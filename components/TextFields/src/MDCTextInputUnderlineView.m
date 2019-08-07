@@ -74,6 +74,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self updateUnderlinePath];
+  [self updateColor];
 }
 
 - (CGSize)intrinsicContentSize {

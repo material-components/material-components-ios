@@ -21,7 +21,9 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -46,7 +48,6 @@ mdc_public_objc_library(
     name = "TextFields",
     sdk_frameworks = [
         "QuartzCore",
-        "UIKit",
     ],
     deps = [
         "//components/AnimationTiming",
@@ -152,22 +153,14 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob([
-        "tests/unit/*.m",
+    extra_srcs = glob([
         "tests/unit/ContainedInputView/*.m",
     ]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
-        ":ContainedInputView",
         ":ColorThemer",
+        ":ContainedInputView",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
@@ -200,17 +193,11 @@ mdc_snapshot_test(
     deps = ["snapshot_test_lib"],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob([
-        "tests/unit/*.swift",
-        "tests/unit/Theming/*.swift"
+    extra_srcs = glob([
+        "tests/unit/Theming/*.swift",
     ]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":TextFields",

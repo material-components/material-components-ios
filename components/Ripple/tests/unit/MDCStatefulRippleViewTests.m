@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCRippleLayer.h"
+#import "../../src/private/MDCRippleLayer.h"
 #import "MaterialRipple.h"
 
 @interface MDCStatefulRippleView (UnitTests)
@@ -147,6 +147,30 @@
   XCTAssertFalse(rippleView.selected);
   XCTAssertFalse(rippleView.dragged);
   XCTAssertTrue(rippleView.rippleHighlighted);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCStatefulRippleView *testRippleView = [[MDCStatefulRippleView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCRippleView *passedRippleView = nil;
+  testRippleView.traitCollectionDidChangeBlock =
+      ^(MDCRippleView *_Nonnull ripple, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedRippleView = ripple;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [testRippleView traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedRippleView, testRippleView);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end

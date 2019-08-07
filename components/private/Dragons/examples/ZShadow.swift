@@ -63,18 +63,10 @@ class ZShadowViewController: UIViewController {
                                                        options: [],
                                                        metrics: nil,
                                                        views: ["view": contentView]));
-    if #available(iOS 9.0, *) {
-      greenBannerLeadingConstraintCollapsed = contentView.greenBanner.trailingAnchor.constraint(equalTo: contentView.greenTappable.trailingAnchor)
-    } else {
-      greenBannerLeadingConstraintCollapsed = NSLayoutConstraint(item: contentView.greenBanner, attribute: .right, relatedBy: .equal, toItem: contentView.greenTappable, attribute: .right, multiplier: 1, constant: 0)
-    }
+    greenBannerLeadingConstraintCollapsed = contentView.greenBanner.trailingAnchor.constraint(equalTo: contentView.greenTappable.trailingAnchor)
     greenBannerLeadingConstraintCollapsed.isActive = false
     
-    if #available(iOS 9.0, *) {
-      blueBannerLeadingConstraintCollapsed = contentView.blueBanner.trailingAnchor.constraint(equalTo: contentView.blueTappable.trailingAnchor)
-    } else {
-      blueBannerLeadingConstraintCollapsed = NSLayoutConstraint(item: contentView.blueBanner, attribute: .right, relatedBy: .equal, toItem: contentView.blueTappable, attribute: .right, multiplier: 1, constant: 0)
-    }
+    blueBannerLeadingConstraintCollapsed = contentView.blueBanner.trailingAnchor.constraint(equalTo: contentView.blueTappable.trailingAnchor)
     blueBannerLeadingConstraintCollapsed.isActive = false
     
     let tap = UITapGestureRecognizer(target: self, action: #selector(squaresTapped))

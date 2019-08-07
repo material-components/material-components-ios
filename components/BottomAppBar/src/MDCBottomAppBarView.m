@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialMath.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
@@ -55,6 +56,9 @@ static const int kMDCButtonAnimationDuration = 200;
 
 @implementation MDCBottomAppBarView
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -83,6 +87,11 @@ static const int kMDCButtonAnimationDuration = 200;
   [self addFloatingButton];
   [self addBottomBarLayer];
   [self addNavBar];
+
+  self.barTintColor = UIColor.whiteColor;
+  self.shadowColor = UIColor.blackColor;
+  _elevation = MDCShadowElevationBottomAppBar;
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)addFloatingButton {
@@ -251,6 +260,9 @@ static const int kMDCButtonAnimationDuration = 200;
   self.floatingButton.center =
       [self getFloatingButtonCenterPositionForAppBarWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+
+  self.bottomBarLayer.fillColor = self.barTintColor.CGColor;
+  self.bottomBarLayer.shadowColor = self.shadowColor.CGColor;
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
@@ -295,6 +307,14 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 #pragma mark - Setters
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
+    return;
+  }
+  _elevation = elevation;
+  [self mdc_elevationDidChange];
+}
 
 - (void)setFloatingButton:(MDCFloatingButton *)floatingButton {
   if (_floatingButton == floatingButton) {
@@ -384,11 +404,8 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)setBarTintColor:(UIColor *)barTintColor {
+  _barTintColor = barTintColor;
   _bottomBarLayer.fillColor = barTintColor.CGColor;
-}
-
-- (UIColor *)barTintColor {
-  return [UIColor colorWithCGColor:_bottomBarLayer.fillColor];
 }
 
 - (void)setLeadingBarItemsTintColor:(UIColor *)leadingBarItemsTintColor {
@@ -416,11 +433,24 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
+  _shadowColor = shadowColor;
   _bottomBarLayer.shadowColor = shadowColor.CGColor;
 }
 
-- (UIColor *)shadowColor {
-  return [UIColor colorWithCGColor:_bottomBarLayer.shadowColor];
+#pragma mark TraitCollection
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
+#pragma mark - MDCElevation
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end

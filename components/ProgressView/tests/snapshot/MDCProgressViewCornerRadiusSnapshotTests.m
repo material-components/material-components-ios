@@ -44,13 +44,6 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  for (UIView *subview in view.subviews) {
-    [self changeViewToRTL:subview];
-  }
-}
-
 #pragma mark - Tests
 
 - (void)testProgress000LTR {

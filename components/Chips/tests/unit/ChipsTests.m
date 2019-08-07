@@ -97,6 +97,8 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertFalse(chip.mdc_adjustsFontForContentSizeCategory);
   XCTAssertNotNil(chip.selectedImageView);
   XCTAssertNotNil(chip.titleLabel);
+  XCTAssertEqualWithAccuracy(chip.mdc_baseElevation, 0, 0.001);
+  XCTAssertNil(chip.mdc_elevationDidChangeBlock);
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(chip.contentPadding, expectedContentPadding),
                 @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(chip.contentPadding),
                 NSStringFromUIEdgeInsets(expectedContentPadding));
@@ -446,6 +448,30 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertTrue(chipView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCChipView *passedChipView;
+  chipView.traitCollectionDidChangeBlock =
+      ^(MDCChipView *_Nonnull blockChipView, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedChipView = blockChipView;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [chipView traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedChipView, chipView);
 }
 
 @end

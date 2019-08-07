@@ -32,6 +32,11 @@ static char MDCFontScaleObjectKey;
 
   NSNumber *fontSizeNumber;
   if (sizeCategory) {
+    // Pick the correct font size from the pre-attached scaling curve that
+    // fits the specific size category. The scaling curve is attached based on
+    // the type of font, so a button font has a different scaling curve than
+    // a headline font, and the two will therefore see different font size numbers
+    // for the same size category.
     fontSizeNumber = self.mdc_scalingCurve[sizeCategory];
   }
 

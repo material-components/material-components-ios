@@ -31,8 +31,10 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   if ([viewController.view isKindOfClass:[UIScrollView class]]) {
     scrollView = (UIScrollView *)viewController.view;
+#if !TARGET_OS_UIKITFORMAC
   } else if ([viewController.view isKindOfClass:[UIWebView class]]) {
     scrollView = ((UIWebView *)viewController.view).scrollView;
+#endif
   } else if ([viewController isKindOfClass:[UICollectionViewController class]]) {
     scrollView = ((UICollectionViewController *)viewController).collectionView;
   }
@@ -272,6 +274,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 - (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
   _preferredSheetHeight = preferredSheetHeight;
   [self updatePreferredSheetHeight];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 #pragma mark - MDCSheetContainerViewDelegate

@@ -18,4 +18,7 @@
 
 @interface MDCDialogShadowedView : UIView
 @property(nonatomic, assign) MDCShadowElevation elevation;
+
+/** The shadow color of the dialog. Defaults to black. */
+@property(nonatomic, copy, nonnull) UIColor *shadowColor;
 @end

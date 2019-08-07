@@ -14,13 +14,27 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MaterialColor.h"
 #import "MaterialInk.h"
+
+/**
+ Creates a fake MDCInkView that has its traitCollection overridden.
+ */
+@interface MDCInkViewSnaphotTestInkViewFake : MDCInkView
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCInkViewSnaphotTestInkViewFake
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+@end
 
 /** Snapshot tests for MDCInkView. */
 @interface MDCInkViewSnapshotTests : MDCSnapshotTestCase
 
 /** The view being tested. */
-@property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, strong) MDCInkViewSnaphotTestInkViewFake *inkView;
 
 @end
 
@@ -33,7 +47,8 @@
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.inkView = [[MDCInkView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+  self.inkView =
+      [[MDCInkViewSnaphotTestInkViewFake alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
   self.inkView.backgroundColor = UIColor.whiteColor;
   self.inkView.inkColor = UIColor.brownColor;
 }
@@ -52,6 +67,11 @@
 
   UIView *snapshotView = [self.inkView mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
+}
+
+- (void)generateSnapshotForIOS13AndVerifyView {
+  UIView *snapshotView = [self.inkView mdc_addToBackgroundView];
+  [self snapshotVerifyViewForIOS13:snapshotView];
 }
 
 #pragma mark - Tests
@@ -83,6 +103,47 @@
 
   // Then
   [self generateSnapshotAndVerifyView];
+}
+
+- (void)testInkColorRespondsToDynamicColorBeforeInkBegan {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    self.inkView.inkColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
+                                                             defaultColor:UIColor.blueColor];
+
+    // When
+    self.inkView.usesLegacyInkRipple = NO;
+    self.inkView.inkStyle = MDCInkStyleBounded;
+    self.inkView.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.inkView startTouchBeganAtPoint:self.inkView.center animated:NO withCompletion:nil];
+
+    // Then
+    [self generateSnapshotForIOS13AndVerifyView];
+  }
+#endif
+}
+
+- (void)testInkColorRespondsToDynamicColorAfterInkBegan {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    self.inkView.inkColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
+                                                             defaultColor:UIColor.blueColor];
+
+    // When
+    self.inkView.usesLegacyInkRipple = NO;
+    self.inkView.inkStyle = MDCInkStyleBounded;
+    [self.inkView startTouchBeganAtPoint:self.inkView.center animated:NO withCompletion:nil];
+    self.inkView.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.inkView layoutIfNeeded];
+
+    // Then
+    [self generateSnapshotForIOS13AndVerifyView];
+  }
+#endif
 }
 
 @end

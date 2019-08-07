@@ -16,8 +16,8 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
+#import "MDCBottomDrawerShadowedView.h"
 #import "MaterialMath.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10;
@@ -39,9 +39,18 @@ static NSString *const kContentOffsetKeyPath = @"contentOffset";
 NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
 
-static UIColor *DrawerShadowColor(void) {
-  return [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.2];
+@implementation MDCBottomDrawerShadowedView
++ (Class)layerClass {
+  return [MDCShadowLayer class];
 }
+
+- (MDCShadowLayer *)shadowLayer {
+  if ([self.layer isKindOfClass:[MDCShadowLayer class]]) {
+    return (MDCShadowLayer *)self.layer;
+  }
+  return nil;
+}
+@end
 
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
 
@@ -137,6 +146,9 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+// The view with the shadow.
+@property(nonatomic) MDCBottomDrawerShadowedView *shadowedView;
+
 // Updates both the header and content based off content offset of the scroll view.
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 
@@ -167,6 +179,11 @@ static UIColor *DrawerShadowColor(void) {
     _maximumInitialDrawerHeight =
         self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
+    UIColor *shadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+    _headerShadowColor = shadowColor;
+    _drawerShadowColor = shadowColor;
+    _elevation = MDCShadowElevationNavDrawer;
+    _shadowedView = [[MDCBottomDrawerShadowedView alloc] init];
   }
   return self;
 }
@@ -368,6 +385,16 @@ static UIColor *DrawerShadowColor(void) {
   }
 }
 
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  self.shadowedView.shadowLayer.elevation = elevation;
+}
+
+- (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
+  _drawerShadowColor = drawerShadowColor;
+  self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
@@ -411,9 +438,14 @@ static UIColor *DrawerShadowColor(void) {
     [self addChildViewController:self.contentViewController];
     [self.scrollView addSubview:self.contentViewController.view];
     [self.contentViewController didMoveToParentViewController:self];
+    [self.scrollView insertSubview:self.shadowedView atIndex:0];
   }
 
   self.scrollView.accessibilityIdentifier = kMDCBottomDrawerScrollViewAccessibilityIdentifier;
+
+  self.shadowedView.layer.shadowColor = self.drawerShadowColor.CGColor;
+  self.shadowedView.backgroundColor = UIColor.clearColor;
+  self.shadowedView.shadowLayer.elevation = self.elevation;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -483,6 +515,18 @@ static UIColor *DrawerShadowColor(void) {
   [super viewWillLayoutSubviews];
 
   [self setupLayout];
+  UIView *topView;
+  if (self.headerViewController) {
+    topView = self.headerViewController.view;
+  } else {
+    topView = self.contentViewController.view;
+  }
+  self.shadowedView.frame = topView.frame;
+  if (topView.layer.mask) {
+    CAShapeLayer *shapeLayer = topView.layer.mask;
+    self.shadowedView.layer.shadowPath = shapeLayer.path;
+  }
+
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
   [self updateViewWithContentOffset:self.scrollView.contentOffset];
 }
@@ -559,13 +603,15 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)setUpHeaderBottomShadowIfNeeded {
   if (self.headerShadowLayer) {
+    // Duplicated from below to support dynamic color updates
+    self.headerShadowLayer.shadowColor = self.headerShadowColor.CGColor;
     return;
   }
 
   self.headerShadowLayer = [[MDCShadowLayer alloc] init];
   // The header acts as an AppBar, so it keeps the same elevation value.
   self.headerShadowLayer.elevation = MDCShadowElevationAppBar;
-  self.headerShadowLayer.shadowColor = DrawerShadowColor().CGColor;
+  self.headerShadowLayer.shadowColor = self.headerShadowColor.CGColor;
   [self.headerViewController.view.layer addSublayer:self.headerShadowLayer];
   self.headerShadowLayer.hidden = YES;
 }
@@ -629,6 +675,11 @@ static UIColor *DrawerShadowColor(void) {
                                : self.contentHeaderTopInset - headerTransitionToTop * headersDiff;
   contentHeaderView.frame =
       CGRectMake(0, contentHeaderViewTop, contentHeaderViewWidth, contentHeaderViewHeight);
+  self.shadowedView.frame = contentHeaderView.frame;
+  if (self.headerViewController.view.layer.mask) {
+    CAShapeLayer *shapeLayer = self.headerViewController.view.layer.mask;
+    self.shadowedView.layer.shadowPath = shapeLayer.path;
+  }
 }
 
 - (void)updateTopHeaderBottomShadowWithContentOffset:(CGPoint)contentOffset {

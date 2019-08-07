@@ -173,12 +173,15 @@ static NSString *const kEnabledSelector = @"enabled";
 // horizontal padding may need to change
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
+
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  if (!isPad ||
-      self.traitCollection.horizontalSizeClass == previousTraitCollection.horizontalSizeClass) {
-    return;
-  } else {
+  if (isPad &&
+      self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass) {
     [self reloadButtonViews];
+  }
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 

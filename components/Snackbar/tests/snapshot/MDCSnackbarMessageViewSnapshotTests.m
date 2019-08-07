@@ -18,7 +18,7 @@
 // isn't imported first.
 // clang-format off
 #import "MaterialSnackbar.h"
-#import "MDCSnackbarMessageViewInternal.h"
+#import "../../src/private/MDCSnackbarMessageViewInternal.h"
 // clang-format on
 
 /** The width of the Snackbar for testing. */
@@ -69,17 +69,8 @@ static NSString *const kItemTitleLong2Arabic =
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  UIView *snapshotView = [view mdc_addToBackgroundView];
+  UIView *snapshotView = [view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
   [self snapshotVerifyView:snapshotView];
-}
-
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      [self changeViewToRTL:subview];
-    }
-  }
 }
 
 - (MDCSnackbarMessageView *)snackbarMessageViewWithMessage:(MDCSnackbarMessage *)message {
@@ -181,6 +172,32 @@ static NSString *const kItemTitleLong2Arabic =
                                                               actionTitle:kItemTitleLong2Arabic];
   messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
   [self changeViewToRTL:messageView];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:messageView];
+}
+
+- (void)testWithZeroElevation {
+  // Given
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
+                                                              actionTitle:kItemTitleShort2Latin];
+  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+
+  // When
+  messageView.elevation = 0;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:messageView];
+}
+
+- (void)testWithCustomElevation {
+  // Given
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
+                                                              actionTitle:kItemTitleShort2Latin];
+  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+
+  // When
+  messageView.elevation = 12;
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];

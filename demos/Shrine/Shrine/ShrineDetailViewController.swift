@@ -39,7 +39,7 @@ class ShrineDetailView: UIScrollView {
     let labelPadding: CGFloat = 50
     imageView.frame = CGRect(x: labelPadding, y: labelPadding,
       width: frame.size.width - 2 * labelPadding, height: 220)
-    imageView.contentMode = UIViewContentMode.scaleAspectFit
+    imageView.contentMode = UIView.ContentMode.scaleAspectFit
     imageView.autoresizingMask = .flexibleHeight
     addSubview(imageView)
     let urlString: String = ShrineData.baseURL + imageName
@@ -69,7 +69,7 @@ class ShrineDetailView: UIScrollView {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineHeightMultiple = 0.8
     let attrString = NSMutableAttributedString(string: title)
-    attrString.addAttribute(NSParagraphStyleAttributeName,
+    attrString.addAttribute(NSAttributedString.Key.paragraphStyle,
                             value:paragraphStyle,
                             range: NSRange(location: 0, length:attrString.length))
     label.attributedText = attrString
@@ -87,7 +87,7 @@ class ShrineDetailView: UIScrollView {
     let descParagraphStyle = NSMutableParagraphStyle()
     descParagraphStyle.lineHeightMultiple = 1.5
     let descAttrString = NSMutableAttributedString(string: desc)
-    descAttrString.addAttribute(NSParagraphStyleAttributeName,
+    descAttrString.addAttribute(NSAttributedString.Key.paragraphStyle,
                                 value:descParagraphStyle,
                                 range:NSRange(location: 0, length: descAttrString.length))
     label.attributedText = descAttrString
@@ -110,7 +110,7 @@ class ShrineDetailViewController: UIViewController {
   init() {
     super.init(nibName: nil, bundle: nil)
 
-    addChildViewController(appBar.headerViewController)
+    addChild(appBar.headerViewController)
     appBar.headerViewController.headerView.backgroundColor = .clear
     appBar.navigationBar.tintColor = .black
   }
@@ -136,7 +136,7 @@ class ShrineDetailViewController: UIViewController {
     backButton.image = backImage
     appBar.navigationBar.leftBarButtonItem = backButton
 
-    floatingButton.setTitle("+", for: UIControlState())
+    floatingButton.setTitle("+", for: UIControl.State())
     floatingButton.backgroundColor =
       UIColor(red: 0.086, green: 0.941, blue: 0.941, alpha: 1)
     floatingButton.sizeToFit()
@@ -157,7 +157,7 @@ class ShrineDetailViewController: UIViewController {
                                   height: floatingButton.frame.height)
   }
 
-  func dismissDetails() {
+  @objc func dismissDetails() {
     dismiss(animated: true, completion: nil)
   }
 

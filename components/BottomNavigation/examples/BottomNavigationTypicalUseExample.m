@@ -42,7 +42,6 @@
 
 - (void)commonBottomNavigationTypicalUseExampleViewDidLoad {
   self.bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-  self.bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   self.bottomNavBar.delegate = self;

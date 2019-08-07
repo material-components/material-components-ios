@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
+
 @protocol MDCButtonBarDelegate;
 
 /** Specifies the title alignment of the |MDCNavigationBar|. */
@@ -96,7 +98,7 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
  (e.g. titleView).
  */
 IB_DESIGNABLE
-@interface MDCNavigationBar : UIView
+@interface MDCNavigationBar : UIView <MDCElevatable, MDCElevationOverriding>
 
 #pragma mark Behavior
 
@@ -302,6 +304,13 @@ IB_DESIGNABLE
  MDCNavigationBarTitleAlignmentLeading.
  */
 @property(nonatomic) MDCNavigationBarTitleAlignment titleAlignment;
+
+/**
+ A block that is invoked when the NavigationBar receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)(
+    MDCNavigationBar *_Nonnull navigationBar, UITraitCollection *_Nullable previousTraitCollection);
 
 #pragma mark Observing UINavigationItem instances
 

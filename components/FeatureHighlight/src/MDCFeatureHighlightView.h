@@ -43,4 +43,12 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
 
+/**
+ A block that is invoked when the @c MDCFeatureHighlightView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFeatureHighlightView *_Nonnull featureHighlight,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end

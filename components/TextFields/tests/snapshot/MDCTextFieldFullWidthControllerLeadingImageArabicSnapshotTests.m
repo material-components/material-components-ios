@@ -44,11 +44,7 @@
 }
 
 - (void)willGenerateSnapshotAndVerify {
-  if (@available(iOS 9.0, *)) {
-    [self changeLayoutToRTL];
-  } else {
-    NSLog(@"[ERROR] RTL tests can only run on iOS 9 or later.");
-  }
+  [self changeLayoutToRTL];
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

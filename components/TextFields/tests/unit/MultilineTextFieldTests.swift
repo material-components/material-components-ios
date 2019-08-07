@@ -141,4 +141,26 @@ class MultilineTextFieldTests: XCTestCase {
       XCTFail("No underline or underline is wrong class")
     }
   }
+
+  func testTraitCollectionDidChangeBlockCalledWithExpectedParameters() {
+    // Given
+    let testTextField = MDCMultilineTextField()
+    let expectation = XCTestExpectation(description: "traitCollection")
+    var passedTraitCollection: UITraitCollection? = nil
+    var passedTextField: MDCMultilineTextField? = nil
+    testTextField.traitCollectionDidChangeBlock = { (textField, traitCollection) in
+      passedTraitCollection = traitCollection
+      passedTextField = textField
+      expectation.fulfill()
+    }
+    let fakeTraitCollection = UITraitCollection(displayScale: 7)
+
+    // When
+    testTextField.traitCollectionDidChange(fakeTraitCollection)
+
+    // Then
+    self.wait(for: [expectation], timeout: 1)
+    XCTAssertEqual(passedTraitCollection, fakeTraitCollection)
+    XCTAssertEqual(passedTextField, testTextField)
+  }
 }

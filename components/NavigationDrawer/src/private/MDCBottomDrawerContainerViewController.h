@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCBottomDrawerState.h"
+#import "MaterialShadowElevations.h"
 
 @class MDCBottomDrawerContainerViewController;
 @protocol MDCBottomDrawerHeader;
@@ -84,6 +85,21 @@
  Its height is determined by the returned preferred content size.
  */
 @property(nonatomic, nullable) UIViewController<MDCBottomDrawerHeader> *headerViewController;
+
+/**
+ The header's shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nullable) UIColor *headerShadowColor;
+
+/**
+ The drawer's top shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nullable) UIColor *drawerShadowColor;
+
+/**
+ The drawer's elevation. Defaults to MDCShadowElevationNavDrawer.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 // The original presenting view controller.
 @property(nonatomic, readonly, nonnull) UIViewController *originalPresentingViewController;

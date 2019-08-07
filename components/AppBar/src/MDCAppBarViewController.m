@@ -56,9 +56,11 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)MDCAppBarViewController_commonInit {
   // Shadow layer
+  __weak MDCAppBarViewController *weakSelf = self;
   MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
       ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
         CGFloat elevation = MDCShadowElevationAppBar * intensity;
+        weakSelf.headerView.elevation = elevation;
         [(MDCShadowLayer *)shadowLayer setElevation:elevation];
       };
   [self.headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
@@ -69,6 +71,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   self.headerStackView.translatesAutoresizingMaskIntoConstraints = NO;
   self.headerStackView.topBar = self.navigationBar;
 }
+
+#pragma mark - Properties
 
 - (MDCHeaderStackView *)headerStackView {
   // Removed call to loadView here as we should never be calling it manually.
@@ -145,6 +149,17 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   return backBarButtonItem;
 }
 
+- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
+  [super setInferTopSafeAreaInsetFromViewController:inferTopSafeAreaInsetFromViewController];
+
+  if (inferTopSafeAreaInsetFromViewController) {
+    self.topLayoutGuideAdjustmentEnabled = YES;
+  }
+
+  _verticalConstraint.active = !self.inferTopSafeAreaInsetFromViewController;
+  _topSafeAreaConstraint.active = self.inferTopSafeAreaInsetFromViewController;
+}
+
 #pragma mark - Resource bundle
 
 + (NSBundle *)bundle {
@@ -165,6 +180,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
+
+#pragma mark - UIViewController Overrides
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -208,17 +225,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
       .active = YES;
 }
 
-- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
-  [super setInferTopSafeAreaInsetFromViewController:inferTopSafeAreaInsetFromViewController];
-
-  if (inferTopSafeAreaInsetFromViewController) {
-    self.topLayoutGuideAdjustmentEnabled = YES;
-  }
-
-  _verticalConstraint.active = !self.inferTopSafeAreaInsetFromViewController;
-  _topSafeAreaConstraint.active = self.inferTopSafeAreaInsetFromViewController;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
@@ -247,6 +253,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   frame.size.width = CGRectGetWidth(parent.view.bounds);
   self.view.frame = frame;
 }
+
+#pragma mark - UIAccessibility
 
 - (BOOL)accessibilityPerformEscape {
   [self dismissSelf];

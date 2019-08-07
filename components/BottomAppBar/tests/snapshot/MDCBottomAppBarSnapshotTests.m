@@ -71,15 +71,6 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 #pragma mark - Tests
 
 - (void)testFloatingButtonCenterLTR {
@@ -161,6 +152,43 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.appBar];
+}
+
+- (void)testDynamicColorSupportOniOS13AndAbove {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *barTintDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.purpleColor;
+          }
+        }];
+    UIColor *shadowDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.blueColor;
+          }
+        }];
+    self.appBar.barTintColor = barTintDynamicColor;
+    self.appBar.shadowColor = shadowDynamicColor;
+
+    // When
+    self.appBar.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+
+    // Then
+    CGSize aSize = [self.appBar sizeThatFits:CGSizeMake(360, INFINITY)];
+    self.appBar.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
+    [self.appBar layoutIfNeeded];
+    UIView *snapshotView =
+        [self.appBar mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
 }
 
 @end

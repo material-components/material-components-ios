@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCSheetState.h"
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
 @protocol MDCBottomSheetControllerDelegate;
@@ -28,7 +30,7 @@
  MDCBottomSheetController automatically sets the appropriate presentation style and
  transitioningDelegate for the bottom sheet behavior.
  */
-@interface MDCBottomSheetController : UIViewController
+@interface MDCBottomSheetController : UIViewController <MDCElevatable, MDCElevationOverriding>
 
 /**
  The view controller being presented as a bottom sheet.
@@ -105,6 +107,24 @@
 @property(nonatomic, readonly) MDCSheetState state;
 
 /**
+ The elevation of the bottom sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
+ Bottom sheet controllers must be created with @c initWithContentViewController:.
+ */
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
+ Initializes the controller with a content view controller.
+
+ @param contentViewController The view controller to be presented as a bottom sheet.
+ */
+- (nonnull instancetype)initWithContentViewController:
+    (nonnull UIViewController *)contentViewController;
+
+/**
  Sets the shape generator for state that is used to define the bottom sheet's shape for that state.
 
  note: If a layer property is explicitly set after the shapeGenerator has been set,
@@ -129,12 +149,12 @@
 - (nullable id<MDCShapeGenerating>)shapeGeneratorForState:(MDCSheetState)state;
 
 /**
- Initializes the controller with a content view controller.
-
- @param contentViewController The view controller to be presented as a bottom sheet.
+ A block that is invoked when the @c MDCBottomSheetController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
  */
-- (nonnull instancetype)initWithContentViewController:
-    (nonnull UIViewController *)contentViewController;
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomSheetController *_Nonnull bottomSheetController,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

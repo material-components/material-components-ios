@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MaterialElevation.h"
 
 /**
  @c MDCBannerViewLayoutStyle specifies the layout style of an MDCBannerView.
@@ -35,7 +36,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
  The [Material Guideline](https://material.io/design/components/banners.html) has more details on
  component usage.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
+__attribute__((objc_subclassing_restricted)) @interface MDCBannerView
+    : UIView<MDCElevatable, MDCElevationOverriding>
 
 /**
  The layout style of a @c MDCBannerView.
@@ -46,9 +48,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 /**
  A view that displays the text on a @c MDCBannerView
- The properties of @c textLabel can be used to configure the text shown on @c MDCBannerView.
+ The properties of @c textView can be used to configure the text shown on @c MDCBannerView.
  */
-@property(nonatomic, readonly, strong, nonnull) UILabel *textLabel;
+@property(nonatomic, readonly, strong, nonnull) UITextView *textView;
 
 /**
  A view that displays the image on a @c MDCBannerView.
@@ -83,5 +85,24 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
  The default value is light grey.
  */
 @property(nonatomic, readwrite, strong, nonnull) UIColor *dividerColor;
+
+/*
+ Indicates whether the banner should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ If set to YES, the text fonts and buttons font will be based on the scalable fonts set on this
+ banner.
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:, assign)
+    BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ A block that is invoked when the @c MDCBannerView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection);
 
 @end

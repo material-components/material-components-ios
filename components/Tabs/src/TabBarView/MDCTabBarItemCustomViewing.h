@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCTabBarSelectionIndicatorSupporting.h"
+#import "MDCTabBarViewCustomViewable.h"
 
 /**
  Defines the necessary APIs for MDCTabBarView to use a UITabBarItem for a custom view property.
@@ -25,7 +25,6 @@
 @protocol MDCTabBarItemCustomViewing
 
 /** A custom view to be displayed for a tab bar item. */
-@property(nullable, nonatomic, strong)
-    UIView<MDCTabBarSelectionIndicatorSupporting> *mdc_customView;
+@property(nullable, nonatomic, strong) UIView<MDCTabBarViewCustomViewable> *mdc_customView;
 
 @end

@@ -109,22 +109,8 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [super tearDown];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      if ([subview isKindOfClass:[UIImageView class]]) {
-        continue;
-      }
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 - (void)changeLayoutToRTL {
-  if (@available(iOS 9.0, *)) {
-    [self changeViewToRTL:self.tabBar];
-  }
+  [self changeViewToRTL:self.tabBar];
 }
 
 - (void)setTitlesToLatinLong {

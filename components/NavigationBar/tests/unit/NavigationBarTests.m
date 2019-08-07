@@ -545,4 +545,61 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects([self.navBar trailingButtonBar].tintColor, UIColor.cyanColor);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  navigationBar.traitCollectionDidChangeBlock =
+      ^(MDCNavigationBar *_Nonnull navBar, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
+
+  // When
+  [navigationBar traitCollectionDidChange:nil];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCNavigationBar *passedNavigationBar;
+  navigationBar.traitCollectionDidChangeBlock =
+      ^(MDCNavigationBar *_Nonnull navBar, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedNavigationBar = navBar;
+        [expectation fulfill];
+      };
+
+  // When
+  UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  [navigationBar traitCollectionDidChange:testCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedNavigationBar, navigationBar);
+}
+
+- (void)testDefaultElevations {
+  XCTAssertEqualWithAccuracy(self.navBar.mdc_currentElevation, 0, 0.001);
+  XCTAssertLessThan(self.navBar.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat fakeElevation = 99;
+
+  // When
+  self.navBar.mdc_overrideBaseElevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.navBar.mdc_overrideBaseElevation, fakeElevation, 0.001);
+}
+
 @end

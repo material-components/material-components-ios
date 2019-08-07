@@ -14,8 +14,9 @@
 
 #import "MDCActionSheetController.h"
 
-#import <MaterialComponents/MaterialMath.h>
-#import <MaterialComponents/MaterialTypography.h>
+#import "MaterialMath.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialTypography.h"
 #import "private/MDCActionSheetHeaderView.h"
 #import "private/MDCActionSheetItemTableViewCell.h"
 
@@ -55,6 +56,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
   action.accessibilityLabel = self.accessibilityLabel;
+  action.titleColor = self.titleColor;
+  action.tintColor = self.tintColor;
   return action;
 }
 
@@ -79,6 +82,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   UIColor *_inkColor;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
@@ -126,6 +131,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
     _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
     _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
+    _mdc_overrideBaseElevation = -1;
   }
 
   return self;
@@ -306,10 +312,10 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.inkColor = self.inkColor;
   cell.rippleColor = self.rippleColor;
   cell.enableRippleBehavior = self.enableRippleBehavior;
-  cell.tintColor = self.actionTintColor;
+  cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
-  cell.actionTextColor = self.actionTextColor;
+  cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   return cell;
 }
 
@@ -329,6 +335,14 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (NSString *)message {
   return self.header.message;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -470,6 +484,10 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   _enableRippleBehavior = enableRippleBehavior;
 
   [self.tableView reloadData];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return MDCShadowElevationModalBottomSheet;
 }
 
 @end

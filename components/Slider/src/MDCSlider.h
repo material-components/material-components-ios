@@ -15,6 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 @protocol MDCSliderDelegate;
@@ -37,7 +38,7 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl
+@interface MDCSlider : UIControl <MDCElevatable, MDCElevationOverriding>
 
 /** When @c YES, the forState: APIs are enabled. Defaults to @c NO. */
 @property(nonatomic, assign, getter=isStatefulAPIEnabled) BOOL statefulAPIEnabled;
@@ -191,6 +192,14 @@ IB_DESIGNABLE
  Default value is MDCElevationNone.
  */
 @property(nonatomic, assign) MDCShadowElevation thumbElevation UI_APPEARANCE_SELECTOR;
+
+/**
+ The shadow color of the cursor (thumb).
+
+ Default value is black
+ */
+@property(nonatomic, strong, nonnull) UIColor *thumbShadowColor;
+
 /**
  The number of discrete values that the slider can take.
 
@@ -302,6 +311,13 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
 
+/**
+ A block that is invoked when the @c MDCSlider receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCSlider *_Nonnull slider, UITraitCollection *_Nullable previousTraitCollection);
+
 #pragma mark - To be deprecated
 
 /**
@@ -334,6 +350,21 @@ IB_DESIGNABLE
  @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
+
+/** When @c YES, haptics for min and max are enabled. The haptics casue a light impact reaction when
+ the slider reaches the minimum or maximum value.
+
+ Defaults to @c YES in iOS 10 or later, @c NO otherwise
+ */
+@property(nonatomic, assign) BOOL hapticsEnabled;
+
+/** When @c YES, haptics for any value change are enabled for discrete sliders. The haptics casue
+ a light impact reaction when the slider value changes for discrete sliders. Can only be set to yes
+ for discrete sliders. Haptics will only occur if hapticsEnabled is also set to @c YES.
+
+ Defaults to @c NO
+ */
+@property(nonatomic, assign) BOOL shouldEnableHapticsForAllDiscreteValues;
 
 @end
 

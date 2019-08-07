@@ -95,7 +95,16 @@
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
+      inkLayer.fillColor = self.inkColor.CGColor;
     }
+  }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
@@ -243,7 +252,12 @@
 }
 
 - (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  static UIColor *defaultInkColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    defaultInkColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  });
+  return defaultInkColor;
 }
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {

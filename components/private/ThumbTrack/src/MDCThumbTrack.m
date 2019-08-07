@@ -178,6 +178,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 @synthesize thumbEnabledColor = _thumbEnabledColor;
 @synthesize trackOnColor = _trackOnColor;
+@synthesize touchController = _touchController;
 
 // TODO(iangordon): ThumbView is not respecting the bounds of ThumbTrack
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -373,6 +374,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (MDCShadowElevation)thumbElevation {
   return _thumbView.elevation;
+}
+
+- (void)setThumbShadowColor:(UIColor *)thumbShadowColor {
+  _thumbView.shadowColor = thumbShadowColor;
+}
+
+- (UIColor *)thumbShadowColor {
+  return _thumbView.shadowColor;
 }
 
 - (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
@@ -1294,10 +1303,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (MDCNumericValueLabel *)numericValueLabel {
   return _valueLabel;
-}
-
-- (MDCInkTouchController *)touchController {
-  return _touchController;
 }
 
 - (MDCDiscreteDotView *)discreteDotView {

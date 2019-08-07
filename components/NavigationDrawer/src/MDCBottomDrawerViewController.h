@@ -15,6 +15,8 @@
 #import <UIKit/UIKit.h>
 #import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerState.h"
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
 
 @protocol MDCBottomDrawerHeader;
 @protocol MDCBottomDrawerViewControllerDelegate;
@@ -23,7 +25,9 @@
  View controller for containing a Google Material bottom drawer.
  */
 @interface MDCBottomDrawerViewController
-    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate,
+                        MDCElevatable,
+                        MDCElevationOverriding>
 
 /**
  The main content displayed by the drawer.
@@ -91,6 +95,16 @@
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
 
 /**
+ The drawer's top shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nonnull) UIColor *drawerShadowColor;
+
+/**
+ The drawer's elevation. Defaults to MDCShadowElevationNavDrawer.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
  The bottom drawer delegate.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerViewControllerDelegate> delegate;
@@ -138,6 +152,15 @@
  */
 - (void)expandToFullscreenWithDuration:(CGFloat)duration
                             completion:(void (^__nullable)(BOOL finished))completion;
+
+/**
+ A block that is invoked when the @c MDCBottomDrawerViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomDrawerViewController *_Nonnull bottomDrawer,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /**

@@ -80,6 +80,14 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _trackingView.elevation;
 }
 
+- (void)setDialogShadowColor:(UIColor *)dialogShadowColor {
+  self.trackingView.shadowColor = dialogShadowColor;
+}
+
+- (UIColor *)dialogShadowColor {
+  return self.trackingView.shadowColor;
+}
+
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
   self = [super initWithPresentedViewController:presentedViewController
@@ -95,6 +103,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     [_dimmingView addGestureRecognizer:_dismissGestureRecognizer];
 
     _trackingView = [[MDCDialogShadowedView alloc] init];
+    _trackingView.shadowColor = UIColor.blackColor;
 
     [self registerKeyboardNotifications];
   }
@@ -104,6 +113,13 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 - (void)dealloc {
   [self unregisterKeyboardNotifications];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (CGRect)frameOfPresentedViewInContainerView {

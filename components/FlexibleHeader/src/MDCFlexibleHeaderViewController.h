@@ -40,6 +40,14 @@
 /** The flexible header view instance that this controller manages. */
 @property(nonatomic, strong, nonnull, readonly) MDCFlexibleHeaderView *headerView;
 
+/**
+ A block that is invoked when the @c MDCFlexibleHeaderViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 /** The layout delegate will be notified of any changes to the flexible header view's frame. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewLayoutDelegate> layoutDelegate;
 

@@ -138,6 +138,14 @@ IB_DESIGNABLE
  */
 - (void)stopAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)stopTransition;
 
+/**
+ A block that is invoked when the @c MDCActivityIndicator receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCActivityIndicator *_Nonnull activityIndicator,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /**

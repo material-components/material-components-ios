@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCRippleLayer.h"
+#import "../../src/private/MDCRippleLayer.h"
 #import "MaterialRipple.h"
 
 @interface FakeMDCRippleViewAnimationDelegate : NSObject <MDCRippleViewDelegate>
@@ -247,6 +247,30 @@
 
   // Then
   XCTAssertEqual(rippleView.activeRippleLayer.maximumRadius, fakeRippleRadius);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCRippleView *testRippleView = [[MDCRippleView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCRippleView *passedRippleView = nil;
+  testRippleView.traitCollectionDidChangeBlock =
+      ^(MDCRippleView *_Nonnull ripple, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedRippleView = ripple;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [testRippleView traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedRippleView, testRippleView);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end

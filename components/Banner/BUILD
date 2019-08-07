@@ -16,22 +16,20 @@ load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
     "mdc_objc_library",
+    "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
 )
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_objc_library(
+mdc_public_objc_library(
     name = "Banner",
-    sdk_frameworks = ["UIKit"],
-    visibility = [
-    ],
-    srcs = native.glob(["src/*.m"]),
-    hdrs = native.glob(["src/*.h"]),
-    includes = ["src"],
     deps = [
         "//components/Buttons",
+        "//components/Elevation",
         "//components/Typography",
     ],
 )
@@ -40,7 +38,11 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Banner",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
         "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
     ],
 )
 
@@ -49,10 +51,27 @@ mdc_snapshot_objc_library(
     deps = [
         ":Banner",
         "//components/Buttons",
+        "//components/schemes/Typography",
     ],
 )
 
 mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
+)
+
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    deps = [
+        ":Banner",
+        "//components/Buttons",
+        "//components/Typography",
+    ],
+)
+
+mdc_unit_test_suite(
+    name = "unit_tests",
+    deps = [
+        ":unit_test_sources",
+    ],
 )

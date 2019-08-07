@@ -37,4 +37,7 @@
 /** Set the @c icon shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;
 
+/** The color of the shadow of the thumb view. Defaults to black. */
+@property(nonnull, nonatomic, strong) UIColor *shadowColor;
+
 @end

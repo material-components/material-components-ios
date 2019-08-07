@@ -118,6 +118,8 @@ static inline UIColor *RippleColor() {
 @synthesize alignment = _alignment;
 @synthesize barPosition = _barPosition;
 @synthesize itemAppearance = _itemAppearance;
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 #pragma mark - Initialization
 
@@ -178,6 +180,7 @@ static inline UIColor *RippleColor() {
   [self addSubview:_dividerBar];
 
   [self updateItemBarStyle];
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)layoutSubviews {
@@ -185,6 +188,18 @@ static inline UIColor *RippleColor() {
 
   CGSize sizeThatFits = [_itemBar sizeThatFits:self.bounds.size];
   _itemBar.frame = CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height);
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return 0;
 }
 
 #pragma mark - Public

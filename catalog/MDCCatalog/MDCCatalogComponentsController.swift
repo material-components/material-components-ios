@@ -104,7 +104,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
 
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+    collectionView?.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
@@ -341,7 +341,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     let cell =
         collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
                                            for: indexPath)
-    cell.backgroundColor = UIColor.white
+    cell.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
 
     let componentName = node.children[indexPath.row].title
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {

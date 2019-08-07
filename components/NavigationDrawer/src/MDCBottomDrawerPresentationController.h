@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCBottomDrawerState.h"
+#import "MaterialShadowElevations.h"
 
 @class MDCBottomDrawerPresentationController;
 
@@ -115,6 +116,16 @@
 @property(nonatomic, readonly) BOOL contentReachesFullscreen;
 
 /**
+ The drawer's top shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nonnull) UIColor *drawerShadowColor;
+
+/**
+ The drawer's elevation. Defaults to MDCShadowElevationNavDrawer.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
  drawer will scroll to the start of its content.
 
@@ -139,4 +150,12 @@
  */
 - (void)expandToFullscreenWithDuration:(CGFloat)duration
                             completion:(void (^__nullable)(BOOL finished))completion;
+
+/**
+ A block that is invoked when the @c MDCBottomDrawerPresentationController  receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomDrawerPresentationController *_Nullable presentationController,
+     UITraitCollection *_Nullable previousTraitCollection);
 @end

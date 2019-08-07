@@ -21,6 +21,7 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 
@@ -30,7 +31,6 @@ mdc_public_objc_library(
     name = "ProgressView",
     sdk_frameworks = [
         "CoreGraphics",
-        "UIKit",
     ],
     deps = [
         "//components/Palettes",
@@ -38,6 +38,14 @@ mdc_public_objc_library(
         "@material_internationalization_ios//:MDFInternationalization",
         "@motion_animator_objc//:MotionAnimator",
         "@motion_interchange_objc//:MotionInterchange",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":ProgressView",
+        "//components/schemes/Container",
     ],
 )
 
@@ -52,25 +60,18 @@ mdc_extension_objc_library(
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
+    extra_srcs = native.glob([
+        "tests/unit/Theming/*.m",
     ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":ProgressView",
+        ":Theming",
         ":private",
     ],
 )

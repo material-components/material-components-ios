@@ -153,6 +153,14 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 @property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
 
 /**
+ A block that is invoked when the @c MDCFeatureHighlightViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFeatureHighlightViewController *_Nonnull featureHighlight,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the
  completion block with accepted set to YES.
 

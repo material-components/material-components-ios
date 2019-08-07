@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialMath.h"
-
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "MDCActionSheetTestHelper.h"
+#import "MaterialMath.h"
+#import "MaterialShadowElevations.h"
 
 static const CGFloat kSafeAreaAmount = 20;
 
@@ -58,6 +58,8 @@ static const CGFloat kSafeAreaAmount = 20;
 - (void)testInitializerResultsInExpectedDefaults {
   // Then
   XCTAssertFalse(self.actionSheet.alwaysAlignTitleLeadingEdges);
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation,
+                             MDCShadowElevationModalBottomSheet, 0.001);
 }
 
 - (void)testTitleColor {
@@ -435,6 +437,24 @@ static const CGFloat kSafeAreaAmount = 20;
 
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, messageFont);
+}
+
+#pragma mark - MaterialElevation
+
+- (void)testDefaultOverrideBaseElevationIsNegative {
+  // Then
+  XCTAssertLessThan(self.actionSheet.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat fakeElevation = 99;
+
+  // When
+  self.actionSheet.mdc_overrideBaseElevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_overrideBaseElevation, fakeElevation, 0.001);
 }
 
 @end

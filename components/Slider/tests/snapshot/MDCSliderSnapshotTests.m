@@ -29,7 +29,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  // self.recordMode = YES;
 
   self.slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
   self.slider.statefulAPIEnabled = YES;
@@ -118,6 +118,53 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDynamicColorSupport {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *sliderDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.purpleColor;
+          }
+        }];
+    UIColor *sliderBackgroundDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.yellowColor;
+          }
+        }];
+
+    UIColor *sliderThumbShadowDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.blueColor;
+          }
+        }];
+
+    [self.slider setTrackFillColor:sliderDynamicColor forState:UIControlStateNormal];
+    [self.slider setThumbColor:sliderDynamicColor forState:UIControlStateNormal];
+    [self.slider setTrackBackgroundColor:sliderBackgroundDynamicColor
+                                forState:UIControlStateNormal];
+    self.slider.thumbElevation = 5;
+    self.slider.thumbShadowColor = sliderThumbShadowDynamicColor;
+
+    // When
+    self.slider.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+
+    // Then
+    UIView *snapshotView = [self.slider mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
 }
 
 @end

@@ -125,6 +125,14 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   _trackLayer.trackColor = _pageIndicatorTintColor;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)setNumberOfPages:(NSInteger)numberOfPages {
   _numberOfPages = MAX(0, numberOfPages);
   _currentPage = MAX(0, MIN(_numberOfPages - 1, _currentPage));

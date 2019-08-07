@@ -92,6 +92,14 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (UIColor *)progressTintColor {
   return self.progressView.backgroundColor;
 }

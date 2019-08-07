@@ -358,4 +358,167 @@ static UIImage *FakeImage(void) {
                     [self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted]);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParametersForCard {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCCard *passedCard = nil;
+  self.card.traitCollectionDidChangeBlock =
+      ^(MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCard = card;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.card traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedCard, self.card);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParametersForCardCollectionCell {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCCardCollectionCell *passedCollectionCell = nil;
+  self.cell.traitCollectionDidChangeBlock =
+      ^(MDCCardCollectionCell *_Nonnull collectionCell,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCollectionCell = collectionCell;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.cell traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedCollectionCell, self.cell);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+#pragma mark - MDCElevation
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChangesForCard {
+  // When
+  [self.card setShadowElevation:4 forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.card.mdc_currentElevation,
+                             [self.card shadowElevationForState:UIControlStateNormal], 0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValueForCard {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.card.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValueForCard {
+  // Given
+  [self.card setShadowElevation:5 forState:UIControlStateNormal];
+  __block BOOL blockCalled = NO;
+  self.card.mdc_elevationDidChangeBlock = ^(MDCCard *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.card setShadowElevation:[self.card shadowElevationForState:UIControlStateNormal] + 1
+                       forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValueForCard {
+  // Given
+  [self.card setShadowElevation:5 forState:UIControlStateNormal];
+  __block BOOL blockCalled = NO;
+  self.card.mdc_elevationDidChangeBlock = ^(MDCCard *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.card setShadowElevation:[self.card shadowElevationForState:UIControlStateNormal]
+                       forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegativeForCard {
+  // Then
+  XCTAssertLessThan(self.card.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChangesForCardCell {
+  // When
+  [self.cell setShadowElevation:4 forState:MDCCardCellStateNormal];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.cell.mdc_currentElevation,
+                             [self.cell shadowElevationForState:MDCCardCellStateNormal], 0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValueForCardCell {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.cell.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.cell.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValueForCardCell {
+  // Given
+  [self.cell setShadowElevation:5 forState:MDCCardCellStateNormal];
+  __block BOOL blockCalled = NO;
+  self.cell.mdc_elevationDidChangeBlock = ^(MDCCardCollectionCell *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.cell setShadowElevation:[self.cell shadowElevationForState:MDCCardCellStateNormal] + 1
+                       forState:MDCCardCellStateNormal];
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValueForCardCell {
+  // Given
+  [self.cell setShadowElevation:5 forState:MDCCardCellStateNormal];
+  __block BOOL blockCalled = NO;
+  self.cell.mdc_elevationDidChangeBlock = ^(MDCCardCollectionCell *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.cell setShadowElevation:[self.cell shadowElevationForState:MDCCardCellStateNormal]
+                       forState:MDCCardCellStateNormal];
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegativeForCardCell {
+  // Then
+  XCTAssertLessThan(self.cell.mdc_overrideBaseElevation, 0);
+}
+
 @end

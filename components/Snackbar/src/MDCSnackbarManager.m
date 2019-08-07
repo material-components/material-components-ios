@@ -524,9 +524,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @implementation MDCSnackbarManager {
   UIColor *_snackbarMessageViewBackgroundColor;
   UIColor *_snackbarMessageViewShadowColor;
+  MDCShadowElevation _messageElevation;
   UIColor *_messageTextColor;
   UIFont *_messageFont;
   UIFont *_buttonFont;
+  BOOL _uppercaseButtonTitle;
+  CGFloat _disabledButtonAlpha;
+  UIColor *_buttonInkColor;
   NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
   BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _shouldApplyStyleChangesToVisibleSnackbars;
@@ -545,6 +549,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   self = [super init];
   if (self) {
     _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
+    _uppercaseButtonTitle = YES;
+    _disabledButtonAlpha = (CGFloat)0.12;
+    _messageElevation = MDCShadowElevationSnackbar;
   }
   return self;
 }
@@ -694,6 +701,19 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   }
 }
 
+- (MDCShadowElevation)messageElevation {
+  return _messageElevation;
+}
+
+- (void)setMessageElevation:(MDCShadowElevation)messageElevation {
+  if (_messageElevation != messageElevation) {
+    _messageElevation = messageElevation;
+    [self runSnackbarUpdatesOnMainThread:^{
+      self.internalManager.currentSnackbar.elevation = messageElevation;
+    }];
+  }
+}
+
 - (UIColor *)messageTextColor {
   return _messageTextColor;
 }
@@ -722,6 +742,47 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (UIFont *)buttonFont {
   return _buttonFont;
+}
+
+- (void)setUppercaseButtonTitle:(BOOL)uppercaseButtonTitle {
+  _uppercaseButtonTitle = uppercaseButtonTitle;
+  [self runSnackbarUpdatesOnMainThread:^{
+    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
+      button.uppercaseTitle = uppercaseButtonTitle;
+    }
+  }];
+}
+
+- (BOOL)uppercaseButtonTitle {
+  return _uppercaseButtonTitle;
+}
+
+- (void)setDisabledButtonAlpha:(CGFloat)disabledButtonAlpha {
+  _disabledButtonAlpha = disabledButtonAlpha;
+
+  [self runSnackbarUpdatesOnMainThread:^{
+    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
+      button.disabledAlpha = disabledButtonAlpha;
+    }
+  }];
+}
+
+- (CGFloat)disabledButtonAlpha {
+  return _disabledButtonAlpha;
+}
+
+- (void)setButtonInkColor:(UIColor *)buttonInkColor {
+  _buttonInkColor = buttonInkColor;
+
+  [self runSnackbarUpdatesOnMainThread:^{
+    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
+      button.inkColor = buttonInkColor;
+    }
+  }];
+}
+
+- (UIColor *)buttonInkColor {
+  return _buttonInkColor;
 }
 
 - (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state {

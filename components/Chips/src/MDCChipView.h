@@ -15,6 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
@@ -34,7 +35,7 @@
  be left-aligned, and the accessory view will be right aligned. In the centered mode, all three will
  appear together in the center of the chip.
  */
-@interface MDCChipView : UIControl
+@interface MDCChipView : UIControl <MDCElevatable, MDCElevationOverriding>
 
 /*
  A UIImageView that leads the title label.
@@ -193,6 +194,13 @@
  area for the Chip.
  */
 @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
+
+/**
+ A block that is invoked when the MDCChipView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
 
 /*
  A color used as the chip's @c backgroundColor for @c state.

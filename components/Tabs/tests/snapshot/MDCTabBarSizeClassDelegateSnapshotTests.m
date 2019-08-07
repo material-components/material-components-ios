@@ -100,22 +100,8 @@ static NSString *const kItemTitleShort3Arabic = @"وتم";
   [super tearDown];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      if ([subview isKindOfClass:[UIImageView class]]) {
-        continue;
-      }
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 - (void)changeLayoutToRTL {
-  if (@available(iOS 9.0, *)) {
-    [self changeViewToRTL:self.tabBar];
-  }
+  [self changeViewToRTL:self.tabBar];
 }
 
 - (void)setTitlesToArabicShort {

@@ -14,5 +14,10 @@
 
 #import "MDCTabBarItem.h"
 #import "MDCTabBarItemCustomViewing.h"
-#import "MDCTabBarSelectionIndicatorSupporting.h"
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewCustomViewable.h"
+#import "MDCTabBarViewDelegate.h"
+#import "MDCTabBarViewIndicatorAttributes.h"
+#import "MDCTabBarViewIndicatorContext.h"
+#import "MDCTabBarViewIndicatorTemplate.h"
+#import "MDCTabBarViewUnderlineIndicatorTemplate.h"

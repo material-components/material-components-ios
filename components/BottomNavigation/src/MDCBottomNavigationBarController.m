@@ -29,16 +29,16 @@ static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
 static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
 
 /**
- * The transform of the large item view when it is in a transitional state (appearing or
- * dismissing).
+ The transform of the large item view when it is in a transitional state (appearing or
+ dismissing).
  */
-static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
+static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
   return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
 }
 
 @interface MDCBottomNavigationBarController ()
 
-/** The view that hosts the content for the selected view controller **/
+/** The view that hosts the content for the selected view controller. */
 @property(nonatomic, strong) UIView *content;
 
 /** The gesture recognizer for detecting long presses on tab bar items. */
@@ -53,8 +53,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
     BOOL navigationBarLongPressRecognizerRegistered;
 
 /**
- * Indicates if the large item view is in the process of dismissing. This is to ensure that the
- * dialog animation is not started again if it is already animating a dismissal.
+ Indicates if the large item view is in the process of dismissing. This is to ensure that the dialog
+ animation is not started again if it is already animating a dismissal.
  */
 @property(nonatomic, getter=isDismissingLargeItemDialog) BOOL dismissingLargeItemView;
 
@@ -67,7 +67,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   if (self) {
     _navigationBar = [[MDCBottomNavigationBar alloc] init];
     _content = [[UIView alloc] init];
-    _viewControllers = @[];
     _selectedIndex = NSNotFound;
     _dismissingLargeItemView = NO;
     _longPressPopUpViewEnabled = YES;
@@ -100,6 +99,19 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   }
 }
 
+- (void)viewSafeAreaInsetsDidChange {
+  if (@available(iOS 11.0, *)) {
+    [super viewSafeAreaInsetsDidChange];
+  }
+  [self updateNavigationBarInsets];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [self updateNavigationBarInsets];
+}
+
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
   // Assert that the given VC is one of our view controllers or it is nil (we are unselecting)
   NSAssert(
@@ -112,8 +124,9 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   }
 
   // Remove current VC and add new one.
-  [self removeContentViewController:self.selectedViewController];
-  [self addContentViewController:selectedViewController];
+  [self.selectedViewController.view removeFromSuperview];
+  [self.content addSubview:selectedViewController.view];
+  [self addConstraintsForChildViewControllerView:selectedViewController.view];
 
   // Set the iVar and update selected index
   _selectedViewController = selectedViewController;
@@ -145,13 +158,25 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self updateViewsForSelectedIndex:selectedIndex];
 }
 
+- (void)addNewChildViewControllers:(NSArray<UIViewController *> *)newChildViewControllers {
+  for (UIViewController *viewController in newChildViewControllers) {
+    [self addChildViewController:viewController];
+    [viewController didMoveToParentViewController:self];
+  }
+}
+
+- (NSArray<UIViewController *> *)viewControllers {
+  return [self.childViewControllers copy];
+}
+
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
   [self deselectCurrentItem];
-  NSArray *viewControllersCopy = [viewControllers copy];
-  _viewControllers = viewControllersCopy;
-  self.navigationBar.items = [self tabBarItemsForViewControllers:viewControllersCopy];
+  [self removeExistingViewControllers];
 
-  self.selectedViewController = viewControllersCopy.firstObject;
+  [self addNewChildViewControllers:[viewControllers copy]];
+  self.navigationBar.items = [self tabBarItemsForViewControllers:self.childViewControllers];
+
+  self.selectedViewController = self.childViewControllers.firstObject;
 }
 
 - (void)setLongPressPopUpViewEnabled:(BOOL)isLongPressPopUpViewEnabled {
@@ -169,6 +194,14 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
+  return self.selectedViewController;
+}
+
+- (UIViewController *)childViewControllerForHomeIndicatorAutoHidden {
+  return self.selectedViewController;
+}
+
+- (UIViewController *)childViewControllerForScreenEdgesDeferringSystemGestures {
   return self.selectedViewController;
 }
 
@@ -276,9 +309,9 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Handles when the navigation bar long press gesture recognizer gesture has been initiated or the
- * touch point was updated.
- * @param point CGPoint The point within @c navigationBar coordinate space.
+ Handles when the navigation bar long press gesture recognizer gesture has been initiated or the
+ touch point was updated.
+ @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressUpdatedForPoint:(CGPoint)point {
   if (!self.isContentSizeCategoryAccessibilityCategory) {
@@ -304,8 +337,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Handles when the navigation bar long press gesture recognizer gesture has concluded.
- * @param point CGPoint The point within @c navigationBar coordinate space.
+ Handles when the navigation bar long press gesture recognizer gesture has concluded.
+ @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressEndedForPoint:(CGPoint)point {
   UITabBarItem *item = [self.navigationBar tabBarItemForPoint:point];
@@ -318,31 +351,65 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 
 #pragma mark - Private Methods
 
-/**
- * Removes the given view controller from its parent view controller and its view from its superview
- */
-- (void)removeContentViewController:(UIViewController *)viewController {
-  [viewController removeFromParentViewController];
-  [viewController.view removeFromSuperview];
-}
-
-/**
- * Adds the given view controller to the view controller hierarchy and its view to the content
- * view.
- */
-- (void)addContentViewController:(UIViewController *)viewController {
-  BOOL doesNotContainViewController = ![self.childViewControllers containsObject:viewController];
-  if (viewController && doesNotContainViewController) {
-    [self addChildViewController:viewController];
-    [self.content addSubview:viewController.view];
-    [self addConstraintsForContentView:viewController.view];
-    [viewController didMoveToParentViewController:self];
+- (void)removeExistingViewControllers {
+  NSArray<UIViewController *> *childViewControllers = self.childViewControllers;
+  for (UIViewController *childViewController in childViewControllers) {
+    [childViewController willMoveToParentViewController:nil];
+    [childViewController.view removeFromSuperview];
+    [childViewController removeFromParentViewController];
   }
 }
 
 /**
- * Deselects the currently set item.  Sets the selectedIndex to NSNotFound, the naviagation bar's
- * selected item to nil, and the selectedViewController to nil.
+ Adjusts all relevant insets in subviews and the selected child view controller. This include @c
+ safeAreaInsets and scroll view insets.  This will ensure that although the child view controller's
+ view is positioned behind the bar, it can still lay out its content above the Bottom Navigation
+ bar.  For a UIScrollView, this means manipulating both @c contentInset and
+ @c scrollIndicatorInsets.
+ */
+- (void)updateNavigationBarInsets {
+  UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
+  CGFloat navigationBarHeight = CGRectGetHeight(self.navigationBar.frame);
+  if (@available(iOS 11.0, *)) {
+    currentSafeAreaInsets = self.view.safeAreaInsets;
+  }
+  UIEdgeInsets additionalSafeAreaInsets =
+      UIEdgeInsetsMake(0, 0, navigationBarHeight - currentSafeAreaInsets.bottom, 0);
+  if (@available(iOS 11.0, *)) {
+    self.selectedViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+  } else {
+    self.content.layoutMargins = additionalSafeAreaInsets;
+    // Based on an article by Ryan Fox, attempt to adjust the contentInset of either the view
+    // or its first subview.
+    // https://medium.com/@wailord/the-automaticallyadjustsscrollviewinsets-rabbit-hole-b9153a769ce9
+    if (self.selectedViewController.automaticallyAdjustsScrollViewInsets) {
+      UIScrollView *scrollView;
+      if ([self.selectedViewController.view isKindOfClass:[UIScrollView class]]) {
+        scrollView = (UIScrollView *)self.selectedViewController.view;
+      } else if ([self.selectedViewController.view.subviews.firstObject
+                     isKindOfClass:[UIScrollView class]]) {
+        scrollView = (UIScrollView *)self.selectedViewController.view.subviews.firstObject;
+      }
+      // Ideally, we would probably set an associated object that tracks the insets applied
+      // as a result of the Bottom Navigation bar, then we could compute the difference between that
+      // value and this value.
+
+      // However, because Bottom Navigation is intended to be used at the application root (it is
+      // meant for app-wide navigation) we assume no other view controller is applying a content
+      // to the child. If such a situation exists, most clients should probably manage their own
+      // contentInset values. If that approach will not work, then the more complex solution
+      // proposed above may be necessary.
+      UIEdgeInsets contentInset = scrollView.contentInset;
+      contentInset.bottom = navigationBarHeight;
+      scrollView.contentInset = contentInset;
+      scrollView.scrollIndicatorInsets = contentInset;
+    }
+  }
+}
+
+/**
+ Deselects the currently set item.  Sets the selectedIndex to NSNotFound, the naviagation bar's
+ selected item to nil, and the selectedViewController to nil.
  */
 - (void)deselectCurrentItem {
   _selectedIndex = NSNotFound;
@@ -353,8 +420,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Sets the selected view controller to the corresponding index and updates the navigation bar's
- * selected item.
+ Sets the selected view controller to the corresponding index and updates the navigation bar's
+ selected item.
  */
 - (void)updateViewsForSelectedIndex:(NSUInteger)index {
   // Update the selected view controller
@@ -364,20 +431,25 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   // Update the navigation bar's selected item.
   self.navigationBar.selectedItem = selectedViewController.tabBarItem;
   [self setNeedsStatusBarAppearanceUpdate];
+  if (@available(iOS 11.0, *)) {
+    [self setNeedsUpdateOfHomeIndicatorAutoHidden];
+    [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+  }
 }
 
 /**
- * Hooks up the constraints for the subviews of this controller.  Namely the content view and the
- * navigation bar.
+ Hooks up the constraints for the subviews of this controller.  Namely the content view and the
+ navigation bar.
  */
 - (void)loadConstraints {
-  self.content.translatesAutoresizingMaskIntoConstraints = NO;
-  self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
+  [self loadConstraintsForNavigationBar];
+  [self loadConstraintsForContentContainerView];
+}
 
-  // Navigation Bar Constraints
+- (void)loadConstraintsForNavigationBar {
+  self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
-  [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
   [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
 
   if (@available(iOS 11.0, *)) {
@@ -385,18 +457,20 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
         constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
         .active = YES;
   }
+}
 
-  // Content View Constraints
+- (void)loadConstraintsForContentContainerView {
+  self.content.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.content.rightAnchor].active = YES;
-
   [self.view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
+  [self.view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
 }
 
 /**
- * Pins the given view to the edges of the content view.
+ Pins the given view to the edges of the content view.
  */
-- (void)addConstraintsForContentView:(UIView *)view {
+- (void)addConstraintsForChildViewControllerView:(UIView *)view {
   view.translatesAutoresizingMaskIntoConstraints = NO;
   [view.leadingAnchor constraintEqualToAnchor:self.content.leadingAnchor].active = YES;
   [view.trailingAnchor constraintEqualToAnchor:self.content.trailingAnchor].active = YES;
@@ -404,7 +478,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
 }
 
-/** Maps an array of view controllers to their corrisponding tab bar items **/
+/** Maps an array of view controllers to their corrisponding tab bar items. */
 - (NSArray<UITabBarItem *> *)tabBarItemsForViewControllers:
     (NSArray<UIViewController *> *)viewControllers {
   NSMutableArray<UITabBarItem *> *tabBarItems = [NSMutableArray array];
@@ -424,7 +498,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Returns an exception for when the navigation bar's items are changed from outside of this class.
+ Returns an exception for when the navigation bar's items are changed from outside of this class.
  */
 - (NSException *)unauthorizedItemsChangedException {
   NSString *reason = [NSString
@@ -452,7 +526,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self.largeItemDialog.centerYAnchor constraintEqualToAnchor:window.centerYAnchor].active = YES;
 
   self.largeItemDialog.layer.opacity = 0;
-  self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
+  self.largeItemDialog.transform = LargeItemViewAnimationTransitionTransform();
   [UIView animateWithDuration:kLargeItemViewAnimationDuration
                    animations:^{
                      self.largeItemDialog.layer.opacity = 1;
@@ -470,7 +544,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [UIView animateWithDuration:kLargeItemViewAnimationDuration
       animations:^{
         self.largeItemDialog.layer.opacity = 0;
-        self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
+        self.largeItemDialog.transform = LargeItemViewAnimationTransitionTransform();
       }
       completion:^(BOOL finished) {
         if (finished) {

@@ -18,7 +18,11 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -31,7 +35,10 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/Elevation",
+        "//components/ShadowElevations",
         "//components/private/Application",
+        "//components/private/Math",
         "//components/private/UIMetrics",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
@@ -47,6 +54,7 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "private",
+    testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = [":test_targets"],
@@ -78,35 +86,22 @@ mdc_examples_objc_library(
     ],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":CanAlwaysExpandToMaximumHeight",
         ":ColorThemer",
         ":FlexibleHeader",
+        "//components/ShadowLayer",
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob([
-        "tests/unit/*.m",
+    extra_srcs = glob([
         "tests/unit/supplemental/*.m",
         "tests/unit/supplemental/*.h",
     ]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":CanAlwaysExpandToMaximumHeight",
         ":ColorThemer",
@@ -121,4 +116,17 @@ mdc_unit_test_suite(
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":FlexibleHeader",
+        "//components/ShadowLayer",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )

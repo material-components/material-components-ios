@@ -127,6 +127,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 @synthesize hidesBackButton = _hidesBackButton;
 @synthesize leadingItemsSupplementBackButton = _leadingItemsSupplementBackButton;
 @synthesize titleView = _titleView;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 
 - (void)dealloc {
   [self setObservedNavigationItem:nil];
@@ -153,6 +155,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   [self addSubview:_titleLabel];
   [self addSubview:_leadingButtonBar];
   [self addSubview:_trailingButtonBar];
+
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -434,6 +438,16 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+  }
+}
+
+#pragma mark TraitCollection
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
@@ -745,6 +759,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
   _leadingButtonBar.enableRippleBehavior = enableRippleBehavior;
   _trailingButtonBar.enableRippleBehavior = enableRippleBehavior;
+}
+
+- (CGFloat)mdc_currentElevation {
+  return 0;
 }
 
 - (void)setObservedNavigationItem:(UINavigationItem *)navigationItem {

@@ -145,6 +145,7 @@ mdc_unit_test_swift_library(
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
+        ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
 )

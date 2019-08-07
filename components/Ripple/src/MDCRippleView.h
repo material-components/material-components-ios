@@ -69,11 +69,16 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 @property(nonatomic, assign) CGFloat maximumRadius;
 
 /**
- Sets the ripple color of the currently active ripple.
-
- @param rippleColor The color to set the active ripple to.
+ The ripple color of the currently active ripple.
  */
-- (void)setActiveRippleColor:(nullable UIColor *)rippleColor;
+@property(nonatomic, strong, nonnull) UIColor *activeRippleColor;
+
+/**
+ A block that is invoked when the @c MDCRippleView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCRippleView *_Nonnull ripple, UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  Cancels all the existing ripples.
@@ -123,6 +128,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  */
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion;
+
 @end
 
 /**

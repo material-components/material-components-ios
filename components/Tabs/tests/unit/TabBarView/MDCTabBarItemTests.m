@@ -16,10 +16,14 @@
 
 #import "MaterialTabs+TabBarView.h"
 
-@interface MDCTabBarItemTestCustomViewTestFake : UIView <MDCTabBarSelectionIndicatorSupporting>
+@interface MDCTabBarItemTestCustomViewTestFake : UIView <MDCTabBarViewCustomViewable>
 @end
 
 @implementation MDCTabBarItemTestCustomViewTestFake
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  // No-op
+}
 
 - (CGRect)contentFrame {
   return CGRectZero;

@@ -19,7 +19,11 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -29,9 +33,11 @@ mdc_public_objc_library(
     name = "BottomSheet",
     sdk_frameworks = [
         "QuartzCore",
-        "UIKit",
     ],
     deps = [
+        "//components/Elevation",
+        "//components/ShadowElevations",
+        "//components/ShadowLayer",
         "//components/ShapeLibrary",
         "//components/Shapes",
         "//components/private/KeyboardWatcher",
@@ -54,22 +60,6 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_objc_library(
-    name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
-    deps = [
-        ":BottomSheet",
-        ":privateHeaders",
-    ],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
@@ -78,9 +68,9 @@ mdc_examples_objc_library(
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
+        "//components/Buttons",
         "//components/ShapeLibrary",
         "//components/Shapes",
-        "//components/Buttons",
         "//components/private/Application",
         "//components/schemes/Color",
         "//components/schemes/Typography",
@@ -96,6 +86,22 @@ mdc_examples_swift_library(
     ],
 )
 
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    deps = [
+        ":BottomSheet",
+        ":privateHeaders",
+    ],
+)
+
+mdc_unit_test_swift_library(
+    name = "unit_test_swift_sources",
+    deps = [
+        ":BottomSheet",
+        ":ShapeThemer",
+    ],
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
@@ -104,16 +110,14 @@ mdc_unit_test_suite(
     ],
 )
 
-swift_library(
-    name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
     deps = [
         ":BottomSheet",
-        ":ShapeThemer",
     ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )

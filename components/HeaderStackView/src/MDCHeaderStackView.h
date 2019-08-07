@@ -49,4 +49,12 @@ IB_DESIGNABLE
 /** The bottom bar. Bottom aligned. */
 @property(nonatomic, strong, nullable) UIView *bottomBar;
 
+/**
+ A block that is invoked when the @c MDCHeaderStackView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCHeaderStackView *_Nonnull headerStackView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end

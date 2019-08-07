@@ -58,6 +58,7 @@
   XCTAssertNotNil(self.alert.title);
   XCTAssertNotNil(self.alert.message);
   XCTAssertTrue(self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertEqualObjects(self.alert.shadowColor, UIColor.blackColor);
 }
 
 - (void)testAlertControllerWithTitleMessage {
@@ -226,11 +227,7 @@
   [self.alert addAction:action2];
 
   // Force the view to load
-  if (@available(iOS 9.0, *)) {
-    [self.alert loadViewIfNeeded];
-  } else {
-    (void)self.alert.view;
-  }
+  [self.alert loadViewIfNeeded];
 
   // Then
   NSArray<UIButton *> *buttons = self.alert.alertView.actionManager.buttonsInActionOrder;
@@ -299,6 +296,32 @@
   // Then
   MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
   XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testCustomShadowColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+
+  // When
+  self.alert.shadowColor = fakeColor;
+
+  // Then
+  XCTAssertEqualObjects(self.alert.mdc_dialogPresentationController.trackingView.shadowColor,
+                        fakeColor);
+}
+
+- (void)testCustomShadowColorOnPresenationController {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+  MDCDialogPresentationController *presentationController = [[MDCDialogPresentationController alloc]
+      initWithPresentedViewController:[[UIViewController alloc] init]
+             presentingViewController:nil];
+
+  // When
+  presentationController.dialogShadowColor = fakeColor;
+
+  // Then
+  XCTAssertEqualObjects(presentationController.trackingView.shadowColor, fakeColor);
 }
 
 - (void)testDialogBackgroundColorIsNotClearWhenNoThemingIsApllied {
@@ -385,6 +408,99 @@
   XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
                  @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
                  fakeButtonFont);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCAlertController *passedAlertController;
+  alertController.traitCollectionDidChangeBlock =
+      ^(MDCAlertController *_Nonnull blockAlertController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedAlertController = blockAlertController;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [alertController traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedAlertController, alertController);
+}
+
+#pragma mark - MaterialElevation
+
+- (void)testDefaultBaseElevationOverrideIsNegative {
+  // Given
+  MDCAlertController *controller = [[MDCAlertController alloc] init];
+  (void)controller;
+
+  // Then
+  XCTAssertLessThan(controller.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+
+  // When
+  alertController.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alertController.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 77;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alertController.mdc_currentElevation, alertController.elevation,
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 5;
+  __block BOOL blockCalled = NO;
+  alertController.mdc_elevationDidChangeBlock =
+      ^(MDCAlertController *controller, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  alertController.elevation = alertController.elevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 5;
+  __block BOOL blockCalled = NO;
+  alertController.mdc_elevationDidChangeBlock =
+      ^(MDCAlertController *controller, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  alertController.elevation = alertController.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
 }
 
 @end

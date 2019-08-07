@@ -141,20 +141,18 @@ class TextFieldTests: XCTestCase {
     XCTAssertTrue(textField.subviews.contains(leftView))
     XCTAssertTrue(textField.subviews.contains(rightView))
 
-    if #available(iOS 9.0, *) {
-      if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
-        XCTAssertEqual(textField.leadingView, leftView)
-        XCTAssertEqual(textField.leadingView, textField.leftView)
+    if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
+      XCTAssertEqual(textField.leadingView, leftView)
+      XCTAssertEqual(textField.leadingView, textField.leftView)
 
-        XCTAssertEqual(textField.trailingView, rightView)
-        XCTAssertEqual(textField.trailingView, textField.rightView)
-      } else {
-        XCTAssertEqual(textField.leadingView, rightView)
-        XCTAssertEqual(textField.leadingView, textField.rightView)
+      XCTAssertEqual(textField.trailingView, rightView)
+      XCTAssertEqual(textField.trailingView, textField.rightView)
+    } else {
+      XCTAssertEqual(textField.leadingView, rightView)
+      XCTAssertEqual(textField.leadingView, textField.rightView)
 
-        XCTAssertEqual(textField.trailingView, leftView)
-        XCTAssertEqual(textField.trailingView, textField.leftView)
-      }
+      XCTAssertEqual(textField.trailingView, leftView)
+      XCTAssertEqual(textField.trailingView, textField.leftView)
     }
   }
 
@@ -195,5 +193,27 @@ class TextFieldTests: XCTestCase {
     } else {
       XCTFail("No underline or underline is wrong class")
     }
+  }
+
+  func testTraitCollectionDidChangeBlockCalledWithExpectedParameters() {
+    // Given
+    let testTextField = MDCTextField()
+    let expectation = XCTestExpectation(description: "traitCollection")
+    var passedTraitCollection: UITraitCollection? = nil
+    var passedTextField: MDCTextField? = nil
+    testTextField.traitCollectionDidChangeBlock = { (textField, traitCollection) in
+      passedTraitCollection = traitCollection
+      passedTextField = textField
+      expectation.fulfill()
+    }
+    let fakeTraitCollection = UITraitCollection(displayScale: 7)
+
+    // When
+    testTextField.traitCollectionDidChange(fakeTraitCollection)
+
+    // Then
+    self.wait(for: [expectation], timeout: 1)
+    XCTAssertEqual(passedTraitCollection, fakeTraitCollection)
+    XCTAssertEqual(passedTextField, testTextField)
   }
 }

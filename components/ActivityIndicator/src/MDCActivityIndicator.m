@@ -148,6 +148,8 @@ static const CGFloat kSingleCycleRotation =
 
     [self updateStrokePath];
   }];
+
+  [self updateStrokeColor];
 }
 
 - (void)commonMDCActivityIndicatorInit {
@@ -1014,6 +1016,14 @@ static const CGFloat kSingleCycleRotation =
 
 - (UIAccessibilityTraits)accessibilityTraits {
   return UIAccessibilityTraitUpdatesFrequently;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 @end

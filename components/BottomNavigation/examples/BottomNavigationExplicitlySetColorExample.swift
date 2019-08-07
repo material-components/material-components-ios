@@ -73,7 +73,6 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     view.backgroundColor = MDCPalette.grey.tint300
     view.addSubview(bottomNavBar)
 
-    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.

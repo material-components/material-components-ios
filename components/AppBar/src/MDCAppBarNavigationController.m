@@ -170,6 +170,9 @@
 
   appBar.appBarViewController.headerView.trackingScrollView = trackingScrollView;
 
+  appBar.appBarViewController.traitCollectionDidChangeBlock =
+      self.traitCollectionDidChangeBlockForAppBarController;
+
   if ([self.delegate respondsToSelector:@selector
                      (appBarNavigationController:willAddAppBar:asChildOfViewController:)]) {
     [self.delegate appBarNavigationController:self

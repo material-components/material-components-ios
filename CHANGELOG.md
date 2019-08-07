@@ -1,3 +1,1382 @@
+# 86.0.0
+
+In this major release we have provided improvements to our Elevation code for Dark Mode as well as internal clean up. 
+
+## Breaking changes
+
+Our `MDCElevatable` protocol now conforms to NSObject so it can leverage the `isKindOfClass:` and `conformsToProtocol:` APIs.
+
+## API changes
+
+### Elevation
+
+#### MDCElevatable
+
+*modified* protocol: `MDCElevatable`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@protocol MDCElevatable` |
+| To: | `@protocol MDCElevatable <NSObject>` |
+
+*modified* protocol: `MDCElevatable`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `protocol MDCElevatable` |
+| To: | `protocol MDCElevatable : NSObjectProtocol` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [BUILD file uses Skylark macros. (#8152)](https://github.com/material-components/material-components-ios/commit/e3a0fb9a4d72a9fff660288628d566f0e9a61944) (Robert Moore)
+
+### ActivityIndicator
+
+* [Update BUILD to use Skylark macros. (#8153)](https://github.com/material-components/material-components-ios/commit/ed55e0f1b2d7210f92fbd29132218f6e6aa1394e) (Robert Moore)
+
+### AnimationTiming
+
+* [Use Skylark macros in BUILD file. (#8154)](https://github.com/material-components/material-components-ios/commit/25dcf26e73c85d6c83f437cb1a3d43c26d2e31cf) (Robert Moore)
+
+### Banner
+
+* [Use Starlark macros. (#8155)](https://github.com/material-components/material-components-ios/commit/d123d7a35613201a44c8f88b2bcbc9016f94f33d) (Robert Moore)
+
+### BottomAppBar
+
+* [Use Starlark macros. (#8156)](https://github.com/material-components/material-components-ios/commit/ff0c94cdf8eb256bec8f333e837015e6dcf162bf) (Robert Moore)
+
+### BottomNavigation
+
+* [Renames functions and fixes comments. (#8133)](https://github.com/material-components/material-components-ios/commit/3b54f2c6ea1731a061761070b9dd8497822ea9d3) (Eric Lee)
+* [Use Starlark macros. (#8159)](https://github.com/material-components/material-components-ios/commit/3c03bd05d62ab78ed1371c874d170107afb14f09) (Robert Moore)
+
+### BottomSheet
+
+* [Use Starlark macros. (#8160)](https://github.com/material-components/material-components-ios/commit/51f63776ace8802208f7eb56a95fa3f81b95e7fe) (Robert Moore)
+
+### ButtonBar
+
+* [Use Starlark macros. (#8161)](https://github.com/material-components/material-components-ios/commit/cab960098bf0e10bac7e2c4adb2492273d1646b1) (Robert Moore)
+
+### Buttons
+
+* [Use Starlark macros. (#8162)](https://github.com/material-components/material-components-ios/commit/54fe07bd2e489e3b0edf2f9b2e754f78da5326a0) (Robert Moore)
+
+### Cards
+
+* [Use Starlark macros. (#8163)](https://github.com/material-components/material-components-ios/commit/6578b292e25201667f3fb032d0020a80464f77e5) (Robert Moore)
+
+### Chips
+
+* [Use Starlark macros. (#8164)](https://github.com/material-components/material-components-ios/commit/363e02d8bdd759f2226b33a5e23dc5d7c9349155) (Robert Moore)
+
+### CollectionCells
+
+* [Use Starlark macros. (#8165)](https://github.com/material-components/material-components-ios/commit/3255f96aa61b02e89cd0b8672879382435e7f09b) (Robert Moore)
+
+### CollectionLayoutAttributes
+
+* [Use more Starlark macros. (#8166)](https://github.com/material-components/material-components-ios/commit/43828e32ce81f2628a2495cc742836294a29263c) (Robert Moore)
+
+### Collections
+
+* [Use more Starlark macros. (#8167)](https://github.com/material-components/material-components-ios/commit/a97f0e9dd435b009e34bc056fee579ca7f4a166d) (Robert Moore)
+
+### Elevation
+
+* [Add smooth continuous formula for values between 0 and 1 (#8212)](https://github.com/material-components/material-components-ios/commit/7d6164356f78b8987a7fece2c3072ddd51701760) (Yarden Eitan)
+* [Update mdc_resolvedColorWithTraitCollection:elevation: to support pre-iOS 13 (#8217)](https://github.com/material-components/material-components-ios/commit/3f121b7014b04d470b83d7fc5f80c5ca2efd1130) (Yarden Eitan)
+* [nsobject (#8188)](https://github.com/material-components/material-components-ios/commit/17f000a076ddda25dd83581ea1dbb37982ef0c82) (Yarden Eitan)
+
+### FeatureHighlight
+
+* [Use Starlark rules. (#8168)](https://github.com/material-components/material-components-ios/commit/e92e0ef7d591e28b3338bb5001f25cbb7837a8a9) (Robert Moore)
+
+### FlexibleHeader
+
+* [Use Starlark macros. (#8169)](https://github.com/material-components/material-components-ios/commit/6e7b7474f368564ca3690560ef46f50f1b748dc3) (Robert Moore)
+
+### HeaderStackView
+
+* [Use Starlark macros. (#8170)](https://github.com/material-components/material-components-ios/commit/a047c779d54048a8efef7212a1a65bcc8366a42d) (Robert Moore)
+
+### Ink
+
+* [Use Starlark macros. (#8172)](https://github.com/material-components/material-components-ios/commit/77c5ebbe7e2f90ddb0846c57949c9a8949c866c3) (Robert Moore)
+
+### LibraryInfo
+
+* [Use Starlark macros. (#8173)](https://github.com/material-components/material-components-ios/commit/67927c9e6f30cf1c259cb5406022188fe60350fb) (Robert Moore)
+
+### List
+
+* [Use Starlark macros in BUILD file. (#8174)](https://github.com/material-components/material-components-ios/commit/0d493b69ccd4768fac3edbf8ac6617814e36d2af) (Robert Moore)
+
+### MaskedTransition
+
+* [Use more Starlark macros. (#8175)](https://github.com/material-components/material-components-ios/commit/ec20611bed01086b5eaf4d5e5b0bd2a77f7d6914) (Robert Moore)
+
+### NavigationBar
+
+* [Use Starlark macros. (#8176)](https://github.com/material-components/material-components-ios/commit/bbdf2f459fdb9b0f735a3cf5acc62b7862c2e35d) (Robert Moore)
+
+### NavigationDrawer
+
+* [Use more Starlark macros. (#8177)](https://github.com/material-components/material-components-ios/commit/58df819da46b672eec751724d14990d7e31b81c2) (Robert Moore)
+
+### OverlayWindow
+
+* [Use more Starlark macros. (#8178)](https://github.com/material-components/material-components-ios/commit/2ed63ed2060bd5b8d44545529f7fa94a13af9679) (Robert Moore)
+
+### PageControl
+
+* [Use Starlark macros in BUILD file. (#8179)](https://github.com/material-components/material-components-ios/commit/b0ee32b59b11f3e7ec332fcc9872829cdb6c4254) (Robert Moore)
+
+### Palettes
+
+* [Use more Starlark macros in the BUILD file. (#8180)](https://github.com/material-components/material-components-ios/commit/6ed797156d8e9c0c2c9cf76b26ed234c1eb5e64d) (Robert Moore)
+
+### ProgressView
+
+* [Add more Starlark macros. (#8181)](https://github.com/material-components/material-components-ios/commit/bbfe5f8193e0f87eba1e15f0e36d86e02c4ab272) (Robert Moore)
+
+### Ripple
+
+* [Use Starlark macros. (#8183)](https://github.com/material-components/material-components-ios/commit/48d3d591bf83a69f5f886a4c5639baa930f799fc) (Robert Moore)
+
+### ShadowElevations
+
+* [Use Starlark macros. (#8184)](https://github.com/material-components/material-components-ios/commit/0cb45de8fc4d8a308172380a038121f2de4c32a1) (Robert Moore)
+
+### ShadowLayer
+
+* [Use Starlark macros. (#8185)](https://github.com/material-components/material-components-ios/commit/c354e6f35ae7c8182fe3890f06cbaaf4e9437c8d) (Robert Moore)
+
+### ShapeLibrary
+
+* [Use Starlark macros. (#8186)](https://github.com/material-components/material-components-ios/commit/fad566278ea6175ff94e0d493507f02389e9cba4) (Robert Moore)
+
+### Shapes
+
+* [Use Starlark macros. (#8192)](https://github.com/material-components/material-components-ios/commit/b556ab09c363ed54237aecd97dc01c2a944ccc4f) (Robert Moore)
+
+### Slider
+
+* [Use Starlark BUILD macros. (#8194)](https://github.com/material-components/material-components-ios/commit/be45bbf3ee672f0ca6ef905447a802d90190b43f) (Robert Moore)
+
+### Snackbar
+
+* [Use Starlark macros in BUILD file. (#8195)](https://github.com/material-components/material-components-ios/commit/870cd5b40461022bebf8a3d7b6075318a66d153a) (Robert Moore)
+
+### Tabs
+
+* [Use Starlark macros in BUILD file. (#8196)](https://github.com/material-components/material-components-ios/commit/7718df1037838ec664c97cc82a1ed1c2214b6f09) (Robert Moore)
+
+### TextFields
+
+* [Use Starlark macros in the BUILD file. (#8197)](https://github.com/material-components/material-components-ios/commit/9f707d1a65b0f51d13f085bcb029d76f13b447ff) (Robert Moore)
+
+### Themes
+
+* [Use Starlark macros in BUILD file. (#8198)](https://github.com/material-components/material-components-ios/commit/e17f9d9d5273d5d38520d8c294d81436317faed7) (Robert Moore)
+
+### Typography
+
+* [Use Starlark macros. (#8199)](https://github.com/material-components/material-components-ios/commit/80e8c3252ef16cffcd4a3c4f535f18b4f6e7004b) (Robert Moore)
+
+### private/Application
+
+* [Use Starlark macros in BUILD file. (#8200)](https://github.com/material-components/material-components-ios/commit/4d435b8096665d30bfbb98a5531c09b7d85c9a6c) (Robert Moore)
+
+### private/Color
+
+* [Use Starlark macros. (#8201)](https://github.com/material-components/material-components-ios/commit/5d42706fdafbb57839339b423418cd5432275b2b) (Robert Moore)
+
+### private/Icons
+
+* [Use Starlark macros in BUILD file. (#8202)](https://github.com/material-components/material-components-ios/commit/6a9ee1fa0cec1eabb28697df9394a474da367604) (Robert Moore)
+
+### private/KeyboardWatcher
+
+* [Use more Starlark macros. (#8203)](https://github.com/material-components/material-components-ios/commit/fa5080487912fa7cd8a1e7e4da9e3682860cb351) (Robert Moore)
+
+### private/Math
+
+* [Use Starlark macros. (#8204)](https://github.com/material-components/material-components-ios/commit/00c88d5317762471c034d259db6c75eae23ad523) (Robert Moore)
+
+### private/Overlay
+
+* [Use more Starlark macros. (#8205)](https://github.com/material-components/material-components-ios/commit/09b261953767614d8ec5d7f7885a6d3bd28c8dad) (Robert Moore)
+
+### private/ThumbTrack
+
+* [Use Starlark macros in BUILD file. (#8206)](https://github.com/material-components/material-components-ios/commit/be19699d29e835e9564cc048c3992b1563a5f688) (Robert Moore)
+
+### private/UIMetrics
+
+* [Use Starlark macros in the BUILD file. (#8207)](https://github.com/material-components/material-components-ios/commit/e048554a3e1d22a14933571716123ef55be63958) (Robert Moore)
+
+### schemes/Color
+
+* [Use Starlark macros in BUILD file. (#8208)](https://github.com/material-components/material-components-ios/commit/dc800bbb04d4c876ded748af3b12377ab8df53ed) (Robert Moore)
+
+### schemes/Container
+
+* [Use Starlark macros in the BUILD file. (#8210)](https://github.com/material-components/material-components-ios/commit/15ae19df4b9b04170045cb9fbcaea49986badf80) (Robert Moore)
+
+### schemes/Shape
+
+* [Use Starlark macros in BUILD file. (#8209)](https://github.com/material-components/material-components-ios/commit/08ee58bcb31761a99e625fb8f3432a003fc1423f) (Robert Moore)
+
+### schemes/Typography
+
+* [Use Starlark macros in BUILD file. (#8211)](https://github.com/material-components/material-components-ios/commit/9e56b9c2143f459c5a1686d854e4a627fddc959b) (Robert Moore)
+
+---
+
+# 85.12.0
+
+This minor release introduces Material Elevation support for ActionSheet and Banner (Beta). It also includes performance improvements for Ink and Ripple.
+
+## New features
+
+Support for Material Elevation expanded to two more components. APIs to support
+overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
+
+## Changes
+
+### ActionSheet
+
+* [Add MaterialElevation support (#8111)](https://github.com/material-components/material-components-ios/commit/2feb8f96cda6fc9ab2fc7d6bcb23f1076c2055aa) (Cody Weaver)
+
+### Banner
+
+* [Add MaterialElevation support (#8142)](https://github.com/material-components/material-components-ios/commit/534649a1cd74a65c56a0d605238546796eed54a2) (Cody Weaver)
+
+## Multi-component changes
+
+* [Use static default colors (#8146)](https://github.com/material-components/material-components-ios/commit/4be077a61bfeda44058ebc1f73e2cf8b71a5c65a) (Cody Weaver)
+
+---
+
+# 85.11.0
+
+This minor release introduces Material Elevation support for Bottom Sheet,
+Navigation Bar, Slider, and Tabs. Bottom Sheet removed its broken `-init`
+initializer, and some internal clean-up was done to remove iOS 8 support.
+
+## New features
+
+Support for Material Elevation expanded to several more components. APIs to
+support overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
+
+## Changes
+
+### ActionSheet
+
+* [Drop iOS 8 work-arounds. (#8120)](https://github.com/material-components/material-components-ios/commit/7bc09cdf8bac90db8acfd38431e7e60f2fec6fd3) (Robert Moore)
+
+### BottomNavigation
+
+* [Test for `additionalSafeAreaInsets` behavior. (#8113)](https://github.com/material-components/material-components-ios/commit/9e936bfb6201c07993119d0b1c2368be7a88d2fe) (Robert Moore)
+
+### BottomSheet
+
+* [Add MaterialElevation support (#8102)](https://github.com/material-components/material-components-ios/commit/606f0386b3a1cead72c7cf05caf187248e1fadc0) (Cody Weaver)
+* [Mark init unavailable (#8108)](https://github.com/material-components/material-components-ios/commit/c336d025e8b09445829a74c10aeea71e6bfbfc1e) (Cody Weaver)
+
+### Elevation
+
+* [Fix spelling typos. (#8114)](https://github.com/material-components/material-components-ios/commit/9ea5f99c122637c6da0be0be666ce095ae6f56de) (Robert Moore)
+
+### NavigationBar
+
+* [Add MaterialElevation support. (#8115)](https://github.com/material-components/material-components-ios/commit/60c60f288cc9eb0e8f87736febdeaf1993ceb79a) (Cody Weaver)
+* [Add doc to note UIBarButtonItem cannot be used in UIPopoverPresentationController. (#8129)](https://github.com/material-components/material-components-ios/commit/4191d03853b20acfe14259d4babddac7e9ee250a) (Wenyu Zhang)
+
+### Slider
+
+* [Add MaterialElevation support (#8127)](https://github.com/material-components/material-components-ios/commit/c6ab74349d0c4dc5b44d69696b3baca4a613276a) (Cody Weaver)
+
+### Tabs
+
+* [Add MaterialElevation support (#8116)](https://github.com/material-components/material-components-ios/commit/a9a0fcadd089e9db5ef45408cf20ee9ab9cf6ebc) (Cody Weaver)
+
+### Typography
+
+* [Drop iOS 8 pragmas. (#8119)](https://github.com/material-components/material-components-ios/commit/ae728261675f67286d4245f8979abc47b5ec5650) (Robert Moore)
+
+### private/Color
+
+* [Fix Math import. (#8104)](https://github.com/material-components/material-components-ios/commit/37d5b8d87cd7fbf9ed455ade98bf2b0ed91ab0a1) (Robert Moore)
+
+### schemes/Typography
+
+* [Remove CoreText dependency. (#8132)](https://github.com/material-components/material-components-ios/commit/c973907f212b58498803db1aa30d26a29c7de1e0) (Robert Moore)
+* [Remove iOS 8 code. (#8118)](https://github.com/material-components/material-components-ios/commit/867fe1bd1e05afca0958d1ecfe55d488bcfd484e) (Robert Moore)
+
+---
+
+# 85.10.0
+
+This minor release expands support for trait collection and Material Elevation
+changes in several components. Bottom Sheet and Navigation Drawer now support
+shadows and elevation.
+
+## Breaking changes
+
+The following breaking changes were made for Beta components that are not
+published to CocoaPods.
+
+*   `MDCBottomNavigationBarController` now positions child view controllers'
+    views behind the Bottom Navigation bar.
+*   `MDCBannerView` now uses a `UITextView` for the message text instead of a
+    `UILabel`.
+
+## New features
+
+Several more components received APIs that allow responding to
+`UITraitCollection` changes. Assigning a `traitCollectionDidBlock` on a
+supported component enables code to be executed in the component's
+`traitCollectionDidChange:` method without subclassing.
+
+Support for Material Elevation expanded to several more components. APIs to
+support overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
+
+The Bottom Sheet component, specifically `MDCBottomSheetController` now renders
+a shadow by default. This may cause a very slight change in the shading around
+the edges of the view. If desired, non-elevated Bottom Sheets can be configured
+by setting the `elevation` property's value to `0`.
+
+Likewise, the Navigation Drawer's `MDCBottomDrawerPresentationController`
+renders a shadow by default. To disable the shadow or modify the drawer's
+elevation, set the `elevation` property to the desired value.
+
+```objc
+MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:mySheetContentVC];
+bottomSheet.elevation = 0;
+```
+
+`MDCTabBarView`, currently in Beta, now provides an API to set its preferred
+layout style.
+
+```objc
+MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
+tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+```
+
+## Changes
+
+### AppBar
+
+* [Set headerView elevation when shadow intensity changes (#8101)](https://github.com/material-components/material-components-ios/commit/74a65bc6d092c2a6a5a501217165c406d68a4e04) (Bryan Oltman)
+
+### Banner
+
+* [use UITextView for text instead of UILabel. (#7993)](https://github.com/material-components/material-components-ios/commit/e58c550a212040ef8cedd0b7c14ef4521c46de19) (Wenyu Zhang)
+
+### BottomAppBar
+
+* [Remove no-op tests. (#8072)](https://github.com/material-components/material-components-ios/commit/db4b31e1edb5d1460f4282f0196db7a50187071a) (Robert Moore)
+
+### BottomNavigation
+
+* [Add MDCElevation support. (#8038)](https://github.com/material-components/material-components-ios/commit/4768e610a8054741f8024161a5b3ebe28f69f608) (Robert Moore)
+* [Deprecate `sizeThatFitsIncludesSafeArea`. (#8066)](https://github.com/material-components/material-components-ios/commit/b6eed78eb43deb580348e293ff561663bf738369) (Robert Moore)
+* [Don't set `sizeThatFitsIncludesSafeArea`. (#8065)](https://github.com/material-components/material-components-ios/commit/48e95bbf0e16e361a6e26210790c89650af1bfd7) (Robert Moore)
+* [Make KVO safe for `nil`. (#8083)](https://github.com/material-components/material-components-ios/commit/eed4679d887829fc35a160b080eaad24e7995cb3) (Robert Moore)
+* [Store child VCs in `childViewControllers`. (#7992)](https://github.com/material-components/material-components-ios/commit/9ed52651c4390722d1a6b3024e896e1d3008520a) (Robert Moore)
+* [Test for `mdc_overrideBaseElevation` (#8075)](https://github.com/material-components/material-components-ios/commit/bce0f4937b2c1956afef21cbacd434aef5ab6190) (Robert Moore)
+
+### BottomSheet
+
+* [Add elevation property (#8089)](https://github.com/material-components/material-components-ios/commit/43dddb988e341b88b033419d731e09e2cf003de1) (Cody Weaver)
+
+### Buttons
+
+* [Move MDCButton's defaultContentInset configuration to later in init (#8069)](https://github.com/material-components/material-components-ios/commit/4fcf3cd5a221297d428f965d2f876a139b3a0516) (Bryan Oltman)
+* [Support MaterialElevation. (#8073)](https://github.com/material-components/material-components-ios/commit/403c1b6a295da0fd905f4c82ecca5f365fb4aeee) (Robert Moore)
+
+### Cards
+
+* [CardCell Supports MaterialElevation. (#8079)](https://github.com/material-components/material-components-ios/commit/130289a6d4960fa14d773334e381b773f0fd8ee7) (Yarden Eitan)
+* [MDCCard conforms to MDCElevation and MDCElevationOverride (#8054)](https://github.com/material-components/material-components-ios/commit/f2b12a10ed25b9c209c0b96832703d814a8cf191) (Yarden Eitan)
+
+### Chips
+
+* [Conform to MDCElevatable and MDCElevationOverriding. (#8068)](https://github.com/material-components/material-components-ios/commit/58aa3402bf0a9ca7cbf876622f6aca90f9a78e30) (Robert Moore)
+* [Fix default value for mdc_overrideBaseElevation. (#8076)](https://github.com/material-components/material-components-ios/commit/d93b4e8fd51cef6a95655f5310863ac5b3ef8279) (Robert Moore)
+
+### Dialogs
+
+* [Add MaterialElevation support to AlertController. (#8098)](https://github.com/material-components/material-components-ios/commit/dce2d98f92b38f522e92e379bbf9dc15c1f1aa85) (Robert Moore)
+
+### Elevation
+
+* [Add MDCElevationOverride to umbrella header (#8052)](https://github.com/material-components/material-components-ios/commit/eab643ea8c0afb928b014af3dea88992fd1218b5) (Robert Moore)
+* [Add a UIColor category to support resolving color with elevation. (#8085)](https://github.com/material-components/material-components-ios/commit/c3f8c6adeb4e3425d2997a291a3f616202f6c3c5) (Wenyu Zhang)
+* [Add absoluteElevation property and clarify the elevationDidChange block param (#8071)](https://github.com/material-components/material-components-ios/commit/c980a95d54ca051468945e9a9b77af7bc9acd17b) (Yarden Eitan)
+* [Add elevationDidChange method to UIView category (#8067)](https://github.com/material-components/material-components-ios/commit/e312d88119e34fa3be48c45c4da948223d9cb133) (Cody Weaver)
+* [Doc clarification (#8074)](https://github.com/material-components/material-components-ios/commit/50ba836103621f510cfb70fc6fac9a0d7ec486fc) (Yarden Eitan)
+* [Improve protocol naming (#8055)](https://github.com/material-components/material-components-ios/commit/d9d038130a30fc57be90bc87ff04218a1ba1a721) (Yarden Eitan)
+* [passing self to the elevationDidChangeBlock (#8058)](https://github.com/material-components/material-components-ios/commit/0643370347a8d0b31ef4eb590c84dfa2424d0ed4) (Yarden Eitan)
+* [Add category to UIView (#7969)](https://github.com/material-components/material-components-ios/commit/f335b9627799cffa4259a498086a489df811657a) (Cody Weaver)
+
+### FeatureHighlight
+
+* [Add traitCollectionDidChange block (#8036)](https://github.com/material-components/material-components-ios/commit/a57245ed9102726529daa3397bee6138dfd616c7) (Cody Weaver)
+
+### FlexibleHeader
+
+* [ [FlexibleHeader] Conform to MDCElevatable, MDCElevationOverriding (#8099)](https://github.com/material-components/material-components-ios/commit/657483ea40e354ec47fb41d785c1b2b9b69cb502) (Bryan Oltman)
+
+### HeaderStackView
+
+* [Add traitCollectionDidChange block (#8061)](https://github.com/material-components/material-components-ios/commit/6190a33c72554fbd92254c4281168a07408624ec) (Cody Weaver)
+
+### Ink
+
+* [Add traitCollectionDidChange block (#8064)](https://github.com/material-components/material-components-ios/commit/b19962a7472f615a25bd68fcf87cc71e691e20ea) (Cody Weaver)
+* [Fix documentation for enum types. (#8090)](https://github.com/material-components/material-components-ios/commit/99f2aec3e28a3d1e1378c3b51f02beb03b6fb775) (Robert Moore)
+
+### List
+
+* [Support MaterialElevation. (#8078)](https://github.com/material-components/material-components-ios/commit/cbeb6f5bc77ddf504c504ad1bf610aab97370005) (Robert Moore)
+
+### NavigationDrawer
+
+* [Adds an elevation and shadow to Bottom Drawer. (#8095)](https://github.com/material-components/material-components-ios/commit/7ded6431437dd364bbb6ca0b7ef16f6b6a981ef3) (Yarden Eitan)
+* [Adding MDCElevation support (#8100)](https://github.com/material-components/material-components-ios/commit/b8ea85d21ae3c1affadd68853b8aea4dd79408cc) (Yarden Eitan)
+
+### PageControl
+
+* [Add traitCollectionDidChange block (#8037)](https://github.com/material-components/material-components-ios/commit/61aea173fa31681a84bb7b9e407b1af0ab57a72f) (Cody Weaver)
+
+### ProgressView
+
+* [Add traitCollectionDidChange block (#8035)](https://github.com/material-components/material-components-ios/commit/5ebe48ba4e8f72b5a16d2126ec1ad2d4ca2a8b08) (Cody Weaver)
+
+### Ripple
+
+* [Add traitCollectionDidChange block (#8062)](https://github.com/material-components/material-components-ios/commit/8f6338e0b2d91e31b3df276b66eb6b8ca216a92d) (Cody Weaver)
+* [Fix active ripple layer not using active ripple color. (#8059)](https://github.com/material-components/material-components-ios/commit/013f3a890ee637898975bf36ebdda79b9de8eab0) (Wenyu Zhang)
+
+### Slider
+
+* [Add traitCollectionDidChange block (#8057)](https://github.com/material-components/material-components-ios/commit/118840dfc859c217413f0ebb625105cd6c306f82) (Cody Weaver)
+
+### Snackbar
+
+* [Supports MaterialElevation. (#8081)](https://github.com/material-components/material-components-ios/commit/f1a0665d67119b446d6936c5f8ccd5202a2084ba) (Yarden Eitan)
+
+### Tabs
+
+* [Add traitCollectionDidChange block (#8056)](https://github.com/material-components/material-components-ios/commit/7bd0bdf14d9fc9283303e21c12ebf061066242ff) (Cody Weaver)
+* [Add traitCollectionDidChange block (#8060)](https://github.com/material-components/material-components-ios/commit/0d624ace58b997447c59d2c0bf6ff84dcc206fd7) (Cody Weaver)
+* [Properties before methods. (#8063)](https://github.com/material-components/material-components-ios/commit/6c3877da223db9cca3b56c3d4fd2122e99aa62d5) (Robert Moore)
+
+### TextFields
+
+* [Add traitCollectionDidChange block (#8070)](https://github.com/material-components/material-components-ios/commit/065de4b2884a55bc6ba7bb8b892db08a59d8db39) (Cody Weaver)
+
+### Typography
+
+* [Internal comments to explain font scaling. (#8087)](https://github.com/material-components/material-components-ios/commit/e64c4400356d9eb608add0dd3f7ad7b18322b256) (Robert Moore)
+
+### private/Color
+
+* [add method for regular color blending. (#8077)](https://github.com/material-components/material-components-ios/commit/997b3b2021670b4adddaee3d0abadccc63931df9) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add conformance to MDCElevatable, MDCElevationOverriding (#8094)](https://github.com/material-components/material-components-ios/commit/02a707a5b401c8a0321445a77964f0cb38e69440) (Bryan Oltman)
+* [Correct `elevationDidChangeBlock` type. (#8106)](https://github.com/material-components/material-components-ios/commit/1c0827f2ef6c80cecb484931c10cd39c63f60b43) (Robert Moore)
+* [Create umbrella header. (#8091)](https://github.com/material-components/material-components-ios/commit/66435f1b685c363c2ee534d8f2a065cef369b2b0) (Robert Moore)
+
+---
+
+# 85.9.1
+
+This patch release fixes a crash in BottomNavigation when a KVO'd property is assigned `nil`.
+
+## Changes
+
+### BottomNavigation
+
+* [Make KVO safe for `nil`. (#8083)](https://github.com/material-components/material-components-ios/commit/5af184f197e8c0d299617a0ed60fed03c0445d6b) (Robert Moore)
+
+---
+
+# 85.9.0
+
+This minor release includes new elevation protocols to prepare for Dark Mode, dynamic color
+support in several components, and a number of MDCTabBarView features.
+
+## New features
+
+Several components support `traitCollectionDidChangeBlock` to allow clients inject a block for exection when traitCollections
+changes. TabBarView allows clients to set preferred layout style. 
+
+## API changes
+
+### ActionSheet
+
+#### MDCActionSheetController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCActionSheetController`
+
+### ActivityIndicator
+
+#### MDCActivityIndicator
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCActivityIndicator`
+
+### Banner
+
+#### MDCBannerView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBannerView`
+
+### BottomAppBar
+
+#### MDCBottomAppBarView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomAppBarView`
+
+### BottomSheet
+
+#### MDCBottomSheetController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomSheetController`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomSheetPresentationController`
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCButtonBar`
+
+### Cards
+
+#### MDCCard
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCCard`
+
+#### MDCCardCollectionCell
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCCardCollectionCell`
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCChipView`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `shadowColor` in `MDCAlertController`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCAlertController`
+
+#### MDCDialogPresentationController
+
+*new* property: `dialogShadowColor` in `MDCDialogPresentationController`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCDialogPresentationController`
+
+### Elevation
+
+#### MDCElevatable
+
+*new* property: `mdc_currentElevation` in `MDCElevatable`
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCElevatable`
+
+*new* protocol: `MDCElevatable`
+
+#### MDCElevatableOverriding
+
+*new* property: `mdc_overrideBaseElevation` in `MDCElevatable`
+
+*new* protocol: `MDCElevatableOverriding`
+
+### List
+
+#### MDCBaseCell
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBaseCell`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomDrawerPresentationController`
+
+#### MDCBottomDrawerViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomDrawerViewController`
+
+### Ripple
+
+#### MDCRippleView
+
+*new* property: `activeRippleColor` in `MDCRippleView`
+
+*removed* method: `-setActiveRippleColor:` in `MDCRippleView`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `thumbShadowColor` in `MDCSlider`
+
+### Tabs
+
+#### MDCTabBarView
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixed` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleScrollable` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixedClusteredCentered` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixedClusteredLeading` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixedClusteredTrailing` in `MDCTabBarView`
+
+*new* enum: `MDCTabBarViewLayoutStyle`
+
+*new* typedef: `MDCTabBarViewLayoutStyle`
+
+*new* property: `preferredLayoutStyle` in `MDCTabBarView`
+
+*new* property: `selectionChangeAnimationDuration` in `MDCTabBarView`
+
+*new* property: `selectionChangeAnimationTimingFunction` in `MDCTabBarView`
+
+## Component changes
+
+### ActionSheet
+
+* [Add traitCollectionDidChange block (#7929)](https://github.com/material-components/material-components-ios/commit/fdc9631dfae547a42ed27d508cd80c138c8c83b9) (Cody Weaver)
+
+### ActivityIndicator
+
+* [Add traitCollectionDidChange block (#7931)](https://github.com/material-components/material-components-ios/commit/8275bcb858047b879ca0af6b18a4f43e32d24bab) (Cody Weaver)
+* [Support dynamic color (#7950)](https://github.com/material-components/material-components-ios/commit/a0ee1f0ff1e86f95ce1e8b78ed23919b103aca97) (Cody Weaver)
+
+### Banner
+
+* [Add traitCollectionDidChangeBlock API. (#7948)](https://github.com/material-components/material-components-ios/commit/a0c0b2b3143f7878ffa9a6d108f20b9af513416e) (Wenyu Zhang)
+* [Add two test cases with icons. (#7989)](https://github.com/material-components/material-components-ios/commit/e852b398dfbc3ae899a015fa63abe48aa9401169) (Wenyu Zhang)
+* [Use Arabic for RTL snapshot test (#8010)](https://github.com/material-components/material-components-ios/commit/9f09ea01fef119a5718209d75cc3f93a609d39ca) (Wenyu Zhang)
+* [add snapshot test for middle length text with large layout margin. (#7957)](https://github.com/material-components/material-components-ios/commit/b8b6780796ccf345dd7bd1720159ed98c141df05) (Wenyu Zhang)
+* [fix layout margin not being considered for all layout styles. (#7956)](https://github.com/material-components/material-components-ios/commit/f61504e7f853d1fb94299f6fb0af7259e16cd50c) (Wenyu Zhang)
+
+### BottomAppBar
+
+* [Add traitCollectionDidChange block (#7930)](https://github.com/material-components/material-components-ios/commit/ce0ab9122ee6548c1a1620510b8b488e1cbbeb61) (Cody Weaver)
+* [add support for dynamic color. (#7975)](https://github.com/material-components/material-components-ios/commit/bc4a297012c66e9f82dd2cf4f76c83ca7882f185) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Add snapshot tests for Bottom Navigation controller. (#7963)](https://github.com/material-components/material-components-ios/commit/3b32d0c29c13a820e2f270a20ab3a1b327dd241c) (Robert Moore)
+* [Controller positions content behind the bar (#7970)](https://github.com/material-components/material-components-ios/commit/56d42d34be38eb8ed00731eb717037c1327a7779) (Robert Moore)
+* [Remove iOS 9 guards. (#7997)](https://github.com/material-components/material-components-ios/commit/25a931201247543d189f521858ccf7eb1cd37175) (Robert Moore)
+* [Update example to demonstrate lazy loading. (#7991)](https://github.com/material-components/material-components-ios/commit/da95087650afdfa5dbf902fa71c6d5b2a435e3bd) (Robert Moore)
+
+### BottomSheet
+
+* [add traitCollectionDidChangeBlock support. (#7966)](https://github.com/material-components/material-components-ios/commit/81938277b6b825e5f2ca73ab661254fd5cb8aa0d) (Wenyu Zhang)
+
+### ButtonBar
+
+* [add traitCollectionDidChangeBlock support. (#7976)](https://github.com/material-components/material-components-ios/commit/1d03b28fb65892e7d1e9bac792cf4a2bc445f81b) (Wenyu Zhang)
+
+### Cards
+
+* [Add Cards dynamic color support (#7906)](https://github.com/material-components/material-components-ios/commit/f25c85abd74c283c85b908856d22e91e605f00c3) (Andrew Overton)
+* [Add traitCollectionDidChange block to MDCCard (#8006)](https://github.com/material-components/material-components-ios/commit/acd2827f2b8fc9cd344ac73cf9ed884bb4a1e04a) (Cody Weaver)
+* [Add traitCollectionDidChange block to MDCCardCollectionCell (#8007)](https://github.com/material-components/material-components-ios/commit/bda9d92cac9d8b1da0d59fbd4f07e9c0f07acc44) (Cody Weaver)
+
+### Chips
+
+* [Add Dynamic Color Support for Chips (#7946)](https://github.com/material-components/material-components-ios/commit/c455ea172e15690a58ce5492b10015494a563e0f) (Andrew Overton)
+* [Add traitCollectionDidChangeBlock (#7980)](https://github.com/material-components/material-components-ios/commit/31b3fbc4dadf5367cc2ed93e08c8a60253c38427) (Bryan Oltman)
+
+### Dialogs
+
+* [Add shadow color API (#7911)](https://github.com/material-components/material-components-ios/commit/8c2bcdc9d82a8fc37ec368b952c0d70388aa3b37) (Cody Weaver)
+* [Add traitCollectionDidChangeBlock to MDCAlertController (#7981)](https://github.com/material-components/material-components-ios/commit/1a29c33790bbade814943b572455255320d30010) (Bryan Oltman)
+* [Remove iOS 9 guards. (#7998)](https://github.com/material-components/material-components-ios/commit/9b5c2faf215c9bccee3b6928c3be67a9b4c24176) (Robert Moore)
+
+### Elevation
+
+* [Add MDCElevation protocol. (#7955)](https://github.com/material-components/material-components-ios/commit/63eda9bfa0a743e9fe0444b30cec27a56aad87f9) (Cody Weaver)
+* [Add elevationDidChangeBlock to MDCElevation protocol (#7962)](https://github.com/material-components/material-components-ios/commit/c1ab40b72f1a56cefc793be095145699fefb3374) (Cody Weaver)
+* [Add property mdc_overrideElevation property (#7965)](https://github.com/material-components/material-components-ios/commit/0c0d26356bfdc4de6a57ca9a77cbebbb5545c285) (Cody Weaver)
+* [Add second protocol for overrides (#8034)](https://github.com/material-components/material-components-ios/commit/26a6a9139a1c83177c50034d93d667e04f882944) (Cody Weaver)
+* [Add MDCElevationOverride to umbrella header (#8052)](https://github.com/material-components/material-components-ios/commit/eab643ea8c0afb928b014af3dea88992fd1218b5) (Robert Moore)
+* [Improve protocol naming (#8055)](https://github.com/material-components/material-components-ios/commit/d9d038130a30fc57be90bc87ff04218a1ba1a721) (Yarden Eitan)
+* [Add category to UIView (#7969)](https://github.com/material-components/material-components-ios/commit/f335b9627799cffa4259a498086a489df811657a) (Cody Weaver)
+* [passing self to the elevationDidChangeBlock (#8058)](https://github.com/material-components/material-components-ios/commit/0643370347a8d0b31ef4eb590c84dfa2424d0ed4) (Yarden Eitan)
+
+### FeatureHighlight
+
+* [Support dynamic color (#7936)](https://github.com/material-components/material-components-ios/commit/086cdb43e5066257c8ef2de165db5f70fbd5e25f) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [ [FlexibleHeader] Add a snapshot for shadow pre iOS 13. (#7941)](https://github.com/material-components/material-components-ios/commit/ba222be80d315ddc53e9967d9c352dfd4da60286) (Wenyu Zhang)
+
+### Ink
+
+* [Dynamic color support (#7974)](https://github.com/material-components/material-components-ios/commit/6eb335a0f925bff9b65fac9cb9245dbc0159665b) (Yarden Eitan)
+
+### List
+
+* [Add traitCollectionDidChange block to MDCBaseCell (#8033)](https://github.com/material-components/material-components-ios/commit/f75253d2740538cc1f6cca6e4a7beca9ba1f132d) (Cody Weaver)
+
+### NavigationDrawer
+
+* [Add traitCollectionDidChange block (#8008)](https://github.com/material-components/material-components-ios/commit/e68ae6c57b7fca486fe1542b275dd6747b601b46) (Cody Weaver)
+* [Add traitCollectionDidChange block to presentation controller. (#8009)](https://github.com/material-components/material-components-ios/commit/5516e8dc0af11465ce88805adac014a0916492c2) (Cody Weaver)
+
+### private/Snapshot
+
+* [add support to change TextInput to RTL mode. (#7986)](https://github.com/material-components/material-components-ios/commit/4953449e209b1e9187b12440e890b5e935d2ec70) (Wenyu Zhang)
+
+### Ripple
+
+* [Add dynamic color support for ripple. (#7968)](https://github.com/material-components/material-components-ios/commit/5cdb7f95f75a516de2eb208f93ee1ad9e5253ed6) (Yarden Eitan)
+* [Turn activeRippleColor into a property (#7949)](https://github.com/material-components/material-components-ios/commit/8a0308f6499abb877e0e5fb6f6686c82eb101526) (Yarden Eitan)
+* [Fix active ripple layer not using active ripple color. (#8059)](https://github.com/material-components/material-components-ios/commit/013f3a890ee637898975bf36ebdda79b9de8eab0) (Wenyu Zhang)
+
+### Slider
+
+* [Add snapshot test for dynamic color with elevation. (#7960)](https://github.com/material-components/material-components-ios/commit/ceb874acaf2ff3876d39dec21a7c6acb62578834) (Wenyu Zhang)
+* [change track background color. (#7967)](https://github.com/material-components/material-components-ios/commit/cf7ed4c5f9c92f290110f7aee0d6718ea06903fb) (Wenyu Zhang)
+* [Add shadowColor to support dynamic color behavior. (#7972)](https://github.com/material-components/material-components-ios/commit/4d47e68dd807877538c0857d83b0ddc2ec30280b) (Wenyu Zhang)
+
+### Tabs
+
+* [Allow clients to set preferred layout style. (#8003)](https://github.com/material-components/material-components-ios/commit/696ee3cdda4e8dcefb9e7d727c20b155cecd586b) (Robert Moore)
+* [Drop iOS 9 guards. (#7999)](https://github.com/material-components/material-components-ios/commit/3913e29f528f0620ae7b7ba474cc22c13ee95bbf) (Robert Moore)
+* [Expose selection change animation properties. (#7944)](https://github.com/material-components/material-components-ios/commit/be5bd6e9c71cf727b4e0fe6a8c8216f24a5b7950) (Robert Moore)
+* [Support Fixed Clustered layout when Justified won't fit. (#7908)](https://github.com/material-components/material-components-ios/commit/4fc9257ca57b6ebb0e922d474404208f4558720f) (Robert Moore)
+* [Support Leading, Trailing Fixed Clustered Layout styles. (#8002)](https://github.com/material-components/material-components-ios/commit/5b7f39de35e2334b4691e6671e848a3f20d1aa42) (Robert Moore)
+* [Tabs dynamic color (#7977)](https://github.com/material-components/material-components-ios/commit/08e4bcbdbdb98c616b6bfbb77e01379f19e88a16) (Andrew Overton)
+
+### TextFields
+
+* [Remove iOS 9 guards. (#8000)](https://github.com/material-components/material-components-ios/commit/14ab9ae9e5165563a1b1cfb316a0fd79cfcd5727) (Robert Moore)
+* [Use new Snapshot RTL methods. (#7994)](https://github.com/material-components/material-components-ios/commit/f72fc36221df06026746da4b609e81db6a30aa77) (Robert Moore)
+
+## Multi-component changes
+
+* [Drop iOS 9 guards for Swift. (#8001)](https://github.com/material-components/material-components-ios/commit/ff2d8a4e7f67567c870158ec6699f0970faf0c2a) (Robert Moore)
+* [Remove RTL snapshot method overrides. (#7996)](https://github.com/material-components/material-components-ios/commit/8dcf1e4a568a75c48c139c1cdf5ca3e2882759ef) (Robert Moore)
+
+---
+
+# 85.8.0
+
+This minor release includes two new default color schemes and elevation properties to prepare for Dark Mode, dynamic color
+support in several components, Haptics feature in Slider, and a number of MDCTabBarView features.
+
+## New features
+
+Several components support `traitCollectionDidChangeBlock` to allow clients inject a block for exection when traitCollections
+changes. Slider supports Haptics feature.
+
+## API changes
+
+### AppBar
+
+#### MDCAppBar
+
+*new* property: `traitCollectionDidChangeBlockForAppBarController` in `MDCAppBarNavigationController`
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomNavigationBar`
+
+### Buttons
+
+#### MDCButton
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCButton`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderContainerViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFlexibleHeaderContainerViewController`
+
+#### MDCFlexibleHeaderView
+
+*new* property: `shadowColor` in `MDCFlexibleHeaderView`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFlexibleHeaderView`
+
+#### MDCFlexibleHeaderViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFlexibleHeaderViewController`
+
+### NavigationBar
+
+#### MDCNavigationBar 
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCNavigationBar`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerContainerViewController  
+
+*new* property: `headerShadowColor` in `MDCBottomDrawerContainerViewController`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `shouldEnableHapticsForAllDiscreteValues` in `MDCSlider`
+
+### Snackbar
+
+#### MDCSnackbarManager 
+
+*new* property: `messageElevation` in `MDCSnackbarManager`
+
+#### MDCSnackbarMessageView
+
+*new* property: `elevation` in `MDCSnackbarMessageView`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCSnackbarMessageView`
+
+### Tabs+TabBarView
+
+#### MDCTabBarView 
+
+*new* method: `-rectForItem:inCoordinateSpace:` in `MDCTabBarView`
+
+### schemes/Color
+
+#### MDCColorScheming
+
+*new* property: `elevationOverlayColor` in `MDCColorScheming`
+
+*new* property: `elevationOverlayEnabledForDarkMode` in `MDCColorScheming`
+
+#### MDCSemanticColorScheme
+
+*new* property: `elevationOverlayColor` in `MDCSemanticColorScheme`
+
+*new* property: `elevationOverlayEnabledForDarkMode` in `MDCSemanticColorScheme`
+
+## Component changes
+
+### AppBar
+
+* [Add `defaultTraitCollectionDidChangeBlock` for injecting into AppBars. (#7887)](https://github.com/material-components/material-components-ios/commit/9bd3a8958d0a0c72967db062f78b3f77c48b47ee) (Robert Moore)
+* [Add `traitCollectionDidChangeBlock` to AppBarViewController. (#7851)](https://github.com/material-components/material-components-ios/commit/97a39fc6ddb739c4182c0f3b32b795996d0fe050) (Robert Moore)
+* [Provide app bar parameter for traitCollectionDidChange block. (#7888)](https://github.com/material-components/material-components-ios/commit/56e940a9726afe95650eeb753b5f8566233d0567) (Robert Moore)
+
+### Banner
+
+* [fix dynamic type support for attributed string. (#7820)](https://github.com/material-components/material-components-ios/commit/112433335c229e45d1382b3ba013bcf28e239409) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [ Add shadowColor API. (#7910)](https://github.com/material-components/material-components-ios/commit/3d62ea7a29c3c4ddf99b410836199e56bbe84fd8) (Cody Weaver)
+* [Add `traitCollectionDidChangeBlock` API. (#7893)](https://github.com/material-components/material-components-ios/commit/fcf9b24138b3469332e93e819b3c8a04e59bedeb) (Robert Moore)
+
+### Buttons
+
+* [Add dynamic color support (#7914)](https://github.com/material-components/material-components-ios/commit/0f8e19aab5fa86453f7b681c6bf4141e3c6166ec) (Cody Weaver)
+* [Add dynamic color support to MDCButton (#7858)](https://github.com/material-components/material-components-ios/commit/01a2002f9f01a7820c59fa560f8c5bcf8867ca2c) (Cody Weaver)
+* [add traitCollectionDidChangeBlock API. (#7853)](https://github.com/material-components/material-components-ios/commit/04408e0407a02713376a63c9414a51787ad96c20) (Wenyu Zhang)
+
+### FlexibleHeader
+
+* [Add dynamic color support to flexible header (#7904)](https://github.com/material-components/material-components-ios/commit/9f2f025fc0efb982d1ebad28290e7c66f9eac148) (Cody Weaver)
+* [Add traitCollectionDidChangeBlock (#7915)](https://github.com/material-components/material-components-ios/commit/238be999695140ff043e43d97c8063d6fa7026fc) (Cody Weaver)
+* [Add traitCollectionDidChangeBlock (#7922)](https://github.com/material-components/material-components-ios/commit/ac6fda5d8d599e1290be629d2e5ca2acd3f6de87) (Cody Weaver)
+* [Add unit test for the shadow layer (#7909)](https://github.com/material-components/material-components-ios/commit/b0b04a2adfe5549a9cf48f1b7aaba3aa65fa0eda) (Cody Weaver)
+* [Add traitCollectionDidChange block (#7917)](https://github.com/material-components/material-components-ios/commit/1161a9db986e8cf33799628645ed09ce017dd98a) (Cody Weaver)
+
+### NavigationBar
+
+* [Add traitCollectionDidChange block. (#7918)](https://github.com/material-components/material-components-ios/commit/3d9d2db94d5a8429a9ee2cdf9733f761e50b99db) (Cody Weaver)
+
+### NavigationDrawer
+
+* [Expose headerShadowColor to allow clients to provide a dynamic color (#7900)](https://github.com/material-components/material-components-ios/commit/385df73f8df055cba799e2d76efddb1849e3261f) (Bryan Oltman)
+
+### ProgressView
+
+* [Provide unique names for methods. (#7824)](https://github.com/material-components/material-components-ios/commit/6f2d5eb654b6ca1d812c42cd1d13d87c2f692daa) (Robert Moore)
+
+### Shapes
+
+* [Fix memory leak in -[MDCRectangleShapeGenerator pathForSize:] by returning an autoreleased CGPathRef (#7913)](https://github.com/material-components/material-components-ios/commit/783fd0762151ec6ab72442abad673b5b9c6c7a48) (Julien Poumailloux)
+
+### Slider
+
+* [Allowing Full Haptics for Discrete Sliders (#7765)](https://github.com/material-components/material-components-ios/commit/46efae77c646285b4971ad13d0a0662d68653122) (afweiss)
+
+### Snackbar
+
+* [Add button styling properties to MDCSnackbarManager (#7832)](https://github.com/material-components/material-components-ios/commit/fc625843c77e85b64030c7be20df23d7907bab0e) (Bryan Oltman)
+* [Add traitCollectionDidChangeBlock API (#7903)](https://github.com/material-components/material-components-ios/commit/4c9ca7d45965d7d3dbfc025ca9a5991f05aeb8bb) (Bryan Oltman)
+* [Allow clients to customize elevation (#7844)](https://github.com/material-components/material-components-ios/commit/ba841d886eb8f43e23fe37cb11eba06bb7194cab) (Cody Weaver)
+* [Support dynamic color (#7905)](https://github.com/material-components/material-components-ios/commit/fac684eb4ca24d469313611ddbf1e9888ff8b2da) (Bryan Oltman)
+* [Use MDCShadowLayer instead of UIKit shadows (#7843)](https://github.com/material-components/material-components-ios/commit/64d5d315ada2886029f558f36596731663e7041b) (Cody Weaver)
+
+### Tabs
+
+* [Add `accessibilityElementForItem:` API. (#7818)](https://github.com/material-components/material-components-ios/commit/4ed8860b20d76dbadf527225e2dbf037feaa4029) (Robert Moore)
+* [Add `setSelected:animated:` API for custom views. (#7810)](https://github.com/material-components/material-components-ios/commit/9e8165694e4dfe4921281308161c8a622adecfe5) (Robert Moore)
+* [Add bottom divider. (#7817)](https://github.com/material-components/material-components-ios/commit/09a7df6530b6b88049251428a4990943fef0ff1f) (Robert Moore)
+* [Add item style options for TabBarView example. (#7808)](https://github.com/material-components/material-components-ios/commit/4cb495c435dfaa6e08d50e7cd97284570ceceb77) (Robert Moore)
+* [Add snapshot tests for contentInset on MDCTabBarView. (#7815)](https://github.com/material-components/material-components-ios/commit/71b103e6816dcfb308987bd65b07f7908c06ac73) (Robert Moore)
+* [Add support for `selectedImage` from UITabBarItem. (#7814)](https://github.com/material-components/material-components-ios/commit/1ead0b6fac7ba10da81379c19ba15bf59a15a8c0) (Robert Moore)
+* [Adjust sizeThatFits: behavior for TabBarView. (#7846)](https://github.com/material-components/material-components-ios/commit/7c7208fb509b52fcf571a6679df7b718c15fc061) (Robert Moore)
+* [Allow clients to calculate when a view appears/disappears. (#7841)](https://github.com/material-components/material-components-ios/commit/3a0c1ee2e8bd2257894ab696d4759ab67e390993) (Robert Moore)
+* [Combine "default" unit tests. (#7822)](https://github.com/material-components/material-components-ios/commit/bc008a2ae6fc27a49370dbfb6abed0c0660c1467) (Robert Moore)
+* [Don't handle `contentInset` directly in layout. (#7816)](https://github.com/material-components/material-components-ios/commit/b67ae677623ac314f037e5c35f38e40117e84de6) (Robert Moore)
+* [Fix crash when assigning `nil` for KVO'd title. (#7806)](https://github.com/material-components/material-components-ios/commit/fffcb4a5a006b34a157fcac4c9cc89d630e0976a) (Robert Moore)
+* [Fix segmented control position. (#7898)](https://github.com/material-components/material-components-ios/commit/640220d66d277047113430c566ea5b161692e959) (Robert Moore)
+* [Fix title-only example. (#7897)](https://github.com/material-components/material-components-ios/commit/f2b258014408fa90a3d60b2e6e3dc027ae47bfa9) (Robert Moore)
+* [Minor refactoring of KVO code. (#7825)](https://github.com/material-components/material-components-ios/commit/bd61834803047560d3f6095ffa72c4b52cba5934) (Robert Moore)
+* [Retain custom view in example. (#7901)](https://github.com/material-components/material-components-ios/commit/4d99e843059129e84ef9061603e092f8b537faaa) (Robert Moore)
+
+### TextFields
+
+* [Textfields dynamic color support (#7889)](https://github.com/material-components/material-components-ios/commit/b2f2a5d77fead5f1164b2884bf540f3295f48927) (Andrew Overton)
+
+### private/Color
+
+* [Add UIColor+MaterialDynamic to support dynamic color. (#7860)](https://github.com/material-components/material-components-ios/commit/a65f36d4beaa7d8859c93a046967270375387d13) (Wenyu Zhang)
+
+### private/Snapshot
+
+* [added ios13 support for snapshots (#7861)](https://github.com/material-components/material-components-ios/commit/48f78118a7d268c92521bad12b118238de74a3fb) (Yarden Eitan)
+
+### schemes/Color
+
+* [Add a default color scheme for Dark mode. (#7831)](https://github.com/material-components/material-components-ios/commit/666b17a34646ea9dde490e1a22c65ab806c6d5bc) (Wenyu Zhang)
+* [Add dynamic color scheme MDCColorSchemeDefaultsMaterial201907. (#7848)](https://github.com/material-components/material-components-ios/commit/6f83e12273d3739dba06f48a1cac3d09865b3cb2) (Wenyu Zhang)
+* [Use UIColor method instead of static method to generate (#7894)](https://github.com/material-components/material-components-ios/commit/0175300afc821396a31b5cd7d0bd638b9ce58dac) (Wenyu Zhang)
+* [add two properties for elevation overlay color in color (#7924)](https://github.com/material-components/material-components-ios/commit/914e9a37fb0ef1e4a3663126bb61997c3600920c) (Wenyu Zhang)
+
+---
+
+# 85.7.0
+
+This minor release exposes some properties on Snackbars and fixes a Banner bug.
+
+## API changes
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `buttonInkColor` in `MDCSnackbarManager`
+
+*new* property: `uppercaseButtonTitle` in `MDCSnackbarManager`
+
+*new* property: `disabledButtonAlpha` in `MDCSnackbarManager`
+
+## Component changes
+
+### Snackbar
+
+* [Add button styling properties to MDCSnackbarManager (#7832)](https://github.com/material-components/material-components-ios/commit/fc625843c77e85b64030c7be20df23d7907bab0e) (Bryan Oltman)
+
+### Banner
+
+* [Fix dynamic type support for attributed string (#7820)](https://github.com/material-components/material-components-ios/commit/112433335c229e45d1382b3ba013bcf28e239409) (Wenyu Zhang)
+
+---
+
+# 85.6.0
+
+This minor release includes features and bug fixes for the MDCTabBarView Beta component.
+
+## API changes
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorSupporting
+
+*removed* protocol: `MDCTabBarViewIndicatorSupporting`
+
+*removed* property: `bounds` in `MDCTabBarViewIndicatorSupporting`
+
+*removed* property: `contentFrame` in `MDCTabBarViewIndicatorSupporting`
+
+#### MDCTabBarItemCustomViewing
+
+*modified* property: `mdc_customView` in `MDCTabBarItemCustomViewing`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readwrite, strong, nonatomic, nullable)     UIView<MDCTabBarViewIndicatorSupporting> *mdc_customView;` |
+| To: | `@property (readwrite, strong, nonatomic, nullable)     UIView<MDCTabBarViewCustomViewable> *mdc_customView;` |
+
+#### MDCTabBarView
+
+*new* property: `bottomDividerColor` in `MDCTabBarView`
+
+*new* method: `-accessibilityElementForItem:` in `MDCTabBarView`
+
+#### MDCTabBarViewCustomViewable
+
+*new* property: `bounds` in `MDCTabBarViewCustomViewable`
+
+*new* property: `contentFrame` in `MDCTabBarViewCustomViewable`
+
+*new* protocol: `MDCTabBarViewCustomViewable`
+
+*new* method: `-setSelected:animated:` in `MDCTabBarViewCustomViewable`
+
+## Component changes
+
+### Tabs
+
+* [Add `accessibilityElementForItem:` API. (#7818)](https://github.com/material-components/material-components-ios/commit/8ef861ecfa2a2cb6546566b8efc00db967ef07d0) (Robert Moore)
+* [Add `setSelected:animated:` API for custom views. (#7810)](https://github.com/material-components/material-components-ios/commit/561e705493bb28238d8f95beed811e99c8251b2f) (Robert Moore)
+* [Add bottom divider. (#7817)](https://github.com/material-components/material-components-ios/commit/552afeb6ad0029d2b90b0c0de4e7f88b4a32ecc2) (Robert Moore)
+* [Add item style options for TabBarView example. (#7808)](https://github.com/material-components/material-components-ios/commit/345dba9e7aca85c86c1bacaf9a6a7fcd449489b5) (Robert Moore)
+* [Add snapshot tests for contentInset on MDCTabBarView. (#7815)](https://github.com/material-components/material-components-ios/commit/cb1d31b600f19e77f1d88f0f72414078dd5ffa72) (Robert Moore)
+* [Add support for `selectedImage` from UITabBarItem. (#7814)](https://github.com/material-components/material-components-ios/commit/25e50656516b17b3c5eed79d5c688bd548bf1354) (Robert Moore)
+* [Adjust sizeThatFits: behavior for TabBarView. (#7846)](https://github.com/material-components/material-components-ios/commit/34dad12ff6a722f9f12d56de025ac509e3cd6dc0) (Robert Moore)
+* [Combine "default" unit tests. (#7822)](https://github.com/material-components/material-components-ios/commit/20a2e3d580ebdae25d337c2c6643b5ed4e83f54d) (Robert Moore)
+* [Don't handle `contentInset` directly in layout. (#7816)](https://github.com/material-components/material-components-ios/commit/671e960b77c23a1eb2ce958017ddcf77ffc6bf19) (Robert Moore)
+* [Fix crash when assigning `nil` for KVO'd title. (#7806)](https://github.com/material-components/material-components-ios/commit/88efc5f05033a84289cdfe32f48b66ec521447e0) (Robert Moore)
+* [Minor refactoring of KVO code. (#7825)](https://github.com/material-components/material-components-ios/commit/0bef8d0bd8457be44fbbb1afd7e393096dfb146e) (Robert Moore)
+
+---
+
+# 85.5.1
+
+This patch release makes a FlexibleHeader dependency on MaterialMath explicit in MaterialComponents.podspec so that pod lib lint validations pass and the release can be published successfully with Cocoapods. There are no code changes.
+
+## Component changes
+
+### FlexibleHeader
+
+* [Add Math dependency to FlexibleHeader](https://github.com/material-components/material-components-ios/commit/a7b621138b03b4664623e7a021b256063bfd2026)
+
+---
+
+# 85.5.0
+
+This minor release includes a theming extension for ProgressView, a bug fix for FlexibleHeader, haptics support for Slider, and progress on a number of core MDCTabBarView features.
+
+## New features
+
+ProgressView now has a theming extension.
+
+```objc
+MDCProgressView *progressView = [[MDCProgressView alloc] init];
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+[progressView applyThemeWithScheme:containerScheme];
+```
+
+## API changes
+
+### ProgressView+Theming
+
+**New extension.**
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `hapticsEnabled` in `MDCSlider`
+
+## Component changes
+
+### FlexibleHeader
+
+* [use MDCEdgeInsetsEqualToEdgeInsets to compare insets when enforcing insets for scroll view.(#7807)](https://github.com/material-components/material-components-ios/commit/bc07f0c53239f8eb7c2df5eaa9e82995177636a8) (Wenyu Zhang)
+
+### ProgressView
+
+* [Add an MDCProgressView theming extension (#7791)](https://github.com/material-components/material-components-ios/commit/43920aed56d0f8f49838c43abdaaf17217a79a77) (Andrew Overton)
+* [Provide unique names for methods (#7824)](https://github.com/material-components/material-components-ios/commit/6f2d5eb654b6ca1d812c42cd1d13d87c2f692daa) (Robert Moore)
+
+### Slider
+
+* [Haptics For Slider (#7738)](https://github.com/material-components/material-components-ios/commit/2674c8cd134dcf84d48c18326bea5607a823e10f) (afweiss)
+
+### Tabs
+
+* [Add Selection Indicator (#7767)](https://github.com/material-components/material-components-ios/commit/d8581113f6427dcbd508102d4d4c704e3473aefa) (Robert Moore)
+* [Allow setting ripple color. (#7784)](https://github.com/material-components/material-components-ios/commit/88e5a52f9f41b955bfe68cfa85564e387a98187e) (Robert Moore)
+* [Customize selection indicator color. (#7774)](https://github.com/material-components/material-components-ios/commit/e4aee2a13bdff24154e22e5d02a2886ef18b060b) (Robert Moore)
+* [Deduplicate item view layout and contentFrame calculation. (#7796)](https://github.com/material-components/material-components-ios/commit/c22a1f0475882d85e9939208ec52ba14a6f3186c) (Robert Moore)
+* [Fix `contentFrame` for item view. (#7782)](https://github.com/material-components/material-components-ios/commit/08816595403ca942a7a53b57b0acaf982a52179a) (Robert Moore)
+* [Fixes layout for changing font sizes. (#7771)](https://github.com/material-components/material-components-ios/commit/4842c32fd80cfa3ee38cd197319286bc8af3ca38) (Robert Moore)
+* [Improve text and image rendering. (#7803)](https://github.com/material-components/material-components-ios/commit/0dc3125598ab30b2b33e38ce128a0cac651aa9e5) (Robert Moore)
+* [Include public headers in umbrella header. (#7783)](https://github.com/material-components/material-components-ios/commit/1065634918ffbdf06a46333788b256e28c98edc9) (Robert Moore)
+* [Inject dummy scroll view into example. (#7772)](https://github.com/material-components/material-components-ios/commit/5a7efb0fcc80f4975801f635f2272adb4c1109bb) (Robert Moore)
+* [Inset scrollable tabs by 52 points. (#7776)](https://github.com/material-components/material-components-ios/commit/a19b73048b65c10a27a2e7715b142cdaebea0097) (Robert Moore)
+* [Item views should translate their autoresizing mask into constraints](https://github.com/material-components/material-components-ios/commit/a1d7a78ff5573aceda6b7256ee9de1c2ae341dda) (Ang)
+* [Remove extra `contentView` from item view. (#7795)](https://github.com/material-components/material-components-ios/commit/8b028b22bc8d879b67a67da2ab0c12243a7f7278) (Robert Moore)
+* [Remove unused/duplicate method. (#7793)](https://github.com/material-components/material-components-ios/commit/32905f37e650209e8a455b05cd5822f380dfc0c5) (Robert Moore)
+* [Switch to manual layout (#7764)](https://github.com/material-components/material-components-ios/commit/583a1bd5f164071c8aa2418bc1431fbdc46f4766) (Robert Moore)
+* [Update README for TabBarView. (#7799)](https://github.com/material-components/material-components-ios/commit/4c41b1008920f6350f8a5b08a714a6e38e262ae9) (Robert Moore)
+* [Vertically hug content in sizeThatFits: (#7777)](https://github.com/material-components/material-components-ios/commit/012c11de3210ff194ae4ba0c43dace79752d3ded) (Robert Moore)
+
+### private/Math
+
+* [Add MDCEdgeInsetsEqualToEdgeInsets to compare two UIEdgeInsets. (#7804)](https://github.com/material-components/material-components-ios/commit/46454f9f4b38ff9cc18ad7c174bd5740b5069c7f) (Wenyu Zhang)
+
+---
+
+# 85.4.0
+
+This minor release includes changes to the MDCTabBarView Beta component.
+
+## API Changes
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorTemplate
+
+*new* protocol: `MDCTabBarViewIndicatorTemplate`
+
+*new* method: `-indicatorAttributesForContext:` in `MDCTabBarViewIndicatorTemplate`
+
+#### MDCTabBarViewIndicatorAttributes
+
+*new* class: `MDCTabBarViewIndicatorAttributes`
+
+*new* property: `path` in `MDCTabBarViewIndicatorAttributes`
+
+#### MDCTabBarViewIndicatorContext
+
+*new* property: `contentFrame` in `MDCTabBarViewIndicatorContext`
+
+*new* protocol: `MDCTabBarViewIndicatorContext`
+
+*new* property: `item` in `MDCTabBarViewIndicatorContext`
+
+*new* property: `bounds` in `MDCTabBarViewIndicatorContext`
+
+#### MDCTabBarView
+
+*new* property: `rippleColor` in `MDCTabBarView`
+
+#### MDCTabBarViewUnderlineIndicatorTemplate
+
+*new* class: `MDCTabBarViewUnderlineIndicatorTemplate`
+
+## Component changes
+
+### Tabs
+
+* [Allow setting ripple color. (#7784)](https://github.com/material-components/material-components-ios/commit/196e2fc524ac42f0d5e09bbbe4906b29c0da6aea) (Robert Moore)
+* [Fix `contentFrame` for item view. (#7782)](https://github.com/material-components/material-components-ios/commit/f008d405ff112cbf585a9753e6c26f4d69c13e4c) (Robert Moore)
+* [Include public headers in umbrella header. (#7783)](https://github.com/material-components/material-components-ios/commit/59e6c2c2558b7514eb8b4e3080c39e764456caf6) (Robert Moore)
+* [Item views should translate their autoresizing mask into constraints](https://github.com/material-components/material-components-ios/commit/708f42f772dd2ac08350f8a2ac3415efe8373be2) (Ang)
+
+---
+
+# 85.3.0
+
+This minor release includes changes to the MDCTabBarView Beta component.
+
+## Component changes
+
+### Tabs
+
+* [Add Selection Indicator (#7767)](https://github.com/material-components/material-components-ios/commit/fa410ccaa038969e74a60a579f66ada34e7e9604) (Robert Moore)
+* [Customize selection indicator color. (#7774)](https://github.com/material-components/material-components-ios/commit/178536925e5ded30c98f7acc10811f59568f8ffe) (Robert Moore)
+* [Fixes layout for changing font sizes. (#7771)](https://github.com/material-components/material-components-ios/commit/be8bd0db086fce66d8feccf6b8fc1a30a7477957) (Robert Moore)
+* [Inject dummy scroll view into example. (#7772)](https://github.com/material-components/material-components-ios/commit/b28813b88ba3820d731df2bbf84f7dc71a636033) (Robert Moore)
+* [Inset scrollable tabs by 52 points. (#7776)](https://github.com/material-components/material-components-ios/commit/f82228af1855eb038d841a151065bfa7cacebdce) (Robert Moore)
+* [Switch to manual layout (#7764)](https://github.com/material-components/material-components-ios/commit/5bdb3411707a9e363b9ff815c726e8b227b0f60c) (Robert Moore)
+* [Vertically hug content in sizeThatFits: (#7777)](https://github.com/material-components/material-components-ios/commit/021b2f8a1862470e8cb129c5fbc1de21356e53a2) (Robert Moore)
+
+---
+
+# 85.2.0
+
+In this minor release we have fixed bugs in Buttons and FlexibleHeader, added new features to Banner, added a theming extension for BottomNavigation, and improved test coverage in BottomSheet.
+
+## New features
+
+MDCBanner now supports `intrinsicContentSize`.
+
+```objc
+MDCBannerView *myBanner = ...
+CGSize validIntrinsicContentSize = myBanner.intrinsicContentSize;
+```
+
+## API changes
+
+### Banner
+
+#### MDCBannerView
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCBannerView`
+
+### BottomNavigation+Theming
+
+**New extension.**
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorSupporting
+
+*new* protocol: `MDCTabBarViewIndicatorSupporting`
+
+*new* property: `contentFrame` in `MDCTabBarViewIndicatorSupporting`
+
+*new* property: `bounds` in `MDCTabBarViewIndicatorSupporting`
+
+#### MDCTabBarView
+
+*new* method: `-setTitleFont:forState:` in `MDCTabBarView`
+
+*new* method: `-titleColorForState:` in `MDCTabBarView`
+
+*new* method: `-setImageTintColor:forState:` in `MDCTabBarView`
+
+*new* method: `-titleFontForState:` in `MDCTabBarView`
+
+*new* method: `-imageTintColorForState:` in `MDCTabBarView`
+
+*new* property: `tabBarDelegate` in `MDCTabBarView`
+
+*new* method: `-setSelectedItem:animated:` in `MDCTabBarView`
+
+*new* method: `-setTitleColor:forState:` in `MDCTabBarView`
+
+*new* property: `barTintColor` in `MDCTabBarView`
+
+#### MDCTabBarItem
+
+*new* class: `MDCTabBarItem`
+
+#### MDCTabBarItemCustomViewing
+
+*new* protocol: `MDCTabBarItemCustomViewing`
+
+*new* property: `mdc_customView` in `MDCTabBarItemCustomViewing`
+
+#### MDCTabBarViewDelegate
+
+*new* method: `-tabBarView:shouldSelectItem:` in `MDCTabBarViewDelegate`
+
+*new* protocol: `MDCTabBarViewDelegate`
+
+*new* method: `-tabBarView:didSelectItem:` in `MDCTabBarViewDelegate`
+
+### TextFields+ContainedInputView
+
+**New extension.**
+
+## Changes
+
+### Banner
+
+* [Add intrinsicContentSize support with an example. (#7620)](https://github.com/material-components/material-components-ios/commit/37a495b04a4e17cdd78e76071fba5c9fc275c3cc) (Wenyu Zhang)
+* [Support Dynamic Type in Banner (#7709)](https://github.com/material-components/material-components-ios/commit/7c1b055ab943539fe104a5fbad75000c66c0e0f2) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Add theming extension (#7691)](https://github.com/material-components/material-components-ios/commit/f7ac1dbbbb1e4eff09e6f51d1145b5b00fd85cc5) (Cody Weaver)
+
+### BottomSheet
+
+* [Added test to avoid referencing UIWebView under UIKit for Mac (#7679)](https://github.com/material-components/material-components-ios/commit/4354bfc284210119a3c1be094079633f98784154) (Mark Aufflick)
+
+### Buttons
+
+* [Resolved inifinite loop in FloatingButtonExampleViewController. (#7675)](https://github.com/material-components/material-components-ios/commit/b3290cd14da46e062641c2196380bd4889e3722b) (Mark Aufflick)
+
+### FlexibleHeader
+
+* [Ensures the frame is correct under UIKit for Mac (#7668)](https://github.com/material-components/material-components-ios/commit/3fa4749b0272204dd81266b3c84bfad7858af5ac) (Mark Aufflick)
+* [Use updated voiceover status change notification (#7571)](https://github.com/material-components/material-components-ios/commit/b322b55e6f966b3849cb2888c75d62b0ed6ca584) (Josh Converse)
+
+### Tabs
+
+* [Add `barTintColor` API. (#7711)](https://github.com/material-components/material-components-ios/commit/41369ecc17281591444cee3db074a95b57fd2de4) (Robert Moore)
+* [Add accessibility hint and identifier (#7729)](https://github.com/material-components/material-components-ios/commit/5050a53de55d50994b442b7be573c5f5dbae85d5) (Cody Weaver)
+* [Add accessibility label (#7727)](https://github.com/material-components/material-components-ios/commit/1d36b079d7e40888058bc0a9c44e6ba13b79f93e) (Cody Weaver)
+* [Add accessibility traits support (#7739)](https://github.com/material-components/material-components-ios/commit/c3fe63e5e206b19097ce5fc01cceed5d9465f848) (mikefan1991)
+* [Add delegate support to MDCTabBarView (#7725)](https://github.com/material-components/material-components-ios/commit/46c8e51ae358373911e3f970068fb75a4f4a02f3) (mikefan1991)
+* [Add imageTintColorForState APIs. (#7714)](https://github.com/material-components/material-components-ios/commit/88e145c62b3229ac64e80776e34568f0f56f1a77) (Robert Moore)
+* [Add initial support for custom view. (#7678)](https://github.com/material-components/material-components-ios/commit/325e269eb4b795d58d38a0dc6c52b60c1023dae3) (Robert Moore)
+* [Add ripple effect (#7726)](https://github.com/material-components/material-components-ios/commit/99ec5aa6917b4b3ff855f6e61127e9eed1f1f640) (Ang)
+* [Add the user selection visible logic  (#7740)](https://github.com/material-components/material-components-ios/commit/ca5afce4417415ffbede4a42cbf1dd53760a6542) (mikefan1991)
+* [Add titleColorForState: API. (#7712)](https://github.com/material-components/material-components-ios/commit/af0fe795a64d952bfc294b11d796e8f0b9e079fd) (Robert Moore)
+* [Add titleFontForState APIs (#7757)](https://github.com/material-components/material-components-ios/commit/029692a0ba9e8d9503d2f3f7389e5a5ee97d3c2d) (Cody Weaver)
+* [Add user selection support to the MDCTabBarView (#7713)](https://github.com/material-components/material-components-ios/commit/e243456b42ba6de0f162f9e12518f077e7989d47) (mikefan1991)
+* [Adds justified and scrollable layout to MDCTabBarView (#7704)](https://github.com/material-components/material-components-ios/commit/60d5f0dbef6c92fe295a4aed0e03848b83bce426) (Ang)
+* [Adds safe area inset (#7753)](https://github.com/material-components/material-components-ios/commit/079c42e65b010745686cd0442e8d6b3ca22c7e42) (Ang)
+* [Adds support for rendering custom views. (#7755)](https://github.com/material-components/material-components-ios/commit/febf914e97be63c7027595aaa364a275dd37756b) (Robert Moore)
+* [Allow setting selected item without animation. (#7749)](https://github.com/material-components/material-components-ios/commit/8d82d5e9d04ac74d6958b9ff02503d6c76528d5c) (Robert Moore)
+* [Create default selection indicator template. (#7751)](https://github.com/material-components/material-components-ios/commit/ee7c89c4ff140b4b586b1e6d966e585b0e19a07f) (Robert Moore)
+* [Expose the the iconImageView and the titleLabel of the item view (#7703)](https://github.com/material-components/material-components-ios/commit/1008ad3945d4b784131d6024e5c5a6551c7c08c5) (mikefan1991)
+* [Fix MDCTabBarViewItemView sizing. (#7718)](https://github.com/material-components/material-components-ios/commit/609d76a2255b98b6aca040715987080e057101bf) (Robert Moore)
+* [Fix bugs (#7735)](https://github.com/material-components/material-components-ios/commit/1a38f2af4630af5477085cde76efa5ecf3d9d456) (mikefan1991)
+* [Fix image tint color when unselecting an item. (#7756)](https://github.com/material-components/material-components-ios/commit/0e97389a5c65b46f3ef85c92da9d8d9e8c4e375e) (Robert Moore)
+* [Fix scroll-to-item for RTL.  (#7754)](https://github.com/material-components/material-components-ios/commit/c2b400f6ff3cf0e83854108ed02d41df67f5a4a7) (Robert Moore)
+* [Fix the layout of MDCTabBarViewItemView (#7747)](https://github.com/material-components/material-components-ios/commit/494feaeb7c41ef3a67f82821bb26454745fa7f8b) (mikefan1991)
+* [Fork selection indicator. (#7723)](https://github.com/material-components/material-components-ios/commit/2703d006efdf646877c65dbe2392275e54953900) (Robert Moore)
+* [Ignore `selectedItem` values not in `items`. (#7702)](https://github.com/material-components/material-components-ios/commit/cc5cce89d0c5402a84200144e42be816f19b2404) (Robert Moore)
+* [Initial MDCTabBarViewItemView version (#7665)](https://github.com/material-components/material-components-ios/commit/4bb8a7cb345dc1f09e60d0b5c44fadd98c60f22e) (mikefan1991)
+* [KVO UITabBarItem's `title` and `image` properties (#7700)](https://github.com/material-components/material-components-ios/commit/fc96bbbe4915ad54bfea584639b446d41b0603ed) (Robert Moore)
+* [Make itemView conform to the selection indicator protocol. (#7750)](https://github.com/material-components/material-components-ios/commit/bd1ab6eadcded6091fd970845c274587dbfba33c) (Robert Moore)
+* [Rearrange MDCTabBarView internals. (#7696)](https://github.com/material-components/material-components-ios/commit/b13f7813e0f9240af4448c267b7a2bbbd4774177) (Robert Moore)
+* [Remove redundant code. (#7716)](https://github.com/material-components/material-components-ios/commit/f55facb659c63bbf624a29141b36885bc12fdca4) (Robert Moore)
+* [Send tab item title/image to views (#7698)](https://github.com/material-components/material-components-ios/commit/d202640cd384666fd872aaeef5d50d81fa60d5a1) (Robert Moore)
+* [Use templated image in snapshot test. (#7730)](https://github.com/material-components/material-components-ios/commit/b46aa91c6d07d4d002972bdb5a66c04f58607248) (Robert Moore)
+
+### TextFields
+
+* [Add MDCBaseTextField as extension (#7694)](https://github.com/material-components/material-components-ios/commit/eadb2e18fe57f5be0ec1b8dd1ea122ba445fb966) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Uses @synthesize for touchController to avoid warning (#7670)](https://github.com/material-components/material-components-ios/commit/d0d08d422bccd7246981fdb7c8c829657caa37a9) (Sylvain Defresne)
+
+---
+
 # 85.1.0
 
 In this minor release we have begun development of a new Tab component, as well as additional tests and bug fixes.
@@ -60,7 +1439,6 @@ chipView.rippleAllowsSelection = YES;
 * [Annotate mdc_adjustsFontForContentSizeCategory as to-be-deprecated. (#7619)](https://github.com/material-components/material-components-ios/commit/ee0943cbbdab48fd9637baf60957113e5e9e205e) (featherless)
 
 ## Multi-component changes
-
 
 * [Remove all example references to MDCFloatingActionButtonThemer. (#7505)](https://github.com/material-components/material-components-ios/commit/9c8e34138af0d02f568bff4ff8f0c0341b5cd860) (featherless)
 * [{Bazel} Create dedicated unit test rules to reduce boilerplate (#7641)](https://github.com/material-components/material-components-ios/commit/2b125fcd935bde8f707ce6e0f96503555d8da6ad) (Robert Moore)

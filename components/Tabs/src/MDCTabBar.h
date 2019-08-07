@@ -17,6 +17,7 @@
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarTextTransform.h"
+#import "MaterialElevation.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
@@ -40,7 +41,7 @@ typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
  @see https://material.io/go/design-tabs
  */
 IB_DESIGNABLE
-@interface MDCTabBar : UIView <UIBarPositioning>
+@interface MDCTabBar : UIView <UIBarPositioning, MDCElevatable, MDCElevationOverriding>
 
 /** The default height for the tab bar with a given position and item appearance. */
 + (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position
@@ -207,6 +208,13 @@ IB_DESIGNABLE
 
 /** Returns the image tint color associated with the specified state. */
 - (nullable UIColor *)imageTintColorForState:(MDCTabBarItemState)state;
+
+/**
+ A block that is invoked when the @c MDCTabBar receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCTabBar *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 
