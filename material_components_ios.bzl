@@ -12,8 +12,10 @@ SWIFT_VERSION = "4.2"
 DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
     "//components/testing/runners:IPHONE_7_PLUS_IN_10_3",
-    "//components/testing/runners:IPHONE_X_IN_11_0",
 ]
+
+KOKORO_EXTENSION_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_X_IN_11_0"
+AUTOBOT_EXTENSION_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_8_IN_13_0"
 
 SNAPSHOT_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_7_IN_11_2"
 
@@ -253,6 +255,17 @@ def mdc_snapshot_test(
       size = size,
       **kwargs)
 
+def mdc_ci_config_setting():
+    """Config setting for mdc continuous integration, e.g. --define ci_mode=kokoro"""
+    native.config_setting(
+        name = "kokoro",
+        values = {"define": "ci_mode=kokoro"},
+    )
+    native.config_setting(
+        name = "autobot",
+        values = {"define": "ci_mode=autobot"},
+    )
+
 def mdc_unit_test_suite(
     name,
     deps = [],
@@ -260,13 +273,26 @@ def mdc_unit_test_suite(
     visibility = ["//visibility:private"],
     size = "medium",
     **kwargs):
-  """Declare a MDC unit_test_suite using the ios_runners matrix."""
-  ios_unit_test_suite(
-    name = name,
-    deps = deps,
-    minimum_os_version = minimum_os_version,
-    runners = DEFAULT_IOS_RUNNER_TARGETS,
-    visibility = visibility,
-    size = size,
-    **kwargs
-  )
+    """Declare a MDC unit_test_suite and a unit_test_extension using the ios_runners matrix."""
+    mdc_ci_config_setting()
+    ios_unit_test_suite(
+        name = name,
+        deps = deps,
+        minimum_os_version = minimum_os_version,
+        runners = DEFAULT_IOS_RUNNER_TARGETS,
+        visibility = visibility,
+        size = size,
+        **kwargs
+    )
+    ios_unit_test(
+        name = name + '_extension',
+        deps = deps,
+        minimum_os_version = minimum_os_version,
+        runner = select({
+            ":kokoro": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
+            ":autobot": AUTOBOT_EXTENSION_IOS_RUNNER_TARGET,
+            "//conditions:default": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
+        }),
+        visibility = visibility,
+        size = size,
+        **kwargs)
