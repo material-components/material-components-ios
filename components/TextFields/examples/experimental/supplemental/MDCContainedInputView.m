@@ -19,6 +19,17 @@
 
 #import "MDCContainedInputView.h"
 
+MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
+    UIControlState controlState) {
+  if ((controlState & UIControlStateDisabled) == UIControlStateDisabled) {
+    return MDCContainedInputViewStateDisabled;
+  } else if ((controlState & UIControlStateEditing) == UIControlStateEditing) {
+    return MDCContainedInputViewStateFocused;
+  } else {
+    return MDCContainedInputViewStateNormal;
+  }
+}
+
 @implementation MDCContainedInputViewColorScheme
 
 - (instancetype)init {

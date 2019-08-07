@@ -41,17 +41,8 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
 // TODO: Remove this.
 static const UIControlState UIControlStateEditing = 1 << 16;
 
-// TODO: Get rid of __unused attribute
-__unused static MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
-    UIControlState controlState) {
-  if ((controlState & UIControlStateDisabled) == UIControlStateDisabled) {
-    return MDCContainedInputViewStateDisabled;
-  } else if ((controlState & UIControlStateEditing) == UIControlStateEditing) {
-    return MDCContainedInputViewStateFocused;
-  } else {
-    return MDCContainedInputViewStateNormal;
-  }
-}
+MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
+    UIControlState controlState);
 
 /**
  Dictates the relative importance of the underline labels, and the order in which they are laid out.
