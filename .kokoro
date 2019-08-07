@@ -359,7 +359,7 @@ run_bazel() {
   tmp_img_dir="$(mktemp -d)"
 
   # Install git lfs if we're performing tests on kokoro
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  if [ -n "$KOKORO_BUILD_NUMBER" ] || [ -n "$AUTOBOT_BUILD_NUMBER" ]; then
     if [ "$COMMAND" == "test" ]; then
       brew_install git-lfs
       git lfs install
@@ -373,11 +373,18 @@ run_bazel() {
     fi
   fi
 
+  # Configure CI mode
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      ci_mode="kokoro"
+  elif [ -n "$AUTOBOT_BUILD_NUMBER" ]; then
+      ci_mode="autobot"
+  fi
+
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=9.0 \
     --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
     --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
     --test_env="IMAGE_DIFF_DIR=$tmp_img_dir" \
-    --define ci_mode=kokoro
+    --define ci_mode=$ci_mode
 }
 
 run_cocoapods() {
