@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCBaseTextField+Private.h"
+#import "MDCBaseTextField2+ContainedInputView.h"
 #import "MDCContainedInputView.h"
 
 @implementation MDCBaseTextField2 (MaterialTheming)
