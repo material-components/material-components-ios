@@ -408,6 +408,7 @@ static const CGFloat kDividerHeight = (CGFloat)1;
   _headerDividerColor = [headerDividerColor copy];
   if (headerDividerColor) {
     self.headerDividerView = [[UIView alloc] init];
+    self.headerDividerView.backgroundColor = headerDividerColor;
   } else {
     self.headerDividerView = nil;
   }
