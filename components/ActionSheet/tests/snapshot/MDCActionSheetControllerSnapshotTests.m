@@ -873,72 +873,75 @@ static NSString *const kLongTitle5Arabic =
 =======
 - (void)testActionSheetHeaderDividerColorWithOnlyTitle {
   // Given
-  self.recordMode = YES;
   MDCActionSheetAction *action1 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetAction *action2 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:@"Foo"];
+      [MDCActionSheetController actionSheetControllerWithTitle:@"Foo"];
   [controller addAction:action1];
   [controller addAction:action2];
-  
+
   // When
   controller.headerDividerColor = UIColor.blackColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
-  
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
 - (void)testActionSheetHeaderDividerColorWithTitleAndMessage {
   // Given
-  self.recordMode = YES;
   MDCActionSheetAction *action1 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetAction *action2 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:@"Foo" message:@"Bar"];
+      [MDCActionSheetController actionSheetControllerWithTitle:@"Foo" message:@"Bar"];
   [controller addAction:action1];
   [controller addAction:action2];
-  
+
   // When
   controller.headerDividerColor = UIColor.blackColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
-  
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
 - (void)testActionSheetHeaderDividerColorWithNoHeader {
   // Given
-  self.recordMode = YES;
   MDCActionSheetAction *action1 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetAction *action2 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:nil];
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
   [controller addAction:action1];
   [controller addAction:action2];
-  
+
   // When
   controller.headerDividerColor = UIColor.blackColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
-  
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 >>>>>>> initial

@@ -466,10 +466,10 @@ static const CGFloat kSafeAreaAmount = 20;
 - (void)testSetHeaderDividerColor {
   // Given
   UIColor *fakeColor = UIColor.orangeColor;
-  
+
   // When
   self.actionSheet.headerDividerColor = fakeColor;
-  
+
   // Then
   XCTAssertEqualObjects(self.actionSheet.headerDividerColor, fakeColor);
   XCTAssertNotNil(self.actionSheet.headerDividerView);
@@ -478,10 +478,10 @@ static const CGFloat kSafeAreaAmount = 20;
 - (void)testSetHeaderDividerColorThenResetToNil {
   // Given
   self.actionSheet.headerDividerColor = UIColor.orangeColor;
-  
+
   // When
   self.actionSheet.headerDividerColor = nil;
-  
+
   // Then
   XCTAssertEqualObjects(self.actionSheet.headerDividerColor, nil);
   XCTAssertNil(self.actionSheet.headerDividerView);

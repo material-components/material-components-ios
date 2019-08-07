@@ -205,9 +205,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 
 /**
  The color of the divider between the header and actions.
- 
+
  @note Setting this to any value other than @c nil will result in the table being shifted down 1pt.
- 
+
  Defaults to nil.
  */
 @property(nonatomic, copy, nullable) UIColor *headerDividerColor;
