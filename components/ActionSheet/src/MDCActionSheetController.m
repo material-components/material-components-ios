@@ -23,6 +23,7 @@
 static NSString *const kReuseIdentifier = @"BaseCell";
 static const CGFloat kActionImageAlpha = (CGFloat)0.6;
 static const CGFloat kActionTextAlpha = (CGFloat)0.87;
+static const CGFloat kDividerHeight = (CGFloat)1;
 
 @interface MDCActionSheetAction ()
 
@@ -68,6 +69,9 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                         UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
+
+/** The view that divides the header from the table. */
+@property(nonatomic, strong, nullable) UIView *headerDividerView;
 
 /**
  Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.
@@ -175,7 +179,14 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   }
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
-  UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
+  if (self.title != nil || self.message != nil) {
+    [self.view addSubview:self.headerDividerView];
+    self.headerDividerView.frame =
+        CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), kDividerHeight);
+  } else {
+    [self.headerDividerView removeFromSuperview];
+  }
+  UIEdgeInsets insets = UIEdgeInsetsMake(size.height + kDividerHeight, 0, 0, 0);
   if (@available(iOS 11.0, *)) {
     insets.bottom = self.tableView.adjustedContentInset.bottom;
   }
@@ -391,6 +402,16 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (UIColor *)messageTextColor {
   return self.header.messageTextColor;
+}
+
+- (void)setHeaderDividerColor:(UIColor *)headerDividerColor {
+  _headerDividerColor = [headerDividerColor copy];
+  if (headerDividerColor) {
+    self.headerDividerView = [[UIView alloc] init];
+  } else {
+    self.headerDividerView = nil;
+  }
+  [self.view setNeedsLayout];
 }
 
 #pragma mark - Dynamic Type

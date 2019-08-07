@@ -204,6 +204,15 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
 /**
+ The color of the divider between the header and actions.
+ 
+ @note Setting this to any value other than @c nil will result in the table being shifted down 1pt.
+ 
+ Defaults to nil.
+ */
+@property(nonatomic, copy, nullable) UIColor *headerDividerColor;
+
+/**
  Determines the alignment behavior of all title leading edges.
 
  When YES, all title leading edges will be aligned with one another.

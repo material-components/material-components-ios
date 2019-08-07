@@ -21,6 +21,10 @@
 
 static const CGFloat kSafeAreaAmount = 20;
 
+@interface MDCActionSheetController (MDCTesting)
+@property(nonatomic, strong, nullable) UIView *headerDividerView;
+@end
+
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *messageLabel;
@@ -60,6 +64,8 @@ static const CGFloat kSafeAreaAmount = 20;
   XCTAssertFalse(self.actionSheet.alwaysAlignTitleLeadingEdges);
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation,
                              MDCShadowElevationModalBottomSheet, 0.001);
+  XCTAssertNil(self.actionSheet.headerDividerColor);
+  XCTAssertNil(self.actionSheet.headerDividerView);
 }
 
 - (void)testTitleColor {
@@ -455,6 +461,30 @@ static const CGFloat kSafeAreaAmount = 20;
 
   // Then
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_overrideBaseElevation, fakeElevation, 0.001);
+}
+
+- (void)testSetHeaderDividerColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+  
+  // When
+  self.actionSheet.headerDividerColor = fakeColor;
+  
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.headerDividerColor, fakeColor);
+  XCTAssertNotNil(self.actionSheet.headerDividerView);
+}
+
+- (void)testSetHeaderDividerColorThenResetToNil {
+  // Given
+  self.actionSheet.headerDividerColor = UIColor.orangeColor;
+  
+  // When
+  self.actionSheet.headerDividerColor = nil;
+  
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.headerDividerColor, nil);
+  XCTAssertNil(self.actionSheet.headerDividerView);
 }
 
 @end
