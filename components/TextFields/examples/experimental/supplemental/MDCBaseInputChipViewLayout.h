@@ -51,14 +51,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
 
 - (instancetype)initWithSize:(CGSize)size
-                     containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                 positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
+                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                                label:(UILabel *)label
                           labelState:(MDCContainedInputViewLabelState)labelState
+                       labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews
                            chipsWrap:(BOOL)chipsWrap
@@ -72,6 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
+        preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing;
 @end

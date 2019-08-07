@@ -12,13 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
+#import "MDCContainedInputViewStyleBase.h"
+#import "MDCTextControlLabelBehavior.h"
 
-/**
- A base implementation of MDCContainedInputViewStyler.
- */
-@interface MDCContainerStylerBase : NSObject <MDCContainedInputViewStyler>
+@interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
+@property(strong, nonatomic) UIColor *filledSublayerFillColor;
+@property(strong, nonatomic) UIColor *thinUnderlineFillColor;
+@property(strong, nonatomic) UIColor *thickUnderlineFillColor;
+@end
+
+@interface MDCContainedInputViewStyleFilled : MDCContainedInputViewStyleBase <MDCContainedInputViewStyle>
 @end

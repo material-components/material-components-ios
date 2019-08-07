@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainerStylerFilled.h"
+#import "MDCContainedInputViewStyleFilled.h"
 
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerFilledPositioningDelegate.h"
-#import "MDCContainerStylerPathDrawingUtils.h"
+#import "MDCContainedInputViewVerticalPositioningGuideFilled.h"
+#import "MDCContainedInputViewStylePathDrawingUtils.h"
 
-static const CGFloat kFilledContainerStylerTopCornerRadius = (CGFloat)4.0;
-static const CGFloat kFilledContainerStylerUnderlineWidthThin = (CGFloat)1.0;
-static const CGFloat kFilledContainerStylerUnderlineWidthThick = (CGFloat)2.0;
+static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
+static const CGFloat kFilledContainerStyleUnderlineWidthThin = (CGFloat)1.0;
+static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
 
 static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
 @implementation MDCContainedInputViewColorSchemeFilled
 @end
 
-@interface MDCContainerStylerFilled () <CAAnimationDelegate>
+@interface MDCContainedInputViewStyleFilled () <CAAnimationDelegate>
 
 @property(strong, nonatomic) CAShapeLayer *filledSublayer;
 @property(strong, nonatomic) CAShapeLayer *thinUnderlineLayer;
@@ -42,7 +42,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
 @end
 
-@implementation MDCContainerStylerFilled
+@implementation MDCContainedInputViewStyleFilled
 
 - (instancetype)init {
   self = [super init];
@@ -135,10 +135,10 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   UIBezierPath *targetThickUnderlineBezier =
       [self filledSublayerUnderlinePathWithViewBounds:view.bounds
                               topRowBottomRowDividerY:topRowBottomRowDividerY
-                                   underlineThickness:kFilledContainerStylerUnderlineWidthThick
+                                   underlineThickness:kFilledContainerStyleUnderlineWidthThick
                                        underlineWidth:thickUnderlineWidth];
   CGFloat thinUnderlineThickness =
-      shouldShowThickUnderline ? 0 : kFilledContainerStylerUnderlineWidthThin;
+      shouldShowThickUnderline ? 0 : kFilledContainerStyleUnderlineWidthThin;
   UIBezierPath *targetThinUnderlineBezier =
       [self filledSublayerUnderlinePathWithViewBounds:view.bounds
                               topRowBottomRowDividerY:topRowBottomRowDividerY
@@ -336,7 +336,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 - (UIBezierPath *)filledSublayerPathWithTextFieldBounds:(CGRect)viewBounds
                                 topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY {
   UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat topRadius = kFilledContainerStylerTopCornerRadius;
+  CGFloat topRadius = kFilledContainerStyleTopCornerRadius;
   CGFloat bottomRadius = 0;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
@@ -348,7 +348,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   [path addLineToPoint:topRightCornerPoint1];
 
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + topRadius);
-  [MDCContainerStylerPathDrawingUtils addTopRightCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addTopRightCornerToPath:path
                                                     fromPoint:topRightCornerPoint1
                                                       toPoint:topRightCornerPoint2
                                                    withRadius:topRadius];
@@ -356,7 +356,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - bottomRadius);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - bottomRadius, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
-  [MDCContainerStylerPathDrawingUtils addBottomRightCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addBottomRightCornerToPath:path
                                                        fromPoint:bottomRightCornerPoint1
                                                          toPoint:bottomRightCornerPoint2
                                                       withRadius:bottomRadius];
@@ -364,7 +364,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   CGPoint bottomLeftCornerPoint1 = CGPointMake(bottomRadius, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - bottomRadius);
   [path addLineToPoint:bottomLeftCornerPoint1];
-  [MDCContainerStylerPathDrawingUtils addBottomLeftCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addBottomLeftCornerToPath:path
                                                       fromPoint:bottomLeftCornerPoint1
                                                         toPoint:bottomLeftCornerPoint2
                                                      withRadius:bottomRadius];
@@ -372,7 +372,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + topRadius);
   CGPoint topLeftCornerPoint2 = CGPointMake(topRadius, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
-  [MDCContainerStylerPathDrawingUtils addTopLeftCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addTopLeftCornerToPath:path
                                                    fromPoint:topLeftCornerPoint1
                                                      toPoint:topLeftCornerPoint2
                                                   withRadius:topRadius];
@@ -399,7 +399,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   [path addLineToPoint:topRightCornerPoint1];
 
   CGPoint topRightCornerPoint2 = CGPointMake(sublayerMaxX, sublayerMinY);
-  [MDCContainerStylerPathDrawingUtils addTopRightCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addTopRightCornerToPath:path
                                                     fromPoint:topRightCornerPoint1
                                                       toPoint:topRightCornerPoint2
                                                    withRadius:0];
@@ -407,7 +407,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   CGPoint bottomRightCornerPoint1 = CGPointMake(sublayerMaxX, sublayerMaxY);
   CGPoint bottomRightCornerPoint2 = CGPointMake(sublayerMaxX, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
-  [MDCContainerStylerPathDrawingUtils addBottomRightCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addBottomRightCornerToPath:path
                                                        fromPoint:bottomRightCornerPoint1
                                                          toPoint:bottomRightCornerPoint2
                                                       withRadius:0];
@@ -415,7 +415,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   CGPoint bottomLeftCornerPoint1 = CGPointMake(sublayerMinX, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(sublayerMinX, sublayerMaxY);
   [path addLineToPoint:bottomLeftCornerPoint1];
-  [MDCContainerStylerPathDrawingUtils addBottomLeftCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addBottomLeftCornerToPath:path
                                                       fromPoint:bottomLeftCornerPoint1
                                                         toPoint:bottomLeftCornerPoint2
                                                      withRadius:0];
@@ -423,7 +423,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   CGPoint topLeftCornerPoint1 = CGPointMake(sublayerMinX, sublayerMinY);
   CGPoint topLeftCornerPoint2 = CGPointMake(sublayerMinX, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
-  [MDCContainerStylerPathDrawingUtils addTopLeftCornerToPath:path
+  [MDCContainedInputViewStylePathDrawingUtils addTopLeftCornerToPath:path
                                                    fromPoint:topLeftCornerPoint1
                                                      toPoint:topLeftCornerPoint2
                                                   withRadius:0];
@@ -444,7 +444,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   return @"thickUnderlineGrowKey";
 }
 
-- (id<MDCContainerStylerPositioningDelegate>)
+- (id<MDCContainerStyleVerticalPositioningReference>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight
@@ -453,7 +453,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
                         preferredContainerHeight:(CGFloat)preferredContainerHeight
                                       labelState:(MDCContainedInputViewLabelState)labelState
                                    labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
-  return [[MDCContainerStylerFilledPositioningDelegate alloc]
+  return [[MDCContainedInputViewVerticalPositioningGuideFilled alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight

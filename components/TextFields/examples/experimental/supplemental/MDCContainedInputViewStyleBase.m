@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainerStylerBase.h"
+#import "MDCContainedInputViewStyleBase.h"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerBasePositioningDelegate.h"
+#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
 
-@implementation MDCContainerStylerBase
+@implementation MDCContainedInputViewStyleBase
 
 - (UIFont *)floatingFontWithFont:(UIFont *)font {
   CGFloat scaleFactor = [self floatingFontSizeScaleFactor];
@@ -67,7 +67,7 @@
   return 0.75;
 }
 
-- (id<MDCContainerStylerPositioningDelegate>)
+- (id<MDCContainerStyleVerticalPositioningReference>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight
@@ -76,7 +76,7 @@
                         preferredContainerHeight:(CGFloat)preferredContainerHeight
                                       labelState:(MDCContainedInputViewLabelState)labelState
                                    labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
-  return [[MDCContainerStylerBasePositioningDelegate alloc]
+  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight

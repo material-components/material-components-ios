@@ -198,19 +198,19 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 //- (MDCBaseTextField2 *)createFilledTextFieldWithMaximalDensity {
 //  MDCBaseTextField2 *textField = [self createFilledTextField];
-//  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
+//  textField.containerStyle.positioningDelegate.verticalDensity = 1.0;
 //  return textField;
 //}
 //
 //- (MDCBaseTextField2 *)createFilledTextFieldWithMinimalDensity {
 //  MDCBaseTextField2 *textField = [self createFilledTextField];
-//  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
+//  textField.containerStyle.positioningDelegate.verticalDensity = 0.0;
 //  return textField;
 //}
 
 - (MDCFilledTextField *)createDefaultFilledTextField {
   MDCFilledTextField *textField = [[MDCFilledTextField alloc] init];
-  //    textField.containerStyler.positioningDelegate.verticalDensity = 1;
+  //    textField.containerStyle.positioningDelegate.verticalDensity = 1;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.labelBehavior = MDCTextControlLabelBehaviorFloats;
   textField.placeholder = @"555-555-5555";
@@ -235,19 +235,19 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 //- (MDCBaseTextField2 *)createOutlinedTextFieldWithMaximalDensity {
 //  MDCBaseTextField2 *textField = [self createOutlinedTextField];
-//  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
+//  textField.containerStyle.positioningDelegate.verticalDensity = 1.0;
 //  return textField;
 //}
 //
 //- (MDCBaseTextField2 *)createOutlinedTextFieldWithMinimalDensity {
 //  MDCBaseTextField *textField = [self createOutlinedTextField];
-//  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
+//  textField.containerStyle.positioningDelegate.verticalDensity = 0.0;
 //  return textField;
 //}
 
 - (MDCOutlinedTextField *)createDefaultOutlinedTextField {
   MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] init];
-  //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
+  //  textField.containerStyle.positioningDelegate.verticalDensity = 0.5;
   //  textField.placeholder = @"This is a placeholder";
   //  textField.label.text = @"This is a floating label";
   textField.placeholder = @"555-555-5555";

@@ -22,7 +22,7 @@
 #import "MDCBaseTextField+Private.h"
 #import "MDCBaseTextField.h"
 #import "MDCBaseTextFieldLayout.h"
-#import "MDCContainerStylerPathDrawingUtils.h"
+#import "MDCContainedInputViewStylePathDrawingUtils.h"
 #import "MaterialMath.h"
 
 //#import "MDCBaseTextField+Private.h"

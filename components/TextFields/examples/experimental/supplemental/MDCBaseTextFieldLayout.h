@@ -19,7 +19,7 @@
 #import "MDCContainedInputClearButton.h"
 #import "MDCContainedInputView.h"
 
-@protocol MDCContainedInputViewStyler;
+@protocol MDCContainedInputViewStyle;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,14 +46,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                  positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
+                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
                            labelState:(MDCContainedInputViewLabelState)labelState
+                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView

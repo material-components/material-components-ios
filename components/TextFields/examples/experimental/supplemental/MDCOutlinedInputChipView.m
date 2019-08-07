@@ -18,7 +18,7 @@
 
 #import "MDCBaseInputChipView+Private.h"
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerOutlined.h"
+#import "MDCContainedInputViewStyleOutlined.h"
 
 @interface MDCOutlinedInputChipView ()
 @end
@@ -42,8 +42,8 @@
 }
 
 - (void)commonMDCOutlinedInputChipViewInit {
-  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
-  self.containerStyler = outlinedStyle;
+  MDCContainedInputViewStyleOutlined *outlinedStyle = [[MDCContainedInputViewStyleOutlined alloc] init];
+  self.containerStyle = outlinedStyle;
 }
 
 #pragma mark Stateful Color APIs

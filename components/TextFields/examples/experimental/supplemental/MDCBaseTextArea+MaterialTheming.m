@@ -17,8 +17,8 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerFilled.h"
-#import "MDCContainerStylerOutlined.h"
+#import "MDCContainedInputViewStyleFilled.h"
+#import "MDCContainedInputViewStyleOutlined.h"
 
 @implementation MDCBaseTextArea (MaterialTheming)
 
@@ -47,17 +47,17 @@
 
 - (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
   MDCContainedInputViewColorScheme *normalColorScheme =
-      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   MDCContainedInputViewColorScheme *focusedColorScheme =
-      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   MDCContainedInputViewColorScheme *disabledColorScheme =
-      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 
@@ -71,8 +71,8 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
-  self.containerStyler = outlinedStyle;
+  MDCContainedInputViewStyleOutlined *outlinedStyle = [[MDCContainedInputViewStyleOutlined alloc] init];
+  self.containerStyle = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -101,8 +101,8 @@
 }
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
-  self.containerStyler = filledStyle;
+  MDCContainedInputViewStyleFilled *filledStyle = [[MDCContainedInputViewStyleFilled alloc] init];
+  self.containerStyle = filledStyle;
 
   [self applyTypographySchemeWith:containerScheme];
 

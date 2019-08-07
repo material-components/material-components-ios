@@ -38,14 +38,14 @@ static const CGFloat kGradientBlurLength = 6;
 @implementation MDCBaseInputChipViewLayout
 
 - (instancetype)initWithSize:(CGSize)size
-                     containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                 positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
+                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                                label:(UILabel *)label
                           labelState:(MDCContainedInputViewLabelState)labelState
+                       labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews
                            chipsWrap:(BOOL)chipsWrap
@@ -59,19 +59,20 @@ static const CGFloat kGradientBlurLength = 6;
               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
+        preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
   self = [super init];
   if (self) {
     [self calculateLayoutWithSize:size
-                         containerStyler:containerStyler
-                     positioningDelegate:positioningDelegate
+                         containerStyle:containerStyle
                                     text:text
                              placeholder:placeholder
                                     font:font
                             floatingFont:floatingFont
                                    label:label
                               labelState:labelState
+                           labelBehavior:labelBehavior
                                    chips:chips
                           staleChipViews:staleChipViews
                                chipsWrap:chipsWrap
@@ -84,6 +85,7 @@ static const CGFloat kGradientBlurLength = 6;
               underlineLabelDrawPriority:underlineLabelDrawPriority
         customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
                 preferredContainerHeight:preferredContainerHeight
+            preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                    isRTL:isRTL
                                isEditing:isEditing];
   }
@@ -91,14 +93,14 @@ static const CGFloat kGradientBlurLength = 6;
 }
 
 - (void)calculateLayoutWithSize:(CGSize)size
-                     containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                 positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
+                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                                label:(UILabel *)label
                           labelState:(MDCContainedInputViewLabelState)labelState
+                       labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews
                            chipsWrap:(BOOL)chipsWrap
@@ -112,8 +114,30 @@ static const CGFloat kGradientBlurLength = 6;
               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
+        preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
+
+  CGFloat numberOfVisibleRows = 0;
+  if (chipsWrap) {
+    numberOfVisibleRows = preferredNumberOfVisibleRows;
+    if (numberOfVisibleRows <= 0) {
+      numberOfVisibleRows = 0;
+    }
+  } else {
+    numberOfVisibleRows = 1;
+  }
+  
+  id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
+      [containerStyle positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
+                                               normalFontLineHeight:font.lineHeight
+                                                      textRowHeight:chipRowHeight
+                                                   numberOfTextRows:numberOfVisibleRows
+                                                            density:0
+                                           preferredContainerHeight:preferredContainerHeight
+                                                         labelState:labelState
+                                                      labelBehavior:labelBehavior];
+
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;

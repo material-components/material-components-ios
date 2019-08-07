@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
   MDCContainedInputViewAssistiveLabelDrawPriorityCustom,
 };
 
-@protocol MDCContainedInputViewStyler;
+@protocol MDCContainedInputViewStyle;
 @protocol MDCContainedInputViewColorScheming;
 
 @protocol MDCContainedInputView <NSObject>
@@ -86,10 +86,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @property(nonatomic, strong, nonnull) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 /**
- Dictates the @c MDCContainerStyler of the text field. Defaults to an instance of
- MDCContainerStylerBase.
+ Dictates the @c MDCContainedInputViewStyle of the text field. Defaults to an instance of
+ MDCContainedInputViewStyleBase.
  */
-@property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyler> containerStyler;
+@property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyle> containerStyle;
 
 /**
  Describes the current @c MDCContainedInputViewState of the view.
@@ -229,9 +229,9 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
 
-@protocol MDCContainerStylerPositioningDelegate;
+@protocol MDCContainerStyleVerticalPositioningReference;
 
-@protocol MDCContainedInputViewStyler <NSObject>
+@protocol MDCContainedInputViewStyle <NSObject>
 
 /**
  This method provides a default object conforming to MDCContainedInputViewColorScheming.
@@ -239,14 +239,14 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state;
 /**
- This method allows objects conforming to MDCContainedInputViewStyler to apply themselves to objects
+ This method allows objects conforming to MDCContainedInputViewStyle to apply themselves to objects
  conforming to MDCContainedInputView with a set of colors represented by an object conforming to
  MDCContainedInputViewColorScheming.
  */
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
     withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
 /**
- This method allows objects conforming to MDCContainedInputViewStyler to remove the styling
+ This method allows objects conforming to MDCContainedInputViewStyle to remove the styling
  previously applied to objects conforming to MDCContainedInputView.
  */
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
@@ -262,7 +262,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  This method returns an object that tells a Contained Input View where to position it's views
  vertically.
  */
-- (nonnull id<MDCContainerStylerPositioningDelegate>)
+- (nonnull id<MDCContainerStyleVerticalPositioningReference>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight
@@ -279,7 +279,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  helps achieve the variations in floating label position across the filled and outlined styles as
  well as the general density of the views.
  */
-@protocol MDCContainerStylerPositioningDelegate <NSObject>
+@protocol MDCContainerStyleVerticalPositioningReference <NSObject>
 
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;

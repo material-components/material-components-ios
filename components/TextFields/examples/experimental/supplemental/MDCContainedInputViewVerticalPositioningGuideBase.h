@@ -15,10 +15,10 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerBase.h"
+#import "MDCContainedInputViewStyleBase.h"
 #import "MDCTextControlLabelBehavior.h"
 
-@interface MDCContainerStylerBasePositioningDelegate : NSObject <MDCContainerStylerPositioningDelegate>
+@interface MDCContainedInputViewVerticalPositioningGuideBase : NSObject <MDCContainerStyleVerticalPositioningReference>
 
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;

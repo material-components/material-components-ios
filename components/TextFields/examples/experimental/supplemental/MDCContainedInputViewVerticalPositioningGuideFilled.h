@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
+#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
+
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerBase.h"
+#import "MDCContainedInputViewStyleBase.h"
 #import "MDCTextControlLabelBehavior.h"
 
-@interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
-@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *thinUnderlineFillColor;
-@property(strong, nonatomic) UIColor *thickUnderlineFillColor;
-@end
-
-@interface MDCContainerStylerFilled : MDCContainerStylerBase <MDCContainedInputViewStyler>
+@interface MDCContainedInputViewVerticalPositioningGuideFilled : MDCContainedInputViewVerticalPositioningGuideBase
 @end

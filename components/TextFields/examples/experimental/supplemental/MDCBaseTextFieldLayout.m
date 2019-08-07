@@ -29,14 +29,14 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                  positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
+                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
                            labelState:(MDCContainedInputViewLabelState)labelState
+                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
@@ -54,14 +54,14 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   self = [super init];
   if (self) {
     [self calculateLayoutWithTextFieldSize:textFieldSize
-                           containerStyler:containerStyler
-                       positioningDelegate:positioningDelegate
+                           containerStyle:containerStyle
                                       text:text
                                placeholder:placeholder
                                       font:font
                               floatingFont:floatingFont
                                      label:label
                                 labelState:labelState
+                             labelBehavior:labelBehavior
                                   leftView:leftView
                               leftViewMode:leftViewMode
                                  rightView:rightView
@@ -83,14 +83,14 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                         containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                     positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
+                         containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
                                    label:(UILabel *)label
                               labelState:(MDCContainedInputViewLabelState)labelState
+                           labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
@@ -105,6 +105,16 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                 preferredContainerHeight:(CGFloat)preferredContainerHeight
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
+  id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
+      [containerStyle positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
+                                               normalFontLineHeight:font.lineHeight
+                                                      textRowHeight:font.lineHeight
+                                                   numberOfTextRows:1
+                                                            density:0
+                                           preferredContainerHeight:preferredContainerHeight
+                                                         labelState:labelState
+                                                      labelBehavior:labelBehavior];
+  
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
                                                                     viewMode:leftViewMode
                                                                    isEditing:isEditing];

@@ -16,8 +16,8 @@
 
 #import "MDCBaseInputChipView.h"
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerFilled.h"
-#import "MDCContainerStylerOutlined.h"
+#import "MDCContainedInputViewStyleFilled.h"
+#import "MDCContainedInputViewStyleOutlined.h"
 #import "MaterialContainerScheme.h"
 
 /**

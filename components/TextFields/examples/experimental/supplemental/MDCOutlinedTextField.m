@@ -18,7 +18,7 @@
 
 #import "MDCBaseTextField+Private.h"
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerOutlined.h"
+#import "MDCContainedInputViewStyleOutlined.h"
 
 @interface MDCOutlinedTextField ()
 @end
@@ -42,8 +42,7 @@
 }
 
 - (void)commonMDCOutlinedTextFieldInit {
-  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
-  self.containerStyler = outlinedStyle;
+  self.containerStyle = [[MDCContainedInputViewStyleOutlined alloc] init];
 }
 
 #pragma mark Stateful Color APIs

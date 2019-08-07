@@ -38,7 +38,7 @@ static const CGFloat kGradientBlurLength = 6;
 @implementation MDCBaseTextAreaLayout
 
 - (instancetype)initWithSize:(CGSize)size
-                     containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
+                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
@@ -57,7 +57,7 @@ static const CGFloat kGradientBlurLength = 6;
   self = [super init];
   if (self) {
     [self calculateLayoutWithSize:size
-                         containerStyler:containerStyler
+                         containerStyle:containerStyle
                                     text:text
                                     font:font
                             floatingFont:floatingFont
@@ -77,7 +77,7 @@ static const CGFloat kGradientBlurLength = 6;
 }
 
 - (void)calculateLayoutWithSize:(CGSize)size
-                     containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
+                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
@@ -93,8 +93,8 @@ static const CGFloat kGradientBlurLength = 6;
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
-  id<MDCContainerStylerPositioningDelegate> positioningDelegate =
-      [containerStyler positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
+  id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
+      [containerStyle positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
                                                normalFontLineHeight:font.lineHeight
                                                       textRowHeight:font.lineHeight
                                                    numberOfTextRows:preferredNumberOfVisibleRows
@@ -342,7 +342,7 @@ static const CGFloat kGradientBlurLength = 6;
                                        floatingLabelMaxY:(CGFloat)floatingLabelMaxY
                                            bottomPadding:(CGFloat)bottomPadding
                                      positioningDelegate:
-                                         (id<MDCContainerStylerPositioningDelegate>)positioningDelegate {
+                                         (id<MDCContainerStyleVerticalPositioningReference>)positioningDelegate {
   CGFloat topFadeStart = floatingLabelMaxY / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;

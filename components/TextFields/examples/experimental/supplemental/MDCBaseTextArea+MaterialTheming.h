@@ -16,8 +16,8 @@
 
 #import "MDCBaseTextArea.h"
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerFilled.h"
-#import "MDCContainerStylerOutlined.h"
+#import "MDCContainedInputViewStyleFilled.h"
+#import "MDCContainedInputViewStyleOutlined.h"
 #import "MaterialContainerScheme.h"
 
 /**
@@ -33,7 +33,7 @@
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 /**
- Sets an MDCContainerStylerFilled instance as the containerStyler and then applies the container
+ Sets an MDCContainerStyleFilled instance as the containerStyler and then applies the container
  scheme's subsystem-specific schemes to the receiver.
 
  @param scheme A container scheme instance.
@@ -41,7 +41,7 @@
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 /**
- Sets an MDCContainerStylerOutlined instance as the containerStyler and then applies the container
+ Sets an MDCContainerStyleOutlined instance as the containerStyler and then applies the container
  scheme's subsystem-specific schemes to the receiver.
 
  @param scheme A container scheme instance.

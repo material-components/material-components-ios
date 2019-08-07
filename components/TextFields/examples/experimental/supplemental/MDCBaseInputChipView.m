@@ -22,7 +22,7 @@
 
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewLabelAnimator.h"
-#import "MDCContainerStylerBase.h"
+#import "MDCContainedInputViewStyleBase.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
@@ -151,7 +151,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
-@synthesize containerStyler = _containerStyler;
+@synthesize containerStyle = _containerStyle;
 @synthesize label = _label;
 
 #pragma mark Object Lifecycle
@@ -181,15 +181,15 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpColorSchemesDictionary];
   [self setUpAssistiveLabels];
   [self setUpClearButton];
-  [self setUpContainerStyler];
+  [self setUpContainerStyle];
 }
 
 - (void)setUpColorSchemesDictionary {
   self.colorSchemes = [[NSMutableDictionary alloc] init];
 }
 
-- (void)setUpContainerStyler {
-  self.containerStyler = [[MDCContainerStylerBase alloc] init];
+- (void)setUpContainerStyle {
+  self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
 }
 
 - (void)dealloc {
@@ -264,32 +264,32 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self addSubview:self.label];
 }
 
-- (void)setContainerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
-  id<MDCContainedInputViewStyler> oldStyle = _containerStyler;
+- (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+  id<MDCContainedInputViewStyle> oldStyle = _containerStyle;
   if (oldStyle) {
     [oldStyle removeStyleFrom:self];
   }
-  _containerStyler = containerStyler;
-  [self setUpStateDependentColorSchemesForStyle:_containerStyler];
+  _containerStyle = containerStyle;
+  [self setUpStateDependentColorSchemesForStyle:_containerStyle];
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [_containerStyler applyStyleToContainedInputView:self
+  [_containerStyle applyStyleToContainedInputView:self
                withContainedInputViewColorScheming:colorScheme];
 }
 
-- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyler>)containerStyler {
+- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   id<MDCContainedInputViewColorScheming> normalColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   id<MDCContainedInputViewColorScheming> focusedColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   id<MDCContainedInputViewColorScheming> disabledColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 }
@@ -471,47 +471,16 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Layout
 
-- (id<MDCContainerStylerPositioningDelegate>)createPositioningDelegate {
-  id<MDCContainerStylerPositioningDelegate> positioningDelegate = nil;
-  if ([self.containerStyler
-          respondsToSelector:@selector
-          (positioningDelegateWithFoatingFontLineHeight:
-                                   normalFontLineHeight:textRowHeight:numberOfTextRows:density
-                                                       :preferredContainerHeight:labelState
-                                                       :labelBehavior:)]) {
-    CGFloat numberOfVisibleRows = 0;
-    if (self.chipsWrap) {
-      numberOfVisibleRows = self.preferredNumberOfVisibleRows;
-      if (numberOfVisibleRows <= 0) {
-        numberOfVisibleRows = 0;
-      }
-    } else {
-      numberOfVisibleRows = 1;
-    }
-
-    positioningDelegate = [self.containerStyler
-        positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
-                                normalFontLineHeight:self.normalFont.lineHeight
-                                       textRowHeight:self.chipRowHeight
-                                    numberOfTextRows:numberOfVisibleRows
-                                             density:0
-                            preferredContainerHeight:self.preferredContainerHeight
-                                          labelState:self.labelState
-                                       labelBehavior:self.labelBehavior];
-  }
-  return positioningDelegate;
-}
-
 - (MDCBaseInputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   return [[MDCBaseInputChipViewLayout alloc] initWithSize:size
-                                          containerStyler:self.containerStyler
-                                      positioningDelegate:[self createPositioningDelegate]
+                                          containerStyle:self.containerStyle
                                                      text:self.inputChipViewTextField.text
                                               placeholder:self.inputChipViewTextField.placeholder
                                                      font:self.normalFont
                                              floatingFont:self.floatingFont
                                                     label:self.label
                                                labelState:self.labelState
+                                            labelBehavior:self.labelBehavior
                                                     chips:self.chips
                                            staleChipViews:self.chips
                                                 chipsWrap:self.chipsWrap
@@ -524,6 +493,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                underlineLabelDrawPriority:self.underlineLabelDrawPriority
                          customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
                                  preferredContainerHeight:self.preferredContainerHeight
+                             preferredNumberOfVisibleRows:self.preferredNumberOfVisibleRows
                                                     isRTL:self.isRTL
                                                 isEditing:self.inputChipViewTextField.isEditing];
 }
@@ -565,7 +535,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                      floatingFont:self.floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [self.containerStyler applyStyleToContainedInputView:self
+  [self.containerStyle applyStyleToContainedInputView:self
                    withContainedInputViewColorScheming:colorScheming];
 
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
@@ -864,7 +834,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (UIFont *)floatingFont {
-  return [self.containerStyler floatingFontWithFont:self.normalFont];
+  return [self.containerStyle floatingFontWithFont:self.normalFont];
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
@@ -983,7 +953,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   id<MDCContainedInputViewColorScheming> colorScheme =
       self.colorSchemes[@(containedInputViewState)];
   if (!colorScheme) {
-    colorScheme = [self.containerStyler defaultColorSchemeForState:containedInputViewState];
+    colorScheme = [self.containerStyle defaultColorSchemeForState:containedInputViewState];
   }
   return colorScheme;
 }

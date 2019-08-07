@@ -21,7 +21,7 @@
 
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewLabelAnimator.h"
-#import "MDCContainerStylerBase.h"
+#import "MDCContainedInputViewStyleBase.h"
 #import "MaterialMath.h"
 
 @class MDCBaseInputChipViewTextView;
@@ -125,7 +125,7 @@
 @synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
-@synthesize containerStyler = _containerStyler;
+@synthesize containerStyle = _containerStyle;
 @synthesize label = _label;
 
 #pragma mark Object Lifecycle
@@ -154,15 +154,15 @@
   [self setUpColorSchemesDictionary];
   [self setUpAssistiveLabels];
   [self setUpClearButton];
-  [self setUpContainerStyler];
+  [self setUpContainerStyle];
 }
 
 - (void)setUpColorSchemesDictionary {
   self.colorSchemes = [[NSMutableDictionary alloc] init];
 }
 
-- (void)setUpContainerStyler {
-  self.containerStyler = [[MDCContainerStylerBase alloc] init];
+- (void)setUpContainerStyle {
+  self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
 }
 
 - (void)dealloc {
@@ -220,32 +220,32 @@
   [self addSubview:self.label];
 }
 
-- (void)setContainerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
-  id<MDCContainedInputViewStyler> oldStyle = _containerStyler;
+- (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+  id<MDCContainedInputViewStyle> oldStyle = _containerStyle;
   if (oldStyle) {
     [oldStyle removeStyleFrom:self];
   }
-  _containerStyler = containerStyler;
-  [self setUpStateDependentColorSchemesForStyle:_containerStyler];
+  _containerStyle = containerStyle;
+  [self setUpStateDependentColorSchemesForStyle:_containerStyle];
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [_containerStyler applyStyleToContainedInputView:self
+  [_containerStyle applyStyleToContainedInputView:self
                withContainedInputViewColorScheming:colorScheme];
 }
 
-- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyler>)containerStyler {
+- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   id<MDCContainedInputViewColorScheming> normalColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   id<MDCContainedInputViewColorScheming> focusedColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   id<MDCContainedInputViewColorScheming> disabledColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 }
@@ -413,7 +413,7 @@
 
 - (MDCBaseTextAreaLayout *)calculateLayoutWithSize:(CGSize)size {
   return [[MDCBaseTextAreaLayout alloc] initWithSize:size
-                                     containerStyler:self.containerStyler
+                                     containerStyle:self.containerStyle
                                                 text:self.inputChipViewTextView.text
                                                 font:self.normalFont
                                         floatingFont:self.floatingFont
@@ -467,7 +467,7 @@
                      floatingFont:self.floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [self.containerStyler applyStyleToContainedInputView:self
+  [self.containerStyle applyStyleToContainedInputView:self
                    withContainedInputViewColorScheming:colorScheming];
 
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
@@ -637,7 +637,7 @@
 }
 
 - (UIFont *)floatingFont {
-  return [self.containerStyler floatingFontWithFont:self.normalFont];
+  return [self.containerStyle floatingFontWithFont:self.normalFont];
 }
 
 - (UIFont *)uiTextViewDefaultFont {
@@ -696,7 +696,7 @@
   id<MDCContainedInputViewColorScheming> colorScheme =
       self.colorSchemes[@(containedInputViewState)];
   if (!colorScheme) {
-    colorScheme = [self.containerStyler defaultColorSchemeForState:containedInputViewState];
+    colorScheme = [self.containerStyle defaultColorSchemeForState:containedInputViewState];
   }
   return colorScheme;
 }

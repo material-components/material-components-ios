@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainerStylerBasePositioningDelegate.h"
+#import "MDCContainedInputViewVerticalPositioningGuideFilled.h"
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStylerBase.h"
-#import "MDCTextControlLabelBehavior.h"
+#import "MDCContainedInputViewStylePathDrawingUtils.h"
 
-@interface MDCContainerStylerOutlinedPositioningDelegate : MDCContainerStylerBasePositioningDelegate
+@implementation MDCContainedInputViewVerticalPositioningGuideFilled
 @end
