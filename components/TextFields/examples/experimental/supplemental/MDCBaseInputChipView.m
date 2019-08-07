@@ -274,7 +274,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [_containerStyle applyStyleToContainedInputView:self
-               withContainedInputViewColorScheming:colorScheme];
+              withContainedInputViewColorScheming:colorScheme];
 }
 
 - (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -473,7 +473,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (MDCBaseInputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   return [[MDCBaseInputChipViewLayout alloc] initWithSize:size
-                                          containerStyle:self.containerStyle
+                                           containerStyle:self.containerStyle
                                                      text:self.inputChipViewTextField.text
                                               placeholder:self.inputChipViewTextField.placeholder
                                                      font:self.normalFont
@@ -536,7 +536,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self
-                   withContainedInputViewColorScheming:colorScheming];
+                  withContainedInputViewColorScheming:colorScheming];
 
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
   //                                           labelState:self.labelState];

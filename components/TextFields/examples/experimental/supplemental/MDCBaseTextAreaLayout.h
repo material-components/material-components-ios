@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
 
 - (instancetype)initWithSize:(CGSize)size
-                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont

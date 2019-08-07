@@ -34,8 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
 @property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
 
-
-
 // TODO: This needs to be replaced with an InputChipView specific label behavior property
 
 @end

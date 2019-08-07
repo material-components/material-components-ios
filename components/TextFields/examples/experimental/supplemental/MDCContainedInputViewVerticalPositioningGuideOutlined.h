@@ -20,5 +20,6 @@
 #import "MDCContainedInputViewStyleBase.h"
 #import "MDCTextControlLabelBehavior.h"
 
-@interface MDCContainedInputViewVerticalPositioningGuideOutlined : MDCContainedInputViewVerticalPositioningGuideBase
+@interface MDCContainedInputViewVerticalPositioningGuideOutlined
+    : MDCContainedInputViewVerticalPositioningGuideBase
 @end

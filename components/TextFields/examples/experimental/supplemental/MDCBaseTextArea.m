@@ -230,7 +230,7 @@
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [_containerStyle applyStyleToContainedInputView:self
-               withContainedInputViewColorScheming:colorScheme];
+              withContainedInputViewColorScheming:colorScheme];
 }
 
 - (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -413,7 +413,7 @@
 
 - (MDCBaseTextAreaLayout *)calculateLayoutWithSize:(CGSize)size {
   return [[MDCBaseTextAreaLayout alloc] initWithSize:size
-                                     containerStyle:self.containerStyle
+                                      containerStyle:self.containerStyle
                                                 text:self.inputChipViewTextView.text
                                                 font:self.normalFont
                                         floatingFont:self.floatingFont
@@ -468,7 +468,7 @@
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self
-                   withContainedInputViewColorScheming:colorScheming];
+                  withContainedInputViewColorScheming:colorScheming];
 
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
   //                                           labelState:self.labelState];

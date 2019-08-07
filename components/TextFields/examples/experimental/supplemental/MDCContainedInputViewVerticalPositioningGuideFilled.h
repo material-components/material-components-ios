@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCContainedInputViewVerticalPositioningGuideBase.h"
-#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
 
 #import <UIKit/UIKit.h>
 
@@ -21,5 +20,6 @@
 #import "MDCContainedInputViewStyleBase.h"
 #import "MDCTextControlLabelBehavior.h"
 
-@interface MDCContainedInputViewVerticalPositioningGuideFilled : MDCContainedInputViewVerticalPositioningGuideBase
+@interface MDCContainedInputViewVerticalPositioningGuideFilled
+    : MDCContainedInputViewVerticalPositioningGuideBase
 @end

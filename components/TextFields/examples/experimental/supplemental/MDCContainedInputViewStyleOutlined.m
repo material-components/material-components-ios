@@ -17,8 +17,8 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainedInputViewVerticalPositioningGuideOutlined.h"
 #import "MDCContainedInputViewStylePathDrawingUtils.h"
+#import "MDCContainedInputViewVerticalPositioningGuideOutlined.h"
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
@@ -141,33 +141,33 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + radius);
   [MDCContainedInputViewStylePathDrawingUtils addTopRightCornerToPath:path
-                                                    fromPoint:topRightCornerPoint1
-                                                      toPoint:topRightCornerPoint2
-                                                   withRadius:radius];
+                                                            fromPoint:topRightCornerPoint1
+                                                              toPoint:topRightCornerPoint2
+                                                           withRadius:radius];
 
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - radius);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - radius, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
   [MDCContainedInputViewStylePathDrawingUtils addBottomRightCornerToPath:path
-                                                       fromPoint:bottomRightCornerPoint1
-                                                         toPoint:bottomRightCornerPoint2
-                                                      withRadius:radius];
+                                                               fromPoint:bottomRightCornerPoint1
+                                                                 toPoint:bottomRightCornerPoint2
+                                                              withRadius:radius];
 
   CGPoint bottomLeftCornerPoint1 = CGPointMake(radius, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - radius);
   [path addLineToPoint:bottomLeftCornerPoint1];
   [MDCContainedInputViewStylePathDrawingUtils addBottomLeftCornerToPath:path
-                                                      fromPoint:bottomLeftCornerPoint1
-                                                        toPoint:bottomLeftCornerPoint2
-                                                     withRadius:radius];
+                                                              fromPoint:bottomLeftCornerPoint1
+                                                                toPoint:bottomLeftCornerPoint2
+                                                             withRadius:radius];
 
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + radius);
   CGPoint topLeftCornerPoint2 = CGPointMake(radius, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
   [MDCContainedInputViewStylePathDrawingUtils addTopLeftCornerToPath:path
-                                                   fromPoint:topLeftCornerPoint1
-                                                     toPoint:topLeftCornerPoint2
-                                                  withRadius:radius];
+                                                           fromPoint:topLeftCornerPoint1
+                                                             toPoint:topLeftCornerPoint2
+                                                          withRadius:radius];
 
   return path;
 }

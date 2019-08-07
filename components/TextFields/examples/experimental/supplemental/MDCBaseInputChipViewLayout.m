@@ -38,7 +38,7 @@ static const CGFloat kGradientBlurLength = 6;
 @implementation MDCBaseInputChipViewLayout
 
 - (instancetype)initWithSize:(CGSize)size
-                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
@@ -65,7 +65,7 @@ static const CGFloat kGradientBlurLength = 6;
   self = [super init];
   if (self) {
     [self calculateLayoutWithSize:size
-                         containerStyle:containerStyle
+                          containerStyle:containerStyle
                                     text:text
                              placeholder:placeholder
                                     font:font
@@ -93,7 +93,7 @@ static const CGFloat kGradientBlurLength = 6;
 }
 
 - (void)calculateLayoutWithSize:(CGSize)size
-                     containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
@@ -117,7 +117,6 @@ static const CGFloat kGradientBlurLength = 6;
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
-
   CGFloat numberOfVisibleRows = 0;
   if (chipsWrap) {
     numberOfVisibleRows = preferredNumberOfVisibleRows;
@@ -127,16 +126,16 @@ static const CGFloat kGradientBlurLength = 6;
   } else {
     numberOfVisibleRows = 1;
   }
-  
+
   id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
       [containerStyle positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
-                                               normalFontLineHeight:font.lineHeight
-                                                      textRowHeight:chipRowHeight
-                                                   numberOfTextRows:numberOfVisibleRows
-                                                            density:0
-                                           preferredContainerHeight:preferredContainerHeight
-                                                         labelState:labelState
-                                                      labelBehavior:labelBehavior];
+                                              normalFontLineHeight:font.lineHeight
+                                                     textRowHeight:chipRowHeight
+                                                  numberOfTextRows:numberOfVisibleRows
+                                                           density:0
+                                          preferredContainerHeight:preferredContainerHeight
+                                                        labelState:labelState
+                                                     labelBehavior:labelBehavior];
 
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;

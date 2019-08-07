@@ -94,7 +94,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
-    [self createToggleErrorButton], [self createResignFirstResponderButton],
+    [self createToggleErrorButton],
+    [self createResignFirstResponderButton],
     [self createLabelWithText:@"Filled InputChipView:"],
     [self createFilledNonWrappingInputChipView],
     [self createLabelWithText:@"Wrapping filled InputChipView:"],
@@ -205,7 +206,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   inputChipView.chipsWrap = YES;
   inputChipView.labelBehavior = MDCTextControlLabelBehaviorDisappears;
   inputChipView.preferredNumberOfVisibleRows = 4;
-//  inputChipView.preferredContainerHeight = 150;
+  //  inputChipView.preferredContainerHeight = 150;
   [inputChipView sizeToFit];
   inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
   return inputChipView;

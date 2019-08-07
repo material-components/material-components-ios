@@ -228,7 +228,7 @@
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self
-                   withContainedInputViewColorScheming:colorScheming];
+                  withContainedInputViewColorScheming:colorScheming];
   self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout labelState:self.labelState];
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.underlineLabelView.frame = self.layout.underlineLabelViewFrame;
@@ -277,7 +277,7 @@
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
-                       containerStyle:self.containerStyle
+                        containerStyle:self.containerStyle
                                   text:self.text
                            placeholder:self.placeholder
                                   font:self.normalFont
@@ -490,7 +490,7 @@
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [_containerStyle applyStyleToContainedInputView:self
-               withContainedInputViewColorScheming:colorScheme];
+              withContainedInputViewColorScheming:colorScheme];
 }
 
 #pragma mark MDCContainedInputView accessors

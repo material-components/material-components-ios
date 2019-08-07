@@ -71,7 +71,8 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainedInputViewStyleOutlined *outlinedStyle = [[MDCContainedInputViewStyleOutlined alloc] init];
+  MDCContainedInputViewStyleOutlined *outlinedStyle =
+      [[MDCContainedInputViewStyleOutlined alloc] init];
   self.containerStyle = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];

@@ -42,7 +42,8 @@
 }
 
 - (void)commonMDCOutlinedInputChipViewInit {
-  MDCContainedInputViewStyleOutlined *outlinedStyle = [[MDCContainedInputViewStyleOutlined alloc] init];
+  MDCContainedInputViewStyleOutlined *outlinedStyle =
+      [[MDCContainedInputViewStyleOutlined alloc] init];
   self.containerStyle = outlinedStyle;
 }
 
