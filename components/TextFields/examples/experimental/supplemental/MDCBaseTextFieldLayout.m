@@ -14,9 +14,6 @@
 
 #import "MDCBaseTextFieldLayout.h"
 
-#import "MDCBaseTextField.h"
-#import "MDCContainedInputView.h"
-
 static const CGFloat kFloatingLabelXOffsetFromTextArea = (CGFloat)3.0;
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
