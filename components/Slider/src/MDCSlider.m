@@ -36,7 +36,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 @property(nonnull, nonatomic, strong)
     UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
 @property(nonatomic) CGFloat previousValue;
-@property(nonatomic) BOOL firstValueChange;
 @end
 
 @implementation MDCSlider {
@@ -124,7 +123,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
   _shouldEnableHapticsForAllDiscreteValues = NO;
 
-  _firstValueChange = YES;
+  _previousValue = -CGFLOAT_MAX;
 }
 
 #pragma mark - Color customization methods
@@ -305,10 +304,12 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setValue:(CGFloat)value {
   _thumbTrack.value = value;
+  _previousValue = -CGFLOAT_MAX;
 }
 
 - (void)setValue:(CGFloat)value animated:(BOOL)animated {
   [_thumbTrack setValue:value animated:animated];
+  _previousValue = -CGFLOAT_MAX;
 }
 
 - (CGFloat)minimumValue {
@@ -591,9 +592,9 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
       BOOL valueCrossesAboveAnchor = (_previousValue < _thumbTrack.filledTrackAnchorValue &&
                                       _thumbTrack.filledTrackAnchorValue <= _thumbTrack.value);
       BOOL valueCrossesBelowAnchor = (_thumbTrack.value <= _thumbTrack.filledTrackAnchorValue &&
-                                      _thumbTrack.filledTrackAnchorValue < _previousValue));
-      BOOL crossesAnchor =
-          (!_firstValueChange) && (valueCrossesAboveAnchor || valueCrossesBelowAnchor);
+                                      _thumbTrack.filledTrackAnchorValue < _previousValue);
+      BOOL crossesAnchor = _previousValue != -CGFLOAT_MAX &&
+          (valueCrossesAboveAnchor || valueCrossesBelowAnchor);
       if (self.shouldEnableHapticsForAllDiscreteValues ||
           _thumbTrack.value == _thumbTrack.minimumValue ||
           _thumbTrack.value == _thumbTrack.maximumValue || crossesAnchor) {
@@ -602,9 +603,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
     }
   }
   self.previousValue = _thumbTrack.value;
-  if (_firstValueChange) {
-    _firstValueChange = NO;
-  }
 }
 
 - (void)thumbTrackTouchDown:(__unused MDCThumbTrack *)thumbTrack {

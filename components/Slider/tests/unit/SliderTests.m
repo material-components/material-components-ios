@@ -1232,7 +1232,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
     self.slider.feedbackGenerator = _mockFeedbackGenerator;
     for (NSUInteger i = 0; i < 6; ++i) {
-      self.slider.value = i;
+      self.slider.thumbTrack.value = i;
 
       // When
       [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
@@ -1256,7 +1256,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
     self.slider.feedbackGenerator = _mockFeedbackGenerator;
     for (NSUInteger i = 1; i < 9; i++) {
-      self.slider.value = i;
+      self.slider.thumbTrack.value = i;
 
       // When
       [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
@@ -1283,7 +1283,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
     self.slider.feedbackGenerator = _mockFeedbackGenerator;
     for (NSUInteger i = 1; i < 10; i++) {
-      self.slider.value = i;
+      self.slider.thumbTrack.value = i;
 
       // When
       [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
