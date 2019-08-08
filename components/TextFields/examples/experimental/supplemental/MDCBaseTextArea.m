@@ -81,7 +81,9 @@
 
 @end
 
-@interface MDCBaseTextArea () <MDCContainedInputView, MDCBaseTextAreaTextViewDelegate, UIGestureRecognizerDelegate>
+@interface MDCBaseTextArea () <MDCContainedInputView,
+                               MDCBaseTextAreaTextViewDelegate,
+                               UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
 @property(strong, nonatomic) UILabel *label;
@@ -618,7 +620,7 @@
   }
 }
 
--(CGFloat)numberOfTextRows {
+- (CGFloat)numberOfTextRows {
   return self.preferredNumberOfVisibleRows;
 }
 

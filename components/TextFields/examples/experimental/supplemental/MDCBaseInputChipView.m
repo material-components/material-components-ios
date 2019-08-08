@@ -796,7 +796,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Accessors
 
--(CGFloat)numberOfTextRows {
+- (CGFloat)numberOfTextRows {
   return self.preferredNumberOfVisibleRows;
 }
 
