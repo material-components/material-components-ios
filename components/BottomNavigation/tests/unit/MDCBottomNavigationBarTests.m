@@ -207,7 +207,9 @@
   bar.items = @[ tabBarItem ];
 
   // Then
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, initialHint);
+  MDCBottomNavigationItemView *itemView = bar.itemViews.firstObject;
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertEqualObjects(itemViewButton.accessibilityHint, initialHint);
 }
 
 - (void)testAccessibilityHintValueChanged {
