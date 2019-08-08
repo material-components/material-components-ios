@@ -95,60 +95,6 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
     }
   }
 
-  func testSettingAViewControllerInjectsAnAppBar() {
-    // Given
-    let viewController = UIViewController()
-
-    // When
-    navigationController.viewControllers = [viewController]
-
-    // Then
-    XCTAssertEqual(viewController.children.count, 1,
-                   "Expected there to be exactly one child view controller added to the view"
-                    + " controller.")
-
-    XCTAssertEqual(navigationController.topViewController, viewController,
-                   "The navigation controller's top view controller is supposed to be the pushed"
-                    + " view controller, but it is \(viewController).")
-
-    XCTAssertTrue(viewController.children.first is MDCFlexibleHeaderViewController,
-                  "The injected view controller is not a flexible header view controller, it is"
-                    + "\(String(describing: viewController.children.first)) instead.")
-
-    if let headerViewController
-      = viewController.children.first as? MDCFlexibleHeaderViewController {
-      XCTAssertEqual(headerViewController.headerView.frame.height,
-                     headerViewController.headerView.maximumHeight)
-    }
-  }
-
-  func testSettingAViewControllerAnimatedInjectsAnAppBar() {
-    // Given
-    let viewController = UIViewController()
-
-    // When
-    navigationController.setViewControllers([viewController], animated: false)
-
-    // Then
-    XCTAssertEqual(viewController.children.count, 1,
-                   "Expected there to be exactly one child view controller added to the view"
-                    + " controller.")
-
-    XCTAssertEqual(navigationController.topViewController, viewController,
-                   "The navigation controller's top view controller is supposed to be the pushed"
-                    + " view controller, but it is \(viewController).")
-
-    XCTAssertTrue(viewController.children.first is MDCFlexibleHeaderViewController,
-                  "The injected view controller is not a flexible header view controller, it is"
-                    + "\(String(describing: viewController.children.first)) instead.")
-
-    if let headerViewController
-      = viewController.children.first as? MDCFlexibleHeaderViewController {
-      XCTAssertEqual(headerViewController.headerView.frame.height,
-                     headerViewController.headerView.maximumHeight)
-    }
-  }
-
   func testPushingAnAppBarContainerViewControllerDoesNotInjectAnAppBar() {
     // Given
     let viewController = UIViewController()
@@ -222,36 +168,6 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
 
     // When
     navigationController.pushViewController(viewController, animated: false)
-
-    // Then
-    let injectedAppBarViewController = viewController.children.first as! MDCAppBarViewController
-    XCTAssertNotNil(injectedAppBarViewController)
-    XCTAssertNotNil(injectedAppBarViewController.traitCollectionDidChangeBlock)
-  }
-
-  func testSettingAViewControllerAssignsTraitCollectionDidChangeBlock() {
-    // Given
-    let viewController = UIViewController()
-    let block: ((MDCFlexibleHeaderViewController, UITraitCollection?) -> Void)? = {_, _ in }
-    navigationController.traitCollectionDidChangeBlockForAppBarController = block
-
-    // When
-    navigationController.viewControllers = [viewController]
-
-    // Then
-    let injectedAppBarViewController = viewController.children.first as! MDCAppBarViewController
-    XCTAssertNotNil(injectedAppBarViewController)
-    XCTAssertNotNil(injectedAppBarViewController.traitCollectionDidChangeBlock)
-  }
-
-  func testSettingAViewControllerAnimatedAssignsTraitCollectionDidChangeBlock() {
-    // Given
-    let viewController = UIViewController()
-    let block: ((MDCFlexibleHeaderViewController, UITraitCollection?) -> Void)? = {_, _ in }
-    navigationController.traitCollectionDidChangeBlockForAppBarController = block
-
-    // When
-    navigationController.setViewControllers([viewController], animated: false)
 
     // Then
     let injectedAppBarViewController = viewController.children.first as! MDCAppBarViewController
