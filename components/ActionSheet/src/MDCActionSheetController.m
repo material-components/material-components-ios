@@ -366,7 +366,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   self.view.backgroundColor = backgroundColor;
   self.tableView.backgroundColor = backgroundColor;
   self.header.backgroundColor = backgroundColor;
-  [self.tableView reloadData];
+  //[self.tableView reloadData];
 }
 
 - (void)setTitleTextColor:(UIColor *)titleTextColor {
