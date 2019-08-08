@@ -137,7 +137,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
 }
 
-- (void)testActionSheetThemingWithDynamicColors {
+- (void)testActionSheetThemingSupportForiOS13 {
   // Given
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
@@ -152,7 +152,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
       [self.containerScheme.colorScheme.surfaceColor
           mdc_resolvedColorWithTraitCollection:self.actionSheet.traitCollection
                                      elevation:self.actionSheet.view.mdc_absoluteElevation]);
-  XCTAssertNil(self.actionSheet.mdc_elevationDidChangeBlock);
+  XCTAssertNotNil(self.actionSheet.mdc_elevationDidChangeBlock);
   XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
 }
 
