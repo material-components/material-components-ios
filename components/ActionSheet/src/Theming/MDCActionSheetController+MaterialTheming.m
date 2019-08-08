@@ -61,7 +61,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
       ^(MDCActionSheetController *_Nonnull actionSheet,
         UITraitCollection *_Nullable previousTraitCollection) {
         [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
-      } self.mdc_elevationDidChangeBlock =
+      };
+  self.mdc_elevationDidChangeBlock =
           ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
             if ([object isKindOfClass:[MDCActionSheetController class]]) {
               MDCActionSheetController *actionSheet = (MDCActionSheetController *)actionSheet;
