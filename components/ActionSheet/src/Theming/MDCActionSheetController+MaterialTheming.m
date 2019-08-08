@@ -38,9 +38,9 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   if (colorScheme.elevationOverlayEnabledForDarkMode) {
-    self.backgroundColor =
-        [colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:self.traitCollection
-                                                             elevation:self.view.mdc_absoluteElevation];
+    self.backgroundColor = [colorScheme.surfaceColor
+        mdc_resolvedColorWithTraitCollection:self.traitCollection
+                                   elevation:self.view.mdc_absoluteElevation];
   } else {
     self.backgroundColor = colorScheme.surfaceColor;
   }
@@ -57,11 +57,12 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
   self.inkColor = rippleColor;
   self.rippleColor = rippleColor;
-  self.traitCollectionDidChangeBlock = ^(MDCActionSheetController * _Nonnull actionSheet, UITraitCollection * _Nullable previousTraitCollection) {
-      if (colorScheme.elevationOverlayEnabledForDarkMode) {
-      actionSheet.backgroundColor =
-          [colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:actionSheet.traitCollection
-                                                               elevation:actionSheet.view.mdc_absoluteElevation];
+  self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
+                                         UITraitCollection *_Nullable previousTraitCollection) {
+    if (colorScheme.elevationOverlayEnabledForDarkMode) {
+      actionSheet.backgroundColor = [colorScheme.surfaceColor
+          mdc_resolvedColorWithTraitCollection:actionSheet.traitCollection
+                                     elevation:actionSheet.view.mdc_absoluteElevation];
     } else {
       actionSheet.backgroundColor = colorScheme.surfaceColor;
     }

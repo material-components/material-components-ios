@@ -139,14 +139,21 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 - (void)testActionSheetThemingWithDynamicColors {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
   self.containerScheme.colorScheme = colorScheme;
 
   // When
   [self.actionSheet applyThemeWithScheme:self.containerScheme];
 
   // Then
-  XCTAssertEqualObjects(self.actionSheet.backgroundColor, [self.containerScheme.colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:self.actionSheet.traitCollection elevation:self.actionSheet.view.mdc_absoluteElevation]);
+  XCTAssertEqualObjects(
+      self.actionSheet.backgroundColor,
+      [self.containerScheme.colorScheme.surfaceColor
+          mdc_resolvedColorWithTraitCollection:self.actionSheet.traitCollection
+                                     elevation:self.actionSheet.view.mdc_absoluteElevation]);
+  XCTAssertNil(self.actionSheet.mdc_elevationDidChangeBlock);
+  XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
 }
 
 @end
