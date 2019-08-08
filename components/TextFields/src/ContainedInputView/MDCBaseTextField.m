@@ -209,6 +209,10 @@
   [self mdc_setRightView:rightView];
 }
 
+- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
+  return CGRectZero;
+}
+
 #pragma mark Custom Accessors
 
 - (void)setTrailingView:(UIView *)trailingView {
