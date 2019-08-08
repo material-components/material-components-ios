@@ -203,6 +203,7 @@
   UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityHint = initialHint;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+
   // When
   bar.items = @[ tabBarItem ];
 
@@ -225,7 +226,9 @@
   tabBarItem.accessibilityHint = newHint;
 
   // Then
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, newHint);
+  MDCBottomNavigationItemView *itemView = bar.itemViews.firstObject;
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertEqualObjects(itemViewButton.accessibilityHint, newHint);
 }
 
 - (void)testIsAccessibilityElementInitialValue {
