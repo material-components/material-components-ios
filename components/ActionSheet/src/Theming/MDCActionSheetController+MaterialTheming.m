@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCActionSheetController+MaterialTheming.h"
+#import "MaterialElevation.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;
@@ -37,7 +38,13 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  self.backgroundColor = colorScheme.surfaceColor;
+  if (colorScheme.elevationOverlayEnabledForDarkMode) {
+    self.backgroundColor =
+        [colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:self.traitCollection
+                                                             elevation:self.mdc_absoluteElevation];
+  } else {
+    self.backgroundColor = colorScheme.surfaceColor;
+  }
   if (self.message && ![self.message isEqualToString:@""]) {
     // If there is a message then this can be high opacity and won't clash with actions.
     self.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
