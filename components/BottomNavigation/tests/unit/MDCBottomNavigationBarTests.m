@@ -540,6 +540,32 @@
   XCTAssertNil(result);
 }
 
+- (NSInteger)countOfButtonsWithAccessibilityHint:(NSString *)accessibilityHint
+                                    fromRootView:(UIView *)view {
+  NSInteger count = ([view isKindOfClass:[UIButton class]] &&
+                     [view.accessibilityHint isEqualToString:accessibilityHint])
+                        ? 1
+                        : 0;
+  for (UIView *subview in view.subviews) {
+    count += [self countOfButtonsWithAccessibilityHint:accessibilityHint fromRootView:subview];
+  }
+  return count;
+}
+
+- (void)testSettingAccessibilityHintPropagatesToOneUIButtonSubview {
+  // Given
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:9];
+  item.accessibilityHint = @"__h_i_n_t__";
+
+  // When
+  self.bottomNavBar.items = @[ item ];
+
+  // Then
+  XCTAssertEqual([self countOfButtonsWithAccessibilityHint:item.accessibilityHint
+                                              fromRootView:self.bottomNavBar],
+                 1);
+}
+
 #pragma mark - traitCollectionDidChangeBlock
 
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
