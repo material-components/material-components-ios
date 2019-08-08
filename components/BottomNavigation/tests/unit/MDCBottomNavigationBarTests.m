@@ -156,16 +156,28 @@
   XCTAssertNil(self.bottomNavBar.selectedItem);
 }
 
-- (void)testAccessibilityIdentifier {
-  NSString *oldIdentifier = @"oldIdentifier";
-  NSString *newIdentifier = @"newIdentifier";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
-  tabBarItem.accessibilityIdentifier = oldIdentifier;
-  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
-  bar.items = @[ tabBarItem ];
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, oldIdentifier);
-  tabBarItem.accessibilityIdentifier = newIdentifier;
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, newIdentifier);
+- (NSInteger)countOfViewsWithAccessibilityIdentifier:(NSString *)accessibilityIdentifier
+                                        fromRootView:(UIView *)view {
+  NSInteger sum = [view.accessibilityIdentifier isEqualToString:accessibilityIdentifier] ? 1 : 0;
+  for (UIView *subview in view.subviews) {
+    sum += [self countOfViewsWithAccessibilityIdentifier:accessibilityIdentifier
+                                            fromRootView:subview];
+  }
+  return sum;
+}
+
+- (void)testSettingAccessibilityIdentifierAffectsExactlyOneSubview {
+  // Given
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:1];
+  item.accessibilityIdentifier = @"__i_d__";
+
+  // When
+  self.bottomNavBar.items = @[ item ];
+
+  // Then
+  XCTAssertEqual([self countOfViewsWithAccessibilityIdentifier:item.accessibilityIdentifier
+                                                  fromRootView:self.bottomNavBar],
+                 1);
 }
 
 - (void)testAccessibilityLabelInitialValue {
