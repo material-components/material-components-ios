@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialActivityIndicator.h"
 #import "MaterialActivityIndicator+ColorThemer.h"
+#import "MaterialActivityIndicator.h"
 #import "MaterialColorScheme.h"
 
 @interface ActivityIndicatorColorThemerTests : XCTestCase
