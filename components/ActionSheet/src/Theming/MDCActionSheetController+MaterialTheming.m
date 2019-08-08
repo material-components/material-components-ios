@@ -57,19 +57,17 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
   self.inkColor = rippleColor;
   self.rippleColor = rippleColor;
-  self.traitCollectionDidChangeBlock =
-      ^(MDCActionSheetController *_Nonnull actionSheet,
-        UITraitCollection *_Nullable previousTraitCollection) {
-        [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
-      };
+  self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
+                                         UITraitCollection *_Nullable previousTraitCollection) {
+    [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+  };
   self.mdc_elevationDidChangeBlock =
-          ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
-            if ([object isKindOfClass:[MDCActionSheetController class]]) {
-              MDCActionSheetController *actionSheet = (MDCActionSheetController *)actionSheet;
-              [actionSheet applyBackgroundColorToActionSheet:actionSheet
-                                             withColorScheme:colorScheme];
-            }
-          };
+      ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
+        if ([object isKindOfClass:[MDCActionSheetController class]]) {
+          MDCActionSheetController *actionSheet = (MDCActionSheetController *)object;
+          [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+        }
+      };
 }
 
 - (void)applyBackgroundColorToActionSheet:(MDCActionSheetController *)actionSheet
