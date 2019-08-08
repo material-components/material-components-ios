@@ -37,13 +37,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  if (colorScheme.elevationOverlayEnabledForDarkMode) {
-    self.backgroundColor =
-        [colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:self.traitCollection
-                                                             elevation:self.view.mdc_absoluteElevation];
-  } else {
-    self.backgroundColor = colorScheme.surfaceColor;
-  }
+  [self applyBackgroundColorToActionSheet:self];
   if (self.message && ![self.message isEqualToString:@""]) {
     // If there is a message then this can be high opacity and won't clash with actions.
     self.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
@@ -57,6 +51,19 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
   self.inkColor = rippleColor;
   self.rippleColor = rippleColor;
+  self.traitCollectionDidChangeBlock = ^(MDCActionSheetController * _Nonnull actionSheet, UITraitCollection * _Nullable previousTraitCollection) {
+    [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+  }
+}
+
+- (void)applyBackgroundColorToActionSheet:(MDCActionSheetController *)actionSheet withColorScheme:(id<MDCColorScheming>)colorScheme {
+  if (colorScheme.elevationOverlayEnabledForDarkMode) {
+    self.backgroundColor =
+        [colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:self.traitCollection
+                                                             elevation:self.view.mdc_absoluteElevation];
+  } else {
+    self.backgroundColor = colorScheme.surfaceColor;
+  }
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
