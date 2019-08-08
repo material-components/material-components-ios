@@ -34,18 +34,18 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(color, ColorFromRGB(0xFFEBEE));
 }
 
-- (void) testCaching {
+- (void)testCaching {
   MDCPalette *first = MDCPalette.redPalette;
   MDCPalette *second = MDCPalette.redPalette;
   XCTAssertTrue(first == second);
 }
 
-- (void) testAccentlessPalette {
+- (void)testAccentlessPalette {
   MDCPalette *brownPalette = MDCPalette.brownPalette;
   XCTAssertNil(brownPalette.accent100);
 }
 
-- (void) testGeneratedPalette {
+- (void)testGeneratedPalette {
   MDCPalette *palette = [MDCPalette paletteGeneratedFromColor:[UIColor colorWithRed:(CGFloat)1
                                                                               green:(CGFloat)0
                                                                                blue:(CGFloat)0
@@ -68,25 +68,24 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testCustomPalette {
   NSDictionary<MDCPaletteTint, UIColor *> *tints = @{
-    MDCPaletteTint50Name: [UIColor colorWithWhite:(CGFloat)0 alpha:(CGFloat)1],
-    MDCPaletteTint100Name: [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)1],
-    MDCPaletteTint200Name: [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)1],
-    MDCPaletteTint300Name: [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)1],
-    MDCPaletteTint400Name: [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)1],
-    MDCPaletteTint500Name: [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)1],
-    MDCPaletteTint600Name: [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)1],
-    MDCPaletteTint700Name: [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)1],
-    MDCPaletteTint800Name: [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)1],
-    MDCPaletteTint900Name: [UIColor colorWithWhite:(CGFloat)0.9 alpha:(CGFloat)1],
+    MDCPaletteTint50Name : [UIColor colorWithWhite:(CGFloat)0 alpha:(CGFloat)1],
+    MDCPaletteTint100Name : [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)1],
+    MDCPaletteTint200Name : [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)1],
+    MDCPaletteTint300Name : [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)1],
+    MDCPaletteTint400Name : [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)1],
+    MDCPaletteTint500Name : [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)1],
+    MDCPaletteTint600Name : [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)1],
+    MDCPaletteTint700Name : [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)1],
+    MDCPaletteTint800Name : [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)1],
+    MDCPaletteTint900Name : [UIColor colorWithWhite:(CGFloat)0.9 alpha:(CGFloat)1],
   };
   NSDictionary<MDCPaletteAccent, UIColor *> *accents = @{
-    MDCPaletteAccent100Name: [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)0],
-    MDCPaletteAccent200Name: [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)0.25],
-    MDCPaletteAccent400Name: [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)0.75],
-    MDCPaletteAccent700Name: [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)1],
+    MDCPaletteAccent100Name : [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)0],
+    MDCPaletteAccent200Name : [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)0.25],
+    MDCPaletteAccent400Name : [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)0.75],
+    MDCPaletteAccent700Name : [UIColor colorWithWhite:(CGFloat)1 alpha:(CGFloat)1],
   };
-  MDCPalette *palette = [MDCPalette paletteWithTints:tints
-                                             accents:accents];
+  MDCPalette *palette = [MDCPalette paletteWithTints:tints accents:accents];
 
   XCTAssertEqual(palette.tint50, tints[MDCPaletteTint50Name]);
   XCTAssertEqual(palette.tint100, tints[MDCPaletteTint100Name]);
