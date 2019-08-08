@@ -51,6 +51,8 @@
 
 @property(nonatomic, assign) CGFloat contentVerticalMargin;
 @property(nonatomic, assign) CGFloat contentHorizontalMargin;
+/** The @c accessibilityIdentifier of the accessibility element for this view. */
+@property(nonatomic, copy, nullable) NSString *accessibilityElementIdentifier;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 

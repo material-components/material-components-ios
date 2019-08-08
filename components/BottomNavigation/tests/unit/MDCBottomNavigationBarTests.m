@@ -540,6 +540,30 @@
   XCTAssertNil(result);
 }
 
+- (NSInteger)countOfViewsWithAccessibilityIdentifier:(NSString *)accessibilityIdentifier
+                                        fromRootView:(UIView *)view {
+  NSInteger sum = [view.accessibilityIdentifier isEqualToString:accessibilityIdentifier] ? 1 : 0;
+  for (UIView *subview in view.subviews) {
+    sum += [self countOfViewsWithAccessibilityIdentifier:accessibilityIdentifier
+                                            fromRootView:subview];
+  }
+  return sum;
+}
+
+- (void)testSettingAccessibilityIdentifierAffectsExactlyOneSubview {
+  // Given
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:1];
+  item.accessibilityIdentifier = @"__i_d__";
+
+  // When
+  self.bottomNavBar.items = @[ item ];
+
+  // Then
+  XCTAssertEqual([self countOfViewsWithAccessibilityIdentifier:item.accessibilityIdentifier
+                                                  fromRootView:self.bottomNavBar],
+                 1);
+}
+
 #pragma mark - traitCollectionDidChangeBlock
 
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
