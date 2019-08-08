@@ -417,7 +417,7 @@ static NSString *const kOfAnnouncement = @"of";
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
       itemView.title = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityIdentifier))]) {
-      itemView.accessibilityIdentifier = newValue;
+      itemView.accessibilityElementIdentifier = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityLabel))]) {
       itemView.accessibilityLabel = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityHint))]) {
@@ -527,7 +527,7 @@ static NSString *const kOfAnnouncement = @"of";
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     itemView.accessibilityValue = item.accessibilityValue;
-    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
+    itemView.accessibilityElementIdentifier = item.accessibilityIdentifier;
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.isAccessibilityElement = item.isAccessibilityElement;
