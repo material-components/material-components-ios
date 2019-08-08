@@ -73,7 +73,9 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 - (void)applyBackgroundColorToActionSheet:(MDCActionSheetController *)actionSheet
                           withColorScheme:(id<MDCColorScheming>)colorScheme {
   if (colorScheme.elevationOverlayEnabledForDarkMode) {
-    actionSheet.backgroundColor = [self dynamicColorWithColor:colorScheme.surfaceColor elevation:actionSheet.view.mdc_absoluteElevation];
+    actionSheet.backgroundColor =
+        [self dynamicColorWithColor:colorScheme.surfaceColor
+                          elevation:actionSheet.view.mdc_absoluteElevation];
   } else {
     actionSheet.backgroundColor = colorScheme.surfaceColor;
   }
