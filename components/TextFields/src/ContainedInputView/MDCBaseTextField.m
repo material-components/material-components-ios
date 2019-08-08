@@ -21,12 +21,13 @@
 #import "private/MDCBaseTextFieldLayout.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
+#import "private/MDCContainedInputViewClearButton.h"
 
 @interface MDCBaseTextField ()
 
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
-
+@property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 
@@ -55,6 +56,7 @@
 - (void)commonMDCInputTextFieldInit {
   [self initializeProperties];
   [self setUpLabel];
+  [self setUpClearButton];
 }
 
 #pragma mark View Setup
@@ -80,6 +82,13 @@
 - (void)setUpLabel {
   self.label = [[UILabel alloc] initWithFrame:self.bounds];
   [self addSubview:self.label];
+}
+- (void)setUpClearButton {
+  self.clearButton = [[MDCContainedInputViewClearButton alloc] init];
+  [self.clearButton addTarget:self
+                       action:@selector(clearButtonPressed:)
+             forControlEvents:UIControlEventTouchUpInside];
+  [self addSubview:self.clearButton];
 }
 
 #pragma mark UIView Overrides
@@ -383,6 +392,13 @@
   } else {
     return MDCContainedInputViewLabelStateNone;
   }
+}
+
+#pragma mark User Actions
+
+- (void)clearButtonPressed:(UIButton *)clearButton {
+  self.text = nil;
+  [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 #pragma mark Internationalization
