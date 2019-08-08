@@ -24,23 +24,23 @@
 #import "MDCContainedInputViewStyleBase.h"
 #import "MaterialMath.h"
 
-@class MDCBaseInputChipViewTextView;
-@protocol MDCBaseInputChipViewTextViewDelegate <NSObject>
+@class MDCBaseTextAreaTextView;
+@protocol MDCBaseTextAreaTextViewDelegate <NSObject>
 - (void)inputChipViewTextViewDidBecomeFirstResponder:(BOOL)didBecome;
 - (void)inputChipViewTextViewDidResignFirstResponder:(BOOL)didResign;
 @end
 
-@interface MDCBaseInputChipViewTextView : UITextView
-@property(nonatomic, weak) id<MDCBaseInputChipViewTextViewDelegate> inputChipViewTextViewDelegate;
+@interface MDCBaseTextAreaTextView : UITextView
+@property(nonatomic, weak) id<MDCBaseTextAreaTextViewDelegate> inputChipViewTextViewDelegate;
 @property(strong, nonatomic, readonly) UIFont *effectiveFont;
 @end
 
-@implementation MDCBaseInputChipViewTextView
+@implementation MDCBaseTextAreaTextView
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonMDCBaseInputChipViewTextViewInit];
+    [self commonMDCBaseTextAreaTextViewInit];
   }
   return self;
 }
@@ -48,12 +48,12 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCBaseInputChipViewTextViewInit];
+    [self commonMDCBaseTextAreaTextViewInit];
   }
   return self;
 }
 
-- (void)commonMDCBaseInputChipViewTextViewInit {
+- (void)commonMDCBaseTextAreaTextViewInit {
   self.backgroundColor = [UIColor clearColor];
   self.textContainerInset = UIEdgeInsetsZero;
 }
@@ -81,7 +81,7 @@
 
 @end
 
-@interface MDCBaseTextArea () <MDCBaseInputChipViewTextViewDelegate, UIGestureRecognizerDelegate>
+@interface MDCBaseTextArea () <MDCContainedInputView, MDCBaseTextAreaTextViewDelegate, UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
 @property(strong, nonatomic) UILabel *label;
@@ -92,7 +92,7 @@
 @property(strong, nonatomic) UIView *maskedScrollViewContainerView;
 @property(strong, nonatomic) UIScrollView *scrollView;
 @property(strong, nonatomic) UIView *scrollViewContentViewTouchForwardingView;
-@property(strong, nonatomic) MDCBaseInputChipViewTextView *inputChipViewTextView;
+@property(strong, nonatomic) MDCBaseTextAreaTextView *inputChipViewTextView;
 
 @property(strong, nonatomic) MDCBaseTextAreaLayout *layout;
 
@@ -212,7 +212,7 @@
   self.scrollViewContentViewTouchForwardingView = [[UIView alloc] init];
   [self.scrollView addSubview:self.scrollViewContentViewTouchForwardingView];
 
-  self.inputChipViewTextView = [[MDCBaseInputChipViewTextView alloc] init];
+  self.inputChipViewTextView = [[MDCBaseTextAreaTextView alloc] init];
   self.inputChipViewTextView.inputChipViewTextViewDelegate = self;
   [self.scrollView addSubview:self.inputChipViewTextView];
 
@@ -616,6 +616,10 @@
   } else {
     return self.rightAssistiveLabel;
   }
+}
+
+-(CGFloat)numberOfTextRows {
+  return self.preferredNumberOfVisibleRows;
 }
 
 #pragma mark User Interaction

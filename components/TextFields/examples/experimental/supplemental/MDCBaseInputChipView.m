@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCBaseInputChipView.h"
-#import "MDCBaseInputChipView+Private.h"
+#import "MDCBaseInputChipView+MDCContainedInputView.h"
 #import "MDCBaseInputChipViewLayout.h"
 
 #import <CoreGraphics/CoreGraphics.h>
@@ -101,7 +101,8 @@
 
 static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
-@interface MDCBaseInputChipView () <MDCBaseInputChipViewTextFieldDelegate,
+@interface MDCBaseInputChipView () <MDCContainedInputView,
+                                    MDCBaseInputChipViewTextFieldDelegate,
                                     UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
@@ -794,6 +795,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 #pragma mark Accessors
+
+-(CGFloat)numberOfTextRows {
+  return self.preferredNumberOfVisibleRows;
+}
 
 - (UITextField *)textField {
   return self.inputChipViewTextField;

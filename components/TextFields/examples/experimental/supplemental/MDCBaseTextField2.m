@@ -500,7 +500,7 @@
 }
 
 - (CGFloat)numberOfTextRows {
-  return 1.0;
+  return 1;
 }
 
 #pragma mark UITextField Layout Overrides

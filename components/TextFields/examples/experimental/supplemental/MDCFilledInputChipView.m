@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCBaseInputChipView+Private.h"
+#import "MDCBaseInputChipView+MDCContainedInputView.h"
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewStyleFilled.h"
 

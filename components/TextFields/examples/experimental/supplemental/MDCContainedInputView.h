@@ -169,9 +169,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  */
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
 
-@optional
-
-@property(nonatomic, assign) CGFloat numberOfTextRows;
+@property(nonatomic, assign, readonly) CGFloat numberOfTextRows;
 
 @end
 
