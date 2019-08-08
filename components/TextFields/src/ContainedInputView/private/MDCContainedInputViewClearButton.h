@@ -26,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly) CGFloat sideLength;
 
 /**
- The length of the sides of the UIImageView within the button. It is equal to 18 points, so the clear button appears to be 18 points wide, even though it is larger and therefore easier to tap.
+ The length of the sides of the UIImageView within the button. It is equal to 18 points, so the
+ clear button appears to be 18 points wide, even though it is larger and therefore easier to tap.
  */
 @property(nonatomic, readonly) CGFloat imageViewSideLength;
 @end
