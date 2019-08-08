@@ -96,6 +96,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   XCTAssertEqualObjects(actionSheetCell.inkTouchController.defaultInkView.inkColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
   XCTAssertEqualObjects(actionSheetCell.actionLabel.font, typographyScheme.subtitle1);
+  XCTAssertNotNil(self.actionSheet.mdc_elevationDidChangeBlock);
+  XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
 }
 
 - (void)testActionSheetThemingTestWithHeaderOnly {
@@ -108,6 +110,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+  XCTAssertNotNil(self.actionSheet.mdc_elevationDidChangeBlock);
+  XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
 }
 
 - (void)testActionSheetThemingTestWithMessageOnly {
@@ -120,6 +124,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+  XCTAssertNotNil(self.actionSheet.mdc_elevationDidChangeBlock);
+  XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
 }
 
 - (void)testActionSheetThemingTestWithHeaderAndMessage {
@@ -135,23 +141,6 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
-}
-
-- (void)testActionSheetThemingSupportForiOS13 {
-  // Given
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
-  self.containerScheme.colorScheme = colorScheme;
-
-  // When
-  [self.actionSheet applyThemeWithScheme:self.containerScheme];
-
-  // Then
-  XCTAssertEqualObjects(
-      self.actionSheet.backgroundColor,
-      [self.containerScheme.colorScheme.surfaceColor
-          mdc_resolvedColorWithTraitCollection:self.actionSheet.traitCollection
-                                     elevation:self.actionSheet.view.mdc_absoluteElevation]);
   XCTAssertNotNil(self.actionSheet.mdc_elevationDidChangeBlock);
   XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
 }
