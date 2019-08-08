@@ -19,7 +19,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCContainedInputViewClearButton : UIButton
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
+
+/**
+ The length of the sides of the button. It is equal to 48 points, which is the minimum touch target.
+ */
 @property(nonatomic, readonly) CGFloat sideLength;
+
+/**
+ The length of the sides of the UIImageView within the button. It is equal to 18 points, so the clear button appears to be 18 points wide, even though it is larger and therefore easier to tap.
+ */
 @property(nonatomic, readonly) CGFloat imageViewSideLength;
 @end
 
