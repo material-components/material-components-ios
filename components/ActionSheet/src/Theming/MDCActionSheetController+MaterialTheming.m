@@ -59,12 +59,16 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   self.rippleColor = rippleColor;
   self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
                                          UITraitCollection *_Nullable previousTraitCollection) {
-    if (colorScheme.elevationOverlayEnabledForDarkMode) {
-      actionSheet.backgroundColor = [colorScheme.surfaceColor
-          mdc_resolvedColorWithTraitCollection:actionSheet.traitCollection
-                                     elevation:actionSheet.view.mdc_absoluteElevation];
-    } else {
-      actionSheet.backgroundColor = colorScheme.surfaceColor;
+    if (@available(iOS 13.0, *)) {
+      if ([actionSheet.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        if (colorScheme.elevationOverlayEnabledForDarkMode) {
+          actionSheet.backgroundColor = [colorScheme.surfaceColor
+                                         mdc_resolvedColorWithTraitCollection:actionSheet.traitCollection
+                                         elevation:actionSheet.view.mdc_absoluteElevation];
+        } else {
+          actionSheet.backgroundColor = colorScheme.surfaceColor;
+        }
+      }
     }
   };
 }
