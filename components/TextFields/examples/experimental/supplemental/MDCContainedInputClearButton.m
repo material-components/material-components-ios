@@ -16,7 +16,7 @@
 
 #import "MaterialMath.h"
 
-static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
+static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)48.0;
 static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 @interface MDCContainedInputClearButton ()
