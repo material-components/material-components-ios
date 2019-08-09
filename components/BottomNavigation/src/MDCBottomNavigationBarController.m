@@ -27,6 +27,7 @@ static const CGFloat kLargeItemViewWidth = 210;
 static const NSTimeInterval kLargeItemViewAnimationDuration = 0.1;
 static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
 static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
+static NSString *const kSelectedViewControllerRestorationKey = @"selectedViewController";
 
 /**
  The transform of the large item view when it is in a transitional state (appearing or
@@ -34,6 +35,23 @@ static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
  */
 static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
   return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
+}
+
+/**
+ Decodes a view controller with the given key from the given coder. If the coder does not have an
+ object associated with the key or the value is not a @c UIViewController this function returns nil.
+ */
+static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString *key) {
+  if (![coder containsValueForKey:key]) {
+    return nil;
+  }
+
+  UIViewController *viewController = [coder decodeObjectForKey:key];
+  if ([viewController isKindOfClass:[UIViewController class]]) {
+    return viewController;
+  }
+
+  return nil;
 }
 
 @interface MDCBottomNavigationBarController ()
@@ -347,6 +365,32 @@ static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
     self.selectedIndex = index;
   }
   [self dismissLargeItemDialog];
+}
+
+#pragma mark - State Restoration Methods
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
+  for (UIViewController *childViewController in self.childViewControllers) {
+    if (childViewController.restorationIdentifier.length > 0) {
+      [coder encodeObject:childViewController];
+    }
+  }
+
+  if (self.selectedViewController) {
+    [coder encodeObject:self.selectedViewController forKey:kSelectedViewControllerRestorationKey];
+  }
+
+  [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
+  UIViewController *selectedViewController =
+      DecodeViewController(coder, kSelectedViewControllerRestorationKey);
+  if (selectedViewController && [self.viewControllers containsObject:selectedViewController]) {
+    self.selectedViewController = selectedViewController;
+  }
+
+  [super decodeRestorableStateWithCoder:coder];
 }
 
 #pragma mark - Private Methods
