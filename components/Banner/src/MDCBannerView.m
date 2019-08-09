@@ -129,6 +129,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   textView.editable = NO;
   textView.textAlignment = NSTextAlignmentNatural;
   textView.textContainerInset = UIEdgeInsetsZero;
+  textView.backgroundColor = UIColor.clearColor;
   [self addSubview:textView];
   _textView = textView;
 
