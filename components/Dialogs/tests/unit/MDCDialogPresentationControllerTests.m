@@ -37,9 +37,9 @@
   presentationController.traitCollectionDidChangeBlock =
       ^(MDCDialogPresentationController *_Nonnull presentationControllerInBlock,
         UITraitCollection *_Nullable previousTraitCollection) {
-        [expectation fulfill];
         passedTraitCollection = previousTraitCollection;
         passedPresentationController = presentationControllerInBlock;
+        [expectation fulfill];
       };
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
