@@ -168,7 +168,7 @@
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (UITraitCollection *_Nullable previousTraitCollection);
+    (MDCButton *_Nonnull button, UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  A color used as the button's @c backgroundColor for @c state.
