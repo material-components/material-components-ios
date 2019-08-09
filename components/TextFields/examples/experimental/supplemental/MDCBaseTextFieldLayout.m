@@ -38,7 +38,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
                         rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(MDCContainedInputClearButton *)clearButton
+                          clearButton:(MDCContainedInputViewClearButton *)clearButton
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
@@ -92,7 +92,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
                            rightViewMode:(UITextFieldViewMode)rightViewMode
-                             clearButton:(MDCContainedInputClearButton *)clearButton
+                             clearButton:(MDCContainedInputViewClearButton *)clearButton
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
                       leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                      rightAssistiveLabel:(UILabel *)rightAssistiveLabel

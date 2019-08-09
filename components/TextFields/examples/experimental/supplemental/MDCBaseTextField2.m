@@ -20,7 +20,7 @@
 
 #import "MDCBaseTextFieldLayout.h"
 #import "MDCContainedInputAssistiveLabelView.h"
-#import "MDCContainedInputClearButton.h"
+#import "MDCContainedInputViewClearButton.h"
 #import "MDCContainedInputViewLabelAnimator.h"
 #import "MDCContainedInputViewStyleBase.h"
 #import "MDCContainedInputViewStylePathDrawingUtils.h"
@@ -29,7 +29,7 @@
 
 @interface MDCBaseTextField2 () <MDCContainedInputView>
 
-@property(strong, nonatomic) MDCContainedInputClearButton *clearButton;
+@property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) UILabel *placeholderLabel;
 
@@ -170,7 +170,7 @@
 }
 
 - (void)setUpClearButton {
-  self.clearButton = [[MDCContainedInputClearButton alloc] init];
+  self.clearButton = [[MDCContainedInputViewClearButton alloc] init];
   [self.clearButton addTarget:self
                        action:@selector(clearButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];

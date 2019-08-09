@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputClearButton.h"
+#import "MDCContainedInputViewClearButton.h"
 
 #import "MaterialMath.h"
 
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)48.0;
 static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
-@interface MDCContainedInputClearButton ()
+@interface MDCContainedInputViewClearButton ()
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
 @end
 
-@implementation MDCContainedInputClearButton
+@implementation MDCContainedInputViewClearButton
 
 #pragma mark Object Lifecycle
 

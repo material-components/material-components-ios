@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputAssistiveLabelView.h"
-#import "MDCContainedInputClearButton.h"
+#import "MDCContainedInputViewClearButton.h"
 #import "MDCContainedInputView.h"
 
 @protocol MDCContainedInputViewStyle;
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
                         rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(MDCContainedInputClearButton *)clearButton
+                          clearButton:(MDCContainedInputViewClearButton *)clearButton
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel

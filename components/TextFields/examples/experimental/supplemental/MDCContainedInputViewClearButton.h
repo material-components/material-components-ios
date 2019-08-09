@@ -17,7 +17,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCContainedInputClearButton : UIButton
+@interface MDCContainedInputViewClearButton : UIButton
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 @property(nonatomic, readonly) CGFloat sideLength;
 @property(nonatomic, readonly) CGFloat imageViewSideLength;
