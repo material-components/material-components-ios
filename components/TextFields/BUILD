@@ -213,4 +213,5 @@ mdc_unit_test_suite(
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
+    use_autobot_environment_runner = False,
 )
