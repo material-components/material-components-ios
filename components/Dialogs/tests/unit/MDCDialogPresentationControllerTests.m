@@ -26,10 +26,11 @@
   // Given
   UIViewController *presentedViewController = [[UIViewController alloc] init];
   UIViewController *presentingViewController = [[UIViewController alloc] init];
-  MDCDialogPresentationController *presentationController = [[MDCDialogPresentationController alloc] initWithPresentedViewController:presentedViewController
-                                                                                                            presentingViewController:presentingViewController];
+  MDCDialogPresentationController *presentationController = [[MDCDialogPresentationController alloc]
+      initWithPresentedViewController:presentedViewController
+             presentingViewController:presentingViewController];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
 
   __block UITraitCollection *passedTraitCollection;
   __block MDCDialogPresentationController *passedPresentationController;
