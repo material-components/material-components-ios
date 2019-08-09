@@ -295,7 +295,7 @@ def mdc_unit_test_suite(
             runner = select({
                 ":kokoro": KOKORO_ENVIRONMENT_IOS_RUNNER_TARGET,
                 ":autobot": AUTOBOT_ENVIRONMENT_IOS_RUNNER_TARGET,
-                "//conditions:default": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
+                "//conditions:default": KOKORO_ENVIRONMENT_IOS_RUNNER_TARGET,
             }),
             visibility = visibility,
             size = size,
