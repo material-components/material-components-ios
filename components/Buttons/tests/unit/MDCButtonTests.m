@@ -1340,9 +1340,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] init];
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
-  button.traitCollectionDidChangeBlock = ^(MDCButton *_Nonnull passedButton, UITraitCollection *_Nullable previousTraitCollection) {
-    [expectation fulfill];
-  };
+  button.traitCollectionDidChangeBlock =
+      ^(MDCButton *_Nonnull passedButton, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
 
   // When
   [button traitCollectionDidChange:nil];
