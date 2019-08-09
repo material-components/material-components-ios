@@ -272,27 +272,42 @@ def mdc_unit_test_suite(
     minimum_os_version = IOS_MINIMUM_OS,
     visibility = ["//visibility:private"],
     size = "medium",
+    use_autobot_extension_runner = True,
     **kwargs):
-    """Declare a MDC unit_test_suite and a unit_test_extension using the ios_runners matrix."""
+    """Declare a MDC unit_test_suite and a unit_test_extension using the ios_runners matrix.
+
+    Args:
+        name: The name of the target.
+        deps: The dependencies of the target.
+        minimum_os_version: The minimum iOS version supported by the target.
+        visibility: The visibility of the package.
+        size: The size of the test.
+        use_autobot_extension_runner: Indicates whether autobot extension runner should be used.
+        **kwargs: Any arguments accepted by ios_unit_test().
+    """
     mdc_ci_config_setting()
+    runners = list(DEFAULT_IOS_RUNNER_TARGETS)
+    if use_autobot_extension_runner:
+        ios_unit_test(
+            name = name + '_extension',
+            deps = deps,
+            minimum_os_version = minimum_os_version,
+            runner = select({
+                ":kokoro": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
+                ":autobot": AUTOBOT_EXTENSION_IOS_RUNNER_TARGET,
+                "//conditions:default": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
+            }),
+            visibility = visibility,
+            size = size,
+            **kwargs)
+    else:
+        runners.append(KOKORO_EXTENSION_IOS_RUNNER_TARGET)
     ios_unit_test_suite(
         name = name,
         deps = deps,
         minimum_os_version = minimum_os_version,
-        runners = DEFAULT_IOS_RUNNER_TARGETS,
+        runners = runners,
         visibility = visibility,
         size = size,
         **kwargs
     )
-    ios_unit_test(
-        name = name + '_extension',
-        deps = deps,
-        minimum_os_version = minimum_os_version,
-        runner = select({
-            ":kokoro": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
-            ":autobot": AUTOBOT_EXTENSION_IOS_RUNNER_TARGET,
-            "//conditions:default": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
-        }),
-        visibility = visibility,
-        size = size,
-        **kwargs)
