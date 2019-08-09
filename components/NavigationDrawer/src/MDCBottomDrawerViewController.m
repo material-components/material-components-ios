@@ -88,6 +88,10 @@
   return UIModalPresentationCustom;
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return self.presentingViewController.supportedInterfaceOrientations;
+}
+
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
   _trackingScrollView = trackingScrollView;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
