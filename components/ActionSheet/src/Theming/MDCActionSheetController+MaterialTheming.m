@@ -66,15 +66,15 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
         [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
       }
     };
-  self.mdc_elevationDidChangeBlock =
-      ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
-        if ([object isKindOfClass:[MDCActionSheetController class]]) {
-          MDCActionSheetController *actionSheet = (MDCActionSheetController *)object;
-          [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
-        }
-      };
-    }
-  #endif
+    self.mdc_elevationDidChangeBlock =
+        ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
+          if ([object isKindOfClass:[MDCActionSheetController class]]) {
+            MDCActionSheetController *actionSheet = (MDCActionSheetController *)object;
+            [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+          }
+        };
+  }
+#endif
 }
 
 - (void)applyBackgroundColorToActionSheet:(MDCActionSheetController *)actionSheet
