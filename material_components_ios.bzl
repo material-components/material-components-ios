@@ -282,7 +282,7 @@ def mdc_unit_test_suite(
         minimum_os_version: The minimum iOS version supported by the target.
         visibility: The visibility of the package.
         size: The size of the test.
-        use_autobot_extension_runner: Indicates whether autobot extension runner should be used.
+        use_autobot_extension_runner: Indicates whether autobot (a testing machine) extension runner should be used.
         **kwargs: Any arguments accepted by ios_unit_test().
     """
     mdc_ci_config_setting()
