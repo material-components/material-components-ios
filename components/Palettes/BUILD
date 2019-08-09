@@ -19,18 +19,12 @@ load(
     "mdc_public_objc_library",
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
-    "mdc_unit_test_swift_library",
 )
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Palettes",
-)
-
-mdc_unit_test_swift_library(
-    name = "unit_test_swift_sources",
-    deps = [":Palettes"],
 )
 
 mdc_examples_swift_library(
@@ -50,6 +44,5 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
-        ":unit_test_swift_sources",
     ],
 )
