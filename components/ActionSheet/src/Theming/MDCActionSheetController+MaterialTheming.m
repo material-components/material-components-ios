@@ -57,18 +57,17 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
   self.inkColor = rippleColor;
   self.rippleColor = rippleColor;
-  #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-    if (@available(iOS 13.0, *)) {
-  self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
-                                         UITraitCollection *_Nullable previousTraitCollection) {
-
-    if ([actionSheet.traitCollection
-            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-      [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
-    }
-  };
-            }
-      #endif
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
+                                           UITraitCollection *_Nullable previousTraitCollection) {
+      if ([actionSheet.traitCollection
+              hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+      }
+    };
+  }
+#endif
   self.mdc_elevationDidChangeBlock =
       ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
         if ([object isKindOfClass:[MDCActionSheetController class]]) {
