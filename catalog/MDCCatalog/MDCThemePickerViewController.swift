@@ -69,12 +69,12 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     return palettesCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
   }
 
-  let titleColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.5)
-  let titleFont = AppTheme.globalTheme.typographyScheme.button
+  let titleColor = AppTheme.containerScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.5)
+  let titleFont = AppTheme.containerScheme.typographyScheme.button
   private let cellReuseIdentifier = "cell"
   private let colorSchemeConfigurations = [
     MDCColorThemeCellConfiguration(name: "Default",
-                                   mainColor: AppTheme.globalTheme.colorScheme.primaryColor,
+                                   mainColor: AppTheme.containerScheme.colorScheme.primaryColor,
                                    scheme: DefaultContainerScheme()),
     MDCColorThemeCellConfiguration(name: "Blue",
                                    mainColor: MDCPalette.blue.tint500,
@@ -153,8 +153,8 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     cell.contentView.layer.cornerRadius = cellSize / 2
     cell.contentView.layer.borderWidth = 1
     cell.contentView.layer.borderColor =
-      AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.05).cgColor
-    if AppTheme.globalTheme.colorScheme.primaryColor
+      AppTheme.containerScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.05).cgColor
+    if AppTheme.containerScheme.colorScheme.primaryColor
       == colorSchemeConfigurations[indexPath.item].mainColor {
       cell.imageView.isHidden = false
       cell.isSelected = true
@@ -207,7 +207,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     navigationController?.popViewController(animated: true)
     let scheme = colorSchemeConfigurations[indexPath.item].scheme
-    AppTheme.globalTheme = AppTheme(containerScheme: scheme)
+    AppTheme.containerScheme = scheme
   }
 
 }

@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   }
 
   @objc func themeDidChange(notification: NSNotification) {
-    let colorScheme = AppTheme.globalTheme.colorScheme
+    let colorScheme = AppTheme.containerScheme.colorScheme
     for viewController in navigationController.children {
       guard let appBar = navigationController.appBar(for: viewController) else {
         continue
@@ -82,9 +82,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
                                   willAdd appBarViewController: MDCAppBarViewController,
                                   asChildOf viewController: UIViewController) {
-    MDCAppBarColorThemer.applyColorScheme(AppTheme.globalTheme.colorScheme,
+    MDCAppBarColorThemer.applyColorScheme(AppTheme.containerScheme.colorScheme,
                                                         to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.globalTheme.typographyScheme,
+    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.containerScheme.typographyScheme,
                                                     to: appBarViewController)
 
     if let injectee = viewController as? CatalogAppBarInjectee {
