@@ -59,7 +59,9 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   self.rippleColor = rippleColor;
   self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
                                          UITraitCollection *_Nullable previousTraitCollection) {
-    [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+    if ([actionSheet.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+    }
   };
   self.mdc_elevationDidChangeBlock =
       ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
