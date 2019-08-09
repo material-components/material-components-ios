@@ -1340,8 +1340,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] init];
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
+
+  __block MDCButton *passedButton;
   button.traitCollectionDidChangeBlock =
-      ^(MDCButton *_Nonnull passedButton, UITraitCollection *_Nullable previousTraitCollection) {
+      ^(MDCButton *_Nonnull buttonInBlock, UITraitCollection *_Nullable previousTraitCollection) {
+        passedButton = buttonInBlock;
         [expectation fulfill];
       };
 
@@ -1350,6 +1353,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedButton, button);
 }
 
 #pragma mark - MaterialElevation
