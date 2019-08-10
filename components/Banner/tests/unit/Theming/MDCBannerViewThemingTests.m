@@ -57,11 +57,11 @@ static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
   XCTAssertEqualObjects(self.bannerView.dividerColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
                             colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
-  XCTAssertEqualObjects([self.bannerView.leadingButton titleFontForState:UIControlStateNormal],
+  XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                         self.containerScheme.colorScheme.primaryColor);
   XCTAssertEqualObjects([self.bannerView.leadingButton imageTintColorForState:UIControlStateNormal],
                         self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.bannerView.trailingButton titleFontForState:UIControlStateNormal],
+  XCTAssertEqualObjects([self.bannerView.trailingButton titleColorForState:UIControlStateNormal],
                         self.containerScheme.colorScheme.primaryColor);
   XCTAssertEqualObjects(
       [self.bannerView.trailingButton imageTintColorForState:UIControlStateNormal],
@@ -101,11 +101,11 @@ static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
   XCTAssertEqualObjects(self.bannerView.dividerColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
                             colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
-  XCTAssertEqualObjects([self.bannerView.leadingButton titleFontForState:UIControlStateNormal],
+  XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                         self.containerScheme.colorScheme.primaryColor);
   XCTAssertEqualObjects([self.bannerView.leadingButton imageTintColorForState:UIControlStateNormal],
                         self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.bannerView.trailingButton titleFontForState:UIControlStateNormal],
+  XCTAssertEqualObjects([self.bannerView.trailingButton titleColorForState:UIControlStateNormal],
                         self.containerScheme.colorScheme.primaryColor);
   XCTAssertEqualObjects(
       [self.bannerView.trailingButton imageTintColorForState:UIControlStateNormal],
