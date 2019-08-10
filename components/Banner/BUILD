@@ -78,6 +78,7 @@ mdc_unit_test_objc_library(
     ]),
     deps = [
         ":Banner",
+        ":Theming",
         "//components/Buttons",
         "//components/Typography",
     ],
