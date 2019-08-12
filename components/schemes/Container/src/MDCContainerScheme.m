@@ -27,4 +27,34 @@
   return self;
 }
 
++ (MDCContainerScheme *)resolveScheme:(id<MDCContainerScheming>)scheme
+                   forTraitCollection:(UITraitCollection *)traitCollection {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.typographyScheme = [MDCTypographyScheme resolveScheme:scheme.typographyScheme
+                                                     forTraitCollection:traitCollection];
+  return containerScheme;
+}
+
+#pragma mark - NSMutableCopying
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+  MDCContainerScheme *copy = [[MDCContainerScheme alloc] init];
+  copy.colorScheme = [self.colorScheme mutableCopy];
+  copy.typographyScheme = [self.typographyScheme mutableCopy];
+  copy.shapeScheme = [self.shapeScheme mutableCopy];
+  return copy;
+}
+
+@end
+
+@implementation MDCContainerScheme (TraitCollectionSupport)
+
++ (MDCContainerScheme *)resolveScheme:(id<MDCContainerScheming>)scheme
+                   forTraitCollection:(UITraitCollection *)traitCollection {
+  MDCContainerScheme *copy = [scheme mutableCopy];
+  copy.typographyScheme = [MDCTypographyScheme resolveScheme:copy.typographyScheme
+                                          forTraitCollection:traitCollection];
+  return copy;
+}
+
 @end

@@ -119,9 +119,9 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
                          alpha:alpha + bAlpha * (1 - alpha)];
 }
 
-#pragma mark - NSCopying
+#pragma mark - NSMutableCopying
 
-- (id)copyWithZone:(NSZone *)zone {
+- (id)mutableCopyWithZone:(NSZone *)zone {
   MDCSemanticColorScheme *copy = [[MDCSemanticColorScheme alloc] init];
   copy.primaryColor = self.primaryColor;
   copy.primaryColorVariant = self.primaryColorVariant;
@@ -133,8 +133,13 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
   copy.onSecondaryColor = self.onSecondaryColor;
   copy.onSurfaceColor = self.onSurfaceColor;
   copy.onBackgroundColor = self.onBackgroundColor;
-
   return copy;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  return [self mutableCopyWithZone:zone];
 }
 
 @end

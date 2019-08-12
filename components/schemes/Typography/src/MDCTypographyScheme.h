@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCTypographyScheme;
+
 /**
  A simple typography scheme that provides semantic fonts. There are no optional
  properties, all fonts must be provided, supporting more reliable typography theming.
@@ -110,6 +112,22 @@
  */
 @property(nonatomic, assign, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
 
+/**
+ Returns a mutable copy of the receiver.
+
+ @note This protocol will eventually require conformance to NSMutableCopying and this method will
+ become required.
+ */
+- (nonnull MDCTypographyScheme *)mutableCopy;
+
+/**
+ Returns a mutable copy of the receiver with the given zone.
+
+ @note This method's protocol will eventually require conformance to NSMutableCopying and this
+ method will become required.
+ */
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone;
+
 @end
 
 /**
@@ -135,7 +153,7 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
  A simple implementation of @c MDCTypographyScheming that provides Material default fonts
  from which basic customizations can be made.
  */
-@interface MDCTypographyScheme : NSObject <MDCTypographyScheming, NSCopying>
+@interface MDCTypographyScheme : NSObject <MDCTypographyScheming, NSCopying, NSMutableCopying>
 
 // Redeclare protocol properties as readwrite
 @property(nonatomic, nonnull, readwrite, copy) UIFont *headline1;

@@ -118,18 +118,9 @@
   return self;
 }
 
-- (instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults
-                 traitCollection:(UITraitCollection *)traitCollection {
-  self = [self initWithDefaults:defaults];
-  if (self) {
-    [MDCTypographyScheme mutateScheme:self forTraitCollection:traitCollection];
-  }
-  return self;
-}
+#pragma mark - NSMutableCopying
 
-#pragma mark - NSCopying
-
-- (id)copyWithZone:(NSZone *)zone {
+- (id)mutableCopyWithZone:(NSZone *)zone {
   MDCTypographyScheme *copy = [[MDCTypographyScheme alloc] init];
   copy.headline1 = self.headline1;
   copy.headline2 = self.headline2;
@@ -144,9 +135,14 @@
   copy.caption = self.caption;
   copy.button = self.button;
   copy.overline = self.overline;
-  copy.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-
+  copy.useCurrentContentSizeCategoryWhenApplied = self.useCurrentContentSizeCategoryWhenApplied;
   return copy;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  return [self mutableCopyWithZone:zone];
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -157,13 +153,37 @@
   self.useCurrentContentSizeCategoryWhenApplied = mdc_adjustsFontForContentSizeCategory;
 }
 
+@end
+
+#pragma mark - TraitCollectionSupport
+
+@implementation MDCTypographyScheme (TraitCollectionSupport)
+
+#pragma mark Public
+
+- (instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults
+                 traitCollection:(UITraitCollection *)traitCollection {
+  self = [self initWithDefaults:defaults];
+  if (self) {
+    [MDCTypographyScheme mutateScheme:self forTraitCollection:traitCollection];
+  }
+  return self;
+}
+
 + (MDCTypographyScheme *)resolveScheme:(id<MDCTypographyScheming>)scheme
                     forTraitCollection:(UITraitCollection *)traitCollection {
-  MDCTypographyScheme *resolved =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  MDCTypographyScheme *resolved;
+  if ([scheme respondsToSelector:@selector(mutableCopyWithZone:)]) {
+    resolved = [scheme mutableCopy];
+  } else {
+    resolved =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  }
   [self mutateScheme:resolved forTraitCollection:traitCollection];
   return resolved;
 }
+
+#pragma mark Private
 
 + (void)mutateScheme:(MDCTypographyScheme *)scheme
     forTraitCollection:(UITraitCollection *)traitCollection {

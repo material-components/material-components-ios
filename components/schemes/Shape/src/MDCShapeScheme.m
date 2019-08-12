@@ -37,4 +37,14 @@
   return self;
 }
 
+#pragma mark - NSMutableCopying
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+  MDCShapeScheme *copy = [[MDCShapeScheme alloc] init];
+  copy.smallComponentShape = self.smallComponentShape;
+  copy.mediumComponentShape = self.mediumComponentShape;
+  copy.largeComponentShape = self.largeComponentShape;
+  return copy;
+}
+
 @end

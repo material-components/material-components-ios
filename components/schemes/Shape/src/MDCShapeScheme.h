@@ -16,6 +16,8 @@
 #import <UIKit/UIKit.h>
 #import "MDCShapeCategory.h"
 
+@class MDCShapeScheme;
+
 /**
  A simple shape scheme that provides semantic meaning.
  Each MDCShapeCategory is mapped to a component.
@@ -40,6 +42,24 @@
  */
 @property(nonnull, readonly, nonatomic) MDCShapeCategory *largeComponentShape;
 
+@optional
+
+/**
+ Returns a mutable copy of the receiver.
+
+ @note This method's protocol will eventually require conformance to NSMutableCopying and this
+ method will become required.
+ */
+- (nonnull MDCShapeScheme *)mutableCopy;
+
+/**
+ Returns a mutable copy of the receiver with the given zone.
+
+ @note This method's protocol will eventually require conformance to NSMutableCopying and this
+ method will become required.
+ */
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone;
+
 @end
 
 /**
@@ -56,7 +76,7 @@ typedef NS_ENUM(NSInteger, MDCShapeSchemeDefaults) {
  A simple implementation of @c MDCShapeScheming that provides Material default shape values from
  which basic customizations can be made.
  */
-@interface MDCShapeScheme : NSObject <MDCShapeScheming>
+@interface MDCShapeScheme : NSObject <MDCShapeScheming, NSMutableCopying>
 
 // Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, nonatomic) MDCShapeCategory *smallComponentShape;

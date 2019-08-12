@@ -18,6 +18,8 @@
 #import <MaterialComponents/MaterialShapeScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
 
+@class MDCContainerScheme;
+
 /**
  A container scheme that exposes properties for all supported Material Theming subsystem schemes.
  */
@@ -38,6 +40,24 @@
  */
 @property(nonatomic, nullable, readonly) id<MDCShapeScheming> shapeScheme;
 
+@optional
+
+/**
+ Returns a mutable copy of the receiver.
+
+ @note This protocol will eventually require conformance to NSMutableCopying and this method will
+ become required.
+ */
+- (nonnull MDCContainerScheme *)mutableCopy;
+
+/**
+ Returns a mutable copy of the receiver with the given zone.
+
+ @note This method's protocol will eventually require conformance to NSMutableCopying and this
+ method will become required.
+ */
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone;
+
 @end
 
 /**
@@ -45,7 +65,7 @@
  schemes values for theming systems.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
-    : NSObject<MDCContainerScheming>
+    : NSObject<MDCContainerScheming, NSMutableCopying>
 
 /**
  Defaults to @c MDCColorSchemeDefaultsMaterial201804
@@ -61,5 +81,17 @@ __attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
  Defaults to @c nil
  */
 @property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;
+
+@end
+
+@interface MDCContainerScheme (TraitCollectionSupport)
+
+/**
+ Returns a copy of this scheme configured with the given trait collection.
+
+ @see MDCTypographyScheme's +resolveScheme:forTraitCollection: for more details.
+ */
++ (nonnull MDCContainerScheme *)resolveScheme:(nonnull id<MDCContainerScheming>)scheme
+                           forTraitCollection:(nonnull UITraitCollection *)traitCollection;
 
 @end

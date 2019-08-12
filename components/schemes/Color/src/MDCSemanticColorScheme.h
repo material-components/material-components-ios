@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class MDCSemanticColorScheme;
+
 /**
  A simple color scheme that provides semantic context for the colors it uses. There are no optional
  properties and all colors must be provided, supporting more reliable color theming.
@@ -86,6 +88,24 @@
  */
 @property(readonly, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 
+@optional
+
+/**
+ Returns a mutable copy of the receiver.
+
+ @note This protocol will eventually require conformance to NSMutableCopying and this method will
+ become required.
+ */
+- (nonnull MDCSemanticColorScheme *)mutableCopy;
+
+/**
+ Returns a mutable copy of the receiver with the given zone.
+
+ @note This method's protocol will eventually require conformance to NSMutableCopying and this
+ method will become required.
+ */
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone;
+
 @end
 
 /**
@@ -110,7 +130,7 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
  A simple implementation of @c MDCColorScheming that provides Material default color values from
  which basic customizations can be made.
  */
-@interface MDCSemanticColorScheme : NSObject <MDCColorScheming, NSCopying>
+@interface MDCSemanticColorScheme : NSObject <MDCColorScheming, NSCopying, NSMutableCopying>
 
 // Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, copy, nonatomic) UIColor *primaryColor;
