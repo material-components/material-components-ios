@@ -96,6 +96,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   XCTAssertEqualObjects(actionSheetCell.inkTouchController.defaultInkView.inkColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
   XCTAssertEqualObjects(actionSheetCell.actionLabel.font, typographyScheme.subtitle1);
+  [self assertTraitCollectionBlockAndElevationBlockForActionSheet:self.actionSheet];
 }
 
 - (void)testActionSheetThemingTestWithHeaderOnly {
@@ -108,6 +109,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+  [self assertTraitCollectionBlockAndElevationBlockForActionSheet:self.actionSheet];
 }
 
 - (void)testActionSheetThemingTestWithMessageOnly {
@@ -120,6 +122,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+  [self assertTraitCollectionBlockAndElevationBlockForActionSheet:self.actionSheet];
 }
 
 - (void)testActionSheetThemingTestWithHeaderAndMessage {
@@ -135,6 +138,23 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+  [self assertTraitCollectionBlockAndElevationBlockForActionSheet:self.actionSheet];
+}
+
+- (void)assertTraitCollectionBlockAndElevationBlockForActionSheet:
+    (MDCActionSheetController *)actionSheet {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    XCTAssertNotNil(self.actionSheet.mdc_elevationDidChangeBlock);
+    XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
+  } else {
+    XCTAssertNil(self.actionSheet.mdc_elevationDidChangeBlock);
+    XCTAssertNil(self.actionSheet.traitCollectionDidChangeBlock);
+  }
+#else
+  XCTAssertNil(self.actionSheet.mdc_elevationDidChangeBlock);
+  XCTAssertNil(self.actionSheet.traitCollectionDidChangeBlock);
+#endif
 }
 
 @end

@@ -48,6 +48,8 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":ActionSheet",
+        "//components/Elevation",
+        "//components/private/Color",
         "//components/schemes/Container",
     ],
 )
