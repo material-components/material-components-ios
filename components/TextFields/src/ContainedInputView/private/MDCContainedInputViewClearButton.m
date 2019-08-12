@@ -186,12 +186,4 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   return ic_clear_path;
 }
 
-- (CGFloat)imageViewSideLength {
-  return kClearButtonInnerImageViewSideLength;
-}
-
-- (CGFloat)sideLength {
-  return kClearButtonTouchTargetSideLength;
-}
-
 @end
