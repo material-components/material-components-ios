@@ -146,7 +146,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     titleLabel.text = title!
     titleLabel.textColor = AppTheme.containerScheme.colorScheme.onPrimaryColor
     titleLabel.textAlignment = .center
-    titleLabel.font = AppTheme.containerScheme.typographyScheme.headline1
+    titleLabel.font = AppTheme.containerScheme.typographyScheme.headline6
     titleLabel.sizeToFit()
 
     let titleInsets = UIEdgeInsets(top: 0,
