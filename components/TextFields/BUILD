@@ -102,6 +102,7 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ColorThemer",
+        ":ContainedInputView",
         ":TextFields",
         ":TypographyThemer",
         "//components/schemes/Container",
