@@ -333,7 +333,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [super traitCollectionDidChange:previousTraitCollection];
 
   if (self.traitCollectionDidChangeBlock) {
-    self.traitCollectionDidChangeBlock(previousTraitCollection);
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
