@@ -209,6 +209,10 @@
   [self mdc_setRightView:rightView];
 }
 
+/**
+ MDCBaseTextField, and other non-UITextFields objects conforming to MDCContainedInputView, share a custom
+ clear button. The system clear button is not used.
+ */
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
   return CGRectZero;
 }
