@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <MaterialComponents/MaterialContainerScheme.h>
+#import "MaterialContainerScheme.h"
 #import "MaterialTextFields+ContainedInputView.h"
 
 static NSString *const kExampleTitle = @"MDCBaseTextField";
@@ -43,13 +43,19 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
   }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
-  CGRect textFieldFrame = CGRectMake(15, 150, CGRectGetWidth(self.view.frame) - 30, 50);
-  self.textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  self.textField = [[MDCBaseTextField alloc] initWithFrame:self.preferredTextFieldFrame];
   self.textField.borderStyle = UITextBorderStyleRoundedRect;
   [self.view addSubview:self.textField];
 }
 
-#pragma mark - Errata
+- (CGRect)preferredTextFieldFrame {
+  return CGRectMake(15, 100, CGRectGetWidth(self.view.frame) - 30, 50);
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  self.textField.frame = self.preferredTextFieldFrame;
+}
 
 @end
 
@@ -59,7 +65,7 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Tab Field", kExampleTitle ],
+    @"breadcrumbs" : @[ @"Text Field", kExampleTitle ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
