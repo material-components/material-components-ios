@@ -52,12 +52,12 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                                  leftView:(UIView *)leftView
-                              leftViewMode:(UITextFieldViewMode)leftViewMode
-                                 rightView:(UIView *)rightView
-                             rightViewMode:(UITextFieldViewMode)rightViewMode
-                                     isRTL:(BOOL)isRTL
-                                 isEditing:(BOOL)isEditing {
+                                leftView:(UIView *)leftView
+                            leftViewMode:(UITextFieldViewMode)leftViewMode
+                               rightView:(UIView *)rightView
+                           rightViewMode:(UITextFieldViewMode)rightViewMode
+                                   isRTL:(BOOL)isRTL
+                               isEditing:(BOOL)isEditing {
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
                                                                     viewMode:leftViewMode
                                                                    isEditing:isEditing];
@@ -71,30 +71,30 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
     leftViewMinX = kHorizontalPadding;
     leftViewMaxX = leftViewMinX + leftViewWidth;
   }
-  
+
   CGFloat textFieldWidth = textFieldSize.width;
   CGFloat rightViewMinX = 0;
   if (shouldAttemptToDisplayRightView) {
     CGFloat rightViewMaxX = textFieldWidth - kHorizontalPadding;
     rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
   }
-  
+
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
   if (shouldAttemptToDisplayLeftView) {
     leftViewMinY = kTemporaryVerticalPadding;
   }
-  
+
   CGFloat rightViewHeight = CGRectGetHeight(rightView.frame);
   CGFloat rightViewMinY = 0;
   if (shouldAttemptToDisplayRightView) {
     rightViewMinY = kTemporaryVerticalPadding;
   }
-  
+
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame =
-  CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
-  
+      CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
+
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.leftViewHidden = !shouldAttemptToDisplayLeftView;

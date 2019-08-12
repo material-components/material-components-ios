@@ -97,7 +97,6 @@
                                                      isEditing:self.isEditing];
 }
 
-
 #pragma mark UITextField Accessor Overrides
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
@@ -220,7 +219,8 @@
 // Apple's RTL behavior with these methods is very unintuitive. Imagine you're in an RTL locale and
 // you set @c leftView on a standard UITextField. Even though the property that you set is called @c
 // leftView, the method @c -rightViewRectForBounds: will be called. They are treating @c leftView as
-// @c rightView, even though @c rightView is nil. The RTL-aware wrappers around these APIs that MDCBaseTextField introduce handle this situation more accurately.
+// @c rightView, even though @c rightView is nil. The RTL-aware wrappers around these APIs that
+// MDCBaseTextField introduce handle this situation more accurately.
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   if ([self isRTL]) {
     return self.layout.rightViewFrame;
