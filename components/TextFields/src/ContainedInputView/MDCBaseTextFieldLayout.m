@@ -65,35 +65,27 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
                                                                      viewMode:rightViewMode
                                                                     isEditing:isEditing];
   CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
-  CGFloat leftViewMinX = 0;
-  CGFloat leftViewMaxX = 0;
-  if (shouldAttemptToDisplayLeftView) {
-    leftViewMinX = kHorizontalPadding;
-    leftViewMaxX = leftViewMinX + leftViewWidth;
-  }
-
-  CGFloat textFieldWidth = textFieldSize.width;
-  CGFloat rightViewMinX = 0;
-  if (shouldAttemptToDisplayRightView) {
-    CGFloat rightViewMaxX = textFieldWidth - kHorizontalPadding;
-    rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
-  }
-
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
+  CGFloat leftViewMinX = 0;
   CGFloat leftViewMinY = 0;
   if (shouldAttemptToDisplayLeftView) {
+    leftViewMinX = kHorizontalPadding;
     leftViewMinY = kTemporaryVerticalPadding;
   }
 
+  CGFloat rightViewWidth = CGRectGetWidth(rightView.frame);
   CGFloat rightViewHeight = CGRectGetHeight(rightView.frame);
+  CGFloat rightViewMinX = 0;
   CGFloat rightViewMinY = 0;
   if (shouldAttemptToDisplayRightView) {
+    CGFloat rightViewMaxX = textFieldSize.width - kHorizontalPadding;
+    rightViewMinX = rightViewMaxX - rightViewWidth;
     rightViewMinY = kTemporaryVerticalPadding;
   }
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame =
-      CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
+      CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
 
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
