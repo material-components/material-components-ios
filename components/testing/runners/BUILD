@@ -38,6 +38,13 @@ ios_test_runner(
     visibility = ["//visibility:public"],
 )
 
+ios_test_runner(
+    name = "IPHONE_8_IN_13_0",
+    device_type = "iPhone 8",
+    os_version = "13.0",
+    visibility = ["//visibility:public"],
+)
+
 native.config_setting(
     name = "xcode_9_0",
     values = {"xcode_version": "9.0"},

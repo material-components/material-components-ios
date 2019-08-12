@@ -93,7 +93,7 @@ class MDCCatalogTileView: UIView {
   func createImage() -> UIImage {
     var newImage: UIImage?
 
-    let colorScheme = AppTheme.globalTheme.colorScheme
+    let colorScheme = AppTheme.containerScheme.colorScheme
 
     switch componentNameString {
     case "Activity Indicator":

@@ -23,6 +23,18 @@
  between primary destination in an app.  It ties a list of view controllers to the bottom
  navigation bar and will display the corresponding view controller in the content view when an
  in the navigation bar is selected.
+
+ State Restoration:
+ To enable state restoration assign a unique restoration identifier to any children view
+ controllers that can be restored and implement the children's methods
+ @c encodeWithRestorableStateWithCoder: and @c decodeRestorableStateWithCoder if needed. At
+ startup set the @c viewControllers property. UIKit will restore the contents of each child view
+ controller with encoded values corresponding with the child's restoration identifier. If a child
+ view controller's restoration identifier is not set, its state will not be restored on the next
+ application launch.
+ A reference to the selected view controller is encoded when the state of this view controller is
+ preserved. Upon decoding, if the view controllers array contains a reference to the previous
+ selected view controller, that view controller is set to selected.
  */
 @interface MDCBottomNavigationBarController : UIViewController <MDCBottomNavigationBarDelegate>
 

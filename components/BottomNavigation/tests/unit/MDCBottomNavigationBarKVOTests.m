@@ -213,7 +213,8 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertEqualObjects(itemView.accessibilityHint, self.barItem.accessibilityHint);
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertEqualObjects(itemViewButton.accessibilityHint, self.barItem.accessibilityHint);
 }
 
 - (void)testChangeAccessibilityHintToEmptyString {
@@ -222,7 +223,8 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertEqualObjects(itemView.accessibilityHint, self.barItem.accessibilityHint);
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertEqualObjects(itemViewButton.accessibilityHint, self.barItem.accessibilityHint);
 }
 
 - (void)testChangeAccessibilityHintToNil {
@@ -231,7 +233,8 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertNil(itemView.accessibilityHint);
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertNil(itemViewButton.accessibilityHint);
 }
 
 - (void)testChangeAccessibilityValueToNonEmptyString {
@@ -267,7 +270,9 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertEqualObjects(itemView.accessibilityIdentifier, self.barItem.accessibilityIdentifier);
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertEqualObjects(itemViewButton.accessibilityIdentifier,
+                        self.barItem.accessibilityIdentifier);
 }
 
 - (void)testChangeAccessibilityIdentifierToEmptyString {
@@ -276,7 +281,9 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertEqualObjects(itemView.accessibilityIdentifier, self.barItem.accessibilityIdentifier);
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertEqualObjects(itemViewButton.accessibilityIdentifier,
+                        self.barItem.accessibilityIdentifier);
 }
 
 - (void)testChangeAccessibilityIdentifierToNil {
@@ -285,7 +292,8 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertNil(itemView.accessibilityIdentifier);
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertNil(itemViewButton.accessibilityIdentifier);
 }
 
 - (void)testChangeIsAccessibilityElementNoToYes {

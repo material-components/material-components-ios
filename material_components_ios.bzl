@@ -12,8 +12,10 @@ SWIFT_VERSION = "4.2"
 DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
     "//components/testing/runners:IPHONE_7_PLUS_IN_10_3",
-    "//components/testing/runners:IPHONE_X_IN_11_0",
 ]
+
+KOKORO_ENVIRONMENT_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_X_IN_11_0"
+AUTOBOT_ENVIRONMENT_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_8_IN_13_0"
 
 SNAPSHOT_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_7_IN_11_2"
 
@@ -253,20 +255,59 @@ def mdc_snapshot_test(
       size = size,
       **kwargs)
 
+def mdc_ci_config_setting():
+    """Config setting for mdc continuous integration, e.g. --define ci_mode=kokoro"""
+    native.config_setting(
+        name = "kokoro",
+        values = {"define": "ci_mode=kokoro"},
+    )
+    native.config_setting(
+        name = "autobot",
+        values = {"define": "ci_mode=autobot"},
+    )
+
 def mdc_unit_test_suite(
     name,
     deps = [],
     minimum_os_version = IOS_MINIMUM_OS,
     visibility = ["//visibility:private"],
     size = "medium",
+    use_autobot_environment_runner = True,
     **kwargs):
-  """Declare a MDC unit_test_suite using the ios_runners matrix."""
-  ios_unit_test_suite(
-    name = name,
-    deps = deps,
-    minimum_os_version = minimum_os_version,
-    runners = DEFAULT_IOS_RUNNER_TARGETS,
-    visibility = visibility,
-    size = size,
-    **kwargs
-  )
+    """Declare a MDC unit_test_suite and a unit_test_environment using the ios_runners matrix.
+
+    Args:
+        name: The name of the target.
+        deps: The dependencies of the target.
+        minimum_os_version: The minimum iOS version supported by the target.
+        visibility: The visibility of the package.
+        size: The size of the test.
+        use_autobot_environment_runner: Indicates whether autobot (a testing machine) environment runner should be used.
+        **kwargs: Any arguments accepted by ios_unit_test().
+    """
+    mdc_ci_config_setting()
+    runners = list(DEFAULT_IOS_RUNNER_TARGETS)
+    if use_autobot_environment_runner:
+        ios_unit_test(
+            name = name + '_environment',
+            deps = deps,
+            minimum_os_version = minimum_os_version,
+            runner = select({
+                ":kokoro": KOKORO_ENVIRONMENT_IOS_RUNNER_TARGET,
+                ":autobot": AUTOBOT_ENVIRONMENT_IOS_RUNNER_TARGET,
+                "//conditions:default": KOKORO_ENVIRONMENT_IOS_RUNNER_TARGET,
+            }),
+            visibility = visibility,
+            size = size,
+            **kwargs)
+    else:
+        runners.append(KOKORO_ENVIRONMENT_IOS_RUNNER_TARGET)
+    ios_unit_test_suite(
+        name = name,
+        deps = deps,
+        minimum_os_version = minimum_os_version,
+        runners = runners,
+        visibility = visibility,
+        size = size,
+        **kwargs
+    )
