@@ -1,15 +1,21 @@
-# #develop#
+# 86.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces new theming APIs for `MDCActionSheetAction`
+and bug fixes. It also includes improvements to the Contained Input Fields and
+Bottom Navigation Bar Controller beta code.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+You can now set title and icon tint colors on individual Action Sheet actions.
+
+```objc
+MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"An action"
+                                                               image:nil
+                                                             handler:nil];
+action.titleColor = UIColor.darkTextColor;
+action.tintColor = UIColor.darkTextColor;
+```
+
 ## API changes
 
 ### ActionSheet
@@ -31,8 +37,6 @@ Replace this text with example code for each new feature.
 *new* property: `leadingView` in `MDCBaseTextField`
 
 *new* property: `trailingViewMode` in `MDCBaseTextField`
-
-## Component changes
 
 ## Changes
 
@@ -76,9 +80,12 @@ Replace this text with example code for each new feature.
 
 * [Rewrite tests in ObjC to prevent the failing unit tests on iOS 13. (#8255)](https://github.com/material-components/material-components-ios/commit/707b49dd0ea34badde67ae3c3df1b1f7b4e279d5) (Wenyu Zhang)
 
-## Multi-component changes
+### TextFields
 
 * [Add some RTL functionality to MDCBaseTextField (#7705)](https://github.com/material-components/material-components-ios/commit/f0cb9b406f2d45f629a105834b403227e9a64abd) (Andrew Overton)
+
+## Multi-component changes
+
 * [Fixes beta components CocoaPods build. (#8134)](https://github.com/material-components/material-components-ios/commit/d389bcc3461712b5dbfaf4b51d6e60fb73f4f800) (Eric Lee)
 
 ---
