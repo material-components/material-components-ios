@@ -134,7 +134,7 @@ exception to our normal squash-and-merge procedure.
 
 Send our local podspec through the CocoaPods linter:
 
-    pod lib lint MaterialComponents.podspec --skip-tests
+    pod lib lint MaterialComponents.podspec --skip-tests --allow-warnings
 
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
