@@ -130,6 +130,19 @@ release-blocking clients are notified of a new release.
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure.
 
+#### Verify CocoaPods podspec and trunk access
+
+Send our local podspec through the CocoaPods linter:
+
+    pod lib lint MaterialComponents.podspec --skip-tests --allow-warnings
+
+CocoaPods publishes a directory of publicly available pods through its **trunk** service.
+Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
+
+    pod trunk me
+
+If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
+
 ### Start internal testing
 
 You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#requirements).
@@ -246,19 +259,6 @@ Update the PR title to the release version. The format is typically "vX.Y.Z" (*e
 Once this is done, send the PR out for review. Add "material-components/core-ios-team" to the 
 list of Reviewers. Also add anyone else you think might need to review specific changes in the 
 release candidate.
-
-#### Verify CocoaPods podspec and trunk access
-
-Send our local podspec through the CocoaPods linter:
-
-    pod lib lint MaterialComponents.podspec --skip-tests --allow-warnings
-
-CocoaPods publishes a directory of publicly available pods through its **trunk** service.
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
-
-    pod trunk me
-
-If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
 
 ## Consider running `scripts/release notes` again
 
