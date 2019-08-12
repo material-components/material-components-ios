@@ -1,8 +1,8 @@
 # 86.1.0
 
-This minor release introduces new theming APIs for `MDCActionSheetAction`
-and bug fixes. It also includes improvements to the Contained Input Fields and
-Bottom Navigation Bar Controller beta code.
+This minor release introduces new theming APIs for `MDCActionSheetAction` and
+bug fixes. It also includes improvements to the Contained Input Fields and
+Bottom Navigation Bar Controller beta component extensions.
 
 ## New features
 
