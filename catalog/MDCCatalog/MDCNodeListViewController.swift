@@ -16,9 +16,6 @@ import UIKit
 
 import CatalogByConvention
 
-import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCollections
@@ -177,6 +174,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
   override init(node: CBCNode) {
     super.init(node: node)
 
+    if #available(iOS 11.0, *) {
+      navigationItem.largeTitleDisplayMode = .never
+    }
+
     var childrenNodes = node.children.filter { $0.isExample() }
 
     // Make sure that primary demo appears first
@@ -227,12 +228,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
                             forCellReuseIdentifier: "NodeViewTableViewPrimaryDemoCell")
     self.tableView.register(NodeViewTableViewDemoCell.self,
                             forCellReuseIdentifier: "NodeViewTableViewDemoCell")
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
   @objc func themeDidChange(notification: NSNotification) {

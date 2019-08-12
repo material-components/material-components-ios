@@ -52,6 +52,17 @@ Pod::Spec.new do |mdc|
   #  end
   #
 
+  mdc.subspec "Theming+UINavigationController" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = [
+      "components/#{component.base_name}/src/*.{h,m}",
+      "components/#{component.base_name}/src/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/schemes/Container"
+  end
+
   # ActionSheet
 
   mdc.subspec "ActionSheet" do |component|
