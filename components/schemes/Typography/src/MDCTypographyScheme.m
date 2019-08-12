@@ -118,6 +118,15 @@
   return self;
 }
 
+- (instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults
+                 traitCollection:(UITraitCollection *)traitCollection {
+  self = [self initWithDefaults:defaults];
+  if (self) {
+    [MDCTypographyScheme mutateScheme:self forTraitCollection:traitCollection];
+  }
+  return self;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -152,20 +161,25 @@
                     forTraitCollection:(UITraitCollection *)traitCollection {
   MDCTypographyScheme *resolved =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  resolved.headline1 = [scheme.headline1 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.headline2 = [scheme.headline2 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.headline3 = [scheme.headline3 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.headline4 = [scheme.headline4 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.headline5 = [scheme.headline5 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.headline6 = [scheme.headline6 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.subtitle1 = [scheme.subtitle1 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.subtitle2 = [scheme.subtitle2 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.body1 = [scheme.body1 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.body2 = [scheme.body2 mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.caption = [scheme.caption mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.button = [scheme.button mdc_scaledFontForTraitCollection:traitCollection];
-  resolved.overline = [scheme.overline mdc_scaledFontForTraitCollection:traitCollection];
+  [self mutateScheme:resolved forTraitCollection:traitCollection];
   return resolved;
+}
+
++ (void)mutateScheme:(MDCTypographyScheme *)scheme
+    forTraitCollection:(UITraitCollection *)traitCollection {
+  scheme.headline1 = [scheme.headline1 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.headline2 = [scheme.headline2 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.headline3 = [scheme.headline3 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.headline4 = [scheme.headline4 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.headline5 = [scheme.headline5 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.headline6 = [scheme.headline6 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.subtitle1 = [scheme.subtitle1 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.subtitle2 = [scheme.subtitle2 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.body1 = [scheme.body1 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.body2 = [scheme.body2 mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.caption = [scheme.caption mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.button = [scheme.button mdc_scaledFontForTraitCollection:traitCollection];
+  scheme.overline = [scheme.overline mdc_scaledFontForTraitCollection:traitCollection];
 }
 
 @end

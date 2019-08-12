@@ -178,6 +178,13 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
  */
 - (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults;
 
+/**
+ Initializes the typography scheme with the values associated with the given defaults and fonts
+ resolved with the given trait collection.
+ */
+- (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults
+                         traitCollection:(nonnull UITraitCollection *)traitCollection;
+
 @end
 
 @interface MDCTypographyScheme (TraitCollectionSupport)
