@@ -84,8 +84,7 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
   }
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
-  CGRect rightViewFrame =
-      CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
+  CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
 
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
