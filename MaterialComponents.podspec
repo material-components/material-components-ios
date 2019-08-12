@@ -1859,7 +1859,6 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Typography"
-    component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MDFInternationalization"
 
