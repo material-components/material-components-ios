@@ -225,6 +225,36 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   }
 }
 
+- (void)testResolvedColorForPreiOS13ResultsInSameColor {
+  // Given
+  UIColor *expectedColor = UIColor.orangeColor;
+
+  // When
+  UIColor *returnedColor = [expectedColor mdc_resolvedColorWithTraitCollection:[[UITraitCollection alloc] init]];
+
+  // Then
+  XCTAssertEqualObjects(expectedColor, returnedColor);
+}
+
+- (void)testResolvedColorForiOS13OrLaterReturnsCorrectColor {
+  // Given
+  UIColor *dynamicColor = UIColor.clearColor;
+  #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+    if (@available(iOS 13.0, *)) {
+  dynamicColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+    if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+      return UIColor.orangeColor;
+    }
+    return UIColor.blueColor;
+  }];
+    }
+#endif
+
+  // When
+
+  // Then
+}
+
 - (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
                                       secondColor:(UIColor *)secondColor {
   CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
