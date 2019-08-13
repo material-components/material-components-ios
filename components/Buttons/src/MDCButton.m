@@ -989,14 +989,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self sizeToFit];
 }
 
-- (BOOL)mdc_legacyFontScaling {
-  return self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-}
-
-- (void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
-  self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = mdc_legacyFontScaling;
-}
-
 #pragma mark - Deprecations
 
 - (void)setCustomTitleColor:(UIColor *)customTitleColor {
