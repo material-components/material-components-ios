@@ -36,4 +36,16 @@
 #endif
 }
 
+- (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    return [self resolvedColorWithTraitCollection:traitCollection];
+  } else {
+    return self;
+  }
+#else
+  return self;
+#endif
+}
+
 @end
