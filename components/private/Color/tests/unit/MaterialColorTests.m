@@ -230,7 +230,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   UIColor *expectedColor = UIColor.orangeColor;
 
   // When
-  UIColor *returnedColor = [expectedColor mdc_resolvedColorWithTraitCollection:[[UITraitCollection alloc] init]];
+  UIColor *returnedColor =
+      [expectedColor mdc_resolvedColorWithTraitCollection:[[UITraitCollection alloc] init]];
 
   // Then
   XCTAssertEqualObjects(expectedColor, returnedColor);
@@ -239,15 +240,16 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testResolvedColorForiOS13OrLaterReturnsCorrectColor {
   // Given
   UIColor *dynamicColor = UIColor.clearColor;
-  #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-    if (@available(iOS 13.0, *)) {
-  dynamicColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
-    if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-      return UIColor.orangeColor;
-    }
-    return UIColor.blueColor;
-  }];
-    }
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    dynamicColor = [UIColor
+        colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            return UIColor.orangeColor;
+          }
+          return UIColor.blueColor;
+        }];
+  }
 #endif
 
   // When
