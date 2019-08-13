@@ -310,7 +310,7 @@ and save where the touches were so we can then start the ripple animation from
 that point:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objevctive-C
+#### Objective-C
 
 ```objc
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
