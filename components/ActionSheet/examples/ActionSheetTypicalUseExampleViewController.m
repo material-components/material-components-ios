@@ -100,7 +100,7 @@
   return @{
     @"breadcrumbs" : @[ @"Action Sheet", @"Action Sheet" ],
     @"primaryDemo" : @YES,
-    @"presentable" : @NO
+    @"presentable" : @YES,
   };
 }
 
