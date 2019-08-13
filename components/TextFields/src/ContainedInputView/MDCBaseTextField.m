@@ -77,8 +77,16 @@
 
 #pragma mark Layout
 
+/**
+ UITextField layout methods such as @c -textRectForBounds: and @c -editingRectForBounds: are called
+ within @c -layoutSubviews. The exact values of the CGRects MDCBaseTextField returns from these
+ methods depend on many factors, and are calculated alongside all the other frames of
+ MDCBaseTextField's subviews. To ensure that these values are known before UITextField's layout
+ methods expect them, they are determined by this method, which is called before the superclass's @c
+ -layoutSubviews in the layout cycle.
+ */
 - (void)preLayoutSubviews {
-  CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
+  CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 

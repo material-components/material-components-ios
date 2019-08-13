@@ -15,8 +15,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCBaseTextFieldLayout : NSObject
 
 @property(nonatomic, assign) BOOL leftViewHidden;
@@ -25,14 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 
-- (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                             leftView:(UIView *)leftView
-                         leftViewMode:(UITextFieldViewMode)leftViewMode
-                            rightView:(UIView *)rightView
-                        rightViewMode:(UITextFieldViewMode)rightViewMode
-                                isRTL:(BOOL)isRTL
-                            isEditing:(BOOL)isEditing;
+- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                                     leftView:(nullable UIView *)leftView
+                                 leftViewMode:(UITextFieldViewMode)leftViewMode
+                                    rightView:(nullable UIView *)rightView
+                                rightViewMode:(UITextFieldViewMode)rightViewMode
+                                        isRTL:(BOOL)isRTL
+                                    isEditing:(BOOL)isEditing;
 
 @end
-
-NS_ASSUME_NONNULL_END
