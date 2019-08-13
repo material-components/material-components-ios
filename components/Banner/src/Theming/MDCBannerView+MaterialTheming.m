@@ -17,7 +17,9 @@
 #import <MaterialComponents/MaterialButtons+Theming.h>
 #import <MaterialComponents/MaterialButtons.h>
 
+// The opacity value applied to text view by default.
 static CGFloat const kTextViewOpacityDefault = (CGFloat)0.87;
+// The opacity value applied to divider by default.
 static CGFloat const kDividerOpacityDefault = (CGFloat)0.12;
 
 @implementation MDCBannerView (MaterialTheming)
