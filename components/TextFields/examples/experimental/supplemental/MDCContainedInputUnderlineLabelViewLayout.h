@@ -17,24 +17,20 @@
 
 #import "MDCContainedInputView.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCContainedInputUnderlineLabelViewLayout : NSObject
 
 @property(nonatomic, assign, readonly) CGRect leftUnderlineLabelFrame;
 @property(nonatomic, assign, readonly) CGRect rightUnderlineLabelFrame;
 @property(nonatomic, assign, readonly) CGFloat calculatedHeight;
 
-- (instancetype)initWithSuperviewWidth:(CGFloat)superviewWidth
-                    leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                   rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-            underlineLabelDrawPriority:
-                (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
-                     horizontalPadding:(CGFloat)horizontalPadding
-                       verticalPadding:(CGFloat)verticalPadding
-                                 isRTL:(BOOL)isRTL;
+- (nonnull instancetype)initWithSuperviewWidth:(CGFloat)superviewWidth
+                            leftUnderlineLabel:(nonnull UILabel *)leftUnderlineLabel
+                           rightUnderlineLabel:(nonnull UILabel *)rightUnderlineLabel
+                    underlineLabelDrawPriority:
+                        (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+              customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+                             horizontalPadding:(CGFloat)horizontalPadding
+                               verticalPadding:(CGFloat)verticalPadding
+                                         isRTL:(BOOL)isRTL;
 
 @end
-
-NS_ASSUME_NONNULL_END
