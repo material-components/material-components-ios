@@ -28,6 +28,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIColor *)colorWithUserInterfaceStyleDarkColor:(UIColor *)darkColor
                                      defaultColor:(UIColor *)defaultColor;
 
+/**
+ Returns the version of the current color that takes the specified traits into account.
+
+ @param traitCollection The traits to use when resolving the color information.
+ @return The version of the color to display for the specified traits. On pre-iOS 13 the original
+ color is returned.
+ */
+- (nonnull UIColor *)resolvedColorWithTraitCollection:(nonnull UITraitCollection *)traitCollection;
+
 @end
 
 NS_ASSUME_NONNULL_END
