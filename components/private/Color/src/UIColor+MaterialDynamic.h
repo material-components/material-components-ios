@@ -33,6 +33,7 @@
  @return The version of the color to display for the specified traits. On pre-iOS 13 the original
  color is returned.
  */
-- (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:(nonnull UITraitCollection *)traitCollection;
+- (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:
+    (nonnull UITraitCollection *)traitCollection;
 
 @end
