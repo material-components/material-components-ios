@@ -42,12 +42,23 @@ static CGFloat const kDividerOpacityDefault = (CGFloat)0.12;
   self.backgroundColor = colorScheme.surfaceColor;
   self.textView.textColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacityDefault];
-  self.dividerColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacityDefault];
+  self.dividerColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacityDefault];
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  self.textView.font = typographyScheme.body2;
+  UIFont *textFont = typographyScheme.body2;
+  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+  } else {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.mdc_adjustsFontForContentSizeCategory;
+  }
+
+  if (useCurrentContentSizeCategoryWhenApplied) {
+    textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
+  }
+  self.textView.font = textFont;
 }
 
 @end
