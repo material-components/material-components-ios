@@ -253,8 +253,19 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 #endif
 
   // When
+  UIColor *platformColor = dynamicColor;
+  UIColor *mdcColor = dynamicColor;
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    UITraitCollection *fakeTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    platformColor = [dynamicColor resolvedColorWithTraitCollection:fakeTraitCollection];
+    mdcColor = [dynamicColor mdc_resolvedColorWithTraitCollection:fakeTraitCollection];
+  }
+#endif
 
   // Then
+  XCTAssertEqualObjects(platformColor, mdcColor);
 }
 
 - (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
