@@ -114,6 +114,10 @@
 - (void)setShapedBackgroundColor:(UIColor *)shapedBackgroundColor {
   _shapedBackgroundColor = shapedBackgroundColor;
 
+  if ([self.delegate isKindOfClass:[UIView class]]) {
+    UIView *view = (UIView *)self.delegate;
+    _shapedBackgroundColor = [_shapedBackgroundColor mdc_resolvedColorWithTraitCollection:view.traitCollection];
+  }
   if (CGPathIsEmpty(self.path)) {
     self.backgroundColor = _shapedBackgroundColor.CGColor;
     _colorLayer.fillColor = nil;
@@ -128,7 +132,7 @@
 
   if ([self.delegate isKindOfClass:[UIView class]]) {
     UIView *view = (UIView *)self.delegate;
-//    _shapedBorderColor = [_shapedBorderColor mdc]
+    _shapedBorderColor = [_shapedBorderColor mdc_resolvedColorWithTraitCollection:view.traitCollection];
   }
   if (CGPathIsEmpty(self.path)) {
     self.borderColor = _shapedBorderColor.CGColor;
