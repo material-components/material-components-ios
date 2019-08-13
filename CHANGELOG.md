@@ -1,15 +1,32 @@
-# #develop#
+# 87.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release improves the `traitCollectionDidChangeBlock` for
+`MDCButton`.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+`MDCButton.traitCollectionDidChangeBlock` now requires an `MDCButton *`
+instance as its first parameter. This is to allow passing the button itself
+into the block and eliminate the need for retaining the button in its own
+block.
 
-Replace this text with links to deprecation guides.
-## New features
+### Previous Releases
 
-Replace this text with example code for each new feature.
+```objc
+button.traitCollectionDidChangeBlock =
+    ^(UITraitCollection *_Nullable previousTraitCollection) {
+      // Code
+    };
+```
+
+### In This Release
+```objc
+button.traitCollectionDidChangeBlock =
+    ^(MDCButton *_Nonnull buttonInBlock, UITraitCollection *_Nullable previousTraitCollection) {
+      // Code
+    };
+```
+
 ## API changes
 
 ### Buttons
@@ -29,8 +46,6 @@ Replace this text with example code for each new feature.
 |---|---|
 | From: | `@property (readwrite, copy, nonatomic, nullable) void (^)     (UITraitCollection *_Nullable) traitCollectionDidChangeBlock;` |
 | To: | `@property (readwrite, copy, nonatomic, nullable) void (^)     (MDCButton *_Nonnull, UITraitCollection *_Nullable)         traitCollectionDidChangeBlock;` |
-
-## Component changes
 
 ## Changes
 
