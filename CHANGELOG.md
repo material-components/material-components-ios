@@ -1,3 +1,67 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### Buttons
+
+#### MDCButton
+
+*modified* property: `traitCollectionDidChangeBlock` in `MDCButton`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var traitCollectionDidChangeBlock: ((UITraitCollection?) -> Void)? { get set }` |
+| To: | `var traitCollectionDidChangeBlock: ((MDCButton, UITraitCollection?) -> Void)? { get set }` |
+
+*modified* property: `traitCollectionDidChangeBlock` in `MDCButton`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readwrite, copy, nonatomic, nullable) void (^)     (UITraitCollection *_Nullable) traitCollectionDidChangeBlock;` |
+| To: | `@property (readwrite, copy, nonatomic, nullable) void (^)     (MDCButton *_Nonnull, UITraitCollection *_Nullable)         traitCollectionDidChangeBlock;` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Add dark mode support to theming extension (#8245)](https://github.com/material-components/material-components-ios/commit/d73d498d7ef78b2f728e88f3e45ec6d32ac81283) (Cody Weaver)
+* [Stop running swift tests on Autobot. (#8274)](https://github.com/material-components/material-components-ios/commit/ef362e851bdda50d9d0d5ec5526cbc8c700173d1) (Wenyu Zhang)
+
+### ButtonBar
+
+* [Stop running swift tests on Autobot. (#8267)](https://github.com/material-components/material-components-ios/commit/f837b914073a27f72d131dcb7dc1a7108e334321) (Wenyu Zhang)
+
+### Buttons
+
+* [Add missing self to traitCollectionDidChangeBlock (#8276)](https://github.com/material-components/material-components-ios/commit/f4352d73e6cddcb6b8573215788693ab6f6bacc8) (Yarden Eitan)
+
+### FlexibleHeader
+
+* [Stop running swift tests on Autobot. (#8269)](https://github.com/material-components/material-components-ios/commit/aa4478e423fc71d49494959a8ed5b153a690ec4f) (Wenyu Zhang)
+
+### NavigationBar
+
+* [Stop running swift tests on Autobot. (#8272)](https://github.com/material-components/material-components-ios/commit/5f0fadc504fe329f78ac013437777e181e597713) (Wenyu Zhang)
+
+### TextFields
+
+* [Add non-experimental MDCBaseTextField example (#8287)](https://github.com/material-components/material-components-ios/commit/59f5551313f0d465e0196414aeab0b441a801c4c) (Andrew Overton)
+* [Stop running swift tests on Autobot. (#8275)](https://github.com/material-components/material-components-ios/commit/65b142ab751dce68ffd8839257b2b853f6509e92) (Wenyu Zhang)
+
+---
+
 # 86.1.0
 
 This minor release introduces new theming APIs for `MDCActionSheetAction` and
