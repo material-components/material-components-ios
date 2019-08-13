@@ -29,9 +29,10 @@
 /**
  Returns the version of the current color that takes the specified traits into account.
 
+ @note On pre-iOS 13 the orginal color is returned.
+
  @param traitCollection The traits to use when resolving the color information.
- @return The version of the color to display for the specified traits. On pre-iOS 13 the original
- color is returned.
+ @return The version of the color to display for the specified traits.
  */
 - (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:
     (nonnull UITraitCollection *)traitCollection;
