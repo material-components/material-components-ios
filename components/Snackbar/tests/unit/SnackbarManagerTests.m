@@ -98,4 +98,12 @@
   XCTAssertEqual(manager.messageElevation, fakeElevation);
 }
 
+- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
+  // Given
+  MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
+
+  // Then
+  XCTAssertTrue(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
 @end
