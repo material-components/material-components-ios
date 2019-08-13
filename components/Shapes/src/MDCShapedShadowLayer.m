@@ -128,7 +128,8 @@
 
   if ([self.delegate isKindOfClass:[UIView class]]) {
     UIView *view = (UIView *)self.delegate;
-    _shapedBorderColor = [_shapedBorderColor mdc_resolvedColorWithTraitCollection:view.traitCollection];
+    _shapedBorderColor =
+        [_shapedBorderColor mdc_resolvedColorWithTraitCollection:view.traitCollection];
   }
   if (CGPathIsEmpty(self.path)) {
     self.borderColor = _shapedBorderColor.CGColor;
