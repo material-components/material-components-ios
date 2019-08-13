@@ -14,7 +14,25 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCFeatureHighlightView+Private.h"
 #import "MaterialFeatureHighlight.h"
+#import "MaterialTypography.h"
+
+/**
+ A @c MDCFeatureHighlightViewController test fake to override the @c traitCollection to test for
+ dynamic type.
+ */
+@interface FeatureHighlightViewControllerTestsFake : MDCFeatureHighlightViewController
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation FeatureHighlightViewControllerTestsFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
 
 @interface FeatureHighlightViewControllerTests : XCTestCase
 
@@ -67,6 +85,42 @@
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedFeatureHighlight, controller);
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+- (void)testFeatureHighlightViewControllerDynamicTypeBehavior {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    FeatureHighlightViewControllerTestsFake *controller =
+        [[FeatureHighlightViewControllerTestsFake alloc]
+            initWithHighlightedView:[[UIView alloc] init]
+                        andShowView:[[UIView alloc] init]
+                         completion:nil];
+    controller.mdc_adjustsFontForContentSizeCategory = YES;
+    MDCFeatureHighlightView *view = (MDCFeatureHighlightView *)controller.view;
+    UIFont *font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightRegular];
+    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+    UIFont *scalableFont = [fontScaler scaledFontWithFont:font];
+    scalableFont = [scalableFont mdc_scaledFontAtDefaultSize];
+    controller.bodyFont = scalableFont;
+    CGFloat originalBodyFontSize = view.bodyLabel.font.pointSize;
+    controller.titleFont = scalableFont;
+    CGFloat originalTitleFontSize = view.titleLabel.font.pointSize;
+
+    // When
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    controller.traitCollectionOverride = traitCollection;
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
+
+    // Then
+    CGFloat actualBodyFontSize = view.bodyLabel.font.pointSize;
+    CGFloat actualTitleFontSize = view.titleLabel.font.pointSize;
+    XCTAssertGreaterThan(actualTitleFontSize, originalTitleFontSize);
+    XCTAssertGreaterThan(actualBodyFontSize, originalBodyFontSize);
+  }
 }
 
 @end

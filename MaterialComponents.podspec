@@ -1015,6 +1015,7 @@ Pod::Spec.new do |mdc|
       unit_tests.dependency "MaterialComponents/FeatureHighlight+ColorThemer"
       unit_tests.dependency "MaterialComponents/FeatureHighlight+TypographyThemer"
       unit_tests.dependency "MaterialComponents/FeatureHighlight+FeatureHighlightAccessibilityMutator"
+      unit_tests.dependency "MaterialComponents/Typography"
     end
   end
 

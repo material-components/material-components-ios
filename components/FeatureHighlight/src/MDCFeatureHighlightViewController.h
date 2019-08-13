@@ -150,7 +150,19 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  Enable legacy font scaling curves for Dynamic Type.
  Default value is NO.
  */
-@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
+@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)
+    BOOL mdc_legacyFontScaling __deprecated;
+
+/**
+ Affects the fallback behavior for when a scaled font is not provided.
+ If enabled, the font size will adjust even if a scaled font has not been provided for
+ a given UIFont property on this component.
+ If disabled, the font size will only be adjusted if a scaled font has been provided.
+ This behavior most closely matches UIKit's.
+ Default value is YES, but this flag will eventually default to NO and then be deprecated
+ and deleted.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
  A block that is invoked when the @c MDCFeatureHighlightViewController receives a call to @c

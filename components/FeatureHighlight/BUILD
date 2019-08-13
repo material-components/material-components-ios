@@ -134,6 +134,7 @@ mdc_unit_test_objc_library(
         ":FontThemer",
         ":TypographyThemer",
         ":private",
+        "//components/Typography",
     ],
 )
 

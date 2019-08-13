@@ -52,6 +52,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
     _outerHighlightColor =
         [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
     _innerHighlightColor = [UIColor whiteColor];
+    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
     _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
 
@@ -72,6 +73,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   self.featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
   self.featureHighlightView.mdc_legacyFontScaling = _mdc_legacyFontScaling;
+  self.featureHighlightView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
   __weak MDCFeatureHighlightViewController *weakSelf = self;
   self.featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -281,6 +284,17 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
   if (self.isViewLoaded) {
     self.featureHighlightView.mdc_legacyFontScaling = legacyScaling;
+  }
+}
+
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
+    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+
+  if (self.isViewLoaded) {
+    self.featureHighlightView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+        adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   }
 }
 

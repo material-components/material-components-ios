@@ -185,8 +185,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   if (_mdc_adjustsFontForContentSizeCategory) {
     if (_titleFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
       // The font has an associated curve (M2+)
-      _titleLabel.font = [_titleFont mdc_scaledFontForCurrentSizeCategory];
-    } else {
+      _titleLabel.font = [_titleFont mdc_scaledFontForTraitEnvironment:self];
+    } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       // The original (M1) custom font + DT implementation
       _titleLabel.font =
           [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
@@ -215,19 +215,19 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   if (!_bodyFont) {
     _bodyFont = [MDCFeatureHighlightView defaultBodyFont];
   }
+  UIFont *bodyFont = _bodyFont;
   if (_mdc_adjustsFontForContentSizeCategory) {
-    if (_bodyFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
+    if (bodyFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
       // The font has an associated curve (M2+)
-      _bodyLabel.font = [_bodyFont mdc_scaledFontForCurrentSizeCategory];
-    } else {
+      bodyFont = [bodyFont mdc_scaledFontForTraitEnvironment:self];
+    } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       // The original (M1) custom font + DT implementation
-      _bodyLabel.font =
+      bodyFont =
           [_bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     }
-  } else {
-    _bodyLabel.font = _bodyFont;
   }
+  _bodyLabel.font = bodyFont;
 
   [self setNeedsLayout];
 }
