@@ -17,8 +17,6 @@
 #import "MDCContainedInputView.h"
 #import "MaterialChips.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 // typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
 //};
 
@@ -28,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat globalChipRowMinX;
 @property(nonatomic, assign) CGFloat globalChipRowMaxX;
 
-@property(nonatomic, strong) NSArray<NSValue *> *chipFrames;
+@property(nonnull, nonatomic, strong) NSArray<NSValue *> *chipFrames;
 
 @property(nonatomic, assign) CGRect floatingLabelFrameFloating;
 @property(nonatomic, assign) CGRect floatingLabelFrameNormal;
@@ -49,22 +47,22 @@ NS_ASSUME_NONNULL_BEGIN
 //@property(nonatomic, readonly) CGFloat minimumHeight;
 @property(nonatomic, readonly) CGFloat contentAreaMaxY;
 
-- (instancetype)initWithSize:(CGSize)size
-                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                                 text:(NSString *)text
-                          placeholder:(NSString *)placeholder
-                                 font:(UIFont *)font
-                         floatingFont:(UIFont *)floatingFont
+- (nonnull instancetype)initWithSize:(CGSize)size
+                      containerStyler:(nonnull id<MDCContainedInputViewStyler>)containerStyler
+                                 text:(nonnull NSString *)text
+                          placeholder:(nonnull NSString *)placeholder
+                                 font:(nonnull UIFont *)font
+                         floatingFont:(nonnull UIFont *)floatingFont
                    floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
-                                chips:(NSArray<UIView *> *)chips
-                       staleChipViews:(NSArray<UIView *> *)staleChipViews
+                                chips:(nonnull NSArray<UIView *> *)chips
+                       staleChipViews:(nonnull NSArray<UIView *> *)staleChipViews
                             chipsWrap:(BOOL)chipsWrap
                         chipRowHeight:(CGFloat)chipRowHeight
                      interChipSpacing:(CGFloat)interChipSpacing
-                          clearButton:(UIButton *)clearButton
+                          clearButton:(nonnull UIButton *)clearButton
                   clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
-                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                   leftUnderlineLabel:(nonnull UILabel *)leftUnderlineLabel
+                  rightUnderlineLabel:(nonnull UILabel *)rightUnderlineLabel
            underlineLabelDrawPriority:
                (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
@@ -73,5 +71,3 @@ NS_ASSUME_NONNULL_BEGIN
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
 @end
-
-NS_ASSUME_NONNULL_END
