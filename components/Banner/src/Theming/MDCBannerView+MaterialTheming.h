@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialContainerScheme.h>
 #import "MDCBannerView.h"
+
+#import <MaterialComponents/MaterialContainerScheme.h>
 
 @interface MDCBannerView (MaterialTheming)
 /**
- Apply an Material theme to an @c MDCBannerView instance.
+ Apply a Material theme to an @c MDCBannerView instance.
 
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.

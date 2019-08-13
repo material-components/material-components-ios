@@ -21,6 +21,10 @@
 static CGFloat const kBannerViewTextViewOpacityDefault = (CGFloat)0.87;
 static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
 
+
+/**
+ This class confirms behavior of @c MDCBannerView.
+ */
 @interface MDCBannerViewThemingTests : XCTestCase
 
 @property(nonatomic, strong, nullable) MDCBannerView *bannerView;
@@ -48,29 +52,31 @@ static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
   [self.bannerView applyThemeWithScheme:self.containerScheme];
 
   // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
   // Color
   XCTAssertEqualObjects(self.bannerView.backgroundColor,
                         self.containerScheme.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.bannerView.textView.textColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewTextViewOpacityDefault]);
+                         colorWithAlphaComponent:kBannerViewTextViewOpacityDefault]);
   XCTAssertEqualObjects(self.bannerView.dividerColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
-  XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
-                        self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.bannerView.leadingButton imageTintColorForState:UIControlStateNormal],
-                        self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.bannerView.trailingButton titleColorForState:UIControlStateNormal],
-                        self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects(
-      [self.bannerView.trailingButton imageTintColorForState:UIControlStateNormal],
-      self.containerScheme.colorScheme.primaryColor);
+                         colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+    XCTAssertEqualObjects([self.bannerView.leadingButton imageTintColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+    XCTAssertEqualObjects([self.bannerView.trailingButton titleColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+    XCTAssertEqualObjects(
+                          [self.bannerView.trailingButton imageTintColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+  }
 
   // Typography
   XCTAssertEqualObjects(self.bannerView.textView.font, self.containerScheme.typographyScheme.body2);
-  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleFontForState:state],
                           self.containerScheme.typographyScheme.button);
@@ -92,28 +98,31 @@ static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
   [self.bannerView applyThemeWithScheme:self.containerScheme];
 
   // Then
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
   // Color
   XCTAssertEqualObjects(self.bannerView.backgroundColor,
                         self.containerScheme.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.bannerView.textView.textColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewTextViewOpacityDefault]);
+                         colorWithAlphaComponent:kBannerViewTextViewOpacityDefault]);
   XCTAssertEqualObjects(self.bannerView.dividerColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
-  XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
-                        self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.bannerView.leadingButton imageTintColorForState:UIControlStateNormal],
-                        self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.bannerView.trailingButton titleColorForState:UIControlStateNormal],
-                        self.containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects(
-      [self.bannerView.trailingButton imageTintColorForState:UIControlStateNormal],
-      self.containerScheme.colorScheme.primaryColor);
+                         colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+    XCTAssertEqualObjects([self.bannerView.leadingButton imageTintColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+    XCTAssertEqualObjects([self.bannerView.trailingButton titleColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+    XCTAssertEqualObjects(
+                          [self.bannerView.trailingButton imageTintColorForState:UIControlStateNormal],
+                          self.containerScheme.colorScheme.primaryColor);
+  }
   // Typography
   XCTAssertEqualObjects(self.bannerView.textView.font, self.containerScheme.typographyScheme.body2);
-  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-                                 UIControlStateHighlighted | UIControlStateDisabled;
+
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleFontForState:state],
                           self.containerScheme.typographyScheme.button);

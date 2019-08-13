@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialButtons+Theming.h>
-#import <MaterialComponents/MaterialButtons.h>
 #import "MDCBannerView+MaterialTheming.h"
 
-static CGFloat const kBannerViewTextViewOpacityDefault = (CGFloat)0.87;
-static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
+#import <MaterialComponents/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialButtons.h>
+
+static CGFloat const kTextViewOpacityDefault = (CGFloat)0.87;
+static CGFloat const kDividerOpacityDefault = (CGFloat)0.12;
 
 @implementation MDCBannerView (MaterialTheming)
 
@@ -40,9 +41,9 @@ static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   self.backgroundColor = colorScheme.surfaceColor;
   self.textView.textColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kBannerViewTextViewOpacityDefault];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacityDefault];
   self.dividerColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kBannerViewDividerOpacityDefault];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacityDefault];
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
