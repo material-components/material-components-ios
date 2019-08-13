@@ -18,14 +18,10 @@
 
 #import "MDCContainedInputUnderlineLabelViewLayout.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCContainedInputUnderlineLabelView : UIView
 
-@property(nonatomic, strong, readonly) UILabel *leftUnderlineLabel;
-@property(nonatomic, strong, readonly) UILabel *rightUnderlineLabel;
-@property(nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *layout;
+@property(nonnull, nonatomic, strong, readonly) UILabel *leftUnderlineLabel;
+@property(nonnull, nonatomic, strong, readonly) UILabel *rightUnderlineLabel;
+@property(nonnull, nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *layout;
 
 @end
-
-NS_ASSUME_NONNULL_END

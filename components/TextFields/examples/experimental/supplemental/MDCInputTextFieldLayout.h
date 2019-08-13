@@ -21,8 +21,6 @@
 
 @protocol MDCContainedInputViewStyler;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCInputTextFieldLayout : NSObject
 
 @property(nonatomic, readonly, class) CGFloat clearButtonSideLength;
@@ -42,35 +40,35 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect underlineLabelViewFrame;
-@property(nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *underlineLabelViewLayout;
+@property(nonnull, nonatomic, strong)
+    MDCContainedInputUnderlineLabelViewLayout *underlineLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
-- (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                                 text:(NSString *)text
-                          placeholder:(NSString *)placeholder
-                                 font:(UIFont *)font
-                         floatingFont:(UIFont *)floatingFont
-                        floatingLabel:(UILabel *)floatingLabel
-                canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                             leftView:(UIView *)leftView
-                         leftViewMode:(UITextFieldViewMode)leftViewMode
-                            rightView:(UIView *)rightView
-                        rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(UIButton *)clearButton
-                      clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-           underlineLabelDrawPriority:
-               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-     customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
-       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
-    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
-                                isRTL:(BOOL)isRTL
-                            isEditing:(BOOL)isEditing;
+- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                              containerStyler:
+                                  (nonnull id<MDCContainedInputViewStyler>)containerStyler
+                                         text:(nonnull NSString *)text
+                                  placeholder:(nonnull NSString *)placeholder
+                                         font:(nonnull UIFont *)font
+                                 floatingFont:(nonnull UIFont *)floatingFont
+                                floatingLabel:(nonnull UILabel *)floatingLabel
+                        canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                                     leftView:(nonnull UIView *)leftView
+                                 leftViewMode:(UITextFieldViewMode)leftViewMode
+                                    rightView:(nonnull UIView *)rightView
+                                rightViewMode:(UITextFieldViewMode)rightViewMode
+                                  clearButton:(nonnull UIButton *)clearButton
+                              clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                           leftUnderlineLabel:(nonnull UILabel *)leftUnderlineLabel
+                          rightUnderlineLabel:(nonnull UILabel *)rightUnderlineLabel
+                   underlineLabelDrawPriority:
+                       (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+             customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+               preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
+            preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+                                        isRTL:(BOOL)isRTL
+                                    isEditing:(BOOL)isEditing;
 
 @end
-
-NS_ASSUME_NONNULL_END
