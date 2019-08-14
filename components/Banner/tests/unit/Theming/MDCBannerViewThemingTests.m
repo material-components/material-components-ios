@@ -18,8 +18,10 @@
 #import "MaterialBanner.h"
 #import "MaterialContainerScheme.h"
 
-static CGFloat const kBannerViewTextViewOpacityDefault = (CGFloat)0.87;
-static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
+// The opacity value applied to text view.
+static CGFloat const kTextViewOpacity = (CGFloat)0.87;
+// The opacity value applied to divider.
+static CGFloat const kDividerOpacity = (CGFloat)0.12;
 
 /**
  This class confirms behavior of @c MDCBannerView.
@@ -58,10 +60,10 @@ static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
                         self.containerScheme.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.bannerView.textView.textColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewTextViewOpacityDefault]);
+                            colorWithAlphaComponent:kTextViewOpacity]);
   XCTAssertEqualObjects(self.bannerView.dividerColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
+                            colorWithAlphaComponent:kDividerOpacity]);
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                           self.containerScheme.colorScheme.primaryColor);
@@ -105,10 +107,10 @@ static CGFloat const kBannerViewDividerOpacityDefault = (CGFloat)0.12;
                         self.containerScheme.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.bannerView.textView.textColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewTextViewOpacityDefault]);
+                            colorWithAlphaComponent:kTextViewOpacity]);
   XCTAssertEqualObjects(self.bannerView.dividerColor,
                         [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kBannerViewDividerOpacityDefault]);
+                            colorWithAlphaComponent:kDividerOpacity]);
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                           self.containerScheme.colorScheme.primaryColor);

@@ -16,11 +16,12 @@
 
 #import <MaterialComponents/MaterialButtons+Theming.h>
 #import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialTypography.h>
 
-// The opacity value applied to text view by default.
-static CGFloat const kTextViewOpacityDefault = (CGFloat)0.87;
-// The opacity value applied to divider by default.
-static CGFloat const kDividerOpacityDefault = (CGFloat)0.12;
+// The opacity value applied to text view.
+static CGFloat const kTextViewOpacity = (CGFloat)0.87;
+// The opacity value applied to divider.
+static CGFloat const kDividerOpacity = (CGFloat)0.12;
 
 @implementation MDCBannerView (MaterialTheming)
 
@@ -43,8 +44,8 @@ static CGFloat const kDividerOpacityDefault = (CGFloat)0.12;
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   self.backgroundColor = colorScheme.surfaceColor;
   self.textView.textColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacityDefault];
-  self.dividerColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacityDefault];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity];
+  self.dividerColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity];
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
