@@ -58,17 +58,17 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
                            rightViewMode:(UITextFieldViewMode)rightViewMode
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
-  BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
+  BOOL displaysLeftView = [self displaysSideView:leftView
                                                                     viewMode:leftViewMode
                                                                    isEditing:isEditing];
-  BOOL shouldAttemptToDisplayRightView = [self shouldAttemptToDisplaySideView:rightView
+  BOOL displaysRightView = [self displaysSideView:rightView
                                                                      viewMode:rightViewMode
                                                                     isEditing:isEditing];
   CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinX = 0;
   CGFloat leftViewMinY = 0;
-  if (shouldAttemptToDisplayLeftView) {
+  if (displaysLeftView) {
     leftViewMinX = kHorizontalPadding;
     leftViewMinY = kTemporaryVerticalPadding;
   }
@@ -77,7 +77,7 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
   CGFloat rightViewHeight = CGRectGetHeight(rightView.frame);
   CGFloat rightViewMinX = 0;
   CGFloat rightViewMinY = 0;
-  if (shouldAttemptToDisplayRightView) {
+  if (displaysRightView) {
     CGFloat rightViewMaxX = textFieldSize.width - kHorizontalPadding;
     rightViewMinX = rightViewMaxX - rightViewWidth;
     rightViewMinY = kTemporaryVerticalPadding;
@@ -88,33 +88,33 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
 
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
-  self.leftViewHidden = !shouldAttemptToDisplayLeftView;
-  self.rightViewHidden = !shouldAttemptToDisplayRightView;
+  self.leftViewHidden = !displaysLeftView;
+  self.rightViewHidden = !displaysRightView;
 }
 
-- (BOOL)shouldAttemptToDisplaySideView:(UIView *)subview
+- (BOOL)displaysSideView:(UIView *)subview
                               viewMode:(UITextFieldViewMode)viewMode
                              isEditing:(BOOL)isEditing {
-  BOOL shouldAttemptToDisplaySideView = NO;
+  BOOL displaysSideView = NO;
   if (subview && !CGSizeEqualToSize(CGSizeZero, subview.frame.size)) {
     switch (viewMode) {
       case UITextFieldViewModeWhileEditing:
-        shouldAttemptToDisplaySideView = isEditing;
+        displaysSideView = isEditing;
         break;
       case UITextFieldViewModeUnlessEditing:
-        shouldAttemptToDisplaySideView = !isEditing;
+        displaysSideView = !isEditing;
         break;
       case UITextFieldViewModeAlways:
-        shouldAttemptToDisplaySideView = YES;
+        displaysSideView = YES;
         break;
       case UITextFieldViewModeNever:
-        shouldAttemptToDisplaySideView = NO;
+        displaysSideView = NO;
         break;
       default:
         break;
     }
   }
-  return shouldAttemptToDisplaySideView;
+  return displaysSideView;
 }
 
 @end
