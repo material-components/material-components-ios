@@ -307,12 +307,13 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
     // When
     UITraitCollection *previousTraitCollection =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     UITraitCollection *currentTraitCollection =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    UIColor *resolvedColor = [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
-                                                        previousTraitCollection:previousTraitCollection
-                                                                      elevation:elevation];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UIColor *resolvedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                   previousTraitCollection:previousTraitCollection
+                                                 elevation:elevation];
     // Then
     XCTAssertEqualObjects(resolvedColor, dynamicColor);
   }
@@ -329,12 +330,13 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
     // When
     UITraitCollection *previousTraitCollection =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     UITraitCollection *currentTraitCollection =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
-    UIColor *resolvedColor = [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
-                                                        previousTraitCollection:previousTraitCollection
-                                                                      elevation:elevation];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+    UIColor *resolvedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                   previousTraitCollection:previousTraitCollection
+                                                 elevation:elevation];
     // Then
     XCTAssertNotEqual(resolvedColor, dynamicColor);
   }

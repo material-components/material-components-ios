@@ -31,10 +31,9 @@
 - (nonnull UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation;
 
 /**
- Returns a color that takes the specified elevation value and traits into account when there is a color
- appearance difference between current traits and previous traits.
- When userInterfaceStyle is UIUserInterfaceStyleDark in currentTraitCollection, elevation will be used
- to resolve the color.
+ Returns a color that takes the specified elevation value and traits into account when there is a
+ color appearance difference between current traits and previous traits. When userInterfaceStyle is
+ UIUserInterfaceStyleDark in currentTraitCollection, elevation will be used to resolve the color.
  Negative elevation is treated as 0.
  Pattern-based UIColor is not supported.
  UIColor in UIExtendedGrayColorSpace will be resolved to UIExtendedSRGBColorSpace.
@@ -43,9 +42,10 @@
  @param previousTraitCollection The previous traits to use when comparing color appearance.
  @param elevation The @c mdc_absoluteElevation to use when resolving the color.
  */
-- (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:(nonnull UITraitCollection *)currentTraitCollection
-                                  previousTraitCollection:(nonnull UITraitCollection *)previousTraitCollection
-                                                elevation:(CGFloat)elevation;
+- (nonnull UIColor *)
+    mdc_resolvedColorWithTraitCollection:(nonnull UITraitCollection *)currentTraitCollection
+                 previousTraitCollection:(nonnull UITraitCollection *)previousTraitCollection
+                               elevation:(CGFloat)elevation;
 
 /**
  Returns a color that takes the specified elevation value and traits into account.
