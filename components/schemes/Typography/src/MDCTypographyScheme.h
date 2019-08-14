@@ -94,7 +94,8 @@
  @warning This API will eventually be deprecated. Please use
  @c useCurrentContentSizeCategoryWhenApplied instead.
 
- @note  The value of @c useCurrentContentSizeCategoryWhenApplied (if implemented) and @c mdc_adjustsFontForContentSizeCategory must always be the same.
+ @note  The value of @c useCurrentContentSizeCategoryWhenApplied (if implemented) and @c
+ mdc_adjustsFontForContentSizeCategory must always be the same.
 
 */
 @property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory __deprecated;
