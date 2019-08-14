@@ -1,3 +1,15 @@
+# 87.0.1
+
+This patch release fixes a bug where Git-LFS was required on the `stable`
+branch.
+
+## Component changes
+
+## Multi-component changes
+* [Restore working .gitattributes file. (#8234)](https://github.com/material-components/material-components-ios/commit/ad0bfaf5bc1b1d32f87513e0f1a88e3185880e6f) (Rob Moore)
+
+---
+
 # 87.0.0
 
 This major release improves the `traitCollectionDidChangeBlock` for
