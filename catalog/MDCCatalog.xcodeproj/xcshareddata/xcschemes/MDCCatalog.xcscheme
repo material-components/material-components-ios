@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3E2E7CBF5A69F7357CB0E4A1EE2BE49F"
+               BlueprintIdentifier = "1E1A299BF41220A754196C9D68FB777D"
                BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -42,7 +42,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A06F5C7178C1AD9F7A3741EC0D78BD34"
+               BlueprintIdentifier = "5F38DAB659843F3A8410C1286BE3F25E"
                BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -56,7 +56,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8DC25A5F5327A7ED56ADE6B4CD0B2EB5"
+               BlueprintIdentifier = "0F32E70FA07BF0B93ADEC8AC71B958CF"
                BuildableName = "MaterialComponents-Unit-ActionSheet-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ActionSheet-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -70,7 +70,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B060AB5056BF4E33BFF2A323A92AA34F"
+               BlueprintIdentifier = "722E8BB6AD8C6485B800B83BA2E5089F"
                BuildableName = "MaterialComponents-Unit-TextFields+ContainedInputView-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-TextFields+ContainedInputView-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -82,30 +82,14 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "NO"
-      codeCoverageEnabled = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "664524B21C6BA62A001ADBF8"
-            BuildableName = "MDCCatalog.app"
-            BlueprintName = "MDCCatalog"
-            ReferencedContainer = "container:MDCCatalog.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "FB_REFERENCE_IMAGE_DIR"
-            value = "$(SOURCE_ROOT)/../snapshot_test_goldens/goldens"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
+      codeCoverageEnabled = "YES"
+      shouldUseLaunchSchemeArgsEnv = "NO">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5AEABD73C978E231D0994587B4ACF0E1"
+               BlueprintIdentifier = "B4007B964B906502259A30F7E31A8AEF"
                BuildableName = "MaterialComponents-Unit-ActionSheet+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ActionSheet+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -115,7 +99,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8DC25A5F5327A7ED56ADE6B4CD0B2EB5"
+               BlueprintIdentifier = "0F32E70FA07BF0B93ADEC8AC71B958CF"
                BuildableName = "MaterialComponents-Unit-ActionSheet-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ActionSheet-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -125,7 +109,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B0A8024F093ADA9CC587BC090A4419AC"
+               BlueprintIdentifier = "F9A1C2C676D59A467CE625CC201AECD7"
                BuildableName = "MaterialComponents-Unit-ActivityIndicator-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ActivityIndicator-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -135,7 +119,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "027EC1DCE82E80AD5CB428F3AD39E984"
+               BlueprintIdentifier = "8C46E47EB837574D5E196A3C581844C0"
                BuildableName = "MaterialComponents-Unit-AnimationTiming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-AnimationTiming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -145,7 +129,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "01685AAF95CBA5141F9D3EA6BBE3F6BC"
+               BlueprintIdentifier = "D37ABB65F9E6B518263D31AFB3D087C2"
                BuildableName = "MaterialComponents-Unit-AppBar+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-AppBar+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -155,7 +139,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "360CC26408356C47D4A1A439E8B34410"
+               BlueprintIdentifier = "94B3E58C44A700988ADE2A82BF33C9A9"
                BuildableName = "MaterialComponents-Unit-AppBar-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-AppBar-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -165,7 +149,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B7391B2DFF14E1B954DFE5684858FE2"
+               BlueprintIdentifier = "0D21D281D2C2BAB92899837B215F5450"
                BuildableName = "MaterialComponents-Unit-BottomAppBar-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-BottomAppBar-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -175,7 +159,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6FE9B3EDF892DDD9D0F787FEA85B92B"
+               BlueprintIdentifier = "BA2DD0920A9B3BB5FE27034EBFA62ABA"
                BuildableName = "MaterialComponents-Unit-BottomNavigation-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-BottomNavigation-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -185,7 +169,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1E188139762C3C4CB117FE0998D3D26E"
+               BlueprintIdentifier = "80173564EC18CF366248DFC25163ED6B"
                BuildableName = "MaterialComponents-Unit-BottomSheet-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-BottomSheet-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -195,7 +179,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9E06EC0B192EDCC21C9FBB3179EF4FF1"
+               BlueprintIdentifier = "745B0D3392123254C65B9F418977041A"
                BuildableName = "MaterialComponents-Unit-ButtonBar-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ButtonBar-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -205,7 +189,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "77C34355FC0CD1527B69ED2B007A7DD4"
+               BlueprintIdentifier = "43DCFEF96304B034C3664F305572ABD5"
                BuildableName = "MaterialComponents-Unit-Buttons+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Buttons+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -215,7 +199,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A71EAA04FB08E01EE3FAC73A2E95767F"
+               BlueprintIdentifier = "45D58D0961BC20F6D59C95F2C4F1FDA5"
                BuildableName = "MaterialComponents-Unit-Buttons-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Buttons-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -225,7 +209,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5A4FC0F41A2DEB369D630388A554614F"
+               BlueprintIdentifier = "DD528C02CBDEFDE0F458DD2D6B1B4676"
                BuildableName = "MaterialComponents-Unit-Cards+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Cards+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -235,7 +219,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "81C4EE9F6E002798282F33F8910D6ACB"
+               BlueprintIdentifier = "05810B57A981A5B06B768C24EEB8E7DB"
                BuildableName = "MaterialComponents-Unit-Cards-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Cards-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -245,7 +229,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5CF4CA83D5E81EF70FE005E6A8C8FEA"
+               BlueprintIdentifier = "0B7115667542383E0A99478310BA194D"
                BuildableName = "MaterialComponents-Unit-Chips+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Chips+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -255,7 +239,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3F985DA4F3E8B5459CD0DFC100BD0EC4"
+               BlueprintIdentifier = "EA9FAB6D74825D78CBF90D53164BB7FC"
                BuildableName = "MaterialComponents-Unit-Chips-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Chips-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -265,7 +249,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "45FDA756DF5E703C196D4AB94261BD5B"
+               BlueprintIdentifier = "1D1B2FAA23E11B1893BDCD191E2F2FBA"
                BuildableName = "MaterialComponents-Unit-CollectionCells-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-CollectionCells-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -275,7 +259,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "77CED09DA4CB77C956A8F549CBDA11A8"
+               BlueprintIdentifier = "41F2D6961E1E281C845A16F1C4FC18C8"
                BuildableName = "MaterialComponents-Unit-CollectionLayoutAttributes-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-CollectionLayoutAttributes-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -285,7 +269,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F4B8E12E2380F086C99D6CE2939B11E5"
+               BlueprintIdentifier = "FD92690A61F9B8339B2E406D4836688E"
                BuildableName = "MaterialComponents-Unit-Collections-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Collections-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -295,7 +279,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "74248269CDE0EE1BEE5FA70A5A569146"
+               BlueprintIdentifier = "6B7855B0186993EAABB1825E38EA7A6B"
                BuildableName = "MaterialComponents-Unit-Dialogs-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Dialogs-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -305,7 +289,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BD3536BF760F8AEEF8E9E04AEEB496E6"
+               BlueprintIdentifier = "16B54118DCADAB12E1C7971638192E70"
                BuildableName = "MaterialComponents-Unit-FeatureHighlight-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-FeatureHighlight-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -315,7 +299,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "77C81E4C3A8D258D994E760532F18BF7"
+               BlueprintIdentifier = "919EA9C4B1DA0DCE8A22DA6AD6D22004"
                BuildableName = "MaterialComponents-Unit-FlexibleHeader-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-FlexibleHeader-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -325,7 +309,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "40538FB8F5280A29E587B2AC7FA19996"
+               BlueprintIdentifier = "DD96F0D40893D6684084982F979474AE"
                BuildableName = "MaterialComponents-Unit-HeaderStackView-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-HeaderStackView-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -335,7 +319,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "39534A756102CCEB20BCB47FA182E668"
+               BlueprintIdentifier = "EFD44542DBC0185BC0D566684BA50A6E"
                BuildableName = "MaterialComponents-Unit-Ink-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Ink-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -345,7 +329,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F02FF61FFD3A802B2E6990E6B9EE5055"
+               BlueprintIdentifier = "9F58F86853D3E0FDDBA5631E1A35CA43"
                BuildableName = "MaterialComponents-Unit-LibraryInfo-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-LibraryInfo-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -355,7 +339,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03427D937E6D8A8191170B67AE7889C9"
+               BlueprintIdentifier = "3E6CBB25095E0170DF57B0DD05CBC412"
                BuildableName = "MaterialComponents-Unit-List-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-List-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -365,7 +349,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "54E4A1F93A01EFD44DF2FE9F161F5432"
+               BlueprintIdentifier = "EF7CF22657C5369FC2106F817D7E141E"
                BuildableName = "MaterialComponents-Unit-MaskedTransition-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-MaskedTransition-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -375,7 +359,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B4629C7878F9AFE418078795704416C5"
+               BlueprintIdentifier = "23FFE4D5F6492A6DC712F0AB717741D2"
                BuildableName = "MaterialComponents-Unit-NavigationBar-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-NavigationBar-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -385,7 +369,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E3CBD9C1497A4E2DAAC98B2EAAA0479E"
+               BlueprintIdentifier = "14A620A56D2AD82F9273153203BD5EAF"
                BuildableName = "MaterialComponents-Unit-NavigationDrawer-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-NavigationDrawer-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -395,7 +379,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D170AD26DF679291AB1D74BB27AC7C8B"
+               BlueprintIdentifier = "CD081D1A63ACC6AC7A71F3F5556FD8AD"
                BuildableName = "MaterialComponents-Unit-OverlayWindow-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-OverlayWindow-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -405,7 +389,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EE6CF86481A77C792D90EFD206C1CECB"
+               BlueprintIdentifier = "E29E55A4639CE37E8FB3DDAC9B20194E"
                BuildableName = "MaterialComponents-Unit-PageControl-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-PageControl-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -415,7 +399,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D874218BA137CC6352E8E6E9332504FD"
+               BlueprintIdentifier = "D6EAEAC9D49B3CFED17B43BF62B01346"
                BuildableName = "MaterialComponents-Unit-Palettes-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Palettes-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -425,7 +409,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "11781C83418AE7B8585083ED3C25C17F"
+               BlueprintIdentifier = "53F0D8C581B4758659FD35C94EB31E13"
                BuildableName = "MaterialComponents-Unit-ProgressView-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ProgressView-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -435,7 +419,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3E55985B3B36899547E3DAD57139D837"
+               BlueprintIdentifier = "02F2617D094EB7169C123E283AA13B67"
                BuildableName = "MaterialComponents-Unit-Ripple-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Ripple-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -445,7 +429,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "40DF556CD433DD58174A388CB98720BA"
+               BlueprintIdentifier = "BE98BC65FA9999766C2E69A304C35FF2"
                BuildableName = "MaterialComponents-Unit-ShadowElevations-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ShadowElevations-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -455,7 +439,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "63BECCA23B5C7169DC15BE5A873A72DE"
+               BlueprintIdentifier = "F1E296B410A2D87309640290B20388D2"
                BuildableName = "MaterialComponents-Unit-ShadowLayer-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ShadowLayer-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -465,7 +449,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "39710615DB72A2B845D5C1FAE318B3FD"
+               BlueprintIdentifier = "E0C04DEA8AC278158FBE4D9257F931E3"
                BuildableName = "MaterialComponents-Unit-ShapeLibrary-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-ShapeLibrary-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -475,7 +459,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A3B3E8A72DCB2CA75D4911B5D2451F50"
+               BlueprintIdentifier = "1D03AA9B31017661DD29289E59523231"
                BuildableName = "MaterialComponents-Unit-Shapes-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Shapes-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -485,7 +469,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8CA0AEE54D05CD0F8A9E620AF28391A1"
+               BlueprintIdentifier = "01E9D9C6A91BEF14E7D80A62F4FAA5FA"
                BuildableName = "MaterialComponents-Unit-Slider-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Slider-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -495,7 +479,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DD00D81B63E0194EE3564DE3ACE5C85E"
+               BlueprintIdentifier = "AB33E94F75E49ED1F52E2D0DBCC4D2CB"
                BuildableName = "MaterialComponents-Unit-Snackbar-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Snackbar-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -505,7 +489,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D2E7D3177D716EEC8BDDA94E73594540"
+               BlueprintIdentifier = "677E70310D5DAC22ECBB5BA8BB191675"
                BuildableName = "MaterialComponents-Unit-Tabs+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Tabs+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -515,7 +499,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ACE81B693518F7EF088F6C940F36CA00"
+               BlueprintIdentifier = "65C7EC9341922173CB5AEC619C857BFE"
                BuildableName = "MaterialComponents-Unit-Tabs-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Tabs-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -525,7 +509,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B50EEF945A805597D167E9A4A2BF40E1"
+               BlueprintIdentifier = "C6A23C8B5908FD78FE34A67729C2963A"
                BuildableName = "MaterialComponents-Unit-TextFields+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-TextFields+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -535,7 +519,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9DA1A0A583AD4899700804119FFD82FD"
+               BlueprintIdentifier = "9F61A38CA52D206DF08D9E5D94647280"
                BuildableName = "MaterialComponents-Unit-TextFields-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-TextFields-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -545,7 +529,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "284C1435D749967DBB39C2C7BEEC913D"
+               BlueprintIdentifier = "0CB893291E1B4FC20AC7FDDAD0A68D43"
                BuildableName = "MaterialComponents-Unit-Themes-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Themes-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -555,7 +539,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6D6C1C5C03CAFD5D168FAB91261516D7"
+               BlueprintIdentifier = "37E1456A86A5A28FD3D831E9AB71F5BC"
                BuildableName = "MaterialComponents-Unit-Typography-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Typography-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -565,7 +549,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8F3FD7328015DC98B8037E7FFF518448"
+               BlueprintIdentifier = "B07C48452F3391E69111165EB171C4C9"
                BuildableName = "MaterialComponents-Unit-private-Application-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-private-Application-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -575,7 +559,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B806406D612E43DCE5A95FEEA92EC974"
+               BlueprintIdentifier = "C7628DA70B1BCEC947183B38BE5ECD17"
                BuildableName = "MaterialComponents-Unit-private-KeyboardWatcher-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-private-KeyboardWatcher-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -585,7 +569,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3B0715BE751696065197E7B132CF798F"
+               BlueprintIdentifier = "F01DD0A685E0FD0FC0C7D8D74F0F0D15"
                BuildableName = "MaterialComponents-Unit-private-Math-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-private-Math-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -595,7 +579,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CB469A2460E3EB8813D9C7F41CEE2CBE"
+               BlueprintIdentifier = "2CCB248F91C25755FA45D758D56FC4D2"
                BuildableName = "MaterialComponents-Unit-private-Overlay-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-private-Overlay-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -605,7 +589,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1696A1FD72898E5DC7DA0796EB5316E1"
+               BlueprintIdentifier = "9D52CDF22F9BD517B5E19353CF9F7F19"
                BuildableName = "MaterialComponents-Unit-private-ThumbTrack-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-private-ThumbTrack-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -615,7 +599,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9AFC701DBAF2EF24708C16FEEBD31375"
+               BlueprintIdentifier = "EDA533AD1F1B185ED1F39DCB9D1E1853"
                BuildableName = "MaterialComponents-Unit-private-UIMetrics-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-private-UIMetrics-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -625,7 +609,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4ACBFD51FB960AC748AEB19DF9674935"
+               BlueprintIdentifier = "67D836C778895EBC6E55636E4F918DD1"
                BuildableName = "MaterialComponents-Unit-schemes-Color-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-schemes-Color-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -635,7 +619,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B44ED38F9D474CF38FADA04FDF5D2690"
+               BlueprintIdentifier = "3CA10DECBC9881C3CF8CECC909A2C10B"
                BuildableName = "MaterialComponents-Unit-schemes-Container-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-schemes-Container-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -645,7 +629,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C748C221DF64CED78C87F098E988341D"
+               BlueprintIdentifier = "9D30DFB4194781852526722245FD987E"
                BuildableName = "MaterialComponents-Unit-schemes-Shape-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-schemes-Shape-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -655,7 +639,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7155239C0BF2B487269FB421906F7B92"
+               BlueprintIdentifier = "058FCCE5EAAE9D3A4AF5D2C3C8F3462A"
                BuildableName = "MaterialComponents-Unit-schemes-Typography-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-schemes-Typography-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -665,7 +649,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3E2E7CBF5A69F7357CB0E4A1EE2BE49F"
+               BlueprintIdentifier = "1E1A299BF41220A754196C9D68FB777D"
                BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -675,7 +659,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A06F5C7178C1AD9F7A3741EC0D78BD34"
+               BlueprintIdentifier = "5F38DAB659843F3A8410C1286BE3F25E"
                BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -685,7 +669,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "88EDC6F080DD13A85C457E8DF3D5680A"
+               BlueprintIdentifier = "ACE8F8377BC344DD26C128FBE324B08E"
                BuildableName = "MaterialComponentsBeta-Unit-BottomNavigation-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-BottomNavigation-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -695,7 +679,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1407E65B882514BA19258E4E7E2CD8E7"
+               BlueprintIdentifier = "3EF1C285419E755C019EC7F5334722D6"
                BuildableName = "MaterialComponentsBeta-Unit-ButtonBar+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-ButtonBar+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -705,7 +689,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CFF8DB3F51685FF8D2E2D2F0E8EE5D22"
+               BlueprintIdentifier = "94C1D3154090898637E0243EBB10377B"
                BuildableName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests.xctest"
                BlueprintName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -715,7 +699,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BEFB959C8B8734803945286E9C2346C5"
+               BlueprintIdentifier = "7F8F825884AA0C4686D14359DF4344AB"
                BuildableName = "MaterialComponents-Unit-List+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-List+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -725,7 +709,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CCD06113384824F0016FA0CF5D813CF6"
+               BlueprintIdentifier = "8C8DCDF159BDAF73E764F62FE202514D"
                BuildableName = "MaterialComponents-Unit-Dialogs+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Dialogs+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -735,7 +719,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D2F34A3A3404A61FE5EE1AE660D0F1FB"
+               BlueprintIdentifier = "F42EF0E7EEE873B8FD4CEB200A146CD5"
                BuildableName = "MaterialComponentsBeta-Unit-Tabs+TabBarView-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-Tabs+TabBarView-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -745,7 +729,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4DA89912E26C1D30834DA796EADFD68E"
+               BlueprintIdentifier = "80FDCBA97111C2F0E5D54C41D9C997FC"
                BuildableName = "MaterialComponents-Unit-BottomNavigation+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-BottomNavigation+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -801,7 +785,35 @@
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "417F4BB5FA07D3B5C1A334F54B8555C5"
+               BuildableName = "MaterialComponentsBeta-Unit-Banner+Theming-UnitTests.xctest"
+               BlueprintName = "MaterialComponentsBeta-Unit-Banner+Theming-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "664524B21C6BA62A001ADBF8"
+            BuildableName = "MDCCatalog.app"
+            BlueprintName = "MDCCatalog"
+            ReferencedContainer = "container:MDCCatalog.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "FB_REFERENCE_IMAGE_DIR"
+            value = "$(SOURCE_ROOT)/../snapshot_test_goldens/goldens"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -823,6 +835,8 @@
             ReferencedContainer = "container:MDCCatalog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

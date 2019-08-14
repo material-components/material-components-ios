@@ -125,6 +125,9 @@ This class is used for creating a @UIWindow with customized size category.
     XCTAssertEqualObjects([self.bannerView.trailingButton titleFontForState:state],
                           self.containerScheme.typographyScheme.button);
   }
+
+  [self assertTraitCollectionAndElevationBlockForBannerView:self.bannerView
+                                                colorScheme:self.containerScheme.colorScheme];
 }
 
 - (void)testThemingWithCustomValues {
@@ -134,6 +137,7 @@ This class is used for creating a @UIWindow with customized size category.
   self.containerScheme.colorScheme.primaryColor = UIColor.purpleColor;
   self.containerScheme.colorScheme.secondaryColor = UIColor.redColor;
   self.containerScheme.colorScheme.backgroundColor = UIColor.blueColor;
+  self.containerScheme.colorScheme.elevationOverlayEnabledForDarkMode = YES;
   self.containerScheme.typographyScheme.body2 = [UIFont systemFontOfSize:101.0];
 
   // When
@@ -172,6 +176,9 @@ This class is used for creating a @UIWindow with customized size category.
     XCTAssertEqualObjects([self.bannerView.trailingButton titleFontForState:state],
                           self.containerScheme.typographyScheme.button);
   }
+
+  [self assertTraitCollectionAndElevationBlockForBannerView:self.bannerView
+                                                colorScheme:self.containerScheme.colorScheme];
 }
 
 - (void)testThemingWithPreScaledTypographyScheme {
@@ -193,6 +200,17 @@ This class is used for creating a @UIWindow with customized size category.
   // Then
   XCTAssertGreaterThan(self.bannerView.textView.font.pointSize,
                        self.containerScheme.typographyScheme.body2.pointSize);
+}
+
+- (void)assertTraitCollectionAndElevationBlockForBannerView:(MDCBannerView *)bannerView
+                                                colorScheme:(id<MDCColorScheming>)colorScheme {
+  if (colorScheme.elevationOverlayEnabledForDarkMode) {
+    XCTAssertNotNil(bannerView.mdc_elevationDidChangeBlock);
+    XCTAssertNotNil(bannerView.traitCollectionDidChangeBlock);
+  } else {
+    XCTAssertNil(bannerView.mdc_elevationDidChangeBlock);
+    XCTAssertNil(bannerView.traitCollectionDidChangeBlock);
+  }
 }
 
 @end

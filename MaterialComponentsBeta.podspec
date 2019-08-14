@@ -81,6 +81,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Buttons"
     extension.dependency "MaterialComponents/Buttons+Theming"
+    extension.dependency "MaterialComponents/Elevation"
     extension.dependency "MaterialComponents/Typography"
     extension.dependency "MaterialComponents/schemes/Container"
 

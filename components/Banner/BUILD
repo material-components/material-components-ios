@@ -41,6 +41,7 @@ mdc_extension_objc_library(
         ":Banner",
         "//components/Buttons",
         "//components/Buttons:Theming",
+        "//components/Elevation",
         "//components/schemes/Container",
     ],
 )

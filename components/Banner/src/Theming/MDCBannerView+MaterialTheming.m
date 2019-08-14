@@ -17,6 +17,7 @@
 #import <MaterialComponents/MaterialButtons+Theming.h>
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialTypography.h>
+#import <MaterialComponents/MaterialElevation.h>
 
 // The opacity value applied to text view.
 static CGFloat const kTextViewOpacity = (CGFloat)0.87;
@@ -42,9 +43,48 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
 #pragma mark - Internal Helpers
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  self.backgroundColor = colorScheme.surfaceColor;
+  if (colorScheme.elevationOverlayEnabledForDarkMode) {
+    UIColor *elevationSurfaceColor =
+        [colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:self.traitCollection
+                                                             elevation:self.mdc_absoluteElevation];
+    self.backgroundColor = elevationSurfaceColor;
+    self.textView.backgroundColor = elevationSurfaceColor;
+  } else {
+    self.backgroundColor = colorScheme.surfaceColor;
+    self.textView.backgroundColor = colorScheme.surfaceColor;
+  }
   self.textView.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity];
   self.dividerColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity];
+
+
+  if (colorScheme.elevationOverlayEnabledForDarkMode) {
+    self.mdc_elevationDidChangeBlock =
+    ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
+      if ([object isKindOfClass:[MDCBannerView class]]) {
+        MDCBannerView *bannerView = (MDCBannerView *)object;
+        UIColor *elevationSurfaceColor = [colorScheme.surfaceColor
+                                  mdc_resolvedColorWithTraitCollection:bannerView.traitCollection
+                                  elevation:bannerView.mdc_absoluteElevation];
+        bannerView.backgroundColor = elevationSurfaceColor;
+        bannerView.textView.backgroundColor = elevationSurfaceColor;
+      }
+    };
+    self.traitCollectionDidChangeBlock = ^(MDCBannerView *_Nonnull bannerView,
+                                           UITraitCollection *_Nullable previousTraitCollection) {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+      if (@available(iOS 13.0, *)) {
+        if ([bannerView.traitCollection
+             hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+          UIColor *elevationSurfaceColor = [colorScheme.surfaceColor
+                                    mdc_resolvedColorWithTraitCollection:bannerView.traitCollection
+                                    elevation:bannerView.mdc_absoluteElevation];
+          bannerView.backgroundColor = elevationSurfaceColor;
+          bannerView.textView.backgroundColor = elevationSurfaceColor;
+        }
+      }
+#endif
+    };
+  }
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
