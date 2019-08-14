@@ -24,6 +24,46 @@ static CGFloat const kTextViewOpacity = (CGFloat)0.87;
 static CGFloat const kDividerOpacity = (CGFloat)0.12;
 
 /**
+This class is used for creating a @UIWindow with customized size category.
+*/
+@interface MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow : UIWindow
+
+/** Used to override the value of @c preferredContentSizeCategory. */
+@property(nonatomic, copy) UIContentSizeCategory contentSizeCategoryOverride;
+
+@end
+
+@implementation MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.contentSizeCategoryOverride = UIContentSizeCategoryLarge;
+  }
+  return self;
+}
+
+- (instancetype)initWithContentSizeCategoryOverride:
+    (UIContentSizeCategory)contentSizeCategoryOverride {
+  self = [super init];
+  if (self) {
+    self.contentSizeCategoryOverride = contentSizeCategoryOverride;
+  }
+  return self;
+}
+
+- (UITraitCollection *)traitCollection {
+  if (@available(iOS 10.0, *)) {
+    UITraitCollection *traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+    return traitCollection;
+  }
+  return [super traitCollection];
+}
+
+@end
+
+/**
  This class confirms behavior of @c MDCBannerView.
  */
 @interface MDCBannerViewThemingTests : XCTestCase
@@ -58,12 +98,12 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
   // Color
   XCTAssertEqualObjects(self.bannerView.backgroundColor,
                         self.containerScheme.colorScheme.surfaceColor);
-  XCTAssertEqualObjects(self.bannerView.textView.textColor,
-                        [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kTextViewOpacity]);
-  XCTAssertEqualObjects(self.bannerView.dividerColor,
-                        [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kDividerOpacity]);
+  XCTAssertEqualObjects(
+      self.bannerView.textView.textColor,
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity]);
+  XCTAssertEqualObjects(
+      self.bannerView.dividerColor,
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity]);
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                           self.containerScheme.colorScheme.primaryColor);
@@ -105,12 +145,12 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
   // Color
   XCTAssertEqualObjects(self.bannerView.backgroundColor,
                         self.containerScheme.colorScheme.surfaceColor);
-  XCTAssertEqualObjects(self.bannerView.textView.textColor,
-                        [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kTextViewOpacity]);
-  XCTAssertEqualObjects(self.bannerView.dividerColor,
-                        [self.containerScheme.colorScheme.onSurfaceColor
-                            colorWithAlphaComponent:kDividerOpacity]);
+  XCTAssertEqualObjects(
+      self.bannerView.textView.textColor,
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity]);
+  XCTAssertEqualObjects(
+      self.bannerView.dividerColor,
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity]);
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                           self.containerScheme.colorScheme.primaryColor);
@@ -132,6 +172,27 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
     XCTAssertEqualObjects([self.bannerView.trailingButton titleFontForState:state],
                           self.containerScheme.typographyScheme.button);
   }
+}
+
+- (void)testThemingWithPreScaledTypographyScheme {
+  // Given
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+
+  // When
+  MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow *extraExtraLargeContainer =
+      [[MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+          initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
+  [extraExtraLargeContainer addSubview:self.bannerView];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+  [self.bannerView applyThemeWithScheme:self.containerScheme];
+
+  // Then
+  XCTAssertGreaterThan(self.bannerView.textView.font.pointSize,
+                       self.containerScheme.typographyScheme.body2.pointSize);
 }
 
 @end

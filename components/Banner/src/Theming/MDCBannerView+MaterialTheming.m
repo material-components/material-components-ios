@@ -43,8 +43,7 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   self.backgroundColor = colorScheme.surfaceColor;
-  self.textView.textColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity];
+  self.textView.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity];
   self.dividerColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity];
 }
 
