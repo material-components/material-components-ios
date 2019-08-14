@@ -320,6 +320,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 }
 
 - (void)testResolvingColorWithDifferenceCurrentTraitCollectionAndPreviousTraitCollection {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     CGFloat elevation = (CGFloat)10;
@@ -339,7 +340,12 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                                  elevation:elevation];
     // Then
     XCTAssertNotEqual(resolvedColor, dynamicColor);
+    UIColor *expectedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                                 elevation:elevation];
+    XCTAssertEqual(resolvedColor, expectedColor);
   }
+#endif
 }
 
 @end
