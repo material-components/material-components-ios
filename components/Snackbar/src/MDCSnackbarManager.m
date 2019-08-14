@@ -552,6 +552,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _uppercaseButtonTitle = YES;
     _disabledButtonAlpha = (CGFloat)0.12;
     _messageElevation = MDCShadowElevationSnackbar;
+    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   }
   return self;
 }
