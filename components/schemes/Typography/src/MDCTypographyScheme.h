@@ -92,7 +92,8 @@
  functionality and embedded frameworks that also render UI.
 
  @warning This API will eventually be deprecated. Please use
- @c useCurrentContentSizeCategoryWhenApplied instead.
+ @c useCurrentContentSizeCategoryWhenApplied instead. It is recommended to use
+ @c useCurrentContentSizeCategoryWhenApplied as the backing value during deprecation.
 */
 @property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory __deprecated;
 
