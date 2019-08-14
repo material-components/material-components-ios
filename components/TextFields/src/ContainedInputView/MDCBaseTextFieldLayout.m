@@ -59,11 +59,11 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
   BOOL displaysLeftView = [self displaysSideView:leftView
-                                                                    viewMode:leftViewMode
-                                                                   isEditing:isEditing];
+                                        viewMode:leftViewMode
+                                       isEditing:isEditing];
   BOOL displaysRightView = [self displaysSideView:rightView
-                                                                     viewMode:rightViewMode
-                                                                    isEditing:isEditing];
+                                         viewMode:rightViewMode
+                                        isEditing:isEditing];
   CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinX = 0;
@@ -93,8 +93,8 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
 }
 
 - (BOOL)displaysSideView:(UIView *)subview
-                              viewMode:(UITextFieldViewMode)viewMode
-                             isEditing:(BOOL)isEditing {
+                viewMode:(UITextFieldViewMode)viewMode
+               isEditing:(BOOL)isEditing {
   BOOL displaysSideView = NO;
   if (subview && !CGSizeEqualToSize(CGSizeZero, subview.frame.size)) {
     switch (viewMode) {
