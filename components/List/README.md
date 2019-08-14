@@ -22,15 +22,18 @@ The MDCBaseCell is a List Item at its simplest--a basic UICollectionViewCell sub
 
 Below is an example:
 
-![MDCBaseCell Example](https://user-images.githubusercontent.com/8020010/42164205-3a7f699a-7dfd-11e8-9109-a7a6040996db.gif)
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/list_base_cell_animated.gif" alt="Animation showing a list of MDCBaseCell views with Ripple effects." width="356">
+</div>
 
 ### MDCSelfSizingStereoCell
 
 The MDCSelfSizingStereoCell is a subclass of MDCBaseCell. It exposes two image views (trailing and leading) and two labels (title and detail) that the user can configure however they like.
 
 Below is an example:
-
-![MDCSelfSizingStereoCell Example](https://user-images.githubusercontent.com/8020010/44807557-dcf11a80-ab97-11e8-83a6-6d7b69e59ecd.gif)
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/list_stereo_cell_animated.gif" alt="Animation showing a list of MDCStereoCell views scrolling up and down." width="480">
+</div>
 
 ## Design & API documentation
 
