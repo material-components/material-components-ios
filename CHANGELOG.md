@@ -1,18 +1,12 @@
-# #develop#
+# 87.0.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This patch release fixes a bug where Git-LFS was required on the `stable`
+branch.
 
 ## Component changes
+
+## Multi-component changes
+* [Restore working .gitattributes file. (#8234)](https://github.com/material-components/material-components-ios/commit/ad0bfaf5bc1b1d32f87513e0f1a88e3185880e6f) (Rob Moore)
 
 ---
 
