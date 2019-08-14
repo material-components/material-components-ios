@@ -568,6 +568,10 @@ NotificationCenter.default.addObserver(self,
 
 
 In the selector update the font sizes to reflect the change:
+
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Objective-C
 ```objc
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateTitleFont];
@@ -575,18 +579,44 @@ In the selector update the font sizes to reflect the change:
 }
 ```
 
-3. Add an observer also in the `UIViewController` so we can reload the collection view once there is a change:
+#### Swift
+```swift
+func contentSizeCategoryDidChange(_: NSNotification) {
+  updateTitleFont()
+  updateDetailsFont()
+}
+```
+<!--</div>-->
 
+3. Add an observer also in the `UIViewController` so we can reload the
+   collection view once there is a change:
+
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Objective-C
 ```objc
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self.collectionView reloadData];
 }
-``` 
+```
+
+#### Swift
+```swift
+func contentSizeCategoryDidChange(_: NSNotification) {
+  collectionView.reloadData()
+}
+```
+<!--</div>-->
 
 ### iPhone X Safe Area Support
 
-Our collection view needs to be aware of the safe areas when being presented on iPhone X. To do so need to set its `contentInsetAdjustmentBehavior` to be aware of the safe area:
+Our collection view needs to be aware of the safe areas when being presented
+on iPhone X. To do so need to set its `contentInsetAdjustmentBehavior` to be
+aware of the safe area:
 
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Objective-C
 ```objc
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 if (@available(iOS 11.0, *)) {
@@ -595,12 +625,27 @@ if (@available(iOS 11.0, *)) {
 #endif
 ```
 
-Lastly, as seen in the self-sizing section on step 2, when setting the width of the cell we need to set it to be the width of the collection view bounds minus the adjustedContentInset that now insets based on the safe area.
+#### Swift
+```swift
+if #available(iOS 11.0, *) {
+  collectionView.contentInsetAdjustmentBehavior = .always
+}
+```
+<!--</div>-->
+
+Lastly, as seen in the self-sizing section on step 2, when setting the width
+of the cell we need to set it to be the width of the collection view bounds
+minus the adjustedContentInset that now insets based on the safe area.
 
 ### Landscape Support
 
-In your view controller you need to invalidate the layout of your collection view when there is an orientation change. Please see below for the desired code changes to achieve that:
+In your view controller you need to invalidate the layout of your collection
+view when there is an orientation change. Please see below for the desired
+code changes to achieve that:
 
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Objective-C
 ```objc
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
@@ -620,18 +665,55 @@ In your view controller you need to invalidate the layout of your collection vie
 }
 ```
 
+#### Swift
+```swift
+override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+  super.traitCollectionDidChange(previousTraitCollection)
+  self.collectionView.collectionViewLayout.invalidateLayout()
+  self.collectionView.reloadData()
+}
+
+override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+  super.viewWillTransition(to: size, with: coordinator)
+  self.collectionView.collectionViewLayout.invalidateLayout()
+  coordinator.animate(alongsideTransition: nil) { (_) in
+    self.collectionView.collectionViewLayout.invalidateLayout()
+  }
+}
+```
+<!--</div>-->
+
 ### Right to Left Text Support
 
 To support right to left text we need to import `MDFInternationalization`:
 
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Objective-C
 ```objc
 #import <MDFInternationalization/MDFInternationalization.h>
 ```
 
+#### Swift
+```swift
+import MDFInternationalization
+```
+<!--</div>-->
+
 and for each of our cell's subviews me need to update the `autoResizingMask`:
 
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Objective-C
 ```objc
 _titleLabel.autoresizingMask =
     MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
 ``` 
+
+#### Swift
+```swift
+_titleLabel.autoresizingMask =
+  MDFTrailingMarginAutoresizingMaskForLayoutDirection(mdf_effectiveUserInterfaceLayoutDirection)
+```
+<!--</div>-->
 
