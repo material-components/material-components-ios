@@ -107,7 +107,8 @@
  the component.
 
  @note This flag will become required in the future as a replacement for
- @c mdc_adjustsFontForContentSizeCategory. The value of this flag needs to be the same as @c mdc_adjustsFontForContentSizeCategory.
+ @c mdc_adjustsFontForContentSizeCategory. The value of this flag needs to be the same as @c
+ mdc_adjustsFontForContentSizeCategory.
  */
 @property(nonatomic, assign, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
 
