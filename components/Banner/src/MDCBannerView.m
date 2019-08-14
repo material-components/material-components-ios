@@ -76,6 +76,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintLeading;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTop;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintBottom;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTrailing;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintCenterY;
 @property(nonatomic, readwrite, strong)
@@ -271,6 +272,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       constraintGreaterThanOrEqualToAnchor:self.buttonContainerView.leadingAnchor];
   self.leadingButtonConstraintTop =
       [self.leadingButton.topAnchor constraintEqualToAnchor:self.buttonContainerView.topAnchor];
+  self.leadingButtonConstraintBottom = [self.leadingButton.bottomAnchor
+      constraintEqualToAnchor:self.buttonContainerView.bottomAnchor];
   self.leadingButtonConstraintTrailing = [self.leadingButton.trailingAnchor
       constraintEqualToAnchor:self.buttonContainerView.trailingAnchor];
   self.leadingButtonConstraintCenterY = [self.leadingButton.centerYAnchor
@@ -325,6 +328,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintBottom.active = NO;
   self.leadingButtonConstraintLeading.active = NO;
   self.leadingButtonConstraintTop.active = NO;
+  self.leadingButtonConstraintBottom.active = NO;
   self.leadingButtonConstraintTrailing.active = NO;
   self.leadingButtonConstraintCenterY.active = NO;
   self.leadingButtonConstraintTrailingWithTrailingButton.active = NO;
@@ -455,12 +459,13 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     self.leadingButtonConstraintCenterY.active = YES;
   } else {
     if (layoutStyle == MDCBannerViewLayoutStyleMultiRowStackedButton) {
+      self.leadingButtonConstraintTop.active = YES;
       self.leadingButtonConstraintTrailing.active = YES;
       self.trailingButtonConstraintTop.active = YES;
     } else {
+      self.leadingButtonConstraintBottom.active = YES;
       self.leadingButtonConstraintTrailingWithTrailingButton.active = YES;
     }
-    self.leadingButtonConstraintTop.active = YES;
   }
   self.leadingButtonConstraintLeading.active = YES;
   self.trailingButtonConstraintTrailing.active = YES;
