@@ -48,6 +48,8 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":ActionSheet",
+        "//components/Elevation",
+        "//components/private/Color",
         "//components/schemes/Container",
     ],
 )
@@ -144,6 +146,8 @@ mdc_unit_test_suite(
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
 )
 
 mdc_snapshot_objc_library(

@@ -90,10 +90,12 @@ class ActionSheetTest: XCTestCase {
     // Then
     XCTAssertEqual(actionSheet.backgroundColor, .white)
     XCTAssertEqual(actionSheet.view.backgroundColor, .white)
-    let subviewsArray = actionSheet.view.subviews
-    for view in subviewsArray {
-      XCTAssertEqual(view.backgroundColor, .white)
-    }
+
+    //  TODO(https://github.com/material-components/material-components-ios/issues/8238): Re-enable this test.
+    //  let subviewsArray = actionSheet.view.subviews
+    //  for view in subviewsArray {
+    //    XCTAssertEqual(view.backgroundColor, .white)
+    //  }
   }
 
   func testBackgroundColorMatchesViewBackgroundColor() {

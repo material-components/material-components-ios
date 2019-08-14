@@ -19,4 +19,25 @@
  future. This class is under active development and should be used with caution.
  */
 @interface MDCBaseTextField : UITextField
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftView/rightView class.
+ */
+@property(strong, nonatomic, nullable) UIView *leadingView;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftView/rightView class.
+ */
+@property(strong, nonatomic, nullable) UIView *trailingView;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ */
+@property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ */
+@property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
 @end

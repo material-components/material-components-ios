@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCActionSheetController+MaterialTheming.h"
+#import "MaterialColor.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;
@@ -36,8 +37,13 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
 
+- (UIColor *)dynamicColorWithColor:(UIColor *)color elevation:(CGFloat)elevation {
+  UIColor *darkModeColor = [color mdc_resolvedColorWithElevation:elevation];
+  return [UIColor colorWithUserInterfaceStyleDarkColor:darkModeColor defaultColor:color];
+}
+
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  self.backgroundColor = colorScheme.surfaceColor;
+  [self applyBackgroundColorToActionSheet:self withColorScheme:colorScheme];
   if (self.message && ![self.message isEqualToString:@""]) {
     // If there is a message then this can be high opacity and won't clash with actions.
     self.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
@@ -51,6 +57,35 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
   self.inkColor = rippleColor;
   self.rippleColor = rippleColor;
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
+                                           UITraitCollection *_Nullable previousTraitCollection) {
+      if ([actionSheet.traitCollection
+              hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+      }
+    };
+    self.mdc_elevationDidChangeBlock =
+        ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
+          if ([object isKindOfClass:[MDCActionSheetController class]]) {
+            MDCActionSheetController *actionSheet = (MDCActionSheetController *)object;
+            [actionSheet applyBackgroundColorToActionSheet:actionSheet withColorScheme:colorScheme];
+          }
+        };
+  }
+#endif
+}
+
+- (void)applyBackgroundColorToActionSheet:(MDCActionSheetController *)actionSheet
+                          withColorScheme:(id<MDCColorScheming>)colorScheme {
+  if (colorScheme.elevationOverlayEnabledForDarkMode) {
+    actionSheet.backgroundColor =
+        [self dynamicColorWithColor:colorScheme.surfaceColor
+                          elevation:actionSheet.view.mdc_absoluteElevation];
+  } else {
+    actionSheet.backgroundColor = colorScheme.surfaceColor;
+  }
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
