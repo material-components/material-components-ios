@@ -18,11 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCBaseTextFieldLayout.h"
-
 @interface MDCBaseTextField ()
-
-@property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -64,45 +60,9 @@
 
 #pragma mark UIView Overrides
 
-- (void)layoutSubviews {
-  [self preLayoutSubviews];
-  [super layoutSubviews];
-  [self postLayoutSubviews];
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   [self setUpLayoutDirection];
-}
-
-#pragma mark Layout
-
-/**
- UITextField layout methods such as @c -textRectForBounds: and @c -editingRectForBounds: are called
- within @c -layoutSubviews. The exact values of the CGRects MDCBaseTextField returns from these
- methods depend on many factors, and are calculated alongside all the other frames of
- MDCBaseTextField's subviews. To ensure that these values are known before UITextField's layout
- methods expect them, they are determined by this method, which is called before the superclass's @c
- -layoutSubviews in the layout cycle.
- */
-- (void)preLayoutSubviews {
-  CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
-  self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
-}
-
-- (void)postLayoutSubviews {
-  self.leftView.hidden = self.layout.leftViewHidden;
-  self.rightView.hidden = self.layout.rightViewHidden;
-}
-
-- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
-                                                      leftView:self.leftView
-                                                  leftViewMode:self.leftViewMode
-                                                     rightView:self.rightView
-                                                 rightViewMode:self.rightViewMode
-                                                         isRTL:self.isRTL
-                                                     isEditing:self.isEditing];
 }
 
 #pragma mark UITextField Accessor Overrides
@@ -219,30 +179,6 @@
   }
   _layoutDirection = layoutDirection;
   [self setNeedsLayout];
-}
-
-#pragma mark UITextField Layout Overrides
-
-// The implementations for this method and the method below deserve some context! Unfortunately,
-// Apple's RTL behavior with these methods is very unintuitive. Imagine you're in an RTL locale and
-// you set @c leftView on a standard UITextField. Even though the property that you set is called @c
-// leftView, the method @c -rightViewRectForBounds: will be called. They are treating @c leftView as
-// @c rightView, even though @c rightView is nil. The RTL-aware wrappers around these APIs that
-// MDCBaseTextField introduce handle this situation more accurately.
-- (CGRect)leftViewRectForBounds:(CGRect)bounds {
-  if ([self isRTL]) {
-    return self.layout.rightViewFrame;
-  } else {
-    return self.layout.leftViewFrame;
-  }
-}
-
-- (CGRect)rightViewRectForBounds:(CGRect)bounds {
-  if ([self isRTL]) {
-    return self.layout.leftViewFrame;
-  } else {
-    return self.layout.rightViewFrame;
-  }
 }
 
 #pragma mark Internationalization
