@@ -182,24 +182,26 @@ This class is used for creating a @UIWindow with customized size category.
 }
 
 - (void)testThemingWithPreScaledTypographyScheme {
-  // Given
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  self.containerScheme.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  if (@available(iOS 10.0, *)) {
+    // Given
+    self.containerScheme.typographyScheme =
+    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+    self.containerScheme.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
 
-  // When
-  MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow *extraExtraLargeContainer =
-      [[MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-          initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
-  [extraExtraLargeContainer addSubview:self.bannerView];
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-  [self.bannerView applyThemeWithScheme:self.containerScheme];
+    // When
+    MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow *extraExtraLargeContainer =
+    [[MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+     initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
+    [extraExtraLargeContainer addSubview:self.bannerView];
+    [NSNotificationCenter.defaultCenter
+     postNotificationName:UIContentSizeCategoryDidChangeNotification
+     object:nil];
+    [self.bannerView applyThemeWithScheme:self.containerScheme];
 
-  // Then
-  XCTAssertGreaterThan(self.bannerView.textView.font.pointSize,
-                       self.containerScheme.typographyScheme.body2.pointSize);
+    // Then
+    XCTAssertGreaterThan(self.bannerView.textView.font.pointSize,
+                          self.containerScheme.typographyScheme.body2.pointSize);
+  }
 }
 
 - (void)assertTraitCollectionAndElevationBlockForBannerView:(MDCBannerView *)bannerView
