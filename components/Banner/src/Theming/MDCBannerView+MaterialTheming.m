@@ -49,6 +49,7 @@ static CGFloat const kDividerOpacityDefault = (CGFloat)0.12;
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   UIFont *textFont = typographyScheme.body2;
+  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
   if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
     useCurrentContentSizeCategoryWhenApplied =
         typographyScheme.useCurrentContentSizeCategoryWhenApplied;
