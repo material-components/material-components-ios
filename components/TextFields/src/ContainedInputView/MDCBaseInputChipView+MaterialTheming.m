@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField+MaterialTheming.h"
+#import "MDCBaseInputChipView+MaterialTheming.h"
 
 #import <Foundation/Foundation.h>
 
-#import "MDCBaseTextField2+ContainedInputView.h"
-#import "MDCContainedInputView.h"
+#import "private/MDCContainedInputView.h"
+#import "private/MDCContainedInputViewStyleFilled.h"
+#import "private/MDCContainedInputViewStyleOutlined.h"
+#import "private/MDCBaseInputChipView+MDCContainedInputView.h"
 
-@implementation MDCBaseTextField2 (MaterialTheming)
+@implementation MDCBaseInputChipView (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
@@ -52,7 +54,7 @@
 }
 
 - (void)applyTypographyScheme:(id<MDCTypographyScheming>)mdcTypographyScheming {
-  self.font = mdcTypographyScheming.subtitle1;
+  self.textField.font = mdcTypographyScheming.subtitle1;
   self.leadingAssistiveLabel.font = mdcTypographyScheming.caption;
   self.trailingAssistiveLabel.font = mdcTypographyScheming.caption;
 }

@@ -16,9 +16,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCContainedInputView.h"
-#import "MDCContainedInputViewStyleFilled.h"
-#import "MDCContainedInputViewStyleOutlined.h"
+#import "private/MDCBaseTextArea+MDCContainedInputView.h"
+#import "private/MDCContainedInputView.h"
+#import "private/MDCContainedInputViewStyleFilled.h"
+#import "private/MDCContainedInputViewStyleOutlined.h"
 
 @implementation MDCBaseTextArea (MaterialTheming)
 

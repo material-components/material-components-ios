@@ -12,41 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "InputChipViewExampleViewController.h"
+#import "InputTextFieldManualLayoutExampleViewController.h"
 
 #import "MaterialButtons.h"
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCBaseInputChipView+MaterialTheming.h"
-#import "supplemental/MDCBaseInputChipView.h"
-#import "supplemental/MDCFilledInputChipView+MaterialTheming.h"
-#import "supplemental/MDCFilledInputChipView.h"
-#import "supplemental/MDCOutlinedInputChipView+MaterialTheming.h"
-#import "supplemental/MDCOutlinedInputChipView.h"
+#import "MDCBaseTextField.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialChips.h"
 
-#import "supplemental/MDCBaseInputChipView+MaterialTheming.h"
+#import "MDCFilledTextField+MaterialTheming.h"
+#import "MDCFilledTextField.h"
+#import "MDCOutlinedTextField+MaterialTheming.h"
+#import "MDCOutlinedTextField.h"
 
-static const CGFloat kSideMargin = (CGFloat)20.0;
+#import "MDCBaseTextField+MaterialTheming.h"
 
-@interface InputChipViewExampleViewController () <UITextFieldDelegate>
+static const NSUInteger kDefaultHorizontalPadding = 20;
+static const NSUInteger kDefaultVerticalPadding = 20;
+
+@interface SimpleTextFieldManualLayoutExampleViewController ()
 
 @property(strong, nonatomic) UIScrollView *scrollView;
 
 @property(strong, nonatomic) NSArray *scrollViewSubviews;
 
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
-
 @property(nonatomic, assign) BOOL isErrored;
 
 @end
 
-@implementation InputChipViewExampleViewController
+@implementation SimpleTextFieldManualLayoutExampleViewController
 
 - (instancetype)init {
   self = [super init];
@@ -95,15 +93,21 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
     [self createToggleErrorButton],
-    [self createResignFirstResponderButton],
-    [self createLabelWithText:@"Filled InputChipView:"],
-    [self createFilledNonWrappingInputChipView],
-    [self createLabelWithText:@"Wrapping filled InputChipView:"],
-    [self createFilledWrappingInputChipView],
-    [self createLabelWithText:@"Outlined InputChipView:"],
-    [self createOutlinedNonWrappingInputChipView],
-    [self createLabelWithText:@"Wrapping outlined InputChipView:"],
-    [self createOutlinedWrappingInputChipView],
+    [self createFirstResponderButton],
+    [self createLabelWithText:@"Default MDCFilledTextField:"],
+    [self createDefaultFilledTextField],
+    [self createLabelWithText:@"Material MDCFilledTextField:"],
+    [self createMaterialFilledTextField],
+    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
+    [self createDefaultOutlinedTextField],
+    [self createLabelWithText:@"Material MDCOutlinedTextField:"],
+    [self createMaterialOutlinedTextField],
+    [self createLabelWithText:@"Default MDCBaseTextField:"],
+    [self createDefaultInputTextField],
+    [self createLabelWithText:@"Material MDCBaseTextField:"],
+    [self createMaterialInputTextField],
+    [self createLabelWithText:@"UITextField:"],
+    [self createUiTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -126,18 +130,23 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 }
 
 - (void)layoutScrollViewSubviews {
-  CGFloat viewMinX = kSideMargin;
-  CGFloat viewMinY = kSideMargin;
+  CGFloat viewMinX = kDefaultHorizontalPadding;
+  CGFloat viewMinY = kDefaultHorizontalPadding;
   for (UIView *view in self.scrollViewSubviews) {
     CGSize viewSize = view.frame.size;
-    CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * kSideMargin);
-    if ([view isKindOfClass:[MDCBaseInputChipView class]]) {
+    CGFloat textFieldWidth =
+        CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
+    if ([view isKindOfClass:[MDCBaseTextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
+    } else if ([view isKindOfClass:[UITextField class]]) {
+      viewSize = CGSizeMake(textFieldWidth, 60);
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
     view.frame = viewFrame;
-    [view sizeToFit];
-    viewMinY = viewMinY + CGRectGetHeight(view.frame) + kSideMargin;
+    if ([view isKindOfClass:[MDCBaseTextField class]] || [view isKindOfClass:[UILabel class]]) {
+      [view sizeToFit];
+    }
+    viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultVerticalPadding;
   }
 }
 
@@ -154,10 +163,10 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
       maxY = subViewMaxY;
     }
   }
-  self.scrollView.contentSize = CGSizeMake(maxX, maxY + kSideMargin);
+  self.scrollView.contentSize = CGSizeMake(maxX, maxY + kDefaultHorizontalPadding);
 }
 
-- (MDCButton *)createResignFirstResponderButton {
+- (MDCButton *)createFirstResponderButton {
   MDCButton *button = [[MDCButton alloc] init];
   [button setTitle:@"Resign first responder" forState:UIControlStateNormal];
   [button addTarget:self
@@ -187,58 +196,86 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return label;
 }
 
-- (MDCOutlinedInputChipView *)createOutlinedNonWrappingInputChipView {
-  MDCOutlinedInputChipView *inputChipView = [[MDCOutlinedInputChipView alloc] init];
-  inputChipView.label.text = @"Outlined non-wrapping";
-  [inputChipView applyThemeWithScheme:self.containerScheme];
-  inputChipView.chipsWrap = NO;
-  inputChipView.labelBehavior = MDCTextControlLabelBehaviorFloats;
-  inputChipView.chipRowHeight = self.chipHeight;
-  [inputChipView sizeToFit];
-  inputChipView.textField.delegate = self;
-  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
-  return inputChipView;
+//- (MDCBaseTextField *)createFilledTextFieldWithMaximalDensity {
+//  MDCBaseTextField *textField = [self createFilledTextField];
+//  textField.containerStyle.positioningDelegate.verticalDensity = 1.0;
+//  return textField;
+//}
+//
+//- (MDCBaseTextField *)createFilledTextFieldWithMinimalDensity {
+//  MDCBaseTextField *textField = [self createFilledTextField];
+//  textField.containerStyle.positioningDelegate.verticalDensity = 0.0;
+//  return textField;
+//}
+
+- (MDCFilledTextField *)createDefaultFilledTextField {
+  MDCFilledTextField *textField = [[MDCFilledTextField alloc] init];
+  //    textField.containerStyle.positioningDelegate.verticalDensity = 1;
+  textField.mdc_adjustsFontForContentSizeCategory = YES;
+  textField.labelBehavior = MDCTextControlLabelBehaviorFloats;
+  textField.placeholder = @"555-555-5555";
+  textField.label.text = @"Phone number";
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  textField.leadingAssistiveLabel.numberOfLines = 0;
+  textField.leadingAssistiveLabel.text = @"This is a string.";
+  return textField;
 }
 
-- (MDCOutlinedInputChipView *)createOutlinedWrappingInputChipView {
-  MDCOutlinedInputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
-  inputChipView.label.text = @"Outlined wrapping";
-  inputChipView.chipsWrap = YES;
-  //  inputChipView.labelBehavior = MDCTextControlLabelBehaviorDisappears;
-  inputChipView.preferredNumberOfVisibleRows = 4;
-  //  inputChipView.preferredContainerHeight = 150;
-  [inputChipView sizeToFit];
-  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
-  return inputChipView;
+- (MDCFilledTextField *)createMaterialFilledTextField {
+  MDCFilledTextField *textField = [self createDefaultFilledTextField];
+  [textField applyThemeWithScheme:self.containerScheme];
+  return textField;
 }
 
-- (MDCFilledInputChipView *)createFilledNonWrappingInputChipView {
-  MDCFilledInputChipView *inputChipView = [[MDCFilledInputChipView alloc] init];
-  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
-  inputChipView.label.text = @"Filled non-wrapping";
-  [inputChipView applyThemeWithScheme:self.containerScheme];
-  inputChipView.chipsWrap = NO;
-  //  inputChipView.labelBehavior = MDCTextControlLabelBehaviorDisappears;
-  inputChipView.chipRowHeight = self.chipHeight;
-  [inputChipView sizeToFit];
-  inputChipView.textField.delegate = self;
-  return inputChipView;
+- (UITextField *)createUiTextField {
+  UITextField *textField = [[UITextField alloc] init];
+  textField.borderStyle = UITextBorderStyleRoundedRect;
+  return textField;
 }
 
-- (MDCFilledInputChipView *)createFilledWrappingInputChipView {
-  MDCFilledInputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
-  inputChipView.label.text = @"Filled wrapping";
-  inputChipView.chipsWrap = YES;
-  inputChipView.preferredContainerHeight = 150;
-  inputChipView.chipRowHeight = self.chipHeight;
-  [inputChipView sizeToFit];
-  return inputChipView;
+//- (MDCBaseTextField *)createOutlinedTextFieldWithMaximalDensity {
+//  MDCBaseTextField *textField = [self createOutlinedTextField];
+//  textField.containerStyle.positioningDelegate.verticalDensity = 1.0;
+//  return textField;
+//}
+//
+//- (MDCBaseTextField *)createOutlinedTextFieldWithMinimalDensity {
+//  MDCBaseTextField *textField = [self createOutlinedTextField];
+//  textField.containerStyle.positioningDelegate.verticalDensity = 0.0;
+//  return textField;
+//}
+
+- (MDCOutlinedTextField *)createDefaultOutlinedTextField {
+  MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] init];
+  //  textField.containerStyle.positioningDelegate.verticalDensity = 0.5;
+  //  textField.placeholder = @"This is a placeholder";
+  //  textField.label.text = @"This is a floating label";
+  textField.placeholder = @"555-555-5555";
+  textField.label.text = @"Phone number";
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  textField.mdc_adjustsFontForContentSizeCategory = YES;
+
+  return textField;
 }
 
-- (CGFloat)chipHeight {
-  MDCChipView *chip = [self createChipWithText:@"Test"
-                                          font:self.allInputChipViews.firstObject.textField.font];
-  return CGRectGetHeight(chip.frame);
+- (MDCOutlinedTextField *)createMaterialOutlinedTextField {
+  MDCOutlinedTextField *textField = [self createDefaultOutlinedTextField];
+  [textField applyThemeWithScheme:self.containerScheme];
+  return textField;
+}
+
+- (MDCBaseTextField *)createDefaultInputTextField {
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] init];
+  textField.placeholder = @"This is a placeholder";
+  textField.label.text = @"This is a floating label";
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  return textField;
+}
+
+- (MDCBaseTextField *)createMaterialInputTextField {
+  MDCBaseTextField *textField = [self createDefaultInputTextField];
+  [textField applyThemeWithScheme:self.containerScheme];
+  return textField;
 }
 
 #pragma mark Private
@@ -257,30 +294,32 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   }];
 }
 
-- (void)updateInputChipViewStates {
-  [self.allInputChipViews enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView,
-                                                       NSUInteger idx, BOOL *stop) {
-    BOOL isEven = idx % 2 == 0;
-    if (self.isErrored) {
-      // TODO: Make InputChipView respond to error theme selector
-      //      if ([inputChipView respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
-      //        [inputChipView applyErrorThemeWithScheme:self.containerScheme];
-      //      }
-      if (isEven) {
-        inputChipView.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
-                                                   @"vel, venenatis lobortis massa. Donec metus "
-                                                   @"dolor.";
+- (void)updateTextFieldThemes {
+  [self.allTextFields enumerateObjectsUsingBlock:^(UITextField *uiTextField, NSUInteger idx,
+                                                   BOOL *stop) {
+    if ([uiTextField isKindOfClass:[MDCBaseTextField class]]) {
+      MDCBaseTextField *textField = (MDCBaseTextField *)uiTextField;
+      BOOL isEven = idx % 2 == 0;
+      if (self.isErrored) {
+        if ([textField respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
+          [textField applyErrorThemeWithScheme:self.containerScheme];
+        }
+        if (isEven) {
+          textField.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+                                                 @"vel, venenatis lobortis massa. Donec metus "
+                                                 @"dolor.";
+        } else {
+          textField.leadingAssistiveLabel.text = @"This is an error.";
+        }
       } else {
-        inputChipView.leadingAssistiveLabel.text = @"This is an error.";
-      }
-    } else {
-      if ([inputChipView respondsToSelector:@selector(applyThemeWithScheme:)]) {
-        [inputChipView applyThemeWithScheme:self.containerScheme];
-      }
-      if (isEven) {
-        inputChipView.leadingAssistiveLabel.text = @"This is helper text.";
-      } else {
-        inputChipView.leadingAssistiveLabel.text = nil;
+        if ([textField respondsToSelector:@selector(applyThemeWithScheme:)]) {
+          [textField applyThemeWithScheme:self.containerScheme];
+        }
+        if (isEven) {
+          textField.leadingAssistiveLabel.text = @"This is helper text.";
+        } else {
+          textField.leadingAssistiveLabel.text = nil;
+        }
       }
     }
   }];
@@ -294,19 +333,9 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     label.textColor = textColor;
   }];
 }
-- (MDCChipView *)createChipWithText:(NSString *)text font:(UIFont *)font {
-  MDCChipView *chipView = [[MDCChipView alloc] init];
-  chipView.titleLabel.text = text;
-  chipView.titleLabel.font = font;
-  [chipView sizeToFit];
-  [chipView addTarget:self
-                action:@selector(selectedChip:)
-      forControlEvents:UIControlEventTouchUpInside];
-  return chipView;
-}
 
-- (NSArray<MDCBaseInputChipView *> *)allInputChipViews {
-  return [self allViewsOfClass:[MDCBaseInputChipView class]];
+- (NSArray<UITextField *> *)allTextFields {
+  return [self allViewsOfClass:[UITextField class]];
 }
 
 - (NSArray<MDCButton *> *)allButtons {
@@ -337,52 +366,24 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 #pragma mark IBActions
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
-  [self.allInputChipViews enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView,
-                                                       NSUInteger idx, BOOL *stop) {
-    [inputChipView resignFirstResponder];
-  }];
+  [self.allTextFields
+      enumerateObjectsUsingBlock:^(UITextField *textField, NSUInteger idx, BOOL *stop) {
+        [textField resignFirstResponder];
+      }];
 }
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {
   self.isErrored = !self.isErrored;
   [self updateButtonThemes];
-  [self updateInputChipViewStates];
+  [self updateTextFieldThemes];
   [self updateLabelColors];
-}
-
-#pragma mark UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  if (textField.text.length <= 0) {
-    return NO;
-  }
-  MDCChipView *chipView = [self createChipWithText:textField.text font:textField.font];
-  MDCBaseInputChipView *inputChipView = [self inputChipViewWithTextField:textField];
-  [inputChipView addChip:chipView];
-  return NO;
-}
-
-- (MDCBaseInputChipView *)inputChipViewWithTextField:(UITextField *)textField {
-  for (MDCBaseInputChipView *inputChipView in self.allInputChipViews) {
-    if (inputChipView.textField == textField) {
-      return inputChipView;
-    }
-  }
-  return nil;
-}
-
-#pragma mark User Interaction
-
-- (void)selectedChip:(MDCChipView *)chip {
-  chip.selected = !chip.selected;
-  NSLog(@"%@", @(chip.isHighlighted));
 }
 
 #pragma mark Catalog By Convention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Text Field", @"CIV Input Chip Views" ],
+    @"breadcrumbs" : @[ @"Text Field", @"CIV TextFields" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };

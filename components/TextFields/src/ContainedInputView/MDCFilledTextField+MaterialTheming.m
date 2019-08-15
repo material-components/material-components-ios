@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCOutlinedTextField+MaterialTheming.h"
+#import "MDCFilledTextField+MaterialTheming.h"
 
 #import <Foundation/Foundation.h>
 
-#import "MDCBaseTextField2+ContainedInputView.h"
+#import "MDCBaseTextField+ContainedInputView.h"
 #import "MDCContainedInputView.h"
-#import "MDCContainedInputViewStyleOutlined.h"
+#import "MDCContainedInputViewStyleFilled.h"
 
-@implementation MDCOutlinedTextField (MaterialTheming)
+@implementation MDCFilledTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
@@ -65,11 +65,11 @@
   UIColor *labelColorDisabled = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
   UIColor *labelColorFocused = colorScheme.primaryColor;
 
-  UIColor *outlineColorNormal = colorScheme.onSurfaceColor;
-  UIColor *outlineColorEditing = colorScheme.primaryColor;
-  UIColor *outlineColorDisabled =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *thinUnderlineFillColor = colorScheme.onBackgroundColor;
+  UIColor *thickUnderlineFillColor = colorScheme.primaryColor;
 
+  UIColor *filledSublayerFillColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
   //  UIColor *clearButtonTintColor =
   //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
   // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
@@ -81,9 +81,12 @@
   [self setTextColor:textColor forState:UIControlStateNormal];
   [self setTextColor:textColor forState:UIControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];
-  [self setOutlineColor:outlineColorNormal forState:UIControlStateNormal];
-  [self setOutlineColor:outlineColorEditing forState:UIControlStateEditing];
-  [self setOutlineColor:outlineColorDisabled forState:UIControlStateDisabled];
+  [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateNormal];
+  [self setUnderlineColor:thickUnderlineFillColor forState:UIControlStateEditing];
+  [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateDisabled];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateNormal];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateEditing];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateDisabled];
   self.trailingAssistiveLabel.textColor = assistiveLabelColor;
   self.leadingAssistiveLabel.textColor = assistiveLabelColor;
   self.tintColor = colorScheme.primaryColor;
@@ -96,10 +99,11 @@
   UIColor *labelColorDisabled = [colorScheme.errorColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *labelColorFocused = colorScheme.errorColor;
 
-  UIColor *outlineColorNormal = colorScheme.errorColor;
-  UIColor *outlineColorEditing = colorScheme.errorColor;
-  UIColor *outlineColorDisabled = [colorScheme.errorColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *thinUnderlineFillColor = colorScheme.errorColor;
+  UIColor *thickUnderlineFillColor = colorScheme.errorColor;
 
+  UIColor *filledSublayerFillColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
   //  UIColor *clearButtonTintColor =
   //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
   // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
@@ -111,9 +115,12 @@
   [self setTextColor:textColor forState:UIControlStateNormal];
   [self setTextColor:textColor forState:UIControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];
-  [self setOutlineColor:outlineColorNormal forState:UIControlStateNormal];
-  [self setOutlineColor:outlineColorEditing forState:UIControlStateEditing];
-  [self setOutlineColor:outlineColorDisabled forState:UIControlStateDisabled];
+  [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateNormal];
+  [self setUnderlineColor:thickUnderlineFillColor forState:UIControlStateEditing];
+  [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateDisabled];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateNormal];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateEditing];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateDisabled];
   self.trailingAssistiveLabel.textColor = assistiveLabelColor;
   self.leadingAssistiveLabel.textColor = assistiveLabelColor;
   self.tintColor = colorScheme.errorColor;

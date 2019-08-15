@@ -15,9 +15,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCBaseTextArea.h"
-#import "MDCContainedInputView.h"
-#import "MDCContainedInputViewStyleFilled.h"
-#import "MDCContainedInputViewStyleOutlined.h"
 #import "MaterialContainerScheme.h"
 
 /**

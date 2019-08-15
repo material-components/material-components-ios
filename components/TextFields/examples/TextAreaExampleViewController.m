@@ -18,8 +18,8 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCBaseTextArea+MaterialTheming.h"
-#import "supplemental/MDCBaseTextArea.h"
+#import "MDCBaseTextArea+MaterialTheming.h"
+#import "MDCBaseTextArea.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -222,21 +222,23 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
           //        [textArea applyErrorThemeWithScheme:self.containerScheme];
           //      }
           if (isEven) {
-            textArea.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
-                                                  @"vel, venenatis lobortis massa. Donec metus "
-                                                  @"dolor.";
+            // TODO: Make TextArea expose assistive labels
+
+            //            textArea.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+//                                                  @"vel, venenatis lobortis massa. Donec metus "
+//                                                  @"dolor.";
           } else {
-            textArea.leadingAssistiveLabel.text = @"This is an error.";
+//            textArea.leadingAssistiveLabel.text = @"This is an error.";
           }
         } else {
-          if ([textArea respondsToSelector:@selector(applyThemeWithScheme:)]) {
-            [textArea applyThemeWithScheme:self.containerScheme];
-          }
-          if (isEven) {
-            textArea.leadingAssistiveLabel.text = @"This is helper text.";
-          } else {
-            textArea.leadingAssistiveLabel.text = nil;
-          }
+//          if ([textArea respondsToSelector:@selector(applyThemeWithScheme:)]) {
+//            [textArea applyThemeWithScheme:self.containerScheme];
+//          }
+//          if (isEven) {
+//            textArea.leadingAssistiveLabel.text = @"This is helper text.";
+//          } else {
+//            textArea.leadingAssistiveLabel.text = nil;
+//          }
         }
       }];
   [self.view setNeedsLayout];

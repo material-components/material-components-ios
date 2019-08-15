@@ -19,10 +19,11 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "MDCContainedInputView.h"
-#import "MDCContainedInputViewLabelAnimator.h"
-#import "MDCContainedInputViewStyleBase.h"
 #import "MaterialMath.h"
+#import "private/MDCBaseTextArea+MDCContainedInputView.h"
+#import "private/MDCContainedInputView.h"
+#import "private/MDCContainedInputViewLabelAnimator.h"
+#import "private/MDCContainedInputViewStyleBase.h"
 
 @class MDCBaseTextAreaTextView;
 @protocol MDCBaseTextAreaTextViewDelegate <NSObject>

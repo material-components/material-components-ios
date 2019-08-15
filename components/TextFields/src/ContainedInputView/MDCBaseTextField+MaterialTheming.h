@@ -14,26 +14,27 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCBaseTextField.h"
 #import "MaterialContainerScheme.h"
 
-#import "MDCContainedInputView.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface MDCBaseTextArea : UIControl <MDCContainedInputView>
+/**
+ This category is used to style MDCBaseTextField instances with an MDCContainerScheme.
+ */
+@interface MDCBaseTextField (MaterialTheming)
 
 /**
- This property determines the behavior of the textfield's label during editing.
- @note The default is MDCTextControlLabelBehaviorFloats.
- */
-@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
+ Applies a container scheme's subsystem-specific schemes to the receiver.
 
-@property(strong, nonatomic, readonly) UITextView *textView;
-@property(strong, nonatomic, readonly) UILabel *label;
-@property(nonatomic, assign) NSInteger numberOfVisibleLines;
-@property(nonatomic, assign) CGFloat preferredContainerHeight;
-@property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
+ @param scheme A container scheme instance.
+ */
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
+/**
+ Applies a container scheme's subsystem-specific schemes to the receiver in a manner best suited to
+ convey an error state.
+
+ @param scheme A container scheme instance.
+ */
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
-
-NS_ASSUME_NONNULL_END

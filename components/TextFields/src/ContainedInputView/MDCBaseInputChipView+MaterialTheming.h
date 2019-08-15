@@ -13,19 +13,28 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MDCBaseTextField2.h"
-#import "MDCContainedInputView.h"
+
+#import "MDCBaseInputChipView.h"
+#import "MaterialContainerScheme.h"
 
 /**
- A UITextField subclass that attempts to do the following:
-
- - Earnestly interpret and actualize the Material guidelines for text fields, which can be found
- here: https://material.io/design/components/text-fields.html#outlined-text-field
-
- - Feel intuitive for someone used to the conventions of iOS development and UIKit controls.
-
- - Enable easy set up and reliable and predictable behavior.
-
+ This category is used to style SimpleTextField instances with an MDCContainerScheme.
  */
-@interface MDCBaseTextField2 (Private) <MDCContainedInputView>
+@interface MDCBaseInputChipView (MaterialTheming)
+
+/**
+ Applies a container scheme's subsystem-specific schemes to the receiver.
+
+ @param scheme A container scheme instance.
+ */
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
+/**
+ Applies a container scheme's subsystem-specific schemes to the receiver in a manner best suited to
+ convey an error state.
+
+ @param scheme A container scheme instance.
+ */
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
 @end
