@@ -181,7 +181,7 @@ This class is used for creating a @UIWindow with customized size category.
                                                 colorScheme:self.containerScheme.colorScheme];
 }
 
-- (void)testThemingWithPreScaledTypographyScheme {
+- (void)testFontsAreScaledWhenTypographySchemeRequestsPrescaling {
   if (@available(iOS 10.0, *)) {
     // Given
     self.containerScheme.typographyScheme =

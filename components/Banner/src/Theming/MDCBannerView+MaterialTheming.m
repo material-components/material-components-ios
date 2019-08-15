@@ -48,10 +48,8 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
         [colorScheme.surfaceColor mdc_resolvedColorWithTraitCollection:self.traitCollection
                                                              elevation:self.mdc_absoluteElevation];
     self.backgroundColor = elevationSurfaceColor;
-    self.textView.backgroundColor = elevationSurfaceColor;
   } else {
     self.backgroundColor = colorScheme.surfaceColor;
-    self.textView.backgroundColor = colorScheme.surfaceColor;
   }
   self.textView.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity];
   self.dividerColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity];
@@ -65,7 +63,6 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
                 mdc_resolvedColorWithTraitCollection:bannerView.traitCollection
                                            elevation:bannerView.mdc_absoluteElevation];
             bannerView.backgroundColor = elevationSurfaceColor;
-            bannerView.textView.backgroundColor = elevationSurfaceColor;
           }
         };
     self.traitCollectionDidChangeBlock = ^(MDCBannerView *_Nonnull bannerView,
@@ -78,7 +75,6 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
               mdc_resolvedColorWithTraitCollection:bannerView.traitCollection
                                          elevation:bannerView.mdc_absoluteElevation];
           bannerView.backgroundColor = elevationSurfaceColor;
-          bannerView.textView.backgroundColor = elevationSurfaceColor;
         }
       }
 #endif
