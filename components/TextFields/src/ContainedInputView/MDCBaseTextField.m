@@ -18,7 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCBaseTextFieldLayout.h"
+#import "private/MDCBaseTextFieldLayout.h"
 
 @interface MDCBaseTextField ()
 
@@ -97,12 +97,30 @@
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
+                                                          font:self.font
                                                       leftView:self.leftView
                                                   leftViewMode:self.leftViewMode
                                                      rightView:self.rightView
                                                  rightViewMode:self.rightViewMode
                                                          isRTL:self.isRTL
                                                      isEditing:self.isEditing];
+}
+
+/**
+To understand this method one must understand that the CGRect UITextField returns from @c
+-textRectForBounds: does not actually represent the CGRect of visible text in UITextField. It
+represents the CGRect of an internal "field editing" class, which has a height that is significantly
+taller than the text (@c font.lineHeight) itself. Providing a height in @c -textRectForBounds: that
+differs from the height determined by the superclass results in an unusable text field. By taking
+the desired CGRect of the visible text from the layout object, giving it the height preferred by the
+superclass's implementation of @c -textRectForBounds:, and then ensuring that this new CGRect has
+the same midY as the original CGRect, we are able to take control of the text's positioning.
+ */
+- (CGRect)adjustTextAreaFrame:(CGRect)textRect
+    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
+  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
+  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
+  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
 #pragma mark UITextField Accessor Overrides
@@ -243,6 +261,11 @@
   } else {
     return self.layout.rightViewFrame;
   }
+}
+
+- (CGRect)textRectForBounds:(CGRect)bounds {
+  return [self adjustTextAreaFrame:self.layout.textRect
+      withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 #pragma mark Internationalization

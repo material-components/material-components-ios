@@ -29,6 +29,7 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                                 font:(UIFont *)font
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
@@ -38,6 +39,7 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
   self = [super init];
   if (self) {
     [self calculateLayoutWithTextFieldSize:textFieldSize
+                                      font:font
                                   leftView:leftView
                               leftViewMode:leftViewMode
                                  rightView:rightView
@@ -52,6 +54,7 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
+                                    font:(nonnull UIFont *)font
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
@@ -83,6 +86,25 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
     rightViewMinY = kTemporaryVerticalPadding;
   }
 
+  CGFloat textRectMinX = 0;
+  CGFloat textRectMaxX = 0;
+
+  CGFloat leftViewMaxX = leftViewMinX + leftViewWidth;
+  if (isRTL) {
+    textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    textRectMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
+                                     : textFieldSize.width - kHorizontalPadding;
+  } else {
+    textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    textRectMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
+                                     : textFieldSize.width - kHorizontalPadding;
+  }
+
+  CGFloat textRectHeight = [self textHeightWithFont:font];
+  CGFloat textRectWidth = textRectMaxX - textRectMinX;
+  CGRect textRect =
+      CGRectMake(textRectMinX, kTemporaryVerticalPadding, textRectWidth, textRectHeight);
+
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
 
@@ -90,6 +112,7 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
   self.rightViewFrame = rightViewFrame;
   self.leftViewHidden = !displaysLeftView;
   self.rightViewHidden = !displaysRightView;
+  self.textRect = textRect;
 }
 
 - (BOOL)displaysSideView:(UIView *)subview
@@ -115,6 +138,10 @@ static const CGFloat kTemporaryVerticalPadding = (CGFloat)12.0;
     }
   }
   return displaysSideView;
+}
+
+- (CGFloat)textHeightWithFont:(UIFont *)font {
+  return (CGFloat)ceil((double)font.lineHeight);
 }
 
 @end
