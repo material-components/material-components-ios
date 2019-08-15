@@ -51,6 +51,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/AnimationTiming",
+        "//components/Elevation",
         "//components/Palettes",
         "//components/Typography",
         "//components/private/Math",
