@@ -98,7 +98,8 @@
  mdc_adjustsFontForContentSizeCategory must always be the same.
 
 */
-@property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory __deprecated;
+@property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory __deprecated_msg(
+    "Use useCurrentContentSizeCategoryWhenApplied instead.");
 
 @optional
 
