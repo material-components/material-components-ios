@@ -94,14 +94,14 @@ static const CGFloat kGradientBlurLength = 6;
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
   id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
-      [containerStyle positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
-                                              normalFontLineHeight:font.lineHeight
-                                                     textRowHeight:font.lineHeight
-                                                  numberOfTextRows:preferredNumberOfVisibleRows
-                                                           density:0
-                                          preferredContainerHeight:preferredContainerHeight
-                                                        labelState:labelState
-                                                     labelBehavior:labelBehavior];
+      [containerStyle positioningReferenceWithFloatingFontLineHeight:floatingFont.lineHeight
+                                                normalFontLineHeight:font.lineHeight
+                                                       textRowHeight:font.lineHeight
+                                                    numberOfTextRows:preferredNumberOfVisibleRows
+                                                             density:0
+                                            preferredContainerHeight:preferredContainerHeight
+                                                          labelState:labelState
+                                                       labelBehavior:labelBehavior];
 
   CGFloat globalTextMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalTextMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;

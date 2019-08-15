@@ -103,14 +103,14 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
   id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
-      [containerStyle positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
-                                              normalFontLineHeight:font.lineHeight
-                                                     textRowHeight:font.lineHeight
-                                                  numberOfTextRows:1
-                                                           density:0
-                                          preferredContainerHeight:preferredContainerHeight
-                                                        labelState:labelState
-                                                     labelBehavior:labelBehavior];
+      [containerStyle positioningReferenceWithFloatingFontLineHeight:floatingFont.lineHeight
+                                                normalFontLineHeight:font.lineHeight
+                                                       textRowHeight:font.lineHeight
+                                                    numberOfTextRows:1
+                                                             density:0
+                                            preferredContainerHeight:preferredContainerHeight
+                                                          labelState:labelState
+                                                       labelBehavior:labelBehavior];
 
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
                                                                     viewMode:leftViewMode

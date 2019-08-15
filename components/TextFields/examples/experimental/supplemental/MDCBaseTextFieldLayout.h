@@ -16,8 +16,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputAssistiveLabelView.h"
-#import "MDCContainedInputViewClearButton.h"
 #import "MDCContainedInputView.h"
+#import "MDCContainedInputViewClearButton.h"
 
 @protocol MDCContainedInputViewStyle;
 

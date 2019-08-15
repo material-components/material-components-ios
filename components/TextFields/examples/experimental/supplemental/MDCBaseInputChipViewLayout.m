@@ -128,14 +128,14 @@ static const CGFloat kGradientBlurLength = 6;
   }
 
   id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
-      [containerStyle positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
-                                              normalFontLineHeight:font.lineHeight
-                                                     textRowHeight:chipRowHeight
-                                                  numberOfTextRows:numberOfVisibleRows
-                                                           density:0
-                                          preferredContainerHeight:preferredContainerHeight
-                                                        labelState:labelState
-                                                     labelBehavior:labelBehavior];
+      [containerStyle positioningReferenceWithFloatingFontLineHeight:floatingFont.lineHeight
+                                                normalFontLineHeight:font.lineHeight
+                                                       textRowHeight:chipRowHeight
+                                                    numberOfTextRows:numberOfVisibleRows
+                                                             density:0
+                                            preferredContainerHeight:preferredContainerHeight
+                                                          labelState:labelState
+                                                       labelBehavior:labelBehavior];
 
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;

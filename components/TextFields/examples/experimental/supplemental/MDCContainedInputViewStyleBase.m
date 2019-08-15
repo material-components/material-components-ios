@@ -68,14 +68,14 @@
 }
 
 - (id<MDCContainerStyleVerticalPositioningReference>)
-    positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
-                            normalFontLineHeight:(CGFloat)normalFontLineHeight
-                                   textRowHeight:(CGFloat)textRowHeight
-                                numberOfTextRows:(CGFloat)numberOfTextRows
-                                         density:(CGFloat)density
-                        preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                      labelState:(MDCContainedInputViewLabelState)labelState
-                                   labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight
+                                        labelState:(MDCContainedInputViewLabelState)labelState
+                                     labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
   return [[MDCContainedInputViewVerticalPositioningGuideBase alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight

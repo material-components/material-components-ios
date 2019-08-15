@@ -252,14 +252,14 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  vertically.
  */
 - (nonnull id<MDCContainerStyleVerticalPositioningReference>)
-    positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
-                            normalFontLineHeight:(CGFloat)normalFontLineHeight
-                                   textRowHeight:(CGFloat)textRowHeight
-                                numberOfTextRows:(CGFloat)numberOfTextRows
-                                         density:(CGFloat)density
-                        preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                      labelState:(MDCContainedInputViewLabelState)labelState
-                                   labelBehavior:(MDCTextControlLabelBehavior)labelBehavior;
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight
+                                        labelState:(MDCContainedInputViewLabelState)labelState
+                                     labelBehavior:(MDCTextControlLabelBehavior)labelBehavior;
 
 @end
 

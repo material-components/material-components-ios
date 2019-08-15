@@ -187,14 +187,14 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 }
 
 - (id<MDCContainerStyleVerticalPositioningReference>)
-    positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingFontLineHeight
-                            normalFontLineHeight:(CGFloat)normalFontLineHeight
-                                   textRowHeight:(CGFloat)textRowHeight
-                                numberOfTextRows:(CGFloat)numberOfTextRows
-                                         density:(CGFloat)density
-                        preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                      labelState:(MDCContainedInputViewLabelState)labelState
-                                   labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingFontLineHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight
+                                        labelState:(MDCContainedInputViewLabelState)labelState
+                                     labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
   return [[MDCContainedInputViewVerticalPositioningGuideOutlined alloc]
       initWithFloatingFontLineHeight:floatingFontLineHeight
                 normalFontLineHeight:normalFontLineHeight
