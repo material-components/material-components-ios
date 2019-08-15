@@ -12,14 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
-
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainedInputViewStyleBase.h"
 #import "MDCTextControlLabelBehavior.h"
 
 @interface MDCContainedInputViewVerticalPositioningGuideFilled
-    : MDCContainedInputViewVerticalPositioningGuideBase
+: NSObject <MDCContainerStyleVerticalPositioningReference>
+
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
+@property(nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;
+@property(nonatomic, assign, readonly) CGFloat containerHeight;
+
+@property(nonatomic, assign) CGFloat floatingLabelHeight;
+@property(nonatomic, assign) CGFloat normalFontLineHeight;
+@property(nonatomic, assign) CGFloat textRowHeight;
+@property(nonatomic, assign) CGFloat numberOfTextRows;
+@property(nonatomic, assign) CGFloat density;
+@property(nonatomic, assign) CGFloat preferredContainerHeight;
+@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
+@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
+
+- (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                          normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                 textRowHeight:(CGFloat)textRowHeight
+                              numberOfTextRows:(CGFloat)numberOfTextRows
+                                       density:(CGFloat)density
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight
+                                    labelState:(MDCContainedInputViewLabelState)labelState
+                                 labelBehavior:(MDCTextControlLabelBehavior)labelBehavior;
+
 @end

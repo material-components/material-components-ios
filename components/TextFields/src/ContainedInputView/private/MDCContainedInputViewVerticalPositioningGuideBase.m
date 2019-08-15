@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputViewVerticalPositioningGuideOutlined.h"
-
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
