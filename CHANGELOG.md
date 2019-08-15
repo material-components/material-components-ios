@@ -1,18 +1,7 @@
-# #develop#
+# 87.0.2
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+This patch release includes no code changes but is necessary due to merge
+problems with the `stable` branch in version 87.0.1.
 
 ---
 
