@@ -27,7 +27,8 @@ extern NSString *_Nonnull const MDCTextInputDidToggleEnabledNotification;
   Material Design compliant single-line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
-@interface MDCTextField : UITextField <MDCTextInput, MDCLeadingViewTextInput, MDCElevatable, MDCElevationOverriding>
+@interface MDCTextField
+    : UITextField <MDCTextInput, MDCLeadingViewTextInput, MDCElevatable, MDCElevationOverriding>
 
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
 @property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
