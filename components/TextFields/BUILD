@@ -119,42 +119,6 @@ mdc_examples_swift_library(
     ],
 )
 
-mdc_objc_library(
-    name = "ExperimentalExampleSource",
-    srcs = glob(["examples/experimental/supplemental/*.m"]),
-    hdrs = glob(["examples/experimental/supplemental/*.h"]),
-    deps = [
-        "//components/Buttons",
-        "//components/Buttons:Theming",
-        "//components/Chips",
-        "//components/private/Math",
-        "//components/schemes/Color",
-    ],
-)
-
-swift_library(
-    name = "SwiftExperimentalExamples",
-    srcs = glob(["examples/experimental/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    deps = [":ExperimentalExampleSource"],
-)
-
-mdc_objc_library(
-    name = "ExperimentalExamples",
-    srcs = glob(["examples/experimental/*.m"]),
-    hdrs = glob(["examples/experimental/*.h"]),
-    deps = [
-        ":ExperimentalExampleSource",
-        "//components/AppBar:ColorThemer",
-        "//components/AppBar:TypographyThemer",
-        "//components/Buttons:ButtonThemer",
-        "//components/Chips",
-    ],
-)
-
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     extra_srcs = glob([
