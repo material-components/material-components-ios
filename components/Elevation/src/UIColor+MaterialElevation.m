@@ -22,6 +22,20 @@
 @implementation UIColor (MaterialElevation)
 
 - (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
+                          previousTraitCollection:(UITraitCollection *)previousTraitCollection
+                                        elevation:(CGFloat)elevation {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([traitCollection
+            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      return [self mdc_resolvedColorWithTraitCollection:traitCollection elevation:elevation];
+    }
+  }
+#endif
+  return self;
+}
+
+- (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
                                         elevation:(CGFloat)elevation {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
