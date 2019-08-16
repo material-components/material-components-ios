@@ -27,10 +27,15 @@
 @implementation MDCBaseTextFieldLayoutTests
 
 - (void)testTextHeightWithFont {
+  // Given
   MDCBaseTextFieldLayout *emptyLayout = [[MDCBaseTextFieldLayout alloc] init];
   UIFont *systemFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+
+  // When
   CGFloat ceiledLineHeight = (CGFloat)ceil((double)systemFont.lineHeight);
   CGFloat calculatedTextHeight = [emptyLayout textHeightWithFont:systemFont];
+
+  // Then
   XCTAssertEqual(ceiledLineHeight, calculatedTextHeight);
 }
 
