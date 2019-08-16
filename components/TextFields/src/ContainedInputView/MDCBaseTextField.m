@@ -107,17 +107,17 @@
 }
 
 /**
-To understand this method one must understand that the CGRect UITextField returns from @c
--textRectForBounds: does not actually represent the CGRect of visible text in UITextField. It
-represents the CGRect of an internal "field editing" class, which has a height that is significantly
-taller than the text (@c font.lineHeight) itself. Providing a height in @c -textRectForBounds: that
-differs from the height determined by the superclass results in an unusable text field. By taking
-the desired CGRect of the visible text from the layout object, giving it the height preferred by the
-superclass's implementation of @c -textRectForBounds:, and then ensuring that this new CGRect has
-the same midY as the original CGRect, we are able to take control of the text's positioning.
+ To understand this method one must understand that the CGRect UITextField returns from @c
+ -textRectForBounds: does not actually represent the CGRect of visible text in UITextField. It
+ represents the CGRect of an internal "field editing" class, which has a height that is significantly
+ taller than the text (@c font.lineHeight) itself. Providing a height in @c -textRectForBounds: that
+ differs from the height determined by the superclass results in a text field with poor text rendering, sometimes to the point of the text not being visible. By taking
+ the desired CGRect of the visible text from the layout object, giving it the height preferred by the
+ superclass's implementation of @c -textRectForBounds:, and then ensuring that this new CGRect has
+ the same midY as the original CGRect, we are able to take control of the text's positioning.
  */
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
-    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
+ withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
   CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
