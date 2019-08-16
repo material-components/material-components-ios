@@ -123,6 +123,7 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     extra_srcs = glob([
         "tests/unit/ContainedInputView/*.m",
+        "tests/unit/ContainedInputView/private/*.m",
     ]),
     deps = [
         ":ColorThemer",
