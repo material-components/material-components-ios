@@ -1,3 +1,10 @@
+# 87.0.2
+
+This patch release includes no code changes but is necessary due to merge
+problems with the `stable` branch in version 87.0.1.
+
+---
+
 # 87.0.1
 
 This patch release fixes a bug where Git-LFS was required on the `stable`
