@@ -163,4 +163,23 @@ class MultilineTextFieldTests: XCTestCase {
     XCTAssertEqual(passedTraitCollection, fakeTraitCollection)
     XCTAssertEqual(passedTextField, testTextField)
   }
+
+  // MARK - Material Elevation
+
+  func testDefaultBaseElevationOverrideIsNegative() {
+    // Then
+    XCTAssertLessThan(MDCMultilineTextField().mdc_overrideBaseElevation, 0);
+  }
+
+  func testSettingOverrideBaseElevationReturnsSetValue() {
+    // Given
+    let expectedBaseElevation: CGFloat = 99
+    let textField = MDCMultilineTextField()
+
+    // When
+    textField.mdc_overrideBaseElevation = expectedBaseElevation
+
+    // Then
+    XCTAssertEqual(textField.mdc_overrideBaseElevation, expectedBaseElevation, accuracy: 0.001)
+  }
 }
