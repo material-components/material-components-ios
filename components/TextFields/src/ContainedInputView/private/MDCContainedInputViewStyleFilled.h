@@ -25,5 +25,5 @@
 @end
 
 @interface MDCContainedInputViewStyleFilled
-    : MDCContainedInputViewStyleBase <MDCContainedInputViewStyle>
+    : NSObject <MDCContainedInputViewStyle>
 @end

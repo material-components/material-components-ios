@@ -16,6 +16,7 @@
 
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewStylePathDrawingUtils.h"
+#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
 
 static const CGFloat kMinPaddingBetweenTopAndFloatingLabel = (CGFloat)6.0;
 static const CGFloat kMaxPaddingBetweenTopAndFloatingLabel = (CGFloat)10.0;

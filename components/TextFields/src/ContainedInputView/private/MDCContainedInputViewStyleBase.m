@@ -20,10 +20,12 @@
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewVerticalPositioningGuideBase.h"
 
+static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
+
 @implementation MDCContainedInputViewStyleBase
 
 - (UIFont *)floatingFontWithFont:(UIFont *)font {
-  CGFloat scaleFactor = [self floatingFontSizeScaleFactor];
+  CGFloat scaleFactor = kBaseFloatingLabelScaleFactor;
   CGFloat floatingFontSize = font.pointSize * scaleFactor;
   return [font fontWithSize:floatingFontSize];
 }
@@ -61,10 +63,6 @@
 }
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
-}
-
-- (CGFloat)floatingFontSizeScaleFactor {
-  return 0.75;
 }
 
 - (id<MDCContainerStyleVerticalPositioningReference>)

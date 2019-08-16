@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCContainerStyleVerticalPositioningReference.h"
+#import "MDCContainedInputViewColorViewModel.h"
 #import "MDCContainedInputViewLabelAnimator.h"
 #import "MDCContainedInputViewLabelState.h"
 #import "MDCTextControlLabelBehavior.h"
@@ -174,38 +176,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @end
 
 /**
- This protocol represents a set of colors that are semantically meaningful and specific to
- MDCContainedInputView. Each property corresponds to the color of one or more views that an
- MDCContainedInputView manages at a given point of time.
- */
-@protocol MDCContainedInputViewColorScheming <NSObject>
-/**
- The color of the contained input view's text.
- */
-@property(strong, nonatomic, nonnull) UIColor *textColor;
-/**
- The color of the contained input view's underline label.
- */
-@property(strong, nonatomic, nonnull) UIColor *underlineLabelColor;
-/**
- The color of the contained input view's floating label.
- */
-@property(strong, nonatomic, nonnull) UIColor *floatingLabelColor;
-/**
- The color of the contained input view's placeholder label.
- */
-@property(strong, nonatomic, nonnull) UIColor *placeholderColor;
-/**
- The tint color of the contained input view's clear button.
- */
-@property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
-/**
- The color the contained input view should apply during an error state.
- */
-@property(strong, nonatomic, nonnull) UIColor *errorColor;
-@end
-
-/**
  A base implementation of MDCContainedInputViewColorScheming. Intended to be subclassed for styles
  that include additional elements that need to be colored.
  */
@@ -217,8 +187,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
 @property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
-
-@protocol MDCContainerStyleVerticalPositioningReference;
 
 @protocol MDCContainedInputViewStyle <NSObject>
 
@@ -239,12 +207,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  previously applied to objects conforming to MDCContainedInputView.
  */
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
-/**
- The value returned by this method determines how big the font of the floating label should be when
- it's floating.
- */
-- (CGFloat)floatingFontSizeScaleFactor;
 
+/**
+ The method returns a UIFont for the floating label based on the primary text font of the MDCContainedInputView.
+ */
 - (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font;
 
 /**
@@ -260,21 +226,5 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
                           preferredContainerHeight:(CGFloat)preferredContainerHeight
                                         labelState:(MDCContainedInputViewLabelState)labelState
                                      labelBehavior:(MDCTextControlLabelBehavior)labelBehavior;
-
-@end
-
-/**
- Objects conforming to this protocol provide information about the vertical positions of views. This
- helps achieve the variations in floating label position across the filled and outlined styles as
- well as the general density of the views.
- */
-@protocol MDCContainerStyleVerticalPositioningReference <NSObject>
-
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
-@property(nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;
-@property(nonatomic, assign, readonly) CGFloat containerHeight;
 
 @end

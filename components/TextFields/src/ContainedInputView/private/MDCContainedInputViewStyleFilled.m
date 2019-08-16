@@ -25,6 +25,7 @@ static const CGFloat kFilledContainerStyleUnderlineWidthThin = (CGFloat)1.0;
 static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
 
 static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
+static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 @implementation MDCContainedInputViewColorSchemeFilled
 @end
@@ -462,6 +463,12 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
             preferredContainerHeight:preferredContainerHeight
                           labelState:labelState
                        labelBehavior:labelBehavior];
+}
+
+- (UIFont *)floatingFontWithFont:(UIFont *)font {
+  CGFloat scaleFactor = kFilledFloatingLabelScaleFactor;
+  CGFloat floatingFontSize = font.pointSize * scaleFactor;
+  return [font fontWithSize:floatingFontSize];
 }
 
 @end
