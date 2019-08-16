@@ -270,15 +270,16 @@
 @property(nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 
 /**
- A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView receives a call to @c
- traitCollectionDidChange:.
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView receives a
+ call to @c traitCollectionDidChange:.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlockForMessageView)
     (MDCSnackbarMessageView *_Nonnull messageView,
      UITraitCollection *_Nullable previousTraitCollection);
 
 /**
- A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView elevation changes, and its mdc_elevationDidChangeBlock is called.
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView elevation
+ changes, and its mdc_elevationDidChangeBlock is called.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlockForMessageView)
     (id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation);

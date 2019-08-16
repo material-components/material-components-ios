@@ -832,19 +832,24 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (void)setMdc_overrideBaseElevation:(CGFloat)mdc_overrideBaseElevation {
   if (_mdc_overrideBaseElevation != mdc_overrideBaseElevation) {
-     _mdc_overrideBaseElevation = mdc_overrideBaseElevation;
-      self.internalManager.currentSnackbar.mdc_overrideBaseElevation = mdc_overrideBaseElevation;
-   }
+    _mdc_overrideBaseElevation = mdc_overrideBaseElevation;
+    self.internalManager.currentSnackbar.mdc_overrideBaseElevation = mdc_overrideBaseElevation;
+  }
 }
 
-- (void)setTraitCollectionDidChangeBlockForMessageView:(void (^)(MDCSnackbarMessageView *, UITraitCollection *))traitCollectionDidChangeBlockForMessageView {
+- (void)setTraitCollectionDidChangeBlockForMessageView:
+    (void (^)(MDCSnackbarMessageView *,
+              UITraitCollection *))traitCollectionDidChangeBlockForMessageView {
   _traitCollectionDidChangeBlockForMessageView = traitCollectionDidChangeBlockForMessageView;
-  self.internalManager.currentSnackbar.traitCollectionDidChangeBlock = traitCollectionDidChangeBlockForMessageView;
+  self.internalManager.currentSnackbar.traitCollectionDidChangeBlock =
+      traitCollectionDidChangeBlockForMessageView;
 }
 
-- (void)setMdc_elevationDidChangeBlockForMessageView:(void (^)(id<MDCElevatable> _Nonnull, CGFloat))mdc_elevationDidChangeBlockForMessageView {
+- (void)setMdc_elevationDidChangeBlockForMessageView:
+    (void (^)(id<MDCElevatable> _Nonnull, CGFloat))mdc_elevationDidChangeBlockForMessageView {
   _mdc_elevationDidChangeBlockForMessageView = mdc_elevationDidChangeBlockForMessageView;
-  self.internalManager.currentSnackbar.mdc_elevationDidChangeBlock = mdc_elevationDidChangeBlockForMessageView;
+  self.internalManager.currentSnackbar.mdc_elevationDidChangeBlock =
+      mdc_elevationDidChangeBlockForMessageView;
 }
 
 @end

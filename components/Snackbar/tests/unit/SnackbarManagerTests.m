@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialSnackbar.h"
 #import "../../src/private/MDCSnackbarManagerInternal.h"
+#import "MaterialSnackbar.h"
 
 @interface MDCSnackbarManagerInternal (SnackbarManagerTesting)
 @property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
@@ -152,8 +152,8 @@
 
 - (void)testCurrentElevationMatchesElevationWhenElevationChanges {
   // Given
-   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
-   message.duration = 10;
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
+  message.duration = 10;
   MDCSnackbarManager.defaultManager.messageElevation = 4;
 
   // When
@@ -207,9 +207,10 @@
   MDCSnackbarManager.defaultManager.messageElevation = 5;
 
   __block BOOL blockCalled = NO;
-  MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
-    blockCalled = YES;
-  };
+  MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView =
+      ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+        blockCalled = YES;
+      };
 
   // When
   MDCSnackbarManager.defaultManager.messageElevation =
@@ -235,9 +236,10 @@
   MDCSnackbarManager.defaultManager.messageElevation = 5;
 
   __block BOOL blockCalled = NO;
-  MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
-    blockCalled = YES;
-  };
+  MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView =
+      ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+        blockCalled = YES;
+      };
 
   // When
   MDCSnackbarManager.defaultManager.messageElevation =
@@ -251,6 +253,5 @@
   // Then
   XCTAssertLessThan(MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation, 0);
 }
-
 
 @end
