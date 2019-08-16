@@ -157,10 +157,11 @@
                         NSStringFromCGRect(finalTextAreaFrame));
 }
 
-- (MDCBaseTextField *)createTextFieldWithLeadingView:(BOOL)leadingView
-                                        trailingView:(BOOL)trailingView
-                                            viewMode:(UITextFieldViewMode)viewMode {
+- (MDCBaseTextField *)createLTRTextFieldWithLeadingView:(BOOL)leadingView
+                                           trailingView:(BOOL)trailingView
+                                               viewMode:(UITextFieldViewMode)viewMode {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   if (leadingView) {
     textField.leadingView = [self createSideView];
   }
@@ -187,9 +188,9 @@
 
 - (void)testOnlyLeadingViewWithViewModeAlways {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:YES
-                                                        trailingView:NO
-                                                            viewMode:UITextFieldViewModeAlways];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:YES
+                                                           trailingView:NO
+                                                               viewMode:UITextFieldViewModeAlways];
   CGRect leadingFrameNotEditing = textField.leftView.frame;
 
   // When
@@ -203,9 +204,9 @@
 
 - (void)testOnlyTrailingViewWithViewModeAlways {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:NO
-                                                        trailingView:YES
-                                                            viewMode:UITextFieldViewModeAlways];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:NO
+                                                           trailingView:YES
+                                                               viewMode:UITextFieldViewModeAlways];
   CGRect trailingFrameNotEditing = textField.rightView.frame;
 
   // When
@@ -219,9 +220,9 @@
 
 - (void)testLeadingAndTrailingViewsWithViewModeAlways {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:YES
-                                                        trailingView:YES
-                                                            viewMode:UITextFieldViewModeAlways];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:YES
+                                                           trailingView:YES
+                                                               viewMode:UITextFieldViewModeAlways];
 
   // When
   [self forceLayoutOfView:textField];
@@ -240,9 +241,9 @@
 
 - (void)testNoLeadingOrTrailingViewWithViewModeAlways {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:NO
-                                                        trailingView:NO
-                                                            viewMode:UITextFieldViewModeAlways];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:NO
+                                                           trailingView:NO
+                                                               viewMode:UITextFieldViewModeAlways];
 
   // When
   [self forceLayoutOfView:textField];
@@ -254,9 +255,9 @@
 
 - (void)testOnlyLeadingViewWithViewModeNever {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:YES
-                                                        trailingView:NO
-                                                            viewMode:UITextFieldViewModeNever];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:YES
+                                                           trailingView:NO
+                                                               viewMode:UITextFieldViewModeNever];
 
   // When
   [self forceLayoutOfView:textField];
@@ -271,9 +272,9 @@
 
 - (void)testOnlyTrailingViewWithViewModeNever {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:NO
-                                                        trailingView:YES
-                                                            viewMode:UITextFieldViewModeNever];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:NO
+                                                           trailingView:YES
+                                                               viewMode:UITextFieldViewModeNever];
 
   // When
   [self forceLayoutOfView:textField];
@@ -288,9 +289,9 @@
 
 - (void)testLeadingAndTrailingViewsWithViewModeNever {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:YES
-                                                        trailingView:YES
-                                                            viewMode:UITextFieldViewModeNever];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:YES
+                                                           trailingView:YES
+                                                               viewMode:UITextFieldViewModeNever];
   // When
   [self forceLayoutOfView:textField];
   BOOL trailingViewHiddenBeforeBecomingFirstResponder = textField.trailingView.hidden;
@@ -306,9 +307,9 @@
 
 - (void)testNoLeadingOrTrailingViewWithViewModeNever {
   // Given
-  MDCBaseTextField *textField = [self createTextFieldWithLeadingView:NO
-                                                        trailingView:NO
-                                                            viewMode:UITextFieldViewModeNever];
+  MDCBaseTextField *textField = [self createLTRTextFieldWithLeadingView:NO
+                                                           trailingView:NO
+                                                               viewMode:UITextFieldViewModeNever];
   // When
   UIView *leadingView = textField.leadingView;
   UIView *trailingView = textField.trailingView;
@@ -322,9 +323,9 @@
 - (void)testOnlyLeadingViewWithViewModeWhileEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:YES
-                              trailingView:NO
-                                  viewMode:UITextFieldViewModeWhileEditing];
+      [self createLTRTextFieldWithLeadingView:YES
+                                 trailingView:NO
+                                     viewMode:UITextFieldViewModeWhileEditing];
   // When
   [self forceLayoutOfView:textField];
   CGRect leadingFrameNotEditing = textField.leftView.frame;
@@ -342,9 +343,9 @@
 - (void)testOnlyTrailingViewWithViewModeWhileEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:NO
-                              trailingView:YES
-                                  viewMode:UITextFieldViewModeWhileEditing];
+      [self createLTRTextFieldWithLeadingView:NO
+                                 trailingView:YES
+                                     viewMode:UITextFieldViewModeWhileEditing];
 
   // When
   [self forceLayoutOfView:textField];
@@ -363,9 +364,9 @@
 - (void)testLeadingAndTrailingViewsWithViewModeWhileEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:YES
-                              trailingView:YES
-                                  viewMode:UITextFieldViewModeWhileEditing];
+      [self createLTRTextFieldWithLeadingView:YES
+                                 trailingView:YES
+                                     viewMode:UITextFieldViewModeWhileEditing];
 
   // When
   [self forceLayoutOfView:textField];
@@ -390,9 +391,9 @@
 - (void)testNoLeadingOrTrailingViewWithViewModeWhileEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:NO
-                              trailingView:NO
-                                  viewMode:UITextFieldViewModeWhileEditing];
+      [self createLTRTextFieldWithLeadingView:NO
+                                 trailingView:NO
+                                     viewMode:UITextFieldViewModeWhileEditing];
 
   // When
   [self forceLayoutOfView:textField];
@@ -405,9 +406,9 @@
 - (void)testOnlyleadingViewWithViewModeUnlessEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:YES
-                              trailingView:NO
-                                  viewMode:UITextFieldViewModeUnlessEditing];
+      [self createLTRTextFieldWithLeadingView:YES
+                                 trailingView:NO
+                                     viewMode:UITextFieldViewModeUnlessEditing];
 
   // When
   [self forceLayoutOfView:textField];
@@ -426,9 +427,9 @@
 - (void)testOnlytrailingViewWithViewModeUnlessEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:NO
-                              trailingView:YES
-                                  viewMode:UITextFieldViewModeUnlessEditing];
+      [self createLTRTextFieldWithLeadingView:NO
+                                 trailingView:YES
+                                     viewMode:UITextFieldViewModeUnlessEditing];
 
   // When
   [self forceLayoutOfView:textField];
@@ -447,9 +448,9 @@
 - (void)testLeadingAndTrailingViewsWithViewModeUnlessEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:YES
-                              trailingView:YES
-                                  viewMode:UITextFieldViewModeUnlessEditing];
+      [self createLTRTextFieldWithLeadingView:YES
+                                 trailingView:YES
+                                     viewMode:UITextFieldViewModeUnlessEditing];
 
   // When
   [self forceLayoutOfView:textField];
@@ -474,9 +475,9 @@
 - (void)testNoLeadingOrTrailingViewWithViewModeUnlessEditing {
   // Given
   MDCBaseTextField *textField =
-      [self createTextFieldWithLeadingView:NO
-                              trailingView:NO
-                                  viewMode:UITextFieldViewModeUnlessEditing];
+      [self createLTRTextFieldWithLeadingView:NO
+                                 trailingView:NO
+                                     viewMode:UITextFieldViewModeUnlessEditing];
 
   // When
   [self forceLayoutOfView:textField];
