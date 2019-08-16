@@ -1,18 +1,108 @@
-# #develop#
+# 87.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release enhances support for Material Elevation in Text Fields and
+Snackbar, brings new conveniences for resolving dynamic colors, and fixes a
+dynamic color bug in `MDCShapedShadowLayer`.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Text Fields
+
+`MDCTextField` now supports Material Elevation. Clients can assign a value for
+`mdc_overrideBaseElevation` or an `elevationDidChangeBlock` to ensure that
+both the Text Field and any subviews can react to elevation changes.
+
+### Snackbar
+
+`MDCSnackbarManager` now supports assigning a
+`traitCollectionDidChangeBlockForMessageView` and an
+`mdc_elevationDidChangeBlockForMessageView`. These blocks make it easier to
+respond to changes in either the elevation or trait collections of the
+`MDCSnackbarMessageView`.
+
+### Material Elevation
+
+Material Elevation has a new `UIColor` category method to make it easier to
+optimize checking for dynamic color changes.
+
+**Previously**
+
+```objc
+UIColor *resolvedColor = originalColor;
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([traitCollection
+            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      resolvedColor = [self mdc_resolvedColorWithTraitCollection:traitCollection elevation:elevation];
+    }
+  }
+#endif
+```
+
+**This Release**
+
+```objc
+UIColor *resolvedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                   previousTraitCollection:previousTraitCollection
+                                                 elevation:elevation];
+```
+
 ## API changes
 
-## Component changes
+### Elevation
+
+#### UIColor(MaterialElevation)
+
+*new* method: `-mdc_resolvedColorWithTraitCollection:previousTraitCollection:elevation:` in `UIColor(MaterialElevation)`
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `mdc_elevationDidChangeBlockForMessageView` in `MDCSnackbarManager`
+
+*new* property: `traitCollectionDidChangeBlockForMessageView` in `MDCSnackbarManager`
+
+### TextFields
+
+#### MDCTextField
+
+*modified* class: `MDCTextField`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextField : UITextField, MDCTextInput, MDCLeadingViewTextInput` |
+| To: | `class MDCTextField : UITextField` |
+
+*modified* class: `MDCTextField`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextField : UITextField <MDCTextInput, MDCLeadingViewTextInput>` |
+| To: | `@interface MDCTextField : UITextField` |
+
+## Changes
+
+### Elevation
+
+* [Add a convenience method to resolve dynamic color only when traitCollection's color appearance has changed. (#8315)](https://github.com/material-components/material-components-ios/commit/a667b241f18a23f789bfb2b4e2f8235d36320d0a) (Wenyu Zhang)
+
+### Shapes
+
+* [Update border color to support dynamic color (#8308)](https://github.com/material-components/material-components-ios/commit/04cf12c72cf6b7a16e1d9546bd4545648da38a2d) (Cody Weaver)
+
+### Snackbar
+
+* [Adding traitCollection and elevationDidChange blocks of the messageView in the manager. (#8330)](https://github.com/material-components/material-components-ios/commit/ab77bd31d4668a25ce1ee731c01dae8bdc3d97e4) (Yarden Eitan)
+
+### TextFields
+
+* [Add MaterialElevation support. (#8325)](https://github.com/material-components/material-components-ios/commit/3b0e812dd603281b74d54adae523fdf09ca40377) (Cody Weaver)
+
+### private/Color
+
+* [Add a method for MDC to call resolveColorWithTraitCollection on pre-iOS 13 (#8307)](https://github.com/material-components/material-components-ios/commit/cdcb0000cd0853d262633d046a033946ca9eaab6) (Cody Weaver)
 
 ---
 
