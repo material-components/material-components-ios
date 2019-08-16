@@ -535,8 +535,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIAccessibilityTraits)accessibilityTraits {
-  if (self.accessibilityTraitsIncludesButton) {
-    return [super accessibilityTraits] | UIAccessibilityTraitButton;
+  if (!self.accessibilityTraitsIncludesButton) {
+    return [super accessibilityTraits] & ~UIAccessibilityTraitButton;
   }
   return [super accessibilityTraits];
 }
