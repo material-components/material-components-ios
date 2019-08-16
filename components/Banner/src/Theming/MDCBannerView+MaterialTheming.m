@@ -67,17 +67,10 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
         };
     self.traitCollectionDidChangeBlock = ^(MDCBannerView *_Nonnull bannerView,
                                            UITraitCollection *_Nullable previousTraitCollection) {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-      if (@available(iOS 13.0, *)) {
-        if ([bannerView.traitCollection
-                hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-          UIColor *elevationSurfaceColor = [colorScheme.surfaceColor
-              mdc_resolvedColorWithTraitCollection:bannerView.traitCollection
-                                         elevation:bannerView.mdc_absoluteElevation];
-          bannerView.backgroundColor = elevationSurfaceColor;
-        }
-      }
-#endif
+      bannerView.backgroundColor = [colorScheme.surfaceColor
+          mdc_resolvedColorWithTraitCollection:bannerView.traitCollection
+                       previousTraitCollection:previousTraitCollection
+                                     elevation:bannerView.mdc_absoluteElevation];
     };
   }
 }
