@@ -269,6 +269,11 @@
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
+-(CGRect)editingRectForBounds:(CGRect)bounds {
+  return [self adjustTextAreaFrame:self.layout.textRect
+      withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
+}
+
 #pragma mark Internationalization
 
 - (BOOL)isRTL {
