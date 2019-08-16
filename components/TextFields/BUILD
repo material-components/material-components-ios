@@ -119,6 +119,13 @@ mdc_examples_swift_library(
     ],
 )
 
+mdc_objc_library(
+    name = "ContainedInputViewPrivateHeaders",
+    hdrs = native.glob(["src/ContainedInputView/private/*.h"]),
+    includes = ["src/private"],
+    visibility = ["//visibility:private"],
+)
+
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     extra_srcs = glob([
@@ -128,6 +135,7 @@ mdc_unit_test_objc_library(
     deps = [
         ":ColorThemer",
         ":ContainedInputView",
+        ":ContainedInputViewPrivateHeaders",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
