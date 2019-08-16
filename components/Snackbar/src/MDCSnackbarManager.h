@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCSnackbarAlignment.h"
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 @class MDCSnackbarMessage;
@@ -47,7 +48,7 @@
  Snackbars prefer an application's main window is a subclass of @c MDCOverlayWindow. When a standard
  UIWindow is used an attempt is made to find the top-most view controller in the view hierarchy.
  */
-@interface MDCSnackbarManager : NSObject
+@interface MDCSnackbarManager : NSObject <MDCElevationOverriding>
 
 /**
  An instance of MDCSnackbarManager.
@@ -268,6 +269,19 @@
  */
 @property(nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 
+/**
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView receives a call to @c
+ traitCollectionDidChange:.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlockForMessageView)
+    (MDCSnackbarMessageView *_Nonnull messageView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView elevation changes, and its mdc_elevationDidChangeBlock is called.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlockForMessageView)
+    (id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation);
 @end
 
 /**

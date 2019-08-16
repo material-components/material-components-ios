@@ -225,16 +225,17 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _buttonFont = manager.buttonFont;
     _message = message;
     _dismissalHandler = [handler copy];
-    _mdc_overrideBaseElevation = -1;
-
+    _mdc_overrideBaseElevation = manager.mdc_overrideBaseElevation;
+    _traitCollectionDidChangeBlock = manager.traitCollectionDidChangeBlockForMessageView;
+    _mdc_elevationDidChangeBlock = manager.mdc_elevationDidChangeBlockForMessageView;
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       self.layer.cornerRadius = kLegacyCornerRadius;
     } else {
       self.layer.cornerRadius = kCornerRadius;
     }
-    _elevation = MDCShadowElevationSnackbar;
-    [(MDCShadowLayer *)self.layer setElevation:MDCShadowElevationSnackbar];
+    _elevation = manager.messageElevation;
+    [(MDCShadowLayer *)self.layer setElevation:_elevation];
 
     _anchoredToScreenBottom = YES;
 

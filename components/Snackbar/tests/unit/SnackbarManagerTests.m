@@ -14,6 +14,15 @@
 
 #import <XCTest/XCTest.h>
 #import "MaterialSnackbar.h"
+#import "../../src/private/MDCSnackbarManagerInternal.h"
+
+@interface MDCSnackbarManagerInternal (SnackbarManagerTesting)
+@property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
+@end
+
+@interface MDCSnackbarManager (SnackbarManagerTesting)
+@property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
+@end
 
 @interface SnackbarManagerTests : XCTestCase
 
@@ -105,5 +114,143 @@
   // Then
   XCTAssertTrue(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
+
+- (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
+  // Given
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
+  message.duration = 10;
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCSnackbarMessageView *passedMessageView;
+  MDCSnackbarManager.defaultManager.traitCollectionDidChangeBlockForMessageView =
+      ^(MDCSnackbarMessageView *_Nonnull inMessageView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedMessageView = inMessageView;
+        passedTraitCollection = previousTraitCollection;
+        [expectation fulfill];
+      };
+
+  // When
+  [MDCSnackbarManager showMessage:message];
+  XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [mainQueueExpectation fulfill];
+  });
+  [self waitForExpectations:@[ mainQueueExpectation ] timeout:1];
+
+  UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  MDCSnackbarMessageView *messageView =
+      MDCSnackbarManager.defaultManager.internalManager.currentSnackbar;
+  [messageView traitCollectionDidChange:testCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedMessageView, messageView);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // Given
+   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
+   message.duration = 10;
+  MDCSnackbarManager.defaultManager.messageElevation = 4;
+
+  // When
+  [MDCSnackbarManager showMessage:message];
+  XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [mainQueueExpectation fulfill];
+  });
+  [self waitForExpectations:@[ mainQueueExpectation ] timeout:1];
+
+  // Then
+  MDCSnackbarMessageView *messageView =
+      MDCSnackbarManager.defaultManager.internalManager.currentSnackbar;
+  XCTAssertEqualWithAccuracy(messageView.mdc_currentElevation, 4, 0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
+  message.duration = 10;
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  [MDCSnackbarManager showMessage:message];
+  XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [mainQueueExpectation fulfill];
+  });
+  [self waitForExpectations:@[ mainQueueExpectation ] timeout:1];
+  MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  MDCSnackbarMessageView *messageView =
+      MDCSnackbarManager.defaultManager.internalManager.currentSnackbar;
+  XCTAssertEqualWithAccuracy(messageView.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
+  message.duration = 10;
+  MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars = YES;
+
+  // When
+  [MDCSnackbarManager showMessage:message];
+  XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [mainQueueExpectation fulfill];
+  });
+  [self waitForExpectations:@[ mainQueueExpectation ] timeout:1];
+  MDCSnackbarManager.defaultManager.messageElevation = 5;
+
+  __block BOOL blockCalled = NO;
+  MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  MDCSnackbarManager.defaultManager.messageElevation =
+      MDCSnackbarManager.defaultManager.messageElevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
+  message.duration = 10;
+  MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars = YES;
+
+  // When
+  [MDCSnackbarManager showMessage:message];
+  XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [mainQueueExpectation fulfill];
+  });
+  [self waitForExpectations:@[ mainQueueExpectation ] timeout:1];
+  MDCSnackbarManager.defaultManager.messageElevation = 5;
+
+  __block BOOL blockCalled = NO;
+  MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  MDCSnackbarManager.defaultManager.messageElevation =
+      MDCSnackbarManager.defaultManager.messageElevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Then
+  XCTAssertLessThan(MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation, 0);
+}
+
 
 @end

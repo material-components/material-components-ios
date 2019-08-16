@@ -536,6 +536,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+
 + (instancetype)defaultManager {
   static MDCSnackbarManager *defaultManager;
   static dispatch_once_t onceToken;
@@ -553,6 +555,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _disabledButtonAlpha = (CGFloat)0.12;
     _messageElevation = MDCShadowElevationSnackbar;
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    _mdc_overrideBaseElevation = -1;
   }
   return self;
 }
@@ -823,6 +826,25 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
   return _shouldApplyStyleChangesToVisibleSnackbars;
+}
+
+#pragma mark - Elevation
+
+- (void)setMdc_overrideBaseElevation:(CGFloat)mdc_overrideBaseElevation {
+  if (_mdc_overrideBaseElevation != mdc_overrideBaseElevation) {
+     _mdc_overrideBaseElevation = mdc_overrideBaseElevation;
+      self.internalManager.currentSnackbar.mdc_overrideBaseElevation = mdc_overrideBaseElevation;
+   }
+}
+
+- (void)setTraitCollectionDidChangeBlockForMessageView:(void (^)(MDCSnackbarMessageView *, UITraitCollection *))traitCollectionDidChangeBlockForMessageView {
+  _traitCollectionDidChangeBlockForMessageView = traitCollectionDidChangeBlockForMessageView;
+  self.internalManager.currentSnackbar.traitCollectionDidChangeBlock = traitCollectionDidChangeBlockForMessageView;
+}
+
+- (void)setMdc_elevationDidChangeBlockForMessageView:(void (^)(id<MDCElevatable> _Nonnull, CGFloat))mdc_elevationDidChangeBlockForMessageView {
+  _mdc_elevationDidChangeBlockForMessageView = mdc_elevationDidChangeBlockForMessageView;
+  self.internalManager.currentSnackbar.mdc_elevationDidChangeBlock = mdc_elevationDidChangeBlockForMessageView;
 }
 
 @end
