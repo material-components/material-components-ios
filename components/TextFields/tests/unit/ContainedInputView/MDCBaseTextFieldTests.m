@@ -160,7 +160,8 @@
 - (MDCBaseTextField *)createLTRTextFieldWithLeadingView:(BOOL)leadingView
                                            trailingView:(BOOL)trailingView
                                                viewMode:(UITextFieldViewMode)viewMode {
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+  CGRect frame = CGRectMake(0, 0, 100, 60);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:frame];
   textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   if (leadingView) {
     textField.leadingView = [self createSideView];
@@ -171,7 +172,9 @@
   textField.trailingViewMode = viewMode;
   textField.leadingViewMode = viewMode;
   UIWindow *window = [[UIWindow alloc] init];
-  [window addSubview:textField];
+  UIView *superview = [[UIView alloc] initWithFrame:frame];
+  [window addSubview:superview];
+  [superview addSubview:textField];
   return textField;
 }
 
