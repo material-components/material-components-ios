@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTextInput.h"
+#import "MaterialElevation.h"
 
 @class MDCIntrinsicHeightTextView;
 
