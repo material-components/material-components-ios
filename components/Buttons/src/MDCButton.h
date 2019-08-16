@@ -155,9 +155,12 @@
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
- If true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+ If @c true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+ If @c false, @c accessibilityTraits will inherit its behavior from @c UIButton.
 
  @note Defaults to true.
+ @note This API is intended as a migration flag to restore @c UIButton behavior to @c MDCButton. In
+       a future version, this API will eventually be deprecated and then deleted.
  */
 @property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
 
