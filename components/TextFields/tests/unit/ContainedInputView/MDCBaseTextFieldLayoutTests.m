@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTextFields+ContainedInputView.h"
 #import "MDCBaseTextFieldLayout.h"
+#import "MaterialTextFields+ContainedInputView.h"
 
 @interface MDCBaseTextFieldLayout (Testing)
 - (CGFloat)textHeightWithFont:(UIFont *)font;
@@ -31,7 +31,7 @@
   UIFont *systemFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   CGFloat ceiledLineHeight = (CGFloat)ceil((double)systemFont.lineHeight);
   CGFloat calculatedTextHeight = [emptyLayout textHeightWithFont:systemFont];
-  XCTAssertEqual(ceiledLineHeight,calculatedTextHeight);
+  XCTAssertEqual(ceiledLineHeight, calculatedTextHeight);
 }
 
 @end

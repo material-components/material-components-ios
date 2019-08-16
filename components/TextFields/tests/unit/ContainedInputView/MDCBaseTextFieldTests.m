@@ -19,7 +19,7 @@
 @interface MDCBaseTextField (Testing)
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
- withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
+    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
 @end
 
 @interface MDCBaseTextFieldTests : XCTestCase
@@ -106,8 +106,8 @@
   CGRect parentClassTextAreaFrame = CGRectMake(20, 30, 120, 50);
   CGRect correctFinalTextAreaFrame = CGRectMake(30, 35, 120, 50);
   CGRect finalTextAreaFrame =
-  [[[MDCBaseTextField alloc] init] adjustTextAreaFrame:textAreaFrame
-                          withParentClassTextAreaFrame:parentClassTextAreaFrame];
+      [[[MDCBaseTextField alloc] init] adjustTextAreaFrame:textAreaFrame
+                              withParentClassTextAreaFrame:parentClassTextAreaFrame];
   XCTAssertEqualObjects(NSStringFromCGRect(correctFinalTextAreaFrame),
                         NSStringFromCGRect(finalTextAreaFrame));
 }
