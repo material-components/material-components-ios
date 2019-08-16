@@ -18,6 +18,8 @@
 
 @interface MDCBaseTextField (Testing)
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+- (CGRect)adjustTextAreaFrame:(CGRect)textRect
+ withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
 @end
 
 @interface MDCBaseTextFieldTests : XCTestCase
@@ -97,6 +99,17 @@
   textField.trailingViewMode = UITextFieldViewModeAlways;
   XCTAssertTrue(textField.leftViewMode == textField.trailingViewMode,
                 @"The trailing view mode should be equal to left view mode.");
+}
+
+- (void)testAdjustTextAreaFrameWithParentClassTextAreaFrame {
+  CGRect textAreaFrame = CGRectMake(30, 50, 120, 20);
+  CGRect parentClassTextAreaFrame = CGRectMake(20, 30, 120, 50);
+  CGRect correctFinalTextAreaFrame = CGRectMake(30, 35, 120, 50);
+  CGRect finalTextAreaFrame =
+  [[[MDCBaseTextField alloc] init] adjustTextAreaFrame:textAreaFrame
+                          withParentClassTextAreaFrame:parentClassTextAreaFrame];
+  XCTAssertEqualObjects(NSStringFromCGRect(correctFinalTextAreaFrame),
+                        NSStringFromCGRect(finalTextAreaFrame));
 }
 
 @end
