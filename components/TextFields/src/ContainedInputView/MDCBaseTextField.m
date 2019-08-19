@@ -211,11 +211,13 @@
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
+  
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
 - (void)postLayoutSubviews {
   CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
+  self.placeholderLabel.attributedText = self.attributedPlaceholder;
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
                             placeholderFrame:placeholderFrame
                         isPlaceholderVisible:self.isPlaceholderVisible];
@@ -331,7 +333,7 @@
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
   //  self.label.text = [attributedPlaceholder string];
-  //  self.label.attributedText = [attributedPlaceholder copy];
+//    self.label.attributedText = [attributedPlaceholder copy];
   //  NSLog(@"setting attributedPlaceholder is not currently supported.");
   // TODO: Evaluate if attributedPlaceholder should be supported.
   //}

@@ -94,20 +94,20 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   self.scrollViewSubviews = @[
     [self createToggleErrorButton],
     [self createFirstResponderButton],
-    [self createLabelWithText:@"Default MDCFilledTextField:"],
-    [self createDefaultFilledTextField],
+//    [self createLabelWithText:@"Default MDCFilledTextField:"],
+//    [self createDefaultFilledTextField],
     [self createLabelWithText:@"Material MDCFilledTextField:"],
     [self createMaterialFilledTextField],
-    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
-    [self createDefaultOutlinedTextField],
-    [self createLabelWithText:@"Material MDCOutlinedTextField:"],
-    [self createMaterialOutlinedTextField],
-    [self createLabelWithText:@"Default MDCBaseTextField:"],
-    [self createDefaultInputTextField],
-    [self createLabelWithText:@"Material MDCBaseTextField:"],
-    [self createMaterialInputTextField],
-    [self createLabelWithText:@"UITextField:"],
-    [self createUiTextField],
+//    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
+//    [self createDefaultOutlinedTextField],
+//    [self createLabelWithText:@"Material MDCOutlinedTextField:"],
+//    [self createMaterialOutlinedTextField],
+//    [self createLabelWithText:@"Default MDCBaseTextField:"],
+//    [self createDefaultInputTextField],
+//    [self createLabelWithText:@"Material MDCBaseTextField:"],
+//    [self createMaterialInputTextField],
+//    [self createLabelWithText:@"UITextField:"],
+//    [self createUiTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -223,8 +223,19 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCFilledTextField *)createMaterialFilledTextField {
   MDCFilledTextField *textField = [self createDefaultFilledTextField];
+  textField.attributedPlaceholder = [self createAttributedPlaceholder];
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
+}
+
+- (NSAttributedString *)createAttributedPlaceholder {
+  NSDictionary<NSAttributedStringKey,id> *attributes =
+  @{
+    NSForegroundColorAttributeName : [UIColor redColor],
+    };
+  NSAttributedString *attributed =
+      [[NSAttributedString alloc] initWithString:@"phone number" attributes:attributes];
+  return attributed;
 }
 
 - (UITextField *)createUiTextField {
