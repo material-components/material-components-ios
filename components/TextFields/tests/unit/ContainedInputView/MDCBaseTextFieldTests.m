@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTextFields+ContainedInputView.h"
 #import <objc/runtime.h>
+#import "MaterialTextFields+ContainedInputView.h"
 
 @interface MDCBaseTextField (Private)
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
@@ -36,7 +36,7 @@
   objc_setAssociatedObject(self, @selector(isEditingOverride), @(isEditingOverride),
                            OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
--(BOOL)isEditing {
+- (BOOL)isEditing {
   return self.isEditingOverride ? self.isEditingOverride : [super isEditing];
 }
 @end
@@ -83,8 +83,8 @@
 - (void)setIsEditing:(BOOL)isEditing onTextField:(MDCBaseTextField *)textField {
   [textField becomeFirstResponder];
   textField.isEditingOverride = isEditing;
-  NSLog(@"yo yo: %@",@(textField.isEditingOverride));
-  NSLog(@"bo bo: %@",@(textField.isEditing));
+  NSLog(@"yo yo: %@", @(textField.isEditingOverride));
+  NSLog(@"bo bo: %@", @(textField.isEditing));
 }
 
 #pragma mark Tests
@@ -205,10 +205,9 @@
   CGFloat desiredTextAreaMidY = CGRectGetMidY(desiredTextAreaFrame);
   CGFloat halfOfPretendSystemDefinedHeight = (pretendSystemDefinedHeight * (CGFloat)0.5);
   CGFloat desiredTextAreaMinY = desiredTextAreaMidY - halfOfPretendSystemDefinedHeight;
-  CGRect desiredFinalTextAreaFrame = CGRectMake(CGRectGetMinX(desiredTextAreaFrame),
-                                                desiredTextAreaMinY,
-                                                CGRectGetWidth(desiredTextAreaFrame),
-                                                pretendSystemDefinedHeight);
+  CGRect desiredFinalTextAreaFrame =
+      CGRectMake(CGRectGetMinX(desiredTextAreaFrame), desiredTextAreaMinY,
+                 CGRectGetWidth(desiredTextAreaFrame), pretendSystemDefinedHeight);
 
   // When
   CGRect finalTextAreaFrame =
