@@ -467,6 +467,7 @@
   CGRect trailingFrameEditing = textField.rightView.frame;
 
   // Then
+  XCTAssertTrue(textField.isEditing);
   XCTAssertFalse(leadingViewHiddenBeforeBecomingFirstResponder);
   XCTAssertFalse(trailingViewHiddenBeforeBecomingFirstResponder);
   XCTAssertTrue(textField.leadingView.hidden);
