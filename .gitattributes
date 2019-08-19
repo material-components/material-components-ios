@@ -1,6 +1,6 @@
 # DO NOT CHANGE THIS FILE
 # DO NOT EDIT THE LINE BELOW.
-.gitattributes merge=gitattributes
+/.gitattributes merge=gitattributes
 # DO NOT EDIT THE LINE ABOVE.
 #
 # You can of course edit this file, but make sure you understand what you are
