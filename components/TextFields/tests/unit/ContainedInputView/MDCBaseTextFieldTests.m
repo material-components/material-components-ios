@@ -83,8 +83,6 @@
 - (void)setIsEditing:(BOOL)isEditing onTextField:(MDCBaseTextField *)textField {
   [textField becomeFirstResponder];
   textField.isEditingOverride = isEditing;
-  NSLog(@"yo yo: %@", @(textField.isEditingOverride));
-  NSLog(@"bo bo: %@", @(textField.isEditing));
 }
 
 #pragma mark Tests
