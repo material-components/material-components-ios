@@ -1,3 +1,13 @@
+# 87.1.1
+
+This patch release corrects issues with Git-LFS on the `stable` branch.
+
+## Multi-component changes
+
+* [{Git LFS} Correct `.gitattributes` to use path and not glob. (#8338)](https://github.com/material-components/material-components-ios/commit/2906c3c5b3bf3369982cf176b618b75c52e32cdc) (Rob Moore)
+
+---
+
 # 87.1.0
 
 This minor release enhances support for Material Elevation in Text Fields and
