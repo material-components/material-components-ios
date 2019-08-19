@@ -15,11 +15,30 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialTextFields+ContainedInputView.h"
+#import <objc/runtime.h>
 
-@interface MDCBaseTextField (Testing)
+@interface MDCBaseTextField (Private)
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
+@end
+
+@interface MDCBaseTextField (Testing)
+@property(nonatomic, assign) BOOL isEditingOverride;
+@end
+
+@implementation MDCBaseTextField (Testing)
+@dynamic isEditingOverride;
+- (BOOL)isEditingOverride {
+  return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+- (void)setIsEditingOverride:(BOOL)isEditingOverride {
+  objc_setAssociatedObject(self, @selector(isEditingOverride), @(isEditingOverride),
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+-(BOOL)isEditing {
+  return self.isEditingOverride ? self.isEditingOverride : [super isEditing];
+}
 @end
 
 @interface MDCBaseTextFieldTests : XCTestCase
