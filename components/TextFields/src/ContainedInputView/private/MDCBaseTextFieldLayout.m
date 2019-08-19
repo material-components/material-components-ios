@@ -14,8 +14,6 @@
 
 #import "MDCBaseTextFieldLayout.h"
 
-static const CGFloat kFloatingLabelXOffsetFromTextArea = (CGFloat)3.0;
-
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 @interface MDCBaseTextFieldLayout ()
@@ -216,12 +214,12 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
       textRectMaxX = textFieldWidth - kHorizontalPadding;
     }
     normalLabelMaxX = textRectMaxX;
-    floatingLabelMaxX = normalLabelMaxX - kFloatingLabelXOffsetFromTextArea;
+    floatingLabelMaxX = normalLabelMaxX;
   } else {
     textRectMinX =
         shouldAttemptToDisplayLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
     normalLabelMinX = textRectMinX;
-    floatingLabelMinX = normalLabelMinX + kFloatingLabelXOffsetFromTextArea;
+    floatingLabelMinX = normalLabelMinX;
     if (shouldAttemptToDisplayClearButton) {
       textRectMaxX = apparentClearButtonMinX - kHorizontalPadding;
     } else {
