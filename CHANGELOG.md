@@ -1,18 +1,10 @@
-# #develop#
+# 87.1.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch release corrects issues with Git-LFS on the `stable` branch.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Multi-component changes
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [{Git LFS} Correct `.gitattributes` to use path and not glob. (#8338)](https://github.com/material-components/material-components-ios/commit/2906c3c5b3bf3369982cf176b618b75c52e32cdc) (Rob Moore)
 
 ---
 
