@@ -43,6 +43,7 @@
 
 - (void)commonMDCOutlinedTextFieldInit {
   self.containerStyle = [[MDCContainedInputViewStyleOutlined alloc] init];
+  self.borderStyle = UITextBorderStyleNone;
 }
 
 #pragma mark Stateful Color APIs

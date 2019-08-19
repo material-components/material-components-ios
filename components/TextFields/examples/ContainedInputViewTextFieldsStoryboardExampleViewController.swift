@@ -13,11 +13,11 @@
 // limitations under the License.
 import UIKit
 
-final class SimpleTextFieldStoryboardExampleViewController: UIViewController {
-
-  @IBOutlet var filledTextField: UITextField!
-  @IBOutlet weak var outlinedTextField: UITextField!
+final class ContainedInputViewTextFieldsStoryboardExampleViewController: UIViewController {
   
+  @IBOutlet weak var filledTextField: MDCFilledTextField!
+  @IBOutlet weak var outlinedTextField: MDCOutlinedTextField!
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
@@ -29,12 +29,11 @@ final class SimpleTextFieldStoryboardExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     registerKeyboardNotifications()
-
   }
 
 }
 
-extension SimpleTextFieldStoryboardExampleViewController: UITextFieldDelegate {
+extension ContainedInputViewTextFieldsStoryboardExampleViewController: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -46,7 +45,7 @@ extension SimpleTextFieldStoryboardExampleViewController: UITextFieldDelegate {
   }
 }
 
-extension SimpleTextFieldStoryboardExampleViewController: UITextViewDelegate {
+extension ContainedInputViewTextFieldsStoryboardExampleViewController: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
@@ -54,7 +53,7 @@ extension SimpleTextFieldStoryboardExampleViewController: UITextViewDelegate {
 
 // MARK: - Keyboard Handling
 
-extension SimpleTextFieldStoryboardExampleViewController {
+extension ContainedInputViewTextFieldsStoryboardExampleViewController {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -86,7 +85,7 @@ extension SimpleTextFieldStoryboardExampleViewController {
 
 // MARK: - Status Bar Style
 
-extension SimpleTextFieldStoryboardExampleViewController {
+extension ContainedInputViewTextFieldsStoryboardExampleViewController {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
@@ -94,14 +93,14 @@ extension SimpleTextFieldStoryboardExampleViewController {
 
 // MARK: - CatalogByConvention
 
-extension SimpleTextFieldStoryboardExampleViewController {
+extension ContainedInputViewTextFieldsStoryboardExampleViewController {
   @objc class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Text Field", "Input Text Field (Storyboard)"],
+      "breadcrumbs": ["Text Field", "CIV TextFields (Storyboard)"],
       "description": "Text fields let users enter and edit text.",
       "primaryDemo": false,
       "presentable": false,
-      "storyboardName": "SimpleTextFieldStoryboardExampleViewController"
+      "storyboardName": "ContainedInputViewTextFieldsStoryboardExampleViewController"
     ]
   }
 }

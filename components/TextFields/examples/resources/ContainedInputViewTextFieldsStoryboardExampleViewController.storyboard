@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EkN-UR-mAg">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.11" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EkN-UR-mAg">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.13"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Simple Text Field Storyboard Example View Controller-->
+        <!--Contained Input View Text Fields Storyboard Example View Controller-->
         <scene sceneID="Ver-Oe-5lZ">
             <objects>
-                <viewController id="EkN-UR-mAg" customClass="SimpleTextFieldStoryboardExampleViewController" customModule="MaterialComponentsExamples" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="EkN-UR-mAg" customClass="ContainedInputViewTextFieldsStoryboardExampleViewController" customModule="MaterialComponentsExamples" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EjN-PI-765"/>
                         <viewControllerLayoutGuide type="bottom" id="Z2k-fX-Sgr"/>
@@ -21,14 +19,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pr7-c9-ngn" customClass="SimpleTextField">
-                                <rect key="frame" x="50" y="70" width="275" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pr7-c9-ngn" customClass="MDCFilledTextField">
+                                <rect key="frame" x="50" y="50" width="275" height="34"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0wE-6b-dmp" customClass="SimpleTextField">
-                                <rect key="frame" x="50" y="150" width="275" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0wE-6b-dmp" customClass="MDCOutlinedTextField">
+                                <rect key="frame" x="50" y="134" width="275" height="34"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -45,8 +43,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="filledTextField" destination="pr7-c9-ngn" id="GbE-SG-Umb"/>
-                        <outlet property="outlinedTextField" destination="0wE-6b-dmp" id="RPR-U3-VZh"/>
+                        <outlet property="filledTextField" destination="pr7-c9-ngn" id="B4U-RN-gqb"/>
+                        <outlet property="outlinedTextField" destination="0wE-6b-dmp" id="MHv-Ej-e94"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ue-b6-bbM" userLabel="First Responder" sceneMemberID="firstResponder"/>

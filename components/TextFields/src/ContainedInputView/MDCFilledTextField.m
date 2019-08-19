@@ -42,8 +42,8 @@
 }
 
 - (void)commonMDCFilledTextFieldInit {
-  MDCContainedInputViewStyleFilled *filledStyle = [[MDCContainedInputViewStyleFilled alloc] init];
-  self.containerStyle = filledStyle;
+  self.containerStyle = [[MDCContainedInputViewStyleFilled alloc] init];
+  self.borderStyle = UITextBorderStyleNone;
 }
 
 #pragma mark Stateful Color APIs
