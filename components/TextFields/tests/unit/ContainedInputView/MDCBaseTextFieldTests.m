@@ -422,6 +422,7 @@
   CGRect leadingFrameEditing = textField.leftView.frame;
 
   // Then
+  XCTAssertTrue(textField.isEditing);
   XCTAssertFalse(leadingViewHiddenBeforeBecomingFirstResponder);
   XCTAssertTrue(textField.leadingView.hidden);
   XCTAssertFalse([self CGRect:leadingFrameNotEditing isEqualToCGRect:leadingFrameEditing]);
@@ -443,6 +444,7 @@
   CGRect trailingFrameEditing = textField.rightView.frame;
 
   // Then
+  XCTAssertTrue(textField.isEditing);
   XCTAssertFalse(trailingViewHiddenBeforeBecomingFirstResponder);
   XCTAssertTrue(textField.trailingView.hidden);
   XCTAssertFalse([self CGRect:trailingFrameNotEditing isEqualToCGRect:trailingFrameEditing]);
