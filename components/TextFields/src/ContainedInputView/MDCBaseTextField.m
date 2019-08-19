@@ -205,8 +205,7 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
-  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
-  self.placeholderLabel.font = self.normalFont;
+  [self updatePlaceholder];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -215,9 +214,26 @@
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
+- (void)updatePlaceholder {
+  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
+  if (self.attributedPlaceholder.length > 0) {
+    self.placeholderLabel.text = nil;
+    self.placeholderLabel.attributedText = self.attributedPlaceholder;
+    self.placeholderLabel.font = nil;
+  } else if (self.placeholder.length > 0) {
+    self.placeholderLabel.attributedText = nil;
+    self.placeholderLabel.text = self.placeholder;
+    self.placeholderLabel.font = self.normalFont;
+  } else {
+    self.placeholderLabel.text = nil;
+    self.placeholderLabel.attributedText = nil;
+    self.placeholderLabel.font = self.normalFont;
+  }
+  self.placeholderLabel.attributedText = self.attributedPlaceholder;
+}
+
 - (void)postLayoutSubviews {
   CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
-  self.placeholderLabel.attributedText = self.attributedPlaceholder;
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
                             placeholderFrame:placeholderFrame
                         isPlaceholderVisible:self.isPlaceholderVisible];
