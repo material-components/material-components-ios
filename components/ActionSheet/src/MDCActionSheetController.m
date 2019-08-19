@@ -340,6 +340,14 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      [self.tableView reloadData];
+    }
+  }
+#endif
+
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
@@ -366,7 +374,6 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   self.view.backgroundColor = backgroundColor;
   self.tableView.backgroundColor = backgroundColor;
   self.header.backgroundColor = backgroundColor;
-  [self.tableView reloadData];
 }
 
 - (void)setTitleTextColor:(UIColor *)titleTextColor {
