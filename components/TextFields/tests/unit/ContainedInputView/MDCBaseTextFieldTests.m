@@ -46,134 +46,12 @@
 
 @implementation MDCBaseTextFieldTests
 
+#pragma mark Helper Methods
+
 - (UIView *)createSideView {
   UIView *sideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
   sideView.backgroundColor = [UIColor blueColor];
   return sideView;
-}
-
-- (void)testLeadingViewLTR {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-
-  // When
-  UIView *sideView = [self createSideView];
-  textField.leadingView = sideView;
-
-  // Then
-  XCTAssertTrue(textField.leftView == textField.leadingView,
-                @"The leading view should be the left view.");
-}
-
-- (void)testLeadingViewRTL {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
-
-  // When
-  UIView *sideView = [self createSideView];
-  textField.leadingView = sideView;
-
-  // Then
-  XCTAssertTrue(textField.rightView == textField.leadingView,
-                @"The leading view should be the right view.");
-}
-
-- (void)testTrailingViewLTR {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-
-  // When
-  UIView *sideView = [self createSideView];
-  textField.trailingView = sideView;
-
-  // Then
-  XCTAssertTrue(textField.rightView == textField.trailingView,
-                @"The trailing view should be the right view.");
-}
-
-- (void)testTrailingViewRTL {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
-
-  // When
-  UIView *sideView = [self createSideView];
-  textField.trailingView = sideView;
-
-  // Then
-  XCTAssertTrue(textField.leftView == textField.trailingView,
-                @"The trailing view should be the left view.");
-}
-
-- (void)testLeadingViewModeLTR {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-
-  // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-  textField.leadingViewMode = UITextFieldViewModeAlways;
-
-  // Then
-  XCTAssertTrue(textField.leftViewMode == textField.leadingViewMode,
-                @"The leading view mode should be equal to the left view mode.");
-}
-
-- (void)testLeadingViewModeRTL {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-
-  // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
-  textField.leadingViewMode = UITextFieldViewModeAlways;
-
-  // Then
-  XCTAssertTrue(textField.rightViewMode == textField.leadingViewMode,
-                @"The leading view mode should be equal to the right view mode.");
-}
-
-- (void)testTrailingViewModeLTR {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-
-  // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
-  textField.trailingViewMode = UITextFieldViewModeAlways;
-
-  // Then
-  XCTAssertTrue(textField.rightView == textField.trailingView,
-                @"The trailing view mode should be equal to the right view mode.");
-}
-
-- (void)testTrailingViewModeRTL {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-
-  // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
-  textField.trailingViewMode = UITextFieldViewModeAlways;
-
-  // Then
-  XCTAssertTrue(textField.leftViewMode == textField.trailingViewMode,
-                @"The trailing view mode should be equal to left view mode.");
-}
-
-- (void)testAdjustTextAreaFrameWithParentClassTextAreaFrame {
-  // Given
-  CGRect textAreaFrame = CGRectMake(30, 50, 120, 20);
-  CGRect parentClassTextAreaFrame = CGRectMake(20, 30, 120, 50);
-
-  // When
-  CGRect finalTextAreaFrame =
-      [[[MDCBaseTextField alloc] init] adjustTextAreaFrame:textAreaFrame
-                              withParentClassTextAreaFrame:parentClassTextAreaFrame];
-
-  // Then
-  CGRect correctFinalTextAreaFrame = CGRectMake(30, 35, 120, 50);
-  XCTAssertEqualObjects(NSStringFromCGRect(correctFinalTextAreaFrame),
-                        NSStringFromCGRect(finalTextAreaFrame));
 }
 
 - (MDCBaseTextField *)createLTRTextFieldWithLeadingView:(BOOL)leadingView
@@ -202,10 +80,144 @@
   [view layoutIfNeeded];
 }
 
-- (BOOL)CGRect:(CGRect)CGRect1 isEqualToCGRect:(CGRect)CGRect2 {
-  NSString *CGRect1Description = NSStringFromCGRect(CGRect1);
-  NSString *CGRect2Description = NSStringFromCGRect(CGRect2);
-  return [CGRect1Description isEqualToString:CGRect2Description];
+- (void)setIsEditing:(BOOL)isEditing onTextField:(MDCBaseTextField *)textField {
+  [textField becomeFirstResponder];
+  textField.isEditingOverride = isEditing;
+  NSLog(@"yo yo: %@",@(textField.isEditingOverride));
+  NSLog(@"bo bo: %@",@(textField.isEditing));
+}
+
+#pragma mark Tests
+
+- (void)testLeadingViewEqualsLeftViewInLTR {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+
+  // When
+  UIView *sideView = [self createSideView];
+  textField.leadingView = sideView;
+
+  // Then
+  XCTAssertTrue(textField.leftView == textField.leadingView,
+                @"The leading view should be the left view.");
+}
+
+- (void)testLeadingViewEqualsRightViewInRTL {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+
+  // When
+  UIView *sideView = [self createSideView];
+  textField.leadingView = sideView;
+
+  // Then
+  XCTAssertTrue(textField.rightView == textField.leadingView,
+                @"The leading view should be the right view.");
+}
+
+- (void)testTrailingViewEqualsRightViewInLTR {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+
+  // When
+  UIView *sideView = [self createSideView];
+  textField.trailingView = sideView;
+
+  // Then
+  XCTAssertTrue(textField.rightView == textField.trailingView,
+                @"The trailing view should be the right view.");
+}
+
+- (void)testTrailingViewEqualsLeftViewInRTL {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+
+  // When
+  UIView *sideView = [self createSideView];
+  textField.trailingView = sideView;
+
+  // Then
+  XCTAssertTrue(textField.leftView == textField.trailingView,
+                @"The trailing view should be the left view.");
+}
+
+- (void)testLeadingViewModeEqualsLeftViewModeInLTR {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+
+  // When
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+  textField.leadingViewMode = UITextFieldViewModeAlways;
+
+  // Then
+  XCTAssertTrue(textField.leftViewMode == textField.leadingViewMode,
+                @"The leading view mode should be equal to the left view mode.");
+}
+
+- (void)testLeadingViewModeEqualsRightViewModeInRTL {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+
+  // When
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+  textField.leadingViewMode = UITextFieldViewModeAlways;
+
+  // Then
+  XCTAssertTrue(textField.rightViewMode == textField.leadingViewMode,
+                @"The leading view mode should be equal to the right view mode.");
+}
+
+- (void)testTrailingViewModeEqualsRightViewModeInLTR {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+
+  // When
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+  textField.trailingViewMode = UITextFieldViewModeAlways;
+
+  // Then
+  XCTAssertTrue(textField.rightViewMode == textField.trailingViewMode,
+                @"The trailing view mode should be equal to the right view mode.");
+}
+
+- (void)testTrailingViewModeEqualsLeftViewModeInRTL {
+  // Given
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+
+  // When
+  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+  textField.trailingViewMode = UITextFieldViewModeAlways;
+
+  // Then
+  XCTAssertTrue(textField.leftViewMode == textField.trailingViewMode,
+                @"The trailing view mode should be equal to left view mode.");
+}
+
+- (void)testAdjustTextAreaFrameWithParentClassTextAreaFrame {
+  // Given
+  CGRect desiredTextAreaFrame = CGRectMake(30, 50, 120, 20);
+  CGRect pretendParentClassTextAreaFrame = CGRectMake(20, 30, 120, 50);
+  CGFloat pretendSystemDefinedHeight = CGRectGetHeight(pretendParentClassTextAreaFrame);
+  CGFloat desiredTextAreaMidY = CGRectGetMidY(desiredTextAreaFrame);
+  CGFloat halfOfPretendSystemDefinedHeight = (pretendSystemDefinedHeight * (CGFloat)0.5);
+  CGFloat desiredTextAreaMinY = desiredTextAreaMidY - halfOfPretendSystemDefinedHeight;
+  CGRect desiredFinalTextAreaFrame = CGRectMake(CGRectGetMinX(desiredTextAreaFrame),
+                                                desiredTextAreaMinY,
+                                                CGRectGetWidth(desiredTextAreaFrame),
+                                                pretendSystemDefinedHeight);
+
+  // When
+  CGRect finalTextAreaFrame =
+      [[[MDCBaseTextField alloc] init] adjustTextAreaFrame:desiredTextAreaFrame
+                              withParentClassTextAreaFrame:pretendParentClassTextAreaFrame];
+
+  // Then
+  XCTAssertEqualObjects(NSStringFromCGRect(desiredFinalTextAreaFrame),
+                        NSStringFromCGRect(finalTextAreaFrame));
 }
 
 - (void)testOnlyLeadingViewWithViewModeAlways {
@@ -216,12 +228,13 @@
   CGRect leadingFrameNotEditing = textField.leftView.frame;
 
   // When
-  [textField becomeFirstResponder];
+  [self setIsEditing:YES onTextField:textField];
   CGRect leadingFrameEditing = textField.leftView.frame;
+  BOOL leadingViewIsVisible = !textField.leadingView.hidden;
 
   // Then
-  XCTAssert([self CGRect:leadingFrameNotEditing isEqualToCGRect:leadingFrameEditing]);
-  XCTAssertFalse(textField.leadingView.hidden);
+  XCTAssertTrue(CGRectEqualToRect(leadingFrameNotEditing, leadingFrameEditing));
+  XCTAssertTrue(leadingViewIsVisible);
 }
 
 - (void)testOnlyTrailingViewWithViewModeAlways {
@@ -232,12 +245,13 @@
   CGRect trailingFrameNotEditing = textField.rightView.frame;
 
   // When
-  [textField becomeFirstResponder];
+  [self setIsEditing:YES onTextField:textField];
   CGRect trailingFrameEditing = textField.rightView.frame;
+  BOOL trailingViewIsVisible = !textField.trailingView.hidden;
 
   // Then
-  XCTAssert([self CGRect:trailingFrameNotEditing isEqualToCGRect:trailingFrameEditing]);
-  XCTAssertFalse(textField.trailingView.hidden);
+  XCTAssertTrue(CGRectEqualToRect(trailingFrameNotEditing, trailingFrameEditing));
+  XCTAssertTrue(trailingViewIsVisible);
 }
 
 - (void)testLeadingAndTrailingViewsWithViewModeAlways {
@@ -250,15 +264,17 @@
   [self forceLayoutOfView:textField];
   CGRect leadingFrameNotEditing = textField.leftView.frame;
   CGRect trailingFrameNotEditing = textField.rightView.frame;
-  [textField becomeFirstResponder];
+  [self setIsEditing:YES onTextField:textField];
   CGRect leadingFrameEditing = textField.leftView.frame;
   CGRect trailingFrameEditing = textField.rightView.frame;
+  BOOL trailingViewIsVisible = !textField.trailingView.hidden;
+  BOOL leadingViewIsVisible = !textField.leadingView.hidden;
 
   // Then
-  XCTAssert([self CGRect:leadingFrameNotEditing isEqualToCGRect:leadingFrameEditing]);
-  XCTAssert([self CGRect:trailingFrameNotEditing isEqualToCGRect:trailingFrameEditing]);
-  XCTAssertFalse(textField.leadingView.hidden);
-  XCTAssertFalse(textField.trailingView.hidden);
+  XCTAssertTrue(CGRectEqualToRect(leadingFrameNotEditing, leadingFrameEditing));
+  XCTAssertTrue(CGRectEqualToRect(trailingFrameNotEditing, trailingFrameEditing));
+  XCTAssertTrue(trailingViewIsVisible);
+  XCTAssertTrue(leadingViewIsVisible);
 }
 
 - (void)testNoLeadingOrTrailingViewWithViewModeAlways {
@@ -283,12 +299,13 @@
 
   // When
   [self forceLayoutOfView:textField];
-  BOOL leadingViewHiddenBeforeBecomingFirstResponder = textField.leadingView.hidden;
+  BOOL leadingViewVisibleBeforeBecomingFirstResponder = !textField.leadingView.hidden;
   [textField becomeFirstResponder];
+  BOOL leadingViewVisibleAfterBecomingFirstResponder = !textField.leadingView.hidden;
 
   // Then
-  XCTAssertTrue(leadingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(textField.leadingView.hidden);
+  XCTAssertFalse(leadingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(leadingViewVisibleAfterBecomingFirstResponder);
   XCTAssertNil(textField.trailingView);
 }
 
@@ -300,12 +317,13 @@
 
   // When
   [self forceLayoutOfView:textField];
-  BOOL trailingViewHiddenBeforeBecomingFirstResponder = textField.trailingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL trailingViewVisibleBeforeBecomingFirstResponder = !textField.trailingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
+  BOOL trailingViewVisibleAfterBecomingFirstResponder = !textField.trailingView.hidden;
 
   // Then
-  XCTAssertTrue(trailingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(textField.trailingView.hidden);
+  XCTAssertFalse(trailingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(trailingViewVisibleAfterBecomingFirstResponder);
   XCTAssertNil(textField.leadingView);
 }
 
@@ -316,15 +334,17 @@
                                                                viewMode:UITextFieldViewModeNever];
   // When
   [self forceLayoutOfView:textField];
-  BOOL trailingViewHiddenBeforeBecomingFirstResponder = textField.trailingView.hidden;
-  BOOL leadingViewHiddenBeforeBecomingFirstResponder = textField.leadingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL trailingViewVisibleBeforeBecomingFirstResponder = !textField.trailingView.hidden;
+  BOOL leadingViewVisibleBeforeBecomingFirstResponder = !textField.leadingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
+  BOOL trailingViewVisibleAfterBecomingFirstResponder = !textField.trailingView.hidden;
+  BOOL leadingViewVisibleAfterBecomingFirstResponder = !textField.leadingView.hidden;
 
   // Then
-  XCTAssertTrue(trailingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(leadingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(textField.leadingView.hidden);
-  XCTAssertTrue(textField.leadingView.hidden);
+  XCTAssertFalse(trailingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(leadingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(trailingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(leadingViewVisibleAfterBecomingFirstResponder);
 }
 
 - (void)testNoLeadingOrTrailingViewWithViewModeNever {
@@ -335,7 +355,7 @@
   // When
   UIView *leadingView = textField.leadingView;
   UIView *trailingView = textField.trailingView;
-  [textField becomeFirstResponder];
+  [self setIsEditing:YES onTextField:textField];
 
   // Then
   XCTAssertNil(leadingView);
@@ -351,15 +371,16 @@
   // When
   [self forceLayoutOfView:textField];
   CGRect leadingFrameNotEditing = textField.leftView.frame;
-  BOOL leadingViewHiddenBeforeBecomingFirstResponder = textField.leadingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL leadingViewVisibleBeforeBecomingFirstResponder = !textField.leadingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
   [self forceLayoutOfView:textField];
   CGRect leadingFrameEditing = textField.leftView.frame;
+  BOOL leadingViewVisibleAfterBecomingFirstResponder = !textField.leadingView.hidden;
 
   // Then
-  XCTAssertTrue(leadingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertFalse(textField.leadingView.hidden);
-  XCTAssertFalse([self CGRect:leadingFrameNotEditing isEqualToCGRect:leadingFrameEditing]);
+  XCTAssertFalse(leadingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertTrue(leadingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(CGRectEqualToRect(leadingFrameNotEditing, leadingFrameEditing));
 }
 
 - (void)testOnlyTrailingViewWithViewModeWhileEditing {
@@ -372,15 +393,16 @@
   // When
   [self forceLayoutOfView:textField];
   CGRect trailingFrameNotEditing = textField.rightView.frame;
-  BOOL trailingViewHiddenBeforeBecomingFirstResponder = textField.trailingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL trailingViewVisibleBeforeBecomingFirstResponder = !textField.trailingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
   [self forceLayoutOfView:textField];
+  BOOL trailingViewVisibleAfterBecomingFirstResponder = !textField.trailingView.hidden;
   CGRect trailingFrameEditing = textField.rightView.frame;
 
   // Then
-  XCTAssertTrue(trailingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertFalse(textField.trailingView.hidden);
-  XCTAssertFalse([self CGRect:trailingFrameNotEditing isEqualToCGRect:trailingFrameEditing]);
+  XCTAssertFalse(trailingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertTrue(trailingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(CGRectEqualToRect(trailingFrameNotEditing, trailingFrameEditing));
 }
 
 - (void)testLeadingAndTrailingViewsWithViewModeWhileEditing {
@@ -394,20 +416,22 @@
   [self forceLayoutOfView:textField];
   CGRect leadingFrameNotEditing = textField.leftView.frame;
   CGRect trailingFrameNotEditing = textField.rightView.frame;
-  BOOL leadingViewHiddenBeforeBecomingFirstResponder = textField.leadingView.hidden;
-  BOOL trailingViewHiddenBeforeBecomingFirstResponder = textField.trailingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL leadingViewVisibleBeforeBecomingFirstResponder = !textField.leadingView.hidden;
+  BOOL trailingViewVisibleBeforeBecomingFirstResponder = !textField.trailingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
   [self forceLayoutOfView:textField];
+  BOOL leadingViewVisibleAfterBecomingFirstResponder = !textField.leadingView.hidden;
+  BOOL trailingViewVisibleAfterBecomingFirstResponder = !textField.trailingView.hidden;
   CGRect leadingFrameEditing = textField.leftView.frame;
   CGRect trailingFrameEditing = textField.rightView.frame;
 
   // Then
-  XCTAssertTrue(leadingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(trailingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertFalse(textField.leadingView.hidden);
-  XCTAssertFalse(textField.trailingView.hidden);
-  XCTAssertFalse([self CGRect:leadingFrameNotEditing isEqualToCGRect:leadingFrameEditing]);
-  XCTAssertFalse([self CGRect:trailingFrameNotEditing isEqualToCGRect:trailingFrameEditing]);
+  XCTAssertFalse(leadingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(trailingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertTrue(leadingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertTrue(trailingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(CGRectEqualToRect(leadingFrameNotEditing, leadingFrameEditing));
+  XCTAssertFalse(CGRectEqualToRect(trailingFrameNotEditing, trailingFrameEditing));
 }
 
 - (void)testNoLeadingOrTrailingViewWithViewModeWhileEditing {
@@ -435,16 +459,17 @@
   // When
   [self forceLayoutOfView:textField];
   CGRect leadingFrameNotEditing = textField.leftView.frame;
-  BOOL leadingViewHiddenBeforeBecomingFirstResponder = textField.leadingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL leadingViewVisibleBeforeBecomingFirstResponder = !textField.leadingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
   [self forceLayoutOfView:textField];
+  BOOL leadingViewVisibleAfterBecomingFirstResponder = !textField.leadingView.hidden;
   CGRect leadingFrameEditing = textField.leftView.frame;
 
   // Then
   XCTAssertTrue(textField.isEditing);
-  XCTAssertFalse(leadingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(textField.leadingView.hidden);
-  XCTAssertFalse([self CGRect:leadingFrameNotEditing isEqualToCGRect:leadingFrameEditing]);
+  XCTAssertTrue(leadingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(leadingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(CGRectEqualToRect(leadingFrameNotEditing, leadingFrameEditing));
 }
 
 - (void)testOnlytrailingViewWithViewModeUnlessEditing {
@@ -457,16 +482,17 @@
   // When
   [self forceLayoutOfView:textField];
   CGRect trailingFrameNotEditing = textField.rightView.frame;
-  BOOL trailingViewHiddenBeforeBecomingFirstResponder = textField.trailingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL trailingViewVisibleBeforeBecomingFirstResponder = !textField.trailingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
   [self forceLayoutOfView:textField];
+  BOOL trailingViewVisibleAfterBecomingFirstResponder = !textField.trailingView.hidden;
   CGRect trailingFrameEditing = textField.rightView.frame;
 
   // Then
   XCTAssertTrue(textField.isEditing);
-  XCTAssertFalse(trailingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(textField.trailingView.hidden);
-  XCTAssertFalse([self CGRect:trailingFrameNotEditing isEqualToCGRect:trailingFrameEditing]);
+  XCTAssertTrue(trailingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(trailingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(CGRectEqualToRect(trailingFrameNotEditing, trailingFrameEditing));
 }
 
 - (void)testLeadingAndTrailingViewsWithViewModeUnlessEditing {
@@ -480,21 +506,23 @@
   [self forceLayoutOfView:textField];
   CGRect leadingFrameNotEditing = textField.leftView.frame;
   CGRect trailingFrameNotEditing = textField.rightView.frame;
-  BOOL leadingViewHiddenBeforeBecomingFirstResponder = textField.leadingView.hidden;
-  BOOL trailingViewHiddenBeforeBecomingFirstResponder = textField.trailingView.hidden;
-  [textField becomeFirstResponder];
+  BOOL leadingViewVisibleBeforeBecomingFirstResponder = !textField.leadingView.hidden;
+  BOOL trailingViewVisibleBeforeBecomingFirstResponder = !textField.trailingView.hidden;
+  [self setIsEditing:YES onTextField:textField];
   [self forceLayoutOfView:textField];
+  BOOL leadingViewVisibleAfterBecomingFirstResponder = !textField.leadingView.hidden;
+  BOOL trailingViewVisibleAfterBecomingFirstResponder = !textField.trailingView.hidden;
   CGRect leadingFrameEditing = textField.leftView.frame;
   CGRect trailingFrameEditing = textField.rightView.frame;
 
   // Then
   XCTAssertTrue(textField.isEditing);
-  XCTAssertFalse(leadingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertFalse(trailingViewHiddenBeforeBecomingFirstResponder);
-  XCTAssertTrue(textField.leadingView.hidden);
-  XCTAssertTrue(textField.trailingView.hidden);
-  XCTAssertFalse([self CGRect:leadingFrameNotEditing isEqualToCGRect:leadingFrameEditing]);
-  XCTAssertFalse([self CGRect:trailingFrameNotEditing isEqualToCGRect:trailingFrameEditing]);
+  XCTAssertTrue(leadingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertTrue(trailingViewVisibleBeforeBecomingFirstResponder);
+  XCTAssertFalse(leadingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(trailingViewVisibleAfterBecomingFirstResponder);
+  XCTAssertFalse(CGRectEqualToRect(leadingFrameNotEditing, leadingFrameEditing));
+  XCTAssertFalse(CGRectEqualToRect(trailingFrameNotEditing, trailingFrameEditing));
 }
 
 - (void)testNoLeadingOrTrailingViewWithViewModeUnlessEditing {
