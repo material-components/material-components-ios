@@ -16,7 +16,7 @@
 
 #import "MaterialContainerScheme.h"
 
-@interface SimpleTextFieldManualLayoutExampleViewController : UIViewController
+@interface ContainedInputViewTextFieldsManualLayoutExampleViewController : UIViewController
 
 @property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 @end
