@@ -28,7 +28,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //    self.recordMode = YES;
+      self.recordMode = YES;
 }
 
 - (void)tearDown {
@@ -113,5 +113,81 @@
   // Then
   [self generateSnapshotAndVerifyForView:textField];
 }
+
+- (void)testEditingTextFieldWithLeadingViewWhileEditing {
+  // Given
+  MDCBaseTextField *textField = [self createBaseTextField];
+  
+  // When
+  textField.leadingView = [self createBlueSideView];
+  textField.leadingViewMode = UITextFieldViewModeWhileEditing;
+
+  [self forceLayoutOfView:textField];
+  BOOL didBecome = [textField becomeFirstResponder];
+
+  textField.text = @"Text2";
+  NSLog(@"didBecome: %@",@(didBecome));
+  NSLog(@"isEditing: %@",@(textField.isEditing));
+  NSLog(@"leftView.frame: %@",NSStringFromCGRect(textField.leadingView.frame));
+  NSLog(@"leftView.hidden: %@",@(textField.leadingView.hidden));
+
+  [self validateTextField:textField withSel:_cmd];
+}
+
+- (void)validateTextField:(UIView *)view withSel:(SEL)sel {
+  XCTestExpectation *e = [[XCTestExpectation alloc] initWithDescription:@"death"];
+  
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+                   //                   NSLog(@"didBecome: %@",@(didBecome));
+                   //                   NSLog(@"isEditing: %@",@(textField.isEditing));
+                   //                   NSLog(@"leftView.frame: %@",NSStringFromCGRect(textField.leadingView.frame));
+                   //                   NSLog(@"leftView.hidden: %@",@(textField.leadingView.hidden));
+                   // Then
+                   //                   [self forceLayoutOfView:textField];
+                   UIView *vieww = [view snapshotViewAfterScreenUpdates:YES];
+                   [self generateSnapshotAndVerifyForView:vieww];
+                   [e fulfill];
+                 });
+  
+  [self waitForExpectations:@[e] timeout:3];
+}
+
+
+- (void)testNonEditingTextFieldWithLeadingViewWhileEditing {
+  // Given
+  MDCBaseTextField *textField = [self createBaseTextField];
+  
+  // When
+  textField.text = @"Text";
+  textField.leadingView = [self createBlueSideView];
+  textField.leadingViewMode = UITextFieldViewModeWhileEditing;
+  [self forceLayoutOfView:textField];
+  // Then
+  [self generateSnapshotAndVerifyForView:textField];
+}
+
+
+- (void)drainMainRunLoop {
+  XCTestExpectation *expectation = [self expectationWithDescription:@"draining the main run loop"];
+  
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  
+  [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)forceLayoutOfView:(UIView *)view {
+  UIWindow *window = [[UIApplication sharedApplication]keyWindow];// [[UIWindow alloc] initWithFrame:view.bounds];
+//  NSLog(@"window: %@",window);
+  [window addSubview:view];
+  [window setNeedsLayout];
+  [window layoutIfNeeded];
+  // Allow animation blocks to issue through the main run loop. This may not be sufficient for all
+  // animations, but it appears to correct and deflake the rendering of long placeholder text.
+  [self drainMainRunLoop];
+}
+
 
 @end
