@@ -71,7 +71,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
-  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"death"];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                (int64_t)(kTextFieldValidationAnimationDuration * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
