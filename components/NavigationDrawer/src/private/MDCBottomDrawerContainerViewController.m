@@ -203,9 +203,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   adjustedInset.top += -self.scrollView.contentOffset.y;
   self.scrollView.contentInset = adjustedInset;
 
-  [self.originalPresentingViewController dismissViewControllerAnimated:YES completion:^{
-    self.scrollView.contentInset = previousInset;
-  }];
+  [self.originalPresentingViewController dismissViewControllerAnimated:YES
+                                                            completion:^{
+                                                              self.scrollView.contentInset =
+                                                                  previousInset;
+                                                            }];
 }
 
 #pragma mark UIGestureRecognizerDelegate (Public)
