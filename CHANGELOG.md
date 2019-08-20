@@ -1,15 +1,62 @@
-# #develop#
+# 88.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release removes the `mdc_legacyFontScaling` API from Chips and
+Buttons.  Ripple's colors when combining `.highlighted` with the `.selected`
+or `.dragged` states fall-back to the color for the `.normal` state rather
+than for the `.selected` or `.dragged` state.  Snackbar allows disabling the
+legacy font scaling behavior when no attached Material scaling curves are
+found on its fonts. TextFields fully supports Material Elevation, ActionSheet
+fixed a bug with dynamic color support, and Banner received a Theming
+Extension.  Several experimental examples were removed from TextFields.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+Buttons and Chips removed the `mdc_legacyFontScaling` API.  It can be replaced
+with `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in all
+instances without any change in behavior.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+Typography's API `mdc_adjustsFontForContentSizeCategory` is now deprecated and
+will be replaced with `useCurrentContentSizeCategoryWhenApplied`. It will be
+removed in a future release.
+
 ## New features
 
-Replace this text with example code for each new feature.
+### Ripple State Management
+
+Unless a color is explicitly set for the combination state,
+`MDCStatefulRippleView` now falls-back to the `.normal` color when either the
+`.selected` or `.dragged` states are combined with the `.highlighted` state.
+This more closely matches the behavior of `UIControl` subclasses.
+
+### Snackbar Dynamic Type
+
+`MDCSnackbarManager` and `MDCSnackbarMessageView` both allow disabling of the
+fall-back Material Typography behavior for Dynamic Type support. When the
+`adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` property is
+`YES` and no Material scaling curves are found attached to the fonts, then no
+automatic Dynamic Type scaling will take place for the manager's or view's
+fonts. This effectively disables the pre-2019 behavior for Dynamic Type.
+
+### TextFields Support Material Elevation
+
+`MDCMultilineTextField` now supports Material Elevation. Clients can assign a
+value for `mdc_overrideBaseElevation` or an `elevationDidChangeBlock` to
+ensure that both the Text Field and any subviews can react to elevation
+changes.
+
+### Banner Theming
+
+`MDCBannerView` now supports a Theming Extension. Please note that Banner is
+still in Beta and not published to CocoaPods.
+
+```objc
+MDCBannerView *banner = [[MDCBannerView alloc] init];
+id<MDCContainerScheming> containerScheme = [[MDCContainerScheme alloc] init];
+[banner applyThemeWithScheme:containerScheme];
+```
+
 ## API changes
 
 ### Banner+Theming
@@ -95,6 +142,7 @@ Replace this text with example code for each new feature.
 
 ### Buttons
 
+* [Add theming extension. (#8285)](https://github.com/material-components/material-components-ios/commit/68f5b9d1e491b7764adf582353757891ae93652b) (Wenyu Zhang)
 * [Clarify docs for accessibilityTraitsIncludesButton. (#8328)](https://github.com/material-components/material-components-ios/commit/46a38b50718cbc4761f3af159ae6a5a52ebd3045) (Robert Moore)
 * [Delete deprecated mdc_legacyFontScaling API. (#8306)](https://github.com/material-components/material-components-ios/commit/a703c2359420c6af2c38987ee24c4ee59b116155) (Wenyu Zhang)
 
@@ -144,6 +192,7 @@ Replace this text with example code for each new feature.
 * [Remove use of `NS_ASSUME_NONNULL_BEGIN`. (#8301)](https://github.com/material-components/material-components-ios/commit/f14a71f02fcd6af13c44c6ed2728e6dce6b1c877) (Robert Moore)
 * [Revert "Revert "[TextFields] Add MDCBaseTextFieldLayout object with leading/trailing view behavior (#8292)" #8316" (#8320)](https://github.com/material-components/material-components-ios/commit/b531792527bb286044a7b40e38012ddbb539c135) (Andrew Overton)
 * [Revert "[TextFields] Add MDCBaseTextFieldLayout object with leading/trailing view behavior (#8292)" (#8316)](https://github.com/material-components/material-components-ios/commit/a80df6dbd092f3d4498d8c60d8bafde71c0e36e9) (Robert Moore)
+* [Delete experimental textfields (#8317)](https://github.com/material-components/material-components-ios/commit/fecd9092639c19b8127ec495355aa9e2f5326702) (Andrew Overton)
 
 ### private/Color
 
@@ -154,11 +203,6 @@ Replace this text with example code for each new feature.
 
 * [Add deprecation flag to mdc_adjustsFontForContentSizeCategory. (#8312)](https://github.com/material-components/material-components-ios/commit/cd4098cb65b6a6117b3bdff1a24574eea1be44bf) (Wenyu Zhang)
 * [add doc to clarify useCurrentContentSizeCategoryWhenApplied. (#8311)](https://github.com/material-components/material-components-ios/commit/14aa5b9ac6f237056eb7c00a9044dafdee5711db) (Wenyu Zhang)
-
-## Multi-component changes
-
-* [Add theming extension. (#8285)](https://github.com/material-components/material-components-ios/commit/68f5b9d1e491b7764adf582353757891ae93652b) (Wenyu Zhang)
-* [Delete experimental textfields (#8317)](https://github.com/material-components/material-components-ios/commit/fecd9092639c19b8127ec495355aa9e2f5326702) (Andrew Overton)
 
 ---
 
