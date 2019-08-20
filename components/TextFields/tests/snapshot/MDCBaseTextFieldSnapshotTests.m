@@ -21,6 +21,9 @@
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @end
 
+static const NSTimeInterval kTextFieldValidationAnimationDuration = 1.0;
+static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
+
 @implementation MDCBaseTextFieldTestsSnapshotTests
 
 - (void)setUp {
@@ -28,7 +31,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-      self.recordMode = YES;
+  //    self.recordMode = YES;
 }
 
 - (void)tearDown {
@@ -49,6 +52,14 @@
   return view;
 }
 
+- (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
+  MDCBaseTextField *textField = [self createBaseTextField];
+  UIWindow *keyWindow = [[UIApplication sharedApplication]keyWindow];
+  [keyWindow addSubview:textField];
+  return textField;
+}
+
+
 - (MDCBaseTextField *)createBaseTextField {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
   textField.borderStyle = UITextBorderStyleRoundedRect;
@@ -58,6 +69,18 @@
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
+}
+
+- (void)validateTextField:(MDCBaseTextField *)textField {
+  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"death"];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kTextFieldValidationAnimationDuration * NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+                   // We take a snapshot of the textfield so we don't have to remove it from the app host's key window. Removing the textfield from the app host's key window before validation can affect the textfield's editing behavior, which has a large effect on the appearance of the textfield.
+                   UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
+                   [self generateSnapshotAndVerifyForView:textFieldSnapshot];
+                   [expectation fulfill];
+                 });
+  [self waitForExpectations:@[expectation] timeout:kTextFieldValidationAnimationTimeout];
 }
 
 #pragma mark - Tests
@@ -116,78 +139,28 @@
 
 - (void)testEditingTextFieldWithLeadingViewWhileEditing {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextField];
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
   
   // When
   textField.leadingView = [self createBlueSideView];
   textField.leadingViewMode = UITextFieldViewModeWhileEditing;
-
-  [self forceLayoutOfView:textField];
-  BOOL didBecome = [textField becomeFirstResponder];
-
   textField.text = @"Text2";
-  NSLog(@"didBecome: %@",@(didBecome));
-  NSLog(@"isEditing: %@",@(textField.isEditing));
-  NSLog(@"leftView.frame: %@",NSStringFromCGRect(textField.leadingView.frame));
-  NSLog(@"leftView.hidden: %@",@(textField.leadingView.hidden));
+  [textField becomeFirstResponder];
 
-  [self validateTextField:textField withSel:_cmd];
+  [self validateTextField:textField];
 }
-
-- (void)validateTextField:(UIView *)view withSel:(SEL)sel {
-  XCTestExpectation *e = [[XCTestExpectation alloc] initWithDescription:@"death"];
-  
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                 dispatch_get_main_queue(), ^{
-                   //                   NSLog(@"didBecome: %@",@(didBecome));
-                   //                   NSLog(@"isEditing: %@",@(textField.isEditing));
-                   //                   NSLog(@"leftView.frame: %@",NSStringFromCGRect(textField.leadingView.frame));
-                   //                   NSLog(@"leftView.hidden: %@",@(textField.leadingView.hidden));
-                   // Then
-                   //                   [self forceLayoutOfView:textField];
-                   UIView *vieww = [view snapshotViewAfterScreenUpdates:YES];
-                   [self generateSnapshotAndVerifyForView:vieww];
-                   [e fulfill];
-                 });
-  
-  [self waitForExpectations:@[e] timeout:3];
-}
-
 
 - (void)testNonEditingTextFieldWithLeadingViewWhileEditing {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextField];
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
   
   // When
   textField.text = @"Text";
   textField.leadingView = [self createBlueSideView];
   textField.leadingViewMode = UITextFieldViewModeWhileEditing;
-  [self forceLayoutOfView:textField];
+
   // Then
-  [self generateSnapshotAndVerifyForView:textField];
+  [self validateTextField:textField];
 }
-
-
-- (void)drainMainRunLoop {
-  XCTestExpectation *expectation = [self expectationWithDescription:@"draining the main run loop"];
-  
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [expectation fulfill];
-  });
-  
-  [self waitForExpectationsWithTimeout:1 handler:nil];
-}
-
-- (void)forceLayoutOfView:(UIView *)view {
-  UIWindow *window = [[UIApplication sharedApplication]keyWindow];// [[UIWindow alloc] initWithFrame:view.bounds];
-//  NSLog(@"window: %@",window);
-  [window addSubview:view];
-  [window setNeedsLayout];
-  [window layoutIfNeeded];
-  // Allow animation blocks to issue through the main run loop. This may not be sufficient for all
-  // animations, but it appears to correct and deflake the rendering of long placeholder text.
-  [self drainMainRunLoop];
-}
-
 
 @end
