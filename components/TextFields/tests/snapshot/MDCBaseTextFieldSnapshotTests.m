@@ -54,11 +54,10 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
   MDCBaseTextField *textField = [self createBaseTextField];
-  UIWindow *keyWindow = [[UIApplication sharedApplication]keyWindow];
+  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
   [keyWindow addSubview:textField];
   return textField;
 }
-
 
 - (MDCBaseTextField *)createBaseTextField {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
@@ -73,14 +72,18 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
   XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"death"];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kTextFieldValidationAnimationDuration * NSEC_PER_SEC)),
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                               (int64_t)(kTextFieldValidationAnimationDuration * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
-                   // We take a snapshot of the textfield so we don't have to remove it from the app host's key window. Removing the textfield from the app host's key window before validation can affect the textfield's editing behavior, which has a large effect on the appearance of the textfield.
+                   // We take a snapshot of the textfield so we don't have to remove it from the app
+                   // host's key window. Removing the textfield from the app host's key window
+                   // before validation can affect the textfield's editing behavior, which has a
+                   // large effect on the appearance of the textfield.
                    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
                    [self generateSnapshotAndVerifyForView:textFieldSnapshot];
                    [expectation fulfill];
                  });
-  [self waitForExpectations:@[expectation] timeout:kTextFieldValidationAnimationTimeout];
+  [self waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
 }
 
 #pragma mark - Tests
@@ -140,7 +143,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 - (void)testEditingTextFieldWithLeadingViewWhileEditing {
   // Given
   MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
-  
+
   // When
   textField.leadingView = [self createBlueSideView];
   textField.leadingViewMode = UITextFieldViewModeWhileEditing;
@@ -153,7 +156,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 - (void)testNonEditingTextFieldWithLeadingViewWhileEditing {
   // Given
   MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
-  
+
   // When
   textField.text = @"Text";
   textField.leadingView = [self createBlueSideView];
