@@ -451,7 +451,7 @@ func set(cellWidth: CGFloat) {
   cellWidthConstraint.isActive = true
 }
 ```
-<!---</div>-->
+<!--</div>-->
 
 and then in the collection view's `cellForItemAtIndexPath` delegate method we
 set the width:
