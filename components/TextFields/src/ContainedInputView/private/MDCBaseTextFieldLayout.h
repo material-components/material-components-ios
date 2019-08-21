@@ -22,8 +22,10 @@
 
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
+@property(nonatomic, assign) CGRect textRect;
 
 - (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                                         font:(nonnull UIFont *)font
                                      leftView:(nullable UIView *)leftView
                                  leftViewMode:(UITextFieldViewMode)leftViewMode
                                     rightView:(nullable UIView *)rightView
