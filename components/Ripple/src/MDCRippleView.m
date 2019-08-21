@@ -58,7 +58,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)commonMDCRippleViewInit {
   self.userInteractionEnabled = NO;
-  self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
   static UIColor *defaultRippleColor;
@@ -67,9 +66,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
     defaultRippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
   });
   _rippleColor = defaultRippleColor;
-
   _rippleStyle = MDCRippleStyleBounded;
-  self.layer.masksToBounds = YES;
 
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
@@ -79,7 +76,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [self updateRippleStyle];
   self.activeRippleLayer.fillColor = self.activeRippleColor.CGColor;
 }
 
@@ -178,6 +174,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
   rippleLayer.rippleLayerDelegate = self;
+  [self updateRippleStyle];
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     [self.traitCollection performAsCurrentTraitCollection:^{
