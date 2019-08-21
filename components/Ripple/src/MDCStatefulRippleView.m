@@ -172,7 +172,25 @@ static UIColor *RippleSelectedColor(void) {
     [self updateRippleColor];
     [self beginRippleTouchDownAtPoint:_lastTouch animated:_didReceiveTouch completion:nil];
   } else if (!rippleHighlighted) {
-    if (!self.allowsSelection && !self.dragged && !_tapWentOutsideOfBounds) {
+    // In cases where the ripple stops being highlighted, we can only dissolve the ripple if we are
+    // not going into selection (as in that case it will stay and become a selected color and be an
+    // overlay), or when it is already selected and therefore it means it will stay selected and
+    // the ripple should act similarly to going in and out of highlighted and offer a standard
+    // ripple touch feedback on top of the selected overlay.
+    BOOL notAllowingSelectionOrAlreadySelected = !self.allowsSelection || self.selected;
+
+    // We should dissolve the ripple in these cases:
+    // 1. where this is a normal tap going in and out of highlighted indicating a ripple effect,
+    //    same goes to when there is already a selected overlay on top of it.
+    // 2. when also we aren't currently in dragged because in dragged we keep the overlay there and
+    //    when dragged is set to NO it releases all the overlays.
+    // 3. lastly also when the tap isn't currently out of the bounds of the surface, as in that case
+    //    the behavior of the ripple returns to its original state as releasing outside the bounds
+    //    acts as "no action was done".
+    BOOL shouldDissolveRipple =
+        notAllowingSelectionOrAlreadySelected && !self.dragged && !_tapWentOutsideOfBounds;
+
+    if (shouldDissolveRipple) {
       // We dissolve the ripple when highlighted is NO, unless we are going into
       // selection or dragging.
       [self updateRippleColor];

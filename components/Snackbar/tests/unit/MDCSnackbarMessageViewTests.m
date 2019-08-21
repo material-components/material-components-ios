@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialSnackbar.h"
+#import "MaterialTypography.h"
 #import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
 
 #import "../../src/private/MDCSnackbarManagerInternal.h"
@@ -30,6 +31,23 @@
 @end
 @interface MDCSnackbarMessageView (Testing)
 @property(nonatomic, strong) UILabel *label;
+@property(nonatomic, strong) NSMutableArray<MDCButton *> *actionButtons;
+@end
+
+/** Fake MDCChipView for unit testing. */
+@interface MDCSnackbarMessageViewTestsFakeView : MDCSnackbarMessageView
+
+/** Used to set the value of @c traitCollection. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation MDCSnackbarMessageViewTestsFakeView
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 @interface MDCSnackbarMessageViewTests : XCTestCase
@@ -379,6 +397,74 @@
 
   // Then
   XCTAssertLessThan(messageView.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testMessageViewMessageDynamicTypeBehavior {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCSnackbarMessageViewTestsFakeView *messageView =
+        [[MDCSnackbarMessageViewTestsFakeView alloc] init];
+    messageView.mdc_adjustsFontForContentSizeCategory = YES;
+    messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    UIFont *messageFont = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
+    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
+    messageFont = [fontScaler scaledFontWithFont:messageFont];
+    messageFont = [messageFont mdc_scaledFontAtDefaultSize];
+    messageView.messageFont = messageFont;
+    CGFloat originalMessageFontSize = messageView.label.font.pointSize;
+
+    // When
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraExtraLarge;
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    messageView.traitCollectionOverride = traitCollection;
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
+
+    // Then
+    CGFloat actualMessageFontSize = messageView.label.font.pointSize;
+    XCTAssertGreaterThan(actualMessageFontSize, originalMessageFontSize);
+  }
+}
+
+- (void)testMessageViewButtonDynamicTypeBehavior {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCSnackbarMessageViewTestsFakeView *messageView =
+        [[MDCSnackbarMessageViewTestsFakeView alloc] init];
+    messageView.mdc_adjustsFontForContentSizeCategory = YES;
+    messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    MDCButton *button = [[MDCButton alloc] init];
+    [messageView.actionButtons addObject:button];
+    UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
+    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
+    buttonFont = [fontScaler scaledFontWithFont:buttonFont];
+    buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
+    messageView.buttonFont = buttonFont;
+    CGFloat originalButtonFontSize = [button titleFontForState:UIControlStateNormal].pointSize;
+
+    // When
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraExtraLarge;
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    messageView.traitCollectionOverride = traitCollection;
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
+
+    // Then
+    CGFloat actualButtonFontSize = [button titleFontForState:UIControlStateNormal].pointSize;
+    XCTAssertGreaterThan(actualButtonFontSize, originalButtonFontSize);
+  }
+}
+
+- (void)testMessageViewAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+
+  // Then
+  XCTAssertTrue(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 @end

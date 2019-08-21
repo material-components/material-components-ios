@@ -17,6 +17,7 @@ load(
     "mdc_examples_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_extension_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_unit_test_objc_library",
@@ -31,6 +32,17 @@ mdc_public_objc_library(
         "//components/Buttons",
         "//components/Elevation",
         "//components/Typography",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":Banner",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/Elevation",
+        "//components/schemes/Container",
     ],
 )
 
@@ -62,8 +74,12 @@ mdc_snapshot_test(
 
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
+    extra_srcs = glob([
+        "tests/unit/Theming/*.m",
+    ]),
     deps = [
         ":Banner",
+        ":Theming",
         "//components/Buttons",
         "//components/Typography",
     ],

@@ -107,6 +107,14 @@
   XCTAssertEqual(manager.messageElevation, fakeElevation);
 }
 
+- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
+  // Given
+  MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
+
+  // Then
+  XCTAssertTrue(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
 - (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
   // Given
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];

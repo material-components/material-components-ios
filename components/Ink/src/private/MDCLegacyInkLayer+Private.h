@@ -14,14 +14,12 @@
 
 #import "MDCLegacyInkLayer.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @class MDCLegacyInkLayerRipple;
 
 @protocol MDCLegacyInkLayerRippleDelegate <MDCLegacyInkLayerDelegate>
 
 /// Called if MDCLegacyInkLayerRipple did start animating.
-- (void)animationDidStart:(MDCLegacyInkLayerRipple *)layerRipple;
+- (void)animationDidStart:(nonnull MDCLegacyInkLayerRipple *)layerRipple;
 
 /// Called for every MDCLegacyInkLayerRipple if an animation did end.
 - (void)animationDidStop:(nullable CAAnimation *)anim
@@ -54,5 +52,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)exit:(BOOL)animated;
 
 @end
-
-NS_ASSUME_NONNULL_END
