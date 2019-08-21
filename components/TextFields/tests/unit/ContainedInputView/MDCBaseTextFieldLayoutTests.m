@@ -68,11 +68,9 @@
 - (void)testLeftAndRightViewsWithViewModeAlways {
   // Given
   MDCBaseTextFieldLayout *nonEditingLayout =
-      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeAlways
-                                       isEditing:NO];
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeAlways isEditing:NO];
   MDCBaseTextFieldLayout *editingLayout =
-      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeAlways
-                                       isEditing:YES];
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeAlways isEditing:YES];
 
   // Then
   XCTAssertFalse(nonEditingLayout.leftViewHidden);
@@ -84,12 +82,10 @@
 - (void)testLeftAndRightViewsWithViewModeWhileEditing {
   // Given
   MDCBaseTextFieldLayout *nonEditingLayout =
-  [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeWhileEditing
-                                   isEditing:NO];
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeWhileEditing isEditing:NO];
   MDCBaseTextFieldLayout *editingLayout =
-  [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeWhileEditing
-                                   isEditing:YES];
-  
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeWhileEditing isEditing:YES];
+
   // Then
   XCTAssertTrue(nonEditingLayout.leftViewHidden);
   XCTAssertTrue(nonEditingLayout.rightViewHidden);
@@ -100,12 +96,10 @@
 - (void)testLeftAndRightViewsWithViewModeUnlessEditing {
   // Given
   MDCBaseTextFieldLayout *nonEditingLayout =
-  [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeUnlessEditing
-                                   isEditing:NO];
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeUnlessEditing isEditing:NO];
   MDCBaseTextFieldLayout *editingLayout =
-  [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeUnlessEditing
-                                   isEditing:YES];
-  
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeUnlessEditing isEditing:YES];
+
   // Then
   XCTAssertFalse(nonEditingLayout.leftViewHidden);
   XCTAssertFalse(nonEditingLayout.rightViewHidden);
@@ -116,12 +110,10 @@
 - (void)testLeftAndRightViewsWithViewModeNever {
   // Given
   MDCBaseTextFieldLayout *nonEditingLayout =
-  [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeNever
-                                   isEditing:NO];
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeNever isEditing:NO];
   MDCBaseTextFieldLayout *editingLayout =
-  [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeNever
-                                   isEditing:YES];
-  
+      [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeNever isEditing:YES];
+
   // Then
   XCTAssertTrue(nonEditingLayout.leftViewHidden);
   XCTAssertTrue(nonEditingLayout.rightViewHidden);
