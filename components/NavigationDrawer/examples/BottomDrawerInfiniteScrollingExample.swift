@@ -81,15 +81,6 @@ class DrawerContentTableViewController: UITableViewController {
   @objc var colorScheme: MDCSemanticColorScheme!
   weak var drawerVC: MDCBottomDrawerViewController!
 
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width, height: tableView.contentSize.height)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
-
   var supportScrollToTop = true
 
   var numberOfRows = 10
@@ -105,6 +96,13 @@ class DrawerContentTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    self.preferredContentSize = CGSize(
+      width: view.bounds.width,
+      height: tableView.contentSize.height)
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
