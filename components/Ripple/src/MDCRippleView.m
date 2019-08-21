@@ -67,10 +67,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   });
   _rippleColor = defaultRippleColor;
   _rippleStyle = MDCRippleStyleBounded;
-
-  // Use mask layer when the superview has a shadowPath.
-  _maskLayer = [CAShapeLayer layer];
-  _maskLayer.delegate = self;
 }
 
 - (void)layoutSubviews {
@@ -104,6 +100,11 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   self.layer.masksToBounds = (self.rippleStyle == MDCRippleStyleBounded);
   if (self.rippleStyle == MDCRippleStyleBounded) {
     if (self.superview.layer.shadowPath) {
+      if (!self.maskLayer) {
+        // Use mask layer when the superview has a shadowPath.
+        self.maskLayer = [CAShapeLayer layer];
+        self.maskLayer.delegate = self;
+      }
       self.maskLayer.path = self.superview.layer.shadowPath;
       self.layer.mask = _maskLayer;
     }
