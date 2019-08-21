@@ -148,7 +148,7 @@ Now there is ink in our cells!
 In order to have cells self-size based on content and not rely on magic number
 constants to decide how big they should be, we need to follow these steps:
 
-1. Apply autoulayout constraints of our added subviews relative to each other
+1. Apply autolayout constraints of our added subviews relative to each other
 and their superview (the cell's `contentView`). We need to make sure our
 constraints don't define static heights or widths but rather constraints that
 are relative or our cell won't calculate itself based on the dynamically sized
@@ -199,7 +199,7 @@ func set(cellWidth: CGFloat) {
   cellWidthConstraint.isActive = true
 }
 ```
-<!---</div>-->
+<!--</div>-->
 
 and then in the collection view's `cellForItemAtIndexPath` delegate method we
 set the width:
