@@ -41,6 +41,7 @@
   MDCBaseTextFieldLayout *layout =
       [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
                                                        font:font
+                                                      label:[UILabel new]
                                                    leftView:[self createSideView]
                                                leftViewMode:viewMode
                                                   rightView:[self createSideView]
