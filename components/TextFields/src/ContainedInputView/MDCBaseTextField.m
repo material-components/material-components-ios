@@ -127,7 +127,8 @@
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  id<MDCContainerStyleVerticalPositioningReference> positioningReference = [self createPositioningReference];
+  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
+      [self createPositioningReference];
   return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
                                           positioningReference:positioningReference
                                                           font:self.font
@@ -314,15 +315,13 @@
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  CGRect textRect =
-      [self textRectFromLayout:self.layout labelState:self.labelState];
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  CGRect textRect =
-      [self textRectFromLayout:self.layout labelState:self.labelState];
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
@@ -343,7 +342,6 @@
   });
   return font;
 }
-
 
 #pragma mark Label
 
@@ -386,7 +384,6 @@
     return MDCContainedInputViewLabelStateNone;
   }
 }
-
 
 #pragma mark Internationalization
 

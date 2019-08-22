@@ -30,7 +30,9 @@
 @property(nonatomic, assign) CGRect rightViewFrame;
 
 - (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                         positioningReference:(nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                         positioningReference:
+                             (nonnull id<MDCContainerStyleVerticalPositioningReference>)
+                                 positioningReference
                                          font:(nonnull UIFont *)font
                                  floatingFont:(nonnull UIFont *)floatingFont
                                         label:(nonnull UILabel *)label

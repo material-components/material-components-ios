@@ -25,7 +25,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                 positioningReference:(id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                 positioningReference:
+                     (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
@@ -56,7 +57,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                    positioningReference:(id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                    positioningReference:
+                        (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
                                    label:(UILabel *)label
@@ -90,23 +92,23 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGFloat floatingLabelMinY = positioningReference.paddingBetweenTopAndFloatingLabel;
   CGFloat floatingLabelHeight = floatingFont.lineHeight;
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
-  
+
   CGFloat textRectMinYWithFloatingLabel =
-  floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndText;
-  
+      floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndText;
+
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =
-  textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
-  
+      textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
+
   CGFloat textRectMinYNormal = positioningReference.paddingBetweenTopAndNormalLabel;
   CGFloat containerMidY = (CGFloat)0.5 * positioningReference.containerHeight;
-  
+
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
   if (displaysLeftView) {
     leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:containerMidY];
   }
-  
+
   CGFloat rightViewHeight = CGRectGetHeight(rightView.frame);
   CGFloat rightViewMinY = 0;
   if (displaysRightView) {
@@ -121,8 +123,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGFloat floatingLabelMaxX = 0;
 
   if (isRTL) {
-    textRectMinX =
-    displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
     labelMinX = textRectMinX;
     floatingLabelMinX = textRectMinX;
     if (displaysRightView) {
@@ -133,15 +134,14 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     labelMaxX = textRectMaxX;
     floatingLabelMaxX = labelMaxX;
   } else {
-    textRectMinX =
-    displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
     labelMinX = textRectMinX;
     floatingLabelMinX = labelMinX;
     textRectMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
-    : textFieldWidth - kHorizontalPadding;
+                                     : textFieldWidth - kHorizontalPadding;
     labelMaxX = textRectMaxX;
     floatingLabelMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
-    : textFieldWidth - kHorizontalPadding;
+                                          : textFieldWidth - kHorizontalPadding;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
@@ -175,7 +175,6 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                               textRect:textRectNormal
                                                  isRTL:isRTL];
 
-  
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.leftViewHidden = !displaysLeftView;
