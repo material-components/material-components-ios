@@ -19,12 +19,16 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBaseTextFieldLayout.h"
+#import "private/MDCContainedInputViewLabelState.h"
+#import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 
 @interface MDCBaseTextField ()
 
+@property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 
 @end
 
@@ -50,16 +54,32 @@
 
 - (void)commonMDCInputTextFieldInit {
   [self initializeProperties];
+  [self setUpLabel];
 }
 
 #pragma mark View Setup
 
 - (void)initializeProperties {
   [self setUpLayoutDirection];
+  [self setUpLabelBehavior];
+  [self setUpLabelState];
 }
 
 - (void)setUpLayoutDirection {
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+}
+
+- (void)setUpLabelBehavior {
+  self.labelBehavior = MDCTextControlLabelBehaviorFloats;
+}
+
+- (void)setUpLabelState {
+  self.labelState = [self determineCurrentLabelState];
+}
+
+- (void)setUpLabel {
+  self.label = [[UILabel alloc] initWithFrame:self.bounds];
+  [self addSubview:self.label];
 }
 
 #pragma mark UIView Overrides
@@ -86,24 +106,44 @@
  -layoutSubviews in the layout cycle.
  */
 - (void)preLayoutSubviews {
+  self.labelState = [self determineCurrentLabelState];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
 - (void)postLayoutSubviews {
+  [self layOutLabel];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
 
+- (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
+                  labelState:(MDCContainedInputViewLabelState)labelState {
+  CGRect textRect = layout.textRectNormal;
+  if (labelState == MDCContainedInputViewLabelStateFloating) {
+    textRect = layout.textRectFloating;
+  }
+  return textRect;
+}
+
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
+      [self createPositioningReference];
   return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
+                                          positioningReference:positioningReference
                                                           font:self.font
+                                                  floatingFont:self.floatingFont
+                                                         label:self.label
                                                       leftView:self.leftView
                                                   leftViewMode:self.leftViewMode
                                                      rightView:self.rightView
                                                  rightViewMode:self.rightViewMode
                                                          isRTL:self.isRTL
                                                      isEditing:self.isEditing];
+}
+
+- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
+  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
 }
 
 /**
@@ -122,6 +162,16 @@
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
   CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
+}
+
+- (void)layOutLabel {
+  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
+    self.label.font = self.floatingFont;
+    self.label.frame = self.layout.labelFrameFloating;
+  } else {
+    self.label.font = self.normalFont;
+    self.label.frame = self.layout.labelFrameNormal;
+  }
 }
 
 #pragma mark UITextField Accessor Overrides
@@ -265,13 +315,74 @@
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  return [self adjustTextAreaFrame:self.layout.textRect
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
+  return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  return [self adjustTextAreaFrame:self.layout.textRect
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
+  return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
+}
+
+- (UIFont *)normalFont {
+  return self.font ?: [self uiTextFieldDefaultFont];
+}
+
+- (UIFont *)floatingFont {
+  return [self.normalFont fontWithSize:(self.normalFont.pointSize * (CGFloat)0.5)];
+}
+
+- (UIFont *)uiTextFieldDefaultFont {
+  static dispatch_once_t onceToken;
+  static UIFont *font;
+  dispatch_once(&onceToken, ^{
+    font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+  });
+  return font;
+}
+
+#pragma mark Label
+
+- (BOOL)canLabelFloat {
+  return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
+}
+
+- (MDCContainedInputViewLabelState)determineCurrentLabelState {
+  return [self labelStateWithLabel:self.label
+                              text:self.text
+                     canLabelFloat:self.canLabelFloat
+                         isEditing:self.isEditing];
+}
+
+- (MDCContainedInputViewLabelState)labelStateWithLabel:(UILabel *)label
+                                                  text:(NSString *)text
+                                         canLabelFloat:(BOOL)canLabelFloat
+                                             isEditing:(BOOL)isEditing {
+  BOOL hasFloatingLabelText = label.text.length > 0;
+  BOOL hasText = text.length > 0;
+  if (hasFloatingLabelText) {
+    if (canLabelFloat) {
+      if (isEditing) {
+        return MDCContainedInputViewLabelStateFloating;
+      } else {
+        if (hasText) {
+          return MDCContainedInputViewLabelStateFloating;
+        } else {
+          return MDCContainedInputViewLabelStateNormal;
+        }
+      }
+    } else {
+      if (hasText) {
+        return MDCContainedInputViewLabelStateNone;
+      } else {
+        return MDCContainedInputViewLabelStateNormal;
+      }
+    }
+  } else {
+    return MDCContainedInputViewLabelStateNone;
+  }
 }
 
 #pragma mark Internationalization

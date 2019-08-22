@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../../src/ContainedInputView/private/MDCBaseTextFieldLayout.h"
+#import "../../../src/ContainedInputView/private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 #import "MaterialTextFields+ContainedInputView.h"
 
 @interface MDCBaseTextFieldLayout (Testing)
@@ -38,15 +39,19 @@
                                                        isEditing:(BOOL)isEditing {
   CGSize textFieldSize = CGSizeMake(100, 30);
   UIFont *font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-  MDCBaseTextFieldLayout *layout =
-      [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
-                                                       font:font
-                                                   leftView:[self createSideView]
-                                               leftViewMode:viewMode
-                                                  rightView:[self createSideView]
-                                              rightViewMode:viewMode
-                                                      isRTL:NO
-                                                  isEditing:isEditing];
+  UIFont *floatingFont = [font fontWithSize:(font.pointSize * (CGFloat)0.5)];
+  MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc]
+      initWithTextFieldSize:textFieldSize
+       positioningReference:[MDCContainedInputViewVerticalPositioningGuideBase new]
+                       font:font
+               floatingFont:floatingFont
+                      label:[UILabel new]
+                   leftView:[self createSideView]
+               leftViewMode:viewMode
+                  rightView:[self createSideView]
+              rightViewMode:viewMode
+                      isRTL:NO
+                  isEditing:isEditing];
   return layout;
 }
 
