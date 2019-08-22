@@ -8,6 +8,7 @@ This patch release adds performance improvements to Ripple during its initilizat
 
 ### Ripple
 
+* [Add the layer masking in layoutSublayers if there are sublayers present. (#8359)](https://github.com/material-components/material-components-ios/commit/cd4b5f13cbfddee5d4022c55e9dfa02ce0a672b7) (Yarden Eitan)
 * [Performance Improvements on initialization (#8354)](https://github.com/material-components/material-components-ios/commit/352e1a07cec5ebb96f3a8ff95bfc64b9e5f70837) (Yarden Eitan)
 
 ---
