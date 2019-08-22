@@ -1,18 +1,14 @@
-# #develop#
+# 88.0.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This patch release adds performance improvements to Ripple during its initilization and layout phases.
 
 ## Component changes
+
+## Changes
+
+### Ripple
+
+* [Performance Improvements on initialization (#8354)](https://github.com/material-components/material-components-ios/commit/352e1a07cec5ebb96f3a8ff95bfc64b9e5f70837) (Yarden Eitan)
 
 ---
 
