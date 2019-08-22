@@ -85,7 +85,12 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
   [super layoutSublayersOfLayer:layer];
-  for (CALayer *sublayer in self.layer.sublayers) {
+
+  NSArray *sublayers = self.layer.sublayers;
+  if (sublayers.count > 0) {
+    [self updateRippleStyle];
+  }
+  for (CALayer *sublayer in sublayers) {
     sublayer.frame = CGRectStandardize(self.bounds);
     [sublayer setNeedsLayout];
   }
