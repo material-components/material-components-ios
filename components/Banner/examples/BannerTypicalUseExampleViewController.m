@@ -93,9 +93,9 @@ static NSString *const exampleExtraLongText =
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.colorScheme = self.containerScheme.colorScheme;
-    self.typographyScheme = self.containerScheme.typographyScheme;
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _colorScheme = _containerScheme.colorScheme;
+    _typographyScheme = _containerScheme.typographyScheme;
   }
   return self;
 }
