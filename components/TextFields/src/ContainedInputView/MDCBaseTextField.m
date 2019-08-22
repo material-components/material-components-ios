@@ -331,7 +331,7 @@
 }
 
 - (UIFont *)floatingFont {
-  return [self.normalFont fontWithSize:(self.normalFont.pointSize * 0.5)];
+  return [self.normalFont fontWithSize:(self.normalFont.pointSize * (CGFloat)0.5)];
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
