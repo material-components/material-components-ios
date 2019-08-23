@@ -14,4 +14,14 @@
 #import "TestHostMinimalDelegate.h"
 
 @implementation TestHostMinimalDelegate
+
+- (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+  UIViewController *rootViewController = [[UIViewController alloc] init];
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+
 @end
