@@ -40,16 +40,22 @@
   CGSize textFieldSize = CGSizeMake(100, 30);
   UIFont *font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   UIFont *floatingFont = [font fontWithSize:(font.pointSize * (CGFloat)0.5)];
+
+  MDCContainedInputViewVerticalPositioningGuideBase *positioningReference =
+      [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
   MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc]
       initWithTextFieldSize:textFieldSize
-       positioningReference:[MDCContainedInputViewVerticalPositioningGuideBase new]
+       positioningReference:positioningReference
+                       text:@"Text"
                        font:font
                floatingFont:floatingFont
-                      label:[UILabel new]
+                      label:[[UILabel alloc] init]
                    leftView:[self createSideView]
                leftViewMode:viewMode
                   rightView:[self createSideView]
               rightViewMode:viewMode
+                clearButton:[[MDCContainedInputViewClearButton alloc] init]
+            clearButtonMode:viewMode
                       isRTL:NO
                   isEditing:isEditing];
   return layout;
