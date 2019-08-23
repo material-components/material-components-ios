@@ -19,6 +19,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBaseTextFieldLayout.h"
+#import "private/MDCContainedInputViewLabelAnimator.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 
@@ -28,6 +29,7 @@
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
+@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 @end
 
@@ -59,21 +61,10 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
-  [self setUpLayoutDirection];
-  [self setUpLabelBehavior];
-  [self setUpLabelState];
-}
-
-- (void)setUpLayoutDirection {
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
-}
-
-- (void)setUpLabelBehavior {
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
-}
-
-- (void)setUpLabelState {
   self.labelState = [self determineCurrentLabelState];
+  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpLabel {
@@ -91,7 +82,7 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
-  [self setUpLayoutDirection];
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
 #pragma mark Layout
@@ -111,7 +102,12 @@
 }
 
 - (void)postLayoutSubviews {
-  [self layOutLabel];
+  [self.labelAnimator layOutLabel:self.label
+                            state:self.labelState
+                 normalLabelFrame:self.layout.labelFrameNormal
+               floatingLabelFrame:self.layout.labelFrameFloating
+                       normalFont:self.normalFont
+                     floatingFont:self.floatingFont];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
@@ -123,24 +119,6 @@
     textRect = layout.textRectFloating;
   }
   return textRect;
-}
-
-/**
- To understand this method one must understand that the CGRect UITextField returns from @c
- -textRectForBounds: does not actually represent the CGRect of visible text in UITextField. It
- represents the CGRect of an internal "field editing" class, which has a height that is
- significantly taller than the text (@c font.lineHeight) itself. Providing a height in @c
- -textRectForBounds: that differs from the height determined by the superclass results in a text
- field with poor text rendering, sometimes to the point of the text not being visible. By taking the
- desired CGRect of the visible text from the layout object, giving it the height preferred by the
- superclass's implementation of @c -textRectForBounds:, and then ensuring that this new CGRect has
- the same midY as the original CGRect, we are able to take control of the text's positioning.
- */
-- (CGRect)adjustTextAreaFrame:(CGRect)textRect
-    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
-  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
-  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
-  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
@@ -167,20 +145,28 @@
   return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
 }
 
-- (void)layOutLabel {
-  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
-    self.label.font = self.floatingFont;
-    self.label.frame = self.layout.labelFrameFloating;
-  } else {
-    self.label.font = self.normalFont;
-    self.label.frame = self.layout.labelFrameNormal;
-  }
-}
-
 - (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
   CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
   CGRect systemPlaceholderRect = [super clearButtonRectForBounds:bounds];
   return systemPlaceholderRect.size.height;
+}
+
+/**
+ To understand this method one must understand that the CGRect UITextField returns from @c
+ -textRectForBounds: does not actually represent the CGRect of visible text in UITextField. It
+ represents the CGRect of an internal "field editing" class, which has a height that is
+ significantly taller than the text (@c font.lineHeight) itself. Providing a height in @c
+ -textRectForBounds: that differs from the height determined by the superclass results in a text
+ field with poor text rendering, sometimes to the point of the text not being visible. By taking the
+ desired CGRect of the visible text from the layout object, giving it the height preferred by the
+ superclass's implementation of @c -textRectForBounds:, and then ensuring that this new CGRect has
+ the same midY as the original CGRect, we are able to take control of the text's positioning.
+ */
+- (CGRect)adjustTextAreaFrame:(CGRect)textRect
+    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
+  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
+  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
+  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
 #pragma mark UITextField Accessor Overrides
