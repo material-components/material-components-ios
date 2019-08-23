@@ -47,6 +47,10 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 #pragma mark UIView Overrides
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+}
+
 - (void)setTintColor:(UIColor *)tintColor {
   [super setTintColor:tintColor];
   self.clearButtonImageView.tintColor = tintColor;
@@ -184,6 +188,14 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   [ic_clear_path closePath];
 
   return ic_clear_path;
+}
+
+- (CGFloat)imageViewSideLength {
+  return kClearButtonInnerImageViewSideLength;
+}
+
+- (CGFloat)sideLength {
+  return kClearButtonTouchTargetSideLength;
 }
 
 @end

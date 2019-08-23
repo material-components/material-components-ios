@@ -19,15 +19,15 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBaseTextFieldLayout.h"
+#import "private/MDCContainedInputViewClearButton.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
-#import "private/MDCContainedInputViewClearButton.h"
 
 @interface MDCBaseTextField ()
 
+@property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
-@property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 
@@ -122,6 +122,8 @@
 
 - (void)postLayoutSubviews {
   [self layOutLabel];
+  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout labelState:self.labelState];
+  self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
@@ -133,26 +135,6 @@
     textRect = layout.textRectFloating;
   }
   return textRect;
-}
-
-- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
-      [self createPositioningReference];
-  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
-                                          positioningReference:positioningReference
-                                                          font:self.font
-                                                  floatingFont:self.floatingFont
-                                                         label:self.label
-                                                      leftView:self.leftView
-                                                  leftViewMode:self.leftViewMode
-                                                     rightView:self.rightView
-                                                 rightViewMode:self.rightViewMode
-                                                         isRTL:self.isRTL
-                                                     isEditing:self.isEditing];
-}
-
-- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
-  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
 }
 
 /**
@@ -171,6 +153,38 @@
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
   CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
+}
+
+- (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
+                          labelState:(MDCContainedInputViewLabelState)labelState {
+  CGRect clearButtonFrame = layout.clearButtonFrameNormal;
+  if (labelState == MDCContainedInputViewLabelStateFloating) {
+    clearButtonFrame = layout.clearButtonFrameFloating;
+  }
+  return clearButtonFrame;
+}
+
+- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
+      [self createPositioningReference];
+  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
+                                          positioningReference:positioningReference
+                                                          text:self.text
+                                                          font:self.normalFont
+                                                  floatingFont:self.floatingFont
+                                                         label:self.label
+                                                      leftView:self.leftView
+                                                  leftViewMode:self.leftViewMode
+                                                     rightView:self.rightView
+                                                 rightViewMode:self.rightViewMode
+                                                   clearButton:self.clearButton
+                                               clearButtonMode:self.clearButtonMode
+                                                         isRTL:self.isRTL
+                                                     isEditing:self.isEditing];
+}
+
+- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
+  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
 }
 
 - (void)layOutLabel {
