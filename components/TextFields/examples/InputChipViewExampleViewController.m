@@ -104,6 +104,10 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     [self createOutlinedNonWrappingInputChipView],
     [self createLabelWithText:@"Wrapping outlined InputChipView:"],
     [self createOutlinedWrappingInputChipView],
+    [self createLabelWithText:@"Base InputChipView:"],
+    [self createBaseNonWrappingInputChipView],
+    [self createLabelWithText:@"Wrapping base InputChipView:"],
+    [self createBaseWrappingInputChipView],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -186,6 +190,34 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   label.text = text;
   return label;
 }
+
+- (MDCBaseInputChipView *)createBaseNonWrappingInputChipView {
+  MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
+  inputChipView.label.text = @"Base non-wrapping";
+  [inputChipView applyThemeWithScheme:self.containerScheme];
+  inputChipView.chipsWrap = NO;
+  inputChipView.labelBehavior = MDCTextControlLabelBehaviorFloats;
+  inputChipView.chipRowHeight = self.chipHeight;
+  [inputChipView sizeToFit];
+  inputChipView.textField.delegate = self;
+  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
+  inputChipView.layer.borderColor = [UIColor blackColor].CGColor;
+  inputChipView.layer.borderWidth = 1;
+  return inputChipView;
+}
+
+- (MDCBaseInputChipView *)createBaseWrappingInputChipView {
+  MDCBaseInputChipView *inputChipView = [self createBaseNonWrappingInputChipView];
+  inputChipView.label.text = @"Base wrapping";
+  inputChipView.chipsWrap = YES;
+  //  inputChipView.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+  inputChipView.preferredNumberOfVisibleRows = 4;
+  //  inputChipView.preferredContainerHeight = 150;
+  [inputChipView sizeToFit];
+  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
+  return inputChipView;
+}
+
 
 - (MDCOutlinedInputChipView *)createOutlinedNonWrappingInputChipView {
   MDCOutlinedInputChipView *inputChipView = [[MDCOutlinedInputChipView alloc] init];
