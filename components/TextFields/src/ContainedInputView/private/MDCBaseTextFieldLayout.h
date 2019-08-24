@@ -39,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect clearButtonFrameFloating;
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
-@property(nonatomic, assign) CGRect underlineLabelViewFrame;
-@property(nonatomic, strong) MDCContainedInputAssistiveLabelViewLayout *underlineLabelViewLayout;
+@property(nonatomic, assign) CGRect assistiveLabelViewFrame;
+@property(nonatomic, strong) MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;

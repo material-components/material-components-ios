@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #import "MDCContainedInputViewLabelAnimator.h"
-
-//#import "MDCContainedInputView.h"
 #import "MaterialMath.h"
 
 @interface MDCContainedInputViewLabelAnimator ()
@@ -102,20 +100,8 @@
     targetOpacity = 1;
   }
 
-  //  BOOL placeholderShouldHide = NO;
-
-  //  CGRect currentFrame = placeholderLabel.frame;
-  //  CGAffineTransform trasformNeededToMakeTargetLookLikeCurrent =
-  //  [self transformFromRect:targetFrame toRect:currentFrame];
-  //  CATransform3D transformFromValueTransform3D =
-  //  CATransform3DMakeAffineTransform(trasformNeededToMakeTargetLookLikeCurrent);
-  //  CATransform3D transformToValueTransform3D = CATransform3DIdentity;
-
   placeholderLabel.frame = targetFrame;
   placeholderLabel.transform = CGAffineTransformIdentity;
-
-  CABasicAnimation *preexistingTransformAnimation = (CABasicAnimation *)[placeholderLabel.layer
-      animationForKey:self.placeholderLabelTransformAnimationKey];
 
   CGFloat currentOpacity = (CGFloat)placeholderLabel.layer.opacity;
   CGFloat opacityFromValue = currentOpacity;
@@ -126,26 +112,11 @@
   CABasicAnimation *preexistingOpacityAnimation = (CABasicAnimation *)[placeholderLabel.layer
       animationForKey:self.placeholderLabelOpacityAnimationKey];
 
-  //  placeholderLabel.hidden = placeholderShouldHide;
-
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      [placeholderLabel.layer removeAnimationForKey:self.placeholderLabelTransformAnimationKey];
       [placeholderLabel.layer removeAnimationForKey:self.placeholderLabelOpacityAnimationKey];
     }];
-    if (preexistingTransformAnimation) {
-      [placeholderLabel.layer removeAnimationForKey:self.placeholderLabelTransformAnimationKey];
-    } else {
-      //      CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-      //      animation.fromValue = [NSValue valueWithCATransform3D:transformFromValueTransform3D];
-      //      animation.toValue = [NSValue valueWithCATransform3D:transformToValueTransform3D];
-      //      animation.duration = self.animationDuration;
-      //      animation.removedOnCompletion = NO;
-      //      animation.fillMode = kCAFillModeForwards;
-      //      [placeholderLabel.layer addAnimation:animation
-      //      forKey:self.placeholderLabelTransformAnimationKey];
-    }
     if (preexistingOpacityAnimation) {
       [placeholderLabel.layer removeAnimationForKey:self.placeholderLabelOpacityAnimationKey];
     } else if (opacityToValue == 1) {
@@ -175,10 +146,6 @@
 
 - (NSString *)floatingLabelTransformAnimationKey {
   return @"floatingLabelTransformAnimationKey";
-}
-
-- (NSString *)placeholderLabelTransformAnimationKey {
-  return @"placeholderLabelTransformAnimationKey";
 }
 
 - (NSString *)placeholderLabelOpacityAnimationKey {

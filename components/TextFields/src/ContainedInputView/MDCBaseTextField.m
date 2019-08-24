@@ -31,7 +31,7 @@
 
 @property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
-@property(strong, nonatomic) UILabel *placeholderLabel;
+@property(nonatomic, strong) MDCContainedInputAssistiveLabelView *assistiveLabelView;
 
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 
@@ -39,14 +39,10 @@
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
-@property(nonatomic, assign) BOOL isPlaceholderVisible;
+//@property(nonatomic, assign) BOOL isPlaceholderVisible;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
-
-//@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
-
-@property(nonatomic, strong) MDCContainedInputAssistiveLabelView *underlineLabelView;
 
 @end
 
@@ -78,46 +74,22 @@
 
 - (void)commonMDCBaseTextFieldInit {
   [self initializeProperties];
-  [self setUpFloatingLabel];
-  [self setUpPlaceholderLabel];
-  [self setUpLabelAnimator];
+  [self setUpLabel];
+//  [self setUpPlaceholderLabel];
   [self setUpAssistiveLabels];
   [self setUpClearButton];
-  [self setUpContainerStyle];
 }
 
 #pragma mark View Setup
 
 - (void)initializeProperties {
-  [self setUpLabelBehavior];
-  [self setUpLayoutDirection];
-  [self setUpLabelState];
-  [self setUpContainedInputViewState];
-  [self setUpColorSchemesDictionary];
-}
-
-- (void)setUpLabelBehavior {
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
-}
-
-- (void)setUpLayoutDirection {
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
-}
-
-- (void)setUpLabelState {
   self.labelState = [self determineCurrentLabelState];
-}
-
-- (void)setUpContainedInputViewState {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-}
-
-- (void)setUpColorSchemesDictionary {
   self.colorSchemes = [[NSMutableDictionary alloc] init];
-}
-
-- (void)setUpContainerStyle {
   self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
+  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -139,35 +111,30 @@
 
 - (void)setUpAssistiveLabels {
   self.underlineLabelDrawPriority = MDCContainedInputViewAssistiveLabelDrawPriorityTrailing;
-  self.underlineLabelView = [[MDCContainedInputAssistiveLabelView alloc] init];
+  self.assistiveLabelView = [[MDCContainedInputAssistiveLabelView alloc] init];
   CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
   UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  self.underlineLabelView.leftAssistiveLabel.font = underlineFont;
-  self.underlineLabelView.rightAssistiveLabel.font = underlineFont;
-  [self addSubview:self.underlineLabelView];
+  self.assistiveLabelView.leftAssistiveLabel.font = underlineFont;
+  self.assistiveLabelView.rightAssistiveLabel.font = underlineFont;
+  [self addSubview:self.assistiveLabelView];
 }
 
 - (UILabel *)leftAssistiveLabel {
-  return self.underlineLabelView.leftAssistiveLabel;
+  return self.assistiveLabelView.leftAssistiveLabel;
 }
 
 - (UILabel *)rightAssistiveLabel {
-  return self.underlineLabelView.rightAssistiveLabel;
+  return self.assistiveLabelView.rightAssistiveLabel;
 }
 
-- (void)setUpFloatingLabel {
+- (void)setUpLabel {
   self.label = [[UILabel alloc] initWithFrame:self.bounds];
   [self addSubview:self.label];
 }
-
-- (void)setUpPlaceholderLabel {
-  self.placeholderLabel = [[UILabel alloc] initWithFrame:self.bounds];
-  [self addSubview:self.placeholderLabel];
-}
-
-- (void)setUpLabelAnimator {
-  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
-}
+//- (void)setUpPlaceholderLabel {
+//  self.placeholderLabel = [[UILabel alloc] initWithFrame:self.bounds];
+//  [self addSubview:self.placeholderLabel];
+//}
 
 - (void)setUpClearButton {
   self.clearButton = [[MDCContainedInputViewClearButton alloc] init];
@@ -197,7 +164,7 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
-  [self setUpLayoutDirection];
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
 #pragma mark Layout
@@ -205,7 +172,7 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
-  [self updatePlaceholder];
+//  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -214,29 +181,11 @@
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
-- (void)updatePlaceholder {
-  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
-  if (self.attributedPlaceholder.length > 0) {
-    self.placeholderLabel.text = nil;
-    self.placeholderLabel.attributedText = self.attributedPlaceholder;
-    self.placeholderLabel.font = nil;
-  } else if (self.placeholder.length > 0) {
-    self.placeholderLabel.attributedText = nil;
-    self.placeholderLabel.text = self.placeholder;
-    self.placeholderLabel.font = self.normalFont;
-  } else {
-    self.placeholderLabel.text = nil;
-    self.placeholderLabel.attributedText = nil;
-    self.placeholderLabel.font = self.normalFont;
-  }
-  self.placeholderLabel.attributedText = self.attributedPlaceholder;
-}
-
 - (void)postLayoutSubviews {
-  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
-  [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
-                            placeholderFrame:placeholderFrame
-                        isPlaceholderVisible:self.isPlaceholderVisible];
+//  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
+//  [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
+//                            placeholderFrame:placeholderFrame
+//                        isPlaceholderVisible:self.isPlaceholderVisible];
   [self.labelAnimator layOutLabel:self.label
                             state:self.labelState
                  normalLabelFrame:self.layout.labelFrameNormal
@@ -249,8 +198,8 @@
                   withContainedInputViewColorScheming:colorScheming];
   self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout labelState:self.labelState];
   self.clearButton.hidden = self.layout.clearButtonHidden;
-  self.underlineLabelView.frame = self.layout.underlineLabelViewFrame;
-  self.underlineLabelView.layout = self.layout.underlineLabelViewLayout;
+  self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
+  self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
   // TODO: Consider hiding views that don't actually fit in the frame
@@ -337,25 +286,9 @@
 
 #pragma mark UITextField Accessor Overrides
 
-- (void)setPlaceholder:(NSString *)placeholder {
-  self.placeholderLabel.attributedText = nil;
-  self.placeholderLabel.text = [placeholder copy];
-}
-
-- (NSString *)placeholder {
-  return self.placeholderLabel.text;
-}
-
-- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-  [super setAttributedPlaceholder:attributedPlaceholder];
-  //  self.label.text = [attributedPlaceholder string];
-//    self.label.attributedText = [attributedPlaceholder copy];
-  //  NSLog(@"setting attributedPlaceholder is not currently supported.");
-  // TODO: Evaluate if attributedPlaceholder should be supported.
-  //}
-  //
-  //- (NSAttributedString *)attributedPlaceholder {
-  //  return self.label.attributedText;
+-(void)setEnabled:(BOOL)enabled {
+  [super setEnabled:enabled];
+  [self setNeedsLayout];
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
@@ -384,19 +317,40 @@
 
 #pragma mark Custom Accessors
 
+-(NSString *)labelText {
+  return self.label.text;
+}
+
+-(void)setLabelText:(nullable NSString *)labelText {
+  self.label.text = [labelText copy];
+}
+
+-(void)setPlaceholderColor:(UIColor *)placeholderColor {
+  _placeholderColor = placeholderColor;
+  NSArray<NSNumber *> *statesNumbers = @[@(MDCContainedInputViewStateNormal),
+                                         @(MDCContainedInputViewStateFocused),
+                                         @(MDCContainedInputViewStateDisabled)];
+  for (NSNumber *stateNumber in statesNumbers) {
+    id<MDCContainedInputViewColorScheming> colorScheme =
+        [self containedInputViewColorSchemingForState:stateNumber.integerValue];
+    colorScheme.placeholderColor = placeholderColor;
+  }
+  [self setNeedsLayout];
+}
+
 - (UILabel *)leadingAssistiveLabel {
   if ([self isRTL]) {
-    return self.underlineLabelView.rightAssistiveLabel;
+    return self.assistiveLabelView.rightAssistiveLabel;
   } else {
-    return self.underlineLabelView.leftAssistiveLabel;
+    return self.assistiveLabelView.leftAssistiveLabel;
   }
 }
 
 - (UILabel *)trailingAssistiveLabel {
   if ([self isRTL]) {
-    return self.underlineLabelView.leftAssistiveLabel;
+    return self.assistiveLabelView.leftAssistiveLabel;
   } else {
-    return self.underlineLabelView.rightAssistiveLabel;
+    return self.assistiveLabelView.rightAssistiveLabel;
   }
 }
 
@@ -657,7 +611,7 @@
   }
 }
 
-#pragma mark Floating Label
+#pragma mark Label
 
 - (BOOL)canLabelFloat {
   return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
@@ -665,6 +619,7 @@
 
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
+                                   attributedPlaceholder:self.attributedPlaceholder
                                               labelState:self.labelState
                                                     text:self.text
                                                isEditing:self.isEditing];
@@ -678,10 +633,13 @@
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
+                            attributedPlaceholder:(NSAttributedString *)attributedPlaceholder
                                        labelState:(MDCContainedInputViewLabelState)labelState
                                              text:(NSString *)text
                                         isEditing:(BOOL)isEditing {
-  BOOL hasPlaceholder = placeholder.length > 0;
+  BOOL hasRegularPlaceholder = placeholder.length > 0;
+  BOOL hasAttributedPlaceholder = attributedPlaceholder.length > 0;
+  BOOL hasPlaceholder = hasRegularPlaceholder || hasAttributedPlaceholder;
   BOOL hasText = text.length > 0;
 
   if (hasPlaceholder) {
@@ -749,7 +707,7 @@
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
-  self.placeholderLabel.textColor = colorScheming.placeholderColor;
+//  self.placeholderLabel.textColor = colorScheming.placeholderColor;
   self.clearButton.tintColor = colorScheming.clearButtonTintColor;
 }
 

@@ -15,7 +15,6 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainedInputViewStylePathDrawingUtils.h"
 #import "MDCContainedInputViewVerticalPositioningGuideBase.h"
 
 static const CGFloat kMinPaddingBetweenTopAndFloatingLabel = (CGFloat)6.0;
@@ -28,6 +27,16 @@ static const CGFloat kMinPaddingAroundAssistiveLabels = (CGFloat)3.0;
 static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
 
 @interface MDCContainedInputViewVerticalPositioningGuideBase ()
+
+@property(nonatomic, assign) CGFloat floatingLabelHeight;
+@property(nonatomic, assign) CGFloat normalFontLineHeight;
+@property(nonatomic, assign) CGFloat textRowHeight;
+@property(nonatomic, assign) CGFloat numberOfTextRows;
+@property(nonatomic, assign) CGFloat density;
+@property(nonatomic, assign) CGFloat preferredContainerHeight;
+@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
+@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
+
 @end
 
 @implementation MDCContainedInputViewVerticalPositioningGuideBase

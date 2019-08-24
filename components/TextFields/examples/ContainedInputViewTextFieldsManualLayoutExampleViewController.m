@@ -227,7 +227,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.labelBehavior = MDCTextControlLabelBehaviorFloats;
   textField.placeholder = @"555-555-5555";
-  textField.label.text = @"Phone number";
+  textField.labelText = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingAssistiveLabel.numberOfLines = 0;
   textField.leadingAssistiveLabel.text = @"This is a string.";
@@ -266,7 +266,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   //  textField.placeholder = @"This is a placeholder";
   //  textField.label.text = @"This is a floating label";
   textField.placeholder = @"555-555-5555";
-  textField.label.text = @"Phone number";
+  textField.labelText = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
 
@@ -282,7 +282,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (MDCBaseTextField *)createDefaultInputTextField {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] init];
   textField.placeholder = @"This is a placeholder";
-  textField.label.text = @"This is a floating label";
+  textField.labelText = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   return textField;
 }

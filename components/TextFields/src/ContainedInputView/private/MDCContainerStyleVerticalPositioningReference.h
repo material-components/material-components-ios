@@ -17,8 +17,7 @@
 
 /**
  Objects conforming to this protocol provide information about the vertical positions of views. This
- helps achieve the variations in floating label position across the filled and outlined styles as
- well as the general density of the views.
+ helps achieve the variations in floating label and text rect position across the filled and outlined styles, and also allows different densities to be possible.
  */
 @protocol MDCContainerStyleVerticalPositioningReference <NSObject>
 
