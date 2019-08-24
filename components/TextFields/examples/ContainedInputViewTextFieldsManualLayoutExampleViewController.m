@@ -41,6 +41,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 @property(strong, nonatomic) NSArray *scrollViewSubviews;
 
 @property(nonatomic, assign) BOOL isErrored;
+@property(nonatomic, assign) BOOL isDisabled;
 
 @end
 
@@ -93,6 +94,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
     [self createToggleErrorButton],
+    [self createDisabledButton],
     [self createFirstResponderButton],
 //    [self createLabelWithText:@"Default MDCFilledTextField:"],
 //    [self createDefaultFilledTextField],
@@ -106,8 +108,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 //    [self createDefaultInputTextField],
 //    [self createLabelWithText:@"Material MDCBaseTextField:"],
 //    [self createMaterialInputTextField],
-//    [self createLabelWithText:@"UITextField:"],
-//    [self createUiTextField],
+    [self createLabelWithText:@"UITextField:"],
+    [self createUiTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -164,6 +166,17 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     }
   }
   self.scrollView.contentSize = CGSizeMake(maxX, maxY + kDefaultHorizontalPadding);
+}
+
+- (MDCButton *)createDisabledButton {
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitle:@"Toggle disabled" forState:UIControlStateNormal];
+  [button addTarget:self
+                action:@selector(disableButtonTapped:)
+      forControlEvents:UIControlEventTouchUpInside];
+  [button applyContainedThemeWithScheme:self.containerScheme];
+  [button sizeToFit];
+  return button;
 }
 
 - (MDCButton *)createFirstResponderButton {
@@ -223,24 +236,15 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCFilledTextField *)createMaterialFilledTextField {
   MDCFilledTextField *textField = [self createDefaultFilledTextField];
-  textField.attributedPlaceholder = [self createAttributedPlaceholder];
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
 
-- (NSAttributedString *)createAttributedPlaceholder {
-  NSDictionary<NSAttributedStringKey,id> *attributes =
-  @{
-    NSForegroundColorAttributeName : [UIColor redColor],
-    };
-  NSAttributedString *attributed =
-      [[NSAttributedString alloc] initWithString:@"phone number" attributes:attributes];
-  return attributed;
-}
-
 - (UITextField *)createUiTextField {
   UITextField *textField = [[UITextField alloc] init];
+  textField.backgroundColor = [UIColor clearColor];
   textField.borderStyle = UITextBorderStyleRoundedRect;
+  textField.textColor = [UIColor blackColor];
   return textField;
 }
 
@@ -382,6 +386,15 @@ static const NSUInteger kDefaultVerticalPadding = 20;
         [textField resignFirstResponder];
       }];
 }
+
+- (void)disableButtonTapped:(UIButton *)button {
+  self.isDisabled = !self.isDisabled;
+  [self.allTextFields enumerateObjectsUsingBlock:^(UITextField * _Nonnull textField, NSUInteger idx, BOOL * _Nonnull stop) {
+    textField.enabled = !self.isDisabled;
+  }];
+  [self updateButtonThemes];
+}
+
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {
   self.isErrored = !self.isErrored;
