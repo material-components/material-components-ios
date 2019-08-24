@@ -45,19 +45,9 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
                                  textRowHeight:(CGFloat)textRowHeight
                               numberOfTextRows:(CGFloat)numberOfTextRows
                                        density:(CGFloat)density
-                      preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                    labelState:(MDCContainedInputViewLabelState)labelState
-                                 labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight {
   self = [super init];
   if (self) {
-    self.floatingLabelHeight = floatingLabelHeight;
-    self.normalFontLineHeight = normalFontLineHeight;
-    self.textRowHeight = textRowHeight;
-    self.numberOfTextRows = numberOfTextRows;
-    self.density = density;
-    self.preferredContainerHeight = preferredContainerHeight;
-    self.labelState = labelState;
-    self.labelBehavior = labelBehavior;
     [self updatePaddingValuesWithFoatingFontLineHeight:floatingLabelHeight
                                   normalFontLineHeight:normalFontLineHeight
                                          textRowHeight:textRowHeight

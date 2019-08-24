@@ -22,6 +22,7 @@
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
+static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 @implementation MDCContainedInputViewColorSchemeOutlined
 @end
@@ -33,6 +34,15 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 @end
 
 @implementation MDCContainedInputViewStyleOutlined
+@synthesize animationDuration = _animationDuration;
+
+-(void)setAnimationDuration:(NSTimeInterval)animationDuration {
+  _animationDuration = animationDuration;
+}
+
+-(NSTimeInterval)animationDuration {
+  return _animationDuration;
+}
 
 - (instancetype)init {
   self = [super init];
@@ -93,6 +103,18 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
     self.outlinedSublayer.strokeColor = outlinedScheme.outlineColor.CGColor;
   }
 }
+
+- (UIFont *)floatingFontWithFont:(UIFont *)font {
+  CGFloat scaleFactor = kFilledFloatingLabelScaleFactor;
+  CGFloat floatingFontSize = font.pointSize * scaleFactor;
+  return [font fontWithSize:floatingFontSize];
+}
+
+
+- (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
+  [self.outlinedSublayer removeFromSuperlayer];
+}
+
 
 //- (BOOL)isPlaceholderFloatingWithFrame:(CGRect)frame {
 //  return CGRectGetMinY(frame) <= 0 && CGRectGetMaxY(frame) >= 0;
@@ -186,24 +208,14 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
   return defaultLineWidth;
 }
 
-- (id<MDCContainerStyleVerticalPositioningReference>)
-    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingFontLineHeight
-                              normalFontLineHeight:(CGFloat)normalFontLineHeight
-                                     textRowHeight:(CGFloat)textRowHeight
-                                  numberOfTextRows:(CGFloat)numberOfTextRows
-                                           density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                        labelState:(MDCContainedInputViewLabelState)labelState
-                                     labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+- (id<MDCContainerStyleVerticalPositioningReference>)positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight normalFontLineHeight:(CGFloat)normalFontLineHeight textRowHeight:(CGFloat)textRowHeight numberOfTextRows:(CGFloat)numberOfTextRows density:(CGFloat)density preferredContainerHeight:(CGFloat)preferredContainerHeight {
   return [[MDCContainedInputViewVerticalPositioningGuideOutlined alloc]
-      initWithFloatingFontLineHeight:floatingFontLineHeight
+      initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight
                     numberOfTextRows:numberOfTextRows
                              density:density
-            preferredContainerHeight:preferredContainerHeight
-                          labelState:labelState
-                       labelBehavior:labelBehavior];
+            preferredContainerHeight:preferredContainerHeight];
 }
 
 @end

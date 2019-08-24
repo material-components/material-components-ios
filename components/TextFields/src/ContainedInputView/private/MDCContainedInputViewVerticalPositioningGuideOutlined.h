@@ -21,5 +21,13 @@
 #import "MDCTextControlLabelBehavior.h"
 
 @interface MDCContainedInputViewVerticalPositioningGuideOutlined
-    : MDCContainedInputViewVerticalPositioningGuideBase
+    : NSObject <MDCContainerStyleVerticalPositioningReference>
+
+- (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                          normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                 textRowHeight:(CGFloat)textRowHeight
+                              numberOfTextRows:(CGFloat)numberOfTextRows
+                                       density:(CGFloat)density
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight;
+
 @end

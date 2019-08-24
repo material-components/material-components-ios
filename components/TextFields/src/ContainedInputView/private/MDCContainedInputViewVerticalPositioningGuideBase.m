@@ -27,16 +27,6 @@ static const CGFloat kMinPaddingAroundAssistiveLabels = (CGFloat)3.0;
 static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
 
 @interface MDCContainedInputViewVerticalPositioningGuideBase ()
-
-@property(nonatomic, assign) CGFloat floatingLabelHeight;
-@property(nonatomic, assign) CGFloat normalFontLineHeight;
-@property(nonatomic, assign) CGFloat textRowHeight;
-@property(nonatomic, assign) CGFloat numberOfTextRows;
-@property(nonatomic, assign) CGFloat density;
-@property(nonatomic, assign) CGFloat preferredContainerHeight;
-@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
-@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
-
 @end
 
 @implementation MDCContainedInputViewVerticalPositioningGuideBase
@@ -53,19 +43,9 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
                                  textRowHeight:(CGFloat)textRowHeight
                               numberOfTextRows:(CGFloat)numberOfTextRows
                                        density:(CGFloat)density
-                      preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                    labelState:(MDCContainedInputViewLabelState)labelState
-                                 labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight {
   self = [super init];
   if (self) {
-    self.floatingLabelHeight = floatingLabelHeight;
-    self.normalFontLineHeight = normalFontLineHeight;
-    self.textRowHeight = textRowHeight;
-    self.numberOfTextRows = numberOfTextRows;
-    self.density = density;
-    self.preferredContainerHeight = preferredContainerHeight;
-    self.labelState = labelState;
-    self.labelBehavior = labelBehavior;
     [self updatePaddingValuesWithFoatingFontLineHeight:floatingLabelHeight
                                   normalFontLineHeight:normalFontLineHeight
                                          textRowHeight:textRowHeight
@@ -144,22 +124,24 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
   if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
     _containerHeight = preferredContainerHeight;
   }
-
-  CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
-  if (isMultiline) {
-    CGFloat heightWithOneRow =
-        [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                      textRowHeight:textRowHeight
-                                   numberOfTextRows:1
-                  paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
-                 paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
-                        paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
-    CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
-    _paddingBetweenTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
-  } else {
-    CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeight;
-    _paddingBetweenTopAndNormalLabel = halfOfContainerHeight - halfOfNormalFontLineHeight;
-  }
+  
+  _paddingBetweenTopAndNormalLabel = _paddingBetweenTopAndFloatingLabel + floatingLabelHeight + _paddingBetweenFloatingLabelAndText;
+//
+//  CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
+//  if (isMultiline) {
+//    CGFloat heightWithOneRow =
+//        [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+//                                      textRowHeight:textRowHeight
+//                                   numberOfTextRows:1
+//                  paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+//                 paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+//                        paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+//    CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
+//    _paddingBetweenTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
+//  } else {
+//    CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeight;
+//    _paddingBetweenTopAndNormalLabel = halfOfContainerHeight - halfOfNormalFontLineHeight;
+//  }
 }
 
 - (CGFloat)standardizeDensity:(CGFloat)density {

@@ -24,7 +24,6 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 static const CGFloat kFilledContainerStyleUnderlineWidthThin = (CGFloat)1.0;
 static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
 
-static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 @implementation MDCContainedInputViewColorSchemeFilled
@@ -44,6 +43,15 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 @end
 
 @implementation MDCContainedInputViewStyleFilled
+@synthesize animationDuration = _animationDuration;
+
+-(void)setAnimationDuration:(NSTimeInterval)animationDuration {
+  _animationDuration = animationDuration;
+}
+
+-(NSTimeInterval)animationDuration {
+  return _animationDuration;
+}
 
 - (instancetype)init {
   self = [super init];
@@ -273,7 +281,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (CABasicAnimation *)basicAnimationWithKeyPath:(NSString *)keyPath {
   CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
-  animation.duration = kLayerAnimationDuration;
+  animation.duration = self.animationDuration;
   animation.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   animation.repeatCount = 0;
@@ -451,18 +459,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                      textRowHeight:(CGFloat)textRowHeight
                                   numberOfTextRows:(CGFloat)numberOfTextRows
                                            density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                        labelState:(MDCContainedInputViewLabelState)labelState
-                                     labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
   return [[MDCContainedInputViewVerticalPositioningGuideFilled alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight
                     numberOfTextRows:numberOfTextRows
                              density:density
-            preferredContainerHeight:preferredContainerHeight
-                          labelState:labelState
-                       labelBehavior:labelBehavior];
+            preferredContainerHeight:preferredContainerHeight];
 }
 
 - (UIFont *)floatingFontWithFont:(UIFont *)font {

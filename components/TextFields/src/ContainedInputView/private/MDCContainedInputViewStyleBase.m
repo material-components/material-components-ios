@@ -23,6 +23,15 @@
 static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
 
 @implementation MDCContainedInputViewStyleBase
+@synthesize animationDuration = _animationDuration;
+
+-(void)setAnimationDuration:(NSTimeInterval)animationDuration {
+  _animationDuration = animationDuration;
+}
+
+-(NSTimeInterval)animationDuration {
+  return _animationDuration;
+}
 
 - (UIFont *)floatingFontWithFont:(UIFont *)font {
   CGFloat scaleFactor = kBaseFloatingLabelScaleFactor;
@@ -71,18 +80,14 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
                                      textRowHeight:(CGFloat)textRowHeight
                                   numberOfTextRows:(CGFloat)numberOfTextRows
                                            density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                        labelState:(MDCContainedInputViewLabelState)labelState
-                                     labelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
   return [[MDCContainedInputViewVerticalPositioningGuideBase alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight
                     numberOfTextRows:numberOfTextRows
                              density:density
-            preferredContainerHeight:preferredContainerHeight
-                          labelState:labelState
-                       labelBehavior:labelBehavior];
+            preferredContainerHeight:preferredContainerHeight];
 }
 
 @end

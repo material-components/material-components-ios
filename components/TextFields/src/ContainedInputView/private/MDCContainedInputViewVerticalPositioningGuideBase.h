@@ -33,8 +33,6 @@
                                  textRowHeight:(CGFloat)textRowHeight
                               numberOfTextRows:(CGFloat)numberOfTextRows
                                        density:(CGFloat)density
-                      preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                    labelState:(MDCContainedInputViewLabelState)labelState
-                                 labelBehavior:(MDCTextControlLabelBehavior)labelBehavior;
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
 @end

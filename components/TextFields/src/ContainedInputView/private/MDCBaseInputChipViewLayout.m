@@ -133,9 +133,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                        textRowHeight:chipRowHeight
                                                     numberOfTextRows:numberOfVisibleRows
                                                              density:0
-                                            preferredContainerHeight:preferredContainerHeight
-                                                          labelState:labelState
-                                                       labelBehavior:labelBehavior];
+                                            preferredContainerHeight:preferredContainerHeight];
 
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;

@@ -191,6 +191,11 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @protocol MDCContainedInputViewStyle <NSObject>
 
 /**
+ Animation duration.
+ */
+@property (nonatomic, assign) NSTimeInterval animationDuration;
+
+/**
  This method provides a default object conforming to MDCContainedInputViewColorScheming.
  */
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
@@ -223,8 +228,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
                                      textRowHeight:(CGFloat)textRowHeight
                                   numberOfTextRows:(CGFloat)numberOfTextRows
                                            density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                        labelState:(MDCContainedInputViewLabelState)labelState
-                                     labelBehavior:(MDCTextControlLabelBehavior)labelBehavior;
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
 @end

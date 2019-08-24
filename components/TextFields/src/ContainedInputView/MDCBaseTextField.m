@@ -39,7 +39,7 @@
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
-//@property(nonatomic, assign) BOOL isPlaceholderVisible;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
@@ -80,6 +80,7 @@
   [self setUpClearButton];
 }
 
+
 #pragma mark View Setup
 
 - (void)initializeProperties {
@@ -88,9 +89,11 @@
   self.labelState = [self determineCurrentLabelState];
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.colorSchemes = [[NSMutableDictionary alloc] init];
-  self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
   self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
+  self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
+  self.animationDuration = 0.5;
 }
+
 
 - (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   id<MDCContainedInputViewColorScheming> normalColorScheme =
@@ -273,9 +276,7 @@
                                                           textRowHeight:self.normalFont.lineHeight
                                                        numberOfTextRows:1
                                                                 density:0
-                                               preferredContainerHeight:self.preferredContainerHeight
-                                                             labelState:self.labelState
-                                                          labelBehavior:self.labelBehavior];
+                                               preferredContainerHeight:self.preferredContainerHeight];
 
 }
 - (CGFloat)normalizedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
@@ -327,6 +328,12 @@
 }
 
 #pragma mark Custom Accessors
+
+-(void)setAnimationDuration:(NSTimeInterval)animationDuration {
+  _animationDuration = animationDuration;
+  self.labelAnimator.animationDuration = animationDuration;
+  self.containerStyle.animationDuration = animationDuration;
+}
 
 -(NSString *)labelText {
   return self.label.text;
@@ -469,6 +476,7 @@
     [oldStyle removeStyleFrom:self];
   }
   _containerStyle = containerStyle;
+  _containerStyle.animationDuration = self.animationDuration;
   [self setUpStateDependentColorSchemesForStyle:_containerStyle];
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];

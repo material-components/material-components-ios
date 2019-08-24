@@ -99,9 +99,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                        textRowHeight:font.lineHeight
                                                     numberOfTextRows:preferredNumberOfVisibleRows
                                                              density:0
-                                            preferredContainerHeight:preferredContainerHeight
-                                                          labelState:labelState
-                                                       labelBehavior:labelBehavior];
+                                            preferredContainerHeight:preferredContainerHeight];
 
   CGFloat globalTextMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalTextMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;

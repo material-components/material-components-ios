@@ -34,6 +34,24 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
 @synthesize containerHeight = _containerHeight;
 @synthesize paddingAroundAssistiveLabels = _paddingAroundAssistiveLabels;
 
+- (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                          normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                 textRowHeight:(CGFloat)textRowHeight
+                              numberOfTextRows:(CGFloat)numberOfTextRows
+                                       density:(CGFloat)density
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  self = [super init];
+  if (self) {
+    [self updatePaddingValuesWithFoatingFontLineHeight:floatingLabelHeight
+                                  normalFontLineHeight:normalFontLineHeight
+                                         textRowHeight:textRowHeight
+                                      numberOfTextRows:numberOfTextRows
+                                               density:density
+                              preferredContainerHeight:preferredContainerHeight];
+  }
+  return self;
+}
+
 - (void)updatePaddingValuesWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                                 normalFontLineHeight:(CGFloat)normalFontLineHeight
                                        textRowHeight:(CGFloat)textRowHeight
