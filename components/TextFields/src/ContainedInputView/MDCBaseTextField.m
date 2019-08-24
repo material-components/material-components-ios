@@ -91,7 +91,7 @@
   self.colorSchemes = [[NSMutableDictionary alloc] init];
   self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
   self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
-  self.animationDuration = 0.5;
+  self.animationDuration = 0.15;
 }
 
 
