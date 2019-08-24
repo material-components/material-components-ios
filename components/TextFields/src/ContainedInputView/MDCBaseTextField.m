@@ -244,7 +244,7 @@
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
-                        containerStyle:self.containerStyle
+                  positioningReference:[self createPositioningReference]
                                   text:self.text
                            placeholder:self.placeholder
                                   font:self.normalFont
@@ -267,6 +267,17 @@
                              isEditing:self.isEditing];
 }
 
+- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
+  return [self.containerStyle positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
+                                                   normalFontLineHeight:self.normalFont.lineHeight
+                                                          textRowHeight:self.normalFont.lineHeight
+                                                       numberOfTextRows:1
+                                                                density:0
+                                               preferredContainerHeight:self.preferredContainerHeight
+                                                             labelState:self.labelState
+                                                          labelBehavior:self.labelBehavior];
+
+}
 - (CGFloat)normalizedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
   CGFloat value = customPriority;
   if (value < 0) {
