@@ -42,7 +42,7 @@
 - (void)tearDown {
   if (self.bottomSheet.presentingViewController) {
     XCTestExpectation *expectation =
-        [[XCTestExpectation alloc] initWithDescription:@"Alert controller is dismissed"];
+        [[XCTestExpectation alloc] initWithDescription:@"Bottom sheet is dismissed"];
     [self.bottomSheet dismissViewControllerAnimated:NO
                                          completion:^{
                                            [expectation fulfill];
@@ -88,7 +88,7 @@
   [self generateAndVerifySnapshot];
 }
 
-- (void)testBottomSheetWithDefaultPresentationStyle {
+- (void)testBottomSheetWithDefaultPresentationStyleOniOS13 {
   // When
   UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
   UIViewController *currentViewController = window.rootViewController;
