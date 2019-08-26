@@ -20,4 +20,3 @@
 @property(nonatomic, readonly) CGFloat sideLength;
 @property(nonatomic, readonly) CGFloat imageViewSideLength;
 @end
-

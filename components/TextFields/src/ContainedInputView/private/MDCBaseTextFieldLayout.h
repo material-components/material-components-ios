@@ -38,34 +38,36 @@
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect assistiveLabelViewFrame;
-@property(nonatomic, strong, nonnull) MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
+@property(nonatomic, strong, nonnull)
+    MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
-- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                 positioningReference:
-                     (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
-                                 text:(nullable NSString *)text
-                          placeholder:(nullable NSString *)placeholder
-                                 font:(nonnull UIFont *)font
-                         floatingFont:(nonnull UIFont *)floatingFont
-                                label:(nonnull UILabel *)label
-                           labelState:(MDCContainedInputViewLabelState)labelState
-                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
-                             leftView:(nullable UIView *)leftView
-                         leftViewMode:(UITextFieldViewMode)leftViewMode
-                            rightView:(nullable UIView *)rightView
-                        rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(nonnull MDCContainedInputViewClearButton *)clearButton
-                      clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                   leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
-                  rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
-           underlineLabelDrawPriority:
-               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
-     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-             preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                isRTL:(BOOL)isRTL
-                            isEditing:(BOOL)isEditing;
+- (nonnull instancetype)
+               initWithTextFieldSize:(CGSize)textFieldSize
+                positioningReference:
+                    (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                                text:(nullable NSString *)text
+                         placeholder:(nullable NSString *)placeholder
+                                font:(nonnull UIFont *)font
+                        floatingFont:(nonnull UIFont *)floatingFont
+                               label:(nonnull UILabel *)label
+                          labelState:(MDCContainedInputViewLabelState)labelState
+                       labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
+                            leftView:(nullable UIView *)leftView
+                        leftViewMode:(UITextFieldViewMode)leftViewMode
+                           rightView:(nullable UIView *)rightView
+                       rightViewMode:(UITextFieldViewMode)rightViewMode
+                         clearButton:(nonnull MDCContainedInputViewClearButton *)clearButton
+                     clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                  leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+                 rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+          underlineLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+    customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
+            preferredContainerHeight:(CGFloat)preferredContainerHeight
+                               isRTL:(BOOL)isRTL
+                           isEditing:(BOOL)isEditing;
 
 @end
