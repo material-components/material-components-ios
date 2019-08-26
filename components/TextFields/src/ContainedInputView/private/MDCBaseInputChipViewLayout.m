@@ -18,6 +18,8 @@
 #import "MDCBaseInputChipView.h"
 #import "MaterialMath.h"
 
+#import "MaterialChips.h"
+
 static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
 
 static const CGFloat kLeadingMargin = (CGFloat)8.0;

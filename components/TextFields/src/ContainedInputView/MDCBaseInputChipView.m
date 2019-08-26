@@ -20,6 +20,8 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <QuartzCore/QuartzCore.h>
 
+//TODO: Refactor so it doesn't depend on chips
+#import "MaterialChips.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 #import "private/MDCContainedInputView.h"

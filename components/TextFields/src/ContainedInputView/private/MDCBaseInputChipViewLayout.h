@@ -15,7 +15,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-#import "MaterialChips.h"
 
 @interface MDCBaseInputChipViewLayout : NSObject
 @property(nonatomic, assign) CGFloat globalChipRowMinX;
