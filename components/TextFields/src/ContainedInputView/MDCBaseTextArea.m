@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCBaseTextArea.h"
-#import "MDCBaseTextAreaLayout.h"
+#import "private/MDCBaseTextAreaLayout.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <MDFInternationalization/MDFInternationalization.h>

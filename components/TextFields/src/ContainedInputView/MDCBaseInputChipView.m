@@ -13,16 +13,16 @@
 // limitations under the License.
 
 #import "MDCBaseInputChipView.h"
-#import "MDCBaseInputChipView+MDCContainedInputView.h"
-#import "MDCBaseInputChipViewLayout.h"
+#import "private/MDCBaseInputChipView+MDCContainedInputView.h"
+#import "private/MDCBaseInputChipViewLayout.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "MDCContainedInputView.h"
-#import "MDCContainedInputViewLabelAnimator.h"
-#import "MDCContainedInputViewStyleBase.h"
+#import "private/MDCContainedInputView.h"
+#import "private/MDCContainedInputViewLabelAnimator.h"
+#import "private/MDCContainedInputViewStyleBase.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 

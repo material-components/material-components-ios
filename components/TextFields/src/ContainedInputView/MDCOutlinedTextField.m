@@ -16,9 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCBaseTextField+ContainedInputView.h"
-#import "MDCContainedInputView.h"
-#import "MDCContainedInputViewStyleOutlined.h"
+#import "private/MDCBaseTextField+ContainedInputView.h"
+#import "private/MDCContainedInputView.h"
+#import "private/MDCContainedInputViewStyleOutlined.h"
 
 @interface MDCOutlinedTextField ()
 @end
