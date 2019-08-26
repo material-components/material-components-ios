@@ -18,6 +18,7 @@
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+  // Set up the rootViewController to support tests that require root level objects.
   UIViewController *rootViewController = [[UIViewController alloc] init];
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
