@@ -21,8 +21,6 @@
 
 @protocol MDCContainedInputViewStyle;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCBaseTextFieldLayout : NSObject
 
 @property(nonatomic, assign) BOOL leftViewHidden;
@@ -40,29 +38,29 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect assistiveLabelViewFrame;
-@property(nonatomic, strong) MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
+@property(nonatomic, strong, nonnull) MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
-- (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                  positioningReference:
-                     (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
-                                 text:(NSString *)text
-                          placeholder:(NSString *)placeholder
-                                 font:(UIFont *)font
-                         floatingFont:(UIFont *)floatingFont
-                                label:(UILabel *)label
+                     (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                                 text:(nullable NSString *)text
+                          placeholder:(nullable NSString *)placeholder
+                                 font:(nonnull UIFont *)font
+                         floatingFont:(nonnull UIFont *)floatingFont
+                                label:(nonnull UILabel *)label
                            labelState:(MDCContainedInputViewLabelState)labelState
                         labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
-                             leftView:(UIView *)leftView
+                             leftView:(nullable UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
-                            rightView:(UIView *)rightView
+                            rightView:(nullable UIView *)rightView
                         rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(MDCContainedInputViewClearButton *)clearButton
+                          clearButton:(nonnull MDCContainedInputViewClearButton *)clearButton
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
-                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
+                   leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+                  rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
                (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
      customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
@@ -71,5 +69,3 @@ NS_ASSUME_NONNULL_BEGIN
                             isEditing:(BOOL)isEditing;
 
 @end
-
-NS_ASSUME_NONNULL_END

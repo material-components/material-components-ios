@@ -16,8 +16,6 @@
 
 #import "MDCTextControlLabelBehavior.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCBaseInputChipView : UIControl
 
 /**
@@ -83,14 +81,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nonnull UIColor *)textColorForState:(UIControlState)state;
 
-@property(strong, nonatomic, readonly) UITextField *textField;
+@property(strong, nonatomic, readonly, nonnull) UITextField *textField;
 @property(nonatomic, assign) BOOL chipsWrap;
 @property(nonatomic, assign) CGFloat chipRowHeight;
 @property(nonatomic, assign) CGFloat chipRowSpacing;
-- (void)addChip:(UIView *)chip;
+- (void)addChip:(nullable UIView *)chip;
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
 @property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
 
 @end
-
-NS_ASSUME_NONNULL_END

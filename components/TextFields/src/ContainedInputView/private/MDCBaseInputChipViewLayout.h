@@ -17,11 +17,6 @@
 #import "MDCContainedInputView.h"
 #import "MaterialChips.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-// typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
-//};
-
 @interface MDCBaseInputChipViewLayout : NSObject
 @property(nonatomic, assign) CGFloat globalChipRowMinX;
 @property(nonatomic, assign) CGFloat globalChipRowMaxX;
@@ -76,5 +71,3 @@ NS_ASSUME_NONNULL_BEGIN
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing;
 @end
-
-NS_ASSUME_NONNULL_END

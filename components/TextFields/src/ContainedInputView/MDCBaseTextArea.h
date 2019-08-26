@@ -17,8 +17,6 @@
 #import "MDCTextControlLabelBehavior.h"
 #import "MaterialContainerScheme.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCBaseTextArea : UIControl
 
 /**
@@ -34,5 +32,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
 
 @end
-
-NS_ASSUME_NONNULL_END

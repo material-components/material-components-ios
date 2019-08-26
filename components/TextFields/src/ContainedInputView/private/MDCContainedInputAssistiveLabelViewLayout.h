@@ -17,8 +17,6 @@
 
 #import "MDCContainedInputView.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCContainedInputAssistiveLabelViewLayout : NSObject
 
 @property(nonatomic, assign, readonly) CGRect leftAssistiveLabelFrame;
@@ -36,5 +34,3 @@ NS_ASSUME_NONNULL_BEGIN
                                  isRTL:(BOOL)isRTL;
 
 @end
-
-NS_ASSUME_NONNULL_END

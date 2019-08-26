@@ -17,8 +17,6 @@
 #import "MDCContainedInputView.h"
 #import "MaterialChips.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCBaseTextAreaLayout : NSObject
 @property(nonatomic, assign) CGFloat globalTextMinX;
 @property(nonatomic, assign) CGFloat globalTextMaxX;
@@ -63,5 +61,3 @@ NS_ASSUME_NONNULL_BEGIN
                            isEditing:(BOOL)isEditing;
 
 @end
-
-NS_ASSUME_NONNULL_END

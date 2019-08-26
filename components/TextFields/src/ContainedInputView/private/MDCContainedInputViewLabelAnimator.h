@@ -16,8 +16,6 @@
 #import <UIKit/UIKit.h>
 #import "MDCContainedInputViewLabelState.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCContainedInputViewLabelAnimator : NSObject
 
 @property(nonatomic, assign) NSTimeInterval animationDuration;
@@ -32,5 +30,3 @@ NS_ASSUME_NONNULL_BEGIN
             normalFont:(nonnull UIFont *)normalFont
           floatingFont:(nonnull UIFont *)floatingFont;
 @end
-
-NS_ASSUME_NONNULL_END

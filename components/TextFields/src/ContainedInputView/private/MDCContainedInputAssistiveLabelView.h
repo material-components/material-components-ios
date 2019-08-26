@@ -18,8 +18,6 @@
 
 #import "MDCContainedInputAssistiveLabelViewLayout.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface MDCContainedInputAssistiveLabelView : UIView
 
 @property(nonatomic, strong, readonly) UILabel *leftAssistiveLabel;
@@ -27,5 +25,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelViewLayout *layout;
 
 @end
-
-NS_ASSUME_NONNULL_END
