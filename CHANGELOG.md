@@ -1,15 +1,14 @@
-# #develop#
+# 89.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major change introduces presentation and dismissal improvements to
+NavigationDrawer.  `MDCSnackbarMessage` subclasses must now respond to `-
+init`. Further improvements are made to the in-development Contained Input
+Fields.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Subclasses of `MDCSnackbarMessage` are now required to respond to `- init`.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ### TextFields+ContainedInputView
