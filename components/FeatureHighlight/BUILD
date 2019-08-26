@@ -20,6 +20,8 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
