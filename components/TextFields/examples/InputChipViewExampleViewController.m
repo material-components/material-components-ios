@@ -31,7 +31,7 @@
 
 static const CGFloat kSideMargin = (CGFloat)20.0;
 
-@interface InputChipViewExampleViewController () <UITextFieldDelegate>
+@interface InputChipViewExampleViewController () <UITextFieldDelegate, MDCInputChipViewDelegate>
 
 @property(strong, nonatomic) UIScrollView *scrollView;
 
@@ -190,6 +190,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (MDCBaseInputChipView *)createBaseNonWrappingInputChipView {
   MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
+  inputChipView.delegate = self;
   inputChipView.label.text = @"Base non-wrapping";
   [inputChipView applyThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = NO;
@@ -217,6 +218,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (MDCOutlinedInputChipView *)createOutlinedNonWrappingInputChipView {
   MDCOutlinedInputChipView *inputChipView = [[MDCOutlinedInputChipView alloc] init];
+  inputChipView.delegate = self;
   inputChipView.label.text = @"Outlined non-wrapping";
   [inputChipView applyThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = NO;
@@ -242,6 +244,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (MDCFilledInputChipView *)createFilledNonWrappingInputChipView {
   MDCFilledInputChipView *inputChipView = [[MDCFilledInputChipView alloc] init];
+  inputChipView.delegate = self;
   inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
   inputChipView.label.text = @"Filled non-wrapping";
   [inputChipView applyThemeWithScheme:self.containerScheme];
@@ -414,6 +417,18 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
+}
+
+#pragma mark MDCInputChipViewDelegate
+
+- (void)inputChipViewDidReturn:(nonnull MDCBaseInputChipView *)inputChipView {
+  
+}
+
+- (void)inputChipViewDidDeleteBackwards:(nonnull MDCBaseInputChipView *)inputChipView
+                                oldText:(nullable NSString *)oldText
+                                newText:(nullable NSString *)newText {
+  
 }
 
 @end

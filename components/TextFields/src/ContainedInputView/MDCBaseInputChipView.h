@@ -16,7 +16,17 @@
 
 #import "MDCTextControlLabelBehavior.h"
 
+@class MDCBaseInputChipView;
+@protocol MDCInputChipViewDelegate <NSObject>
+- (void)inputChipViewDidReturn:(nonnull MDCBaseInputChipView *)inputChipView;
+- (void)inputChipViewDidDeleteBackwards:(nonnull MDCBaseInputChipView *)inputChipView
+                                oldText:(nullable NSString *)oldText
+                                newText:(nullable NSString *)newText;
+@end
+
 @interface MDCBaseInputChipView : UIControl
+
+@property(weak, nonatomic, nullable) id<MDCInputChipViewDelegate> delegate;
 
 /**
  The @c label is a label that occupies the area the text usually occupies when there is no
