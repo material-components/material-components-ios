@@ -31,6 +31,7 @@
 
 @property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
+@property(strong, nonatomic) UILabel *placeholderLabel;
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelView *assistiveLabelView;
 
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
@@ -40,6 +41,7 @@
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
+@property(nonatomic, assign) BOOL isPlaceholderVisible;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
@@ -75,7 +77,7 @@
 - (void)commonMDCBaseTextFieldInit {
   [self initializeProperties];
   [self setUpLabel];
-  //  [self setUpPlaceholderLabel];
+  [self setUpPlaceholderLabel];
   [self setUpAssistiveLabels];
   [self setUpClearButton];
 }
@@ -132,10 +134,10 @@
   self.label = [[UILabel alloc] initWithFrame:self.bounds];
   [self addSubview:self.label];
 }
-//- (void)setUpPlaceholderLabel {
-//  self.placeholderLabel = [[UILabel alloc] initWithFrame:self.bounds];
-//  [self addSubview:self.placeholderLabel];
-//}
+- (void)setUpPlaceholderLabel {
+  self.placeholderLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  [self addSubview:self.placeholderLabel];
+}
 
 - (void)setUpClearButton {
   self.clearButton = [[MDCContainedInputViewClearButton alloc] init];
@@ -173,7 +175,8 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
-  //  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
+  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
+  self.placeholderLabel.text = self.placeholder;
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -183,10 +186,11 @@
 }
 
 - (void)postLayoutSubviews {
-  //  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout
-  //  labelState:self.labelState]; [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
-  //                            placeholderFrame:placeholderFrame
-  //                        isPlaceholderVisible:self.isPlaceholderVisible];
+  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout
+                                                 labelState:self.labelState];
+  [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
+                            placeholderFrame:placeholderFrame
+                        isPlaceholderVisible:self.isPlaceholderVisible];
   [self.labelAnimator layOutLabel:self.label
                             state:self.labelState
                  normalLabelFrame:self.layout.labelFrameNormal
@@ -539,6 +543,7 @@
   return CGRectZero;
 }
 
+//TODO: Evaluate whether this method can be removed given the custom placeholder stuff.
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
   if (self.labelState == MDCContainedInputViewLabelStateNormal) {
     return CGRectZero;
@@ -546,14 +551,15 @@
   return [super placeholderRectForBounds:bounds];
 }
 
+//TODO: Evaluate whether this method can be removed given the custom placeholder stuff.
 - (void)drawPlaceholderInRect:(CGRect)rect {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  NSDictionary *attributes = @{
-    NSFontAttributeName : self.font,
-    NSForegroundColorAttributeName : colorScheme.placeholderColor
-  };
-  [self.placeholder drawInRect:rect withAttributes:attributes];
+//  id<MDCContainedInputViewColorScheming> colorScheme =
+//      [self containedInputViewColorSchemingForState:self.containedInputViewState];
+//  NSDictionary *attributes = @{
+//    NSFontAttributeName : self.font,
+//    NSForegroundColorAttributeName : colorScheme.placeholderColor
+//  };
+//  [self.placeholder drawInRect:rect withAttributes:attributes];
 }
 
 #pragma mark Fonts
@@ -637,7 +643,6 @@
 
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
-                                   attributedPlaceholder:self.attributedPlaceholder
                                               labelState:self.labelState
                                                     text:self.text
                                                isEditing:self.isEditing];
@@ -651,13 +656,10 @@
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
-                            attributedPlaceholder:(NSAttributedString *)attributedPlaceholder
                                        labelState:(MDCContainedInputViewLabelState)labelState
                                              text:(NSString *)text
                                         isEditing:(BOOL)isEditing {
-  BOOL hasRegularPlaceholder = placeholder.length > 0;
-  BOOL hasAttributedPlaceholder = attributedPlaceholder.length > 0;
-  BOOL hasPlaceholder = hasRegularPlaceholder || hasAttributedPlaceholder;
+  BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
 
   if (hasPlaceholder) {
@@ -725,7 +727,7 @@
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
-  //  self.placeholderLabel.textColor = colorScheming.placeholderColor;
+  self.placeholderLabel.textColor = colorScheming.placeholderColor;
   self.clearButton.tintColor = colorScheming.clearButtonTintColor;
 }
 
