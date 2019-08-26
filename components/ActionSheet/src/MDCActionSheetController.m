@@ -56,6 +56,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
   action.accessibilityLabel = self.accessibilityLabel;
+  action.titleColor = self.titleColor;
+  action.tintColor = self.tintColor;
   return action;
 }
 
@@ -310,10 +312,10 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.inkColor = self.inkColor;
   cell.rippleColor = self.rippleColor;
   cell.enableRippleBehavior = self.enableRippleBehavior;
-  cell.tintColor = self.actionTintColor;
+  cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
-  cell.actionTextColor = self.actionTextColor;
+  cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   return cell;
 }
 
@@ -337,6 +339,15 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([self.traitCollection
+            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      [self.tableView reloadData];
+    }
+  }
+#endif
 
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);

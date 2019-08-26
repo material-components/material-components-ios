@@ -19,6 +19,63 @@
 
 static CGFloat const kDefaultExpectationTimeout = 15;
 
+/**
+ A coder object used for testing state restoration of the bottom navigation bar controller.
+ References to encoded objects are stored in memory and retained by this object.
+ @warning Not all @c NSCoder methods are implemented as they are not needed at the time of
+ writing. If the implementation of encoding/decoding the bottom navigation bar controller changes,
+ this coder's impementation may need to be extended to support other types.
+ */
+@interface MDCBottomNavigationBarControllerTestRestorationArchive : NSCoder
+
+/** The archive that contains the objects encoded by the coder. */
+@property(nonatomic, nonnull, readonly) NSMutableDictionary<NSString *, id> *objectArchive;
+
+@end
+
+@implementation MDCBottomNavigationBarControllerTestRestorationArchive
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _objectArchive = [NSMutableDictionary dictionary];
+  }
+
+  return self;
+}
+
+- (BOOL)allowsKeyedCoding {
+  return YES;
+}
+
+- (BOOL)containsValueForKey:(NSString *)key {
+  if (!key) {
+    return NO;
+  }
+
+  return self.objectArchive[key] != nil;
+}
+
+- (void)encodeObject:(id)object {
+  if ([object respondsToSelector:@selector(restorationIdentifier)]) {
+    [self encodeObject:object forKey:[object restorationIdentifier]];
+  }
+}
+
+- (void)encodeObject:(id)object forKey:(NSString *)key {
+  if (!key) {
+    return;
+  }
+
+  self.objectArchive[key] = object;
+}
+
+- (id)decodeObjectForKey:(NSString *)key {
+  return self.objectArchive[key];
+}
+
+@end
+
 @interface MDCBottomNavigationBarControllerTests
     : XCTestCase <MDCBottomNavigationBarControllerDelegate>
 
@@ -309,6 +366,59 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   // Then
   XCTAssertTrue(childViewController1.viewLoaded);
   XCTAssertFalse(childViewController2.viewLoaded);
+}
+
+- (void)testEncodesChildViewControllersWhenPreservingRestorationState {
+  // Given
+  UIViewController *childViewController1 = [[UIViewController alloc] init];
+  childViewController1.restorationIdentifier = @"vc1";
+
+  UIViewController *childViewController2 = [[UIViewController alloc] init];
+  childViewController2.restorationIdentifier = @"vc2";
+
+  self.bottomNavigationBarController.viewControllers =
+      @[ childViewController1, childViewController2 ];
+  MDCBottomNavigationBarControllerTestRestorationArchive *coder =
+      [[MDCBottomNavigationBarControllerTestRestorationArchive alloc] init];
+
+  // When
+  [self.bottomNavigationBarController encodeRestorableStateWithCoder:coder];
+
+  // Then
+  XCTAssertEqualObjects(coder.objectArchive[childViewController1.restorationIdentifier],
+                        childViewController1);
+  XCTAssertEqualObjects(coder.objectArchive[childViewController2.restorationIdentifier],
+                        childViewController2);
+}
+
+- (void)testDecodingControllerAndChildViewControllersState {
+  // Given
+  NSString *title1 = @"vc1";
+  UIViewController *childViewController1 = [[UIViewController alloc] init];
+  childViewController1.restorationIdentifier = @"vc1";
+  childViewController1.title = title1;
+
+  NSString *title2 = @"title2";
+  UIViewController *childViewController2 = [[UIViewController alloc] init];
+  childViewController2.restorationIdentifier = @"vc2";
+  childViewController2.title = title2;
+
+  self.bottomNavigationBarController.viewControllers =
+      @[ childViewController1, childViewController2 ];
+  self.bottomNavigationBarController.selectedViewController = childViewController2;
+  MDCBottomNavigationBarControllerTestRestorationArchive *coder =
+      [[MDCBottomNavigationBarControllerTestRestorationArchive alloc] init];
+
+  // When
+  [self.bottomNavigationBarController encodeRestorableStateWithCoder:coder];
+  self.bottomNavigationBarController.selectedViewController = childViewController1;
+  [self.bottomNavigationBarController decodeRestorableStateWithCoder:coder];
+
+  // Then
+  XCTAssertEqualObjects(self.bottomNavigationBarController.selectedViewController,
+                        childViewController2);
+  XCTAssertEqualObjects(self.bottomNavigationBarController.viewControllers[0].title, title1);
+  XCTAssertEqualObjects(self.bottomNavigationBarController.viewControllers[1].title, title2);
 }
 
 - (void)testOverwritesAdditionalSafeAreaInsetsOfSelectedViewController {

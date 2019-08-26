@@ -319,14 +319,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateTitleFont];
 }
 
-- (void)mdc_setLegacyFontScaling:(BOOL)legacyScaling {
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = legacyScaling;
-}
-
-- (BOOL)mdc_legacyFontScaling {
-  return _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-}
-
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateTitleFont];
 }
@@ -542,7 +534,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   // If we are automatically adjusting for Dynamic Type resize the font based on the text style
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (titleFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
+    if (titleFont.mdc_scalingCurve) {
       titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
     } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       titleFont =

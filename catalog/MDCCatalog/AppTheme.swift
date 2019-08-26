@@ -20,21 +20,7 @@ import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialTypographyScheme
 
 final class AppTheme {
-  let containerScheme: MDCContainerScheming
-
-  var colorScheme: MDCColorScheming {
-    return containerScheme.colorScheme
-  }
-
-  var typographyScheme: MDCTypographyScheming {
-    return containerScheme.typographyScheme
-  }
-
-  init(containerScheme: MDCContainerScheming) {
-    self.containerScheme = containerScheme
-  }
-
-  static var globalTheme = AppTheme(containerScheme: DefaultContainerScheme()) {
+  static var containerScheme: MDCContainerScheming = DefaultContainerScheme() {
     didSet {
       NotificationCenter.default.post(name: AppTheme.didChangeGlobalThemeNotificationName,
                                       object: nil,
@@ -44,22 +30,18 @@ final class AppTheme {
 
   static let didChangeGlobalThemeNotificationName =
     Notification.Name("MDCCatalogDidChangeGlobalTheme")
+
+  private init() {
+    // An AppTheme is not intended to be created; use the static APIs instead.
+  }
 }
 
 func DefaultContainerScheme() -> MDCContainerScheme {
   let containerScheme = MDCContainerScheme()
 
-  let colorScheme = MDCSemanticColorScheme(defaults: .material201907)
-  containerScheme.colorScheme = colorScheme
-
-  let typographyScheme = MDCTypographyScheme()
-  typographyScheme.headline1 = UIFont.systemFont(ofSize: 20)
-  typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
-  typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
-  containerScheme.typographyScheme = typographyScheme
-
-  let shapeScheme = MDCShapeScheme()
-  containerScheme.shapeScheme = shapeScheme
+  containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201907)
+  containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
+  containerScheme.shapeScheme = MDCShapeScheme()
 
   return containerScheme
 }

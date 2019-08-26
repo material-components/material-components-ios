@@ -201,7 +201,18 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (void)hideDrawer {
-  [self.originalPresentingViewController dismissViewControllerAnimated:YES completion:nil];
+  // Inset the scroll view by the current offset before dismissing in order to prevent a jump to a
+  // zero offset during interactive dismissal.
+  UIEdgeInsets previousInset = self.scrollView.contentInset;
+  UIEdgeInsets adjustedInset = previousInset;
+  adjustedInset.top += -self.scrollView.contentOffset.y;
+  self.scrollView.contentInset = adjustedInset;
+
+  [self.originalPresentingViewController dismissViewControllerAnimated:YES
+                                                            completion:^{
+                                                              self.scrollView.contentInset =
+                                                                  previousInset;
+                                                            }];
 }
 
 #pragma mark UIGestureRecognizerDelegate (Public)

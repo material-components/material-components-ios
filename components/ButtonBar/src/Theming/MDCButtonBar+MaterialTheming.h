@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <MaterialComponents/MaterialButtonBar.h>
-#import "MaterialContainerScheme.h"
+#import <MaterialComponents/MaterialContainerScheme.h>
 
 // This category applies Material themes that are defined in the Material Guidelines:
 // https://material.io/design/components/app-bars-top.html

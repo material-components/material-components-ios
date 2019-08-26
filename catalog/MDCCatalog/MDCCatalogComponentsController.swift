@@ -104,7 +104,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
 
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    collectionView?.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    collectionView?.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
@@ -116,7 +116,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
   }
 
   @objc func themeDidChange(notification: NSNotification) {
-    let colorScheme = AppTheme.globalTheme.colorScheme
+    let colorScheme = AppTheme.containerScheme.colorScheme
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
     setNeedsStatusBarAppearanceUpdate()
@@ -144,9 +144,9 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     titleLabel.text = title!
-    titleLabel.textColor = AppTheme.globalTheme.colorScheme.onPrimaryColor
+    titleLabel.textColor = AppTheme.containerScheme.colorScheme.onPrimaryColor
     titleLabel.textAlignment = .center
-    titleLabel.font = AppTheme.globalTheme.typographyScheme.headline1
+    titleLabel.font = AppTheme.containerScheme.typographyScheme.headline6
     titleLabel.sizeToFit()
 
     let titleInsets = UIEdgeInsets(top: 0,
@@ -162,7 +162,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
 
     containerView.addSubview(logo)
 
-    let colorScheme = AppTheme.globalTheme.colorScheme
+    let colorScheme = AppTheme.containerScheme.colorScheme
 
     let image = MDCDrawImage(CGRect(x:0,
                                     y:0,
@@ -341,7 +341,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     let cell =
         collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
                                            for: indexPath)
-    cell.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    cell.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     let componentName = node.children[indexPath.row].title
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {

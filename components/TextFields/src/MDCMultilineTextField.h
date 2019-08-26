@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTextInput.h"
+#import "MaterialElevation.h"
 
 @class MDCIntrinsicHeightTextView;
 
@@ -25,7 +26,8 @@
   Material Design themed mutiline text field (multiline text input).
   https://www.google.com/design/spec/components/text-fields.html#text-fields-multi-line-text-field
  */
-@interface MDCMultilineTextField : UIView <MDCTextInput, MDCMultilineTextInput>
+@interface MDCMultilineTextField
+    : UIView <MDCTextInput, MDCMultilineTextInput, MDCElevatable, MDCElevationOverriding>
 
 /** A mirror of the same property that already exists on UITextField, UITextView, and UILabel. */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategory;

@@ -14,9 +14,45 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCTextControlLabelBehavior.h"
+
 /**
  A UITextField subclass that will potentially provide the foundation for Material TextFields in the
  future. This class is under active development and should be used with caution.
  */
 @interface MDCBaseTextField : UITextField
+
+/**
+ The @c label is a label that occupies the area the text usually occupies when there is no
+ text. It is distinct from the placeholder in that it can move above the text area or disappear to
+ reveal the placeholder when editing begins.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *label;
+
+/**
+ This property determines the behavior of the textfield's label during editing.
+ @note The default is MDCTextControlLabelBehaviorFloats.
+ */
+@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftView/rightView class.
+ */
+@property(strong, nonatomic, nullable) UIView *leadingView;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftView/rightView class.
+ */
+@property(strong, nonatomic, nullable) UIView *trailingView;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ */
+@property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ */
+@property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
 @end

@@ -33,6 +33,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/ShadowLayer",
+        "//components/private/Color",
         "//components/private/Math",
     ],
 )

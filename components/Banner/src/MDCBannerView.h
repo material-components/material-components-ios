@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialElevation.h>
 #import <UIKit/UIKit.h>
-
-#import "MaterialButtons.h"
-#import "MaterialElevation.h"
 
 /**
  @c MDCBannerViewLayoutStyle specifies the layout style of an MDCBannerView.

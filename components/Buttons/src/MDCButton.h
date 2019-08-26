@@ -140,8 +140,6 @@
  Default value is @c YES.
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)
-    BOOL mdc_legacyFontScaling __deprecated;
 
 /**
  The shape generator used to define the button's shape.
@@ -157,9 +155,12 @@
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
- If true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+ If @c true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+ If @c false, @c accessibilityTraits will inherit its behavior from @c UIButton.
 
  @note Defaults to true.
+ @note This API is intended as a migration flag to restore @c UIButton behavior to @c MDCButton. In
+       a future version, this API will eventually be deprecated and then deleted.
  */
 @property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
 
@@ -168,7 +169,7 @@
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (UITraitCollection *_Nullable previousTraitCollection);
+    (MDCButton *_Nonnull button, UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  A color used as the button's @c backgroundColor for @c state.

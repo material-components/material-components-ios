@@ -211,7 +211,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     mainSectionHeader = MainSectionHeader()
     additionalExamplesSectionHeader = createAdditionalExamplesSectionHeader()
-    self.tableView.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    self.tableView.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
     self.tableView.separatorStyle = .none
     self.tableView.sectionHeaderHeight = UITableView.automaticDimension
 
@@ -284,7 +284,7 @@ extension MDCNodeListViewController {
 
   func createAdditionalExamplesSectionHeader() -> UIView {
     let sectionView = UIView()
-    sectionView.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    sectionView.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
     let lineDivider = UIView()
     lineDivider.backgroundColor = UIColor(white: 0.85, alpha: 1)
     lineDivider.translatesAutoresizingMaskIntoConstraints = false
@@ -390,7 +390,7 @@ extension MDCNodeListViewController {
 
   func MainSectionHeader() -> UIView {
     let sectionView = UIView()
-    sectionView.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    sectionView.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     let sectionTitleLabel = UILabel()
     sectionTitleLabel.font = MDCTypography.body2Font()
@@ -513,7 +513,7 @@ extension MDCNodeListViewController {
       cell?.selectionStyle = .none
       let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
       let button = primaryDemoCell.containedButton
-      button.applyContainedTheme(withScheme: AppTheme.globalTheme.containerScheme)
+      button.applyContainedTheme(withScheme: AppTheme.containerScheme)
       button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
     } else {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
@@ -534,7 +534,7 @@ extension MDCNodeListViewController {
       cell!.accessibilityIdentifier = "Cell" + cell!.textLabel!.text!
       cell!.accessoryType = .disclosureIndicator
     }
-    cell?.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    cell?.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
     return cell!
   }
 
@@ -577,15 +577,15 @@ extension MDCNodeListViewController {
   func themeExample(vc: UIViewController) {
     let colorSel = NSSelectorFromString("setColorScheme:");
     if vc.responds(to: colorSel) {
-      vc.perform(colorSel, with: AppTheme.globalTheme.colorScheme)
+      vc.perform(colorSel, with: AppTheme.containerScheme.colorScheme)
     }
     let typoSel = NSSelectorFromString("setTypographyScheme:");
     if vc.responds(to: typoSel) {
-      vc.perform(typoSel, with: AppTheme.globalTheme.typographyScheme)
+      vc.perform(typoSel, with: AppTheme.containerScheme.typographyScheme)
     }
     let containerSel = NSSelectorFromString("setContainerScheme:")
     if vc.responds(to: containerSel) {
-      vc.perform(containerSel, with: AppTheme.globalTheme.containerScheme)
+      vc.perform(containerSel, with: AppTheme.containerScheme)
     }
   }
 }
