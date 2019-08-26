@@ -285,7 +285,7 @@ static NSString *const exampleExtraLongText =
 
   MDCButton *dismissButton = bannerView.leadingButton;
   [dismissButton applyTextThemeWithScheme:self.containerScheme];
-  [dismissButton sizeToFit];
+  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
