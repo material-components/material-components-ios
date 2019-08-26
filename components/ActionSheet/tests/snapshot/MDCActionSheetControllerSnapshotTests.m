@@ -86,11 +86,11 @@ static NSString *const kLongTitle5Arabic =
 - (void)tearDown {
   if (self.actionSheetController.presentingViewController) {
     XCTestExpectation *expectation =
-    [[XCTestExpectation alloc] initWithDescription:@"Action sheet is dismissed"];
+        [[XCTestExpectation alloc] initWithDescription:@"Action sheet is dismissed"];
     [self.actionSheetController dismissViewControllerAnimated:NO
-                                         completion:^{
-                                           [expectation fulfill];
-                                         }];
+                                                   completion:^{
+                                                     [expectation fulfill];
+                                                   }];
     [self waitForExpectations:@[ expectation ] timeout:5];
   }
   self.actionSheetController = nil;
@@ -838,17 +838,17 @@ static NSString *const kLongTitle5Arabic =
 - (void)testThreeActionsSufficientSizeShortTextLTRWithDefaultPresentationStyleOniOS13 {
   // Given
   MDCActionSheetAction *action1 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetAction *action2 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   MDCActionSheetAction *action3 =
-  [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
-                                  image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                handler:nil];
+      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
   self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:nil];
   [self.actionSheetController addAction:action1];
   [self.actionSheetController addAction:action2];
@@ -859,7 +859,7 @@ static NSString *const kLongTitle5Arabic =
   UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
   UIViewController *currentViewController = window.rootViewController;
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"Action sheet is presented"];
+      [[XCTestExpectation alloc] initWithDescription:@"Action sheet is presented"];
   [currentViewController presentViewController:self.actionSheetController
                                       animated:NO
                                     completion:^{
