@@ -21,12 +21,6 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
 
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialButtons+ButtonThemer.h"
-
-//#import "supplemental/MDCBaseTextArea+MaterialTheming.h"
-
 static const CGFloat kSideMargin = (CGFloat)20.0;
 
 @interface TextAreaExampleViewController () <UITextViewDelegate>

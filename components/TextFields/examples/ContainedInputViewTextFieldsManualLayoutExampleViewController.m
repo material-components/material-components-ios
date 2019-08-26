@@ -20,10 +20,6 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
 
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialButtons+ButtonThemer.h"
-
 #import "MDCFilledTextField+MaterialTheming.h"
 #import "MDCFilledTextField.h"
 #import "MDCOutlinedTextField+MaterialTheming.h"
