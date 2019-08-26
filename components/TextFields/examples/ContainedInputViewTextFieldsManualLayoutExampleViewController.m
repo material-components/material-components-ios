@@ -16,9 +16,9 @@
 
 #import "MaterialButtons.h"
 
+#import "MDCBaseTextField.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "MDCBaseTextField.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -96,18 +96,18 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createToggleErrorButton],
     [self createDisabledButton],
     [self createFirstResponderButton],
-//    [self createLabelWithText:@"Default MDCFilledTextField:"],
-//    [self createDefaultFilledTextField],
+    //    [self createLabelWithText:@"Default MDCFilledTextField:"],
+    //    [self createDefaultFilledTextField],
     [self createLabelWithText:@"Material MDCFilledTextField:"],
     [self createMaterialFilledTextField],
-//    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
-//    [self createDefaultOutlinedTextField],
+    //    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
+    //    [self createDefaultOutlinedTextField],
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
     [self createMaterialOutlinedTextField],
     [self createLabelWithText:@"Default MDCBaseTextField:"],
     [self createDefaultInputTextField],
-//    [self createLabelWithText:@"Material MDCBaseTextField:"],
-//    [self createMaterialInputTextField],
+    //    [self createLabelWithText:@"Material MDCBaseTextField:"],
+    //    [self createMaterialInputTextField],
     [self createLabelWithText:@"UITextField:"],
     [self createUiTextField],
   ];
@@ -389,12 +389,12 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (void)disableButtonTapped:(UIButton *)button {
   self.isDisabled = !self.isDisabled;
-  [self.allTextFields enumerateObjectsUsingBlock:^(UITextField * _Nonnull textField, NSUInteger idx, BOOL * _Nonnull stop) {
+  [self.allTextFields enumerateObjectsUsingBlock:^(UITextField *_Nonnull textField, NSUInteger idx,
+                                                   BOOL *_Nonnull stop) {
     textField.enabled = !self.isDisabled;
   }];
   [self updateButtonThemes];
 }
-
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {
   self.isErrored = !self.isErrored;

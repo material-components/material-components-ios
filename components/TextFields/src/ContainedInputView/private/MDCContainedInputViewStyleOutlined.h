@@ -21,6 +21,5 @@
 @property(strong, nonatomic) UIColor *outlineColor;
 @end
 
-@interface MDCContainedInputViewStyleOutlined
-    : NSObject <MDCContainedInputViewStyle>
+@interface MDCContainedInputViewStyleOutlined : NSObject <MDCContainedInputViewStyle>
 @end

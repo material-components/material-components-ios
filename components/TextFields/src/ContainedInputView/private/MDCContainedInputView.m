@@ -55,4 +55,3 @@ MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
 }
 
 @end
-

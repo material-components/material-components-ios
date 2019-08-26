@@ -124,24 +124,25 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
   if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
     _containerHeight = preferredContainerHeight;
   }
-  
-  _paddingBetweenTopAndNormalLabel = _paddingBetweenTopAndFloatingLabel + floatingLabelHeight + _paddingBetweenFloatingLabelAndText;
-//
-//  CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
-//  if (isMultiline) {
-//    CGFloat heightWithOneRow =
-//        [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-//                                      textRowHeight:textRowHeight
-//                                   numberOfTextRows:1
-//                  paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
-//                 paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
-//                        paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
-//    CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
-//    _paddingBetweenTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
-//  } else {
-//    CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeight;
-//    _paddingBetweenTopAndNormalLabel = halfOfContainerHeight - halfOfNormalFontLineHeight;
-//  }
+
+  _paddingBetweenTopAndNormalLabel = _paddingBetweenTopAndFloatingLabel + floatingLabelHeight +
+                                     _paddingBetweenFloatingLabelAndText;
+  //
+  //  CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
+  //  if (isMultiline) {
+  //    CGFloat heightWithOneRow =
+  //        [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+  //                                      textRowHeight:textRowHeight
+  //                                   numberOfTextRows:1
+  //                  paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+  //                 paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+  //                        paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+  //    CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
+  //    _paddingBetweenTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
+  //  } else {
+  //    CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeight;
+  //    _paddingBetweenTopAndNormalLabel = halfOfContainerHeight - halfOfNormalFontLineHeight;
+  //  }
 }
 
 - (CGFloat)standardizeDensity:(CGFloat)density {

@@ -45,11 +45,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 @implementation MDCContainedInputViewStyleFilled
 @synthesize animationDuration = _animationDuration;
 
--(void)setAnimationDuration:(NSTimeInterval)animationDuration {
+- (void)setAnimationDuration:(NSTimeInterval)animationDuration {
   _animationDuration = animationDuration;
 }
 
--(NSTimeInterval)animationDuration {
+- (NSTimeInterval)animationDuration {
   return _animationDuration;
 }
 

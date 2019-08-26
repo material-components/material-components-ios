@@ -15,10 +15,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainerStyleVerticalPositioningReference.h"
 #import "MDCContainedInputViewColorViewModel.h"
 #import "MDCContainedInputViewLabelAnimator.h"
 #import "MDCContainedInputViewLabelState.h"
+#import "MDCContainerStyleVerticalPositioningReference.h"
 #import "MDCTextControlLabelBehavior.h"
 
 /**
@@ -193,7 +193,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 /**
  Animation duration.
  */
-@property (nonatomic, assign) NSTimeInterval animationDuration;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 /**
  This method provides a default object conforming to MDCContainedInputViewColorScheming.
@@ -214,7 +214,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
 
 /**
- The method returns a UIFont for the floating label based on the primary text font of the MDCContainedInputView.
+ The method returns a UIFont for the floating label based on the primary text font of the
+ MDCContainedInputView.
  */
 - (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font;
 

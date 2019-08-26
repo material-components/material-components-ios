@@ -24,7 +24,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                 positioningReference:(id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                 positioningReference:
+                     (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -78,7 +79,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                    positioningReference:(id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                    positioningReference:
+                        (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
@@ -100,7 +102,6 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                 preferredContainerHeight:(CGFloat)preferredContainerHeight
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
-
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
                                                                     viewMode:leftViewMode
                                                                    isEditing:isEditing];

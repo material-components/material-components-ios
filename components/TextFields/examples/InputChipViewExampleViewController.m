@@ -16,14 +16,14 @@
 
 #import "MaterialButtons.h"
 
-#import "MaterialButtons+Theming.h"
-#import "MaterialColorScheme.h"
 #import "MDCBaseInputChipView+MaterialTheming.h"
 #import "MDCBaseInputChipView.h"
 #import "MDCFilledInputChipView+MaterialTheming.h"
 #import "MDCFilledInputChipView.h"
 #import "MDCOutlinedInputChipView+MaterialTheming.h"
 #import "MDCOutlinedInputChipView.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialColorScheme.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -217,7 +217,6 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
   return inputChipView;
 }
-
 
 - (MDCOutlinedInputChipView *)createOutlinedNonWrappingInputChipView {
   MDCOutlinedInputChipView *inputChipView = [[MDCOutlinedInputChipView alloc] init];

@@ -28,9 +28,9 @@
 @interface MDCBaseTextField : UITextField
 
 /**
- The @c labelText is the text that occupies the area the textfield's text usually occupies when there is no
- text. It is distinct from the placeholder in that it can move above the textfield's text area or disappear to
- reveal the placeholder when editing begins.
+ The @c labelText is the text that occupies the area the textfield's text usually occupies when
+ there is no text. It is distinct from the placeholder in that it can move above the textfield's
+ text area or disappear to reveal the placeholder when editing begins.
  */
 @property(strong, nonatomic, nullable) NSString *labelText;
 

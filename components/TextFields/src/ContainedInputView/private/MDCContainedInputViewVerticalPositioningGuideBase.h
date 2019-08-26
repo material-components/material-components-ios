@@ -27,7 +27,6 @@
 @property(nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;
 @property(nonatomic, assign, readonly) CGFloat containerHeight;
 
-
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                           normalFontLineHeight:(CGFloat)normalFontLineHeight
                                  textRowHeight:(CGFloat)textRowHeight

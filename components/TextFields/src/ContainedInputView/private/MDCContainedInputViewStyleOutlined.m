@@ -36,11 +36,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 @implementation MDCContainedInputViewStyleOutlined
 @synthesize animationDuration = _animationDuration;
 
--(void)setAnimationDuration:(NSTimeInterval)animationDuration {
+- (void)setAnimationDuration:(NSTimeInterval)animationDuration {
   _animationDuration = animationDuration;
 }
 
--(NSTimeInterval)animationDuration {
+- (NSTimeInterval)animationDuration {
   return _animationDuration;
 }
 
@@ -110,11 +110,9 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   return [font fontWithSize:floatingFontSize];
 }
 
-
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
   [self.outlinedSublayer removeFromSuperlayer];
 }
-
 
 //- (BOOL)isPlaceholderFloatingWithFrame:(CGRect)frame {
 //  return CGRectGetMinY(frame) <= 0 && CGRectGetMaxY(frame) >= 0;
@@ -208,7 +206,13 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   return defaultLineWidth;
 }
 
-- (id<MDCContainerStyleVerticalPositioningReference>)positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight normalFontLineHeight:(CGFloat)normalFontLineHeight textRowHeight:(CGFloat)textRowHeight numberOfTextRows:(CGFloat)numberOfTextRows density:(CGFloat)density preferredContainerHeight:(CGFloat)preferredContainerHeight {
+- (id<MDCContainerStyleVerticalPositioningReference>)
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
   return [[MDCContainedInputViewVerticalPositioningGuideOutlined alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight

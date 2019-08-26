@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialContainerScheme.h"
 #import "MDCTextControlLabelBehavior.h"
+#import "MaterialContainerScheme.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

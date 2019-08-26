@@ -18,14 +18,14 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialMath.h"
+#import "MaterialTypography.h"
 #import "private/MDCBaseTextFieldLayout.h"
 #import "private/MDCContainedInputAssistiveLabelView.h"
 #import "private/MDCContainedInputViewClearButton.h"
 #import "private/MDCContainedInputViewLabelAnimator.h"
 #import "private/MDCContainedInputViewStyleBase.h"
 #import "private/MDCContainedInputViewStylePathDrawingUtils.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
 
 @interface MDCBaseTextField () <MDCContainedInputView>
 
@@ -75,11 +75,10 @@
 - (void)commonMDCBaseTextFieldInit {
   [self initializeProperties];
   [self setUpLabel];
-//  [self setUpPlaceholderLabel];
+  //  [self setUpPlaceholderLabel];
   [self setUpAssistiveLabels];
   [self setUpClearButton];
 }
-
 
 #pragma mark View Setup
 
@@ -93,7 +92,6 @@
   self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
   self.animationDuration = 0.15;
 }
-
 
 - (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   id<MDCContainedInputViewColorScheming> normalColorScheme =
@@ -175,20 +173,20 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
-//  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
+  //  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
-  
+
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
 - (void)postLayoutSubviews {
-//  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
-//  [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
-//                            placeholderFrame:placeholderFrame
-//                        isPlaceholderVisible:self.isPlaceholderVisible];
+  //  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout
+  //  labelState:self.labelState]; [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
+  //                            placeholderFrame:placeholderFrame
+  //                        isPlaceholderVisible:self.isPlaceholderVisible];
   [self.labelAnimator layOutLabel:self.label
                             state:self.labelState
                  normalLabelFrame:self.layout.labelFrameNormal
@@ -271,13 +269,13 @@
 }
 
 - (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
-  return [self.containerStyle positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
-                                                   normalFontLineHeight:self.normalFont.lineHeight
-                                                          textRowHeight:self.normalFont.lineHeight
-                                                       numberOfTextRows:1
-                                                                density:0
-                                               preferredContainerHeight:self.preferredContainerHeight];
-
+  return [self.containerStyle
+      positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
+                                normalFontLineHeight:self.normalFont.lineHeight
+                                       textRowHeight:self.normalFont.lineHeight
+                                    numberOfTextRows:1
+                                             density:0
+                            preferredContainerHeight:self.preferredContainerHeight];
 }
 - (CGFloat)normalizedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
   CGFloat value = customPriority;
@@ -298,7 +296,7 @@
 
 #pragma mark UITextField Accessor Overrides
 
--(void)setEnabled:(BOOL)enabled {
+- (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   [self setNeedsLayout];
 }
@@ -329,25 +327,26 @@
 
 #pragma mark Custom Accessors
 
--(void)setAnimationDuration:(NSTimeInterval)animationDuration {
+- (void)setAnimationDuration:(NSTimeInterval)animationDuration {
   _animationDuration = animationDuration;
   self.labelAnimator.animationDuration = animationDuration;
   self.containerStyle.animationDuration = animationDuration;
 }
 
--(NSString *)labelText {
+- (NSString *)labelText {
   return self.label.text;
 }
 
--(void)setLabelText:(nullable NSString *)labelText {
+- (void)setLabelText:(nullable NSString *)labelText {
   self.label.text = [labelText copy];
 }
 
--(void)setPlaceholderColor:(UIColor *)placeholderColor {
+- (void)setPlaceholderColor:(UIColor *)placeholderColor {
   _placeholderColor = placeholderColor;
-  NSArray<NSNumber *> *statesNumbers = @[@(MDCContainedInputViewStateNormal),
-                                         @(MDCContainedInputViewStateFocused),
-                                         @(MDCContainedInputViewStateDisabled)];
+  NSArray<NSNumber *> *statesNumbers = @[
+    @(MDCContainedInputViewStateNormal), @(MDCContainedInputViewStateFocused),
+    @(MDCContainedInputViewStateDisabled)
+  ];
   for (NSNumber *stateNumber in statesNumbers) {
     id<MDCContainedInputViewColorScheming> colorScheme =
         [self containedInputViewColorSchemingForState:stateNumber.integerValue];
@@ -726,7 +725,7 @@
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
-//  self.placeholderLabel.textColor = colorScheming.placeholderColor;
+  //  self.placeholderLabel.textColor = colorScheming.placeholderColor;
   self.clearButton.tintColor = colorScheming.clearButtonTintColor;
 }
 
