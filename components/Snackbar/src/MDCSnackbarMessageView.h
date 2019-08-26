@@ -112,23 +112,26 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
+ Affects the fallback behavior for when a scaled font is not provided.
+
+ If enabled, the font size will adjust even if a scaled font has not been provided for
+ a given UIFont property on this component.
+
+ If disabled, the font size will only be adjusted if a scaled font has been provided.
+ This behavior most closely matches UIKit's.
+
+ Default value is YES, but this flag will eventually default to NO and then be deprecated
+ and deleted.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+
+/**
  A block that is invoked when the MDCSnackbarMessageView receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCSnackbarMessageView *_Nonnull messageView,
      UITraitCollection *_Nullable previousTraitCollection);
-
-/**
- This block is called after a change of the snackbar message view's elevation or one of its view
- hierarchy ancestors.
- Use this block to respond to elevation changes in the view or its ancestor views.
- @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
- views.
- @param object This snackbar message view.
- */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCSnackbarMessageView *_Nonnull object, CGFloat elevation);
 
 @end
 

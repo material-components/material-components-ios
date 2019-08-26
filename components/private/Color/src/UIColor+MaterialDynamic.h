@@ -14,8 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface UIColor (MaterialDynamic)
 
 /// Returns a color object that picks its value from given color objects dynamically
@@ -25,9 +23,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param darkColor A color object returned when @c userInterfaceStyle is @c
 /// UIUserInterfaceStyleDark based on currently active traits.
 /// @param defaultColor A default color object.
-+ (UIColor *)colorWithUserInterfaceStyleDarkColor:(UIColor *)darkColor
-                                     defaultColor:(UIColor *)defaultColor;
++ (nonnull UIColor *)colorWithUserInterfaceStyleDarkColor:(nonnull UIColor *)darkColor
+                                             defaultColor:(nonnull UIColor *)defaultColor;
+
+/**
+ Returns the version of the current color that takes the specified traits into account.
+
+ @note On pre-iOS 13 the orginal color is returned.
+
+ @param traitCollection The traits to use when resolving the color information.
+ @return The version of the color to display for the specified traits.
+ */
+- (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:
+    (nonnull UITraitCollection *)traitCollection;
 
 @end
-
-NS_ASSUME_NONNULL_END

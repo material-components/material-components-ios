@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialBottomSheet.h"
+#import "MaterialElevation.h"
 
 @class MDCActionSheetAction;
 
@@ -38,7 +39,8 @@
  in a sheet from the bottom.
 
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController : UIViewController
+__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
+    : UIViewController<MDCElevatable, MDCElevationOverriding>
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.
@@ -271,6 +273,20 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  The @c accessibilityIdentifier for the view associated with this action.
  */
 @property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
+
+/**
+ The color of the action title.
+
+ @note If no @c titleColor is provided then the @c actionTextColor from the controller will be used.
+ */
+@property(nonatomic, copy, nullable) UIColor *titleColor;
+
+/**
+ The tint color of the action.
+
+ @note If no @c tintColor is provided then the @c actionTintColor from the controller will be used.
+ */
+@property(nonatomic, copy, nullable) UIColor *tintColor;
 
 @end
 

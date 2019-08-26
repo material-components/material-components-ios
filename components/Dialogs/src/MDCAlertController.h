@@ -150,18 +150,6 @@
      UITraitCollection *_Nullable previousTraitCollection);
 
 /**
- This block is called after a change of the alert controller's elevation or one of its view
- controller ancestors.
-
- Use this block to respond to elevation changes in the alert controller or its ancestors.
-
- @param alertController This alert controller.
- @param absoluteElevation The @c mdc_absoluteElevation this alert controller.
- */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCAlertController *_Nonnull alertController, CGFloat absoluteElevation);
-
-/**
  Affects the fallback behavior for when a scaled font is not provided.
 
  If @c YES, the font size will adjust even if a scaled font has not been provided for

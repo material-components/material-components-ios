@@ -156,16 +156,28 @@
   XCTAssertNil(self.bottomNavBar.selectedItem);
 }
 
-- (void)testAccessibilityIdentifier {
-  NSString *oldIdentifier = @"oldIdentifier";
-  NSString *newIdentifier = @"newIdentifier";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
-  tabBarItem.accessibilityIdentifier = oldIdentifier;
-  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
-  bar.items = @[ tabBarItem ];
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, oldIdentifier);
-  tabBarItem.accessibilityIdentifier = newIdentifier;
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, newIdentifier);
+- (NSInteger)countOfViewsWithAccessibilityIdentifier:(NSString *)accessibilityIdentifier
+                                        fromRootView:(UIView *)view {
+  NSInteger sum = [view.accessibilityIdentifier isEqualToString:accessibilityIdentifier] ? 1 : 0;
+  for (UIView *subview in view.subviews) {
+    sum += [self countOfViewsWithAccessibilityIdentifier:accessibilityIdentifier
+                                            fromRootView:subview];
+  }
+  return sum;
+}
+
+- (void)testSettingAccessibilityIdentifierAffectsExactlyOneSubview {
+  // Given
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:1];
+  item.accessibilityIdentifier = @"__i_d__";
+
+  // When
+  self.bottomNavBar.items = @[ item ];
+
+  // Then
+  XCTAssertEqual([self countOfViewsWithAccessibilityIdentifier:item.accessibilityIdentifier
+                                                  fromRootView:self.bottomNavBar],
+                 1);
 }
 
 - (void)testAccessibilityLabelInitialValue {
@@ -203,11 +215,20 @@
   UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityHint = initialHint;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+
   // When
   bar.items = @[ tabBarItem ];
 
   // Then
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, initialHint);
+  MDCBottomNavigationItemView *itemView = bar.itemViews.firstObject;
+  UIButton *itemViewButton = itemView.button;
+  if (@available(iOS 10.0, *)) {
+    XCTAssertEqualObjects(itemViewButton.accessibilityHint, initialHint);
+  } else {
+    // On iOS 9, the bar "fakes" being a tab bar and modifies the hint.
+    XCTAssertTrue([itemViewButton.accessibilityHint containsString:initialHint],
+                  @"(%@) does not contain (%@)", itemViewButton.accessibilityHint, initialHint);
+  }
 }
 
 - (void)testAccessibilityHintValueChanged {
@@ -223,7 +244,9 @@
   tabBarItem.accessibilityHint = newHint;
 
   // Then
-  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, newHint);
+  MDCBottomNavigationItemView *itemView = bar.itemViews.firstObject;
+  UIButton *itemViewButton = itemView.button;
+  XCTAssertEqualObjects(itemViewButton.accessibilityHint, newHint);
 }
 
 - (void)testIsAccessibilityElementInitialValue {
@@ -538,6 +561,38 @@
 
   // Then
   XCTAssertNil(result);
+}
+
+- (NSInteger)countOfButtonsWithAccessibilityHint:(NSString *)accessibilityHint
+                                    fromRootView:(UIView *)view {
+  BOOL foundMatchingElement = NO;
+  if (@available(iOS 10.0, *)) {
+    foundMatchingElement = ([view isKindOfClass:[UIButton class]] &&
+                            [view.accessibilityHint isEqualToString:accessibilityHint]);
+  } else {
+    // Accounts for the "fake" tab bar behavior that modifies the `accessibilityHint` on iOS 9.
+    foundMatchingElement = ([view isKindOfClass:[UIButton class]] &&
+                            [view.accessibilityHint containsString:accessibilityHint]);
+  }
+  NSInteger count = foundMatchingElement ? 1 : 0;
+  for (UIView *subview in view.subviews) {
+    count += [self countOfButtonsWithAccessibilityHint:accessibilityHint fromRootView:subview];
+  }
+  return count;
+}
+
+- (void)testSettingAccessibilityHintPropagatesToOneUIButtonSubview {
+  // Given
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:9];
+  item.accessibilityHint = @"__h_i_n_t__";
+
+  // When
+  self.bottomNavBar.items = @[ item ];
+
+  // Then
+  XCTAssertEqual([self countOfButtonsWithAccessibilityHint:item.accessibilityHint
+                                              fromRootView:self.bottomNavBar],
+                 1);
 }
 
 #pragma mark - traitCollectionDidChangeBlock

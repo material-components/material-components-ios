@@ -67,6 +67,7 @@ static NSString *const kOfAnnouncement = @"of";
 @implementation MDCBottomNavigationBar
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -416,7 +417,7 @@ static NSString *const kOfAnnouncement = @"of";
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
       itemView.title = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityIdentifier))]) {
-      itemView.accessibilityIdentifier = newValue;
+      itemView.accessibilityElementIdentifier = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityLabel))]) {
       itemView.accessibilityLabel = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityHint))]) {
@@ -526,7 +527,7 @@ static NSString *const kOfAnnouncement = @"of";
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     itemView.accessibilityValue = item.accessibilityValue;
-    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
+    itemView.accessibilityElementIdentifier = item.accessibilityIdentifier;
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.isAccessibilityElement = item.isAccessibilityElement;
@@ -546,7 +547,13 @@ static NSString *const kOfAnnouncement = @"of";
           key, kMaterialBottomNavigationStringsTableName, [[self class] bundle], kOfString);
       NSString *localizedPosition =
           [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
-      itemView.button.accessibilityHint = localizedPosition;
+      // Allow a custom `accessibilityHint` to be assigned even if "faking" a tab bar is enabled.
+      if (itemView.button.accessibilityHint.length) {
+        itemView.button.accessibilityHint =
+            [NSString stringWithFormat:@"%@. %@", localizedPosition, itemView.accessibilityHint];
+      } else {
+        itemView.button.accessibilityHint = localizedPosition;
+      }
     }
     if (item.image) {
       itemView.image = item.image;

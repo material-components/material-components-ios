@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "85.9.1"
+  mdc.version      = "88.0.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -63,8 +63,11 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MaterialComponents/BottomSheet"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/Ripple"
+    component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/Typography"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -79,6 +82,8 @@ Pod::Spec.new do |mdc|
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Elevation"
+    extension.dependency "MaterialComponents/private/Color"
     extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
@@ -1328,6 +1333,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFTextAccessibility"
 
     component.dependency "MaterialComponents/ButtonBar"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/private/Math"
@@ -1619,6 +1625,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1639,8 +1646,10 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/ThumbTrack"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1758,6 +1767,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Ripple"
@@ -1850,9 +1860,9 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Typography"
-    component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MDFInternationalization"
 
@@ -1876,6 +1886,8 @@ Pod::Spec.new do |mdc|
     "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
     "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
+
+    extension.dependency "MDFInternationalization"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [

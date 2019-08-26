@@ -232,13 +232,12 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
     UIColor *staticColor = UIColor.blackColor;
     UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
 
-    // When/Then
-    XCTAssertThrowsSpecificNamed(
-        [staticColor performSelector:@selector(mdc_resolvedColorWithTraitCollection:elevation:)
-                          withObject:traitCollection
-                          withObject:@(elevation)],
-        NSException, NSGenericException, @"Expected exception when %@ is called on pre iOS13",
-        NSStringFromSelector(@selector(mdc_resolvedColorWithTraitCollection:elevation:)));
+    // When
+    UIColor *color = [staticColor mdc_resolvedColorWithTraitCollection:traitCollection
+                                                             elevation:elevation];
+
+    // Then
+    [self assertEqualColorsWithFloatPrecisionFirstColor:color secondColor:staticColor];
   }
 }
 
@@ -267,6 +266,86 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                              secondColor);
   XCTAssertEqualWithAccuracy(fAlpha, sAlpha, 0.001, @"(%@) is not equal to (%@)", firstColor,
                              secondColor);
+}
+
+- (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToZero {
+  // Given
+  CGFloat firstElevation = (CGFloat)0.01;
+  CGFloat secondElevation = (CGFloat)0;
+
+  // When
+  UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
+  UIColor *resolvedSecondRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:secondElevation];
+
+  // Then
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedFirstRGBColor
+                                          secondColor:resolvedSecondRGBColor];
+}
+
+- (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToOne {
+  // Given
+  CGFloat firstElevation = (CGFloat)0.99;
+  CGFloat secondElevation = (CGFloat)1;
+
+  // When
+  UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
+  UIColor *resolvedSecondRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:secondElevation];
+
+  // Then
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedFirstRGBColor
+                                          secondColor:resolvedSecondRGBColor];
+}
+
+- (void)testResolvingColorWithSameCurrentTraitCollectionAndPreviousTraitCollection {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    CGFloat elevation = (CGFloat)10;
+    UIColor *darkColor = UIColor.blackColor;
+    UIColor *lightColor = UIColor.whiteColor;
+    UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor
+                                                             defaultColor:lightColor];
+
+    // When
+    UITraitCollection *previousTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UITraitCollection *currentTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UIColor *resolvedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                   previousTraitCollection:previousTraitCollection
+                                                 elevation:elevation];
+    // Then
+    XCTAssertEqualObjects(resolvedColor, dynamicColor);
+  }
+}
+
+- (void)testResolvingColorWithDifferenceCurrentTraitCollectionAndPreviousTraitCollection {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    CGFloat elevation = (CGFloat)10;
+    UIColor *darkColor = UIColor.blackColor;
+    UIColor *lightColor = UIColor.whiteColor;
+    UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor
+                                                             defaultColor:lightColor];
+
+    // When
+    UITraitCollection *previousTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UITraitCollection *currentTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+    UIColor *resolvedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                   previousTraitCollection:previousTraitCollection
+                                                 elevation:elevation];
+    // Then
+    XCTAssertNotEqual(resolvedColor, dynamicColor);
+    UIColor *expectedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                                 elevation:elevation];
+    XCTAssertEqual(resolvedColor, expectedColor);
+  }
+#endif
 }
 
 @end

@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCSnackbarAlignment.h"
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 @class MDCSnackbarMessage;
@@ -47,7 +48,7 @@
  Snackbars prefer an application's main window is a subclass of @c MDCOverlayWindow. When a standard
  UIWindow is used an attempt is made to find the top-most view controller in the view hierarchy.
  */
-@interface MDCSnackbarManager : NSObject
+@interface MDCSnackbarManager : NSObject <MDCElevationOverriding>
 
 /**
  An instance of MDCSnackbarManager.
@@ -240,6 +241,20 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
+ Affects the fallback behavior for when a scaled font is not provided.
+
+ If enabled, the font size will adjust even if a scaled font has not been provided for
+ a given UIFont property on this component.
+
+ If disabled, the font size will only be adjusted if a scaled font has been provided.
+ This behavior most closely matches UIKit's.
+
+ Default value is YES, but this flag will eventually default to NO and then be deprecated
+ and deleted.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+
+/**
  If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views by
  default. If accessibilityViewIsModal needs to be set for specific snackbar views,
  -willPresentSnackbarWithMessageView: in MDCSnackbarManagerDelegate can be used to access
@@ -254,6 +269,20 @@
  */
 @property(nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 
+/**
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView receives a
+ call to @c traitCollectionDidChange:.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlockForMessageView)
+    (MDCSnackbarMessageView *_Nonnull messageView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView elevation
+ changes, and its mdc_elevationDidChangeBlock is called.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlockForMessageView)
+    (id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation);
 @end
 
 /**

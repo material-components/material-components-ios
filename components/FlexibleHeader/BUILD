@@ -20,7 +20,9 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -52,6 +54,7 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "private",
+    testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = [":test_targets"],
@@ -83,14 +86,8 @@ mdc_examples_objc_library(
     ],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":CanAlwaysExpandToMaximumHeight",
         ":ColorThemer",
@@ -99,20 +96,12 @@ swift_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob([
-        "tests/unit/*.m",
+    extra_srcs = glob([
         "tests/unit/supplemental/*.m",
         "tests/unit/supplemental/*.h",
     ]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":CanAlwaysExpandToMaximumHeight",
         ":ColorThemer",
@@ -127,6 +116,8 @@ mdc_unit_test_suite(
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
 )
 
 mdc_snapshot_objc_library(

@@ -37,6 +37,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 @dynamic layer;
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 + (Class)layerClass {
   return [MDCShapedShadowLayer class];

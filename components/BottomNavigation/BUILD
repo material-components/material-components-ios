@@ -15,6 +15,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -135,21 +137,8 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
-)
-
-mdc_objc_library(
+mdc_examples_objc_library(
     name = "ObjcExamples",
-    srcs = native.glob([
-        "examples/*.m",
-        "examples/*.h",
-        "examples/supplemental/*.m",
-        "examples/supplemental/*.h",
-    ]),
     includes = ["examples/supplemental"],
     deps = [
         ":BottomNavigation",
@@ -161,18 +150,8 @@ mdc_objc_library(
     ],
 )
 
-swift_library(
+mdc_examples_swift_library(
     name = "SwiftExamples",
-    srcs = native.glob(
-        [
-            "examples/*.swift",
-            "examples/supplemental/*.swift",
-        ],
-    ),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
     deps = [
         ":BottomNavigation",
         ":BottomNavigationBeta",
@@ -206,7 +185,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":Theming",
         ":TypographyThemer",
-        ":private",
+        ":privateHeaders",
         "//components/Typography",
     ],
 )
@@ -248,7 +227,7 @@ mdc_snapshot_objc_library(
         ":ColorThemer",
         ":Theming",
         ":TypographyThemer",
-        ":private",
+        ":privateHeaders",
     ],
 )
 

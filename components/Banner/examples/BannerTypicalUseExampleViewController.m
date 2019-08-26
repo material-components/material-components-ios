@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #import "MaterialBanner.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
 
@@ -82,6 +84,7 @@ static NSString *const exampleExtraLongText =
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
@@ -90,8 +93,9 @@ static NSString *const exampleExtraLongText =
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _colorScheme = _containerScheme.colorScheme;
+    _typographyScheme = _containerScheme.typographyScheme;
   }
   return self;
 }
@@ -241,11 +245,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
@@ -283,19 +284,14 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *dismissButton = bannerView.leadingButton;
-  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  dismissButton.uppercaseTitle = YES;
-  [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  dismissButton.backgroundColor = self.colorScheme.surfaceColor;
+  [dismissButton applyTextThemeWithScheme:self.containerScheme];
   [dismissButton sizeToFit];
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
   MDCButton *changeTextButton = bannerView.trailingButton;
+  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
   [changeTextButton setTitle:@"Long dismiss" forState:UIControlStateNormal];
-  changeTextButton.uppercaseTitle = YES;
-  [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
@@ -330,17 +326,13 @@ static NSString *const exampleExtraLongText =
 
   MDCButton *dismissButton = bannerView.leadingButton;
   [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  dismissButton.uppercaseTitle = YES;
-  [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  dismissButton.backgroundColor = self.colorScheme.surfaceColor;
+  [dismissButton applyTextThemeWithScheme:self.containerScheme];
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
   MDCButton *changeTextButton = bannerView.trailingButton;
+  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
   [changeTextButton setTitle:@"Extra long long long dismiss" forState:UIControlStateNormal];
-  changeTextButton.uppercaseTitle = YES;
-  [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
@@ -374,10 +366,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
 
@@ -402,10 +392,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
@@ -443,10 +431,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;

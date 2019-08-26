@@ -21,6 +21,7 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
@@ -29,10 +30,6 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "NavigationDrawer",
-    sdk_frameworks = [
-        "Foundation",
-        "UIKit",
-    ],
     deps = [
         "//components/Elevation",
         "//components/Palettes",
@@ -52,18 +49,9 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
-)
-
-mdc_objc_library(
-    name = "TestingHeader",
     testonly = 1,
-    hdrs = native.glob(["src/private/MDCBottomDrawerContainerViewController+Testing.h"]),
-    includes = ["src/private/MDCBottomDrawerContainerViewController+Testing.h"],
-    visibility = ["//visibility:public"],
-    deps = [":NavigationDrawer"],
+    hdrs = native.glob(["src/private/*.h"]),
+    visibility = ["//visibility:private"],
 )
 
 mdc_examples_swift_library(
@@ -77,18 +65,8 @@ mdc_examples_swift_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":NavigationDrawer",

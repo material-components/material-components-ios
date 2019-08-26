@@ -102,6 +102,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 @implementation MDCButton
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @dynamic layer;
 
 + (Class)layerClass {
@@ -332,7 +333,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [super traitCollectionDidChange:previousTraitCollection];
 
   if (self.traitCollectionDidChangeBlock) {
-    self.traitCollectionDidChangeBlock(previousTraitCollection);
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
@@ -986,14 +987,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateTitleFont];
 
   [self sizeToFit];
-}
-
-- (BOOL)mdc_legacyFontScaling {
-  return self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-}
-
-- (void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
-  self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = mdc_legacyFontScaling;
 }
 
 #pragma mark - Deprecations

@@ -21,7 +21,9 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -46,10 +48,10 @@ mdc_public_objc_library(
     name = "TextFields",
     sdk_frameworks = [
         "QuartzCore",
-        "UIKit",
     ],
     deps = [
         "//components/AnimationTiming",
+        "//components/Elevation",
         "//components/Palettes",
         "//components/Typography",
         "//components/private/Math",
@@ -58,6 +60,9 @@ mdc_public_objc_library(
 
 mdc_extension_objc_library(
     name = "ContainedInputView",
+    deps = [
+        "@material_internationalization_ios//:MDFInternationalization",
+    ],
 )
 
 mdc_extension_objc_library(
@@ -98,8 +103,10 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ColorThemer",
+        ":ContainedInputView",
         ":TextFields",
         ":TypographyThemer",
+        "//components/schemes/Container",
     ],
 )
 
@@ -114,57 +121,22 @@ mdc_examples_swift_library(
 )
 
 mdc_objc_library(
-    name = "ExperimentalExampleSource",
-    srcs = glob(["examples/experimental/supplemental/*.m"]),
-    hdrs = glob(["examples/experimental/supplemental/*.h"]),
-    deps = [
-        "//components/Buttons",
-        "//components/Buttons:Theming",
-        "//components/Chips",
-        "//components/private/Math",
-        "//components/schemes/Color",
-    ],
-)
-
-swift_library(
-    name = "SwiftExperimentalExamples",
-    srcs = glob(["examples/experimental/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    deps = [":ExperimentalExampleSource"],
-)
-
-mdc_objc_library(
-    name = "ExperimentalExamples",
-    srcs = glob(["examples/experimental/*.m"]),
-    hdrs = glob(["examples/experimental/*.h"]),
-    deps = [
-        ":ExperimentalExampleSource",
-        "//components/AppBar:ColorThemer",
-        "//components/AppBar:TypographyThemer",
-        "//components/Buttons:ButtonThemer",
-        "//components/Chips",
-    ],
-)
-
-mdc_objc_library(
-    name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob([
-        "tests/unit/*.m",
-        "tests/unit/ContainedInputView/*.m",
-    ]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
+    name = "ContainedInputViewPrivateHeaders",
+    hdrs = native.glob(["src/ContainedInputView/private/*.h"]),
+    includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    extra_srcs = glob([
+        "tests/unit/ContainedInputView/*.m",
+        "tests/unit/ContainedInputView/private/*.m",
+    ]),
     deps = [
-        ":ContainedInputView",
         ":ColorThemer",
+        ":ContainedInputView",
+        ":ContainedInputViewPrivateHeaders",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
@@ -182,6 +154,7 @@ mdc_snapshot_objc_library(
     ],
     deps = [
         ":ColorThemer",
+        ":ContainedInputView",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
@@ -196,17 +169,11 @@ mdc_snapshot_test(
     deps = ["snapshot_test_lib"],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob([
-        "tests/unit/*.swift",
-        "tests/unit/Theming/*.swift"
+    extra_srcs = glob([
+        "tests/unit/Theming/*.swift",
     ]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":TextFields",
@@ -222,4 +189,6 @@ mdc_unit_test_suite(
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
 )

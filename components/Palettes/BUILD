@@ -17,25 +17,14 @@ load(
     "mdc_examples_swift_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Palettes",
-)
-
-swift_library(
-    name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
-    deps = [":Palettes"],
 )
 
 mdc_examples_swift_library(
@@ -46,15 +35,8 @@ mdc_examples_swift_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [":Palettes"],
 )
 
@@ -62,6 +44,5 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
-        ":unit_test_swift_sources",
     ],
 )

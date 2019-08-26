@@ -14,8 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
+#import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
 #import "MDCTabBarView.h"
-#import "MDCTabBarViewItemView.h"
 
 /** The typical size of an image in a Tab bar. */
 static const CGSize kTypicalImageSize = (CGSize){24, 24};

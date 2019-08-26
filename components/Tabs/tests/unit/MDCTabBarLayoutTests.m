@@ -15,7 +15,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <XCTest/XCTest.h>
 
-#import "MDCItemBar.h"
+#import "../../src/private/MDCItemBar.h"
 #import "MDCTabBar.h"
 
 // Returns the underlying collection view from a given tabBar. If one cannot be extracted, returns

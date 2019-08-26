@@ -69,7 +69,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
     flatButtonDynamicLegacy.translatesAutoresizingMaskIntoConstraints = false
     flatButtonDynamicLegacy.addTarget(self, action: #selector(tap), for: .touchUpInside)
     flatButtonDynamicLegacy.mdc_adjustsFontForContentSizeCategory = true
-    flatButtonDynamicLegacy.mdc_legacyFontScaling = true
+    flatButtonDynamicLegacy.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = true
     view.addSubview(flatButtonDynamicLegacy)
 
     let views = [

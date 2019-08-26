@@ -58,23 +58,20 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)commonMDCRippleViewInit {
   self.userInteractionEnabled = NO;
-  self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
-  _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
-
+  static UIColor *defaultRippleColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    defaultRippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
+  });
+  _rippleColor = defaultRippleColor;
   _rippleStyle = MDCRippleStyleBounded;
-  self.layer.masksToBounds = YES;
-
-  // Use mask layer when the superview has a shadowPath.
-  _maskLayer = [CAShapeLayer layer];
-  _maskLayer.delegate = self;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [self updateRippleStyle];
   self.activeRippleLayer.fillColor = self.activeRippleColor.CGColor;
 }
 
@@ -88,7 +85,12 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
   [super layoutSublayersOfLayer:layer];
-  for (CALayer *sublayer in self.layer.sublayers) {
+
+  NSArray *sublayers = self.layer.sublayers;
+  if (sublayers.count > 0) {
+    [self updateRippleStyle];
+  }
+  for (CALayer *sublayer in sublayers) {
     sublayer.frame = CGRectStandardize(self.bounds);
     [sublayer setNeedsLayout];
   }
@@ -103,6 +105,11 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   self.layer.masksToBounds = (self.rippleStyle == MDCRippleStyleBounded);
   if (self.rippleStyle == MDCRippleStyleBounded) {
     if (self.superview.layer.shadowPath) {
+      if (!self.maskLayer) {
+        // Use mask layer when the superview has a shadowPath.
+        self.maskLayer = [CAShapeLayer layer];
+        self.maskLayer.delegate = self;
+      }
       self.maskLayer.path = self.superview.layer.shadowPath;
       self.layer.mask = _maskLayer;
     }
@@ -173,6 +180,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
   rippleLayer.rippleLayerDelegate = self;
+  [self updateRippleStyle];
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     [self.traitCollection performAsCurrentTraitCollection:^{

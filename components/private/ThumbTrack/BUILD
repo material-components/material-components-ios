@@ -17,6 +17,7 @@ load(
     "//:material_components_ios.bzl",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 
@@ -26,7 +27,6 @@ mdc_public_objc_library(
     name = "ThumbTrack",
     sdk_frameworks = [
         "CoreGraphics",
-        "UIKit",
     ],
     deps = [
         "//components/Ink",
@@ -43,23 +43,12 @@ mdc_objc_library(
     name = "private_headers",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
     deps = [":ThumbTrack"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ThumbTrack",
         ":private_headers",

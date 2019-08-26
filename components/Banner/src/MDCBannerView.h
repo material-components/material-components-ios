@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialElevation.h>
 #import <UIKit/UIKit.h>
-
-#import "MaterialButtons.h"
 
 /**
  @c MDCBannerViewLayoutStyle specifies the layout style of an MDCBannerView.
@@ -35,7 +35,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
  The [Material Guideline](https://material.io/design/components/banners.html) has more details on
  component usage.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
+__attribute__((objc_subclassing_restricted)) @interface MDCBannerView
+    : UIView<MDCElevatable, MDCElevationOverriding>
 
 /**
  The layout style of a @c MDCBannerView.

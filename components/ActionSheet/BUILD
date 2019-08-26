@@ -22,6 +22,8 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_swift_library",
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
@@ -33,9 +35,12 @@ mdc_public_objc_library(
     sdk_frameworks = ["UIKit"],
     deps = [
         "//components/BottomSheet",
+        "//components/Elevation",
         "//components/Ink",
         "//components/Ripple",
+        "//components/ShadowElevations",
         "//components/Typography",
+        "//components/private/Math",
     ],
 )
 
@@ -43,6 +48,8 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":ActionSheet",
+        "//components/Elevation",
+        "//components/private/Color",
         "//components/schemes/Container",
     ],
 )
@@ -79,12 +86,6 @@ mdc_objc_library(
     deps = [":ActionSheet"],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
@@ -109,90 +110,33 @@ mdc_examples_swift_library(
     ],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    deps = [
-        ":ActionSheet",
-        ":private",
-    ],
-)
-
-swift_library(
-    name = "unit_test_color_themer_swift_sources",
-    srcs = glob(["tests/unit/ColorThemer/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
+    extra_srcs = glob(["tests/unit/ColorThemer/*.swift"]),
     deps = [
         ":ActionSheet",
         ":ColorThemer",
-        ":private",
-    ],
-)
-
-mdc_objc_library(
-    name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob(["tests/unit/*.m"]),
-    hdrs = native.glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "CoreImage",
-        "XCTest",
-    ],
-    deps = [
-        ":ActionSheet",
-        ":ActionSheetThemer",
-        ":ColorThemer",
-        ":Theming",
-        ":TypographyThemer",
         ":privateHeaders",
     ],
 )
 
-mdc_objc_library(
-    name = "unit_test_theming_sources",
-    testonly = 1,
-    srcs = native.glob([
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    hdrs = glob(["tests/unit/*.h"]),
+    extra_srcs = glob([
+        "tests/unit/ActionSheetThemer/*.m",
         "tests/unit/Theming/*.m",
     ]),
     sdk_frameworks = [
-        "UIKit",
         "CoreImage",
-        "XCTest",
-    ],
-    deps = [
-        ":ActionSheet",
-        ":Theming",
-        ":privateHeaders",
-        ":unit_test_sources",
-    ],
-)
-
-mdc_objc_library(
-    name = "unit_test_themer_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/ActionSheetThemer/*.m",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "CoreImage",
-        "XCTest",
     ],
     deps = [
         ":ActionSheet",
         ":ActionSheetThemer",
         ":ColorThemer",
+        ":Theming",
         ":TypographyThemer",
         ":privateHeaders",
-        ":unit_test_sources",
     ],
 )
 
@@ -202,6 +146,8 @@ mdc_unit_test_suite(
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
 )
 
 mdc_snapshot_objc_library(

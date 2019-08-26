@@ -157,17 +157,6 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
- Enable legacy font scaling curves for Dynamic Type.
-
- Legacy font scaling uses the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:
- category instead of the MDCFontScaler API.
-
- Default value is YES.
- */
-@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)
-    BOOL mdc_legacyFontScaling __deprecated;
-
-/**
  Affects the fallback behavior for when a scaled font is not provided.
 
  If enabled, the font size will adjust even if a scaled font has not been provided for
@@ -201,19 +190,6 @@
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
-
-/**
- This block is called after a change of the chip view's elevation or one of its view
- hierarchy ancestors.
-
- Use this block to respond to elevation changes in the view or its ancestor views.
-
- @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
- views.
- @param object This chip view.
- */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCChipView *_Nonnull chip, CGFloat elevation);
 
 /*
  A color used as the chip's @c backgroundColor for @c state.

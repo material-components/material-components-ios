@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCSlider+Private.h"
+#import "../../src/private/MDCSlider+Private.h"
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialThumbTrack.h"
@@ -1266,6 +1266,64 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedSlider, self.slider);
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+#pragma mark - MaterialElevation
+
+- (void)testDefaultBaseElevationOverrideIsNegative {
+  // Then
+  XCTAssertLessThan(self.slider.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.slider.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.slider.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  self.slider.thumbElevation = 77;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.slider.mdc_currentElevation, self.slider.thumbElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  self.slider.thumbElevation = 5;
+  __block BOOL blockCalled = NO;
+  self.slider.mdc_elevationDidChangeBlock =
+      ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.slider.thumbElevation = self.slider.thumbElevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  self.slider.thumbElevation = 5;
+  __block BOOL blockCalled = NO;
+  self.slider.mdc_elevationDidChangeBlock =
+      ^(id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.slider.thumbElevation = self.slider.thumbElevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
 }
 
 #pragma mark Private test helpers
