@@ -82,6 +82,15 @@ static NSString *const kMessageLongArabic =
 }
 
 - (void)tearDown {
+  if (self.alertController.presentingViewController) {
+    XCTestExpectation *expectation =
+        [[XCTestExpectation alloc] initWithDescription:@"Alert controller is dismissed"];
+    [self.alertController dismissViewControllerAnimated:NO
+                                             completion:^{
+                                               [expectation fulfill];
+                                             }];
+    [self waitForExpectations:@[ expectation ] timeout:5];
+  }
   self.alertController = nil;
   self.actionLow = nil;
   self.actionMedium = nil;
@@ -251,6 +260,25 @@ static NSString *const kMessageLongArabic =
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testDefaultPresentationStyleWithShortTitleShortMessageLatinOniOS13 {
+  // When
+  UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+  UIViewController *currentViewController = window.rootViewController;
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageShortLatin;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"Alert controller is presented"];
+  [currentViewController presentViewController:self.alertController
+                                      animated:NO
+                                    completion:^{
+                                      [expectation fulfill];
+                                    }];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:5];
+  [self snapshotVerifyViewForIOS13:window];
 }
 
 @end
