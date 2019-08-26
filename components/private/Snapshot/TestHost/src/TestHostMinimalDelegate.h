@@ -15,4 +15,7 @@
 
 // No-op delegate sufficient to satisfy UIApplicationMain.
 @interface TestHostMinimalDelegate : UIResponder <UIApplicationDelegate>
+
+@property(strong, nonatomic) UIWindow *window;
+
 @end
