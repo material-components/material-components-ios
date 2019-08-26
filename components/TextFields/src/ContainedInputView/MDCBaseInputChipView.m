@@ -20,11 +20,11 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "MaterialMath.h"
+#import "MaterialTypography.h"
 #import "private/MDCContainedInputView.h"
 #import "private/MDCContainedInputViewLabelAnimator.h"
 #import "private/MDCContainedInputViewStyleBase.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
 
 @class MDCBaseInputChipViewTextField;
 @protocol MDCBaseInputChipViewTextFieldDelegate <NSObject>
