@@ -29,6 +29,35 @@ static NSString *const exampleExtraLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
     @"labore et dolore.";
 
+@interface BannerExampleContentView : UIView
+
+@property(nonatomic, readwrite, strong) UILabel *contentLabel;
+
+@end
+
+@implementation BannerExampleContentView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+  self = [super initWithFrame:frame];
+  if (self) {
+    self.backgroundColor = UIColor.grayColor;
+    UILabel *contentLabel = [[UILabel alloc] init];
+    [self addSubview:contentLabel];
+    contentLabel.text = @"Content View";
+    [contentLabel sizeToFit];
+    self.contentLabel = contentLabel;
+  }
+  return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.contentLabel.center = self.center;
+}
+
+@end
+
 @interface BannerExampleUseInfo : NSObject
 
 @property(nonatomic, readonly, copy) NSString *identifier;
@@ -78,7 +107,7 @@ static NSString *const exampleExtraLongText =
 
 @property(nonatomic, strong) UITableView *exampleListTableView;
 @property(nonatomic, strong) NSArray<BannerExampleUseInfo *> *exampleList;
-@property(nonatomic, weak) UIView *contentView;
+@property(nonatomic, weak) BannerExampleContentView *contentView;
 @property(nonatomic, weak) UILabel *contentViewLabel;
 @property(nonatomic, weak) MDCBannerView *bannerView;
 
@@ -103,25 +132,13 @@ static NSString *const exampleExtraLongText =
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Set up example content view
-  UIView *contentView = [[UIView alloc] initWithFrame:self.view.bounds];
-  contentView.backgroundColor = self.colorScheme.secondaryColor;
-  UILabel *contentViewLabel = [[UILabel alloc] init];
-  [contentView addSubview:contentViewLabel];
-  contentViewLabel.text = @"Content View";
-  [contentViewLabel sizeToFit];
-  contentViewLabel.center =
-      CGPointMake(CGRectGetMidX(contentView.bounds), CGRectGetMidY(contentView.bounds));
-  self.contentViewLabel = contentViewLabel;
-  self.contentView = contentView;
+  BannerExampleContentView *contentView = [[BannerExampleContentView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:contentView];
+  self.contentView = contentView;
 
   // Set up example list table view
   self.exampleList = [self getBannerExampleList];
-  CGRect exampleListTableViewFrame =
-      CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
-                 CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
-  UITableView *exampleListTableView = [[UITableView alloc] initWithFrame:exampleListTableViewFrame
-                                                                   style:UITableViewStylePlain];
+  UITableView *exampleListTableView = [[UITableView alloc] init];
   [self.view addSubview:exampleListTableView];
   self.exampleListTableView = exampleListTableView;
   exampleListTableView.dataSource = self;
@@ -143,6 +160,9 @@ static NSString *const exampleExtraLongText =
   [super viewWillLayoutSubviews];
 
   self.contentView.frame = self.view.bounds;
+  self.exampleListTableView.frame =
+  CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
+             CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
 
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
   // Adjust bannerViewContainer's frame
