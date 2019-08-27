@@ -1,13 +1,9 @@
-# 89.0.0
+# 88.1.0
 
-This major change introduces presentation and dismissal improvements to
+This minor change introduces presentation and dismissal improvements to
 NavigationDrawer.  `MDCSnackbarMessage` subclasses must now respond to `-
 init`. Further improvements are made to the in-development Contained Input
 Fields.
-
-## Breaking changes
-
-Subclasses of `MDCSnackbarMessage` are now required to respond to `- init`.
 
 ## API changes
 
@@ -28,8 +24,6 @@ Subclasses of `MDCSnackbarMessage` are now required to respond to `- init`.
 *new* enum value: `MDCTextControlLabelBehaviorFloats` in `MDCTextControlLabelBehavior`
 
 *new* typedef: `MDCTextControlLabelBehavior`
-
-## Component changes
 
 ## Changes
 
