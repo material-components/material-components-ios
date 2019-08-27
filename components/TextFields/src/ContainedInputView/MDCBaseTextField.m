@@ -181,7 +181,6 @@
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
-
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
@@ -207,6 +206,8 @@
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
+  self.assistiveLabelView.leftAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.leftAssistiveLabelFrame;
+  self.assistiveLabelView.rightAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.rightAssistiveLabelFrame;
   // TODO: Consider hiding views that don't actually fit in the frame
 }
 

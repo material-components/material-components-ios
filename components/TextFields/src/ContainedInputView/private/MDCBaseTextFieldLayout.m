@@ -285,18 +285,6 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   self.topRowBottomRowDividerY = positioningReference.containerHeight;
 }
 
-- (CGSize)underlineLabelSizeWithLabel:(UILabel *)label constrainedToWidth:(CGFloat)maxWidth {
-  if (maxWidth <= 0 || label.text.length <= 0 || label.hidden) {
-    return CGSizeZero;
-  }
-  CGSize fittingSize = CGSizeMake(maxWidth, CGFLOAT_MAX);
-  CGSize size = [label sizeThatFits:fittingSize];
-  if (size.width > maxWidth) {
-    size.width = maxWidth;
-  }
-  return size;
-}
-
 - (CGFloat)leadingAssistiveLabelWidthWithCombinedAssistiveLabelsWidth:
                (CGFloat)totalAssistiveLabelsWidth
                                                    customDrawPriority:(CGFloat)customDrawPriority {

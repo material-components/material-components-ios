@@ -39,8 +39,10 @@
 
 - (void)commonMDCContainedInputAssistiveLabelViewInit {
   self.leftAssistiveLabel = [[UILabel alloc] init];
-  self.rightAssistiveLabel = [[UILabel alloc] init];
+  self.leftAssistiveLabel.numberOfLines = 0;
   [self addSubview:self.leftAssistiveLabel];
+  self.rightAssistiveLabel = [[UILabel alloc] init];
+  self.rightAssistiveLabel.numberOfLines = 0;
   [self addSubview:self.rightAssistiveLabel];
 }
 

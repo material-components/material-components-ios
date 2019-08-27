@@ -92,18 +92,18 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createToggleErrorButton],
     [self createDisabledButton],
     [self createFirstResponderButton],
-    //    [self createLabelWithText:@"Default MDCFilledTextField:"],
-    //    [self createDefaultFilledTextField],
+    [self createLabelWithText:@"Default MDCFilledTextField:"],
+    [self createDefaultFilledTextField],
     [self createLabelWithText:@"Material MDCFilledTextField:"],
     [self createMaterialFilledTextField],
-    //    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
-    //    [self createDefaultOutlinedTextField],
+    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
+    [self createDefaultOutlinedTextField],
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
     [self createMaterialOutlinedTextField],
     [self createLabelWithText:@"Default MDCBaseTextField:"],
-    [self createDefaultInputTextField],
-    //    [self createLabelWithText:@"Material MDCBaseTextField:"],
-    //    [self createMaterialInputTextField],
+    [self createDefaultBaseTextField],
+    [self createLabelWithText:@"Material MDCBaseTextField:"],
+    [self createMaterialBaseTextField],
     [self createLabelWithText:@"UITextField:"],
     [self createUiTextField],
   ];
@@ -275,16 +275,18 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-- (MDCBaseTextField *)createDefaultInputTextField {
+- (MDCBaseTextField *)createDefaultBaseTextField {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] init];
   textField.placeholder = @"This is a placeholder";
   textField.labelText = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  textField.layer.borderColor = [UIColor blackColor].CGColor;
+  textField.layer.borderWidth = 1;
   return textField;
 }
 
-- (MDCBaseTextField *)createMaterialInputTextField {
-  MDCBaseTextField *textField = [self createDefaultInputTextField];
+- (MDCBaseTextField *)createMaterialBaseTextField {
+  MDCBaseTextField *textField = [self createDefaultBaseTextField];
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
@@ -305,7 +307,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   }];
 }
 
-- (void)updateTextFieldThemes {
+- (void)applyErrorStatesToTextFields {
   [self.allTextFields enumerateObjectsUsingBlock:^(UITextField *uiTextField, NSUInteger idx,
                                                    BOOL *stop) {
     if ([uiTextField isKindOfClass:[MDCBaseTextField class]]) {
@@ -395,7 +397,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (void)toggleErrorButtonTapped:(UIButton *)button {
   self.isErrored = !self.isErrored;
   [self updateButtonThemes];
-  [self updateTextFieldThemes];
+  [self applyErrorStatesToTextFields];
   [self updateLabelColors];
 }
 
