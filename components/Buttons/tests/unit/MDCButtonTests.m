@@ -1276,7 +1276,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
                 NSStringFromCGRect(expectedFrame), NSStringFromCGRect(self.button.frame));
 }
 
-- (void)testIntrinsicContentSizeWithMinimum {
+- (void)testIntrinsicContentSizeWithMinimumSizeIncreasesSize {
   // Given
   CGSize originalSize = self.button.intrinsicContentSize;
   CGSize expectedSize = CGSizeMake(originalSize.width + 10, originalSize.height + 10);
@@ -1288,7 +1288,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertTrue(CGSizeEqualToSize(expectedSize, self.button.intrinsicContentSize));
 }
 
-- (void)testIntrinsicContentSizeWithMaximum {
+- (void)testIntrinsicContentSizeWithMaximumDecreasesSize {
   // Given
   CGSize originalSize = self.button.intrinsicContentSize;
   CGSize expectedSize = CGSizeMake(originalSize.width - 5, originalSize.height - 5);
@@ -1300,7 +1300,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertTrue(CGSizeEqualToSize(expectedSize, self.button.intrinsicContentSize));
 }
 
-- (void)testIntrinsicContentSizeWithMaximumAndMinimum {
+- (void)testIntrinsicContentSizeWithMaximumAndMinimumSizeBehavior {
   // Given
   CGSize originalSize = self.button.intrinsicContentSize;
   CGSize expectedSize = CGSizeMake(originalSize.width + 5, originalSize.height - 5);
