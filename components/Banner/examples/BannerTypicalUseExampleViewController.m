@@ -25,9 +25,11 @@ static const CGFloat exampleBannerContentPadding = 10.0f;
 static NSString *const exampleShortText = @"tristique senectus et";
 static NSString *const exampleLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do incididunt.";
-static NSString *const exampleExtraLongText =
+static NSString *const exampleSuperLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
-    @"labore et dolore.";
+    @"labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco "
+    @"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
+    @"voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
 
 @interface BannerExampleUseInfo : NSObject
 
@@ -221,6 +223,13 @@ static NSString *const exampleExtraLongText =
         exampleUseTarget:self
       exampleUseSelector:@selector(showMultilineLongAttributedTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo9];
+
+  BannerExampleUseInfo *exampleUseInfo10 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example10"
+                                   displayName:@"Extra Long Text that exceeds 3 lines"
+                              exampleUseTarget:self
+                            exampleUseSelector:@selector(showExtraLongTextStyleBanner)];
+  [bannerExampleList addObject:exampleUseInfo10];
 
   return [bannerExampleList copy];
 }
@@ -422,6 +431,33 @@ static NSString *const exampleExtraLongText =
                         range:NSMakeRange([exampleLongText length] - 11, 11)];
   bannerView.textView.attributedText = exampleString;
   bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showExtraLongTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.textView.text = exampleSuperLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
