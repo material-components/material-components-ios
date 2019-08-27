@@ -120,7 +120,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(strong, nonatomic) UIView *scrollViewContentViewTouchForwardingView;
 @property(strong, nonatomic) MDCBaseInputChipViewTextField *inputChipViewTextField;
 
-@property(strong, nonatomic) NSMutableArray *chips;
+@property(strong, nonatomic) NSMutableArray *mutableChips;
 @property(strong, nonatomic) NSMutableArray *chipsToRemove;
 
 @property(strong, nonatomic) MDCBaseInputChipViewLayout *layout;
@@ -226,7 +226,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpChipsArray {
-  self.chips = [[NSMutableArray alloc] init];
+  self.mutableChips = [[NSMutableArray alloc] init];
 }
 
 - (void)setUpChipsToRemoveArray {
@@ -484,8 +484,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                                     label:self.label
                                                labelState:self.labelState
                                             labelBehavior:self.labelBehavior
-                                                    chips:self.chips
-                                           staleChipViews:self.chips
+                                                    chips:self.mutableChips
+                                           staleChipViews:self.mutableChips
                                                 chipsWrap:self.chipsWrap
                                             chipRowHeight:self.chipRowHeight
                                          interChipSpacing:self.chipRowSpacing
@@ -554,7 +554,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.textField.frame = self.layout.textFieldFrame;
   self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
   self.scrollView.contentSize = self.layout.scrollViewContentSize;
-  [self animateChipLayoutChangesWithChips:self.chips
+  [self animateChipLayoutChangesWithChips:self.mutableChips
                                chipFrames:self.layout.chipFrames
                             chipsToRemove:self.chipsToRemove
                                chipsToAdd:self.chipsToAdd];
@@ -606,7 +606,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (NSArray<MDCChipView *> *)chipsToAdd {
   NSMutableArray *chips = [[NSMutableArray alloc] init];
-  for (MDCChipView *chip in self.chips) {
+  for (MDCChipView *chip in self.mutableChips) {
     if (!chip.superview) {
       [chips addObject:chip];
     }
@@ -655,8 +655,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)performChipPositioningOnCompletion:(void (^)(void))completion {
   [UIView animateWithDuration:kChipAnimationDuration
       animations:^{
-        for (NSUInteger idx = 0; idx < self.chips.count; idx++) {
-          MDCChipView *chip = self.chips[idx];
+        for (NSUInteger idx = 0; idx < self.mutableChips.count; idx++) {
+          MDCChipView *chip = self.mutableChips[idx];
           CGRect frame = CGRectZero;
           if (self.layout.chipFrames.count > idx) {
             frame = [self.layout.chipFrames[idx] CGRectValue];
@@ -694,37 +694,20 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   }
 }
 
-#pragma mark Chip Selecting
-
-- (void)selectChip:(MDCChipView *)chip {
-  chip.selected = YES;
-  UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
-                                  [chip accessibilityLabel]);
-}
-
 #pragma mark Chip Adding
 
 - (void)addChip:(MDCChipView *)chipView {
-  [self.chips addObject:chipView];
+  [self.mutableChips addObject:chipView];
   self.textField.text = nil;
   [self setNeedsLayout];
 }
 
 - (void)removeChips:(NSArray<MDCChipView *> *)chips {
   [self.chipsToRemove addObjectsFromArray:chips];
-  [self.chips removeObjectsInArray:chips];
+  [self.mutableChips removeObjectsInArray:chips];
   [self setNeedsLayout];
 }
 
-- (NSArray<MDCChipView *> *)selectedChips {
-  NSMutableArray *selectedChips = [NSMutableArray new];
-  for (MDCChipView *chip in self.chips) {
-    if (chip.isSelected) {
-      [selectedChips addObject:chip];
-    }
-  }
-  return [selectedChips copy];
-}
 
 #pragma mark Notification Listener Methods
 
@@ -762,7 +745,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                          textFieldText:self.textField.text
                          canLabelFloat:self.canLabelFloat
                              isEditing:self.textField.isEditing
-                                 chips:self.chips];
+                                 chips:self.mutableChips];
 }
 
 - (MDCContainedInputViewLabelState)labelStateWithLabelText:(NSString *)labelText
@@ -911,17 +894,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)inputChipViewTextFieldDidDeleteBackward:(MDCBaseInputChipViewTextField *)textField
                                         oldText:(NSString *)oldText
                                         newText:(NSString *)newText {
-  BOOL isEmpty = newText.length == 0;
-  BOOL isNewlyEmpty = oldText.length > 0 && newText.length == 0;
-  if (isEmpty) {
-    if (!isNewlyEmpty) {
-      NSArray *selectedChips = [self selectedChips];
-      if (selectedChips.count > 0) {
-        [self removeChips:selectedChips];
-      } else if (self.chips.count > 0) {
-        [self selectChip:self.chips.lastObject];
-      }
-    }
+  if ([self.delegate respondsToSelector:@selector(inputChipViewDidDeleteBackwards:oldText:newText:)]) {
+    [self.delegate inputChipViewDidDeleteBackwards:self oldText:oldText newText:newText];
   }
 }
 
@@ -936,6 +910,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder {
   self.label.text = placeholder;
   [self setNeedsLayout];
+}
+
+-(NSArray<UIView *> *)chips {
+  return [self.mutableChips copy];
 }
 
 #pragma mark Theming

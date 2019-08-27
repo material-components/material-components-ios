@@ -421,14 +421,44 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 #pragma mark MDCInputChipViewDelegate
 
-- (void)inputChipViewDidReturn:(nonnull MDCBaseInputChipView *)inputChipView {
-  
-}
-
 - (void)inputChipViewDidDeleteBackwards:(nonnull MDCBaseInputChipView *)inputChipView
                                 oldText:(nullable NSString *)oldText
                                 newText:(nullable NSString *)newText {
-  
+  BOOL isEmpty = newText.length == 0;
+  BOOL isNewlyEmpty = oldText.length > 0 && newText.length == 0;
+  if (isEmpty) {
+    if (!isNewlyEmpty) {
+      NSArray<MDCChipView *> *selectedChips = [self selectedChipsWithChips:inputChipView.chips];
+      if (selectedChips.count > 0) {
+        [inputChipView removeChips:selectedChips];
+      } else if (inputChipView.chips.count > 0) {
+        [self selectChip:inputChipView.chips.lastObject];
+      }
+    }
+  }
 }
+
+- (NSArray<MDCChipView *> *)selectedChipsWithChips:(NSArray<UIView *> *)chips {
+  NSMutableArray *selectedChips = [NSMutableArray new];
+  for (UIView *view in chips) {
+    if ([view isKindOfClass:[MDCChipView class]]) {
+      MDCChipView *chipView = (MDCChipView *)view;
+      if (chipView.isSelected) {
+        [selectedChips addObject:chipView];
+      }
+    }
+  }
+  return [selectedChips copy];
+}
+
+- (void)selectChip:(UIView *)chip {
+  if ([chip isKindOfClass:[MDCChipView class]]) {
+    MDCChipView *chipView = (MDCChipView *)chip;
+    chipView.selected = YES;
+  }
+  UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
+                                  [chip accessibilityLabel]);
+}
+
 
 @end

@@ -18,13 +18,14 @@
 
 @class MDCBaseInputChipView;
 @protocol MDCInputChipViewDelegate <NSObject>
-- (void)inputChipViewDidReturn:(nonnull MDCBaseInputChipView *)inputChipView;
 - (void)inputChipViewDidDeleteBackwards:(nonnull MDCBaseInputChipView *)inputChipView
                                 oldText:(nullable NSString *)oldText
                                 newText:(nullable NSString *)newText;
 @end
 
 @interface MDCBaseInputChipView : UIControl
+
+@property(strong, nonatomic, nonnull, readonly) NSArray<UIView *> *chips;
 
 @property(weak, nonatomic, nullable) id<MDCInputChipViewDelegate> delegate;
 
@@ -95,7 +96,8 @@
 @property(nonatomic, assign) BOOL chipsWrap;
 @property(nonatomic, assign) CGFloat chipRowHeight;
 @property(nonatomic, assign) CGFloat chipRowSpacing;
-- (void)addChip:(nullable UIView *)chip;
+- (void)addChip:(nonnull UIView *)chip;
+- (void)removeChips:(nonnull NSArray<UIView *> *)chips;
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
 @property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
 
