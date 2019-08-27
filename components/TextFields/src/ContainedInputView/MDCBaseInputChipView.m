@@ -21,7 +21,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 // TODO: Refactor so it doesn't depend on chips
-#import "MaterialChips.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 #import "private/MDCContainedInputView.h"
@@ -604,9 +603,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return layer;
 }
 
-- (NSArray<MDCChipView *> *)chipsToAdd {
+- (NSArray<UIView *> *)chipsToAdd {
   NSMutableArray *chips = [[NSMutableArray alloc] init];
-  for (MDCChipView *chip in self.mutableChips) {
+  for (UIView *chip in self.mutableChips) {
     if (!chip.superview) {
       [chips addObject:chip];
     }
@@ -614,10 +613,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return [chips copy];
 }
 
-- (void)animateChipLayoutChangesWithChips:(NSArray<MDCChipView *> *)chips
+- (void)animateChipLayoutChangesWithChips:(NSArray<UIView *> *)chips
                                chipFrames:(NSArray<NSValue *> *)frames
-                            chipsToRemove:(NSArray<MDCChipView *> *)chipsToRemove
-                               chipsToAdd:(NSArray<MDCChipView *> *)chipsToAdd {
+                            chipsToRemove:(NSArray<UIView *> *)chipsToRemove
+                               chipsToAdd:(NSArray<UIView *> *)chipsToAdd {
   // iterate through views, calculate a frame and an isHidden value for each.
   // If the chip is going to be removed don't change the frame.
   // go through and animate each views new status
@@ -634,12 +633,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   if (self.chipsToRemove.count > 0) {
     [UIView animateWithDuration:0  // kChipAnimationDuration
         animations:^{
-          for (MDCChipView *chip in self.chipsToRemove) {
+          for (UIView *chip in self.chipsToRemove) {
             chip.alpha = 0;
           }
         }
         completion:^(BOOL finished) {
-          for (MDCChipView *chip in self.chipsToRemove) {
+          for (UIView *chip in self.chipsToRemove) {
             [chip removeFromSuperview];
           }
           [self.chipsToRemove removeAllObjects];
@@ -656,7 +655,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [UIView animateWithDuration:kChipAnimationDuration
       animations:^{
         for (NSUInteger idx = 0; idx < self.mutableChips.count; idx++) {
-          MDCChipView *chip = self.mutableChips[idx];
+          UIView *chip = self.mutableChips[idx];
           CGRect frame = CGRectZero;
           if (self.layout.chipFrames.count > idx) {
             frame = [self.layout.chipFrames[idx] CGRectValue];
@@ -672,15 +671,15 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)performChipAdditionsOnCompletion:(void (^)(void))completion {
-  NSArray<MDCChipView *> *chipsToAdd = self.chipsToAdd;
-  for (MDCChipView *chip in chipsToAdd) {
+  NSArray<UIView *> *chipsToAdd = self.chipsToAdd;
+  for (UIView *chip in chipsToAdd) {
     [self.scrollView addSubview:chip];
     chip.alpha = 0;
   }
   if (chipsToAdd.count > 0) {
     [UIView animateWithDuration:0  // kChipAnimationDuration
         animations:^{
-          for (MDCChipView *chip in chipsToAdd) {
+          for (UIView *chip in chipsToAdd) {
             chip.alpha = 1;
           }
         }
@@ -696,13 +695,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Chip Adding
 
-- (void)addChip:(MDCChipView *)chipView {
+- (void)addChip:(UIView *)chipView {
   [self.mutableChips addObject:chipView];
   self.textField.text = nil;
   [self setNeedsLayout];
 }
 
-- (void)removeChips:(NSArray<MDCChipView *> *)chips {
+- (void)removeChips:(NSArray<UIView *> *)chips {
   [self.chipsToRemove addObjectsFromArray:chips];
   [self.mutableChips removeObjectsInArray:chips];
   [self setNeedsLayout];

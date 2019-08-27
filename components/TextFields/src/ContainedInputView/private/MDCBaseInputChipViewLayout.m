@@ -18,8 +18,6 @@
 #import "MDCBaseInputChipView.h"
 #import "MaterialMath.h"
 
-#import "MaterialChips.h"
-
 static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
 
 static const CGFloat kLeadingMargin = (CGFloat)8.0;
@@ -346,7 +344,7 @@ static const CGFloat kGradientBlurLength = 6;
       //      CGFloat chipMinY = 0;
       //      CGRect chipFrame = CGRectZero;
       //      NSInteger row = 0;
-      //      for (MDCChipView *chip in chips) {
+      //      for (UIView *chip in chips) {
       //        CGFloat chipWidth = CGRectGetWidth(chip.frame);
       //        CGFloat chipHeight = CGRectGetHeight(chip.frame);
       //        CGFloat chipMaxX = chipMinX + chipWidth;
@@ -372,7 +370,7 @@ static const CGFloat kGradientBlurLength = 6;
     } else {
       CGFloat chipMinX = globalChipRowMinX;
       CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * (CGFloat)0.5);
-      for (MDCChipView *chip in rtlChips) {
+      for (UIView *chip in rtlChips) {
         CGFloat chipWidth = CGRectGetWidth(chip.frame);
         CGFloat chipHeight = CGRectGetHeight(chip.frame);
         CGFloat chipMinY = chipCenterY - ((CGFloat)0.5 * chipHeight);
@@ -390,7 +388,7 @@ static const CGFloat kGradientBlurLength = 6;
       CGFloat chipMinY = 0;
       CGRect chipFrame = CGRectZero;
       CGFloat row = 0;
-      for (MDCChipView *chip in chips) {
+      for (UIView *chip in chips) {
         CGFloat chipWidth = CGRectGetWidth(chip.frame);
         CGFloat chipHeight = CGRectGetHeight(chip.frame);
         CGFloat chipMaxX = chipMinX + chipWidth;
@@ -416,7 +414,7 @@ static const CGFloat kGradientBlurLength = 6;
     } else {
       CGFloat chipMinX = globalChipRowMinX;
       CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * (CGFloat)0.5);
-      for (MDCChipView *chip in chips) {
+      for (UIView *chip in chips) {
         CGFloat chipWidth = CGRectGetWidth(chip.frame);
         CGFloat chipHeight = CGRectGetHeight(chip.frame);
         CGFloat chipMinY = chipCenterY - ((CGFloat)0.5 * chipHeight);

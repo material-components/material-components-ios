@@ -15,7 +15,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-#import "MaterialChips.h"
 
 @interface MDCBaseTextAreaLayout : NSObject
 @property(nonatomic, assign) CGFloat globalTextMinX;
