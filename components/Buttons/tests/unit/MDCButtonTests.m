@@ -1276,6 +1276,43 @@ static NSString *controlStateDescription(UIControlState controlState) {
                 NSStringFromCGRect(expectedFrame), NSStringFromCGRect(self.button.frame));
 }
 
+- (void)testIntrinsicContentSizeWithMinimumSizeIncreasesSize {
+  // Given
+  CGSize originalSize = self.button.intrinsicContentSize;
+  CGSize expectedSize = CGSizeMake(originalSize.width + 10, originalSize.height + 10);
+
+  // When
+  self.button.minimumSize = expectedSize;
+
+  // Then
+  XCTAssertTrue(CGSizeEqualToSize(expectedSize, self.button.intrinsicContentSize));
+}
+
+- (void)testIntrinsicContentSizeWithMaximumDecreasesSize {
+  // Given
+  CGSize originalSize = self.button.intrinsicContentSize;
+  CGSize expectedSize = CGSizeMake(originalSize.width - 5, originalSize.height - 5);
+
+  // When
+  self.button.maximumSize = expectedSize;
+
+  // Then
+  XCTAssertTrue(CGSizeEqualToSize(expectedSize, self.button.intrinsicContentSize));
+}
+
+- (void)testIntrinsicContentSizeWithMaximumAndMinimumSizeBehavior {
+  // Given
+  CGSize originalSize = self.button.intrinsicContentSize;
+  CGSize expectedSize = CGSizeMake(originalSize.width + 5, originalSize.height - 5);
+
+  // When
+  self.button.maximumSize = CGSizeMake(0, expectedSize.height);
+  self.button.minimumSize = CGSizeMake(expectedSize.width, 0);
+
+  // Then
+  XCTAssertTrue(CGSizeEqualToSize(expectedSize, self.button.intrinsicContentSize));
+}
+
 #pragma mark - UIAccessibility
 
 - (void)testAccessibilityTraitsDefault {
