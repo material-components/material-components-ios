@@ -238,9 +238,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (UITextField *)createUiTextField {
   UITextField *textField = [[UITextField alloc] init];
-  textField.backgroundColor = [UIColor clearColor];
-  textField.borderStyle = UITextBorderStyleRoundedRect;
-  textField.textColor = [UIColor blackColor];
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   return textField;
 }
 
