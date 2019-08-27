@@ -771,11 +771,15 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   return _addedContentHeight;
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
+              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
 
-  [self resetCachedState];
+  [coordinator
+      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self resetCachedState];
+      }
+                      completion:nil];
 }
 
 #pragma mark UIScrollViewDelegate (Private)

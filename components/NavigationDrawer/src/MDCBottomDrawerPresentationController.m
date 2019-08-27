@@ -220,13 +220,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   [self.bottomDrawerContainerViewController.view layoutIfNeeded];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  [self.bottomDrawerContainerViewController viewWillTransitionToSize:size
-                                           withTransitionCoordinator:coordinator];
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
