@@ -37,8 +37,7 @@ static NSString *const exampleExtraLongText =
 
 @implementation BannerExampleContentView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = UIColor.grayColor;
@@ -132,7 +131,8 @@ static NSString *const exampleExtraLongText =
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Set up example content view
-  BannerExampleContentView *contentView = [[BannerExampleContentView alloc] initWithFrame:self.view.bounds];
+  BannerExampleContentView *contentView =
+      [[BannerExampleContentView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:contentView];
   self.contentView = contentView;
 
@@ -161,8 +161,8 @@ static NSString *const exampleExtraLongText =
 
   self.contentView.frame = self.view.bounds;
   self.exampleListTableView.frame =
-  CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
-             CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
+      CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
+                 CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
 
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
   // Adjust bannerViewContainer's frame
