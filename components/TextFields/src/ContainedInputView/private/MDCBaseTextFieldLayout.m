@@ -102,19 +102,21 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
   }
 
-  CGFloat apparentClearButtonMinX = 0;
+  // clearButtonVisibleMinX refers to the minX of the "X" imageview within the clear button as it
+  // appears, not of its actual touch target.
+  CGFloat clearButtonVisibleMinX = 0;
   if (isRTL) {
-    apparentClearButtonMinX =
+    clearButtonVisibleMinX =
         displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
   } else {
-    CGFloat apparentClearButtonMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
-                                                        : textFieldWidth - kHorizontalPadding;
-    apparentClearButtonMinX = apparentClearButtonMaxX - clearButton.imageViewSideLength;
+    CGFloat clearButtonVisibleMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
+                                                       : textFieldWidth - kHorizontalPadding;
+    clearButtonVisibleMinX = clearButtonVisibleMaxX - clearButton.imageViewSideLength;
   }
 
   CGFloat clearButtonImageViewSideMargin =
       (clearButton.sideLength - clearButton.imageViewSideLength) * (CGFloat)0.5;
-  CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
+  CGFloat clearButtonTouchTargetMinX = clearButtonVisibleMinX - clearButtonImageViewSideMargin;
 
   CGFloat floatingLabelMinY = positioningReference.paddingBetweenTopAndFloatingLabel;
   CGFloat floatingLabelHeight = floatingFont.lineHeight;
@@ -158,10 +160,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   if (isRTL) {
     if (displaysClearButton) {
-      CGFloat apparentClearButtonMaxX = apparentClearButtonMinX + clearButton.imageViewSideLength;
-      textRectMinX = apparentClearButtonMaxX + kHorizontalPadding;
+      CGFloat clearButtonVisibleMaxX = clearButtonVisibleMinX + clearButton.imageViewSideLength;
+      textRectMinX = clearButtonVisibleMaxX + kHorizontalPadding;
       labelMinX = textRectMinX;
-      floatingLabelMinX = apparentClearButtonMinX;
+      floatingLabelMinX = clearButtonVisibleMinX;
     } else {
       textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
       labelMinX = textRectMinX;
@@ -179,7 +181,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     labelMinX = textRectMinX;
     floatingLabelMinX = labelMinX;
     if (displaysClearButton) {
-      textRectMaxX = apparentClearButtonMinX - kHorizontalPadding;
+      textRectMaxX = clearButtonVisibleMinX - kHorizontalPadding;
     } else {
       textRectMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
                                        : textFieldWidth - kHorizontalPadding;
@@ -201,9 +203,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect rightViewFrame =
       CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
 
-  CGRect clearButtonFrameNormal = CGRectMake(actualClearButtonMinX, clearButtonMinY,
+  CGRect clearButtonFrameNormal = CGRectMake(clearButtonTouchTargetMinX, clearButtonMinY,
                                              clearButton.sideLength, clearButton.sideLength);
-  CGRect clearButtonFrameFloating = CGRectMake(actualClearButtonMinX, clearButtonFloatingMinY,
+  CGRect clearButtonFrameFloating = CGRectMake(clearButtonTouchTargetMinX, clearButtonFloatingMinY,
                                                clearButton.sideLength, clearButton.sideLength);
 
   CGRect labelFrameNormal = [self labelFrameWithText:label.text
