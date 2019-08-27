@@ -143,14 +143,11 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:containerMidY];
   }
 
-  CGFloat clearButtonMinY = 0;
-  CGFloat clearButtonFloatingMinY = 0;
-  if (displaysClearButton) {
-    clearButtonMinY = [self minYForSubviewWithHeight:clearButton.sideLength
-                                             centerY:textRectCenterYNormal];
-    clearButtonFloatingMinY = [self minYForSubviewWithHeight:clearButton.sideLength
-                                                     centerY:textRectCenterYWithFloatingLabel];
-  }
+  CGFloat clearButtonMinY = [self minYForSubviewWithHeight:clearButton.sideLength
+                                                   centerY:textRectCenterYNormal];
+  CGFloat clearButtonFloatingMinY =
+      [self minYForSubviewWithHeight:clearButton.sideLength
+                             centerY:textRectCenterYWithFloatingLabel];
 
   CGFloat textRectMinX = 0;
   CGFloat textRectMaxX = 0;
@@ -275,24 +272,18 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                        isEditing:(BOOL)isEditing
                             text:(NSString *)text {
   BOOL hasText = text.length > 0;
-  BOOL shouldDisplayClearButton = NO;
   switch (viewMode) {
     case UITextFieldViewModeWhileEditing:
-      shouldDisplayClearButton = isEditing && hasText;
-      break;
+      return isEditing && hasText;
     case UITextFieldViewModeUnlessEditing:
-      shouldDisplayClearButton = !isEditing;
-      break;
+      return !isEditing;
     case UITextFieldViewModeAlways:
-      shouldDisplayClearButton = YES;
-      break;
+      return YES;
     case UITextFieldViewModeNever:
-      shouldDisplayClearButton = NO;
-      break;
+      return NO;
     default:
-      break;
+      return NO;
   }
-  return shouldDisplayClearButton;
 }
 
 - (CGSize)floatingLabelSizeWithText:(NSString *)placeholder
