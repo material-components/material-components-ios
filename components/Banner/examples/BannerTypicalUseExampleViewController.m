@@ -32,11 +32,6 @@ static NSString *const exampleExtraLongText =
 @interface BannerExampleContentView : UIView
 
 @property(nonatomic, readwrite, strong) UILabel *contentLabel;
-@property(nonatomic, weak) MDCBannerView *bannerView;
-
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
@@ -58,235 +53,6 @@ static NSString *const exampleExtraLongText =
 - (void)layoutSubviews {
   [super layoutSubviews];
   self.contentLabel.center = self.center;
-  CGSize bannerViewSize = [self.bannerView sizeThatFits:self.bounds.size];
-  CGFloat topAreaInset = 0.0f;
-  if (@available(iOS 11.0, *)) {
-    topAreaInset = self.safeAreaInsets.top;
-  }
-  self.bannerView.frame =
-      CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
-  [self.bannerView setNeedsUpdateConstraints];
-}
-
-#pragma mark - Example handlers
-
-- (void)showSingleLineStyleBanner {
-  if (self.bannerView) {
-    [self.bannerView removeFromSuperview];
-  }
-
-  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textView.text = exampleShortText;
-  bannerView.textView.font = self.typographyScheme.body2;
-  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
-  bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  UIEdgeInsets margins = UIEdgeInsetsZero;
-  margins.left = exampleBannerContentPadding;
-  margins.right = exampleBannerContentPadding;
-  bannerView.layoutMargins = margins;
-  [self addSubview:bannerView];
-  self.bannerView = bannerView;
-
-  MDCButton *button = bannerView.leadingButton;
-  [button applyTextThemeWithScheme:self.containerScheme];
-  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  bannerView.trailingButton.hidden = YES;
-  bannerView.imageView.hidden = YES;
-  bannerView.showsDivider = YES;
-
-  [button addTarget:self
-                action:@selector(dismissBanner)
-      forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)showSingleLineStyleBannerWithIcon {
-  [self showSingleLineStyleBanner];
-  self.bannerView.imageView.hidden = NO;
-  NSBundle *bundle = [NSBundle bundleForClass:[BannerExampleContentView class]];
-  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
-                                                inBundle:bundle
-                           compatibleWithTraitCollection:nil]
-      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
-}
-
-- (void)showMultiLineAlignedButtonStyleBanner {
-  if (self.bannerView) {
-    [self.bannerView removeFromSuperview];
-  }
-
-  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textView.text = exampleLongText;
-  bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  UIEdgeInsets margins = UIEdgeInsetsZero;
-  margins.left = exampleBannerContentPadding;
-  margins.right = exampleBannerContentPadding;
-  bannerView.layoutMargins = margins;
-  bannerView.imageView.hidden = YES;
-  [self addSubview:bannerView];
-  self.bannerView = bannerView;
-
-  MDCButton *dismissButton = bannerView.leadingButton;
-  [dismissButton applyTextThemeWithScheme:self.containerScheme];
-  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [dismissButton addTarget:self
-                    action:@selector(dismissBanner)
-          forControlEvents:UIControlEventTouchUpInside];
-  MDCButton *changeTextButton = bannerView.trailingButton;
-  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
-  [changeTextButton setTitle:@"Long dismiss" forState:UIControlStateNormal];
-  [changeTextButton addTarget:self
-                       action:@selector(dismissBanner)
-             forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)showMultiLineAlignedButtonStyleBannerWithIcon {
-  [self showMultiLineAlignedButtonStyleBanner];
-  self.bannerView.imageView.hidden = NO;
-  NSBundle *bundle = [NSBundle bundleForClass:[BannerExampleContentView class]];
-  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
-                                                inBundle:bundle
-                           compatibleWithTraitCollection:nil]
-      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
-}
-
-- (void)showMultiLineStackedButtonStyleBanner {
-  if (self.bannerView) {
-    [self.bannerView removeFromSuperview];
-  }
-
-  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textView.text = exampleLongText;
-  bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  UIEdgeInsets margins = UIEdgeInsetsZero;
-  margins.left = exampleBannerContentPadding;
-  margins.right = exampleBannerContentPadding;
-  bannerView.layoutMargins = margins;
-  bannerView.imageView.hidden = YES;
-  [self addSubview:bannerView];
-  self.bannerView = bannerView;
-
-  MDCButton *dismissButton = bannerView.leadingButton;
-  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [dismissButton applyTextThemeWithScheme:self.containerScheme];
-  [dismissButton addTarget:self
-                    action:@selector(dismissBanner)
-          forControlEvents:UIControlEventTouchUpInside];
-  MDCButton *changeTextButton = bannerView.trailingButton;
-  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
-  [changeTextButton setTitle:@"Extra long long long dismiss" forState:UIControlStateNormal];
-  [changeTextButton addTarget:self
-                       action:@selector(dismissBanner)
-             forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)showMultiLineStackedButtonStyleBannerWithIcon {
-  [self showMultiLineStackedButtonStyleBanner];
-  self.bannerView.imageView.hidden = NO;
-  NSBundle *bundle = [NSBundle bundleForClass:[BannerExampleContentView class]];
-  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
-                                                inBundle:bundle
-                           compatibleWithTraitCollection:nil]
-      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
-}
-
-- (void)showSingleLineLongTextStyleBanner {
-  if (self.bannerView) {
-    [self.bannerView removeFromSuperview];
-  }
-
-  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
-  bannerView.textView.text = exampleLongText;
-  bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  UIEdgeInsets margins = UIEdgeInsetsZero;
-  margins.left = exampleBannerContentPadding;
-  margins.right = exampleBannerContentPadding;
-  bannerView.layoutMargins = margins;
-  [self addSubview:bannerView];
-  self.bannerView = bannerView;
-
-  MDCButton *button = bannerView.leadingButton;
-  [button applyTextThemeWithScheme:self.containerScheme];
-  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  bannerView.imageView.hidden = YES;
-  bannerView.showsDivider = YES;
-
-  [button addTarget:self
-                action:@selector(dismissBanner)
-      forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)showMultilineLongTextStyleBanner {
-  if (self.bannerView) {
-    [self.bannerView removeFromSuperview];
-  }
-
-  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textView.text = exampleLongText;
-  bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  UIEdgeInsets margins = UIEdgeInsetsZero;
-  margins.left = exampleBannerContentPadding;
-  margins.right = exampleBannerContentPadding;
-  bannerView.layoutMargins = margins;
-  [self addSubview:bannerView];
-  self.bannerView = bannerView;
-
-  MDCButton *button = bannerView.leadingButton;
-  [button applyTextThemeWithScheme:self.containerScheme];
-  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  bannerView.trailingButton.hidden = YES;
-  bannerView.imageView.hidden = YES;
-  bannerView.showsDivider = YES;
-
-  [button addTarget:self
-                action:@selector(dismissBanner)
-      forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)showMultilineLongAttributedTextStyleBanner {
-  if (self.bannerView) {
-    [self.bannerView removeFromSuperview];
-  }
-
-  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  NSMutableAttributedString *exampleString =
-      [[NSMutableAttributedString alloc] initWithString:exampleLongText];
-  [exampleString addAttribute:NSFontAttributeName
-                        value:self.typographyScheme.body2
-                        range:NSMakeRange(6, 5)];
-  [exampleString addAttribute:NSForegroundColorAttributeName
-                        value:UIColor.redColor
-                        range:NSMakeRange(12, 5)];
-  [exampleString addAttribute:NSLinkAttributeName
-                        value:@"http://www.google.com"
-                        range:NSMakeRange([exampleLongText length] - 11, 11)];
-  bannerView.textView.attributedText = exampleString;
-  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
-  bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  UIEdgeInsets margins = UIEdgeInsetsZero;
-  margins.left = exampleBannerContentPadding;
-  margins.right = exampleBannerContentPadding;
-  bannerView.layoutMargins = margins;
-  [self addSubview:bannerView];
-  self.bannerView = bannerView;
-
-  MDCButton *button = bannerView.leadingButton;
-  [button applyTextThemeWithScheme:self.containerScheme];
-  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  bannerView.trailingButton.hidden = YES;
-  bannerView.imageView.hidden = YES;
-  bannerView.showsDivider = YES;
-
-  [button addTarget:self
-                action:@selector(dismissBanner)
-      forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)dismissBanner {
-  [self.bannerView removeFromSuperview];
 }
 
 @end
@@ -341,20 +107,32 @@ static NSString *const exampleExtraLongText =
 @property(nonatomic, strong) UITableView *exampleListTableView;
 @property(nonatomic, strong) NSArray<BannerExampleUseInfo *> *exampleList;
 @property(nonatomic, weak) BannerExampleContentView *contentView;
+@property(nonatomic, weak) UILabel *contentViewLabel;
+@property(nonatomic, weak) MDCBannerView *bannerView;
+
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
 @implementation BannerTypicalUseExampleViewController
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _colorScheme = _containerScheme.colorScheme;
+    _typographyScheme = _containerScheme.typographyScheme;
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Set up example content view
   BannerExampleContentView *contentView =
       [[BannerExampleContentView alloc] initWithFrame:self.view.bounds];
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  contentView.containerScheme = containerScheme;
-  contentView.colorScheme = containerScheme.colorScheme;
-  contentView.typographyScheme = containerScheme.typographyScheme;
   [self.view addSubview:contentView];
   self.contentView = contentView;
 
@@ -385,6 +163,16 @@ static NSString *const exampleExtraLongText =
   self.exampleListTableView.frame =
       CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
                  CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
+
+  CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
+  // Adjust bannerViewContainer's frame
+  CGFloat topAreaInset = 0.0f;
+  if (@available(iOS 11.0, *)) {
+    topAreaInset = self.view.safeAreaInsets.top;
+  }
+  self.bannerView.frame =
+      CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+  [self.bannerView setNeedsUpdateConstraints];
 }
 
 #pragma mark - Internal helpers
@@ -394,67 +182,288 @@ static NSString *const exampleExtraLongText =
   BannerExampleUseInfo *exampleUseInfo1 =
       [BannerExampleUseInfo infoWithIdentifier:@"example1"
                                    displayName:@"Short Text with One Action"
-                              exampleUseTarget:self.contentView
+                              exampleUseTarget:self
                             exampleUseSelector:@selector(showSingleLineStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo1];
 
   BannerExampleUseInfo *exampleUseInfo2 =
       [BannerExampleUseInfo infoWithIdentifier:@"example2"
                                    displayName:@"Short Text with One Action (Icon)"
-                              exampleUseTarget:self.contentView
+                              exampleUseTarget:self
                             exampleUseSelector:@selector(showSingleLineStyleBannerWithIcon)];
   [bannerExampleList addObject:exampleUseInfo2];
 
   BannerExampleUseInfo *exampleUseInfo3 =
       [BannerExampleUseInfo infoWithIdentifier:@"example3"
                                    displayName:@"Long Text with Two Short Actions"
-                              exampleUseTarget:self.contentView
+                              exampleUseTarget:self
                             exampleUseSelector:@selector(showMultiLineAlignedButtonStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo3];
 
   BannerExampleUseInfo *exampleUseInfo4 = [BannerExampleUseInfo
       infoWithIdentifier:@"example4"
              displayName:@"Long Text with Two Short Actions (Icon)"
-        exampleUseTarget:self.contentView
+        exampleUseTarget:self
       exampleUseSelector:@selector(showMultiLineAlignedButtonStyleBannerWithIcon)];
   [bannerExampleList addObject:exampleUseInfo4];
 
   BannerExampleUseInfo *exampleUseInfo5 =
       [BannerExampleUseInfo infoWithIdentifier:@"example5"
                                    displayName:@"Long Text with Two Long Actions"
-                              exampleUseTarget:self.contentView
+                              exampleUseTarget:self
                             exampleUseSelector:@selector(showMultiLineStackedButtonStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo5];
 
   BannerExampleUseInfo *exampleUseInfo6 = [BannerExampleUseInfo
       infoWithIdentifier:@"example6"
              displayName:@"Long Text with Two Long Actions (Icon)"
-        exampleUseTarget:self.contentView
+        exampleUseTarget:self
       exampleUseSelector:@selector(showMultiLineStackedButtonStyleBannerWithIcon)];
   [bannerExampleList addObject:exampleUseInfo6];
 
   BannerExampleUseInfo *exampleUseInfo7 =
       [BannerExampleUseInfo infoWithIdentifier:@"example7"
                                    displayName:@"Long Text with One Action (Single Line Style)"
-                              exampleUseTarget:self.contentView
+                              exampleUseTarget:self
                             exampleUseSelector:@selector(showSingleLineLongTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo7];
 
   BannerExampleUseInfo *exampleUseInfo8 =
       [BannerExampleUseInfo infoWithIdentifier:@"example8"
                                    displayName:@"Long Text with One Action (Automatic Style)"
-                              exampleUseTarget:self.contentView
+                              exampleUseTarget:self
                             exampleUseSelector:@selector(showMultilineLongTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo8];
 
   BannerExampleUseInfo *exampleUseInfo9 = [BannerExampleUseInfo
       infoWithIdentifier:@"example9"
              displayName:@"Long Attributed Text with One Action"
-        exampleUseTarget:self.contentView
+        exampleUseTarget:self
       exampleUseSelector:@selector(showMultilineLongAttributedTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo9];
 
   return [bannerExampleList copy];
+}
+
+#pragma mark - Example handlers
+
+- (void)showSingleLineStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.textView.text = exampleShortText;
+  bannerView.textView.font = self.typographyScheme.body2;
+  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showSingleLineStyleBannerWithIcon {
+  [self showSingleLineStyleBanner];
+  self.bannerView.imageView.hidden = NO;
+  NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
+                                                inBundle:bundle
+                           compatibleWithTraitCollection:nil]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
+}
+
+- (void)showMultiLineAlignedButtonStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.textView.text = exampleLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  bannerView.imageView.hidden = YES;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *dismissButton = bannerView.leadingButton;
+  [dismissButton applyTextThemeWithScheme:self.containerScheme];
+  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [dismissButton addTarget:self
+                    action:@selector(dismissBanner)
+          forControlEvents:UIControlEventTouchUpInside];
+  MDCButton *changeTextButton = bannerView.trailingButton;
+  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
+  [changeTextButton setTitle:@"Long dismiss" forState:UIControlStateNormal];
+  [changeTextButton addTarget:self
+                       action:@selector(dismissBanner)
+             forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showMultiLineAlignedButtonStyleBannerWithIcon {
+  [self showMultiLineAlignedButtonStyleBanner];
+  self.bannerView.imageView.hidden = NO;
+  NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
+                                                inBundle:bundle
+                           compatibleWithTraitCollection:nil]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
+}
+
+- (void)showMultiLineStackedButtonStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.textView.text = exampleLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  bannerView.imageView.hidden = YES;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *dismissButton = bannerView.leadingButton;
+  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [dismissButton applyTextThemeWithScheme:self.containerScheme];
+  [dismissButton addTarget:self
+                    action:@selector(dismissBanner)
+          forControlEvents:UIControlEventTouchUpInside];
+  MDCButton *changeTextButton = bannerView.trailingButton;
+  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
+  [changeTextButton setTitle:@"Extra long long long dismiss" forState:UIControlStateNormal];
+  [changeTextButton addTarget:self
+                       action:@selector(dismissBanner)
+             forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showMultiLineStackedButtonStyleBannerWithIcon {
+  [self showMultiLineStackedButtonStyleBanner];
+  self.bannerView.imageView.hidden = NO;
+  NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
+                                                inBundle:bundle
+                           compatibleWithTraitCollection:nil]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
+}
+
+- (void)showSingleLineLongTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+  bannerView.textView.text = exampleLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showMultilineLongTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.textView.text = exampleLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showMultilineLongAttributedTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  NSMutableAttributedString *exampleString =
+      [[NSMutableAttributedString alloc] initWithString:exampleLongText];
+  [exampleString addAttribute:NSFontAttributeName
+                        value:self.typographyScheme.body2
+                        range:NSMakeRange(6, 5)];
+  [exampleString addAttribute:NSForegroundColorAttributeName
+                        value:UIColor.redColor
+                        range:NSMakeRange(12, 5)];
+  [exampleString addAttribute:NSLinkAttributeName
+                        value:@"http://www.google.com"
+                        range:NSMakeRange([exampleLongText length] - 11, 11)];
+  bannerView.textView.attributedText = exampleString;
+  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)dismissBanner {
+  [self.bannerView removeFromSuperview];
 }
 
 #pragma mark - UITableViewDataSource delegate methods
