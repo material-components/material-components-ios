@@ -42,16 +42,14 @@ MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
 
 - (void)commonMDCContainedInputViewColorSchemeInit {
   UIColor *textColor = [UIColor blackColor];
-  UIColor *underlineLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *assistiveLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *floatingLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *errorColor = [UIColor redColor];
-  UIColor *clearButtonTintColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.20];
+  UIColor *normalLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
   self.textColor = textColor;
-  self.underlineLabelColor = underlineLabelColor;
+  self.assistiveLabelColor = assistiveLabelColor;
   self.floatingLabelColor = floatingLabelColor;
+  self.normalLabelColor = normalLabelColor;
   self.placeholderColor = floatingLabelColor;
-  self.clearButtonTintColor = clearButtonTintColor;
-  self.errorColor = errorColor;
 }
 
 @end

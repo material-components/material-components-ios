@@ -94,12 +94,26 @@
  UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
  UIControlState value.
  */
-- (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state;
+- (void)setFloatingLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state;
 /**
  Returns the label color for a given state.
  @param state The UIControlState.
  */
-- (nonnull UIColor *)labelColorForState:(UIControlState)state;
+- (nonnull UIColor *)floatingLabelColorForState:(UIControlState)state;
+
+/**
+ Sets the label color for a given state.
+ @param labelColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setNormalLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state;
+/**
+ Returns the label color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)normalLabelColorForState:(UIControlState)state;
 
 /**
  Sets the text color for a given state.

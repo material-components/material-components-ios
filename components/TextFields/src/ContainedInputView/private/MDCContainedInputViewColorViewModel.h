@@ -28,21 +28,17 @@
 /**
  The color of the contained input view's underline label.
  */
-@property(strong, nonatomic, nonnull) UIColor *underlineLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *assistiveLabelColor;
 /**
- The color of the contained input view's floating label.
+ The color of the contained input view's label when it's floating.
  */
 @property(strong, nonatomic, nonnull) UIColor *floatingLabelColor;
+/**
+ The color of the contained input view's label when it's in its normal, i.e. not floating, state.
+ */
+@property(strong, nonatomic, nonnull) UIColor *normalLabelColor;
 /**
  The color of the contained input view's placeholder label.
  */
 @property(strong, nonatomic, nonnull) UIColor *placeholderColor;
-/**
- The tint color of the contained input view's clear button.
- */
-@property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
-/**
- The color the contained input view should apply during an error state.
- */
-@property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end

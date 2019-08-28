@@ -687,8 +687,8 @@
 - (void)applyMDCContainedInputViewColorScheming:
     (id<MDCContainedInputViewColorScheming>)colorScheming {
   self.textView.textColor = colorScheming.textColor;
-  self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
-  self.trailingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
+  self.leadingAssistiveLabel.textColor = colorScheming.assistiveLabelColor;
+  self.trailingAssistiveLabel.textColor = colorScheming.assistiveLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
 }
 

@@ -707,8 +707,8 @@
 - (void)applyMDCContainedInputViewColorScheming:
     (id<MDCContainedInputViewColorScheming>)colorScheming {
   self.textColor = colorScheming.textColor;
-  self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
-  self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
+  self.leadingAssistiveLabel.textColor = colorScheming.assistiveLabelColor;
+  self.leadingAssistiveLabel.textColor = colorScheming.assistiveLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
   self.placeholderLabel.textColor = colorScheming.placeholderColor;
 }
@@ -731,20 +731,37 @@
 
 #pragma mark Color Accessors
 
-- (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
+- (void)setNormalLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:containedInputViewState];
+  colorScheme.normalLabelColor = labelColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)normalLabelColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+      MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:containedInputViewState];
+  return colorScheme.normalLabelColor;
+}
+
+- (void)setFloatingLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+  MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:containedInputViewState];
   colorScheme.floatingLabelColor = labelColor;
   [self setNeedsLayout];
 }
 
-- (UIColor *)labelColorForState:(UIControlState)state {
+- (UIColor *)floatingLabelColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
-      MDCContainedInputViewStateWithUIControlState(state);
+  MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
+  [self containedInputViewColorSchemingForState:containedInputViewState];
   return colorScheme.floatingLabelColor;
 }
 

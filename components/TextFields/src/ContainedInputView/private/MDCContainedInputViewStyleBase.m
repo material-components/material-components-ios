@@ -44,7 +44,7 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
   MDCContainedInputViewColorScheme *colorScheme = [[MDCContainedInputViewColorScheme alloc] init];
 
   UIColor *floatingLabelColor = colorScheme.floatingLabelColor;
-  UIColor *underlineLabelColor = colorScheme.underlineLabelColor;
+  UIColor *assistiveLabelColor = colorScheme.assistiveLabelColor;
   UIColor *textColor = colorScheme.textColor;
 
   switch (state) {
@@ -61,7 +61,7 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
   }
 
   colorScheme.textColor = textColor;
-  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.assistiveLabelColor = assistiveLabelColor;
   colorScheme.floatingLabelColor = floatingLabelColor;
 
   return colorScheme;

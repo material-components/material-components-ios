@@ -75,9 +75,12 @@
   // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
   // color view model
 
-  [self setLabelColor:labelColor forState:UIControlStateNormal];
-  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
-  [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
+  [self setFloatingLabelColor:labelColor forState:UIControlStateNormal];
+  [self setFloatingLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setFloatingLabelColor:labelColorDisabled forState:UIControlStateDisabled];
+  [self setNormalLabelColor:labelColor forState:UIControlStateNormal];
+  [self setNormalLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setNormalLabelColor:labelColorDisabled forState:UIControlStateDisabled];
   [self setTextColor:textColor forState:UIControlStateNormal];
   [self setTextColor:textColor forState:UIControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];
@@ -109,9 +112,12 @@
   // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
   // color view model
 
-  [self setLabelColor:labelColor forState:UIControlStateNormal];
-  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
-  [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
+  [self setNormalLabelColor:labelColor forState:UIControlStateNormal];
+  [self setNormalLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setNormalLabelColor:labelColorDisabled forState:UIControlStateDisabled];
+  [self setFloatingLabelColor:labelColor forState:UIControlStateNormal];
+  [self setFloatingLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setFloatingLabelColor:labelColorDisabled forState:UIControlStateDisabled];
   [self setTextColor:textColor forState:UIControlStateNormal];
   [self setTextColor:textColor forState:UIControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];

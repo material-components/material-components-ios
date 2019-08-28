@@ -181,11 +181,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  */
 @interface MDCContainedInputViewColorScheme : NSObject <MDCContainedInputViewColorScheming>
 @property(strong, nonatomic, nonnull) UIColor *textColor;
-@property(strong, nonatomic, nonnull) UIColor *underlineLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *assistiveLabelColor;
 @property(strong, nonatomic, nonnull) UIColor *floatingLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *normalLabelColor;
 @property(strong, nonatomic, nonnull) UIColor *placeholderColor;
-@property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
-@property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
 
 @protocol MDCContainedInputViewStyle <NSObject>

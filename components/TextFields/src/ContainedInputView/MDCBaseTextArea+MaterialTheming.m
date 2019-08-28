@@ -136,14 +136,12 @@
     outlinedColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
                     containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
   UIColor *textColor = colorScheming.onSurfaceColor;
-  UIColor *underlineLabelColor =
+  UIColor *assistiveLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *floatingLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *placeholderColor = floatingLabelColor;
   UIColor *outlineColor = colorScheming.onSurfaceColor;
-  UIColor *clearButtonTintColor =
-      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
 
   switch (containedInputViewState) {
     case MDCContainedInputViewStateNormal:
@@ -153,7 +151,7 @@
       break;
       //    case MDCContainedInputViewStateErrored:
       //      floatingLabelColor = colorScheming.errorColor;
-      //      underlineLabelColor = colorScheming.errorColor;
+      //      assistiveLabelColor = colorScheming.errorColor;
       //      outlineColor = colorScheming.errorColor;
       //      break;
     case MDCContainedInputViewStateFocused:
@@ -167,10 +165,10 @@
   MDCContainedInputViewColorSchemeOutlined *colorScheme =
       [[MDCContainedInputViewColorSchemeOutlined alloc] init];
   colorScheme.textColor = textColor;
-  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.assistiveLabelColor = assistiveLabelColor;
   colorScheme.outlineColor = outlineColor;
   colorScheme.floatingLabelColor = floatingLabelColor;
-  colorScheme.clearButtonTintColor = clearButtonTintColor;
+  colorScheme.normalLabelColor = floatingLabelColor;
   colorScheme.placeholderColor = placeholderColor;
   return colorScheme;
 }
@@ -179,7 +177,7 @@
     filledColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
                   containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
   UIColor *textColor = colorScheming.onSurfaceColor;
-  UIColor *underlineLabelColor =
+  UIColor *assistiveLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *floatingLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
@@ -187,8 +185,6 @@
   UIColor *thickUnderlineFillColor = colorScheming.primaryColor;
   UIColor *filledSublayerFillColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-  UIColor *clearButtonTintColor =
-      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
 
   switch (containedInputViewState) {
     case MDCContainedInputViewStateNormal:
@@ -196,12 +192,6 @@
     case MDCContainedInputViewStateDisabled:
       floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
-      //    case MDCContainedInputViewStateErrored:
-      //      floatingLabelColor = colorScheming.errorColor;
-      //      underlineLabelColor = colorScheming.errorColor;
-      //      thinUnderlineFillColor = colorScheming.errorColor;
-      //      thickUnderlineFillColor = colorScheming.errorColor;
-      //      break;
     case MDCContainedInputViewStateFocused:
       floatingLabelColor = colorScheming.primaryColor;
       break;
@@ -215,9 +205,9 @@
   colorScheme.filledSublayerFillColor = filledSublayerFillColor;
   colorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
   colorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
-  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.assistiveLabelColor = assistiveLabelColor;
   colorScheme.floatingLabelColor = floatingLabelColor;
-  colorScheme.clearButtonTintColor = clearButtonTintColor;
+  colorScheme.normalLabelColor = floatingLabelColor;
   return colorScheme;
 }
 
