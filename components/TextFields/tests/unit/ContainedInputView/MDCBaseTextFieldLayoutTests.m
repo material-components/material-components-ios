@@ -54,7 +54,7 @@
                leftViewMode:viewMode
                   rightView:[self createSideView]
               rightViewMode:viewMode
-                clearButton:[[MDCContainedInputViewClearButton alloc] init]
+      clearButtonSideLength:19
             clearButtonMode:viewMode
                       isRTL:NO
                   isEditing:isEditing];
