@@ -1,3 +1,61 @@
+# 88.1.0
+
+This minor change introduces presentation and dismissal improvements to
+NavigationDrawer.  `MDCSnackbarMessage` subclasses must now respond to `-
+init`. Further improvements are made to the in-development Contained Input
+Fields.
+
+## API changes
+
+### TextFields+ContainedInputView
+
+#### MDCBaseTextField
+
+*new* property: `labelBehavior` in `MDCBaseTextField`
+
+*new* property: `label` in `MDCBaseTextField`
+
+#### MDCTextControlLabelBehavior
+
+*new* enum value: `MDCTextControlLabelBehaviorDisappears` in `MDCTextControlLabelBehavior`
+
+*new* enum: `MDCTextControlLabelBehavior`
+
+*new* enum value: `MDCTextControlLabelBehaviorFloats` in `MDCTextControlLabelBehavior`
+
+*new* typedef: `MDCTextControlLabelBehavior`
+
+## Changes
+
+### Banner
+
+* [Apply text theme to button in the typical example. (#8337)](https://github.com/material-components/material-components-ios/commit/42fbedcc4acfdb658f86d410e84ba44af923a274) (Wenyu Zhang)
+
+### List
+
+* [Fix docs rendering for snippet. (#8353)](https://github.com/material-components/material-components-ios/commit/822cbcbfe084beeff4afe9ceb60a5d7cee7067e1) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add fix for jump on interactive dismissal (#8347)](https://github.com/material-components/material-components-ios/commit/6c5db5b212f438d2b385a94d47f261acbbb8aaa6) (Jonathan Willing)
+* [Respect the rotation preferences of presenting controller (#8278)](https://github.com/material-components/material-components-ios/commit/cfbdd2a0a096be4822ac71b7e333e265dea0cbac) (Michael Cheung)
+
+### Ripple
+
+* [Add the layer masking in layoutSublayers if there are sublayers present. (#8359)](https://github.com/material-components/material-components-ios/commit/a70588207d6c18e62edca35dae6172c66e15f8c5) (Yarden Eitan)
+* [Performance Improvements on initialization (#8354)](https://github.com/material-components/material-components-ios/commit/00d6c02d7db60068a4b23d66b32e0de030f1df0e) (Yarden Eitan)
+
+### Snackbar
+
+* [Fix MDCSnackbarMessage convenience class methods (#7724)](https://github.com/material-components/material-components-ios/commit/6b3fc4cda7616a392f7d46e5da25cdfc7f066782) (Jack Freeman)
+
+### TextFields
+
+* [Add floating label to MDCBaseTextField (#8358)](https://github.com/material-components/material-components-ios/commit/70daa8f70d3e4863901915131120b315869b5350) (Andrew Overton)
+* [Add initial text rect logic (#8324)](https://github.com/material-components/material-components-ios/commit/35c01a8354ad4e374ac51401c3e3526710143fbb) (Andrew Overton)
+
+---
+
 # 88.0.1
 
 This patch release adds performance improvements to Ripple during its initilization and layout phases.
