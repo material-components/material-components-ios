@@ -101,8 +101,6 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
   }
 
-  // clearButtonVisibleMinX refers to the minX of the "X" imageview within the clear button as it
-  // appears, not of its actual touch target.
   CGFloat clearButtonMinX = 0;
   if (isRTL) {
     clearButtonMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
