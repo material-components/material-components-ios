@@ -29,7 +29,6 @@
 
 @interface MDCBaseTextField () <MDCContainedInputView>
 
-@property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) UILabel *placeholderLabel;
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelView *assistiveLabelView;
@@ -79,7 +78,6 @@
   [self setUpLabel];
   [self setUpPlaceholderLabel];
   [self setUpAssistiveLabels];
-  [self setUpClearButton];
 }
 
 #pragma mark View Setup
@@ -139,14 +137,6 @@
   [self addSubview:self.placeholderLabel];
 }
 
-- (void)setUpClearButton {
-  self.clearButton = [[MDCContainedInputViewClearButton alloc] init];
-  [self.clearButton addTarget:self
-                       action:@selector(clearButtonPressed:)
-             forControlEvents:UIControlEventTouchUpInside];
-  [self addSubview:self.clearButton];
-}
-
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
@@ -200,8 +190,6 @@
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self
                   withContainedInputViewColorScheming:colorScheming];
-  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout labelState:self.labelState];
-  self.clearButton.hidden = self.layout.clearButtonHidden;
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   self.leftView.hidden = self.layout.leftViewHidden;
@@ -236,16 +224,14 @@
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
-- (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
-                          labelState:(MDCContainedInputViewLabelState)labelState {
-  CGRect clearButtonFrame = layout.clearButtonFrameNormal;
-  if (labelState == MDCContainedInputViewLabelStateFloating) {
-    clearButtonFrame = layout.clearButtonFrameFloating;
-  }
-  return clearButtonFrame;
+- (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
+  CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
+  CGRect systemPlaceholderRect = [self placeholderRectForBounds:bounds];
+  return systemPlaceholderRect.size.height;
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
   CGFloat normalizedCustomAssistiveLabelDrawPriority =
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
@@ -262,7 +248,7 @@
                           leftViewMode:self.leftViewMode
                              rightView:self.rightView
                          rightViewMode:self.rightViewMode
-                           clearButton:self.clearButton
+                 clearButtonSideLength:clearButtonSideLength
                        clearButtonMode:self.clearButtonMode
                     leftAssistiveLabel:self.leftAssistiveLabel
                    rightAssistiveLabel:self.rightAssistiveLabel
@@ -541,7 +527,10 @@
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  return CGRectZero;
+  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
+    return self.layout.clearButtonFrameFloating;
+  }
+  return self.layout.clearButtonFrameNormal;
 }
 
 //TODO: Evaluate whether this method can be removed given the custom placeholder stuff.
@@ -707,13 +696,6 @@
   }
 }
 
-#pragma mark User Actions
-
-- (void)clearButtonPressed:(UIButton *)clearButton {
-  self.text = nil;
-  [self sendActionsForControlEvents:UIControlEventEditingChanged];
-}
-
 #pragma mark Internationalization
 
 - (BOOL)isRTL {
@@ -729,7 +711,6 @@
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
   self.placeholderLabel.textColor = colorScheming.placeholderColor;
-  self.clearButton.tintColor = colorScheming.clearButtonTintColor;
 }
 
 - (void)setContainedInputViewColorScheming:

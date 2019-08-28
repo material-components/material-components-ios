@@ -25,7 +25,6 @@
 
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
-@property(nonatomic, assign) BOOL clearButtonHidden;
 
 @property(nonatomic, assign) CGRect labelFrameFloating;
 @property(nonatomic, assign) CGRect labelFrameNormal;
@@ -59,7 +58,7 @@
                         leftViewMode:(UITextFieldViewMode)leftViewMode
                            rightView:(nullable UIView *)rightView
                        rightViewMode:(UITextFieldViewMode)rightViewMode
-                         clearButton:(nonnull MDCContainedInputViewClearButton *)clearButton
+               clearButtonSideLength:(CGFloat)clearButtonSideLength
                      clearButtonMode:(UITextFieldViewMode)clearButtonMode
                   leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
