@@ -15,7 +15,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputViewClearButton.h"
 #import "MDCContainerStyleVerticalPositioningReference.h"
 
 @interface MDCBaseTextFieldLayout : NSObject
@@ -33,21 +32,21 @@
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 
-- (nonnull instancetype)
-    initWithTextFieldSize:(CGSize)textFieldSize
-     positioningReference:
-         (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
-                     text:(nullable NSString *)text
-                     font:(nonnull UIFont *)font
-             floatingFont:(nonnull UIFont *)floatingFont
-                    label:(nonnull UILabel *)label
-                 leftView:(nullable UIView *)leftView
-             leftViewMode:(UITextFieldViewMode)leftViewMode
-                rightView:(nullable UIView *)rightView
-            rightViewMode:(UITextFieldViewMode)rightViewMode
-              clearButton:(nonnull MDCContainedInputViewClearButton *)clearButton
-          clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                    isRTL:(BOOL)isRTL
-                isEditing:(BOOL)isEditing;
+- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                         positioningReference:
+                             (nonnull id<MDCContainerStyleVerticalPositioningReference>)
+                                 positioningReference
+                                         text:(nullable NSString *)text
+                                         font:(nonnull UIFont *)font
+                                 floatingFont:(nonnull UIFont *)floatingFont
+                                        label:(nonnull UILabel *)label
+                                     leftView:(nullable UIView *)leftView
+                                 leftViewMode:(UITextFieldViewMode)leftViewMode
+                                    rightView:(nullable UIView *)rightView
+                                rightViewMode:(UITextFieldViewMode)rightViewMode
+                        clearButtonSideLength:(CGFloat)clearButtonSideLength
+                              clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                                        isRTL:(BOOL)isRTL
+                                    isEditing:(BOOL)isEditing;
 
 @end

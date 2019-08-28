@@ -19,13 +19,11 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBaseTextFieldLayout.h"
-#import "private/MDCContainedInputViewClearButton.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 
 @interface MDCBaseTextField ()
 
-@property(strong, nonatomic) MDCContainedInputViewClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
@@ -56,7 +54,6 @@
 - (void)commonMDCInputTextFieldInit {
   [self initializeProperties];
   [self setUpLabel];
-  [self setUpClearButton];
 }
 
 #pragma mark View Setup
@@ -82,13 +79,6 @@
 - (void)setUpLabel {
   self.label = [[UILabel alloc] initWithFrame:self.bounds];
   [self addSubview:self.label];
-}
-- (void)setUpClearButton {
-  self.clearButton = [[MDCContainedInputViewClearButton alloc] init];
-  [self.clearButton addTarget:self
-                       action:@selector(clearButtonPressed:)
-             forControlEvents:UIControlEventTouchUpInside];
-  [self addSubview:self.clearButton];
 }
 
 #pragma mark UIView Overrides
@@ -122,8 +112,6 @@
 
 - (void)postLayoutSubviews {
   [self layOutLabel];
-  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout labelState:self.labelState];
-  self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
@@ -164,7 +152,14 @@
   return clearButtonFrame;
 }
 
+- (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
+  CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
+  CGRect systemPlaceholderRect = [super clearButtonRectForBounds:bounds];
+  return systemPlaceholderRect.size.height;
+}
+
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
   id<MDCContainerStyleVerticalPositioningReference> positioningReference =
       [self createPositioningReference];
   return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
@@ -177,7 +172,7 @@
                                                   leftViewMode:self.leftViewMode
                                                      rightView:self.rightView
                                                  rightViewMode:self.rightViewMode
-                                                   clearButton:self.clearButton
+                                         clearButtonSideLength:clearButtonSideLength
                                                clearButtonMode:self.clearButtonMode
                                                          isRTL:self.isRTL
                                                      isEditing:self.isEditing];
@@ -223,12 +218,14 @@
   [self mdc_setRightView:rightView];
 }
 
-/**
- MDCBaseTextField, and other non-UITextFields objects conforming to MDCContainedInputView, share a
- custom clear button. The system clear button is not used.
- */
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  return CGRectZero;
+  if (self.layout.clearButtonHidden) {
+    return CGRectZero;
+  }
+  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
+    return self.layout.clearButtonFrameFloating;
+  }
+  return self.layout.clearButtonFrameNormal;
 }
 
 #pragma mark Custom Accessors

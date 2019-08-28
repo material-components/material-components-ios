@@ -35,7 +35,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
                         rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(MDCContainedInputViewClearButton *)clearButton
+                clearButtonSideLength:(CGFloat)clearButtonSideLength
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
@@ -51,7 +51,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                               leftViewMode:leftViewMode
                                  rightView:rightView
                              rightViewMode:rightViewMode
-                               clearButton:clearButton
+                     clearButtonSideLength:clearButtonSideLength
                            clearButtonMode:clearButtonMode
                                      isRTL:isRTL
                                  isEditing:isEditing];
@@ -73,7 +73,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
                            rightViewMode:(UITextFieldViewMode)rightViewMode
-                             clearButton:(MDCContainedInputViewClearButton *)clearButton
+                   clearButtonSideLength:(CGFloat)clearButtonSideLength
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
@@ -83,10 +83,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   BOOL displaysRightView = [self displaysSideView:rightView
                                          viewMode:rightViewMode
                                         isEditing:isEditing];
-  BOOL displaysClearButton = [self shouldDisplayClearButton:clearButton
-                                                   viewMode:clearButtonMode
-                                                  isEditing:isEditing
-                                                       text:text];
+  BOOL displaysClearButton = [self shouldDisplayClearButtonWithViewMode:clearButtonMode
+                                                              isEditing:isEditing
+                                                                   text:text];
   CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
   CGFloat leftViewMinX = 0;
   CGFloat leftViewMaxX = 0;
@@ -104,19 +103,14 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   // clearButtonVisibleMinX refers to the minX of the "X" imageview within the clear button as it
   // appears, not of its actual touch target.
-  CGFloat clearButtonVisibleMinX = 0;
+  CGFloat clearButtonMinX = 0;
   if (isRTL) {
-    clearButtonVisibleMinX =
-        displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    clearButtonMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
   } else {
-    CGFloat clearButtonVisibleMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
-                                                       : textFieldWidth - kHorizontalPadding;
-    clearButtonVisibleMinX = clearButtonVisibleMaxX - clearButton.imageViewSideLength;
+    CGFloat clearButtonMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
+                                                : textFieldWidth - kHorizontalPadding;
+    clearButtonMinX = clearButtonMaxX - clearButtonSideLength;
   }
-
-  CGFloat clearButtonImageViewSideMargin =
-      (clearButton.sideLength - clearButton.imageViewSideLength) * (CGFloat)0.5;
-  CGFloat clearButtonTouchTargetMinX = clearButtonVisibleMinX - clearButtonImageViewSideMargin;
 
   CGFloat floatingLabelMinY = positioningReference.paddingBetweenTopAndFloatingLabel;
   CGFloat floatingLabelHeight = floatingFont.lineHeight;
@@ -145,10 +139,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:containerMidY];
   }
 
-  CGFloat clearButtonMinY = [self minYForSubviewWithHeight:clearButton.sideLength
+  CGFloat clearButtonMinY = [self minYForSubviewWithHeight:clearButtonSideLength
                                                    centerY:textRectCenterYNormal];
   CGFloat clearButtonFloatingMinY =
-      [self minYForSubviewWithHeight:clearButton.sideLength
+      [self minYForSubviewWithHeight:clearButtonSideLength
                              centerY:textRectCenterYWithFloatingLabel];
 
   CGFloat textRectMinX = 0;
@@ -160,10 +154,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   if (isRTL) {
     if (displaysClearButton) {
-      CGFloat clearButtonVisibleMaxX = clearButtonVisibleMinX + clearButton.imageViewSideLength;
-      textRectMinX = clearButtonVisibleMaxX + kHorizontalPadding;
+      CGFloat clearButtonMaxX = clearButtonMinX + clearButtonSideLength;
+      textRectMinX = clearButtonMaxX + kHorizontalPadding;
       labelMinX = textRectMinX;
-      floatingLabelMinX = clearButtonVisibleMinX;
+      floatingLabelMinX = clearButtonMinX;
     } else {
       textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
       labelMinX = textRectMinX;
@@ -181,7 +175,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     labelMinX = textRectMinX;
     floatingLabelMinX = labelMinX;
     if (displaysClearButton) {
-      textRectMaxX = clearButtonVisibleMinX - kHorizontalPadding;
+      textRectMaxX = clearButtonMinX - kHorizontalPadding;
     } else {
       textRectMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
                                        : textFieldWidth - kHorizontalPadding;
@@ -203,10 +197,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect rightViewFrame =
       CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
 
-  CGRect clearButtonFrameNormal = CGRectMake(clearButtonTouchTargetMinX, clearButtonMinY,
-                                             clearButton.sideLength, clearButton.sideLength);
-  CGRect clearButtonFrameFloating = CGRectMake(clearButtonTouchTargetMinX, clearButtonFloatingMinY,
-                                               clearButton.sideLength, clearButton.sideLength);
+  CGRect clearButtonFrameNormal =
+      CGRectMake(clearButtonMinX, clearButtonMinY, clearButtonSideLength, clearButtonSideLength);
+  CGRect clearButtonFrameFloating = CGRectMake(clearButtonMinX, clearButtonFloatingMinY,
+                                               clearButtonSideLength, clearButtonSideLength);
 
   CGRect labelFrameNormal = [self labelFrameWithText:label.text
                                           labelState:MDCContainedInputViewLabelStateNormal
@@ -269,10 +263,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   return displaysSideView;
 }
 
-- (BOOL)shouldDisplayClearButton:(UIButton *)clearButton
-                        viewMode:(UITextFieldViewMode)viewMode
-                       isEditing:(BOOL)isEditing
-                            text:(NSString *)text {
+- (BOOL)shouldDisplayClearButtonWithViewMode:(UITextFieldViewMode)viewMode
+                                   isEditing:(BOOL)isEditing
+                                        text:(NSString *)text {
   BOOL hasText = text.length > 0;
   switch (viewMode) {
     case UITextFieldViewModeWhileEditing:
