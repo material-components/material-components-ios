@@ -227,7 +227,6 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   self.textRectNormal = textRectNormal;
   self.labelFrameFloating = labelFrameFloating;
   self.labelFrameNormal = labelFrameNormal;
-  self.clearButtonHidden = !displaysClearButton;
   self.leftViewHidden = !displaysLeftView;
   self.rightViewHidden = !displaysRightView;
 }

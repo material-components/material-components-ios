@@ -143,21 +143,6 @@
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
-- (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
-                          labelState:(MDCContainedInputViewLabelState)labelState {
-  CGRect clearButtonFrame = layout.clearButtonFrameNormal;
-  if (labelState == MDCContainedInputViewLabelStateFloating) {
-    clearButtonFrame = layout.clearButtonFrameFloating;
-  }
-  return clearButtonFrame;
-}
-
-- (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
-  CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
-  CGRect systemPlaceholderRect = [super clearButtonRectForBounds:bounds];
-  return systemPlaceholderRect.size.height;
-}
-
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
   id<MDCContainerStyleVerticalPositioningReference> positioningReference =
@@ -192,6 +177,12 @@
   }
 }
 
+- (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
+  CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
+  CGRect systemPlaceholderRect = [super clearButtonRectForBounds:bounds];
+  return systemPlaceholderRect.size.height;
+}
+
 #pragma mark UITextField Accessor Overrides
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
@@ -219,9 +210,6 @@
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  if (self.layout.clearButtonHidden) {
-    return CGRectZero;
-  }
   if (self.labelState == MDCContainedInputViewLabelStateFloating) {
     return self.layout.clearButtonFrameFloating;
   }
@@ -411,13 +399,6 @@
   } else {
     return MDCContainedInputViewLabelStateNone;
   }
-}
-
-#pragma mark User Actions
-
-- (void)clearButtonPressed:(UIButton *)clearButton {
-  self.text = nil;
-  [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 #pragma mark Internationalization

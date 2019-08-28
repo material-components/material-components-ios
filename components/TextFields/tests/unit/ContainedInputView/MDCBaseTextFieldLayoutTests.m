@@ -43,21 +43,21 @@
 
   MDCContainedInputViewVerticalPositioningGuideBase *positioningReference =
       [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
-  MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc]
-      initWithTextFieldSize:textFieldSize
-       positioningReference:positioningReference
-                       text:@"Text"
-                       font:font
-               floatingFont:floatingFont
-                      label:[[UILabel alloc] init]
-                   leftView:[self createSideView]
-               leftViewMode:viewMode
-                  rightView:[self createSideView]
-              rightViewMode:viewMode
-      clearButtonSideLength:19
-            clearButtonMode:viewMode
-                      isRTL:NO
-                  isEditing:isEditing];
+  MDCBaseTextFieldLayout *layout =
+      [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
+                                       positioningReference:positioningReference
+                                                       text:@"Text"
+                                                       font:font
+                                               floatingFont:floatingFont
+                                                      label:[[UILabel alloc] init]
+                                                   leftView:[self createSideView]
+                                               leftViewMode:viewMode
+                                                  rightView:[self createSideView]
+                                              rightViewMode:viewMode
+                                      clearButtonSideLength:19
+                                            clearButtonMode:viewMode
+                                                      isRTL:NO
+                                                  isEditing:isEditing];
   return layout;
 }
 
