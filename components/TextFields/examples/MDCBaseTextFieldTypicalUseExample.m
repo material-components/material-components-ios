@@ -45,6 +45,7 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   self.textField = [[MDCBaseTextField alloc] initWithFrame:self.preferredTextFieldFrame];
   self.textField.borderStyle = UITextBorderStyleRoundedRect;
+  self.textField.label.text = @"This is a label";
   [self.view addSubview:self.textField];
 }
 

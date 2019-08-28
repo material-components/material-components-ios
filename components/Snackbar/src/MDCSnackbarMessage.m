@@ -35,13 +35,13 @@ static BOOL _usesLegacySnackbar = NO;
 @dynamic text;
 
 + (instancetype)messageWithText:(NSString *)text {
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  MDCSnackbarMessage *message = [[[self class] alloc] init];
   message.text = text;
   return message;
 }
 
 + (instancetype)messageWithAttributedText:(NSAttributedString *)attributedText {
-  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  MDCSnackbarMessage *message = [[[self class] alloc] init];
   message.attributedText = attributedText;
   return message;
 }
