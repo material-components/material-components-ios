@@ -261,7 +261,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
-    extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Buttons"
     extension.dependency "MaterialComponents/Buttons+Theming"
     extension.dependency "MaterialComponents/Elevation"
