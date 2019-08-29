@@ -835,7 +835,6 @@ static NSString *const kLongTitle5Arabic =
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
-<<<<<<< HEAD
 - (void)testThreeActionsSufficientSizeShortTextLTRWithDefaultPresentationStyleOniOS13 {
   // Given
   MDCActionSheetAction *action1 =
@@ -870,6 +869,7 @@ static NSString *const kLongTitle5Arabic =
   // Then
   [self waitForExpectations:@[ expectation ] timeout:5];
   [self snapshotVerifyViewForIOS13:window];
+<<<<<<< HEAD
 =======
 - (void)testActionSheetHeaderDividerColorWithOnlyTitle {
   // Given
@@ -945,6 +945,9 @@ static NSString *const kLongTitle5Arabic =
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 >>>>>>> initial
+=======
+>>>>>>> clean
 }
 
 @end
+
