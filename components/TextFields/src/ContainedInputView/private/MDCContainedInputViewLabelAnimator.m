@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCContainedInputViewLabelAnimator.h"
+
 #import "MaterialMath.h"
 
 @interface MDCContainedInputViewLabelAnimator ()
@@ -23,7 +24,7 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.animationDuration = 0.2;
+    _animationDuration = 0.15;
   }
   return self;
 }

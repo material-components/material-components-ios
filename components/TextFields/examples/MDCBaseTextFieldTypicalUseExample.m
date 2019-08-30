@@ -72,7 +72,7 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
 }
 
 - (CGRect)preferredTextFieldFrame {
-  return CGRectMake(15, 100, CGRectGetWidth(self.view.frame) - 30, 50);
+  return CGRectMake(15, 120, CGRectGetWidth(self.view.frame) - 30, 50);
 }
 
 - (void)viewWillLayoutSubviews {
