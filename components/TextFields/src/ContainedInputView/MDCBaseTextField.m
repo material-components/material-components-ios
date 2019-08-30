@@ -32,15 +32,11 @@
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) UILabel *placeholderLabel;
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelView *assistiveLabelView;
-
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
-
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
-
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
-@property(nonatomic, assign) BOOL isPlaceholderVisible;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
@@ -165,7 +161,6 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
-  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
   self.placeholderLabel.text = self.placeholder;
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
@@ -179,7 +174,7 @@
                                                  labelState:self.labelState];
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
                             placeholderFrame:placeholderFrame
-                        isPlaceholderVisible:self.isPlaceholderVisible];
+                        isPlaceholderVisible:self.shouldPlaceholderBeVisible];
   [self.labelAnimator layOutLabel:self.label
                             state:self.labelState
                  normalLabelFrame:self.layout.labelFrameNormal
@@ -191,12 +186,11 @@
   [self.containerStyle applyStyleToContainedInputView:self
                   withContainedInputViewColorScheming:colorScheming];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
-  self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
+  [self.assistiveLabelView applyLayout:self.layout.assistiveLabelViewLayout];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
-  self.assistiveLabelView.leftAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.leftAssistiveLabelFrame;
-  self.assistiveLabelView.rightAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.rightAssistiveLabelFrame;
-  // TODO: Consider hiding views that don't actually fit in the frame
+//  self.assistiveLabelView.leftAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.leftAssistiveLabelFrame;
+//  self.assistiveLabelView.rightAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.rightAssistiveLabelFrame;
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
@@ -227,7 +221,7 @@
 - (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
   CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
   CGRect systemPlaceholderRect = [self placeholderRectForBounds:bounds];
-  return systemPlaceholderRect.size.height;
+  return CGRectGetHeight(systemPlaceholderRect);
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
@@ -238,12 +232,9 @@
                  initWithTextFieldSize:textFieldSize
                   positioningReference:[self createPositioningReference]
                                   text:self.text
-                           placeholder:self.placeholder
                                   font:self.normalFont
                           floatingFont:self.floatingFont
                                  label:self.label
-                            labelState:self.labelState
-                         labelBehavior:self.labelBehavior
                               leftView:self.leftView
                           leftViewMode:self.leftViewMode
                              rightView:self.rightView
@@ -477,7 +468,7 @@
 #pragma mark MDCContainedInputView accessors
 
 - (CGRect)containerFrame {
-  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
+  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
 }
 
 - (CGFloat)numberOfTextRows {

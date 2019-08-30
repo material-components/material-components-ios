@@ -63,38 +63,25 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
     (MDCContainedInputViewState)state {
   MDCContainedInputViewColorSchemeOutlined *colorScheme =
       [[MDCContainedInputViewColorSchemeOutlined alloc] init];
-  UIColor *outlineColor = [UIColor blackColor];
-  switch (state) {
-    case MDCContainedInputViewStateNormal:
-      break;
-    case MDCContainedInputViewStateDisabled:
-      break;
-    case MDCContainedInputViewStateFocused:
-      //      outlineColor = [UIColor blackColor]//colorScheme.primaryColor;
-      break;
-    default:
-      break;
-  }
-  colorScheme.outlineColor = outlineColor;
+  colorScheme.outlineColor = [UIColor blackColor];
   return (id<MDCContainedInputViewColorScheming>)colorScheme;
 }
 
 - (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
     withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
-  UIView *uiView = nil;
   if (![containedInputView isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:containedInputView];
     return;
   }
-  uiView = (UIView *)containedInputView;
-  CGRect placeholderFrame = containedInputView.label.frame;
+  CGRect labelFrame = containedInputView.label.frame;
   BOOL isFloatingLabelFloating =
       containedInputView.labelState == MDCContainedInputViewLabelStateFloating;
-  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerFrame);
+  CGFloat containerHeight = CGRectGetMaxY(containedInputView.containerFrame);
   CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
+  UIView *uiView = (UIView *)containedInputView;
   [self applyStyleTo:uiView
-             placeholderFrame:placeholderFrame
-      topRowBottomRowDividerY:topRowBottomRowDividerY
+             labelFrame:labelFrame
+      containerHeight:containerHeight
       isFloatingLabelFloating:isFloatingLabelFloating
              outlineLineWidth:lineWidth];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
@@ -114,18 +101,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   [self.outlinedSublayer removeFromSuperlayer];
 }
 
-//- (BOOL)isPlaceholderFloatingWithFrame:(CGRect)frame {
-//  return CGRectGetMinY(frame) <= 0 && CGRectGetMaxY(frame) >= 0;
-//}
-
 - (void)applyStyleTo:(UIView *)view
-           placeholderFrame:(CGRect)placeholderFrame
-    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+           labelFrame:(CGRect)labelFrame
+    containerHeight:(CGFloat)containerHeight
     isFloatingLabelFloating:(BOOL)isFloatingLabelFloating
            outlineLineWidth:(CGFloat)outlineLineWidth {
   UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
-                                      placeholderFrame:placeholderFrame
-                               topRowBottomRowDividerY:topRowBottomRowDividerY
+                                      labelFrame:labelFrame
+                               containerHeight:containerHeight
                                              lineWidth:outlineLineWidth
                                isFloatingLabelFloating:isFloatingLabelFloating];
   self.outlinedSublayer.path = path.CGPath;
@@ -136,22 +119,22 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 }
 
 - (UIBezierPath *)outlinePathWithViewBounds:(CGRect)viewBounds
-                           placeholderFrame:(CGRect)placeholderFrame
-                    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+                           labelFrame:(CGRect)labelFrame
+                    containerHeight:(CGFloat)containerHeight
                                   lineWidth:(CGFloat)lineWidth
                     isFloatingLabelFloating:(BOOL)isFloatingLabelFloating {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat radius = kOutlinedContainerStyleCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
+  CGFloat sublayerMaxY = containerHeight;
 
   CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
   [path moveToPoint:startingPoint];
   if (isFloatingLabelFloating) {
-    CGFloat leftLineBreak = CGRectGetMinX(placeholderFrame) - kFloatingLabelOutlineSidePadding;
-    CGFloat rightLineBreak = CGRectGetMaxX(placeholderFrame) + kFloatingLabelOutlineSidePadding;
+    CGFloat leftLineBreak = CGRectGetMinX(labelFrame) - kFloatingLabelOutlineSidePadding;
+    CGFloat rightLineBreak = CGRectGetMaxX(labelFrame) + kFloatingLabelOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];

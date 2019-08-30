@@ -34,7 +34,6 @@
                                         newText:(NSString *)newText;
 - (void)inputChipViewTextFieldDidBecomeFirstResponder:(BOOL)didBecome;
 - (void)inputChipViewTextFieldDidResignFirstResponder:(BOOL)didResign;
-- (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder;
 @end
 
 @interface MDCBaseInputChipViewTextField : UITextField
@@ -76,12 +75,6 @@
   return didBecomeFirstResponder;
 }
 
-- (void)setPlaceholder:(NSString *)placeholder {
-  [super setPlaceholder:placeholder];
-  [self.inputChipViewTextFieldDelegate inputChipViewTextFieldDidSetPlaceholder:placeholder];
-}
-
-// we don't want to display the placeholder, we have a label that we create and manage to do that.
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
   return CGRectZero;
 }
@@ -107,8 +100,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                     UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
-@property(strong, nonatomic) UIButton *clearButton;
-@property(strong, nonatomic) UIImageView *clearButtonImageView;
 @property(strong, nonatomic) UILabel *label;
 
 @property(strong, nonatomic) UILabel *leftAssistiveLabel;
@@ -131,10 +122,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(strong, nonatomic) CAGradientLayer *horizontalGradient;
 @property(strong, nonatomic) CAGradientLayer *verticalGradient;
 
-//@property(strong, nonatomic) UIButton *clearButton;
-//@property(strong, nonatomic) UIImageView *clearButtonImageView;
-//@property(strong, nonatomic) UILabel *floatingLabel;
-//
 //@property(strong, nonatomic) UILabel *leftAssistiveLabel;
 //@property(strong, nonatomic) UILabel *rightAssistiveLabel;
 
@@ -182,7 +169,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpGradientLayers];
   [self setUpColorSchemesDictionary];
   [self setUpAssistiveLabels];
-  [self setUpClearButton];
   [self setUpContainerStyle];
 }
 
@@ -305,26 +291,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  self.rightAssistiveLabel.font = underlineFont;
   //  [self addSubview:self.leftAssistiveLabel];
   //  [self addSubview:self.rightAssistiveLabel];
-}
-
-- (void)setUpClearButton {
-  //  CGFloat clearButtonSideLength = MDCBaseTextFieldLayout.clearButtonSideLength;
-  //  CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
-  //  self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
-  //  [self.clearButton addTarget:self
-  //                       action:@selector(clearButtonPressed:)
-  //             forControlEvents:UIControlEventTouchUpInside];
-  //
-  //  CGFloat clearButtonImageViewSideLength =
-  //  MDCBaseTextFieldLayout.clearButtonImageViewSideLength; CGRect clearButtonImageViewRect =
-  //  CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
-  //  self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
-  //  UIImage *clearButtonImage =
-  //  [[self untintedClearButtonImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  //  self.clearButtonImageView.image = clearButtonImage;
-  //  [self.clearButton addSubview:self.clearButtonImageView];
-  //  [self addSubview:self.clearButton];
-  //  self.clearButtonImageView.center = self.clearButton.center;
 }
 
 - (void)setUpGradientLayers {
@@ -540,9 +506,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self.containerStyle applyStyleToContainedInputView:self
                   withContainedInputViewColorScheming:colorScheming];
 
-  //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
-  //                                           labelState:self.labelState];
-  //  self.clearButton.hidden = self.layout.clearButtonHidden;
   //  self.leftAssistiveLabel.frame = self.layout.leftAssistiveLabelFrame;
   //  self.rightAssistiveLabel.frame = self.layout.rightAssistiveLabelFrame;
 
@@ -904,11 +867,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)inputChipViewTextFieldDidBecomeFirstResponder:(BOOL)didBecome {
   [self handleResponderChange];
-}
-
-- (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder {
-  self.label.text = placeholder;
-  [self setNeedsLayout];
 }
 
 -(NSArray<UIView *> *)chips {

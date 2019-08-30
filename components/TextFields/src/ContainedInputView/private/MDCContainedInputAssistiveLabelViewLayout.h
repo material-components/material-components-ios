@@ -23,7 +23,7 @@
 @property(nonatomic, assign, readonly) CGRect rightAssistiveLabelFrame;
 @property(nonatomic, assign, readonly) CGFloat calculatedHeight;
 
-- (instancetype)initWithSuperviewWidth:(CGFloat)superviewWidth
+- (instancetype)initWithWidth:(CGFloat)superviewWidth
                     leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                    rightAssistiveLabel:(UILabel *)rightAssistiveLabel
             underlineLabelDrawPriority:

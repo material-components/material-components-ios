@@ -46,17 +46,11 @@
   [self addSubview:self.rightAssistiveLabel];
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  if (self.layout) {
-    self.leftAssistiveLabel.frame = self.layout.leftAssistiveLabelFrame;
-    self.rightAssistiveLabel.frame = self.layout.rightAssistiveLabelFrame;
-    self.leftAssistiveLabel.hidden = NO;
-    self.rightAssistiveLabel.hidden = NO;
-  } else {
-    self.leftAssistiveLabel.hidden = YES;
-    self.rightAssistiveLabel.hidden = YES;
-  }
+-(void)applyLayout:(MDCContainedInputAssistiveLabelViewLayout *)layout {
+  self.leftAssistiveLabel.frame = layout.leftAssistiveLabelFrame;
+  self.leftAssistiveLabel.hidden = layout == nil;
+  self.rightAssistiveLabel.frame = layout.rightAssistiveLabelFrame;
+  self.rightAssistiveLabel.hidden = layout == nil;
 }
 
 @end

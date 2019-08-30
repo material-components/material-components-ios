@@ -41,19 +41,16 @@
     MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
-@property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
+@property(nonatomic, assign) CGFloat containerHeight;
 
 - (nonnull instancetype)
                initWithTextFieldSize:(CGSize)textFieldSize
                 positioningReference:
                     (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                 text:(nullable NSString *)text
-                         placeholder:(nullable NSString *)placeholder
                                 font:(nonnull UIFont *)font
                         floatingFont:(nonnull UIFont *)floatingFont
                                label:(nonnull UILabel *)label
-                          labelState:(MDCContainedInputViewLabelState)labelState
-                       labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                             leftView:(nullable UIView *)leftView
                         leftViewMode:(UITextFieldViewMode)leftViewMode
                            rightView:(nullable UIView *)rightView

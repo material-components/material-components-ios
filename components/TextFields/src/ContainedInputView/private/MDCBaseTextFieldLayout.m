@@ -27,12 +27,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                  positioningReference:
                      (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                  text:(NSString *)text
-                          placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
-                           labelState:(MDCContainedInputViewLabelState)labelState
-                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
@@ -52,12 +49,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     [self calculateLayoutWithTextFieldSize:textFieldSize
                       positioningReference:positioningReference
                                       text:text
-                               placeholder:placeholder
                                       font:font
                               floatingFont:floatingFont
                                      label:label
-                                labelState:labelState
-                             labelBehavior:labelBehavior
                                   leftView:leftView
                               leftViewMode:leftViewMode
                                  rightView:rightView
@@ -82,12 +76,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                     positioningReference:
                         (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                     text:(NSString *)text
-                             placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
                                    label:(UILabel *)label
-                              labelState:(MDCContainedInputViewLabelState)labelState
-                           labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
@@ -102,10 +93,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                 preferredContainerHeight:(CGFloat)preferredContainerHeight
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
-  BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
+  BOOL shouldAttemptToDisplayLeftView = [self displaysSideView:leftView
                                                                     viewMode:leftViewMode
                                                                    isEditing:isEditing];
-  BOOL shouldAttemptToDisplayRightView = [self shouldAttemptToDisplaySideView:rightView
+  BOOL shouldAttemptToDisplayRightView = [self displaysSideView:rightView
                                                                      viewMode:rightViewMode
                                                                     isEditing:isEditing];
   BOOL shouldAttemptToDisplayClearButton =
@@ -250,7 +241,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat assistiveLabelVerticalPadding = positioningReference.paddingAroundAssistiveLabels;
   self.assistiveLabelViewLayout = [[MDCContainedInputAssistiveLabelViewLayout alloc]
-                initWithSuperviewWidth:textFieldWidth
+                initWithWidth:textFieldWidth
                     leftAssistiveLabel:leftAssistiveLabel
                    rightAssistiveLabel:rightAssistiveLabel
             underlineLabelDrawPriority:underlineLabelDrawPriority
@@ -260,20 +251,19 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                  isRTL:isRTL];
   self.assistiveLabelViewFrame = CGRectMake(0, positioningReference.containerHeight, textFieldWidth,
                                             self.assistiveLabelViewLayout.calculatedHeight);
-
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.clearButtonFrameFloating = clearButtonFrameFloating;
   self.clearButtonFrameNormal = clearButtonFrameNormal;
   self.textRectFloating = textRectFloating;
   self.textRectNormal = textRectNormal;
-  self.placeholderFrameFloating = textRectFloating;
-  self.placeholderFrameNormal = textRectNormal;
+  self.placeholderFrameFloating = CGRectOffset(textRectFloating, 0, -1);
+  self.placeholderFrameNormal = CGRectOffset(textRectNormal, 0, -1);
   self.labelFrameFloating = labelFrameFloating;
   self.labelFrameNormal = labelFrameNormal;
   self.leftViewHidden = !shouldAttemptToDisplayLeftView;
   self.rightViewHidden = !shouldAttemptToDisplayRightView;
-  self.topRowBottomRowDividerY = positioningReference.containerHeight;
+  self.containerHeight = positioningReference.containerHeight;
 }
 
 - (CGFloat)leadingAssistiveLabelWidthWithCombinedAssistiveLabelsWidth:
@@ -286,29 +276,24 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   return (CGFloat)round((double)(centerY - ((CGFloat)0.5 * height)));
 }
 
-- (BOOL)shouldAttemptToDisplaySideView:(UIView *)subview
-                              viewMode:(UITextFieldViewMode)viewMode
-                             isEditing:(BOOL)isEditing {
-  BOOL shouldAttemptToDisplaySideView = NO;
+- (BOOL)displaysSideView:(UIView *)subview
+                viewMode:(UITextFieldViewMode)viewMode
+               isEditing:(BOOL)isEditing {
   if (subview && !CGSizeEqualToSize(CGSizeZero, subview.frame.size)) {
     switch (viewMode) {
       case UITextFieldViewModeWhileEditing:
-        shouldAttemptToDisplaySideView = isEditing;
-        break;
+        return isEditing;
       case UITextFieldViewModeUnlessEditing:
-        shouldAttemptToDisplaySideView = !isEditing;
-        break;
+        return !isEditing;
       case UITextFieldViewModeAlways:
-        shouldAttemptToDisplaySideView = YES;
-        break;
+        return YES;
       case UITextFieldViewModeNever:
-        shouldAttemptToDisplaySideView = NO;
-        break;
+        return NO;
       default:
-        break;
+        return NO;
     }
   }
-  return shouldAttemptToDisplaySideView;
+  return NO;
 }
 
 - (BOOL)shouldDisplayClearButtonWithViewMode:(UITextFieldViewMode)viewMode
@@ -329,7 +314,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   }
 }
 
-- (CGSize)floatingLabelSizeWithText:(NSString *)placeholder
+- (CGSize)floatingLabelSizeWithText:(NSString *)text
                            maxWidth:(CGFloat)maxWidth
                                font:(UIFont *)font {
   if (!font) {
@@ -337,10 +322,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   }
   CGSize fittingSize = CGSizeMake(maxWidth, CGFLOAT_MAX);
   NSDictionary *attributes = @{NSFontAttributeName : font};
-  CGRect rect = [placeholder boundingRectWithSize:fittingSize
-                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                       attributes:attributes
-                                          context:nil];
+  CGRect rect = [text boundingRectWithSize:fittingSize
+                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                attributes:attributes
+                                   context:nil];
   rect.size.height = font.lineHeight;
   return rect.size;
 }
@@ -394,42 +379,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 }
 
 - (CGFloat)calculatedHeight {
-  CGFloat maxY = 0;
-  CGFloat labelFrameFloatingMaxY = CGRectGetMaxY(self.labelFrameFloating);
-  if (labelFrameFloatingMaxY > maxY) {
-    maxY = labelFrameFloatingMaxY;
-  }
-  CGFloat labelFrameNormalMaxY = CGRectGetMaxY(self.labelFrameNormal);
-  if (labelFrameFloatingMaxY > maxY) {
-    maxY = labelFrameNormalMaxY;
-  }
-  CGFloat textRectNormalMaxY = CGRectGetMaxY(self.textRectNormal);
-  if (textRectNormalMaxY > maxY) {
-    maxY = textRectNormalMaxY;
-  }
-  CGFloat textRectFloatingMaxY = CGRectGetMaxY(self.textRectFloating);
-  if (textRectFloatingMaxY > maxY) {
-    maxY = textRectFloatingMaxY;
-  }
-  CGFloat clearButtonFrameNormalMaxY = CGRectGetMaxY(self.clearButtonFrameNormal);
-  if (clearButtonFrameNormalMaxY > maxY) {
-    maxY = clearButtonFrameNormalMaxY;
-  }
-  CGFloat clearButtonFrameFloatingMaxY = CGRectGetMaxY(self.clearButtonFrameFloating);
-  if (clearButtonFrameFloatingMaxY > maxY) {
-    maxY = clearButtonFrameFloatingMaxY;
-  }
-  CGFloat leftViewFrameMaxY = CGRectGetMaxY(self.leftViewFrame);
-  if (leftViewFrameMaxY > maxY) {
-    maxY = leftViewFrameMaxY;
-  }
-  CGFloat rightViewFrameMaxY = CGRectGetMaxY(self.rightViewFrame);
-  if (rightViewFrameMaxY > maxY) {
-    maxY = rightViewFrameMaxY;
-  }
-  if (self.topRowBottomRowDividerY > maxY) {
-    maxY = self.topRowBottomRowDividerY;
-  }
+  CGFloat maxY = self.containerHeight;
   CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
   if (underlineLabelViewMaxY > maxY) {
     maxY = underlineLabelViewMaxY;

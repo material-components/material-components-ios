@@ -129,10 +129,10 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
     self.thickUnderlineLayer.fillColor = filledScheme.thickUnderlineFillColor.CGColor;
   }
 
-  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containerFrame);
+  CGFloat containerHeight = CGRectGetMaxY(containerFrame);
   UIBezierPath *filledSublayerBezier =
       [self filledSublayerPathWithTextFieldBounds:view.bounds
-                          topRowBottomRowDividerY:topRowBottomRowDividerY];
+                          containerHeight:containerHeight];
   self.filledSublayer.path = filledSublayerBezier.CGPath;
   if (self.filledSublayer.superlayer != view.layer) {
     [view.layer insertSublayer:self.filledSublayer atIndex:0];
@@ -143,14 +143,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   CGFloat thickUnderlineWidth = shouldShowThickUnderline ? viewWidth : 0;
   UIBezierPath *targetThickUnderlineBezier =
       [self filledSublayerUnderlinePathWithViewBounds:view.bounds
-                              topRowBottomRowDividerY:topRowBottomRowDividerY
+                              containerHeight:containerHeight
                                    underlineThickness:kFilledContainerStyleUnderlineWidthThick
                                        underlineWidth:thickUnderlineWidth];
   CGFloat thinUnderlineThickness =
       shouldShowThickUnderline ? 0 : kFilledContainerStyleUnderlineWidthThin;
   UIBezierPath *targetThinUnderlineBezier =
       [self filledSublayerUnderlinePathWithViewBounds:view.bounds
-                              topRowBottomRowDividerY:topRowBottomRowDividerY
+                              containerHeight:containerHeight
                                    underlineThickness:thinUnderlineThickness
                                        underlineWidth:viewWidth];
   //  NSLog(@"target thick: %@",NSStringFromCGRect(targetThickUnderlineBezier.bounds));
@@ -343,13 +343,13 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 }
 
 - (UIBezierPath *)filledSublayerPathWithTextFieldBounds:(CGRect)viewBounds
-                                topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY {
+                                containerHeight:(CGFloat)containerHeight {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat topRadius = kFilledContainerStyleTopCornerRadius;
   CGFloat bottomRadius = 0;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
+  CGFloat sublayerMaxY = containerHeight;
 
   CGPoint startingPoint = CGPointMake(topRadius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - topRadius, sublayerMinY);
@@ -390,7 +390,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 }
 
 - (UIBezierPath *)filledSublayerUnderlinePathWithViewBounds:(CGRect)viewBounds
-                                    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+                                    containerHeight:(CGFloat)containerHeight
                                          underlineThickness:(CGFloat)underlineThickness
                                              underlineWidth:(CGFloat)underlineWidth {
   UIBezierPath *path = [[UIBezierPath alloc] init];
@@ -399,7 +399,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   CGFloat halfUnderlineWidth = underlineWidth * (CGFloat)0.5;
   CGFloat sublayerMinX = halfViewWidth - halfUnderlineWidth;
   CGFloat sublayerMaxX = sublayerMinX + underlineWidth;
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
+  CGFloat sublayerMaxY = containerHeight;
   CGFloat sublayerMinY = sublayerMaxY - underlineThickness;
 
   CGPoint startingPoint = CGPointMake(sublayerMinX, sublayerMinY);

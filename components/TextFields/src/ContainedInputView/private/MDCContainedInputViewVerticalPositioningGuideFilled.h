@@ -27,15 +27,6 @@
 @property(nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;
 @property(nonatomic, assign, readonly) CGFloat containerHeight;
 
-@property(nonatomic, assign) CGFloat floatingLabelHeight;
-@property(nonatomic, assign) CGFloat normalFontLineHeight;
-@property(nonatomic, assign) CGFloat textRowHeight;
-@property(nonatomic, assign) CGFloat numberOfTextRows;
-@property(nonatomic, assign) CGFloat density;
-@property(nonatomic, assign) CGFloat preferredContainerHeight;
-@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
-@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
-
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                           normalFontLineHeight:(CGFloat)normalFontLineHeight
                                  textRowHeight:(CGFloat)textRowHeight

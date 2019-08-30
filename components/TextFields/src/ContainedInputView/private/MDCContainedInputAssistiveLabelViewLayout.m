@@ -26,7 +26,7 @@
 
 #pragma mark Object Lifecycle
 
-- (instancetype)initWithSuperviewWidth:(CGFloat)superviewWidth
+- (instancetype)initWithWidth:(CGFloat)superviewWidth
                     leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                    rightAssistiveLabel:(UILabel *)rightAssistiveLabel
             underlineLabelDrawPriority:
