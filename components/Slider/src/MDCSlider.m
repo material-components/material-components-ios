@@ -593,8 +593,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
                                       _thumbTrack.filledTrackAnchorValue <= _thumbTrack.value);
       BOOL valueCrossesBelowAnchor = (_thumbTrack.value <= _thumbTrack.filledTrackAnchorValue &&
                                       _thumbTrack.filledTrackAnchorValue < _previousValue);
-      BOOL crossesAnchor = _previousValue != -CGFLOAT_MAX &&
-          (valueCrossesAboveAnchor || valueCrossesBelowAnchor);
+      BOOL crossesAnchor =
+          _previousValue != -CGFLOAT_MAX && (valueCrossesAboveAnchor || valueCrossesBelowAnchor);
       if (self.shouldEnableHapticsForAllDiscreteValues ||
           _thumbTrack.value == _thumbTrack.minimumValue ||
           _thumbTrack.value == _thumbTrack.maximumValue || crossesAnchor) {
