@@ -70,7 +70,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
 
 /** The view that divides the header from the table. */
-@property(nonatomic, strong, nullable) UIView *headerDividerView;
+@property(nonatomic, strong, nonnull) UIView *headerDividerView;
 
 /**
  Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.

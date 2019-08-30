@@ -22,7 +22,7 @@
 static const CGFloat kSafeAreaAmount = 20;
 
 @interface MDCActionSheetController (MDCTesting)
-@property(nonatomic, strong, nullable) UIView *headerDividerView;
+@property(nonatomic, strong, nonnull) UIView *headerDividerView;
 @end
 
 @interface MDCActionSheetHeaderView (Testing)
