@@ -949,5 +949,53 @@ static NSString *const kLongTitle5Arabic =
 >>>>>>> clean
 }
 
-@end
+- (void)testActionSheetWithHeaderShown {
+  // Given
+  self.recordMode = YES;
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:@"Foo"];
+  [self.actionSheetController addAction:action1];
+  [self.actionSheetController addAction:action2];
+  self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
 
+  // When
+  self.actionSheetController.showHeaderDivider = YES;
+  self.actionSheetController.headerDividerColor = UIColor.blackColor;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
+}
+
+- (void)testActionSheetWithHeaderShownButNoTitleOrMessage {
+  // Given
+  self.recordMode = YES;
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:nil
+                                                                                message:nil];
+  [self.actionSheetController addAction:action1];
+  [self.actionSheetController addAction:action2];
+  self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // When
+  self.actionSheetController.showHeaderDivider = YES;
+  self.actionSheetController.headerDividerColor = UIColor.blackColor;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
+}
+
+@end
