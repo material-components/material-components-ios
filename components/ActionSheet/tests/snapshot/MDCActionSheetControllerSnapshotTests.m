@@ -889,6 +889,8 @@ static NSString *const kLongTitle5Arabic =
   // When
   self.actionSheetController.showHeaderDivider = YES;
   self.actionSheetController.headerDividerColor = UIColor.blackColor;
+  [self.actionSheetController.view setNeedsLayout];
+  [self.actionSheetController.view layoutIfNeeded];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
@@ -913,6 +915,8 @@ static NSString *const kLongTitle5Arabic =
   // When
   self.actionSheetController.showHeaderDivider = YES;
   self.actionSheetController.headerDividerColor = UIColor.blackColor;
+  [self.actionSheetController.view setNeedsLayout];
+  [self.actionSheetController.view layoutIfNeeded];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
