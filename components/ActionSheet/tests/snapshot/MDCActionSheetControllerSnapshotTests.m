@@ -869,89 +869,10 @@ static NSString *const kLongTitle5Arabic =
   // Then
   [self waitForExpectations:@[ expectation ] timeout:5];
   [self snapshotVerifyViewForIOS13:window];
-<<<<<<< HEAD
-=======
-- (void)testActionSheetHeaderDividerColorWithOnlyTitle {
-  // Given
-  MDCActionSheetAction *action1 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action2 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:@"Foo"];
-  [controller addAction:action1];
-  [controller addAction:action2];
-
-  // When
-  controller.headerDividerColor = UIColor.blackColor;
-  controller.view.bounds = CGRectMake(0, 0, 320, 200);
-  [controller.view setNeedsLayout];
-  [controller.view layoutIfNeeded];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
-}
-
-- (void)testActionSheetHeaderDividerColorWithTitleAndMessage {
-  // Given
-  MDCActionSheetAction *action1 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action2 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:@"Foo" message:@"Bar"];
-  [controller addAction:action1];
-  [controller addAction:action2];
-
-  // When
-  controller.headerDividerColor = UIColor.blackColor;
-  controller.view.bounds = CGRectMake(0, 0, 320, 200);
-  [controller.view setNeedsLayout];
-  [controller.view layoutIfNeeded];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
-}
-
-- (void)testActionSheetHeaderDividerColorWithNoHeader {
-  // Given
-  MDCActionSheetAction *action1 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action2 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [controller addAction:action1];
-  [controller addAction:action2];
-
-  // When
-  controller.headerDividerColor = UIColor.blackColor;
-  controller.view.bounds = CGRectMake(0, 0, 320, 200);
-  [controller.view setNeedsLayout];
-  [controller.view layoutIfNeeded];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
->>>>>>> initial
-=======
->>>>>>> clean
 }
 
 - (void)testActionSheetWithHeaderShown {
   // Given
-  self.recordMode = YES;
   MDCActionSheetAction *action1 =
       [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
                                       image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
@@ -975,7 +896,6 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testActionSheetWithHeaderShownButNoTitleOrMessage {
   // Given
-  self.recordMode = YES;
   MDCActionSheetAction *action1 =
       [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
                                       image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
