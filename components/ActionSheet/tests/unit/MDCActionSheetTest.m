@@ -489,7 +489,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
-  CGFloat originalTableContentInsets = self.actionSheet.tableView.contentInset.bottom;
+  CGFloat originalTableContentInsets = self.actionSheet.tableView.contentOffset.y;
 
   // When
   self.actionSheet.showHeaderDivider = YES;
@@ -497,7 +497,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet.view layoutIfNeeded];
 
   // Then
-  XCTAssertGreaterThan(self.actionSheet.tableView.contentInset.bottom, originalTableContentInsets);
+  XCTAssertGreaterThan(self.actionSheet.tableView.contentOffset.y, originalTableContentInsets);
 }
 
 - (void)testTableViewContentInsetsWithHeaderDividerViewAndMessage {
@@ -506,7 +506,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
-  CGFloat originalTableContentInsets = self.actionSheet.tableView.contentInset.bottom;
+  CGFloat originalTableContentInsets = self.actionSheet.tableView.contentOffset.y;
 
   // When
   self.actionSheet.showHeaderDivider = YES;
@@ -514,7 +514,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet.view layoutIfNeeded];
 
   // Then
-  XCTAssertGreaterThan(self.actionSheet.tableView.contentInset.bottom, originalTableContentInsets);
+  XCTAssertGreaterThan(self.actionSheet.tableView.contentOffset.y, originalTableContentInsets);
 }
 
 - (void)testTableViewContentInsetsWithHeaderDividerViewAndNoTitleOrMessage {
@@ -524,7 +524,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
-  CGFloat originalTableContentInsets = self.actionSheet.tableView.contentInset.bottom;
+  CGFloat originalTableContentInsets = self.actionSheet.tableView.contentOffset.y;
 
   // When
   self.actionSheet.showHeaderDivider = YES;
@@ -532,7 +532,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet.view layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.actionSheet.tableView.contentInset.bottom,
+  XCTAssertEqualWithAccuracy(self.actionSheet.tableView.contentOffset.y,
                              originalTableContentInsets, 0.001);
 }
 
