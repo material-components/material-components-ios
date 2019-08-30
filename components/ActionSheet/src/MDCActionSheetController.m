@@ -135,6 +135,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
     _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
     _headerDividerColor = UIColor.clearColor;
+    _headerDividerView = [[UIView alloc] init];
     _mdc_overrideBaseElevation = -1;
   }
 
