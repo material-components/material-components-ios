@@ -22,6 +22,8 @@
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
 
+@property(nonatomic, assign) CGRect clearButtonFrameFloating;
+@property(nonatomic, assign) CGRect clearButtonFrameNormal;
 @property(nonatomic, assign) CGRect labelFrameFloating;
 @property(nonatomic, assign) CGRect labelFrameNormal;
 @property(nonatomic, assign) CGRect textRectNormal;
@@ -33,6 +35,7 @@
                          positioningReference:
                              (nonnull id<MDCContainerStyleVerticalPositioningReference>)
                                  positioningReference
+                                         text:(nullable NSString *)text
                                          font:(nonnull UIFont *)font
                                  floatingFont:(nonnull UIFont *)floatingFont
                                         label:(nonnull UILabel *)label
@@ -40,6 +43,8 @@
                                  leftViewMode:(UITextFieldViewMode)leftViewMode
                                     rightView:(nullable UIView *)rightView
                                 rightViewMode:(UITextFieldViewMode)rightViewMode
+                        clearButtonSideLength:(CGFloat)clearButtonSideLength
+                              clearButtonMode:(UITextFieldViewMode)clearButtonMode
                                         isRTL:(BOOL)isRTL
                                     isEditing:(BOOL)isEditing;
 

@@ -40,18 +40,24 @@
   CGSize textFieldSize = CGSizeMake(100, 30);
   UIFont *font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   UIFont *floatingFont = [font fontWithSize:(font.pointSize * (CGFloat)0.5)];
-  MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc]
-      initWithTextFieldSize:textFieldSize
-       positioningReference:[MDCContainedInputViewVerticalPositioningGuideBase new]
-                       font:font
-               floatingFont:floatingFont
-                      label:[UILabel new]
-                   leftView:[self createSideView]
-               leftViewMode:viewMode
-                  rightView:[self createSideView]
-              rightViewMode:viewMode
-                      isRTL:NO
-                  isEditing:isEditing];
+
+  MDCContainedInputViewVerticalPositioningGuideBase *positioningReference =
+      [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
+  MDCBaseTextFieldLayout *layout =
+      [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
+                                       positioningReference:positioningReference
+                                                       text:@"Text"
+                                                       font:font
+                                               floatingFont:floatingFont
+                                                      label:[[UILabel alloc] init]
+                                                   leftView:[self createSideView]
+                                               leftViewMode:viewMode
+                                                  rightView:[self createSideView]
+                                              rightViewMode:viewMode
+                                      clearButtonSideLength:19
+                                            clearButtonMode:viewMode
+                                                      isRTL:NO
+                                                  isEditing:isEditing];
   return layout;
 }
 

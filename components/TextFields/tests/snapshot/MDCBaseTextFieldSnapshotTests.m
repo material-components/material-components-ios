@@ -114,4 +114,16 @@
   [self generateSnapshotAndVerifyForView:textField];
 }
 
+- (void)testTextFieldWithVisibleClearButton {
+  // Given
+  MDCBaseTextField *textField = [self createBaseTextField];
+
+  // When
+  textField.clearButtonMode = UITextFieldViewModeAlways;
+  textField.text = @"Text";
+
+  // Then
+  [self generateSnapshotAndVerifyForView:textField];
+}
+
 @end
