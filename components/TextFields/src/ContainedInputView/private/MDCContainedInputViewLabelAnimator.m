@@ -14,8 +14,6 @@
 
 #import "MDCContainedInputViewLabelAnimator.h"
 
-#import "MaterialMath.h"
-
 @interface MDCContainedInputViewLabelAnimator ()
 @end
 

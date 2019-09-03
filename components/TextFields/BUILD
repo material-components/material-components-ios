@@ -62,7 +62,6 @@ mdc_extension_objc_library(
     name = "ContainedInputView",
     deps = [
         "@material_internationalization_ios//:MDFInternationalization",
-        "//components/private/Math",
     ],
 )
 
