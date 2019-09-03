@@ -532,8 +532,8 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet.view layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.actionSheet.tableView.contentOffset.y,
-                             originalTableContentInsets, 0.001);
+  XCTAssertEqualWithAccuracy(self.actionSheet.tableView.contentOffset.y, originalTableContentInsets,
+                             0.001);
 }
 
 @end
