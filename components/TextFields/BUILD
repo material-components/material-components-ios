@@ -107,6 +107,7 @@ mdc_examples_objc_library(
         ":ContainedInputView",
         ":TextFields",
         ":TypographyThemer",
+        "//components/Buttons",
         "//components/schemes/Container",
     ],
 )
