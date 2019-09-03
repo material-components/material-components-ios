@@ -58,8 +58,6 @@
                            chipsWrap:(BOOL)chipsWrap
                        chipRowHeight:(CGFloat)chipRowHeight
                     interChipSpacing:(CGFloat)interChipSpacing
-                         clearButton:(UIButton *)clearButton
-                 clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:

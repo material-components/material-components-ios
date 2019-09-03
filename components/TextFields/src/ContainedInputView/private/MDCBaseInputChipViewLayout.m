@@ -51,8 +51,6 @@ static const CGFloat kGradientBlurLength = 6;
                            chipsWrap:(BOOL)chipsWrap
                        chipRowHeight:(CGFloat)chipRowHeight
                     interChipSpacing:(CGFloat)interChipSpacing
-                         clearButton:(UIButton *)clearButton
-                 clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:
@@ -78,8 +76,6 @@ static const CGFloat kGradientBlurLength = 6;
                                chipsWrap:chipsWrap
                            chipRowHeight:chipRowHeight
                         interChipSpacing:interChipSpacing
-                             clearButton:clearButton
-                     clearButtonViewMode:clearButtonViewMode
                       leftAssistiveLabel:leftAssistiveLabel
                      rightAssistiveLabel:rightAssistiveLabel
               underlineLabelDrawPriority:underlineLabelDrawPriority
@@ -106,8 +102,6 @@ static const CGFloat kGradientBlurLength = 6;
                            chipsWrap:(BOOL)chipsWrap
                        chipRowHeight:(CGFloat)chipRowHeight
                     interChipSpacing:(CGFloat)interChipSpacing
-                         clearButton:(UIButton *)clearButton
-                 clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:
@@ -275,10 +269,6 @@ static const CGFloat kGradientBlurLength = 6;
   if (textRectMaxY > maxY) {
     maxY = textRectMaxY;
   }
-  //  CGFloat clearButtonFrameMaxY = CGRectGetMaxY(self.clearButtonFrame);
-  //  if (clearButtonFrameMaxY > maxY) {
-  //    maxY = clearButtonFrameMaxY;
-  //  }
   CGFloat leftAssistiveLabelFrameMaxY = CGRectGetMaxY(self.leftAssistiveLabelFrame);
   if (leftAssistiveLabelFrameMaxY > maxY) {
     maxY = leftAssistiveLabelFrameMaxY;

@@ -454,8 +454,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                                 chipsWrap:self.chipsWrap
                                             chipRowHeight:self.chipRowHeight
                                          interChipSpacing:self.chipRowSpacing
-                                              clearButton:self.clearButton
-                                      clearButtonViewMode:self.textField.clearButtonMode
                                        leftAssistiveLabel:self.leftAssistiveLabel
                                       rightAssistiveLabel:self.rightAssistiveLabel
                                underlineLabelDrawPriority:self.underlineLabelDrawPriority
