@@ -60,18 +60,18 @@
 }
 
 - (void)applyDefaultColorTheme:(id<MDCColorScheming>)mdcColorScheming {
-  MDCContainedInputViewColorScheme *normalColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  MDCContainedInputViewColorViewModelBase *normalColorScheme =
+      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
-  MDCContainedInputViewColorScheme *focusedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  MDCContainedInputViewColorViewModelBase *focusedColorScheme =
+      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  MDCContainedInputViewColorScheme *disabledColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  MDCContainedInputViewColorViewModelBase *disabledColorScheme =
+      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 
@@ -90,17 +90,17 @@
   //
   //
   //  MDCContainedInputViewColorScheme *normalColorScheme =
-  //  [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  //  [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateNormal];
   //  [self setContainedInputViewColorScheming:normalColorScheme
   //                                  forState:MDCContainedInputViewStateNormal];
   //
   //  MDCContainedInputViewColorScheme *focusedColorScheme =
-  //  [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  //  [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateFocused];
   //  [self setContainedInputViewColorScheming:focusedColorScheme
   //                                  forState:MDCContainedInputViewStateFocused];
   //
   //  MDCContainedInputViewColorScheme *disabledColorScheme =
-  //  [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  //  [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateDisabled];
   //  [self setContainedInputViewColorScheming:disabledColorScheme
   //                                  forState:MDCContainedInputViewStateDisabled];
   //

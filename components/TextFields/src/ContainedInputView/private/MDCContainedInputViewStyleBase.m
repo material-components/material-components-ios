@@ -39,13 +39,13 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
   return [font fontWithSize:floatingFontSize];
 }
 
-- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+- (id<MDCContainedInputViewColorViewModel>)defaultColorViewModelForState:
     (MDCContainedInputViewState)state {
-  MDCContainedInputViewColorScheme *colorScheme = [[MDCContainedInputViewColorScheme alloc] init];
+  MDCContainedInputViewColorViewModelBase *colorViewModel = [[MDCContainedInputViewColorViewModelBase alloc] init];
 
-  UIColor *floatingLabelColor = colorScheme.floatingLabelColor;
-  UIColor *assistiveLabelColor = colorScheme.assistiveLabelColor;
-  UIColor *textColor = colorScheme.textColor;
+  UIColor *floatingLabelColor = colorViewModel.floatingLabelColor;
+  UIColor *assistiveLabelColor = colorViewModel.assistiveLabelColor;
+  UIColor *textColor = colorViewModel.textColor;
 
   switch (state) {
     case MDCContainedInputViewStateNormal:
@@ -60,15 +60,15 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
       break;
   }
 
-  colorScheme.textColor = textColor;
-  colorScheme.assistiveLabelColor = assistiveLabelColor;
-  colorScheme.floatingLabelColor = floatingLabelColor;
+  colorViewModel.textColor = textColor;
+  colorViewModel.assistiveLabelColor = assistiveLabelColor;
+  colorViewModel.floatingLabelColor = floatingLabelColor;
 
-  return colorScheme;
+  return colorViewModel;
 }
 
 - (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
-    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
+    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorViewModel>)colorViewModel {
 }
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {

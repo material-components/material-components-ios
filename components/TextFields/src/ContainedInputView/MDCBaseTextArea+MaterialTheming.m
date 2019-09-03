@@ -47,18 +47,18 @@
 }
 
 - (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
-  MDCContainedInputViewColorScheme *normalColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  MDCContainedInputViewColorViewModelBase *normalColorScheme =
+      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
-  MDCContainedInputViewColorScheme *focusedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  MDCContainedInputViewColorViewModelBase *focusedColorScheme =
+      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  MDCContainedInputViewColorScheme *disabledColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  MDCContainedInputViewColorViewModelBase *disabledColorScheme =
+      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 
@@ -81,19 +81,19 @@
   id<MDCColorScheming> mdcColorScheming =
       containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
 
-  MDCContainedInputViewColorSchemeOutlined *normalColorScheme =
+  MDCContainedInputViewColorViewModelOutlined *normalColorScheme =
       [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
                             containedInputViewState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
-  MDCContainedInputViewColorSchemeOutlined *focusedColorScheme =
+  MDCContainedInputViewColorViewModelOutlined *focusedColorScheme =
       [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
                             containedInputViewState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  MDCContainedInputViewColorSchemeOutlined *disabledColorScheme =
+  MDCContainedInputViewColorViewModelOutlined *disabledColorScheme =
       [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
                             containedInputViewState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
@@ -111,19 +111,19 @@
   id<MDCColorScheming> mdcColorScheming =
       containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
 
-  MDCContainedInputViewColorSchemeFilled *normalColorScheme =
+  MDCContainedInputViewColorViewModelFilled *normalColorScheme =
       [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
                           containedInputViewState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
-  MDCContainedInputViewColorSchemeFilled *focusedColorScheme =
+  MDCContainedInputViewColorViewModelFilled *focusedColorScheme =
       [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
                           containedInputViewState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  MDCContainedInputViewColorSchemeFilled *disabledColorScheme =
+  MDCContainedInputViewColorViewModelFilled *disabledColorScheme =
       [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
                           containedInputViewState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
@@ -132,7 +132,7 @@
   self.tintColor = mdcColorScheming.primaryColor;
 }
 
-- (MDCContainedInputViewColorSchemeOutlined *)
+- (MDCContainedInputViewColorViewModelOutlined *)
     outlinedColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
                     containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
   UIColor *textColor = colorScheming.onSurfaceColor;
@@ -162,8 +162,8 @@
       break;
   }
 
-  MDCContainedInputViewColorSchemeOutlined *colorScheme =
-      [[MDCContainedInputViewColorSchemeOutlined alloc] init];
+  MDCContainedInputViewColorViewModelOutlined *colorScheme =
+      [[MDCContainedInputViewColorViewModelOutlined alloc] init];
   colorScheme.textColor = textColor;
   colorScheme.assistiveLabelColor = assistiveLabelColor;
   colorScheme.outlineColor = outlineColor;
@@ -173,7 +173,7 @@
   return colorScheme;
 }
 
-- (MDCContainedInputViewColorSchemeFilled *)
+- (MDCContainedInputViewColorViewModelFilled *)
     filledColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
                   containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
   UIColor *textColor = colorScheming.onSurfaceColor;
@@ -199,8 +199,8 @@
       break;
   }
 
-  MDCContainedInputViewColorSchemeFilled *colorScheme =
-      [[MDCContainedInputViewColorSchemeFilled alloc] init];
+  MDCContainedInputViewColorViewModelFilled *colorScheme =
+      [[MDCContainedInputViewColorViewModelFilled alloc] init];
   colorScheme.textColor = textColor;
   colorScheme.filledSublayerFillColor = filledSublayerFillColor;
   colorScheme.thickUnderlineFillColor = thickUnderlineFillColor;

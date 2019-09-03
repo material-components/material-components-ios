@@ -52,24 +52,24 @@
 - (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorScheming> colorScheme =
+  id<MDCContainedInputViewColorViewModel> colorViewModel =
       [self containedInputViewColorSchemingForState:containedInputViewState];
-  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
-    outlinedColorScheme.outlineColor = outlineColor;
+  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelOutlined class]]) {
+    MDCContainedInputViewColorViewModelOutlined *outlinedColorViewModel =
+        (MDCContainedInputViewColorViewModelOutlined *)colorViewModel;
+    outlinedColorViewModel.outlineColor = outlineColor;
   }
 }
 
 - (nonnull UIColor *)outlineColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorScheming> colorScheme =
+  id<MDCContainedInputViewColorViewModel> colorViewModel =
       [self containedInputViewColorSchemingForState:containedInputViewState];
-  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
-    return outlinedColorScheme.outlineColor;
+  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelOutlined class]]) {
+    MDCContainedInputViewColorViewModelOutlined *outlinedColorViewModel =
+        (MDCContainedInputViewColorViewModelOutlined *)colorViewModel;
+    return outlinedColorViewModel.outlineColor;
   }
   return [UIColor clearColor];
 }

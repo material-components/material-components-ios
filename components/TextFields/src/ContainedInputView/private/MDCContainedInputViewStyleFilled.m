@@ -26,7 +26,7 @@ static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
 
 static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
-@implementation MDCContainedInputViewColorSchemeFilled
+@implementation MDCContainedInputViewColorViewModelFilled
 @end
 
 @interface MDCContainedInputViewStyleFilled () <CAAnimationDelegate>
@@ -70,10 +70,10 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   [self.filledSublayer addSublayer:self.thickUnderlineLayer];
 }
 
-- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+- (id<MDCContainedInputViewColorViewModel>)defaultColorViewModelForState:
     (MDCContainedInputViewState)state {
-  MDCContainedInputViewColorSchemeFilled *colorScheme =
-      [[MDCContainedInputViewColorSchemeFilled alloc] init];
+  MDCContainedInputViewColorViewModelFilled *colorViewModel =
+      [[MDCContainedInputViewColorViewModelFilled alloc] init];
   UIColor *thinUnderlineFillColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.5];
   UIColor *thickUnderlineFillColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.06];
   UIColor *filledSublayerFillColor = [UIColor colorWithRed:(0xDD / 255)
@@ -92,14 +92,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
     default:
       break;
   }
-  colorScheme.filledSublayerFillColor = filledSublayerFillColor;
-  colorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
-  colorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
-  return (id<MDCContainedInputViewColorScheming>)colorScheme;
+  colorViewModel.filledSublayerFillColor = filledSublayerFillColor;
+  colorViewModel.thickUnderlineFillColor = thickUnderlineFillColor;
+  colorViewModel.thinUnderlineFillColor = thinUnderlineFillColor;
+  return (id<MDCContainedInputViewColorViewModel>)colorViewModel;
 }
 
 - (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
-    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
+    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorViewModel>)colorViewModel {
   if (![containedInputView isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:containedInputView];
     return;
@@ -107,7 +107,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   UIView *uiView = (UIView *)containedInputView;
   [self applyStyleToView:uiView
                    state:containedInputView.containedInputViewState
-             colorScheme:colorScheme
+             colorViewModel:colorViewModel
           containerFrame:containedInputView.containerFrame];
 }
 
@@ -119,11 +119,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)applyStyleToView:(UIView *)view
                    state:(MDCContainedInputViewState)state
-             colorScheme:(id<MDCContainedInputViewColorScheming>)colorScheme
+             colorViewModel:(id<MDCContainedInputViewColorViewModel>)colorViewModel
           containerFrame:(CGRect)containerFrame {
-  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledScheme =
-        (MDCContainedInputViewColorSchemeFilled *)colorScheme;
+  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelFilled class]]) {
+    MDCContainedInputViewColorViewModelFilled *filledScheme =
+        (MDCContainedInputViewColorViewModelFilled *)colorViewModel;
     self.filledSublayer.fillColor = filledScheme.filledSublayerFillColor.CGColor;
     self.thinUnderlineLayer.fillColor = filledScheme.thinUnderlineFillColor.CGColor;
     self.thickUnderlineLayer.fillColor = filledScheme.thickUnderlineFillColor.CGColor;

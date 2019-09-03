@@ -24,7 +24,7 @@ static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
-@implementation MDCContainedInputViewColorSchemeOutlined
+@implementation MDCContainedInputViewColorViewModelOutlined
 @end
 
 @interface MDCContainedInputViewStyleOutlined ()
@@ -59,16 +59,16 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
       [self outlineLineWidthForState:MDCContainedInputViewStateNormal];
 }
 
-- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+- (id<MDCContainedInputViewColorViewModel>)defaultColorViewModelForState:
     (MDCContainedInputViewState)state {
-  MDCContainedInputViewColorSchemeOutlined *colorScheme =
-      [[MDCContainedInputViewColorSchemeOutlined alloc] init];
-  colorScheme.outlineColor = [UIColor blackColor];
-  return (id<MDCContainedInputViewColorScheming>)colorScheme;
+  MDCContainedInputViewColorViewModelOutlined *colorViewModel =
+      [[MDCContainedInputViewColorViewModelOutlined alloc] init];
+  colorViewModel.outlineColor = [UIColor blackColor];
+  return (id<MDCContainedInputViewColorViewModel>)colorViewModel;
 }
 
 - (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
-    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
+    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorViewModel>)colorViewModel {
   if (![containedInputView isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:containedInputView];
     return;
@@ -84,9 +84,9 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
       containerHeight:containerHeight
       isFloatingLabelFloating:isFloatingLabelFloating
              outlineLineWidth:lineWidth];
-  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
+  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelOutlined class]]) {
+    MDCContainedInputViewColorViewModelOutlined *outlinedScheme =
+        (MDCContainedInputViewColorViewModelOutlined *)colorViewModel;
     self.outlinedSublayer.strokeColor = outlinedScheme.outlineColor.CGColor;
   }
 }

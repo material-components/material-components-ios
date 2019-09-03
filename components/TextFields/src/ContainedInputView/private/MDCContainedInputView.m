@@ -30,17 +30,17 @@ MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
   }
 }
 
-@implementation MDCContainedInputViewColorScheme
+@implementation MDCContainedInputViewColorViewModelBase
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonMDCContainedInputViewColorSchemeInit];
+    [self commonMDCContainedInputViewColorViewModelInit];
   }
   return self;
 }
 
-- (void)commonMDCContainedInputViewColorSchemeInit {
+- (void)commonMDCContainedInputViewColorViewModelInit {
   UIColor *textColor = [UIColor blackColor];
   UIColor *assistiveLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *floatingLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];

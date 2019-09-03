@@ -70,7 +70,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 };
 
 @protocol MDCContainedInputViewStyle;
-@protocol MDCContainedInputViewColorScheming;
+@protocol MDCContainedInputViewColorViewModel;
 
 @protocol MDCContainedInputView <NSObject>
 /**
@@ -147,14 +147,14 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 /**
  This method returns a color scheme for a given state.
  */
-- (nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:
+- (nonnull id<MDCContainedInputViewColorViewModel>)containedInputViewColorSchemingForState:
     (MDCContainedInputViewState)containedInputViewState;
 
 /**
  This method sets a color scheme for a given state.
  */
 - (void)setContainedInputViewColorScheming:
-            (nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
+            (nonnull id<MDCContainedInputViewColorViewModel>)containedInputViewColorScheming
                                   forState:(MDCContainedInputViewState)textFieldState;
 
 /**
@@ -176,10 +176,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @end
 
 /**
- A base implementation of MDCContainedInputViewColorScheming. Intended to be subclassed for styles
+ A base implementation of MDCContainedInputViewColorViewModel. Intended to be subclassed for styles
  that include additional elements that need to be colored.
  */
-@interface MDCContainedInputViewColorScheme : NSObject <MDCContainedInputViewColorScheming>
+@interface MDCContainedInputViewColorViewModelBase : NSObject <MDCContainedInputViewColorViewModel>
 @property(strong, nonatomic, nonnull) UIColor *textColor;
 @property(strong, nonatomic, nonnull) UIColor *assistiveLabelColor;
 @property(strong, nonatomic, nonnull) UIColor *floatingLabelColor;
@@ -195,17 +195,17 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @property(nonatomic, assign) NSTimeInterval animationDuration;
 
 /**
- This method provides a default object conforming to MDCContainedInputViewColorScheming.
+ This method provides a default object conforming to MDCContainedInputViewColorViewModel.
  */
-- (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+- (nonnull id<MDCContainedInputViewColorViewModel>)defaultColorViewModelForState:
     (MDCContainedInputViewState)state;
 /**
  This method allows objects conforming to MDCContainedInputViewStyle to apply themselves to objects
  conforming to MDCContainedInputView with a set of colors represented by an object conforming to
- MDCContainedInputViewColorScheming.
+ MDCContainedInputViewColorViewModel.
  */
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
-    withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
+    withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorViewModel>)colorScheme;
 /**
  This method allows objects conforming to MDCContainedInputViewStyle to remove the styling
  previously applied to objects conforming to MDCContainedInputView.

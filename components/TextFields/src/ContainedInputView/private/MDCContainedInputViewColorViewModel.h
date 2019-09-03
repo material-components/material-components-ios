@@ -20,7 +20,7 @@
  MDCContainedInputView. Each property corresponds to the color of one or more views that an
  MDCContainedInputView manages at a given point of time.
  */
-@protocol MDCContainedInputViewColorScheming <NSObject>
+@protocol MDCContainedInputViewColorViewModel <NSObject>
 /**
  The color of the contained input view's text.
  */
