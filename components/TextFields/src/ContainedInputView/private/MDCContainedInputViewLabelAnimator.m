@@ -57,35 +57,17 @@
   CGRect currentFrame = floatingLabel.frame;
   CGAffineTransform trasformNeededToMakeViewWithTargetFrameLookLikeItHasCurrentFrame =
       [self transformFromRect:targetFrame toRect:currentFrame];
-  CATransform3D transformFromValueTransform3D = CATransform3DMakeAffineTransform(
-      trasformNeededToMakeViewWithTargetFrameLookLikeItHasCurrentFrame);
-  CATransform3D transformToValueTransform3D = CATransform3DIdentity;
 
   floatingLabel.frame = targetFrame;
   floatingLabel.font = targetFont;
-  floatingLabel.transform = CGAffineTransformIdentity;
+  floatingLabel.transform = trasformNeededToMakeViewWithTargetFrameLookLikeItHasCurrentFrame;
 
-  CABasicAnimation *preexistingTransformAnimation =
-      (CABasicAnimation *)[floatingLabel.layer animationForKey:self.labelTransformAnimationKey];
+  [floatingLabel.layer removeAllAnimations];
 
-  [CATransaction begin];
-  {
-    [CATransaction setCompletionBlock:^{
-      [floatingLabel.layer removeAnimationForKey:self.labelTransformAnimationKey];
-    }];
-    if (preexistingTransformAnimation) {
-      [floatingLabel.layer removeAnimationForKey:self.labelTransformAnimationKey];
-    } else {
-      CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-      animation.fromValue = [NSValue valueWithCATransform3D:transformFromValueTransform3D];
-      animation.toValue = [NSValue valueWithCATransform3D:transformToValueTransform3D];
-      animation.duration = self.animationDuration;
-      animation.removedOnCompletion = NO;
-      animation.fillMode = kCAFillModeForwards;
-      [floatingLabel.layer addAnimation:animation forKey:self.labelTransformAnimationKey];
-    }
-  }
-  [CATransaction commit];
+  [UIView animateWithDuration:self.animationDuration
+                   animations:^{
+                     floatingLabel.transform = CGAffineTransformIdentity;
+                   }];
 }
 
 /**
@@ -101,10 +83,6 @@
                                      finalRect.size.height / sourceRect.size.height);
 
   return transform;
-}
-
-- (NSString *)labelTransformAnimationKey {
-  return @"labelTransformAnimationKey";
 }
 
 @end
