@@ -1,18 +1,12 @@
-# #develop#
+# 88.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces the Banner component, and a bug fix for Buttons.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+`MDCBannerView` is now available for providing messaging to your app's users.
+It implements [Material Banners](https://material.io/components/banners/) and
+"displays a prominent message and related optional actions."
 
 ## Changes
 
