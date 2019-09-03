@@ -35,6 +35,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 @interface MDCSlider () <MDCThumbTrackDelegate>
 @property(nonnull, nonatomic, strong)
     UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
+@property(nonatomic) CGFloat previousValue;
 @end
 
 @implementation MDCSlider {
@@ -121,6 +122,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
     _hapticsEnabled = NO;
   }
   _shouldEnableHapticsForAllDiscreteValues = NO;
+
+  _previousValue = -CGFLOAT_MAX;
 }
 
 #pragma mark - Color customization methods
@@ -301,10 +304,12 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setValue:(CGFloat)value {
   _thumbTrack.value = value;
+  _previousValue = -CGFLOAT_MAX;
 }
 
 - (void)setValue:(CGFloat)value animated:(BOOL)animated {
   [_thumbTrack setValue:value animated:animated];
+  _previousValue = -CGFLOAT_MAX;
 }
 
 - (CGFloat)minimumValue {
@@ -583,14 +588,21 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
   if (@available(iOS 10.0, *)) {
-    if (self.hapticsEnabled) {
+    if (self.hapticsEnabled && _previousValue != _thumbTrack.value) {
+      BOOL valueCrossesAboveAnchor = (_previousValue < _thumbTrack.filledTrackAnchorValue &&
+                                      _thumbTrack.filledTrackAnchorValue <= _thumbTrack.value);
+      BOOL valueCrossesBelowAnchor = (_thumbTrack.value <= _thumbTrack.filledTrackAnchorValue &&
+                                      _thumbTrack.filledTrackAnchorValue < _previousValue);
+      BOOL crossesAnchor =
+          _previousValue != -CGFLOAT_MAX && (valueCrossesAboveAnchor || valueCrossesBelowAnchor);
       if (self.shouldEnableHapticsForAllDiscreteValues ||
           _thumbTrack.value == _thumbTrack.minimumValue ||
-          _thumbTrack.value == _thumbTrack.maximumValue) {
+          _thumbTrack.value == _thumbTrack.maximumValue || crossesAnchor) {
         [self.feedbackGenerator impactOccurred];
       }
     }
   }
+  self.previousValue = _thumbTrack.value;
 }
 
 - (void)thumbTrackTouchDown:(__unused MDCThumbTrack *)thumbTrack {
