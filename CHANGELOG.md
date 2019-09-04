@@ -1,6 +1,7 @@
 # 88.2.0
 
-This minor release introduces the Banner component, and a bug fix for Buttons.
+This minor release makes the Banner component generally available, and
+provides a bug fix for Buttons.
 
 ## New features
 
