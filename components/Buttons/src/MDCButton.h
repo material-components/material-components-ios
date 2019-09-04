@@ -336,13 +336,6 @@
 
 #pragma mark - Deprecated
 
-/**
- This property sets/gets the title color for UIControlStateNormal.
- */
-@property(nonatomic, strong, nullable)
-    UIColor *customTitleColor UI_APPEARANCE_SELECTOR __deprecated_msg(
-        "Use setTitleColor:forState: instead");
-
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
         ;
