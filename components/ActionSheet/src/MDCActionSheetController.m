@@ -182,8 +182,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   CGFloat dividerHeight = 1;
-  // If there is no title or message we don't add a divider view to the top of the action sheet.
-  if ((self.title != nil || self.message != nil) && self.showHeaderDivider) {
+  if (self.showHeaderDivider) {
     self.headerDividerView.frame =
         CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), dividerHeight);
   } else {
@@ -409,9 +408,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 }
 
 - (void)setHeaderDividerColor:(UIColor *)headerDividerColor {
-  _headerDividerColor = [headerDividerColor copy];
   self.headerDividerView.backgroundColor = headerDividerColor;
   [self.view setNeedsDisplay];
+}
+
+- (UIColor *)headerDividerColor {
+  return self.headerDividerView.backgroundColor;
 }
 
 #pragma mark - Dynamic Type

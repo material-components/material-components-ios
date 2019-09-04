@@ -524,7 +524,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
-  CGFloat originalTableContentInsets = self.actionSheet.tableView.contentOffset.y;
+  CGFloat originalTableContentInset = self.actionSheet.tableView.contentInset.top;
 
   // When
   self.actionSheet.showHeaderDivider = YES;
@@ -532,8 +532,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet.view layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.actionSheet.tableView.contentOffset.y, originalTableContentInsets,
-                             0.001);
+  XCTAssertGreaterThan(self.actionSheet.tableView.contentInset.top, originalTableContentInset);
 }
 
 @end

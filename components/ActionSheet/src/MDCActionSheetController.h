@@ -209,7 +209,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 
  Defaults to NO.
  */
-@property(nonatomic, assign) BOOL showHeaderDivider;
+@property(nonatomic, assign, setter=setShowsHeaderDivider) BOOL showHeaderDivider;
 
 /**
  The color of the divider between the header and actions.
