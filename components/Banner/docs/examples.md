@@ -5,7 +5,7 @@
 
 ```swift
 let bannerView = MDCBannerView()
-bannerView.textLabel.text = "Text on Banner"
+bannerView.textView.text = "Text on Banner"
 bannerView.imageView.image = UIImage(named: "bannerIcon")
 bannerView.leadingButton.setTitle("Action", for: .normal)
 bannerView.trailingButton.hidden = true
@@ -23,7 +23,7 @@ view.addSubview(bannerView)
 
 ```objc
 MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-bannerView.textLabel.text = @"Text on Banner";
+bannerView.textView.text = @"Text on Banner";
 bannerView.imageView.image = [UIImage imageNamed:@"bannerIcon"];
 [bannerView.leadingButton setTitle:@"Action" forState:UIControlStateNormal];
 bannerView.trailingButton.hidden = YES;

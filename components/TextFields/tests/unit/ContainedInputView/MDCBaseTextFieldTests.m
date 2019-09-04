@@ -168,4 +168,20 @@
                         NSStringFromCGRect(finalTextAreaFrame));
 }
 
+- (void)testClearButtonRectForBounds {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+
+  // When
+  textField.clearButtonMode = UITextFieldViewModeAlways;
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
+
+  // Then
+  CGRect expectedClearButtonFrame = CGRectMake(99, 21, 19, 19);
+  CGRect actualClearButtonFrame = [textField clearButtonRectForBounds:textFieldFrame];
+  XCTAssertTrue(CGRectEqualToRect(actualClearButtonFrame, expectedClearButtonFrame));
+}
+
 @end

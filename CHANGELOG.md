@@ -1,3 +1,58 @@
+# 88.2.0
+
+This minor release makes the Banner component generally available, and
+provides a bug fix for Buttons.
+
+## New features
+
+`MDCBannerView` is now available for providing messaging to your app's users.
+It implements [Material Banners](https://material.io/components/banners/) and
+"displays a prominent message and related optional actions."
+
+## Changes
+
+### ActionSheet
+
+* [ [ActionSheet] Add snapshot tests to ensure the default presentation behavior doesn't change under iOS 13. (#8365)](https://github.com/material-components/material-components-ios/commit/05d01faa2cd5570b0a63c9f23007206871a9a829) (Wenyu Zhang)
+
+### Banner
+
+* [Add a missing button title in example. (#8369)](https://github.com/material-components/material-components-ios/commit/7f980895801cc7c236cd43e0e604cb98869b5828) (Wenyu Zhang)
+* [Add an example to show super long text case. (#8372)](https://github.com/material-components/material-components-ios/commit/8428e0690c9d0ca8ac30c64ca027fce770bbe241) (Wenyu Zhang)
+* [Add documentation on setting hidden of trailing button. (#8371)](https://github.com/material-components/material-components-ios/commit/0079e5741c1474897d564b5c19dc49cb00d214cb) (Wenyu Zhang)
+* [Refactor typical example view controller. (#8373)](https://github.com/material-components/material-components-ios/commit/93f9527e94e22439eed673d5b70e53c6e7a5ebdd) (Wenyu Zhang)
+* [Update readme after updating API from textLabel to textView. (#8378)](https://github.com/material-components/material-components-ios/commit/2bc08dc44a18a929545e5f857a2ef2e50e5ef5c1) (Wenyu Zhang)
+
+### BottomSheet
+
+* [Add snapshot tests to ensure BottomSheet's default presentation behavior doesn't change under iOS 13. (#8364)](https://github.com/material-components/material-components-ios/commit/0891e70dfca389730738cb4d7930ee44cb17ab59) (Wenyu Zhang)
+
+### Buttons
+
+* [overwrite intrinsicContentSize method. (#8370)](https://github.com/material-components/material-components-ios/commit/e3784afe259055679479f09b2e92324b61cf7fe0) (Wenyu Zhang)
+
+### Dialogs
+
+* [Add snapshot tests to ensure Dialog's default presentation behavior (#8360)](https://github.com/material-components/material-components-ios/commit/a91b1116b8fe90694aa55ae29ab7f652d2e7cee7) (Wenyu Zhang)
+
+### FeatureHighlight
+
+* [Add snapshot tests to ensure the default presentation behavior doesn't change under iOS 13. (#8366)](https://github.com/material-components/material-components-ios/commit/c2d5bf6f9b5708c8b50adf963a813bfa6a85f8eb) (Wenyu Zhang)
+
+### TextFields
+
+* [Add contained input view clear button (#8247)](https://github.com/material-components/material-components-ios/commit/ab4f218a0902b21b2eea81537ffd49387803094e) (Andrew Overton)
+
+### private/Snapshot/TestHost
+
+* [Add a window into the app delegate of host application. (#8361)](https://github.com/material-components/material-components-ios/commit/e4127f23f8ab1bf2fb1d293c3ea868caadc095ec) (Wenyu Zhang)
+
+### private/Snapshot
+
+* [Add a window into the app delegate of host application. (#8361)](https://github.com/material-components/material-components-ios/commit/e4127f23f8ab1bf2fb1d293c3ea868caadc095ec) (Wenyu Zhang)
+
+---
+
 # 88.1.0
 
 This minor change introduces presentation and dismissal improvements to

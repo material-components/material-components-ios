@@ -26,7 +26,6 @@
 
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
-
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 
@@ -126,26 +125,6 @@
   return textRect;
 }
 
-- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
-      [self createPositioningReference];
-  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
-                                          positioningReference:positioningReference
-                                                          font:self.font
-                                                  floatingFont:self.floatingFont
-                                                         label:self.label
-                                                      leftView:self.leftView
-                                                  leftViewMode:self.leftViewMode
-                                                     rightView:self.rightView
-                                                 rightViewMode:self.rightViewMode
-                                                         isRTL:self.isRTL
-                                                     isEditing:self.isEditing];
-}
-
-- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
-  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
-}
-
 /**
  To understand this method one must understand that the CGRect UITextField returns from @c
  -textRectForBounds: does not actually represent the CGRect of visible text in UITextField. It
@@ -164,6 +143,30 @@
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
+- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
+  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
+      [self createPositioningReference];
+  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
+                                          positioningReference:positioningReference
+                                                          text:self.text
+                                                          font:self.normalFont
+                                                  floatingFont:self.floatingFont
+                                                         label:self.label
+                                                      leftView:self.leftView
+                                                  leftViewMode:self.leftViewMode
+                                                     rightView:self.rightView
+                                                 rightViewMode:self.rightViewMode
+                                         clearButtonSideLength:clearButtonSideLength
+                                               clearButtonMode:self.clearButtonMode
+                                                         isRTL:self.isRTL
+                                                     isEditing:self.isEditing];
+}
+
+- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
+  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
+}
+
 - (void)layOutLabel {
   if (self.labelState == MDCContainedInputViewLabelStateFloating) {
     self.label.font = self.floatingFont;
@@ -172,6 +175,12 @@
     self.label.font = self.normalFont;
     self.label.frame = self.layout.labelFrameNormal;
   }
+}
+
+- (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
+  CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
+  CGRect systemPlaceholderRect = [super clearButtonRectForBounds:bounds];
+  return systemPlaceholderRect.size.height;
 }
 
 #pragma mark UITextField Accessor Overrides
@@ -198,6 +207,13 @@
   NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
         @"trailingView instead.");
   [self mdc_setRightView:rightView];
+}
+
+- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
+  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
+    return self.layout.clearButtonFrameFloating;
+  }
+  return self.layout.clearButtonFrameNormal;
 }
 
 #pragma mark Custom Accessors
