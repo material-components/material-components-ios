@@ -65,7 +65,7 @@ static const CGFloat kSafeAreaAmount = 20;
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation,
                              MDCShadowElevationModalBottomSheet, 0.001);
   XCTAssertEqualObjects(self.actionSheet.headerDividerColor, UIColor.clearColor);
-  XCTAssertFalse(self.actionSheet.showHeaderDivider);
+  XCTAssertFalse(self.actionSheet.showsHeaderDivider);
   XCTAssertNotNil(self.actionSheet.headerDividerView);
 }
 
@@ -475,12 +475,12 @@ static const CGFloat kSafeAreaAmount = 20;
   XCTAssertEqualObjects(self.actionSheet.headerDividerColor, expectedColor);
 }
 
-- (void)testSetShowHeaderDivider {
+- (void)testSetShowsHeaderDivider {
   // When
-  self.actionSheet.showHeaderDivider = YES;
+  self.actionSheet.showsHeaderDivider = YES;
 
   // Then
-  XCTAssertTrue(self.actionSheet.showHeaderDivider);
+  XCTAssertTrue(self.actionSheet.showsHeaderDivider);
 }
 
 - (void)testTableViewContentInsetsWithHeaderDividerViewAndTitle {
@@ -492,7 +492,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat originalTableContentInset = self.actionSheet.tableView.contentInset.top;
 
   // When
-  self.actionSheet.showHeaderDivider = YES;
+  self.actionSheet.showsHeaderDivider = YES;
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 
@@ -509,7 +509,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat originalTableContentInset = self.actionSheet.tableView.contentInset.top;
 
   // When
-  self.actionSheet.showHeaderDivider = YES;
+  self.actionSheet.showsHeaderDivider = YES;
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 
@@ -527,7 +527,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat originalTableContentInset = self.actionSheet.tableView.contentInset.top;
 
   // When
-  self.actionSheet.showHeaderDivider = YES;
+  self.actionSheet.showsHeaderDivider = YES;
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 

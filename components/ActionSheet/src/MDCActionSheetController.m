@@ -134,8 +134,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
     _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
     _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
-    _headerDividerColor = UIColor.clearColor;
     _headerDividerView = [[UIView alloc] init];
+    _headerDividerView.backgroundColor = UIColor.clearColor;
     _mdc_overrideBaseElevation = -1;
   }
 
@@ -414,6 +414,14 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (UIColor *)headerDividerColor {
   return self.headerDividerView.backgroundColor;
+}
+
+- (void)setShowsHeaderDivider:(BOOL)showsHeaderDivider {
+  if (_showsHeaderDivider == showsHeaderDivider) {
+    return;
+  }
+  _showsHeaderDivider = showsHeaderDivider;
+  [self.view setNeedsLayout];
 }
 
 #pragma mark - Dynamic Type

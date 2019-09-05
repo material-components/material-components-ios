@@ -887,7 +887,7 @@ static NSString *const kLongTitle5Arabic =
   self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // When
-  self.actionSheetController.showHeaderDivider = YES;
+  self.actionSheetController.showsHeaderDivider = YES;
   self.actionSheetController.headerDividerColor = UIColor.blackColor;
   [self.actionSheetController.view setNeedsLayout];
   [self.actionSheetController.view layoutIfNeeded];
@@ -913,7 +913,7 @@ static NSString *const kLongTitle5Arabic =
   self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // When
-  self.actionSheetController.showHeaderDivider = YES;
+  self.actionSheetController.showsHeaderDivider = YES;
   self.actionSheetController.headerDividerColor = UIColor.blackColor;
   [self.actionSheetController.view setNeedsLayout];
   [self.actionSheetController.view layoutIfNeeded];
