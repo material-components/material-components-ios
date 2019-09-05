@@ -19,7 +19,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBaseTextFieldLayout.h"
-#import "private/MDCContainedInputViewLabelAnimator.h"
+#import "private/MDCContainedInputViewLabelAnimation.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 
@@ -29,7 +29,6 @@
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
-@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 @end
 
@@ -64,7 +63,6 @@
   [self setUpLayoutDirection];
   [self setUpLabelBehavior];
   [self setUpLabelState];
-  [self setUpLabelAnimator];
 }
 
 - (void)setUpLayoutDirection {
@@ -77,10 +75,6 @@
 
 - (void)setUpLabelState {
   self.labelState = [self determineCurrentLabelState];
-}
-
-- (void)setUpLabelAnimator {
-  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpLabel {
@@ -118,12 +112,13 @@
 }
 
 - (void)postLayoutSubviews {
-  [self.labelAnimator layOutLabel:self.label
-                            state:self.labelState
-                 normalLabelFrame:self.layout.labelFrameNormal
-               floatingLabelFrame:self.layout.labelFrameFloating
-                       normalFont:self.normalFont
-                     floatingFont:self.floatingFont];
+  self.label.hidden = self.labelState == MDCContainedInputViewLabelStateNone;
+  [MDCContainedInputViewLabelAnimation layOutLabel:self.label
+                                             state:self.labelState
+                                  normalLabelFrame:self.layout.labelFrameNormal
+                                floatingLabelFrame:self.layout.labelFrameFloating
+                                        normalFont:self.normalFont
+                                      floatingFont:self.floatingFont];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }

@@ -16,11 +16,9 @@
 #import <UIKit/UIKit.h>
 #import "MDCContainedInputViewLabelState.h"
 
-@interface MDCContainedInputViewLabelAnimator : NSObject
+@interface MDCContainedInputViewLabelAnimation : NSObject
 
-@property(nonatomic, assign) NSTimeInterval animationDuration;
-
-- (void)layOutLabel:(nonnull UILabel *)floatingLabel
++ (void)layOutLabel:(nonnull UILabel *)floatingLabel
                  state:(MDCContainedInputViewLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
