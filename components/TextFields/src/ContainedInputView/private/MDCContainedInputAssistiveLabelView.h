@@ -22,6 +22,6 @@
 
 @property(nonatomic, strong, readonly, nonnull) UILabel *leftAssistiveLabel;
 @property(nonatomic, strong, readonly, nonnull) UILabel *rightAssistiveLabel;
-- (void)applyLayout:(nullable MDCContainedInputAssistiveLabelViewLayout *)layout;
+@property(nonatomic, strong, nonnull) MDCContainedInputAssistiveLabelViewLayout *layout;
 
 @end

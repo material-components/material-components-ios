@@ -173,7 +173,8 @@
                                       floatingFont:self.floatingFont];
   [self.containerStyle applyStyleToContainedInputView:self];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
-  [self.assistiveLabelView applyLayout:self.layout.assistiveLabelViewLayout];
+  self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
+  [self.assistiveLabelView setNeedsLayout];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }

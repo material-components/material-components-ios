@@ -156,9 +156,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat clearButtonMinY = [self minYForSubviewWithHeight:clearButtonSideLength
                                                    centerY:textRectCenterYNormal];
-  CGFloat clearButtonFloatingMinY =
-      [self minYForSubviewWithHeight:clearButtonSideLength
-                             centerY:textRectCenterYWithFloatingLabel];
+//  CGFloat clearButtonFloatingMinY =
+//      [self minYForSubviewWithHeight:clearButtonSideLength
+//                             centerY:textRectCenterYWithFloatingLabel];
 
   CGFloat textRectMinX = 0;
   CGFloat textRectMaxX = 0;
@@ -215,8 +215,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
       CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
   CGRect clearButtonFrameNormal =
       CGRectMake(clearButtonMinX, clearButtonMinY, clearButtonSideLength, clearButtonSideLength);
-  CGRect clearButtonFrameFloating = CGRectMake(clearButtonMinX, clearButtonFloatingMinY,
-                                               clearButtonSideLength, clearButtonSideLength);
+  CGRect clearButtonFrameFloating = clearButtonFrameNormal;
+//  CGRectMake(clearButtonMinX, clearButtonFloatingMinY,
+//                                               clearButtonSideLength, clearButtonSideLength);
 
   CGRect labelFrameNormal = [self labelFrameWithText:label.text
                                           labelState:MDCContainedInputViewLabelStateNormal
