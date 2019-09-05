@@ -26,9 +26,6 @@ static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
 
 static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
-@implementation MDCContainedInputViewColorViewModelFilled
-@end
-
 @interface MDCContainedInputViewStyleFilled () <CAAnimationDelegate>
 
 @property(strong, nonatomic) CAShapeLayer *filledSublayer;
@@ -40,10 +37,54 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 @property(strong, nonatomic, readonly, class) NSString *thinUnderlineGrowKey;
 @property(strong, nonatomic, readonly, class) NSString *thinUnderlineShrinkKey;
 
+@property(strong, nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *underlineColors;
+@property(strong, nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *filledBackgroundColors;
+
 @end
 
 @implementation MDCContainedInputViewStyleFilled
 @synthesize animationDuration = _animationDuration;
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCContainedInputViewStyleFilledInit];
+  }
+  return self;
+}
+
+- (void)commonMDCContainedInputViewStyleFilledInit {
+  [self setUpUnderlineColors];
+  [self setUpFilledBackgroundColors];
+  [self setUpSublayers];
+}
+
+- (void)setUpUnderlineColors {
+  self.underlineColors = [NSMutableDictionary new];
+  UIColor *underlineColor = [UIColor blackColor];
+  self.underlineColors[@(MDCContainedInputViewStateNormal)] = underlineColor;
+  self.underlineColors[@(MDCContainedInputViewStateFocused)] = underlineColor;
+  self.underlineColors[@(MDCContainedInputViewStateDisabled)] = underlineColor;
+}
+
+- (void)setUpFilledBackgroundColors {
+  self.filledBackgroundColors = [NSMutableDictionary new];
+  UIColor *filledBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.1];
+  self.filledBackgroundColors[@(MDCContainedInputViewStateNormal)] = filledBackgroundColor;
+  self.filledBackgroundColors[@(MDCContainedInputViewStateFocused)] = filledBackgroundColor;
+  self.filledBackgroundColors[@(MDCContainedInputViewStateDisabled)] = filledBackgroundColor;
+}
+
+- (void)setUpSublayers {
+  self.filledSublayer = [[CAShapeLayer alloc] init];
+  self.filledSublayer.lineWidth = 0.0;
+  self.thinUnderlineLayer = [[CAShapeLayer alloc] init];
+  [self.filledSublayer addSublayer:self.thinUnderlineLayer];
+  self.thickUnderlineLayer = [[CAShapeLayer alloc] init];
+  [self.filledSublayer addSublayer:self.thickUnderlineLayer];
+}
+
+#pragma mark Accessors
 
 - (void)setAnimationDuration:(NSTimeInterval)animationDuration {
   _animationDuration = animationDuration;
@@ -53,53 +94,25 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   return _animationDuration;
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self setUpFilledSublayers];
-  }
-  return self;
+- (UIColor *)underlineColorForState:(MDCContainedInputViewState)state {
+  return self.underlineColors[@(state)];
 }
 
-- (void)setUpFilledSublayers {
-  self.filledSublayer = [[CAShapeLayer alloc] init];
-  self.filledSublayer.lineWidth = 0.0;
-  self.thinUnderlineLayer = [[CAShapeLayer alloc] init];
-  [self.filledSublayer addSublayer:self.thinUnderlineLayer];
-  self.thickUnderlineLayer = [[CAShapeLayer alloc] init];
-  [self.filledSublayer addSublayer:self.thickUnderlineLayer];
+- (void)setUnderlineColor:(nonnull UIColor *)underlineColor
+                 forState:(MDCContainedInputViewState)state {
+  self.underlineColors[@(state)] = underlineColor;
 }
 
-- (id<MDCContainedInputViewColorViewModel>)defaultColorViewModelForState:
-    (MDCContainedInputViewState)state {
-  MDCContainedInputViewColorViewModelFilled *colorViewModel =
-      [[MDCContainedInputViewColorViewModelFilled alloc] init];
-  UIColor *thinUnderlineFillColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.5];
-  UIColor *thickUnderlineFillColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.06];
-  UIColor *filledSublayerFillColor = [UIColor colorWithRed:(0xDD / 255)
-                                                     green:(0xDD / 255)
-                                                      blue:(0xDD / 255)
-                                                     alpha:0.25];
-
-  switch (state) {
-    case MDCContainedInputViewStateNormal:
-      break;
-    case MDCContainedInputViewStateDisabled:
-      break;
-    case MDCContainedInputViewStateFocused:
-      thickUnderlineFillColor = [UIColor blackColor];
-      break;
-    default:
-      break;
-  }
-  colorViewModel.filledSublayerFillColor = filledSublayerFillColor;
-  colorViewModel.thickUnderlineFillColor = thickUnderlineFillColor;
-  colorViewModel.thinUnderlineFillColor = thinUnderlineFillColor;
-  return (id<MDCContainedInputViewColorViewModel>)colorViewModel;
+- (UIColor *)filledBackgroundColorForState:(MDCContainedInputViewState)state {
+  return self.filledBackgroundColors[@(state)];
 }
 
-- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
-    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorViewModel>)colorViewModel {
+- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
+                        forState:(MDCContainedInputViewState)state {
+  self.filledBackgroundColors[@(state)] = filledBackgroundColor;
+}
+
+- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView {
   if (![containedInputView isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:containedInputView];
     return;
@@ -107,7 +120,6 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   UIView *uiView = (UIView *)containedInputView;
   [self applyStyleToView:uiView
                    state:containedInputView.containedInputViewState
-             colorViewModel:colorViewModel
           containerFrame:containedInputView.containerFrame];
 }
 
@@ -119,20 +131,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)applyStyleToView:(UIView *)view
                    state:(MDCContainedInputViewState)state
-             colorViewModel:(id<MDCContainedInputViewColorViewModel>)colorViewModel
           containerFrame:(CGRect)containerFrame {
-  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelFilled class]]) {
-    MDCContainedInputViewColorViewModelFilled *filledScheme =
-        (MDCContainedInputViewColorViewModelFilled *)colorViewModel;
-    self.filledSublayer.fillColor = filledScheme.filledSublayerFillColor.CGColor;
-    self.thinUnderlineLayer.fillColor = filledScheme.thinUnderlineFillColor.CGColor;
-    self.thickUnderlineLayer.fillColor = filledScheme.thickUnderlineFillColor.CGColor;
-  }
+  self.filledSublayer.fillColor = [self.filledBackgroundColors[@(state)] CGColor];
+  self.thinUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
+  self.thickUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
 
   CGFloat containerHeight = CGRectGetMaxY(containerFrame);
-  UIBezierPath *filledSublayerBezier =
-      [self filledSublayerPathWithTextFieldBounds:view.bounds
-                          containerHeight:containerHeight];
+  UIBezierPath *filledSublayerBezier = [self filledSublayerPathWithTextFieldBounds:view.bounds
+                                                                   containerHeight:containerHeight];
   self.filledSublayer.path = filledSublayerBezier.CGPath;
   if (self.filledSublayer.superlayer != view.layer) {
     [view.layer insertSublayer:self.filledSublayer atIndex:0];
@@ -143,14 +149,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   CGFloat thickUnderlineWidth = shouldShowThickUnderline ? viewWidth : 0;
   UIBezierPath *targetThickUnderlineBezier =
       [self filledSublayerUnderlinePathWithViewBounds:view.bounds
-                              containerHeight:containerHeight
+                                      containerHeight:containerHeight
                                    underlineThickness:kFilledContainerStyleUnderlineWidthThick
                                        underlineWidth:thickUnderlineWidth];
   CGFloat thinUnderlineThickness =
       shouldShowThickUnderline ? 0 : kFilledContainerStyleUnderlineWidthThin;
   UIBezierPath *targetThinUnderlineBezier =
       [self filledSublayerUnderlinePathWithViewBounds:view.bounds
-                              containerHeight:containerHeight
+                                      containerHeight:containerHeight
                                    underlineThickness:thinUnderlineThickness
                                        underlineWidth:viewWidth];
   //  NSLog(@"target thick: %@",NSStringFromCGRect(targetThickUnderlineBezier.bounds));
@@ -343,7 +349,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 }
 
 - (UIBezierPath *)filledSublayerPathWithTextFieldBounds:(CGRect)viewBounds
-                                containerHeight:(CGFloat)containerHeight {
+                                        containerHeight:(CGFloat)containerHeight {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat topRadius = kFilledContainerStyleTopCornerRadius;
   CGFloat bottomRadius = 0;
@@ -390,7 +396,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 }
 
 - (UIBezierPath *)filledSublayerUnderlinePathWithViewBounds:(CGRect)viewBounds
-                                    containerHeight:(CGFloat)containerHeight
+                                            containerHeight:(CGFloat)containerHeight
                                          underlineThickness:(CGFloat)underlineThickness
                                              underlineWidth:(CGFloat)underlineWidth {
   UIBezierPath *path = [[UIBezierPath alloc] init];

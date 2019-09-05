@@ -46,7 +46,7 @@
   [self addSubview:self.rightAssistiveLabel];
 }
 
--(void)applyLayout:(MDCContainedInputAssistiveLabelViewLayout *)layout {
+- (void)applyLayout:(MDCContainedInputAssistiveLabelViewLayout *)layout {
   self.leftAssistiveLabel.frame = layout.leftAssistiveLabelFrame;
   self.leftAssistiveLabel.hidden = layout == nil;
   self.rightAssistiveLabel.frame = layout.rightAssistiveLabelFrame;

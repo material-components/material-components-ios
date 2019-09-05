@@ -94,15 +94,13 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
   BOOL shouldAttemptToDisplayLeftView = [self displaysSideView:leftView
-                                                                    viewMode:leftViewMode
-                                                                   isEditing:isEditing];
+                                                      viewMode:leftViewMode
+                                                     isEditing:isEditing];
   BOOL shouldAttemptToDisplayRightView = [self displaysSideView:rightView
-                                                                     viewMode:rightViewMode
-                                                                    isEditing:isEditing];
+                                                       viewMode:rightViewMode
+                                                      isEditing:isEditing];
   BOOL shouldAttemptToDisplayClearButton =
-      [self shouldDisplayClearButtonWithViewMode:clearButtonMode
-                                       isEditing:isEditing
-                                            text:text];
+      [self shouldDisplayClearButtonWithViewMode:clearButtonMode isEditing:isEditing text:text];
 
   CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
   CGFloat leftViewMinX = 0;
@@ -124,9 +122,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     clearButtonMinX =
         shouldAttemptToDisplayLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
   } else {
-    CGFloat clearButtonMaxX = shouldAttemptToDisplayRightView
-                                          ? rightViewMinX - kHorizontalPadding
-                                          : textFieldWidth - kHorizontalPadding;
+    CGFloat clearButtonMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kHorizontalPadding
+                                                              : textFieldWidth - kHorizontalPadding;
     clearButtonMinX = clearButtonMaxX - clearButtonSideLength;
   }
 
@@ -159,8 +156,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat clearButtonMinY = [self minYForSubviewWithHeight:clearButtonSideLength
                                                    centerY:textRectCenterYNormal];
-  CGFloat clearButtonFloatingMinY = [self minYForSubviewWithHeight:clearButtonSideLength
-                                                           centerY:textRectCenterYWithFloatingLabel];
+  CGFloat clearButtonFloatingMinY =
+      [self minYForSubviewWithHeight:clearButtonSideLength
+                             centerY:textRectCenterYWithFloatingLabel];
 
   CGFloat textRectMinX = 0;
   CGFloat textRectMaxX = 0;
@@ -215,8 +213,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame =
       CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
-  CGRect clearButtonFrameNormal = CGRectMake(clearButtonMinX, clearButtonMinY,
-                                             clearButtonSideLength, clearButtonSideLength);
+  CGRect clearButtonFrameNormal =
+      CGRectMake(clearButtonMinX, clearButtonMinY, clearButtonSideLength, clearButtonSideLength);
   CGRect clearButtonFrameFloating = CGRectMake(clearButtonMinX, clearButtonFloatingMinY,
                                                clearButtonSideLength, clearButtonSideLength);
 
@@ -241,7 +239,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat assistiveLabelVerticalPadding = positioningReference.paddingAroundAssistiveLabels;
   self.assistiveLabelViewLayout = [[MDCContainedInputAssistiveLabelViewLayout alloc]
-                initWithWidth:textFieldWidth
+                         initWithWidth:textFieldWidth
                     leftAssistiveLabel:leftAssistiveLabel
                    rightAssistiveLabel:rightAssistiveLabel
             underlineLabelDrawPriority:underlineLabelDrawPriority

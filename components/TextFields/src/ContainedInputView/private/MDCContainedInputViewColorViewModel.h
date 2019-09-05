@@ -15,12 +15,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCContainedInputViewState.h"
+
 /**
- This protocol represents a set of colors that are semantically meaningful and specific to
- MDCContainedInputView. Each property corresponds to the color of one or more views that an
- MDCContainedInputView manages at a given point of time.
+ This object represents a set of colors that are semantically meaningful and specific to
+ MDCContainedInputViews. Each property is a dictionary mapping MDCContainedInputViewStates to colors
+ that corresponds to one or more views that an MDCContainedInputView manages at a given point of
+ time.
  */
-@protocol MDCContainedInputViewColorViewModel <NSObject>
+@interface MDCContainedInputViewColorViewModel : NSObject
 /**
  The color of the contained input view's text.
  */
@@ -37,8 +40,7 @@
  The color of the contained input view's label when it's in its normal, i.e. not floating, state.
  */
 @property(strong, nonatomic, nonnull) UIColor *normalLabelColor;
-/**
- The color of the contained input view's placeholder label.
- */
-@property(strong, nonatomic, nonnull) UIColor *placeholderColor;
+
+- (nonnull instancetype)initWithState:(MDCContainedInputViewState)state NS_DESIGNATED_INITIALIZER;
+
 @end

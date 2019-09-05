@@ -22,8 +22,8 @@
 #import "MaterialTypography.h"
 #import "private/MDCBaseTextFieldLayout.h"
 #import "private/MDCContainedInputAssistiveLabelView.h"
-#import "private/MDCContainedInputViewClearButton.h"
-#import "private/MDCContainedInputViewLabelAnimator.h"
+#import "private/MDCContainedInputViewColorViewModel.h"
+#import "private/MDCContainedInputViewLabelAnimation.h"
 #import "private/MDCContainedInputViewStyleBase.h"
 #import "private/MDCContainedInputViewStylePathDrawingUtils.h"
 
@@ -39,12 +39,11 @@
 @property(nonatomic, assign) NSTimeInterval animationDuration;
 
 @property(nonatomic, strong)
-    NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorViewModel>> *colorViewModels;
+    NSMutableDictionary<NSNumber *, MDCContainedInputViewColorViewModel *> *colorViewModels;
 
 @end
 
 @implementation MDCBaseTextField
-@synthesize labelAnimator = _labelAnimator;
 @synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
@@ -71,6 +70,7 @@
 
 - (void)commonMDCBaseTextFieldInit {
   [self initializeProperties];
+  [self setUpColorViewModels];
   [self setUpLabel];
   [self setUpPlaceholderLabel];
   [self setUpAssistiveLabels];
@@ -83,27 +83,19 @@
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.colorViewModels = [[NSMutableDictionary alloc] init];
-  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
   self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
   self.animationDuration = 0.15;
 }
 
-- (void)setUpStateDependentColorViewModelsForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  id<MDCContainedInputViewColorViewModel> normalColorViewModel =
-      [containerStyle defaultColorViewModelForState:MDCContainedInputViewStateNormal];
-  [self setContainedInputViewColorScheming:normalColorViewModel
-                                  forState:MDCContainedInputViewStateNormal];
-
-  id<MDCContainedInputViewColorViewModel> focusedColorViewModel =
-      [containerStyle defaultColorViewModelForState:MDCContainedInputViewStateFocused];
-  [self setContainedInputViewColorScheming:focusedColorViewModel
-                                  forState:MDCContainedInputViewStateFocused];
-
-  id<MDCContainedInputViewColorViewModel> disabledColorViewModel =
-      [containerStyle defaultColorViewModelForState:MDCContainedInputViewStateDisabled];
-  [self setContainedInputViewColorScheming:disabledColorViewModel
-                                  forState:MDCContainedInputViewStateDisabled];
+- (void)setUpColorViewModels {
+  self.colorViewModels = [[NSMutableDictionary alloc] init];
+  self.colorViewModels[@(MDCContainedInputViewStateNormal)] =
+      [[MDCContainedInputViewColorViewModel alloc] initWithState:MDCContainedInputViewStateNormal];
+  self.colorViewModels[@(MDCContainedInputViewStateFocused)] =
+      [[MDCContainedInputViewColorViewModel alloc] initWithState:MDCContainedInputViewStateFocused];
+  self.colorViewModels[@(MDCContainedInputViewStateDisabled)] =
+      [[MDCContainedInputViewColorViewModel alloc]
+          initWithState:MDCContainedInputViewStateDisabled];
 }
 
 - (void)setUpAssistiveLabels {
@@ -130,6 +122,7 @@
 }
 - (void)setUpPlaceholderLabel {
   self.placeholderLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  self.placeholderColor = [UIColor systemGrayColor];
   [self addSubview:self.placeholderLabel];
 }
 
@@ -162,35 +155,27 @@
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
   self.placeholderLabel.text = self.placeholder;
-  id<MDCContainedInputViewColorViewModel> colorScheming =
-      [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [self applyMDCContainedInputViewColorViewModel:colorScheming];
+  [self updateColors];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
 - (void)postLayoutSubviews {
-  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout
-                                                 labelState:self.labelState];
-  [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
-                            placeholderFrame:placeholderFrame
-                        isPlaceholderVisible:self.shouldPlaceholderBeVisible];
-  [self.labelAnimator layOutLabel:self.label
-                            state:self.labelState
-                 normalLabelFrame:self.layout.labelFrameNormal
-               floatingLabelFrame:self.layout.labelFrameFloating
-                       normalFont:self.normalFont
-                     floatingFont:self.floatingFont];
-  id<MDCContainedInputViewColorViewModel> colorScheming =
-      [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [self.containerStyle applyStyleToContainedInputView:self
-                  withContainedInputViewColorScheming:colorScheming];
+  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
+  [MDCContainedInputViewLabelAnimation layOutPlaceholderLabel:self.placeholderLabel
+                                             placeholderFrame:placeholderFrame
+                                         isPlaceholderVisible:self.shouldPlaceholderBeVisible];
+  [MDCContainedInputViewLabelAnimation layOutLabel:self.label
+                                             state:self.labelState
+                                  normalLabelFrame:self.layout.labelFrameNormal
+                                floatingLabelFrame:self.layout.labelFrameFloating
+                                        normalFont:self.normalFont
+                                      floatingFont:self.floatingFont];
+  [self.containerStyle applyStyleToContainedInputView:self];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   [self.assistiveLabelView applyLayout:self.layout.assistiveLabelViewLayout];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
-//  self.assistiveLabelView.leftAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.leftAssistiveLabelFrame;
-//  self.assistiveLabelView.rightAssistiveLabel.frame = self.layout.assistiveLabelViewLayout.rightAssistiveLabelFrame;
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
@@ -219,9 +204,14 @@
 }
 
 - (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
-  CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
-  CGRect systemPlaceholderRect = [self placeholderRectForBounds:bounds];
-  return CGRectGetHeight(systemPlaceholderRect);
+  static dispatch_once_t onceToken;
+  static CGRect systemPlaceholderRect;
+  dispatch_once(&onceToken, ^{
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+    systemPlaceholderRect = [textField clearButtonRectForBounds:textField.bounds];
+  });
+  CGFloat sideLength = CGRectGetHeight(systemPlaceholderRect);
+  return sideLength > 0 ? sideLength : 19.0;
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
@@ -311,7 +301,6 @@
 
 - (void)setAnimationDuration:(NSTimeInterval)animationDuration {
   _animationDuration = animationDuration;
-  self.labelAnimator.animationDuration = animationDuration;
   self.containerStyle.animationDuration = animationDuration;
 }
 
@@ -325,16 +314,7 @@
 
 - (void)setPlaceholderColor:(UIColor *)placeholderColor {
   _placeholderColor = placeholderColor;
-  NSArray<NSNumber *> *statesNumbers = @[
-    @(MDCContainedInputViewStateNormal), @(MDCContainedInputViewStateFocused),
-    @(MDCContainedInputViewStateDisabled)
-  ];
-  for (NSNumber *stateNumber in statesNumbers) {
-    id<MDCContainedInputViewColorViewModel> colorViewModel =
-        [self containedInputViewColorSchemingForState:stateNumber.integerValue];
-    colorViewModel.placeholderColor = placeholderColor;
-  }
-  [self setNeedsLayout];
+  self.placeholderLabel.textColor = _placeholderColor;
 }
 
 - (UILabel *)leadingAssistiveLabel {
@@ -458,11 +438,7 @@
   }
   _containerStyle = containerStyle;
   _containerStyle.animationDuration = self.animationDuration;
-  [self setUpStateDependentColorViewModelsForStyle:_containerStyle];
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [_containerStyle applyStyleToContainedInputView:self
-              withContainedInputViewColorScheming:colorViewModel];
+  [_containerStyle applyStyleToContainedInputView:self];
 }
 
 #pragma mark MDCContainedInputView accessors
@@ -524,23 +500,13 @@
   return self.layout.clearButtonFrameNormal;
 }
 
-//TODO: Evaluate whether this method can be removed given the custom placeholder stuff.
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
-  if (self.labelState == MDCContainedInputViewLabelStateNormal) {
-    return CGRectZero;
-  }
-  return [super placeholderRectForBounds:bounds];
+  return CGRectZero;
 }
 
-//TODO: Evaluate whether this method can be removed given the custom placeholder stuff.
+// If we decide we don't want to use the custom placeholder label we can either delete this method
+// or fully implement it.
 - (void)drawPlaceholderInRect:(CGRect)rect {
-//  id<MDCContainedInputViewColorViewModel> colorViewModel =
-//      [self containedInputViewColorSchemingForState:self.containedInputViewState];
-//  NSDictionary *attributes = @{
-//    NSFontAttributeName : self.font,
-//    NSForegroundColorAttributeName : colorViewModel.placeholderColor
-//  };
-//  [self.placeholder drawInRect:rect withAttributes:attributes];
 }
 
 #pragma mark Fonts
@@ -695,27 +661,28 @@
 
 #pragma mark Theming
 
-- (void)applyMDCContainedInputViewColorViewModel:
-    (id<MDCContainedInputViewColorViewModel>)colorScheming {
-  self.textColor = colorScheming.textColor;
-  self.leadingAssistiveLabel.textColor = colorScheming.assistiveLabelColor;
-  self.leadingAssistiveLabel.textColor = colorScheming.assistiveLabelColor;
-  self.label.textColor = colorScheming.floatingLabelColor;
-  self.placeholderLabel.textColor = colorScheming.placeholderColor;
+- (void)updateColors {
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:self.containedInputViewState];
+  self.textColor = colorViewModel.textColor;
+  self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
+  self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
+  self.label.textColor = colorViewModel.floatingLabelColor;
+  self.placeholderLabel.textColor = self.placeholderColor;
 }
 
-- (void)setContainedInputViewColorScheming:
-            (id<MDCContainedInputViewColorViewModel>)simpleTextFieldColorScheming
-                                  forState:(MDCContainedInputViewState)containedInputViewState {
-  self.colorViewModels[@(containedInputViewState)] = simpleTextFieldColorScheming;
+- (void)setContainedInputViewColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
+                                   forState:(MDCContainedInputViewState)containedInputViewState {
+  self.colorViewModels[@(containedInputViewState)] = colorViewModel;
 }
 
-- (id<MDCContainedInputViewColorViewModel>)containedInputViewColorSchemingForState:
+- (MDCContainedInputViewColorViewModel *)containedInputViewColorViewModelForState:
     (MDCContainedInputViewState)containedInputViewState {
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
+  MDCContainedInputViewColorViewModel *colorViewModel =
       self.colorViewModels[@(containedInputViewState)];
   if (!colorViewModel) {
-    colorViewModel = [self.containerStyle defaultColorViewModelForState:containedInputViewState];
+    colorViewModel =
+        [[MDCContainedInputViewColorViewModel alloc] initWithState:containedInputViewState];
   }
   return colorViewModel;
 }
@@ -725,8 +692,8 @@
 - (void)setNormalLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
   colorViewModel.normalLabelColor = labelColor;
   [self setNeedsLayout];
 }
@@ -734,33 +701,33 @@
 - (UIColor *)normalLabelColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
   return colorViewModel.normalLabelColor;
 }
 
 - (void)setFloatingLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
-  MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-  [self containedInputViewColorSchemingForState:containedInputViewState];
+      MDCContainedInputViewStateWithUIControlState(state);
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
   colorViewModel.floatingLabelColor = labelColor;
   [self setNeedsLayout];
 }
 
 - (UIColor *)floatingLabelColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
-  MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-  [self containedInputViewColorSchemingForState:containedInputViewState];
+      MDCContainedInputViewStateWithUIControlState(state);
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
   return colorViewModel.floatingLabelColor;
 }
 
 - (void)setTextColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
   colorViewModel.textColor = labelColor;
   [self setNeedsLayout];
 }
@@ -768,8 +735,8 @@
 - (UIColor *)textColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
   return colorViewModel.textColor;
 }
 

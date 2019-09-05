@@ -460,5 +460,4 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
                                   [chip accessibilityLabel]);
 }
 
-
 @end

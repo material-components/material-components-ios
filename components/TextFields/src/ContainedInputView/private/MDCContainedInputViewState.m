@@ -12,11 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "MDCContainedInputViewState.h"
 
-@interface MDCContainedInputViewClearButton : UIButton
-- (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
-@property(nonatomic, readonly) CGFloat sideLength;
-@property(nonatomic, readonly) CGFloat imageViewSideLength;
-@end
+MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
+    UIControlState controlState) {
+  if ((controlState & UIControlStateDisabled) == UIControlStateDisabled) {
+    return MDCContainedInputViewStateDisabled;
+  } else if ((controlState & UIControlStateEditing) == UIControlStateEditing) {
+    return MDCContainedInputViewStateFocused;
+  } else {
+    return MDCContainedInputViewStateNormal;
+  }
+}

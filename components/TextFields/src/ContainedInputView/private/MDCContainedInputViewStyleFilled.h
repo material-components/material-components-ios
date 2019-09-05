@@ -18,11 +18,11 @@
 #import "MDCContainedInputViewStyleBase.h"
 #import "MDCTextControlLabelBehavior.h"
 
-@interface MDCContainedInputViewColorViewModelFilled : MDCContainedInputViewColorViewModelBase
-@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *thinUnderlineFillColor;
-@property(strong, nonatomic) UIColor *thickUnderlineFillColor;
-@end
-
 @interface MDCContainedInputViewStyleFilled : NSObject <MDCContainedInputViewStyle>
+- (nonnull UIColor *)underlineColorForState:(MDCContainedInputViewState)state;
+- (void)setUnderlineColor:(nonnull UIColor *)underlineColor
+                 forState:(MDCContainedInputViewState)state;
+- (nonnull UIColor *)filledBackgroundColorForState:(MDCContainedInputViewState)state;
+- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
+                        forState:(MDCContainedInputViewState)state;
 @end

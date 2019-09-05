@@ -60,51 +60,11 @@
 }
 
 - (void)applyDefaultColorTheme:(id<MDCColorScheming>)mdcColorScheming {
-  MDCContainedInputViewColorViewModelBase *normalColorScheme =
-      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateNormal];
-  [self setContainedInputViewColorScheming:normalColorScheme
-                                  forState:MDCContainedInputViewStateNormal];
-
-  MDCContainedInputViewColorViewModelBase *focusedColorScheme =
-      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateFocused];
-  [self setContainedInputViewColorScheming:focusedColorScheme
-                                  forState:MDCContainedInputViewStateFocused];
-
-  MDCContainedInputViewColorViewModelBase *disabledColorScheme =
-      [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateDisabled];
-  [self setContainedInputViewColorScheming:disabledColorScheme
-                                  forState:MDCContainedInputViewStateDisabled];
-
-  self.tintColor = mdcColorScheming.primaryColor;
+  // TODO: Implement
 }
 
 - (void)applyErrorColorTheme:(id<MDCColorScheming>)mdcColorScheming {
-  //  UIColor *errorColor = mdcColorScheming.errorColor;
-  //  UIColor *errorColorLowAlpha = [errorColor colorWithAlphaComponent:0.5];
-  //  [self setTextColor:errorColor forState:UIControlStateNormal];
-  //  [self setTextColor:errorColor forState:UIControlStateDisabled];
-  //  [self setTextColor:errorColorLowAlpha forState:UIControlStateEditing];
-  //  [self setLabelColor:errorColor forState:UIControlStateNormal];
-  //  [self setLabelColor:errorColor forState:UIControlStateDisabled];
-  //  [self setLabelColor:errorColorLowAlpha forState:UIControlStateEditing];
-  //
-  //
-  //  MDCContainedInputViewColorScheme *normalColorScheme =
-  //  [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateNormal];
-  //  [self setContainedInputViewColorScheming:normalColorScheme
-  //                                  forState:MDCContainedInputViewStateNormal];
-  //
-  //  MDCContainedInputViewColorScheme *focusedColorScheme =
-  //  [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateFocused];
-  //  [self setContainedInputViewColorScheming:focusedColorScheme
-  //                                  forState:MDCContainedInputViewStateFocused];
-  //
-  //  MDCContainedInputViewColorScheme *disabledColorScheme =
-  //  [self.containerStyle defaultColorViewModelForState:MDCContainedInputViewStateDisabled];
-  //  [self setContainedInputViewColorScheming:disabledColorScheme
-  //                                  forState:MDCContainedInputViewStateDisabled];
-  //
-  //  self.tintColor = mdcColorScheming.primaryColor;
+  // TODO: Implement
 }
 
 @end

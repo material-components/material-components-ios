@@ -17,7 +17,6 @@
 
 #import "MDCContainedInputAssistiveLabelView.h"
 #import "MDCContainedInputView.h"
-#import "MDCContainedInputViewClearButton.h"
 
 @protocol MDCContainedInputViewStyle;
 
@@ -43,27 +42,27 @@
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat containerHeight;
 
-- (nonnull instancetype)
-               initWithTextFieldSize:(CGSize)textFieldSize
-                positioningReference:
-                    (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
-                                text:(nullable NSString *)text
-                                font:(nonnull UIFont *)font
-                        floatingFont:(nonnull UIFont *)floatingFont
-                               label:(nonnull UILabel *)label
-                            leftView:(nullable UIView *)leftView
-                        leftViewMode:(UITextFieldViewMode)leftViewMode
-                           rightView:(nullable UIView *)rightView
-                       rightViewMode:(UITextFieldViewMode)rightViewMode
-               clearButtonSideLength:(CGFloat)clearButtonSideLength
-                     clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                  leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
-                 rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
-          underlineLabelDrawPriority:
-              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
-    customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-            preferredContainerHeight:(CGFloat)preferredContainerHeight
-                               isRTL:(BOOL)isRTL
-                           isEditing:(BOOL)isEditing;
+- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                         positioningReference:
+                             (nonnull id<MDCContainerStyleVerticalPositioningReference>)
+                                 positioningReference
+                                         text:(nullable NSString *)text
+                                         font:(nonnull UIFont *)font
+                                 floatingFont:(nonnull UIFont *)floatingFont
+                                        label:(nonnull UILabel *)label
+                                     leftView:(nullable UIView *)leftView
+                                 leftViewMode:(UITextFieldViewMode)leftViewMode
+                                    rightView:(nullable UIView *)rightView
+                                rightViewMode:(UITextFieldViewMode)rightViewMode
+                        clearButtonSideLength:(CGFloat)clearButtonSideLength
+                              clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                           leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+                          rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+                   underlineLabelDrawPriority:
+                       (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+             customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
+                     preferredContainerHeight:(CGFloat)preferredContainerHeight
+                                        isRTL:(BOOL)isRTL
+                                    isEditing:(BOOL)isEditing;
 
 @end

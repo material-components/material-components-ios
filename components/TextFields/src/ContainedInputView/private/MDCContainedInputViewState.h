@@ -14,14 +14,27 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MDCContainedInputView.h"
 
-#import "MDCContainedInputAssistiveLabelViewLayout.h"
+static const UIControlState UIControlStateEditing = 1 << 16;
 
-@interface MDCContainedInputAssistiveLabelView : UIView
+/**
+ A set of Contained Input View states outlined in the Material guidelines. These states overlap with
+ and extend UIControlState.
+ */
+typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
+  /**
+   The default state of the contained input view.
+   */
+  MDCContainedInputViewStateNormal = 1 << 0,
+  /**
+   The state the view is in during normal editing.
+   */
+  MDCContainedInputViewStateFocused = 1 << 1,
+  /**
+   The disabled state.
+   */
+  MDCContainedInputViewStateDisabled = 1 << 2,
+};
 
-@property(nonatomic, strong, readonly, nonnull) UILabel *leftAssistiveLabel;
-@property(nonatomic, strong, readonly, nonnull) UILabel *rightAssistiveLabel;
-- (void)applyLayout:(nullable MDCContainedInputAssistiveLabelViewLayout *)layout;
-
-@end
+MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
+    UIControlState controlState);

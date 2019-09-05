@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputViewLabelAnimator.h"
+#import "MDCContainedInputViewLabelAnimation.h"
+#import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
 
-@interface MDCContainedInputViewLabelAnimator ()
-@end
+static const CGFloat kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration = (CGFloat)0.15;
 
-@implementation MDCContainedInputViewLabelAnimator
+@implementation MDCContainedInputViewLabelAnimation
 
 - (instancetype)init {
   self = [super init];
@@ -28,66 +28,46 @@
   return self;
 }
 
-- (void)layOutLabel:(nonnull UILabel *)floatingLabel
++ (void)layOutLabel:(nonnull UILabel *)label
                  state:(MDCContainedInputViewLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
           floatingFont:(nonnull UIFont *)floatingFont {
-  UIFont *targetFont = normalFont;
-  CGRect targetFrame = normalLabelFrame;
-  BOOL floatingLabelShouldHide = NO;
-  switch (labelState) {
-    case MDCContainedInputViewLabelStateFloating:
-      targetFont = floatingFont;
-      targetFrame = floatingLabelFrame;
-      break;
-    case MDCContainedInputViewLabelStateNormal:
-      break;
-    case MDCContainedInputViewLabelStateNone:
-      floatingLabelShouldHide = YES;
-      break;
-    default:
-      break;
+  UIFont *targetFont;
+  CGRect targetFrame;
+  MDCAnimationTimingFunction mdcTimingFunction;
+  if (labelState == MDCContainedInputViewLabelStateFloating) {
+    targetFont = floatingFont;
+    targetFrame = floatingLabelFrame;
+    mdcTimingFunction = MDCAnimationTimingFunctionAcceleration;
+  } else {
+    targetFont = normalFont;
+    targetFrame = normalLabelFrame;
+    mdcTimingFunction = MDCAnimationTimingFunctionDeceleration;
   }
 
-  CGRect currentFrame = floatingLabel.frame;
-  CGAffineTransform trasformNeededToMakeTargetLookLikeCurrent =
+  CGRect currentFrame = label.frame;
+  CGAffineTransform trasformNeededToMakeViewWithTargetFrameLookLikeItHasCurrentFrame =
       [self transformFromRect:targetFrame toRect:currentFrame];
-  CATransform3D transformFromValueTransform3D =
-      CATransform3DMakeAffineTransform(trasformNeededToMakeTargetLookLikeCurrent);
-  CATransform3D transformToValueTransform3D = CATransform3DIdentity;
 
-  floatingLabel.frame = targetFrame;
-  floatingLabel.font = targetFont;
-  floatingLabel.transform = CGAffineTransformIdentity;
+  label.frame = targetFrame;
+  label.font = targetFont;
+  label.transform = trasformNeededToMakeViewWithTargetFrameLookLikeItHasCurrentFrame;
 
-  CABasicAnimation *preexistingTransformAnimation = (CABasicAnimation *)[floatingLabel.layer
-      animationForKey:self.floatingLabelTransformAnimationKey];
-
-  floatingLabel.hidden = floatingLabelShouldHide;
-
-  [CATransaction begin];
-  {
-    [CATransaction setCompletionBlock:^{
-      [floatingLabel.layer removeAnimationForKey:self.floatingLabelTransformAnimationKey];
-    }];
-    if (preexistingTransformAnimation) {
-      [floatingLabel.layer removeAnimationForKey:self.floatingLabelTransformAnimationKey];
-    } else {
-      CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-      animation.fromValue = [NSValue valueWithCATransform3D:transformFromValueTransform3D];
-      animation.toValue = [NSValue valueWithCATransform3D:transformToValueTransform3D];
-      animation.duration = self.animationDuration;
-      animation.removedOnCompletion = NO;
-      animation.fillMode = kCAFillModeForwards;
-      [floatingLabel.layer addAnimation:animation forKey:self.floatingLabelTransformAnimationKey];
-    }
-  }
-  [CATransaction commit];
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+  [UIView mdc_animateWithTimingFunction:timingFunction
+                               duration:kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration
+                                  delay:0
+                                options:UIViewAnimationOptionTransitionNone
+                             animations:^{
+                               label.transform = CGAffineTransformIdentity;
+                             }
+                             completion:nil];
 }
 
-- (void)layOutPlaceholderLabel:(UILabel *)placeholderLabel
++ (void)layOutPlaceholderLabel:(UILabel *)placeholderLabel
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible {
   CGRect hiddenFrame =
@@ -123,7 +103,7 @@
       CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
       animation.fromValue = @(opacityFromValue);
       animation.toValue = @(opacityToValue);
-      animation.duration = self.animationDuration;
+      animation.duration = kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration;
       animation.removedOnCompletion = NO;
       animation.fillMode = kCAFillModeForwards;
       [placeholderLabel.layer addAnimation:animation
@@ -133,7 +113,11 @@
   [CATransaction commit];
 }
 
-- (CGAffineTransform)transformFromRect:(CGRect)sourceRect toRect:(CGRect)finalRect {
+/**
+ This helper method returns the transform that would need to be applied to a view with a frame of @c
+ sourceRect in order for it to appear as though its frame was @c finalRect.
+ */
++ (CGAffineTransform)transformFromRect:(CGRect)sourceRect toRect:(CGRect)finalRect {
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform =
       CGAffineTransformTranslate(transform, -(CGRectGetMidX(sourceRect) - CGRectGetMidX(finalRect)),
@@ -144,11 +128,7 @@
   return transform;
 }
 
-- (NSString *)floatingLabelTransformAnimationKey {
-  return @"floatingLabelTransformAnimationKey";
-}
-
-- (NSString *)placeholderLabelOpacityAnimationKey {
++ (NSString *)placeholderLabelOpacityAnimationKey {
   return @"placeholderLabelOpacityAnimationKey";
 }
 

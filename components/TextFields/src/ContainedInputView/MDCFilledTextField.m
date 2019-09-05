@@ -52,59 +52,36 @@
                         forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
-  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelFilled class]]) {
-    MDCContainedInputViewColorViewModelFilled *filledColorViewModel =
-        (MDCContainedInputViewColorViewModelFilled *)colorViewModel;
-    filledColorViewModel.filledSublayerFillColor = filledBackgroundColor;
-  }
+  [self.filledStyle setFilledBackgroundColor:filledBackgroundColor
+                                    forState:containedInputViewState];
   [self setNeedsLayout];
 }
 
 - (nonnull UIColor *)filledBackgroundColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
-  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelFilled class]]) {
-    MDCContainedInputViewColorViewModelFilled *filledColorViewModel =
-        (MDCContainedInputViewColorViewModelFilled *)colorViewModel;
-    return filledColorViewModel.filledSublayerFillColor;
-  }
-  // TODO: Is it okay to return clear color here? Should it be nullable?
-  return [UIColor clearColor];
+  return [self.filledStyle underlineColorForState:containedInputViewState];
 }
 
 - (void)setUnderlineColor:(nonnull UIColor *)underlineColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
-  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelFilled class]]) {
-    MDCContainedInputViewColorViewModelFilled *filledColorViewModel =
-        (MDCContainedInputViewColorViewModelFilled *)colorViewModel;
-    filledColorViewModel.thinUnderlineFillColor = underlineColor;
-    filledColorViewModel.thickUnderlineFillColor = underlineColor;
-    // TODO: Explore setting either the thick or thin depending on the state!
-  }
+  [self.filledStyle setUnderlineColor:underlineColor forState:containedInputViewState];
   [self setNeedsLayout];
 }
 
 - (nonnull UIColor *)underlineColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
       MDCContainedInputViewStateWithUIControlState(state);
-  id<MDCContainedInputViewColorViewModel> colorViewModel =
-      [self containedInputViewColorSchemingForState:containedInputViewState];
-  if ([colorViewModel isKindOfClass:[MDCContainedInputViewColorViewModelFilled class]]) {
-    MDCContainedInputViewColorViewModelFilled *filledColorViewModel =
-        (MDCContainedInputViewColorViewModelFilled *)colorViewModel;
-    return filledColorViewModel.thinUnderlineFillColor;
-    //    return filledColorViewModel.thickUnderlineFillColor;
-    // TODO: Determine which one of these you should actually return!
+  return [self.filledStyle underlineColorForState:containedInputViewState];
+}
+
+- (MDCContainedInputViewStyleFilled *)filledStyle {
+  MDCContainedInputViewStyleFilled *filledStyle = nil;
+  if ([self.containerStyle isKindOfClass:[MDCContainedInputViewStyleFilled class]]) {
+    filledStyle = (MDCContainedInputViewStyleFilled *)self.containerStyle;
   }
-  // TODO: Is it okay to return clear color here? Should it be nullable?
-  return [UIColor clearColor];
+  return filledStyle;
 }
 
 @end

@@ -39,36 +39,7 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
   return [font fontWithSize:floatingFontSize];
 }
 
-- (id<MDCContainedInputViewColorViewModel>)defaultColorViewModelForState:
-    (MDCContainedInputViewState)state {
-  MDCContainedInputViewColorViewModelBase *colorViewModel = [[MDCContainedInputViewColorViewModelBase alloc] init];
-
-  UIColor *floatingLabelColor = colorViewModel.floatingLabelColor;
-  UIColor *assistiveLabelColor = colorViewModel.assistiveLabelColor;
-  UIColor *textColor = colorViewModel.textColor;
-
-  switch (state) {
-    case MDCContainedInputViewStateNormal:
-      break;
-    case MDCContainedInputViewStateDisabled:
-      floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:(CGFloat)0.10];
-      break;
-    case MDCContainedInputViewStateFocused:
-      floatingLabelColor = [UIColor blackColor];
-      break;
-    default:
-      break;
-  }
-
-  colorViewModel.textColor = textColor;
-  colorViewModel.assistiveLabelColor = assistiveLabelColor;
-  colorViewModel.floatingLabelColor = floatingLabelColor;
-
-  return colorViewModel;
-}
-
-- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
-    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorViewModel>)colorViewModel {
+- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView {
 }
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
