@@ -1003,14 +1003,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return [self titleColorForState:UIControlStateNormal];
 }
 
-- (BOOL)shouldCapitalizeTitle {
-  return [self isUppercaseTitle];
-}
-
-- (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
-  [self setUppercaseTitle:shouldCapitalizeTitle];
-}
-
 - (UIColor *)underlyingColor {
   return [self underlyingColorHint];
 }
