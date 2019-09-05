@@ -70,10 +70,6 @@
 
   UIColor *filledSublayerFillColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-  //  UIColor *clearButtonTintColor =
-  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
-  // color view model
 
   [self setLabelColor:labelColor forState:UIControlStateNormal];
   [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
@@ -104,10 +100,6 @@
 
   UIColor *filledSublayerFillColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-  //  UIColor *clearButtonTintColor =
-  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
-  // color view model
 
   [self setLabelColor:labelColor forState:UIControlStateNormal];
   [self setLabelColor:labelColorFocused forState:UIControlStateEditing];

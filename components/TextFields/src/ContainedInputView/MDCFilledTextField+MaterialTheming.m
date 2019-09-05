@@ -70,10 +70,6 @@
 
   UIColor *filledSublayerFillColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-  //  UIColor *clearButtonTintColor =
-  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
-  // color view model
 
   [self setFloatingLabelColor:labelColor forState:UIControlStateNormal];
   [self setFloatingLabelColor:labelColorFocused forState:UIControlStateEditing];
@@ -90,8 +86,9 @@
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateNormal];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateEditing];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateDisabled];
-  self.trailingAssistiveLabel.textColor = assistiveLabelColor;
-  self.leadingAssistiveLabel.textColor = assistiveLabelColor;
+  [self setAssistiveLabelColor:assistiveLabelColor forState:UIControlStateNormal];
+  [self setAssistiveLabelColor:assistiveLabelColor forState:UIControlStateEditing];
+  [self setAssistiveLabelColor:assistiveLabelColor forState:UIControlStateDisabled];
   self.tintColor = colorScheme.primaryColor;
 }
 
@@ -107,10 +104,6 @@
 
   UIColor *filledSublayerFillColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-  //  UIColor *clearButtonTintColor =
-  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
-  // color view model
 
   [self setNormalLabelColor:labelColor forState:UIControlStateNormal];
   [self setNormalLabelColor:labelColorFocused forState:UIControlStateEditing];
@@ -127,8 +120,9 @@
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateNormal];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateEditing];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateDisabled];
-  self.trailingAssistiveLabel.textColor = assistiveLabelColor;
-  self.leadingAssistiveLabel.textColor = assistiveLabelColor;
+  [self setAssistiveLabelColor:assistiveLabelColor forState:UIControlStateNormal];
+  [self setAssistiveLabelColor:assistiveLabelColor forState:UIControlStateEditing];
+  [self setAssistiveLabelColor:assistiveLabelColor forState:UIControlStateDisabled];
   self.tintColor = colorScheme.errorColor;
 }
 

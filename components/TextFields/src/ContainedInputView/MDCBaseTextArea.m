@@ -155,7 +155,6 @@
   [self setUpGradientLayers];
   [self setUpColorViewModels];
   [self setUpAssistiveLabels];
-  [self setUpClearButton];
   [self setUpContainerStyle];
 }
 
@@ -242,10 +241,6 @@
   //  self.rightAssistiveLabel.font = underlineFont;
   //  [self addSubview:self.leftAssistiveLabel];
   //  [self addSubview:self.rightAssistiveLabel];
-}
-
-- (void)setUpClearButton {
-  // TODO: Use CIV clear button
 }
 
 - (void)setUpGradientLayers {

@@ -666,7 +666,7 @@
       [self containedInputViewColorViewModelForState:self.containedInputViewState];
   self.textColor = colorViewModel.textColor;
   self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
+  self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
   self.label.textColor = colorViewModel.floatingLabelColor;
   self.placeholderLabel.textColor = self.placeholderColor;
 }
@@ -738,6 +738,24 @@
   MDCContainedInputViewColorViewModel *colorViewModel =
       [self containedInputViewColorViewModelForState:containedInputViewState];
   return colorViewModel.textColor;
+}
+
+- (void)setAssistiveLabelColor:(nonnull UIColor *)assistiveLabelColor
+                      forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+      MDCContainedInputViewStateWithUIControlState(state);
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
+  colorViewModel.assistiveLabelColor = assistiveLabelColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)assistiveLabelColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+      MDCContainedInputViewStateWithUIControlState(state);
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:containedInputViewState];
+  return colorViewModel.assistiveLabelColor;
 }
 
 @end

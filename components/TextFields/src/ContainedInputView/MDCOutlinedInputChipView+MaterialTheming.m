@@ -70,11 +70,6 @@
   UIColor *outlineColorDisabled =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
 
-  //  UIColor *clearButtonTintColor =
-  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
-  // color view model
-
   [self setLabelColor:labelColor forState:UIControlStateNormal];
   [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
   [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
@@ -99,11 +94,6 @@
   UIColor *outlineColorNormal = colorScheme.errorColor;
   UIColor *outlineColorEditing = colorScheme.errorColor;
   UIColor *outlineColorDisabled = [colorScheme.errorColor colorWithAlphaComponent:(CGFloat)0.60];
-
-  //  UIColor *clearButtonTintColor =
-  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
-  // color view model
 
   [self setLabelColor:labelColor forState:UIControlStateNormal];
   [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
