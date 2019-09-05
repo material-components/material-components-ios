@@ -61,6 +61,7 @@ mdc_public_objc_library(
 mdc_extension_objc_library(
     name = "ContainedInputView",
     deps = [
+        "//components/AnimationTiming",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
