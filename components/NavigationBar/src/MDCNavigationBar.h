@@ -365,14 +365,14 @@ IB_DESIGNABLE
 @property(nonatomic, copy, nullable)
     NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
 
-@end
-
 #pragma mark - Deprecated
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
 
 @interface MDCNavigationBar (ToBeDeprecated)
+
+@end
 
 /**
  The inkColor that is used for all buttons in trailing and leading button bars.
