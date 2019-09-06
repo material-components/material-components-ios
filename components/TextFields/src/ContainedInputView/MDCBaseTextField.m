@@ -109,14 +109,6 @@
   [self addSubview:self.assistiveLabelView];
 }
 
-- (UILabel *)leftAssistiveLabel {
-  return self.assistiveLabelView.leftAssistiveLabel;
-}
-
-- (UILabel *)rightAssistiveLabel {
-  return self.assistiveLabelView.rightAssistiveLabel;
-}
-
 - (void)setUpLabel {
   self.label = [[UILabel alloc] initWithFrame:self.bounds];
   [self addSubview:self.label];
@@ -253,6 +245,7 @@
                                              density:0
                             preferredContainerHeight:self.preferredContainerHeight];
 }
+
 - (CGFloat)normalizedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
   CGFloat value = customPriority;
   if (value < 0) {
@@ -455,6 +448,14 @@
   return 1;
 }
 
+- (UILabel *)leftAssistiveLabel {
+  return self.assistiveLabelView.leftAssistiveLabel;
+}
+
+- (UILabel *)rightAssistiveLabel {
+  return self.assistiveLabelView.rightAssistiveLabel;
+}
+
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
@@ -518,6 +519,7 @@
 - (void)setFont:(UIFont *)font {
   [super setFont:font];
 }
+
 - (UIFont *)font {
   return [super font] ?: [self uiTextFieldDefaultFont];
 }
@@ -576,7 +578,7 @@
                                                 object:nil];
 }
 
-#pragma mark Text Field State
+#pragma mark MDCContainedInputViewState
 
 - (MDCContainedInputViewState)determineCurrentContainedInputViewState {
   return [self containedInputViewStateWithIsEnabled:self.isEnabled isEditing:self.isEditing];
@@ -595,11 +597,7 @@
   }
 }
 
-#pragma mark Label
-
-- (BOOL)canLabelFloat {
-  return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
-}
+#pragma mark Placeholder
 
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
@@ -608,20 +606,13 @@
                                                isEditing:self.isEditing];
 }
 
-- (MDCContainedInputViewLabelState)determineCurrentLabelState {
-  return [self labelStateWithLabel:self.label
-                              text:self.text
-                     canLabelFloat:self.canLabelFloat
-                         isEditing:self.isEditing];
-}
-
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
                                        labelState:(MDCContainedInputViewLabelState)labelState
                                              text:(NSString *)text
                                         isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
-
+  
   if (hasPlaceholder) {
     if (hasText) {
       return NO;
@@ -635,6 +626,19 @@
   } else {
     return NO;
   }
+}
+
+#pragma mark Label
+
+- (BOOL)canLabelFloat {
+  return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
+}
+
+- (MDCContainedInputViewLabelState)determineCurrentLabelState {
+  return [self labelStateWithLabel:self.label
+                              text:self.text
+                     canLabelFloat:self.canLabelFloat
+                         isEditing:self.isEditing];
 }
 
 - (MDCContainedInputViewLabelState)labelStateWithLabel:(UILabel *)label

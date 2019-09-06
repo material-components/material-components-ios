@@ -135,7 +135,7 @@
  conforming to MDCContainedInputView with a set of colors represented by an object conforming to
  MDCContainedInputViewColorViewModel.
  */
-- (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView;
+- (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)containedInputView;
 /**
  This method allows objects conforming to MDCContainedInputViewStyle to remove the styling
  previously applied to objects conforming to MDCContainedInputView.
