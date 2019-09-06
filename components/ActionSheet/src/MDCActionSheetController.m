@@ -181,14 +181,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   }
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
-  CGFloat dividerHeight = 1;
-  if (self.showsHeaderDivider) {
-    self.headerDividerView.frame =
-        CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), dividerHeight);
-  } else {
-    dividerHeight = 0;
-    self.headerDividerView.frame = CGRectZero;
-  }
+  CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
+  self.headerDividerView.frame = CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), dividerHeight);
   UIEdgeInsets insets = UIEdgeInsetsMake(size.height + dividerHeight, 0, 0, 0);
   if (@available(iOS 11.0, *)) {
     insets.bottom = self.tableView.adjustedContentInset.bottom;
@@ -417,11 +411,11 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 }
 
 - (void)setShowsHeaderDivider:(BOOL)showsHeaderDivider {
-  if (_showsHeaderDivider == showsHeaderDivider) {
-    return;
-  }
-  _showsHeaderDivider = showsHeaderDivider;
-  [self.view setNeedsLayout];
+  self.headerDividerView.hidden = showsHeaderDivider;
+}
+
+- (BOOL)showsHeaderDivider {
+  return self.headerDividerView.hidden;
 }
 
 #pragma mark - Dynamic Type
