@@ -20,8 +20,7 @@
 
 static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
 
-static const CGFloat kLeadingMargin = (CGFloat)8.0;
-static const CGFloat kTrailingMargin = (CGFloat)8.0;
+static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 static const CGFloat kGradientBlurLength = 6;
 
@@ -36,7 +35,8 @@ static const CGFloat kGradientBlurLength = 6;
 @implementation MDCBaseInputChipViewLayout
 
 - (instancetype)initWithSize:(CGSize)size
-                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                positioningReference:
+                    (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
@@ -61,7 +61,7 @@ static const CGFloat kGradientBlurLength = 6;
   self = [super init];
   if (self) {
     [self calculateLayoutWithSize:size
-                          containerStyle:containerStyle
+                    positioningReference:positioningReference
                                     text:text
                              placeholder:placeholder
                                     font:font
@@ -87,7 +87,8 @@ static const CGFloat kGradientBlurLength = 6;
 }
 
 - (void)calculateLayoutWithSize:(CGSize)size
-                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                positioningReference:
+                    (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
@@ -104,31 +105,14 @@ static const CGFloat kGradientBlurLength = 6;
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:
               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
-    customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
+    customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
-  CGFloat numberOfVisibleRows = 0;
-  if (chipsWrap) {
-    numberOfVisibleRows = preferredNumberOfVisibleRows;
-    if (numberOfVisibleRows <= 0) {
-      numberOfVisibleRows = 0;
-    }
-  } else {
-    numberOfVisibleRows = 1;
-  }
-
-  id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
-      [containerStyle positioningReferenceWithFloatingFontLineHeight:floatingFont.lineHeight
-                                                normalFontLineHeight:font.lineHeight
-                                                       textRowHeight:chipRowHeight
-                                                    numberOfTextRows:numberOfVisibleRows
-                                                             density:0
-                                            preferredContainerHeight:preferredContainerHeight];
-
-  CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
-  CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
+  CGFloat globalChipRowMinX = isRTL ? kHorizontalPadding : kHorizontalPadding;
+  CGFloat globalChipRowMaxX =
+      isRTL ? size.width - kHorizontalPadding : size.width - kHorizontalPadding;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
 
   CGRect labelFrameFloating =
@@ -136,27 +120,27 @@ static const CGFloat kGradientBlurLength = 6;
                                floatingFont:floatingFont
                           globalChipRowMinX:globalChipRowMinX
                           globalChipRowMaxX:globalChipRowMaxX
-          paddingBetweenTopAndFloatingLabel:positioningDelegate.paddingBetweenTopAndFloatingLabel
+          paddingBetweenTopAndFloatingLabel:positioningReference.paddingBetweenTopAndFloatingLabel
                                       isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(labelFrameFloating);
 
   CGFloat initialChipRowMinYWithFloatingLabel =
-      floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
+      floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndText;
 
-  CGFloat bottomPadding = positioningDelegate.paddingBetweenTextAndBottom;
+  CGFloat bottomPadding = positioningReference.paddingBetweenTextAndBottom;
 
   CGRect labelFrameNormal =
       [self normalLabelFrameWithText:label.text
                                      font:font
                         globalChipRowMinX:globalChipRowMinX
                         globalChipRowMaxX:globalChipRowMaxX
-          paddingBetweenTopAndNormalLabel:positioningDelegate.paddingBetweenTopAndNormalLabel
+          paddingBetweenTopAndNormalLabel:positioningReference.paddingBetweenTopAndNormalLabel
                                     isRTL:isRTL];
 
   CGFloat initialChipRowMinYNormal = 0;
   CGFloat halfOfNormalLabelHeight = (CGFloat)0.5 * font.lineHeight;
   CGFloat halfOfChipRowHeight = ((CGFloat)0.5 * chipRowHeight);
-  initialChipRowMinYNormal = positioningDelegate.paddingBetweenTopAndNormalLabel +
+  initialChipRowMinYNormal = positioningReference.paddingBetweenTopAndNormalLabel +
                              halfOfNormalLabelHeight - halfOfChipRowHeight;
   CGFloat initialChipRowMinY = initialChipRowMinYNormal;
   if (labelState == MDCContainedInputViewLabelStateFloating) {
@@ -172,7 +156,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                     globalChipRowMaxX:globalChipRowMaxX
                                                                 isRTL:isRTL];
 
-  CGSize scrollViewSize = CGSizeMake(size.width, positioningDelegate.containerHeight);
+  CGSize scrollViewSize = CGSizeMake(size.width, positioningReference.containerHeight);
 
   CGSize textFieldSize = [self textSizeWithText:text font:font maxWidth:maxTextWidth];
   CGRect textFieldFrame = [self textFieldFrameWithSize:scrollViewSize
@@ -202,7 +186,19 @@ static const CGFloat kGradientBlurLength = 6;
                                                  chipsWrap:chipsWrap
                                             textFieldFrame:textFieldFrame];
 
-  self.containerHeight = positioningDelegate.containerHeight;
+  CGFloat assistiveLabelVerticalPadding = positioningReference.paddingAroundAssistiveLabels;
+  self.assistiveLabelViewLayout = [[MDCContainedInputAssistiveLabelViewLayout alloc]
+                         initWithWidth:size.width
+                    leftAssistiveLabel:leftAssistiveLabel
+                   rightAssistiveLabel:rightAssistiveLabel
+            underlineLabelDrawPriority:underlineLabelDrawPriority
+      customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
+                     horizontalPadding:kHorizontalPadding
+                       verticalPadding:assistiveLabelVerticalPadding
+                                 isRTL:isRTL];
+  self.assistiveLabelViewFrame = CGRectMake(0, positioningReference.containerHeight, size.width,
+                                            self.assistiveLabelViewLayout.calculatedHeight);
+  self.containerHeight = positioningReference.containerHeight;
   self.chipFrames = chipFrames;
   self.textFieldFrame = textFieldFrame;
   self.scrollViewContentOffset = contentOffset;
@@ -213,7 +209,7 @@ static const CGFloat kGradientBlurLength = 6;
   self.labelFrameNormal = labelFrameNormal;
   self.globalChipRowMinX = globalChipRowMinX;
   self.globalChipRowMaxX = globalChipRowMaxX;
-  CGRect scrollViewRect = CGRectMake(0, 0, size.width, positioningDelegate.containerHeight);
+  CGRect scrollViewRect = CGRectMake(0, 0, size.width, positioningReference.containerHeight);
   self.maskedScrollViewContainerViewFrame = scrollViewRect;
   self.scrollViewFrame = scrollViewRect;
 
@@ -226,7 +222,7 @@ static const CGFloat kGradientBlurLength = 6;
     topFadeStartingY = floatingLabelMaxY;
   }
   self.verticalGradientLocations =
-      [self determineVerticalGradientLocationsWithViewHeight:positioningDelegate.containerHeight
+      [self determineVerticalGradientLocationsWithViewHeight:positioningReference.containerHeight
                                             topFadeStartingY:topFadeStartingY
                                          bottomFadeStartingY:bottomPadding];
 
@@ -254,10 +250,10 @@ static const CGFloat kGradientBlurLength = 6;
 
 - (CGFloat)calculatedHeight {
   CGFloat maxY = self.containerHeight;
-  //  CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
-  //  if (underlineLabelViewMaxY > maxY) {
-  //    maxY = underlineLabelViewMaxY;
-  //  }
+  CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
+  if (underlineLabelViewMaxY > maxY) {
+    maxY = underlineLabelViewMaxY;
+  }
   return maxY;
 }
 

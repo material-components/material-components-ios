@@ -91,7 +91,7 @@ static const CGFloat kGradientBlurLength = 6;
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
-  id<MDCContainerStyleVerticalPositioningReference> positioningDelegate =
+  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
       [containerStyle positioningReferenceWithFloatingFontLineHeight:floatingFont.lineHeight
                                                 normalFontLineHeight:font.lineHeight
                                                        textRowHeight:font.lineHeight
@@ -106,26 +106,26 @@ static const CGFloat kGradientBlurLength = 6;
                                floatingFont:floatingFont
                              globalTextMinX:globalTextMinX
                              globalTextMaxX:globalTextMaxX
-          paddingBetweenTopAndFloatingLabel:positioningDelegate.paddingBetweenTopAndFloatingLabel
+          paddingBetweenTopAndFloatingLabel:positioningReference.paddingBetweenTopAndFloatingLabel
                                       isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(floatingLabelFrame);
 
-  CGFloat bottomPadding = positioningDelegate.paddingBetweenTextAndBottom;
-  CGFloat contentAreaMaxY = positioningDelegate.containerHeight;
+  CGFloat bottomPadding = positioningReference.paddingBetweenTextAndBottom;
+  CGFloat contentAreaMaxY = positioningReference.containerHeight;
 
   CGRect normalLabelFrame =
       [self normalLabelFrameWithLabelText:label.text
                                      font:font
                            globalTextMinX:globalTextMinX
                            globalTextMaxX:globalTextMaxX
-          paddingBetweenTopAndNormalLabel:positioningDelegate.paddingBetweenTopAndNormalLabel
+          paddingBetweenTopAndNormalLabel:positioningReference.paddingBetweenTopAndNormalLabel
                                     isRTL:isRTL];
 
   CGFloat halfOfNormalLineHeight = (CGFloat)0.5 * font.lineHeight;
   CGFloat textViewMinYNormal = CGRectGetMidY(normalLabelFrame) - halfOfNormalLineHeight;
   CGFloat textViewMinY = textViewMinYNormal;
   CGFloat textViewMinYWithFloatingLabel =
-      floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
+      floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndText;
   if (labelState == MDCContainedInputViewLabelStateFloating) {
     textViewMinY = textViewMinYWithFloatingLabel;
   }
@@ -173,7 +173,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                       viewHeight:contentAreaMaxY
                                                floatingLabelMaxY:floatingLabelMaxY
                                                    bottomPadding:bottomPadding
-                                             positioningDelegate:positioningDelegate];
+                                            positioningReference:positioningReference];
   return;
 }
 
@@ -323,9 +323,9 @@ static const CGFloat kGradientBlurLength = 6;
                                               viewHeight:(CGFloat)viewHeight
                                        floatingLabelMaxY:(CGFloat)floatingLabelMaxY
                                            bottomPadding:(CGFloat)bottomPadding
-                                     positioningDelegate:
-                                         (id<MDCContainerStyleVerticalPositioningReference>)
-                                             positioningDelegate {
+                                    positioningReference:
+                                        (id<MDCContainerStyleVerticalPositioningReference>)
+                                            positioningReference {
   CGFloat topFadeStart = floatingLabelMaxY / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;

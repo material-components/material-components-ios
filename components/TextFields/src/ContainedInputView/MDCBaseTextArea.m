@@ -456,12 +456,6 @@
                                       floatingFont:self.floatingFont];
   [self.containerStyle applyStyleToContainedInputView:self];
 
-  //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
-  //                                           labelState:self.labelState];
-  //  self.clearButton.hidden = self.layout.clearButtonHidden;
-  //  self.leftAssistiveLabel.frame = self.layout.leftAssistiveLabelFrame;
-  //  self.rightAssistiveLabel.frame = self.layout.rightAssistiveLabelFrame;
-
   self.maskedScrollViewContainerView.frame = self.layout.maskedScrollViewContainerViewFrame;
   self.scrollView.frame = self.layout.scrollViewFrame;
   self.scrollViewContentViewTouchForwardingView.frame =

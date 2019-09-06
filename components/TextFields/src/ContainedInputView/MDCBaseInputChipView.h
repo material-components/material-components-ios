@@ -89,7 +89,7 @@
 - (void)addChip:(nonnull UIView *)chip;
 - (void)removeChips:(nonnull NSArray<UIView *> *)chips;
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
-@property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
+@property(nonatomic, assign) NSInteger preferredNumberOfVisibleRows;
 
 /**
  Indicates whether the text field should automatically update its font when the device’s

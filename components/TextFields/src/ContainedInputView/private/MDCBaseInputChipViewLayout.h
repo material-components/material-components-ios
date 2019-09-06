@@ -14,22 +14,23 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCContainedInputAssistiveLabelViewLayout.h"
 #import "MDCContainedInputView.h"
 
 @interface MDCBaseInputChipViewLayout : NSObject
 @property(nonatomic, assign) CGFloat globalChipRowMinX;
 @property(nonatomic, assign) CGFloat globalChipRowMaxX;
 
-@property(nonatomic, strong) NSArray<NSValue *> *chipFrames;
+@property(nonatomic, strong, nonnull) NSArray<NSValue *> *chipFrames;
 
 @property(nonatomic, assign) CGRect labelFrameFloating;
 @property(nonatomic, assign) CGRect labelFrameNormal;
 
 @property(nonatomic, assign) CGRect textFieldFrame;
 
-@property(nonatomic, assign) CGRect underlineLabelFrame;
-@property(nonatomic, assign) CGRect leftAssistiveLabelFrame;
-@property(nonatomic, assign) CGRect rightAssistiveLabelFrame;
+@property(nonatomic, assign) CGRect assistiveLabelViewFrame;
+@property(nonatomic, strong, nonnull)
+    MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, assign) CGRect maskedScrollViewContainerViewFrame;
 @property(nonatomic, assign) CGRect scrollViewFrame;
@@ -40,25 +41,26 @@
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, readonly) CGFloat containerHeight;
 
-@property(nonatomic, strong) NSArray<NSNumber *> *verticalGradientLocations;
-@property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
+@property(nonatomic, strong, nonnull) NSArray<NSNumber *> *verticalGradientLocations;
+@property(nonatomic, strong, nonnull) NSArray<NSNumber *> *horizontalGradientLocations;
 
-- (instancetype)initWithSize:(CGSize)size
-                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-                                text:(NSString *)text
-                         placeholder:(NSString *)placeholder
-                                font:(UIFont *)font
-                        floatingFont:(UIFont *)floatingFont
-                               label:(UILabel *)label
+- (nonnull instancetype)initWithSize:(CGSize)size
+                positioningReference:
+                    (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                                text:(nullable NSString *)text
+                         placeholder:(nullable NSString *)placeholder
+                                font:(nonnull UIFont *)font
+                        floatingFont:(nonnull UIFont *)floatingFont
+                               label:(nonnull UILabel *)label
                           labelState:(MDCContainedInputViewLabelState)labelState
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
-                               chips:(NSArray<UIView *> *)chips
-                      staleChipViews:(NSArray<UIView *> *)staleChipViews
+                               chips:(nonnull NSArray<UIView *> *)chips
+                      staleChipViews:(nonnull NSArray<UIView *> *)staleChipViews
                            chipsWrap:(BOOL)chipsWrap
                        chipRowHeight:(CGFloat)chipRowHeight
                     interChipSpacing:(CGFloat)interChipSpacing
-                  leftAssistiveLabel:(UILabel *)leftAssistiveLabel
-                 rightAssistiveLabel:(UILabel *)rightAssistiveLabel
+                  leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+                 rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:
               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority

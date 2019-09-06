@@ -225,7 +225,6 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   textField.placeholder = @"555-555-5555";
   textField.labelText = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  textField.leadingAssistiveLabel.numberOfLines = 0;
   textField.leadingAssistiveLabel.text = @"This is a string.";
   return textField;
 }

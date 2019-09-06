@@ -22,6 +22,7 @@
 #import "MaterialTypography.h"
 #import "private/MDCBaseInputChipView+MDCContainedInputView.h"
 #import "private/MDCBaseInputChipViewLayout.h"
+#import "private/MDCContainedInputAssistiveLabelView.h"
 #import "private/MDCContainedInputView.h"
 #import "private/MDCContainedInputViewColorViewModel.h"
 #import "private/MDCContainedInputViewLabelAnimation.h"
@@ -113,8 +114,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark MDCContainedInputView properties
 @property(strong, nonatomic) UILabel *label;
 
-@property(strong, nonatomic) UILabel *leftAssistiveLabel;
-@property(strong, nonatomic) UILabel *rightAssistiveLabel;
+@property(nonatomic, strong) MDCContainedInputAssistiveLabelView *assistiveLabelView;
 
 @property(strong, nonatomic) UIView *maskedScrollViewContainerView;
 @property(strong, nonatomic) UIScrollView *scrollView;
@@ -274,14 +274,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpAssistiveLabels {
-  //  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
-  //  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  //  self.leftAssistiveLabel = [[UILabel alloc] init];
-  //  self.leftAssistiveLabel.font = underlineFont;
-  //  self.rightAssistiveLabel = [[UILabel alloc] init];
-  //  self.rightAssistiveLabel.font = underlineFont;
-  //  [self addSubview:self.leftAssistiveLabel];
-  //  [self addSubview:self.rightAssistiveLabel];
+  self.underlineLabelDrawPriority = MDCContainedInputViewAssistiveLabelDrawPriorityTrailing;
+  self.assistiveLabelView = [[MDCContainedInputAssistiveLabelView alloc] init];
+  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
+  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
+  self.assistiveLabelView.leftAssistiveLabel.font = underlineFont;
+  self.assistiveLabelView.rightAssistiveLabel.font = underlineFont;
+  [self addSubview:self.assistiveLabelView];
 }
 
 - (void)setUpGradientLayers {
@@ -430,9 +429,31 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Layout
 
+- (NSInteger)determineNumberOfVisibleRows {
+  NSInteger numberOfVisibleRows = 0;
+  if (self.chipsWrap) {
+    numberOfVisibleRows = self.preferredNumberOfVisibleRows;
+    if (numberOfVisibleRows <= 0) {
+      numberOfVisibleRows = 1;
+    }
+  } else {
+    numberOfVisibleRows = 1;
+  }
+  return numberOfVisibleRows;
+}
+
 - (MDCBaseInputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
+  CGFloat numberOfVisibleRows = (CGFloat)[self determineNumberOfVisibleRows];
+  id<MDCContainerStyleVerticalPositioningReference> positioningReference = [self.containerStyle
+      positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
+                                normalFontLineHeight:self.normalFont.lineHeight
+                                       textRowHeight:self.chipRowHeight
+                                    numberOfTextRows:numberOfVisibleRows
+                                             density:0
+                            preferredContainerHeight:self.preferredContainerHeight];
+
   return [[MDCBaseInputChipViewLayout alloc] initWithSize:size
-                                           containerStyle:self.containerStyle
+                                     positioningReference:positioningReference
                                                      text:self.inputChipViewTextField.text
                                               placeholder:self.inputChipViewTextField.placeholder
                                                      font:self.normalFont
@@ -508,6 +529,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  NSLog(@"inset: %@",NSStringFromUIEdgeInsets(self.scrollView.contentInset));
   //  NSLog(@"offset: %@",NSStringFromCGPoint(self.scrollView.contentOffset));
   //  NSLog(@"size: %@\n\n",NSStringFromCGSize(self.scrollView.contentSize));
+
+  self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
+  self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
+  [self.assistiveLabelView setNeedsLayout];
 
   [self layOutGradientLayers];
 }
@@ -731,6 +756,14 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (UITextField *)textField {
   return self.inputChipViewTextField;
+}
+
+- (UILabel *)leftAssistiveLabel {
+  return self.assistiveLabelView.leftAssistiveLabel;
+}
+
+- (UILabel *)rightAssistiveLabel {
+  return self.assistiveLabelView.rightAssistiveLabel;
 }
 
 - (UILabel *)leadingAssistiveLabel {
