@@ -16,7 +16,7 @@
 
 #import "MaterialAnimationTiming.h"
 
-static const CGFloat kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration = (CGFloat)0.15;
+static const CGFloat kDefaultAnimationDuration = (CGFloat)0.15;
 
 @implementation MDCContainedInputViewLabelAnimation
 
@@ -28,15 +28,12 @@ static const CGFloat kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration
           floatingFont:(nonnull UIFont *)floatingFont {
   UIFont *targetFont;
   CGRect targetFrame;
-  MDCAnimationTimingFunction mdcTimingFunction;
   if (labelState == MDCContainedInputViewLabelStateFloating) {
     targetFont = floatingFont;
     targetFrame = floatingLabelFrame;
-    mdcTimingFunction = MDCAnimationTimingFunctionAcceleration;
   } else {
     targetFont = normalFont;
     targetFrame = normalLabelFrame;
-    mdcTimingFunction = MDCAnimationTimingFunctionDeceleration;
   }
 
   CGRect currentFrame = label.frame;
@@ -50,9 +47,9 @@ static const CGFloat kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration
   CAMediaTimingFunction *timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
   [UIView mdc_animateWithTimingFunction:timingFunction
-                               duration:kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration
+                               duration:kDefaultAnimationDuration
                                   delay:0
-                                options:UIViewAnimationOptionTransitionNone
+                                options:0
                              animations:^{
                                label.transform = CGAffineTransformIdentity;
                              }
