@@ -31,7 +31,7 @@
     UIView *bigView = [[UIView alloc] initWithFrame:bigViewFrame];
     bigView.backgroundColor = UIColor.whiteColor;
     bigView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-    bigView.layer.borderWidth = (CGFloat)0.5;
+    bigView.layer.borderWidth = 0.5f;
     [self addSubview:bigView];
 
     CGFloat buttonViewDim = 50;
@@ -43,7 +43,7 @@
     UIView *pseudoButtonView = [[UIView alloc] initWithFrame:pseudoButtonViewFrame];
     pseudoButtonView.backgroundColor = UIColor.whiteColor;
     pseudoButtonView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-    pseudoButtonView.layer.borderWidth = (CGFloat)0.5;
+    pseudoButtonView.layer.borderWidth = 0.5f;
     pseudoButtonView.layer.cornerRadius = 5;
     pseudoButtonView.clipsToBounds = YES;
     [self addSubview:pseudoButtonView];
@@ -56,7 +56,7 @@
     UIView *pseudoFABView = [[UIView alloc] initWithFrame:pseudoFABViewFrame];
     pseudoFABView.backgroundColor = UIColor.whiteColor;
     pseudoFABView.layer.borderColor = UIColor.lightGrayColor.CGColor;
-    pseudoFABView.layer.borderWidth = (CGFloat)0.5;
+    pseudoFABView.layer.borderWidth = 0.5f;
     pseudoFABView.layer.cornerRadius = 28;
     pseudoFABView.clipsToBounds = YES;
     [self addSubview:pseudoFABView];

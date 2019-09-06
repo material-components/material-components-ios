@@ -25,9 +25,9 @@
   [MDCFloatingButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
   [MDCFloatingButtonShapeThemer applyShapeScheme:scheme.shapeScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
-  [button setElevation:(CGFloat)6 forState:UIControlStateNormal];
-  [button setElevation:(CGFloat)12 forState:UIControlStateHighlighted];
-  [button setElevation:(CGFloat)0 forState:UIControlStateDisabled];
+  [button setElevation:6.f forState:UIControlStateNormal];
+  [button setElevation:12.f forState:UIControlStateHighlighted];
+  [button setElevation:0.f forState:UIControlStateDisabled];
 }
 
 @end

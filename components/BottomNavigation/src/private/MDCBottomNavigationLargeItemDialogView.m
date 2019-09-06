@@ -16,7 +16,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-static const CGFloat kTitleFontScaling = (CGFloat)0.5;
+static const CGFloat kTitleFontScaling = 0.5f;
 static const CGFloat kTitleFontSize = 35;
 static const CGFloat kImageTopMargin = 30;
 static const CGFloat kImageHeight = 75;
@@ -66,7 +66,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nonnull item) {
 }
 
 - (void)commonMDCBottomNavigationLargeItemViewInit {
-  UIColor *contentColor = [UIColor colorWithWhite:(CGFloat)0.15 alpha:1];
+  UIColor *contentColor = [UIColor colorWithWhite:0.15f alpha:1];
 
   _imageView = [[UIImageView alloc] init];
   _imageView.tintColor = contentColor;

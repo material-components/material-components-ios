@@ -61,7 +61,7 @@ static UIImage *fakeImage(void) {
       CGRectGetHeight(view.label.bounds) + CGRectGetHeight(view.iconImageView.bounds);
   CGFloat expectedDistance = contentHeight / 2 + view.contentVerticalMargin;
   XCTAssertEqualWithAccuracy(view.label.center.y - view.iconImageView.center.y, expectedDistance,
-                             (CGFloat)0.001);
+                             0.001f);
 }
 
 - (void)testHorizontalMarginLayout {
@@ -83,7 +83,7 @@ static UIImage *fakeImage(void) {
       CGRectGetWidth(view.label.bounds) + CGRectGetWidth(view.iconImageView.bounds);
   CGFloat expectedDistance = contentWidth / 2 + view.contentHorizontalMargin;
   XCTAssertEqualWithAccuracy(view.label.center.x - view.iconImageView.center.x, expectedDistance,
-                             (CGFloat)0.001);
+                             0.001f);
 }
 
 - (void)testSetSelectedItemTintColorUpdatesInkColor {

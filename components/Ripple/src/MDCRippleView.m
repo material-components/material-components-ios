@@ -33,8 +33,8 @@
 
 @end
 
-static const CGFloat kRippleDefaultAlpha = (CGFloat)0.16;
-static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
+static const CGFloat kRippleDefaultAlpha = 0.16f;
+static const CGFloat kRippleFadeOutDelay = 0.15f;
 
 @implementation MDCRippleView
 

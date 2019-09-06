@@ -20,9 +20,9 @@
 #import <MaterialComponents/MaterialTypography.h>
 
 // The opacity value applied to text view.
-static CGFloat const kTextViewOpacity = (CGFloat)0.87;
+static CGFloat const kTextViewOpacity = 0.87f;
 // The opacity value applied to divider.
-static CGFloat const kDividerOpacity = (CGFloat)0.12;
+static CGFloat const kDividerOpacity = 0.12f;
 
 @implementation MDCBannerView (MaterialTheming)
 

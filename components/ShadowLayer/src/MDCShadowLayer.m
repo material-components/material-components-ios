@@ -53,10 +53,10 @@ static const float kAmbientShadowOpacity = (float)0.08;
   static dispatch_once_t once;
   dispatch_once(&once, ^{
     emptyShadowMetrics = [[MDCShadowMetrics alloc] init];
-    emptyShadowMetrics->_topShadowRadius = (CGFloat)0.0;
+    emptyShadowMetrics->_topShadowRadius = 0.0f;
     emptyShadowMetrics->_topShadowOffset = CGSizeMake(0.0, 0.0);
     emptyShadowMetrics->_topShadowOpacity = 0;
-    emptyShadowMetrics->_bottomShadowRadius = (CGFloat)0.0;
+    emptyShadowMetrics->_bottomShadowRadius = 0.0f;
     emptyShadowMetrics->_bottomShadowOffset = CGSizeMake(0.0, 0.0);
     emptyShadowMetrics->_bottomShadowOpacity = 0;
   });
@@ -65,17 +65,17 @@ static const float kAmbientShadowOpacity = (float)0.08;
 }
 
 + (CGFloat)ambientShadowBlur:(CGFloat)points {
-  CGFloat blur = (CGFloat)0.889544 * points - (CGFloat)0.003701;
+  CGFloat blur = 0.889544f * points - 0.003701f;
   return blur;
 }
 
 + (CGFloat)keyShadowBlur:(CGFloat)points {
-  CGFloat blur = (CGFloat)0.666920 * points - (CGFloat)0.001648;
+  CGFloat blur = 0.666920f * points - 0.001648f;
   return blur;
 }
 
 + (CGFloat)keyShadowYOff:(CGFloat)points {
-  CGFloat yOff = (CGFloat)1.23118 * points - (CGFloat)0.03933;
+  CGFloat yOff = 1.23118f * points - 0.03933f;
   return yOff;
 }
 
@@ -371,8 +371,8 @@ static const float kAmbientShadowOpacity = (float)0.08;
                    duration:(NSTimeInterval)duration {
   [CATransaction begin];
   [CATransaction setDisableActions:YES];
-  CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? (CGFloat)0.001 : self.cornerRadius;
-  CGFloat newCornerRadius = (cornerRadius <= 0) ? (CGFloat)0.001 : cornerRadius;
+  CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? 0.001f : self.cornerRadius;
+  CGFloat newCornerRadius = (cornerRadius <= 0) ? 0.001f : cornerRadius;
   // Create the paths
   UIBezierPath *currentLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                                               cornerRadius:currentCornerRadius];

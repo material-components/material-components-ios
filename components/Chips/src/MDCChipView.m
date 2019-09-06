@@ -26,7 +26,7 @@
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
-static const CGSize kMDCChipMinimumSizeDefault = (CGSize){(CGFloat)0, (CGFloat)32};
+static const CGSize kMDCChipMinimumSizeDefault = (CGSize){0.f, 32.f};
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -54,11 +54,11 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
 
 // TODO(samnm): Pull background color from MDCPalette
 static const uint32_t MDCChipBackgroundColor = 0xEBEBEB;
-static const CGFloat MDCChipSelectedDarkenPercent = (CGFloat)0.16;
-static const CGFloat MDCChipDisabledLightenPercent = (CGFloat)0.38;
-static const CGFloat MDCChipTitleColorWhite = (CGFloat)0.13;
-static const CGFloat MDCChipTitleColorDisabledLightenPercent = (CGFloat)0.38;
-static const CGFloat MDCChipViewRippleDefaultOpacity = (CGFloat)0.12;
+static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
+static const CGFloat MDCChipDisabledLightenPercent = 0.38f;
+static const CGFloat MDCChipTitleColorWhite = 0.13f;
+static const CGFloat MDCChipTitleColorDisabledLightenPercent = 0.38f;
+static const CGFloat MDCChipViewRippleDefaultOpacity = 0.12f;
 
 static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};

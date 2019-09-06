@@ -17,7 +17,7 @@
 #import <MaterialComponents/MaterialRipple.h>
 #import <MaterialComponents/MaterialTypography.h>
 
-static const CGFloat kLabelAlpha = (CGFloat)0.87;
+static const CGFloat kLabelAlpha = 0.87f;
 static const CGFloat kImageLeadingPadding = 8;
 static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
@@ -26,7 +26,7 @@ static const CGFloat kTitleTrailingPadding = 8;
 static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 static inline UIColor *RippleColor() {
-  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  return [[UIColor alloc] initWithWhite:0 alpha:0.14f];
 }
 
 @interface MDCActionSheetItemTableViewCell ()

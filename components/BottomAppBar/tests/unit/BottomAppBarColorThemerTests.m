@@ -60,7 +60,7 @@
                                                       toBottomAppBarView:self.bottomAppBar];
 
   // Then
-  UIColor *barItemTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6];
+  UIColor *barItemTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f];
   XCTAssertEqualObjects(self.bottomAppBar.barTintColor, colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.bottomAppBar.leadingBarItemsTintColor, barItemTintColor);
   XCTAssertEqualObjects(self.bottomAppBar.trailingBarItemsTintColor, barItemTintColor);

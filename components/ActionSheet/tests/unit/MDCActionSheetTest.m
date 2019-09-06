@@ -67,7 +67,7 @@ static const CGFloat kSafeAreaAmount = 20;
   self.actionSheet.title = @"Test";
 
   // Then
-  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6];
+  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
   UIColor *titleColor = self.actionSheet.header.titleLabel.textColor;
   XCTAssertEqualObjects(titleColor, expectedColor);
 }
@@ -77,7 +77,7 @@ static const CGFloat kSafeAreaAmount = 20;
   self.actionSheet.message = @"Test";
 
   // Then
-  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6];
+  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
   UIColor *messageColor = self.actionSheet.header.messageLabel.textColor;
   XCTAssertEqualObjects(messageColor, expectedColor);
 }
@@ -88,11 +88,11 @@ static const CGFloat kSafeAreaAmount = 20;
   self.actionSheet.message = @"Test message";
 
   // Then
-  UIColor *expectedTitleColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *expectedTitleColor = [UIColor.blackColor colorWithAlphaComponent:0.87f];
   UIColor *titleColor = self.actionSheet.header.titleLabel.textColor;
   XCTAssertEqualObjects(titleColor, expectedTitleColor);
 
-  UIColor *expectedMessageColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6];
+  UIColor *expectedMessageColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
   UIColor *messageColor = self.actionSheet.header.messageLabel.textColor;
   XCTAssertEqualObjects(messageColor, expectedMessageColor);
 }
@@ -103,11 +103,11 @@ static const CGFloat kSafeAreaAmount = 20;
   self.actionSheet.title = @"Test title";
 
   // Then
-  UIColor *expectedTitleColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *expectedTitleColor = [UIColor.blackColor colorWithAlphaComponent:0.87f];
   UIColor *titleColor = self.actionSheet.header.titleLabel.textColor;
   XCTAssertEqualObjects(titleColor, expectedTitleColor);
 
-  UIColor *expectedMessageColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6];
+  UIColor *expectedMessageColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
   UIColor *messageColor = self.actionSheet.header.messageLabel.textColor;
   XCTAssertEqualObjects(messageColor, expectedMessageColor);
 }
@@ -160,8 +160,8 @@ static const CGFloat kSafeAreaAmount = 20;
   UIColor *messageColor = UIColor.blackColor;
 
   // When
-  UIColor *titleColorChangeAlpha = [titleColor colorWithAlphaComponent:(CGFloat)0.6];
-  UIColor *messageColorChangeAlpha = [messageColor colorWithAlphaComponent:(CGFloat)0.5];
+  UIColor *titleColorChangeAlpha = [titleColor colorWithAlphaComponent:0.6f];
+  UIColor *messageColorChangeAlpha = [messageColor colorWithAlphaComponent:0.5f];
 
   self.actionSheet.titleTextColor = titleColorChangeAlpha;
   self.actionSheet.messageTextColor = messageColorChangeAlpha;
@@ -189,7 +189,7 @@ static const CGFloat kSafeAreaAmount = 20;
 
 - (void)testTitleCustomDoesNotChangeAfterSetMessage {
   // Given
-  UIColor *titleColor = [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.6];
+  UIColor *titleColor = [UIColor.blueColor colorWithAlphaComponent:0.6f];
   self.actionSheet.title = @"Test title";
 
   // When
@@ -211,9 +211,9 @@ static const CGFloat kSafeAreaAmount = 20;
 
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.87]);
+                        [UIColor.blackColor colorWithAlphaComponent:0.87f]);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6]);
+                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
 }
 
 - (void)testSetAlignTitles {
@@ -278,7 +278,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
-  CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
+  CGFloat halfCellHeight = cellHeight * 0.5f;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
   for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
@@ -307,7 +307,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
-  CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
+  CGFloat halfCellHeight = cellHeight * 0.5f;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
   for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
@@ -342,7 +342,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
-  CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
+  CGFloat halfCellHeight = cellHeight * 0.5f;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
   for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
@@ -369,7 +369,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
-  CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
+  CGFloat halfCellHeight = cellHeight * 0.5f;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
   for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
@@ -396,7 +396,7 @@ static const CGFloat kSafeAreaAmount = 20;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
-  CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
+  CGFloat halfCellHeight = cellHeight * 0.5f;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
   for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {

@@ -26,9 +26,9 @@
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
   button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
   button.layer.cornerRadius = scheme.cornerRadius;
-  [button setElevation:(CGFloat)2 forState:UIControlStateNormal];
-  [button setElevation:(CGFloat)8 forState:UIControlStateHighlighted];
-  [button setElevation:(CGFloat)0 forState:UIControlStateDisabled];
+  [button setElevation:2.f forState:UIControlStateNormal];
+  [button setElevation:8.f forState:UIControlStateHighlighted];
+  [button setElevation:0.f forState:UIControlStateDisabled];
 }
 
 @end

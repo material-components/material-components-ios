@@ -110,23 +110,23 @@ static NSString *const kMessageLongArabic =
   colorScheme.primaryColorVariant = [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
   colorScheme.secondaryColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1];
   colorScheme.errorColor = [UIColor colorWithRed:1 green:1 blue:0 alpha:1];
-  colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.25 alpha:1];
-  colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
+  colorScheme.surfaceColor = [UIColor colorWithWhite:0.25f alpha:1];
+  colorScheme.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
   colorScheme.onPrimaryColor = [UIColor colorWithRed:1
-                                               green:(CGFloat)0.5
-                                                blue:(CGFloat)0.25
+                                               green:0.5f
+                                                blue:0.25f
                                                alpha:1];
-  colorScheme.onSecondaryColor = [UIColor colorWithRed:(CGFloat)0.5
+  colorScheme.onSecondaryColor = [UIColor colorWithRed:0.5f
                                                  green:1
-                                                  blue:(CGFloat)0.25
+                                                  blue:0.25f
                                                  alpha:1];
-  colorScheme.onSurfaceColor = [UIColor colorWithRed:(CGFloat)0.25
-                                               green:(CGFloat)0.5
+  colorScheme.onSurfaceColor = [UIColor colorWithRed:0.25f
+                                               green:0.5f
                                                 blue:1
                                                alpha:1];
-  colorScheme.onBackgroundColor = [UIColor colorWithRed:(CGFloat)0.25
+  colorScheme.onBackgroundColor = [UIColor colorWithRed:0.25f
                                                   green:0
-                                                   blue:(CGFloat)0.75
+                                                   blue:0.75f
                                                   alpha:1];
   container.colorScheme = colorScheme;
 

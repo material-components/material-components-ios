@@ -34,7 +34,7 @@ static NSString *const kSelectedViewControllerRestorationKey = @"selectedViewCon
  dismissing).
  */
 static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
-  return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
+  return CGAffineTransformScale(CGAffineTransformIdentity, 0.97f, 0.97f);
 }
 
 /**

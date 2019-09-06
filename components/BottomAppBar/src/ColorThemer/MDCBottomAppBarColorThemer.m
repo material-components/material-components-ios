@@ -29,7 +29,7 @@
   [self resetUIStatesForTheming:bottomAppBarView.floatingButton];
 
   bottomAppBarView.barTintColor = colorScheme.surfaceColor;
-  UIColor *barItemTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6];
+  UIColor *barItemTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f];
   bottomAppBarView.leadingBarItemsTintColor = barItemTintColor;
   bottomAppBarView.trailingBarItemsTintColor = barItemTintColor;
   [bottomAppBarView.floatingButton setBackgroundColor:colorScheme.primaryColor

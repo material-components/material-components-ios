@@ -552,7 +552,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   if (self) {
     _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
     _uppercaseButtonTitle = YES;
-    _disabledButtonAlpha = (CGFloat)0.12;
+    _disabledButtonAlpha = 0.12f;
     _messageElevation = MDCShadowElevationSnackbar;
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _mdc_overrideBaseElevation = -1;

@@ -22,7 +22,7 @@ static NSString *const kMDCFloatingButtonTransformKey = @"kMDCFloatingButtonTran
 static NSString *const kMDCFloatingButtonOpacityKey = @"kMDCFloatingButtonOpacityKey";
 
 // By using a power of 2 (2^-12), we can reduce rounding errors during transform multiplication
-static const CGFloat kMDCFloatingButtonTransformScale = (CGFloat)0.000244140625;
+static const CGFloat kMDCFloatingButtonTransformScale = 0.000244140625f;
 
 static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270;
 static const NSTimeInterval kMDCFloatingButtonExitDuration = 0.180;

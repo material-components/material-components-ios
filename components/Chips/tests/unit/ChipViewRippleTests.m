@@ -53,9 +53,9 @@
   // Then
   XCTAssertNotNil(self.chipView.rippleView);
   XCTAssertEqualObjects([self.chipView.rippleView rippleColorForState:MDCRippleStateNormal],
-                        [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
+                        [UIColor colorWithWhite:0 alpha:0.12f]);
   XCTAssertEqualObjects([self.chipView.rippleView rippleColorForState:MDCRippleStateHighlighted],
-                        [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
+                        [UIColor colorWithWhite:0 alpha:0.12f]);
   XCTAssertEqual(self.chipView.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.chipView.enableRippleBehavior);
   XCTAssertNil(self.chipView.rippleView.superview);

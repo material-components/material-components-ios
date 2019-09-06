@@ -62,9 +62,9 @@
   XCTAssertFalse(self.bottomNavigationBar.enableRippleBehavior);
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertEqualObjects(itemView.rippleTouchController.rippleView.rippleColor,
-                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
+                          [UIColor.blackColor colorWithAlphaComponent:0.15f]);
     XCTAssertEqualObjects(itemView.inkView.inkColor,
-                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
+                          [UIColor.blackColor colorWithAlphaComponent:0.15f]);
     XCTAssertEqual(itemView.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleUnbounded);
     XCTAssertNotNil(itemView.rippleTouchController.rippleView.superview);
     XCTAssertNotNil(itemView.inkView.superview);
@@ -86,9 +86,9 @@
   XCTAssertTrue(self.bottomNavigationBar.enableRippleBehavior);
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertEqualObjects(itemView.rippleTouchController.rippleView.rippleColor,
-                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
+                          [UIColor.blackColor colorWithAlphaComponent:0.15f]);
     XCTAssertEqualObjects(itemView.inkView.inkColor,
-                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
+                          [UIColor.blackColor colorWithAlphaComponent:0.15f]);
     XCTAssertEqual(itemView.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleUnbounded);
     XCTAssertNotNil(itemView.rippleTouchController.rippleView.superview);
     XCTAssertNotNil(itemView.inkView.superview);
@@ -144,9 +144,9 @@
   // Then
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertEqualObjects(itemView.rippleTouchController.rippleView.rippleColor,
-                          [UIColor.redColor colorWithAlphaComponent:(CGFloat)0.15]);
+                          [UIColor.redColor colorWithAlphaComponent:0.15f]);
     XCTAssertEqualObjects(itemView.inkView.inkColor,
-                          [UIColor.redColor colorWithAlphaComponent:(CGFloat)0.15]);
+                          [UIColor.redColor colorWithAlphaComponent:0.15f]);
   }
 }
 @end

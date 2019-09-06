@@ -47,10 +47,10 @@ static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
 static const float kShiftEpsilon = (float)0.1;
 
 // The epsilon used when comparing height values.
-static const CGFloat kHeightEpsilon = (CGFloat)0.001;
+static const CGFloat kHeightEpsilon = 0.001f;
 
 // The epsilon used when comparing content offset values.
-static const CGFloat kContentOffsetEpsilon = (CGFloat)0.001;
+static const CGFloat kContentOffsetEpsilon = 0.001f;
 
 // The minimum delta y before we change the scroll direction.
 static const CGFloat kDeltaYSlop = 5;
@@ -760,7 +760,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // The flexible header is "in front of" the content.
 - (BOOL)fhv_isDetachedFromTopOfContent {
   // Epsilon here is somewhat large in order to be visually-forgiving for sub-point situations.
-  return [self fhv_projectedHeaderBottomEdge] > (CGFloat)0.5;
+  return [self fhv_projectedHeaderBottomEdge] > 0.5f;
 }
 
 - (BOOL)fhv_isOverExtendingBottom {

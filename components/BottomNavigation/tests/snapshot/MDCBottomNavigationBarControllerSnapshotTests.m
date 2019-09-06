@@ -20,7 +20,7 @@
 static const NSInteger kNumberOfCellsInScrollableChild = 25;
 
 /** The size of a cell in the scrollable child view controller. */
-static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloat)48};
+static const CGSize kSizeOfCellInScrollableChild = (CGSize){48.f, 48.f};
 
 /** A view controller with content that expands to fit its bounds. */
 @interface MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController
@@ -103,7 +103,7 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
   self.navBarController = [[MDCBottomNavigationBarController alloc] init];
   self.navBarController.navigationBar.barTintColor =
-      [UIColor.redColor colorWithAlphaComponent:(CGFloat)0.5];
+      [UIColor.redColor colorWithAlphaComponent:0.5f];
   self.navBarController.view.backgroundColor = UIColor.blackColor;
   self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
 

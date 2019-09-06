@@ -15,7 +15,7 @@
 #import "MDCBaseTextFieldLayout.h"
 #import "MDCContainedInputViewLabelState.h"
 
-static const CGFloat kHorizontalPadding = (CGFloat)12.0;
+static const CGFloat kHorizontalPadding = 12.0f;
 
 @interface MDCBaseTextFieldLayout ()
 @end
@@ -119,11 +119,11 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =
-      textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
+      textRectMinYWithFloatingLabel + (0.5f * textRectHeight);
 
   CGFloat textRectMinYNormal = positioningReference.paddingBetweenTopAndNormalLabel;
-  CGFloat textRectCenterYNormal = textRectMinYNormal + ((CGFloat)0.5 * textRectHeight);
-  CGFloat containerMidY = (CGFloat)0.5 * positioningReference.containerHeight;
+  CGFloat textRectCenterYNormal = textRectMinYNormal + (0.5f * textRectHeight);
+  CGFloat containerMidY = 0.5f * positioningReference.containerHeight;
 
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
@@ -187,7 +187,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect textRectNormal =
       CGRectMake(textRectMinX, textRectMinYNormal, textRectWidth, textRectHeight);
   CGFloat textRectMinYFloatingLabel =
-      (CGFloat)floor((double)(textRectCenterYWithFloatingLabel - (textRectHeight * (CGFloat)0.5)));
+      (CGFloat)floor((double)(textRectCenterYWithFloatingLabel - (textRectHeight * 0.5f)));
   CGRect textRectFloating =
       CGRectMake(textRectMinX, textRectMinYFloatingLabel, textRectWidth, textRectHeight);
 
@@ -232,7 +232,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
-  return (CGFloat)round((double)(centerY - ((CGFloat)0.5 * height)));
+  return (CGFloat)round((double)(centerY - (0.5f * height)));
 }
 
 - (BOOL)displaysSideView:(UIView *)subview
@@ -324,7 +324,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     case MDCContainedInputViewLabelStateNormal:
       size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:font];
       CGFloat textRectMidY = CGRectGetMidY(textRect);
-      originY = textRectMidY - ((CGFloat)0.5 * size.height);
+      originY = textRectMidY - (0.5f * size.height);
       if (isRTL) {
         originX = labelMaxX - size.width;
       } else {

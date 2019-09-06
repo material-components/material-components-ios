@@ -126,7 +126,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
+    _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:0.16f];
     _needsScrollToSelectedItem = YES;
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];

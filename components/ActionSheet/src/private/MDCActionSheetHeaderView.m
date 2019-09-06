@@ -17,8 +17,8 @@
 #import <MaterialComponents/MaterialMath.h>
 #import <MaterialComponents/MaterialTypography.h>
 
-static const CGFloat kTitleLabelAlpha = (CGFloat)0.87;
-static const CGFloat kMessageLabelAlpha = (CGFloat)0.6;
+static const CGFloat kTitleLabelAlpha = 0.87f;
+static const CGFloat kMessageLabelAlpha = 0.6f;
 static const CGFloat kMessageOnlyPadding = 23;
 static const CGFloat kLeadingPadding = 0;
 static const CGFloat kTopStandardPadding = 16;

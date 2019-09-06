@@ -81,7 +81,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 }
 
 static inline UIColor *RippleColor() {
-  return [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+  return [UIColor colorWithWhite:1 alpha:0.7f];
 }
 
 @interface MDCTabBar ()
@@ -143,7 +143,7 @@ static inline UIColor *RippleColor() {
 - (void)commonMDCTabBarInit {
   _bottomDividerColor = [UIColor clearColor];
   _selectedItemTintColor = [UIColor whiteColor];
-  _unselectedItemTintColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+  _unselectedItemTintColor = [UIColor colorWithWhite:1 alpha:0.7f];
   _selectedTitleColor = _selectedItemTintColor;
   _unselectedTitleColor = _unselectedItemTintColor;
   _inkColor = RippleColor();

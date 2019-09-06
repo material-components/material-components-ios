@@ -38,7 +38,7 @@ static const CGFloat kBorderWidth = 1;
   if (shapeScheme) {
     [self applyThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4.f;
   }
 
   [self setShadowElevation:kNormalElevation forState:MDCCardCellStateNormal];
@@ -69,7 +69,7 @@ static const CGFloat kBorderWidth = 1;
   if (shapeScheme) {
     [self applyThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4.f;
   }
 
   for (MDCCardCellState state = MDCCardCellStateNormal; state <= MDCCardCellStateSelected;

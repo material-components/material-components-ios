@@ -151,7 +151,7 @@ static UIImage *fakeImage() {
 - (void)testChangeBadgeColorToNewColor {
   // When
   if (@available(iOS 10.0, *)) {
-    self.barItem.badgeColor = [UIColor.purpleColor colorWithAlphaComponent:(CGFloat)0.712];
+    self.barItem.badgeColor = [UIColor.purpleColor colorWithAlphaComponent:0.712f];
 
     // Then
     MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;

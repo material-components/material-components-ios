@@ -17,12 +17,12 @@
 #import "MaterialMath.h"
 
 static const CGFloat kExpandRippleBeyondSurface = 10;
-static const CGFloat kRippleStartingScale = (CGFloat)0.6;
-static const CGFloat kRippleTouchDownDuration = (CGFloat)0.225;
-static const CGFloat kRippleTouchUpDuration = (CGFloat)0.15;
-static const CGFloat kRippleFadeInDuration = (CGFloat)0.075;
-static const CGFloat kRippleFadeOutDuration = (CGFloat)0.075;
-static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
+static const CGFloat kRippleStartingScale = 0.6f;
+static const CGFloat kRippleTouchDownDuration = 0.225f;
+static const CGFloat kRippleTouchUpDuration = 0.15f;
+static const CGFloat kRippleFadeInDuration = 0.075f;
+static const CGFloat kRippleFadeOutDuration = 0.075f;
+static const CGFloat kRippleFadeOutDelay = 0.15f;
 
 static NSString *const kRippleLayerOpacityString = @"opacity";
 static NSString *const kRippleLayerPositionString = @"position";

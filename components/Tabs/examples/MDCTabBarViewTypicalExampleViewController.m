@@ -190,12 +190,12 @@ static NSString *const kExampleTitle = @"TabBarView";
 - (void)applyThemingToTabBarView {
   self.tabBar.barTintColor = self.containerScheme.colorScheme.surfaceColor;
   [self.tabBar setTitleColor:[self.containerScheme.colorScheme.onSurfaceColor
-                                 colorWithAlphaComponent:(CGFloat)0.6]
+                                 colorWithAlphaComponent:0.6f]
                     forState:UIControlStateNormal];
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.primaryColor
                     forState:UIControlStateSelected];
   [self.tabBar setImageTintColor:[self.containerScheme.colorScheme.onSurfaceColor
-                                     colorWithAlphaComponent:(CGFloat)0.6]
+                                     colorWithAlphaComponent:0.6f]
                         forState:UIControlStateNormal];
   [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
                         forState:UIControlStateSelected];
@@ -204,9 +204,9 @@ static NSString *const kExampleTitle = @"TabBarView";
   [self.tabBar setTitleFont:[UIFont systemFontOfSize:16] forState:UIControlStateSelected];
   self.tabBar.selectionIndicatorStrokeColor = self.containerScheme.colorScheme.primaryColor;
   self.tabBar.rippleColor =
-      [self.containerScheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.1];
+      [self.containerScheme.colorScheme.primaryColor colorWithAlphaComponent:0.1f];
   self.tabBar.bottomDividerColor =
-      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
 }
 
 - (void)addSegmentedControl {

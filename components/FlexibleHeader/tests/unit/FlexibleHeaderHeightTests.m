@@ -54,8 +54,8 @@
 }
 
 - (void)testDefaults {
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 56, (CGFloat)0.0001);
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 56, (CGFloat)0.0001);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 56, 0.0001f);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 56, 0.0001f);
 }
 
 - (void)testSettingMaxGreaterThanMinDoesNotAdjustMin {
@@ -64,8 +64,8 @@
   _flexibleHeaderView.maximumHeight = 80;
 
   // Then
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 50, (CGFloat)0.0001);
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 80, (CGFloat)0.0001);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 50, 0.0001f);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 80, 0.0001f);
 }
 
 - (void)testSettingMaxLessThanMinAdjustsMin {
@@ -74,8 +74,8 @@
   _flexibleHeaderView.maximumHeight = 30;
 
   // Then
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 30, (CGFloat)0.0001);
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 30, (CGFloat)0.0001);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 30, 0.0001f);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 30, 0.0001f);
 }
 
 - (void)testSettingMinGreaterThanMaxAdjustsMax {
@@ -84,8 +84,8 @@
   _flexibleHeaderView.minimumHeight = 200;
 
   // Then
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 200, (CGFloat)0.0001);
-  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 200, (CGFloat)0.0001);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight, 200, 0.0001f);
+  XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight, 200, 0.0001f);
 }
 
 @end

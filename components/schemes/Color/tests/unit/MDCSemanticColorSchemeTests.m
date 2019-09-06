@@ -224,10 +224,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityBlackOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:(CGFloat)0.5];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5
-                                           green:(CGFloat)0.5
-                                            blue:(CGFloat)0.5
+  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
+  UIColor *expectedColor = [UIColor colorWithRed:0.5f
+                                           green:0.5f
+                                            blue:0.5f
                                            alpha:1];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
@@ -236,16 +236,16 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor60GrayOpacityOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:(CGFloat)0.9
-                                        green:(CGFloat)0.9
-                                         blue:(CGFloat)0.9
-                                        alpha:(CGFloat)0.6];
+  UIColor *blendColor = [UIColor colorWithRed:0.9f
+                                        green:0.9f
+                                         blue:0.9f
+                                        alpha:0.6f];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.94000000000000006
-                                           green:(CGFloat)0.94000000000000006
-                                            blue:(CGFloat)0.94000000000000006
-                                           alpha:(CGFloat)1];
+  UIColor *expectedColor = [UIColor colorWithRed:0.94000000000000006f
+                                           green:0.94000000000000006f
+                                            blue:0.94000000000000006f
+                                           alpha:1.f];
 
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
@@ -253,10 +253,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
   UIColor *backgroundColor = [UIColor blackColor];
-  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:(CGFloat)0.5];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5
-                                           green:(CGFloat)0.5
-                                            blue:(CGFloat)0.5
+  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5f];
+  UIColor *expectedColor = [UIColor colorWithRed:0.5f
+                                           green:0.5f
+                                            blue:0.5f
                                            alpha:1];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
@@ -264,18 +264,18 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 - (void)testBasicColorMergeTest {
-  UIColor *backgroundColor = [UIColor colorWithRed:(CGFloat)0.4
-                                             green:(CGFloat)0.6
-                                              blue:(CGFloat)0.9
-                                             alpha:(CGFloat)0.8];
-  UIColor *blendColor = [UIColor colorWithRed:(CGFloat)0.1
-                                        green:(CGFloat)0.8
-                                         blue:(CGFloat)0.8
-                                        alpha:(CGFloat)0.2];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.32857142857142863
-                                           green:(CGFloat)0.64761904761904765
-                                            blue:(CGFloat)0.87619047619047618
-                                           alpha:(CGFloat)0.84000000000000008];
+  UIColor *backgroundColor = [UIColor colorWithRed:0.4f
+                                             green:0.6f
+                                              blue:0.9f
+                                             alpha:0.8f];
+  UIColor *blendColor = [UIColor colorWithRed:0.1f
+                                        green:0.8f
+                                         blue:0.8f
+                                        alpha:0.2f];
+  UIColor *expectedColor = [UIColor colorWithRed:0.32857142857142863f
+                                           green:0.64761904761904765f
+                                            blue:0.87619047619047618f
+                                           alpha:0.84000000000000008f];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -283,18 +283,18 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 - (void)testHBSColorMergeTest {
-  UIColor *backgroundColor = [UIColor colorWithHue:(CGFloat)0.7
-                                        saturation:(CGFloat)0.6
-                                        brightness:(CGFloat)0.2
-                                             alpha:(CGFloat)0.7];
-  UIColor *blendColor = [UIColor colorWithRed:(CGFloat)0.3
-                                        green:(CGFloat)0.3
-                                         blue:(CGFloat)0.2
-                                        alpha:(CGFloat)0.8];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.27080851063829786
-                                           green:(CGFloat)0.2672340425531915
-                                            blue:(CGFloat)0.20000000000000004
-                                           alpha:(CGFloat)0.93999999999999994];
+  UIColor *backgroundColor = [UIColor colorWithHue:0.7f
+                                        saturation:0.6f
+                                        brightness:0.2f
+                                             alpha:0.7f];
+  UIColor *blendColor = [UIColor colorWithRed:0.3f
+                                        green:0.3f
+                                         blue:0.2f
+                                        alpha:0.8f];
+  UIColor *expectedColor = [UIColor colorWithRed:0.27080851063829786f
+                                           green:0.2672340425531915f
+                                            blue:0.20000000000000004f
+                                           alpha:0.93999999999999994f];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
@@ -302,15 +302,15 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 - (void)testGrayScaleColorMergeTest {
-  UIColor *backgroundColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.8];
-  UIColor *blendColor = [UIColor colorWithRed:(CGFloat)0.9
-                                        green:(CGFloat)0.82
-                                         blue:(CGFloat)0.1
-                                        alpha:(CGFloat)0.6];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.69130434782608696
-                                           green:(CGFloat)0.63913043478260867
-                                            blue:(CGFloat)0.16956521739130434
-                                           alpha:(CGFloat)0.92000000000000004];
+  UIColor *backgroundColor = [UIColor colorWithWhite:0.3f alpha:0.8f];
+  UIColor *blendColor = [UIColor colorWithRed:0.9f
+                                        green:0.82f
+                                         blue:0.1f
+                                        alpha:0.6f];
+  UIColor *expectedColor = [UIColor colorWithRed:0.69130434782608696f
+                                           green:0.63913043478260867f
+                                            blue:0.16956521739130434f
+                                           alpha:0.92000000000000004f];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor

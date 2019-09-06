@@ -66,7 +66,7 @@ static NSString *const kExampleDetailText =
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
 
 #define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / (CGFloat)255 green:(g) / (CGFloat)255 blue:(b) / (CGFloat)255 alpha:1]
+  [UIColor colorWithRed:(r) / 255.f green:(g) / 255.f blue:(b) / 255.f alpha:1]
 #define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
 @implementation CollectionCellsLayoutExample {

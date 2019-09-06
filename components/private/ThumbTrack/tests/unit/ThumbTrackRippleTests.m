@@ -59,7 +59,7 @@
   // Then
   XCTAssertNotNil(self.thumbTrack.rippleView);
   XCTAssertEqualObjects(self.thumbTrack.rippleView.rippleColor,
-                        [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.5]);
+                        [UIColor.blueColor colorWithAlphaComponent:0.5f]);
   XCTAssertEqual(self.thumbTrack.rippleView.rippleStyle, MDCRippleStyleUnbounded);
   XCTAssertFalse(self.thumbTrack.enableRippleBehavior);
   XCTAssertTrue(self.thumbTrack.shouldDisplayRipple);

@@ -20,7 +20,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
+static const CGFloat kEpsilonAccuracy = 0.001f;
 
 @interface ButtonThemerTests : XCTestCase
 @end
@@ -50,11 +50,11 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                              kEpsilonAccuracy);
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
   XCTAssertEqualObjects(button.inkColor,
-                        [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16]);
+                        [colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
 }
 
 - (void)testOutlinedButtonThemer {
@@ -75,9 +75,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                         scheme.colorScheme.primaryColor);
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.inkColor,
-                        [scheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16]);
+                        [scheme.colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateNormal],
-                        [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
+                        [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled],
                         [button borderColorForState:UIControlStateNormal]);
 
@@ -123,13 +123,13 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                              kEpsilonAccuracy);
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
   XCTAssertEqualObjects(button.inkColor,
-                        [colorScheme.onPrimaryColor colorWithAlphaComponent:(CGFloat)0.32]);
+                        [colorScheme.onPrimaryColor colorWithAlphaComponent:0.32f]);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
 }
 
 - (void)testFloatingButtonThemer {

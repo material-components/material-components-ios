@@ -255,7 +255,7 @@
   static UIColor *defaultInkColor;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    defaultInkColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+    defaultInkColor = [[UIColor alloc] initWithWhite:0 alpha:0.14f];
   });
   return defaultInkColor;
 }

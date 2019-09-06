@@ -20,8 +20,8 @@
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat kPrimaryThemeUnselectedOpacity = (CGFloat)0.74;
-static const CGFloat kSurfaceThemeUnselectedOpacity = (CGFloat)0.6;
+static const CGFloat kPrimaryThemeUnselectedOpacity = 0.74f;
+static const CGFloat kSurfaceThemeUnselectedOpacity = 0.6f;
 
 @implementation MDCTabBar (MaterialTheming)
 

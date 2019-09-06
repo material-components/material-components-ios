@@ -448,7 +448,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
       _titleLabel.autoresizingMask =
           UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
       // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
-      _titleLabel.minimumScaleFactor = (CGFloat)0.85;
+      _titleLabel.minimumScaleFactor = 0.85f;
       _titleLabel.textAlignment = NSTextAlignmentCenter;
 
       [self.contentView addSubview:_titleLabel];

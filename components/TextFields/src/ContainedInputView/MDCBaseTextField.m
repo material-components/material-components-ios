@@ -134,7 +134,7 @@
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
-  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
+  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * 0.5f);
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
@@ -332,7 +332,7 @@
 }
 
 - (UIFont *)floatingFont {
-  return [self.normalFont fontWithSize:(self.normalFont.pointSize * (CGFloat)0.5)];
+  return [self.normalFont fontWithSize:(self.normalFont.pointSize * 0.5f)];
 }
 
 - (UIFont *)uiTextFieldDefaultFont {

@@ -14,7 +14,7 @@
 
 #import "MDCBottomDrawerColorThemer.h"
 
-static const CGFloat kScrimAlpha = (CGFloat)0.32;
+static const CGFloat kScrimAlpha = 0.32f;
 
 @implementation MDCBottomDrawerColorThemer
 

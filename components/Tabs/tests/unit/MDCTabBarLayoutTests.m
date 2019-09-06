@@ -102,9 +102,9 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
 
   // Then
   CGFloat leftInset = flowLayout.sectionInset.left;
-  XCTAssertEqualWithAccuracy(CGRectGetMinX(firstItemCell.frame), leftInset, (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetMinX(firstItemCell.frame), leftInset, 0.001f);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(secondItemCell.frame),
-                             leftInset + CGRectGetWidth(firstItemCell.frame), (CGFloat)0.001);
+                             leftInset + CGRectGetWidth(firstItemCell.frame), 0.001f);
 }
 
 // Tests that setting UISemanticContentAttributeForceRightToLeft causes the tab bar's collection
@@ -137,11 +137,11 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
   CGFloat leftInset = flowLayout.sectionInset.left;
   CGFloat expectedFirstItemOriginX = totalWidth - leftInset - CGRectGetWidth(firstItemCell.frame);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(firstItemCell.frame), expectedFirstItemOriginX,
-                             (CGFloat)0.001);
+                             0.001f);
   CGFloat expectedSecondItemOriginX =
       expectedFirstItemOriginX - CGRectGetWidth(secondItemCell.frame);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(secondItemCell.frame), expectedSecondItemOriginX,
-                             (CGFloat)0.001);
+                             0.001f);
 }
 
 @end

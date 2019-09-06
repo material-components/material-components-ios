@@ -25,10 +25,10 @@
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toAlertController:(nonnull MDCAlertController *)alertController {
-  alertController.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
-  alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  alertController.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   alertController.titleIconTintColor = colorScheme.primaryColor;
-  alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
+  alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.32f];
   alertController.backgroundColor = colorScheme.surfaceColor;
 
   // Apply theming to buttons based on the action emphasis

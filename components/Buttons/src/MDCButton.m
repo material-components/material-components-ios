@@ -35,7 +35,7 @@ static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // https://material.io/go/design-buttons#buttons-main-buttons
-static const CGFloat MDCButtonDisabledAlpha = (CGFloat)0.12;
+static const CGFloat MDCButtonDisabledAlpha = 0.12f;
 
 // Blue 500 from https://material.io/go/design-color-theming#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
@@ -197,10 +197,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
+  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-  _rippleView.rippleColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.12];
+  _rippleView.rippleColor = [UIColor colorWithWhite:1 alpha:0.12f];
 
   // Default content insets
   // The default contentEdgeInsets are set here (instead of above, as they were previously) because

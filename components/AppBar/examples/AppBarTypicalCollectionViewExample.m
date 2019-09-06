@@ -95,13 +95,13 @@
                                                                          forIndexPath:indexPath];
   switch (indexPath.row % 3) {
     case 0:
-      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:1];
+      cell.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1];
       break;
     case 1:
-      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:1];
+      cell.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1];
       break;
     case 2:
-      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:1];
+      cell.backgroundColor = [UIColor colorWithWhite:0.7f alpha:1];
       break;
     default:
       break;

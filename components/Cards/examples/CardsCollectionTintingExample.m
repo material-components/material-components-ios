@@ -51,7 +51,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [super viewDidLoad];
 
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
-  self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
+  self.collectionView.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   self.collectionView.allowsMultipleSelection = YES;
   [self.collectionView setTintColor:[UIColor redColor]];

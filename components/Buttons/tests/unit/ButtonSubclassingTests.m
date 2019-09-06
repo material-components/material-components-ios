@@ -20,7 +20,7 @@
 #import "MaterialTypography.h"
 
 static const UIEdgeInsets ButtonTestContentEdgeInsets = {1, 2, 3, 4};
-static const CGFloat ButtonTestCornerRadius = (CGFloat)1.234;
+static const CGFloat ButtonTestCornerRadius = 1.234f;
 
 @interface ButtonSubclass : MDCButton
 @end

@@ -16,9 +16,9 @@
 #import "supplemental/FlexibleHeaderHorizontalPagingSupplemental.h"
 
 static UIColor *HexColor(uint32_t hex) {
-  return [UIColor colorWithRed:(CGFloat)((uint8_t)(hex >> 16)) / (CGFloat)255
-                         green:(CGFloat)((uint8_t)(hex >> 8)) / (CGFloat)255
-                          blue:(CGFloat)((uint8_t)hex) / (CGFloat)255
+  return [UIColor colorWithRed:(CGFloat)((uint8_t)(hex >> 16)) / 255.f
+                         green:(CGFloat)((uint8_t)(hex >> 8)) / 255.f
+                          blue:(CGFloat)((uint8_t)hex) / 255.f
                          alpha:1];
 }
 
@@ -162,7 +162,7 @@ static const NSUInteger kNumberOfPages = 10;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

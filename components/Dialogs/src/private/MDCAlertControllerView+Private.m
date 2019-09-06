@@ -39,7 +39,7 @@ static const CGFloat MDCDialogActionButtonMinimumHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 static const CGFloat MDCDialogActionMinTouchTarget = 48;
 
-static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
+static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 @interface MDCAlertControllerView ()
 
@@ -151,7 +151,7 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [button setTitleColor:themeColor forState:UIControlStateNormal];
   [button setImageTintColor:themeColor forState:UIControlStateNormal];
-  [button setInkColor:[UIColor colorWithWhite:0 alpha:(CGFloat)0.06]];
+  [button setInkColor:[UIColor colorWithWhite:0 alpha:0.06f]];
   button.disabledAlpha = 1;
   [button setElevation:MDCShadowElevationNone forState:UIControlStateNormal];
 }
@@ -553,17 +553,17 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   // Place buttons in actionsScrollView
   if (self.isVerticalActionsLayout) {
     CGPoint buttonCenter;
-    buttonCenter.x = self.actionsScrollView.contentSize.width * (CGFloat)0.5;
+    buttonCenter.x = self.actionsScrollView.contentSize.width * 0.5f;
     buttonCenter.y = self.actionsScrollView.contentSize.height - MDCDialogActionsInsets.bottom;
     for (UIButton *button in buttons) {
       CGRect buttonRect = button.frame;
 
-      buttonCenter.y -= buttonRect.size.height * (CGFloat)0.5;
+      buttonCenter.y -= buttonRect.size.height * 0.5f;
 
       button.center = buttonCenter;
 
       if (button != [buttons lastObject]) {
-        buttonCenter.y -= buttonRect.size.height * (CGFloat)0.5;
+        buttonCenter.y -= buttonRect.size.height * 0.5f;
         buttonCenter.y -= MDCDialogActionsVerticalPadding;
       }
     }
@@ -611,11 +611,11 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     self.actionsScrollView.frame = actionsScrollViewRect;
   } else {
     // Complex layout case : Split the space between the two scrollviews
-    if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.bounds) * (CGFloat)0.5) {
+    if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.bounds) * 0.5f) {
       actionsScrollViewRect.size.height =
           CGRectGetHeight(self.bounds) - contentScrollViewRect.size.height;
     } else {
-      CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) * (CGFloat)0.5;
+      CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) * 0.5f;
       actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
     }
     actionsScrollViewRect.origin.y =

@@ -20,16 +20,16 @@
                         toButton:(nonnull MDCButton *)button {
   [self resetUIControlStatesForButtonTheming:button];
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]
+  [button setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]
                     forState:UIControlStateDisabled];
   [button setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
-  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
+  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
                forState:UIControlStateDisabled];
   [button setImageTintColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
-  [button setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
+  [button setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
                    forState:UIControlStateDisabled];
   button.disabledAlpha = 1;
-  button.inkColor = [colorScheme.onPrimaryColor colorWithAlphaComponent:(CGFloat)0.32];
+  button.inkColor = [colorScheme.onPrimaryColor colorWithAlphaComponent:0.32f];
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {

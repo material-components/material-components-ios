@@ -175,12 +175,12 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @end
 
-static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = (CGFloat)0.4;
-static CGFloat const kInkLayerForegroundBoundedPositionExitDuration = (CGFloat)0.3;
-static CGFloat const kInkLayerForegroundBoundedRadiusExitDuration = (CGFloat)0.8;
+static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
+static CGFloat const kInkLayerForegroundBoundedPositionExitDuration = 0.3f;
+static CGFloat const kInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
 static CGFloat const kInkLayerForegroundRadiusGrowthMultiplier = 350;
-static CGFloat const kInkLayerForegroundUnboundedEnterDelay = (CGFloat)0.08;
-static CGFloat const kInkLayerForegroundUnboundedOpacityEnterDuration = (CGFloat)0.12;
+static CGFloat const kInkLayerForegroundUnboundedEnterDelay = 0.08f;
+static CGFloat const kInkLayerForegroundUnboundedOpacityEnterDuration = 0.12f;
 static CGFloat const kInkLayerForegroundWaveTouchDownAcceleration = 1024;
 static CGFloat const kInkLayerForegroundWaveTouchUpAcceleration = 3400;
 static NSString *const kInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
@@ -200,7 +200,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 - (void)setupRipple {
   CGFloat random = MDCLegacyInkLayerRandom();
   self.radius =
-      (CGFloat)((CGFloat)0.9 + random * (CGFloat)0.1) * kInkLayerForegroundRadiusGrowthMultiplier;
+      (CGFloat)(0.9f + random * 0.1f) * kInkLayerForegroundRadiusGrowthMultiplier;
   [super setupRipple];
 }
 
@@ -297,7 +297,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     }
     endPoint = CGPointMake(endPoint.x + xOffset, endPoint.y + yOffset);
     CGPoint centerOffsetPoint =
-        MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, (CGFloat)0.3);
+        MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, 0.3f);
     UIBezierPath *movePath = [UIBezierPath bezierPath];
     [movePath moveToPoint:startPoint];
     [movePath addLineToPoint:centerOffsetPoint];
@@ -370,9 +370,9 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 @end
 
-static CGFloat const kInkLayerBackgroundOpacityEnterDuration = (CGFloat)0.6;
-static CGFloat const kInkLayerBackgroundBaseOpacityExitDuration = (CGFloat)0.48;
-static CGFloat const kInkLayerBackgroundFastEnterDuration = (CGFloat)0.12;
+static CGFloat const kInkLayerBackgroundOpacityEnterDuration = 0.6f;
+static CGFloat const kInkLayerBackgroundBaseOpacityExitDuration = 0.48f;
+static CGFloat const kInkLayerBackgroundFastEnterDuration = 0.12f;
 static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
 @interface MDCLegacyInkLayerBackgroundRipple ()
@@ -498,7 +498,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   static UIColor *defaultInkColor;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    defaultInkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+    defaultInkColor = [UIColor colorWithWhite:0 alpha:0.08f];
   });
 
   _bounded = YES;

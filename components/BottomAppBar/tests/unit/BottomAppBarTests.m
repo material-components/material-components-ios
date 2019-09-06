@@ -94,7 +94,7 @@
   CGPoint floatingButtonPosition = self.bottomAppBar.floatingButton.center;
   CGPoint navigationBarPosition = self.bottomAppBar.navBar.frame.origin;
   XCTAssertEqualWithAccuracy(floatingButtonPosition.y + veriticalOffset, navigationBarPosition.y,
-                             (CGFloat)0.001);
+                             0.001f);
 }
 
 #pragma mark - Path test

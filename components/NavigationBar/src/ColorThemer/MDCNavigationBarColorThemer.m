@@ -30,8 +30,8 @@
   navigationBar.backgroundColor = colorScheme.surfaceColor;
   // Note that we must set the tint color before setting the buttons title color. Otherwise the
   // button title colors will be set with the tint color.
-  navigationBar.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
-  navigationBar.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  navigationBar.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.54f];
+  navigationBar.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
   [navigationBar setButtonsTitleColor:navigationBar.titleTextColor forState:UIControlStateNormal];
 }
 

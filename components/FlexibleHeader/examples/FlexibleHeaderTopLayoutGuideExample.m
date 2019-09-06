@@ -79,7 +79,7 @@
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
   self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
   [self setupScrollViewContent];
@@ -88,9 +88,9 @@
 
   // Create UIView Object
   UIView *constrainedView = [[UIView alloc] init];
-  constrainedView.backgroundColor = [UIColor colorWithRed:11 / (CGFloat)255
-                                                    green:232 / (CGFloat)255
-                                                     blue:94 / (CGFloat)255
+  constrainedView.backgroundColor = [UIColor colorWithRed:11 / 255.f
+                                                    green:232 / 255.f
+                                                     blue:94 / 255.f
                                                     alpha:1];
   constrainedView.translatesAutoresizingMaskIntoConstraints = NO;
   self.constrainedView = constrainedView;

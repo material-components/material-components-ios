@@ -19,9 +19,9 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowLayer.h"
 
-static const CGFloat kStartCornerRadius = (CGFloat)0.001;
-static const CGFloat kEndCornerRadius = (CGFloat)25.0;
-static const CGFloat kAnimationDuration = (CGFloat)2.5;
+static const CGFloat kStartCornerRadius = 0.001f;
+static const CGFloat kEndCornerRadius = 25.0f;
+static const CGFloat kAnimationDuration = 2.5f;
 
 @interface CustomView : UIView
 
@@ -68,7 +68,7 @@ static const CGFloat kAnimationDuration = (CGFloat)2.5;
 
   self.customView = [[CustomView alloc] initWithFrame:CGRectZero];
   self.customView.backgroundColor = UIColor.lightGrayColor;
-  [self.customView setElevation:(CGFloat)8.0];
+  [self.customView setElevation:8.0f];
   [self.view addSubview:self.customView];
 }
 

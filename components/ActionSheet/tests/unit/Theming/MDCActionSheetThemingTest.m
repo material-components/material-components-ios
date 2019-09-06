@@ -18,9 +18,9 @@
 #import "../../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MaterialActionSheet+Theming.h"
 
-static const CGFloat kHighAlpha = (CGFloat)0.87;
-static const CGFloat kMediumAlpha = (CGFloat)0.6;
-static const CGFloat kInkAlpha = (CGFloat)0.16;
+static const CGFloat kHighAlpha = 0.87f;
+static const CGFloat kMediumAlpha = 0.6f;
+static const CGFloat kInkAlpha = 0.16f;
 
 @interface MDCActionSheetController (Testing)
 @property(nonatomic, strong) UITableView *tableView;

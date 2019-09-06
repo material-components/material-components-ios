@@ -471,11 +471,11 @@
   // Then
   XCTAssertNotNil(self.presentationController.topHandle);
   XCTAssertEqualWithAccuracy(CGRectGetWidth(self.presentationController.topHandle.frame),
-                             (CGFloat)24.0, (CGFloat)0.001);
+                             24.0f, 0.001f);
   XCTAssertEqualWithAccuracy(CGRectGetHeight(self.presentationController.topHandle.frame),
-                             (CGFloat)2.0, (CGFloat)0.001);
-  XCTAssertEqualWithAccuracy(self.presentationController.topHandle.layer.cornerRadius, (CGFloat)1.0,
-                             (CGFloat)0.001);
+                             2.0f, 0.001f);
+  XCTAssertEqualWithAccuracy(self.presentationController.topHandle.layer.cornerRadius, 1.0f,
+                             0.001f);
   XCTAssertEqual(self.presentationController.topHandle.hidden, YES);
 }
 
@@ -542,7 +542,7 @@
   [self.fakeBottomDrawer.scrollView setContentOffset:CGPointMake(0, 1000)];
 
   // Then
-  XCTAssertEqualWithAccuracy(fakeHeader.topInset, (CGFloat)7.0, (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(fakeHeader.topInset, 7.0f, 0.001f);
 }
 
 - (void)testContentReachesFullscreenPresentationControllerValue {
@@ -561,7 +561,7 @@
   [self.drawerViewController setContentOffsetY:0 animated:YES];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, 0.001f);
 }
 
 - (void)testAddedHeight {
@@ -683,7 +683,7 @@
 - (void)testDrawerHeightReasonableRounding {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
-  self.fakeBottomDrawer.maximumInitialDrawerHeight = (CGFloat)412.3;
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 412.3f;
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
 
@@ -699,7 +699,7 @@
   XCTestExpectation *expectation = [self expectationWithDescription:@"expand complete"];
 
   // When
-  [self.drawerViewController expandToFullscreenWithDuration:(CGFloat)0.2
+  [self.drawerViewController expandToFullscreenWithDuration:0.2f
                                                  completion:^(BOOL completed) {
                                                    [expectation fulfill];
                                                  }];
@@ -839,7 +839,7 @@
 
   // Then
   XCTAssertTrue(CGColorEqualToColor(self.fakeBottomDrawer.shadowedView.layer.shadowColor,
-                                    [UIColor colorWithWhite:0 alpha:(CGFloat)0.2].CGColor));
+                                    [UIColor colorWithWhite:0 alpha:0.2f].CGColor));
 }
 
 - (void)testShadowColorIsSetCorrectly {

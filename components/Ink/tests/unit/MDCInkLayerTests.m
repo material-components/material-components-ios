@@ -61,7 +61,7 @@
   XCTAssertEqualWithAccuracy(inkLayer.initialRadius, 0, 0.0001);
   XCTAssertEqualWithAccuracy(inkLayer.finalRadius, 0, 0.0001);
   XCTAssertEqualWithAccuracy(inkLayer.maxRippleRadius, 0, 0.0001);
-  XCTAssertEqualObjects(inkLayer.inkColor, [UIColor colorWithWhite:0 alpha:(CGFloat)0.08]);
+  XCTAssertEqualObjects(inkLayer.inkColor, [UIColor colorWithWhite:0 alpha:0.08f]);
 }
 
 - (void)testInitWithLayer {
@@ -94,7 +94,7 @@
   CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
   inkLayer.bounds = CGRectMake(0, 0, 10, 10);
   inkLayer.speed = (float)0.0025;
-  inkLayer.endAnimationDelay = (CGFloat)0.9;
+  inkLayer.endAnimationDelay = 0.9f;
 
   // When
   [inkLayer endAnimationAtPoint:CGPointMake(5, 5)];
@@ -124,7 +124,7 @@
   CAAnimation *animation = inkLayer.addedAnimations.firstObject;
   if (animation) {
     startTime = [inkLayer convertTime:startTime fromLayer:nil];
-    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, (CGFloat)0.1);
+    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.1f);
   }
 }
 

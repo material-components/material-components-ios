@@ -34,7 +34,7 @@
   if (shapeScheme) {
     [self applyContainedThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4.f;
   }
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
@@ -77,7 +77,7 @@
   if (shapeScheme) {
     [self applyOutlinedThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4.f;
   }
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
@@ -99,15 +99,15 @@
   [self resetButtonColorsForAllStates];
 
   UIColor *disabledContentColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38];
-  UIColor *borderColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f];
+  UIColor *borderColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
   [self setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [self setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [self setTitleColor:disabledContentColor forState:UIControlStateDisabled];
   self.disabledAlpha = 1;
   [self setImageTintColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [self setImageTintColor:disabledContentColor forState:UIControlStateDisabled];
-  self.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.12];
+  self.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:0.12f];
   [self setBorderColor:borderColor forState:UIControlStateNormal];
 }
 
@@ -141,7 +141,7 @@
   if (shapeScheme) {
     [self applyTextThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4.0;
+    self.layer.cornerRadius = 4.0f;
   }
 
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |

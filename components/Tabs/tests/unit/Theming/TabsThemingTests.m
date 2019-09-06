@@ -20,8 +20,8 @@
 #import "MaterialTabs.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat kPrimaryThemeUnselectedOpacity = (CGFloat)0.74;
-static const CGFloat kSurfaceThemeUnselectedOpacity = (CGFloat)0.6;
+static const CGFloat kPrimaryThemeUnselectedOpacity = 0.74f;
+static const CGFloat kSurfaceThemeUnselectedOpacity = 0.6f;
 
 @interface MDCTabsThemingTest : XCTestCase
 @property(nonatomic, strong) MDCTabBar *tabBar;
@@ -103,16 +103,16 @@ static const CGFloat kSurfaceThemeUnselectedOpacity = (CGFloat)0.6;
 - (MDCSemanticColorScheme *)customColorScheme {
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 
-  colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
-  colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
-  colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
-  colorScheme.errorColor = [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)0.3];
-  colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)0.4];
-  colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)0.5];
-  colorScheme.onPrimaryColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.6];
-  colorScheme.onSecondaryColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)0.7];
-  colorScheme.onSurfaceColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)0.8];
-  colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
+  colorScheme.primaryColor = [UIColor colorWithWhite:0.9f alpha:0];
+  colorScheme.primaryColorVariant = [UIColor colorWithWhite:0.8f alpha:0.1f];
+  colorScheme.secondaryColor = [UIColor colorWithWhite:0.7f alpha:0.2f];
+  colorScheme.errorColor = [UIColor colorWithWhite:0.6f alpha:0.3f];
+  colorScheme.surfaceColor = [UIColor colorWithWhite:0.5f alpha:0.4f];
+  colorScheme.backgroundColor = [UIColor colorWithWhite:0.4f alpha:0.5f];
+  colorScheme.onPrimaryColor = [UIColor colorWithWhite:0.3f alpha:0.6f];
+  colorScheme.onSecondaryColor = [UIColor colorWithWhite:0.2f alpha:0.7f];
+  colorScheme.onSurfaceColor = [UIColor colorWithWhite:0.1f alpha:0.8f];
+  colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:0.9f];
 
   return colorScheme;
 }

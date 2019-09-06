@@ -130,7 +130,7 @@
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:(CGFloat)0.87];
+  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";

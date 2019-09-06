@@ -118,7 +118,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
           initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + insets.left + insets.right,
                                    CGRectGetHeight(view.bounds) + insets.top + insets.bottom)];
   backgroundWindow.contentSizeCategoryOverride = sizeCategory;
-  backgroundWindow.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:1];
+  backgroundWindow.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1];
   [backgroundWindow addSubview:view];
   backgroundWindow.hidden = NO;
 

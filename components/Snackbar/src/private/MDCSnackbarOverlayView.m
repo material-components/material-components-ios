@@ -33,7 +33,7 @@ NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075;
 NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 
 // The scaling starting point for presenting the new Snackbar.
-static const CGFloat MDCSnackbarEnterStartingScale = (CGFloat)0.8;
+static const CGFloat MDCSnackbarEnterStartingScale = 0.8f;
 
 // How far from the bottom of the screen should the Snackbar be.
 static const CGFloat MDCSnackbarBottomMargin_iPhone = 8;

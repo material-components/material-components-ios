@@ -68,9 +68,9 @@
     XCTAssertNotNil(cell.rippleTouchController);
     XCTAssertNotNil(cell.inkTouchController);
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
+                          [[UIColor alloc] initWithWhite:0 alpha:0.14f]);
     XCTAssertEqualObjects(cell.rippleTouchController.rippleView.rippleColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
+                          [[UIColor alloc] initWithWhite:0 alpha:0.14f]);
     XCTAssertEqual(cell.inkTouchController.defaultInkView.inkStyle, MDCInkStyleBounded);
     XCTAssertEqual(cell.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleBounded);
     XCTAssertNil(cell.rippleTouchController.rippleView.superview);
@@ -101,9 +101,9 @@
     XCTAssertNotNil(cell.rippleTouchController);
     XCTAssertNotNil(cell.inkTouchController);
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
+                          [[UIColor alloc] initWithWhite:0 alpha:0.14f]);
     XCTAssertEqualObjects(cell.rippleTouchController.rippleView.rippleColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
+                          [[UIColor alloc] initWithWhite:0 alpha:0.14f]);
     XCTAssertEqual(cell.inkTouchController.defaultInkView.inkStyle, MDCInkStyleBounded);
     XCTAssertEqual(cell.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleBounded);
     XCTAssertNotNil(cell.rippleTouchController.rippleView.superview);

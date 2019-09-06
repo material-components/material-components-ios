@@ -72,10 +72,10 @@ static const CGFloat kCornerRadius = 4;
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
-  self.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
-  self.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  self.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
+  self.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
   self.titleIconTintColor = colorScheme.primaryColor;
-  self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
+  self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.32f];
   self.backgroundColor = colorScheme.surfaceColor;
 }
 

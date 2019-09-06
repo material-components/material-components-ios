@@ -18,7 +18,7 @@
 #import "MaterialNavigationDrawer+ColorThemer.h"
 #import "MaterialNavigationDrawer.h"
 
-static const CGFloat kScimAlpha = (CGFloat)0.32;
+static const CGFloat kScimAlpha = 0.32f;
 
 @interface MDCNavigationDrawerThemeTest : XCTestCase
 @property(nonatomic, strong) MDCBottomDrawerViewController *bottomDrawer;

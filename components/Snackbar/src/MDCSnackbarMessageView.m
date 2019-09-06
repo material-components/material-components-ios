@@ -34,9 +34,9 @@ NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
 static NSString *const kMaterialSnackbarBundle = @"MaterialSnackbar.bundle";
 
 static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
-  return [UIColor colorWithRed:(r) / (CGFloat)255
-                         green:(g) / (CGFloat)255
-                          blue:(b) / (CGFloat)255
+  return [UIColor colorWithRed:(r) / 255.f
+                         green:(g) / 255.f
+                          blue:(b) / 255.f
                          alpha:(a)];
 }
 
@@ -156,7 +156,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.06];
+    self.inkColor = [UIColor colorWithWhite:1 alpha:0.06f];
 
     CGFloat buttonContentPadding =
         MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;

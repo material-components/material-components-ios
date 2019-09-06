@@ -60,9 +60,9 @@ static const CGFloat kBottomBarHeight = 44;
   fabFrame.origin.x = CGRectGetMaxX(self.view.bounds) - CGRectGetWidth(fabFrame) - kFABSideOffset;
   fabFrame.origin.y =
       CGRectGetMaxY(self.view.bounds) - CGRectGetHeight(fabFrame) - kFABBottomOffset;
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / (CGFloat)255
-                                                          green:232 / (CGFloat)255
-                                                           blue:94 / (CGFloat)255
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / 255.f
+                                                          green:232 / 255.f
+                                                           blue:94 / 255.f
                                                           alpha:1]
                                  forState:UIControlStateNormal];
   self.floatingButton.frame = fabFrame;

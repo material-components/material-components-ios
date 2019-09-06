@@ -102,7 +102,7 @@
 
 - (void)testApplyingScrimColorToPresentationController {
   // Given
-  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:(CGFloat)0.5];
+  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5f];
 
   // When
   self.presentationController.scrimColor = scrimColor;
@@ -113,7 +113,7 @@
 
 - (void)testApplyingScrimColorToAlert {
   // Given
-  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.3];
+  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:0.3f];
 
   // When
   self.alert.scrimColor = scrimColor;

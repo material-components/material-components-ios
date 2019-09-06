@@ -146,7 +146,7 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because autolayout doesn't play well with anchor points.
   vertical -= self.textInput.placeholderLabel.font.lineHeight *
-              (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * (CGFloat)0.5;
+              (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * 0.5f;
 
   // Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
   // See MDCTextInputController.h.
@@ -164,7 +164,7 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   }
 
   CGFloat horizontal =
-      placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * (CGFloat)0.5;
+      placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * 0.5f;
 
   return UIOffsetMake(horizontal, vertical);
 }

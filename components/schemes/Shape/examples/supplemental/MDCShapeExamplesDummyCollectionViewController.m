@@ -65,7 +65,7 @@ static NSString *kReuseIdentifier = @"dummyCell";
   MDCShapeExamplesDummyCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReuseIdentifier
                                                 forIndexPath:indexPath];
-  cell.backgroundColor = [UIColor colorWithWhite:(indexPath.row % 2) * (CGFloat)0.2 + (CGFloat)0.8
+  cell.backgroundColor = [UIColor colorWithWhite:(indexPath.row % 2) * 0.2f + 0.8f
                                            alpha:1];
   return cell;
 }

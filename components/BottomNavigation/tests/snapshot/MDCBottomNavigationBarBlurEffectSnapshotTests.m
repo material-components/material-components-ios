@@ -135,7 +135,7 @@
   [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
 
   // When
-  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.5f];
 
   // Then
   UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
@@ -164,7 +164,7 @@
   [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
 
   // When
-  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.5f];
   self.navigationBar.backgroundBlurEnabled = YES;
   self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleLight;
 
@@ -179,7 +179,7 @@
   [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
 
   // When
-  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.5f];
   self.navigationBar.backgroundBlurEnabled = YES;
   self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleDark;
 

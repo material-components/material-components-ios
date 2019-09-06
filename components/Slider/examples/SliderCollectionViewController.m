@@ -231,7 +231,7 @@ static CGFloat const kSliderVerticalMargin = 12;
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Default slider";
-    model.value = (CGFloat)0.66;
+    model.value = 0.66f;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
@@ -244,7 +244,7 @@ static CGFloat const kSliderVerticalMargin = 12;
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Discrete slider with numeric value label";
     model.numDiscreteValues = 5;
-    model.value = (CGFloat)0.2;
+    model.value = 0.2f;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
@@ -265,28 +265,28 @@ static CGFloat const kSliderVerticalMargin = 12;
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Dark themed slider";
     model.labelColor = [UIColor whiteColor];
-    model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:(CGFloat)0.3];
+    model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3f];
     model.sliderColor = MDCPalette.bluePalette.tint500;
     model.bgColor = [UIColor darkGrayColor];
-    model.value = (CGFloat)0.2;
+    model.value = 0.2f;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Anchored slider";
-    model.anchorValue = (CGFloat)0.5;
-    model.value = (CGFloat)0.7;
+    model.anchorValue = 0.5f;
+    model.value = 0.7f;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Haptics Disabled Slider";
-    model.value = (CGFloat)0.66;
+    model.value = 0.66f;
     model.hapticsEnabled = NO;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Disabled slider";
-    model.value = (CGFloat)0.5;
-    model.anchorValue = (CGFloat)0.1;
+    model.value = 0.5f;
+    model.anchorValue = 0.1f;
     model.enabled = NO;
     [_sliders addObject:model];
 

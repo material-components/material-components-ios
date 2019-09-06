@@ -43,7 +43,7 @@
   XCTAssertEqualObjects(thumbTrack.trackOnColor, thumbTrack.primaryColor);
   XCTAssertEqualObjects(thumbTrack.thumbEnabledColor, thumbTrack.primaryColor);
   XCTAssertEqualObjects(thumbTrack.inkColor,
-                        [thumbTrack.primaryColor colorWithAlphaComponent:(CGFloat)0.5]);
+                        [thumbTrack.primaryColor colorWithAlphaComponent:0.5f]);
   XCTAssertEqualObjects(thumbTrack.valueLabelBackgroundColor, thumbTrack.primaryColor);
 }
 
@@ -239,7 +239,7 @@
 
   // Then
   XCTAssertEqualObjects(thumbTrack.inkColor,
-                        [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.5]);
+                        [UIColor.blueColor colorWithAlphaComponent:0.5f]);
 }
 
 - (void)testSetInkColor {

@@ -19,7 +19,7 @@
 #import "MaterialProgressView.h"
 
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.
-static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
+static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
 
 @interface ProgressViewMaterialThemingTests : XCTestCase
 @property(strong, nonatomic) MDCProgressView *progressView;

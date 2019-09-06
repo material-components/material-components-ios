@@ -37,7 +37,7 @@ static const CGFloat kBorderWidth = 1;
   if (shapeScheme) {
     [self applyThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4.f;
   }
 
   [self setShadowElevation:kNormalElevation forState:UIControlStateNormal];
@@ -67,7 +67,7 @@ static const CGFloat kBorderWidth = 1;
   if (shapeScheme) {
     [self applyThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4.f;
   }
 
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |

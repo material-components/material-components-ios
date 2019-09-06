@@ -45,15 +45,15 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
 - (void)testRoundedCornerEquality {
   // Given
   MDCRoundedCornerTreatment *roundedCorner =
-      [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)3.2];
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:3.2f];
   MDCRoundedCornerTreatment *roundedCorner2 =
-      [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)4.3];
-  MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithRadius:(CGFloat)3.2];
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:4.3f];
+  MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithRadius:3.2f];
 
   // When
   XCTAssertNotEqual(roundedCorner.hash, roundedCorner2.hash);
   XCTAssertNotEqualObjects(roundedCorner, roundedCorner2);
-  roundedCorner2.radius = (CGFloat)3.2;
+  roundedCorner2.radius = 3.2f;
 
   // Then
   XCTAssertEqual(roundedCorner.hash, roundedCorner2.hash);
@@ -64,14 +64,14 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
 
 - (void)testCutCornerEquality {
   // Given
-  MDCCutCornerTreatment *cutCorner = [[MDCCutCornerTreatment alloc] initWithCut:(CGFloat)3.2];
-  MDCCutCornerTreatment *cutCorner2 = [[MDCCutCornerTreatment alloc] initWithCut:(CGFloat)4.3];
-  MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithCut:(CGFloat)3.2];
+  MDCCutCornerTreatment *cutCorner = [[MDCCutCornerTreatment alloc] initWithCut:3.2f];
+  MDCCutCornerTreatment *cutCorner2 = [[MDCCutCornerTreatment alloc] initWithCut:4.3f];
+  MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithCut:3.2f];
 
   // When
   XCTAssertNotEqual(cutCorner.hash, cutCorner2.hash);
   XCTAssertNotEqualObjects(cutCorner, cutCorner2);
-  cutCorner2.cut = (CGFloat)3.2;
+  cutCorner2.cut = 3.2f;
 
   // Then
   XCTAssertEqual(cutCorner.hash, cutCorner2.hash);
@@ -82,9 +82,9 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
 
 - (void)testPercentageValueInequalityForCorners {
   // Given
-  MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:(CGFloat)3.2];
+  MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:3.2f];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
-  MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithCut:(CGFloat)3.2];
+  MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithCut:3.2f];
 
   // Then
   XCTAssertNotEqualObjects(corner, cornerTreatment);
@@ -93,10 +93,10 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
 - (void)testPercentageValueEqualityForCorners {
   // Given
   MDCRoundedCornerTreatment *corner =
-      [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)1.2];
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:1.2f];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
   MDCCornerTreatment *cornerTreatment =
-      [MDCCornerTreatment cornerWithRadius:(CGFloat)1.2
+      [MDCCornerTreatment cornerWithRadius:1.2f
                                  valueType:MDCCornerTreatmentValueTypePercentage];
 
   // Then
@@ -106,7 +106,7 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
 - (void)testPathGeneratorForPercentages {
   // Given
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:(CGFloat)0.5];
+  MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:0.5f];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
   [shapeGenerator setCorners:corner];
 
@@ -127,12 +127,12 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
   for (NSUInteger i = 0; i < [pathPoints count]; i += 2) {
     CGPoint point = points[i / 2].CGPointValue;
     CGPoint p1 = pathPoints[i].CGPointValue;
-    XCTAssertEqualWithAccuracy(point.x, p1.x, (CGFloat)0.0001);
-    XCTAssertEqualWithAccuracy(point.y, p1.y, (CGFloat)0.0001);
+    XCTAssertEqualWithAccuracy(point.x, p1.x, 0.0001f);
+    XCTAssertEqualWithAccuracy(point.y, p1.y, 0.0001f);
 
     CGPoint p2 = pathPoints[i + 1].CGPointValue;
-    XCTAssertEqualWithAccuracy(point.x, p2.x, (CGFloat)0.0001);
-    XCTAssertEqualWithAccuracy(point.y, p2.y, (CGFloat)0.0001);
+    XCTAssertEqualWithAccuracy(point.x, p2.x, 0.0001f);
+    XCTAssertEqualWithAccuracy(point.y, p2.y, 0.0001f);
   }
 }
 
@@ -148,7 +148,7 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element) {
 - (void)testCopyForCorners {
   // Given
   MDCRoundedCornerTreatment *corner =
-      [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)1.2];
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:1.2f];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
 
   // When

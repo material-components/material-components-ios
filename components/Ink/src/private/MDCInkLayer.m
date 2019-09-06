@@ -15,14 +15,14 @@
 #import "MDCInkLayer.h"
 #import "MaterialMath.h"
 
-static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
-static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
-static const CGFloat MDCInkLayerStartScalePositionDuration = (CGFloat)0.333;
-static const CGFloat MDCInkLayerStartFadeHalfDuration = (CGFloat)0.167;
-static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = (CGFloat)0.25;
+static const CGFloat MDCInkLayerCommonDuration = 0.083f;
+static const CGFloat MDCInkLayerEndFadeOutDuration = 0.15f;
+static const CGFloat MDCInkLayerStartScalePositionDuration = 0.333f;
+static const CGFloat MDCInkLayerStartFadeHalfDuration = 0.167f;
+static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = 0.25f;
 
-static const CGFloat MDCInkLayerScaleStartMin = (CGFloat)0.2;
-static const CGFloat MDCInkLayerScaleStartMax = (CGFloat)0.6;
+static const CGFloat MDCInkLayerScaleStartMin = 0.2f;
+static const CGFloat MDCInkLayerScaleStartMax = 0.6f;
 static const CGFloat MDCInkLayerScaleDivisor = 300;
 
 static NSString *const MDCInkLayerOpacityString = @"opacity";
@@ -34,7 +34,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
   }
   return self;
 }
@@ -45,7 +45,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     _endAnimationDelay = 0;
     _finalRadius = 0;
     _initialRadius = 0;
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
     _startAnimationActive = NO;
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
@@ -64,7 +64,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   self = [super initWithCoder:aDecoder];
 
   if (self) {
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+    _inkColor = [UIColor colorWithWhite:0 alpha:0.08f];
   }
 
   return self;
@@ -77,7 +77,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 
 - (void)setRadiiWithRect:(CGRect)rect {
   self.initialRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * (CGFloat)0.6);
+      (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * 0.6f);
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10);
 }
 

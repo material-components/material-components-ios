@@ -134,7 +134,7 @@ static const CGFloat kCornerRadiusUnthemed = 12;
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:presentButton
                                  attribute:NSLayoutAttributeCenterY
-                                multiplier:(CGFloat)1.1
+                                multiplier:1.1f
                                   constant:0],
     [NSLayoutConstraint constraintWithItem:self.view
                                  attribute:NSLayoutAttributeCenterX
@@ -148,7 +148,7 @@ static const CGFloat kCornerRadiusUnthemed = 12;
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:unthemedButton
                                  attribute:NSLayoutAttributeCenterY
-                                multiplier:(CGFloat)0.9
+                                multiplier:0.9f
                                   constant:0],
   ]];
 

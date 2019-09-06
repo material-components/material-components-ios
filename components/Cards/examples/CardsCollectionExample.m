@@ -51,7 +51,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [super viewDidLoad];
 
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
-  self.collectionView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
+  self.collectionView.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   self.collectionView.alwaysBounceVertical = YES;
   // Register cell classes
   [self.collectionView registerClass:[MDCCardCollectionCell class]
@@ -77,9 +77,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   [cell applyThemeWithScheme:self.containerScheme];
-  [cell setBackgroundColor:[UIColor colorWithRed:107 / (CGFloat)255
-                                           green:63 / (CGFloat)255
-                                            blue:238 / (CGFloat)255
+  [cell setBackgroundColor:[UIColor colorWithRed:107 / 255.f
+                                           green:63 / 255.f
+                                            blue:238 / 255.f
                                            alpha:1]];
   return cell;
 }

@@ -108,7 +108,7 @@
 
 - (void)testUIFontWeightMediumValue {
   // Given
-  CGFloat MDCFontWeightMedium = (CGFloat)0.23;
+  CGFloat MDCFontWeightMedium = 0.23f;
   // Ensure that our placehold value for UIFontWeightMedium matches the real value.
   // We are defining it for < iOS 8.2 in MDCTypography.m
   // TODO(#2651): Remove the pragmas and pointer check below

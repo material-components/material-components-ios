@@ -41,16 +41,16 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)setUp {
   [super setUp];
 
-  self.rgbColor = [UIColor colorWithRed:(CGFloat)0.9
-                                  green:(CGFloat)0.8
-                                   blue:(CGFloat)0.6
-                                  alpha:(CGFloat)0.6];
-  self.greyScaleColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.6];
+  self.rgbColor = [UIColor colorWithRed:0.9f
+                                  green:0.8f
+                                   blue:0.6f
+                                  alpha:0.6f];
+  self.greyScaleColor = [UIColor colorWithWhite:0.8f alpha:0.6f];
   if (@available(iOS 10.0, *)) {
-    self.p3DisplayColor = [UIColor colorWithDisplayP3Red:(CGFloat)0.8
-                                                   green:(CGFloat)0.7
-                                                    blue:(CGFloat)0.5
-                                                   alpha:(CGFloat)0.4];
+    self.p3DisplayColor = [UIColor colorWithDisplayP3Red:0.8f
+                                                   green:0.7f
+                                                    blue:0.5f
+                                                   alpha:0.4f];
   } else {
     self.p3DisplayColor = nil;
   }
@@ -69,7 +69,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testResolvedColorWithZeroElevation {
   // Given
-  CGFloat elevation = (CGFloat)0;
+  CGFloat elevation = 0.f;
 
   // When
   UIColor *resolvedRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:elevation];
@@ -92,7 +92,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testResolvedColorWithLowElevation {
   // Given
-  CGFloat elevation = (CGFloat)10;
+  CGFloat elevation = 10.f;
 
   // When
   UIColor *resolvedRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:elevation];
@@ -100,20 +100,20 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   UIColor *resolvedP3DisplayColor = [self.p3DisplayColor mdc_resolvedColorWithElevation:elevation];
 
   // Then
-  UIColor *expectedRGBColor = [UIColor colorWithRed:(CGFloat)0.91964261807423053
-                                              green:(CGFloat)0.83928523614846129
-                                               blue:(CGFloat)0.67857047229692247
-                                              alpha:(CGFloat)0.65116211491037057];
+  UIColor *expectedRGBColor = [UIColor colorWithRed:0.91964261807423053f
+                                              green:0.83928523614846129f
+                                               blue:0.67857047229692247f
+                                              alpha:0.65116211491037057f];
   ;
-  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.83928523614846129
-                                                    green:(CGFloat)0.83928523614846129
-                                                     blue:(CGFloat)0.83928523614846129
-                                                    alpha:(CGFloat)0.65116211491037057];
+  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:0.83928523614846129f
+                                                    green:0.83928523614846129f
+                                                     blue:0.83928523614846129f
+                                                    alpha:0.65116211491037057f];
   ;
-  UIColor *expectedP3Display = [UIColor colorWithRed:(CGFloat)0.86849367970437186
-                                               green:(CGFloat)0.77713910118968843
-                                                blue:(CGFloat)0.61272176809458923
-                                               alpha:(CGFloat)0.47674317236555602];
+  UIColor *expectedP3Display = [UIColor colorWithRed:0.86849367970437186f
+                                               green:0.77713910118968843f
+                                                blue:0.61272176809458923f
+                                               alpha:0.47674317236555602f];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor
                                           secondColor:expectedRGBColor];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
@@ -126,7 +126,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testResolvedColorWithHighElevation {
   // Given
-  CGFloat elevation = (CGFloat)10000;
+  CGFloat elevation = 10000.f;
 
   // When
   UIColor *resolvedRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:elevation];
@@ -134,20 +134,20 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   UIColor *resolvedP3DisplayColor = [self.p3DisplayColor mdc_resolvedColorWithElevation:elevation];
 
   // Then
-  UIColor *expectedRGBColor = [UIColor colorWithRed:(CGFloat)0.95614843571155961
-                                              green:(CGFloat)0.91229687142311943
-                                               blue:(CGFloat)0.82459374284623876
-                                              alpha:(CGFloat)0.77378792660557727];
+  UIColor *expectedRGBColor = [UIColor colorWithRed:0.95614843571155961f
+                                              green:0.91229687142311943f
+                                               blue:0.82459374284623876f
+                                              alpha:0.77378792660557727f];
   ;
-  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.91229687142311943
-                                                    green:(CGFloat)0.91229687142311943
-                                                     blue:(CGFloat)0.91229687142311943
-                                                    alpha:(CGFloat)0.77378792660557727];
+  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:0.91229687142311943f
+                                                    green:0.91229687142311943f
+                                                     blue:0.91229687142311943f
+                                                    alpha:0.77378792660557727f];
   ;
-  UIColor *expectedP3Display = [UIColor colorWithRed:(CGFloat)0.9384637763413608
-                                               green:(CGFloat)0.89571590108272103
-                                                blue:(CGFloat)0.81877950928077237
-                                               alpha:(CGFloat)0.66068188990836596];
+  UIColor *expectedP3Display = [UIColor colorWithRed:0.9384637763413608f
+                                               green:0.89571590108272103f
+                                                blue:0.81877950928077237f
+                                               alpha:0.66068188990836596f];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor
                                           secondColor:expectedRGBColor];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
@@ -185,7 +185,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    CGFloat elevation = (CGFloat)10;
+    CGFloat elevation = 10.f;
     UIColor *darkColor = UIColor.blackColor;
     UIColor *lightColor = UIColor.whiteColor;
     UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor
@@ -208,7 +208,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    CGFloat elevation = (CGFloat)10;
+    CGFloat elevation = 10.f;
     UIColor *staticColor = UIColor.blackColor;
 
     // When
@@ -228,7 +228,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   if (@available(iOS 13.0, *)) {
   } else {
     // Given
-    CGFloat elevation = (CGFloat)10;
+    CGFloat elevation = 10.f;
     UIColor *staticColor = UIColor.blackColor;
     UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
 
@@ -243,7 +243,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testResolvedColorWithElevationForPatternBasedColorThrowException {
   // Given
-  CGFloat elevation = (CGFloat)10;
+  CGFloat elevation = 10.f;
 
   // When/Then
   XCTAssertThrowsSpecificNamed(
@@ -270,8 +270,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToZero {
   // Given
-  CGFloat firstElevation = (CGFloat)0.01;
-  CGFloat secondElevation = (CGFloat)0;
+  CGFloat firstElevation = 0.01f;
+  CGFloat secondElevation = 0.f;
 
   // When
   UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
@@ -284,8 +284,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToOne {
   // Given
-  CGFloat firstElevation = (CGFloat)0.99;
-  CGFloat secondElevation = (CGFloat)1;
+  CGFloat firstElevation = 0.99f;
+  CGFloat secondElevation = 1.f;
 
   // When
   UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
@@ -299,7 +299,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testResolvingColorWithSameCurrentTraitCollectionAndPreviousTraitCollection {
   if (@available(iOS 13.0, *)) {
     // Given
-    CGFloat elevation = (CGFloat)10;
+    CGFloat elevation = 10.f;
     UIColor *darkColor = UIColor.blackColor;
     UIColor *lightColor = UIColor.whiteColor;
     UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor
@@ -323,7 +323,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    CGFloat elevation = (CGFloat)10;
+    CGFloat elevation = 10.f;
     UIColor *darkColor = UIColor.blackColor;
     UIColor *lightColor = UIColor.whiteColor;
     UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor

@@ -56,7 +56,7 @@ static void RenderDialogLinesPatternOfSize(CGSize size) {
   CGContextRef context = UIGraphicsGetCurrentContext();
   CGContextSetLineWidth(context, 2);
   for (int i = 0; i < numLines; ++i) {
-    CGFloat increment = ((CGFloat)i / numLines) + (CGFloat)1 / (numLines * 2);
+    CGFloat increment = ((CGFloat)i / numLines) + 1.f / (numLines * 2);
     CGContextMoveToPoint(context, size.width * increment, 0);
     CGContextAddLineToPoint(context, 0, size.height * increment);
     CGContextMoveToPoint(context, size.width - size.width * increment, size.height);

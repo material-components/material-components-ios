@@ -24,7 +24,7 @@
     _shapeScheme = [[MDCShapeScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
     _minimumHeight = 36;
-    _cornerRadius = (CGFloat)4;
+    _cornerRadius = 4.f;
   }
   return self;
 }

@@ -95,18 +95,18 @@
   // Then
   XCTAssertFalse(self.tabBar.enableRippleBehavior);
   XCTAssertFalse(self.itemBar.style.enableRippleBehavior);
-  XCTAssertEqualObjects(self.tabBar.rippleColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
-  XCTAssertEqualObjects(self.tabBar.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+  XCTAssertEqualObjects(self.tabBar.rippleColor, [UIColor colorWithWhite:1 alpha:0.7f]);
+  XCTAssertEqualObjects(self.tabBar.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertEqualObjects(self.itemBar.style.rippleColor, [UIColor colorWithWhite:1
-                                                                          alpha:(CGFloat)0.7]);
-  XCTAssertEqualObjects(self.itemBar.style.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+                                                                          alpha:0.7f]);
+  XCTAssertEqualObjects(self.itemBar.style.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   for (MDCItemBarCell *cell in itemBarCells) {
     XCTAssertNotNil(cell.rippleTouchController);
     XCTAssertNotNil(cell.inkTouchController);
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+                          [UIColor colorWithWhite:1 alpha:0.7f]);
     XCTAssertEqualObjects(cell.rippleTouchController.rippleView.rippleColor,
-                          [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+                          [UIColor colorWithWhite:1 alpha:0.7f]);
     XCTAssertEqual(cell.inkTouchController.defaultInkView.inkStyle, MDCInkStyleBounded);
     XCTAssertEqual(cell.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleBounded);
     XCTAssertNil(cell.rippleTouchController.rippleView.superview);
@@ -132,18 +132,18 @@
   // Then
   XCTAssertTrue(self.tabBar.enableRippleBehavior);
   XCTAssertTrue(self.itemBar.style.enableRippleBehavior);
-  XCTAssertEqualObjects(self.tabBar.rippleColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
-  XCTAssertEqualObjects(self.tabBar.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+  XCTAssertEqualObjects(self.tabBar.rippleColor, [UIColor colorWithWhite:1 alpha:0.7f]);
+  XCTAssertEqualObjects(self.tabBar.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertEqualObjects(self.itemBar.style.rippleColor, [UIColor colorWithWhite:1
-                                                                          alpha:(CGFloat)0.7]);
-  XCTAssertEqualObjects(self.itemBar.style.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+                                                                          alpha:0.7f]);
+  XCTAssertEqualObjects(self.itemBar.style.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   for (MDCItemBarCell *cell in itemBarCells) {
     XCTAssertNotNil(cell.rippleTouchController);
     XCTAssertNotNil(cell.inkTouchController);
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+                          [UIColor colorWithWhite:1 alpha:0.7f]);
     XCTAssertEqualObjects(cell.rippleTouchController.rippleView.rippleColor,
-                          [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+                          [UIColor colorWithWhite:1 alpha:0.7f]);
     XCTAssertEqual(cell.inkTouchController.defaultInkView.inkStyle, MDCInkStyleBounded);
     XCTAssertEqual(cell.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleBounded);
     XCTAssertNotNil(cell.rippleTouchController.rippleView.superview);

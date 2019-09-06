@@ -18,9 +18,9 @@
 #import "MaterialPalettes.h"
 #import "private/MDCBottomDrawerContainerViewController.h"
 
-static CGFloat kTopHandleHeight = (CGFloat)2.0;
-static CGFloat kTopHandleWidth = (CGFloat)24.0;
-static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
+static CGFloat kTopHandleHeight = 2.0f;
+static CGFloat kTopHandleWidth = 24.0f;
+static CGFloat kTopHandleTopMargin = 5.0f;
 
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
                                                      MDCBottomDrawerContainerViewControllerDelegate>
@@ -53,7 +53,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   if (self) {
     _topHandleHidden = YES;
     _maximumInitialDrawerHeight = 0;
-    _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+    _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:0.2f];
     _elevation = MDCShadowElevationNavDrawer;
   }
   return self;
@@ -103,7 +103,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
   self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
   self.scrimView.backgroundColor =
-      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:0.32f];
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
@@ -113,7 +113,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
   self.topHandle =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTopHandleWidth, kTopHandleHeight)];
-  self.topHandle.layer.cornerRadius = kTopHandleHeight * (CGFloat)0.5;
+  self.topHandle.layer.cornerRadius = kTopHandleHeight * 0.5f;
   self.topHandle.backgroundColor = self.topHandleColor ?: MDCPalette.greyPalette.tint300;
   self.topHandle.hidden = self.topHandleHidden;
   self.topHandle.translatesAutoresizingMaskIntoConstraints = NO;
@@ -296,7 +296,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
                                                                   transitionRatio:)]) {
     [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
-    self.topHandle.alpha = (CGFloat)1.0 - transitionRatio;
+    self.topHandle.alpha = 1.0f - transitionRatio;
   }
 }
 

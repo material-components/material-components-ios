@@ -58,7 +58,7 @@
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
   _maximumInitialDrawerHeight = 0;
-  _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+  _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:0.2f];
   _elevation = MDCShadowElevationNavDrawer;
   _mdc_overrideBaseElevation = -1;
 }
@@ -263,12 +263,12 @@
 - (void)contentDrawerTopInset:(CGFloat)transitionToTop {
   CGFloat topInset = MDCDeviceTopSafeAreaInset();
   if ([self contentReachesFullScreen]) {
-    topInset -= ((CGFloat)1.0 - transitionToTop) * topInset;
+    topInset -= (1.0f - transitionToTop) * topInset;
   } else {
-    topInset = (CGFloat)0.0;
+    topInset = 0.0f;
   }
   if (!self.topHandleHidden) {
-    topInset = MAX(topInset, (CGFloat)7.0);
+    topInset = MAX(topInset, 7.0f);
   }
   [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
 }

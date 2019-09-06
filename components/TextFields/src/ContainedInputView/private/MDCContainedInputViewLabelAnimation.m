@@ -16,7 +16,7 @@
 
 #import "MaterialAnimationTiming.h"
 
-static const CGFloat kDefaultAnimationDuration = (CGFloat)0.15;
+static const CGFloat kDefaultAnimationDuration = 0.15f;
 
 @implementation MDCContainedInputViewLabelAnimation
 

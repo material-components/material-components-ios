@@ -21,7 +21,7 @@
 #import "MockUIImpactFeedbackGenerator.h"
 
 static const int kNumberOfRepeats = 20;
-static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
+static const CGFloat kEpsilonAccuracy = 0.001f;
 
 @interface MDCSlider (TestInterface)
 
@@ -47,7 +47,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider = [[MDCSlider alloc] init];
   self.aNonDefaultColor = [UIColor orangeColor];
   self.defaultBlue = MDCPalette.bluePalette.tint500;
-  self.defaultGray = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.26];
+  self.defaultGray = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
 }
 
 - (void)tearDown {
@@ -235,7 +235,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     self.slider.numberOfDiscreteValues = (NSUInteger)(self.slider.maximumValue + 1);
 
     // Then
-    XCTAssertEqualWithAccuracy(self.slider.value, originalValue, (CGFloat)0.5 + kEpsilonAccuracy);
+    XCTAssertEqualWithAccuracy(self.slider.value, originalValue, 0.5f + kEpsilonAccuracy);
     XCTAssertEqualWithAccuracy(self.slider.value, round(originalValue), kEpsilonAccuracy);
   }
 }
@@ -321,7 +321,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   // Given
   UIColor *expectedThumbColor = MDCPalette.bluePalette.tint500;
   UIColor *expectedThumbDisabledColor =
-      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.26];
+      [[UIColor blackColor] colorWithAlphaComponent:0.26f];
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
@@ -603,9 +603,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 - (void)testTrackBackgroundColorForStateDefaults {
   // Given
   UIColor *expectedDefaultTrackOffColor =
-      [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.26];
+      [UIColor.blackColor colorWithAlphaComponent:0.26f];
   UIColor *expectedDisabledTrackOffColor =
-      [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.26];
+      [UIColor.blackColor colorWithAlphaComponent:0.26f];
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
@@ -936,11 +936,11 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects(
       [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1]], @(1.));
   XCTAssertEqualObjects([testFormatter numberFromString:[self.slider thumbTrack:track
-                                                                 stringForValue:(CGFloat)0.57]],
+                                                                 stringForValue:0.57f]],
                         @(0.57));
   XCTAssertEqualObjects(
       [testFormatter numberFromString:[self.slider thumbTrack:track
-                                               stringForValue:(CGFloat)0.33333333]],
+                                               stringForValue:0.33333333f]],
       @(0.333));
 }
 
@@ -1031,8 +1031,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testAccessibilityIncrement {
   // Given
-  self.slider.value = [self randomPercent] - (CGFloat)0.1;
-  CGFloat expectedValue = self.slider.value + (CGFloat)0.1;
+  self.slider.value = [self randomPercent] - 0.1f;
+  CGFloat expectedValue = self.slider.value + 0.1f;
 
   // When
   [self.slider accessibilityIncrement];
@@ -1043,8 +1043,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testAccessibilityDecrement {
   // Given
-  self.slider.value = [self randomPercent] + (CGFloat)0.1;
-  CGFloat expectedValue = self.slider.value - (CGFloat)0.1;
+  self.slider.value = [self randomPercent] + 0.1f;
+  CGFloat expectedValue = self.slider.value - 0.1f;
 
   // When
   [self.slider accessibilityDecrement];
@@ -1068,8 +1068,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 - (void)testAccessibilityIncrementWithLargerMax {
   // Given
   self.slider.maximumValue = [self randomNumber];
-  self.slider.value = ([self randomPercent] - (CGFloat)0.1) * self.slider.maximumValue;
-  CGFloat expectedValue = self.slider.value + (CGFloat)0.1 * self.slider.maximumValue;
+  self.slider.value = ([self randomPercent] - 0.1f) * self.slider.maximumValue;
+  CGFloat expectedValue = self.slider.value + 0.1f * self.slider.maximumValue;
 
   // When
   [self.slider accessibilityIncrement];

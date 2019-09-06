@@ -59,7 +59,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   [self.container addSubview:_tintedProgressView];
   _tintedProgressView.progressTintColor = self.colorScheme.primaryColor;
   _tintedProgressView.trackTintColor =
-      [self.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.24];
+      [self.colorScheme.primaryColor colorWithAlphaComponent:0.24f];
   // Hide the progress view at setup time.
   _tintedProgressView.hidden = YES;
 

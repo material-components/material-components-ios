@@ -253,7 +253,7 @@
 
 - (void)testCustomCornerRadius {
   // Given
-  CGFloat cornerRadius = (CGFloat)36.0;
+  CGFloat cornerRadius = 36.0f;
 
   // When
   self.alert.cornerRadius = cornerRadius;
@@ -276,7 +276,7 @@
 
 - (void)testCustomElevation {
   // Given
-  CGFloat elevation = (CGFloat)2.0;
+  CGFloat elevation = 2.0f;
 
   // When
   self.alert.elevation = elevation;
@@ -288,7 +288,7 @@
 
 - (void)testCustomDialogPresentationElevation {
   // Given
-  CGFloat elevation = (CGFloat)2.0;
+  CGFloat elevation = 2.0f;
 
   // When
   self.alert.mdc_dialogPresentationController.dialogElevation = elevation;

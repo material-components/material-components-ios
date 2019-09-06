@@ -66,18 +66,18 @@
       // alpha value of 2. This formula provides a gradual polynomial curve that makes the delta
       // of the alpha value between lower numbers to be smaller than the higher numbers.
       // AlphaValue = 5.11916 * elevationValue ^ 2
-      alphaValue = (CGFloat)5.11916 * MDCPow((CGFloat)elevation, 2);
+      alphaValue = 5.11916f * MDCPow((CGFloat)elevation, 2);
     } else {
       // A formula is used here to simulate the alpha percentage stated on
       // https://material.io/design/color/dark-theme.html#properties
       // AlphaValue = 4.5 * ln (elevationValue + 1) + 2
       // Note: Both formulas meet at the transition point of (1, 5.11916).
-      alphaValue = (CGFloat)4.5 * (CGFloat)log(elevation + 1) + 2;
+      alphaValue = 4.5f * (CGFloat)log(elevation + 1) + 2;
     }
   }
   // TODO (https://github.com/material-components/material-components-ios/issues/8096):
   // Grayscale color should be returned if color space is UIExtendedGrayColorSpace.
-  return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * (CGFloat)0.01]
+  return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * 0.01f]
              withBackgroundColor:self];
 }
 

@@ -31,7 +31,7 @@
   colorScheme.surfaceColor = [UIColor redColor];
   colorScheme.onSurfaceColor = [UIColor blueColor];
   UIColor *blendedBackgroundColor = [MDCSemanticColorScheme
-               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
+               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
       withBackgroundColor:colorScheme.surfaceColor];
 
   // When
@@ -40,11 +40,11 @@
   // Then
   XCTAssertEqualObjects(snackbarManager.snackbarMessageViewBackgroundColor, blendedBackgroundColor);
   XCTAssertEqualObjects(snackbarManager.messageTextColor,
-                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:0.87f]);
   XCTAssertEqualObjects([snackbarManager buttonTitleColorForState:UIControlStateNormal],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
   XCTAssertEqualObjects([snackbarManager buttonTitleColorForState:UIControlStateHighlighted],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
 }
 
 @end

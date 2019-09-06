@@ -30,7 +30,7 @@ static const NSTimeInterval kAnimateOutDuration = 0.1;
 static const CGFloat kCycleRotation = (CGFloat)(3.0 / 2);
 static const CGFloat kOuterRotationIncrement = (CGFloat)(1.0 / kTotalDetentCount) * (CGFloat)M_PI;
 static const CGFloat kSpinnerRadius = 12;
-static const CGFloat kStrokeLength = (CGFloat)0.75;
+static const CGFloat kStrokeLength = 0.75f;
 
 #ifndef CGFLOAT_EPSILON
 #if CGFLOAT_IS_DOUBLE
@@ -366,7 +366,7 @@ static const CGFloat kSingleCycleRotation =
 
 - (void)setStrokeColor:(UIColor *)strokeColor {
   _strokeLayer.strokeColor = strokeColor.CGColor;
-  _trackLayer.strokeColor = [strokeColor colorWithAlphaComponent:(CGFloat)0.3].CGColor;
+  _trackLayer.strokeColor = [strokeColor colorWithAlphaComponent:0.3f].CGColor;
 }
 
 - (void)setIndicatorMode:(MDCActivityIndicatorMode)indicatorMode {
@@ -481,7 +481,7 @@ static const CGFloat kSingleCycleRotation =
 
   [self applyPropertiesWithoutAnimation:^{
     self.strokeLayer.strokeStart = 0;
-    self.strokeLayer.strokeEnd = (CGFloat)0.001;
+    self.strokeLayer.strokeEnd = 0.001f;
     self.strokeLayer.lineWidth = self.strokeWidth;
     self.trackLayer.lineWidth = self.strokeWidth;
 
@@ -665,7 +665,7 @@ static const CGFloat kSingleCycleRotation =
   _cycleCount = nearestCycle;
 
   CGFloat targetRotation = [self normalizedRotationForCycle:nearestCycle];
-  if (targetRotation <= (CGFloat)0.001) {
+  if (targetRotation <= 0.001f) {
     targetRotation = 1;
   }
   CGFloat pointCycleDuration = (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleDuration;

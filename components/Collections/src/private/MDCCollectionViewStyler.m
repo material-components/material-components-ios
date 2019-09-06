@@ -33,7 +33,7 @@ typedef NS_OPTIONS(NSUInteger, BackgroundCacheKey) {
 const CGFloat MDCCollectionViewCellStyleCardSectionInset = 8;
 
 /** Cell content view insets for card-style cells */
-static const CGFloat kFourThirds = (CGFloat)4 / 3;
+static const CGFloat kFourThirds = 4.f / 3;
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina3x = {kFourThirds, kFourThirds,
                                                                       kFourThirds, kFourThirds};
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina = {1.5, 1.5, 1.5, 1.5};
@@ -49,9 +49,9 @@ static const CGFloat kCollectionViewGridDefaultPadding = 4;
 /** The drawn cell background */
 static const CGSize kCellImageSize = {44, 44};
 static const CGFloat kCollectionViewCellDefaultBorderWidth = 1;
-static const CGFloat kCollectionViewCellDefaultBorderRadius = (CGFloat)1.5;
+static const CGFloat kCollectionViewCellDefaultBorderRadius = 1.5f;
 static inline UIColor *kCollectionViewCellDefaultBorderColor() {
-  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.05];
+  return [UIColor colorWithWhite:0 alpha:0.05f];
 }
 
 /** Cell shadowing */
@@ -60,7 +60,7 @@ static inline CGSize kCollectionViewCellDefaultShadowOffset() {
   return CGSizeMake(0, 1);
 }
 static inline UIColor *kCollectionViewCellDefaultShadowColor() {
-  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.1];
+  return [UIColor colorWithWhite:0 alpha:0.1f];
 }
 
 /** Animate cell on appearance settings */
@@ -297,9 +297,9 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
                                isGroupStyle:isGroupedStyle
                               isHighlighted:isHighlighted]) {
     CGFloat mainScreenScale = [[UIScreen mainScreen] scale];
-    if (mainScreenScale > (CGFloat)2.1) {
+    if (mainScreenScale > 2.1f) {
       insets = kCollectionViewCellContentInsetsRetina3x;
-    } else if (mainScreenScale > (CGFloat)1.1) {
+    } else if (mainScreenScale > 1.1f) {
       insets = kCollectionViewCellContentInsetsRetina;
     } else {
       insets = kCollectionViewCellContentInsets;

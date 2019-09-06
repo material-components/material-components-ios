@@ -24,8 +24,8 @@
 
 #import "private/MDCSelfSizingStereoCellLayout.h"
 
-static const CGFloat kTitleColorOpacity = (CGFloat)0.87;
-static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
+static const CGFloat kTitleColorOpacity = 0.87f;
+static const CGFloat kDetailColorOpacity = 0.6f;
 
 @interface MDCSelfSizingStereoCell ()
 

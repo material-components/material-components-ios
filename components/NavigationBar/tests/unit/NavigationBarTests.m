@@ -18,7 +18,7 @@
 #import "MaterialNavigationBar+TypographyThemer.h"
 #import "MaterialNavigationBar.h"
 
-static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
+static const CGFloat kEpsilonAccuracy = 0.001f;
 
 @interface MDCNavigationBar (Testing)
 @property(nonatomic) UILabel *titleLabel;

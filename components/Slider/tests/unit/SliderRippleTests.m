@@ -56,7 +56,7 @@
   // Then
   XCTAssertNotNil(self.slider.thumbTrack.rippleView);
   XCTAssertEqualObjects(self.slider.thumbTrack.rippleView.rippleColor,
-                        [MDCPalette.bluePalette.tint500 colorWithAlphaComponent:(CGFloat)0.5]);
+                        [MDCPalette.bluePalette.tint500 colorWithAlphaComponent:0.5f]);
   XCTAssertEqual(self.slider.thumbTrack.rippleView.rippleStyle, MDCRippleStyleUnbounded);
   XCTAssertFalse(self.slider.enableRippleBehavior);
   XCTAssertFalse(self.slider.thumbTrack.enableRippleBehavior);

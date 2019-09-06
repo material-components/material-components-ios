@@ -26,10 +26,10 @@
 - (void)testShapeCategoryEquality {
   // Given
   MDCShapeCategory *originalCategory =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:(CGFloat)2.1];
+      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:2.1f];
   MDCShapeCategory *testCategory = [[MDCShapeCategory alloc] init];
   MDCCornerTreatment *corner =
-      [MDCCornerTreatment cornerWithCut:(CGFloat)2.1 valueType:MDCCornerTreatmentValueTypeAbsolute];
+      [MDCCornerTreatment cornerWithCut:2.1f valueType:MDCCornerTreatmentValueTypeAbsolute];
   testCategory.topLeftCorner = corner;
   testCategory.topRightCorner = corner;
   testCategory.bottomLeftCorner = corner;
@@ -72,7 +72,7 @@
 - (void)testShapeCategoryCopy {
   // Given
   MDCShapeCategory *cat = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
-                                                                  andSize:(CGFloat)2.2];
+                                                                  andSize:2.2f];
 
   // When
   MDCShapeCategory *copiedCat = [cat copy];

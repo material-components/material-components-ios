@@ -58,7 +58,7 @@
 // Test that the presentation controller for a bottom sheet can have its scrim color set.
 - (void)testApplyingScrimColorToPresentationController {
   // Make a scrim color.
-  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:(CGFloat)0.5];
+  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5f];
   self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
 
   // Ensure that the bottom sheet has created all of the necessary internal storage for
@@ -75,7 +75,7 @@
 // Test that the presentation controller's scrim color is set when setting it on the sheet.
 - (void)testApplyingScrimColorToSheet {
   // Make a scrim color and set it on the controller.
-  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.3];
+  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:0.3f];
   self.bottomSheet.scrimColor = scrimColor;
 
   // Ensure that the presentation controller is allocated after the bottom sheet because the color

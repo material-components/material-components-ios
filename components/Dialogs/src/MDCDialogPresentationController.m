@@ -96,7 +96,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     useDialogCornerRadius = NO;
 
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
-    _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+    _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.32f];
     _dimmingView.alpha = 0;
     _dismissGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                         action:@selector(dismiss:)];
@@ -151,10 +151,10 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
   presentedViewFrame.origin.x =
       containerSafeAreaInsets.left +
-      (standardPresentableBounds.size.width - presentedViewFrame.size.width) * (CGFloat)0.5;
+      (standardPresentableBounds.size.width - presentedViewFrame.size.width) * 0.5f;
   presentedViewFrame.origin.y =
       containerSafeAreaInsets.top +
-      (standardPresentableBounds.size.height - presentedViewFrame.size.height) * (CGFloat)0.5;
+      (standardPresentableBounds.size.height - presentedViewFrame.size.height) * 0.5f;
 
   presentedViewFrame.origin.x = (CGFloat)floor(presentedViewFrame.origin.x);
   presentedViewFrame.origin.y = (CGFloat)floor(presentedViewFrame.origin.y);

@@ -89,9 +89,9 @@ static NSArray<UIColor *> *testColors() {
   // Hard coded values, if this test fails it only means that we could mean that we changed the
   // accessible color we are returning.
   XCTAssertEqualObjects(featureHighlightViewController.titleColor,
-                        [UIColor colorWithWhite:0 alpha:(CGFloat)0.87]);
+                        [UIColor colorWithWhite:0 alpha:0.87f]);
   XCTAssertEqualObjects(featureHighlightViewController.bodyColor,
-                        [UIColor colorWithWhite:0 alpha:(CGFloat)0.54]);
+                        [UIColor colorWithWhite:0 alpha:0.54f]);
 }
 
 - (void)testMutatorKeepsAccessibleTextColor {

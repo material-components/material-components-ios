@@ -80,7 +80,7 @@
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionLabel.textColor,
-                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.87]);
+                          [UIColor.blackColor colorWithAlphaComponent:0.87f]);
   }
 }
 
@@ -105,7 +105,7 @@
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionImageView.tintColor,
-                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6]);
+                          [UIColor.blackColor colorWithAlphaComponent:0.6f]);
   }
 }
 
@@ -130,7 +130,7 @@
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
+                          [[UIColor alloc] initWithWhite:0 alpha:0.14f]);
   }
 }
 

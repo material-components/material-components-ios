@@ -69,7 +69,7 @@ static UIVisualEffectView *MDCInitializeCompatibleBlurView() {
   CGFloat margin = kCornerRadius + kMargins;
   UIEdgeInsets layoutMargins = UIEdgeInsetsMake(margin, margin, margin, margin);
   if (UIAccessibilityIsReduceTransparencyEnabled()) {
-    self.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)1];
+    self.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1.f];
     self.layoutMargins = layoutMargins;
   } else {
     _blurView = MDCInitializeCompatibleBlurView();

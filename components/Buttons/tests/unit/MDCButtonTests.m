@@ -20,7 +20,7 @@
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
+static const CGFloat kEpsilonAccuracy = 0.001f;
 // A value greater than the largest value created by combining normal values of UIControlState.
 // This is a complete hack, but UIControlState doesn't expose anything useful here.
 // This assumes that UIControlState is actually a set of bitfields and ignores application-specific
@@ -30,7 +30,7 @@ static const UIControlState kUIControlStateDisabledHighlighted =
     UIControlStateHighlighted | UIControlStateDisabled;
 
 static CGFloat randomNumber() {
-  return arc4random_uniform(100) / (CGFloat)10;
+  return arc4random_uniform(100) / 10.f;
 }
 
 static CGFloat randomNumberNotEqualTo(const CGFloat targetNumber) {
@@ -869,7 +869,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 - (void)testAlphaRestoredWhenReenabled {
   // Given
-  CGFloat alpha = (CGFloat)0.5;
+  CGFloat alpha = 0.5f;
 
   // When
   self.button.alpha = alpha;
@@ -882,7 +882,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 - (void)testEnabledAlphaNotSetWhileDisabled {
   // Given
-  CGFloat alpha = (CGFloat)0.2;
+  CGFloat alpha = 0.2f;
 
   // When
   self.button.alpha = alpha;
@@ -891,7 +891,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button.enabled = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, (CGFloat)0.0001);
+  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, 0.0001f);
 }
 
 - (void)testDisabledAlpha {
@@ -903,7 +903,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button.enabled = NO;
 
   // Then
-  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, (CGFloat)0.0001);
+  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, 0.0001f);
 }
 
 - (void)testPointInsideWithoutHitAreaInsets {
@@ -911,9 +911,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button.frame = CGRectMake(0, 0, 80, 50);
 
   CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
-  CGPoint touchPointInsideBoundsTopRight = CGPointMake((CGFloat)79.9, 0);
-  CGPoint touchPointInsideBoundsBottomRight = CGPointMake((CGFloat)79.9, (CGFloat)49.9);
-  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, (CGFloat)49.9);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake(79.9f, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(79.9f, 49.9f);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 49.9f);
 
   CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, (CGFloat)-0.1);
   CGPoint touchPointOutsideBoundsTopRight = CGPointMake(80, 0);
@@ -937,9 +937,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button.frame = CGRectMake(0, 0, 10, 10);
 
   CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
-  CGPoint touchPointInsideBoundsTopRight = CGPointMake((CGFloat)9.9, 0);
-  CGPoint touchPointInsideBoundsBottomRight = CGPointMake((CGFloat)9.9, (CGFloat)9.9);
-  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, (CGFloat)9.9);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake(9.9f, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(9.9f, 9.9f);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 9.9f);
 
   CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, (CGFloat)-0.1);
   CGPoint touchPointOutsideBoundsTopRight = CGPointMake(10, 0);
@@ -963,9 +963,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button.frame = CGRectMake(0, 0, 10, 10);
 
   CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-5, -5);
-  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(-5, (CGFloat)14.9);
-  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake((CGFloat)14.9, (CGFloat)14.9);
-  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake((CGFloat)14.9, -5);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(-5, 14.9f);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9f, 14.9f);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(14.9f, -5);
 
   CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake((CGFloat)-5.1, -5);
   CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(-5, 15);
@@ -995,9 +995,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   UIEdgeInsets insets = UIEdgeInsetsMake(-10, -5, -10, -5);
 
   CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-15, -20);
-  CGPoint touchPointInsideHitAreaTopRight = CGPointMake((CGFloat)14.9, -20);
-  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake((CGFloat)14.9, (CGFloat)19.9);
-  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, (CGFloat)19.9);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(14.9f, -20);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9f, 19.9f);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, 19.9f);
 
   CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake((CGFloat)-15.1, -20);
   CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(20, -20);

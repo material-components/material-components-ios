@@ -15,12 +15,12 @@
 #import "MDCStatefulRippleView.h"
 #import "private/MDCRippleLayer.h"
 
-static const CGFloat kDefaultRippleAlpha = (CGFloat)0.12;
-static const CGFloat kDefaultRippleSelectedAlpha = (CGFloat)0.08;
-static const CGFloat kDefaultRippleDraggedAlpha = (CGFloat)0.08;
+static const CGFloat kDefaultRippleAlpha = 0.12f;
+static const CGFloat kDefaultRippleSelectedAlpha = 0.08f;
+static const CGFloat kDefaultRippleDraggedAlpha = 0.08f;
 
 static UIColor *RippleSelectedColor(void) {
-  return [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:1];
+  return [UIColor colorWithRed:0.384f green:0 blue:0.933f alpha:1];
 }
 
 @interface MDCStatefulRippleView ()

@@ -25,17 +25,17 @@
 
 #pragma mark - ThumbTrack constants
 
-static const CGFloat kAnimationDuration = (CGFloat)0.25;
-static const CGFloat kThumbChangeAnimationDuration = (CGFloat)0.12;
+static const CGFloat kAnimationDuration = 0.25f;
+static const CGFloat kThumbChangeAnimationDuration = 0.12f;
 static const CGFloat kDefaultThumbBorderWidth = 2;
 static const CGFloat kDefaultThumbRadius = 6;
 static const CGFloat kDefaultTrackHeight = 2;
 static const CGFloat kDefaultFilledTrackAnchorValue = -CGFLOAT_MAX;
-static const CGFloat kTrackOnAlpha = (CGFloat)0.5;
+static const CGFloat kTrackOnAlpha = 0.5f;
 static const CGFloat kMinTouchSize = 48;
-static const CGFloat kThumbSlopFactor = (CGFloat)3.5;
+static const CGFloat kThumbSlopFactor = 3.5f;
 static const CGFloat kValueLabelHeight = 48;
-static const CGFloat kValueLabelWidth = (CGFloat)0.81 * kValueLabelHeight;
+static const CGFloat kValueLabelWidth = 0.81f * kValueLabelHeight;
 static const CGFloat kValueLabelFontSize = 12;
 
 static UIColor *ValueLabelTextColorDefault() {
@@ -105,12 +105,12 @@ static UIColor *InkColorDefault() {
     CGFloat absoluteIncrement =
         (self.bounds.size.width - self.bounds.size.height) / (_numDiscreteDots - 1);
     // Increment within 0..1
-    CGFloat relativeIncrement = (CGFloat)1.0 / (_numDiscreteDots - 1);
+    CGFloat relativeIncrement = 1.0f / (_numDiscreteDots - 1);
 
     // Allow an extra 10% of the increment to guard against rounding errors excluding dots that
     // should genuinely be within the active segment.
-    CGFloat minActiveX = CGRectGetMinX(self.activeDotsSegment) - relativeIncrement * (CGFloat)0.1;
-    CGFloat maxActiveX = CGRectGetMaxX(self.activeDotsSegment) + relativeIncrement * (CGFloat)0.1;
+    CGFloat minActiveX = CGRectGetMinX(self.activeDotsSegment) - relativeIncrement * 0.1f;
+    CGFloat maxActiveX = CGRectGetMaxX(self.activeDotsSegment) + relativeIncrement * 0.1f;
     for (NSUInteger i = 0; i < _numDiscreteDots; i++) {
       CGFloat relativePosition = i * relativeIncrement;
       if (minActiveX <= relativePosition && maxActiveX >= relativePosition) {
@@ -411,7 +411,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _valueLabel = [[MDCNumericValueLabel alloc]
         initWithFrame:CGRectMake(0, 0, kValueLabelWidth, kValueLabelHeight)];
     // Effectively 0, but setting it to 0 results in animation not happening
-    _valueLabel.transform = CGAffineTransformMakeScale((CGFloat)0.001, (CGFloat)0.001);
+    _valueLabel.transform = CGAffineTransformMakeScale(0.001f, 0.001f);
     _valueLabel.fontSize = kValueLabelFontSize;
     [self addSubview:_valueLabel];
   } else {
@@ -887,7 +887,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if (self.enabled && _isDraggingThumb) {
       _valueLabel.transform = CGAffineTransformIdentity;
     } else {
-      _valueLabel.transform = CGAffineTransformMakeScale((CGFloat)0.001, (CGFloat)0.001);
+      _valueLabel.transform = CGAffineTransformMakeScale(0.001f, 0.001f);
     }
   }
 

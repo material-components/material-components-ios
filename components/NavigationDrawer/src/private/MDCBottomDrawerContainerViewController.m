@@ -25,7 +25,7 @@ static const CGFloat kVerticalDistanceThresholdForDismissal = 40;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset = 20;
 // This epsilon is defined in units of screen points, and is supposed to be as small as possible
 // yet meaningful for comparison calculations.
-static const CGFloat kEpsilon = (CGFloat)0.001;
+static const CGFloat kEpsilon = 0.001f;
 // The buffer for the drawer's scroll view is neeeded to ensure that the KVO receiving the new
 // content offset, which is then changing the content offset of the tracking scroll view, will
 // be able to provide a value as if the scroll view is scrolling at natural speed. This is needed
@@ -34,7 +34,7 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2;
-static const CGFloat kInitialDrawerHeightFactor = (CGFloat)0.5;
+static const CGFloat kInitialDrawerHeightFactor = 0.5f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
@@ -179,7 +179,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _maximumInitialDrawerHeight =
         self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
-    UIColor *shadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+    UIColor *shadowColor = [UIColor.blackColor colorWithAlphaComponent:0.2f];
     _headerShadowColor = shadowColor;
     _drawerShadowColor = shadowColor;
     _elevation = MDCShadowElevationNavDrawer;

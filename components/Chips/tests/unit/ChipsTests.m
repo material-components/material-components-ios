@@ -115,17 +115,17 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertNil(chip.shapeGenerator);
   // Background color
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateDisabled],
-                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.38));
+                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), 0.38f));
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateSelected],
-                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.16));
+                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), 0.16f));
 
   // Elevation
   XCTAssertEqualWithAccuracy([chip elevationForState:UIControlStateHighlighted], 8, 0.001);
 
   // Title color
-  UIColor *normalTitleColor = [UIColor colorWithWhite:(CGFloat)0.13 alpha:1];
+  UIColor *normalTitleColor = [UIColor colorWithWhite:0.13f alpha:1];
   XCTAssertEqualObjects([chip titleColorForState:UIControlStateDisabled],
-                        MDCColorLighten(normalTitleColor, (CGFloat)0.38));
+                        MDCColorLighten(normalTitleColor, 0.38f));
 
   UIControlState maximumState =
       UIControlStateDisabled | UIControlStateSelected | UIControlStateHighlighted;
@@ -273,7 +273,7 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   CGRect chipBounds = CGRectStandardize(chip.bounds);
-  const CGFloat delta = (CGFloat)0.001;
+  const CGFloat delta = 0.001f;
   // Top-left corner
   XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
                                               CGRectGetMinY(chipBounds) + hitAreaInsets.top)

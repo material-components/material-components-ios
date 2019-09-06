@@ -152,7 +152,7 @@
   CGRect pretendParentClassTextAreaFrame = CGRectMake(20, 30, 120, 50);
   CGFloat pretendSystemDefinedHeight = CGRectGetHeight(pretendParentClassTextAreaFrame);
   CGFloat desiredTextAreaMidY = CGRectGetMidY(desiredTextAreaFrame);
-  CGFloat halfOfPretendSystemDefinedHeight = (pretendSystemDefinedHeight * (CGFloat)0.5);
+  CGFloat halfOfPretendSystemDefinedHeight = (pretendSystemDefinedHeight * 0.5f);
   CGFloat desiredTextAreaMinY = desiredTextAreaMidY - halfOfPretendSystemDefinedHeight;
   CGRect desiredFinalTextAreaFrame =
       CGRectMake(CGRectGetMinX(desiredTextAreaFrame), desiredTextAreaMinY,

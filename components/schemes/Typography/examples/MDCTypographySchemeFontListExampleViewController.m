@@ -28,7 +28,7 @@
   CGRect contentBounds = UIEdgeInsetsInsetRect(CGRectStandardize(self.contentView.bounds),
                                                UIEdgeInsetsMake(0, 16, 0, 16));
   self.contentView.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-  if (CGRectGetHeight(contentBounds) < (CGFloat)0.01) {
+  if (CGRectGetHeight(contentBounds) < 0.01f) {
     contentBounds = CGRectMake(CGRectGetMinX(contentBounds), CGRectGetMinY(contentBounds),
                                CGRectGetWidth(contentBounds), CGRectGetHeight(self.bounds));
   }
@@ -178,7 +178,7 @@ static NSArray<UIFont *> *Fonts() {
   HairlineSeparatorView *footer =
       (HairlineSeparatorView *)[tableView dequeueReusableCellWithIdentifier:@"footer"];
   footer.contentView.backgroundColor =
-      [self.colorScheme.onBackgroundColor colorWithAlphaComponent:(CGFloat)0.12];
+      [self.colorScheme.onBackgroundColor colorWithAlphaComponent:0.12f];
   return footer;
 }
 

@@ -17,7 +17,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
-const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
+const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 /**
  * View to host shadow for the tab bar.

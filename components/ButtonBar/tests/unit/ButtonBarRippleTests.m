@@ -65,7 +65,7 @@
     if ([view isKindOfClass:[MDCButton class]]) {
       MDCButton *button = (MDCButton *)view;
       XCTAssertFalse(button.enableRippleBehavior);
-      XCTAssertEqualObjects(button.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.2]);
+      XCTAssertEqualObjects(button.inkColor, [UIColor colorWithWhite:1 alpha:0.2f]);
     }
   }
 }
@@ -84,7 +84,7 @@
     if ([view isKindOfClass:[MDCButton class]]) {
       MDCButton *button = (MDCButton *)view;
       XCTAssertTrue(button.enableRippleBehavior);
-      XCTAssertEqualObjects(button.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.2]);
+      XCTAssertEqualObjects(button.inkColor, [UIColor colorWithWhite:1 alpha:0.2f]);
     }
   }
 }

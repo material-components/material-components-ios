@@ -157,7 +157,7 @@
   FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
   rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
   rippleLayer.speed = (float)0.1;
-  CGFloat expectedRippleFadeoutDelay = (CGFloat)0.150;
+  CGFloat expectedRippleFadeoutDelay = 0.150f;
 
   // When
   [rippleLayer startRippleAtPoint:CGPointMake(0, 0) animated:YES completion:nil];
@@ -200,7 +200,7 @@
         animationsCount += 1;
         XCTAssertEqualObjects(@1, basicAnimation.toValue);
         XCTAssertEqualWithAccuracy(
-            (CGFloat)0.6, (CGFloat)((NSNumber *)basicAnimation.fromValue).doubleValue, 0.0001);
+            0.6f, (CGFloat)((NSNumber *)basicAnimation.fromValue).doubleValue, 0.0001);
       }
     } else if ([animation isKindOfClass:[CAKeyframeAnimation class]]) {
       animationsCount += 1;
@@ -227,7 +227,7 @@
   XCTAssertEqualObjects(@1, basicAnimation.fromValue);
   XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
                         basicAnimation.timingFunction);
-  XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.15, 0.0001);
+  XCTAssertEqualWithAccuracy(basicAnimation.duration, 0.15f, 0.0001);
 }
 
 - (void)testFadeInRippleAnimationCorrectness {
@@ -246,7 +246,7 @@
   XCTAssertEqualObjects(@0, basicAnimation.fromValue);
   XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
                         basicAnimation.timingFunction);
-  XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
+  XCTAssertEqualWithAccuracy(basicAnimation.duration, 0.075f, 0.0001);
 }
 
 - (void)testFadeOutRippleAnimationCorrectness {
@@ -265,7 +265,7 @@
   XCTAssertEqualObjects(@1, basicAnimation.fromValue);
   XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
                         basicAnimation.timingFunction);
-  XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
+  XCTAssertEqualWithAccuracy(basicAnimation.duration, 0.075f, 0.0001);
 }
 
 /** Test that setting @c maximumRadius correctly sets the property on @c MDCRippleLayer. */

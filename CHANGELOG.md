@@ -2808,8 +2808,8 @@ rippleView.maximumRadius = 10;
 
 | Type of change: | Declaration |
 |---|---|
-| From: | `static const MDCShadowElevation MDCShadowElevationNavDrawer = (CGFloat)16.` |
-| To: | `static const MDCShadowElevation MDCShadowElevationNavDrawer = (CGFloat)4.` |
+| From: | `static const MDCShadowElevation MDCShadowElevationNavDrawer = 16.f` |
+| To: | `static const MDCShadowElevation MDCShadowElevationNavDrawer = 4.f` |
 
 ## Component changes
 
@@ -6720,9 +6720,9 @@ present(bottomDrawerViewController, animated: true, completion: nil)
 
 CAMediaTimingFunction *timingFunction =
     [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-[self.customView.shadowLayer animateCornerRadius:(CGFloat)25.0
+[self.customView.shadowLayer animateCornerRadius:25.0f
                               withTimingFunction:timingFunction
-                                        duration:(CGFloat)2.5];
+                                        duration:2.5f];
 ```
 
 `MDCSnackbarManager` instances can now be themed using a color scheme:

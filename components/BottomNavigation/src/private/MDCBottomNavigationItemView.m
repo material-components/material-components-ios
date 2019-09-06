@@ -25,7 +25,7 @@
 // A number large enough to be larger than any reasonable screen dimension but small enough that
 // CGFloat doesn't lose precision.
 static const CGFloat kMaxSizeDimension = 1000000;
-static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
+static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 
 /** The default value for @c numberOfLines for the title label. */
