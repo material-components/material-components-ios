@@ -72,16 +72,16 @@
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
 
   [self setLabelColor:labelColor forState:UIControlStateNormal];
-  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setLabelColor:labelColorFocused forState:MDCTextControlStateEditing];
   [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
   [self setTextColor:textColor forState:UIControlStateNormal];
-  [self setTextColor:textColor forState:UIControlStateEditing];
+  [self setTextColor:textColor forState:MDCTextControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];
   [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateNormal];
-  [self setUnderlineColor:thickUnderlineFillColor forState:UIControlStateEditing];
+  [self setUnderlineColor:thickUnderlineFillColor forState:MDCTextControlStateEditing];
   [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateDisabled];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateNormal];
-  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateEditing];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:MDCTextControlStateEditing];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateDisabled];
   self.trailingAssistiveLabel.textColor = assistiveLabelColor;
   self.leadingAssistiveLabel.textColor = assistiveLabelColor;
@@ -102,16 +102,16 @@
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
 
   [self setLabelColor:labelColor forState:UIControlStateNormal];
-  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setLabelColor:labelColorFocused forState:MDCTextControlStateEditing];
   [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
   [self setTextColor:textColor forState:UIControlStateNormal];
-  [self setTextColor:textColor forState:UIControlStateEditing];
+  [self setTextColor:textColor forState:MDCTextControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];
   [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateNormal];
-  [self setUnderlineColor:thickUnderlineFillColor forState:UIControlStateEditing];
+  [self setUnderlineColor:thickUnderlineFillColor forState:MDCTextControlStateEditing];
   [self setUnderlineColor:thinUnderlineFillColor forState:UIControlStateDisabled];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateNormal];
-  [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateEditing];
+  [self setFilledBackgroundColor:filledSublayerFillColor forState:MDCTextControlStateEditing];
   [self setFilledBackgroundColor:filledSublayerFillColor forState:UIControlStateDisabled];
   self.trailingAssistiveLabel.textColor = assistiveLabelColor;
   self.leadingAssistiveLabel.textColor = assistiveLabelColor;

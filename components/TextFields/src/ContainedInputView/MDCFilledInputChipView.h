@@ -26,7 +26,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFilledInputChipView
  Sets the filled background color for a given state.
  @param filledBackgroundColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
@@ -41,7 +41,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFilledInputChipView
  Sets the underline color for a given state.
  @param underlineColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setUnderlineColor:(nonnull UIColor *)underlineColor forState:(UIControlState)state;

@@ -92,7 +92,7 @@
  label when it's in its "floating position," i.e. when it's floating.
  @param floatingLabelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setFloatingLabelColor:(nonnull UIColor *)floatingLabelColor forState:(UIControlState)state;
@@ -108,7 +108,7 @@
  when it's in its "normal position," i.e. when it's not floating.
  @param normalLabelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setNormalLabelColor:(nonnull UIColor *)normalLabelColor forState:(UIControlState)state;
@@ -123,7 +123,7 @@
  Sets the text color for a given state.
  @param textColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setTextColor:(nonnull UIColor *)textColor forState:(UIControlState)state;
@@ -137,7 +137,7 @@
  Sets the assistive label color for a given state.
  @param assistiveLabelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setAssistiveLabelColor:(nonnull UIColor *)assistiveLabelColor

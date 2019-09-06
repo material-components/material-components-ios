@@ -71,13 +71,13 @@
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
 
   [self setLabelColor:labelColor forState:UIControlStateNormal];
-  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setLabelColor:labelColorFocused forState:MDCTextControlStateEditing];
   [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
   [self setTextColor:textColor forState:UIControlStateNormal];
-  [self setTextColor:textColor forState:UIControlStateEditing];
+  [self setTextColor:textColor forState:MDCTextControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];
   [self setOutlineColor:outlineColorNormal forState:UIControlStateNormal];
-  [self setOutlineColor:outlineColorEditing forState:UIControlStateEditing];
+  [self setOutlineColor:outlineColorEditing forState:MDCTextControlStateEditing];
   [self setOutlineColor:outlineColorDisabled forState:UIControlStateDisabled];
   self.trailingAssistiveLabel.textColor = assistiveLabelColor;
   self.leadingAssistiveLabel.textColor = assistiveLabelColor;
@@ -96,13 +96,13 @@
   UIColor *outlineColorDisabled = [colorScheme.errorColor colorWithAlphaComponent:(CGFloat)0.60];
 
   [self setLabelColor:labelColor forState:UIControlStateNormal];
-  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setLabelColor:labelColorFocused forState:MDCTextControlStateEditing];
   [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
   [self setTextColor:textColor forState:UIControlStateNormal];
-  [self setTextColor:textColor forState:UIControlStateEditing];
+  [self setTextColor:textColor forState:MDCTextControlStateEditing];
   [self setTextColor:textColor forState:UIControlStateDisabled];
   [self setOutlineColor:outlineColorNormal forState:UIControlStateNormal];
-  [self setOutlineColor:outlineColorEditing forState:UIControlStateEditing];
+  [self setOutlineColor:outlineColorEditing forState:MDCTextControlStateEditing];
   [self setOutlineColor:outlineColorDisabled forState:UIControlStateDisabled];
   self.trailingAssistiveLabel.textColor = assistiveLabelColor;
   self.leadingAssistiveLabel.textColor = assistiveLabelColor;

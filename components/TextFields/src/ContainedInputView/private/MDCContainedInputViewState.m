@@ -18,7 +18,7 @@ MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
     UIControlState controlState) {
   if ((controlState & UIControlStateDisabled) == UIControlStateDisabled) {
     return MDCContainedInputViewStateDisabled;
-  } else if ((controlState & UIControlStateEditing) == UIControlStateEditing) {
+  } else if ((controlState & MDCTextControlStateEditing) == MDCTextControlStateEditing) {
     return MDCContainedInputViewStateFocused;
   } else {
     return MDCContainedInputViewStateNormal;

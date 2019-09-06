@@ -25,7 +25,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : M
  Sets the outline color for a given state.
  @param outlineColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(UIControlState)state;

@@ -612,7 +612,7 @@
                                         isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
-  
+
   if (hasPlaceholder) {
     if (hasText) {
       return NO;
@@ -689,7 +689,7 @@
   self.textColor = colorViewModel.textColor;
   self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
   self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.label.textColor =  labelColor;
+  self.label.textColor = labelColor;
   self.placeholderLabel.textColor = self.placeholderColor;
 }
 

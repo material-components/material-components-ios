@@ -901,10 +901,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   } else if (labelState == MDCContainedInputViewLabelStateFloating) {
     labelColor = colorViewModel.floatingLabelColor;
   }
-  self.textField .textColor = colorViewModel.textColor;
+  self.textField.textColor = colorViewModel.textColor;
   self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
   self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.label.textColor =  labelColor;
+  self.label.textColor = labelColor;
 }
 
 - (void)setContainedInputViewColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel

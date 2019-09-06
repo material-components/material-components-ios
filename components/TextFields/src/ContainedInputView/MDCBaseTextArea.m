@@ -711,7 +711,7 @@
   self.textView.textColor = colorViewModel.textColor;
   self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
   self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.label.textColor =  labelColor;
+  self.label.textColor = labelColor;
 }
 
 - (void)setContainedInputViewColorViewModel:

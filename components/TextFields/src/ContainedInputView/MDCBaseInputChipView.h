@@ -58,7 +58,7 @@
  Sets the label color for a given state.
  @param labelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state;
@@ -72,7 +72,7 @@
  Sets the text color for a given state.
  @param textColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
- UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
  UIControlState value.
  */
 - (void)setTextColor:(nonnull UIColor *)textColor forState:(UIControlState)state;

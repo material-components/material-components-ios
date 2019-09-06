@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-static const UIControlState UIControlStateEditing = 1 << 16;
+static const UIControlState MDCTextControlStateEditing = 1 << 16;
 
 /**
  A set of Contained Input View states outlined in the Material guidelines. These states overlap with
