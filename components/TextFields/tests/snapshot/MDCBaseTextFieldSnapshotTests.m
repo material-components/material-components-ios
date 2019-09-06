@@ -105,6 +105,20 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
   [self validateTextField:textField];
 }
 
+- (void)testTextFieldWithLeadingViewWhileEditing {
+  // Given
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+  
+  // When
+  textField.leadingView = [self createRedSideView];
+  textField.leadingViewMode = UITextFieldViewModeWhileEditing;
+  textField.text = @"Text";
+  [textField becomeFirstResponder];
+  
+  // Then
+  [self validateTextField:textField];
+}
+
 - (void)testTextFieldWithTrailingView {
   // Given
   MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
@@ -134,27 +148,12 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 }
 
 - (void)testTextFieldWithVisibleClearButton {
-  NSLog(@"testTextFieldWithVisibleClearButton");
   // Given
   MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
 
   // When
   textField.clearButtonMode = UITextFieldViewModeAlways;
   textField.text = @"Text";
-
-  // Then
-  [self validateTextField:textField];
-}
-
-- (void)testTextFieldWithWhileEditingSideView {
-  // Given
-  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
-
-  // When
-  textField.leadingView = [self createRedSideView];
-  textField.leadingViewMode = UITextFieldViewModeWhileEditing;
-  textField.text = @"Text";
-  [textField becomeFirstResponder];
 
   // Then
   [self validateTextField:textField];
