@@ -156,7 +156,9 @@
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
   self.placeholderLabel.text = self.placeholder;
-  [self updateColors];
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:self.containedInputViewState];
+  [self applyColorViewModel:colorViewModel withLabelState:self.labelState];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
@@ -672,13 +674,18 @@
 
 #pragma mark Theming
 
-- (void)updateColors {
-  MDCContainedInputViewColorViewModel *colorViewModel =
-      [self containedInputViewColorViewModelForState:self.containedInputViewState];
+- (void)applyColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
+             withLabelState:(MDCContainedInputViewLabelState)labelState {
+  UIColor *labelColor = [UIColor clearColor];
+  if (labelState == MDCContainedInputViewLabelStateNormal) {
+    labelColor = colorViewModel.normalLabelColor;
+  } else if (labelState == MDCContainedInputViewLabelStateFloating) {
+    labelColor = colorViewModel.floatingLabelColor;
+  }
   self.textColor = colorViewModel.textColor;
   self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
   self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.label.textColor = colorViewModel.floatingLabelColor;
+  self.label.textColor =  labelColor;
   self.placeholderLabel.textColor = self.placeholderColor;
 }
 

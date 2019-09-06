@@ -479,7 +479,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
-  [self updateColors];
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:self.containedInputViewState];
+  [self applyColorViewModel:colorViewModel withLabelState:self.labelState];
   self.layout = [self calculateLayoutWithSize:self.bounds.size];
 }
 
@@ -891,13 +893,18 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Theming
 
-- (void)updateColors {
-  MDCContainedInputViewColorViewModel *colorViewModel =
-      [self containedInputViewColorViewModelForState:self.containedInputViewState];
-  self.textField.textColor = colorViewModel.textColor;
+- (void)applyColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
+             withLabelState:(MDCContainedInputViewLabelState)labelState {
+  UIColor *labelColor = [UIColor clearColor];
+  if (labelState == MDCContainedInputViewLabelStateNormal) {
+    labelColor = colorViewModel.normalLabelColor;
+  } else if (labelState == MDCContainedInputViewLabelStateFloating) {
+    labelColor = colorViewModel.floatingLabelColor;
+  }
+  self.textField .textColor = colorViewModel.textColor;
   self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.label.textColor = colorViewModel.floatingLabelColor;
+  self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
+  self.label.textColor =  labelColor;
 }
 
 - (void)setContainedInputViewColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
