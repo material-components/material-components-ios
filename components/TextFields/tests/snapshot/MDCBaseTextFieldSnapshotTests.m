@@ -18,6 +18,8 @@
 
 #import "MaterialTextFields+ContainedInputView.h"
 
+static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
+
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @end
 
@@ -35,6 +37,29 @@
   [super tearDown];
 }
 
+- (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
+  textField.borderStyle = UITextBorderStyleRoundedRect;
+  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+  [keyWindow addSubview:textField];
+  return textField;
+}
+
+- (void)validateTextField:(MDCBaseTextField *)textField {
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    // We take a snapshot of the textfield so we don't have to remove it from the app
+    // host's key window. Removing the textfield from the app host's key window
+    // before validation can affect the textfield's editing behavior, which has a
+    // large effect on the appearance of the textfield.
+    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
+    [self generateSnapshotAndVerifyForView:textFieldSnapshot];
+    [expectation fulfill];
+  });
+  [self waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
+}
+
 - (UIView *)createBlueSideView {
   return [self createSideViewWithColor:[UIColor blueColor]];
 }
@@ -49,12 +74,6 @@
   return view;
 }
 
-- (MDCBaseTextField *)createBaseTextField {
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
-  textField.borderStyle = UITextBorderStyleRoundedRect;
-  return textField;
-}
-
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
@@ -64,18 +83,18 @@
 
 - (void)testTextFieldWithText {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextField];
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
 
   // When
   textField.text = @"Text";
 
   // Then
-  [self generateSnapshotAndVerifyForView:textField];
+  [self validateTextField:textField];
 }
 
 - (void)testTextFieldWithLeadingView {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextField];
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
 
   // When
   textField.text = @"Text";
@@ -83,12 +102,12 @@
   textField.leadingViewMode = UITextFieldViewModeAlways;
 
   // Then
-  [self generateSnapshotAndVerifyForView:textField];
+  [self validateTextField:textField];
 }
 
 - (void)testTextFieldWithTrailingView {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextField];
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
 
   // When
   textField.text = @"Text";
@@ -96,12 +115,12 @@
   textField.trailingViewMode = UITextFieldViewModeAlways;
 
   // Then
-  [self generateSnapshotAndVerifyForView:textField];
+  [self validateTextField:textField];
 }
 
 - (void)testTextFieldWithLeadingViewAndTrailingView {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextField];
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
 
   // When
   textField.text = @"Text";
@@ -111,19 +130,34 @@
   textField.leadingViewMode = UITextFieldViewModeAlways;
 
   // Then
-  [self generateSnapshotAndVerifyForView:textField];
+  [self validateTextField:textField];
 }
 
 - (void)testTextFieldWithVisibleClearButton {
+  NSLog(@"testTextFieldWithVisibleClearButton");
   // Given
-  MDCBaseTextField *textField = [self createBaseTextField];
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
 
   // When
   textField.clearButtonMode = UITextFieldViewModeAlways;
   textField.text = @"Text";
 
   // Then
-  [self generateSnapshotAndVerifyForView:textField];
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithWhileEditingSideView {
+  // Given
+  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+
+  // When
+  textField.leadingView = [self createRedSideView];
+  textField.leadingViewMode = UITextFieldViewModeWhileEditing;
+  textField.text = @"Text";
+  [textField becomeFirstResponder];
+
+  // Then
+  [self validateTextField:textField];
 }
 
 @end
