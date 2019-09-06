@@ -404,7 +404,6 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (void)setHeaderDividerColor:(UIColor *)headerDividerColor {
   self.headerDividerView.backgroundColor = headerDividerColor;
-  [self.view setNeedsDisplay];
 }
 
 - (UIColor *)headerDividerColor {
