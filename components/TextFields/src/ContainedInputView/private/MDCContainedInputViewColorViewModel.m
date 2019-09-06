@@ -36,18 +36,19 @@
 - (void)setUpColorsWithState:(MDCContainedInputViewState)state {
   UIColor *textColor = [UIColor blackColor];
   UIColor *floatingLabelColor = [UIColor blackColor];
-  UIColor *normalLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *assistiveLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *normalLabelColor = [UIColor darkGrayColor];
+  UIColor *assistiveLabelColor = [UIColor darkGrayColor];
+  CGFloat disabledAlpha = (CGFloat)0.60;
   switch (state) {
     case MDCContainedInputViewStateNormal:
       break;
     case MDCContainedInputViewStateFocused:
       break;
     case MDCContainedInputViewStateDisabled:
-      textColor = [textColor colorWithAlphaComponent:(CGFloat)0.60];
-      floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:(CGFloat)0.60];
-      normalLabelColor = [normalLabelColor colorWithAlphaComponent:(CGFloat)0.60];
-      assistiveLabelColor = [assistiveLabelColor colorWithAlphaComponent:(CGFloat)0.60];
+      textColor = [textColor colorWithAlphaComponent:disabledAlpha];
+      floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:disabledAlpha];
+      normalLabelColor = [normalLabelColor colorWithAlphaComponent:disabledAlpha];
+      assistiveLabelColor = [assistiveLabelColor colorWithAlphaComponent:disabledAlpha];
       break;
   }
   self.textColor = textColor;

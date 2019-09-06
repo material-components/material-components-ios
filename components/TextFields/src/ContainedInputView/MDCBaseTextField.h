@@ -57,7 +57,7 @@
 
 /**
  Sets the floating label color for a given state. Floating label color refers to the color of the
- label when it's in its "floating position," i.e. when it's floating.
+ label when it's in its "floating position," i.e. when it's above the text area.
  @param floatingLabelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
  UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
@@ -66,7 +66,7 @@
 - (void)setFloatingLabelColor:(nonnull UIColor *)floatingLabelColor forState:(UIControlState)state;
 /**
  Returns the floating label color for a given state. Floating label color refers to the color of the
- label when it's in its "floating position," i.e. when it's floating.
+ label when it's in its "floating position," i.e. when it's above the text area.
  @param state The UIControlState.
  */
 - (nonnull UIColor *)floatingLabelColorForState:(UIControlState)state;
