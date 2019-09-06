@@ -63,7 +63,7 @@
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   // TODO: Remove this method
-  self.containerStyle = [[MDCContainedInputViewStyleFilled alloc] init];
+  self.containerStyle = [[MDCContainedInputViewStyleOutlined alloc] init];
 }
 
 @end

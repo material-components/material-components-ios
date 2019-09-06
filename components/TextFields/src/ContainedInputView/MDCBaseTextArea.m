@@ -478,7 +478,7 @@
 }
 
 - (CGRect)containerFrame {
-  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.contentAreaMaxY);
+  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
 }
 
 - (void)layOutGradientLayers {

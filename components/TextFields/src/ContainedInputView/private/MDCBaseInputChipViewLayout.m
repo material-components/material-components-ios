@@ -29,7 +29,7 @@ static const CGFloat kGradientBlurLength = 6;
 
 @property(nonatomic, assign) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat minimumHeight;
-@property(nonatomic, assign) CGFloat contentAreaMaxY;
+@property(nonatomic, assign) CGFloat containerHeight;
 
 @end
 
@@ -172,8 +172,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                     globalChipRowMaxX:globalChipRowMaxX
                                                                 isRTL:isRTL];
 
-  CGFloat containerHeight = positioningDelegate.containerHeight;
-  CGSize scrollViewSize = CGSizeMake(size.width, containerHeight);
+  CGSize scrollViewSize = CGSizeMake(size.width, positioningDelegate.containerHeight);
 
   CGSize textFieldSize = [self textSizeWithText:text font:font maxWidth:maxTextWidth];
   CGRect textFieldFrame = [self textFieldFrameWithSize:scrollViewSize
@@ -203,7 +202,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                  chipsWrap:chipsWrap
                                             textFieldFrame:textFieldFrame];
 
-  self.contentAreaMaxY = containerHeight;
+  self.containerHeight = positioningDelegate.containerHeight;
   self.chipFrames = chipFrames;
   self.textFieldFrame = textFieldFrame;
   self.scrollViewContentOffset = contentOffset;
@@ -214,7 +213,7 @@ static const CGFloat kGradientBlurLength = 6;
   self.labelFrameNormal = labelFrameNormal;
   self.globalChipRowMinX = globalChipRowMinX;
   self.globalChipRowMaxX = globalChipRowMaxX;
-  CGRect scrollViewRect = CGRectMake(0, 0, size.width, containerHeight);
+  CGRect scrollViewRect = CGRectMake(0, 0, size.width, positioningDelegate.containerHeight);
   self.maskedScrollViewContainerViewFrame = scrollViewRect;
   self.scrollViewFrame = scrollViewRect;
 
@@ -227,7 +226,7 @@ static const CGFloat kGradientBlurLength = 6;
     topFadeStartingY = floatingLabelMaxY;
   }
   self.verticalGradientLocations =
-      [self determineVerticalGradientLocationsWithViewHeight:containerHeight
+      [self determineVerticalGradientLocationsWithViewHeight:positioningDelegate.containerHeight
                                             topFadeStartingY:topFadeStartingY
                                          bottomFadeStartingY:bottomPadding];
 
@@ -254,27 +253,11 @@ static const CGFloat kGradientBlurLength = 6;
 }
 
 - (CGFloat)calculatedHeight {
-  CGFloat maxY = 0;
-  CGFloat labelFrameFloatingMaxY = CGRectGetMaxY(self.labelFrameFloating);
-  if (labelFrameFloatingMaxY > maxY) {
-    maxY = labelFrameFloatingMaxY;
-  }
-  CGFloat labelFrameNormalMaxY = CGRectGetMaxY(self.labelFrameNormal);
-  if (labelFrameFloatingMaxY > maxY) {
-    maxY = labelFrameNormalMaxY;
-  }
-  CGFloat textRectMaxY = self.contentAreaMaxY;
-  if (textRectMaxY > maxY) {
-    maxY = textRectMaxY;
-  }
-  CGFloat leftAssistiveLabelFrameMaxY = CGRectGetMaxY(self.leftAssistiveLabelFrame);
-  if (leftAssistiveLabelFrameMaxY > maxY) {
-    maxY = leftAssistiveLabelFrameMaxY;
-  }
-  CGFloat rightAssistiveLabelFrameMaxY = CGRectGetMaxY(self.rightAssistiveLabelFrame);
-  if (rightAssistiveLabelFrameMaxY > maxY) {
-    maxY = rightAssistiveLabelFrameMaxY;
-  }
+  CGFloat maxY = self.containerHeight;
+  //  CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
+  //  if (underlineLabelViewMaxY > maxY) {
+  //    maxY = underlineLabelViewMaxY;
+  //  }
   return maxY;
 }
 

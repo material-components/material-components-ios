@@ -29,7 +29,7 @@ static const CGFloat kGradientBlurLength = 6;
 
 @property(nonatomic, assign) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat minimumHeight;
-@property(nonatomic, assign) CGFloat contentAreaMaxY;
+@property(nonatomic, assign) CGFloat containerHeight;
 
 @end
 
@@ -147,7 +147,7 @@ static const CGFloat kGradientBlurLength = 6;
                                              contentOffset:contentOffset
                                              textViewFrame:textViewFrame];
 
-  self.contentAreaMaxY = contentAreaMaxY;
+  self.containerHeight = contentAreaMaxY;
   self.textViewFrame = textViewFrame;
   self.scrollViewContentOffset = contentOffset;
   self.scrollViewContentSize = contentSize;
@@ -178,27 +178,11 @@ static const CGFloat kGradientBlurLength = 6;
 }
 
 - (CGFloat)calculatedHeight {
-  CGFloat maxY = 0;
-  CGFloat floatingLabelFrameMaxY = CGRectGetMaxY(self.floatingLabelFrame);
-  if (floatingLabelFrameMaxY > maxY) {
-    maxY = floatingLabelFrameMaxY;
-  }
-  CGFloat normalLabelFrameMaxY = CGRectGetMaxY(self.normalLabelFrame);
-  if (floatingLabelFrameMaxY > maxY) {
-    maxY = normalLabelFrameMaxY;
-  }
-  CGFloat textRectMaxY = self.contentAreaMaxY;
-  if (textRectMaxY > maxY) {
-    maxY = textRectMaxY;
-  }
-  CGFloat leftAssistiveLabelFrameMaxY = CGRectGetMaxY(self.leftAssistiveLabelFrame);
-  if (leftAssistiveLabelFrameMaxY > maxY) {
-    maxY = leftAssistiveLabelFrameMaxY;
-  }
-  CGFloat rightAssistiveLabelFrameMaxY = CGRectGetMaxY(self.rightAssistiveLabelFrame);
-  if (rightAssistiveLabelFrameMaxY > maxY) {
-    maxY = rightAssistiveLabelFrameMaxY;
-  }
+  CGFloat maxY = self.containerHeight;
+  //  CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
+  //  if (underlineLabelViewMaxY > maxY) {
+  //    maxY = underlineLabelViewMaxY;
+  //  }
   return maxY;
 }
 

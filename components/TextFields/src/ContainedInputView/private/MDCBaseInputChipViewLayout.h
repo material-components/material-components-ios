@@ -38,8 +38,7 @@
 @property(nonatomic, assign) CGPoint scrollViewContentOffset;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
-//@property(nonatomic, readonly) CGFloat minimumHeight;
-@property(nonatomic, readonly) CGFloat contentAreaMaxY;
+@property(nonatomic, readonly) CGFloat containerHeight;
 
 @property(nonatomic, strong) NSArray<NSNumber *> *verticalGradientLocations;
 @property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
