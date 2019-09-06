@@ -55,16 +55,6 @@
 @property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
 
 /**
- Indicates whether the text field should automatically update its font when the device’s
- UIContentSizeCategory is changed.
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
- Defaults value is NO.
- */
-@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
-
-/**
  Sets the label color for a given state.
  @param labelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
@@ -100,5 +90,15 @@
 - (void)removeChips:(nonnull NSArray<UIView *> *)chips;
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
 @property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
+
+/**
+ Indicates whether the text field should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ Defaults value is NO.
+ */
+@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end

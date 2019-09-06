@@ -182,6 +182,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (MDCBaseTextArea *)createFilledTextArea {
   MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] init];
+  textArea.mdc_adjustsFontForContentSizeCategory = YES;
   [textArea applyFilledThemeWithScheme:self.containerScheme];
   textArea.textView.delegate = self;
   textArea.label.text = @"Stuff";

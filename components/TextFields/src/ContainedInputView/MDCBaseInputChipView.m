@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #import "MDCBaseInputChipView.h"
-#import "private/MDCBaseInputChipView+MDCContainedInputView.h"
-#import "private/MDCBaseInputChipViewLayout.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <MDFInternationalization/MDFInternationalization.h>
@@ -22,6 +20,8 @@
 
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "private/MDCBaseInputChipView+MDCContainedInputView.h"
+#import "private/MDCBaseInputChipViewLayout.h"
 #import "private/MDCContainedInputView.h"
 #import "private/MDCContainedInputViewColorViewModel.h"
 #import "private/MDCContainedInputViewLabelAnimation.h"
@@ -38,18 +38,18 @@
 
 @interface MDCBaseInputChipViewTextField : UITextField
 @property(nonatomic, weak) id<MDCBaseInputChipViewTextFieldDelegate> inputChipViewTextFieldDelegate;
-@property(strong, nonatomic, readonly) UIFont *effectiveFont;
 @end
 
 @implementation MDCBaseInputChipViewTextField
 
-- (UIFont *)effectiveFont {
-  return self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]];
+- (UIFont *)font {
+  return [super font] ?: [self uiTextFieldDefaultFont];
 }
 
 - (void)setFont:(UIFont *)font {
   [super setFont:font];
 }
+
 - (void)deleteBackward {
   NSString *oldText = self.text;
   [super deleteBackward];
@@ -89,6 +89,17 @@
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
   return CGRectZero;
+}
+
+- (UIFont *)uiTextFieldDefaultFont {
+  static dispatch_once_t onceToken;
+  static UIFont *font;
+  dispatch_once(&onceToken, ^{
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+    textField.text = @"Text";
+    font = textField.font;
+  });
+  return font;
 }
 
 @end
@@ -228,7 +239,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpChipRowHeight {
-  CGFloat textHeight = (CGFloat)ceil((double)self.inputChipViewTextField.effectiveFont.lineHeight);
+  CGFloat textHeight = (CGFloat)ceil((double)self.inputChipViewTextField.font.lineHeight);
   self.chipRowHeight = textHeight * 2;
 
   self.chipRowSpacing = 7;
@@ -559,8 +570,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
   [self performChipRemovalOnCompletion:^{
     [self performChipPositioningOnCompletion:^{
-      [self performChipAdditionsOnCompletion:^{
-      }];
+      [self performChipAdditionsOnCompletion:nil];
     }];
   }];
 }
@@ -754,7 +764,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark Fonts
 
 - (UIFont *)normalFont {
-  return self.inputChipViewTextField.effectiveFont;
+  return self.inputChipViewTextField.font;
 }
 
 - (UIFont *)floatingFont {

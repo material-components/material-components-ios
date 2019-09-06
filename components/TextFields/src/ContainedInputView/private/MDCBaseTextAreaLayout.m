@@ -23,8 +23,6 @@ static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
 static const CGFloat kLeadingMargin = (CGFloat)8.0;
 static const CGFloat kTrailingMargin = (CGFloat)8.0;
 
-static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
-
 static const CGFloat kGradientBlurLength = 6;
 
 @interface MDCBaseTextAreaLayout ()
@@ -227,12 +225,12 @@ static const CGFloat kGradientBlurLength = 6;
                        globalTextMaxX:(CGFloat)globalTextMaxX
     paddingBetweenTopAndFloatingLabel:(CGFloat)paddingBetweenTopAndFloatingLabel
                                 isRTL:(BOOL)isRTL {
-  CGFloat maxTextWidth = globalTextMaxX - globalTextMinX - kFloatingLabelXOffset;
+  CGFloat maxTextWidth = globalTextMaxX - globalTextMinX;
   CGSize floatingLabelSize = [self textSizeWithText:text font:floatingFont maxWidth:maxTextWidth];
   CGFloat textMinY = paddingBetweenTopAndFloatingLabel;
-  CGFloat textMinX = globalTextMinX + kFloatingLabelXOffset;
+  CGFloat textMinX = globalTextMinX;
   if (isRTL) {
-    textMinX = globalTextMaxX - kFloatingLabelXOffset - floatingLabelSize.width;
+    textMinX = globalTextMaxX - floatingLabelSize.width;
   }
   return CGRectMake(textMinX, textMinY, floatingLabelSize.width, floatingLabelSize.height);
 }

@@ -79,6 +79,7 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
+  self.font = [self uiTextFieldDefaultFont];
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
@@ -512,8 +513,15 @@
 
 #pragma mark Fonts
 
+- (void)setFont:(UIFont *)font {
+  [super setFont:font];
+}
+- (UIFont *)font {
+  return [super font] ?: [self uiTextFieldDefaultFont];
+}
+
 - (UIFont *)normalFont {
-  return self.font ?: [self uiTextFieldDefaultFont];
+  return self.font;
 }
 
 - (UIFont *)floatingFont {
@@ -524,7 +532,9 @@
   static dispatch_once_t onceToken;
   static UIFont *font;
   dispatch_once(&onceToken, ^{
-    font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+    textField.text = @"Text";
+    font = textField.font;
   });
   return font;
 }

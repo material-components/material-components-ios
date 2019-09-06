@@ -13,14 +13,15 @@
 // limitations under the License.
 
 #import "MDCBaseTextArea.h"
-#import "private/MDCBaseTextAreaLayout.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <QuartzCore/QuartzCore.h>
 
 #import "MaterialMath.h"
+#import "MaterialTypography.h"
 #import "private/MDCBaseTextArea+MDCContainedInputView.h"
+#import "private/MDCBaseTextAreaLayout.h"
 #import "private/MDCContainedInputView.h"
 #import "private/MDCContainedInputViewLabelAnimation.h"
 #import "private/MDCContainedInputViewStyleBase.h"
@@ -33,7 +34,6 @@
 
 @interface MDCBaseTextAreaTextView : UITextView
 @property(nonatomic, weak) id<MDCBaseTextAreaTextViewDelegate> inputChipViewTextViewDelegate;
-@property(strong, nonatomic, readonly) UIFont *effectiveFont;
 @end
 
 @implementation MDCBaseTextAreaTextView
@@ -57,10 +57,12 @@
 - (void)commonMDCBaseTextAreaTextViewInit {
   self.backgroundColor = [UIColor clearColor];
   self.textContainerInset = UIEdgeInsetsZero;
+  self.layoutMargins = UIEdgeInsetsZero;
+  self.textContainer.lineFragmentPadding = 0;
 }
 
-- (UIFont *)effectiveFont {
-  return self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]];
+- (UIFont *)font {
+  return [super font] ?: [self uiTextViewDefaultFont];
 }
 
 - (BOOL)resignFirstResponder {
@@ -71,13 +73,24 @@
 }
 
 - (BOOL)becomeFirstResponder {
-  self.layer.borderColor = [UIColor redColor].CGColor;
-  self.layer.borderWidth = 1;
+  //  self.layer.borderColor = [UIColor redColor].CGColor;
+  //  self.layer.borderWidth = 1;
 
   BOOL didBecomeFirstResponder = [super becomeFirstResponder];
   [self.inputChipViewTextViewDelegate
       inputChipViewTextViewDidBecomeFirstResponder:didBecomeFirstResponder];
   return didBecomeFirstResponder;
+}
+
+- (UIFont *)uiTextViewDefaultFont {
+  static dispatch_once_t onceToken;
+  static UIFont *font;
+  dispatch_once(&onceToken, ^{
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+    textView.text = @"Text";
+    font = textView.font;
+  });
+  return font;
 }
 
 @end
@@ -610,7 +623,7 @@
 #pragma mark Fonts
 
 - (UIFont *)normalFont {
-  return self.inputChipViewTextView.effectiveFont;
+  return self.inputChipViewTextView.font;
 }
 
 - (UIFont *)floatingFont {
@@ -624,6 +637,43 @@
     font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   });
   return font;
+}
+
+#pragma mark Dynamic Type
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self startObservingUIContentSizeCategory];
+  } else {
+    [self stopObservingUIContentSizeCategory];
+  }
+  [self updateFontsForDynamicType];
+}
+
+- (void)updateFontsForDynamicType {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    UIFont *helperFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+    self.textView.font = textFont;
+    self.label.font = textFont;
+    self.leadingAssistiveLabel.font = helperFont;
+    self.leadingAssistiveLabel.font = helperFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)startObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(updateFontsForDynamicType)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)stopObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
 }
 
 #pragma mark Custom UIView Geometry Methods

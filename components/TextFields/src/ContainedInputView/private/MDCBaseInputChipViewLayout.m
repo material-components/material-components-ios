@@ -23,8 +23,6 @@ static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
 static const CGFloat kLeadingMargin = (CGFloat)8.0;
 static const CGFloat kTrailingMargin = (CGFloat)8.0;
 
-static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
-
 static const CGFloat kGradientBlurLength = 6;
 
 @interface MDCBaseInputChipViewLayout ()
@@ -302,12 +300,12 @@ static const CGFloat kGradientBlurLength = 6;
                     globalChipRowMaxX:(CGFloat)globalChipRowMaxX
     paddingBetweenTopAndFloatingLabel:(CGFloat)paddingBetweenTopAndFloatingLabel
                                 isRTL:(BOOL)isRTL {
-  CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX - kFloatingLabelXOffset;
+  CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
   CGSize textSize = [self textSizeWithText:text font:floatingFont maxWidth:maxTextWidth];
   CGFloat floatingLabelMinY = paddingBetweenTopAndFloatingLabel;
-  CGFloat floatingLabelMinX = globalChipRowMinX + kFloatingLabelXOffset;
+  CGFloat floatingLabelMinX = globalChipRowMinX;
   if (isRTL) {
-    floatingLabelMinX = globalChipRowMaxX - kFloatingLabelXOffset - textSize.width;
+    floatingLabelMinX = globalChipRowMaxX - textSize.width;
   }
   return CGRectMake(floatingLabelMinX, floatingLabelMinY, textSize.width, textSize.height);
 }
