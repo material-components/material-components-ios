@@ -108,13 +108,13 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 - (void)testTextFieldWithLeadingViewWhileEditing {
   // Given
   MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
-  
+
   // When
   textField.leadingView = [self createRedSideView];
   textField.leadingViewMode = UITextFieldViewModeWhileEditing;
   textField.text = @"Text";
   [textField becomeFirstResponder];
-  
+
   // Then
   [self validateTextField:textField];
 }
