@@ -1926,6 +1926,7 @@ Pod::Spec.new do |mdc|
     "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
+    extension.dependency "MaterialComponents/AnimationTiming"
     extension.dependency "MDFInternationalization"
 
     extension.test_spec 'UnitTests' do |unit_tests|
