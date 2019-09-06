@@ -367,6 +367,11 @@ IB_DESIGNABLE
 
 @end
 
+#pragma mark - Deprecated
+
+/** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
+@property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
+
 @interface MDCNavigationBar (ToBeDeprecated)
 
 /**

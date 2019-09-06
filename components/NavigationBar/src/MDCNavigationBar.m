@@ -841,4 +841,14 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   self.leadingItemsSupplementBackButton = leftItemsSupplementBackButton;
 }
 
+#pragma mark deprecated
+
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+  [self setTitleAlignment:[MDCNavigationBar titleAlignmentFromTextAlignment:textAlignment]];
+}
+
+- (NSTextAlignment)textAlignment {
+  return [MDCNavigationBar textAlignmentFromTitleAlignment:self.titleAlignment];
+}
+
 @end
