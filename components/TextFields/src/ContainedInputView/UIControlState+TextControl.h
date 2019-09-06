@@ -21,4 +21,4 @@ typedef UIControlState MDCTextControlState;
  The addition of this state to UIControlState makes it so that clients can specify certain colors
  for when the control is editing.
  */
-static const MDCTextControlState MDCTextControlStateEditing = 0x00010000;
+static const MDCTextControlState MDCTextControlStateEditing = 1 << 16;
