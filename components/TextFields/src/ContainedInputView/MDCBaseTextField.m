@@ -60,20 +60,8 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
-  [self setUpLayoutDirection];
-  [self setUpLabelBehavior];
-  [self setUpLabelState];
-}
-
-- (void)setUpLayoutDirection {
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
-}
-
-- (void)setUpLabelBehavior {
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
-}
-
-- (void)setUpLabelState {
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
 }
 
