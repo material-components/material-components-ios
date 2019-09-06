@@ -370,9 +370,9 @@ IB_DESIGNABLE
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
 
-@interface MDCNavigationBar (ToBeDeprecated)
-
 @end
+
+@interface MDCNavigationBar (ToBeDeprecated)
 
 /**
  The inkColor that is used for all buttons in trailing and leading button bars.
