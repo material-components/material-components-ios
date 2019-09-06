@@ -12,6 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField.h"
-#import "MDCTextControlLabelBehavior.h"
-#import "UIControlState+TextControl.h"
+#import "MDCContainedInputViewState.h"
+
+MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
+    UIControlState controlState) {
+  if ((controlState & UIControlStateDisabled) == UIControlStateDisabled) {
+    return MDCContainedInputViewStateDisabled;
+  } else if ((controlState & MDCTextControlStateEditing) == MDCTextControlStateEditing) {
+    return MDCContainedInputViewStateFocused;
+  } else {
+    return MDCContainedInputViewStateNormal;
+  }
+}

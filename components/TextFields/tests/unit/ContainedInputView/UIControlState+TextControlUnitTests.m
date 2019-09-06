@@ -12,6 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField.h"
-#import "MDCTextControlLabelBehavior.h"
-#import "UIControlState+TextControl.h"
+#import <XCTest/XCTest.h>
+
+#import "../../../src/ContainedInputView/UIControlState+TextControl.h"
+
+@interface UIControlStateTextControlUnitTests : XCTestCase
+@end
+
+@implementation UIControlStateTextControlUnitTests
+
+- (void)testMDCTextControlStateEditing {
+  XCTAssertTrue((MDCTextControlStateEditing & UIControlStateApplication) ==
+                MDCTextControlStateEditing);
+}
+
+@end

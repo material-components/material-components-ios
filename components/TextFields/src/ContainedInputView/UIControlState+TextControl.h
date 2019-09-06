@@ -12,6 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField.h"
-#import "MDCTextControlLabelBehavior.h"
-#import "UIControlState+TextControl.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+typedef UIControlState MDCTextControlState;
+
+/**
+ The addition of this state to UIControlState makes it so that clients can specify certain colors
+ for when the control is editing.
+ */
+static const MDCTextControlState MDCTextControlStateEditing = 0x00010000;
