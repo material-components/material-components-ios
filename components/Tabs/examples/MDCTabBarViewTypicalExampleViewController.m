@@ -189,9 +189,9 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 - (void)applyThemingToTabBarView {
   self.tabBar.barTintColor = self.containerScheme.colorScheme.surfaceColor;
-  [self.tabBar setTitleColor:[self.containerScheme.colorScheme.onSurfaceColor
-                                 colorWithAlphaComponent:0.6f]
-                    forState:UIControlStateNormal];
+  [self.tabBar
+      setTitleColor:[self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]
+           forState:UIControlStateNormal];
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.primaryColor
                     forState:UIControlStateSelected];
   [self.tabBar setImageTintColor:[self.containerScheme.colorScheme.onSurfaceColor

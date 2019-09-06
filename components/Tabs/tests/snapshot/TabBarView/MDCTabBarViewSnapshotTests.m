@@ -409,8 +409,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testSelectedItemInitiallyVisibleLTRLatin {
   // Given
-  self.tabBarView.bounds =
-      CGRectMake(0, 0, kMinItemWidth * 1.5f, kExpectedHeightTitlesOrIconsOnly);
+  self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * 1.5f, kExpectedHeightTitlesOrIconsOnly);
   [self changeToLatinStringsWithLongTitles:YES];
   self.item1.image = nil;
   self.item2.image = nil;
@@ -427,8 +426,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testSelectedItemInitiallyVisibleRTLArabic {
   // Given
-  self.tabBarView.bounds =
-      CGRectMake(0, 0, kMinItemWidth * 1.5f, kExpectedHeightTitlesOrIconsOnly);
+  self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * 1.5f, kExpectedHeightTitlesOrIconsOnly);
   [self changeToArabicStringsWithLongTitles:YES];
   self.item1.image = nil;
   self.item2.image = nil;
@@ -613,9 +611,8 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.bounds =
-      CGRectMake(0, 0, kMinItemWidth * (self.tabBarView.items.count - 0.5f),
-                 kExpectedHeightTitlesOrIconsOnly);
+  self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * (self.tabBarView.items.count - 0.5f),
+                                      kExpectedHeightTitlesOrIconsOnly);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -1300,8 +1297,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   self.tabBarView.bounds =
       CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
   UIView *itemRectOverlayView = [[UIView alloc] init];
-  itemRectOverlayView.backgroundColor =
-      [UIColor.magentaColor colorWithAlphaComponent:0.25f];
+  itemRectOverlayView.backgroundColor = [UIColor.magentaColor colorWithAlphaComponent:0.25f];
   [self.tabBarView addSubview:itemRectOverlayView];
   [self.tabBarView layoutIfNeeded];
 
@@ -1321,8 +1317,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * 1.2 + kLeadingInsetForScrollableTabs,
                                       intrinsicContentSize.height);
   UIView *itemRectOverlayView = [[UIView alloc] init];
-  itemRectOverlayView.backgroundColor =
-      [UIColor.magentaColor colorWithAlphaComponent:0.25f];
+  itemRectOverlayView.backgroundColor = [UIColor.magentaColor colorWithAlphaComponent:0.25f];
   [self.tabBarView addSubview:itemRectOverlayView];
   [self.tabBarView layoutIfNeeded];
 
@@ -1357,8 +1352,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
       CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
 
   UIView *itemRectOverlayView = [[UIView alloc] init];
-  itemRectOverlayView.backgroundColor =
-      [UIColor.magentaColor colorWithAlphaComponent:0.25f];
+  itemRectOverlayView.backgroundColor = [UIColor.magentaColor colorWithAlphaComponent:0.25f];
   [superview addSubview:itemRectOverlayView];
   [superview layoutIfNeeded];
 

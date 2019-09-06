@@ -201,8 +201,7 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertNotNil(tabBarView);
   XCTAssertNotNil(tabBarView.items);
-  XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0
-                                                                              alpha:0.16f]);
+  XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0 alpha:0.16f]);
   XCTAssertEqualObjects(self.tabBarView.bottomDividerColor, UIColor.clearColor);
   XCTAssertEqualObjects(self.tabBarView.barTintColor, UIColor.whiteColor);
 }

@@ -50,8 +50,8 @@
 - (void)testRippleIsDisabledAndRipplePropertiesAreCorrect {
   // Then
   XCTAssertNotNil(self.baseCell.rippleView);
-  XCTAssertEqualObjects(self.baseCell.rippleView.rippleColor,
-                        [UIColor colorWithWhite:0 alpha:0.16f]);
+  XCTAssertEqualObjects(self.baseCell.rippleView.rippleColor, [UIColor colorWithWhite:0
+                                                                                alpha:0.16f]);
   XCTAssertEqual(self.baseCell.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.baseCell.enableRippleBehavior);
   XCTAssertNil(self.baseCell.rippleView.superview);
@@ -70,8 +70,8 @@
 
   // Then
   XCTAssertNotNil(self.baseCell.rippleView);
-  XCTAssertEqualObjects(self.baseCell.rippleView.rippleColor,
-                        [UIColor colorWithWhite:0 alpha:0.16f]);
+  XCTAssertEqualObjects(self.baseCell.rippleView.rippleColor, [UIColor colorWithWhite:0
+                                                                                alpha:0.16f]);
   XCTAssertEqual(self.baseCell.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertTrue(self.baseCell.enableRippleBehavior);
   XCTAssertNotNil(self.baseCell.rippleView.superview);

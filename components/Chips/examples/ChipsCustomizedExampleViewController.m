@@ -38,8 +38,7 @@
   [chip setTitleColor:customColor forState:UIControlStateNormal];
   [chip setBorderColor:customColor forState:UIControlStateNormal];
   [chip setBorderWidth:2 forState:UIControlStateNormal];
-  [chip setInkColor:[customColor colorWithAlphaComponent:0.2f]
-           forState:UIControlStateNormal];
+  [chip setInkColor:[customColor colorWithAlphaComponent:0.2f] forState:UIControlStateNormal];
 
   UIColor *customSelectedColor = [UIColor orangeColor];
   [chip setTitleColor:customSelectedColor forState:UIControlStateSelected];

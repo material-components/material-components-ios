@@ -320,8 +320,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testThumbColorForStateDefaults {
   // Given
   UIColor *expectedThumbColor = MDCPalette.bluePalette.tint500;
-  UIColor *expectedThumbDisabledColor =
-      [[UIColor blackColor] colorWithAlphaComponent:0.26f];
+  UIColor *expectedThumbDisabledColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
@@ -602,10 +601,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTrackBackgroundColorForStateDefaults {
   // Given
-  UIColor *expectedDefaultTrackOffColor =
-      [UIColor.blackColor colorWithAlphaComponent:0.26f];
-  UIColor *expectedDisabledTrackOffColor =
-      [UIColor.blackColor colorWithAlphaComponent:0.26f];
+  UIColor *expectedDefaultTrackOffColor = [UIColor.blackColor colorWithAlphaComponent:0.26f];
+  UIColor *expectedDisabledTrackOffColor = [UIColor.blackColor colorWithAlphaComponent:0.26f];
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
@@ -938,10 +935,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualObjects([testFormatter numberFromString:[self.slider thumbTrack:track
                                                                  stringForValue:0.57f]],
                         @(0.57));
-  XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track
-                                               stringForValue:0.33333333f]],
-      @(0.333));
+  XCTAssertEqualObjects([testFormatter numberFromString:[self.slider thumbTrack:track
+                                                                 stringForValue:0.33333333f]],
+                        @(0.333));
 }
 
 - (void)testValueLabelTextColorDefalut {

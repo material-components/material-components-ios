@@ -98,8 +98,7 @@
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   [self resetButtonColorsForAllStates];
 
-  UIColor *disabledContentColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f];
+  UIColor *disabledContentColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f];
   UIColor *borderColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
   [self setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [self setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];

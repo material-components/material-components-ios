@@ -92,8 +92,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   UIView *containerView = [self containerView];
 
   _dimmingView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-  _dimmingView.backgroundColor =
-      _scrimColor ? _scrimColor : [UIColor colorWithWhite:0 alpha:0.4f];
+  _dimmingView.backgroundColor = _scrimColor ? _scrimColor : [UIColor colorWithWhite:0 alpha:0.4f];
   _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
   _dimmingView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

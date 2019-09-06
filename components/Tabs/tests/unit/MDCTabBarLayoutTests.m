@@ -136,8 +136,7 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
   CGFloat totalWidth = CGRectGetWidth(_tabBar.frame);
   CGFloat leftInset = flowLayout.sectionInset.left;
   CGFloat expectedFirstItemOriginX = totalWidth - leftInset - CGRectGetWidth(firstItemCell.frame);
-  XCTAssertEqualWithAccuracy(CGRectGetMinX(firstItemCell.frame), expectedFirstItemOriginX,
-                             0.001f);
+  XCTAssertEqualWithAccuracy(CGRectGetMinX(firstItemCell.frame), expectedFirstItemOriginX, 0.001f);
   CGFloat expectedSecondItemOriginX =
       expectedFirstItemOriginX - CGRectGetWidth(secondItemCell.frame);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(secondItemCell.frame), expectedSecondItemOriginX,

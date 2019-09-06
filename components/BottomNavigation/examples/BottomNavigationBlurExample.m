@@ -99,8 +99,7 @@
                                           toBottomNavigationBar:self.bottomNavBar];
   [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
                                            toBottomNavigation:self.bottomNavBar];
-  self.bottomNavBar.barTintColor =
-      [self.bottomNavBar.barTintColor colorWithAlphaComponent:0.85f];
+  self.bottomNavBar.barTintColor = [self.bottomNavBar.barTintColor colorWithAlphaComponent:0.85f];
   self.view.backgroundColor = self.colorScheme.backgroundColor;
   self.collectionView.backgroundColor = self.colorScheme.backgroundColor;
 }

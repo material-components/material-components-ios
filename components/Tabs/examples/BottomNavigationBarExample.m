@@ -42,10 +42,7 @@
   _bottomNavigationBar.delegate = self;
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:_bottomNavigationBar];
 
-  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0
-                                                  green:0.5f
-                                                   blue:0
-                                                  alpha:0.15f];
+  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:0.15f];
 
   NSBundle *bundle = [NSBundle bundleForClass:[BottomNavigationBarExample class]];
   UIImage *infoImage = [UIImage imageNamed:@"TabBarDemo_ic_info"

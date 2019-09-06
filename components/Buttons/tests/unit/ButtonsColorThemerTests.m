@@ -120,12 +120,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
         XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
       }
     } else {
-      XCTAssert(CGColorEqualToColor(
-          [button titleColorForState:state].CGColor,
-          [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
-      XCTAssert(CGColorEqualToColor(
-          [button backgroundColorForState:state].CGColor,
-          [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+      XCTAssert(
+          CGColorEqualToColor([button titleColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
+      XCTAssert(
+          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
     }
   }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, 0.001f);
@@ -163,10 +163,10 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
         XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor);
       }
     } else {
-      XCTAssert(CGColorEqualToColor(
-                    [button titleColorForState:state].CGColor,
-                    [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor),
-                @"state:%lu", (unsigned long)state);
+      XCTAssert(
+          CGColorEqualToColor([button titleColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor),
+          @"state:%lu", (unsigned long)state);
       XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor, @"state:%lu",
                      (unsigned long)state);
     }
@@ -207,12 +207,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
         XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
       }
     } else {
-      XCTAssert(CGColorEqualToColor(
-          [button titleColorForState:state].CGColor,
-          [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
-      XCTAssert(CGColorEqualToColor(
-          [button backgroundColorForState:state].CGColor,
-          [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+      XCTAssert(
+          CGColorEqualToColor([button titleColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
+      XCTAssert(
+          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
     }
   }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, 0.001f);

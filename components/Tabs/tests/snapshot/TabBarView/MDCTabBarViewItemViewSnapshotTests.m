@@ -358,8 +358,7 @@ static NSString *const kLongTitleArabic =
 
   // When
   self.itemView.titleLabel.text = kLongTitleLatin;
-  self.itemView.bounds =
-      CGRectMake(0, 0, kMaximumWidth * 1.5f, kMinimumHeightTitleAndImage * 1.5f);
+  self.itemView.bounds = CGRectMake(0, 0, kMaximumWidth * 1.5f, kMinimumHeightTitleAndImage * 1.5f);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.itemView];
@@ -372,8 +371,8 @@ static NSString *const kLongTitleArabic =
   // When
   self.itemView.titleLabel.text = kLongTitleArabic;
   [self changeToRTL];
-  self.itemView.bounds = CGRectMake(0, 0, kMinimumWidth * 1.5f,
-                                    kMinimumHeightOnlyTitleOrOnlyImage * 1.5f);
+  self.itemView.bounds =
+      CGRectMake(0, 0, kMinimumWidth * 1.5f, kMinimumHeightOnlyTitleOrOnlyImage * 1.5f);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.itemView];
@@ -519,8 +518,7 @@ static NSString *const kLongTitleArabic =
   // When
   self.itemView.iconImageView.image =
       [UIImage mdc_testImageOfSize:CGSizeMake(48, 48) withStyle:MDCSnapshotTestImageStyleFramedX];
-  self.itemView.bounds =
-      CGRectMake(0, 0, kMaximumWidth * 1.5f, kMinimumHeightTitleAndImage * 1.5f);
+  self.itemView.bounds = CGRectMake(0, 0, kMaximumWidth * 1.5f, kMinimumHeightTitleAndImage * 1.5f);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.itemView];
@@ -534,8 +532,8 @@ static NSString *const kLongTitleArabic =
   self.itemView.iconImageView.image =
       [UIImage mdc_testImageOfSize:CGSizeMake(48, 48) withStyle:MDCSnapshotTestImageStyleFramedX];
   [self changeToRTL];
-  self.itemView.bounds = CGRectMake(0, 0, kMinimumWidth * 1.5f,
-                                    kMinimumHeightOnlyTitleOrOnlyImage * 1.5f);
+  self.itemView.bounds =
+      CGRectMake(0, 0, kMinimumWidth * 1.5f, kMinimumHeightOnlyTitleOrOnlyImage * 1.5f);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.itemView];
@@ -573,8 +571,7 @@ static NSString *const kLongTitleArabic =
   // When
   UIView *contentFrameOverlayView = [[UIView alloc] init];
   contentFrameOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
-  contentFrameOverlayView.backgroundColor =
-      [UIColor.blueColor colorWithAlphaComponent:0.25f];
+  contentFrameOverlayView.backgroundColor = [UIColor.blueColor colorWithAlphaComponent:0.25f];
   contentFrameOverlayView.bounds =
       CGRectMake(0, 0, CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   contentFrameOverlayView.center =
@@ -595,8 +592,7 @@ static NSString *const kLongTitleArabic =
   // When
   UIView *contentFrameOverlayView = [[UIView alloc] init];
   contentFrameOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
-  contentFrameOverlayView.backgroundColor =
-      [UIColor.blueColor colorWithAlphaComponent:0.25f];
+  contentFrameOverlayView.backgroundColor = [UIColor.blueColor colorWithAlphaComponent:0.25f];
   contentFrameOverlayView.bounds =
       CGRectMake(0, 0, CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   contentFrameOverlayView.center =
@@ -616,8 +612,7 @@ static NSString *const kLongTitleArabic =
   // When
   UIView *contentFrameOverlayView = [[UIView alloc] init];
   contentFrameOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
-  contentFrameOverlayView.backgroundColor =
-      [UIColor.blueColor colorWithAlphaComponent:0.25f];
+  contentFrameOverlayView.backgroundColor = [UIColor.blueColor colorWithAlphaComponent:0.25f];
   contentFrameOverlayView.bounds =
       CGRectMake(0, 0, CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   contentFrameOverlayView.center =

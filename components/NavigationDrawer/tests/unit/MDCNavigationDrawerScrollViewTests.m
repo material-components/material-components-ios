@@ -470,10 +470,10 @@
 
   // Then
   XCTAssertNotNil(self.presentationController.topHandle);
-  XCTAssertEqualWithAccuracy(CGRectGetWidth(self.presentationController.topHandle.frame),
-                             24.0f, 0.001f);
-  XCTAssertEqualWithAccuracy(CGRectGetHeight(self.presentationController.topHandle.frame),
-                             2.0f, 0.001f);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(self.presentationController.topHandle.frame), 24.0f,
+                             0.001f);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(self.presentationController.topHandle.frame), 2.0f,
+                             0.001f);
   XCTAssertEqualWithAccuracy(self.presentationController.topHandle.layer.cornerRadius, 1.0f,
                              0.001f);
   XCTAssertEqual(self.presentationController.topHandle.hidden, YES);

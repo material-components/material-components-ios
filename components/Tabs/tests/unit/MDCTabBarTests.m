@@ -29,8 +29,7 @@
   // Then
   XCTAssertNotNil(tabBar.selectionIndicatorTemplate);
   XCTAssertEqualObjects(tabBar.selectedItemTintColor, UIColor.whiteColor);
-  XCTAssertEqualObjects(tabBar.unselectedItemTintColor, [UIColor colorWithWhite:1
-                                                                          alpha:0.7f]);
+  XCTAssertEqualObjects(tabBar.unselectedItemTintColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertEqualObjects(tabBar.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertNil(tabBar.barTintColor);
   XCTAssertTrue(tabBar.clipsToBounds);

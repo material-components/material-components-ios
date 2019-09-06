@@ -76,8 +76,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
-  self.initialRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * 0.6f);
+  self.initialRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * 0.6f);
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10);
 }
 

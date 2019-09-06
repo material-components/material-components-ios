@@ -22,14 +22,8 @@
 @implementation MDCActionSheetTestHelper
 
 + (NSArray *)colorsToTest {
-  UIColor *rgbColor = [UIColor colorWithRed:0.7f
-                                      green:0.7f
-                                       blue:0.7f
-                                      alpha:0.7f];
-  UIColor *hsbColor = [UIColor colorWithHue:0.8f
-                                 saturation:0.8f
-                                 brightness:0.8f
-                                      alpha:0.8f];
+  UIColor *rgbColor = [UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:0.7f];
+  UIColor *hsbColor = [UIColor colorWithHue:0.8f saturation:0.8f brightness:0.8f alpha:0.8f];
   UIColor *blackWithAlpha = [UIColor.greenColor colorWithAlphaComponent:0.8f];
   UIColor *black = UIColor.blackColor;
   CIColor *ciColor = [[CIColor alloc] initWithColor:UIColor.blackColor];

@@ -49,8 +49,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateHighlighted], 0,
                              kEpsilonAccuracy);
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
-  XCTAssertEqualObjects(button.inkColor,
-                        [colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
+  XCTAssertEqualObjects(button.inkColor, [colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],

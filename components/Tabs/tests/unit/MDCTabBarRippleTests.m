@@ -97,8 +97,7 @@
   XCTAssertFalse(self.itemBar.style.enableRippleBehavior);
   XCTAssertEqualObjects(self.tabBar.rippleColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertEqualObjects(self.tabBar.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
-  XCTAssertEqualObjects(self.itemBar.style.rippleColor, [UIColor colorWithWhite:1
-                                                                          alpha:0.7f]);
+  XCTAssertEqualObjects(self.itemBar.style.rippleColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertEqualObjects(self.itemBar.style.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   for (MDCItemBarCell *cell in itemBarCells) {
     XCTAssertNotNil(cell.rippleTouchController);
@@ -134,8 +133,7 @@
   XCTAssertTrue(self.itemBar.style.enableRippleBehavior);
   XCTAssertEqualObjects(self.tabBar.rippleColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertEqualObjects(self.tabBar.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
-  XCTAssertEqualObjects(self.itemBar.style.rippleColor, [UIColor colorWithWhite:1
-                                                                          alpha:0.7f]);
+  XCTAssertEqualObjects(self.itemBar.style.rippleColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   XCTAssertEqualObjects(self.itemBar.style.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
   for (MDCItemBarCell *cell in itemBarCells) {
     XCTAssertNotNil(cell.rippleTouchController);

@@ -41,16 +41,10 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)setUp {
   [super setUp];
 
-  self.rgbColor = [UIColor colorWithRed:0.9f
-                                  green:0.8f
-                                   blue:0.6f
-                                  alpha:0.6f];
+  self.rgbColor = [UIColor colorWithRed:0.9f green:0.8f blue:0.6f alpha:0.6f];
   self.greyScaleColor = [UIColor colorWithWhite:0.8f alpha:0.6f];
   if (@available(iOS 10.0, *)) {
-    self.p3DisplayColor = [UIColor colorWithDisplayP3Red:0.8f
-                                                   green:0.7f
-                                                    blue:0.5f
-                                                   alpha:0.4f];
+    self.p3DisplayColor = [UIColor colorWithDisplayP3Red:0.8f green:0.7f blue:0.5f alpha:0.4f];
   } else {
     self.p3DisplayColor = nil;
   }

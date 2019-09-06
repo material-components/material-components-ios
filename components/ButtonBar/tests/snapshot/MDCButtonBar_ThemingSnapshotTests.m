@@ -104,22 +104,10 @@
   colorScheme.errorColor = [UIColor colorWithRed:1 green:1 blue:0 alpha:1];
   colorScheme.surfaceColor = [UIColor colorWithWhite:0.25f alpha:1];
   colorScheme.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
-  colorScheme.onPrimaryColor = [UIColor colorWithRed:1
-                                               green:0.5f
-                                                blue:0.25f
-                                               alpha:1];
-  colorScheme.onSecondaryColor = [UIColor colorWithRed:0.5f
-                                                 green:1
-                                                  blue:0.25f
-                                                 alpha:1];
-  colorScheme.onSurfaceColor = [UIColor colorWithRed:0.25f
-                                               green:0.5f
-                                                blue:1
-                                               alpha:1];
-  colorScheme.onBackgroundColor = [UIColor colorWithRed:0.25f
-                                                  green:0
-                                                   blue:0.75f
-                                                  alpha:1];
+  colorScheme.onPrimaryColor = [UIColor colorWithRed:1 green:0.5f blue:0.25f alpha:1];
+  colorScheme.onSecondaryColor = [UIColor colorWithRed:0.5f green:1 blue:0.25f alpha:1];
+  colorScheme.onSurfaceColor = [UIColor colorWithRed:0.25f green:0.5f blue:1 alpha:1];
+  colorScheme.onBackgroundColor = [UIColor colorWithRed:0.25f green:0 blue:0.75f alpha:1];
   container.colorScheme = colorScheme;
 
   MDCTypographyScheme *typographyScheme =

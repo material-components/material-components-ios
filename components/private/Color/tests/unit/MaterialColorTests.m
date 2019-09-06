@@ -100,20 +100,14 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testColorMergeFor50OpacityBlackOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
-  UIColor *expectedColor = [UIColor colorWithRed:0.5f
-                                           green:0.5f
-                                            blue:0.5f
-                                           alpha:1];
+  UIColor *expectedColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
 - (void)testColorMergeFor60GrayOpacityOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:0.9f
-                                        green:0.9f
-                                         blue:0.9f
-                                        alpha:0.6f];
+  UIColor *blendColor = [UIColor colorWithRed:0.9f green:0.9f blue:0.9f alpha:0.6f];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   UIColor *expectedColor = [UIColor colorWithRed:0.94000000000000006f
                                            green:0.94000000000000006f
@@ -127,23 +121,14 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
   UIColor *backgroundColor = [UIColor blackColor];
   UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5f];
-  UIColor *expectedColor = [UIColor colorWithRed:0.5f
-                                           green:0.5f
-                                            blue:0.5f
-                                           alpha:1];
+  UIColor *expectedColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
 - (void)testBasicColorMergeTest {
-  UIColor *backgroundColor = [UIColor colorWithRed:0.4f
-                                             green:0.6f
-                                              blue:0.9f
-                                             alpha:0.8f];
-  UIColor *blendColor = [UIColor colorWithRed:0.1f
-                                        green:0.8f
-                                         blue:0.8f
-                                        alpha:0.2f];
+  UIColor *backgroundColor = [UIColor colorWithRed:0.4f green:0.6f blue:0.9f alpha:0.8f];
+  UIColor *blendColor = [UIColor colorWithRed:0.1f green:0.8f blue:0.8f alpha:0.2f];
   UIColor *expectedColor = [UIColor colorWithRed:0.32857142857142863f
                                            green:0.64761904761904765f
                                             blue:0.87619047619047618f
@@ -154,14 +139,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 }
 
 - (void)testHBSColorMergeTest {
-  UIColor *backgroundColor = [UIColor colorWithHue:0.7f
-                                        saturation:0.6f
-                                        brightness:0.2f
-                                             alpha:0.7f];
-  UIColor *blendColor = [UIColor colorWithRed:0.3f
-                                        green:0.3f
-                                         blue:0.2f
-                                        alpha:0.8f];
+  UIColor *backgroundColor = [UIColor colorWithHue:0.7f saturation:0.6f brightness:0.2f alpha:0.7f];
+  UIColor *blendColor = [UIColor colorWithRed:0.3f green:0.3f blue:0.2f alpha:0.8f];
   UIColor *expectedColor = [UIColor colorWithRed:0.27080851063829786f
                                            green:0.2672340425531915f
                                             blue:0.20000000000000004f
@@ -173,10 +152,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testGrayScaleColorMergeTest {
   UIColor *backgroundColor = [UIColor colorWithWhite:0.3f alpha:0.8f];
-  UIColor *blendColor = [UIColor colorWithRed:0.9f
-                                        green:0.82f
-                                         blue:0.1f
-                                        alpha:0.6f];
+  UIColor *blendColor = [UIColor colorWithRed:0.9f green:0.82f blue:0.1f alpha:0.6f];
   UIColor *expectedColor = [UIColor colorWithRed:0.69130434782608696f
                                            green:0.63913043478260867f
                                             blue:0.16956521739130434f
@@ -189,10 +165,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testP3ColorMergeTest {
   if (@available(iOS 10.0, *)) {
     UIColor *backgroundColor = [UIColor colorWithWhite:0.3f alpha:0.8f];
-    UIColor *blendColor = [UIColor colorWithRed:0.9f
-                                          green:0.82f
-                                           blue:0.1f
-                                          alpha:0.6f];
+    UIColor *blendColor = [UIColor colorWithRed:0.9f green:0.82f blue:0.1f alpha:0.6f];
     UIColor *expectedColor = [UIColor colorWithRed:0.69130434782608696f
                                              green:0.63913043478260867f
                                               blue:0.16956521739130434f
@@ -209,10 +182,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                           saturation:0.6f
                                           brightness:0.2f
                                                alpha:0.7f];
-    UIColor *imageColor = [UIColor colorWithRed:0.3f
-                                          green:0.3f
-                                           blue:0.2f
-                                          alpha:0.8f];
+    UIColor *imageColor = [UIColor colorWithRed:0.3f green:0.3f blue:0.2f alpha:0.8f];
     UIImage *fakeImage = fakeImageWithColorAndSize(imageColor, CGRectMake(0, 0, 100, 100));
     UIColor *blendColor = [UIColor colorWithPatternImage:fakeImage];
     UIColor *expectedColor = [UIColor colorWithRed:0.10399999999999993f

@@ -34,10 +34,7 @@ NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
 static NSString *const kMaterialSnackbarBundle = @"MaterialSnackbar.bundle";
 
 static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
-  return [UIColor colorWithRed:(r) / 255.f
-                         green:(g) / 255.f
-                          blue:(b) / 255.f
-                         alpha:(a)];
+  return [UIColor colorWithRed:(r) / 255.f green:(g) / 255.f blue:(b) / 255.f alpha:(a)];
 }
 
 /**

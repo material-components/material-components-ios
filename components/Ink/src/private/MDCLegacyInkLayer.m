@@ -199,8 +199,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 - (void)setupRipple {
   CGFloat random = MDCLegacyInkLayerRandom();
-  self.radius =
-      (CGFloat)(0.9f + random * 0.1f) * kInkLayerForegroundRadiusGrowthMultiplier;
+  self.radius = (CGFloat)(0.9f + random * 0.1f) * kInkLayerForegroundRadiusGrowthMultiplier;
   [super setupRipple];
 }
 
@@ -296,8 +295,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
       endPoint = self.customInkCenter;
     }
     endPoint = CGPointMake(endPoint.x + xOffset, endPoint.y + yOffset);
-    CGPoint centerOffsetPoint =
-        MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, 0.3f);
+    CGPoint centerOffsetPoint = MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, 0.3f);
     UIBezierPath *movePath = [UIBezierPath bezierPath];
     [movePath moveToPoint:startPoint];
     [movePath addLineToPoint:centerOffsetPoint];

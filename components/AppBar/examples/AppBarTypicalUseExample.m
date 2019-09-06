@@ -48,8 +48,7 @@
 
     [self addChildViewController:_appBarViewController];
 
-    _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:0.9f
-                                                                     alpha:0.1f];
+    _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
 
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];

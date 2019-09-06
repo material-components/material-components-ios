@@ -74,9 +74,9 @@
   MDCSnackbarManager.messageTextColor = [UIColor whiteColor];
   [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-  UIColor *blendedBackgroundColor = [MDCSemanticColorScheme
-               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
-      withBackgroundColor:colorScheme.surfaceColor];
+  UIColor *blendedBackgroundColor =
+      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
+                     withBackgroundColor:colorScheme.surfaceColor];
 
   // When
   [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
