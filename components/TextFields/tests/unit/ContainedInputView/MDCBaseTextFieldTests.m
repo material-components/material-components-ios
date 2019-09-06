@@ -184,4 +184,67 @@
   XCTAssertTrue(CGRectEqualToRect(actualClearButtonFrame, expectedClearButtonFrame));
 }
 
+- (void)testFloatingLabelColorAccessors {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  UIColor *floatingLabelColor = [UIColor redColor];
+
+  // When
+  [textField setFloatingLabelColor:floatingLabelColor forState:UIControlStateNormal];
+  [textField setFloatingLabelColor:floatingLabelColor forState:MDCTextControlStateEditing];
+  [textField setFloatingLabelColor:floatingLabelColor forState:UIControlStateDisabled];
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualObjects(floatingLabelColor,
+                        [textField floatingLabelColorForState:UIControlStateNormal]);
+  XCTAssertEqualObjects(floatingLabelColor,
+                        [textField floatingLabelColorForState:MDCTextControlStateEditing]);
+  XCTAssertEqualObjects(floatingLabelColor,
+                        [textField floatingLabelColorForState:UIControlStateDisabled]);
+}
+
+- (void)testNormalLabelColorAccessors {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  UIColor *normalLabelColor = [UIColor blueColor];
+
+  // When
+  [textField setNormalLabelColor:normalLabelColor forState:UIControlStateNormal];
+  [textField setNormalLabelColor:normalLabelColor forState:MDCTextControlStateEditing];
+  [textField setNormalLabelColor:normalLabelColor forState:UIControlStateDisabled];
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualObjects(normalLabelColor,
+                        [textField normalLabelColorForState:UIControlStateNormal]);
+  XCTAssertEqualObjects(normalLabelColor,
+                        [textField normalLabelColorForState:MDCTextControlStateEditing]);
+  XCTAssertEqualObjects(normalLabelColor,
+                        [textField normalLabelColorForState:UIControlStateDisabled]);
+}
+
+- (void)testTextColorAccessors {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  UIColor *textColor = [UIColor purpleColor];
+
+  // When
+  [textField setTextColor:textColor forState:UIControlStateNormal];
+  [textField setTextColor:textColor forState:MDCTextControlStateEditing];
+  [textField setTextColor:textColor forState:UIControlStateDisabled];
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualObjects(textColor, [textField textColorForState:UIControlStateNormal]);
+  XCTAssertEqualObjects(textColor, [textField textColorForState:MDCTextControlStateEditing]);
+  XCTAssertEqualObjects(textColor, [textField textColorForState:UIControlStateDisabled]);
+}
+
 @end
