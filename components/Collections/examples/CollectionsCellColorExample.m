@@ -31,7 +31,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   // Array of cell background colors.
   _cellBackgroundColors = @[
     [UIColor colorWithWhite:0 alpha:0.2f],
-    [UIColor colorWithRed:0.fx39 / 255.f green:0.fxA4 / 255.f blue:0.fxDD / 255.f alpha:1],
+    [UIColor colorWithRed:0x39 / 255.f green:0xA4 / 255.f blue:0xDD / 255.f alpha:1],
     [UIColor whiteColor]
   ];
 
