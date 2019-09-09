@@ -57,8 +57,8 @@
 
 /**
  Sets the floating label color for a given state.
- Floating label color refers to the color of the
- label when it's in its "floating position," i.e. when it's above the text area.
+ Floating label color refers to the color of the label when it's in its "floating position," i.e.
+ when it's above the text area.
  @param floatingLabelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
  UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
@@ -68,16 +68,16 @@
 
 /**
  Returns the floating label color for a given state.
- Floating label color refers to the color of the
- label when it's in its "floating position," i.e. when it's above the text area.
+ Floating label color refers to the color of the label when it's in its "floating position," i.e.
+ when it's above the text area.
  @param state The UIControlState.
  */
 - (nonnull UIColor *)floatingLabelColorForState:(UIControlState)state;
 
 /**
  Sets the normal label color for a given state.
- Normal label color refers to the color of the label
- when it's in its "normal position," i.e. when it's not floating.
+ Normal label color refers to the color of the label when it's in its "normal position," i.e. when
+ it's not floating.
  @param normalLabelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
  UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
@@ -87,16 +87,15 @@
 
 /**
  Returns the normal label color for a given state.
- Normal label color refers to the color of the
- label when it's in its "normal position," i.e. when it's not floating.
+ Normal label color refers to the color of the label when it's in its "normal position," i.e. when
+ it's not floating.
  @param state The UIControlState.
  */
 - (nonnull UIColor *)normalLabelColorForState:(UIControlState)state;
 
 /**
  Sets the text color for a given state.
- Text color in this case refers to the color of the input text. This accessor can be thought of as a
- stateful version of the UITextField method @c -setText:.
+ Text color in this case refers to the color of the input text.
  @param textColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
  UIControlStateDisabled, and MDCTextControlStateEditing, which is a custom MDC
@@ -105,6 +104,7 @@
 - (void)setTextColor:(nonnull UIColor *)textColor forState:(UIControlState)state;
 /**
  Returns the text color for a given state.
+ Text color in this case refers to the color of the input text.
  @param state The UIControlState.
  */
 - (nonnull UIColor *)textColorForState:(UIControlState)state;
