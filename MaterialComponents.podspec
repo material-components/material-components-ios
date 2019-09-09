@@ -2093,6 +2093,7 @@ Pod::Spec.new do |mdc|
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
       scheme.dependency "MaterialComponents/Typography"
+      scheme.dependency "MaterialComponents/schemes/Typography+BasicFontScheme"
 
       scheme.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [
