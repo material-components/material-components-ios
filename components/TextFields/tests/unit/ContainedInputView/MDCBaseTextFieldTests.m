@@ -196,8 +196,6 @@
   [textField setFloatingLabelColor:floatingLabelColorNormal forState:UIControlStateNormal];
   [textField setFloatingLabelColor:floatingLabelColorEditing forState:MDCTextControlStateEditing];
   [textField setFloatingLabelColor:floatingLabelColorDisabled forState:UIControlStateDisabled];
-  [textField setNeedsLayout];
-  [textField layoutIfNeeded];
 
   // Then
   XCTAssertEqualObjects(floatingLabelColorNormal,
@@ -220,8 +218,6 @@
   [textField setNormalLabelColor:normalLabelColorNormal forState:UIControlStateNormal];
   [textField setNormalLabelColor:normalLabelColorEditing forState:MDCTextControlStateEditing];
   [textField setNormalLabelColor:normalLabelColorDisabled forState:UIControlStateDisabled];
-  [textField setNeedsLayout];
-  [textField layoutIfNeeded];
 
   // Then
   XCTAssertEqualObjects(normalLabelColorNormal,
@@ -244,8 +240,6 @@
   [textField setTextColor:textColorNormal forState:UIControlStateNormal];
   [textField setTextColor:textColorEditing forState:MDCTextControlStateEditing];
   [textField setTextColor:textColorDisabled forState:UIControlStateDisabled];
-  [textField setNeedsLayout];
-  [textField layoutIfNeeded];
 
   // Then
   XCTAssertEqualObjects(textColorNormal, [textField textColorForState:UIControlStateNormal]);
