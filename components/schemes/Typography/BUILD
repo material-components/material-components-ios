@@ -33,7 +33,7 @@ mdc_public_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "BasicFontSchemes
+    name = "BasicFontScheme"
 )
 
 mdc_examples_objc_library(
