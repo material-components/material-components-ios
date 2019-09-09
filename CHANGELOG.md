@@ -22,7 +22,7 @@ Chips' `inkColor` API has been deleted.
 
 ### FlexibleHeader
 
-* [Update inferred status bar style on light backgrounds for iOS 13 (#8380)](https://github.com/material-components/material-components-ios/commit/f52abf7a87409d79071fe25596648b7a61079b63) (Robert Moore)
+* [Update inferred status bar style on light backgrounds for iOS 13 (#8380)](https://github.com/material-components/material-components-ios/commit/f52abf7a87409d79071fe25596648b7a61079b63) (Cameron Spickert)
 
 ### Slider
 
