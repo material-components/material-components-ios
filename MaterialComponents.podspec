@@ -2095,6 +2095,7 @@ Pod::Spec.new do |mdc|
           "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
         ]
         unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        unit_tests.dependency "MaterialComponents/private/XCTest"
       end
     end
 
@@ -2188,5 +2189,16 @@ Pod::Spec.new do |mdc|
         unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
+
+    private_spec.subspec "XCTest" do |component|
+      component.ios.deployment_target = '9.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = [
+        "components/private/#{component.base_name}/src/*.{h,m}",
+        "components/private/#{component.base_name}/src/private/*.{h,m}"
+      ]
+      component.framework = 'XCTest'
+    end
+
   end
 end
