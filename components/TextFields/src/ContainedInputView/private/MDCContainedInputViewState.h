@@ -21,19 +21,19 @@
  A set of Contained Input View states outlined in the Material guidelines. These states overlap with
  and extend UIControlState.
  */
-typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
+typedef NS_ENUM(NSInteger, MDCContainedInputViewState) {
   /**
    The default state of the contained input view.
    */
-  MDCContainedInputViewStateNormal = 1 << 0,
+  MDCContainedInputViewStateNormal,
   /**
    The state the view is in during normal editing.
    */
-  MDCContainedInputViewStateFocused = 1 << 1,
+  MDCContainedInputViewStateFocused,
   /**
    The disabled state.
    */
-  MDCContainedInputViewStateDisabled = 1 << 2,
+  MDCContainedInputViewStateDisabled,
 };
 
 MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
