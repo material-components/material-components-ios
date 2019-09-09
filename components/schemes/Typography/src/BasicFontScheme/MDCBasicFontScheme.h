@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#pragma mark - Soon to be deprecated
+#pragma mark - To be deprecated
 
 /**
  A font scheme comprised of set of UIFonts that are associated with various text styles.
