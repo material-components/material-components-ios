@@ -17,15 +17,15 @@
 @implementation XCTestCase (MaterialColor)
 
 - (void)assetEqualFirstColor:(UIColor *)firstColor secondColor:(UIColor *)secondColor {
-  CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
+  CGFloat fRed = 0.0f, fGreen = 0.0f, fBlue = 0.0f, fAlpha = 0.0f;
   [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
-  CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
+  CGFloat sRed = 0.0f, sGreen = 0.0f, sBlue = 0.0f, sAlpha = 0.0f;
   [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
 
-  XCTAssertEqualWithAccuracy(fRed, sRed, 0.001);
-  XCTAssertEqualWithAccuracy(fGreen, sBlue, 0.001);
-  XCTAssertEqualWithAccuracy(fBlue, sBlue, 0.001);
-  XCTAssertEqualWithAccuracy(fAlpha, sAlpha, 0.001);
+  XCTAssertEqualWithAccuracy(fRed, sRed, FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(fGreen, sGreen, FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(fBlue, sBlue, FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(fAlpha, sAlpha, FLT_EPSILON);
 }
 
 @end
