@@ -18,6 +18,7 @@
 
 #import "MaterialTextFields+ContainedInputView.h"
 
+static const NSTimeInterval kTextFieldValidationEstimatedAnimationDuration = 0.25;
 static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
@@ -52,7 +53,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 - (void)validateTextField:(MDCBaseTextField *)textField {
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
-  dispatch_async(dispatch_get_main_queue(), ^{
+
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kTextFieldValidationEstimatedAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     // We take a snapshot of the textfield so we don't have to remove it from the app
     // host's key window. Removing the textfield from the app host's key window
     // before validation can affect the textfield's editing behavior, which has a
@@ -162,5 +164,20 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   // Then
   [self validateTextField:textField];
 }
+
+- (void)testFloatingLabelWithCustomColorWhileEditing {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+  
+  // When
+  textField.label.text = @"Floating label text";
+  textField.text = @"Text";
+  [textField setFloatingLabelColor:[UIColor purpleColor] forState:MDCTextControlStateEditing];
+  [textField becomeFirstResponder];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 
 @end
