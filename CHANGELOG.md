@@ -1,3 +1,40 @@
+# 89.0.0
+
+This major release deletes several deprecated APIs, includes bug fixes for iOS 13, and improves
+haptics support in Slider.
+
+## Breaking changes
+
+Buttons' `customTitleColor` and `shouldCapitalizeTitle` APIs have been deleted.
+
+Chips' `inkColor` API has been deleted.
+
+## Changes
+
+### Buttons
+
+* [Delete deprecated customTitleColor property (#8403)](https://github.com/material-components/material-components-ios/commit/2feace84a9050fec15bd6c48b2bcb1745864af57) (Bryan Oltman)
+* [Remove unused shouldCapitalizeTitle property (#8402)](https://github.com/material-components/material-components-ios/commit/d6139cbfa90fd38adcf55c261cc1b6ad13d70bf9) (Bryan Oltman)
+
+### Chips
+
+* [Remove deprecated inkColor property (#8399)](https://github.com/material-components/material-components-ios/commit/c326f923234240957575fc4ff57fde48f28f9f48) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Update inferred status bar style on light backgrounds for iOS 13 (#8380)](https://github.com/material-components/material-components-ios/commit/f52abf7a87409d79071fe25596648b7a61079b63) (Robert Moore)
+
+### Slider
+
+* [Adding Haptic Feedback When Crossing Anchored Value (#8225)](https://github.com/material-components/material-components-ios/commit/8a587b8c61ceaabdc0a0bbf5f6ffc52bb0f9fda8) (afweiss)
+
+### TextFields
+
+* [Add label animator (#8382)](https://github.com/material-components/material-components-ios/commit/1fbb91217f0d8d71c54a26f4875fc1a94741367f) (Andrew Overton)
+* [Misc clean up (#8404)](https://github.com/material-components/material-components-ios/commit/7873ef4c2fddd9a5448221e0c68b55f7aa6ec93f) (Andrew Overton)
+
+---
+
 # 88.2.0
 
 This minor release makes the Banner component generally available, and
