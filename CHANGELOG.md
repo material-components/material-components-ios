@@ -9,8 +9,6 @@ Buttons' `customTitleColor` and `shouldCapitalizeTitle` APIs have been deleted.
 
 Chips' `inkColor` API has been deleted.
 
-## Component changes
-
 ## Changes
 
 ### Buttons
