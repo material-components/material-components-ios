@@ -54,15 +54,18 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
 
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kTextFieldValidationEstimatedAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    // We take a snapshot of the textfield so we don't have to remove it from the app
-    // host's key window. Removing the textfield from the app host's key window
-    // before validation can affect the textfield's editing behavior, which has a
-    // large effect on the appearance of the textfield.
-    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
-    [self generateSnapshotAndVerifyForView:textFieldSnapshot];
-    [expectation fulfill];
-  });
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW,
+                    (int64_t)(kTextFieldValidationEstimatedAnimationDuration * NSEC_PER_SEC)),
+      dispatch_get_main_queue(), ^{
+        // We take a snapshot of the textfield so we don't have to remove it from the app
+        // host's key window. Removing the textfield from the app host's key window
+        // before validation can affect the textfield's editing behavior, which has a
+        // large effect on the appearance of the textfield.
+        UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
+        [self generateSnapshotAndVerifyForView:textFieldSnapshot];
+        [expectation fulfill];
+      });
   [self waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
 }
 
@@ -168,7 +171,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 - (void)testFloatingLabelWithCustomColorWhileEditing {
   // Given
   MDCBaseTextField *textField = self.textField;
-  
+
   // When
   textField.label.text = @"Floating label text";
   textField.text = @"Text";
@@ -178,6 +181,5 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   // Then
   [self validateTextField:textField];
 }
-
 
 @end
