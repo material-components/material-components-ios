@@ -352,7 +352,8 @@ IB_DESIGNABLE
 @property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /** When @c YES, haptics for min and max are enabled. The haptics casue a light impact reaction when
- the slider reaches the minimum or maximum value.
+ the slider reaches the minimum or maximum value. If the slider is anchored, it will also cause a
+ light impact reaction when the slider reaches or crosses the anchored value.
 
  Defaults to @c YES in iOS 10 or later, @c NO otherwise
  */

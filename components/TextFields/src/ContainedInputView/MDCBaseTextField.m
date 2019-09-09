@@ -19,6 +19,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBaseTextFieldLayout.h"
+#import "private/MDCContainedInputViewLabelAnimation.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 
@@ -59,20 +60,8 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
-  [self setUpLayoutDirection];
-  [self setUpLabelBehavior];
-  [self setUpLabelState];
-}
-
-- (void)setUpLayoutDirection {
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
-}
-
-- (void)setUpLabelBehavior {
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
-}
-
-- (void)setUpLabelState {
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
 }
 
@@ -91,7 +80,7 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
-  [self setUpLayoutDirection];
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
 #pragma mark Layout
@@ -111,7 +100,13 @@
 }
 
 - (void)postLayoutSubviews {
-  [self layOutLabel];
+  self.label.hidden = self.labelState == MDCContainedInputViewLabelStateNone;
+  [MDCContainedInputViewLabelAnimation layOutLabel:self.label
+                                             state:self.labelState
+                                  normalLabelFrame:self.layout.labelFrameNormal
+                                floatingLabelFrame:self.layout.labelFrameFloating
+                                        normalFont:self.normalFont
+                                      floatingFont:self.floatingFont];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
@@ -165,16 +160,6 @@
 
 - (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
   return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
-}
-
-- (void)layOutLabel {
-  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
-    self.label.font = self.floatingFont;
-    self.label.frame = self.layout.labelFrameFloating;
-  } else {
-    self.label.font = self.normalFont;
-    self.label.frame = self.layout.labelFrameNormal;
-  }
 }
 
 - (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {

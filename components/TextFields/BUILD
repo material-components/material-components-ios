@@ -61,8 +61,8 @@ mdc_public_objc_library(
 mdc_extension_objc_library(
     name = "ContainedInputView",
     deps = [
+        "//components/AnimationTiming",
         "@material_internationalization_ios//:MDFInternationalization",
-        "//components/private/Math",
     ],
 )
 
@@ -107,6 +107,7 @@ mdc_examples_objc_library(
         ":ContainedInputView",
         ":TextFields",
         ":TypographyThemer",
+        "//components/Buttons",
         "//components/schemes/Container",
     ],
 )

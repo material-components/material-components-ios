@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTextFields+ContainedInputView.h"
 
@@ -26,6 +27,9 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
 
 /** The TextField for this example. */
 @property(nonatomic, strong) MDCBaseTextField *textField;
+
+/** The UIButton that makes the textfield stop being the first responder. */
+@property(nonatomic, strong) MDCButton *resignFirstResponderButton;
 
 /** The container scheme injected into this example. */
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
@@ -48,15 +52,36 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
   self.textField.label.text = @"This is a label";
   self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.view addSubview:self.textField];
+
+  self.resignFirstResponderButton = [self createFirstResponderButton];
+  [self.view addSubview:self.resignFirstResponderButton];
+}
+
+- (MDCButton *)createFirstResponderButton {
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitle:@"Resign first responder" forState:UIControlStateNormal];
+  [button addTarget:self
+                action:@selector(resignFirstResponderButtonTapped:)
+      forControlEvents:UIControlEventTouchUpInside];
+  [button sizeToFit];
+  return button;
+}
+
+- (void)resignFirstResponderButtonTapped:(UIButton *)button {
+  [self.textField resignFirstResponder];
 }
 
 - (CGRect)preferredTextFieldFrame {
-  return CGRectMake(15, 100, CGRectGetWidth(self.view.frame) - 30, 50);
+  return CGRectMake(15, 120, CGRectGetWidth(self.view.frame) - 30, 50);
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   self.textField.frame = self.preferredTextFieldFrame;
+  self.resignFirstResponderButton.frame =
+      CGRectMake(CGRectGetMinX(self.textField.frame), CGRectGetMaxY(self.textField.frame) + 20,
+                 CGRectGetWidth(self.resignFirstResponderButton.frame),
+                 CGRectGetHeight(self.resignFirstResponderButton.frame));
 }
 
 @end
