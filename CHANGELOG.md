@@ -1,16 +1,13 @@
-# #develop#
+# 89.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release deletes several deprecated APIs, includes bug fixes for iOS 13, and improves
+haptics support in Slider.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Buttons' `customTitleColor` and `shouldCapitalizeTitle` APIs have been deleted.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+Chips' `inkColor` API has been deleted.
 
 ## Component changes
 
