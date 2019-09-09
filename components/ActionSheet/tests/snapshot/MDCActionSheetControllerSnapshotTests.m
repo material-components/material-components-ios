@@ -69,6 +69,8 @@ static NSString *const kLongTitle5Arabic =
 /** Snapshot tests for MDCActionSheetController's view. */
 @interface MDCActionSheetControllerSnapshotTests : MDCSnapshotTestCase
 
+@property(nonatomic, strong, nullable) MDCActionSheetController *actionSheetController;
+
 @end
 
 @implementation MDCActionSheetControllerSnapshotTests
@@ -79,6 +81,21 @@ static NSString *const kLongTitle5Arabic =
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
+}
+
+- (void)tearDown {
+  if (self.actionSheetController.presentingViewController) {
+    XCTestExpectation *expectation =
+        [[XCTestExpectation alloc] initWithDescription:@"Action sheet is dismissed"];
+    [self.actionSheetController dismissViewControllerAnimated:NO
+                                                   completion:^{
+                                                     [expectation fulfill];
+                                                   }];
+    [self waitForExpectations:@[ expectation ] timeout:5];
+  }
+  self.actionSheetController = nil;
+
+  [super tearDown];
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -816,6 +833,42 @@ static NSString *const kLongTitle5Arabic =
 
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testThreeActionsSufficientSizeShortTextLTRWithDefaultPresentationStyleOniOS13 {
+  // Given
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action3 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [self.actionSheetController addAction:action1];
+  [self.actionSheetController addAction:action2];
+  [self.actionSheetController addAction:action3];
+  self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // When
+  UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+  UIViewController *currentViewController = window.rootViewController;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"Action sheet is presented"];
+  [currentViewController presentViewController:self.actionSheetController
+                                      animated:NO
+                                    completion:^{
+                                      [expectation fulfill];
+                                    }];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:5];
+  [self snapshotVerifyViewForIOS13:window];
 }
 
 @end

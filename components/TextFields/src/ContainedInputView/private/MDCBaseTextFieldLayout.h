@@ -25,6 +25,8 @@
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
 
+@property(nonatomic, assign) CGRect clearButtonFrameFloating;
+@property(nonatomic, assign) CGRect clearButtonFrameNormal;
 @property(nonatomic, assign) CGRect labelFrameFloating;
 @property(nonatomic, assign) CGRect labelFrameNormal;
 @property(nonatomic, assign) CGRect placeholderFrameFloating;

@@ -219,6 +219,11 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   //  CGRectMake(clearButtonMinX, clearButtonFloatingMinY,
   //                                               clearButtonSideLength, clearButtonSideLength);
 
+  CGRect clearButtonFrameNormal =
+      CGRectMake(clearButtonMinX, clearButtonMinY, clearButtonSideLength, clearButtonSideLength);
+  CGRect clearButtonFrameFloating = CGRectMake(clearButtonMinX, clearButtonFloatingMinY,
+                                               clearButtonSideLength, clearButtonSideLength);
+
   CGRect labelFrameNormal = [self labelFrameWithText:label.text
                                           labelState:MDCContainedInputViewLabelStateNormal
                                                 font:font

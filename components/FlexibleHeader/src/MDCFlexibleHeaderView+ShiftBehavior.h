@@ -169,13 +169,3 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
                                   targetContentOffset:(inout nonnull CGPoint *)targetContentOffset;
 
 @end
-
-// clang-format off
-@interface MDCFlexibleHeaderView ()
-
-/** @see shiftBehavior */
-@property(nonatomic) MDCFlexibleHeaderShiftBehavior behavior
-    __deprecated_msg("Use shiftBehavior instead.");
-
-@end
-// clang-format on
