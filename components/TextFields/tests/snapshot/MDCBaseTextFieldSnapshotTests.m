@@ -18,9 +18,10 @@
 
 #import "MaterialTextFields+ContainedInputView.h"
 
-static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
+static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
+@property(strong, nonatomic) MDCBaseTextField *textField;
 @end
 
 @implementation MDCBaseTextFieldTestsSnapshotTests
@@ -28,6 +29,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 - (void)setUp {
   [super setUp];
 
+  self.textField = [self createBaseTextFieldInKeyWindow];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
   //    self.recordMode = YES;
@@ -35,6 +37,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)tearDown {
   [super tearDown];
+  [self.textField removeFromSuperview];
+  self.textField = nil;
 }
 
 - (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
@@ -83,7 +87,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)testTextFieldWithText {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+  MDCBaseTextField *textField = self.textField;
 
   // When
   textField.text = @"Text";
@@ -94,7 +98,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)testTextFieldWithLeadingView {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+  MDCBaseTextField *textField = self.textField;
 
   // When
   textField.text = @"Text";
@@ -107,7 +111,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)testTextFieldWithLeadingViewWhileEditing {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+  MDCBaseTextField *textField = self.textField;
 
   // When
   textField.leadingView = [self createRedSideView];
@@ -121,7 +125,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)testTextFieldWithTrailingView {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+  MDCBaseTextField *textField = self.textField;
 
   // When
   textField.text = @"Text";
@@ -134,7 +138,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)testTextFieldWithLeadingViewAndTrailingView {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+  MDCBaseTextField *textField = self.textField;
 
   // When
   textField.text = @"Text";
@@ -149,7 +153,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.5;
 
 - (void)testTextFieldWithVisibleClearButton {
   // Given
-  MDCBaseTextField *textField = [self createBaseTextFieldInKeyWindow];
+  MDCBaseTextField *textField = self.textField;
 
   // When
   textField.clearButtonMode = UITextFieldViewModeAlways;
