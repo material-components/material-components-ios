@@ -15,26 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "../UIControlState+TextControl.h"
+typedef UIControlState MDCTextControlState;
 
 /**
- A set of Contained Input View states outlined in the Material guidelines. These states overlap with
- and extend UIControlState.
+ The addition of this state to UIControlState makes it so that clients can specify certain colors for when the control is editing.
  */
-typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
-  /**
-   The default state of the contained input view.
-   */
-  MDCContainedInputViewStateNormal = 1 << 0,
-  /**
-   The state the view is in during normal editing.
-   */
-  MDCContainedInputViewStateFocused = 1 << 1,
-  /**
-   The disabled state.
-   */
-  MDCContainedInputViewStateDisabled = 1 << 2,
-};
-
-MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
-    UIControlState controlState);
+static const MDCTextControlState MDCTextControlStateEditing = 1 << 4;

@@ -18,10 +18,8 @@
 #import "MDCContainedInputViewState.h"
 
 /**
- This object represents a set of colors that are semantically meaningful and specific to
- MDCContainedInputViews. Each property is a dictionary mapping MDCContainedInputViewStates to colors
- that corresponds to one or more views that an MDCContainedInputView manages at a given point of
- time.
+ This object represents a group of colors that are applied on a state by state basis to
+ MDCContainedInputViews. Each property corresponds to a Contained Input View specific subview.
  */
 @interface MDCContainedInputViewColorViewModel : NSObject
 /**
@@ -29,7 +27,7 @@
  */
 @property(strong, nonatomic, nonnull) UIColor *textColor;
 /**
- The color of the contained input view's underline label.
+ The color of the contained input view's assistive labels.
  */
 @property(strong, nonatomic, nonnull) UIColor *assistiveLabelColor;
 /**
@@ -41,6 +39,9 @@
  */
 @property(strong, nonatomic, nonnull) UIColor *normalLabelColor;
 
+/**
+ This initializer returns an instance for a given state with a nonnull value for each property.
+ */
 - (nonnull instancetype)initWithState:(MDCContainedInputViewState)state NS_DESIGNATED_INITIALIZER;
 
 @end

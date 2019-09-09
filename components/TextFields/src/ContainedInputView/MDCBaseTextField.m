@@ -86,10 +86,10 @@
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
   self.animationDuration = 0.15;
+  self.colorViewModels = [[NSMutableDictionary alloc] init];
 }
 
 - (void)setUpColorViewModels {
-  self.colorViewModels = [[NSMutableDictionary alloc] init];
   self.colorViewModels[@(MDCContainedInputViewStateNormal)] =
       [[MDCContainedInputViewColorViewModel alloc] initWithState:MDCContainedInputViewStateNormal];
   self.colorViewModels[@(MDCContainedInputViewStateFocused)] =
@@ -676,7 +676,7 @@
   return self.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
-#pragma mark Theming
+#pragma mark Coloring
 
 - (void)applyColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
              withLabelState:(MDCContainedInputViewLabelState)labelState {
@@ -695,7 +695,9 @@
 
 - (void)setContainedInputViewColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
                                    forState:(MDCContainedInputViewState)containedInputViewState {
-  self.colorViewModels[@(containedInputViewState)] = colorViewModel;
+  if (colorViewModel) {
+    self.colorViewModels[@(containedInputViewState)] = colorViewModel;
+  }
 }
 
 - (MDCContainedInputViewColorViewModel *)containedInputViewColorViewModelForState:
