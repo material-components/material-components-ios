@@ -28,12 +28,13 @@ licenses(["notice"])  # Apache 2.0
 mdc_public_objc_library(
     name = "Typography",
     deps = [
+        ":BasicFontScheme",
         "//components/Typography",
     ],
 )
 
 mdc_extension_objc_library(
-    name = "BasicFontScheme"
+    name = "BasicFontScheme",
 )
 
 mdc_examples_objc_library(
