@@ -16,7 +16,7 @@
 
 @implementation XCTestCase (MaterialColor)
 
-- (void)assetEqualFirstColor:(UIColor *)firstColor secondColor:(UIColor *)secondColor {
+- (void)assertEqualFirstColor:(UIColor *)firstColor secondColor:(UIColor *)secondColor {
   CGFloat fRed = 0.0f, fGreen = 0.0f, fBlue = 0.0f, fAlpha = 0.0f;
   [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
   CGFloat sRed = 0.0f, sGreen = 0.0f, sBlue = 0.0f, sAlpha = 0.0f;

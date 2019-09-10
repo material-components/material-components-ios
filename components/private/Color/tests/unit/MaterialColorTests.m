@@ -96,7 +96,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   UIColor *expectedColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-  [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+  XCTAssertEqualColors(resultColor, expectedColor);
 }
 
 - (void)testColorMergeFor50OpacityBlackOnWhite {
@@ -108,7 +108,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                            alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-  [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+  XCTAssertEqualColors(resultColor, expectedColor);
 }
 
 - (void)testColorMergeFor60GrayOpacityOnWhite {
@@ -123,7 +123,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                             blue:(CGFloat)0.94000000000000006
                                            alpha:(CGFloat)1];
 
-  [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+  XCTAssertEqualColors(resultColor, expectedColor);
 }
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
@@ -135,7 +135,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                            alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-  [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+  XCTAssertEqualColors(resultColor, expectedColor);
 }
 
 - (void)testBasicColorMergeTest {
@@ -153,7 +153,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                            alpha:(CGFloat)0.84000000000000008];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-  [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+  XCTAssertEqualColors(resultColor, expectedColor);
 }
 
 - (void)testHBSColorMergeTest {
@@ -171,7 +171,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                            alpha:(CGFloat)0.93999999999999994];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-  [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+  XCTAssertEqualColors(resultColor, expectedColor);
 }
 
 - (void)testGrayScaleColorMergeTest {
@@ -186,7 +186,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                            alpha:(CGFloat)0.92000000000000004];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-  [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+  XCTAssertEqualColors(resultColor, expectedColor);
 }
 
 - (void)testP3ColorMergeTest {
@@ -202,7 +202,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                              alpha:(CGFloat)0.92000000000000004];
     UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-    [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+    XCTAssertEqualColors(resultColor, expectedColor);
   }
 }
 
@@ -224,7 +224,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                              alpha:(CGFloat)0.69999999999999996];
     UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
 
-    [self assetEqualFirstColor:resultColor secondColor:expectedColor];
+    XCTAssertEqualColors(resultColor, expectedColor);
   }
 }
 

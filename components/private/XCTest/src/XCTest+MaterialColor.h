@@ -14,8 +14,10 @@
 
 #import <XCTest/XCTest.h>
 
+#define XCTAssertEqualColors(color1, color2) [self assertEqualFirstColor:color1 secondColor:color2];
+
 @interface XCTestCase (MaterialColor)
 
-- (void)assetEqualFirstColor:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
+- (void)assertEqualFirstColor:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 @end
