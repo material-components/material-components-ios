@@ -873,7 +873,6 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testActionSheetWithHeaderShown {
   // Given
-  self.recordMode = YES;
   MDCActionSheetAction *action1 =
       [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
                                       image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
@@ -899,7 +898,6 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testActionSheetWithHeaderShownButNoTitleOrMessage {
   // Given
-  self.recordMode = YES;
   MDCActionSheetAction *action1 =
       [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
                                       image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
