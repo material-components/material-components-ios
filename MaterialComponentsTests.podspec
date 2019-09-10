@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'components/private/XCTest/src/*.{h,m,swift}'
   s.framework    = 'XCTest'
+  s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 end
