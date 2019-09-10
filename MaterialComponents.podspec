@@ -604,6 +604,8 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/Themes"
   end
 
+  # ButtonBar is not intended to be themed as a standalone component.
+  # Please theme it via the AppBar component's Theming extension instead.
   mdc.subspec "ButtonBar+TypographyThemer" do |extension|
     extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
