@@ -2189,6 +2189,5 @@ Pod::Spec.new do |mdc|
         unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
-
   end
 end
