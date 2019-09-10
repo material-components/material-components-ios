@@ -123,6 +123,8 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  # This subspec is deprecated.
+  # Please theme MDCActivityIndicator's colors directly instead.
   mdc.subspec "ActivityIndicator+ColorThemer" do |extension|
     extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
@@ -131,9 +133,6 @@ Pod::Spec.new do |mdc|
     extension.source_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
     ]
-
-    # Please theme MDCActivityIndicator's colors directly instead.
-    extension.deprecated = true
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Color"
