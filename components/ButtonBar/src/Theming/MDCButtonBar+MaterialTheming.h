@@ -17,7 +17,9 @@
 
 // This category applies Material themes that are defined in the Material Guidelines:
 // https://material.io/design/components/app-bars-top.html
-@interface MDCButtonBar (MaterialTheming)
+__deprecated_msg("ButtonBar is not intended to be themed as a standalone component."
+                 " Please theme it via the AppBar component's Theming extension instead.")
+    @interface MDCButtonBar(MaterialTheming)
 
 /**
  Apply the primary theme to this instance.
@@ -25,6 +27,8 @@
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
  */
-- (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+- (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme
+    __deprecated_msg("ButtonBar is not intended to be themed as a standalone component."
+                     " Please theme it via the AppBar component's Theming extension instead.");
 
 @end

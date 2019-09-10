@@ -32,7 +32,9 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    buttonBar.applyPrimaryTheme(withScheme: scheme)
+    buttonBar.backgroundColor = colorScheme.primaryColor
+    buttonBar.tintColor = colorScheme.onPrimaryColor
+    buttonBar.setButtonsTitleFont(typographyScheme.button, for: .normal)
 
     // MDCButtonBar ignores the style of UIBarButtonItem.
     let ignored: UIBarButtonItem.Style = .done
