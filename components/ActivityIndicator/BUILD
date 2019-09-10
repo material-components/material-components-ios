@@ -57,14 +57,6 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":ActivityIndicator",
-        "//components/schemes/Color",
-    ],
-)
-
 mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
     deps = [
@@ -119,5 +111,16 @@ mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [
         ":snapshot_test_lib",
+    ],
+)
+
+# Deprecated
+
+mdc_extension_objc_library(
+    name = "ColorThemer",
+    deprecation = "Please theme MDCActivityIndicator's colors directly instead.",
+    deps = [
+        ":ActivityIndicator",
+        "//components/schemes/Color",
     ],
 )

@@ -132,6 +132,9 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
     ]
 
+    # Please theme MDCActivityIndicator's colors directly instead.
+    extension.deprecated = true
+
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Color"
   end
