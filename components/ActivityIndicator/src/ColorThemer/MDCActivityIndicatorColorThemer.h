@@ -25,7 +25,7 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 __deprecated_msg("Please theme MDCActivityIndicator's colors directly instead.")
-@interface MDCActivityIndicatorColorThemer : NSObject
+    @interface MDCActivityIndicatorColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCActivityIndicator.
@@ -39,7 +39,7 @@ __deprecated_msg("Please theme MDCActivityIndicator's colors directly instead.")
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
              toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator
-             __deprecated_msg("Please theme MDCActivityIndicator's colors directly instead.");
+    __deprecated_msg("Please theme MDCActivityIndicator's colors directly instead.");
 
 /**
  Applies a color scheme's properties to an MDCActivityIndicator.
@@ -53,6 +53,6 @@ __deprecated_msg("Please theme MDCActivityIndicator's colors directly instead.")
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
      toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator
-     __deprecated_msg("Please theme MDCActivityIndicator's colors directly instead.");
+    __deprecated_msg("Please theme MDCActivityIndicator's colors directly instead.");
 
 @end
