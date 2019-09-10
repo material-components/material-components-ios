@@ -22,10 +22,9 @@
  `MDCButtonBar`'s `-applyPrimaryThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCButtonBarTypographyThemer : NSObject
-@end
-
-@interface MDCButtonBarTypographyThemer (ToBeDeprecated)
+__deprecated_msg("ButtonBar is not intended to be themed as a standalone component."
+                 " Please theme it via the AppBar component's Theming extension instead.")
+    @interface MDCButtonBarTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCButtonBar.
@@ -38,6 +37,8 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-                  toButtonBar:(nonnull MDCButtonBar *)buttonBar;
+                  toButtonBar:(nonnull MDCButtonBar *)buttonBar
+    __deprecated_msg("ButtonBar is not intended to be themed as a standalone component."
+                     " Please theme it via the AppBar component's Theming extension instead.");
 
 @end
