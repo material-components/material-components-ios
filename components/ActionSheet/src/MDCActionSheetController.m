@@ -411,11 +411,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 }
 
 - (void)setShowsHeaderDivider:(BOOL)showsHeaderDivider {
-  self.headerDividerView.hidden = showsHeaderDivider;
-}
-
-- (BOOL)showsHeaderDivider {
-  return self.headerDividerView.hidden;
+  _showsHeaderDivider = showsHeaderDivider;
+  self.headerDividerView.hidden = !showsHeaderDivider;
 }
 
 #pragma mark - Dynamic Type
