@@ -215,7 +215,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  The color of the divider between the header and actions. This API should be used with
  @c showsHeaderDivider to make the divider visable.
 
- Defaults to UIColor.clearColor.
+ Defaults to a ligh grey color.
  */
 @property(nonatomic, copy, nonnull) UIColor *headerDividerColor;
 

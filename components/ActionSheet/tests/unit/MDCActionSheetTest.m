@@ -20,6 +20,7 @@
 #import "MaterialShadowElevations.h"
 
 static const CGFloat kSafeAreaAmount = 20;
+static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
 @interface MDCActionSheetController (MDCTesting)
 @property(nonatomic, strong, nonnull) UIView *headerDividerView;
@@ -64,7 +65,8 @@ static const CGFloat kSafeAreaAmount = 20;
   XCTAssertFalse(self.actionSheet.alwaysAlignTitleLeadingEdges);
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation,
                              MDCShadowElevationModalBottomSheet, 0.001);
-  XCTAssertEqualObjects(self.actionSheet.headerDividerColor, UIColor.clearColor);
+  XCTAssertEqualObjects(self.actionSheet.headerDividerColor,
+                        [UIColor.blackColor colorWithAlphaComponent:kDefaultDividerOpacity]);
   XCTAssertFalse(self.actionSheet.showsHeaderDivider);
   XCTAssertNotNil(self.actionSheet.headerDividerView);
 }

@@ -23,6 +23,7 @@
 static NSString *const kReuseIdentifier = @"BaseCell";
 static const CGFloat kActionImageAlpha = (CGFloat)0.6;
 static const CGFloat kActionTextAlpha = (CGFloat)0.87;
+static const CGFloat kDividerDefaultOpacity = (CGFloat)0.12;
 
 @interface MDCActionSheetAction ()
 
@@ -135,7 +136,9 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
     _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
     _headerDividerView = [[UIView alloc] init];
-    _headerDividerView.backgroundColor = UIColor.clearColor;
+    _headerDividerView.backgroundColor =
+        [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultOpacity];
+    ;
     _mdc_overrideBaseElevation = -1;
   }
 
