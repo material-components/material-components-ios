@@ -2198,6 +2198,7 @@ Pod::Spec.new do |mdc|
         "components/private/#{component.base_name}/src/private/*.{h,m}"
       ]
       component.framework = 'XCTest'
+      component.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
     end
 
   end
