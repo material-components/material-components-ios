@@ -85,9 +85,13 @@ target "MDCCatalog" do
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'SnapshotTests'
   ]
-  pod 'MaterialComponentsTests', :path => '../'
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
+
+  target 'MDCCatalogTests' do
+    inherit! :search_paths
+    pod 'MaterialComponentsTests', :path => '../'
+  end
 
   use_frameworks!
 end

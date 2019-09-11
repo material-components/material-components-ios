@@ -29,6 +29,9 @@
 		66D3389520730A3E00FFA1AB /* MDCThemePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		A77B0FE922BBDBB400C0CEB3 /* MDCTabBarViewTypicalExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A77B0FE822BBDBB400C0CEB3 /* MDCTabBarViewTypicalExampleViewController.m */; };
+		DD1A687A5805F66D86F928BC /* Pods_MDCCatalogTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0865C711DEA9E1C29A85466F /* Pods_MDCCatalogTests.framework */; };
+		DD639C732328CF6A00409081 /* MDCCatalogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD639C722328CF6A00409081 /* MDCCatalogTests.m */; };
+		DDBF0B66232FF4060041DA41 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDBF0B65232FF4060041DA41 /* Info.plist */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +43,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 64307B371DF74FEF004AE4AC;
 			remoteInfo = MDCActionExtension;
+		};
+		DD639C752328CF6A00409081 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 664524AB1C6BA62A001ADBF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 664524B21C6BA62A001ADBF8;
+			remoteInfo = MDCCatalog;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -55,9 +65,20 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD639C652328CF3400409081 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0865C711DEA9E1C29A85466F /* Pods_MDCCatalogTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCCatalogTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B4A5E6C1CC9307A00D2AC5D /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
 		0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCEarlGreyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1259AD212C335B693CDA9EEA /* Pods-MDCActionExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCActionExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCActionExtension/Pods-MDCActionExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +123,7 @@
 		5D090E541C9AEB8D0061344A /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E551C9AEB8D0061344A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D090E561C9AEB8D0061344A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		622ABDBC4AECBF160E4DAE7C /* Pods-MDCCatalogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogTests/Pods-MDCCatalogTests.release.xcconfig"; sourceTree = "<group>"; };
 		64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MDCActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		64307B3A1DF74FEF004AE4AC /* MDCActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDCActionViewController.h; sourceTree = "<group>"; };
 		64307B3B1DF74FEF004AE4AC /* MDCActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCActionViewController.m; sourceTree = "<group>"; };
@@ -127,9 +149,13 @@
 		BB375464F626CD555584A27F /* Pods_MDCSnapshotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCSnapshotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		D0ECF9608E1CF6AA39139933 /* Pods-MDCSnapshotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCSnapshotTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCSnapshotTests/Pods-MDCSnapshotTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DD639C702328CF6A00409081 /* MDCCatalogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDCCatalogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD639C722328CF6A00409081 /* MDCCatalogTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCCatalogTests.m; sourceTree = "<group>"; };
+		DDBF0B65232FF4060041DA41 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogComponentsController.swift; sourceTree = "<group>"; };
 		DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogCollectionViewCell.swift; sourceTree = "<group>"; };
 		E94681B7591B9CD40924C92C /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = "${SRCROOT}/Pods/EarlGrey/EarlGrey/EarlGrey.framework"; sourceTree = SRCROOT; };
+		EB6518C0D5E745B55F714CA8 /* Pods-MDCCatalogTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalogTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalogTests/Pods-MDCCatalogTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +172,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD639C6D2328CF6A00409081 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD1A687A5805F66D86F928BC /* Pods_MDCCatalogTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +219,7 @@
 			children = (
 				664524B51C6BA62A001ADBF8 /* MDCCatalog */,
 				64307B391DF74FEF004AE4AC /* MDCActionExtension */,
+				DD639C712328CF6A00409081 /* MDCCatalogTests */,
 				664524B41C6BA62A001ADBF8 /* Products */,
 				E165A9868676B4998575E09A /* Pods */,
 				C18E275F798D7A4D3C533DF1 /* Frameworks */,
@@ -197,6 +232,7 @@
 				664524B31C6BA62A001ADBF8 /* MDCCatalog.app */,
 				E94681B7591B9CD40924C92C /* EarlGrey.framework */,
 				64307B381DF74FEF004AE4AC /* MDCActionExtension.appex */,
+				DD639C702328CF6A00409081 /* MDCCatalogTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -244,8 +280,18 @@
 				0C98A248D8EC59DB853B8611 /* Pods_MDCEarlGreyTests.framework */,
 				93314CA227FB65FEC87098C3 /* EarlGrey.framework */,
 				BB375464F626CD555584A27F /* Pods_MDCSnapshotTests.framework */,
+				0865C711DEA9E1C29A85466F /* Pods_MDCCatalogTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DD639C712328CF6A00409081 /* MDCCatalogTests */ = {
+			isa = PBXGroup;
+			children = (
+				DDBF0B65232FF4060041DA41 /* Info.plist */,
+				DD639C722328CF6A00409081 /* MDCCatalogTests.m */,
+			);
+			path = MDCCatalogTests;
 			sourceTree = "<group>";
 		};
 		E165A9868676B4998575E09A /* Pods */ = {
@@ -257,6 +303,8 @@
 				1259AD212C335B693CDA9EEA /* Pods-MDCActionExtension.release.xcconfig */,
 				D0ECF9608E1CF6AA39139933 /* Pods-MDCSnapshotTests.debug.xcconfig */,
 				218B9E562C16EA9D989710F1 /* Pods-MDCSnapshotTests.release.xcconfig */,
+				EB6518C0D5E745B55F714CA8 /* Pods-MDCCatalogTests.debug.xcconfig */,
+				622ABDBC4AECBF160E4DAE7C /* Pods-MDCCatalogTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -292,6 +340,7 @@
 				664524B11C6BA62A001ADBF8 /* Resources */,
 				72ACDAA295D1F2087113246F /* [CP] Embed Pods Frameworks */,
 				64307B471DF74FEF004AE4AC /* Embed App Extensions */,
+				DD639C652328CF3400409081 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -302,6 +351,26 @@
 			productName = MDCCatalog;
 			productReference = 664524B31C6BA62A001ADBF8 /* MDCCatalog.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DD639C6F2328CF6A00409081 /* MDCCatalogTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD639C772328CF6A00409081 /* Build configuration list for PBXNativeTarget "MDCCatalogTests" */;
+			buildPhases = (
+				AD8597E209A4A90FA3C6457F /* [CP] Check Pods Manifest.lock */,
+				DD639C6C2328CF6A00409081 /* Sources */,
+				DD639C6D2328CF6A00409081 /* Frameworks */,
+				DD639C6E2328CF6A00409081 /* Resources */,
+				A210C7C57F212220B7CAD39C /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD639C762328CF6A00409081 /* PBXTargetDependency */,
+			);
+			name = MDCCatalogTests;
+			productName = MDCCatalogTests;
+			productReference = DD639C702328CF6A00409081 /* MDCCatalogTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -326,6 +395,11 @@
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
+					DD639C6F2328CF6A00409081 = {
+						CreatedOnToolsVersion = 11.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 664524B21C6BA62A001ADBF8;
+					};
 				};
 			};
 			buildConfigurationList = 664524AE1C6BA62A001ADBF8 /* Build configuration list for PBXProject "MDCCatalog" */;
@@ -333,6 +407,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				ar,
@@ -376,6 +451,7 @@
 			targets = (
 				664524B21C6BA62A001ADBF8 /* MDCCatalog */,
 				64307B371DF74FEF004AE4AC /* MDCActionExtension */,
+				DD639C6F2328CF6A00409081 /* MDCCatalogTests */,
 			);
 		};
 /* End PBXProject section */
@@ -403,6 +479,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD639C6E2328CF6A00409081 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDBF0B66232FF4060041DA41 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -421,7 +505,6 @@
 				"${BUILT_PRODUCTS_DIR}/MaterialComponentsBeta/MaterialComponentsBeta.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponentsExamples/MaterialComponentsExamples.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponentsSnapshotTests/MaterialComponentsSnapshotTests.framework",
-				"${BUILT_PRODUCTS_DIR}/MaterialComponentsTests/MaterialComponentsTests.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
@@ -436,7 +519,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsBeta.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsExamples.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsSnapshotTests.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsTests.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
@@ -444,6 +526,46 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A210C7C57F212220B7CAD39C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MDCCatalogTests/Pods-MDCCatalogTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponentsTests/MaterialComponentsTests.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsTests.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MDCCatalogTests/Pods-MDCCatalogTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AD8597E209A4A90FA3C6457F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MDCCatalogTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF1E8983301BB250EA61087B /* [CP] Check Pods Manifest.lock */ = {
@@ -512,6 +634,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD639C6C2328CF6A00409081 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD639C732328CF6A00409081 /* MDCCatalogTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -519,6 +649,11 @@
 			isa = PBXTargetDependency;
 			target = 64307B371DF74FEF004AE4AC /* MDCActionExtension */;
 			targetProxy = 64307B411DF74FEF004AE4AC /* PBXContainerItemProxy */;
+		};
+		DD639C762328CF6A00409081 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 664524B21C6BA62A001ADBF8 /* MDCCatalog */;
+			targetProxy = DD639C752328CF6A00409081 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -766,6 +901,57 @@
 			};
 			name = Release;
 		};
+		DD639C782328CF6A00409081 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB6518C0D5E745B55F714CA8 /* Pods-MDCCatalogTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MDCCatalogTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = test.MDCCatalogTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
+			};
+			name = Debug;
+		};
+		DD639C792328CF6A00409081 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 622ABDBC4AECBF160E4DAE7C /* Pods-MDCCatalogTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MDCCatalogTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = test.MDCCatalogTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MDCCatalog.app/MDCCatalog";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -792,6 +978,15 @@
 			buildConfigurations = (
 				664524C61C6BA62A001ADBF8 /* Debug */,
 				664524C71C6BA62A001ADBF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD639C772328CF6A00409081 /* Build configuration list for PBXNativeTarget "MDCCatalogTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD639C782328CF6A00409081 /* Debug */,
+				DD639C792328CF6A00409081 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

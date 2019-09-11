@@ -782,6 +782,16 @@
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD639C6F2328CF6A00409081"
+               BuildableName = "MDCCatalogTests.xctest"
+               BlueprintName = "MDCCatalogTests"
+               ReferencedContainer = "container:MDCCatalog.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
