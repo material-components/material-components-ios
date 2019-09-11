@@ -137,7 +137,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
     _headerDividerView = [[UIView alloc] init];
     _headerDividerView.backgroundColor =
-        [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultOpacity];
+        [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultAlpha];
     _mdc_overrideBaseElevation = -1;
   }
 
