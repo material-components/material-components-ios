@@ -50,8 +50,12 @@ UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 /** Text stopped being edited event. */
 - (void)didEndEditing;
 
-/** Called by the controlled text input to notify the controller that it's font was set. */
-- (void)didSetFont;
+/**
+ Called by the controlled text input to notify the controller that it's font was set.
+
+ @param previousFont The font previously set on the text input.
+ */
+- (void)didSetFont:(nullable UIFont *)previousFont;
 
 /** Called by the controlled text input to notify the controller that it's text was set manually. */
 - (void)didSetText;
