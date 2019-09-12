@@ -397,16 +397,16 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 #pragma mark - TextInput Customization
 
 - (void)updateTextInput {
-	UIFont *font = self.textInputFont;
-	if (self.mdc_adjustsFontForContentSizeCategory) {
-		font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+  UIFont *font = self.textInputFont;
+    if (self.mdc_adjustsFontForContentSizeCategory) {
+      font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
 								  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-		// TODO: (#4331) This needs to be converted to the new text scheme.
-	}
+        // TODO: (#4331) This needs to be converted to the new text scheme.
+    }
 	
-	if (![self.textInput.font mdc_isSimplyEqual:font]){
-		self.textInput.font = font;
-	}
+    if (![self.textInput.font mdc_isSimplyEqual:font]){
+      self.textInput.font = font;
+    }
 }
 
 #pragma mark - Placeholder Customization
