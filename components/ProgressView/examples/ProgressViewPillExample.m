@@ -95,11 +95,13 @@ static const CGFloat kProgressViewHeight = 4;
     @"progressViewHeight" : @(kProgressViewHeight),
   };
 
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint
-        constraintsWithVisualFormat:@"V:|-(topMargin)-[progressView(==progressViewHeight)]"
-                            options:0
-                            metrics:metrics
-                              views:views]];
+  [NSLayoutConstraint
+      activateConstraints:
+          [NSLayoutConstraint
+              constraintsWithVisualFormat:@"V:|-(topMargin)-[progressView(==progressViewHeight)]"
+                                  options:0
+                                  metrics:metrics
+                                    views:views]];
 
   [NSLayoutConstraint activateConstraints:[NSLayoutConstraint
         constraintsWithVisualFormat:@"H:|-(horizontalMargin)-[progressView]-(horizontalMargin)-|"
