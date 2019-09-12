@@ -163,4 +163,15 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   [self validateTextField:textField];
 }
 
+- (void)testTextFieldWithColoredPlaceholder {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.placeholder = @"placeholder";
+  textField.placeholderColor = [UIColor greenColor];
+
+  // Then
+  [self validateTextField:textField];
+}
 @end
