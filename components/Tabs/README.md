@@ -301,15 +301,15 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 ### Theming Extensions
 
- `MDCTabBar` supports Material Theming using a Container Scheme.
+`MDCTabBar` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of a MDCTabBar, which are the Primary Theme
 and the Surface Theme.
 
- <!--<div class="material-code-render" markdown="1">-->
+<!--<div class="material-code-render" markdown="1">-->
 
- #### Swift
+#### Swift
 
- ```swift
+```swift
 // Import the Tabs Theming Extensions module
 import MaterialComponents.MaterialTabs_MaterialTheming
  ...
@@ -321,9 +321,9 @@ tabBar.applyPrimaryTheme(withScheme: containerScheme)
 tabBar.applySurfaceTheme(withScheme: containerScheme)
 ```
 
- #### Objective-C
+#### Objective-C
 
- ```objc
+```objc
 // Import the Tabs Theming Extensions header
 #import <MaterialComponents/MaterialTabBar+MaterialTheming.h>
  ...

@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtonBar+Theming.h"
 #import "MaterialButtonBar.h"
 #import "MaterialContainerScheme.h"
 
@@ -49,11 +48,10 @@
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
-
-  MDCContainerScheme *scheme = [self containerScheme];
-  scheme.typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10];
-
-  [buttonBar applyPrimaryThemeWithScheme:scheme];
+  buttonBar.backgroundColor = self.colorScheme.primaryColor;
+  buttonBar.tintColor = self.colorScheme.onPrimaryColor;
+  [buttonBar setButtonsTitleFont:[UIFont fontWithName:@"American Typewriter" size:10]
+                        forState:UIControlStateNormal];
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;

@@ -8,7 +8,7 @@ path: /catalog/cards/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Cards -->
+<!-- This file was auto-generated using ./scripts/generate_readme Cards -->
 
 # Cards
 
@@ -230,7 +230,7 @@ and the outlined theme.
 
  #### Swift
 
- ```swift
+```swift
 // Import the Cards Theming Extensions module
 import MaterialComponents.MaterialCards_MaterialTheming
  ...
@@ -244,7 +244,7 @@ card.applyOutlinedTheme(withScheme: containerScheme)
 
  #### Objective-C
 
- ```objc
+```objc
 // Import the Cards Theming Extensions header
 #import <MaterialComponents/MaterialCards+MaterialTheming.h>
  ...

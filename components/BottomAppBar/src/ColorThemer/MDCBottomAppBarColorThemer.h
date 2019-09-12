@@ -21,14 +21,14 @@
  A color themer for MDCBottomAppBarView. This API does not fully implement the Material Design color
  system.
 
- @warning This API will eventually be deprecated. There is no replacement yet.
+ @warning This API will eventually be deleted. There is no replacement yet.
  Track progress here: https://github.com/material-components/material-components-ios/issues/7172
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCBottomAppBarColorThemer : NSObject
-@end
-
-@interface MDCBottomAppBarColorThemer (ToBeDeprecated)
+__deprecated_msg("No replacement exists. Please comment on"
+                 " https://github.com/material-components/material-components-ios/issues/7172"
+                 " in order to indicate interest in a replacement API.")
+    @interface MDCBottomAppBarColorThemer : NSObject
 
 /**
  Applies a color scheme to theme an MDCBottomAppBarView using the "surface" variant theming. The
@@ -43,7 +43,10 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithSemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                                toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
+                                toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView
+    __deprecated_msg("No replacement exists. Please comment on"
+                     " https://github.com/material-components/material-components-ios/issues/7172"
+                     " in order to indicate interest in a replacement API.");
 
 /**
  Applies a color scheme to theme a MDCBottomAppBarView.
@@ -56,6 +59,9 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-      toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
+      toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView
+    __deprecated_msg("No replacement exists. Please comment on"
+                     " https://github.com/material-components/material-components-ios/issues/7172"
+                     " in order to indicate interest in a replacement API.");
 
 @end

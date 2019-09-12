@@ -14,7 +14,10 @@
 
 #import "MDCActivityIndicatorColorThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCActivityIndicatorColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
              toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator {

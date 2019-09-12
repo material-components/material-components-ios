@@ -329,6 +329,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return superSize;
 }
 
+- (CGSize)intrinsicContentSize {
+  return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
@@ -990,22 +994,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - Deprecations
-
-- (void)setCustomTitleColor:(UIColor *)customTitleColor {
-  [self setTitleColor:customTitleColor forState:UIControlStateNormal];
-}
-
-- (UIColor *)customTitleColor {
-  return [self titleColorForState:UIControlStateNormal];
-}
-
-- (BOOL)shouldCapitalizeTitle {
-  return [self isUppercaseTitle];
-}
-
-- (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
-  [self setUppercaseTitle:shouldCapitalizeTitle];
-}
 
 - (UIColor *)underlyingColor {
   return [self underlyingColorHint];

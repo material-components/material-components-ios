@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCActionSheetController+MaterialTheming.h"
+
 #import "MaterialColor.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;

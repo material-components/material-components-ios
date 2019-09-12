@@ -19,6 +19,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBaseTextFieldLayout.h"
+#import "private/MDCContainedInputViewLabelAnimation.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 
@@ -26,7 +27,6 @@
 
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
-
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 
@@ -60,20 +60,8 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
-  [self setUpLayoutDirection];
-  [self setUpLabelBehavior];
-  [self setUpLabelState];
-}
-
-- (void)setUpLayoutDirection {
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
-}
-
-- (void)setUpLabelBehavior {
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
-}
-
-- (void)setUpLabelState {
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
 }
 
@@ -92,7 +80,7 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
-  [self setUpLayoutDirection];
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
 #pragma mark Layout
@@ -112,7 +100,13 @@
 }
 
 - (void)postLayoutSubviews {
-  [self layOutLabel];
+  self.label.hidden = self.labelState == MDCContainedInputViewLabelStateNone;
+  [MDCContainedInputViewLabelAnimation layOutLabel:self.label
+                                             state:self.labelState
+                                  normalLabelFrame:self.layout.labelFrameNormal
+                                floatingLabelFrame:self.layout.labelFrameFloating
+                                        normalFont:self.normalFont
+                                      floatingFont:self.floatingFont];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
@@ -124,26 +118,6 @@
     textRect = layout.textRectFloating;
   }
   return textRect;
-}
-
-- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
-      [self createPositioningReference];
-  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
-                                          positioningReference:positioningReference
-                                                          font:self.font
-                                                  floatingFont:self.floatingFont
-                                                         label:self.label
-                                                      leftView:self.leftView
-                                                  leftViewMode:self.leftViewMode
-                                                     rightView:self.rightView
-                                                 rightViewMode:self.rightViewMode
-                                                         isRTL:self.isRTL
-                                                     isEditing:self.isEditing];
-}
-
-- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
-  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
 }
 
 /**
@@ -164,14 +138,34 @@
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
-- (void)layOutLabel {
-  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
-    self.label.font = self.floatingFont;
-    self.label.frame = self.layout.labelFrameFloating;
-  } else {
-    self.label.font = self.normalFont;
-    self.label.frame = self.layout.labelFrameNormal;
-  }
+- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
+  id<MDCContainerStyleVerticalPositioningReference> positioningReference =
+      [self createPositioningReference];
+  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
+                                          positioningReference:positioningReference
+                                                          text:self.text
+                                                          font:self.normalFont
+                                                  floatingFont:self.floatingFont
+                                                         label:self.label
+                                                      leftView:self.leftView
+                                                  leftViewMode:self.leftViewMode
+                                                     rightView:self.rightView
+                                                 rightViewMode:self.rightViewMode
+                                         clearButtonSideLength:clearButtonSideLength
+                                               clearButtonMode:self.clearButtonMode
+                                                         isRTL:self.isRTL
+                                                     isEditing:self.isEditing];
+}
+
+- (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
+  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
+}
+
+- (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
+  CGRect bounds = CGRectMake(0, 0, textFieldSize.width, textFieldSize.height);
+  CGRect systemPlaceholderRect = [super clearButtonRectForBounds:bounds];
+  return systemPlaceholderRect.size.height;
 }
 
 #pragma mark UITextField Accessor Overrides
@@ -198,6 +192,13 @@
   NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
         @"trailingView instead.");
   [self mdc_setRightView:rightView];
+}
+
+- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
+  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
+    return self.layout.clearButtonFrameFloating;
+  }
+  return self.layout.clearButtonFrameNormal;
 }
 
 #pragma mark Custom Accessors

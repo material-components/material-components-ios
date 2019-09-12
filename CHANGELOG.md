@@ -1,3 +1,153 @@
+# 89.0.0
+
+This major release deletes several deprecated APIs, includes bug fixes for iOS 13, and improves
+haptics support in Slider.
+
+## Breaking changes
+
+Buttons' `customTitleColor` and `shouldCapitalizeTitle` APIs have been deleted.
+
+Chips' `inkColor` API has been deleted.
+
+## Changes
+
+### Buttons
+
+* [Delete deprecated customTitleColor property (#8403)](https://github.com/material-components/material-components-ios/commit/2feace84a9050fec15bd6c48b2bcb1745864af57) (Bryan Oltman)
+* [Remove unused shouldCapitalizeTitle property (#8402)](https://github.com/material-components/material-components-ios/commit/d6139cbfa90fd38adcf55c261cc1b6ad13d70bf9) (Bryan Oltman)
+
+### Chips
+
+* [Remove deprecated inkColor property (#8399)](https://github.com/material-components/material-components-ios/commit/c326f923234240957575fc4ff57fde48f28f9f48) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Update inferred status bar style on light backgrounds for iOS 13 (#8380)](https://github.com/material-components/material-components-ios/commit/f52abf7a87409d79071fe25596648b7a61079b63) (Cameron Spickert)
+
+### Slider
+
+* [Adding Haptic Feedback When Crossing Anchored Value (#8225)](https://github.com/material-components/material-components-ios/commit/8a587b8c61ceaabdc0a0bbf5f6ffc52bb0f9fda8) (afweiss)
+
+### TextFields
+
+* [Add label animator (#8382)](https://github.com/material-components/material-components-ios/commit/1fbb91217f0d8d71c54a26f4875fc1a94741367f) (Andrew Overton)
+* [Misc clean up (#8404)](https://github.com/material-components/material-components-ios/commit/7873ef4c2fddd9a5448221e0c68b55f7aa6ec93f) (Andrew Overton)
+
+---
+
+# 88.2.0
+
+This minor release makes the Banner component generally available, and
+provides a bug fix for Buttons.
+
+## New features
+
+`MDCBannerView` is now available for providing messaging to your app's users.
+It implements [Material Banners](https://material.io/components/banners/) and
+"displays a prominent message and related optional actions."
+
+## Changes
+
+### ActionSheet
+
+* [ [ActionSheet] Add snapshot tests to ensure the default presentation behavior doesn't change under iOS 13. (#8365)](https://github.com/material-components/material-components-ios/commit/05d01faa2cd5570b0a63c9f23007206871a9a829) (Wenyu Zhang)
+
+### Banner
+
+* [Add a missing button title in example. (#8369)](https://github.com/material-components/material-components-ios/commit/7f980895801cc7c236cd43e0e604cb98869b5828) (Wenyu Zhang)
+* [Add an example to show super long text case. (#8372)](https://github.com/material-components/material-components-ios/commit/8428e0690c9d0ca8ac30c64ca027fce770bbe241) (Wenyu Zhang)
+* [Add documentation on setting hidden of trailing button. (#8371)](https://github.com/material-components/material-components-ios/commit/0079e5741c1474897d564b5c19dc49cb00d214cb) (Wenyu Zhang)
+* [Refactor typical example view controller. (#8373)](https://github.com/material-components/material-components-ios/commit/93f9527e94e22439eed673d5b70e53c6e7a5ebdd) (Wenyu Zhang)
+* [Update readme after updating API from textLabel to textView. (#8378)](https://github.com/material-components/material-components-ios/commit/2bc08dc44a18a929545e5f857a2ef2e50e5ef5c1) (Wenyu Zhang)
+
+### BottomSheet
+
+* [Add snapshot tests to ensure BottomSheet's default presentation behavior doesn't change under iOS 13. (#8364)](https://github.com/material-components/material-components-ios/commit/0891e70dfca389730738cb4d7930ee44cb17ab59) (Wenyu Zhang)
+
+### Buttons
+
+* [overwrite intrinsicContentSize method. (#8370)](https://github.com/material-components/material-components-ios/commit/e3784afe259055679479f09b2e92324b61cf7fe0) (Wenyu Zhang)
+
+### Dialogs
+
+* [Add snapshot tests to ensure Dialog's default presentation behavior (#8360)](https://github.com/material-components/material-components-ios/commit/a91b1116b8fe90694aa55ae29ab7f652d2e7cee7) (Wenyu Zhang)
+
+### FeatureHighlight
+
+* [Add snapshot tests to ensure the default presentation behavior doesn't change under iOS 13. (#8366)](https://github.com/material-components/material-components-ios/commit/c2d5bf6f9b5708c8b50adf963a813bfa6a85f8eb) (Wenyu Zhang)
+
+### TextFields
+
+* [Add contained input view clear button (#8247)](https://github.com/material-components/material-components-ios/commit/ab4f218a0902b21b2eea81537ffd49387803094e) (Andrew Overton)
+
+### private/Snapshot/TestHost
+
+* [Add a window into the app delegate of host application. (#8361)](https://github.com/material-components/material-components-ios/commit/e4127f23f8ab1bf2fb1d293c3ea868caadc095ec) (Wenyu Zhang)
+
+### private/Snapshot
+
+* [Add a window into the app delegate of host application. (#8361)](https://github.com/material-components/material-components-ios/commit/e4127f23f8ab1bf2fb1d293c3ea868caadc095ec) (Wenyu Zhang)
+
+---
+
+# 88.1.0
+
+This minor change introduces presentation and dismissal improvements to
+NavigationDrawer.  `MDCSnackbarMessage` subclasses must now respond to `-
+init`. Further improvements are made to the in-development Contained Input
+Fields.
+
+## API changes
+
+### TextFields+ContainedInputView
+
+#### MDCBaseTextField
+
+*new* property: `labelBehavior` in `MDCBaseTextField`
+
+*new* property: `label` in `MDCBaseTextField`
+
+#### MDCTextControlLabelBehavior
+
+*new* enum value: `MDCTextControlLabelBehaviorDisappears` in `MDCTextControlLabelBehavior`
+
+*new* enum: `MDCTextControlLabelBehavior`
+
+*new* enum value: `MDCTextControlLabelBehaviorFloats` in `MDCTextControlLabelBehavior`
+
+*new* typedef: `MDCTextControlLabelBehavior`
+
+## Changes
+
+### Banner
+
+* [Apply text theme to button in the typical example. (#8337)](https://github.com/material-components/material-components-ios/commit/42fbedcc4acfdb658f86d410e84ba44af923a274) (Wenyu Zhang)
+
+### List
+
+* [Fix docs rendering for snippet. (#8353)](https://github.com/material-components/material-components-ios/commit/822cbcbfe084beeff4afe9ceb60a5d7cee7067e1) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add fix for jump on interactive dismissal (#8347)](https://github.com/material-components/material-components-ios/commit/6c5db5b212f438d2b385a94d47f261acbbb8aaa6) (Jonathan Willing)
+* [Respect the rotation preferences of presenting controller (#8278)](https://github.com/material-components/material-components-ios/commit/cfbdd2a0a096be4822ac71b7e333e265dea0cbac) (Michael Cheung)
+
+### Ripple
+
+* [Add the layer masking in layoutSublayers if there are sublayers present. (#8359)](https://github.com/material-components/material-components-ios/commit/a70588207d6c18e62edca35dae6172c66e15f8c5) (Yarden Eitan)
+* [Performance Improvements on initialization (#8354)](https://github.com/material-components/material-components-ios/commit/00d6c02d7db60068a4b23d66b32e0de030f1df0e) (Yarden Eitan)
+
+### Snackbar
+
+* [Fix MDCSnackbarMessage convenience class methods (#7724)](https://github.com/material-components/material-components-ios/commit/6b3fc4cda7616a392f7d46e5da25cdfc7f066782) (Jack Freeman)
+
+### TextFields
+
+* [Add floating label to MDCBaseTextField (#8358)](https://github.com/material-components/material-components-ios/commit/70daa8f70d3e4863901915131120b315869b5350) (Andrew Overton)
+* [Add initial text rect logic (#8324)](https://github.com/material-components/material-components-ios/commit/35c01a8354ad4e374ac51401c3e3526710143fbb) (Andrew Overton)
+
+---
+
 # 88.0.1
 
 This patch release adds performance improvements to Ripple during its initilization and layout phases.
