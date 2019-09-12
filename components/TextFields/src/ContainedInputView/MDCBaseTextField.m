@@ -33,6 +33,7 @@
 @end
 
 @implementation MDCBaseTextField
+@synthesize placeholderColor = _placeholderColor;
 
 #pragma mark Object Lifecycle
 
@@ -201,6 +202,19 @@
   return self.layout.clearButtonFrameNormal;
 }
 
+- (CGRect)placeholderRectForBounds:(CGRect)bounds {
+  if (self.shouldPlaceholderBeVisible) {
+    return [super placeholderRectForBounds:bounds];
+  }
+  return CGRectZero;
+}
+
+- (void)drawPlaceholderInRect:(CGRect)rect {
+  if (self.shouldPlaceholderBeVisible) {
+    [super drawPlaceholderInRect:rect];
+  }
+}
+
 #pragma mark Custom Accessors
 
 - (void)setTrailingView:(UIView *)trailingView {
@@ -291,6 +305,27 @@
   [self setNeedsLayout];
 }
 
+- (UIColor *)placeholderColor {
+  return _placeholderColor ?: [UIColor lightGrayColor];
+}
+
+- (void)setPlaceholderColor:(UIColor *)placeholderColor {
+  _placeholderColor = placeholderColor;
+  [self updateAttributedPlaceholder];
+}
+
+- (void)setPlaceholder:(NSString *)placeholder {
+  [super setPlaceholder:placeholder];
+  [self updateAttributedPlaceholder];
+}
+
+- (void)updateAttributedPlaceholder {
+  NSDictionary *attributes = @{NSForegroundColorAttributeName : self.placeholderColor};
+  NSAttributedString *attributedPlaceholder =
+      [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
+  self.attributedPlaceholder = attributedPlaceholder;
+}
+
 #pragma mark UITextField Layout Overrides
 
 // The implementations for this method and the method below deserve some context! Unfortunately,
@@ -342,6 +377,37 @@
     font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   });
   return font;
+}
+
+#pragma mark Placeholder
+
+- (BOOL)shouldPlaceholderBeVisible {
+  return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
+                                              labelState:self.labelState
+                                                    text:self.text
+                                               isEditing:self.isEditing];
+}
+
+- (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
+                                       labelState:(MDCContainedInputViewLabelState)labelState
+                                             text:(NSString *)text
+                                        isEditing:(BOOL)isEditing {
+  BOOL hasPlaceholder = placeholder.length > 0;
+  BOOL hasText = text.length > 0;
+
+  if (hasPlaceholder) {
+    if (hasText) {
+      return NO;
+    } else {
+      if (labelState == MDCContainedInputViewLabelStateNormal) {
+        return NO;
+      } else {
+        return YES;
+      }
+    }
+  } else {
+    return NO;
+  }
 }
 
 #pragma mark Label
