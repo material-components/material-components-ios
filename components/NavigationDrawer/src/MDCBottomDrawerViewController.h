@@ -176,6 +176,7 @@
  */
 @protocol MDCBottomDrawerViewControllerDelegate <NSObject>
 
+@optional
 /**
  Called when the top inset of the drawer changes due to size changes when moving into full screen
  to cover the status bar and safe area inset. Also if there is a top handle, the top inset will
@@ -187,5 +188,63 @@
  */
 - (void)bottomDrawerControllerDidChangeTopInset:(nonnull MDCBottomDrawerViewController *)controller
                                        topInset:(CGFloat)topInset;
+
+/**
+ Called when the y-offset of the visible contents of the drawer (excluding shadow & scrim) have
+ changed. This is triggered when the drawer is presented and dismissed as well as when the content
+ is being dragged interactively.
+
+ @param controller The MDCBottomDrawerViewController.
+ @param yOffset The y-Offset of the top of the visible contents of the drawer.
+ */
+- (void)bottomDrawerControllerDidChangeTopYOffset:
+            (nonnull MDCBottomDrawerViewController *)controller
+                                          yOffset:(CGFloat)yOffset;
+
+/**
+ Called when the bottom drawer will begin animating to an open state. This is triggered when the VC
+ is being presented. Add animations and/or completion to the transitionCoordinator to cause them to
+ animate/complete alongside the drawer animation.
+
+ @param controller The MDCBottomDrawerViewController.
+ @param transitionCoordinator The transitionCoordinator handling the presentation transition.
+ @param targetOffset The target yOffset of the content after the animation completes.
+ */
+- (void)bottomDrawerControllerWillTransitionOpen:(nonnull MDCBottomDrawerViewController *)controller
+                                 withCoordinator:
+                                     (nullable id<UIViewControllerTransitionCoordinator>)
+                                         transitionCoordinator
+                                   targetYOffset:(CGFloat)targetYOffset;
+
+/**
+ Called when the bottom drawer has completed animating to the open state.
+
+ @param controller The MDCBottomDrawerViewController.
+ */
+- (void)bottomDrawerControllerDidEndOpenTransition:
+    (nonnull MDCBottomDrawerViewController *)controller;
+
+/**
+ Called when the bottom drawer will begin animating to a closed state. This is triggered when the VC
+ is being dismissed. Add animations and/or completion to the transitionCoordinator to cause them to
+ animate/complete alongside the drawer animation.
+
+ @param controller The MDCBottomDrawerViewController.
+ @param transitionCoordinator The transitionCoordinator handling the presentation transition.
+ @param targetOffset The target yOffset of the content after the animation completes.
+ */
+- (void)
+    bottomDrawerControllerWillTransitionClosed:(nonnull MDCBottomDrawerViewController *)controller
+                               withCoordinator:(nullable id<UIViewControllerTransitionCoordinator>)
+                                                   transitionCoordinator
+                                 targetYOffset:(CGFloat)targetYOffset;
+
+/**
+ Called when the bottom drawer has completed animating to the closed state.
+
+ @param controller The MDCBottomDrawerViewController.
+ */
+- (void)bottomDrawerControllerDidEndCloseTransition:
+    (nonnull MDCBottomDrawerViewController *)controller;
 
 @end
