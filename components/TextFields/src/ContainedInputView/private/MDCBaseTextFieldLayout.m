@@ -256,8 +256,6 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   self.clearButtonFrameNormal = clearButtonFrameNormal;
   self.textRectFloating = textRectFloating;
   self.textRectNormal = textRectNormal;
-  self.placeholderFrameFloating = CGRectOffset(textRectFloating, 0, -1);
-  self.placeholderFrameNormal = CGRectOffset(textRectNormal, 0, -1);
   self.labelFrameFloating = labelFrameFloating;
   self.labelFrameNormal = labelFrameNormal;
   self.leftViewHidden = !shouldAttemptToDisplayLeftView;
@@ -313,7 +311,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   }
 }
 
-- (CGSize)floatingLabelSizeWithText:(NSString *)text
+- (CGSize)labelSizeWithText:(NSString *)text
                            maxWidth:(CGFloat)maxWidth
                                font:(UIFont *)font {
   if (!font) {
@@ -347,7 +345,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     case MDCContainedInputViewLabelStateNone:
       break;
     case MDCContainedInputViewLabelStateFloating:
-      size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:floatingFont];
+      size = [self labelSizeWithText:text maxWidth:maxWidth font:floatingFont];
       originY = floatingLabelMinY;
       if (isRTL) {
         originX = labelMaxX - size.width;
@@ -357,7 +355,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
     case MDCContainedInputViewLabelStateNormal:
-      size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:font];
+      size = [self labelSizeWithText:text maxWidth:maxWidth font:font];
       CGFloat textRectMidY = CGRectGetMidY(textRect);
       originY = textRectMidY - ((CGFloat)0.5 * size.height);
       if (isRTL) {

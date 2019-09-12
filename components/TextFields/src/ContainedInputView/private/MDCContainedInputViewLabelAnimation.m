@@ -67,52 +67,6 @@ static const CGFloat kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration
                              completion:nil];
 }
 
-+ (void)layOutPlaceholderLabel:(UILabel *)placeholderLabel
-              placeholderFrame:(CGRect)placeholderFrame
-          isPlaceholderVisible:(BOOL)isPlaceholderVisible {
-  CGRect hiddenFrame =
-      CGRectOffset(placeholderFrame, 0, CGRectGetHeight(placeholderFrame) * (CGFloat)0.5);
-  CGRect targetFrame = hiddenFrame;
-  CGFloat hiddenOpacity = 0;
-  CGFloat targetOpacity = hiddenOpacity;
-  if (isPlaceholderVisible) {
-    targetFrame = placeholderFrame;
-    targetOpacity = 1;
-  }
-
-  placeholderLabel.frame = targetFrame;
-  placeholderLabel.transform = CGAffineTransformIdentity;
-
-  CGFloat currentOpacity = (CGFloat)placeholderLabel.layer.opacity;
-  CGFloat opacityFromValue = currentOpacity;
-  CGFloat opacityToValue = targetOpacity;
-
-  placeholderLabel.layer.opacity = (float)targetOpacity;
-
-  CABasicAnimation *preexistingOpacityAnimation = (CABasicAnimation *)[placeholderLabel.layer
-      animationForKey:self.placeholderLabelOpacityAnimationKey];
-
-  [CATransaction begin];
-  {
-    [CATransaction setCompletionBlock:^{
-      [placeholderLabel.layer removeAnimationForKey:self.placeholderLabelOpacityAnimationKey];
-    }];
-    if (preexistingOpacityAnimation) {
-      [placeholderLabel.layer removeAnimationForKey:self.placeholderLabelOpacityAnimationKey];
-    } else if (opacityToValue == 1) {
-      CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-      animation.fromValue = @(opacityFromValue);
-      animation.toValue = @(opacityToValue);
-      animation.duration = kMDCContainedInputViewLabelAnimatorDefaultAnimationDuration;
-      animation.removedOnCompletion = NO;
-      animation.fillMode = kCAFillModeForwards;
-      [placeholderLabel.layer addAnimation:animation
-                                    forKey:self.placeholderLabelOpacityAnimationKey];
-    }
-  }
-  [CATransaction commit];
-}
-
 /**
  This helper method returns the transform that would need to be applied to a view with a frame of @c
  sourceRect in order for it to appear as though its frame was @c finalRect.

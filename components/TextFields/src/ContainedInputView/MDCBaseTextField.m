@@ -30,7 +30,6 @@
 @interface MDCBaseTextField () <MDCContainedInputView>
 
 @property(strong, nonatomic) UILabel *label;
-@property(strong, nonatomic) UILabel *placeholderLabel;
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelView *assistiveLabelView;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
@@ -72,7 +71,6 @@
   [self initializeProperties];
   [self setUpColorViewModels];
   [self setUpLabel];
-  [self setUpPlaceholderLabel];
   [self setUpAssistiveLabels];
 }
 
@@ -113,11 +111,6 @@
   self.label = [[UILabel alloc] initWithFrame:self.bounds];
   [self addSubview:self.label];
 }
-- (void)setUpPlaceholderLabel {
-  self.placeholderLabel = [[UILabel alloc] initWithFrame:self.bounds];
-  self.placeholderColor = [UIColor systemGrayColor];
-  [self addSubview:self.placeholderLabel];
-}
 
 #pragma mark UIView Overrides
 
@@ -147,7 +140,6 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.labelState = [self determineCurrentLabelState];
-  self.placeholderLabel.text = self.placeholder;
   MDCContainedInputViewColorViewModel *colorViewModel =
       [self containedInputViewColorViewModelForState:self.containedInputViewState];
   [self applyColorViewModel:colorViewModel withLabelState:self.labelState];
@@ -156,10 +148,6 @@
 }
 
 - (void)postLayoutSubviews {
-  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
-  [MDCContainedInputViewLabelAnimation layOutPlaceholderLabel:self.placeholderLabel
-                                             placeholderFrame:placeholderFrame
-                                         isPlaceholderVisible:self.shouldPlaceholderBeVisible];
   [MDCContainedInputViewLabelAnimation layOutLabel:self.label
                                              state:self.labelState
                                   normalLabelFrame:self.layout.labelFrameNormal
@@ -181,15 +169,6 @@
     textRect = layout.textRectFloating;
   }
   return textRect;
-}
-
-- (CGRect)placeholderRectFromLayout:(MDCBaseTextFieldLayout *)layout
-                         labelState:(MDCContainedInputViewLabelState)labelState {
-  CGRect placeholderRect = layout.placeholderFrameNormal;
-  if (labelState == MDCContainedInputViewLabelStateFloating) {
-    placeholderRect = layout.placeholderFrameFloating;
-  }
-  return placeholderRect;
 }
 
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
@@ -309,11 +288,6 @@
   self.label.text = [labelText copy];
 }
 
-- (void)setPlaceholderColor:(UIColor *)placeholderColor {
-  _placeholderColor = placeholderColor;
-  self.placeholderLabel.textColor = _placeholderColor;
-}
-
 - (UILabel *)leadingAssistiveLabel {
   if ([self isRTL]) {
     return self.assistiveLabelView.rightAssistiveLabel;
@@ -420,6 +394,12 @@
   [self setNeedsLayout];
 }
 
+-(UIColor *)placeholderColor {
+  return _placeholderColor ?: [UIColor lightGrayColor];
+}
+
+#pragma mark MDCContainedInputView accessors
+
 - (void)setLabelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
   if (_labelBehavior == labelBehavior) {
     return;
@@ -437,8 +417,6 @@
   _containerStyle.animationDuration = self.animationDuration;
   [_containerStyle applyStyleToContainedInputView:self];
 }
-
-#pragma mark MDCContainedInputView accessors
 
 - (CGRect)containerFrame {
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
@@ -506,19 +484,21 @@
 }
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
+  if (self.shouldPlaceholderBeVisible) {
+    return [super placeholderRectForBounds:bounds];
+  }
   return CGRectZero;
 }
 
-// If we decide we don't want to use the custom placeholder label we can either delete this method
-// or fully implement it.
 - (void)drawPlaceholderInRect:(CGRect)rect {
+  if (self.shouldPlaceholderBeVisible) {
+    NSDictionary *attributes = @{NSForegroundColorAttributeName:self.placeholderColor,
+                                 NSFontAttributeName:self.font};
+    [self.placeholder drawInRect:rect withAttributes:attributes];
+  }
 }
 
 #pragma mark Fonts
-
-- (void)setFont:(UIFont *)font {
-  [super setFont:font];
-}
 
 - (UIFont *)font {
   return [super font] ?: [self uiTextFieldDefaultFont];
@@ -690,7 +670,6 @@
   self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
   self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
   self.label.textColor = labelColor;
-  self.placeholderLabel.textColor = self.placeholderColor;
 }
 
 - (void)setContainedInputViewColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel

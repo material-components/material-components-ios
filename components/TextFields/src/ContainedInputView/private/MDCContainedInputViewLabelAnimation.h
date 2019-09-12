@@ -20,9 +20,6 @@
 
 @property(nonatomic, assign) NSTimeInterval animationDuration;
 
-+ (void)layOutPlaceholderLabel:(nonnull UILabel *)placeholderLabel
-              placeholderFrame:(CGRect)placeholderFrame
-          isPlaceholderVisible:(BOOL)isPlaceholderVisible;
 + (void)layOutLabel:(nonnull UILabel *)floatingLabel
                  state:(MDCContainedInputViewLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
