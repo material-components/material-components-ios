@@ -294,13 +294,6 @@
   [self mdc_setRightView:rightView];
 }
 
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
-    return self.layout.clearButtonFrameFloating;
-  }
-  return self.layout.clearButtonFrameNormal;
-}
-
 #pragma mark Custom Accessors
 
 - (void)setAnimationDuration:(NSTimeInterval)animationDuration {

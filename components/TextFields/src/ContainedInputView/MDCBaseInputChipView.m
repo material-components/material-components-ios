@@ -430,16 +430,11 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark Layout
 
 - (NSInteger)determineNumberOfVisibleRows {
-  NSInteger numberOfVisibleRows = 0;
   if (self.chipsWrap) {
-    numberOfVisibleRows = self.preferredNumberOfVisibleRows;
-    if (numberOfVisibleRows <= 0) {
-      numberOfVisibleRows = 1;
-    }
+    return self.preferredNumberOfVisibleRows;
   } else {
-    numberOfVisibleRows = 1;
+    return 1;
   }
-  return numberOfVisibleRows;
 }
 
 - (MDCBaseInputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
