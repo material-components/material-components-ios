@@ -319,13 +319,6 @@
   [self updateAttributedPlaceholder];
 }
 
-- (void)updateAttributedPlaceholder {
-  NSDictionary *attributes = @{NSForegroundColorAttributeName : self.placeholderColor};
-  NSAttributedString *attributedPlaceholder =
-      [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
-  self.attributedPlaceholder = attributedPlaceholder;
-}
-
 #pragma mark UITextField Layout Overrides
 
 // The implementations for this method and the method below deserve some context! Unfortunately,
@@ -408,6 +401,13 @@
   } else {
     return NO;
   }
+}
+
+- (void)updateAttributedPlaceholder {
+  NSDictionary *attributes = @{NSForegroundColorAttributeName : self.placeholderColor};
+  NSAttributedString *attributedPlaceholder =
+  [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
+  self.attributedPlaceholder = attributedPlaceholder;
 }
 
 #pragma mark Label
