@@ -411,6 +411,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
+    component.framework = "WebKit"
 
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/ShapeLibrary"
