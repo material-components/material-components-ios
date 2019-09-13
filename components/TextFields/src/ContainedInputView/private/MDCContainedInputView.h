@@ -73,7 +73,7 @@
 @property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
 
 /**
- This property is used to determine how much horizontal space to allot for each of the two underline
+ This property is used to determine how much horizontal space to allot for each of the two assistive
  labels.
 
  @note The default value is MDCContainedInputViewAssistiveLabelDrawPriorityTrailing. The rationale
@@ -82,14 +82,14 @@
  leftover for the longer text, which may wrap to new lines.
  */
 @property(nonatomic, assign)
-    MDCContainedInputViewAssistiveLabelDrawPriority underlineLabelDrawPriority;
+    MDCContainedInputViewAssistiveLabelDrawPriority assistiveLabelDrawPriority;
 
 /**
- When @c underlineLabelDrawPriority is set to @c .custom the value of this property helps determine
- what percentage of the available width each underline label gets. It can be thought of as a
- divider. A value of @c 0 would result in the trailing underline label getting all the available
- width. A value of @c 1 would result in the leading underline label getting all the available width.
- A value of @c .5 would result in each underline label getting 50% of the available width.
+ When @c assistiveLabelDrawPriority is set to @c .custom the value of this property helps determine
+ what percentage of the available width each assistive label gets. It can be thought of as a
+ divider. A value of @c 0 would result in the trailing assistive label getting all the available
+ width. A value of @c 1 would result in the leading assistive label getting all the available width.
+ A value of @c .5 would result in each assistive label getting 50% of the available width.
  */
 @property(nonatomic, assign) CGFloat customAssistiveLabelDrawPriority;
 
@@ -114,7 +114,7 @@
 
 /**
  This API allows the user to override the default main content area height. The main content area is
- the part of the view where the where the data input happens. It is located above the underline
+ the part of the view where the where the data input happens. It is located above the assistive
  label area. If this property is set to a value that's lower than the default main content area
  height the value will be ignored in the calculation of the view's @c intrinsicContentSize.
  */

@@ -56,8 +56,8 @@
                               clearButtonMode:(UITextFieldViewMode)clearButtonMode
                            leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
                           rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
-                   underlineLabelDrawPriority:
-                       (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+                   assistiveLabelDrawPriority:
+                       (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
              customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                      preferredContainerHeight:(CGFloat)preferredContainerHeight
                                         isRTL:(BOOL)isRTL

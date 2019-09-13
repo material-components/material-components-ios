@@ -138,7 +138,7 @@
 
 @implementation MDCBaseTextArea
 @synthesize preferredContainerHeight = _preferredContainerHeight;
-@synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
+@synthesize assistiveLabelDrawPriority = _assistiveLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyle = _containerStyle;
 @synthesize label = _label;
@@ -246,12 +246,12 @@
 }
 
 - (void)setUpAssistiveLabels {
-  //  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
-  //  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
+  //  CGFloat assistiveFontSize = MDCRound([UIFont systemFontSize] * 0.75);
+  //  UIFont *assistiveFont = [UIFont systemFontOfSize:assistiveFontSize];
   //  self.leftAssistiveLabel = [[UILabel alloc] init];
-  //  self.leftAssistiveLabel.font = underlineFont;
+  //  self.leftAssistiveLabel.font = assistiveFont;
   //  self.rightAssistiveLabel = [[UILabel alloc] init];
-  //  self.rightAssistiveLabel.font = underlineFont;
+  //  self.rightAssistiveLabel.font = assistiveFont;
   //  [self addSubview:self.leftAssistiveLabel];
   //  [self addSubview:self.rightAssistiveLabel];
 }
@@ -413,7 +413,7 @@
                                        labelBehavior:self.labelBehavior
                                   leftAssistiveLabel:self.leftAssistiveLabel
                                  rightAssistiveLabel:self.rightAssistiveLabel
-                          underlineLabelDrawPriority:self.underlineLabelDrawPriority
+                          assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
                     customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
                             preferredContainerHeight:self.preferredContainerHeight
                         preferredNumberOfVisibleRows:self.preferredNumberOfVisibleRows

@@ -61,8 +61,8 @@
                     interChipSpacing:(CGFloat)interChipSpacing
                   leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
-          underlineLabelDrawPriority:
-              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+          assistiveLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows

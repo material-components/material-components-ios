@@ -148,7 +148,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 @implementation MDCBaseInputChipView
 @synthesize preferredContainerHeight = _preferredContainerHeight;
-@synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
+@synthesize assistiveLabelDrawPriority = _assistiveLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyle = _containerStyle;
 @synthesize label = _label;
@@ -274,12 +274,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpAssistiveLabels {
-  self.underlineLabelDrawPriority = MDCContainedInputViewAssistiveLabelDrawPriorityTrailing;
+  self.assistiveLabelDrawPriority = MDCContainedInputViewAssistiveLabelDrawPriorityTrailing;
   self.assistiveLabelView = [[MDCContainedInputAssistiveLabelView alloc] init];
-  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
-  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  self.assistiveLabelView.leftAssistiveLabel.font = underlineFont;
-  self.assistiveLabelView.rightAssistiveLabel.font = underlineFont;
+  CGFloat assistiveFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
+  UIFont *assistiveFont = [UIFont systemFontOfSize:assistiveFontSize];
+  self.assistiveLabelView.leftAssistiveLabel.font = assistiveFont;
+  self.assistiveLabelView.rightAssistiveLabel.font = assistiveFont;
   [self addSubview:self.assistiveLabelView];
 }
 
@@ -463,7 +463,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                          interChipSpacing:self.chipRowSpacing
                                        leftAssistiveLabel:self.leftAssistiveLabel
                                       rightAssistiveLabel:self.rightAssistiveLabel
-                               underlineLabelDrawPriority:self.underlineLabelDrawPriority
+                               assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
                          customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
                                  preferredContainerHeight:self.preferredContainerHeight
                              preferredNumberOfVisibleRows:self.preferredNumberOfVisibleRows

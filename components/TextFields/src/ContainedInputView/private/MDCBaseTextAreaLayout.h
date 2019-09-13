@@ -25,7 +25,7 @@
 
 @property(nonatomic, assign) CGRect textViewFrame;
 
-@property(nonatomic, assign) CGRect underlineLabelFrame;
+@property(nonatomic, assign) CGRect assistiveLabelFrame;
 @property(nonatomic, assign) CGRect leftAssistiveLabelFrame;
 @property(nonatomic, assign) CGRect rightAssistiveLabelFrame;
 
@@ -51,8 +51,8 @@
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-          underlineLabelDrawPriority:
-              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+          assistiveLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows

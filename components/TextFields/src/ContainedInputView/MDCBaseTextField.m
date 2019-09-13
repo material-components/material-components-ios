@@ -44,10 +44,11 @@
 
 @implementation MDCBaseTextField
 @synthesize preferredContainerHeight = _preferredContainerHeight;
-@synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
+@synthesize assistiveLabelDrawPriority = _assistiveLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyle = _containerStyle;
 @synthesize labelBehavior = _labelBehavior;
+@synthesize placeholderColor = _placeholderColor;
 
 #pragma mark Object Lifecycle
 
@@ -98,12 +99,12 @@
 }
 
 - (void)setUpAssistiveLabels {
-  self.underlineLabelDrawPriority = MDCContainedInputViewAssistiveLabelDrawPriorityTrailing;
+  self.assistiveLabelDrawPriority = MDCContainedInputViewAssistiveLabelDrawPriorityTrailing;
   self.assistiveLabelView = [[MDCContainedInputAssistiveLabelView alloc] init];
-  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
-  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  self.assistiveLabelView.leftAssistiveLabel.font = underlineFont;
-  self.assistiveLabelView.rightAssistiveLabel.font = underlineFont;
+  CGFloat assistiveFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
+  UIFont *assistiveFont = [UIFont systemFontOfSize:assistiveFontSize];
+  self.assistiveLabelView.leftAssistiveLabel.font = assistiveFont;
+  self.assistiveLabelView.rightAssistiveLabel.font = assistiveFont;
   [self addSubview:self.assistiveLabelView];
 }
 
@@ -178,19 +179,18 @@
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
-- (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
+- (CGFloat)clearButtonSideLength {
   static dispatch_once_t onceToken;
-  static CGRect systemPlaceholderRect;
+  static CGRect systemClearButtonRect;
+  UITextField *textField = self.textFieldPrototype;
   dispatch_once(&onceToken, ^{
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
-    systemPlaceholderRect = [textField clearButtonRectForBounds:textField.bounds];
+    systemClearButtonRect = [textField clearButtonRectForBounds:textField.bounds];
   });
-  CGFloat sideLength = CGRectGetHeight(systemPlaceholderRect);
+  CGFloat sideLength = CGRectGetHeight(systemClearButtonRect);
   return sideLength > 0 ? sideLength : 19.0;
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
   CGFloat normalizedCustomAssistiveLabelDrawPriority =
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
@@ -204,11 +204,11 @@
                           leftViewMode:self.leftViewMode
                              rightView:self.rightView
                          rightViewMode:self.rightViewMode
-                 clearButtonSideLength:clearButtonSideLength
+                 clearButtonSideLength:[self clearButtonSideLength]
                        clearButtonMode:self.clearButtonMode
-                    leftAssistiveLabel:self.leftAssistiveLabel
-                   rightAssistiveLabel:self.rightAssistiveLabel
-            underlineLabelDrawPriority:self.underlineLabelDrawPriority
+                    leftAssistiveLabel:self.assistiveLabelView.leftAssistiveLabel
+                   rightAssistiveLabel:self.assistiveLabelView.rightAssistiveLabel
+            assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
               preferredContainerHeight:self.preferredContainerHeight
                                  isRTL:self.isRTL
@@ -394,8 +394,18 @@
   [self setNeedsLayout];
 }
 
--(UIColor *)placeholderColor {
+- (UIColor *)placeholderColor {
   return _placeholderColor ?: [UIColor lightGrayColor];
+}
+
+- (void)setPlaceholderColor:(UIColor *)placeholderColor {
+  _placeholderColor = placeholderColor;
+  [self updateAttributedPlaceholder];
+}
+
+- (void)setPlaceholder:(NSString *)placeholder {
+  [super setPlaceholder:placeholder];
+  [self updateAttributedPlaceholder];
 }
 
 #pragma mark MDCContainedInputView accessors
@@ -424,14 +434,6 @@
 
 - (CGFloat)numberOfTextRows {
   return 1;
-}
-
-- (UILabel *)leftAssistiveLabel {
-  return self.assistiveLabelView.leftAssistiveLabel;
-}
-
-- (UILabel *)rightAssistiveLabel {
-  return self.assistiveLabelView.rightAssistiveLabel;
 }
 
 #pragma mark UITextField Layout Overrides
@@ -492,9 +494,7 @@
 
 - (void)drawPlaceholderInRect:(CGRect)rect {
   if (self.shouldPlaceholderBeVisible) {
-    NSDictionary *attributes = @{NSForegroundColorAttributeName:self.placeholderColor,
-                                 NSFontAttributeName:self.font};
-    [self.placeholder drawInRect:rect withAttributes:attributes];
+    [super drawPlaceholderInRect:rect];
   }
 }
 
@@ -513,14 +513,18 @@
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
+  UIFont *backupSystemFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+  return self.textFieldPrototype.font ?: backupSystemFont;
+}
+
+- (UITextField *)textFieldPrototype {
   static dispatch_once_t onceToken;
-  static UIFont *font;
+  static UITextField *textField;
   dispatch_once(&onceToken, ^{
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
     textField.text = @"Text";
-    font = textField.font;
   });
-  return font;
+  return textField;
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
@@ -606,6 +610,13 @@
   } else {
     return NO;
   }
+}
+
+- (void)updateAttributedPlaceholder {
+  NSDictionary *attributes = @{NSForegroundColorAttributeName : self.placeholderColor};
+  NSAttributedString *attributedPlaceholder =
+  [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
+  self.attributedPlaceholder = attributedPlaceholder;
 }
 
 #pragma mark Label

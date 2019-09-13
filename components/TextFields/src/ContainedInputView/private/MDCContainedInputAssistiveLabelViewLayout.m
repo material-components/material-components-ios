@@ -29,8 +29,8 @@
 - (instancetype)initWithWidth:(CGFloat)superviewWidth
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-          underlineLabelDrawPriority:
-              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+          assistiveLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                    horizontalPadding:(CGFloat)horizontalPadding
                      verticalPadding:(CGFloat)verticalPadding
@@ -40,7 +40,7 @@
     [self calculateLayoutWithSuperviewWidth:superviewWidth
                          leftAssistiveLabel:leftAssistiveLabel
                         rightAssistiveLabel:rightAssistiveLabel
-                 underlineLabelDrawPriority:underlineLabelDrawPriority
+                 assistiveLabelDrawPriority:assistiveLabelDrawPriority
            customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                           horizontalPadding:horizontalPadding
                             verticalPadding:verticalPadding
@@ -54,59 +54,59 @@
 - (void)calculateLayoutWithSuperviewWidth:(CGFloat)superviewWidth
                        leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                       rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-               underlineLabelDrawPriority:
-                   (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+               assistiveLabelDrawPriority:
+                   (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
          customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                         horizontalPadding:(CGFloat)horizontalPadding
                           verticalPadding:(CGFloat)verticalPadding
                                     isRTL:(BOOL)isRTL {
-  CGFloat underlineLabelsCombinedMinX = horizontalPadding;
-  CGFloat underlineLabelsCombinedMaxX = superviewWidth - horizontalPadding;
-  CGFloat underlineLabelsCombinedMaxWidth =
-      underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
+  CGFloat assistiveLabelsCombinedMinX = horizontalPadding;
+  CGFloat assistiveLabelsCombinedMaxX = superviewWidth - horizontalPadding;
+  CGFloat assistiveLabelsCombinedMaxWidth =
+      assistiveLabelsCombinedMaxX - assistiveLabelsCombinedMinX;
 
-  CGFloat underlineLabelsCombinedMinY = verticalPadding;
+  CGFloat assistiveLabelsCombinedMinY = verticalPadding;
   CGFloat leadingAssistiveLabelWidth = 0;
   CGFloat trailingAssistiveLabelWidth = 0;
   CGSize leadingAssistiveLabelSize = CGSizeZero;
   CGSize trailingAssistiveLabelSize = CGSizeZero;
   UILabel *leadingAssistiveLabel = isRTL ? rightAssistiveLabel : leftAssistiveLabel;
   UILabel *trailingAssistiveLabel = isRTL ? leftAssistiveLabel : rightAssistiveLabel;
-  switch (underlineLabelDrawPriority) {
+  switch (assistiveLabelDrawPriority) {
     case MDCContainedInputViewAssistiveLabelDrawPriorityCustom:
       leadingAssistiveLabelWidth = [self
-          leadingAssistiveLabelWidthWithCombinedAssistiveLabelsWidth:underlineLabelsCombinedMaxWidth
+          leadingAssistiveLabelWidthWithCombinedAssistiveLabelsWidth:assistiveLabelsCombinedMaxWidth
                                                   customDrawPriority:
                                                       customAssistiveLabelDrawPriority];
-      trailingAssistiveLabelWidth = underlineLabelsCombinedMaxWidth - leadingAssistiveLabelWidth;
-      leadingAssistiveLabelSize = [self underlineLabelSizeWithLabel:leadingAssistiveLabel
+      trailingAssistiveLabelWidth = assistiveLabelsCombinedMaxWidth - leadingAssistiveLabelWidth;
+      leadingAssistiveLabelSize = [self assistiveLabelSizeWithLabel:leadingAssistiveLabel
                                                  constrainedToWidth:leadingAssistiveLabelWidth];
-      trailingAssistiveLabelSize = [self underlineLabelSizeWithLabel:trailingAssistiveLabel
+      trailingAssistiveLabelSize = [self assistiveLabelSizeWithLabel:trailingAssistiveLabel
                                                   constrainedToWidth:trailingAssistiveLabelWidth];
       break;
     case MDCContainedInputViewAssistiveLabelDrawPriorityLeading:
       leadingAssistiveLabelSize =
-          [self underlineLabelSizeWithLabel:leadingAssistiveLabel
-                         constrainedToWidth:underlineLabelsCombinedMaxWidth];
+          [self assistiveLabelSizeWithLabel:leadingAssistiveLabel
+                         constrainedToWidth:assistiveLabelsCombinedMaxWidth];
       if ([self isLabelMultilineWithLabel:leadingAssistiveLabel size:leadingAssistiveLabelSize]) {
         trailingAssistiveLabelSize = CGSizeZero;
       } else {
         trailingAssistiveLabelSize =
-            [self underlineLabelSizeWithLabel:trailingAssistiveLabel
-                           constrainedToWidth:underlineLabelsCombinedMaxWidth -
+            [self assistiveLabelSizeWithLabel:trailingAssistiveLabel
+                           constrainedToWidth:assistiveLabelsCombinedMaxWidth -
                                               leadingAssistiveLabelSize.width];
       }
       break;
     case MDCContainedInputViewAssistiveLabelDrawPriorityTrailing:
       trailingAssistiveLabelSize =
-          [self underlineLabelSizeWithLabel:trailingAssistiveLabel
-                         constrainedToWidth:underlineLabelsCombinedMaxWidth];
+          [self assistiveLabelSizeWithLabel:trailingAssistiveLabel
+                         constrainedToWidth:assistiveLabelsCombinedMaxWidth];
       if ([self isLabelMultilineWithLabel:trailingAssistiveLabel size:trailingAssistiveLabelSize]) {
         leadingAssistiveLabelSize = CGSizeZero;
       } else {
         leadingAssistiveLabelSize =
-            [self underlineLabelSizeWithLabel:leadingAssistiveLabel
-                           constrainedToWidth:underlineLabelsCombinedMaxWidth -
+            [self assistiveLabelSizeWithLabel:leadingAssistiveLabel
+                           constrainedToWidth:assistiveLabelsCombinedMaxWidth -
                                               trailingAssistiveLabelSize.width];
       }
       break;
@@ -129,12 +129,12 @@
   CGRect rightAssistiveLabelFrame = CGRectZero;
   if (!CGSizeEqualToSize(leftAssistiveLabelSize, CGSizeZero)) {
     leftAssistiveLabelFrame =
-        CGRectMake(underlineLabelsCombinedMinX, underlineLabelsCombinedMinY,
+        CGRectMake(assistiveLabelsCombinedMinX, assistiveLabelsCombinedMinY,
                    leftAssistiveLabelSize.width, leftAssistiveLabelSize.height);
   }
   if (!CGSizeEqualToSize(rightAssistiveLabelSize, CGSizeZero)) {
     rightAssistiveLabelFrame = CGRectMake(
-        underlineLabelsCombinedMaxX - rightAssistiveLabelSize.width, underlineLabelsCombinedMinY,
+        assistiveLabelsCombinedMaxX - rightAssistiveLabelSize.width, assistiveLabelsCombinedMinY,
         rightAssistiveLabelSize.width, rightAssistiveLabelSize.height);
   }
 
@@ -145,7 +145,7 @@
   self.calculatedHeight = maxAssistiveLabelHeight + verticalPadding;
 }
 
-- (CGSize)underlineLabelSizeWithLabel:(UILabel *)label constrainedToWidth:(CGFloat)maxWidth {
+- (CGSize)assistiveLabelSizeWithLabel:(UILabel *)label constrainedToWidth:(CGFloat)maxWidth {
   if (maxWidth <= 0 || label.text.length <= 0 || label.hidden) {
     return CGSizeZero;
   }

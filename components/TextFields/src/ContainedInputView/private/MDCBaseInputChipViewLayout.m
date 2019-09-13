@@ -51,8 +51,8 @@ static const CGFloat kGradientBlurLength = 6;
                     interChipSpacing:(CGFloat)interChipSpacing
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-          underlineLabelDrawPriority:
-              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+          assistiveLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
@@ -76,7 +76,7 @@ static const CGFloat kGradientBlurLength = 6;
                         interChipSpacing:interChipSpacing
                       leftAssistiveLabel:leftAssistiveLabel
                      rightAssistiveLabel:rightAssistiveLabel
-              underlineLabelDrawPriority:underlineLabelDrawPriority
+              assistiveLabelDrawPriority:assistiveLabelDrawPriority
         customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
                 preferredContainerHeight:preferredContainerHeight
             preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
@@ -103,8 +103,8 @@ static const CGFloat kGradientBlurLength = 6;
                     interChipSpacing:(CGFloat)interChipSpacing
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-          underlineLabelDrawPriority:
-              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+          assistiveLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
             preferredContainerHeight:(CGFloat)preferredContainerHeight
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
@@ -191,7 +191,7 @@ static const CGFloat kGradientBlurLength = 6;
                          initWithWidth:size.width
                     leftAssistiveLabel:leftAssistiveLabel
                    rightAssistiveLabel:rightAssistiveLabel
-            underlineLabelDrawPriority:underlineLabelDrawPriority
+            assistiveLabelDrawPriority:assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                      horizontalPadding:kHorizontalPadding
                        verticalPadding:assistiveLabelVerticalPadding
@@ -250,9 +250,9 @@ static const CGFloat kGradientBlurLength = 6;
 
 - (CGFloat)calculatedHeight {
   CGFloat maxY = self.containerHeight;
-  CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
-  if (underlineLabelViewMaxY > maxY) {
-    maxY = underlineLabelViewMaxY;
+  CGFloat assistiveLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
+  if (assistiveLabelViewMaxY > maxY) {
+    maxY = assistiveLabelViewMaxY;
   }
   return maxY;
 }

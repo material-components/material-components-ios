@@ -38,8 +38,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-           underlineLabelDrawPriority:
-               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+           assistiveLabelDrawPriority:
+               (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
      customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
              preferredContainerHeight:(CGFloat)preferredContainerHeight
                                 isRTL:(BOOL)isRTL
@@ -60,7 +60,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                            clearButtonMode:clearButtonMode
                         leftAssistiveLabel:leftAssistiveLabel
                        rightAssistiveLabel:rightAssistiveLabel
-                underlineLabelDrawPriority:underlineLabelDrawPriority
+                assistiveLabelDrawPriority:assistiveLabelDrawPriority
           customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                   preferredContainerHeight:preferredContainerHeight
                                      isRTL:isRTL
@@ -87,8 +87,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
                       leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                      rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-              underlineLabelDrawPriority:
-                  (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+              assistiveLabelDrawPriority:
+                  (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
         customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                 preferredContainerHeight:(CGFloat)preferredContainerHeight
                                    isRTL:(BOOL)isRTL
@@ -243,7 +243,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                          initWithWidth:textFieldWidth
                     leftAssistiveLabel:leftAssistiveLabel
                    rightAssistiveLabel:rightAssistiveLabel
-            underlineLabelDrawPriority:underlineLabelDrawPriority
+            assistiveLabelDrawPriority:assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                      horizontalPadding:kHorizontalPadding
                        verticalPadding:assistiveLabelVerticalPadding
@@ -377,9 +377,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (CGFloat)calculatedHeight {
   CGFloat maxY = self.containerHeight;
-  CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
-  if (underlineLabelViewMaxY > maxY) {
-    maxY = underlineLabelViewMaxY;
+  CGFloat assistiveLabelViewMaxY = CGRectGetMaxY(self.assistiveLabelViewFrame);
+  if (assistiveLabelViewMaxY > maxY) {
+    maxY = assistiveLabelViewMaxY;
   }
   return maxY;
 }
