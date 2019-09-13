@@ -994,10 +994,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - Deprecations
 
-- (UIColor *)underlyingColor {
-  return [self underlyingColorHint];
-}
-
 - (void)setUnderlyingColor:(UIColor *)underlyingColor {
   [self setUnderlyingColorHint:underlyingColor];
 }
