@@ -103,12 +103,13 @@ static const CGFloat kProgressViewHeight = 4;
                                   metrics:metrics
                                     views:views]];
 
-  [NSLayoutConstraint activateConstraints:[NSLayoutConstraint
-        constraintsWithVisualFormat:@"H:|-(horizontalMargin)-[progressView]-(horizontalMargin)-|"
-                            options:0
-                            metrics:metrics
-                              views:views]
-  ]];
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:
+                                  @"H:|-(horizontalMargin)-[progressView]-(horizontalMargin)-|"
+                                                  options:0
+                                                  metrics:metrics
+                                                    views:views]];
 }
 
 #pragma mark - CatalogByConvention
