@@ -148,7 +148,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _enabledAlpha = self.alpha;
-  _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
   _nontransformedTitles = [NSMutableDictionary dictionary];

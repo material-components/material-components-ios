@@ -334,9 +334,4 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - Deprecated
-
-@property(nonatomic) BOOL shouldRaiseOnTouch __deprecated_msg(
-    "Set elevation to MDCShadowElevationNone for all states instead.");
-
 @end
