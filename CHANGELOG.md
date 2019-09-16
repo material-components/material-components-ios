@@ -1,18 +1,35 @@
 # 90.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release deletes several deprecated APIs and annotates several APIs as deprecated.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+Buttons' `buttonWithShape:` API has been deleted. Please use `floatingButtonWithShape:` instead.
+
+FlexibleHeader's `behavior` API has been deleted. Please use `shiftBehavior` instead.
+
+NavigationBar's `textAlignment` API has been deleted. Please use `titleAlignment` instead.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
-## New features
+ActivityIndicator's ColorThemer is now deprecated. Please theme MDCActivityIndicator's colors
+directly instead.
 
-Replace this text with example code for each new feature.
-## API changes
+ButtonBar's Theming extension and TypographyThemer are now deprecated. ButtonBar is not intended to
+be themed as a standalone component. Please theme it via the AppBar component's Theming extension
+instead.
 
-## Component changes
+BottomAppBar's ColorThemer is now deprecated. There is presently no replacement. Please indicate
+interest in a replacement at
+https://github.com/material-components/material-components-ios/issues/7172.
+
+## Upcoming breaking changes
+
+BasicFontScheme is now a standalone target within schemes/Typography with the CocoaPods spec name:
+`MaterialComponents/schemes/Typography+BasicFontScheme`. For backwards compatibility, this new
+target is still a dependency of `MaterialComponents/schemes/Typography.  This dependency will be
+removed as a breaking change in a subsequent release, with the intent of eventually deprecating
+and deleting the BasicFontScheme target altogether.
 
 ## Changes
 
@@ -23,6 +40,10 @@ Replace this text with example code for each new feature.
 ### ActivityIndicator
 
 * [Deprecate ColorThemer. (#8430)](https://github.com/material-components/material-components-ios/commit/97bb87866b56bfa80127f2b36cc271d98d90b44f) (featherless)
+
+### BottomAppBar
+
+* [Deprecate the ColorThemer. (#8438)](https://github.com/material-components/material-components-ios/commit/a01712388be973c3912e2b32d3bd57e816dfa120) (featherless)
 
 ### ButtonBar
 
@@ -56,7 +77,6 @@ Replace this text with example code for each new feature.
 
 ## Multi-component changes
 
-* [Deprecate the ColorThemer. (#8438)](https://github.com/material-components/material-components-ios/commit/a01712388be973c3912e2b32d3bd57e816dfa120) (featherless)
 * [Fix theming docs. (#8431)](https://github.com/material-components/material-components-ios/commit/c5188966f65f39edb269ee13c63eaa4185c31d92) (Robert Moore)
 
 ---
