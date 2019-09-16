@@ -615,7 +615,7 @@
 - (void)updateAttributedPlaceholder {
   NSDictionary *attributes = @{NSForegroundColorAttributeName : self.placeholderColor};
   NSAttributedString *attributedPlaceholder =
-  [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
+      [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
   self.attributedPlaceholder = attributedPlaceholder;
 }
 

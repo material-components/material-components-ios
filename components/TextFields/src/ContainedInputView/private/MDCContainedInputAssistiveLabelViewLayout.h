@@ -24,13 +24,13 @@
 @property(nonatomic, assign, readonly) CGFloat calculatedHeight;
 
 - (instancetype)initWithWidth:(CGFloat)superviewWidth
-           leftAssistiveLabel:(UILabel *)leftAssistiveLabel
-          rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-   assistiveLabelDrawPriority:
-(MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
-customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-            horizontalPadding:(CGFloat)horizontalPadding
-              verticalPadding:(CGFloat)verticalPadding
-                        isRTL:(BOOL)isRTL;
+                  leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                 rightAssistiveLabel:(UILabel *)rightAssistiveLabel
+          assistiveLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)assistiveLabelDrawPriority
+    customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
+                   horizontalPadding:(CGFloat)horizontalPadding
+                     verticalPadding:(CGFloat)verticalPadding
+                               isRTL:(BOOL)isRTL;
 
 @end

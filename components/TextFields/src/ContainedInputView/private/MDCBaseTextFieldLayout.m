@@ -311,9 +311,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   }
 }
 
-- (CGSize)labelSizeWithText:(NSString *)text
-                           maxWidth:(CGFloat)maxWidth
-                               font:(UIFont *)font {
+- (CGSize)labelSizeWithText:(NSString *)text maxWidth:(CGFloat)maxWidth font:(UIFont *)font {
   if (!font) {
     return CGSizeZero;
   }
