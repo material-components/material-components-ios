@@ -33,7 +33,9 @@
  Once the view controller to be presented has been fully configured, you can present the view
  controller using any of the available view controller presentation APIs.
  */
-@interface MDCMaskedTransitionController : NSObject <UIViewControllerTransitioningDelegate>
+__deprecated_msg("There is no replacemennt for this API."
+                 " Please use a standard presentViewController invocation instead.")
+    @interface MDCMaskedTransitionController : NSObject<UIViewControllerTransitioningDelegate>
 
 /**
  Initializes the transition controller with a given source view.
