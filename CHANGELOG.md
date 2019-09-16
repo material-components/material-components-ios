@@ -52,6 +52,7 @@ Replace this text with example code for each new feature.
 ### schemes/Typography
 
 * [Pull BasicFontScheme out to an extension. (#8425)](https://github.com/material-components/material-components-ios/commit/c0e74b1d201f546164d411063e7eaf6b3bffd51a) (featherless)
+* [Rename MaterialTypography+BasicFontScheme.h to MaterialTypographyScheme+BasicFontScheme.h. (#8442)](https://github.com/material-components/material-components-ios/commit/d54d89b413ab7d1eb1db452656d9209cf123c739) (featherless)
 
 ## Multi-component changes
 
