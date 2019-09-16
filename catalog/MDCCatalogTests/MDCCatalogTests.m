@@ -14,8 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialXCTest.h"
-
 @interface MDCCatalogTests : XCTestCase
 
 @end
