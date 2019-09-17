@@ -336,9 +336,8 @@
 
 #pragma mark - Deprecated
 
-@property(nonatomic)
-    BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
-        ;
+@property(nonatomic) BOOL shouldRaiseOnTouch __deprecated_msg(
+    "Set elevation to MDCShadowElevationNone for all states instead.");
 
 @property(nonatomic, strong, nullable)
     UIColor *underlyingColor __deprecated_msg("Use underlyingColorHint instead.");

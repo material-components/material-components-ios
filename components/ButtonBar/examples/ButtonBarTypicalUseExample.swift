@@ -15,7 +15,6 @@
 import Foundation
 import MaterialComponents.MaterialButtonBar
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponentsBeta.MaterialButtonBar_Theming
 
 class ButtonBarTypicalUseSwiftExample: UIViewController {
   @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
@@ -32,7 +31,9 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    buttonBar.applyPrimaryTheme(withScheme: scheme)
+    buttonBar.backgroundColor = colorScheme.primaryColor
+    buttonBar.tintColor = colorScheme.onPrimaryColor
+    buttonBar.setButtonsTitleFont(typographyScheme.button, for: .normal)
 
     // MDCButtonBar ignores the style of UIBarButtonItem.
     let ignored: UIBarButtonItem.Style = .done

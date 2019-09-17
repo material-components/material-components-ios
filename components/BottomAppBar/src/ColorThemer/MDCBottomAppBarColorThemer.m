@@ -17,7 +17,10 @@
 #import "MaterialBottomAppBar.h"
 #import "MaterialThemes.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCBottomAppBarColorThemer
+#pragma clang diagnostic pop
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
       toBottomAppBarView:(MDCBottomAppBarView *)bottomAppBarView {
