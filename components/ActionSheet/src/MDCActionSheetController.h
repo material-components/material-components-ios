@@ -219,6 +219,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic, copy, nonnull) UIColor *headerDividerColor;
 
 /**
+ The elevation of the action sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
  Determines the alignment behavior of all title leading edges.
 
  When YES, all title leading edges will be aligned with one another.
