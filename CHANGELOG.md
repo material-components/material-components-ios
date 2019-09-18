@@ -1,18 +1,31 @@
-# #develop#
+# 91.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release deletes several deprecated APIs and annotates several APIs as deprecated. Usage
+of UIWebView has also been partially replaced with WKWebView.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+Buttons shouldRaiseOnTouch was deleted. Set elevation to MDCShadowElevationNone for all states
+instead.
+
+Buttons underlyingColor property was deleted. Use underlyingColorHint instead.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+MDCMaskedTransitionController was deprecated. There is no replacemennt for this component. Please
+use a standard presentViewController invocation instead.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+ProgressView cornerRadius property was added. This enables clients to customize the corner radius
+of the filled portion of the progress view.
 
-## Component changes
+ActionSheet added the ability to add a divider between the header and table. Properties 
+`headerDividerColor` and `showHeaderDivider` were added to MDCActionSheetController. If a client 
+wants to show a header divider they would need to set `showHeaderDivider` and then set an
+appropriate color for their use case, by default it is `clearColor`. By default the property 
+`showHeaderDivider` view is `NO` so that we do not break clients. This matches a pattern outlined 
+in [`MDCBannerView`](https://github.com/material-components/material-components-ios/blob/ac114b4bda9dbad328ae445c4529a43a94ccd97d/components/Banner/src/MDCBannerView.h#L76-L88).
 
 ## Changes
 
