@@ -51,6 +51,7 @@ mdc_extension_objc_library(
         "//components/Elevation",
         "//components/private/Color",
         "//components/schemes/Container",
+        "//components/ShadowElevations",
     ],
 )
 

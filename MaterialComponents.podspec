@@ -85,6 +85,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/Elevation"
     extension.dependency "MaterialComponents/private/Color"
     extension.dependency "MaterialComponents/schemes/Container"
+    extension.dependency "MaterialComponents/ShadowElevations"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
