@@ -1,23 +1,23 @@
 # 91.0.0
 
 This major release deletes several deprecated APIs and annotates several APIs as deprecated. Usage
-of UIWebView has also been partially replaced with WKWebView.
+of `UIWebView` has also been replaced with `WKWebView`.
 
 ## Breaking changes
 
-Buttons shouldRaiseOnTouch was deleted. Set elevation to MDCShadowElevationNone for all states
+Buttons `shouldRaiseOnTouch` was deleted. Set elevation to `MDCShadowElevationNone` for all states
 instead.
 
-Buttons underlyingColor property was deleted. Use underlyingColorHint instead.
+Buttons `underlyingColor` property was deleted. Use `underlyingColorHint` instead.
 
 ## New deprecations
 
-MDCMaskedTransitionController was deprecated. There is no replacemennt for this component. Please
-use a standard presentViewController invocation instead.
+`MDCMaskedTransitionController` was deprecated. There is no replacemennt for this component. Please
+use a standard `presentViewController` invocation instead.
 
 ## New features
 
-ProgressView cornerRadius property was added. This enables clients to customize the corner radius
+ProgressView's `cornerRadius` property was added. This enables clients to customize the corner radius
 of the filled portion of the progress view.
 
 ActionSheet added the ability to add a divider between the header and table. Properties 
