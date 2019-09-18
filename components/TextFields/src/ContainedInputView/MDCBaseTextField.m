@@ -404,10 +404,14 @@
 }
 
 - (void)updateAttributedPlaceholder {
-  NSDictionary *attributes = @{NSForegroundColorAttributeName : self.placeholderColor};
-  NSAttributedString *attributedPlaceholder =
-      [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
-  self.attributedPlaceholder = attributedPlaceholder;
+  if (self.attributedPlaceholder.length > 0) {
+    NSMutableAttributedString *mutableAttributedString =
+        [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedPlaceholder];
+    NSRange range = NSMakeRange(0, mutableAttributedString.length);
+    NSDictionary *newColorAttribute = @{NSForegroundColorAttributeName : self.placeholderColor};
+    [mutableAttributedString addAttributes:newColorAttribute range:range];
+    self.attributedPlaceholder = [mutableAttributedString copy];
+  }
 }
 
 #pragma mark Label
