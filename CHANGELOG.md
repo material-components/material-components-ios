@@ -12,7 +12,7 @@ Buttons `underlyingColor` property was deleted. Use `underlyingColorHint` instea
 
 ## New deprecations
 
-`MDCMaskedTransitionController` was deprecated. There is no replacemennt for this component. Please
+`MDCMaskedTransitionController` was deprecated. There is no replacement for this component. Please
 use a standard `presentViewController` invocation instead.
 
 ## New features
