@@ -466,6 +466,18 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_overrideBaseElevation, fakeElevation, 0.001);
 }
 
+- (void)testSettingCustomElevation {
+  // Given
+  CGFloat customElevation = 99;
+
+  // When
+  self.actionSheet.elevation = customElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.actionSheet.elevation, customElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation, customElevation, 0.001);
+}
+
 - (void)testSetHeaderDividerColor {
   // Given
   UIColor *expectedColor = UIColor.orangeColor;
