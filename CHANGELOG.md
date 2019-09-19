@@ -50,10 +50,6 @@ in [`MDCBannerView`](https://github.com/material-components/material-components-
 
 * [Add cornerRadius API. (#7417)](https://github.com/material-components/material-components-ios/commit/63bb1a8c9faa4513fb29e5ca22c23c17503f76bc) (featherless)
 
-### TextFields
-
-* [Preserve placeholder font. (#8444)](https://github.com/material-components/material-components-ios/commit/8200fd04f5b70d15cf3fa10e8d6586c54fafb45f) (Robert Moore)
-
 ### schemes/Typography
 
 * [Rename MaterialTypography+BasicFontScheme.h to MaterialTypographyScheme+BasicFontScheme.h. (#8442)](https://github.com/material-components/material-components-ios/commit/c5aac50a89a0e2b2a1e7eea86de46c78e30d2d0b) (featherless)
