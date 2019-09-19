@@ -111,6 +111,7 @@ subclass conforming to the `MDCTabBarItemCustomViewing` protocol is provided as
 `MDCTabBarItem`.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 ##### Swift
 ```swift
 let customView = MyCustomTabView()
