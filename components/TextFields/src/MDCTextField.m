@@ -433,9 +433,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 }
 
 - (void)setFont:(UIFont *)font {
-  UIFont *previousFont = self.font;
   [super setFont:font];
-  [_fundament didSetFont:previousFont];
+  [_fundament didSetFont];
 }
 
 - (void)setEnabled:(BOOL)enabled {
