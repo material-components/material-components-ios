@@ -18,6 +18,12 @@ import MaterialComponents.MaterialNavigationDrawer
 
 class DrawerContentViewController: UIViewController {
   var preferredHeight: CGFloat = 2000
+  let bodyLabel : UILabel = {
+    let label = UILabel(frame: .zero)
+    label.text = "Example body"
+    label.sizeToFit()
+    return label
+  }()
 
   override var preferredContentSize: CGSize {
     get {
@@ -35,6 +41,17 @@ class DrawerContentViewController: UIViewController {
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(bodyLabel)
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    bodyLabel.center =
+      CGPoint(x: self.view.frame.size.width / 2, y: 20)
+  }
+
 }
 
 class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
