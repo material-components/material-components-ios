@@ -18,7 +18,7 @@
 
 @implementation MDCContainedInputViewColorViewModel
 
-- (instancetype)initWithState:(MDCContainedInputViewState)state {
+- (instancetype)initWithState:(MDCTextControlState)state {
   self = [super init];
   if (self) {
     [self setUpColorsWithState:state];
@@ -27,24 +27,24 @@
 }
 
 - (instancetype)init {
-  self = [self initWithState:MDCContainedInputViewStateNormal];
+  self = [self initWithState:MDCTextControlStateNormal];
   if (self) {
   }
   return self;
 }
 
-- (void)setUpColorsWithState:(MDCContainedInputViewState)state {
+- (void)setUpColorsWithState:(MDCTextControlState)state {
   UIColor *textColor = [UIColor blackColor];
   UIColor *floatingLabelColor = [UIColor blackColor];
   UIColor *normalLabelColor = [UIColor darkGrayColor];
   UIColor *assistiveLabelColor = [UIColor darkGrayColor];
   CGFloat disabledAlpha = (CGFloat)0.60;
   switch (state) {
-    case MDCContainedInputViewStateNormal:
+    case MDCTextControlStateNormal:
       break;
-    case MDCContainedInputViewStateFocused:
+    case MDCTextControlStateEditing:
       break;
-    case MDCContainedInputViewStateDisabled:
+    case MDCTextControlStateDisabled:
       textColor = [textColor colorWithAlphaComponent:disabledAlpha];
       floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:disabledAlpha];
       normalLabelColor = [normalLabelColor colorWithAlphaComponent:disabledAlpha];

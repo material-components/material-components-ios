@@ -14,4 +14,4 @@
 
 #import "MDCBaseTextField.h"
 #import "MDCTextControlLabelBehavior.h"
-#import "UIControlState+TextControl.h"
+#import "MDCTextControlState.h"

@@ -193,17 +193,17 @@
   UIColor *floatingLabelColorDisabled = [UIColor purpleColor];
 
   // When
-  [textField setFloatingLabelColor:floatingLabelColorNormal forState:UIControlStateNormal];
+  [textField setFloatingLabelColor:floatingLabelColorNormal forState:MDCTextControlStateNormal];
   [textField setFloatingLabelColor:floatingLabelColorEditing forState:MDCTextControlStateEditing];
-  [textField setFloatingLabelColor:floatingLabelColorDisabled forState:UIControlStateDisabled];
+  [textField setFloatingLabelColor:floatingLabelColorDisabled forState:MDCTextControlStateDisabled];
 
   // Then
   XCTAssertEqualObjects(floatingLabelColorNormal,
-                        [textField floatingLabelColorForState:UIControlStateNormal]);
+                        [textField floatingLabelColorForState:MDCTextControlStateNormal]);
   XCTAssertEqualObjects(floatingLabelColorEditing,
                         [textField floatingLabelColorForState:MDCTextControlStateEditing]);
   XCTAssertEqualObjects(floatingLabelColorDisabled,
-                        [textField floatingLabelColorForState:UIControlStateDisabled]);
+                        [textField floatingLabelColorForState:MDCTextControlStateDisabled]);
 }
 
 - (void)testNormalLabelColorAccessors {
@@ -215,17 +215,17 @@
   UIColor *normalLabelColorDisabled = [UIColor purpleColor];
 
   // When
-  [textField setNormalLabelColor:normalLabelColorNormal forState:UIControlStateNormal];
+  [textField setNormalLabelColor:normalLabelColorNormal forState:MDCTextControlStateNormal];
   [textField setNormalLabelColor:normalLabelColorEditing forState:MDCTextControlStateEditing];
-  [textField setNormalLabelColor:normalLabelColorDisabled forState:UIControlStateDisabled];
+  [textField setNormalLabelColor:normalLabelColorDisabled forState:MDCTextControlStateDisabled];
 
   // Then
   XCTAssertEqualObjects(normalLabelColorNormal,
-                        [textField normalLabelColorForState:UIControlStateNormal]);
+                        [textField normalLabelColorForState:MDCTextControlStateNormal]);
   XCTAssertEqualObjects(normalLabelColorEditing,
                         [textField normalLabelColorForState:MDCTextControlStateEditing]);
   XCTAssertEqualObjects(normalLabelColorDisabled,
-                        [textField normalLabelColorForState:UIControlStateDisabled]);
+                        [textField normalLabelColorForState:MDCTextControlStateDisabled]);
 }
 
 - (void)testTextColorAccessors {
@@ -237,14 +237,15 @@
   UIColor *textColorDisabled = [UIColor purpleColor];
 
   // When
-  [textField setTextColor:textColorNormal forState:UIControlStateNormal];
+  [textField setTextColor:textColorNormal forState:MDCTextControlStateNormal];
   [textField setTextColor:textColorEditing forState:MDCTextControlStateEditing];
-  [textField setTextColor:textColorDisabled forState:UIControlStateDisabled];
+  [textField setTextColor:textColorDisabled forState:MDCTextControlStateDisabled];
 
   // Then
-  XCTAssertEqualObjects(textColorNormal, [textField textColorForState:UIControlStateNormal]);
+  XCTAssertEqualObjects(textColorNormal, [textField textColorForState:MDCTextControlStateNormal]);
   XCTAssertEqualObjects(textColorEditing, [textField textColorForState:MDCTextControlStateEditing]);
-  XCTAssertEqualObjects(textColorDisabled, [textField textColorForState:UIControlStateDisabled]);
+  XCTAssertEqualObjects(textColorDisabled,
+                        [textField textColorForState:MDCTextControlStateDisabled]);
 }
 
 @end

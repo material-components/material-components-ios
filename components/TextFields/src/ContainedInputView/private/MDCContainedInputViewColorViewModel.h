@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputViewState.h"
+#import "MDCTextControlState.h"
 
 /**
  This object represents a group of colors that are applied on a state by state basis to
@@ -42,6 +42,6 @@
 /**
  This initializer returns an instance for a given state with a nonnull value for each property.
  */
-- (nonnull instancetype)initWithState:(MDCContainedInputViewState)state NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithState:(MDCTextControlState)state NS_DESIGNATED_INITIALIZER;
 
 @end
