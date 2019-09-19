@@ -1,3 +1,61 @@
+# 91.0.0
+
+This major release deletes several deprecated APIs and annotates several APIs as deprecated. Usage
+of `UIWebView` has also been replaced with `WKWebView`.
+
+## Breaking changes
+
+Buttons `shouldRaiseOnTouch` was deleted. Set elevation to `MDCShadowElevationNone` for all states
+instead.
+
+Buttons `underlyingColor` property was deleted. Use `underlyingColorHint` instead.
+
+## New deprecations
+
+`MDCMaskedTransitionController` was deprecated. There is no replacement for this component. Please
+use a standard `presentViewController` invocation instead.
+
+## New features
+
+ProgressView's `cornerRadius` property was added. This enables clients to customize the corner radius
+of the filled portion of the progress view.
+
+ActionSheet added the ability to add a divider between the header and table. Properties 
+`headerDividerColor` and `showHeaderDivider` were added to MDCActionSheetController. If a client 
+wants to show a header divider they would need to set `showHeaderDivider` and then set an
+appropriate color for their use case, by default it is `clearColor`. By default the property 
+`showHeaderDivider` view is `NO` so that we do not break clients. This matches a pattern outlined 
+in [`MDCBannerView`](https://github.com/material-components/material-components-ios/blob/ac114b4bda9dbad328ae445c4529a43a94ccd97d/components/Banner/src/MDCBannerView.h#L76-L88).
+
+## Changes
+
+### ActionSheet
+
+* [Add ability to add a divider between header and table (#8230)](https://github.com/material-components/material-components-ios/commit/693d01a06a088d93a84338f0c76b41bb8633223c) (Cody Weaver)
+
+### BottomSheet
+
+* [replace UIWebView usage with WKWebView. (#8453)](https://github.com/material-components/material-components-ios/commit/9bd8770ae49884f2fe7889a2441ea03d46ef9e87) (Wenyu Zhang)
+
+### Buttons
+
+* [Delete underlyingColor property (#8451)](https://github.com/material-components/material-components-ios/commit/7b0f8ee01bf32903cf8b0ac65472584e96dbe242) (Bryan Oltman)
+* [Remove unused shouldRaiseOnTouch property (#8455)](https://github.com/material-components/material-components-ios/commit/a6053f4afd983c78b8c6d3347a1cdd81f0f734dc) (Bryan Oltman)
+
+### MaskedTransition
+
+* [Deprecate MDCMaskedTransitionController. (#8443)](https://github.com/material-components/material-components-ios/commit/16e7009604624d9d9f99b9a0cde0f2725e8eb1a2) (featherless)
+
+### ProgressView
+
+* [Add cornerRadius API. (#7417)](https://github.com/material-components/material-components-ios/commit/63bb1a8c9faa4513fb29e5ca22c23c17503f76bc) (featherless)
+
+### schemes/Typography
+
+* [Rename MaterialTypography+BasicFontScheme.h to MaterialTypographyScheme+BasicFontScheme.h. (#8442)](https://github.com/material-components/material-components-ios/commit/c5aac50a89a0e2b2a1e7eea86de46c78e30d2d0b) (featherless)
+
+---
+
 # 90.0.0
 
 This major release deletes several deprecated APIs and annotates several APIs as deprecated.
