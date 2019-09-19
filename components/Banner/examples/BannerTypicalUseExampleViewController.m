@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #import "MaterialBanner.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
 
@@ -23,9 +25,39 @@ static const CGFloat exampleBannerContentPadding = 10.0f;
 static NSString *const exampleShortText = @"tristique senectus et";
 static NSString *const exampleLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do incididunt.";
-static NSString *const exampleExtraLongText =
+static NSString *const exampleSuperLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
-    @"labore et dolore.";
+    @"labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco "
+    @"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
+    @"voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
+
+@interface BannerExampleContentView : UIView
+
+@property(nonatomic, readwrite, strong) UILabel *contentLabel;
+
+@end
+
+@implementation BannerExampleContentView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    self.backgroundColor = UIColor.grayColor;
+    UILabel *contentLabel = [[UILabel alloc] init];
+    [self addSubview:contentLabel];
+    contentLabel.text = @"Content View";
+    [contentLabel sizeToFit];
+    self.contentLabel = contentLabel;
+  }
+  return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.contentLabel.center = self.center;
+}
+
+@end
 
 @interface BannerExampleUseInfo : NSObject
 
@@ -76,12 +108,13 @@ static NSString *const exampleExtraLongText =
 
 @property(nonatomic, strong) UITableView *exampleListTableView;
 @property(nonatomic, strong) NSArray<BannerExampleUseInfo *> *exampleList;
-@property(nonatomic, weak) UIView *contentView;
+@property(nonatomic, weak) BannerExampleContentView *contentView;
 @property(nonatomic, weak) UILabel *contentViewLabel;
 @property(nonatomic, weak) MDCBannerView *bannerView;
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
@@ -90,8 +123,9 @@ static NSString *const exampleExtraLongText =
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _colorScheme = _containerScheme.colorScheme;
+    _typographyScheme = _containerScheme.typographyScheme;
   }
   return self;
 }
@@ -99,25 +133,14 @@ static NSString *const exampleExtraLongText =
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Set up example content view
-  UIView *contentView = [[UIView alloc] initWithFrame:self.view.bounds];
-  contentView.backgroundColor = self.colorScheme.secondaryColor;
-  UILabel *contentViewLabel = [[UILabel alloc] init];
-  [contentView addSubview:contentViewLabel];
-  contentViewLabel.text = @"Content View";
-  [contentViewLabel sizeToFit];
-  contentViewLabel.center =
-      CGPointMake(CGRectGetMidX(contentView.bounds), CGRectGetMidY(contentView.bounds));
-  self.contentViewLabel = contentViewLabel;
-  self.contentView = contentView;
+  BannerExampleContentView *contentView =
+      [[BannerExampleContentView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:contentView];
+  self.contentView = contentView;
 
   // Set up example list table view
   self.exampleList = [self getBannerExampleList];
-  CGRect exampleListTableViewFrame =
-      CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
-                 CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
-  UITableView *exampleListTableView = [[UITableView alloc] initWithFrame:exampleListTableViewFrame
-                                                                   style:UITableViewStylePlain];
+  UITableView *exampleListTableView = [[UITableView alloc] init];
   [self.view addSubview:exampleListTableView];
   self.exampleListTableView = exampleListTableView;
   exampleListTableView.dataSource = self;
@@ -139,6 +162,9 @@ static NSString *const exampleExtraLongText =
   [super viewWillLayoutSubviews];
 
   self.contentView.frame = self.view.bounds;
+  self.exampleListTableView.frame =
+      CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
+                 CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
 
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
   // Adjust bannerViewContainer's frame
@@ -218,6 +244,13 @@ static NSString *const exampleExtraLongText =
       exampleUseSelector:@selector(showMultilineLongAttributedTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo9];
 
+  BannerExampleUseInfo *exampleUseInfo10 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example10"
+                                   displayName:@"Extra Long Text that exceeds 3 lines"
+                              exampleUseTarget:self
+                            exampleUseSelector:@selector(showExtraLongTextStyleBanner)];
+  [bannerExampleList addObject:exampleUseInfo10];
+
   return [bannerExampleList copy];
 }
 
@@ -241,11 +274,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
@@ -283,19 +313,14 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *dismissButton = bannerView.leadingButton;
+  [dismissButton applyTextThemeWithScheme:self.containerScheme];
   [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  dismissButton.uppercaseTitle = YES;
-  [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  dismissButton.backgroundColor = self.colorScheme.surfaceColor;
-  [dismissButton sizeToFit];
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
   MDCButton *changeTextButton = bannerView.trailingButton;
+  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
   [changeTextButton setTitle:@"Long dismiss" forState:UIControlStateNormal];
-  changeTextButton.uppercaseTitle = YES;
-  [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
@@ -330,17 +355,13 @@ static NSString *const exampleExtraLongText =
 
   MDCButton *dismissButton = bannerView.leadingButton;
   [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  dismissButton.uppercaseTitle = YES;
-  [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  dismissButton.backgroundColor = self.colorScheme.surfaceColor;
+  [dismissButton applyTextThemeWithScheme:self.containerScheme];
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
   MDCButton *changeTextButton = bannerView.trailingButton;
+  [changeTextButton applyTextThemeWithScheme:self.containerScheme];
   [changeTextButton setTitle:@"Extra long long long dismiss" forState:UIControlStateNormal];
-  changeTextButton.uppercaseTitle = YES;
-  [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
@@ -374,10 +395,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
 
@@ -402,10 +421,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
@@ -443,10 +460,35 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-  button.uppercaseTitle = YES;
-  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  button.backgroundColor = self.colorScheme.surfaceColor;
+  bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showExtraLongTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.textView.text = exampleSuperLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button applyTextThemeWithScheme:self.containerScheme];
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;

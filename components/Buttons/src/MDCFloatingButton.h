@@ -204,9 +204,4 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
                 forShape:(MDCFloatingButtonShape)shape
                   inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
-#pragma mark - Deprecations
-
-+ (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape
-    __deprecated_msg("Use floatingButtonWithShape: instead.");
-
 @end

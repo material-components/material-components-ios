@@ -1,3 +1,654 @@
+# 91.0.0
+
+This major release deletes several deprecated APIs and annotates several APIs as deprecated. Usage
+of `UIWebView` has also been replaced with `WKWebView`.
+
+## Breaking changes
+
+Buttons `shouldRaiseOnTouch` was deleted. Set elevation to `MDCShadowElevationNone` for all states
+instead.
+
+Buttons `underlyingColor` property was deleted. Use `underlyingColorHint` instead.
+
+## New deprecations
+
+`MDCMaskedTransitionController` was deprecated. There is no replacement for this component. Please
+use a standard `presentViewController` invocation instead.
+
+## New features
+
+ProgressView's `cornerRadius` property was added. This enables clients to customize the corner radius
+of the filled portion of the progress view.
+
+ActionSheet added the ability to add a divider between the header and table. Properties 
+`headerDividerColor` and `showHeaderDivider` were added to MDCActionSheetController. If a client 
+wants to show a header divider they would need to set `showHeaderDivider` and then set an
+appropriate color for their use case, by default it is `clearColor`. By default the property 
+`showHeaderDivider` view is `NO` so that we do not break clients. This matches a pattern outlined 
+in [`MDCBannerView`](https://github.com/material-components/material-components-ios/blob/ac114b4bda9dbad328ae445c4529a43a94ccd97d/components/Banner/src/MDCBannerView.h#L76-L88).
+
+## Changes
+
+### ActionSheet
+
+* [Add ability to add a divider between header and table (#8230)](https://github.com/material-components/material-components-ios/commit/693d01a06a088d93a84338f0c76b41bb8633223c) (Cody Weaver)
+
+### BottomSheet
+
+* [replace UIWebView usage with WKWebView. (#8453)](https://github.com/material-components/material-components-ios/commit/9bd8770ae49884f2fe7889a2441ea03d46ef9e87) (Wenyu Zhang)
+
+### Buttons
+
+* [Delete underlyingColor property (#8451)](https://github.com/material-components/material-components-ios/commit/7b0f8ee01bf32903cf8b0ac65472584e96dbe242) (Bryan Oltman)
+* [Remove unused shouldRaiseOnTouch property (#8455)](https://github.com/material-components/material-components-ios/commit/a6053f4afd983c78b8c6d3347a1cdd81f0f734dc) (Bryan Oltman)
+
+### MaskedTransition
+
+* [Deprecate MDCMaskedTransitionController. (#8443)](https://github.com/material-components/material-components-ios/commit/16e7009604624d9d9f99b9a0cde0f2725e8eb1a2) (featherless)
+
+### ProgressView
+
+* [Add cornerRadius API. (#7417)](https://github.com/material-components/material-components-ios/commit/63bb1a8c9faa4513fb29e5ca22c23c17503f76bc) (featherless)
+
+### schemes/Typography
+
+* [Rename MaterialTypography+BasicFontScheme.h to MaterialTypographyScheme+BasicFontScheme.h. (#8442)](https://github.com/material-components/material-components-ios/commit/c5aac50a89a0e2b2a1e7eea86de46c78e30d2d0b) (featherless)
+
+---
+
+# 90.0.0
+
+This major release deletes several deprecated APIs and annotates several APIs as deprecated.
+
+## Breaking changes
+
+Buttons' `buttonWithShape:` API has been deleted. Please use `floatingButtonWithShape:` instead.
+
+FlexibleHeader's `behavior` API has been deleted. Please use `shiftBehavior` instead.
+
+NavigationBar's `textAlignment` API has been deleted. Please use `titleAlignment` instead.
+
+## New deprecations
+
+ActivityIndicator's ColorThemer is now deprecated. Please theme MDCActivityIndicator's colors
+directly instead.
+
+ButtonBar's Theming extension and TypographyThemer are now deprecated. ButtonBar is not intended to
+be themed as a standalone component. Please theme it via the AppBar component's Theming extension
+instead.
+
+BottomAppBar's ColorThemer is now deprecated. There is presently no replacement. Please indicate
+interest in a replacement at
+https://github.com/material-components/material-components-ios/issues/7172.
+
+## Upcoming breaking changes
+
+BasicFontScheme is now a standalone target within schemes/Typography with the CocoaPods spec name:
+`MaterialComponents/schemes/Typography+BasicFontScheme`. For backwards compatibility, this new
+target is still a dependency of `MaterialComponents/schemes/Typography.  This dependency will be
+removed as a breaking change in a subsequent release, with the intent of eventually deprecating
+and deleting the BasicFontScheme target altogether.
+
+## Changes
+
+### ActionSheet
+
+* [Minor style cleanup of import statements. (#8428)](https://github.com/material-components/material-components-ios/commit/42a912da8cdf879f703f983f4fffa1968c6e68c3) (featherless)
+
+### ActivityIndicator
+
+* [Deprecate ColorThemer. (#8430)](https://github.com/material-components/material-components-ios/commit/97bb87866b56bfa80127f2b36cc271d98d90b44f) (featherless)
+
+### BottomAppBar
+
+* [Deprecate the ColorThemer. (#8438)](https://github.com/material-components/material-components-ios/commit/a01712388be973c3912e2b32d3bd57e816dfa120) (featherless)
+
+### ButtonBar
+
+* [Deprecate Theming and TypographyThemer. (#8432)](https://github.com/material-components/material-components-ios/commit/0f7ee59f139b3e1e48cddd1aada1de4715c54b8a) (featherless)
+
+### Buttons
+
+* [Clarify the alternative to shouldRaiseOnTouch. (#8422)](https://github.com/material-components/material-components-ios/commit/2085de156ca18cd61275c33cd8a3eca157c7b388) (featherless)
+* [Delete MDCFloatingButton's buttonWithShape method (#8416)](https://github.com/material-components/material-components-ios/commit/cf04f20a9ede9c6e9a4b17d519365628ed05857a) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Delete unused behavior property (#8414)](https://github.com/material-components/material-components-ios/commit/700908fae5ecc8341dfb3ec3837fc4edae7ffa46) (Bryan Oltman)
+
+### NavigationBar
+
+* [Delete unused MDCNavigationBar textAlignment property (#8411)](https://github.com/material-components/material-components-ios/commit/14febdb6a1770f89f0a3b58463d906b814f9deec) (Bryan Oltman)
+
+### TextFields
+
+* [Try new approach to snapshot testing textfields (#8407)](https://github.com/material-components/material-components-ios/commit/2d747d5da18b106624e62a21d33d0f37cd4f1e3b) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Delete unused hasShadow property (#8412)](https://github.com/material-components/material-components-ios/commit/d158f657a28ecccd3f7735b9ca96bdad08ffb8d8) (Bryan Oltman)
+
+### schemes/Typography
+
+* [Pull BasicFontScheme out to an extension. (#8425)](https://github.com/material-components/material-components-ios/commit/c0e74b1d201f546164d411063e7eaf6b3bffd51a) (featherless)
+* [Rename MaterialTypography+BasicFontScheme.h to MaterialTypographyScheme+BasicFontScheme.h. (#8442)](https://github.com/material-components/material-components-ios/commit/d54d89b413ab7d1eb1db452656d9209cf123c739) (featherless)
+
+## Multi-component changes
+
+* [Fix theming docs. (#8431)](https://github.com/material-components/material-components-ios/commit/c5188966f65f39edb269ee13c63eaa4185c31d92) (Robert Moore)
+
+---
+
+# 89.0.0
+
+This major release deletes several deprecated APIs, includes bug fixes for iOS 13, and improves
+haptics support in Slider.
+
+## Breaking changes
+
+Buttons' `customTitleColor` and `shouldCapitalizeTitle` APIs have been deleted.
+
+Chips' `inkColor` API has been deleted.
+
+## Changes
+
+### Buttons
+
+* [Delete deprecated customTitleColor property (#8403)](https://github.com/material-components/material-components-ios/commit/2feace84a9050fec15bd6c48b2bcb1745864af57) (Bryan Oltman)
+* [Remove unused shouldCapitalizeTitle property (#8402)](https://github.com/material-components/material-components-ios/commit/d6139cbfa90fd38adcf55c261cc1b6ad13d70bf9) (Bryan Oltman)
+
+### Chips
+
+* [Remove deprecated inkColor property (#8399)](https://github.com/material-components/material-components-ios/commit/c326f923234240957575fc4ff57fde48f28f9f48) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Update inferred status bar style on light backgrounds for iOS 13 (#8380)](https://github.com/material-components/material-components-ios/commit/f52abf7a87409d79071fe25596648b7a61079b63) (Cameron Spickert)
+
+### Slider
+
+* [Adding Haptic Feedback When Crossing Anchored Value (#8225)](https://github.com/material-components/material-components-ios/commit/8a587b8c61ceaabdc0a0bbf5f6ffc52bb0f9fda8) (afweiss)
+
+### TextFields
+
+* [Add label animator (#8382)](https://github.com/material-components/material-components-ios/commit/1fbb91217f0d8d71c54a26f4875fc1a94741367f) (Andrew Overton)
+* [Misc clean up (#8404)](https://github.com/material-components/material-components-ios/commit/7873ef4c2fddd9a5448221e0c68b55f7aa6ec93f) (Andrew Overton)
+
+---
+
+# 88.2.0
+
+This minor release makes the Banner component generally available, and
+provides a bug fix for Buttons.
+
+## New features
+
+`MDCBannerView` is now available for providing messaging to your app's users.
+It implements [Material Banners](https://material.io/components/banners/) and
+"displays a prominent message and related optional actions."
+
+## Changes
+
+### ActionSheet
+
+* [ [ActionSheet] Add snapshot tests to ensure the default presentation behavior doesn't change under iOS 13. (#8365)](https://github.com/material-components/material-components-ios/commit/05d01faa2cd5570b0a63c9f23007206871a9a829) (Wenyu Zhang)
+
+### Banner
+
+* [Add a missing button title in example. (#8369)](https://github.com/material-components/material-components-ios/commit/7f980895801cc7c236cd43e0e604cb98869b5828) (Wenyu Zhang)
+* [Add an example to show super long text case. (#8372)](https://github.com/material-components/material-components-ios/commit/8428e0690c9d0ca8ac30c64ca027fce770bbe241) (Wenyu Zhang)
+* [Add documentation on setting hidden of trailing button. (#8371)](https://github.com/material-components/material-components-ios/commit/0079e5741c1474897d564b5c19dc49cb00d214cb) (Wenyu Zhang)
+* [Refactor typical example view controller. (#8373)](https://github.com/material-components/material-components-ios/commit/93f9527e94e22439eed673d5b70e53c6e7a5ebdd) (Wenyu Zhang)
+* [Update readme after updating API from textLabel to textView. (#8378)](https://github.com/material-components/material-components-ios/commit/2bc08dc44a18a929545e5f857a2ef2e50e5ef5c1) (Wenyu Zhang)
+
+### BottomSheet
+
+* [Add snapshot tests to ensure BottomSheet's default presentation behavior doesn't change under iOS 13. (#8364)](https://github.com/material-components/material-components-ios/commit/0891e70dfca389730738cb4d7930ee44cb17ab59) (Wenyu Zhang)
+
+### Buttons
+
+* [overwrite intrinsicContentSize method. (#8370)](https://github.com/material-components/material-components-ios/commit/e3784afe259055679479f09b2e92324b61cf7fe0) (Wenyu Zhang)
+
+### Dialogs
+
+* [Add snapshot tests to ensure Dialog's default presentation behavior (#8360)](https://github.com/material-components/material-components-ios/commit/a91b1116b8fe90694aa55ae29ab7f652d2e7cee7) (Wenyu Zhang)
+
+### FeatureHighlight
+
+* [Add snapshot tests to ensure the default presentation behavior doesn't change under iOS 13. (#8366)](https://github.com/material-components/material-components-ios/commit/c2d5bf6f9b5708c8b50adf963a813bfa6a85f8eb) (Wenyu Zhang)
+
+### TextFields
+
+* [Add contained input view clear button (#8247)](https://github.com/material-components/material-components-ios/commit/ab4f218a0902b21b2eea81537ffd49387803094e) (Andrew Overton)
+
+### private/Snapshot/TestHost
+
+* [Add a window into the app delegate of host application. (#8361)](https://github.com/material-components/material-components-ios/commit/e4127f23f8ab1bf2fb1d293c3ea868caadc095ec) (Wenyu Zhang)
+
+### private/Snapshot
+
+* [Add a window into the app delegate of host application. (#8361)](https://github.com/material-components/material-components-ios/commit/e4127f23f8ab1bf2fb1d293c3ea868caadc095ec) (Wenyu Zhang)
+
+---
+
+# 88.1.0
+
+This minor change introduces presentation and dismissal improvements to
+NavigationDrawer.  `MDCSnackbarMessage` subclasses must now respond to `-
+init`. Further improvements are made to the in-development Contained Input
+Fields.
+
+## API changes
+
+### TextFields+ContainedInputView
+
+#### MDCBaseTextField
+
+*new* property: `labelBehavior` in `MDCBaseTextField`
+
+*new* property: `label` in `MDCBaseTextField`
+
+#### MDCTextControlLabelBehavior
+
+*new* enum value: `MDCTextControlLabelBehaviorDisappears` in `MDCTextControlLabelBehavior`
+
+*new* enum: `MDCTextControlLabelBehavior`
+
+*new* enum value: `MDCTextControlLabelBehaviorFloats` in `MDCTextControlLabelBehavior`
+
+*new* typedef: `MDCTextControlLabelBehavior`
+
+## Changes
+
+### Banner
+
+* [Apply text theme to button in the typical example. (#8337)](https://github.com/material-components/material-components-ios/commit/42fbedcc4acfdb658f86d410e84ba44af923a274) (Wenyu Zhang)
+
+### List
+
+* [Fix docs rendering for snippet. (#8353)](https://github.com/material-components/material-components-ios/commit/822cbcbfe084beeff4afe9ceb60a5d7cee7067e1) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add fix for jump on interactive dismissal (#8347)](https://github.com/material-components/material-components-ios/commit/6c5db5b212f438d2b385a94d47f261acbbb8aaa6) (Jonathan Willing)
+* [Respect the rotation preferences of presenting controller (#8278)](https://github.com/material-components/material-components-ios/commit/cfbdd2a0a096be4822ac71b7e333e265dea0cbac) (Michael Cheung)
+
+### Ripple
+
+* [Add the layer masking in layoutSublayers if there are sublayers present. (#8359)](https://github.com/material-components/material-components-ios/commit/a70588207d6c18e62edca35dae6172c66e15f8c5) (Yarden Eitan)
+* [Performance Improvements on initialization (#8354)](https://github.com/material-components/material-components-ios/commit/00d6c02d7db60068a4b23d66b32e0de030f1df0e) (Yarden Eitan)
+
+### Snackbar
+
+* [Fix MDCSnackbarMessage convenience class methods (#7724)](https://github.com/material-components/material-components-ios/commit/6b3fc4cda7616a392f7d46e5da25cdfc7f066782) (Jack Freeman)
+
+### TextFields
+
+* [Add floating label to MDCBaseTextField (#8358)](https://github.com/material-components/material-components-ios/commit/70daa8f70d3e4863901915131120b315869b5350) (Andrew Overton)
+* [Add initial text rect logic (#8324)](https://github.com/material-components/material-components-ios/commit/35c01a8354ad4e374ac51401c3e3526710143fbb) (Andrew Overton)
+
+---
+
+# 88.0.1
+
+This patch release adds performance improvements to Ripple during its initilization and layout phases.
+
+## Component changes
+
+## Changes
+
+### Ripple
+
+* [Add the layer masking in layoutSublayers if there are sublayers present. (#8359)](https://github.com/material-components/material-components-ios/commit/cd4b5f13cbfddee5d4022c55e9dfa02ce0a672b7) (Yarden Eitan)
+* [Performance Improvements on initialization (#8354)](https://github.com/material-components/material-components-ios/commit/352e1a07cec5ebb96f3a8ff95bfc64b9e5f70837) (Yarden Eitan)
+
+---
+
+# 88.0.0
+
+This major release removes the `mdc_legacyFontScaling` API from Chips and
+Buttons.  Ripple's colors when combining `.highlighted` with the `.selected`
+or `.dragged` states fall-back to the color for the `.normal` state rather
+than for the `.selected` or `.dragged` state.  Snackbar allows disabling the
+legacy font scaling behavior when no attached Material scaling curves are
+found on its fonts. TextFields fully supports Material Elevation, ActionSheet
+fixed a bug with dynamic color support, and Banner received a Theming
+Extension.  Several experimental examples were removed from TextFields.
+
+## Breaking changes
+
+Buttons and Chips removed the `mdc_legacyFontScaling` API.  It can be replaced
+with `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in all
+instances without any change in behavior.
+
+## New deprecations
+
+Typography's API `mdc_adjustsFontForContentSizeCategory` is now deprecated and
+will be replaced with `useCurrentContentSizeCategoryWhenApplied`. It will be
+removed in a future release.
+
+## New features
+
+### Ripple State Management
+
+Unless a color is explicitly set for the combination state,
+`MDCStatefulRippleView` now falls-back to the `.normal` color when either the
+`.selected` or `.dragged` states are combined with the `.highlighted` state.
+This more closely matches the behavior of `UIControl` subclasses.
+
+### Snackbar Dynamic Type
+
+`MDCSnackbarManager` and `MDCSnackbarMessageView` both allow disabling of the
+fall-back Material Typography behavior for Dynamic Type support. When the
+`adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` property is
+`YES` and no Material scaling curves are found attached to the fonts, then no
+automatic Dynamic Type scaling will take place for the manager's or view's
+fonts. This effectively disables the pre-2019 behavior for Dynamic Type.
+
+### TextFields Support Material Elevation
+
+`MDCMultilineTextField` now supports Material Elevation. Clients can assign a
+value for `mdc_overrideBaseElevation` or an `elevationDidChangeBlock` to
+ensure that both the Text Field and any subviews can react to elevation
+changes.
+
+### Banner Theming
+
+`MDCBannerView` now supports a Theming Extension. Please note that Banner is
+still in Beta and not published to CocoaPods.
+
+```objc
+MDCBannerView *banner = [[MDCBannerView alloc] init];
+id<MDCContainerScheming> containerScheme = [[MDCContainerScheme alloc] init];
+[banner applyThemeWithScheme:containerScheme];
+```
+
+## API changes
+
+### Banner+Theming
+
+**New extension.**
+
+### Buttons
+
+#### MDCButton
+
+*removed* property: `mdc_legacyFontScaling` in `MDCButton`
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSnackbarManager`
+
+#### MDCSnackbarMessageView()
+
+*new* category: `MDCSnackbarMessageView()`
+
+*removed* category: `MDCSnackbarMessageView()`
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@4029` |
+| To: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@4574` |
+
+#### MDCSnackbarMessageView
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSnackbarMessageView`
+
+### TextFields
+
+#### MDCMultilineTextField
+
+*modified* class: `MDCMultilineTextField`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCMultilineTextField : UIView <MDCTextInput, MDCMultilineTextInput>` |
+| To: | `@interface MDCMultilineTextField : UIView` |
+
+*modified* class: `MDCMultilineTextField`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCMultilineTextField : UIView, MDCTextInput, MDCMultilineTextInput` |
+| To: | `class MDCMultilineTextField : UIView` |
+
+### TypographyScheme
+
+#### MDCTypographyScheming
+
+*modified* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheming`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheming`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Use useCurrentContentSizeCategoryWhenApplied instead.` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Update cells when the background is set. (#8341)](https://github.com/material-components/material-components-ios/commit/841bfc6948ded0a5ba77791f0377f4b2abd07156) (Cody Weaver)
+
+### Banner
+
+* [Refactor theming extension to use new color method for elevation.(#8332)](https://github.com/material-components/material-components-ios/commit/2d0bf3d5c967a23901f607acc60a711a47e6d566) (Wenyu Zhang)
+
+### Buttons
+
+* [Add theming extension. (#8285)](https://github.com/material-components/material-components-ios/commit/68f5b9d1e491b7764adf582353757891ae93652b) (Wenyu Zhang)
+* [Clarify docs for accessibilityTraitsIncludesButton. (#8328)](https://github.com/material-components/material-components-ios/commit/46a38b50718cbc4761f3af159ae6a5a52ebd3045) (Robert Moore)
+* [Delete deprecated mdc_legacyFontScaling API. (#8306)](https://github.com/material-components/material-components-ios/commit/a703c2359420c6af2c38987ee24c4ee59b116155) (Wenyu Zhang)
+
+### Chips
+
+* [delete deprecated mdc_legacyFontScaling. (#8305)](https://github.com/material-components/material-components-ios/commit/ffd8a84fc110ff61dda2d5123e01da78b36eb161) (Wenyu Zhang)
+
+### Elevation
+
+* [Add a convenience method to resolve dynamic color only when traitCollection's color appearance has changed. (#8315)](https://github.com/material-components/material-components-ios/commit/ba2336c38e2a3877f1579c6cb771dfcc0516320d) (Wenyu Zhang)
+* [Fix spelling error (#8336)](https://github.com/material-components/material-components-ios/commit/614820316af915429e22342c98ec6740f8e16e9b) (Cody Weaver)
+
+### Ink
+
+* [Remove use of `NS_ASSUME_NONNULL_BEGIN`. (#8298)](https://github.com/material-components/material-components-ios/commit/1ca983726f5e1200c5c5610136cd009af0aa3b57) (Robert Moore)
+
+### List
+
+* [Fix docs markdown. (#8294)](https://github.com/material-components/material-components-ios/commit/ea2f2ca2ebc52a514cd690e50ef498fb950cbfc9) (Robert Moore)
+* [Fix missing images on material.io. (#8310)](https://github.com/material-components/material-components-ios/commit/63ce18bfb337152cd337a27f84a1cca04c2f8167) (Robert Moore)
+* [Fix remaining code blocks. (#8313)](https://github.com/material-components/material-components-ios/commit/39bcd3e651829ae09d4a2a296e556872a0011fd7) (Robert Moore)
+* [Fix typo in README (#8302)](https://github.com/material-components/material-components-ios/commit/70bb5995e7cdaa68ea673e29fd26fa2ca60f8e72) (Robert Moore)
+
+### Ripple
+
+* [Fixing selection state in Ripple (#7609)](https://github.com/material-components/material-components-ios/commit/87cc5aa535a3e9821488fd917d5588716d672aa1) (Galia Kaufman)
+
+### Shapes
+
+* [Update border color to support dynamic color (#8308)](https://github.com/material-components/material-components-ios/commit/a18d6e6b412375ecca86ea0d43da16b821d6f2f8) (Cody Weaver)
+
+### Slider
+
+* [Remove use of `NS_ASSUME_NONNULL_BEGIN`. (#8300)](https://github.com/material-components/material-components-ios/commit/efdbb44938da11a8f155bb5f86613fd7d2dbee62) (Robert Moore)
+
+### Snackbar
+
+* [Add dynamic type M2 support. (#8303)](https://github.com/material-components/material-components-ios/commit/ab552b1ae07ad2b21dd6fe3c86a259fe60f0d595) (Wenyu Zhang)
+* [Adding traitCollection and elevationDidChange blocks of the messageView in the manager. (#8330)](https://github.com/material-components/material-components-ios/commit/b00771afb7c4b6c4b8c2425b7ba7fd02a4e6ea7f) (Yarden Eitan)
+
+### TextFields
+
+* [Add MDCBaseTextFieldLayout object with leading/trailing view behavior (#8292)](https://github.com/material-components/material-components-ios/commit/74c2f3f962636d15a5bfdeb7af6f61db20ea7179) (Andrew Overton)
+* [Add MaterialElevation support. (#8325)](https://github.com/material-components/material-components-ios/commit/5ce079eca870b4bc22fc8f213482d2199c118a24) (Cody Weaver)
+* [Add MaterialElevation support. (#8333)](https://github.com/material-components/material-components-ios/commit/81729e13e313b1921f4e78f73f0319a4ebd3dfb2) (Cody Weaver)
+* [Remove Experimental BUILD targets. (#8322)](https://github.com/material-components/material-components-ios/commit/64bc79daebc06420079140964f5735884e64ec99) (Robert Moore)
+* [Remove use of `NS_ASSUME_NONNULL_BEGIN`. (#8301)](https://github.com/material-components/material-components-ios/commit/f14a71f02fcd6af13c44c6ed2728e6dce6b1c877) (Robert Moore)
+* [Revert "Revert "[TextFields] Add MDCBaseTextFieldLayout object with leading/trailing view behavior (#8292)" #8316" (#8320)](https://github.com/material-components/material-components-ios/commit/b531792527bb286044a7b40e38012ddbb539c135) (Andrew Overton)
+* [Revert "[TextFields] Add MDCBaseTextFieldLayout object with leading/trailing view behavior (#8292)" (#8316)](https://github.com/material-components/material-components-ios/commit/a80df6dbd092f3d4498d8c60d8bafde71c0e36e9) (Robert Moore)
+* [Delete experimental textfields (#8317)](https://github.com/material-components/material-components-ios/commit/fecd9092639c19b8127ec495355aa9e2f5326702) (Andrew Overton)
+
+### private/Color
+
+* [Add a method for MDC to call resolveColorWithTraitCollection on pre-iOS 13 (#8307)](https://github.com/material-components/material-components-ios/commit/a1d1296884a3158ed1c32c04cd437ee2b11ef278) (Cody Weaver)
+* [Remove use of `NS_ASSUME_NONNULL_BEGIN`. (#8299)](https://github.com/material-components/material-components-ios/commit/e6389754e155c1d97fbb1d8b48773ebf86e9c4a4) (Robert Moore)
+
+### schemes/Typography
+
+* [Add deprecation flag to mdc_adjustsFontForContentSizeCategory. (#8312)](https://github.com/material-components/material-components-ios/commit/cd4098cb65b6a6117b3bdff1a24574eea1be44bf) (Wenyu Zhang)
+* [add doc to clarify useCurrentContentSizeCategoryWhenApplied. (#8311)](https://github.com/material-components/material-components-ios/commit/14aa5b9ac6f237056eb7c00a9044dafdee5711db) (Wenyu Zhang)
+
+---
+
+# 87.1.1
+
+This patch release corrects issues with Git-LFS on the `stable` branch.
+
+## Multi-component changes
+
+* [{Git LFS} Correct `.gitattributes` to use path and not glob. (#8338)](https://github.com/material-components/material-components-ios/commit/2906c3c5b3bf3369982cf176b618b75c52e32cdc) (Rob Moore)
+
+---
+
+# 87.1.0
+
+This minor release enhances support for Material Elevation in Text Fields and
+Snackbar, brings new conveniences for resolving dynamic colors, and fixes a
+dynamic color bug in `MDCShapedShadowLayer`.
+
+## New features
+
+### Text Fields
+
+`MDCTextField` now supports Material Elevation. Clients can assign a value for
+`mdc_overrideBaseElevation` or an `elevationDidChangeBlock` to ensure that
+both the Text Field and any subviews can react to elevation changes.
+
+### Snackbar
+
+`MDCSnackbarManager` now supports assigning a
+`traitCollectionDidChangeBlockForMessageView` and an
+`mdc_elevationDidChangeBlockForMessageView`. These blocks make it easier to
+respond to changes in either the elevation or trait collections of the
+`MDCSnackbarMessageView`.
+
+### Material Elevation
+
+Material Elevation has a new `UIColor` category method to make it easier to
+optimize checking for dynamic color changes.
+
+**Previously**
+
+```objc
+UIColor *resolvedColor = originalColor;
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([traitCollection
+            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      resolvedColor = [self mdc_resolvedColorWithTraitCollection:traitCollection elevation:elevation];
+    }
+  }
+#endif
+```
+
+**This Release**
+
+```objc
+UIColor *resolvedColor =
+        [dynamicColor mdc_resolvedColorWithTraitCollection:currentTraitCollection
+                                   previousTraitCollection:previousTraitCollection
+                                                 elevation:elevation];
+```
+
+## API changes
+
+### Elevation
+
+#### UIColor(MaterialElevation)
+
+*new* method: `-mdc_resolvedColorWithTraitCollection:previousTraitCollection:elevation:` in `UIColor(MaterialElevation)`
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `mdc_elevationDidChangeBlockForMessageView` in `MDCSnackbarManager`
+
+*new* property: `traitCollectionDidChangeBlockForMessageView` in `MDCSnackbarManager`
+
+### TextFields
+
+#### MDCTextField
+
+*modified* class: `MDCTextField`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextField : UITextField, MDCTextInput, MDCLeadingViewTextInput` |
+| To: | `class MDCTextField : UITextField` |
+
+*modified* class: `MDCTextField`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextField : UITextField <MDCTextInput, MDCLeadingViewTextInput>` |
+| To: | `@interface MDCTextField : UITextField` |
+
+## Changes
+
+### Elevation
+
+* [Add a convenience method to resolve dynamic color only when traitCollection's color appearance has changed. (#8315)](https://github.com/material-components/material-components-ios/commit/a667b241f18a23f789bfb2b4e2f8235d36320d0a) (Wenyu Zhang)
+
+### Shapes
+
+* [Update border color to support dynamic color (#8308)](https://github.com/material-components/material-components-ios/commit/04cf12c72cf6b7a16e1d9546bd4545648da38a2d) (Cody Weaver)
+
+### Snackbar
+
+* [Adding traitCollection and elevationDidChange blocks of the messageView in the manager. (#8330)](https://github.com/material-components/material-components-ios/commit/ab77bd31d4668a25ce1ee731c01dae8bdc3d97e4) (Yarden Eitan)
+
+### TextFields
+
+* [Add MaterialElevation support. (#8325)](https://github.com/material-components/material-components-ios/commit/3b0e812dd603281b74d54adae523fdf09ca40377) (Cody Weaver)
+
+### private/Color
+
+* [Add a method for MDC to call resolveColorWithTraitCollection on pre-iOS 13 (#8307)](https://github.com/material-components/material-components-ios/commit/cdcb0000cd0853d262633d046a033946ca9eaab6) (Cody Weaver)
+
+---
+
+# 87.0.2
+
+This patch release includes no code changes but is necessary due to merge
+problems with the `stable` branch in version 87.0.1.
+
+---
+
+# 87.0.1
+
+This patch release fixes a bug where Git-LFS was required on the `stable`
+branch.
+
+## Component changes
+
+## Multi-component changes
+* [Restore working .gitattributes file. (#8234)](https://github.com/material-components/material-components-ios/commit/ad0bfaf5bc1b1d32f87513e0f1a88e3185880e6f) (Rob Moore)
+
+---
+
 # 87.0.0
 
 This major release improves the `traitCollectionDidChangeBlock` for

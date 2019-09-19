@@ -4,7 +4,7 @@ By default, `MDCBannerView` is configured to display an image view, a text label
 
 ### Styling
 
-By default, `MDCBannerView` is configured to display items with black text and a white background. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textLabel`, `imageView`, `leadingButton` and `trailingButton`.
+By default, `MDCBannerView` is configured to display items with black text and a white background. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textView`, `imageView`, `leadingButton` and `trailingButton`.
 
 ### LayoutMargins
 

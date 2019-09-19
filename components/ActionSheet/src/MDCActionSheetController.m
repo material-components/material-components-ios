@@ -23,6 +23,7 @@
 static NSString *const kReuseIdentifier = @"BaseCell";
 static const CGFloat kActionImageAlpha = (CGFloat)0.6;
 static const CGFloat kActionTextAlpha = (CGFloat)0.87;
+static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 @interface MDCActionSheetAction ()
 
@@ -68,6 +69,9 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                         UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
+
+/** The view that divides the header from the table. */
+@property(nonatomic, strong, nonnull) UIView *headerDividerView;
 
 /**
  Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.
@@ -131,6 +135,9 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
     _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
     _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
+    _headerDividerView = [[UIView alloc] init];
+    _headerDividerView.backgroundColor =
+        [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultAlpha];
     _mdc_overrideBaseElevation = -1;
   }
 
@@ -163,6 +170,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   }
   [self.view addSubview:self.tableView];
   [self.view addSubview:self.header];
+  [self.view addSubview:self.headerDividerView];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -175,7 +183,10 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   }
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
-  UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
+  CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
+  self.headerDividerView.frame =
+      CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), dividerHeight);
+  UIEdgeInsets insets = UIEdgeInsetsMake(size.height + dividerHeight, 0, 0, 0);
   if (@available(iOS 11.0, *)) {
     insets.bottom = self.tableView.adjustedContentInset.bottom;
   }
@@ -340,6 +351,15 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([self.traitCollection
+            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      [self.tableView reloadData];
+    }
+  }
+#endif
+
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
@@ -382,6 +402,19 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (UIColor *)messageTextColor {
   return self.header.messageTextColor;
+}
+
+- (void)setHeaderDividerColor:(UIColor *)headerDividerColor {
+  self.headerDividerView.backgroundColor = headerDividerColor;
+}
+
+- (UIColor *)headerDividerColor {
+  return self.headerDividerView.backgroundColor;
+}
+
+- (void)setShowsHeaderDivider:(BOOL)showsHeaderDivider {
+  _showsHeaderDivider = showsHeaderDivider;
+  self.headerDividerView.hidden = !showsHeaderDivider;
 }
 
 #pragma mark - Dynamic Type

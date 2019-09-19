@@ -267,14 +267,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   return self.layer.shapeGenerator;
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
-  [self setInkColor:inkColor forState:UIControlStateNormal];
-}
-
-- (UIColor *)inkColor {
-  return [self inkColorForState:UIControlStateNormal];
-}
-
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
   _enableRippleBehavior = enableRippleBehavior;
 

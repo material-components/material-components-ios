@@ -132,12 +132,6 @@
 @property(nonatomic) BOOL rippleAllowsSelection;
 
 /*
- The color of the ink ripple.
- */
-@property(nonatomic, strong, null_resettable)
-    UIColor *inkColor UI_APPEARANCE_SELECTOR __deprecated_msg("Use setInkColor:forState:");
-
-/*
  The shape generator used to define the chip's shape.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;

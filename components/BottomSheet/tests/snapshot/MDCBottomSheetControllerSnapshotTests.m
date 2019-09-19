@@ -40,6 +40,15 @@
 }
 
 - (void)tearDown {
+  if (self.bottomSheet.presentingViewController) {
+    XCTestExpectation *expectation =
+        [[XCTestExpectation alloc] initWithDescription:@"Bottom sheet is dismissed"];
+    [self.bottomSheet dismissViewControllerAnimated:NO
+                                         completion:^{
+                                           [expectation fulfill];
+                                         }];
+    [self waitForExpectations:@[ expectation ] timeout:5];
+  }
   self.bottomSheet = nil;
 
   [super tearDown];
@@ -77,6 +86,23 @@
 
   // Then
   [self generateAndVerifySnapshot];
+}
+
+- (void)testBottomSheetWithDefaultPresentationStyleOniOS13 {
+  // When
+  UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+  UIViewController *currentViewController = window.rootViewController;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"Bottom sheet is presented"];
+  [currentViewController presentViewController:self.bottomSheet
+                                      animated:NO
+                                    completion:^{
+                                      [expectation fulfill];
+                                    }];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:5];
+  [self snapshotVerifyViewForIOS13:window];
 }
 
 @end

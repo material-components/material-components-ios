@@ -17,6 +17,7 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
+    "mdc_extension_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
@@ -27,8 +28,13 @@ licenses(["notice"])  # Apache 2.0
 mdc_public_objc_library(
     name = "Typography",
     deps = [
+        ":BasicFontScheme",
         "//components/Typography",
     ],
+)
+
+mdc_extension_objc_library(
+    name = "BasicFontScheme",
 )
 
 mdc_examples_objc_library(

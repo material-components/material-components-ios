@@ -17,7 +17,10 @@
 #import <MaterialComponents/MaterialButtonBar+ColorThemer.h>
 #import <MaterialComponents/MaterialButtonBar+TypographyThemer.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCButtonBar (MaterialTheming)
+#pragma clang diagnostic pop
 
 - (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;

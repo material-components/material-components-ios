@@ -8,7 +8,7 @@ path: /catalog/chips/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Chips -->
+<!-- This file was auto-generated using ./scripts/generate_readme Chips -->
 
 # Chips
 
@@ -367,7 +367,7 @@ and the outlined theme.
 
  #### Swift
 
- ```swift
+```swift
 // Import the Chips Theming Extensions module
 import MaterialComponents.MaterialChips_MaterialTheming
  ...
@@ -381,7 +381,7 @@ chip.applyOutlinedTheme(withScheme: containerScheme)
 
  #### Objective-C
 
- ```objc
+```objc
 // Import the Tabs Theming Extensions header
 #import <MaterialComponents/MaterialChips+MaterialTheming.h>
  ...

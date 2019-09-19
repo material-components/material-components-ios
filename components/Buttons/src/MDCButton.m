@@ -148,7 +148,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _enabledAlpha = self.alpha;
-  _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
   _nontransformedTitles = [NSMutableDictionary dictionary];
@@ -327,6 +326,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     superSize.width = MIN(self.maximumSize.width, superSize.width);
   }
   return superSize;
+}
+
+- (CGSize)intrinsicContentSize {
+  return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -990,26 +993,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - Deprecations
-
-- (void)setCustomTitleColor:(UIColor *)customTitleColor {
-  [self setTitleColor:customTitleColor forState:UIControlStateNormal];
-}
-
-- (UIColor *)customTitleColor {
-  return [self titleColorForState:UIControlStateNormal];
-}
-
-- (BOOL)shouldCapitalizeTitle {
-  return [self isUppercaseTitle];
-}
-
-- (void)setShouldCapitalizeTitle:(BOOL)shouldCapitalizeTitle {
-  [self setUppercaseTitle:shouldCapitalizeTitle];
-}
-
-- (UIColor *)underlyingColor {
-  return [self underlyingColorHint];
-}
 
 - (void)setUnderlyingColor:(UIColor *)underlyingColor {
   [self setUnderlyingColorHint:underlyingColor];
