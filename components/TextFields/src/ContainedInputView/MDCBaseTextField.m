@@ -404,7 +404,7 @@
 }
 
 - (void)updateAttributedPlaceholder {
-  if (self.attributedPlaceholder.length > 0) {
+  if (self.attributedPlaceholder.length > 0 && self.placeholderColor) {
     NSMutableAttributedString *mutableAttributedString =
         [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedPlaceholder];
     NSRange range = NSMakeRange(0, mutableAttributedString.length);
