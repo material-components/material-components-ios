@@ -973,12 +973,9 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updateClearButton];
 }
 
-- (void)didSetFont:(UIFont *)previousFont {
+- (void)didSetFont {
   UIFont *font = self.textInput.font;
-  // Don't replace a custom placeholderLabel font.
-  if (!self.placeholderLabel.font || self.placeholderLabel.font == previousFont) {
-    self.placeholderLabel.font = font;
-  }
+  self.placeholderLabel.font = font;
 
   [self updatePlaceholderPosition];
 }
