@@ -1,3 +1,17 @@
+# 91.1.0
+
+This minor release adds support for customizing the elevation on ActionSheet component, and updates its
+theming extension to apply a customized elevation value.
+
+## Changes
+
+### ActionSheet
+
+* [set elevation value in theming extension. (#8466)](https://github.com/material-components/material-components-ios/commit/a651fe5e4e73f40e616aa916ff02acd4550c47b4) (Wenyu Zhang)
+* [Add elevation property to ActionSheet. (#8465)](https://github.com/material-components/material-components-ios/commit/60547de63810c8dc6d25b22b51209b9433edebc2) (Wenyu Zhang)
+
+---
+
 # 91.0.0
 
 This major release deletes several deprecated APIs and annotates several APIs as deprecated. Usage
