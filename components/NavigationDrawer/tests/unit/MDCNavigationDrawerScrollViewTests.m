@@ -527,6 +527,21 @@
       drawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
 }
 
+- (void)testSetShouldAutoDismissOnTapCorrectly {
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  self.drawerViewController.dismissOnBackgroundTap = YES;
+  XCTAssertTrue(drawerPresentationController.dismissOnBackgroundTap);
+}
+
+- (void)testSetShouldForwardTouchEventsCorrectly {
+  XCTAssertNil(self.drawerViewController.nextResponder);
+  self.drawerViewController.shouldForwardBackgroundTouchEvents = YES;
+  XCTAssertFalse(self.drawerViewController.dismissOnBackgroundTap);
+  XCTAssertEqualObjects(self.drawerViewController.delegate,
+                        self.drawerViewController.nextResponder);
+}
+
 - (void)testBottomDrawerTopInset {
   // Given
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
