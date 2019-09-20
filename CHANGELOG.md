@@ -1,6 +1,6 @@
 # 91.1.0
 
-This minor release adds support for customizing elevation on ActionSheet component, and updates its
+This minor release adds support for customizing the elevation on ActionSheet component, and updates its
 theming extension to apply a customized elevation value.
 
 ## Changes
