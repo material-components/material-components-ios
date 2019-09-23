@@ -17,8 +17,8 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "../../src/private/MDCBottomDrawerHeaderMask.h"
 #import "../../src/private/MDCBottomDrawerShadowedView.h"
-#import "third_party/objective_c/material_components_ios/components/NavigationDrawer/tests/unit/MDCNavigationDrawerFakes.h"
-#import "third_party/objective_c/material_components_ios/components/ShadowLayer/src/MaterialShadowLayer.h"
+#import "MDCNavigationDrawerFakes.h"
+#import "MaterialShadowLayer.h"
 
 @interface MDCBottomDrawerDelegateTest
     : UIViewController <MDCBottomDrawerPresentationControllerDelegate,
