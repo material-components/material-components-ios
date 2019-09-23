@@ -34,6 +34,9 @@
   // Used for tracking the presentation/dismissal animations.
   BOOL _isDrawerClosed;
   CGFloat _lastOffset;
+
+  // Used for forwarding touch events if enabled.
+  __weak UIResponder *_cachedNextResponder;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -67,6 +70,8 @@
   _mdc_overrideBaseElevation = -1;
   _isDrawerClosed = YES;
   _lastOffset = NSNotFound;
+  _shouldAutoDismissOnTap = YES;
+  _shouldForwardTouchEvents = NO;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -201,6 +206,15 @@
   }
 }
 
+- (void)setShouldAutoDismissOnTap:(BOOL)shouldAutoDismissOnTap {
+  _shouldAutoDismissOnTap = shouldAutoDismissOnTap;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldAutoDismissOnTap = self.shouldAutoDismissOnTap;
+  }
+}
+
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
@@ -222,6 +236,21 @@
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
   }
+}
+
+-(void)setDelegate:(id<MDCBottomDrawerViewControllerDelegate>)delegate {
+  _delegate = delegate;
+  if ([delegate isKindOfClass:[UIResponder class]]) {
+    _cachedNextResponder = (UIResponder *)delegate;
+  }
+}
+
+- (UIResponder *)nextResponder {
+  // Allow the delegate to opt-in to the responder chain to handle events.
+  if (self.shouldForwardTouchEvents && _cachedNextResponder) {
+    return _cachedNextResponder;
+  }
+  return [super nextResponder];
 }
 
 - (CGFloat)mdc_currentElevation {
