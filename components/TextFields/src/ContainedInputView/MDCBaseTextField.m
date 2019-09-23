@@ -18,7 +18,9 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCTextControlState.h"
 #import "private/MDCBaseTextFieldLayout.h"
+#import "private/MDCContainedInputViewColorViewModel.h"
 #import "private/MDCContainedInputViewLabelAnimation.h"
 #import "private/MDCContainedInputViewLabelState.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
@@ -28,7 +30,15 @@
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+@property(nonatomic, assign) MDCTextControlState textControlState;
 @property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
+
+/**
+ This property maps MDCTextControlStates as NSNumbers to
+ MDCContainedInputViewColorViewModels.
+ */
+@property(nonatomic, strong)
+    NSMutableDictionary<NSNumber *, MDCContainedInputViewColorViewModel *> *colorViewModels;
 
 @end
 
@@ -54,6 +64,7 @@
 
 - (void)commonMDCInputTextFieldInit {
   [self initializeProperties];
+  [self setUpColorViewModels];
   [self setUpLabel];
 }
 
@@ -63,6 +74,16 @@
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
+  self.colorViewModels = [[NSMutableDictionary alloc] init];
+}
+
+- (void)setUpColorViewModels {
+  self.colorViewModels[@(MDCTextControlStateNormal)] =
+      [[MDCContainedInputViewColorViewModel alloc] initWithState:MDCTextControlStateNormal];
+  self.colorViewModels[@(MDCTextControlStateEditing)] =
+      [[MDCContainedInputViewColorViewModel alloc] initWithState:MDCTextControlStateEditing];
+  self.colorViewModels[@(MDCTextControlStateDisabled)] =
+      [[MDCContainedInputViewColorViewModel alloc] initWithState:MDCTextControlStateDisabled];
 }
 
 - (void)setUpLabel {
@@ -94,7 +115,11 @@
  -layoutSubviews in the layout cycle.
  */
 - (void)preLayoutSubviews {
+  self.textControlState = [self determineCurrentTextControlState];
   self.labelState = [self determineCurrentLabelState];
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:self.textControlState];
+  [self applyColorViewModel:colorViewModel withLabelState:self.labelState];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
@@ -344,6 +369,24 @@
   return font;
 }
 
+#pragma mark MDCTextControlState
+
+- (MDCTextControlState)determineCurrentTextControlState {
+  return [self textControlStateWithIsEnabled:self.isEnabled isEditing:self.isEditing];
+}
+
+- (MDCTextControlState)textControlStateWithIsEnabled:(BOOL)isEnabled isEditing:(BOOL)isEditing {
+  if (isEnabled) {
+    if (isEditing) {
+      return MDCTextControlStateEditing;
+    } else {
+      return MDCTextControlStateNormal;
+    }
+  } else {
+    return MDCTextControlStateDisabled;
+  }
+}
+
 #pragma mark Label
 
 - (BOOL)canLabelFloat {
@@ -390,6 +433,77 @@
 
 - (BOOL)isRTL {
   return self.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+}
+
+#pragma mark Coloring
+
+- (void)applyColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
+             withLabelState:(MDCContainedInputViewLabelState)labelState {
+  UIColor *labelColor = [UIColor clearColor];
+  if (labelState == MDCContainedInputViewLabelStateNormal) {
+    labelColor = colorViewModel.normalLabelColor;
+  } else if (labelState == MDCContainedInputViewLabelStateFloating) {
+    labelColor = colorViewModel.floatingLabelColor;
+  }
+  self.textColor = colorViewModel.textColor;
+  self.label.textColor = labelColor;
+}
+
+- (void)setContainedInputViewColorViewModel:(MDCContainedInputViewColorViewModel *)colorViewModel
+                                   forState:(MDCTextControlState)textControlState {
+  if (colorViewModel) {
+    self.colorViewModels[@(textControlState)] = colorViewModel;
+  }
+}
+
+- (MDCContainedInputViewColorViewModel *)containedInputViewColorViewModelForState:
+    (MDCTextControlState)textControlState {
+  MDCContainedInputViewColorViewModel *colorViewModel = self.colorViewModels[@(textControlState)];
+  if (!colorViewModel) {
+    colorViewModel = [[MDCContainedInputViewColorViewModel alloc] initWithState:textControlState];
+  }
+  return colorViewModel;
+}
+
+#pragma mark Color Accessors
+
+- (void)setNormalLabelColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:state];
+  colorViewModel.normalLabelColor = labelColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)normalLabelColorForState:(MDCTextControlState)state {
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:state];
+  return colorViewModel.normalLabelColor;
+}
+
+- (void)setFloatingLabelColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:state];
+  colorViewModel.floatingLabelColor = labelColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)floatingLabelColorForState:(MDCTextControlState)state {
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:state];
+  return colorViewModel.floatingLabelColor;
+}
+
+- (void)setTextColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:state];
+  colorViewModel.textColor = labelColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)textColorForState:(MDCTextControlState)state {
+  MDCContainedInputViewColorViewModel *colorViewModel =
+      [self containedInputViewColorViewModelForState:state];
+  return colorViewModel.textColor;
 }
 
 @end
