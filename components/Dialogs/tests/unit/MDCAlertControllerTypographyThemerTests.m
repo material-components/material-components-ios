@@ -29,7 +29,10 @@
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme toAlertController:alert];
+#pragma clang diagnostic pop
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqualObjects(view.titleLabel.font, typographyScheme.headline6);
