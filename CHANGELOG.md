@@ -1,18 +1,20 @@
-# #develop#
+# 92.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release removes the `mdc_adjustsFontForContentSizeCategory` API
+from `MDCTypographyScheming`. It makes
+`useCurrentContentSizeCategoryWhenApplied` required for all implementations.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Classes conforming to `MDCTypographyScheming` must now provide the API
+`useCurrentContentSizeCategoryWhenApplied`. It was previously recommended that
+it be bound to the value of `mdc_adjustsFontForContentSizeCategory`.
 
-Replace this text with links to deprecation guides.
-## New features
+## Changes
 
-Replace this text with example code for each new feature.
-## API changes
+## schemes/Typography
 
-## Component changes
+* [Replace `mdc_adjustsFontForContentSizeCategory` with (#8476)](https://github.com/material-components/material-components-ios/commit/fd3395b5297c9dd4e4aeb25c02dee6026720c962) (Robert Moore)
 
 ---
 
