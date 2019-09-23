@@ -209,6 +209,15 @@
   }
 }
 
+- (void)setShouldHeaderAlwaysExpand:(BOOL)shouldHeaderAlwaysExpand {
+  _shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
+  }
+}
+
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
 }

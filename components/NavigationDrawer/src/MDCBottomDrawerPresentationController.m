@@ -255,6 +255,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.elevation = elevation;
 }
 
+- (void)setShouldHeaderAlwaysExpand:(BOOL)shouldHeaderAlwaysExpand {
+  _shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
+  self.bottomDrawerContainerViewController.shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
+}
+
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
   _drawerShadowColor = drawerShadowColor;
   self.bottomDrawerContainerViewController.drawerShadowColor = drawerShadowColor;

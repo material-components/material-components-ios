@@ -92,6 +92,6 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
   }
 
   func updateTransitionRatio(_ transitionRatio: CGFloat) {
-    print("Called \n\n\n")
+    print("Called")
   }
 }

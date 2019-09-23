@@ -110,6 +110,14 @@
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerViewControllerDelegate> delegate;
 
 /**
+ Determines if the header should always expand as it approaches the top of the screen.
+ If the content height is smaller than the screen height then the header will not expand unless this
+ flag is enabled.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldHeaderAlwaysExpand;
+
+/**
  Sets the top corners radius for an MDCBottomDrawerState drawerState
 
  @param radius The corner radius to set the top corners.

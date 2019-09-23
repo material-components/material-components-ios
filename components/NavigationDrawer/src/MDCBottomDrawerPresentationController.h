@@ -126,6 +126,14 @@
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
+ Determines if the header should always expand as it approaches the top of the screen.
+ If the content height is smaller than the screen height then the header will not expand unless this
+ flag is enabled.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldHeaderAlwaysExpand;
+
+/**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
  drawer will scroll to the start of its content.
 
