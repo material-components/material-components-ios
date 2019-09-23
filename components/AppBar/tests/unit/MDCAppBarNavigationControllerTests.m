@@ -36,6 +36,30 @@
   [super tearDown];
 }
 
+- (void)testInitHidesTheNavigationBar {
+  // Then
+  XCTAssertTrue(self.navigationController.navigationBarHidden);
+}
+
+- (void)testInitWithNibNameHidesTheNavigationBar {
+  // Given
+  MDCAppBarNavigationController *navigationController =
+      [[MDCAppBarNavigationController alloc] initWithNibName:nil bundle:nil];
+
+  // Then
+  XCTAssertTrue(navigationController.navigationBarHidden);
+}
+
+- (void)testInitWithRootViewControllerHidesTheNavigationBar {
+  // Given
+  UIViewController *viewController = [[UIViewController alloc] init];
+  MDCAppBarNavigationController *navigationController =
+      [[MDCAppBarNavigationController alloc] initWithRootViewController:viewController];
+
+  // Then
+  XCTAssertTrue(navigationController.navigationBarHidden);
+}
+
 - (void)testSettingAViewControllerInjectsAnAppBar {
   // Given
   UIViewController *viewController = [[UIViewController alloc] init];

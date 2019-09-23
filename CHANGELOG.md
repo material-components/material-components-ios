@@ -1,3 +1,32 @@
+# 91.1.1
+
+This patch release corrects initalization of AppBar and splits the typography scheme so the protocol can be 
+used separately from the class conforming to the protocol.
+
+## Changes
+
+### ActionSheet
+
+* [Add elevation property to ActionSheet. (#8465)](https://github.com/material-components/material-components-ios/commit/efe0592ff78c9cf05844f61072311d97eb564829) (Wenyu Zhang)
+
+### AppBar
+
+* [Hide the navigation bar in MDCAppBarNavigationController's initWithRootViewController API. (#8471)](https://github.com/material-components/material-components-ios/commit/204c25080d60798e4e98eecc260db7c20cb4f1e1) (featherless)
+
+### NavigationDrawer
+
+* [Minor change to example to help debug some bugs. (#8467)](https://github.com/material-components/material-components-ios/commit/08fa1a3638c9ad59007927d49513368d4e91f924) (Randall Li)
+
+### schemes/Typography
+
+* [Separate the declaration of MDCTypopgraphyScheming from MDCTypography, as requested in https://github.com/material-components/material-components-ios/issues/8445. (#8460)](https://github.com/material-components/material-components-ios/commit/39ec06ef5bded8664c9a96d4a84d17b3887ecd1c) (Bryan Oltman)
+
+## Multi-component changes
+
+* [set elevation value in theming extension. (#8466)](https://github.com/material-components/material-components-ios/commit/bca36107405594d5b7b16265a5b0ed698f85a5ee) (Wenyu Zhang)
+
+---
+
 # 91.1.0
 
 This minor release adds support for customizing the elevation on ActionSheet component, and updates its
