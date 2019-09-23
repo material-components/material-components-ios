@@ -22,19 +22,7 @@
   UIFont *titleFont = typographyScheme.subtitle1;
   UIFont *detailFont = typographyScheme.body2;
 
-  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
-  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
-  } else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.mdc_adjustsFontForContentSizeCategory;
-#pragma clang diagnostic pop
-  }
-
-  if (useCurrentContentSizeCategoryWhenApplied) {
+  if (typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
     titleFont = [titleFont mdc_scaledFontForTraitEnvironment:cell];
     detailFont = [detailFont mdc_scaledFontForTraitEnvironment:cell];
   }

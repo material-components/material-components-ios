@@ -77,19 +77,8 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   UIFont *textFont = typographyScheme.body2;
-  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
-  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
-  } else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.mdc_adjustsFontForContentSizeCategory;
-#pragma clang diagnostic pop
-  }
 
-  if (useCurrentContentSizeCategoryWhenApplied) {
+  if (typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
     textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
   }
   self.textView.font = textFont;
