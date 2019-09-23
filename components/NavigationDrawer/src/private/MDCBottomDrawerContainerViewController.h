@@ -160,7 +160,7 @@
  flag is enabled.
  Defaults to NO.
  */
-@property(nonatomic, assign) BOOL shouldHeaderAlwaysExpand;
+@property(nonatomic, assign) BOOL shouldAlwaysExpandHeader;
 
 /**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the

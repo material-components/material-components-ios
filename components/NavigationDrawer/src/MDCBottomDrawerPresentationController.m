@@ -80,7 +80,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
-  bottomDrawerContainerViewController.shouldHeaderAlwaysExpand = self.shouldHeaderAlwaysExpand;
+  bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
@@ -256,9 +256,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.elevation = elevation;
 }
 
-- (void)setShouldHeaderAlwaysExpand:(BOOL)shouldHeaderAlwaysExpand {
-  _shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
-  self.bottomDrawerContainerViewController.shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
+- (void)setShouldAlwaysExpandHeader:(BOOL)shouldAlwaysExpandHeader {
+  _shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
+  self.bottomDrawerContainerViewController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
 }
 
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {

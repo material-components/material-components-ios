@@ -209,12 +209,12 @@
   }
 }
 
-- (void)setShouldHeaderAlwaysExpand:(BOOL)shouldHeaderAlwaysExpand {
-  _shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
+- (void)setShouldAlwaysExpandHeader:(BOOL)shouldAlwaysExpandHeader {
+  _shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    bottomDrawerPresentationController.shouldHeaderAlwaysExpand = shouldHeaderAlwaysExpand;
+    bottomDrawerPresentationController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
   }
 }
 

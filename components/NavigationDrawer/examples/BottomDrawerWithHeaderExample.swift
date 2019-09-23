@@ -78,7 +78,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.delegate = self
-    bottomDrawerViewController.shouldHeaderAlwaysExpand = true
+    bottomDrawerViewController.shouldAlwaysExpandHeader = true
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
     bottomDrawerViewController.headerViewController?.view.backgroundColor = UIColor.black

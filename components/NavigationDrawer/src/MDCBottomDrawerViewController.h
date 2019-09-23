@@ -115,7 +115,7 @@
  flag is enabled.
  Defaults to NO.
  */
-@property(nonatomic, assign) BOOL shouldHeaderAlwaysExpand;
+@property(nonatomic, assign) BOOL shouldAlwaysExpandHeader;
 
 /**
  Sets the top corners radius for an MDCBottomDrawerState drawerState

@@ -17,6 +17,15 @@
 #import "MaterialNavigationDrawer.h"
 
 #import "MDCNavigationDrawerFakes.h"
+#import "../../src/private/MDCBottomDrawerContainerViewController.h"
+
+@interface MDCBottomDrawerContainerViewController (MDCBottomDrawerHeaderTesting)
+- (void)updateViewWithContentOffset:(CGPoint)contentOffset;
+@end
+
+@interface MDCBottomDrawerPresentationController (MDCBottomDrawerHeaderTesting)
+@property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
+@end
 
 @interface MDCNavigationDrawerTest : XCTestCase
 @property(nonatomic, strong) MDCBottomDrawerViewController *navigationDrawer;
@@ -142,6 +151,41 @@
 
   // Then
   XCTAssertFalse(blockCalled);
+}
+
+- (void)testSettingShouldAlwaysExpandHeader {
+  // When
+  self.navigationDrawer.shouldAlwaysExpandHeader = YES;
+
+  // Then
+  XCTAssertTrue(self.navigationDrawer.shouldAlwaysExpandHeader);
+  if ([self.navigationDrawer.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController = (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertTrue(presentationController.shouldAlwaysExpandHeader);
+  } else {
+    XCTFail(@"The presentation controller should be class of kind MDCBottomDrawerPresentationController but is %@", self.navigationDrawer.presentationController.class);
+  }
+}
+
+- (void)testHeaderHeightWhenShouldAlwaysExpandEnabledAndScrollOccured {
+  // Given
+  self.navigationDrawer.shouldAlwaysExpandHeader = YES;
+  self.navigationDrawer.headerViewController.preferredContentSize = CGSizeMake(100, 200);
+  self.navigationDrawer.contentViewController.preferredContentSize = CGSizeMake(100, 200);
+  [self.navigationDrawer.presentationController presentationTransitionWillBegin];
+  CGFloat originalHeaderHeight = CGRectGetHeight(self.navigationDrawer.headerViewController.view.frame);
+
+  // When
+  if ([self.navigationDrawer.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController = (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    [presentationController.bottomDrawerContainerViewController updateViewWithContentOffset:CGPointMake(0, 400)];
+  } else {
+    XCTFail(@"The presentation controller should be class of kind MDCBottomDrawerPresentationController but is %@", self.navigationDrawer.presentationController.class);
+  }
+
+  // Then
+  CGFloat newHeaderHeight = CGRectGetHeight(self.navigationDrawer.headerViewController.view.frame);
+  XCTAssertGreaterThan(newHeaderHeight, originalHeaderHeight);
 }
 
 @end
