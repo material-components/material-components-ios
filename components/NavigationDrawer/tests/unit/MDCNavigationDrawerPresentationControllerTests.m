@@ -106,7 +106,6 @@
       [[MDCBottomDrawerPresentationController alloc]
           initWithPresentedViewController:fakeBottomDrawer
                  presentingViewController:fakePresentingViewController];
-  
 
   // When
   presentationController.shouldAlwaysExpandHeader = YES;
