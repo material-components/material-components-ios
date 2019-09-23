@@ -80,6 +80,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
+  bottomDrawerContainerViewController.shouldHeaderAlwaysExpand = self.shouldHeaderAlwaysExpand;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {

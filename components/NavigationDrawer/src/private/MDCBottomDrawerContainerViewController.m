@@ -642,18 +642,23 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
-  if ((self.contentViewController.preferredContentSize.height +
-       self.headerViewController.preferredContentSize.height) <
-      self.presentingViewBounds.size.height) {
-  }
+
   if (self.shouldHeaderAlwaysExpand) {
+    if ((self.contentViewController.preferredContentSize.height +
+         self.headerViewController.preferredContentSize.height) <
+        self.presentingViewBounds.size.height) {
+      // Make sure the content offset is greater than the content height surplus or we will divide
+      // by 0.
+      if (contentOffset.y > self.contentHeightSurplus) {
+        CGFloat additionalScrollPassedMaxHeight =
+            self.contentHeaderTopInset -
+            (self.contentHeightSurplus + self.addedContentHeightThreshold);
+        fullscreenHeaderHeight = self.topHeaderHeight;
+        headerTransitionToTop =
+            (contentOffset.y - self.contentHeightSurplus) / additionalScrollPassedMaxHeight;
+      }
+    }
   }
-  NSLog(@"Transition percentage = %f", transitionPercentage);
-  NSLog(@"Transition complete content offset = %f", self.transitionCompleteContentOffset);
-  NSLog(@"Content offset = %f", contentOffset.y);
-  NSLog(@"Header transition to top = %f", headerTransitionToTop);
-  NSLog(@"Full screen height = %f", fullscreenHeaderHeight);
-  NSLog(@"Content header offset = %f", self.contentHeaderTopInset);
 
   [self updateContentHeaderWithTransitionToTop:headerTransitionToTop
                         fullscreenHeaderHeight:fullscreenHeaderHeight];
