@@ -22,16 +22,7 @@
   UIFont *titleFont = typographyScheme.subtitle1;
   UIFont *detailFont = typographyScheme.body2;
 
-  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
-  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
-  } else {
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.mdc_adjustsFontForContentSizeCategory;
-  }
-
-  if (useCurrentContentSizeCategoryWhenApplied) {
+  if (typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
     titleFont = [titleFont mdc_scaledFontForTraitEnvironment:cell];
     detailFont = [detailFont mdc_scaledFontForTraitEnvironment:cell];
   }
