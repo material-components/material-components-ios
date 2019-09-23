@@ -82,8 +82,11 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
     useCurrentContentSizeCategoryWhenApplied =
         typographyScheme.useCurrentContentSizeCategoryWhenApplied;
   } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     useCurrentContentSizeCategoryWhenApplied =
         typographyScheme.mdc_adjustsFontForContentSizeCategory;
+#pragma clang diagnostic pop
   }
 
   if (useCurrentContentSizeCategoryWhenApplied) {
