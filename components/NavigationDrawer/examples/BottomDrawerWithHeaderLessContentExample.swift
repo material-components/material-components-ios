@@ -21,7 +21,7 @@ import MaterialComponents.MaterialNavigationDrawer
 class BottomDrawerWithHeaderLessContentExample: BottomDrawerWithHeaderExample {
 
   @objc override func presentNavigationDrawer() {
-    contentViewController.preferredHeight = 500
+    contentViewController.preferredHeight = 600
     super.presentNavigationDrawer()
   }
 

@@ -634,6 +634,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       [self transitionPercentageForContentOffset:contentOffset
                                           offset:0
                                         distance:self.headerAnimationDistance];
+  NSLog(@"Transition percentage = %f", transitionPercentage);
+  NSLog(@"Transition complete content offset = %f", self.transitionCompleteContentOffset);
+  NSLog(@"Content offset = %f", contentOffset.y);
   CGFloat headerTransitionToTop =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1 : transitionPercentage;
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
@@ -642,6 +645,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
+  if ((self.contentViewController.preferredContentSize.height +
+       self.headerViewController.preferredContentSize.height) <
+      self.presentingViewBounds.size.height) {
+  }
 
   [self updateContentHeaderWithTransitionToTop:headerTransitionToTop
                         fullscreenHeaderHeight:fullscreenHeaderHeight];
@@ -654,6 +661,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   if (!self.headerViewController) {
     return;
   }
+  NSLog(@"Content header offset = %f", self.contentHeaderTopInset);
+  NSLog(@"Header = %@", NSStringFromCGRect(self.headerViewController.view.frame));
+  NSLog(@"Content = %@", NSStringFromCGRect(self.contentViewController.view.frame));
 
   UIView *contentHeaderView = self.headerViewController.view;
   BOOL contentReachesFullscreen = self.contentReachesFullscreen;

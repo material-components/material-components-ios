@@ -80,6 +80,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     bottomDrawerViewController.delegate = self
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
+    bottomDrawerViewController.headerViewController?.view.backgroundColor = UIColor.black
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 
