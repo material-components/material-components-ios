@@ -36,6 +36,15 @@
                                                drawerState:(MDCBottomDrawerState)drawerState;
 
 /**
+ This method is called when the bottom drawer will change the y-offset of its contents.
+
+ @param containerViewController the container view controller of the bottom drawer.
+ @param yOffset current yOffset of the bottom drawer contents
+ */
+- (void)bottomDrawerContainerViewControllerDidChangeYOffset:
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                                                    yOffset:(CGFloat)yOffset;
+/**
  This method is called when the drawer is scrolled/dragged and provides a transition ratio value
  between 0-100% (0-1) that indicates the percentage in which the drawer is close to reaching the end
  of its scrolling. If the drawer is about to reach fullscreen, its percentage moves between 0-100%

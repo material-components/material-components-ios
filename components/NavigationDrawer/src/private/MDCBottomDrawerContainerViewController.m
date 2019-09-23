@@ -638,6 +638,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1 : transitionPercentage;
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
                                                        transitionRatio:transitionPercentage];
+
   [self updateDrawerState:transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1;
   CGFloat fullscreenHeaderHeight =
@@ -647,6 +648,17 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                         fullscreenHeaderHeight:fullscreenHeaderHeight];
   [self updateTopHeaderBottomShadowWithContentOffset:contentOffset];
   [self updateContentWithHeight:contentOffset.y];
+
+  // Calculate the current yOffset of the header and content.
+  CGFloat yOffset = self.contentViewController.view.frame.origin.y -
+                    self.headerViewController.view.frame.size.height - contentOffset.y;
+
+  // While animation open, always send back the final target Y offset.
+  if (self.animatingPresentation) {
+    yOffset = self.contentHeaderTopInset;
+  }
+  [self.delegate bottomDrawerContainerViewControllerDidChangeYOffset:self
+                                                             yOffset:MAX(0.0f, yOffset)];
 }
 
 - (void)updateContentHeaderWithTransitionToTop:(CGFloat)headerTransitionToTop
