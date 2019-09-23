@@ -16,8 +16,8 @@
 
 #import "MaterialNavigationDrawer.h"
 
-#import "MDCNavigationDrawerFakes.h"
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
+#import "MDCNavigationDrawerFakes.h"
 
 @interface MDCBottomDrawerContainerViewController (MDCBottomDrawerHeaderTesting)
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
@@ -159,11 +159,15 @@
 
   // Then
   XCTAssertTrue(self.navigationDrawer.shouldAlwaysExpandHeader);
-  if ([self.navigationDrawer.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    MDCBottomDrawerPresentationController *presentationController = (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
     XCTAssertTrue(presentationController.shouldAlwaysExpandHeader);
   } else {
-    XCTFail(@"The presentation controller should be class of kind MDCBottomDrawerPresentationController but is %@", self.navigationDrawer.presentationController.class);
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
   }
 }
 
@@ -173,14 +177,20 @@
   self.navigationDrawer.headerViewController.preferredContentSize = CGSizeMake(100, 200);
   self.navigationDrawer.contentViewController.preferredContentSize = CGSizeMake(100, 200);
   [self.navigationDrawer.presentationController presentationTransitionWillBegin];
-  CGFloat originalHeaderHeight = CGRectGetHeight(self.navigationDrawer.headerViewController.view.frame);
+  CGFloat originalHeaderHeight =
+      CGRectGetHeight(self.navigationDrawer.headerViewController.view.frame);
 
   // When
-  if ([self.navigationDrawer.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    MDCBottomDrawerPresentationController *presentationController = (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
-    [presentationController.bottomDrawerContainerViewController updateViewWithContentOffset:CGPointMake(0, 400)];
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    [presentationController.bottomDrawerContainerViewController
+        updateViewWithContentOffset:CGPointMake(0, 400)];
   } else {
-    XCTFail(@"The presentation controller should be class of kind MDCBottomDrawerPresentationController but is %@", self.navigationDrawer.presentationController.class);
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
   }
 
   // Then

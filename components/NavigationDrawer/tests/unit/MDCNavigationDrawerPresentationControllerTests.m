@@ -109,6 +109,7 @@
   fakePresentationController.shouldAlwaysExpandHeader = YES;
 
   // Then
-  XCTAssertTrue(fakePresentationController.bottomDrawerContainerViewController.shouldAlwaysExpandHeader);
+  XCTAssertTrue(
+      fakePresentationController.bottomDrawerContainerViewController.shouldAlwaysExpandHeader);
 }
 @end
