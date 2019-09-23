@@ -643,20 +643,18 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
-  if (self.shouldAlwaysExpandHeader) {
-    if ((self.contentViewController.preferredContentSize.height +
-         self.headerViewController.preferredContentSize.height) <
-        self.presentingViewBounds.size.height) {
-      // Make sure the content offset is greater than the content height surplus or we will divide
-      // by 0.
-      if (contentOffset.y > self.contentHeightSurplus) {
-        CGFloat additionalScrollPassedMaxHeight =
-            self.contentHeaderTopInset -
-            (self.contentHeightSurplus + self.addedContentHeightThreshold);
-        fullscreenHeaderHeight = self.topHeaderHeight;
-        headerTransitionToTop =
-            (contentOffset.y - self.contentHeightSurplus) / additionalScrollPassedMaxHeight;
-      }
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height +
+                          self.headerViewController.preferredContentSize.height;
+  if (self.shouldAlwaysExpandHeader && (contentHeight < self.presentingViewBounds.size.height)) {
+    // Make sure the content offset is greater than the content height surplus or we will divide
+    // by 0.
+    if (contentOffset.y > self.contentHeightSurplus) {
+      CGFloat additionalScrollPassedMaxHeight =
+          self.contentHeaderTopInset -
+          (self.contentHeightSurplus + self.addedContentHeightThreshold);
+      fullscreenHeaderHeight = self.topHeaderHeight;
+      headerTransitionToTop =
+          MIN(1, (contentOffset.y - self.contentHeightSurplus) / additionalScrollPassedMaxHeight);
     }
   }
 
@@ -677,8 +675,12 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
   if ([self.headerViewController
           respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
-    [self.headerViewController
-        updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0];
+    if (self.shouldAlwaysExpandHeader) {
+      [self.headerViewController updateDrawerHeaderTransitionRatio:headerTransitionToTop];
+    } else {
+      [self.headerViewController
+          updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0];
+    }
   }
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat headersDiff = fullscreenHeaderHeight - contentHeaderHeight;

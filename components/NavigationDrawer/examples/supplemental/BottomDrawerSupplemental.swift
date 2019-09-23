@@ -90,8 +90,4 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
     titleLabel.center =
       CGPoint(x: self.view.frame.size.width / 2, y: self.preferredHeight - 20)
   }
-
-  func updateTransitionRatio(_ transitionRatio: CGFloat) {
-    print("Called")
-  }
 }
