@@ -160,6 +160,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
+  CGFloat _headerVCPerferredContentSizeHeightCached;
   CGFloat _scrollToContentOffsetY;
   BOOL _shouldPresentAtFullscreen;
 }
@@ -643,8 +644,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
-  CGFloat contentHeight = self.contentViewController.preferredContentSize.height +
-                          self.headerViewController.preferredContentSize.height;
+  CGFloat contentHeight = _contentVCPreferredContentSizeHeightCached +
+                          _headerVCPerferredContentSizeHeightCached;
   if (self.shouldAlwaysExpandHeader && (contentHeight < self.presentingViewBounds.size.height)) {
     // Make sure the content offset is greater than the content height surplus or we will divide
     // by 0.
@@ -837,6 +838,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
   }
   _contentVCPreferredContentSizeHeightCached = contentHeight;
+  _headerVCPerferredContentSizeHeightCached = contentHeaderHeight;
 
   contentHeight += addedContentHeight;
   _addedContentHeight = addedContentHeight;
