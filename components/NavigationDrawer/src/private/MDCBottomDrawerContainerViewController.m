@@ -644,8 +644,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
-  CGFloat contentHeight = _contentVCPreferredContentSizeHeightCached +
-                          _headerVCPerferredContentSizeHeightCached;
+  CGFloat contentHeight =
+      _contentVCPreferredContentSizeHeightCached + _headerVCPerferredContentSizeHeightCached;
   if (self.shouldAlwaysExpandHeader && (contentHeight < self.presentingViewBounds.size.height)) {
     // Make sure the content offset is greater than the content height surplus or we will divide
     // by 0.
