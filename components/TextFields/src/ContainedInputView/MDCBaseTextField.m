@@ -111,6 +111,7 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
+
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
@@ -213,6 +214,7 @@
 
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
+
   [self setNeedsLayout];
 }
 
