@@ -51,6 +51,7 @@ fix_bazel_imports() {
   
   rewrite_tests() {
     find "${stashed_dir}"components/private/*/tests -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/schemes/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
@@ -120,6 +121,7 @@ fix_bazel_imports() {
   rewrite_source "s/import <MaterialComponents\/MDC(.+)\.h>/import\/\*MDC prefix framework import\*\/ \"MDC\1.h\"/"
   rewrite_tests "s/import <MaterialComponentsBeta\/Material(.+)Beta\.h>/import\/\*Material beta prefix framework import\*\/ \"Material\1Beta.h\"/"
   rewrite_tests "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_tests "s/import <MDFTesting\/MDFTesting\.h>/import \"MDFTesting.h\"/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -164,6 +166,7 @@ fix_bazel_imports() {
     rewrite_source "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
     rewrite_source "s/import\/\*MDC prefix framework import\*\/ \"MDC(.+)\.h\"/import <MaterialComponents\/MDC\1\.h>/"
     rewrite_tests "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_tests "s/import \"MDFTesting\.h\"/import <MDFTesting\/MDFTesting.h>/"
     rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }

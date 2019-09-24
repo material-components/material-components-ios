@@ -68,6 +68,12 @@ git_repository(
 )
 
 git_repository(
+    name = "material_testing_ios",
+    remote = "https://github.com/material-foundation/material-testing-ios.git",
+    tag = "v1.0.0",
+)
+
+git_repository(
     name = "material_text_accessibility_ios",
     remote = "https://github.com/material-foundation/material-text-accessibility-ios.git",
     tag = "v2.0.0",
