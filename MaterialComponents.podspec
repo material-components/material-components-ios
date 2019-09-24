@@ -2149,6 +2149,7 @@ Pod::Spec.new do |mdc|
           "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
         ]
         unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        unit_tests.dependency "MDFTesting"
       end
     end
 
