@@ -43,7 +43,6 @@
 @end
 
 @implementation MDCBaseTextField
-@synthesize placeholderColor = _placeholderColor;
 
 #pragma mark Object Lifecycle
 
@@ -330,20 +329,6 @@
   [self setNeedsLayout];
 }
 
-- (UIColor *)placeholderColor {
-  return _placeholderColor ?: [UIColor lightGrayColor];
-}
-
-- (void)setPlaceholderColor:(UIColor *)placeholderColor {
-  _placeholderColor = placeholderColor;
-  [self updateAttributedPlaceholder];
-}
-
-- (void)setPlaceholder:(NSString *)placeholder {
-  [super setPlaceholder:placeholder];
-  [self updateAttributedPlaceholder];
-}
-
 #pragma mark UITextField Layout Overrides
 
 // The implementations for this method and the method below deserve some context! Unfortunately,
@@ -397,7 +382,6 @@
   return font;
 }
 
-<<<<<<< HEAD
 #pragma mark Placeholder
 
 - (BOOL)shouldPlaceholderBeVisible {
@@ -429,15 +413,6 @@
   }
 }
 
-- (void)updateAttributedPlaceholder {
-  if (self.attributedPlaceholder.length > 0 && self.placeholderColor) {
-    NSMutableAttributedString *mutableAttributedString =
-        [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedPlaceholder];
-    NSRange range = NSMakeRange(0, mutableAttributedString.length);
-    NSDictionary *newColorAttribute = @{NSForegroundColorAttributeName : self.placeholderColor};
-    [mutableAttributedString addAttributes:newColorAttribute range:range];
-    self.attributedPlaceholder = [mutableAttributedString copy];
-=======
 #pragma mark MDCTextControlState
 
 - (MDCTextControlState)determineCurrentTextControlState {
@@ -453,7 +428,6 @@
     }
   } else {
     return MDCTextControlStateDisabled;
->>>>>>> develop
   }
 }
 

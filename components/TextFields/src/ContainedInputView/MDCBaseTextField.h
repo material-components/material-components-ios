@@ -31,11 +31,6 @@
 @property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
- The color of the placeholder. The default is @c .lightGrayColor .
- */
-@property(nonatomic, strong, nonnull) UIColor *placeholderColor;
-
-/**
  This property determines the behavior of the textfield's label during editing.
  @note The default is MDCTextControlLabelBehaviorFloats.
  */

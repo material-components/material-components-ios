@@ -168,30 +168,18 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   [self validateTextField:textField];
 }
 
-<<<<<<< HEAD
-- (void)testTextFieldWithColoredPlaceholder {
-=======
 - (void)testFloatingLabelWithCustomColorWhileEditing {
->>>>>>> develop
   // Given
   MDCBaseTextField *textField = self.textField;
 
   // When
-<<<<<<< HEAD
-  textField.placeholder = @"placeholder";
-  textField.placeholderColor = [UIColor greenColor];
-=======
   textField.label.text = @"Floating label text";
   textField.text = @"Text";
   [textField setFloatingLabelColor:[UIColor purpleColor] forState:MDCTextControlStateEditing];
   [textField becomeFirstResponder];
->>>>>>> develop
 
   // Then
   [self validateTextField:textField];
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 @end
