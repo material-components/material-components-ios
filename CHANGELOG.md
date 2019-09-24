@@ -1,3 +1,23 @@
+# 92.0.0
+
+This major release removes the `mdc_adjustsFontForContentSizeCategory` API
+from `MDCTypographyScheming`. It makes
+`useCurrentContentSizeCategoryWhenApplied` required for all implementations.
+
+## Breaking changes
+
+Classes conforming to `MDCTypographyScheming` must now provide the API
+`useCurrentContentSizeCategoryWhenApplied`. It was previously recommended that
+it be bound to the value of `mdc_adjustsFontForContentSizeCategory`.
+
+## Changes
+
+## schemes/Typography
+
+* [Replace `mdc_adjustsFontForContentSizeCategory` with (#8476)](https://github.com/material-components/material-components-ios/commit/fd3395b5297c9dd4e4aeb25c02dee6026720c962) (Robert Moore)
+
+---
+
 # 91.1.1
 
 This patch release corrects initalization of AppBar and splits the typography scheme so the protocol can be 

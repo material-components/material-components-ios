@@ -40,16 +40,6 @@
 
 @implementation ChipViewTypographyThemerTests
 
-- (void)testFontThemerWithNoDynamicTypeSupport {
-  MDCChipView *chip = [[MDCChipView alloc] init];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  typographyScheme.mdc_adjustsFontForContentSizeCategory = NO;
-
-  [MDCChipViewTypographyThemer applyTypographyScheme:typographyScheme toChipView:chip];
-
-  XCTAssertEqualObjects(chip.titleLabel.font, typographyScheme.body2);
-}
-
 - (void)testFontThemerWhenCurrentContentSizeCategoryIsUsed {
   if (@available(iOS 10.0, *)) {
     // Given

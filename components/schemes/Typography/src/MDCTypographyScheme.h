@@ -83,15 +83,3 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 - (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults;
 
 @end
-
-@interface MDCTypographyScheme (ToBeDeprecated)
-
-/**
- @warning Will eventually be deprecated and removed. Please use
- useCurrentContentSizeCategoryWhenApplied instead.
-
- Modifying this property will also modify useCurrentContentSizeCategoryWhenApplied, and vice-versa.
- */
-@property(nonatomic, assign, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
-
-@end
