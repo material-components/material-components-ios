@@ -99,6 +99,16 @@
   [self postLayoutSubviews];
 }
 
+// UITextField's sizeToFit calls this method and then also calls setNeedsLayout.
+// When the system calls this method the size parameter is the view's current size.
+- (CGSize)sizeThatFits:(CGSize)size {
+  return [self preferredSizeWithWidth:size.width];
+}
+
+- (CGSize)intrinsicContentSize {
+  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
@@ -193,7 +203,18 @@
   return systemPlaceholderRect.size.height;
 }
 
+- (CGSize)preferredSizeWithWidth:(CGFloat)width {
+  CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
+  MDCBaseTextFieldLayout *layout = [self calculateLayoutWithTextFieldSize:fittingSize];
+  return CGSizeMake(width, layout.calculatedHeight);
+}
+
 #pragma mark UITextField Accessor Overrides
+
+- (void)setEnabled:(BOOL)enabled {
+  [super setEnabled:enabled];
+  [self setNeedsLayout];
+}
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
   NSLog(@"Setting leftViewMode is not recommended. Consider setting leadingViewMode and "

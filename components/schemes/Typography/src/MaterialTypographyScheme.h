@@ -13,5 +13,6 @@
 // limitations under the License.
 
 #import <MaterialComponents/MaterialTypographyScheme+BasicFontScheme.h>
+
 #import "MDCTypographyScheme.h"
 #import "MDCTypographyScheming.h"
