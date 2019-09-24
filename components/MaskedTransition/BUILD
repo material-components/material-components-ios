@@ -26,6 +26,7 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "MaskedTransition",
+    deprecation = "There is no replacemennt for this component. Please use a standard presentViewController invocation instead.",
     sdk_frameworks = [
         "CoreGraphics",
         "QuartzCore",

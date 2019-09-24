@@ -1,3 +1,207 @@
+# 92.0.0
+
+This major release removes the `mdc_adjustsFontForContentSizeCategory` API
+from `MDCTypographyScheming`. It makes
+`useCurrentContentSizeCategoryWhenApplied` required for all implementations.
+
+## Breaking changes
+
+Classes conforming to `MDCTypographyScheming` must now provide the API
+`useCurrentContentSizeCategoryWhenApplied`. It was previously recommended that
+it be bound to the value of `mdc_adjustsFontForContentSizeCategory`.
+
+## Changes
+
+## schemes/Typography
+
+* [Replace `mdc_adjustsFontForContentSizeCategory` with (#8476)](https://github.com/material-components/material-components-ios/commit/fd3395b5297c9dd4e4aeb25c02dee6026720c962) (Robert Moore)
+
+---
+
+# 91.1.1
+
+This patch release corrects initalization of AppBar and splits the typography scheme so the protocol can be 
+used separately from the class conforming to the protocol.
+
+## Changes
+
+### ActionSheet
+
+* [Add elevation property to ActionSheet. (#8465)](https://github.com/material-components/material-components-ios/commit/efe0592ff78c9cf05844f61072311d97eb564829) (Wenyu Zhang)
+
+### AppBar
+
+* [Hide the navigation bar in MDCAppBarNavigationController's initWithRootViewController API. (#8471)](https://github.com/material-components/material-components-ios/commit/204c25080d60798e4e98eecc260db7c20cb4f1e1) (featherless)
+
+### NavigationDrawer
+
+* [Minor change to example to help debug some bugs. (#8467)](https://github.com/material-components/material-components-ios/commit/08fa1a3638c9ad59007927d49513368d4e91f924) (Randall Li)
+
+### schemes/Typography
+
+* [Separate the declaration of MDCTypopgraphyScheming from MDCTypography, as requested in https://github.com/material-components/material-components-ios/issues/8445. (#8460)](https://github.com/material-components/material-components-ios/commit/39ec06ef5bded8664c9a96d4a84d17b3887ecd1c) (Bryan Oltman)
+
+## Multi-component changes
+
+* [set elevation value in theming extension. (#8466)](https://github.com/material-components/material-components-ios/commit/bca36107405594d5b7b16265a5b0ed698f85a5ee) (Wenyu Zhang)
+
+---
+
+# 91.1.0
+
+This minor release adds support for customizing the elevation on ActionSheet component, and updates its
+theming extension to apply a customized elevation value.
+
+## Changes
+
+### ActionSheet
+
+* [set elevation value in theming extension. (#8466)](https://github.com/material-components/material-components-ios/commit/a651fe5e4e73f40e616aa916ff02acd4550c47b4) (Wenyu Zhang)
+* [Add elevation property to ActionSheet. (#8465)](https://github.com/material-components/material-components-ios/commit/60547de63810c8dc6d25b22b51209b9433edebc2) (Wenyu Zhang)
+
+---
+
+# 91.0.0
+
+This major release deletes several deprecated APIs and annotates several APIs as deprecated. Usage
+of `UIWebView` has also been replaced with `WKWebView`.
+
+## Breaking changes
+
+Buttons `shouldRaiseOnTouch` was deleted. Set elevation to `MDCShadowElevationNone` for all states
+instead.
+
+Buttons `underlyingColor` property was deleted. Use `underlyingColorHint` instead.
+
+## New deprecations
+
+`MDCMaskedTransitionController` was deprecated. There is no replacement for this component. Please
+use a standard `presentViewController` invocation instead.
+
+## New features
+
+ProgressView's `cornerRadius` property was added. This enables clients to customize the corner radius
+of the filled portion of the progress view.
+
+ActionSheet added the ability to add a divider between the header and table. Properties 
+`headerDividerColor` and `showHeaderDivider` were added to MDCActionSheetController. If a client 
+wants to show a header divider they would need to set `showHeaderDivider` and then set an
+appropriate color for their use case, by default it is `clearColor`. By default the property 
+`showHeaderDivider` view is `NO` so that we do not break clients. This matches a pattern outlined 
+in [`MDCBannerView`](https://github.com/material-components/material-components-ios/blob/ac114b4bda9dbad328ae445c4529a43a94ccd97d/components/Banner/src/MDCBannerView.h#L76-L88).
+
+## Changes
+
+### ActionSheet
+
+* [Add ability to add a divider between header and table (#8230)](https://github.com/material-components/material-components-ios/commit/693d01a06a088d93a84338f0c76b41bb8633223c) (Cody Weaver)
+
+### BottomSheet
+
+* [replace UIWebView usage with WKWebView. (#8453)](https://github.com/material-components/material-components-ios/commit/9bd8770ae49884f2fe7889a2441ea03d46ef9e87) (Wenyu Zhang)
+
+### Buttons
+
+* [Delete underlyingColor property (#8451)](https://github.com/material-components/material-components-ios/commit/7b0f8ee01bf32903cf8b0ac65472584e96dbe242) (Bryan Oltman)
+* [Remove unused shouldRaiseOnTouch property (#8455)](https://github.com/material-components/material-components-ios/commit/a6053f4afd983c78b8c6d3347a1cdd81f0f734dc) (Bryan Oltman)
+
+### MaskedTransition
+
+* [Deprecate MDCMaskedTransitionController. (#8443)](https://github.com/material-components/material-components-ios/commit/16e7009604624d9d9f99b9a0cde0f2725e8eb1a2) (featherless)
+
+### ProgressView
+
+* [Add cornerRadius API. (#7417)](https://github.com/material-components/material-components-ios/commit/63bb1a8c9faa4513fb29e5ca22c23c17503f76bc) (featherless)
+
+### schemes/Typography
+
+* [Rename MaterialTypography+BasicFontScheme.h to MaterialTypographyScheme+BasicFontScheme.h. (#8442)](https://github.com/material-components/material-components-ios/commit/c5aac50a89a0e2b2a1e7eea86de46c78e30d2d0b) (featherless)
+
+---
+
+# 90.0.0
+
+This major release deletes several deprecated APIs and annotates several APIs as deprecated.
+
+## Breaking changes
+
+Buttons' `buttonWithShape:` API has been deleted. Please use `floatingButtonWithShape:` instead.
+
+FlexibleHeader's `behavior` API has been deleted. Please use `shiftBehavior` instead.
+
+NavigationBar's `textAlignment` API has been deleted. Please use `titleAlignment` instead.
+
+## New deprecations
+
+ActivityIndicator's ColorThemer is now deprecated. Please theme MDCActivityIndicator's colors
+directly instead.
+
+ButtonBar's Theming extension and TypographyThemer are now deprecated. ButtonBar is not intended to
+be themed as a standalone component. Please theme it via the AppBar component's Theming extension
+instead.
+
+BottomAppBar's ColorThemer is now deprecated. There is presently no replacement. Please indicate
+interest in a replacement at
+https://github.com/material-components/material-components-ios/issues/7172.
+
+## Upcoming breaking changes
+
+BasicFontScheme is now a standalone target within schemes/Typography with the CocoaPods spec name:
+`MaterialComponents/schemes/Typography+BasicFontScheme`. For backwards compatibility, this new
+target is still a dependency of `MaterialComponents/schemes/Typography.  This dependency will be
+removed as a breaking change in a subsequent release, with the intent of eventually deprecating
+and deleting the BasicFontScheme target altogether.
+
+## Changes
+
+### ActionSheet
+
+* [Minor style cleanup of import statements. (#8428)](https://github.com/material-components/material-components-ios/commit/42a912da8cdf879f703f983f4fffa1968c6e68c3) (featherless)
+
+### ActivityIndicator
+
+* [Deprecate ColorThemer. (#8430)](https://github.com/material-components/material-components-ios/commit/97bb87866b56bfa80127f2b36cc271d98d90b44f) (featherless)
+
+### BottomAppBar
+
+* [Deprecate the ColorThemer. (#8438)](https://github.com/material-components/material-components-ios/commit/a01712388be973c3912e2b32d3bd57e816dfa120) (featherless)
+
+### ButtonBar
+
+* [Deprecate Theming and TypographyThemer. (#8432)](https://github.com/material-components/material-components-ios/commit/0f7ee59f139b3e1e48cddd1aada1de4715c54b8a) (featherless)
+
+### Buttons
+
+* [Clarify the alternative to shouldRaiseOnTouch. (#8422)](https://github.com/material-components/material-components-ios/commit/2085de156ca18cd61275c33cd8a3eca157c7b388) (featherless)
+* [Delete MDCFloatingButton's buttonWithShape method (#8416)](https://github.com/material-components/material-components-ios/commit/cf04f20a9ede9c6e9a4b17d519365628ed05857a) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Delete unused behavior property (#8414)](https://github.com/material-components/material-components-ios/commit/700908fae5ecc8341dfb3ec3837fc4edae7ffa46) (Bryan Oltman)
+
+### NavigationBar
+
+* [Delete unused MDCNavigationBar textAlignment property (#8411)](https://github.com/material-components/material-components-ios/commit/14febdb6a1770f89f0a3b58463d906b814f9deec) (Bryan Oltman)
+
+### TextFields
+
+* [Try new approach to snapshot testing textfields (#8407)](https://github.com/material-components/material-components-ios/commit/2d747d5da18b106624e62a21d33d0f37cd4f1e3b) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Delete unused hasShadow property (#8412)](https://github.com/material-components/material-components-ios/commit/d158f657a28ecccd3f7735b9ca96bdad08ffb8d8) (Bryan Oltman)
+
+### schemes/Typography
+
+* [Pull BasicFontScheme out to an extension. (#8425)](https://github.com/material-components/material-components-ios/commit/c0e74b1d201f546164d411063e7eaf6b3bffd51a) (featherless)
+* [Rename MaterialTypography+BasicFontScheme.h to MaterialTypographyScheme+BasicFontScheme.h. (#8442)](https://github.com/material-components/material-components-ios/commit/d54d89b413ab7d1eb1db452656d9209cf123c739) (featherless)
+
+## Multi-component changes
+
+* [Fix theming docs. (#8431)](https://github.com/material-components/material-components-ios/commit/c5188966f65f39edb269ee13c63eaa4185c31d92) (Robert Moore)
+
+---
+
 # 89.0.0
 
 This major release deletes several deprecated APIs, includes bug fixes for iOS 13, and improves

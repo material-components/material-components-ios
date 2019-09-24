@@ -24,8 +24,11 @@
 
 - (void)testInit {
   UIView *view = [[UIView alloc] init];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   MDCMaskedTransitionController *transitionController =
       [[MDCMaskedTransitionController alloc] initWithSourceView:view];
+#pragma clang diagnostic pop
   XCTAssertEqual(transitionController.sourceView, view);
 }
 

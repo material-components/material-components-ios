@@ -18,6 +18,7 @@
 
 #import "MaterialTextFields+ContainedInputView.h"
 
+static const NSTimeInterval kTextFieldValidationEstimatedAnimationDuration = 0.25;
 static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
@@ -32,7 +33,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   self.textField = [self createBaseTextFieldInKeyWindow];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //    self.recordMode = YES;
+  //      self.recordMode = YES;
 }
 
 - (void)tearDown {
@@ -52,15 +53,19 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 - (void)validateTextField:(MDCBaseTextField *)textField {
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    // We take a snapshot of the textfield so we don't have to remove it from the app
-    // host's key window. Removing the textfield from the app host's key window
-    // before validation can affect the textfield's editing behavior, which has a
-    // large effect on the appearance of the textfield.
-    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
-    [self generateSnapshotAndVerifyForView:textFieldSnapshot];
-    [expectation fulfill];
-  });
+
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW,
+                    (int64_t)(kTextFieldValidationEstimatedAnimationDuration * NSEC_PER_SEC)),
+      dispatch_get_main_queue(), ^{
+        // We take a snapshot of the textfield so we don't have to remove it from the app
+        // host's key window. Removing the textfield from the app host's key window
+        // before validation can affect the textfield's editing behavior, which has a
+        // large effect on the appearance of the textfield.
+        UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
+        [self generateSnapshotAndVerifyForView:textFieldSnapshot];
+        [expectation fulfill];
+      });
   [self waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
 }
 
@@ -163,15 +168,30 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   [self validateTextField:textField];
 }
 
+<<<<<<< HEAD
 - (void)testTextFieldWithColoredPlaceholder {
+=======
+- (void)testFloatingLabelWithCustomColorWhileEditing {
+>>>>>>> develop
   // Given
   MDCBaseTextField *textField = self.textField;
 
   // When
+<<<<<<< HEAD
   textField.placeholder = @"placeholder";
   textField.placeholderColor = [UIColor greenColor];
+=======
+  textField.label.text = @"Floating label text";
+  textField.text = @"Text";
+  [textField setFloatingLabelColor:[UIColor purpleColor] forState:MDCTextControlStateEditing];
+  [textField becomeFirstResponder];
+>>>>>>> develop
 
   // Then
   [self validateTextField:textField];
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 @end

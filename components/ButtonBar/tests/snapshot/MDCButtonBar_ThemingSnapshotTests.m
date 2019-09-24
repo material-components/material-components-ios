@@ -168,7 +168,10 @@
 
 - (void)testDefaultSchemeWithTitles {
   // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [self.buttonBar applyPrimaryThemeWithScheme:self.defaultScheme];
+#pragma clang diagnostic pop
   [self.buttonBar sizeToFit];
 
   // Then
@@ -180,7 +183,10 @@
   [self changeItemsToImages];
 
   // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [self.buttonBar applyPrimaryThemeWithScheme:self.defaultScheme];
+#pragma clang diagnostic pop
   [self.buttonBar sizeToFit];
 
   // Then
@@ -189,7 +195,10 @@
 
 - (void)testCustomSchemeWithTitles {
   // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [self.buttonBar applyPrimaryThemeWithScheme:self.customScheme];
+#pragma clang diagnostic pop
   [self.buttonBar sizeToFit];
 
   // Then
@@ -201,7 +210,10 @@
   [self changeItemsToImages];
 
   // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [self.buttonBar applyPrimaryThemeWithScheme:self.customScheme];
+#pragma clang diagnostic pop
   [self.buttonBar sizeToFit];
 
   // Then

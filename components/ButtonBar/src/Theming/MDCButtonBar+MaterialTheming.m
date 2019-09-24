@@ -43,7 +43,10 @@
 }
 
 - (void)applyPrimaryThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCButtonBarTypographyThemer applyTypographyScheme:scheme toButtonBar:self];
+#pragma clang diagnostic pop
 }
 
 @end

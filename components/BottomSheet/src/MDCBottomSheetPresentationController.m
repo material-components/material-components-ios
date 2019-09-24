@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #import "MDCBottomSheetPresentationController.h"
+
+#import <WebKit/WebKit.h>
+
 #import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"
 
@@ -31,10 +34,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   if ([viewController.view isKindOfClass:[UIScrollView class]]) {
     scrollView = (UIScrollView *)viewController.view;
-#if !TARGET_OS_UIKITFORMAC
-  } else if ([viewController.view isKindOfClass:[UIWebView class]]) {
-    scrollView = ((UIWebView *)viewController.view).scrollView;
-#endif
+  } else if ([viewController.view isKindOfClass:[WKWebView class]]) {
+    scrollView = ((WKWebView *)viewController.view).scrollView;
   } else if ([viewController isKindOfClass:[UICollectionViewController class]]) {
     scrollView = ((UICollectionViewController *)viewController).collectionView;
   }

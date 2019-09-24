@@ -46,8 +46,8 @@
   if (@available(iOS 10.0, *)) {
     // Given
     UIFont *font = [UIFont systemFontOfSize:22.0];
-    font =
-        [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
+    font = [[[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1]
+        scaledFontWithFont:font] mdc_scaledFontAtDefaultSize];
     MDCTypographyMockTraitEnvironment *traitEnvironment =
         [[MDCTypographyMockTraitEnvironment alloc] init];
     traitEnvironment.traitCollection = [UITraitCollection

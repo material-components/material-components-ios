@@ -53,7 +53,10 @@
                                                                    message:@"message"];
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:alert];
+#pragma clang diagnostic pop
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertTrue([self color1:view.titleLabel.textColor

@@ -21,16 +21,8 @@
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                    toChipView:(nonnull MDCChipView *)chipView {
   UIFont *titleFont = typographyScheme.body2;
-  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
-  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
-  } else {
-    useCurrentContentSizeCategoryWhenApplied =
-        typographyScheme.mdc_adjustsFontForContentSizeCategory;
-  }
 
-  if (useCurrentContentSizeCategoryWhenApplied) {
+  if (typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
     titleFont = [titleFont mdc_scaledFontForTraitEnvironment:chipView];
   }
   chipView.titleFont = titleFont;

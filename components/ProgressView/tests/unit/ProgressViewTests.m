@@ -36,6 +36,10 @@
 
 #pragma mark - Tests
 
+- (void)testCornerRadius {
+  XCTAssertEqual(_progressView.cornerRadius, 0);
+}
+
 - (void)testInitialProgress {
   XCTAssertEqual(_progressView.progress, 0);
 }

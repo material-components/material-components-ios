@@ -139,6 +139,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     _headerDividerView.backgroundColor =
         [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultAlpha];
     _mdc_overrideBaseElevation = -1;
+    _elevation = MDCShadowElevationModalBottomSheet;
   }
 
   return self;
@@ -519,8 +520,16 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   [self.tableView reloadData];
 }
 
+- (void)setElevation:(MDCShadowElevation)elevation {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
+    return;
+  }
+  _elevation = elevation;
+  [self.view mdc_elevationDidChange];
+}
+
 - (CGFloat)mdc_currentElevation {
-  return MDCShadowElevationModalBottomSheet;
+  return self.elevation;
 }
 
 @end
