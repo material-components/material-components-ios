@@ -8,7 +8,7 @@ path: /catalog/tabs/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Tabs -->
+<!-- This file was auto-generated using scripts/generate_readme Tabs -->
 
 # Tabs
 
@@ -402,6 +402,13 @@ Subclassing is not supported by `MDCTabBarView`. Any requirements that you have
 for Material Tabs that are not met by the public APIs should be filed as a
 feature request or bug against `MDCTabBarView`.
 
+#### Selected Item Behavior
+
+`MDCTabBarView` does not automatically mark any item as *selected* when the
+`items` array is set, unless the previously-selected item is in the new
+`items` array.  This is a change from `MDCTabBar`, but ensures that the view
+and its APIs present equivalent information.
+
 #### Colors, Fonts, and Theming
 
 To set the image tint colors, use `- setImageTintColor:forState:`. The
@@ -455,6 +462,7 @@ subclass conforming to the `MDCTabBarItemCustomViewing` protocol is provided as
 `MDCTabBarItem`.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 ##### Swift
 ```swift
 let customView = MyCustomTabView()
