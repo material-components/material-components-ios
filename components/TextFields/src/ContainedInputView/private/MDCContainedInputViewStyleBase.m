@@ -24,7 +24,7 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
 
 @implementation MDCContainedInputViewStyleBase
 
-- (UIFont *)floatingFontWithFont:(UIFont *)font {
+- (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
   CGFloat scaleFactor = kBaseFloatingLabelScaleFactor;
   CGFloat floatingFontSize = font.pointSize * scaleFactor;
   return [font fontWithSize:floatingFontSize];

@@ -29,32 +29,39 @@ static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0
 @protocol MDCContainedInputView <NSObject>
 
 /**
- Dictates the @c MDCContainedInputViewStyle of the text field. Defaults to an instance of
- MDCContainedInputViewStyleBase.
+ This object represents the style of the text control, i.e. the thing that makes it filled or
+ outlined. See the documentation for MDCContainedInputViewStyle for more information on its
+ responsibilities.
  */
 @property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyle> containerStyle;
 
 /**
- Describes the current @c MDCtextControlState of the view.
+ Describes the current @c MDCtextControlState of the view. This value is affected by things like
+ UIControlState, as well as whether or not it's editing.
  */
 @property(nonatomic, assign, readonly) MDCTextControlState textControlState;
 
 /**
- Describes the current @c MDCContainedInputViewLabelState of the contained input view. This
- value is affected by things like the view's state, the value for @c canFloatingLabelFloat, and the
+ Describes the current MDCContainedInputViewLabelState of the contained input view. This
+ value is affected by things like the view's @c textControlState, its @c labelBehavior, and the
  text of the floating label.
  */
 @property(nonatomic, assign, readonly) MDCContainedInputViewLabelState labelState;
 
 /**
- The @c label is a label that occupies the text area when there is no text and that floats
- above the text once there is some. It is distinct from a placeholder.
+ Describes the behavior of the label when the view begins editing.
+ */
+@property(nonatomic, assign, readonly) MDCTextControlLabelBehavior labelBehavior;
+
+/**
+ The @c label is a label that occupies the text area in a resting state with no text and that either
+ floats above the text or disappears in an editing state. It is distinct from a placeholder.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
- The @c normalFont is the contained input view's primary font. The text is this font. The label also
- has this font when it isn't floating.
+ The @c normalFont is the contained input view's primary font. The text has this font. The label
+ also has this font when it isn't floating.
  */
 @property(strong, nonatomic, readonly, nonnull) UIFont *normalFont;
 
@@ -64,13 +71,13 @@ static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0
 @property(strong, nonatomic, readonly, nonnull) UIFont *floatingFont;
 
 /**
- This method returns a color scheme for a given state.
+ This method returns a MDCContainedInputViewColorViewModel for a given MDCTextControlState.
  */
 - (nonnull MDCContainedInputViewColorViewModel *)containedInputViewColorViewModelForState:
     (MDCTextControlState)textControlState;
 
 /**
- This method sets a color scheme for a given state.
+ This method sets a MDCContainedInputViewColorViewModel for a given MDCTextControlState.
  */
 - (void)setContainedInputViewColorViewModel:
             (nonnull MDCContainedInputViewColorViewModel *)containedInputViewColorViewModel
@@ -82,8 +89,7 @@ static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0
 
 /**
  This method allows objects conforming to MDCContainedInputViewStyle to apply themselves to objects
- conforming to MDCContainedInputView with a set of colors represented by an object conforming to
- MDCContainedInputViewColorViewModel.
+ conforming to MDCContainedInputView.
  */
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)containedInputView;
 /**
@@ -93,13 +99,13 @@ static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
 
 /**
- The method returns a UIFont for the floating label based on the primary text font of the
- MDCContainedInputView.
+ The method returns a UIFont for the floating label based on the @c normalFont of the
+ view.
  */
-- (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font;
+- (UIFont *_Nonnull)floatingFontWithNormalFont:(nonnull UIFont *)font;
 
 /**
- This method returns an object that tells a Contained Input View where to position it's views
+ This method returns an object that tells the view where to position it's views
  vertically.
  */
 - (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference;

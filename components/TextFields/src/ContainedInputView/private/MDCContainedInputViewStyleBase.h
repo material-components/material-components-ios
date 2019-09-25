@@ -18,7 +18,8 @@
 #import "MDCContainedInputView.h"
 
 /**
- A base implementation of MDCContainedInputViewStyle.
+ A base implementation of MDCContainedInputViewStyle. This is only used for base text controls, i.e.
+ ones that are not filled or outlined.
  */
 @interface MDCContainedInputViewStyleBase : NSObject <MDCContainedInputViewStyle>
 @end
