@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import <MDFTesting/MDFTesting.h>
 #import "MaterialSnackbar.h"
 #import "MaterialTypography.h"
 #import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
@@ -82,13 +83,13 @@
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
 
   // Then
-  XCTAssertEqualObjects(messageView.snackbarMessageViewBackgroundColor,
+  XCTAssertEqualColors(messageView.snackbarMessageViewBackgroundColor,
                         [UIColor colorWithRed:(CGFloat)(0x32 / 255.0)
                                         green:(CGFloat)(0x32 / 255.0)
                                          blue:(CGFloat)(0x32 / 255.0)
                                         alpha:1]);
-  XCTAssertEqualObjects(messageView.snackbarMessageViewShadowColor, UIColor.blackColor);
-  XCTAssertEqualObjects(messageView.messageTextColor, UIColor.whiteColor);
+  XCTAssertEqualColors(messageView.snackbarMessageViewShadowColor, UIColor.blackColor);
+  XCTAssertEqualColors(messageView.messageTextColor, UIColor.whiteColor);
 }
 
 - (void)testDefaultElevation {

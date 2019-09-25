@@ -16,6 +16,7 @@ import XCTest
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_ColorThemer
 import MaterialComponents.MaterialThemes
+import MDFTesting
 
 class AppBarColorThemerTests: XCTestCase {
 
@@ -56,15 +57,15 @@ class AppBarColorThemerTests: XCTestCase {
     MDCAppBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, to: appBar)
 
     // Then
-    XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
-                   colorScheme.surfaceColor)
-    XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(appBar.navigationBar.titleTextColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    XCTAssertEqual(appBar.navigationBar.buttonsTitleColor(for: .normal),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    XCTAssertEqual(appBar.navigationBar.tintColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.54))
+    assertEqualFirstColor(appBar.headerViewController.headerView.backgroundColor,
+                   secondColor: colorScheme.surfaceColor)
+    assertEqualFirstColor(appBar.navigationBar.backgroundColor, secondColor: colorScheme.surfaceColor)
+    assertEqualFirstColor(appBar.navigationBar.titleTextColor,
+                   secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    assertEqualFirstColor(appBar.navigationBar.buttonsTitleColor(for: .normal),
+                   secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    assertEqualFirstColor(appBar.navigationBar.tintColor,
+                   secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.54))
   }
 
   func testColorThemerAffectsSubComponents() {

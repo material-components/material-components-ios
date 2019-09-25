@@ -17,6 +17,7 @@ import XCTest
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialDialogs_DialogThemer
+import MDFTesting
 
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
@@ -45,7 +46,7 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
 
   func testDefaultAlertScheme() {
-    XCTAssertEqual(alertScheme.colorScheme.primaryColor, MDCSemanticColorScheme().primaryColor)
+    assertEqualFirstColor(alertScheme.colorScheme.primaryColor, secondColor: MDCSemanticColorScheme().primaryColor)
     XCTAssertEqual(alertScheme.typographyScheme.body1, MDCTypographyScheme().body1)
     XCTAssertEqual(alertScheme.cornerRadius, defaultCornerRadius)
     XCTAssertEqual(alertScheme.elevation, defaultElevation)
@@ -62,12 +63,12 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
 
     // Then
-    XCTAssertEqual(alertScheme.colorScheme.onSurfaceColor, colorScheme.onSurfaceColor)
-    XCTAssertEqual(alertView.titleColor,
-                   alertScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    assertEqualFirstColor(alertScheme.colorScheme.onSurfaceColor, secondColor: colorScheme.onSurfaceColor)
+    assertEqualFirstColor(alertView.titleColor,
+                          secondColor: alertScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.87))
     XCTAssertNotEqual(alertView.titleColor,
-                   MDCSemanticColorScheme().onSurfaceColor.withAlphaComponent(0.87))
-    XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
+                      MDCSemanticColorScheme().onSurfaceColor.withAlphaComponent(0.87))
+    assertEqualFirstColor(alertView.titleIconTintColor, secondColor: colorScheme.primaryColor)
   }
 
   // Testing soon-to-be-deprecated old approach to button theming // b/117717380: Will be deprecated
@@ -98,7 +99,7 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
 
     // Then
-    XCTAssertEqual(presentationController.scrimColor, scrimColor)
+    assertEqualFirstColor(presentationController.scrimColor, secondColor: scrimColor)
   }
 
   func testApplyingAlertSchemeWithCustomTypography() {

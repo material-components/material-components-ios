@@ -58,6 +58,9 @@ static const MDCShadowElevation MDCShadowElevationFABResting = 6.0f;
 static const MDCShadowElevation MDCShadowElevationMenu = 8.0f;
 
 /** The shadow elevation of a modal bottom sheet. */
+static const MDCShadowElevation MDCShadowElevationModalActionSheet = 8.0f;
+
+/** The shadow elevation of a modal bottom sheet. */
 static const MDCShadowElevation MDCShadowElevationModalBottomSheet = 8.0f;
 
 /** The shadow elevation of the navigation drawer. */

@@ -139,6 +139,7 @@ mdc_unit_test_swift_library(
         ":ColorThemer",
         ":TypographyThemer",
         ":private",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 

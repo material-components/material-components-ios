@@ -19,6 +19,7 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialTextFields_Theming
+import MDFTesting
 
 class TextFieldsMaterialThemingTests: XCTestCase {
 
@@ -45,26 +46,26 @@ class TextFieldsMaterialThemingTests: XCTestCase {
 
     // Then
     // Color
-    XCTAssertEqual(textFieldControllerFilled.borderFillColor,
-                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledSurfaceOverlayAlpha))
-    XCTAssertEqual(textFieldControllerFilled.normalColor,
-                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledIndicatorLineAlpha))
-    XCTAssertEqual(textFieldControllerFilled.inlinePlaceholderColor,
-                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
-    XCTAssertEqual(textFieldControllerFilled.leadingUnderlineLabelTextColor,
-                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
-    XCTAssertEqual(textFieldControllerFilled.activeColor, scheme.colorScheme.primaryColor)
+    assertEqualFirstColor(textFieldControllerFilled.borderFillColor,
+                          secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledSurfaceOverlayAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.normalColor,
+                          secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledIndicatorLineAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.inlinePlaceholderColor,
+                          secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.leadingUnderlineLabelTextColor,
+                          secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.activeColor, secondColor: scheme.colorScheme.primaryColor)
     //XCTAssertEqual(textFieldControllerFilled.textInput.textColor,
     //               scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledActiveAlpha))
-    XCTAssertEqual(textFieldControllerFilled.errorColor, scheme.colorScheme.errorColor)
-    XCTAssertEqual(textFieldControllerFilled.disabledColor,
-                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledDisabledAlpha))
-    XCTAssertEqual(textFieldControllerFilled.floatingPlaceholderNormalColor,
-                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
-    XCTAssertEqual(textFieldControllerFilled.floatingPlaceholderActiveColor,
-                   scheme.colorScheme.primaryColor.withAlphaComponent(filledActiveAlpha))
-    XCTAssertEqual(textFieldControllerFilled.textInputClearButtonTintColor,
-                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledIconAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.errorColor, secondColor: scheme.colorScheme.errorColor)
+    assertEqualFirstColor(textFieldControllerFilled.disabledColor,
+                          secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledDisabledAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.floatingPlaceholderNormalColor,
+                          secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.floatingPlaceholderActiveColor,
+                          secondColor: scheme.colorScheme.primaryColor.withAlphaComponent(filledActiveAlpha))
+    assertEqualFirstColor(textFieldControllerFilled.textInputClearButtonTintColor,
+                          secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledIconAlpha))
 
     // Typography
     XCTAssertEqual(textFieldControllerFilled.inlinePlaceholderFont,
@@ -91,18 +92,18 @@ class TextFieldsMaterialThemingTests: XCTestCase {
     // Then
     // Color
     let onSurfaceOpacity = scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldOnSurfaceAlpha)
-    XCTAssertEqual(textFieldControllerOutlined.activeColor, scheme.colorScheme.primaryColor)
-    XCTAssertEqual(textFieldControllerOutlined.errorColor, scheme.colorScheme.errorColor)
-    XCTAssertEqual(textFieldControllerOutlined.trailingUnderlineLabelTextColor, onSurfaceOpacity)
-    XCTAssertEqual(textFieldControllerOutlined.normalColor, onSurfaceOpacity)
-    XCTAssertEqual(textFieldControllerOutlined.inlinePlaceholderColor, onSurfaceOpacity)
-    let textInput = textFieldControllerOutlined.textInput as! MDCTextInput
-    XCTAssertEqual(textInput.textColor, scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldActiveAlpha))
-    XCTAssertEqual(textFieldControllerOutlined.leadingUnderlineLabelTextColor, onSurfaceOpacity)
-    XCTAssertEqual(textFieldControllerOutlined.disabledColor, scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldDisabledAlpha))
-    XCTAssertEqual(textFieldControllerOutlined.textInputClearButtonTintColor, scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldIconAlpha))
-    XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderNormalColor, onSurfaceOpacity)
-    XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderActiveColor, scheme.colorScheme.primaryColor.withAlphaComponent(outlinedTextFieldActiveAlpha))
+    assertEqualFirstColor(textFieldControllerOutlined.activeColor, secondColor: scheme.colorScheme.primaryColor)
+    assertEqualFirstColor(textFieldControllerOutlined.errorColor, secondColor: scheme.colorScheme.errorColor)
+    assertEqualFirstColor(textFieldControllerOutlined.trailingUnderlineLabelTextColor, secondColor: onSurfaceOpacity)
+    assertEqualFirstColor(textFieldControllerOutlined.normalColor, secondColor: onSurfaceOpacity)
+    assertEqualFirstColor(textFieldControllerOutlined.inlinePlaceholderColor, secondColor: onSurfaceOpacity)
+    let textInput = textFieldControllerOutlined.textInput!
+    assertEqualFirstColor(textInput.textColor, secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldActiveAlpha))
+    assertEqualFirstColor(textFieldControllerOutlined.leadingUnderlineLabelTextColor, secondColor: onSurfaceOpacity)
+    assertEqualFirstColor(textFieldControllerOutlined.disabledColor, secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldDisabledAlpha))
+    assertEqualFirstColor(textFieldControllerOutlined.textInputClearButtonTintColor, secondColor: scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldIconAlpha))
+    assertEqualFirstColor(textFieldControllerOutlined.floatingPlaceholderNormalColor, secondColor: onSurfaceOpacity)
+    assertEqualFirstColor(textFieldControllerOutlined.floatingPlaceholderActiveColor, secondColor: scheme.colorScheme.primaryColor.withAlphaComponent(outlinedTextFieldActiveAlpha))
 
     // Typography
     XCTAssertEqual(textFieldControllerOutlined.inlinePlaceholderFont,

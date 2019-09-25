@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCMath.h"
+#import <MDFTesting/MDFTesting.h>
 #import "MaterialColorScheme.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
@@ -241,8 +242,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                                             blue:0.94000000000000006f
                                            alpha:1.f];
 
-  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
-                                                    secondColor:expectedColor]);
+  XCTAssertEqualColors(resultColor, expectedColor)
 }
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
@@ -263,8 +263,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                                            alpha:0.84000000000000008f];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
-  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
-                                                    secondColor:expectedColor]);
+  XCTAssertEqualColors(resultColor, expectedColor)
 }
 
 - (void)testHBSColorMergeTest {
@@ -276,8 +275,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                                            alpha:0.93999999999999994f];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
-  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
-                                                    secondColor:expectedColor]);
+  XCTAssertEqualColors(resultColor, expectedColor)
 }
 
 - (void)testGrayScaleColorMergeTest {
@@ -289,19 +287,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                                            alpha:0.92000000000000004f];
   UIColor *resultColor = [MDCSemanticColorScheme blendColor:blendColor
                                         withBackgroundColor:backgroundColor];
-  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
-                                                    secondColor:expectedColor]);
-}
-
-- (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
-                                      secondColor:(UIColor *)secondColor {
-  CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
-  [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
-  CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
-  [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
-
-  return (MDCCGFloatEqual(fRed, sRed) && MDCCGFloatEqual(fGreen, sGreen) &&
-          MDCCGFloatEqual(fBlue, sBlue) && MDCCGFloatEqual(fAlpha, sAlpha));
+  XCTAssertEqualColors(resultColor, expectedColor)
 }
 
 - (void)testColorSchemeCopy {

@@ -193,6 +193,7 @@ Pod::Spec.new do |mdc|
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/AppBar+ColorThemer"
       unit_tests.dependency "MaterialComponents/AppBar+TypographyThemer"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -568,6 +569,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -709,6 +711,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -831,6 +834,7 @@ Pod::Spec.new do |mdc|
         "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -946,6 +950,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/Dialogs+DialogThemer"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -1012,6 +1017,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -1341,6 +1347,7 @@ Pod::Spec.new do |mdc|
         "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -1391,6 +1398,7 @@ Pod::Spec.new do |mdc|
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/NavigationBar+ColorThemer"
       unit_tests.dependency "MaterialComponents/NavigationBar+TypographyThemer"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -1755,6 +1763,7 @@ Pod::Spec.new do |mdc|
       unit_tests.dependency "MaterialComponents/Snackbar+FontThemer"
       unit_tests.dependency "MaterialComponents/Snackbar+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -1921,6 +1930,7 @@ Pod::Spec.new do |mdc|
       unit_tests.dependency "MaterialComponents/TextFields+FontThemer"
       unit_tests.dependency "MaterialComponents/TextFields+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -1988,6 +1998,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+      unit_tests.dependency "MDFTesting"
     end
   end
 
@@ -2062,6 +2073,7 @@ Pod::Spec.new do |mdc|
         ]
         unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
         unit_tests.dependency "MaterialComponents/private/Math"
+        unit_tests.dependency "MDFTesting"
       end
     end
     scheme_spec.subspec "Container" do |scheme|

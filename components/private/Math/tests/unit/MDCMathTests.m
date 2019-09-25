@@ -241,16 +241,12 @@
 
 - (void)testMDCRoundCenterWithBoundsAndScaleRoundingErrors {
   // Given
-#if CGFLOAT_IS_DOUBLE
-  const CGFloat acceptableRoundingError = 5E-15;
-#else
   const CGFloat acceptableRoundingError = 5E-7f;
-#endif
   CGPoint misalignedCenter = CGPointMake(0.3f, 9.99f);
   CGRect bounds = CGRectMake(0, 0, 20.1f, 21.9f);
   CGPoint alignedScale1Center = CGPointMake(0.05f, 9.95f);
   CGPoint alignedScale2Center = CGPointMake(0.05f, 9.95f);
-  CGPoint alignedScale3Center = CGPointMake((CGFloat)(0.05 + 1.0 / 3.0), 9.95f);
+  CGPoint alignedScale3Center = CGPointMake(0.05f + 1.0f / 3.0f, 9.95f);
 
   // Then
   CGPoint outputScale1Center = MDCRoundCenterWithBoundsAndScale(misalignedCenter, bounds, 1);

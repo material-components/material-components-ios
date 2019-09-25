@@ -20,6 +20,7 @@ import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialCards_Theming
+import MDFTesting
 
 class CardsMaterialThemingTests: XCTestCase {
 
@@ -83,9 +84,9 @@ class CardsMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(card.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(card.borderColor(for: .normal),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.37))
+    assertEqualFirstColor(card.backgroundColor, secondColor: colorScheme.surfaceColor)
+    assertEqualFirstColor(card.borderColor(for: .normal),
+                          secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.37))
 
     // Test shape
     if let cardShape = card.shapeGenerator as? MDCRectangleShapeGenerator {
@@ -184,9 +185,9 @@ class CardsMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(cardCell.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(cardCell.borderColor(for: .normal),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.37))
+    assertEqualFirstColor(cardCell.backgroundColor, secondColor: colorScheme.surfaceColor)
+    assertEqualFirstColor(cardCell.borderColor(for: .normal),
+                          secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.37))
 
     // Test shape
     if let cardShape = cardCell.shapeGenerator as? MDCRectangleShapeGenerator {

@@ -18,6 +18,7 @@ import MaterialComponents.MaterialList
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialList_Theming
+import MDFTesting
 
 class ListMaterialThemingTests: XCTestCase {
 
@@ -56,7 +57,7 @@ class ListMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(cell.inkColor, inkColor)
+    assertEqualFirstColor(cell.inkColor, secondColor: inkColor)
   }
 
   func testMDCBaseCellWithContainerSchemeWithCustomColorScheme() {
@@ -71,7 +72,7 @@ class ListMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(cell.inkColor, inkColor)
+    assertEqualFirstColor(cell.inkColor, secondColor: inkColor)
   }
 
   func testMDCSelfSizingStereoCellWithEmptyContainerScheme() {
@@ -87,11 +88,11 @@ class ListMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(cell.inkColor, inkColor)
-    XCTAssertEqual(cell.titleLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.detailLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.leadingImageView.tintColor, textAndTintColor)
-    XCTAssertEqual(cell.trailingImageView.tintColor, textAndTintColor)
+    assertEqualFirstColor(cell.inkColor, secondColor: inkColor)
+    assertEqualFirstColor(cell.titleLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.detailLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.leadingImageView.tintColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.trailingImageView.tintColor, secondColor: textAndTintColor)
     // Test Typography
     XCTAssertEqual(cell.titleLabel.font, titleFont)
     XCTAssertEqual(cell.detailLabel.font, detailFont)
@@ -111,11 +112,11 @@ class ListMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(cell.inkColor, inkColor)
-    XCTAssertEqual(cell.titleLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.detailLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.leadingImageView.tintColor, textAndTintColor)
-    XCTAssertEqual(cell.trailingImageView.tintColor, textAndTintColor)
+    assertEqualFirstColor(cell.inkColor, secondColor: inkColor)
+    assertEqualFirstColor(cell.titleLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.detailLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.leadingImageView.tintColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.trailingImageView.tintColor, secondColor: textAndTintColor)
     // Test Typography
     XCTAssertEqual(cell.titleLabel.font, titleFont)
     XCTAssertEqual(cell.detailLabel.font, detailFont)
@@ -135,11 +136,11 @@ class ListMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(cell.inkColor, inkColor)
-    XCTAssertEqual(cell.titleLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.detailLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.leadingImageView.tintColor, textAndTintColor)
-    XCTAssertEqual(cell.trailingImageView.tintColor, textAndTintColor)
+    assertEqualFirstColor(cell.inkColor, secondColor: inkColor)
+    assertEqualFirstColor(cell.titleLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.detailLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.leadingImageView.tintColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.trailingImageView.tintColor, secondColor: textAndTintColor)
     // Test Typography
     XCTAssertEqual(cell.titleLabel.font, titleFont)
     XCTAssertEqual(cell.detailLabel.font, detailFont)
@@ -160,11 +161,11 @@ class ListMaterialThemingTests: XCTestCase {
 
     // Then
     // Test Colors
-    XCTAssertEqual(cell.inkColor, inkColor)
-    XCTAssertEqual(cell.titleLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.detailLabel.textColor, textAndTintColor)
-    XCTAssertEqual(cell.leadingImageView.tintColor, textAndTintColor)
-    XCTAssertEqual(cell.trailingImageView.tintColor, textAndTintColor)
+    assertEqualFirstColor(cell.inkColor, secondColor: inkColor)
+    assertEqualFirstColor(cell.titleLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.detailLabel.textColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.leadingImageView.tintColor, secondColor: textAndTintColor)
+    assertEqualFirstColor(cell.trailingImageView.tintColor, secondColor: textAndTintColor)
     // Test Typography
     XCTAssertEqual(cell.titleLabel.font, titleFont)
     XCTAssertEqual(cell.detailLabel.font, detailFont)
