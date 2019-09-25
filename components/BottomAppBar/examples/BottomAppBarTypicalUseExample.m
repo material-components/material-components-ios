@@ -84,8 +84,7 @@
   [self.bottomBarView.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
 
   self.bottomBarView.barTintColor = self.colorScheme.surfaceColor;
-  UIColor *barItemTintColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f];
+  UIColor *barItemTintColor = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f];
   self.bottomBarView.leadingBarItemsTintColor = barItemTintColor;
   self.bottomBarView.trailingBarItemsTintColor = barItemTintColor;
   [self.bottomBarView.floatingButton setBackgroundColor:self.colorScheme.primaryColor

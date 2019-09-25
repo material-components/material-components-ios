@@ -14,10 +14,10 @@
 
 import XCTest
 
+import MDFTesting
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialDialogs_DialogThemer
-import MDFTesting
 
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 

@@ -13,10 +13,11 @@
 // limitations under the License.
 
 import XCTest
+
+import MDFTesting
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_ColorThemer
 import MaterialComponents.MaterialThemes
-import MDFTesting
 
 class AppBarColorThemerTests: XCTestCase {
 
@@ -59,7 +60,8 @@ class AppBarColorThemerTests: XCTestCase {
     // Then
     assertEqualFirstColor(appBar.headerViewController.headerView.backgroundColor,
                    secondColor: colorScheme.surfaceColor)
-    assertEqualFirstColor(appBar.navigationBar.backgroundColor, secondColor: colorScheme.surfaceColor)
+    assertEqualFirstColor(appBar.navigationBar.backgroundColor,
+                          secondColor: colorScheme.surfaceColor)
     assertEqualFirstColor(appBar.navigationBar.titleTextColor,
                    secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
     assertEqualFirstColor(appBar.navigationBar.buttonsTitleColor(for: .normal),

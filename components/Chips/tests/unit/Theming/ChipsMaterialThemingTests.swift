@@ -14,6 +14,7 @@
 
 import XCTest
 
+import MDFTesting
 import MaterialComponents.MaterialChips
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
@@ -21,7 +22,6 @@ import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialChips_Theming
-import MDFTesting
 
 class ChipsMaterialThemingTests: XCTestCase {
 
@@ -59,11 +59,14 @@ class ChipsMaterialThemingTests: XCTestCase {
     // Test Colors
     assertEqualFirstColor(chip.inkColor(for: .normal), secondColor: onSurface16OpacityColor)
     assertEqualFirstColor(chip.backgroundColor(for: .normal), secondColor: backgroundColor)
-    assertEqualFirstColor(chip.backgroundColor(for: .selected), secondColor: selectedBackgroundColor)
-    assertEqualFirstColor(chip.backgroundColor(for: .disabled), secondColor: backgroundColor.withAlphaComponent(0.38))
+    assertEqualFirstColor(chip.backgroundColor(for: .selected),
+                          secondColor: selectedBackgroundColor)
+    assertEqualFirstColor(chip.backgroundColor(for: .disabled),
+                          secondColor: backgroundColor.withAlphaComponent(0.38))
     assertEqualFirstColor(chip.titleColor(for: .normal), secondColor: textColor)
     assertEqualFirstColor(chip.titleColor(for: .selected), secondColor: selectedTextColor)
-    assertEqualFirstColor(chip.titleColor(for: .disabled), secondColor: textColor.withAlphaComponent(0.38))
+    assertEqualFirstColor(chip.titleColor(for: .disabled),
+                          secondColor: textColor.withAlphaComponent(0.38))
 
     // Test shape
     if let cardShape = chip.shapeGenerator as? MDCRectangleShapeGenerator {
@@ -125,11 +128,14 @@ class ChipsMaterialThemingTests: XCTestCase {
     assertEqualFirstColor(chip.borderColor(for: .normal), secondColor: borderColor)
     assertEqualFirstColor(chip.borderColor(for: .selected), secondColor: .clear)
     assertEqualFirstColor(chip.backgroundColor(for: .normal), secondColor: colorScheme.surfaceColor)
-    assertEqualFirstColor(chip.backgroundColor(for: .selected), secondColor: selectedBackgroundColor)
-    assertEqualFirstColor(chip.backgroundColor(for: .disabled), secondColor: colorScheme.surfaceColor.withAlphaComponent(0.38))
+    assertEqualFirstColor(chip.backgroundColor(for: .selected),
+                          secondColor: selectedBackgroundColor)
+    assertEqualFirstColor(chip.backgroundColor(for: .disabled),
+                          secondColor: colorScheme.surfaceColor.withAlphaComponent(0.38))
     assertEqualFirstColor(chip.titleColor(for: .normal), secondColor: textColor)
     assertEqualFirstColor(chip.titleColor(for: .selected), secondColor: selectedTextColor)
-    assertEqualFirstColor(chip.titleColor(for: .disabled), secondColor: textColor.withAlphaComponent(0.38))
+    assertEqualFirstColor(chip.titleColor(for: .disabled),
+                          secondColor: textColor.withAlphaComponent(0.38))
 
     // Test shape
     if let cardShape = chip.shapeGenerator as? MDCRectangleShapeGenerator {

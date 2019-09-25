@@ -14,6 +14,7 @@
 
 import XCTest
 
+import MDFTesting
 import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialDialogs_Theming
@@ -21,7 +22,6 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShadowElevations
-import MDFTesting
 
 class DialogsMaterialThemingTests: XCTestCase {
 
@@ -46,10 +46,13 @@ class DialogsMaterialThemingTests: XCTestCase {
     alert.applyTheme(withScheme: scheme)
 
     // Color
-    assertEqualFirstColor(alert.titleColor, secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    assertEqualFirstColor(alert.messageColor, secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.60))
+    assertEqualFirstColor(alert.titleColor,
+                          secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    assertEqualFirstColor(alert.messageColor,
+                          secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.60))
     assertEqualFirstColor(alert.titleIconTintColor, secondColor: colorScheme.primaryColor)
-    assertEqualFirstColor(alert.scrimColor, secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+    assertEqualFirstColor(alert.scrimColor,
+                          secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.32))
     assertEqualFirstColor(alert.backgroundColor, secondColor: colorScheme.surfaceColor);
 
     // Typography
@@ -68,12 +71,15 @@ class DialogsMaterialThemingTests: XCTestCase {
       case .low:
         assertEqualFirstColor(button.backgroundColor(for: .normal), secondColor: .clear)
         assertEqualFirstColor(button.borderColor(for: .normal), secondColor: nil)
-        assertEqualFirstColor(button.inkColor, secondColor: colorScheme.primaryColor.withAlphaComponent(0.16))
-        assertEqualFirstColor(button.titleColor(for: [.normal, .highlighted]), secondColor: colorScheme.primaryColor)
+        assertEqualFirstColor(button.inkColor,
+                              secondColor: colorScheme.primaryColor.withAlphaComponent(0.16))
+        assertEqualFirstColor(button.titleColor(for: [.normal, .highlighted]),
+                              secondColor: colorScheme.primaryColor)
         assertEqualFirstColor(button.titleColor(for: .disabled),
                               secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.38))
         [.normal, .highlighted].forEach {
-          assertEqualFirstColor(button.imageTintColor(for: $0), secondColor: colorScheme.primaryColor)
+          assertEqualFirstColor(button.imageTintColor(for: $0),
+                                secondColor: colorScheme.primaryColor)
         }
         assertEqualFirstColor(button.imageTintColor(for: .disabled),
                               secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.38))
@@ -91,11 +97,15 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssertEqual(button.minimumSize.height, 36.0, accuracy: 0.001)
       case .medium:
         assertEqualFirstColor(button.backgroundColor(for: .normal), secondColor: .clear)
-        assertEqualFirstColor(button.titleColor(for: .normal), secondColor: colorScheme.primaryColor)
-        assertEqualFirstColor(button.titleColor(for: .disabled), secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+        assertEqualFirstColor(button.titleColor(for: .normal),
+                              secondColor: colorScheme.primaryColor)
+        assertEqualFirstColor(button.titleColor(for: .disabled),
+                              secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.38))
         XCTAssertEqual(button.disabledAlpha,1)
-        assertEqualFirstColor(button.inkColor,secondColor: colorScheme.primaryColor.withAlphaComponent(0.12))
-        assertEqualFirstColor(button.borderColor(for: .normal), secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.12))
+        assertEqualFirstColor(button.inkColor,
+                              secondColor: colorScheme.primaryColor.withAlphaComponent(0.12))
+        assertEqualFirstColor(button.borderColor(for: .normal),
+                              secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.12))
         // Test shape
         XCTAssertEqual(button.layer.cornerRadius, kCornerRadius, accuracy: 0.001)
         // Test typography
@@ -108,20 +118,24 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssertEqual(button.borderWidth(for: .highlighted), 1, accuracy: 0.001)
         XCTAssertEqual(button.borderWidth(for: .disabled), 1, accuracy: 0.001)
       case .high:
-        assertEqualFirstColor(button.backgroundColor(for: .normal), secondColor: colorScheme.primaryColor)
+        assertEqualFirstColor(button.backgroundColor(for: .normal),
+                              secondColor: colorScheme.primaryColor)
         assertEqualFirstColor(
           button.backgroundColor(for: .disabled),
           secondColor: colorScheme.onSurfaceColor.withAlphaComponent(disabledBackgroundOpacity))
-        assertEqualFirstColor(button.titleColor(for: .normal), secondColor: colorScheme.onPrimaryColor)
+        assertEqualFirstColor(button.titleColor(for: .normal),
+                              secondColor: colorScheme.onPrimaryColor)
         assertEqualFirstColor(
           button.titleColor(for: .disabled),
           secondColor: colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
-        assertEqualFirstColor(button.imageTintColor(for: .normal), secondColor: colorScheme.onPrimaryColor)
+        assertEqualFirstColor(button.imageTintColor(for: .normal),
+                              secondColor: colorScheme.onPrimaryColor)
         assertEqualFirstColor(
           button.imageTintColor(for: .disabled),
           secondColor: colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
         assertEqualFirstColor(button.inkColor,
-                              secondColor: colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
+                              secondColor: colorScheme.onPrimaryColor.withAlphaComponent(
+                                  inkOpacity))
         // Test shape
         XCTAssertEqual(button.layer.cornerRadius, kCornerRadius, accuracy: 0.001)
         // Test typography
@@ -160,18 +174,22 @@ class DialogsMaterialThemingTests: XCTestCase {
     // Then
     assertEqualFirstColor(alertView.backgroundColor, secondColor: colorScheme.surfaceColor);
 
-    assertEqualFirstColor(alertView.titleColor, secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    assertEqualFirstColor(alertView.messageColor, secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.60))
+    assertEqualFirstColor(alertView.titleColor,
+                          secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    assertEqualFirstColor(alertView.messageColor,
+                          secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.60))
     assertEqualFirstColor(presentationController.scrimColor,
                           secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
     assertEqualFirstColor(alertView.titleIconTintColor, secondColor: colorScheme.primaryColor)
-    assertEqualFirstColor(button.backgroundColor(for: .normal), secondColor: colorScheme.primaryColor)
+    assertEqualFirstColor(button.backgroundColor(for: .normal),
+                          secondColor: colorScheme.primaryColor)
 
     assertEqualFirstColor(button.titleColor(for: .normal), secondColor: colorScheme.onPrimaryColor)
     assertEqualFirstColor(button.inkColor,
                           secondColor: colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
-    assertEqualFirstColor(button.imageTintColor(for: .normal), secondColor: colorScheme.onPrimaryColor)
+    assertEqualFirstColor(button.imageTintColor(for: .normal),
+                          secondColor: colorScheme.onPrimaryColor)
   }
 
   func testMDCDialogPresentationControllerTheming() {
@@ -258,7 +276,8 @@ class DialogsMaterialThemingTests: XCTestCase {
 
     // Then
     // Color
-    assertEqualFirstColor(presentationThemedController.scrimColor, secondColor: alertThemedController.scrimColor)
+    assertEqualFirstColor(presentationThemedController.scrimColor,
+                          secondColor: alertThemedController.scrimColor)
 
     // Other properties
     XCTAssertEqual(presentationThemedController.dialogCornerRadius,

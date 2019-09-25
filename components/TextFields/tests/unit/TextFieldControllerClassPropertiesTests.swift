@@ -16,10 +16,11 @@
 // swiftlint:disable type_body_length
 
 import XCTest
+
+import MDFTesting
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTextFields
 import MaterialComponents.MaterialTypography
-import MDFTesting
 
 class TextFieldControllerClassPropertiesTests: XCTestCase {
   override func tearDown() {
@@ -111,7 +112,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
   func testFilled() {
 
     // Test the values of the class properties.
-    assertEqualFirstColor(MDCTextInputControllerFilled.errorColorDefault, secondColor: MDCPalette.red.accent400)
+    assertEqualFirstColor(MDCTextInputControllerFilled.errorColorDefault,
+                          secondColor: MDCPalette.red.accent400)
     assertEqualFirstColor(MDCTextInputControllerFilled.inlinePlaceholderColorDefault,
                           secondColor: UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault, false)
@@ -154,7 +156,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     let textField = MDCTextField()
     var controller = MDCTextInputControllerFilled(textInput: textField)
 
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerFilled.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerFilled.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerFilled.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
@@ -196,7 +199,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     assertEqualFirstColor(MDCTextInputControllerFilled.errorColorDefault, secondColor: .green)
 
     MDCTextInputControllerFilled.inlinePlaceholderColorDefault = .orange
-    assertEqualFirstColor(MDCTextInputControllerFilled.inlinePlaceholderColorDefault, secondColor: .orange)
+    assertEqualFirstColor(MDCTextInputControllerFilled.inlinePlaceholderColorDefault,
+                          secondColor: .orange)
 
     MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault = false
     XCTAssertEqual(MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault,
@@ -218,10 +222,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerFilled.underlineViewModeDefault, .unlessEditing)
 
     MDCTextInputControllerFilled.leadingUnderlineLabelTextColorDefault = .brown
-    assertEqualFirstColor(MDCTextInputControllerFilled.leadingUnderlineLabelTextColorDefault, secondColor: .brown)
+    assertEqualFirstColor(MDCTextInputControllerFilled.leadingUnderlineLabelTextColorDefault,
+                          secondColor: .brown)
 
     MDCTextInputControllerFilled.trailingUnderlineLabelTextColorDefault = .cyan
-    assertEqualFirstColor(MDCTextInputControllerFilled.trailingUnderlineLabelTextColorDefault, secondColor: .cyan)
+    assertEqualFirstColor(MDCTextInputControllerFilled.trailingUnderlineLabelTextColorDefault,
+                          secondColor: .cyan)
 
     MDCTextInputControllerFilled.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 4)
     XCTAssertEqual(MDCTextInputControllerFilled.inlinePlaceholderFontDefault,
@@ -237,10 +243,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     // Default specific properties
     MDCTextInputControllerFilled.floatingPlaceholderActiveColorDefault = .yellow
-    assertEqualFirstColor(MDCTextInputControllerFilled.floatingPlaceholderActiveColorDefault, secondColor: .yellow)
+    assertEqualFirstColor(MDCTextInputControllerFilled.floatingPlaceholderActiveColorDefault,
+                          secondColor: .yellow)
 
     MDCTextInputControllerFilled.floatingPlaceholderNormalColorDefault = .orange
-    assertEqualFirstColor(MDCTextInputControllerFilled.floatingPlaceholderNormalColorDefault, secondColor: .orange)
+    assertEqualFirstColor(MDCTextInputControllerFilled.floatingPlaceholderNormalColorDefault,
+                          secondColor: .orange)
 
     MDCTextInputControllerFilled.floatingPlaceholderScaleDefault = 0.6
     XCTAssertEqual(Float(MDCTextInputControllerFilled.floatingPlaceholderScaleDefault), 0.6)
@@ -254,7 +262,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     // Test that the changes to the class properties can propagate to an instance.
     controller = MDCTextInputControllerFilled(textInput: textField)
 
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerFilled.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerFilled.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerFilled.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
@@ -293,13 +302,15 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
   func testOutlined() {
     // Test the values of the class properties.
-    assertEqualFirstColor(MDCTextInputControllerOutlined.errorColorDefault, secondColor: MDCPalette.red.accent400)
+    assertEqualFirstColor(MDCTextInputControllerOutlined.errorColorDefault,
+                          secondColor: MDCPalette.red.accent400)
     assertEqualFirstColor(MDCTextInputControllerOutlined.inlinePlaceholderColorDefault,
                           secondColor: UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault, false)
     assertEqualFirstColor(MDCTextInputControllerOutlined.activeColorDefault,
                           secondColor: MDCPalette.blue.accent700)
-    assertEqualFirstColor(MDCTextInputControllerOutlined.normalColorDefault, secondColor: .lightGray)
+    assertEqualFirstColor(MDCTextInputControllerOutlined.normalColorDefault,
+                          secondColor: .lightGray)
     XCTAssertEqual(MDCTextInputControllerOutlined.underlineHeightActiveDefault, 0)
     XCTAssertEqual(MDCTextInputControllerOutlined.underlineHeightNormalDefault, 0)
     XCTAssertEqual(MDCTextInputControllerOutlined.underlineViewModeDefault, .whileEditing)
@@ -335,7 +346,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     let textField = MDCTextField()
     var controller = MDCTextInputControllerOutlined(textInput: textField)
 
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerOutlined.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerOutlined.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerOutlined.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
@@ -377,7 +389,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     assertEqualFirstColor(MDCTextInputControllerOutlined.errorColorDefault, secondColor: .green)
 
     MDCTextInputControllerOutlined.inlinePlaceholderColorDefault = .orange
-    assertEqualFirstColor(MDCTextInputControllerOutlined.inlinePlaceholderColorDefault, secondColor: .orange)
+    assertEqualFirstColor(MDCTextInputControllerOutlined.inlinePlaceholderColorDefault,
+                          secondColor: .orange)
 
     MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault = false
     XCTAssertEqual(MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault,
@@ -399,10 +412,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerOutlined.underlineViewModeDefault, .unlessEditing)
 
     MDCTextInputControllerOutlined.leadingUnderlineLabelTextColorDefault = .green
-    assertEqualFirstColor(MDCTextInputControllerOutlined.leadingUnderlineLabelTextColorDefault, secondColor: .green)
+    assertEqualFirstColor(MDCTextInputControllerOutlined.leadingUnderlineLabelTextColorDefault,
+                          secondColor: .green)
 
     MDCTextInputControllerOutlined.trailingUnderlineLabelTextColorDefault = .gray
-    assertEqualFirstColor(MDCTextInputControllerOutlined.trailingUnderlineLabelTextColorDefault, secondColor: .gray)
+    assertEqualFirstColor(MDCTextInputControllerOutlined.trailingUnderlineLabelTextColorDefault,
+                          secondColor: .gray)
 
     MDCTextInputControllerOutlined.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 4)
     XCTAssertEqual(MDCTextInputControllerOutlined.inlinePlaceholderFontDefault,
@@ -418,10 +433,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     // Default specific properties
     MDCTextInputControllerOutlined.floatingPlaceholderActiveColorDefault = .clear
-    assertEqualFirstColor(MDCTextInputControllerOutlined.floatingPlaceholderActiveColorDefault, secondColor: .clear)
+    assertEqualFirstColor(MDCTextInputControllerOutlined.floatingPlaceholderActiveColorDefault,
+                          secondColor: .clear)
 
     MDCTextInputControllerOutlined.floatingPlaceholderNormalColorDefault = .purple
-    assertEqualFirstColor(MDCTextInputControllerOutlined.floatingPlaceholderNormalColorDefault, secondColor: .purple)
+    assertEqualFirstColor(MDCTextInputControllerOutlined.floatingPlaceholderNormalColorDefault,
+                          secondColor: .purple)
 
     MDCTextInputControllerOutlined.floatingPlaceholderScaleDefault = 0.6
     XCTAssertEqual(Float(MDCTextInputControllerOutlined.floatingPlaceholderScaleDefault), 0.6)
@@ -435,7 +452,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     // Test that the changes to the class properties can propagate to an instance.
     controller = MDCTextInputControllerOutlined(textInput: textField)
 
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerOutlined.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerOutlined.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerOutlined.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
@@ -474,13 +492,15 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
   func testUnderline() {
 
     // Test the values of the class properties.
-    assertEqualFirstColor(MDCTextInputControllerUnderline.errorColorDefault, secondColor: MDCPalette.red.accent400)
+    assertEqualFirstColor(MDCTextInputControllerUnderline.errorColorDefault,
+                          secondColor: MDCPalette.red.accent400)
     assertEqualFirstColor(MDCTextInputControllerUnderline.inlinePlaceholderColorDefault,
                           secondColor: UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault, false)
     assertEqualFirstColor(MDCTextInputControllerUnderline.activeColorDefault,
                           secondColor: MDCPalette.blue.accent700)
-    assertEqualFirstColor(MDCTextInputControllerUnderline.normalColorDefault, secondColor: .lightGray)
+    assertEqualFirstColor(MDCTextInputControllerUnderline.normalColorDefault,
+                          secondColor: .lightGray)
     XCTAssertEqual(MDCTextInputControllerUnderline.underlineHeightActiveDefault, 2)
     XCTAssertEqual(MDCTextInputControllerUnderline.underlineHeightNormalDefault, 1)
     XCTAssertEqual(MDCTextInputControllerUnderline.underlineViewModeDefault, .whileEditing)
@@ -516,7 +536,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     let textField = MDCTextField()
     var controller = MDCTextInputControllerUnderline(textInput: textField)
 
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerUnderline.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerUnderline.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerUnderline.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
@@ -558,7 +579,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     assertEqualFirstColor(MDCTextInputControllerUnderline.errorColorDefault, secondColor: .green)
 
     MDCTextInputControllerUnderline.inlinePlaceholderColorDefault = .orange
-    assertEqualFirstColor(MDCTextInputControllerUnderline.inlinePlaceholderColorDefault, secondColor: .orange)
+    assertEqualFirstColor(MDCTextInputControllerUnderline.inlinePlaceholderColorDefault,
+                          secondColor: .orange)
 
     MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault = false
     XCTAssertEqual(MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault,
@@ -580,10 +602,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerUnderline.underlineViewModeDefault, .unlessEditing)
 
     MDCTextInputControllerUnderline.leadingUnderlineLabelTextColorDefault = .blue
-    assertEqualFirstColor(MDCTextInputControllerUnderline.leadingUnderlineLabelTextColorDefault, secondColor: .blue)
+    assertEqualFirstColor(MDCTextInputControllerUnderline.leadingUnderlineLabelTextColorDefault,
+                          secondColor: .blue)
 
     MDCTextInputControllerUnderline.trailingUnderlineLabelTextColorDefault = .white
-    assertEqualFirstColor(MDCTextInputControllerUnderline.trailingUnderlineLabelTextColorDefault, secondColor: .white)
+    assertEqualFirstColor(MDCTextInputControllerUnderline.trailingUnderlineLabelTextColorDefault,
+                          secondColor: .white)
 
     MDCTextInputControllerUnderline.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 4)
     XCTAssertEqual(MDCTextInputControllerUnderline.inlinePlaceholderFontDefault,
@@ -599,10 +623,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     // Default specific properties
     MDCTextInputControllerUnderline.floatingPlaceholderActiveColorDefault = .red
-    assertEqualFirstColor(MDCTextInputControllerUnderline.floatingPlaceholderActiveColorDefault, secondColor: .red)
+    assertEqualFirstColor(MDCTextInputControllerUnderline.floatingPlaceholderActiveColorDefault,
+                          secondColor: .red)
 
     MDCTextInputControllerUnderline.floatingPlaceholderNormalColorDefault = .red
-    assertEqualFirstColor(MDCTextInputControllerUnderline.floatingPlaceholderNormalColorDefault, secondColor: .red)
+    assertEqualFirstColor(MDCTextInputControllerUnderline.floatingPlaceholderNormalColorDefault,
+                          secondColor: .red)
 
     MDCTextInputControllerUnderline.floatingPlaceholderScaleDefault = 0.6
     XCTAssertEqual(Float(MDCTextInputControllerUnderline.floatingPlaceholderScaleDefault), 0.6)
@@ -616,7 +642,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     // Test that the changes to the class properties can propagate to an instance.
     controller = MDCTextInputControllerUnderline(textInput: textField)
 
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerUnderline.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerUnderline.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerUnderline.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
@@ -657,7 +684,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
   func testFullWidth() {
     // Test the values of the class properties.
     assertEqualFirstColor(MDCTextInputControllerFullWidth.disabledColorDefault, secondColor: .clear)
-    assertEqualFirstColor(MDCTextInputControllerFullWidth.errorColorDefault, secondColor: MDCPalette.red.accent400)
+    assertEqualFirstColor(MDCTextInputControllerFullWidth.errorColorDefault,
+                          secondColor: MDCPalette.red.accent400)
     assertEqualFirstColor(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault,
                           secondColor: UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault,
@@ -667,7 +695,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerFullWidth.underlineHeightActiveDefault, 0)
     XCTAssertEqual(MDCTextInputControllerFullWidth.underlineHeightNormalDefault, 0)
     XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .never)
-    assertEqualFirstColor(MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault, secondColor: .clear)
+    assertEqualFirstColor(MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault,
+                          secondColor: .clear)
     assertEqualFirstColor(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault,
                           secondColor: UIColor(white: 0, alpha: CGFloat(0.54)))
 
@@ -685,7 +714,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     var controller = MDCTextInputControllerFullWidth(textInput: textField)
 
     assertEqualFirstColor(controller.disabledColor, secondColor: .clear)
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerFullWidth.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerFullWidth.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,
@@ -720,7 +750,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     assertEqualFirstColor(MDCTextInputControllerFullWidth.errorColorDefault, secondColor: .green)
 
     MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault = .orange
-    assertEqualFirstColor(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault, secondColor: .orange)
+    assertEqualFirstColor(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault,
+                          secondColor: .orange)
 
     MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault = false
     XCTAssertEqual(MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault,
@@ -742,10 +773,12 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerFullWidth.underlineViewModeDefault, .never)
 
     MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault = .brown
-    assertEqualFirstColor(MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault, secondColor: .clear)
+    assertEqualFirstColor(MDCTextInputControllerFullWidth.leadingUnderlineLabelTextColorDefault,
+                          secondColor: .clear)
 
     MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault = .cyan
-    assertEqualFirstColor(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault, secondColor: .cyan)
+    assertEqualFirstColor(MDCTextInputControllerFullWidth.trailingUnderlineLabelTextColorDefault,
+                          secondColor: .cyan)
 
     MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault = UIFont.systemFont(ofSize: 4)
     XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderFontDefault,
@@ -763,7 +796,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     controller = MDCTextInputControllerFullWidth(textInput: textField)
 
     assertEqualFirstColor(controller.disabledColor, secondColor: .clear)
-    assertEqualFirstColor(controller.errorColor, secondColor: MDCTextInputControllerFullWidth.errorColorDefault)
+    assertEqualFirstColor(controller.errorColor,
+                          secondColor: MDCTextInputControllerFullWidth.errorColorDefault)
     assertEqualFirstColor(controller.inlinePlaceholderColor,
                           secondColor: MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault)
     XCTAssertEqual(controller.mdc_adjustsFontForContentSizeCategory,

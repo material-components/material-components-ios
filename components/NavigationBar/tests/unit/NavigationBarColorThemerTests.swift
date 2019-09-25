@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import XCTest
+
+import MDFTesting
 import MaterialComponents.MaterialNavigationBar
 import MaterialComponents.MaterialNavigationBar_ColorThemer
-import MDFTesting
 
 class NavigationBarColorThemerTests: XCTestCase {
 
@@ -56,6 +57,7 @@ class NavigationBarColorThemerTests: XCTestCase {
                           secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
     assertEqualFirstColor(navigationBar.buttonsTitleColor(for: .normal),
                           secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    assertEqualFirstColor(navigationBar.tintColor, secondColor: colorScheme.onSurfaceColor.withAlphaComponent(0.54))
+    assertEqualFirstColor(navigationBar.tintColor, secondColor:
+      colorScheme.onSurfaceColor.withAlphaComponent(0.54))
   }
 }

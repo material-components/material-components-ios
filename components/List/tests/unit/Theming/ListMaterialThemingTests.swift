@@ -14,11 +14,11 @@
 
 import XCTest
 
+import MDFTesting
 import MaterialComponents.MaterialList
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialList_Theming
-import MDFTesting
 
 class ListMaterialThemingTests: XCTestCase {
 

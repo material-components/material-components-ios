@@ -84,10 +84,10 @@
 
   // Then
   XCTAssertEqualColors(messageView.snackbarMessageViewBackgroundColor,
-                        [UIColor colorWithRed:(CGFloat)(0x32 / 255.0)
-                                        green:(CGFloat)(0x32 / 255.0)
-                                         blue:(CGFloat)(0x32 / 255.0)
-                                        alpha:1]);
+                       [UIColor colorWithRed:(CGFloat)(0x32 / 255.0)
+                                       green:(CGFloat)(0x32 / 255.0)
+                                        blue:(CGFloat)(0x32 / 255.0)
+                                       alpha:1]);
   XCTAssertEqualColors(messageView.snackbarMessageViewShadowColor, UIColor.blackColor);
   XCTAssertEqualColors(messageView.messageTextColor, UIColor.whiteColor);
 }

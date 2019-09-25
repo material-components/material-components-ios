@@ -14,13 +14,13 @@
 
 import XCTest
 
+import MDFTesting
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialCards_Theming
-import MDFTesting
 
 class CardsMaterialThemingTests: XCTestCase {
 
