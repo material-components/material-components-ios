@@ -54,6 +54,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
 
+  BOOL areAnimationsEnabled = UIView.areAnimationsEnabled;
+  [UIView setAnimationsEnabled:NO];
   dispatch_after(
       dispatch_time(DISPATCH_TIME_NOW,
                     (int64_t)(kTextFieldValidationEstimatedAnimationDuration * NSEC_PER_SEC)),
@@ -65,6 +67,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
         UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
         [self generateSnapshotAndVerifyForView:textFieldSnapshot];
         [expectation fulfill];
+        [UIView setAnimationsEnabled:areAnimationsEnabled];
       });
   [self waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
 }
