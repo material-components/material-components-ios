@@ -238,7 +238,7 @@
   }
 }
 
--(void)setDelegate:(id<MDCBottomDrawerViewControllerDelegate>)delegate {
+- (void)setDelegate:(id<MDCBottomDrawerViewControllerDelegate>)delegate {
   _delegate = delegate;
   if ([delegate isKindOfClass:[UIResponder class]]) {
     _cachedNextResponder = (UIResponder *)delegate;
