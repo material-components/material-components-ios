@@ -142,5 +142,6 @@ mdc_examples_swift_library(
         "//components/Buttons:ButtonThemer",
         "//components/Buttons:Theming",
         "//components/schemes/Container",
+        "@material_testing_ios//:MDFTesting",
     ],
 )

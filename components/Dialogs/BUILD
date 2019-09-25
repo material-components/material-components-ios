@@ -159,6 +159,7 @@ mdc_unit_test_swift_library(
         ":DialogThemer",
         ":Theming",
         "//components/Buttons:Theming",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 

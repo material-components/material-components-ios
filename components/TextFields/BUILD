@@ -182,6 +182,7 @@ mdc_unit_test_swift_library(
         ":Theming",
         "//components/Palettes",
         "//components/private/Math",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 
