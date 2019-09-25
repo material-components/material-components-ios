@@ -19,7 +19,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCTextControlState.h"
-#import "private/MDCBaseTextField+ContainedInputView.h"
 #import "private/MDCBaseTextFieldLayout.h"
 #import "private/MDCContainedInputViewColorViewModel.h"
 #import "private/MDCContainedInputViewLabelAnimation.h"
