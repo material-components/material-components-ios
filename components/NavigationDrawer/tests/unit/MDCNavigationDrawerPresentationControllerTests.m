@@ -96,4 +96,23 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testSettingShouldAlwaysExpandHeader {
+  // Given
+  UIViewController *fakeContentViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerViewController *fakeBottomDrawer = [[MDCBottomDrawerViewController alloc] init];
+  fakeBottomDrawer.contentViewController = fakeContentViewController;
+  UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerPresentationController *presentationController =
+      [[MDCBottomDrawerPresentationController alloc]
+          initWithPresentedViewController:fakeBottomDrawer
+                 presentingViewController:fakePresentingViewController];
+
+  // When
+  presentationController.shouldAlwaysExpandHeader = YES;
+  [presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertTrue(
+      presentationController.bottomDrawerContainerViewController.shouldAlwaysExpandHeader);
+}
 @end

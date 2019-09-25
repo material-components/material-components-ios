@@ -341,7 +341,7 @@ publish_release() {
     echo
     echo "And then get an auth token by running:"
     echo
-    echo "    gh user --whoami"
+    echo "    gh user"
     echo
     exit 1
   fi

@@ -50,6 +50,67 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio;
 
+/**
+ This method is called when the y-offset of the visible contents of the drawer have changed. This
+ is triggered when the drawer is presented and dismissed as well as when the content is being
+ dragged interactively.
+
+ @param presentationController presentation controller of the bottom drawer
+ @param yOffset yOffset of the top of the drawer
+ */
+- (void)bottomDrawerTopDidChangeYOffset:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                                yOffset:(CGFloat)yOffset;
+
+/**
+ This method is called when the bottom drawer will begin animating to an open state. This is
+ triggered when the VC is being presented.
+
+ @param presentationController presentation controller of the bottom drawer
+ @param transitionCoordinator coordinator being used to animate the transition
+ @param targetYOffset y-Offset that the drawer will animate to
+
+ @discussion The target y-offset is calculated based upon the @c maximumInitialDrawerHeight and
+ @c preferredContentSize of the @c contentViewController. This value may not be the final offset
+ since that may change once the initial layout pass has completed. If the offset changes again then
+ @c bottomDrawerTopDidChangeYOffset:yOffset will be called with the updated value.
+ */
+- (void)bottomDrawerPresentTransitionWillBegin:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                               withCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)
+                                                   transitionCoordinator
+                                 targetYOffset:(CGFloat)targetYOffset;
+
+/**
+ This method is called when the bottom drawer has completed animating to an open state. This is
+ triggered when the VC is being presented.
+
+ @param presentationController presentation controller of the bottom drawer
+ */
+- (void)bottomDrawerPresentTransitionDidEnd:
+    (nonnull MDCBottomDrawerPresentationController *)presentationController;
+
+/**
+ This method is called when the bottom drawer will begin animating to a closed state. This is
+ triggered when the VC is being dismissed.
+
+ @param presentationController presentation controller of the bottom drawer
+ @param transitionCoordinator coordinator being used to animate the transition
+ */
+- (void)bottomDrawerDismissTransitionWillBegin:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                               withCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)
+                                                   transitionCoordinator;
+
+/**
+ This method is called when the bottom drawer has completed animating to a closed state. This is
+ triggered when the VC is being dismissed.
+
+ @param presentationController presentation controller of the bottom drawer
+ */
+- (void)bottomDrawerDismissTransitionDidEnd:
+    (nonnull MDCBottomDrawerPresentationController *)presentationController;
+
 @end
 
 /**
@@ -124,6 +185,14 @@
  The drawer's elevation. Defaults to MDCShadowElevationNavDrawer.
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
+ Determines if the header should always expand as it approaches the top of the screen.
+ If the content height is smaller than the screen height then the header will not expand unless this
+ flag is enabled.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldAlwaysExpandHeader;
 
 /**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the

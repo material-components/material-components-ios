@@ -204,6 +204,26 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
 /**
+ Determines if a divider should be shown between the header and actions. To customize the divider
+ color see @c headerDividerColor.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL showsHeaderDivider;
+
+/**
+ The color of the divider between the header and actions.
+
+ Defaults to a semi transparent black.
+ */
+@property(nonatomic, copy, nonnull) UIColor *headerDividerColor;
+
+/**
+ The elevation of the action sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
  Determines the alignment behavior of all title leading edges.
 
  When YES, all title leading edges will be aligned with one another.

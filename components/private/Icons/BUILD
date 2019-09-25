@@ -41,6 +41,7 @@ mdc_unit_test_objc_library(
         "//components/private/Icons/icons/ic_more_horiz",
         "//components/private/Icons/icons/ic_radio_button_unchecked",
         "//components/private/Icons/icons/ic_reorder",
+        "//components/private/Icons/icons/ic_settings",
     ],
 )
 

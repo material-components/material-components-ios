@@ -32,8 +32,11 @@
   activityIndicator.cycleColors = @[ UIColor.whiteColor ];
 
   // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCActivityIndicatorColorThemer applySemanticColorScheme:colorScheme
                                         toActivityIndicator:activityIndicator];
+#pragma clang diagnostic pop
 
   // Then
   XCTAssertEqualObjects(activityIndicator.cycleColors, @[ colorScheme.primaryColor ]);

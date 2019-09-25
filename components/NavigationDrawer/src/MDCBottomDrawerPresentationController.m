@@ -80,6 +80,7 @@ static CGFloat kTopHandleTopMargin = 5.0f;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
+  bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
@@ -172,6 +173,13 @@ static CGFloat kTopHandleTopMargin = 5.0f;
         self.scrimView.alpha = 1.0;
       }
                       completion:nil];
+
+  // Need to calculate the initial position of the drawer since the layout pass will
+  // not be complete before the animation begins.
+  CGRect frame = [self frameOfPresentedViewInContainerView];
+  [self.delegate bottomDrawerPresentTransitionWillBegin:self
+                                        withCoordinator:transitionCoordinator
+                                          targetYOffset:frame.origin.y];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -187,6 +195,8 @@ static CGFloat kTopHandleTopMargin = 5.0f;
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }
+
+  [self.delegate bottomDrawerPresentTransitionDidEnd:self];
 }
 
 - (void)dismissalTransitionWillBegin {
@@ -197,6 +207,8 @@ static CGFloat kTopHandleTopMargin = 5.0f;
         self.scrimView.alpha = 0.0;
       }
                       completion:nil];
+
+  [self.delegate bottomDrawerDismissTransitionWillBegin:self withCoordinator:transitionCoordinator];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -211,12 +223,25 @@ static CGFloat kTopHandleTopMargin = 5.0f;
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }
+  [self.delegate bottomDrawerDismissTransitionDidEnd:self];
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
-
   [self.bottomDrawerContainerViewController.view layoutIfNeeded];
+}
+
+- (CGRect)frameOfPresentedViewInContainerView {
+  CGSize containerSize = self.containerView.frame.size;
+  CGSize preferredSize = self.presentedViewController.preferredContentSize;
+
+  // Layout has yet to be completed so let's calculate the preferred height
+  if (CGSizeEqualToSize(preferredSize, CGSizeZero)) {
+    preferredSize.height = self.bottomDrawerContainerViewController.maximumInitialDrawerHeight;
+    preferredSize.width = containerSize.width;
+  }
+  return CGRectMake(0, containerSize.height - preferredSize.height, preferredSize.height,
+                    preferredSize.width);
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
@@ -252,6 +277,11 @@ static CGFloat kTopHandleTopMargin = 5.0f;
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   self.bottomDrawerContainerViewController.elevation = elevation;
+}
+
+- (void)setShouldAlwaysExpandHeader:(BOOL)shouldAlwaysExpandHeader {
+  _shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
+  self.bottomDrawerContainerViewController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
 }
 
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
@@ -307,6 +337,15 @@ static CGFloat kTopHandleTopMargin = 5.0f;
                             completion:(void (^__nullable)(BOOL finished))completion {
   [self.bottomDrawerContainerViewController expandToFullscreenWithDuration:duration
                                                                 completion:completion];
+}
+
+- (void)bottomDrawerContainerViewControllerDidChangeYOffset:
+            (MDCBottomDrawerContainerViewController *)containerViewController
+                                                    yOffset:(CGFloat)yOffset {
+  id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopDidChangeYOffset:yOffset:)]) {
+    [strongDelegate bottomDrawerTopDidChangeYOffset:self yOffset:yOffset];
+  }
 }
 
 @end

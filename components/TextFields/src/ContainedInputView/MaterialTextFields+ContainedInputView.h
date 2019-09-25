@@ -13,3 +13,5 @@
 // limitations under the License.
 
 #import "MDCBaseTextField.h"
+#import "MDCTextControlLabelBehavior.h"
+#import "MDCTextControlState.h"

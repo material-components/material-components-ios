@@ -334,13 +334,4 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - Deprecated
-
-@property(nonatomic)
-    BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
-        ;
-
-@property(nonatomic, strong, nullable)
-    UIColor *underlyingColor __deprecated_msg("Use underlyingColorHint instead.");
-
 @end

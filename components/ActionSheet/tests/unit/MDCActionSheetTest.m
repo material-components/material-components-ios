@@ -20,6 +20,11 @@
 #import "MaterialShadowElevations.h"
 
 static const CGFloat kSafeAreaAmount = 20;
+static const CGFloat kDefaultDividerOpacity = 0.12f;
+
+@interface MDCActionSheetController (MDCTesting)
+@property(nonatomic, strong, nonnull) UIView *headerDividerView;
+@end
 
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -60,6 +65,10 @@ static const CGFloat kSafeAreaAmount = 20;
   XCTAssertFalse(self.actionSheet.alwaysAlignTitleLeadingEdges);
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation,
                              MDCShadowElevationModalBottomSheet, 0.001);
+  XCTAssertEqualObjects(self.actionSheet.headerDividerColor,
+                        [UIColor.blackColor colorWithAlphaComponent:kDefaultDividerOpacity]);
+  XCTAssertFalse(self.actionSheet.showsHeaderDivider);
+  XCTAssertNotNil(self.actionSheet.headerDividerView);
 }
 
 - (void)testTitleColor {
@@ -455,6 +464,89 @@ static const CGFloat kSafeAreaAmount = 20;
 
   // Then
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_overrideBaseElevation, fakeElevation, 0.001);
+}
+
+- (void)testSettingCustomElevation {
+  // Given
+  CGFloat customElevation = 99;
+
+  // When
+  self.actionSheet.elevation = customElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.actionSheet.elevation, customElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation, customElevation, 0.001);
+}
+
+- (void)testSetHeaderDividerColor {
+  // Given
+  UIColor *expectedColor = UIColor.orangeColor;
+
+  // When
+  self.actionSheet.headerDividerColor = expectedColor;
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.headerDividerColor, expectedColor);
+}
+
+- (void)testSetShowsHeaderDivider {
+  // When
+  self.actionSheet.showsHeaderDivider = YES;
+
+  // Then
+  XCTAssertTrue(self.actionSheet.showsHeaderDivider);
+}
+
+- (void)testTableViewContentInsetsWithHeaderDividerViewAndTitle {
+  // Given
+  self.actionSheet.title = @"Foo";
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+  CGFloat originalTableContentInset = self.actionSheet.tableView.contentInset.top;
+
+  // When
+  self.actionSheet.showsHeaderDivider = YES;
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+
+  // Then
+  XCTAssertGreaterThan(self.actionSheet.tableView.contentInset.top, originalTableContentInset);
+}
+
+- (void)testTableViewContentInsetsWithHeaderDividerViewAndMessage {
+  // Given
+  self.actionSheet.message = @"Foo";
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+  CGFloat originalTableContentInset = self.actionSheet.tableView.contentInset.top;
+
+  // When
+  self.actionSheet.showsHeaderDivider = YES;
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+
+  // Then
+  XCTAssertGreaterThan(self.actionSheet.tableView.contentInset.top, originalTableContentInset);
+}
+
+- (void)testTableViewContentInsetsWithHeaderDividerViewAndNoTitleOrMessage {
+  // Given
+  self.actionSheet.title = nil;
+  self.actionSheet.message = nil;
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+  CGFloat originalTableContentInset = self.actionSheet.tableView.contentInset.top;
+
+  // When
+  self.actionSheet.showsHeaderDivider = YES;
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+
+  // Then
+  XCTAssertGreaterThan(self.actionSheet.tableView.contentInset.top, originalTableContentInset);
 }
 
 @end

@@ -74,8 +74,11 @@
 
 @implementation NavigationBarTypicalUseExample (Rotation)
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration {
+#pragma clang diagnostic pop
   [self.exampleView setNeedsDisplay];
 }
 

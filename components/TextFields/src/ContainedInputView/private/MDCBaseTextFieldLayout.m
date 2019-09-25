@@ -229,6 +229,7 @@ static const CGFloat kHorizontalPadding = 12.0f;
   self.labelFrameNormal = labelFrameNormal;
   self.leftViewHidden = !displaysLeftView;
   self.rightViewHidden = !displaysRightView;
+  self.containerHeight = positioningReference.containerHeight;
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
@@ -340,6 +341,10 @@ static const CGFloat kHorizontalPadding = 12.0f;
 
 - (CGFloat)textHeightWithFont:(UIFont *)font {
   return (CGFloat)ceil((double)font.lineHeight);
+}
+
+- (CGFloat)calculatedHeight {
+  return self.containerHeight;
 }
 
 @end

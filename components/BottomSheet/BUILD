@@ -33,6 +33,7 @@ mdc_public_objc_library(
     name = "BottomSheet",
     sdk_frameworks = [
         "QuartzCore",
+        "WebKit",
     ],
     deps = [
         "//components/Elevation",

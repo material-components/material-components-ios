@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import "MDCActionSheetController+MaterialTheming.h"
+
 #import "MaterialColor.h"
+#import "MaterialShadowElevations.h"
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kMediumAlpha = 0.6f;
@@ -43,6 +45,7 @@ static const CGFloat kInkAlpha = 0.16f;
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+  self.elevation = MDCShadowElevationModalActionSheet;
   [self applyBackgroundColorToActionSheet:self withColorScheme:colorScheme];
   if (self.message && ![self.message isEqualToString:@""]) {
     // If there is a message then this can be high opacity and won't clash with actions.

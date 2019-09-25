@@ -51,15 +51,6 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":BottomAppBar",
-        "//components/Themes",
-        "//components/schemes/Color",
-    ],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
@@ -117,4 +108,17 @@ mdc_snapshot_objc_library(
 mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
+)
+
+# Deprecated
+
+mdc_extension_objc_library(
+    name = "ColorThemer",
+    deprecation = "Please indicate interest in a replacement API at" +
+                  " https://github.com/material-components/material-components-ios/issues/7172",
+    deps = [
+        ":BottomAppBar",
+        "//components/Themes",
+        "//components/schemes/Color",
+    ],
 )

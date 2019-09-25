@@ -54,6 +54,22 @@
 
 @end
 
+@implementation BottomSheetWebViewPresentationExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Presentation from Modal (WebView)" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
+@end
+
 @implementation BottomSheetShortCollectionExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {

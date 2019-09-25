@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialActivityIndicator+ColorThemer.h"
 #import "MaterialActivityIndicator.h"
+#import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "supplemental/ActivityIndicatorExampleViewControllerSupplemental.h"
 
@@ -49,8 +49,7 @@
 
   // Themed determinate activity indicator
   self.activityIndicator1 = [[MDCActivityIndicator alloc] init];
-  [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
-                                        toActivityIndicator:self.activityIndicator1];
+  self.activityIndicator1.cycleColors = @[ self.colorScheme.primaryColor ];
   self.activityIndicator1.delegate = self;
   self.activityIndicator1.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [self.activityIndicator1 sizeToFit];
@@ -59,8 +58,7 @@
   self.activityIndicator2 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator2.delegate = self;
   self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeDeterminate;
-  [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
-                                        toActivityIndicator:self.activityIndicator2];
+  self.activityIndicator2.cycleColors = @[ self.colorScheme.primaryColor ];
   [self.activityIndicator2 sizeToFit];
 
   // Indeterminate activity indicator with custom colors.

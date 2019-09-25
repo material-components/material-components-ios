@@ -17,6 +17,7 @@
 #import "../../../src/private/MDCActionSheetHeaderView.h"
 #import "../../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MaterialActionSheet+Theming.h"
+#import "MaterialShadowElevations.h"
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kMediumAlpha = 0.6f;
@@ -96,6 +97,10 @@ static const CGFloat kInkAlpha = 0.16f;
   XCTAssertEqualObjects(actionSheetCell.inkTouchController.defaultInkView.inkColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
   XCTAssertEqualObjects(actionSheetCell.actionLabel.font, typographyScheme.subtitle1);
+
+  // Elevation
+  XCTAssertEqualWithAccuracy(self.actionSheet.elevation, MDCShadowElevationModalActionSheet, 0.001);
+
   [self assertTraitCollectionBlockAndElevationBlockForActionSheet:self.actionSheet];
 }
 

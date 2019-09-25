@@ -48,8 +48,7 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    // We always want the navigation bar to be hidden.
-    [self setNavigationBarHidden:YES animated:NO];
+    [self MDCAppBarNavigationController_commonInit];
   }
   return self;
 }
@@ -57,9 +56,16 @@
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
   self = [super initWithRootViewController:rootViewController];
   if (self) {
+    [self MDCAppBarNavigationController_commonInit];
+
     [self injectAppBarIntoViewController:rootViewController];
   }
   return self;
+}
+
+- (void)MDCAppBarNavigationController_commonInit {
+  // We always want the navigation bar to be hidden.
+  [self setNavigationBarHidden:YES animated:NO];
 }
 
 #pragma mark - UINavigationController overrides

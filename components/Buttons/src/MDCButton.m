@@ -148,7 +148,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)commonMDCButtonInit {
   _disabledAlpha = MDCButtonDisabledAlpha;
   _enabledAlpha = self.alpha;
-  _shouldRaiseOnTouch = YES;
   _uppercaseTitle = YES;
   _userElevations = [NSMutableDictionary dictionary];
   _nontransformedTitles = [NSMutableDictionary dictionary];
@@ -994,10 +993,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 #pragma mark - Deprecations
-
-- (UIColor *)underlyingColor {
-  return [self underlyingColorHint];
-}
 
 - (void)setUnderlyingColor:(UIColor *)underlyingColor {
   [self setUnderlyingColorHint:underlyingColor];
