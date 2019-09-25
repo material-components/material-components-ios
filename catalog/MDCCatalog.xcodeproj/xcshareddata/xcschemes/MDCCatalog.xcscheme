@@ -104,6 +104,20 @@
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA36F5CABC29BF4F91DA44204B9C3260"
+               BuildableName = "MaterialComponents-Unit-private-Icons-UnitTests.xctest"
+               BlueprintName = "MaterialComponents-Unit-private-Icons-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -836,6 +850,16 @@
                BlueprintIdentifier = "A432BC84C829B1F2A68FA667BE55990E"
                BuildableName = "MaterialComponents-Unit-Banner-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Banner-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA36F5CABC29BF4F91DA44204B9C3260"
+               BuildableName = "MaterialComponents-Unit-private-Icons-UnitTests.xctest"
+               BlueprintName = "MaterialComponents-Unit-private-Icons-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -8,6 +8,12 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/src/*.{h,m}"
     end
 
+    iss.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/private/Icons/tests/unit/*.{h,m,swift}"
+      ]
+    end
+
     iss.subspec "ic_arrow_back" do |ss|
       ss.public_header_files = "components/private/Icons/icons/ic_arrow_back/src/*.h"
       ss.source_files = "components/private/Icons/icons/ic_arrow_back/src/*.{h,m}"
