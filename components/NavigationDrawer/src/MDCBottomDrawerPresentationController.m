@@ -23,9 +23,9 @@ static CGFloat kTopHandleWidth = (CGFloat)24.0;
 static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 /**
- * View that allows touches that aren't handled from within the view to be propagated up the
- * responder chain. This is used to allow forwarding of tap events from the scrim view through to
- * the delegate if that has been enabled on the VC.
+ View that allows touches that aren't handled from within the view to be propagated up the
+ responder chain. This is used to allow forwarding of tap events from the scrim view through to
+ the delegate if that has been enabled on the VC.
  */
 @interface MDCBottomDrawerScrimView : UIView
 @end
