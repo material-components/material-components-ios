@@ -64,6 +64,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
   if (self.aSwitch.superview != self) {
     [self addSubview:_aSwitch];
     [self.aSwitch addTarget:self
@@ -134,6 +135,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   self.title = kExampleTitle;
   NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
   self.contentInsetToggleEnabledImage = [[UIImage imageNamed:@"contentInset_enabled"
@@ -439,6 +441,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
   [coordinator
       animateAlongsideTransition:nil
                       completion:^(
@@ -449,6 +452,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
+
   [self logItemVisibilityChanges];
 }
 

@@ -26,6 +26,7 @@
 
 - (void)setUp {
   [super setUp];
+
   self.bottomAppBar = [[MDCBottomAppBarView alloc] init];
 }
 

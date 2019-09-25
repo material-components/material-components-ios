@@ -571,6 +571,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)setAccessibilityValue:(NSString *)accessibilityValue {
   [super setAccessibilityValue:accessibilityValue];
+
   self.button.accessibilityValue = accessibilityValue;
 }
 
@@ -580,6 +581,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)setAccessibilityHint:(NSString *)accessibilityHint {
   [super setAccessibilityHint:accessibilityHint];
+
   self.button.accessibilityHint = accessibilityHint;
 }
 

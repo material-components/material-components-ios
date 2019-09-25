@@ -403,6 +403,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
   [self invalidateIntrinsicContentSize];
 }
 
