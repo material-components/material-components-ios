@@ -53,9 +53,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 @end
 
 /**
- * View that allows touches that aren't handled from within the view to be propagated up the
- * responder chain. This is used to allow forwarding of tap events from the scroll view through to
- * the delegate if that has been enabled on the VC.
+ View that allows touches that aren't handled from within the view to be propagated up the
+ responder chain. This is used to allow forwarding of tap events from the scroll view through to
+ the delegate if that has been enabled on the VC.
  */
 
 @interface MDCBottomDrawerScrollView : UIScrollView
