@@ -70,7 +70,7 @@ git_repository(
 git_repository(
     name = "material_testing_ios",
     remote = "https://github.com/material-foundation/material-testing-ios.git",
-    tag = "v1.0.1",
+    commit = "f3ecfca28f186bf83d0e16708dae50e6253fdd70",
 )
 
 git_repository(
