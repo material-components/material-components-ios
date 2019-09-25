@@ -17,10 +17,15 @@
 #import <objc/runtime.h>
 #import "MaterialTextFields+ContainedInputView.h"
 
+#import "../../../src/ContainedInputView/private/MDCContainedInputViewLabelState.h"
+
 @interface MDCBaseTextField (Private)
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
+- (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
+                                             text:(NSString *)text
+                                       labelState:(MDCContainedInputViewLabelState)labelState;
 @end
 
 @interface MDCBaseTextFieldTests : XCTestCase
@@ -261,6 +266,36 @@
   CGSize newSize = textField.frame.size;
   CGSize correctSize = CGSizeMake(130, 50);
   XCTAssertTrue(CGSizeEqualToSize(newSize, correctSize));
+}
+
+- (void)testPlaceholderVisibility {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+
+  // When
+  NSString *placeholder = @"placeholder";
+  NSString *text = @"text";
+  NSString *nilPlaceholder = nil;
+  NSString *nilText = nil;
+
+  // Then
+  XCTAssertFalse([textField
+      shouldPlaceholderBeVisibleWithPlaceholder:nilPlaceholder
+                                           text:text
+                                     labelState:MDCContainedInputViewLabelStateNormal]);
+  XCTAssertFalse([textField
+      shouldPlaceholderBeVisibleWithPlaceholder:placeholder
+                                           text:text
+                                     labelState:MDCContainedInputViewLabelStateNormal]);
+  XCTAssertFalse([textField
+      shouldPlaceholderBeVisibleWithPlaceholder:placeholder
+                                           text:nilText
+                                     labelState:MDCContainedInputViewLabelStateNormal]);
+  XCTAssertTrue([textField
+      shouldPlaceholderBeVisibleWithPlaceholder:placeholder
+                                           text:nilText
+                                     labelState:MDCContainedInputViewLabelStateFloating]);
 }
 
 @end

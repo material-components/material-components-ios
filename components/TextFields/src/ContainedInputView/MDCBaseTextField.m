@@ -409,15 +409,13 @@
 
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
-                                              labelState:self.labelState
                                                     text:self.text
-                                               isEditing:self.isEditing];
+                                              labelState:self.labelState];
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
-                                       labelState:(MDCContainedInputViewLabelState)labelState
                                              text:(NSString *)text
-                                        isEditing:(BOOL)isEditing {
+                                       labelState:(MDCContainedInputViewLabelState)labelState {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
 
