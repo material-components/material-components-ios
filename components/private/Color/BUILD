@@ -32,6 +32,7 @@ mdc_unit_test_objc_library(
     deps = [
         ":Color",
         "//components/private/Math",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 

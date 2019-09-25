@@ -102,6 +102,7 @@ swift_library(
         "//components/schemes/Typography",
         "@catalog_by_convention//:CatalogByConvention",
         "@material_internationalization_ios//:MDFInternationalization",
+        "@material_testing_ios//:MDFTesting",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
