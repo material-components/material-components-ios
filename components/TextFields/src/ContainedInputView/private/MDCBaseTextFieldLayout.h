@@ -31,6 +31,9 @@
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 
+@property(nonatomic, readonly) CGFloat calculatedHeight;
+@property(nonatomic, assign) CGFloat containerHeight;
+
 - (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                          positioningReference:
                              (nonnull id<MDCContainerStyleVerticalPositioningReference>)

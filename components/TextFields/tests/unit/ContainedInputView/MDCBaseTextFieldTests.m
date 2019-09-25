@@ -248,4 +248,19 @@
                         [textField textColorForState:MDCTextControlStateDisabled]);
 }
 
+- (void)testSizeThatFits {
+  // Given
+  CGRect largeTextFieldFrame = CGRectMake(0, 0, 130, 300);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:largeTextFieldFrame];
+
+  // When
+  textField.text = @"text";
+  [textField sizeToFit];
+
+  // Then
+  CGSize newSize = textField.frame.size;
+  CGSize correctSize = CGSizeMake(130, 50);
+  XCTAssertTrue(CGSizeEqualToSize(newSize, correctSize));
+}
+
 @end
