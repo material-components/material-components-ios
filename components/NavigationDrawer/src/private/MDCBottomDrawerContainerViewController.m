@@ -641,7 +641,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                                                        transitionRatio:transitionPercentage];
 
   [self updateDrawerState:transitionPercentage];
-  self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1;
+  self.currentlyFullscreen =
+      self.contentReachesFullscreen && headerTransitionToTop >= 1 && contentOffset.y > 0;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
