@@ -100,13 +100,21 @@ mdc_extension_objc_library(
     ],
 )
 
+filegroup(
+    name = "TabsExamplesAssets",
+    srcs = glob(["examples/resources/TabBarDemoAssets.xcassets/**"]),
+)
+
 mdc_examples_objc_library(
     name = "ObjcExamples",
+    data = [":TabsExamplesAssets"],
     deps = [
         ":ColorThemer",
         ":TabBarView",
         ":Tabs",
         ":TypographyThemer",
+        "//components/ActionSheet",
+        "//components/ActionSheet:Theming",
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
@@ -115,6 +123,7 @@ mdc_examples_objc_library(
         "//components/Collections",
         "//components/Palettes",
         "//components/Slider",
+        "//components/private/Icons/icons/ic_settings",
         "//components/private/Math",
         "//components/schemes/Color",
         "//components/schemes/Container",

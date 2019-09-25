@@ -182,4 +182,16 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   [self validateTextField:textField];
 }
 
+- (void)testDisabledTextField {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.label.text = @"Floating label text";
+  textField.text = @"Text";
+  textField.enabled = NO;
+
+  // Then
+  [self validateTextField:textField];
+}
 @end
