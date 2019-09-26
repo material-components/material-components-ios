@@ -19,7 +19,7 @@
 #import "MaterialTextFields+ContainedInputView.h"
 
 static const NSTimeInterval kTextFieldValidationEstimatedAnimationDuration = 0.25;
-static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
+static const NSTimeInterval kTextFieldValidationAnimationTimeout = 5.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCBaseTextField *textField;
