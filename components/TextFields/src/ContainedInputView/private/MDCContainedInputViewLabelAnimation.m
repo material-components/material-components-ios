@@ -14,9 +14,8 @@
 
 #import "MDCContainedInputViewLabelAnimation.h"
 
+#import "MDCContainedInputView.h"
 #import "MaterialAnimationTiming.h"
-
-static const CGFloat kDefaultAnimationDuration = (CGFloat)0.15;
 
 @implementation MDCContainedInputViewLabelAnimation
 
@@ -47,7 +46,7 @@ static const CGFloat kDefaultAnimationDuration = (CGFloat)0.15;
   CAMediaTimingFunction *timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
   [UIView mdc_animateWithTimingFunction:timingFunction
-                               duration:kDefaultAnimationDuration
+                               duration:kMDCContainedInputViewDefaultAnimationDuration
                                   delay:0
                                 options:0
                              animations:^{

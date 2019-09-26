@@ -164,6 +164,24 @@
 @property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
 
 /**
+ A flag allowing clients to opt-out of the drawer closing when the user taps outside the content.
+
+ @default YES The drawer should autohide on tap.
+ */
+@property(nonatomic, assign) BOOL shouldAutoDismissOnTap;
+
+/**
+ A flag allowing clients to opt-in to handling touch events.
+
+ @default NO The drawer will not forward touch events.
+
+ @discussion If set to YES and the delegate is an instance of @UIResponder, then the touch events
+ will be forwarded along to the delegate. Note: @shouldAutoDismissOnTap should also be set to NO
+ so that the events will propagate properly.
+ */
+@property(nonatomic, assign) BOOL shouldForwardTouchEvents;
+
+/**
  A flag allowing clients to opt-in to the drawer adding additional height to the content to include
  the bottom safe area inset. This will remove the need for clients to calculate their content size
  with the bottom safe area when setting the preferredContentSize of the contentViewController.

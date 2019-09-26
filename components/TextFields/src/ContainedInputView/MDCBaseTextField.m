@@ -23,9 +23,10 @@
 #import "private/MDCContainedInputViewColorViewModel.h"
 #import "private/MDCContainedInputViewLabelAnimation.h"
 #import "private/MDCContainedInputViewLabelState.h"
+#import "private/MDCContainedInputViewStyleBase.h"
 #import "private/MDCContainedInputViewVerticalPositioningGuideBase.h"
 
-@interface MDCBaseTextField ()
+@interface MDCBaseTextField () <MDCContainedInputView>
 
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
@@ -43,6 +44,7 @@
 @end
 
 @implementation MDCBaseTextField
+@synthesize containerStyle = _containerStyle;
 
 #pragma mark Object Lifecycle
 
@@ -74,6 +76,7 @@
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
+  self.containerStyle = [[MDCContainedInputViewStyleBase alloc] init];
   self.colorViewModels = [[NSMutableDictionary alloc] init];
 }
 
@@ -195,7 +198,7 @@
 }
 
 - (id<MDCContainerStyleVerticalPositioningReference>)createPositioningReference {
-  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
+  return [self.containerStyle positioningReference];
 }
 
 - (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
@@ -350,6 +353,17 @@
   }
   _layoutDirection = layoutDirection;
   [self setNeedsLayout];
+}
+
+#pragma mark MDCContainedInputView accessors
+
+- (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+  id<MDCContainedInputViewStyle> oldStyle = _containerStyle;
+  if (oldStyle) {
+    [oldStyle removeStyleFrom:self];
+  }
+  _containerStyle = containerStyle;
+  [_containerStyle applyStyleToContainedInputView:self];
 }
 
 #pragma mark UITextField Layout Overrides
