@@ -123,8 +123,7 @@ static CGFloat kTopHandleTopMargin = 5.0f;
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor =
-      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:0.32f];
+  self.scrimView.backgroundColor = self.scrimColor ?: [UIColor colorWithWhite:0 alpha:0.32f];
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
