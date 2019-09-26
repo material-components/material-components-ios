@@ -69,7 +69,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
     // host's key window. Removing the textfield from the app host's key window
     // before validation can affect the textfield's editing behavior, which has a
     // large effect on the appearance of the textfield.
-    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
+    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:NO];
     [self generateSnapshotAndVerifyForView:textFieldSnapshot];
     [expectation fulfill];
   });
