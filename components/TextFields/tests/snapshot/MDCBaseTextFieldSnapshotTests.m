@@ -23,6 +23,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCBaseTextField *textField;
+@property(nonatomic, assign) BOOL areAnimationsEnabled;
 @end
 
 @implementation MDCBaseTextFieldTestsSnapshotTests
@@ -30,6 +31,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 - (void)setUp {
   [super setUp];
 
+  self.areAnimationsEnabled = UIView.areAnimationsEnabled;
+  [UIView setAnimationsEnabled:NO];
   self.textField = [self createBaseTextFieldInKeyWindow];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
@@ -40,6 +43,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   [super tearDown];
   [self.textField removeFromSuperview];
   self.textField = nil;
+  [UIView setAnimationsEnabled:self.areAnimationsEnabled];
 }
 
 - (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
@@ -53,7 +57,6 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 - (void)validateTextField:(MDCBaseTextField *)textField {
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
-
   dispatch_after(
       dispatch_time(DISPATCH_TIME_NOW,
                     (int64_t)(kTextFieldValidationEstimatedAnimationDuration * NSEC_PER_SEC)),
