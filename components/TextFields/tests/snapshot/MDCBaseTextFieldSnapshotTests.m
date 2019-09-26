@@ -18,7 +18,7 @@
 
 #import "MaterialTextFields+ContainedInputView.h"
 
-static const NSTimeInterval kTextFieldValidationEstimatedAnimationDuration = 0.25;
+//This timeout value is intended to be temporary. These snapshot tests currently take longer than we'd want them to.
 static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
@@ -55,11 +55,12 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
+  NSLog(@"is main thread: %@",@([NSThread isMainThread]));
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
-  dispatch_after(
-      dispatch_time(DISPATCH_TIME_NOW,
-                    (int64_t)(kTextFieldValidationEstimatedAnimationDuration * NSEC_PER_SEC)),
+  dispatch_async(
       dispatch_get_main_queue(), ^{
         // We take a snapshot of the textfield so we don't have to remove it from the app
         // host's key window. Removing the textfield from the app host's key window
