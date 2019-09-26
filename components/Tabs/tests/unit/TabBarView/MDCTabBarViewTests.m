@@ -521,6 +521,7 @@ static UIImage *fakeImage(CGSize size) {
 - (void)testContentPaddingAddedToContentSizeForScrollableLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+  [self.tabBarView setContentPadding:UIEdgeInsetsZero forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
   UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
   self.tabBarView.bounds =
       CGRectMake(0, 0, kMaxWidthTabBarItem - contentPadding.left - contentPadding.right, 1000);
@@ -546,6 +547,7 @@ static UIImage *fakeImage(CGSize size) {
 - (void)testContentPaddingAddedToContentSizeForScrollableFallbackLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+  [self.tabBarView setContentPadding:UIEdgeInsetsZero forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
   UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
   // Too-small bounds forces a "scrollable" layout instead
   self.tabBarView.bounds = CGRectMake(0, 0, 100, 1000);
@@ -583,7 +585,7 @@ static UIImage *fakeImage(CGSize size) {
 
   // When
   [self.tabBarView setContentPadding:contentPadding
-                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
   [self.tabBarView layoutIfNeeded];
 
   // Then
@@ -608,7 +610,7 @@ static UIImage *fakeImage(CGSize size) {
 
   // When
   [self.tabBarView setContentPadding:contentPadding
-                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredLeading];
   [self.tabBarView layoutIfNeeded];
 
   // Then
@@ -633,7 +635,7 @@ static UIImage *fakeImage(CGSize size) {
 
   // When
   [self.tabBarView setContentPadding:contentPadding
-                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
   [self.tabBarView layoutIfNeeded];
 
   // Then
@@ -658,7 +660,7 @@ static UIImage *fakeImage(CGSize size) {
 
   // When
   [self.tabBarView setContentPadding:contentPadding
-                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredCentered];
   [self.tabBarView layoutIfNeeded];
 
   // Then
@@ -686,7 +688,7 @@ static UIImage *fakeImage(CGSize size) {
 
   // When
   [self.tabBarView setContentPadding:contentPadding
-                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredCentered];
   [self.tabBarView layoutIfNeeded];
 
   // Then
