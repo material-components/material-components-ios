@@ -22,6 +22,25 @@ static CGFloat kTopHandleHeight = 2.0f;
 static CGFloat kTopHandleWidth = 24.0f;
 static CGFloat kTopHandleTopMargin = 5.0f;
 
+/**
+ View that allows touches that aren't handled from within the view to be propagated up the
+ responder chain. This is used to allow forwarding of tap events from the scrim view through to
+ the delegate if that has been enabled on the VC.
+ */
+@interface MDCBottomDrawerScrimView : UIView
+@end
+
+@implementation MDCBottomDrawerScrimView
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  // Allow unhandled touches to propagate along the responder chain and optionally be handled by
+  // the drawer delegate.
+  UIView *view = [super hitTest:point withEvent:event];
+  return view == self ? nil : view;
+}
+
+@end
+
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
                                                      MDCBottomDrawerContainerViewControllerDelegate>
 
@@ -55,6 +74,7 @@ static CGFloat kTopHandleTopMargin = 5.0f;
     _maximumInitialDrawerHeight = 0;
     _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:0.2f];
     _elevation = MDCShadowElevationNavDrawer;
+    _shouldAutoDismissOnTap = YES;
   }
   return self;
 }
@@ -102,8 +122,9 @@ static CGFloat kTopHandleTopMargin = 5.0f;
   self.bottomDrawerContainerViewController = bottomDrawerContainerViewController;
   self.bottomDrawerContainerViewController.delegate = self;
 
-  self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor = self.scrimColor ?: [UIColor colorWithWhite:0 alpha:0.32f];
+  self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
+  self.scrimView.backgroundColor =
+      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:0.32f];
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
@@ -183,11 +204,13 @@ static CGFloat kTopHandleTopMargin = 5.0f;
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
-  // Set up the tap recognizer to dimiss the drawer by.
-  UITapGestureRecognizer *tapGestureRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
-  [self.containerView addGestureRecognizer:tapGestureRecognizer];
-  tapGestureRecognizer.delegate = self;
+  if (self.shouldAutoDismissOnTap) {
+    // Set up the tap recognizer to dimiss the drawer by.
+    UITapGestureRecognizer *tapGestureRecognizer =
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
+    [self.containerView addGestureRecognizer:tapGestureRecognizer];
+    tapGestureRecognizer.delegate = self;
+  }
 
   self.bottomDrawerContainerViewController.animatingPresentation = NO;
   [self.bottomDrawerContainerViewController.view setNeedsLayout];
@@ -195,7 +218,6 @@ static CGFloat kTopHandleTopMargin = 5.0f;
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }
-
   [self.delegate bottomDrawerPresentTransitionDidEnd:self];
 }
 
