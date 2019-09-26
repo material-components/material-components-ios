@@ -18,7 +18,8 @@
 
 #import "MaterialTextFields+ContainedInputView.h"
 
-//This timeout value is intended to be temporary. These snapshot tests currently take longer than we'd want them to.
+// This timeout value is intended to be temporary. These snapshot tests currently take longer than
+// we'd want them to.
 static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
@@ -34,16 +35,17 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   self.areAnimationsEnabled = UIView.areAnimationsEnabled;
   [UIView setAnimationsEnabled:NO];
   self.textField = [self createBaseTextFieldInKeyWindow];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardDidShow:)
-                                               name:UIKeyboardDidShowNotification object:nil];
+                                               name:UIKeyboardDidShowNotification
+                                             object:nil];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
   //      self.recordMode = YES;
 }
 
--(void)dealloc {
+- (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -67,21 +69,20 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
-  NSLog(@"is main thread: %@",@([NSThread isMainThread]));
+  NSLog(@"is main thread: %@", @([NSThread isMainThread]));
   [textField setNeedsLayout];
   [textField layoutIfNeeded];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
-  dispatch_async(
-      dispatch_get_main_queue(), ^{
-        // We take a snapshot of the textfield so we don't have to remove it from the app
-        // host's key window. Removing the textfield from the app host's key window
-        // before validation can affect the textfield's editing behavior, which has a
-        // large effect on the appearance of the textfield.
-        UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
-        [self generateSnapshotAndVerifyForView:textFieldSnapshot];
-        [expectation fulfill];
-      });
+  dispatch_async(dispatch_get_main_queue(), ^{
+    // We take a snapshot of the textfield so we don't have to remove it from the app
+    // host's key window. Removing the textfield from the app host's key window
+    // before validation can affect the textfield's editing behavior, which has a
+    // large effect on the appearance of the textfield.
+    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
+    [self generateSnapshotAndVerifyForView:textFieldSnapshot];
+    [expectation fulfill];
+  });
   [self waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
 }
 
