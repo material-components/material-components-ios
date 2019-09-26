@@ -245,26 +245,6 @@
   [self mdc_setRightView:rightView];
 }
 
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
-    return self.layout.clearButtonFrameFloating;
-  }
-  return self.layout.clearButtonFrameNormal;
-}
-
-- (CGRect)placeholderRectForBounds:(CGRect)bounds {
-  if (self.shouldPlaceholderBeVisible) {
-    return [super placeholderRectForBounds:bounds];
-  }
-  return CGRectZero;
-}
-
-- (void)drawPlaceholderInRect:(CGRect)rect {
-  if (self.shouldPlaceholderBeVisible) {
-    [super drawPlaceholderInRect:rect];
-  }
-}
-
 #pragma mark Custom Accessors
 
 - (void)setTrailingView:(UIView *)trailingView {
@@ -368,6 +348,18 @@
 
 #pragma mark UITextField Layout Overrides
 
+- (CGRect)textRectForBounds:(CGRect)bounds {
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
+  return [self adjustTextAreaFrame:textRect
+      withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
+}
+
+- (CGRect)editingRectForBounds:(CGRect)bounds {
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
+  return [self adjustTextAreaFrame:textRect
+      withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
+}
+
 // The implementations for this method and the method below deserve some context! Unfortunately,
 // Apple's RTL behavior with these methods is very unintuitive. Imagine you're in an RTL locale and
 // you set @c leftView on a standard UITextField. Even though the property that you set is called @c
@@ -390,17 +382,29 @@
   }
 }
 
-- (CGRect)textRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
-  return [self adjustTextAreaFrame:textRect
-      withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
+- (CGRect)clearButtonRectForBounds:(CGRect)bounds {
+  if (self.labelState == MDCContainedInputViewLabelStateFloating) {
+    return self.layout.clearButtonFrameFloating;
+  }
+  return self.layout.clearButtonFrameNormal;
 }
 
-- (CGRect)editingRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
-  return [self adjustTextAreaFrame:textRect
-      withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
+- (CGRect)placeholderRectForBounds:(CGRect)bounds {
+  if (self.shouldPlaceholderBeVisible) {
+    return [super placeholderRectForBounds:bounds];
+  }
+  return CGRectZero;
 }
+
+#pragma mark UITextField Drawing Overrides
+
+- (void)drawPlaceholderInRect:(CGRect)rect {
+  if (self.shouldPlaceholderBeVisible) {
+    [super drawPlaceholderInRect:rect];
+  }
+}
+
+#pragma mark Fonts
 
 - (UIFont *)normalFont {
   return self.font ?: [self uiTextFieldDefaultFont];
@@ -417,6 +421,24 @@
     font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   });
   return font;
+}
+
+#pragma mark MDCTextControlState
+
+- (MDCTextControlState)determineCurrentTextControlState {
+  return [self textControlStateWithIsEnabled:self.isEnabled isEditing:self.isEditing];
+}
+
+- (MDCTextControlState)textControlStateWithIsEnabled:(BOOL)isEnabled isEditing:(BOOL)isEditing {
+  if (isEnabled) {
+    if (isEditing) {
+      return MDCTextControlStateEditing;
+    } else {
+      return MDCTextControlStateNormal;
+    }
+  } else {
+    return MDCTextControlStateDisabled;
+  }
 }
 
 #pragma mark Placeholder
@@ -445,24 +467,6 @@
     }
   } else {
     return NO;
-  }
-}
-
-#pragma mark MDCTextControlState
-
-- (MDCTextControlState)determineCurrentTextControlState {
-  return [self textControlStateWithIsEnabled:self.isEnabled isEditing:self.isEditing];
-}
-
-- (MDCTextControlState)textControlStateWithIsEnabled:(BOOL)isEnabled isEditing:(BOOL)isEditing {
-  if (isEnabled) {
-    if (isEditing) {
-      return MDCTextControlStateEditing;
-    } else {
-      return MDCTextControlStateNormal;
-    }
-  } else {
-    return MDCTextControlStateDisabled;
   }
 }
 
