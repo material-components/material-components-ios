@@ -114,6 +114,9 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 /** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
 
+/** The content padding (as UIEdgeInsets) for each layout style. */
+@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, NSValue *> *layoutStyleToContentPadding;
+
 @end
 
 @implementation MDCTabBarView
@@ -133,6 +136,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
     _stateToTitleColor = [NSMutableDictionary dictionary];
     _stateToTitleFont = [NSMutableDictionary dictionary];
     _preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+    _layoutStyleToContentPadding = [NSMutableDictionary dictionary];
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
@@ -444,6 +448,18 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   if (self.selectedItem) {
     [self.selectionIndicatorView setNeedsLayout];
   }
+}
+
+- (void)setContentPadding:(UIEdgeInsets)contentPadding forLayoutStyle:(MDCTabBarViewLayoutStyle)layoutStyle {
+  self.layoutStyleToContentPadding[@(layoutStyle)] = [NSValue valueWithUIEdgeInsets:contentPadding];
+}
+
+- (UIEdgeInsets)contentPaddingForLayoutStyle:(MDCTabBarViewLayoutStyle)layoutStyle {
+  NSValue *paddingValue = self.layoutStyleToContentPadding[@(layoutStyle)];
+  if (paddingValue) {
+    return paddingValue.UIEdgeInsetsValue;
+  }
+  return UIEdgeInsetsZero;
 }
 
 #pragma mark - Custom APIs
