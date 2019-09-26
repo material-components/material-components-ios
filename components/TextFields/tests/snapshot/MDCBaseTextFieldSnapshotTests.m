@@ -40,10 +40,6 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   //      self.recordMode = YES;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)tearDown {
   [super tearDown];
   [self.textField removeFromSuperview];
