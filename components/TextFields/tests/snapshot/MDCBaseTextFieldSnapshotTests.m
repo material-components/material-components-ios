@@ -19,7 +19,7 @@
 #import "MaterialTextFields+ContainedInputView.h"
 
 static const NSTimeInterval kTextFieldValidationEstimatedAnimationDuration = 0.25;
-static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
+static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCBaseTextField *textField;
@@ -197,4 +197,18 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   // Then
   [self validateTextField:textField];
 }
+
+- (void)testEditingTextFieldWithVisiblePlaceholder {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.label.text = @"Floating label text";
+  textField.placeholder = @"Placeholder";
+  [textField becomeFirstResponder];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 @end
