@@ -34,9 +34,21 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   self.areAnimationsEnabled = UIView.areAnimationsEnabled;
   [UIView setAnimationsEnabled:NO];
   self.textField = [self createBaseTextFieldInKeyWindow];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(keyboardDidShow:)
+                                               name:UIKeyboardDidShowNotification object:nil];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
   //      self.recordMode = YES;
+}
+
+-(void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification {
+  NSLog(@"keyboard did show");
 }
 
 - (void)tearDown {
