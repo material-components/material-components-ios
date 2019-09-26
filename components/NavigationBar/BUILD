@@ -100,6 +100,7 @@ mdc_unit_test_swift_library(
     deps = [
         ":ColorThemer",
         ":NavigationBar",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 

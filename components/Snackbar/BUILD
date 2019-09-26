@@ -117,7 +117,6 @@ mdc_unit_test_swift_library(
         ":Snackbar",
         ":TypographyThemer",
         ":private",
-        "@material_testing_ios//:MDFTesting",
     ],
 )
 
@@ -132,6 +131,7 @@ mdc_unit_test_objc_library(
         ":FontThemer",
         ":Snackbar",
         ":private",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 

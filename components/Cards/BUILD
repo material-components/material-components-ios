@@ -92,6 +92,7 @@ mdc_unit_test_swift_library(
         ":ColorThemer",
         ":ShapeThemer",
         ":Theming",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 

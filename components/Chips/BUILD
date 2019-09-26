@@ -153,6 +153,7 @@ mdc_unit_test_swift_library(
         "//components/schemes/Color",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
+        "@material_testing_ios//:MDFTesting",
     ],
 )
 
