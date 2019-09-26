@@ -211,8 +211,8 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   if (self.activeRippleLayer == nil) {
     if (completion) {
       completion();
-      return;
     }
+    return;
   }
   [self.activeRippleLayer endRippleAnimated:animated completion:completion];
 }
@@ -223,8 +223,8 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   if (self.activeRippleLayer == nil) {
     if (completion) {
       completion();
-      return;
     }
+    return;
   }
   [self.activeRippleLayer fadeInRippleAnimated:animated completion:completion];
 }
@@ -235,8 +235,8 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   if (self.activeRippleLayer == nil) {
     if (completion) {
       completion();
-      return;
     }
+    return;
   }
   [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
 }
