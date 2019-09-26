@@ -120,13 +120,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)cancelAllRipplesAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
   NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
-  // Call callbacks immediately if no sublayers existing
-  if (sublayers.count == 0) {
-    if (completion) {
-      completion();
-      return;
-    }
-  }
   if (animated) {
     CFTimeInterval latestBeginTouchDownRippleTime = DBL_MIN;
     for (CALayer *layer in sublayers) {
