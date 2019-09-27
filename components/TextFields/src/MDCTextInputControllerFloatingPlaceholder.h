@@ -19,7 +19,7 @@
 
 /**
  The color applied to the placeholder when floating and the text field is first responder. However,
- when in error state, it will be colored with the error color.
+ when in error state, it will be colored with the floatingPlaceholderErrorActive Color.
 
  Only relevent when floatingEnabled is true.
 
@@ -50,6 +50,17 @@
  Default is black with Material Design hint text opacity (textInput's tint).
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *floatingPlaceholderNormalColorDefault;
+
+/**
+ The error color of the border of the input field while being in edit mode.
+ The color applied to the placeholder when floating and the text field is first responder and is in
+ the error state.
+
+ Only relevent when floatingEnabled is true.
+
+ Default is errorColor.
+ */
+@property(nonatomic, nullable, strong) UIColor *floatingPlaceholderErrorActiveColor;
 
 /**
  When the placeholder floats up, constraints are created that use this value for constants.
