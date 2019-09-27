@@ -394,6 +394,30 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testFixedClusteredLeadingLayoutContentPaddingLatinLTR {
+  // When
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredLeading];
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredLeadingLayoutContentPaddingArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredLeading];
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 #pragma mark - FixedClusteredTrailing Layout
 
 - (void)testFixedClusteredTrailingLayoutStyleFitSizeLatinLTR {
