@@ -99,6 +99,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIColor *_activeColor;
   UIColor *_borderFillColor;
+  UIColor *_borderStrokeColor;
   UIColor *_disabledColor;
   UIColor *_errorColor;
   UIColor *_floatingPlaceholderActiveColor;
@@ -186,6 +187,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   copy.activeColor = self.activeColor;
   copy.borderFillColor = self.borderFillColor;
+  copy.borderStrokeColor = self.borderStrokeColor;
   copy.characterCounter = self.characterCounter;  // Just a pointer value copy
   copy.characterCountViewMode = self.characterCountViewMode;
   copy.characterCountMax = self.characterCountMax;
@@ -329,6 +331,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)updateBorder {
   self.textInput.borderView.borderFillColor = self.borderFillColor;
+  self.textInput.borderView.borderStrokeColor = self.borderStrokeColor;
   self.textInput.borderPath = [self defaultBorderPath];
 }
 
@@ -811,6 +814,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     _characterCountViewMode = characterCountViewMode;
 
     [self updateLayout];
+  }
+}
+
+- (UIColor *)borderStrokeColor {
+  return _borderStrokeColor;
+}
+
+- (void)setBorderStrokeColor:(UIColor *)borderStrokeColor {
+  if (_borderStrokeColor != borderStrokeColor) {
+    _borderStrokeColor = borderStrokeColor;
+    [self updateBorder];
   }
 }
 

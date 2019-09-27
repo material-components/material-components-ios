@@ -47,6 +47,7 @@
   XCTAssertEqualObjects(controller.normalColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.normalColor);
+
   XCTAssertEqualObjects(controller.inlinePlaceholderColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor, controller.inlinePlaceholderColor);
@@ -152,6 +153,41 @@
   XCTAssertEqualObjects(controller.disabledColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects(textField.underline.disabledColor, controller.disabledColor);
+}
+
+- (void)testOutlinedTextFieldBorderStrokeColorTheming {
+  // Given
+  MDCTextField *textField = [[MDCTextField alloc] init];
+  MDCTextInputControllerOutlined *controller =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
+  // When
+  controller.borderStrokeColor = UIColor.redColor;
+  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
+                                      toTextInputController:controller];
+
+  // Then
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.borderStrokeColor);
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, UIColor.redColor);
+}
+
+- (void)testOutlinedTextFieldBorderStrokeColorDefaultsToNormal {
+  // Given
+  MDCTextField *textField = [[MDCTextField alloc] init];
+  MDCTextInputControllerOutlined *controller =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
+  // When
+  controller.borderStrokeColor = nil;
+  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
+                                      toTextInputController:controller];
+
+  // Then
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.normalColor);
 }
 
 @end

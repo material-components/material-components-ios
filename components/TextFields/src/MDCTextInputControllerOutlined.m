@@ -199,7 +199,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   }
   self.textInput.borderPath = path;
 
-  UIColor *borderColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
+  UIColor *borderColor =
+      self.textInput.isEditing ? self.activeColor : (self.borderStrokeColor ?: self.normalColor);
   if (!self.textInput.isEnabled) {
     borderColor = self.disabledColor;
   }
