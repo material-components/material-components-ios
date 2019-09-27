@@ -14,20 +14,20 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MDCContainedInputViewLabelState.h"
+#import "MDCTextControlLabelState.h"
 
 /**
- The logic to animate labels is extracted into its own class so that any MDCContainedInputView can
+ The logic to animate labels is extracted into its own class so that any MDCTextControl can
  make use of it.
  */
-@interface MDCContainedInputViewLabelAnimation : NSObject
+@interface MDCTextControlLabelAnimation : NSObject
 
 /**
  This method lays out the label in an animated fashion, often from normal position to the floating
  position, and vice versa.
  */
 + (void)layOutLabel:(nonnull UILabel *)floatingLabel
-                 state:(MDCContainedInputViewLabelState)labelState
+                 state:(MDCTextControlLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont

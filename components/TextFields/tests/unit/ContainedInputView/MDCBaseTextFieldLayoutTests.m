@@ -15,7 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../../src/ContainedInputView/private/MDCBaseTextFieldLayout.h"
-#import "../../../src/ContainedInputView/private/MDCContainedInputViewVerticalPositioningGuideBase.h"
+#import "../../../src/ContainedInputView/private/MDCTextControlVerticalPositioningReferenceBase.h"
 #import "MaterialTextFields+ContainedInputView.h"
 
 @interface MDCBaseTextFieldLayout (Testing)
@@ -41,8 +41,8 @@
   UIFont *font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   UIFont *floatingFont = [font fontWithSize:(font.pointSize * (CGFloat)0.5)];
 
-  MDCContainedInputViewVerticalPositioningGuideBase *positioningReference =
-      [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
+  MDCTextControlVerticalPositioningReferenceBase *positioningReference =
+      [[MDCTextControlVerticalPositioningReferenceBase alloc] init];
   MDCBaseTextFieldLayout *layout =
       [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
                                        positioningReference:positioningReference

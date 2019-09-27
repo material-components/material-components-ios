@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputViewStyleBase.h"
+#import "MDCTextControlStyleBase.h"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputView.h"
-#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
+#import "MDCTextControl.h"
+#import "MDCTextControlVerticalPositioningReferenceBase.h"
 
 static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
 
-@implementation MDCContainedInputViewStyleBase
+@implementation MDCTextControlStyleBase
 
 - (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
   CGFloat scaleFactor = kBaseFloatingLabelScaleFactor;
@@ -30,14 +30,14 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
   return [font fontWithSize:floatingFontSize];
 }
 
-- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView {
+- (void)applyStyleToTextControl:(id<MDCTextControl>)textControl {
 }
 
-- (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
+- (void)removeStyleFrom:(id<MDCTextControl>)textControl {
 }
 
-- (id<MDCContainerStyleVerticalPositioningReference>)positioningReference {
-  return [[MDCContainedInputViewVerticalPositioningGuideBase alloc] init];
+- (id<MDCTextControlVerticalPositioningReference>)positioningReference {
+  return [[MDCTextControlVerticalPositioningReferenceBase alloc] init];
 }
 
 @end
