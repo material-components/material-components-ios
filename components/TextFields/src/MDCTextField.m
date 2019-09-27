@@ -638,6 +638,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   CGRect leftViewRect = [super leftViewRectForBounds:bounds];
   leftViewRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(leftViewRect)];
 
+  if (@available(iOS 13.0, *)) {
+    leftViewRect = self.leadingView.frame;
+  }
+
   if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
        UIUserInterfaceLayoutDirectionRightToLeft) &&
       [self.positioningDelegate respondsToSelector:@selector(trailingViewRectForBounds:
@@ -659,6 +663,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
   CGRect rightViewRect = [super rightViewRectForBounds:bounds];
   rightViewRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(rightViewRect)];
+
+  if (@available(iOS 13.0, *)) {
+    rightViewRect = self.trailingView.frame;
+  }
 
   if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
        UIUserInterfaceLayoutDirectionRightToLeft) &&
