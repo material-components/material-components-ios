@@ -606,8 +606,9 @@
 
 - (void)setFont:(UIFont *)font {
   if (self.textView.font != font) {
+    UIFont *previousFont = self.textView.font;
     [self.textView setFont:font];
-    [_fundament didSetFont];
+    [_fundament didSetFont:previousFont];
   }
 }
 
