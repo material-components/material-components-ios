@@ -50,6 +50,7 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
   self.textField = [[MDCBaseTextField alloc] initWithFrame:self.preferredTextFieldFrame];
   self.textField.borderStyle = UITextBorderStyleRoundedRect;
   self.textField.label.text = @"This is a label";
+  self.textField.placeholder = @"This is placeholder text";
   self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.view addSubview:self.textField];
 
