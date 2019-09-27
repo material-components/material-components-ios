@@ -224,8 +224,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedLayoutContentPaddingLatinLTR {
   // When
-  [self changeToArabicStrings];
-  [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
   [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
@@ -237,6 +235,8 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedLayoutContentPaddingArabicRTL {
   // When
+  [self changeToArabicStrings];
+  [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
   [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
