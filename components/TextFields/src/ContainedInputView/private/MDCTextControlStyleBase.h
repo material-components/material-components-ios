@@ -13,29 +13,13 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-#import "MDCContainedInputViewVerticalPositioningGuideBase.h"
+#import "MDCTextControl.h"
 
-@interface MDCContainedInputViewVerticalPositioningGuideBase ()
-
-@end
-
-@implementation MDCContainedInputViewVerticalPositioningGuideBase
-
-- (CGFloat)paddingBetweenTopAndFloatingLabel {
-  return 10;
-}
-
-- (CGFloat)paddingBetweenTopAndNormalLabel {
-  return 20;
-}
-
-- (CGFloat)paddingBetweenFloatingLabelAndText {
-  return 5;
-}
-
-- (CGFloat)containerHeight {
-  return 50;
-}
-
+/**
+ A base implementation of MDCTextControlStyle. This is only used for base text controls, i.e.
+ ones that are not filled or outlined.
+ */
+@interface MDCTextControlStyleBase : NSObject <MDCTextControlStyle>
 @end

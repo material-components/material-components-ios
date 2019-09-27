@@ -17,7 +17,7 @@
 #import <objc/runtime.h>
 #import "MaterialTextFields+ContainedInputView.h"
 
-#import "../../../src/ContainedInputView/private/MDCContainedInputViewLabelState.h"
+#import "../../../src/ContainedInputView/private/MDCTextControlLabelState.h"
 
 @interface MDCBaseTextField (Private)
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
@@ -25,7 +25,7 @@
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
                                              text:(NSString *)text
-                                       labelState:(MDCContainedInputViewLabelState)labelState;
+                                       labelState:(MDCTextControlLabelState)labelState;
 @end
 
 @interface MDCBaseTextFieldTests : XCTestCase
@@ -283,19 +283,19 @@
   XCTAssertFalse([textField
       shouldPlaceholderBeVisibleWithPlaceholder:nilPlaceholder
                                            text:text
-                                     labelState:MDCContainedInputViewLabelStateNormal]);
+                                     labelState:MDCTextControlLabelStateNormal]);
   XCTAssertFalse([textField
       shouldPlaceholderBeVisibleWithPlaceholder:placeholder
                                            text:text
-                                     labelState:MDCContainedInputViewLabelStateNormal]);
+                                     labelState:MDCTextControlLabelStateNormal]);
   XCTAssertFalse([textField
       shouldPlaceholderBeVisibleWithPlaceholder:placeholder
                                            text:nilText
-                                     labelState:MDCContainedInputViewLabelStateNormal]);
+                                     labelState:MDCTextControlLabelStateNormal]);
   XCTAssertTrue([textField
       shouldPlaceholderBeVisibleWithPlaceholder:placeholder
                                            text:nilText
-                                     labelState:MDCContainedInputViewLabelStateFloating]);
+                                     labelState:MDCTextControlLabelStateFloating]);
 }
 
 @end
