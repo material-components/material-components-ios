@@ -603,9 +603,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     }
   }
 
-  self.bottomDividerView.frame =
-      CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - kBottomDividerHeight,
-                 CGRectGetWidth(self.bounds), kBottomDividerHeight);
   self.contentSize = [self calculatedContentSize];
   [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
 
@@ -621,6 +618,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     }
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
   }
+  // It's possible that after scrolling the minX of bounds could have changed. Positioning it last
+  // ensures that its frame matches the displayed content bounds.
+  self.bottomDividerView.frame =
+      CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - kBottomDividerHeight,
+                 CGRectGetWidth(self.bounds), kBottomDividerHeight);
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -730,8 +732,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // Right-aligned
   if ((isRTL && layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredLeading) ||
       (!isRTL && layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredTrailing)) {
-    itemViewOriginX = CGRectGetMinX([self availableBoundsForSubviewLayout]) +
-                      (contentSize.width - totalRequiredWidth);
+    itemViewOriginX = (contentSize.width - totalRequiredWidth);
   }
   // Centered
   else if (layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredCentered) {
@@ -795,16 +796,29 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
+/**
+ The content size of the tabs in their current layout style.
+
+ For @c FixedJustified:  The content size is the maximum of the bounds within the safe area or the
+                         intrinsic size of the tabs when all tabs have the widest tab's width.
+ For @c FixedClustered*: The bounds within the safe area. This ensures they are positionined
+                         accurately within the content area.
+ For @c Scrollable:      The intrinsic size size of the tabs.
+ */
 - (CGSize)calculatedContentSize {
   MDCTabBarViewLayoutStyle layoutStyle = [self effectiveLayoutStyle];
   switch (layoutStyle) {
     case MDCTabBarViewLayoutStyleFixed: {
-      return [self intrinsicContentSizeForJustifiedLayout];
+      CGSize intrinsicContentSize = [self intrinsicContentSizeForJustifiedLayout];
+      CGSize boundsSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+
+      return CGSizeMake(MAX(boundsSize.width, intrinsicContentSize.width),
+                        MAX(boundsSize.height, intrinsicContentSize.height));
     }
     case MDCTabBarViewLayoutStyleFixedClusteredCentered:
     case MDCTabBarViewLayoutStyleFixedClusteredTrailing:
     case MDCTabBarViewLayoutStyleFixedClusteredLeading: {
-      return [self intrinsicContentSizeForClusteredLayout:layoutStyle];
+      return [self availableSizeForSubviewLayout];
     }
     case MDCTabBarViewLayoutStyleScrollable: {
       return [self intrinsicContentSizeForScrollableLayout];
