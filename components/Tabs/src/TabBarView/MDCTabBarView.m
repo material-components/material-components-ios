@@ -665,7 +665,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       if (availableSize.width < requiredWidthForJustifiedLayout) {
         return MDCTabBarViewLayoutStyleScrollable;
       }
-      UIEdgeInsets contentPadding = [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+      UIEdgeInsets contentPadding =
+          [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleFixed];
       CGFloat itemLayoutWidth = availableSize.width - contentPadding.left - contentPadding.right;
       if ((itemLayoutWidth / self.items.count) > kMaxItemWidth) {
         return MDCTabBarViewLayoutStyleFixedClusteredCentered;
@@ -724,11 +725,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
+  UIEdgeInsets contentPadding = [self contentPaddingForLayoutStyle:layoutStyle];
   CGSize contentSize = [self availableSizeForSubviewLayout];
   CGFloat itemViewWidth = [self estimatedItemViewSizeForClusteredFixedLayout].width;
   CGFloat totalRequiredWidth = itemViewWidth * self.items.count;
   // Start-out assuming left-aligned because it requires no computation.
-  CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginX = isRTL ? contentPadding.right : contentPadding.left;
   // Right-aligned
   if ((isRTL && layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredLeading) ||
       (!isRTL && layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredTrailing)) {
@@ -736,11 +738,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   // Centered
   else if (layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredCentered) {
-    itemViewOriginX = (contentSize.width - totalRequiredWidth) / 2;
+    itemViewOriginX =
+        (contentSize.width - totalRequiredWidth - contentPadding.left - contentPadding.right) / 2;
+    itemViewOriginX += isRTL ? contentPadding.right : contentPadding.left;
   }
 
-  CGFloat itemViewOriginY = 0;
-  CGFloat itemViewHeight = contentSize.height;
+  CGFloat itemViewOriginY = contentPadding.top;
+  CGFloat itemViewHeight = contentSize.height - contentPadding.top - contentPadding.bottom;
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
 
