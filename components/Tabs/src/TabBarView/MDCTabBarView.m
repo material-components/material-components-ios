@@ -735,6 +735,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if ((isRTL && layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredLeading) ||
       (!isRTL && layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredTrailing)) {
     itemViewOriginX = (contentSize.width - totalRequiredWidth);
+    itemViewOriginX -= isRTL ? contentPadding.left : contentPadding.right;
   }
   // Centered
   else if (layoutStyle == MDCTabBarViewLayoutStyleFixedClusteredCentered) {

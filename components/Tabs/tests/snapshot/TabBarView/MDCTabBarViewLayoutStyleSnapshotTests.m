@@ -480,6 +480,30 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testFixedClusteredTrailingLayoutContentPaddingLatinLTR {
+  // When
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 10)
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredTrailingLayoutContentPaddingArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 10)
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 #pragma mark - Scrollable Layout
 
 - (void)testScrollableLayoutStyleFitSizeLatinLTR {
