@@ -585,7 +585,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  switch ([self layoutStyle]) {
+  switch ([self effectiveLayoutStyle]) {
     case MDCTabBarViewLayoutStyleFixed: {
       [self layoutSubviewsForJustifiedLayout];
       break;
@@ -593,7 +593,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixedClusteredCentered:
     case MDCTabBarViewLayoutStyleFixedClusteredTrailing:
     case MDCTabBarViewLayoutStyleFixedClusteredLeading: {
-      [self layoutSubviewsForFixedClusteredLayout:[self layoutStyle]];
+      [self layoutSubviewsForFixedClusteredLayout:[self effectiveLayoutStyle]];
       break;
     }
     case MDCTabBarViewLayoutStyleScrollable: {
@@ -631,10 +631,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (BOOL)isScrollableLayoutStyle {
-  return [self layoutStyle] == MDCTabBarViewLayoutStyleScrollable;
+  return [self effectiveLayoutStyle] == MDCTabBarViewLayoutStyleScrollable;
 }
 
-- (MDCTabBarViewLayoutStyle)layoutStyle {
+/**
+ The current layout style of the Tab Bar. Although the user sets a preferred layout style, not all
+ combinations of items, bounds, and style can be rendered correctly.
+ */
+- (MDCTabBarViewLayoutStyle)effectiveLayoutStyle {
   if (self.items.count == 0) {
     return MDCTabBarViewLayoutStyleFixed;
   }
@@ -787,7 +791,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)calculatedContentSize {
-  MDCTabBarViewLayoutStyle layoutStyle = [self layoutStyle];
+  MDCTabBarViewLayoutStyle layoutStyle = [self effectiveLayoutStyle];
   switch (layoutStyle) {
     case MDCTabBarViewLayoutStyleFixed: {
       return [self intrinsicContentSizeForJustifiedLayout];
@@ -899,7 +903,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return CGSizeZero;
   }
 
-  switch ([self layoutStyle]) {
+  switch ([self effectiveLayoutStyle]) {
     case MDCTabBarViewLayoutStyleFixed: {
       if (CGRectGetWidth(self.bounds) > 0) {
         CGSize contentSize = [self availableSizeForSubviewLayout];
