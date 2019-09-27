@@ -647,21 +647,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 
   CGSize availableSize = [self availableSizeForSubviewLayout];
-  CGFloat requiredWidthForJustifiedLayout = [self intrinsicContentSizeForJustifiedLayout].width;
-  CGFloat requiredWidthForClusteredLeadingLayout =
-      [self intrinsicContentSizeForClusteredLayout:MDCTabBarViewLayoutStyleFixedClusteredLeading]
-          .width;
-  CGFloat requiredWidthForClusteredTrailingLayout =
-      [self intrinsicContentSizeForClusteredLayout:MDCTabBarViewLayoutStyleFixedClusteredTrailing]
-          .width;
-  CGFloat requiredWidthForClusteredCenteredLayout =
-      [self intrinsicContentSizeForClusteredLayout:MDCTabBarViewLayoutStyleFixedClusteredCentered]
-          .width;
   switch (self.preferredLayoutStyle) {
     case MDCTabBarViewLayoutStyleScrollable: {
       return MDCTabBarViewLayoutStyleScrollable;
     }
     case MDCTabBarViewLayoutStyleFixed: {
+      CGFloat requiredWidthForJustifiedLayout = [self intrinsicContentSizeForJustifiedLayout].width;
       if (availableSize.width < requiredWidthForJustifiedLayout) {
         return MDCTabBarViewLayoutStyleScrollable;
       }
@@ -674,18 +665,30 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       return MDCTabBarViewLayoutStyleFixed;
     }
     case MDCTabBarViewLayoutStyleFixedClusteredCentered: {
+      CGFloat requiredWidthForClusteredCenteredLayout =
+          [self
+              intrinsicContentSizeForClusteredLayout:MDCTabBarViewLayoutStyleFixedClusteredCentered]
+              .width;
       if (availableSize.width < requiredWidthForClusteredCenteredLayout) {
         return MDCTabBarViewLayoutStyleScrollable;
       }
       return MDCTabBarViewLayoutStyleFixedClusteredCentered;
     }
     case MDCTabBarViewLayoutStyleFixedClusteredLeading: {
+      CGFloat requiredWidthForClusteredLeadingLayout =
+          [self
+              intrinsicContentSizeForClusteredLayout:MDCTabBarViewLayoutStyleFixedClusteredLeading]
+              .width;
       if (availableSize.width < requiredWidthForClusteredLeadingLayout) {
         return MDCTabBarViewLayoutStyleScrollable;
       }
       return MDCTabBarViewLayoutStyleFixedClusteredLeading;
     }
     case MDCTabBarViewLayoutStyleFixedClusteredTrailing: {
+      CGFloat requiredWidthForClusteredTrailingLayout =
+          [self
+              intrinsicContentSizeForClusteredLayout:MDCTabBarViewLayoutStyleFixedClusteredTrailing]
+              .width;
       if (availableSize.width < requiredWidthForClusteredTrailingLayout) {
         return MDCTabBarViewLayoutStyleScrollable;
       }

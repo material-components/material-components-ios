@@ -483,7 +483,7 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testFixedClusteredTrailingLayoutContentPaddingLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 10)
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
 
   // Then
@@ -496,7 +496,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 10)
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
 
   // Then
@@ -560,6 +560,30 @@ static NSString *const kItemTitleLong1Arabic =
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testScrollableLayoutContentPaddingLatinLTR {
+  // When
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 0)
+                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testScrollableLayoutContentPaddingArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 0)
+                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
 
   // Then
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
