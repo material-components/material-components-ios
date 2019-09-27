@@ -487,4 +487,23 @@ static const CGFloat kHeightShort = 48;
   [self generateAndVerifySnapshot];
 }
 
+- (void)testNilBadgeColorsRendersClearBackgroundAndUILabelDefaultTextColor {
+  // Given
+  self.tabItem1.badgeValue = @"";
+  self.tabItem2.badgeValue = @"Black on Yellow";
+  self.tabItem3.badgeValue = @"Black on Green";
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+
+  // When
+  if (@available(iOS 10.0, *)) {
+    self.tabItem3.badgeColor = UIColor.greenColor;
+  }
+  self.navigationBar.itemBadgeBackgroundColor = nil;
+  self.navigationBar.itemBadgeTextColor = nil;
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 @end
