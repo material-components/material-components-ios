@@ -450,8 +450,8 @@ static const CGFloat kHeightShort = 48;
 - (void)testCustomBadgeColorsSetAfterItems {
   // Given
   self.tabItem1.badgeValue = @"";
-  self.tabItem2.badgeValue = @"Black on Yellow";
-  self.tabItem3.badgeValue = @"Black on Green";
+  self.tabItem2.badgeValue = @"Gray on Yellow";
+  self.tabItem3.badgeValue = @"Gray on Green";
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
 
@@ -460,7 +460,7 @@ static const CGFloat kHeightShort = 48;
     self.tabItem3.badgeColor = UIColor.greenColor;
   }
   self.navigationBar.itemBadgeBackgroundColor = UIColor.yellowColor;
-  self.navigationBar.itemBadgeTextColor = UIColor.blackColor;
+  self.navigationBar.itemBadgeTextColor = UIColor.darkGrayColor;
 
   // Then
   [self generateAndVerifySnapshot];
@@ -469,8 +469,8 @@ static const CGFloat kHeightShort = 48;
 - (void)testCustomBadgeColorsSetBeforeItems {
   // Given
   self.tabItem1.badgeValue = @"";
-  self.tabItem2.badgeValue = @"Black on Yellow";
-  self.tabItem3.badgeValue = @"Black on Green";
+  self.tabItem2.badgeValue = @"Gray on Yellow";
+  self.tabItem3.badgeValue = @"Gray on Green";
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
 
@@ -479,7 +479,7 @@ static const CGFloat kHeightShort = 48;
     self.tabItem3.badgeColor = UIColor.greenColor;
   }
   self.navigationBar.itemBadgeBackgroundColor = UIColor.yellowColor;
-  self.navigationBar.itemBadgeTextColor = UIColor.blackColor;
+  self.navigationBar.itemBadgeTextColor = UIColor.darkGrayColor;
   self.navigationBar.items =
       @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
 
@@ -490,7 +490,7 @@ static const CGFloat kHeightShort = 48;
 - (void)testNilBadgeColorsRendersClearBackgroundAndUILabelDefaultTextColor {
   // Given
   self.tabItem1.badgeValue = @"";
-  self.tabItem2.badgeValue = @"Black on Yellow";
+  self.tabItem2.badgeValue = @"Black on Clear";
   self.tabItem3.badgeValue = @"Black on Green";
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
