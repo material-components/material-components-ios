@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputViewColorViewModel.h"
+#import "MDCTextControlColorViewModel.h"
 
 #import <Foundation/Foundation.h>
 
-@implementation MDCContainedInputViewColorViewModel
+@implementation MDCTextControlColorViewModel
 
 - (instancetype)initWithState:(MDCTextControlState)state {
   self = [super init];

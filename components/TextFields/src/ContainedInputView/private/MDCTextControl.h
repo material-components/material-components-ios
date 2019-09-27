@@ -15,25 +15,25 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputViewColorViewModel.h"
-#import "MDCContainedInputViewLabelAnimation.h"
-#import "MDCContainedInputViewLabelState.h"
-#import "MDCContainerStyleVerticalPositioningReference.h"
+#import "MDCTextControlColorViewModel.h"
+#import "MDCTextControlLabelAnimation.h"
+#import "MDCTextControlLabelState.h"
+#import "MDCTextControlVerticalPositioningReference.h"
 #import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlState.h"
 
-static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0.15;
+static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 
-@protocol MDCContainedInputViewStyle;
+@protocol MDCTextControlStyle;
 
-@protocol MDCContainedInputView <NSObject>
+@protocol MDCTextControl <NSObject>
 
 /**
  This object represents the style of the text control, i.e. the thing that makes it filled or
- outlined. See the documentation for MDCContainedInputViewStyle for more information on its
+ outlined. See the documentation for MDCTextControlStyle for more information on its
  responsibilities.
  */
-@property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyle> containerStyle;
+@property(nonatomic, strong, nonnull) id<MDCTextControlStyle> containerStyle;
 
 /**
  Describes the current @c MDCtextControlState of the view. This value is affected by things like
@@ -42,11 +42,11 @@ static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0
 @property(nonatomic, assign, readonly) MDCTextControlState textControlState;
 
 /**
- Describes the current MDCContainedInputViewLabelState of the contained input view. This
+ Describes the current MDCTextControlLabelState of the contained input view. This
  value is affected by things like the view's @c textControlState, its @c labelBehavior, and the
  text of the floating label.
  */
-@property(nonatomic, assign, readonly) MDCContainedInputViewLabelState labelState;
+@property(nonatomic, assign, readonly) MDCTextControlLabelState labelState;
 
 /**
  Describes the behavior of the label when the view begins editing.
@@ -71,32 +71,32 @@ static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0
 @property(strong, nonatomic, readonly, nonnull) UIFont *floatingFont;
 
 /**
- This method returns a MDCContainedInputViewColorViewModel for a given MDCTextControlState.
+ This method returns a MDCTextControlColorViewModel for a given MDCTextControlState.
  */
-- (nonnull MDCContainedInputViewColorViewModel *)containedInputViewColorViewModelForState:
+- (nonnull MDCTextControlColorViewModel *)textControlColorViewModelForState:
     (MDCTextControlState)textControlState;
 
 /**
- This method sets a MDCContainedInputViewColorViewModel for a given MDCTextControlState.
+ This method sets a MDCTextControlColorViewModel for a given MDCTextControlState.
  */
-- (void)setContainedInputViewColorViewModel:
-            (nonnull MDCContainedInputViewColorViewModel *)containedInputViewColorViewModel
+- (void)setTextControlColorViewModel:
+            (nonnull MDCTextControlColorViewModel *)textControlColorViewModel
                                    forState:(MDCTextControlState)textFieldState;
 
 @end
 
-@protocol MDCContainedInputViewStyle <NSObject>
+@protocol MDCTextControlStyle <NSObject>
 
 /**
- This method allows objects conforming to MDCContainedInputViewStyle to apply themselves to objects
- conforming to MDCContainedInputView.
+ This method allows objects conforming to MDCTextControlStyle to apply themselves to objects
+ conforming to MDCTextControl.
  */
-- (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)containedInputView;
+- (void)applyStyleToTextControl:(nonnull id<MDCTextControl>)textControl;
 /**
- This method allows objects conforming to MDCContainedInputViewStyle to remove the styling
- previously applied to objects conforming to MDCContainedInputView.
+ This method allows objects conforming to MDCTextControlStyle to remove the styling
+ previously applied to objects conforming to MDCTextControl.
  */
-- (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
+- (void)removeStyleFrom:(nonnull id<MDCTextControl>)textControl;
 
 /**
  The method returns a UIFont for the floating label based on the @c normalFont of the
@@ -108,6 +108,6 @@ static const CGFloat kMDCContainedInputViewDefaultAnimationDuration = (CGFloat)0
  This method returns an object that tells the view where to position it's views
  vertically.
  */
-- (nonnull id<MDCContainerStyleVerticalPositioningReference>)positioningReference;
+- (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference;
 
 @end

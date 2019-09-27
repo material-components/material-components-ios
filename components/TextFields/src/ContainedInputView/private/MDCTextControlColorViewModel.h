@@ -19,9 +19,9 @@
 
 /**
  This object represents a group of colors that are applied on a state by state basis to
- MDCContainedInputViews. Each property corresponds to a Contained Input View specific subview.
+ MDCTextControls. Each property corresponds to a Contained Input View specific subview.
  */
-@interface MDCContainedInputViewColorViewModel : NSObject
+@interface MDCTextControlColorViewModel : NSObject
 /**
  The color of the contained input view's text.
  */

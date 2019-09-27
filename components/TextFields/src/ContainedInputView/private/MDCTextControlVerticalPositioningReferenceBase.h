@@ -12,14 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputView.h"
+#import "MDCTextControlVerticalPositioningReference.h"
 
-/**
- A base implementation of MDCContainedInputViewStyle. This is only used for base text controls, i.e.
- ones that are not filled or outlined.
- */
-@interface MDCContainedInputViewStyleBase : NSObject <MDCContainedInputViewStyle>
+@interface MDCTextControlVerticalPositioningReferenceBase
+    : NSObject <MDCTextControlVerticalPositioningReference>
+
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
+@property(nonatomic, assign, readonly) CGFloat containerHeight;
+
 @end
