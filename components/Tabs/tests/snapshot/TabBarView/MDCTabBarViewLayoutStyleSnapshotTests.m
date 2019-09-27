@@ -223,13 +223,11 @@ static NSString *const kItemTitleLong1Arabic =
 }
 
 - (void)testFixedLayoutContentPaddingLatinLTR {
-  self.recordMode = YES;
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 0)
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
 
-  // Then
   // Then
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(0, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];

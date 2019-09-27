@@ -663,7 +663,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       if (availableSize.width < requiredWidthForJustifiedLayout) {
         return MDCTabBarViewLayoutStyleScrollable;
       }
-      if ((availableSize.width / self.items.count) > kMaxItemWidth) {
+      UIEdgeInsets contentPadding = [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+      CGFloat itemLayoutWidth = availableSize.width - contentPadding.left - contentPadding.right;
+      if ((itemLayoutWidth / self.items.count) > kMaxItemWidth) {
         return MDCTabBarViewLayoutStyleFixedClusteredCentered;
       }
       return MDCTabBarViewLayoutStyleFixed;
@@ -697,11 +699,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
   CGSize contentSize = [self availableSizeForSubviewLayout];
-  CGFloat itemViewWidth = contentSize.width / self.itemViews.count;
   UIEdgeInsets contentPadding = [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+  CGFloat itemLayoutWidth = contentSize.width - contentPadding.left - contentPadding.right;
+  CGFloat itemViewWidth = itemLayoutWidth / self.itemViews.count;
   CGFloat itemViewOriginX = isRTL ? contentPadding.right : contentPadding.left;
   CGFloat itemViewOriginY = contentPadding.top;
-  CGFloat itemViewHeight = contentSize.height;
+  CGFloat itemViewHeight = contentSize.height - contentPadding.top - contentPadding.bottom;
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
 
