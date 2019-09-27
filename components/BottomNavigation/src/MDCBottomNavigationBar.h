@@ -96,6 +96,17 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, strong, nonnull) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
+ Background color for badges. Default is a red color. Only applies if the @c UITabBarItem
+ @c badgeColor is `nil`.
+ */
+@property(nonatomic, copy, nullable) UIColor *itemBadgeBackgroundColor;
+
+/**
+ Text color for badges. Default is white.
+ */
+@property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor;
+
+/**
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
  */

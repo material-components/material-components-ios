@@ -104,6 +104,18 @@ static UIImage *fakeImage(void) {
   XCTAssertEqualObjects(item1.inkView.inkColor, item2.inkView.inkColor);
 }
 
+- (void)testBadgeTextColorSetsBadgeLabelTextColor {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.badgeValue = @"123";
+
+  // When
+  itemView.badgeTextColor = UIColor.purpleColor;
+
+  // Then
+  XCTAssertEqualObjects(itemView.badge.badgeValueLabel.textColor, UIColor.purpleColor);
+}
+
 - (void)testSetTitleVisibilityUpdatesLayout {
   // Given
   MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];

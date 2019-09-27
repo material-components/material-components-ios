@@ -17,6 +17,7 @@
 #import "../../src/private/MDCBottomNavigationBar+Private.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MaterialBottomNavigation.h"
+#import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
 
 /**
@@ -71,6 +72,8 @@
                              0.001);
   XCTAssertLessThan(self.bottomNavBar.mdc_overrideBaseElevation, 0);
   XCTAssertNil(self.bottomNavBar.mdc_elevationDidChangeBlock);
+  XCTAssertEqualObjects(self.bottomNavBar.itemBadgeTextColor, UIColor.whiteColor);
+  XCTAssertEqualObjects(self.bottomNavBar.itemBadgeBackgroundColor, MDCPalette.redPalette.tint700);
 }
 
 #pragma mark - Fonts

@@ -445,4 +445,46 @@ static const CGFloat kHeightShort = 48;
 #endif
 }
 
+#pragma mark - Badging
+
+- (void)testCustomBadgeColorsSetAfterItems {
+  // Given
+  self.tabItem1.badgeValue = @"";
+  self.tabItem2.badgeValue = @"Black on Yellow";
+  self.tabItem3.badgeValue = @"Black on Green";
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+
+  // When
+  if (@available(iOS 10.0, *)) {
+    self.tabItem3.badgeColor = UIColor.greenColor;
+  }
+  self.navigationBar.itemBadgeBackgroundColor = UIColor.yellowColor;
+  self.navigationBar.itemBadgeTextColor = UIColor.blackColor;
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCustomBadgeColorsSetBeforeItems {
+  // Given
+  self.tabItem1.badgeValue = @"";
+  self.tabItem2.badgeValue = @"Black on Yellow";
+  self.tabItem3.badgeValue = @"Black on Green";
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+
+  // When
+  if (@available(iOS 10.0, *)) {
+    self.tabItem3.badgeColor = UIColor.greenColor;
+  }
+  self.navigationBar.itemBadgeBackgroundColor = UIColor.yellowColor;
+  self.navigationBar.itemBadgeTextColor = UIColor.blackColor;
+  self.navigationBar.items =
+      @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 @end
