@@ -141,11 +141,11 @@
 - (void)postLayoutSubviews {
   self.label.hidden = self.labelState == MDCTextControlLabelStateNone;
   [MDCTextControlLabelAnimation layOutLabel:self.label
-                                             state:self.labelState
-                                  normalLabelFrame:self.layout.labelFrameNormal
-                                floatingLabelFrame:self.layout.labelFrameFloating
-                                        normalFont:self.normalFont
-                                      floatingFont:self.floatingFont];
+                                      state:self.labelState
+                           normalLabelFrame:self.layout.labelFrameNormal
+                         floatingLabelFrame:self.layout.labelFrameFloating
+                                 normalFont:self.normalFont
+                               floatingFont:self.floatingFont];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
@@ -484,9 +484,9 @@
 }
 
 - (MDCTextControlLabelState)labelStateWithLabel:(UILabel *)label
-                                                  text:(NSString *)text
-                                         canLabelFloat:(BOOL)canLabelFloat
-                                             isEditing:(BOOL)isEditing {
+                                           text:(NSString *)text
+                                  canLabelFloat:(BOOL)canLabelFloat
+                                      isEditing:(BOOL)isEditing {
   BOOL hasFloatingLabelText = label.text.length > 0;
   BOOL hasText = text.length > 0;
   if (hasFloatingLabelText) {
@@ -533,7 +533,7 @@
 }
 
 - (void)setTextControlColorViewModel:(MDCTextControlColorViewModel *)colorViewModel
-                                   forState:(MDCTextControlState)textControlState {
+                            forState:(MDCTextControlState)textControlState {
   if (colorViewModel) {
     self.colorViewModels[@(textControlState)] = colorViewModel;
   }
@@ -551,41 +551,35 @@
 #pragma mark Color Accessors
 
 - (void)setNormalLabelColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {
-  MDCTextControlColorViewModel *colorViewModel =
-      [self textControlColorViewModelForState:state];
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   colorViewModel.normalLabelColor = labelColor;
   [self setNeedsLayout];
 }
 
 - (UIColor *)normalLabelColorForState:(MDCTextControlState)state {
-  MDCTextControlColorViewModel *colorViewModel =
-      [self textControlColorViewModelForState:state];
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   return colorViewModel.normalLabelColor;
 }
 
 - (void)setFloatingLabelColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {
-  MDCTextControlColorViewModel *colorViewModel =
-      [self textControlColorViewModelForState:state];
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   colorViewModel.floatingLabelColor = labelColor;
   [self setNeedsLayout];
 }
 
 - (UIColor *)floatingLabelColorForState:(MDCTextControlState)state {
-  MDCTextControlColorViewModel *colorViewModel =
-      [self textControlColorViewModelForState:state];
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   return colorViewModel.floatingLabelColor;
 }
 
 - (void)setTextColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {
-  MDCTextControlColorViewModel *colorViewModel =
-      [self textControlColorViewModelForState:state];
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   colorViewModel.textColor = labelColor;
   [self setNeedsLayout];
 }
 
 - (UIColor *)textColorForState:(MDCTextControlState)state {
-  MDCTextControlColorViewModel *colorViewModel =
-      [self textControlColorViewModelForState:state];
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   return colorViewModel.textColor;
 }
 

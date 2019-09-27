@@ -17,10 +17,10 @@
 
 #import "MDCTextControlColorViewModel.h"
 #import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelState.h"
-#import "MDCTextControlVerticalPositioningReference.h"
 #import "MDCTextControlLabelBehavior.h"
+#import "MDCTextControlLabelState.h"
 #import "MDCTextControlState.h"
+#import "MDCTextControlVerticalPositioningReference.h"
 
 static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 
@@ -81,7 +81,7 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
  */
 - (void)setTextControlColorViewModel:
             (nonnull MDCTextControlColorViewModel *)textControlColorViewModel
-                                   forState:(MDCTextControlState)textFieldState;
+                            forState:(MDCTextControlState)textFieldState;
 
 @end
 
