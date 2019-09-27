@@ -787,7 +787,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixedClusteredLeading:
     case MDCTabBarViewLayoutStyleFixedClusteredCentered:
     case MDCTabBarViewLayoutStyleFixedClusteredTrailing: {
-      return [self intrinsicContentSizeForClusteredLayout:[self effectiveLayoutStyle]];
+      return [self intrinsicContentSizeForClusteredLayout:self.preferredLayoutStyle];
     }
   }
 }

@@ -222,6 +222,19 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testFixedLayoutContentPaddingLatinLTR {
+  self.recordMode = YES;
+  // When
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 0)
+                      forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+
+  // Then
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(0, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 #pragma mark - FixedClusteredCentered Layout
 
 - (void)testFixedClusteredCenteredLayoutStyleFitSizeLatinLTR {
