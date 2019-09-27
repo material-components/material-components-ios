@@ -105,7 +105,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _stateToTitleFont = [NSMutableDictionary dictionary];
     _preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
     _layoutStyleToContentPadding = [NSMutableDictionary dictionary];
-    _layoutStyleToContentPadding[@(MDCTabBarViewLayoutStyleScrollable)] = [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, kScrollableTabsLeadingEdgeInset, 0, 0)];
+    _layoutStyleToContentPadding[@(MDCTabBarViewLayoutStyleScrollable)] =
+        [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, kScrollableTabsLeadingEdgeInset, 0, 0)];
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
@@ -229,7 +230,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
     [self addSubview:itemView];
     [itemViews addObject:itemView];
-    [self setNeedsLayout];
   }
 
   self.itemViews = itemViews;
@@ -245,6 +245,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self addObserversToTabBarItems];
 
   [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
@@ -422,7 +423,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)setContentPadding:(UIEdgeInsets)contentPadding
            forLayoutStyle:(MDCTabBarViewLayoutStyle)layoutStyle {
   self.layoutStyleToContentPadding[@(layoutStyle)] = [NSValue valueWithUIEdgeInsets:contentPadding];
-  if ([self layoutStyle] == layoutStyle) {
+  if ([self effectiveLayoutStyle] == layoutStyle) {
     [self setNeedsLayout];
   }
 }
@@ -697,8 +698,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   CGSize contentSize = [self availableSizeForSubviewLayout];
   CGFloat itemViewWidth = contentSize.width / self.itemViews.count;
-  CGFloat itemViewOriginX = 0;
-  CGFloat itemViewOriginY = 0;
+  UIEdgeInsets contentPadding = [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+  CGFloat itemViewOriginX = isRTL ? contentPadding.right : contentPadding.left;
+  CGFloat itemViewOriginY = contentPadding.top;
   CGFloat itemViewHeight = contentSize.height;
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
@@ -785,7 +787,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixedClusteredLeading:
     case MDCTabBarViewLayoutStyleFixedClusteredCentered:
     case MDCTabBarViewLayoutStyleFixedClusteredTrailing: {
-      return [self intrinsicContentSizeForClusteredLayout:[self layoutStyle]];
+      return [self intrinsicContentSizeForClusteredLayout:[self effectiveLayoutStyle]];
     }
   }
 }

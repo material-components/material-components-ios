@@ -161,7 +161,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.tabBarView = [[MDCTabBarView alloc] init]; 
+  self.tabBarView = [[MDCTabBarView alloc] init];
   self.tabBarView.barTintColor = UIColor.whiteColor;
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesOrIconsOnly);
 
