@@ -545,6 +545,33 @@ static UIImage *fakeImage(CGSize size) {
                 NSStringFromCGSize(expectedContentSize));
 }
 
+- (void)testContentPaddingAddedToIntrinsicContentSizeForScrollableLayout {
+  // Given
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+  [self.tabBarView setContentPadding:UIEdgeInsetsZero
+                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+  UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMaxWidthTabBarItem - contentPadding.left - contentPadding.right, 1000);
+  self.tabBarView.items = @[ self.itemA ];
+  [self.tabBarView layoutIfNeeded];
+  CGSize originalIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  CGSize expectedIntrinsicContentSize =
+      CGSizeMake(originalIntrinsicContentSize.width + contentPadding.left + contentPadding.right,
+                 originalIntrinsicContentSize.height + contentPadding.top + contentPadding.bottom);
+
+  // When
+  [self.tabBarView setContentPadding:contentPadding
+                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
+  [self.tabBarView layoutIfNeeded];
+
+  // Then
+  CGSize actualIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  XCTAssertTrue(CGSizeEqualToSize(actualIntrinsicContentSize, expectedIntrinsicContentSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualIntrinsicContentSize),
+                NSStringFromCGSize(expectedIntrinsicContentSize));
+}
+
 - (void)testContentPaddingAddedToContentSizeForScrollableFallbackLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
@@ -572,7 +599,7 @@ static UIImage *fakeImage(CGSize size) {
                 NSStringFromCGSize(expectedContentSize));
 }
 
-- (void)testContentPaddingAddedToContentSizeForFixedLayout {
+- (void)testContentPaddingWontAffectContentSizeForFixedLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
   UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
@@ -581,9 +608,6 @@ static UIImage *fakeImage(CGSize size) {
   self.tabBarView.items = @[ self.itemA ];
   [self.tabBarView layoutIfNeeded];
   CGSize originalContentSize = self.tabBarView.contentSize;
-  CGSize expectedContentSize =
-      CGSizeMake(originalContentSize.width + contentPadding.left + contentPadding.right,
-                 originalContentSize.height + contentPadding.top + contentPadding.bottom);
 
   // When
   [self.tabBarView setContentPadding:contentPadding forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
@@ -591,12 +615,36 @@ static UIImage *fakeImage(CGSize size) {
 
   // Then
   CGSize actualContentSize = self.tabBarView.contentSize;
-  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, expectedContentSize),
+  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, originalContentSize),
                 @"(%@) is not equal to (%@)", NSStringFromCGSize(actualContentSize),
-                NSStringFromCGSize(expectedContentSize));
+                NSStringFromCGSize(originalContentSize));
 }
 
-- (void)testContentPaddingAddedToContentSizeForFixedClusteredLeadingLayout {
+- (void)testContentPaddingAddedToIntrinsicContentSizeForFixedLayout {
+  // Given
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+  UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMaxWidthTabBarItem - contentPadding.left - contentPadding.right, 1000);
+  self.tabBarView.items = @[ self.itemA ];
+  [self.tabBarView layoutIfNeeded];
+  CGSize originalIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  CGSize expectedIntrinsicContentSize =
+      CGSizeMake(originalIntrinsicContentSize.width + contentPadding.left + contentPadding.right,
+                 originalIntrinsicContentSize.height + contentPadding.top + contentPadding.bottom);
+
+  // When
+  [self.tabBarView setContentPadding:contentPadding forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+  [self.tabBarView layoutIfNeeded];
+
+  // Then
+  CGSize actualIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  XCTAssertTrue(CGSizeEqualToSize(actualIntrinsicContentSize, expectedIntrinsicContentSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualIntrinsicContentSize),
+                NSStringFromCGSize(expectedIntrinsicContentSize));
+}
+
+- (void)testContentPaddingWontAffectContentSizeForFixedClusteredLeadingLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
   UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
@@ -605,9 +653,30 @@ static UIImage *fakeImage(CGSize size) {
   self.tabBarView.items = @[ self.itemA ];
   [self.tabBarView layoutIfNeeded];
   CGSize originalContentSize = self.tabBarView.contentSize;
-  CGSize expectedContentSize =
-      CGSizeMake(originalContentSize.width + contentPadding.left + contentPadding.right,
-                 originalContentSize.height + contentPadding.top + contentPadding.bottom);
+
+  // When
+  [self.tabBarView setContentPadding:contentPadding forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+  [self.tabBarView layoutIfNeeded];
+
+  // Then
+  CGSize actualContentSize = self.tabBarView.contentSize;
+  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, originalContentSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualContentSize),
+                NSStringFromCGSize(originalContentSize));
+}
+
+- (void)testContentPaddingAddedToIntrinsicContentSizeForFixedClusteredLeadingLayout {
+  // Given
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+  UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMaxWidthTabBarItem - contentPadding.left - contentPadding.right, 1000);
+  self.tabBarView.items = @[ self.itemA ];
+  [self.tabBarView layoutIfNeeded];
+  CGSize originalIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  CGSize expectedIntrinsicContentSize =
+      CGSizeMake(originalIntrinsicContentSize.width + contentPadding.left + contentPadding.right,
+                 originalIntrinsicContentSize.height + contentPadding.top + contentPadding.bottom);
 
   // When
   [self.tabBarView setContentPadding:contentPadding
@@ -615,13 +684,13 @@ static UIImage *fakeImage(CGSize size) {
   [self.tabBarView layoutIfNeeded];
 
   // Then
-  CGSize actualContentSize = self.tabBarView.contentSize;
-  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, expectedContentSize),
-                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualContentSize),
-                NSStringFromCGSize(expectedContentSize));
+  CGSize actualIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  XCTAssertTrue(CGSizeEqualToSize(actualIntrinsicContentSize, expectedIntrinsicContentSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualIntrinsicContentSize),
+                NSStringFromCGSize(expectedIntrinsicContentSize));
 }
 
-- (void)testContentPaddingAddedToContentSizeForFixedClusteredTrailingLayout {
+- (void)testContentPaddingWontAffectContentSizeForFixedClusteredTrailingLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
   UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
@@ -630,9 +699,30 @@ static UIImage *fakeImage(CGSize size) {
   self.tabBarView.items = @[ self.itemA ];
   [self.tabBarView layoutIfNeeded];
   CGSize originalContentSize = self.tabBarView.contentSize;
-  CGSize expectedContentSize =
-      CGSizeMake(originalContentSize.width + contentPadding.left + contentPadding.right,
-                 originalContentSize.height + contentPadding.top + contentPadding.bottom);
+
+  // When
+  [self.tabBarView setContentPadding:contentPadding forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+  [self.tabBarView layoutIfNeeded];
+
+  // Then
+  CGSize actualContentSize = self.tabBarView.contentSize;
+  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, originalContentSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualContentSize),
+                NSStringFromCGSize(originalContentSize));
+}
+
+- (void)testContentPaddingAddedToIntrinsicContentSizeForFixedClusteredTrailingLayout {
+  // Given
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+  UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMaxWidthTabBarItem - contentPadding.left - contentPadding.right, 1000);
+  self.tabBarView.items = @[ self.itemA ];
+  [self.tabBarView layoutIfNeeded];
+  CGSize originalIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  CGSize expectedIntrinsicContentSize =
+      CGSizeMake(originalIntrinsicContentSize.width + contentPadding.left + contentPadding.right,
+                 originalIntrinsicContentSize.height + contentPadding.top + contentPadding.bottom);
 
   // When
   [self.tabBarView setContentPadding:contentPadding
@@ -640,13 +730,13 @@ static UIImage *fakeImage(CGSize size) {
   [self.tabBarView layoutIfNeeded];
 
   // Then
-  CGSize actualContentSize = self.tabBarView.contentSize;
-  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, expectedContentSize),
-                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualContentSize),
-                NSStringFromCGSize(expectedContentSize));
+  CGSize actualIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  XCTAssertTrue(CGSizeEqualToSize(actualIntrinsicContentSize, expectedIntrinsicContentSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualIntrinsicContentSize),
+                NSStringFromCGSize(expectedIntrinsicContentSize));
 }
 
-- (void)testContentPaddingAddedToContentSizeForFixedClusteredCenteredLayout {
+- (void)testContentPaddingWontAffectContentSizeForFixedClusteredCenteredLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredCentered;
   UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
@@ -655,37 +745,30 @@ static UIImage *fakeImage(CGSize size) {
   self.tabBarView.items = @[ self.itemA ];
   [self.tabBarView layoutIfNeeded];
   CGSize originalContentSize = self.tabBarView.contentSize;
-  CGSize expectedContentSize =
-      CGSizeMake(originalContentSize.width + contentPadding.left + contentPadding.right,
-                 originalContentSize.height + contentPadding.top + contentPadding.bottom);
 
   // When
-  [self.tabBarView setContentPadding:contentPadding
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredCentered];
+  [self.tabBarView setContentPadding:contentPadding forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
   [self.tabBarView layoutIfNeeded];
 
   // Then
   CGSize actualContentSize = self.tabBarView.contentSize;
-  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, expectedContentSize),
+  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, originalContentSize),
                 @"(%@) is not equal to (%@)", NSStringFromCGSize(actualContentSize),
-                NSStringFromCGSize(expectedContentSize));
+                NSStringFromCGSize(originalContentSize));
 }
 
-- (void)testContentPaddingAddedToContentSizeForFixedClusteredCenteredFallbackLayout {
+- (void)testContentPaddingAddedToIntrinsicContentSizeForFixedClusteredCenteredLayout {
   // Given
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredCentered;
   UIEdgeInsets contentPadding = UIEdgeInsetsMake(1, 2, 3, 4);
-  self.tabBarView.bounds = CGRectMake(0, 0, 2000, 1000);
-  self.itemA.title =
-      @"A very long title that will not fit within the maximum widht of a single item.";
-  self.itemB.title = self.itemA.title;
-  self.itemC.title = self.itemA.title;
-  self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMaxWidthTabBarItem - contentPadding.left - contentPadding.right, 1000);
+  self.tabBarView.items = @[ self.itemA ];
   [self.tabBarView layoutIfNeeded];
-  CGSize originalContentSize = self.tabBarView.contentSize;
-  CGSize expectedContentSize =
-      CGSizeMake(originalContentSize.width + contentPadding.left + contentPadding.right,
-                 originalContentSize.height + contentPadding.top + contentPadding.bottom);
+  CGSize originalIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  CGSize expectedIntrinsicContentSize =
+      CGSizeMake(originalIntrinsicContentSize.width + contentPadding.left + contentPadding.right,
+                 originalIntrinsicContentSize.height + contentPadding.top + contentPadding.bottom);
 
   // When
   [self.tabBarView setContentPadding:contentPadding
@@ -693,10 +776,10 @@ static UIImage *fakeImage(CGSize size) {
   [self.tabBarView layoutIfNeeded];
 
   // Then
-  CGSize actualContentSize = self.tabBarView.contentSize;
-  XCTAssertTrue(CGSizeEqualToSize(actualContentSize, expectedContentSize),
-                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualContentSize),
-                NSStringFromCGSize(expectedContentSize));
+  CGSize actualIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  XCTAssertTrue(CGSizeEqualToSize(actualIntrinsicContentSize, expectedIntrinsicContentSize),
+                @"(%@) is not equal to (%@)", NSStringFromCGSize(actualIntrinsicContentSize),
+                NSStringFromCGSize(expectedIntrinsicContentSize));
 }
 
 #pragma mark - Delegate
