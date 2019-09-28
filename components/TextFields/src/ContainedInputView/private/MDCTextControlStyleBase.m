@@ -40,4 +40,16 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
   return [[MDCTextControlVerticalPositioningReferenceBase alloc] init];
 }
 
+- (id<MDCTextControlVerticalPositioningReference>)
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows {
+  return [[MDCTextControlVerticalPositioningReferenceBase alloc]
+      initWithFloatingFontLineHeight:floatingLabelHeight
+                normalFontLineHeight:normalFontLineHeight
+                       textRowHeight:textRowHeight
+                    numberOfTextRows:numberOfTextRows];
+}
+
 @end

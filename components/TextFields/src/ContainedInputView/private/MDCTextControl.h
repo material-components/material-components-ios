@@ -108,6 +108,10 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
  This method returns an object that tells the view where to position it's views
  vertically.
  */
-- (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference;
+- (nonnull id<MDCTextControlVerticalPositioningReference>)
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows;
 
 @end

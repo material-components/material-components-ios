@@ -110,18 +110,18 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     clearButtonMinX = clearButtonMaxX - clearButtonSideLength;
   }
 
-  CGFloat floatingLabelMinY = positioningReference.paddingBetweenTopAndFloatingLabel;
+  CGFloat floatingLabelMinY = positioningReference.paddingBetweenContainerTopAndFloatingLabel;
   CGFloat floatingLabelHeight = floatingFont.lineHeight;
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
 
   CGFloat textRectMinYWithFloatingLabel =
-      floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndText;
+      floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndEditingText;
 
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =
       textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
 
-  CGFloat textRectMinYNormal = positioningReference.paddingBetweenTopAndNormalLabel;
+  CGFloat textRectMinYNormal = positioningReference.paddingBetweenContainerTopAndNormalLabel;
   CGFloat textRectCenterYNormal = textRectMinYNormal + ((CGFloat)0.5 * textRectHeight);
   CGFloat containerMidY = (CGFloat)0.5 * positioningReference.containerHeight;
 
