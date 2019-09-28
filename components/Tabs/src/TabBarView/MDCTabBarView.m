@@ -761,8 +761,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviewsForScrollableLayout {
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  UIEdgeInsets contentPadding =
+      [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
 
-  CGFloat itemViewOriginX = kScrollableTabsLeadingEdgeInset;
+  // Default for LTR
+  CGFloat itemViewOriginX = contentPadding.left;
   if (isRTL) {
     itemViewOriginX = 0;
     CGFloat requiredBarSize = [self intrinsicContentSizeForScrollableLayout].width;
@@ -770,9 +773,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     if (boundsBarDiff > 0) {
       itemViewOriginX = boundsBarDiff;
     }
+    itemViewOriginX += contentPadding.right;
   }
-  CGFloat itemViewOriginY = 0;
-  CGFloat itemViewHeight = [self availableSizeForSubviewLayout].height;
+  CGFloat itemViewOriginY = contentPadding.top;
+  CGFloat itemViewHeight =
+      [self availableSizeForSubviewLayout].height - contentPadding.top - contentPadding.bottom;
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
   for (UIView *view in itemViewEnumerator) {

@@ -569,7 +569,7 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testScrollableLayoutContentPaddingLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 0)
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
                       forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
 
   // Then
@@ -582,7 +582,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(0, 0, 0, 0)
+  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 20)
                       forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
 
   // Then
