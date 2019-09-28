@@ -819,8 +819,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
  For @c Scrollable:      The intrinsic size size of the tabs.
  */
 - (CGSize)calculatedContentSize {
-  MDCTabBarViewLayoutStyle layoutStyle = [self effectiveLayoutStyle];
-  switch (layoutStyle) {
+  switch ([self effectiveLayoutStyle]) {
     case MDCTabBarViewLayoutStyleFixed: {
       CGSize intrinsicContentSize = [self intrinsicContentSizeForJustifiedLayout];
       CGSize boundsSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
