@@ -160,13 +160,10 @@
   MDCTextField *textField = [[MDCTextField alloc] init];
   MDCTextInputControllerOutlined *controller =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   controller.borderStrokeColor = UIColor.redColor;
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                      toTextInputController:controller];
+  controller.normalColor = UIColor.orangeColor;
 
   // Then
   XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.borderStrokeColor);
@@ -178,16 +175,14 @@
   MDCTextField *textField = [[MDCTextField alloc] init];
   MDCTextInputControllerOutlined *controller =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   controller.borderStrokeColor = nil;
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                      toTextInputController:controller];
+  controller.normalColor = UIColor.purpleColor;
 
   // Then
   XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.normalColor);
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, UIColor.purpleColor);
 }
 
 @end

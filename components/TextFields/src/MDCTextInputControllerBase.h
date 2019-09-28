@@ -74,7 +74,7 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
 /**
  The color the input field's border in the resting state. A nil value yields a clear border.
 
- Default is clear.
+ Default is nil.
  */
 @property(nonatomic, nullable, strong) UIColor *borderStrokeColor;
 
