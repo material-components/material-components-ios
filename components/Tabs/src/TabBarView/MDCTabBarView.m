@@ -81,7 +81,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
 
-/** The content padding (as UIEdgeInsets) for each layout style. */
+/**
+ The content padding (as UIEdgeInsets) for each layout style. The layout style is stored as an
+ @c NSNumber of the raw enumeration value. The padding @c UIEdgeInsets is stored as an @c NSValue.
+ */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, NSValue *> *layoutStyleToContentPadding;
 
