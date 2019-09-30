@@ -14,8 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import <MDFTesting/MDFTesting.h>
-
 #import "MaterialMath.h"
 #import "UIColor+MaterialBlending.h"
 #import "UIColor+MaterialDynamic.h"
@@ -122,7 +120,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                             blue:(CGFloat)0.94000000000000006
                                            alpha:(CGFloat)1];
 
-  XCTAssertEqualColors(resultColor, expectedColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                    secondColor:expectedColor]);
 }
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
@@ -150,7 +149,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                             blue:(CGFloat)0.87619047619047618
                                            alpha:(CGFloat)0.84000000000000008];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
-  XCTAssertEqualColors(resultColor, expectedColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                    secondColor:expectedColor]);
 }
 
 - (void)testHBSColorMergeTest {
@@ -167,7 +167,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                             blue:(CGFloat)0.20000000000000004
                                            alpha:(CGFloat)0.93999999999999994];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
-  XCTAssertEqualColors(resultColor, expectedColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                    secondColor:expectedColor]);
 }
 
 - (void)testGrayScaleColorMergeTest {
@@ -181,7 +182,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                             blue:(CGFloat)0.16956521739130434
                                            alpha:(CGFloat)0.92000000000000004];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
-  XCTAssertEqualColors(resultColor, expectedColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                    secondColor:expectedColor]);
 }
 
 - (void)testP3ColorMergeTest {
@@ -196,7 +198,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                               blue:(CGFloat)0.16956521739130434
                                              alpha:(CGFloat)0.92000000000000004];
     UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
-    XCTAssertEqualColors(resultColor, expectedColor);
+    XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                      secondColor:expectedColor]);
   }
 }
 
@@ -217,7 +220,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                               blue:(CGFloat)0.19999999999999998
                                              alpha:(CGFloat)0.69999999999999996];
     UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
-    XCTAssertEqualColors(resultColor, expectedColor);
+    XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                      secondColor:expectedColor]);
   }
 }
 
@@ -262,6 +266,17 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
   // Then
   XCTAssertEqualObjects(platformColor, mdcColor);
+}
+
+- (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
+                                      secondColor:(UIColor *)secondColor {
+  CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
+  [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
+  CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
+  [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
+
+  return (MDCCGFloatEqual(fRed, sRed) && MDCCGFloatEqual(fGreen, sGreen) &&
+          MDCCGFloatEqual(fBlue, sBlue) && MDCCGFloatEqual(fAlpha, sAlpha));
 }
 
 @end
