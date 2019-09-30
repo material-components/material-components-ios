@@ -64,7 +64,6 @@ static CGFloat randomNumber() {
                        @"The default value for |cycleColors| should be a non-empty array.");
 }
 
-
 - (void)testSetCycleColorsEmptyReturnsDefault {
   // Given
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
