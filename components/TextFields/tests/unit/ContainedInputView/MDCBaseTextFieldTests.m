@@ -184,7 +184,7 @@
   [textField layoutIfNeeded];
 
   // Then
-  CGRect expectedClearButtonFrame = CGRectMake(99, 21, 19, 19);
+  CGRect expectedClearButtonFrame = CGRectMake(99, 27, 19, 19);
   CGRect actualClearButtonFrame = [textField clearButtonRectForBounds:textFieldFrame];
   XCTAssertTrue(CGRectEqualToRect(actualClearButtonFrame, expectedClearButtonFrame));
 }
@@ -264,7 +264,7 @@
 
   // Then
   CGSize newSize = textField.frame.size;
-  CGSize correctSize = CGSizeMake(130, 50);
+  CGSize correctSize = CGSizeMake(130, 57);
   XCTAssertTrue(CGSizeEqualToSize(newSize, correctSize));
 }
 

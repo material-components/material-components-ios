@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCTextControlVerticalPositioningReferenceBase.h"
+#import "MaterialMath.h"
 
 static const CGFloat kPaddingBetweenTopAndFloatingLabel = (CGFloat)10.0;
 static const CGFloat kPaddingBetweenFloatingLabelAndText = (CGFloat)6.0;
@@ -71,8 +72,10 @@ static const CGFloat kPaddingBetweenTextAndBottom = (CGFloat)10.0;
                            (CGFloat)paddingBetweenFloatingLabelAndText
                               paddingBetweenTextAndBottom:(CGFloat)paddingBetweenTextAndBottom {
   CGFloat totalTextHeight = numberOfTextRows * textRowHeight;
-  return paddingBetweenTopAndFloatingLabel + floatingLabelHeight +
-         paddingBetweenFloatingLabelAndText + totalTextHeight + paddingBetweenTextAndBottom;
+  CGFloat containerHeight = paddingBetweenTopAndFloatingLabel + floatingLabelHeight +
+                            paddingBetweenFloatingLabelAndText + totalTextHeight +
+                            paddingBetweenTextAndBottom;
+  return MDCCeil(containerHeight);
 }
 
 - (CGFloat)paddingBetweenContainerTopAndFloatingLabel {
