@@ -64,6 +64,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
+  [textField sizeToFit];
   [textField setNeedsLayout];
   [textField layoutIfNeeded];
   XCTestExpectation *expectation =
