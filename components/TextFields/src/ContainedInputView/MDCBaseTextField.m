@@ -337,6 +337,14 @@
 
 #pragma mark MDCTextControl accessors
 
+- (void)setLabelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
+  if (_labelBehavior == labelBehavior) {
+    return;
+  }
+  _labelBehavior = labelBehavior;
+  [self setNeedsLayout];
+}
+
 - (void)setContainerStyle:(id<MDCTextControlStyle>)containerStyle {
   id<MDCTextControlStyle> oldStyle = _containerStyle;
   if (oldStyle) {
@@ -344,6 +352,14 @@
   }
   _containerStyle = containerStyle;
   [_containerStyle applyStyleToTextControl:self];
+}
+
+- (CGRect)containerFrame {
+  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
+}
+
+- (CGFloat)numberOfVisibleTextRows {
+  return 1;
 }
 
 #pragma mark UITextField Layout Overrides
@@ -380,6 +396,13 @@
   } else {
     return self.layout.rightViewFrame;
   }
+}
+
+- (CGRect)borderRectForBounds:(CGRect)bounds {
+  if (!self.containerStyle) {
+    return [super borderRectForBounds:bounds];
+  }
+  return CGRectZero;
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
