@@ -1,3 +1,73 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### BottomNavigation
+
+* [Add support for custom badge and text colors. (#8518)](https://github.com/material-components/material-components-ios/commit/d19d3882922ec1bd34f07400e709bfeacb671e0a) (Robert Moore)
+
+### NavigationDrawer
+
+* [Allow animations alongside movement in MDCBottomNavigatio… (#8474)](https://github.com/material-components/material-components-ios/commit/bf5361b55cc17600317ce4ff2f02e73f1e69e630) (Hiedi Utley)
+* [Allow header to expand even if content doesn't fill screen. (#8484)](https://github.com/material-components/material-components-ios/commit/0d30e34a2c4f3c1962d2cd7fc394e7355835aedc) (Cody Weaver)
+* [Allow touch events to propagate to delegate for  MDCBottomNavigationDrawer (#8486)](https://github.com/material-components/material-components-ios/commit/8df9fcdf33d5ead19668f364c6b048ff0bf043e0) (Hiedi Utley)
+* [Allow users to scroll to dismiss on lower resolution devices. (#8503)](https://github.com/material-components/material-components-ios/commit/a80e41c20710024d01941ab538817678352e480c) (Cody Weaver)
+* [Fix broken header when content expands (#8514)](https://github.com/material-components/material-components-ios/commit/6de8286be5637216715b963e17d2cc008f52232d) (Cody Weaver)
+
+### Ripple
+
+* [Add callbacks for MDCRippleView and MDCRippleLayer NO is passed in for animated parameter (#8505)](https://github.com/material-components/material-components-ios/commit/f7ac93819d24604754132cf28b7b80f32e10e2da) (Michael Schneider)
+
+### Tabs
+
+* [Add newline for code snippet. (#8472)](https://github.com/material-components/material-components-ios/commit/ccbe89d0207105b4362075bf3df60f8f26a0fbe4) (Robert Moore)
+* [Correct MDCTabBarView behavior for contentInset. (#8512)](https://github.com/material-components/material-components-ios/commit/86b59715a01dbbfe4fbb61646f88df99c9ce7065) (Robert Moore)
+* [Expand configuration in MDCTabBarView example. (#8498)](https://github.com/material-components/material-components-ios/commit/1ce82c678bf95b6d2247fbab3d44ed35a857eb24) (Robert Moore)
+* [Remove internal layout type. (#8519)](https://github.com/material-components/material-components-ios/commit/f9560f63ee0afe32df2b45f1a0e5e490047fb0ec) (Robert Moore)
+* [Update TabBarView documentation. (#8489)](https://github.com/material-components/material-components-ios/commit/4e6ad990e91c9f27cfb97bc34b953e18d05cdba1) (Robert Moore)
+
+### TextFields
+
+* [Add initial stateful coloring stuff (#8406)](https://github.com/material-components/material-components-ios/commit/b6eb3d73a00d07f5f037371c98efaf6d16c184a8) (Andrew Overton)
+* [Add some important protocols (#8493)](https://github.com/material-components/material-components-ios/commit/85bd705a22c5a600d84efc677e48f3a7914dcd69) (Andrew Overton)
+* [Add some placeholder logic (#8448)](https://github.com/material-components/material-components-ios/commit/6febfa95cf81f3ce7991418f668f20ce71278dba) (Andrew Overton)
+* [Implement some UIView overrides in MDCBaseTextField (#8494)](https://github.com/material-components/material-components-ios/commit/e1c48320767c699d7190c31cbcc4f59bc1583479) (Andrew Overton)
+* [Preserve placeholder font. (#8521)](https://github.com/material-components/material-components-ios/commit/0ecae7177b965aa33a6a569ef1433b888bab88d8) (Robert Moore)
+* [Rename "contained input view" to "text control" (#8524)](https://github.com/material-components/material-components-ios/commit/2420eba2168a836b59090bea285b74fa99f20e6d) (Andrew Overton)
+* [Tinkering with snapshot tests (#8511)](https://github.com/material-components/material-components-ios/commit/27015d885b16c8142016facf3607bf3f4f363323) (Andrew Overton)
+
+### Typography
+
+* [Fix scaling test. (#8477)](https://github.com/material-components/material-components-ios/commit/d8858723ef0b6d0a17812550fbefb86f087d9fba) (Robert Moore)
+
+### private/Icons
+
+* [Add tests for remaining icons. (#8499)](https://github.com/material-components/material-components-ios/commit/2f4b35e2aaa1443c80c2d2328fc0f0d31583cd0a) (Robert Moore)
+
+## Multi-component changes
+
+* [Correct icons scripts and integration. (#8501)](https://github.com/material-components/material-components-ios/commit/c3ad8fb9f52bde4af0fcd27cd5394c3e0e6e2c84) (Robert Moore)
+* [Replace `mdc_adjustsFontForContentSizeCategory` with (#8476)](https://github.com/material-components/material-components-ios/commit/0f7758dda70c1f03262e87ae774e882e73119a3e) (Robert Moore)
+* [Suppress deprecation warnings. (#8481)](https://github.com/material-components/material-components-ios/commit/8cebc56185fd4e54a210493486987d74dc29c09a) (Robert Moore)
+* [Use XCTAssertEqualColors from MDFTesting to help color testing. (#8497)](https://github.com/material-components/material-components-ios/commit/9dfd40427dcf0c7c8d20b971613833b780a72e85) (Wenyu Zhang)
+* [remove MDFTesting references. (#8531)](https://github.com/material-components/material-components-ios/commit/b843136be3f6b80df75adc2fb00b99ae337e5c00) (Wenyu Zhang)
+
+---
+
 # 92.0.0
 
 This major release removes the `mdc_adjustsFontForContentSizeCategory` API
