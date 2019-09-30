@@ -229,7 +229,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
 
   // Then
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(0, 0)];
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
@@ -242,7 +242,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
 
   // Then
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(0, 0)];
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
