@@ -83,6 +83,19 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
             (nonnull MDCTextControlColorViewModel *)textControlColorViewModel
                             forState:(MDCTextControlState)textFieldState;
 
+/**
+ Returns the CGRect surrounding the main content, i.e. the area that the container should be drawn
+ around. In an outlined MDCTextControl, this will be the CGRect the outline is drawn around. In a
+ filled MDCTextControl, it will be the rect the filled background is drawn in.
+ */
+@property(nonatomic, assign, readonly) CGRect containerFrame;
+
+/**
+ The number of rows of text the MDCTextControl shows at one time. For textfields, this will always
+ be 1. For other views it can be more than that.
+ */
+@property(nonatomic, assign, readonly) CGFloat numberOfVisibleTextRows;
+
 @end
 
 @protocol MDCTextControlStyle <NSObject>

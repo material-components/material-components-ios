@@ -19,6 +19,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialMath.h"
+#import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -100,6 +101,9 @@ static NSString *const kOfAnnouncement = @"of";
   _sizeThatFitsIncludesSafeArea = NO;
   _titlesNumberOfLines = 1;
   _mdc_overrideBaseElevation = -1;
+  _itemBadgeTextColor = UIColor.whiteColor;
+  _itemBadgeBackgroundColor = MDCPalette.redPalette.tint700;
+  ;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -535,6 +539,8 @@ static NSString *const kOfAnnouncement = @"of";
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     itemView.truncatesTitle = self.truncatesLongTitles;
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
+    itemView.badgeColor = self.itemBadgeBackgroundColor;
+    itemView.badgeTextColor = self.itemBadgeTextColor;
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];
@@ -701,6 +707,28 @@ static NSString *const kOfAnnouncement = @"of";
 
 - (UIColor *)backgroundColor {
   return self.barView.backgroundColor;
+}
+
+- (void)setItemBadgeTextColor:(UIColor *)itemBadgeTextColor {
+  _itemBadgeTextColor = itemBadgeTextColor;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.badgeTextColor = itemBadgeTextColor;
+  }
+}
+
+- (void)setItemBadgeBackgroundColor:(UIColor *)itemBadgeBackgroundColor {
+  _itemBadgeBackgroundColor = itemBadgeBackgroundColor;
+  for (NSUInteger i = 0; i < self.items.count; ++i) {
+    UITabBarItem *item = self.items[i];
+    if (@available(iOS 10.0, *)) {
+      // Skip items with a custom color
+      if (item.badgeColor) {
+        continue;
+      }
+    }
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.badgeColor = itemBadgeBackgroundColor;
+  }
 }
 
 - (void)setBackgroundBlurEffectStyle:(UIBlurEffectStyle)backgroundBlurEffectStyle {

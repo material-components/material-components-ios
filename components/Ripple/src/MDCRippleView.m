@@ -156,6 +156,9 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
         [rippleLayer removeFromSuperlayer];
       }
     }
+    if (completion) {
+      completion();
+    }
   }
 }
 
@@ -203,14 +206,38 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion {
+  // If all ripple animations are already cancelled and removed from the superlayer call the
+  // short circuit and call the completion handler directly.
+  if (self.activeRippleLayer == nil) {
+    if (completion) {
+      completion();
+    }
+    return;
+  }
   [self.activeRippleLayer endRippleAnimated:animated completion:completion];
 }
 
 - (void)fadeInRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
+  // If all ripple animations are already cancelled and removed from the superlayer call the
+  // short circuit and call the completion handler directly.
+  if (self.activeRippleLayer == nil) {
+    if (completion) {
+      completion();
+    }
+    return;
+  }
   [self.activeRippleLayer fadeInRippleAnimated:animated completion:completion];
 }
 
 - (void)fadeOutRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
+  // If all ripple animations are already cancelled and removed from the superlayer call the
+  // short circuit and call the completion handler directly.
+  if (self.activeRippleLayer == nil) {
+    if (completion) {
+      completion();
+    }
+    return;
+  }
   [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
 }
 
