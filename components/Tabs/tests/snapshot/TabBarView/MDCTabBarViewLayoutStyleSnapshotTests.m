@@ -315,6 +315,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredCentered];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -328,6 +329,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredCentered];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -401,6 +403,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredLeading];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -414,6 +417,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredLeading];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -487,6 +491,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -500,6 +505,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -573,6 +579,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -586,6 +593,7 @@ static NSString *const kItemTitleLong1Arabic =
                       forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
 
   // Then
+  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
