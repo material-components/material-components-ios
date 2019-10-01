@@ -117,6 +117,27 @@
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
 
+/**
+ Accessory view that contains custom UI.
+
+ The size of the accessory view is determined through Auto Layout. If your view uses manual layout,
+ you can either add a height constraint (e.g. `[view.heightAnchor constraintEqualToConstant:100]`),
+ or you can override
+ `-systemLayoutSizeFittingSize:withHorizontalFittingPriority:verticalFittingPriority:`.
+
+ If the content of the view changes and the height needs to be recalculated, call
+ `[alert setAccessoryViewNeedsLayout]`. Note that MDCAccessorizedAlertController will automatically
+ recalculate the accessory view's size if the alert's width changes.
+ */
+@property(nonatomic, strong, nullable) UIView *accessoryView;
+
+/**
+ Notifies the alert controller that the size of the accessory view needs to be recalculated due to
+ content changes. Note that MDCAccessorizedAlertController will automatically recalculate the
+ accessory view's size if the alert's width changes.
+ */
+- (void)setAccessoryViewNeedsLayout;
+
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
  UIContentSizeCategory changes.

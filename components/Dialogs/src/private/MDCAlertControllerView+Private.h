@@ -21,6 +21,7 @@
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
 @property(nonatomic, nonnull, strong) UILabel *messageLabel;
+@property(nonatomic, nullable, strong) UIView *accessoryView;
 
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
