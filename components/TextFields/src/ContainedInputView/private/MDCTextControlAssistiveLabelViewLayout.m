@@ -102,6 +102,8 @@
       }
       break;
     case MDCTextControlAssistiveLabelDrawPriorityTrailing:
+      // Pass through (.trailing is the default priority)
+    default:
       trailingAssistiveLabelSize =
           [self assistiveLabelSizeWithLabel:trailingAssistiveLabel
                          constrainedToWidth:assistiveLabelsCombinedMaxWidth];
@@ -113,8 +115,6 @@
                            constrainedToWidth:assistiveLabelsCombinedMaxWidth -
                                               trailingAssistiveLabelSize.width];
       }
-      break;
-    default:
       break;
   }
 
