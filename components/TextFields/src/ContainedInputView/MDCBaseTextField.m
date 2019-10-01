@@ -198,7 +198,11 @@
 }
 
 - (id<MDCTextControlVerticalPositioningReference>)createPositioningReference {
-  return [self.containerStyle positioningReference];
+  return [self.containerStyle
+      positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
+                                normalFontLineHeight:self.normalFont.lineHeight
+                                       textRowHeight:self.normalFont.lineHeight
+                                    numberOfTextRows:1];
 }
 
 - (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
