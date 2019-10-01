@@ -16,10 +16,11 @@
 #import <UIKit/UIKit.h>
 
 /**
- Objects conforming to this protocol provide information about the vertical positions of views. This
- helps achieve the variations in floating label and text rect position across the filled and
- outlined styles, and also allows different densities to be possible.
- */
+Style objects vend objects conforming to this protocol to provide the MDCTextControl's layout object
+with information about the vertical positions of views. This helps achieve the variations in
+floating label and text rect position across the filled and outlined styles, and also allows
+different densities to be possible.
+*/
 @protocol MDCTextControlVerticalPositioningReference <NSObject>
 
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenContainerTopAndFloatingLabel;
