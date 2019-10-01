@@ -27,6 +27,8 @@ different densities to be possible.
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenContainerTopAndNormalLabel;
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndEditingText;
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenEditingTextAndContainerBottom;
+@property(nonatomic, assign, readonly) CGFloat paddingAboveAssistiveLabels;
+@property(nonatomic, assign, readonly) CGFloat paddingBelowAssistiveLabels;
 @property(nonatomic, assign, readonly) CGFloat containerHeight;
 
 @end

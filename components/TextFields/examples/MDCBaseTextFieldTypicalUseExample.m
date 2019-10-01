@@ -53,7 +53,8 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
   self.textField.placeholder = @"This is placeholder text";
   self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.view addSubview:self.textField];
-
+  self.textField.leadingAssistiveLabel.text = @"sdflskd asldkf asldkfj aslkdfj alsdkfj aslkdfj asldkf j";
+  self.textField.trailingAssistiveLabel.text = @"STuff";
   self.resignFirstResponderButton = [self createFirstResponderButton];
   [self.view addSubview:self.resignFirstResponderButton];
 }

@@ -18,6 +18,8 @@
 static const CGFloat kPaddingBetweenTopAndFloatingLabel = (CGFloat)10.0;
 static const CGFloat kPaddingBetweenFloatingLabelAndText = (CGFloat)6.0;
 static const CGFloat kPaddingBetweenTextAndBottom = (CGFloat)10.0;
+static const CGFloat kPaddingAboveAssistiveLabels = (CGFloat)0.0;
+static const CGFloat kPaddingBelowAssistiveLabels = (CGFloat)6.0;
 
 @interface MDCTextControlVerticalPositioningReferenceBase ()
 @end
@@ -28,6 +30,8 @@ static const CGFloat kPaddingBetweenTextAndBottom = (CGFloat)10.0;
 @synthesize paddingBetweenTopAndNormalLabel = _paddingBetweenTopAndNormalLabel;
 @synthesize paddingBetweenFloatingLabelAndText = _paddingBetweenFloatingLabelAndText;
 @synthesize paddingBetweenTextAndBottom = _paddingBetweenTextAndBottom;
+@synthesize paddingAboveAssistiveLabels = _paddingAboveAssistiveLabels;
+@synthesize paddingBelowAssistiveLabels = _paddingBelowAssistiveLabels;
 @synthesize containerHeight = _containerHeight;
 
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
@@ -51,6 +55,8 @@ static const CGFloat kPaddingBetweenTextAndBottom = (CGFloat)10.0;
   _paddingBetweenTopAndFloatingLabel = kPaddingBetweenTopAndFloatingLabel;
   _paddingBetweenFloatingLabelAndText = kPaddingBetweenFloatingLabelAndText;
   _paddingBetweenTextAndBottom = kPaddingBetweenTextAndBottom;
+  _paddingAboveAssistiveLabels = kPaddingAboveAssistiveLabels;
+  _paddingBelowAssistiveLabels = kPaddingBelowAssistiveLabels;
 
   _containerHeight =
       [self calculateContainerHeightWithFoatingLabelHeight:floatingLabelHeight
@@ -92,6 +98,14 @@ static const CGFloat kPaddingBetweenTextAndBottom = (CGFloat)10.0;
 
 - (CGFloat)paddingBetweenEditingTextAndContainerBottom {
   return _paddingBetweenTextAndBottom;
+}
+
+- (CGFloat)paddingAboveAssistiveLabels {
+  return _paddingAboveAssistiveLabels;
+}
+
+- (CGFloat)paddingBelowAssistiveLabels {
+  return _paddingBelowAssistiveLabels;
 }
 
 - (CGFloat)containerHeight {
