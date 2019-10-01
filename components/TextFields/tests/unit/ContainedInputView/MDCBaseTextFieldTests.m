@@ -253,6 +253,29 @@
                         [textField textColorForState:MDCTextControlStateDisabled]);
 }
 
+- (void)testAssistiveLabelColorAccessors {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  UIColor *assistiveLabelColorNormal = [UIColor blueColor];
+  UIColor *assistiveLabelColorEditing = [UIColor greenColor];
+  UIColor *assistiveLabelColorDisabled = [UIColor purpleColor];
+
+  // When
+  [textField setAssistiveLabelColor:assistiveLabelColorNormal forState:MDCTextControlStateNormal];
+  [textField setAssistiveLabelColor:assistiveLabelColorEditing forState:MDCTextControlStateEditing];
+  [textField setAssistiveLabelColor:assistiveLabelColorDisabled
+                           forState:MDCTextControlStateDisabled];
+
+  // Then
+  XCTAssertEqualObjects(assistiveLabelColorNormal,
+                        [textField assistiveLabelColorForState:MDCTextControlStateNormal]);
+  XCTAssertEqualObjects(assistiveLabelColorEditing,
+                        [textField assistiveLabelColorForState:MDCTextControlStateEditing]);
+  XCTAssertEqualObjects(assistiveLabelColorDisabled,
+                        [textField assistiveLabelColorForState:MDCTextControlStateDisabled]);
+}
+
 - (void)testSizeThatFits {
   // Given
   CGRect largeTextFieldFrame = CGRectMake(0, 0, 130, 300);

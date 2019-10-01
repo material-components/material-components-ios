@@ -220,4 +220,18 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   [self validateTextField:textField];
 }
 
+- (void)testTextFieldWithAssistiveLabelText {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.text = @"text";
+  textField.leadingAssistiveLabel.text = @"leading assistive label text";
+  textField.trailingAssistiveLabel.text = @"trailing assistive label text";
+  [textField becomeFirstResponder];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 @end
