@@ -171,6 +171,25 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setAccessoryView:(UIView *)accessoryView {
+  if (_accessoryView == accessoryView) {
+    return;
+  }
+
+  _accessoryView = accessoryView;
+
+  if (self.alertView) {
+    self.alertView.accessoryView = accessoryView;
+    [self setAccessoryViewNeedsLayout];
+  }
+}
+
+- (void)setAccessoryViewNeedsLayout {
+  [self.alertView setNeedsLayout];
+  self.preferredContentSize =
+      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+}
+
 - (NSArray<MDCAlertAction *> *)actions {
   return self.actionManager.actions;
 }
@@ -397,6 +416,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)setupAlertView {
   self.alertView.titleLabel.text = self.title;
   self.alertView.messageLabel.text = self.message;
+  self.alertView.accessoryView = self.accessoryView;
   self.alertView.titleFont = self.titleFont;
   self.alertView.messageFont = self.messageFont;
   self.alertView.titleColor = self.titleColor;
