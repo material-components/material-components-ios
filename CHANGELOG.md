@@ -19,7 +19,13 @@ custom badge background and text colors for all badges.
 
 ### Navigation Drawer
 
+#### Always allow the header to expand
+
 Header can expand even if content doest fill screen.
+
+```
+  self.navigationDrawer.shouldAlwaysExpandHeader = YES;
+```
 
 #### Touch events set to delegate
 
@@ -35,6 +41,37 @@ Touch events are propagated to delegate to allow clients to interpret touches in
   }
 
 ```
+
+### Animation events sent to delegate
+
+The animation lifecycle events are forwarded to the delegate so that clients can respond to them.
+
+```
+  public func bottomDrawerControllerWillTransitionOpen(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?, targetYOffset:CGFloat) {
+    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:targetYOffset)
+  }
+
+  public func bottomDrawerControllerDidEndOpenTransition(_ controller: MDCBottomDrawerViewController) {
+    NSLog("open transition ended")
+  }
+
+  public func bottomDrawerControllerWillTransitionClosed(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?) {
+    // Drawer is transitioning off screen so lets move the floating view back to its initial position.
+    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:CGFloat.greatestFiniteMagnitude)
+  }
+
+  public func bottomDrawerControllerDidEndCloseTransition(_ controller: MDCBottomDrawerViewController) {
+    NSLog("close transition ended")
+  }
+
+  public func bottomDrawerControllerDidChangeTopYOffset(_ controller: MDCBottomDrawerViewController, yOffset: CGFloat) {
+    self.transitionWith(controller, _transitionCoordinator: nil, yOffset:yOffset)
+  }
+  func transitionWith(_ controller: MDCBottomDrawerViewController, _transitionCoordinator: UIViewControllerTransitionCoordinator?, yOffset:CGFloat) {
+    NSLog("transition started")
+  }
+```
+
 ## API changes
 
 ## Component changes
