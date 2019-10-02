@@ -4,12 +4,37 @@ Replace this text with a summarized description of this release's contents.
 ## Breaking changes
 
 Replace this explanations for how to resolve the breaking changes.
-## New deprecations
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Bottom Navigation
+
+Bottom Navigation has itemBadgeBackgroundColor and itemBadgeTextColor APIs to allow clients to set a
+custom badge background and text colors for all badges.
+
+```
+  itemView.badgeColor = UIColor.whiteColor;
+  itemView.badgeTextColor = UIColor.redColor;
+```
+
+### Navigation Drawer
+
+Header can expand even if content doest fill screen.
+
+#### Touch events set to delegate
+
+Touch events are propagated to delegate to allow clients to interpret touches in the scrim area.
+
+```
+  navigationDrawer.shouldAutoDismissOnTap = false
+  navigationDrawer.shouldForwardTouchEvents = true
+...
+  override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+  }
+  public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+  }
+
+```
 ## API changes
 
 ## Component changes
@@ -90,7 +115,7 @@ it be bound to the value of `mdc_adjustsFontForContentSizeCategory`.
 
 # 91.1.1
 
-This patch release corrects initalization of AppBar and splits the typography scheme so the protocol can be 
+This patch release corrects initalization of AppBar and splits the typography scheme so the protocol can be
 used separately from the class conforming to the protocol.
 
 ## Changes
@@ -153,11 +178,11 @@ use a standard `presentViewController` invocation instead.
 ProgressView's `cornerRadius` property was added. This enables clients to customize the corner radius
 of the filled portion of the progress view.
 
-ActionSheet added the ability to add a divider between the header and table. Properties 
-`headerDividerColor` and `showHeaderDivider` were added to MDCActionSheetController. If a client 
+ActionSheet added the ability to add a divider between the header and table. Properties
+`headerDividerColor` and `showHeaderDivider` were added to MDCActionSheetController. If a client
 wants to show a header divider they would need to set `showHeaderDivider` and then set an
-appropriate color for their use case, by default it is `clearColor`. By default the property 
-`showHeaderDivider` view is `NO` so that we do not break clients. This matches a pattern outlined 
+appropriate color for their use case, by default it is `clearColor`. By default the property
+`showHeaderDivider` view is `NO` so that we do not break clients. This matches a pattern outlined
 in [`MDCBannerView`](https://github.com/material-components/material-components-ios/blob/ac114b4bda9dbad328ae445c4529a43a94ccd97d/components/Banner/src/MDCBannerView.h#L76-L88).
 
 ## Changes
@@ -955,7 +980,7 @@ action.tintColor = UIColor.darkTextColor;
 
 # 86.0.0
 
-In this major release we have provided improvements to our Elevation code for Dark Mode as well as internal clean up. 
+In this major release we have provided improvements to our Elevation code for Dark Mode as well as internal clean up.
 
 ## Breaking changes
 
@@ -1491,7 +1516,7 @@ support in several components, and a number of MDCTabBarView features.
 ## New features
 
 Several components support `traitCollectionDidChangeBlock` to allow clients inject a block for exection when traitCollections
-changes. TabBarView allows clients to set preferred layout style. 
+changes. TabBarView allows clients to set preferred layout style.
 
 ## API changes
 
@@ -1808,13 +1833,13 @@ changes. Slider supports Haptics feature.
 
 ### NavigationBar
 
-#### MDCNavigationBar 
+#### MDCNavigationBar
 
 *new* property: `traitCollectionDidChangeBlock` in `MDCNavigationBar`
 
 ### NavigationDrawer
 
-#### MDCBottomDrawerContainerViewController  
+#### MDCBottomDrawerContainerViewController
 
 *new* property: `headerShadowColor` in `MDCBottomDrawerContainerViewController`
 
@@ -1826,7 +1851,7 @@ changes. Slider supports Haptics feature.
 
 ### Snackbar
 
-#### MDCSnackbarManager 
+#### MDCSnackbarManager
 
 *new* property: `messageElevation` in `MDCSnackbarManager`
 
@@ -1838,7 +1863,7 @@ changes. Slider supports Haptics feature.
 
 ### Tabs+TabBarView
 
-#### MDCTabBarView 
+#### MDCTabBarView
 
 *new* method: `-rectForItem:inCoordinateSpace:` in `MDCTabBarView`
 
