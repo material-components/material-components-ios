@@ -34,7 +34,7 @@
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect assistiveLabelViewFrame;
 @property(nonatomic, strong, nonnull)
-    MDCContainedInputAssistiveLabelViewLayout *assistiveLabelViewLayout;
+    MDCTextControlAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat containerHeight;

@@ -24,7 +24,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCContainedInputAssistiveLabelViewInit];
+    [self commonMDCTextControlAssistiveLabelViewInit];
   }
   return self;
 }
@@ -32,12 +32,12 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCContainedInputAssistiveLabelViewInit];
+    [self commonMDCTextControlAssistiveLabelViewInit];
   }
   return self;
 }
 
-- (void)commonMDCContainedInputAssistiveLabelViewInit {
+- (void)commonMDCTextControlAssistiveLabelViewInit {
   self.leftAssistiveLabel = [[UILabel alloc] init];
   self.leftAssistiveLabel.numberOfLines = 0;
   [self addSubview:self.leftAssistiveLabel];

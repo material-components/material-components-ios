@@ -233,7 +233,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                               textRect:textRectNormal
                                                  isRTL:isRTL];
 
-  self.assistiveLabelViewLayout = [[MDCContainedInputAssistiveLabelViewLayout alloc]
+  self.assistiveLabelViewLayout = [[MDCTextControlAssistiveLabelViewLayout alloc]
                          initWithWidth:textFieldWidth
                     leftAssistiveLabel:leftAssistiveLabel
                    rightAssistiveLabel:rightAssistiveLabel

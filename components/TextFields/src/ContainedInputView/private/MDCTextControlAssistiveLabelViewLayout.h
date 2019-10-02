@@ -18,7 +18,7 @@
 #import "MDCTextControl.h"
 #import "MDCTextControlAssistiveLabelDrawPriority.h"
 
-@interface MDCContainedInputAssistiveLabelViewLayout : NSObject
+@interface MDCTextControlAssistiveLabelViewLayout : NSObject
 
 @property(nonatomic, assign, readonly) CGRect leftAssistiveLabelFrame;
 @property(nonatomic, assign, readonly) CGRect rightAssistiveLabelFrame;

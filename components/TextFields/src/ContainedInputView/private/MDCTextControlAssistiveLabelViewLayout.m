@@ -14,7 +14,7 @@
 
 #import "MDCTextControlAssistiveLabelViewLayout.h"
 
-@interface MDCContainedInputAssistiveLabelViewLayout ()
+@interface MDCTextControlAssistiveLabelViewLayout ()
 
 @property(nonatomic, assign) CGRect leftAssistiveLabelFrame;
 @property(nonatomic, assign) CGRect rightAssistiveLabelFrame;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation MDCContainedInputAssistiveLabelViewLayout
+@implementation MDCTextControlAssistiveLabelViewLayout
 
 #pragma mark Object Lifecycle
 
