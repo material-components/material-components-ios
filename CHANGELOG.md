@@ -1,4 +1,4 @@
-# #develop#
+# 92.1.0
 
 Replace this text with a summarized description of this release's contents.
 ## Breaking changes
@@ -71,10 +71,6 @@ The animation lifecycle events are forwarded to the delegate so that clients can
     NSLog("transition started")
   }
 ```
-
-## API changes
-
-## Component changes
 
 ## Changes
 
