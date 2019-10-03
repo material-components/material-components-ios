@@ -1,15 +1,16 @@
 # 92.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
+In this minor release we touched Tabs, Ripple, TextFields, and Bottom navigation.
+For Bottom navigation we added color APIs to Bottom Navigation badges and added hooks for clients to respond to animation lifecycle events and touches to the scrim. We also allowed the view to go to fullscreen even if its not tall enough.
+For Tabs we added some APIs for custom contentInstes.
+For Ripple we optimized some callbacks.
+For TextFields we correct an overwrite of the placehoder font.
 
 ## New features
 
 ### Bottom Navigation
 
-Bottom Navigation has itemBadgeBackgroundColor and itemBadgeTextColor APIs to allow clients to set a
+Bottom Navigation addded itemBadgeBackgroundColor and itemBadgeTextColor APIs to allow clients to set a
 custom badge background and text colors for all badges.
 
 ```
