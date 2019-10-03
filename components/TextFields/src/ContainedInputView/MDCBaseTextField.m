@@ -197,8 +197,8 @@
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  CGFloat normalizedCustomAssistiveLabelDrawPriority =
-      [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
+  CGFloat clampedCustomAssistiveLabelDrawPriority =
+      [self clampedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
   id<MDCTextControlVerticalPositioningReference> positioningReference =
       [self createPositioningReference];
@@ -218,7 +218,7 @@
                     leftAssistiveLabel:self.assistiveLabelView.leftAssistiveLabel
                    rightAssistiveLabel:self.assistiveLabelView.rightAssistiveLabel
             assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
-      customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
+      customAssistiveLabelDrawPriority:clampedCustomAssistiveLabelDrawPriority
                                  isRTL:self.isRTL
                              isEditing:self.isEditing];
 }
@@ -231,7 +231,7 @@
                                     numberOfTextRows:1];
 }
 
-- (CGFloat)normalizedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
+- (CGFloat)clampedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
   CGFloat value = customPriority;
   if (value < 0) {
     value = 0;
@@ -608,8 +608,8 @@
     labelColor = colorViewModel.floatingLabelColor;
   }
   self.textColor = colorViewModel.textColor;
-  self.leadingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
-  self.trailingAssistiveLabel.textColor = colorViewModel.assistiveLabelColor;
+  self.leadingAssistiveLabel.textColor = colorViewModel.leadingAssistiveLabelColor;
+  self.trailingAssistiveLabel.textColor = colorViewModel.trailingAssistiveLabelColor;
   self.label.textColor = labelColor;
 }
 
@@ -664,16 +664,28 @@
   return colorViewModel.textColor;
 }
 
-- (void)setAssistiveLabelColor:(nonnull UIColor *)assistiveLabelColor
-                      forState:(MDCTextControlState)state {
+- (void)setLeadingAssistiveLabelColor:(nonnull UIColor *)leadingAssistiveLabelColor
+                             forState:(MDCTextControlState)state {
   MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
-  colorViewModel.assistiveLabelColor = assistiveLabelColor;
+  colorViewModel.leadingAssistiveLabelColor = leadingAssistiveLabelColor;
   [self setNeedsLayout];
 }
 
-- (UIColor *)assistiveLabelColorForState:(MDCTextControlState)state {
+- (nonnull UIColor *)leadingAssistiveLabelColorForState:(MDCTextControlState)state {
   MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
-  return colorViewModel.assistiveLabelColor;
+  return colorViewModel.leadingAssistiveLabelColor;
+}
+
+- (void)setTrailingAssistiveLabelColor:(nonnull UIColor *)trailingAssistiveLabelColor
+                              forState:(MDCTextControlState)state {
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
+  colorViewModel.trailingAssistiveLabelColor = trailingAssistiveLabelColor;
+  [self setNeedsLayout];
+}
+
+- (nonnull UIColor *)trailingAssistiveLabelColorForState:(MDCTextControlState)state {
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
+  return colorViewModel.trailingAssistiveLabelColor;
 }
 
 @end

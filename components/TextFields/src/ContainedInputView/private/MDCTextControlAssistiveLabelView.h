@@ -18,6 +18,10 @@
 
 #import "MDCTextControlAssistiveLabelViewLayout.h"
 
+/**
+ This view acts as a subview of MDCTextControls and a superview of their leading and assistive
+ labels.
+ */
 @interface MDCTextControlAssistiveLabelView : UIView
 
 @property(nonatomic, strong, readonly, nonnull) UILabel *leftAssistiveLabel;
