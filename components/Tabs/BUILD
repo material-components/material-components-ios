@@ -162,7 +162,7 @@ mdc_objc_library(
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     extra_srcs = glob([
-        "tests/unit/Theming/*.m" +
+        "tests/unit/Theming/*.m",
         "tests/unit/TabBarView/*.m",
     ]),
     deps = [
