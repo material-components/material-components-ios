@@ -21,11 +21,8 @@
 #import "MaterialShadowLayer.h"
 
 @interface MDCBottomDrawerDelegateTest
-    : UIViewController <MDCBottomDrawerPresentationControllerDelegate,
-                        MDCBottomDrawerViewControllerDelegate>
-
-@property(nonatomic, strong) NSMutableArray *commands;
-
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
+@property(nonatomic, assign) BOOL delegateWasCalled;
 @end
 
 @implementation MDCBottomDrawerDelegateTest
@@ -33,92 +30,18 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _commands = [NSMutableArray array];
+    _delegateWasCalled = NO;
   }
   return self;
 }
 - (void)bottomDrawerWillChangeState:(MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
-  [_commands addObject:NSStringFromSelector(_cmd)];
+  _delegateWasCalled = YES;
 }
 
 - (void)bottomDrawerTopTransitionRatio:
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerDismissTransitionDidEnd:
-    (MDCBottomDrawerPresentationController *)presentationController {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerPresentTransitionDidEnd:
-    (MDCBottomDrawerPresentationController *)presentationController {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerTopDidChangeYOffset:
-            (MDCBottomDrawerPresentationController *)presentationController
-                                yOffset:(CGFloat)yOffset {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerDismissTransitionWillBegin:
-            (MDCBottomDrawerPresentationController *)presentationController
-                               withCoordinator:(id<UIViewControllerTransitionCoordinator>)
-                                                   transitionCoordinator {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerPresentTransitionWillBegin:
-            (MDCBottomDrawerPresentationController *)presentationController
-                               withCoordinator:
-                                   (id<UIViewControllerTransitionCoordinator>)transitionCoordinator
-                                 targetYOffset:(CGFloat)targetYOffset {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerControllerDidEndOpenTransition:(MDCBottomDrawerViewController *)controller {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerControllerDidEndCloseTransition:(MDCBottomDrawerViewController *)controller {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerControllerDidChangeTopInset:(nonnull MDCBottomDrawerViewController *)controller
-                                       topInset:(CGFloat)topInset {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerControllerDidChangeTopYOffset:
-            (nonnull MDCBottomDrawerViewController *)controller
-                                          yOffset:(CGFloat)yOffset {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)bottomDrawerControllerWillTransitionOpen:(nonnull MDCBottomDrawerViewController *)controller
-                                 withCoordinator:
-                                     (nullable id<UIViewControllerTransitionCoordinator>)
-                                         transitionCoordinator
-                                   targetYOffset:(CGFloat)targetYOffset {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)
-    bottomDrawerControllerWillTransitionClosed:(nonnull MDCBottomDrawerViewController *)controller
-                               withCoordinator:(nullable id<UIViewControllerTransitionCoordinator>)
-                                                   transitionCoordinator {
-  [_commands addObject:NSStringFromSelector(_cmd)];
-}
-
-- (void)clear {
-  _commands = [NSMutableArray array];
-}
-
-- (BOOL)verifyCallback:(SEL)cmd {
-  return [_commands containsObject:NSStringFromSelector(cmd)];
 }
 
 @end
@@ -495,88 +418,7 @@
   self.fakeBottomDrawer.drawerState = MDCBottomDrawerStateExpanded;
 
   // Then
-  XCTAssertTrue([self.delegateTest verifyCallback:@selector(bottomDrawerWillChangeState:
-                                                                            drawerState:)]);
-}
-
-- (void)testBottomDrawerControllerWillOpenCallback {
-  self.drawerViewController.delegate = self.delegateTest;
-  self.presentationController.delegate = self.drawerViewController;
-  [self.presentationController presentationTransitionWillBegin];
-  XCTAssertTrue([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerWillTransitionOpen:
-                                                        withCoordinator:targetYOffset:)]);
-  XCTAssertFalse([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
-}
-
-- (void)testBottomDrawerControllerDidOpenCallback {
-  self.drawerViewController.delegate = self.delegateTest;
-  self.presentationController.delegate = self.drawerViewController;
-  [self.presentationController presentationTransitionDidEnd:YES];
-  XCTAssertTrue(
-      [self.delegateTest verifyCallback:@selector(bottomDrawerControllerDidEndOpenTransition:)]);
-  XCTAssertFalse([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
-}
-
-- (void)testBottomDrawerControllerWillCloseCallback {
-  self.drawerViewController.delegate = self.delegateTest;
-  self.presentationController.delegate = self.drawerViewController;
-  [self.presentationController dismissalTransitionWillBegin];
-  XCTAssertTrue([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerWillTransitionClosed:withCoordinator:)]);
-  XCTAssertFalse([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
-}
-
-- (void)testBottomDrawerControllerDidCloseCallback {
-  self.drawerViewController.delegate = self.delegateTest;
-  self.presentationController.delegate = self.drawerViewController;
-  [self.presentationController dismissalTransitionDidEnd:YES];
-  XCTAssertTrue(
-      [self.delegateTest verifyCallback:@selector(bottomDrawerControllerDidEndCloseTransition:)]);
-  XCTAssertFalse([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
-}
-
-- (void)testBottomDrawerControllerToYOffsetChangesCallback {
-  self.fakeBottomDrawer.delegate = self.presentationController;
-  self.drawerViewController.delegate = self.delegateTest;
-  self.presentationController.delegate = self.drawerViewController;
-
-  CGSize fakePreferredContentSize = CGSizeMake(200, 100);
-  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
-  self.fakeBottomDrawer.contentViewController =
-      [[MDCNavigationDrawerFakeTableViewController alloc] init];
-  // fake out a layout pass...
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 100);
-  self.fakeBottomDrawer.contentViewController.view.frame = CGRectMake(0, 500, 200, 100);
-
-  // fake presenting the drawer
-  [self.presentationController presentationTransitionWillBegin];
-  [self.presentationController presentationTransitionDidEnd:YES];
-  XCTAssertFalse([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
-
-  // fake a content inset change -- aka a user scrolled
-  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, 100)];
-  XCTAssertTrue([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
-
-  // clear recorded cmds
-  [self.delegateTest clear];
-
-  // fake close the drawer
-  [self.presentationController dismissalTransitionWillBegin];
-  [self.presentationController dismissalTransitionDidEnd:YES];
-  XCTAssertFalse([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
-
-  // fake a content inset change -- aka a reset
-  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, 50)];
-  XCTAssertFalse([self.delegateTest
-      verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
+  XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
 }
 
 - (void)testBottomDrawerCornersAPICollapsed {
