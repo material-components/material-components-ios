@@ -104,6 +104,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIColor *_errorColor;
   UIColor *_floatingPlaceholderActiveColor;
   UIColor *_floatingPlaceholderNormalColor;
+  UIColor *_floatingPlaceholderErrorActiveColor;
   UIColor *_inlinePlaceholderColor;
   UIColor *_leadingUnderlineLabelTextColor;
   UIColor *_normalColor;
@@ -200,6 +201,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   copy.floatingEnabled = self.isFloatingEnabled;
   copy.floatingPlaceholderActiveColor = self.floatingPlaceholderActiveColor;
   copy.floatingPlaceholderNormalColor = self.floatingPlaceholderNormalColor;
+  copy.floatingPlaceholderErrorActiveColor = self.floatingPlaceholderErrorActiveColor;
   copy.floatingPlaceholderScale = self.floatingPlaceholderScale;
   copy.helperText = [self.helperText copy];
   copy.inlinePlaceholderColor = self.inlinePlaceholderColor;
@@ -431,10 +433,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIColor *placeholderColor;
   if ([self isPlaceholderUp]) {
+    UIColor *errorColor = self.textInput.isEditing
+                              ? (self.floatingPlaceholderErrorActiveColor ?: self.errorColor)
+                              : self.errorColor;
     UIColor *nonErrorColor = self.textInput.isEditing ? self.floatingPlaceholderActiveColor
                                                       : self.floatingPlaceholderNormalColor;
     placeholderColor = (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
-                           ? self.errorColor
+                           ? errorColor
                            : nonErrorColor;
   } else {
     placeholderColor = self.inlinePlaceholderColor;
@@ -968,6 +973,17 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _floatingPlaceholderNormalColorDefault = floatingPlaceholderNormalColorDefault
                                                ? floatingPlaceholderNormalColorDefault
                                                : [self class].inlinePlaceholderColorDefault;
+}
+
+- (UIColor *)floatingPlaceholderErrorActiveColor {
+  return _floatingPlaceholderErrorActiveColor;
+}
+
+- (void)setFloatingPlaceholderErrorActiveColor:(UIColor *)floatingPlaceholderErrorActiveColor {
+  if (![_floatingPlaceholderErrorActiveColor isEqual:floatingPlaceholderErrorActiveColor]) {
+    _floatingPlaceholderErrorActiveColor = floatingPlaceholderErrorActiveColor;
+    [self updatePlaceholder];
+  }
 }
 
 - (void)setFloatingEnabled:(BOOL)floatingEnabled {
