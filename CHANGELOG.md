@@ -1,7 +1,8 @@
 # 92.1.0
 
-In this minor release we touched Tabs, Ripple, TextFields, and Bottom navigation.
-For Bottom navigation we added color APIs to Bottom Navigation badges and added hooks for clients to respond to animation lifecycle events and touches to the scrim. We also allowed the view to go to fullscreen even if its not tall enough.
+In this minor release we touched Tabs, Ripple, TextFields, Bottom Navigation, and Navigation Drawer.
+For Bottom navigation we added color APIs to badges.
+For Navigation drawer we allowed the view to go to fullscreen even if its not tall enough.
 For Tabs we added some APIs for custom contentInstes.
 For Ripple we optimized some callbacks.
 For TextFields we correct an overwrite of the placehoder font.
@@ -28,51 +29,6 @@ Header can expand even if content doest fill screen.
   self.navigationDrawer.shouldAlwaysExpandHeader = YES;
 ```
 
-#### Touch events set to delegate
-
-Touch events are propagated to delegate to allow clients to interpret touches in the scrim area.
-
-```
-  navigationDrawer.shouldAutoDismissOnTap = false
-  navigationDrawer.shouldForwardTouchEvents = true
-...
-  override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-  }
-  public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-  }
-
-```
-
-### Animation events sent to delegate
-
-The animation lifecycle events are forwarded to the delegate so that clients can respond to them.
-
-```
-  public func bottomDrawerControllerWillTransitionOpen(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?, targetYOffset:CGFloat) {
-    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:targetYOffset)
-  }
-
-  public func bottomDrawerControllerDidEndOpenTransition(_ controller: MDCBottomDrawerViewController) {
-    NSLog("open transition ended")
-  }
-
-  public func bottomDrawerControllerWillTransitionClosed(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?) {
-    // Drawer is transitioning off screen so lets move the floating view back to its initial position.
-    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:CGFloat.greatestFiniteMagnitude)
-  }
-
-  public func bottomDrawerControllerDidEndCloseTransition(_ controller: MDCBottomDrawerViewController) {
-    NSLog("close transition ended")
-  }
-
-  public func bottomDrawerControllerDidChangeTopYOffset(_ controller: MDCBottomDrawerViewController, yOffset: CGFloat) {
-    self.transitionWith(controller, _transitionCoordinator: nil, yOffset:yOffset)
-  }
-  func transitionWith(_ controller: MDCBottomDrawerViewController, _transitionCoordinator: UIViewControllerTransitionCoordinator?, yOffset:CGFloat) {
-    NSLog("transition started")
-  }
-```
-
 ## Changes
 
 ### BottomNavigation
@@ -81,9 +37,7 @@ The animation lifecycle events are forwarded to the delegate so that clients can
 
 ### NavigationDrawer
 
-* [Allow animations alongside movement in MDCBottomNavigatio… (#8474)](https://github.com/material-components/material-components-ios/commit/bf5361b55cc17600317ce4ff2f02e73f1e69e630) (Hiedi Utley)
 * [Allow header to expand even if content doesn't fill screen. (#8484)](https://github.com/material-components/material-components-ios/commit/0d30e34a2c4f3c1962d2cd7fc394e7355835aedc) (Cody Weaver)
-* [Allow touch events to propagate to delegate for  MDCBottomNavigationDrawer (#8486)](https://github.com/material-components/material-components-ios/commit/8df9fcdf33d5ead19668f364c6b048ff0bf043e0) (Hiedi Utley)
 * [Allow users to scroll to dismiss on lower resolution devices. (#8503)](https://github.com/material-components/material-components-ios/commit/a80e41c20710024d01941ab538817678352e480c) (Cody Weaver)
 * [Fix broken header when content expands (#8514)](https://github.com/material-components/material-components-ios/commit/6de8286be5637216715b963e17d2cc008f52232d) (Cody Weaver)
 
