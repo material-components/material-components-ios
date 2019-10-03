@@ -21,7 +21,7 @@
  The color applied to the placeholder when floating and the text field is first responder. However,
  when in error state, it will be colored with the error color.
 
- Only relevent when floatingEnabled is true.
+ Only relevant when floatingEnabled is true.
 
  Default is floatingPlaceholderActiveColorDefault.
  */
@@ -38,7 +38,7 @@
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color and when in active state, it will be colored with the active color.
 
- Only relevent when floatingEnabled is true.
+ Only relevant when floatingEnabled is true.
 
  Default is floatingPlaceholderNormalColorDefault.
  */
@@ -58,7 +58,7 @@
 
 /**
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
- as a value from 0.0 to 1.0. Only relevent when floatingEnabled = true.
+ as a value from 0.0 to 1.0. Only relevant when floatingEnabled = true.
 
  If nil, the floatingPlaceholderScale is @(floatingPlaceholderScaleDefault).
  */

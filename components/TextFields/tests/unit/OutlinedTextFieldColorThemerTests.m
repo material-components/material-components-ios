@@ -47,6 +47,7 @@
   XCTAssertEqualObjects(controller.normalColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.normalColor);
+
   XCTAssertEqualObjects(controller.inlinePlaceholderColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor, controller.inlinePlaceholderColor);
@@ -152,6 +153,36 @@
   XCTAssertEqualObjects(controller.disabledColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects(textField.underline.disabledColor, controller.disabledColor);
+}
+
+- (void)testOutlinedTextFieldBorderStrokeColorTheming {
+  // Given
+  MDCTextField *textField = [[MDCTextField alloc] init];
+  MDCTextInputControllerOutlined *controller =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
+
+  // When
+  controller.borderStrokeColor = UIColor.redColor;
+  controller.normalColor = UIColor.orangeColor;
+
+  // Then
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.borderStrokeColor);
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, UIColor.redColor);
+}
+
+- (void)testOutlinedTextFieldBorderStrokeColorDefaultsToNormal {
+  // Given
+  MDCTextField *textField = [[MDCTextField alloc] init];
+  MDCTextInputControllerOutlined *controller =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
+
+  // When
+  controller.borderStrokeColor = nil;
+  controller.normalColor = UIColor.purpleColor;
+
+  // Then
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.normalColor);
+  XCTAssertEqualObjects(textField.borderView.borderStrokeColor, UIColor.purpleColor);
 }
 
 @end

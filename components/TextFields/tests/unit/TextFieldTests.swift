@@ -49,6 +49,7 @@ class TextFieldTests: XCTestCase {
 
     textField.textInsetsMode = .never
     textField.borderView?.borderFillColor = .purple
+    textField.borderView?.borderStrokeColor = .orange
     textField.borderView?.borderPath =
       UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
     textField.borderView?.borderStrokeColor = .yellow
@@ -72,6 +73,8 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
       XCTAssertEqual(textField.borderView?.borderFillColor,
                      textFieldCopy.borderView?.borderFillColor)
+      XCTAssertEqual(textField.borderView?.borderStrokeColor,
+                    textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral,
                      textFieldCopy.borderView?.borderPath?.bounds.integral)
       XCTAssertEqual(textField.borderView?.borderStrokeColor,
