@@ -168,8 +168,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 
 /**
  Sets the padding around the tabs content used for the specified layout style. For example,
- @c MDCTabBarViewLayoutStyleScrollable has a default left padding of 52 points. The values are
- flipped for right-to-left layouts.
+ @c MDCTabBarViewLayoutStyleScrollable has a default left padding of 52 points. The left and right
+ values are flipped for right-to-left layouts.
 
  @note The padding is applied only when the @c layoutStyle is currently in-use, which depends on
  the preferred layout style, the size of the tabs, and the current bounds.
