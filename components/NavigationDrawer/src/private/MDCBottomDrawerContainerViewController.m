@@ -52,26 +52,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 @end
 
-/**
- View that allows touches that aren't handled from within the view to be propagated up the
- responder chain. This is used to allow forwarding of tap events from the scroll view through to
- the delegate if that has been enabled on the VC.
- */
-
-@interface MDCBottomDrawerScrollView : UIScrollView
-@end
-
-@implementation MDCBottomDrawerScrollView
-
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-  // Allow unhandled touches to propagate along the responder chain and optionally be handled by
-  // the drawer delegate.
-  UIView *view = [super hitTest:point withEvent:event];
-  return view == self ? nil : view;
-}
-
-@end
-
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
 
 /**
@@ -779,7 +759,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (UIScrollView *)scrollView {
   if (!_scrollView) {
-    _scrollView = [[MDCBottomDrawerScrollView alloc] init];
+    _scrollView = [[UIScrollView alloc] init];
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.alwaysBounceVertical = YES;
     _scrollView.backgroundColor = [UIColor clearColor];
