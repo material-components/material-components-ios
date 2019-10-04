@@ -14,15 +14,20 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCContainerStyleVerticalPositioningReference.h"
-
-@interface MDCContainedInputViewVerticalPositioningGuideBase
-    : NSObject <MDCContainerStyleVerticalPositioningReference>
-
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
-@property(nonatomic, assign, readonly) CGFloat containerHeight;
-
-@end
+/**
+ This enum represents different states the floating label can be in.
+ */
+typedef NS_ENUM(NSUInteger, MDCTextControlLabelState) {
+  /**
+   The state where the floating label is not visible.
+   */
+  MDCTextControlLabelStateNone,
+  /**
+   The state where the floating label is floating.
+   */
+  MDCTextControlLabelStateFloating,
+  /**
+   The state where the floating label is occupying the normal text area.
+   */
+  MDCTextControlLabelStateNormal,
+};

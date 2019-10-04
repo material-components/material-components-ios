@@ -18,7 +18,10 @@
 #import "private/MDCMaskedTransition.h"
 #import "private/MDCMaskedTransitionMotionForContext.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCMaskedTransitionController
+#pragma clang diagnostic pop
 
 - (instancetype)initWithSourceView:(UIView *)sourceView {
   self = [self init];

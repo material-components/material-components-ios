@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCBaseTextFieldLayout.h"
-#import "MDCContainedInputViewLabelState.h"
+#import "MDCTextControlLabelState.h"
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
@@ -26,7 +26,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                  positioningReference:
-                     (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                     (id<MDCTextControlVerticalPositioningReference>)positioningReference
                                  text:(NSString *)text
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
@@ -64,7 +64,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
                     positioningReference:
-                        (id<MDCContainerStyleVerticalPositioningReference>)positioningReference
+                        (id<MDCTextControlVerticalPositioningReference>)positioningReference
                                     text:(NSString *)text
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
@@ -201,7 +201,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                                clearButtonSideLength, clearButtonSideLength);
 
   CGRect labelFrameNormal = [self labelFrameWithText:label.text
-                                          labelState:MDCContainedInputViewLabelStateNormal
+                                          labelState:MDCTextControlLabelStateNormal
                                                 font:font
                                         floatingFont:floatingFont
                                    floatingLabelMinY:floatingLabelMinY
@@ -210,7 +210,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                             textRect:textRectNormal
                                                isRTL:isRTL];
   CGRect labelFrameFloating = [self labelFrameWithText:label.text
-                                            labelState:MDCContainedInputViewLabelStateFloating
+                                            labelState:MDCTextControlLabelStateFloating
                                                   font:font
                                           floatingFont:floatingFont
                                      floatingLabelMinY:floatingLabelMinY
@@ -229,6 +229,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   self.labelFrameNormal = labelFrameNormal;
   self.leftViewHidden = !displaysLeftView;
   self.rightViewHidden = !displaysRightView;
+  self.containerHeight = positioningReference.containerHeight;
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
@@ -295,7 +296,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 }
 
 - (CGRect)labelFrameWithText:(NSString *)text
-                  labelState:(MDCContainedInputViewLabelState)labelState
+                  labelState:(MDCTextControlLabelState)labelState
                         font:(UIFont *)font
                 floatingFont:(UIFont *)floatingFont
            floatingLabelMinY:(CGFloat)floatingLabelMinY
@@ -309,9 +310,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGFloat originX = 0;
   CGFloat originY = 0;
   switch (labelState) {
-    case MDCContainedInputViewLabelStateNone:
+    case MDCTextControlLabelStateNone:
       break;
-    case MDCContainedInputViewLabelStateFloating:
+    case MDCTextControlLabelStateFloating:
       size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:floatingFont];
       originY = floatingLabelMinY;
       if (isRTL) {
@@ -321,7 +322,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
-    case MDCContainedInputViewLabelStateNormal:
+    case MDCTextControlLabelStateNormal:
       size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:font];
       CGFloat textRectMidY = CGRectGetMidY(textRect);
       originY = textRectMidY - ((CGFloat)0.5 * size.height);
@@ -340,6 +341,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (CGFloat)textHeightWithFont:(UIFont *)font {
   return (CGFloat)ceil((double)font.lineHeight);
+}
+
+- (CGFloat)calculatedHeight {
+  return self.containerHeight;
 }
 
 @end

@@ -18,10 +18,13 @@
 
 #import "MaterialTextFields+ContainedInputView.h"
 
-static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
+// This timeout value is intended to be temporary. These snapshot tests currently take longer than
+// we'd want them to.
+static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCBaseTextField *textField;
+@property(nonatomic, assign) BOOL areAnimationsEnabled;
 @end
 
 @implementation MDCBaseTextFieldTestsSnapshotTests
@@ -29,27 +32,40 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
 - (void)setUp {
   [super setUp];
 
+  self.areAnimationsEnabled = UIView.areAnimationsEnabled;
+  [UIView setAnimationsEnabled:NO];
   self.textField = [self createBaseTextFieldInKeyWindow];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //    self.recordMode = YES;
+  //      self.recordMode = YES;
 }
 
 - (void)tearDown {
   [super tearDown];
   [self.textField removeFromSuperview];
   self.textField = nil;
+  [UIView setAnimationsEnabled:self.areAnimationsEnabled];
 }
 
 - (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
   textField.borderStyle = UITextBorderStyleRoundedRect;
+
+  // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,
+  // at least locally.
+  UIView *dummyInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+  textField.inputView = dummyInputView;
+
+  // Add the textfield to the window so it's part of a valid view hierarchy and things like
+  // `-becomeFirstResponder` work.
   UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
   [keyWindow addSubview:textField];
   return textField;
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -158,6 +174,46 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 1.0;
   // When
   textField.clearButtonMode = UITextFieldViewModeAlways;
   textField.text = @"Text";
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testFloatingLabelWithCustomColorWhileEditing {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.label.text = @"Floating label text";
+  textField.text = @"Text";
+  [textField setFloatingLabelColor:[UIColor purpleColor] forState:MDCTextControlStateEditing];
+  [textField becomeFirstResponder];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testDisabledTextField {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.label.text = @"Floating label text";
+  textField.text = @"Text";
+  textField.enabled = NO;
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testEditingTextFieldWithVisiblePlaceholder {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.label.text = @"Floating label text";
+  textField.placeholder = @"Placeholder";
+  [textField becomeFirstResponder];
 
   // Then
   [self validateTextField:textField];

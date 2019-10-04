@@ -14,12 +14,22 @@
 
 #import <UIKit/UIKit.h>
 
+#import <MaterialComponents/MaterialActionSheet+Theming.h>
+#import <MaterialComponents/MaterialActionSheet.h>
 #import <MaterialComponents/MaterialAnimationTiming.h>
 #import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialIcons+ic_check.h>
+#import <MaterialComponents/MaterialIcons+ic_settings.h>
 #import <MaterialComponents/MaterialMath.h>
 #import "MaterialTabs+TabBarView.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
+
+/** Accessibility label for the content insets toggle button. */
+static NSString *const kToggleContentInsetsAccessibilityLabel = @"Toggle content insets";
+
+/** Accessibility label for the preferred layout menu button. */
+static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferred alignment";
 
 /** A custom view to place in an MDCTabBarView. */
 @interface MDCTabBarViewTypicalExampleViewControllerCustomView
@@ -112,6 +122,12 @@ static NSString *const kExampleTitle = @"TabBarView";
 /** Tracks the UITabBarItem views that are currently on-screen. */
 @property(nonatomic, copy) NSSet<UITabBarItem *> *visibleItems;
 
+/** Image for toggle button when contentInset is non-zero. */
+@property(nonatomic, strong) UIImage *contentInsetToggleEnabledImage;
+
+/** Image for toggle button when contentInset is zero. */
+@property(nonatomic, strong) UIImage *contentInsetToggleDisabledImage;
+
 @end
 
 @implementation MDCTabBarViewTypicalExampleViewController
@@ -119,6 +135,15 @@ static NSString *const kExampleTitle = @"TabBarView";
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = kExampleTitle;
+  NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
+  self.contentInsetToggleEnabledImage = [[UIImage imageNamed:@"contentInset_enabled"
+                                                    inBundle:selfBundle
+                               compatibleWithTraitCollection:nil]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.contentInsetToggleDisabledImage = [[UIImage imageNamed:@"contentInset_disabled"
+                                                     inBundle:selfBundle
+                                compatibleWithTraitCollection:nil]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   [self applyFixForInjectedAppBar];
 
@@ -185,6 +210,23 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   [self applyThemingToTabBarView];
   [self addSegmentedControl];
+
+  UIBarButtonItem *alignmentButton = [[UIBarButtonItem alloc]
+      initWithImage:[MDCIcons.imageFor_ic_settings
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:UIBarButtonItemStylePlain
+             target:self
+             action:@selector(didTapAlignmentButton)];
+  alignmentButton.accessibilityLabel = kPreferredLayoutMenuAccessibilityLabel;
+
+  UIBarButtonItem *insetsButton =
+      [[UIBarButtonItem alloc] initWithImage:self.contentInsetToggleDisabledImage
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didToggleInsets:)];
+  insetsButton.accessibilityLabel = kToggleContentInsetsAccessibilityLabel;
+
+  self.navigationItem.rightBarButtonItems = @[ alignmentButton, insetsButton ];
 }
 
 - (void)applyThemingToTabBarView {
@@ -271,6 +313,65 @@ static NSString *const kExampleTitle = @"TabBarView";
 }
 
 #pragma mark - Item style variations
+
+- (void)didTapAlignmentButton {
+  MDCTabBarViewLayoutStyle currentStyle = self.tabBar.preferredLayoutStyle;
+  UIImage *checkIcon =
+      [MDCIcons.imageFor_ic_check imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  MDCActionSheetController *actionSheet =
+      [MDCActionSheetController actionSheetControllerWithTitle:@"Preferred Layout Style"];
+  MDCActionSheetAction *fixedJustifiedAction = [MDCActionSheetAction
+      actionWithTitle:@"Fixed"
+                image:((currentStyle == MDCTabBarViewLayoutStyleFixed) ? checkIcon : nil)
+              handler:^(MDCActionSheetAction *_Nonnull action) {
+                self.tabBar.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+              }];
+  MDCActionSheetAction *fixedClusteredLeadingAction = [MDCActionSheetAction
+      actionWithTitle:@"Fixed Clustered Leading"
+                image:((currentStyle == MDCTabBarViewLayoutStyleFixedClusteredLeading) ? checkIcon
+                                                                                       : nil)
+              handler:^(MDCActionSheetAction *_Nonnull action) {
+                self.tabBar.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+              }];
+  MDCActionSheetAction *fixedClusteredTrailingAction = [MDCActionSheetAction
+      actionWithTitle:@"Fixed Clustered Trailing"
+                image:((currentStyle == MDCTabBarViewLayoutStyleFixedClusteredTrailing) ? checkIcon
+                                                                                        : nil)
+              handler:^(MDCActionSheetAction *_Nonnull action) {
+                self.tabBar.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+              }];
+  MDCActionSheetAction *fixedClusteredCenteredAction = [MDCActionSheetAction
+      actionWithTitle:@"Fixed Clustered Centered"
+                image:((currentStyle == MDCTabBarViewLayoutStyleFixedClusteredCentered) ? checkIcon
+                                                                                        : nil)
+              handler:^(MDCActionSheetAction *_Nonnull action) {
+                self.tabBar.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredCentered;
+              }];
+  MDCActionSheetAction *scrollableAction = [MDCActionSheetAction
+      actionWithTitle:@"Scrollable"
+                image:((currentStyle == MDCTabBarViewLayoutStyleScrollable) ? checkIcon : nil)
+              handler:^(MDCActionSheetAction *_Nonnull action) {
+                self.tabBar.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+              }];
+  [actionSheet addAction:fixedJustifiedAction];
+  [actionSheet addAction:fixedClusteredLeadingAction];
+  [actionSheet addAction:fixedClusteredTrailingAction];
+  [actionSheet addAction:fixedClusteredCenteredAction];
+  [actionSheet addAction:scrollableAction];
+  [actionSheet applyThemeWithScheme:self.containerScheme];
+  actionSheet.alwaysAlignTitleLeadingEdges = YES;
+  [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
+- (void)didToggleInsets:(UIBarButtonItem *)sender {
+  if (UIEdgeInsetsEqualToEdgeInsets(self.tabBar.contentInset, UIEdgeInsetsZero)) {
+    self.tabBar.contentInset = UIEdgeInsetsMake(0, 10, 0, 30);
+    sender.image = self.contentInsetToggleEnabledImage;
+  } else {
+    self.tabBar.contentInset = UIEdgeInsetsZero;
+    sender.image = self.contentInsetToggleDisabledImage;
+  }
+}
 
 - (void)segmentedControlChangedValue:(id)sender {
   if ([sender isKindOfClass:[UISegmentedControl class]]) {

@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainerStyleVerticalPositioningReference.h"
+#import "MDCTextControlVerticalPositioningReference.h"
 
 @interface MDCBaseTextFieldLayout : NSObject
 
@@ -31,9 +31,12 @@
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 
+@property(nonatomic, readonly) CGFloat calculatedHeight;
+@property(nonatomic, assign) CGFloat containerHeight;
+
 - (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                          positioningReference:
-                             (nonnull id<MDCContainerStyleVerticalPositioningReference>)
+                             (nonnull id<MDCTextControlVerticalPositioningReference>)
                                  positioningReference
                                          text:(nullable NSString *)text
                                          font:(nonnull UIFont *)font

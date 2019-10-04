@@ -20,7 +20,7 @@
  helps achieve the variations in floating label and text rect position across the filled and
  outlined styles, and also allows different densities to be possible.
  */
-@protocol MDCContainerStyleVerticalPositioningReference <NSObject>
+@protocol MDCTextControlVerticalPositioningReference <NSObject>
 
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;

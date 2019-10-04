@@ -12,23 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputViewLabelAnimation.h"
+#import "MDCTextControlLabelAnimation.h"
 
+#import "MDCTextControl.h"
 #import "MaterialAnimationTiming.h"
 
-static const CGFloat kDefaultAnimationDuration = (CGFloat)0.15;
-
-@implementation MDCContainedInputViewLabelAnimation
+@implementation MDCTextControlLabelAnimation
 
 + (void)layOutLabel:(nonnull UILabel *)label
-                 state:(MDCContainedInputViewLabelState)labelState
+                 state:(MDCTextControlLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
           floatingFont:(nonnull UIFont *)floatingFont {
   UIFont *targetFont;
   CGRect targetFrame;
-  if (labelState == MDCContainedInputViewLabelStateFloating) {
+  if (labelState == MDCTextControlLabelStateFloating) {
     targetFont = floatingFont;
     targetFrame = floatingLabelFrame;
   } else {
@@ -47,7 +46,7 @@ static const CGFloat kDefaultAnimationDuration = (CGFloat)0.15;
   CAMediaTimingFunction *timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
   [UIView mdc_animateWithTimingFunction:timingFunction
-                               duration:kDefaultAnimationDuration
+                               duration:kMDCTextControlDefaultAnimationDuration
                                   delay:0
                                 options:0
                              animations:^{

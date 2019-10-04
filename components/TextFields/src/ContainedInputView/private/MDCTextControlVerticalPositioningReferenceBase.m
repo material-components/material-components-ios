@@ -12,22 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-/**
- This enum represents different states the floating label can be in.
- */
-typedef NS_ENUM(NSUInteger, MDCContainedInputViewLabelState) {
-  /**
-   The state where the floating label is not visible.
-   */
-  MDCContainedInputViewLabelStateNone,
-  /**
-   The state where the floating label is floating.
-   */
-  MDCContainedInputViewLabelStateFloating,
-  /**
-   The state where the floating label is occupying the normal text area.
-   */
-  MDCContainedInputViewLabelStateNormal,
-};
+#import "MDCTextControlVerticalPositioningReferenceBase.h"
+
+@interface MDCTextControlVerticalPositioningReferenceBase ()
+
+@end
+
+@implementation MDCTextControlVerticalPositioningReferenceBase
+
+- (CGFloat)paddingBetweenTopAndFloatingLabel {
+  return 10;
+}
+
+- (CGFloat)paddingBetweenTopAndNormalLabel {
+  return 20;
+}
+
+- (CGFloat)paddingBetweenFloatingLabelAndText {
+  return 5;
+}
+
+- (CGFloat)containerHeight {
+  return 50;
+}
+
+@end
