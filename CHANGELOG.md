@@ -1,18 +1,15 @@
 # 92.1.0
 
-In this minor release we touched Tabs, Ripple, TextFields, Bottom Navigation, and Navigation Drawer.
-For Bottom navigation we added color APIs to badges.
-For Navigation drawer we allowed the view to go to fullscreen even if its not tall enough.
-For Tabs we added some APIs for custom contentInstes.
-For Ripple we optimized some callbacks.
-For TextFields we correct an overwrite of the placehoder font.
+This minor release introduces badge color APIs for Bottom Navigation and Bottom Drawer support for
+full-height presentation with any content. Tabs and TextFields received bug fixes. Ripple optimizations
+improved callback behavior.
 
 ## New features
 
 ### Bottom Navigation
 
-Bottom Navigation addded itemBadgeBackgroundColor and itemBadgeTextColor APIs to allow clients to set a
-custom badge background and text colors for all badges.
+Bottom Navigation addded itemBadgeBackgroundColor and itemBadgeTextColor APIs to allow clients to
+set a custom badge background and text colors for all badges.
 
 ```
   itemView.badgeColor = UIColor.whiteColor;
