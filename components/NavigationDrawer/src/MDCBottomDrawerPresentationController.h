@@ -50,67 +50,6 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio;
 
-/**
- This method is called when the y-offset of the visible contents of the drawer have changed. This
- is triggered when the drawer is presented and dismissed as well as when the content is being
- dragged interactively.
-
- @param presentationController presentation controller of the bottom drawer
- @param yOffset yOffset of the top of the drawer
- */
-- (void)bottomDrawerTopDidChangeYOffset:
-            (nonnull MDCBottomDrawerPresentationController *)presentationController
-                                yOffset:(CGFloat)yOffset;
-
-/**
- This method is called when the bottom drawer will begin animating to an open state. This is
- triggered when the VC is being presented.
-
- @param presentationController presentation controller of the bottom drawer
- @param transitionCoordinator coordinator being used to animate the transition
- @param targetYOffset y-Offset that the drawer will animate to
-
- @discussion The target y-offset is calculated based upon the @c maximumInitialDrawerHeight and
- @c preferredContentSize of the @c contentViewController. This value may not be the final offset
- since that may change once the initial layout pass has completed. If the offset changes again then
- @c bottomDrawerTopDidChangeYOffset:yOffset will be called with the updated value.
- */
-- (void)bottomDrawerPresentTransitionWillBegin:
-            (nonnull MDCBottomDrawerPresentationController *)presentationController
-                               withCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)
-                                                   transitionCoordinator
-                                 targetYOffset:(CGFloat)targetYOffset;
-
-/**
- This method is called when the bottom drawer has completed animating to an open state. This is
- triggered when the VC is being presented.
-
- @param presentationController presentation controller of the bottom drawer
- */
-- (void)bottomDrawerPresentTransitionDidEnd:
-    (nonnull MDCBottomDrawerPresentationController *)presentationController;
-
-/**
- This method is called when the bottom drawer will begin animating to a closed state. This is
- triggered when the VC is being dismissed.
-
- @param presentationController presentation controller of the bottom drawer
- @param transitionCoordinator coordinator being used to animate the transition
- */
-- (void)bottomDrawerDismissTransitionWillBegin:
-            (nonnull MDCBottomDrawerPresentationController *)presentationController
-                               withCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)
-                                                   transitionCoordinator;
-
-/**
- This method is called when the bottom drawer has completed animating to a closed state. This is
- triggered when the VC is being dismissed.
-
- @param presentationController presentation controller of the bottom drawer
- */
-- (void)bottomDrawerDismissTransitionDidEnd:
-    (nonnull MDCBottomDrawerPresentationController *)presentationController;
-
 @end
 
 /**
@@ -162,24 +101,6 @@
  VoiceOver or SwitchControl, the drawer will always present at full screen.
  */
 @property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
-
-/**
- A flag allowing clients to opt-out of the drawer closing when the user taps outside the content.
-
- @default YES The drawer should autohide on tap.
- */
-@property(nonatomic, assign) BOOL shouldAutoDismissOnTap;
-
-/**
- A flag allowing clients to opt-in to handling touch events.
-
- @default NO The drawer will not forward touch events.
-
- @discussion If set to YES and the delegate is an instance of @UIResponder, then the touch events
- will be forwarded along to the delegate. Note: @shouldAutoDismissOnTap should also be set to NO
- so that the events will propagate properly.
- */
-@property(nonatomic, assign) BOOL shouldForwardTouchEvents;
 
 /**
  A flag allowing clients to opt-in to the drawer adding additional height to the content to include

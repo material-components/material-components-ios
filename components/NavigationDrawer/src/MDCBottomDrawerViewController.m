@@ -30,13 +30,6 @@
 @implementation MDCBottomDrawerViewController {
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
   BOOL _isMaskAppliedFirstTime;
-
-  // Used for tracking the presentation/dismissal animations.
-  BOOL _isDrawerClosed;
-  CGFloat _lastOffset;
-
-  // Used for forwarding touch events if enabled.
-  __weak UIResponder *_cachedNextResponder;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -68,10 +61,6 @@
   _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
   _elevation = MDCShadowElevationNavDrawer;
   _mdc_overrideBaseElevation = -1;
-  _isDrawerClosed = YES;
-  _lastOffset = NSNotFound;
-  _shouldAutoDismissOnTap = YES;
-  _shouldForwardTouchEvents = NO;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -206,15 +195,6 @@
   }
 }
 
-- (void)setShouldAutoDismissOnTap:(BOOL)shouldAutoDismissOnTap {
-  _shouldAutoDismissOnTap = shouldAutoDismissOnTap;
-  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.presentationController;
-    bottomDrawerPresentationController.shouldAutoDismissOnTap = self.shouldAutoDismissOnTap;
-  }
-}
-
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
@@ -236,21 +216,6 @@
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
   }
-}
-
-- (void)setDelegate:(id<MDCBottomDrawerViewControllerDelegate>)delegate {
-  _delegate = delegate;
-  if ([delegate isKindOfClass:[UIResponder class]]) {
-    _cachedNextResponder = (UIResponder *)delegate;
-  }
-}
-
-- (UIResponder *)nextResponder {
-  // Allow the delegate to opt-in to the responder chain to handle events.
-  if (self.shouldForwardTouchEvents && _cachedNextResponder) {
-    return _cachedNextResponder;
-  }
-  return [super nextResponder];
 }
 
 - (CGFloat)mdc_currentElevation {
@@ -293,61 +258,6 @@
   }
 }
 
-- (void)bottomDrawerPresentTransitionDidEnd:
-    (MDCBottomDrawerPresentationController *)presentationController {
-  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerDidEndOpenTransition:)]) {
-    [self.delegate bottomDrawerControllerDidEndOpenTransition:self];
-  }
-}
-
-- (void)bottomDrawerDismissTransitionDidEnd:
-    (MDCBottomDrawerPresentationController *)presentationController {
-  _isDrawerClosed = YES;
-  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerDidEndCloseTransition:)]) {
-    [self.delegate bottomDrawerControllerDidEndCloseTransition:self];
-  }
-}
-
-- (void)bottomDrawerPresentTransitionWillBegin:
-            (MDCBottomDrawerPresentationController *)presentationController
-                               withCoordinator:
-                                   (id<UIViewControllerTransitionCoordinator>)transitionCoordinator
-                                 targetYOffset:(CGFloat)targetYOffset {
-  _isDrawerClosed = NO;
-  _lastOffset = targetYOffset;
-  if ([self.delegate respondsToSelector:@selector
-                     (bottomDrawerControllerWillTransitionOpen:withCoordinator:targetYOffset:)]) {
-    [self.delegate bottomDrawerControllerWillTransitionOpen:self
-                                            withCoordinator:transitionCoordinator
-                                              targetYOffset:targetYOffset];
-  }
-}
-
-- (void)bottomDrawerDismissTransitionWillBegin:
-            (MDCBottomDrawerPresentationController *)presentationController
-                               withCoordinator:(id<UIViewControllerTransitionCoordinator>)
-                                                   transitionCoordinator {
-  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerWillTransitionClosed:
-                                                                             withCoordinator:)]) {
-    [self.delegate bottomDrawerControllerWillTransitionClosed:self
-                                              withCoordinator:transitionCoordinator];
-  }
-}
-
-- (void)bottomDrawerTopDidChangeYOffset:
-            (MDCBottomDrawerPresentationController *)presentationController
-                                yOffset:(CGFloat)yOffset {
-  // Only forward changes along if the drawer is actually still on screen and the offset has
-  // changed. This will avoid sending thru duplicated offset changes or changes where the
-  // real value will be calculated soon (aka set to zero for prep, then layout pass happens).
-  if (!_isDrawerClosed && _lastOffset != yOffset &&
-      [self.delegate respondsToSelector:@selector(bottomDrawerControllerDidChangeTopYOffset:
-                                                                                    yOffset:)]) {
-    [self.delegate bottomDrawerControllerDidChangeTopYOffset:self yOffset:yOffset];
-  }
-  _lastOffset = yOffset;
-}
-
 - (void)bottomDrawerWillChangeState:
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
@@ -369,11 +279,7 @@
   if (!self.topHandleHidden) {
     topInset = MAX(topInset, (CGFloat)7.0);
   }
-
-  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerDidChangeTopInset:
-                                                                                 topInset:)]) {
-    [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
-  }
+  [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
 }
 
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
