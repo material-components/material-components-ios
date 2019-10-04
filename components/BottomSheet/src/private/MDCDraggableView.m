@@ -109,7 +109,7 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
 // Disable pan gesture on UIControl
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     
-    if ([touch.view isKindOfClass:[UIControl class]]) {      //change it to your condition
+    if ([touch.view isKindOfClass:[UIControl class]]) {
         return NO;
     }
     return YES;
