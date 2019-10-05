@@ -37,6 +37,18 @@
 @property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
 
 /**
+ The @c leadingAssistiveLabel is a label below the text on the leading edge of the view. It can be
+ used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingAssistiveLabel;
+
+/**
+ The @c trailingAssistiveLabel is a label below the text on the trailing edge of the view. It can be
+ used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
+
+/**
  This is an RTL-aware wrapper around UITextField's leftView/rightView class.
  */
 @property(strong, nonatomic, nullable) UIView *leadingView;
@@ -104,5 +116,33 @@
  @param state The MDCTextControlState.
  */
 - (nonnull UIColor *)textColorForState:(MDCTextControlState)state;
+
+/**
+ Sets the leading assistive label text color.
+ @param leadingAssistiveLabelColor The UIColor for the given state.
+ @param state The MDCTextControlState.
+ */
+- (void)setLeadingAssistiveLabelColor:(nonnull UIColor *)leadingAssistiveLabelColor
+                             forState:(MDCTextControlState)state;
+
+/**
+ Returns the leading assistive label color for a given state.
+ @param state The MDCTextControlState.
+ */
+- (nonnull UIColor *)leadingAssistiveLabelColorForState:(MDCTextControlState)state;
+
+/**
+ Sets the trailing assistive label text color.
+ @param trailingAssistiveLabelColor The UIColor for the given state.
+ @param state The MDCTextControlState.
+ */
+- (void)setTrailingAssistiveLabelColor:(nonnull UIColor *)trailingAssistiveLabelColor
+                              forState:(MDCTextControlState)state;
+
+/**
+ Returns the trailing assistive label color for a given state.
+ @param state The MDCTextControlState.
+ */
+- (nonnull UIColor *)trailingAssistiveLabelColorForState:(MDCTextControlState)state;
 
 @end

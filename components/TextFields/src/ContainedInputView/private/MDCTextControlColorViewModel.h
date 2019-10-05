@@ -27,9 +27,13 @@
  */
 @property(strong, nonatomic, nonnull) UIColor *textColor;
 /**
- The color of the contained input view's assistive labels.
+ The color of the contained input view's leading assistive label.
  */
-@property(strong, nonatomic, nonnull) UIColor *assistiveLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *leadingAssistiveLabelColor;
+/**
+ The color of the contained input view's trailing assistive label.
+ */
+@property(strong, nonatomic, nonnull) UIColor *trailingAssistiveLabelColor;
 /**
  The color of the contained input view's label when it's floating.
  */

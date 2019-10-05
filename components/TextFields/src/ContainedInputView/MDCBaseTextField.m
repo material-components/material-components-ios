@@ -19,7 +19,9 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCTextControlState.h"
+#import "MaterialMath.h"
 #import "private/MDCBaseTextFieldLayout.h"
+#import "private/MDCTextControlAssistiveLabelView.h"
 #import "private/MDCTextControlColorViewModel.h"
 #import "private/MDCTextControlLabelAnimation.h"
 #import "private/MDCTextControlLabelState.h"
@@ -29,6 +31,7 @@
 @interface MDCBaseTextField () <MDCTextControl>
 
 @property(strong, nonatomic) UILabel *label;
+@property(nonatomic, strong) MDCTextControlAssistiveLabelView *assistiveLabelView;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCTextControlState textControlState;
@@ -45,6 +48,8 @@
 
 @implementation MDCBaseTextField
 @synthesize containerStyle = _containerStyle;
+@synthesize assistiveLabelDrawPriority = _assistiveLabelDrawPriority;
+@synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 
 #pragma mark Object Lifecycle
 
@@ -68,6 +73,7 @@
   [self initializeProperties];
   [self setUpColorViewModels];
   [self setUpLabel];
+  [self setUpAssistiveLabels];
 }
 
 #pragma mark View Setup
@@ -87,6 +93,16 @@
       [[MDCTextControlColorViewModel alloc] initWithState:MDCTextControlStateEditing];
   self.colorViewModels[@(MDCTextControlStateDisabled)] =
       [[MDCTextControlColorViewModel alloc] initWithState:MDCTextControlStateDisabled];
+}
+
+- (void)setUpAssistiveLabels {
+  self.assistiveLabelDrawPriority = MDCTextControlAssistiveLabelDrawPriorityTrailing;
+  self.assistiveLabelView = [[MDCTextControlAssistiveLabelView alloc] init];
+  CGFloat assistiveFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
+  UIFont *assistiveFont = [UIFont systemFontOfSize:assistiveFontSize];
+  self.assistiveLabelView.leftAssistiveLabel.font = assistiveFont;
+  self.assistiveLabelView.rightAssistiveLabel.font = assistiveFont;
+  [self addSubview:self.assistiveLabelView];
 }
 
 - (void)setUpLabel {
@@ -146,6 +162,9 @@
                          floatingLabelFrame:self.layout.labelFrameFloating
                                  normalFont:self.normalFont
                                floatingFont:self.floatingFont];
+  self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
+  self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
+  [self.assistiveLabelView setNeedsLayout];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 }
@@ -178,23 +197,30 @@
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  CGFloat clampedCustomAssistiveLabelDrawPriority =
+      [self clampedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
   id<MDCTextControlVerticalPositioningReference> positioningReference =
       [self createPositioningReference];
-  return [[MDCBaseTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
-                                          positioningReference:positioningReference
-                                                          text:self.text
-                                                          font:self.normalFont
-                                                  floatingFont:self.floatingFont
-                                                         label:self.label
-                                                      leftView:self.leftView
-                                                  leftViewMode:self.leftViewMode
-                                                     rightView:self.rightView
-                                                 rightViewMode:self.rightViewMode
-                                         clearButtonSideLength:clearButtonSideLength
-                                               clearButtonMode:self.clearButtonMode
-                                                         isRTL:self.isRTL
-                                                     isEditing:self.isEditing];
+  return [[MDCBaseTextFieldLayout alloc]
+                 initWithTextFieldSize:textFieldSize
+                  positioningReference:positioningReference
+                                  text:self.text
+                                  font:self.normalFont
+                          floatingFont:self.floatingFont
+                                 label:self.label
+                              leftView:self.leftView
+                          leftViewMode:self.leftViewMode
+                             rightView:self.rightView
+                         rightViewMode:self.rightViewMode
+                 clearButtonSideLength:clearButtonSideLength
+                       clearButtonMode:self.clearButtonMode
+                    leftAssistiveLabel:self.assistiveLabelView.leftAssistiveLabel
+                   rightAssistiveLabel:self.assistiveLabelView.rightAssistiveLabel
+            assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
+      customAssistiveLabelDrawPriority:clampedCustomAssistiveLabelDrawPriority
+                                 isRTL:self.isRTL
+                             isEditing:self.isEditing];
 }
 
 - (id<MDCTextControlVerticalPositioningReference>)createPositioningReference {
@@ -203,6 +229,16 @@
                                 normalFontLineHeight:self.normalFont.lineHeight
                                        textRowHeight:self.normalFont.lineHeight
                                     numberOfTextRows:1];
+}
+
+- (CGFloat)clampedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
+  CGFloat value = customPriority;
+  if (value < 0) {
+    value = 0;
+  } else if (value > 1) {
+    value = 1;
+  }
+  return value;
 }
 
 - (CGFloat)clearButtonSideLengthWithTextFieldSize:(CGSize)textFieldSize {
@@ -250,6 +286,22 @@
 }
 
 #pragma mark Custom Accessors
+
+- (UILabel *)leadingAssistiveLabel {
+  if ([self isRTL]) {
+    return self.assistiveLabelView.rightAssistiveLabel;
+  } else {
+    return self.assistiveLabelView.leftAssistiveLabel;
+  }
+}
+
+- (UILabel *)trailingAssistiveLabel {
+  if ([self isRTL]) {
+    return self.assistiveLabelView.leftAssistiveLabel;
+  } else {
+    return self.assistiveLabelView.rightAssistiveLabel;
+  }
+}
 
 - (void)setTrailingView:(UIView *)trailingView {
   if ([self isRTL]) {
@@ -556,6 +608,8 @@
     labelColor = colorViewModel.floatingLabelColor;
   }
   self.textColor = colorViewModel.textColor;
+  self.leadingAssistiveLabel.textColor = colorViewModel.leadingAssistiveLabelColor;
+  self.trailingAssistiveLabel.textColor = colorViewModel.trailingAssistiveLabelColor;
   self.label.textColor = labelColor;
 }
 
@@ -608,6 +662,30 @@
 - (UIColor *)textColorForState:(MDCTextControlState)state {
   MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   return colorViewModel.textColor;
+}
+
+- (void)setLeadingAssistiveLabelColor:(nonnull UIColor *)leadingAssistiveLabelColor
+                             forState:(MDCTextControlState)state {
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
+  colorViewModel.leadingAssistiveLabelColor = leadingAssistiveLabelColor;
+  [self setNeedsLayout];
+}
+
+- (nonnull UIColor *)leadingAssistiveLabelColorForState:(MDCTextControlState)state {
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
+  return colorViewModel.leadingAssistiveLabelColor;
+}
+
+- (void)setTrailingAssistiveLabelColor:(nonnull UIColor *)trailingAssistiveLabelColor
+                              forState:(MDCTextControlState)state {
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
+  colorViewModel.trailingAssistiveLabelColor = trailingAssistiveLabelColor;
+  [self setNeedsLayout];
+}
+
+- (nonnull UIColor *)trailingAssistiveLabelColorForState:(MDCTextControlState)state {
+  MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
+  return colorViewModel.trailingAssistiveLabelColor;
 }
 
 @end
