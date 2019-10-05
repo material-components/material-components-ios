@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- Dictates the relative importance of the underline labels, and the order in which they are laid out.
+ Dictates the relative importance of the underline labels, and the order in which they are laid out. It is important to note that at the time this documentation is being written this type is not publicly exposed. There is no way to configure it. @c .trailing is the default and only value in use.
  */
 typedef NS_ENUM(NSUInteger, MDCTextControlAssistiveLabelDrawPriority) {
   /**
