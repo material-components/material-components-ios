@@ -259,8 +259,10 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   textField.text = @"text";
   textField.leadingAssistiveLabel.text = @"leading assistive label text";
   textField.trailingAssistiveLabel.text = @"trailing assistive label text";
-  [textField setLeadingAssistiveLabelColor:[UIColor blueColor] forState:MDCTextControlStateDisabled];
-  [textField setTrailingAssistiveLabelColor:[UIColor redColor] forState:MDCTextControlStateDisabled];
+  [textField setLeadingAssistiveLabelColor:[UIColor blueColor]
+                                  forState:MDCTextControlStateDisabled];
+  [textField setTrailingAssistiveLabelColor:[UIColor redColor]
+                                   forState:MDCTextControlStateDisabled];
   textField.enabled = NO;
 
   // Then
