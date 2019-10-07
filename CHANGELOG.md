@@ -1,6 +1,6 @@
 # 92.2.0
 
-This minor release adds new features to MDCAlertController and MDCTabBarView.
+This minor hotfix release adds new features to MDCAlertController and MDCTabBarView.
 
 ## New features
 
