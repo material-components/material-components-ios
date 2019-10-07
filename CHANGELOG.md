@@ -4,7 +4,7 @@ This minor release adds new features to MDCAlertController and MDCTabBarView.
 
 ## New features
 
-MDCAlertController has a new accessoryView property. This property can be used to add custom views
+MDCAlertController has a new `accessoryView` property. This property can be used to add custom views
 to the alert controller. Example usage:
 
 ```swift
@@ -14,15 +14,13 @@ textField.placeholder = "This is a text field"
 alert.accessoryView = textField
 ``` 
 
-TabBarView has a new `setContentPadding:forLayoutStyle:` API. Example usage:
+TabBarView (a Beta component) has a new `setContentPadding:forLayoutStyle:` API. Example usage:
 
 ```objc
-tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
 [tabBarView setContentPadding:UIEdgeInsetsMake(0, 8, 0, 8)
-               forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+               forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
 ``` 
-
-## Component changes
 
 ## Changes
 
