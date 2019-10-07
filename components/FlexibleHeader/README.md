@@ -265,9 +265,9 @@ self.headerViewController.headerView.trackingScrollView = scrollView;
 
 iOS 13 changed the behavior of the `contentInset` of a collection view by triggering a layout.
 This may affect your app if you have not yet registered cells for reuse yet. Our recomendation is
-to use view controller composition by making your collection view a child view controller. If this
-is not possible then ensuring your order of opperations has cells registered before setting the
-flexibleHeader's trackingScrollView.
+to use view controller composition by making your collection view controller a child view
+controller. If this is not possible then ensure the correct order of operations by registering cell
+reuse identifiers before setting the Flexible Header's `trackingScrollView`.
 
 Step 2: **Forward UIScrollViewDelegate events to the Header View**.
 
