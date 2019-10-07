@@ -1,3 +1,27 @@
+# 92.2.0
+
+This minor hotfix release adds a new accessory view feature to MDCAlertController.
+
+## New features
+
+MDCAlertController has a new `accessoryView` property. This property can be used to add custom views
+to the alert controller. Example usage:
+
+```swift
+let alert = MDCAlertController(title: "This is a title", message: "This is a message")
+let textField = UITextField()
+textField.placeholder = "This is a text field"
+alert.accessoryView = textField
+``` 
+
+## Changes
+
+### Dialogs
+
+* [Add accessoryView to MDCAlertController (#8538)](https://github.com/material-components/material-components-ios/commit/c84e1ab11535a2dd846e0500374883bcd9044edc) (Jacob Lukas‎)
+
+---
+
 # 92.1.0
 
 This minor release introduces badge color APIs for Bottom Navigation and Bottom Drawer support for
