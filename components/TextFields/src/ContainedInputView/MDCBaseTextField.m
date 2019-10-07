@@ -56,7 +56,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCInputTextFieldInit];
+    [self commonMDCBaseTextFieldInit];
   }
   return self;
 }
@@ -64,12 +64,12 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCInputTextFieldInit];
+    [self commonMDCBaseTextFieldInit];
   }
   return self;
 }
 
-- (void)commonMDCInputTextFieldInit {
+- (void)commonMDCBaseTextFieldInit {
   [self initializeProperties];
   [self setUpColorViewModels];
   [self setUpLabel];
@@ -82,6 +82,7 @@
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
+  self.textControlState = [self determineCurrentTextControlState];
   self.containerStyle = [[MDCTextControlStyleBase alloc] init];
   self.colorViewModels = [[NSMutableDictionary alloc] init];
 }
@@ -162,6 +163,7 @@
                          floatingLabelFrame:self.layout.labelFrameFloating
                                  normalFont:self.normalFont
                                floatingFont:self.floatingFont];
+  [self.containerStyle applyStyleToTextControl:self];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
@@ -429,7 +431,7 @@
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
   return [self adjustTextAreaFrame:textRect
-      withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
+      withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
 }
 
 // The implementations for this method and the method below deserve some context! Unfortunately,
@@ -490,7 +492,7 @@
 }
 
 - (UIFont *)floatingFont {
-  return [self.normalFont fontWithSize:(self.normalFont.pointSize * (CGFloat)0.5)];
+  return [self.containerStyle floatingFontWithNormalFont:self.normalFont];
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
