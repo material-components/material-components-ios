@@ -222,30 +222,6 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedLayoutContentPaddingLatinLTR {
-  // When
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
-
-  // Then
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testFixedLayoutContentPaddingArabicRTL {
-  // When
-  [self changeToArabicStrings];
-  [self changeViewToRTL:self.tabBarView];
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
-
-  // Then
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
 #pragma mark - FixedClusteredCentered Layout
 
 - (void)testFixedClusteredCenteredLayoutStyleFitSizeLatinLTR {
@@ -304,32 +280,6 @@ static NSString *const kItemTitleLong1Arabic =
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredCentered;
 
   // Then
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testFixedClusteredCenteredLayoutContentPaddingLatinLTR {
-  // When
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredCentered;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredCentered];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testFixedClusteredCenteredLayoutContentPaddingArabicRTL {
-  // When
-  [self changeToArabicStrings];
-  [self changeViewToRTL:self.tabBarView];
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredCentered;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredCentered];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
@@ -396,32 +346,6 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredLeadingLayoutContentPaddingLatinLTR {
-  // When
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredLeading];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testFixedClusteredLeadingLayoutContentPaddingArabicRTL {
-  // When
-  [self changeToArabicStrings];
-  [self changeViewToRTL:self.tabBarView];
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredLeading];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
 #pragma mark - FixedClusteredTrailing Layout
 
 - (void)testFixedClusteredTrailingLayoutStyleFitSizeLatinLTR {
@@ -484,32 +408,6 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredTrailingLayoutContentPaddingLatinLTR {
-  // When
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testFixedClusteredTrailingLayoutContentPaddingArabicRTL {
-  // When
-  [self changeToArabicStrings];
-  [self changeViewToRTL:self.tabBarView];
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleFixedClusteredTrailing];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
 #pragma mark - Scrollable Layout
 
 - (void)testScrollableLayoutStyleFitSizeLatinLTR {
@@ -568,32 +466,6 @@ static NSString *const kItemTitleLong1Arabic =
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
 
   // Then
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testScrollableLayoutContentPaddingLatinLTR {
-  // When
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 30)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
-  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testScrollableLayoutContentPaddingArabicRTL {
-  // When
-  [self changeToArabicStrings];
-  [self changeViewToRTL:self.tabBarView];
-  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
-  [self.tabBarView setContentPadding:UIEdgeInsetsMake(10, 20, 40, 20)
-                      forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
-
-  // Then
-  // Add padding to make the layout clearer in the snapshots.
   [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
