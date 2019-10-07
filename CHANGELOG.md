@@ -1,18 +1,38 @@
-# #develop#
+# 92.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release adds new features to MDCAlertController and MDCTabBarView.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+MDCAlertController has a new accessoryView property. This property can be used to add custom views
+to the alert controller. Example usage:
+
+```swift
+let alert = MDCAlertController(title: "This is a title", message: "This is a message")
+let textField = UITextField()
+textField.placeholder = "This is a text field"
+alert.accessoryView = textField
+``` 
+
+TabBarView has a new `setContentPadding:forLayoutStyle:` API. Example usage:
+
+```objc
+tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+[tabBarView setContentPadding:UIEdgeInsetsMake(0, 8, 0, 8)
+               forLayoutStyle:MDCTabBarViewLayoutStyleFixed];
+``` 
 
 ## Component changes
+
+## Changes
+
+### Dialogs
+
+* [Add accessoryView to MDCAlertController (#8538)](https://github.com/material-components/material-components-ios/commit/c84e1ab11535a2dd846e0500374883bcd9044edc) (Jacob Lukas‎)
+
+### Tabs
+
+* [Add TabBarView API to set content padding (#8529)](https://github.com/material-components/material-components-ios/commit/09cf8dfe323d634e71d94bfad92ba63d622082b4) (Robert Moore)
 
 ---
 
