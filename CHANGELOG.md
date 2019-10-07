@@ -1,6 +1,6 @@
 # 92.2.0
 
-This minor hotfix release adds new features to MDCAlertController and MDCTabBarView.
+This minor hotfix release adds a new accessory view feature to MDCAlertController.
 
 ## New features
 
@@ -14,23 +14,11 @@ textField.placeholder = "This is a text field"
 alert.accessoryView = textField
 ``` 
 
-TabBarView (a Beta component) has a new `setContentPadding:forLayoutStyle:` API. Example usage:
-
-```objc
-tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
-[tabBarView setContentPadding:UIEdgeInsetsMake(0, 8, 0, 8)
-               forLayoutStyle:MDCTabBarViewLayoutStyleScrollable];
-``` 
-
 ## Changes
 
 ### Dialogs
 
 * [Add accessoryView to MDCAlertController (#8538)](https://github.com/material-components/material-components-ios/commit/c84e1ab11535a2dd846e0500374883bcd9044edc) (Jacob Lukas‎)
-
-### Tabs
-
-* [Add TabBarView API to set content padding (#8529)](https://github.com/material-components/material-components-ios/commit/09cf8dfe323d634e71d94bfad92ba63d622082b4) (Robert Moore)
 
 ---
 
