@@ -16,7 +16,7 @@
 #import "MaterialActivityIndicator.h"
 
 static CGFloat randomNumber() {
-  return arc4random_uniform(64) + 8;
+  return arc4random_uniform(128) + 8;
 }
 
 @interface MDCActivityIndicator (Private)
@@ -40,19 +40,6 @@ static CGFloat randomNumber() {
 
   // Then
   XCTAssertGreaterThanOrEqual(indicator.radius, 5);
-  XCTAssertLessThanOrEqual(indicator.radius, 72);
-}
-
-- (void)testSetRadiusMax {
-  // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-
-  // When
-  indicator.radius = 80;
-
-  // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8);
-  XCTAssertLessThanOrEqual(indicator.radius, 72);
 }
 
 - (void)testSetRadius {
@@ -65,7 +52,6 @@ static CGFloat randomNumber() {
 
   // Then
   XCTAssertGreaterThanOrEqual(indicator.radius, 8);
-  XCTAssertLessThanOrEqual(indicator.radius, 72);
   XCTAssertEqual(indicator.radius, random);
 }
 

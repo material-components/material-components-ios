@@ -37,7 +37,8 @@
   UIColor *textColor = [UIColor blackColor];
   UIColor *floatingLabelColor = [UIColor blackColor];
   UIColor *normalLabelColor = [UIColor darkGrayColor];
-  UIColor *assistiveLabelColor = [UIColor darkGrayColor];
+  UIColor *leadingAssistiveLabelColor = [UIColor darkGrayColor];
+  UIColor *trailingAssistiveLabelColor = [UIColor darkGrayColor];
   CGFloat disabledAlpha = (CGFloat)0.60;
   switch (state) {
     case MDCTextControlStateNormal:
@@ -48,13 +49,17 @@
       textColor = [textColor colorWithAlphaComponent:disabledAlpha];
       floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:disabledAlpha];
       normalLabelColor = [normalLabelColor colorWithAlphaComponent:disabledAlpha];
-      assistiveLabelColor = [assistiveLabelColor colorWithAlphaComponent:disabledAlpha];
+      leadingAssistiveLabelColor =
+          [leadingAssistiveLabelColor colorWithAlphaComponent:disabledAlpha];
+      trailingAssistiveLabelColor =
+          [trailingAssistiveLabelColor colorWithAlphaComponent:disabledAlpha];
       break;
   }
   self.textColor = textColor;
   self.floatingLabelColor = floatingLabelColor;
   self.normalLabelColor = normalLabelColor;
-  self.assistiveLabelColor = assistiveLabelColor;
+  self.leadingAssistiveLabelColor = leadingAssistiveLabelColor;
+  self.trailingAssistiveLabelColor = trailingAssistiveLabelColor;
 }
 
 @end

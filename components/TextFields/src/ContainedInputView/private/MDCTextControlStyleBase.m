@@ -20,7 +20,7 @@
 #import "MDCTextControl.h"
 #import "MDCTextControlVerticalPositioningReferenceBase.h"
 
-static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
+static const CGFloat kBaseFloatingLabelScaleFactor = 0.5;
 
 @implementation MDCTextControlStyleBase
 
@@ -38,6 +38,18 @@ static const CGFloat kBaseFloatingLabelScaleFactor = 0.75;
 
 - (id<MDCTextControlVerticalPositioningReference>)positioningReference {
   return [[MDCTextControlVerticalPositioningReferenceBase alloc] init];
+}
+
+- (id<MDCTextControlVerticalPositioningReference>)
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows {
+  return [[MDCTextControlVerticalPositioningReferenceBase alloc]
+      initWithFloatingFontLineHeight:floatingLabelHeight
+                normalFontLineHeight:normalFontLineHeight
+                       textRowHeight:textRowHeight
+                    numberOfTextRows:numberOfTextRows];
 }
 
 @end

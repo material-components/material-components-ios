@@ -63,6 +63,7 @@ class TextFieldsMaterialThemingTests: XCTestCase {
                    scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
     XCTAssertEqual(textFieldControllerFilled.floatingPlaceholderActiveColor,
                    scheme.colorScheme.primaryColor.withAlphaComponent(filledActiveAlpha))
+    XCTAssertNil(textFieldControllerFilled.floatingPlaceholderErrorActiveColor)
     XCTAssertEqual(textFieldControllerFilled.textInputClearButtonTintColor,
                    scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledIconAlpha))
 
@@ -103,6 +104,7 @@ class TextFieldsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(textFieldControllerOutlined.textInputClearButtonTintColor, scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldIconAlpha))
     XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderNormalColor, onSurfaceOpacity)
     XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderActiveColor, scheme.colorScheme.primaryColor.withAlphaComponent(outlinedTextFieldActiveAlpha))
+    XCTAssertNil(textFieldControllerOutlined.floatingPlaceholderErrorActiveColor)
 
     // Typography
     XCTAssertEqual(textFieldControllerOutlined.inlinePlaceholderFont,

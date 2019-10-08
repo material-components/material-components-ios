@@ -63,6 +63,7 @@ mdc_extension_objc_library(
     deps = [
         "//components/AnimationTiming",
         "@material_internationalization_ios//:MDFInternationalization",
+        "//components/private/Math",
     ],
 )
 

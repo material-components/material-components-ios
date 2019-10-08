@@ -64,6 +64,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
+  [textField sizeToFit];
   [textField setNeedsLayout];
   [textField layoutIfNeeded];
   XCTestExpectation *expectation =
@@ -214,6 +215,55 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   textField.label.text = @"Floating label text";
   textField.placeholder = @"Placeholder";
   [textField becomeFirstResponder];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithAssistiveLabelText {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.text = @"text";
+  textField.leadingAssistiveLabel.text = @"leading assistive label text";
+  textField.trailingAssistiveLabel.text = @"trailing assistive label text";
+  [textField setLeadingAssistiveLabelColor:[UIColor blueColor] forState:MDCTextControlStateNormal];
+  [textField setTrailingAssistiveLabelColor:[UIColor redColor] forState:MDCTextControlStateNormal];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithAssistiveLabelTextWhileEditing {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.text = @"text";
+  textField.leadingAssistiveLabel.text = @"leading assistive label text";
+  textField.trailingAssistiveLabel.text = @"trailing assistive label text";
+  [textField setLeadingAssistiveLabelColor:[UIColor blueColor] forState:MDCTextControlStateEditing];
+  [textField setTrailingAssistiveLabelColor:[UIColor redColor] forState:MDCTextControlStateEditing];
+  [textField becomeFirstResponder];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithAssistiveLabelTextWhileDisabled {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.text = @"text";
+  textField.leadingAssistiveLabel.text = @"leading assistive label text";
+  textField.trailingAssistiveLabel.text = @"trailing assistive label text";
+  [textField setLeadingAssistiveLabelColor:[UIColor blueColor]
+                                  forState:MDCTextControlStateDisabled];
+  [textField setTrailingAssistiveLabelColor:[UIColor redColor]
+                                   forState:MDCTextControlStateDisabled];
+  textField.enabled = NO;
 
   // Then
   [self validateTextField:textField];

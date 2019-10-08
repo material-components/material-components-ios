@@ -72,6 +72,13 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
 @property(class, nonatomic, null_resettable, strong) UIColor *borderFillColorDefault;
 
 /**
+ The color the input field's border in the resting state. A nil value yields a clear border.
+
+ Default is nil.
+ */
+@property(nonatomic, nullable, strong) UIColor *borderStrokeColor;
+
+/**
  Should the controller's .textInput grow vertically as new lines are added.
 
  If the text input does not conform to MDCMultilineTextInput, this parameter has no effect.

@@ -184,7 +184,7 @@
   [textField layoutIfNeeded];
 
   // Then
-  CGRect expectedClearButtonFrame = CGRectMake(99, 21, 19, 19);
+  CGRect expectedClearButtonFrame = CGRectMake(99, 27, 19, 19);
   CGRect actualClearButtonFrame = [textField clearButtonRectForBounds:textFieldFrame];
   XCTAssertTrue(CGRectEqualToRect(actualClearButtonFrame, expectedClearButtonFrame));
 }
@@ -253,6 +253,47 @@
                         [textField textColorForState:MDCTextControlStateDisabled]);
 }
 
+- (void)testAssistiveLabelColorAccessors {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  UIColor *leadingAssistiveLabelColorNormal = [UIColor blueColor];
+  UIColor *leadingAssistiveLabelColorEditing = [UIColor greenColor];
+  UIColor *leadingAssistiveLabelColorDisabled = [UIColor purpleColor];
+  UIColor *trailingAssistiveLabelColorNormal = [UIColor brownColor];
+  UIColor *trailingAssistiveLabelColorEditing = [UIColor magentaColor];
+  UIColor *trailingAssistiveLabelColorDisabled = [UIColor yellowColor];
+
+  // When
+  [textField setLeadingAssistiveLabelColor:leadingAssistiveLabelColorNormal
+                                  forState:MDCTextControlStateNormal];
+  [textField setLeadingAssistiveLabelColor:leadingAssistiveLabelColorEditing
+                                  forState:MDCTextControlStateEditing];
+  [textField setLeadingAssistiveLabelColor:leadingAssistiveLabelColorDisabled
+                                  forState:MDCTextControlStateDisabled];
+  [textField setTrailingAssistiveLabelColor:trailingAssistiveLabelColorNormal
+                                   forState:MDCTextControlStateNormal];
+  [textField setTrailingAssistiveLabelColor:trailingAssistiveLabelColorEditing
+                                   forState:MDCTextControlStateEditing];
+  [textField setTrailingAssistiveLabelColor:trailingAssistiveLabelColorDisabled
+                                   forState:MDCTextControlStateDisabled];
+
+  // Then
+  XCTAssertEqualObjects(leadingAssistiveLabelColorNormal,
+                        [textField leadingAssistiveLabelColorForState:MDCTextControlStateNormal]);
+  XCTAssertEqualObjects(leadingAssistiveLabelColorEditing,
+                        [textField leadingAssistiveLabelColorForState:MDCTextControlStateEditing]);
+  XCTAssertEqualObjects(leadingAssistiveLabelColorDisabled,
+                        [textField leadingAssistiveLabelColorForState:MDCTextControlStateDisabled]);
+  XCTAssertEqualObjects(trailingAssistiveLabelColorNormal,
+                        [textField trailingAssistiveLabelColorForState:MDCTextControlStateNormal]);
+  XCTAssertEqualObjects(trailingAssistiveLabelColorEditing,
+                        [textField trailingAssistiveLabelColorForState:MDCTextControlStateEditing]);
+  XCTAssertEqualObjects(
+      trailingAssistiveLabelColorDisabled,
+      [textField trailingAssistiveLabelColorForState:MDCTextControlStateDisabled]);
+}
+
 - (void)testSizeThatFits {
   // Given
   CGRect largeTextFieldFrame = CGRectMake(0, 0, 130, 300);
@@ -264,7 +305,7 @@
 
   // Then
   CGSize newSize = textField.frame.size;
-  CGSize correctSize = CGSizeMake(130, 50);
+  CGSize correctSize = CGSizeMake(130, 57);
   XCTAssertTrue(CGSizeEqualToSize(newSize, correctSize));
 }
 

@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCTextControlAssistiveLabelDrawPriority.h"
 #import "MDCTextControlColorViewModel.h"
 #import "MDCTextControlLabelAnimation.h"
 #import "MDCTextControlLabelBehavior.h"
@@ -71,6 +72,36 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 @property(strong, nonatomic, readonly, nonnull) UIFont *floatingFont;
 
 /**
+ The @c leadingAssistiveLabel can be used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingAssistiveLabel;
+
+/**
+ The @c trailingAssistiveLabel can be used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
+
+/**
+ This property is used to determine how much horizontal space to allot for each of the two assistive
+ labels.
+
+ @note The default value is MDCTextControlAssistiveLabelDrawPriorityTrailing. The rationale
+ behind this is it is less likely to have long explanatory error text and more likely to have short
+ text, like a character counter. It is better to draw the short text first and use whatever space is
+ leftover for the longer text, which may wrap to new lines.
+ */
+@property(nonatomic, assign) MDCTextControlAssistiveLabelDrawPriority assistiveLabelDrawPriority;
+
+/**
+ When @c assistiveLabelDrawPriority is set to @c .custom the value of this property helps determine
+ what percentage of the available width each assistive label gets. It can be thought of as a
+ divider. A value of @c 0 would result in the trailing assistive label getting all the available
+ width. A value of @c 1 would result in the leading assistive label getting all the available width.
+ A value of @c .5 would result in each assistive label getting 50% of the available width.
+ */
+@property(nonatomic, assign) CGFloat customAssistiveLabelDrawPriority;
+
+/**
  This method returns a MDCTextControlColorViewModel for a given MDCTextControlState.
  */
 - (nonnull MDCTextControlColorViewModel *)textControlColorViewModelForState:
@@ -82,6 +113,19 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 - (void)setTextControlColorViewModel:
             (nonnull MDCTextControlColorViewModel *)textControlColorViewModel
                             forState:(MDCTextControlState)textFieldState;
+
+/**
+ Returns the CGRect surrounding the main content, i.e. the area that the container should be drawn
+ around. In an outlined MDCTextControl, this will be the CGRect the outline is drawn around. In a
+ filled MDCTextControl, it will be the rect the filled background is drawn in.
+ */
+@property(nonatomic, assign, readonly) CGRect containerFrame;
+
+/**
+ The number of rows of text the MDCTextControl shows at one time. For textfields, this will always
+ be 1. For other views it can be more than that.
+ */
+@property(nonatomic, assign, readonly) CGFloat numberOfVisibleTextRows;
 
 @end
 
@@ -108,6 +152,10 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
  This method returns an object that tells the view where to position it's views
  vertically.
  */
-- (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference;
+- (nonnull id<MDCTextControlVerticalPositioningReference>)
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows;
 
 @end

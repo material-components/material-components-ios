@@ -167,6 +167,27 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 - (nullable UIFont *)titleFontForState:(UIControlState)state;
 
 /**
+ Sets the padding around the tabs content used for the specified layout style. For example,
+ @c MDCTabBarViewLayoutStyleScrollable has a default left padding of 52 points. The left and right
+ values are flipped for right-to-left layouts.
+
+ @note The padding is applied only when the @c layoutStyle is currently in-use, which depends on
+ the preferred layout style, the size of the tabs, and the current bounds.
+
+ @param contentPadding Additional space to include around the tab views.
+ @param layoutStyle The layout style when the padding is applied.
+ */
+- (void)setContentPadding:(UIEdgeInsets)contentPadding
+           forLayoutStyle:(MDCTabBarViewLayoutStyle)layoutStyle;
+
+/**
+ The content padding used for the specified layout style.
+
+ @param layoutStyle The layout style when the padding is applied.
+ */
+- (UIEdgeInsets)contentPaddingForLayoutStyle:(MDCTabBarViewLayoutStyle)layoutStyle;
+
+/**
  Returns the @c UIAccessibility element associated with the provided item.
 
  @note The returned object is not guaranteed to be of type @c UIAccessibilityElement. It is

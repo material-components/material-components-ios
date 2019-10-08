@@ -19,9 +19,9 @@
 
 /**
  The color applied to the placeholder when floating and the text field is first responder. However,
- when in error state, it will be colored with the error color.
+ when in error state, it will be colored with the floatingPlaceholderErrorActive Color.
 
- Only relevent when floatingEnabled is true.
+ Only relevant when floatingEnabled is true.
 
  Default is floatingPlaceholderActiveColorDefault.
  */
@@ -38,7 +38,7 @@
  The color applied to the placeholder when floating. However, when in error state, it will be
  colored with the error color and when in active state, it will be colored with the active color.
 
- Only relevent when floatingEnabled is true.
+ Only relevant when floatingEnabled is true.
 
  Default is floatingPlaceholderNormalColorDefault.
  */
@@ -52,13 +52,24 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *floatingPlaceholderNormalColorDefault;
 
 /**
+ The error color of the border of the input field while being in edit mode.
+ The color applied to the placeholder when floating and the text field is first responder and is in
+ the error state.
+
+ Only relevent when floatingEnabled is true.
+
+ Default is errorColor.
+ */
+@property(nonatomic, nullable, strong) UIColor *floatingPlaceholderErrorActiveColor;
+
+/**
  When the placeholder floats up, constraints are created that use this value for constants.
  */
 @property(nonatomic, readonly) UIOffset floatingPlaceholderOffset;
 
 /**
  The scale of the the floating placeholder label in comparison to the inline placeholder specified
- as a value from 0.0 to 1.0. Only relevent when floatingEnabled = true.
+ as a value from 0.0 to 1.0. Only relevant when floatingEnabled = true.
 
  If nil, the floatingPlaceholderScale is @(floatingPlaceholderScaleDefault).
  */

@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCTextControlAssistiveLabelDrawPriority.h"
+#import "MDCTextControlAssistiveLabelViewLayout.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
 @interface MDCBaseTextFieldLayout : NSObject
@@ -30,10 +32,21 @@
 @property(nonatomic, assign) CGRect textRectFloating;
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
+@property(nonatomic, assign) CGRect assistiveLabelViewFrame;
+@property(nonatomic, strong, nonnull)
+    MDCTextControlAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat containerHeight;
 
+/**
+  Initializing an MDCBaseTextFieldLayout object with this initializer is tantamount to calculating a
+  layout for a TextField. The admittedly long parameter list includes everything that might impact
+  the layout of the textfield. Providing the object with everything that it needs to calculate a
+  layout allows it to do so all in one place, in isolation, and in a top down fashion. The inability
+  of other objects to interfere with this process helps ensure that the resulting layout is correct
+  and reliable.
+ */
 - (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                          positioningReference:
                              (nonnull id<MDCTextControlVerticalPositioningReference>)
@@ -48,6 +61,11 @@
                                 rightViewMode:(UITextFieldViewMode)rightViewMode
                         clearButtonSideLength:(CGFloat)clearButtonSideLength
                               clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                           leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+                          rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+                   assistiveLabelDrawPriority:
+                       (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
+             customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                                         isRTL:(BOOL)isRTL
                                     isEditing:(BOOL)isEditing;
 
