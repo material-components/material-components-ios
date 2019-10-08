@@ -1,16 +1,25 @@
-# #develop#
+# 92.3.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces new color properties to TextFields and removes max size constraints on ActivityIndicator.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+MDCTextInputControllerBase now allows setting the input field's border in the resting state using `borderStrokeColor`:
+
+```objc
+MDCTextField *textField = [[MDCTextField alloc] init];
+MDCTextInputControllerOutlined *controller =
+  [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
+controller.borderStrokeColor = UIColor.redColor;
+```
+
+MDCTextInputControllerFloatingPlaceholder now allows setting the error color of the border of the input field while being in edit mode using `floatingPlaceholderErrorActiveColor`:
+
+```swift
+let textFieldFilled = MDCTextField()
+let textFieldControllerFilled = MDCTextInputControllerFilled(textInput: textFieldFilled)
+textFieldControllerFilled.floatingPlaceholderErrorActiveColor = .red
+```
 
 ## Component changes
 
@@ -19,10 +28,6 @@ Replace this text with example code for each new feature.
 ### ActivityIndicator
 
 * [Removes 72dp radius limit on activity indicator (#8534)](https://github.com/material-components/material-components-ios/commit/4d39b55d09bdbc13d9338a61f8cb5daeae2b4e83) (Josh Converse)
-
-### Dialogs
-
-* [Add accessoryView to MDCAlertController (#8538)](https://github.com/material-components/material-components-ios/commit/b0966cca86ed30080d98dce5677166359a26aae8) (featherless)
 
 ### Tabs
 
