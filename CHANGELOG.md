@@ -1,3 +1,48 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActivityIndicator
+
+* [Removes 72dp radius limit on activity indicator (#8534)](https://github.com/material-components/material-components-ios/commit/4d39b55d09bdbc13d9338a61f8cb5daeae2b4e83) (Josh Converse)
+
+### Dialogs
+
+* [Add accessoryView to MDCAlertController (#8538)](https://github.com/material-components/material-components-ios/commit/b0966cca86ed30080d98dce5677166359a26aae8) (featherless)
+
+### Tabs
+
+* [Add TabBarView API to set content padding (#8529)](https://github.com/material-components/material-components-ios/commit/993eea2e9ea3dea8015dba03a8d043d7406ba7f0) (Robert Moore)
+
+### TextFields
+
+* [Add assistive label view (#8539)](https://github.com/material-components/material-components-ios/commit/f06651ee89e8f5b04b3d3a3431713649d12f3766) (Andrew Overton)
+* [Add some MDCTextControl properties and some small methods I forgot to implement (#8535)](https://github.com/material-components/material-components-ios/commit/4eb5b58a9625081c2606e94ef10b4c1d25970283) (Andrew Overton)
+* [Adding border stroke color (#8510)](https://github.com/material-components/material-components-ios/commit/b52b0b41188bcc8c185b228a68a96fe9cbdbf397) (Galia Kaufman)
+* [Adding floatingPlaceholder Error Active color API to controller (#8526)](https://github.com/material-components/material-components-ios/commit/a1c2e4b0a9ad8c76d976f94940a83aa9c7a7e804) (Galia Kaufman)
+* [Bring more of base positioning reference over (#8530)](https://github.com/material-components/material-components-ios/commit/9d814f27fc334165365f67313fe18b8a82abecee) (Andrew Overton)
+* [Minor cleanup (#8543)](https://github.com/material-components/material-components-ios/commit/de9f2baadfe8184d314a1050035f32b616b96881) (Andrew Overton)
+
+## Multi-component changes
+
+* [Added section for iOS 13 collection considerations (#8527)](https://github.com/material-components/material-components-ios/commit/302077c4ba3a9c95682de3b9e9fd90e0ee1dcb9d) (Randall Li)
+
+---
+
 # 92.2.0
 
 This minor hotfix release adds a new accessory view feature to MDCAlertController.
