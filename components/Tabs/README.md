@@ -8,7 +8,7 @@ path: /catalog/tabs/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Tabs -->
+<!-- This file was auto-generated using ./scripts/generate_readme Tabs -->
 
 # Tabs
 
