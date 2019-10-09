@@ -1,3 +1,15 @@
+# 92.3.1
+
+This minor hotfix adds a missing podspec dependency to TextFields+ContainedInputView extension.
+
+## Component changes
+
+### TextFields
+
+* [[TextFields] Missing containedinputview podspec dependency (#8554)](https://github.com/material-components/material-components-ios/commit/dfb670ead5062324728eda2bd1dd56f18dd3c836) (Yarden Eitan)
+
+---
+
 # 92.3.0
 
 This minor release introduces new color properties to TextFields and removes max size constraints on ActivityIndicator.
