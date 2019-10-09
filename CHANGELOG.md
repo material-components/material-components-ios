@@ -1,18 +1,12 @@
-# #develop#
+# 92.3.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This minor hotfix adds a missing podspec dependency to TextFields+ContainedInputView extension.
 
 ## Component changes
+
+### TextFields
+
+* [[TextFields] Missing containedinputview podspec dependency (#8554)](https://github.com/material-components/material-components-ios/commit/dfb670ead5062324728eda2bd1dd56f18dd3c836) (Yarden Eitan)
 
 ---
 
