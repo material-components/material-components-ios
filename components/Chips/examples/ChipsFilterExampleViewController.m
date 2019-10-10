@@ -41,6 +41,8 @@
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
   // Filter chips should allow multiSelection, MDCChipCollectionViewCell manages the state of the
@@ -77,6 +79,17 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(switchStyle)];
+
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [_collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)switchStyle {
@@ -107,6 +120,8 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
+
+  chipView.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
