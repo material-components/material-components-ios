@@ -142,6 +142,7 @@ cut_release() {
   fi
   echo $branch_message
   git checkout -b release-candidate $branch
+  git checkout stable -- .gitattributes
 
   touch "$rootdir/CHANGELOG.md"
   if ! grep "# #develop#" "$rootdir/CHANGELOG.md" >> /dev/null; then
@@ -307,8 +308,10 @@ merge_release() {
     git checkout develop
   fi
   git rebase origin/develop
-  git merge --no-ff release-candidate --no-edit
-
+  git merge --no-ff --no-commit release-candidate --no-edit
+  git reset HEAD .gitattributes
+  git checkout -- .gitattributes
+  git commit -m "merged release-candidate"
   git branch -D release-candidate
 
   git checkout stable
