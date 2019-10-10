@@ -41,7 +41,10 @@
 
   // Action chips should allow single selection, collection view default is based on single
   // selection. Note that MDCChipCollectionViewCell manages the state of the chip accordingly.
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                       collectionViewLayout:layout];
+  _collectionView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
   _collectionView.delaysContentTouches = NO;
@@ -87,12 +90,6 @@
                                   animated:NO
                             scrollPosition:UICollectionViewScrollPositionNone];
   }
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _collectionView.frame = self.view.bounds;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
