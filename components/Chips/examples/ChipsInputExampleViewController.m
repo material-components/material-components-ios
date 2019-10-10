@@ -48,6 +48,7 @@
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
+  _chipField.textField.mdc_adjustsFontForContentSizeCategory = YES;
   if (self.containerScheme.colorScheme) {
     _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
   } else {
@@ -56,11 +57,26 @@
     _chipField.backgroundColor = colorScheme.surfaceColor;
   }
   [self.view addSubview:_chipField];
+
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self updateLayout];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  [self updateLayout];
+}
+
+- (void)updateLayout {
   CGRect frame = CGRectInset(self.view.bounds, 10, 10);
   if (@available(iOS 11.0, *)) {
     frame = UIEdgeInsetsInsetRect(frame, self.view.safeAreaInsets);
@@ -80,7 +96,11 @@
   } else {
     [chip applyThemeWithScheme:self.containerScheme];
   }
+  chip.mdc_adjustsFontForContentSizeCategory = YES;
   [chip sizeToFit];
+
+  _chipField.chipHeight = MAX(_chipField.chipHeight, chip.frame.size.height);
+
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);
   chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0);
 }
