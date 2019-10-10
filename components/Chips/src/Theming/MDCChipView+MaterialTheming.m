@@ -23,25 +23,9 @@
 #pragma mark - Standard Chip
 
 - (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme {
-  id<MDCColorScheming> colorScheme = scheme.colorScheme;
-  if (!colorScheme) {
-    colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  [self applyThemeWithColorScheme:colorScheme];
-
-  id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
-  if (!shapeScheme) {
-    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  }
-  [self applyThemeWithShapeScheme:shapeScheme];
-
-  id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
-  if (!typographyScheme) {
-    typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
-  [self applyThemeWithTypographyScheme:typographyScheme];
+  [self applyThemeWithColorScheme:scheme.colorScheme];
+  [self applyThemeWithShapeScheme:scheme.shapeScheme];
+  [self applyThemeWithTypographyScheme:scheme.typographyScheme];
 
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
                                  UIControlStateHighlighted | UIControlStateDisabled;
@@ -65,25 +49,9 @@
 #pragma mark - Outlined Chip
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
-  id<MDCColorScheming> colorScheme = scheme.colorScheme;
-  if (!colorScheme) {
-    colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  [self applyOutlinedThemeWithColorScheme:colorScheme];
-
-  id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
-  if (!shapeScheme) {
-    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  }
-  [self applyThemeWithShapeScheme:shapeScheme];
-
-  id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
-  if (!typographyScheme) {
-    typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
-  [self applyThemeWithTypographyScheme:typographyScheme];
+  [self applyOutlinedThemeWithColorScheme:scheme.colorScheme];
+  [self applyThemeWithShapeScheme:scheme.shapeScheme];
+  [self applyThemeWithTypographyScheme:scheme.typographyScheme];
 
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
                                  UIControlStateHighlighted | UIControlStateDisabled;
