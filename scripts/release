@@ -308,6 +308,7 @@ merge_release() {
     git checkout develop
   fi
   git rebase origin/develop
+  # The following lines will only create one commit thanks to the --no-commit argument here.
   git merge --no-ff --no-commit release-candidate --no-edit
   git reset HEAD .gitattributes
   git checkout -- .gitattributes
