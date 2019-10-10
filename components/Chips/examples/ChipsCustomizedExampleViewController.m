@@ -57,7 +57,10 @@
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                       collectionViewLayout:layout];
+  _collectionView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _collectionView.dataSource = self;
   _collectionView.delegate = self;
   _collectionView.allowsMultipleSelection = YES;
@@ -77,12 +80,6 @@
   [super viewDidLoad];
 
   [_sizingChip applyThemeWithScheme:self.containerScheme];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _collectionView.frame = self.view.bounds;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
