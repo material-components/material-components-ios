@@ -28,6 +28,14 @@
   if (self) {
     self.editing = YES;
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.titles = @[
+      @"Truffaut",  @"Farm-to-table", @"XOXO",     @"Chillwave",  @"Fanny",      @"Pack",
+      @"Master",    @"Cleanse",       @"Small",    @"Batch",      @"Church-key", @"Biodiesel",
+      @"Subway",    @"Tile",          @"Gentrify", @"Humblebrag", @"Drinking",   @"Vinegar",
+      @"Godard",    @"Pug",           @"Marfa",    @"Poutine",    @"Jianbing",   @"Fashion",
+      @"Axe",       @"Banjo",         @"Vegan",    @"Taxidermy",  @"Portland",   @"Irony",
+      @"Gastropub", @"Truffaut"
+    ];
   }
   return self;
 }
@@ -54,20 +62,6 @@
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
-}
-
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"Truffaut",  @"Farm-to-table", @"XOXO",     @"Chillwave",  @"Fanny",      @"Pack",
-      @"Master",    @"Cleanse",       @"Small",    @"Batch",      @"Church-key", @"Biodiesel",
-      @"Subway",    @"Tile",          @"Gentrify", @"Humblebrag", @"Drinking",   @"Vinegar",
-      @"Godard",    @"Pug",           @"Marfa",    @"Poutine",    @"Jianbing",   @"Fashion",
-      @"Axe",       @"Banjo",         @"Vegan",    @"Taxidermy",  @"Portland",   @"Irony",
-      @"Gastropub", @"Truffaut"
-    ];
-  }
-  return _titles;
 }
 
 @end

@@ -32,6 +32,13 @@
   self = [super init];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.titles = @[
+      @"The Bronx",
+      @"Brooklyn",
+      @"Manhattan",
+      @"Queens",
+      @"Staten Island",
+    ];
   }
   return self;
 }
@@ -129,19 +136,6 @@
   }
 
   return cell;
-}
-
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"The Bronx",
-      @"Brooklyn",
-      @"Manhattan",
-      @"Queens",
-      @"Staten Island",
-    ];
-  }
-  return _titles;
 }
 
 @end
