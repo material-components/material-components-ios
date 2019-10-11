@@ -41,7 +41,6 @@ static const CGFloat MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment = 1;
 static const NSUInteger MDCTextInputTextFieldOutlinedTextAreaMinimumLines = 5;
 static const BOOL MDCTextInputTextFieldOutlinedTextAreaExpandsOnOverflow = NO;
 
-
 #pragma mark - Class Properties
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
