@@ -208,7 +208,7 @@
 
  @param controller The MDCBottomDrawerViewController.
  @param transitionCoordinator The transitionCoordinator handling the presentation transition.
- @param targetOffset The target yOffset of the content after the animation completes.
+ @param targetYOffset The target yOffset of the content after the animation completes.
  */
 - (void)bottomDrawerControllerWillTransitionOpen:(nonnull MDCBottomDrawerViewController *)controller
                                  withCoordinator:
@@ -231,7 +231,7 @@
 
  @param controller The MDCBottomDrawerViewController.
  @param transitionCoordinator The transitionCoordinator handling the presentation transition.
- @param targetOffset The target yOffset of the content after the animation completes.
+ @param targetYOffset The target yOffset of the content after the animation completes.
  */
 - (void)
     bottomDrawerControllerWillTransitionClosed:(nonnull MDCBottomDrawerViewController *)controller
