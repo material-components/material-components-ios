@@ -38,6 +38,8 @@ static const CGFloat MDCTextInputTextFieldOutlinedTextAreaHalfPadding = 8;
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
 static const CGFloat MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment = 1;
+static const NSUInteger MDCTextInputTextFieldOutlinedTextAreaMinimumLines = 5;
+static const BOOL MDCTextInputTextFieldOutlinedTextAreaExpandsOnOverflow = NO;
 
 #pragma mark - Class Properties
 
@@ -56,6 +58,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
            @"This design is meant for multi-line text fields only.");
   self = [super initWithTextInput:input];
   if (self) {
+    super.expandsOnOverflow = MDCTextInputTextFieldOutlinedTextAreaExpandsOnOverflow;
+    super.minimumLines = MDCTextInputTextFieldOutlinedTextAreaMinimumLines;
   }
   return self;
 }
@@ -145,9 +149,6 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   if (![self.textInput conformsToProtocol:@protocol(MDCMultilineTextInput)]) {
     return;
   }
-
-  ((UIView<MDCMultilineTextInput> *)self.textInput).expandsOnOverflow = NO;
-  ((UIView<MDCMultilineTextInput> *)self.textInput).minimumLines = 5;
 
   self.textInput.underline.alpha = 0;
 
