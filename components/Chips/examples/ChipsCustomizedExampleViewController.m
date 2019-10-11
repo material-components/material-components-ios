@@ -17,6 +17,8 @@
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
+#import "supplemental/ChipsExampleAssets.h"
+
 @implementation ChipsCustomizedExampleViewController {
   UICollectionView *_collectionView;
 }
@@ -106,7 +108,7 @@
 
   [[self class] configureChip:cell.chipView];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
-  cell.chipView.selectedImageView.image = [self doneImage];
+  cell.chipView.selectedImageView.image = ChipsExampleAssets.doneImage;
   cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
   [cell.chipView applyThemeWithScheme:self.containerScheme];

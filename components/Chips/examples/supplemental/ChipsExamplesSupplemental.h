@@ -47,10 +47,6 @@
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
-@interface ChipsCustomizedExampleViewController (Supplemental)
-- (UIImage *)doneImage;
-@end
-
 @interface ChipsFilterExampleViewController
     : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
@@ -61,21 +57,12 @@
     : ChipsFilterExampleViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @end
 
-@interface ChipsFilterExampleViewController (Supplemental)
-- (UIImage *)doneImage;
-@end
-
 @interface ChipsInputExampleViewController : UIViewController
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
 @interface ChipsSizingExampleViewController : UIViewController
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end
-
-@interface ChipsSizingExampleViewController (Supplemental)
-- (UIImage *)faceImage;
-- (UIButton *)deleteButton;
 @end
 
 @interface ChipsTypicalUseViewController
@@ -86,17 +73,8 @@
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
-@interface ChipsTypicalUseViewController (Supplemental)
-- (UIImage *)doneImage;
-@end
-
 @interface ChipsShapingExampleViewController : UIViewController
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end
-
-@interface ChipsShapingExampleViewController (Supplemental)
-- (UIImage *)faceImage;
-- (UIButton *)deleteButton;
 @end
 
 @interface ChipModel : NSObject
