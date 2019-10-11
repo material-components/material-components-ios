@@ -16,21 +16,21 @@
 
 @implementation ChipsExampleAssets
 
-+ (nonnull UIImage *)doneImage {
++ (UIImage *)doneImage {
   UIImage *image = [UIImage imageNamed:@"ic_done"
                               inBundle:[NSBundle bundleForClass:self]
          compatibleWithTraitCollection:nil];
   return image;
 }
 
-+ (nonnull UIImage *)faceImage {
++ (UIImage *)faceImage {
   UIImage *image = [UIImage imageNamed:@"ic_mask"
                               inBundle:[NSBundle bundleForClass:self]
          compatibleWithTraitCollection:nil];
   return image;
 }
 
-+ (nonnull UIButton *)deleteButton {
++ (UIButton *)deleteButton {
   UIImage *image = [UIImage imageNamed:@"ic_cancel"
                               inBundle:[NSBundle bundleForClass:self]
          compatibleWithTraitCollection:nil];
