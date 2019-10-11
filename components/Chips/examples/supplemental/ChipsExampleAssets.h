@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface ChipsExampleAssets: NSObject
+@interface ChipsExampleAssets : NSObject
 
 @property(class, nonatomic, readonly, nonnull) UIImage *doneImage;
 @property(class, nonatomic, readonly, nonnull) UIImage *faceImage;
