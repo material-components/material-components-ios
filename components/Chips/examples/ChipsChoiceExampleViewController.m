@@ -19,7 +19,6 @@
 #import "MaterialContainerScheme.h"
 
 @interface ChipsChoiceExampleViewController ()
-@property(nonatomic, strong) MDCChipView *sizingChip;
 @property(nonatomic, assign, getter=isOutlined) BOOL outlined;
 @end
 
@@ -40,9 +39,6 @@
 - (void)loadView {
   [super loadView];
   self.view.backgroundColor = [UIColor whiteColor];
-
-  // This is used to calculate the size of each chip based on the chip setup
-  _sizingChip = [[MDCChipView alloc] init];
 
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
@@ -75,7 +71,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self.sizingChip applyThemeWithScheme:self.containerScheme];
 
   self.outlined = NO;
   self.navigationItem.rightBarButtonItem =
@@ -134,14 +129,6 @@
   }
 
   return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  // The size of the chip depends on title here.
-  self.sizingChip.titleLabel.text = self.titles[indexPath.row];
-  return [self.sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
 - (NSArray *)titles {

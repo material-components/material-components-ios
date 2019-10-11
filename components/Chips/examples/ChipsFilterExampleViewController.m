@@ -20,7 +20,6 @@
 
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
-  MDCChipView *_sizingChip;
   NSMutableArray *_selectedIndecies;
   BOOL _isOutlined;
 }
@@ -66,9 +65,6 @@
   if (@available(iOS 11.0, *)) {
     _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
-
-  // This is used to calculate the size of each chip based on the chip setup
-  _sizingChip = [[MDCChipView alloc] init];
 
   [self.view addSubview:_collectionView];
 }
@@ -143,16 +139,6 @@
   }
 
   return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  // The size of the chip depends on title, image and selection state.
-  _sizingChip.selected = [_selectedIndecies containsObject:indexPath];
-  _sizingChip.titleLabel.text = self.titles[indexPath.row];
-  _sizingChip.selectedImageView.image = [self doneImage];
-  return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
