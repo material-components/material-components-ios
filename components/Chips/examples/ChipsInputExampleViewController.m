@@ -81,6 +81,8 @@
   if (@available(iOS 11.0, *)) {
     frame = UIEdgeInsetsInsetRect(frame, self.view.safeAreaInsets);
   }
+  MDCChipView *chip = _chipField.chips.lastObject;
+  [self recomputeChipFieldChipHeightWithChip:chip];
   frame.size = [_chipField sizeThatFits:frame.size];
   _chipField.frame = frame;
 }
@@ -97,12 +99,17 @@
     [chip applyThemeWithScheme:self.containerScheme];
   }
   chip.mdc_adjustsFontForContentSizeCategory = YES;
-  [chip sizeToFit];
-
-  _chipField.chipHeight = MAX(_chipField.chipHeight, chip.frame.size.height);
+  [self recomputeChipFieldChipHeightWithChip:chip];
 
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);
   chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0);
+}
+
+- (void)recomputeChipFieldChipHeightWithChip:(MDCChipView *)chip {
+  [chip sizeToFit];
+  if (chip.frame.size.height > 0) {
+    _chipField.chipHeight = chip.frame.size.height;
+  }
 }
 
 @end
