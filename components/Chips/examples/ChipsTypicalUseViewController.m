@@ -28,6 +28,14 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.model = @[
+      MakeModel(@"Chip", NO, YES, NO),
+      MakeModel(@"Chip", YES, NO, NO),
+      MakeModel(@"Chip", YES, NO, YES),
+      MakeModel(@"Chip", NO, NO, YES),
+      MakeModel(@"Chip", NO, YES, YES),
+      MakeModel(@"Chip", YES, YES, YES),
+    ];
   }
   return self;
 }
@@ -114,20 +122,6 @@
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
   [self updateClearButton];
-}
-
-- (NSArray *)model {
-  if (!_model) {
-    _model = @[
-      MakeModel(@"Chip", NO, YES, NO),
-      MakeModel(@"Chip", YES, NO, NO),
-      MakeModel(@"Chip", YES, NO, YES),
-      MakeModel(@"Chip", NO, NO, YES),
-      MakeModel(@"Chip", NO, YES, YES),
-      MakeModel(@"Chip", YES, YES, YES),
-    ];
-  }
-  return _model;
 }
 
 @end

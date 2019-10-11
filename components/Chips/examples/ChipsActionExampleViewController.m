@@ -31,6 +31,12 @@
   self = [super init];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.titles = @[
+      @"Change Title to Action 0",
+      @"Change Title to Action 1",
+      @"Change Title to Action 2",
+      @"Change Title to Action 3",
+    ];
   }
   return self;
 }
@@ -139,18 +145,6 @@
 
   // Do the action related to the chip
   [self setTitle:[NSString stringWithFormat:@"Action %d", (int)indexPath.row]];
-}
-
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"Change Title to Action 0",
-      @"Change Title to Action 1",
-      @"Change Title to Action 2",
-      @"Change Title to Action 3",
-    ];
-  }
-  return _titles;
 }
 
 @end

@@ -28,6 +28,19 @@
   self = [super init];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.titles = @[
+      @"Doorman",
+      @"Elevator",
+      @"Garage Parking",
+      @"Gym",
+      @"Laundry in Building",
+      @"Green Building",
+      @"Parking Available",
+      @"Pets Allowed",
+      @"Pied-a-Terre Allowed",
+      @"Swimming Pool",
+      @"Smoke-free",
+    ];
   }
   return self;
 }
@@ -153,25 +166,6 @@
   [_selectedIndecies removeObject:indexPath];
   // Animating Chip Deselection
   [collectionView performBatchUpdates:nil completion:nil];
-}
-
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"Doorman",
-      @"Elevator",
-      @"Garage Parking",
-      @"Gym",
-      @"Laundry in Building",
-      @"Green Building",
-      @"Parking Available",
-      @"Pets Allowed",
-      @"Pied-a-Terre Allowed",
-      @"Swimming Pool",
-      @"Smoke-free",
-    ];
-  }
-  return _titles;
 }
 
 - (BOOL)shouldAnimateResize {
