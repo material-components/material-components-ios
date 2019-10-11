@@ -35,7 +35,8 @@
   self.textFieldController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
 
-  MDCTextInputControllerOutlinedTextArea *textInputControllerOutlinedTextArea = (MDCTextInputControllerOutlinedTextArea *)self.textFieldController;
+  MDCTextInputControllerOutlinedTextArea *textInputControllerOutlinedTextArea =
+      (MDCTextInputControllerOutlinedTextArea *)self.textFieldController;
   textInputControllerOutlinedTextArea.minimumLines = 1;
   textInputControllerOutlinedTextArea.expandsOnOverflow = YES;
 }
