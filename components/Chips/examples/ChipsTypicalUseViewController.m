@@ -17,18 +17,16 @@
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
-@implementation ChipsTypicalUseViewController {
-  MDCChipView *_sizingChip;
-}
+@implementation ChipsTypicalUseViewController
 
 - (instancetype)init {
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    _sizingChip = [[MDCChipView alloc] init];
-    _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
     self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
@@ -42,8 +40,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  [_sizingChip applyThemeWithScheme:self.containerScheme];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -118,17 +114,6 @@
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
   [self updateClearButton];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
-  _sizingChip.selected = [selectedPaths containsObject:indexPath];
-
-  ChipModel *model = self.model[indexPath.row];
-  [model apply:_sizingChip];
-  return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
 - (NSArray *)model {
