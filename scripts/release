@@ -142,7 +142,7 @@ cut_release() {
   fi
   echo $branch_message
   git checkout -b release-candidate $branch
-  git checkout stable -- .gitattributes
+  git checkout origin/stable -- .gitattributes
 
   touch "$rootdir/CHANGELOG.md"
   if ! grep "# #develop#" "$rootdir/CHANGELOG.md" >> /dev/null; then
