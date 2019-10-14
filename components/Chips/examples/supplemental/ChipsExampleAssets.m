@@ -18,19 +18,19 @@
 
 + (UIImage *)doneImage {
   return [UIImage imageNamed:@"ic_done"
-                           inBundle:[NSBundle bundleForClass:self]
+                           inBundle:[NSBundle bundleForClass:[ChipsExampleAssets class]]
       compatibleWithTraitCollection:nil];
 }
 
 + (UIImage *)faceImage {
   return [UIImage imageNamed:@"ic_mask"
-                           inBundle:[NSBundle bundleForClass:self]
+                           inBundle:[NSBundle bundleForClass:[ChipsExampleAssets class]]
       compatibleWithTraitCollection:nil];
 }
 
 + (UIButton *)deleteButton {
   UIImage *image = [UIImage imageNamed:@"ic_cancel"
-                              inBundle:[NSBundle bundleForClass:self]
+                              inBundle:[NSBundle bundleForClass:[ChipsExampleAssets class]]
          compatibleWithTraitCollection:nil];
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
