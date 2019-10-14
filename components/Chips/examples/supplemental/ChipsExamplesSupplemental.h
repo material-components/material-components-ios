@@ -44,7 +44,3 @@
 @property(nonatomic, strong) NSArray<ChipModel *> *model;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
-
-@interface ChipsShapingExampleViewController : UIViewController
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end

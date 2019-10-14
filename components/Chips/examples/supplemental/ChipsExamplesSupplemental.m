@@ -90,15 +90,3 @@
 }
 
 @end
-
-@implementation ChipsShapingExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Shaped Chip" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @NO,
-  };
-}
-
-@end
