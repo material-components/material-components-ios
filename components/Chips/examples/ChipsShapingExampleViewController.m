@@ -22,6 +22,8 @@
 #import "MaterialSlider+ColorThemer.h"
 #import "MaterialSlider.h"
 
+#import "supplemental/ChipsExampleAssets.h"
+
 @implementation ChipsShapingExampleViewController {
   MDCChipView *_chipView;
   MDCSlider *_cornerSlider;
@@ -46,8 +48,8 @@
 
   _chipView = [[MDCChipView alloc] init];
   _chipView.titleLabel.text = @"Material";
-  _chipView.imageView.image = [self faceImage];
-  _chipView.accessoryView = [self deleteButton];
+  _chipView.imageView.image = ChipsExampleAssets.faceImage;
+  _chipView.accessoryView = ChipsExampleAssets.deleteButton;
   _chipView.imagePadding = UIEdgeInsetsMake(0, 10, 0, 0);
   _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];

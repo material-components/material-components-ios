@@ -18,6 +18,8 @@
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
 
+#import "supplemental/ChipsExampleAssets.h"
+
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
   NSMutableArray *_selectedIndecies;
@@ -132,7 +134,7 @@
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
-      [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [ChipsExampleAssets.doneImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   if (self.containerScheme.colorScheme) {
     chipView.selectedImageView.tintColor =
         [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
