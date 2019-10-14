@@ -23,19 +23,9 @@
 @property(nonatomic, assign) BOOL showProfilePic;
 @property(nonatomic, assign) BOOL showDoneImage;
 @property(nonatomic, assign) BOOL showDeleteButton;
-- (void)apply:(MDCChipView *)cell;
 @end
 
 @implementation ChipModel
-
-- (void)apply:(MDCChipView *)chipView {
-  chipView.enableRippleBehavior = YES;
-  chipView.titleLabel.text = self.title;
-  chipView.imageView.image = self.showProfilePic ? ChipsExampleAssets.faceImage : nil;
-  chipView.selectedImageView.image = self.showDoneImage ? ChipsExampleAssets.doneImage : nil;
-  chipView.accessoryView = self.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
-}
-
 @end
 
 static ChipModel *MakeModel(NSString *title,
@@ -146,7 +136,13 @@ static ChipModel *MakeModel(NSString *title,
   cell.alwaysAnimateResize = YES;
 
   ChipModel *model = self.model[indexPath.row];
-  [model apply:cell.chipView];
+
+  cell.chipView.enableRippleBehavior = YES;
+  cell.chipView.titleLabel.text = model.title;
+  cell.chipView.imageView.image = model.showProfilePic ? ChipsExampleAssets.faceImage : nil;
+  cell.chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
+  cell.chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
+
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
