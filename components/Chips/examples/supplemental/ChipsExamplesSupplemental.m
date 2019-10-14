@@ -39,36 +39,6 @@
 
 @end
 
-@interface ChipsChoiceExampleViewController (Supplemental)
-@end
-
-@implementation ChipsChoiceExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Choice" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
-@interface ChipsActionExampleViewController (Supplemental)
-@end
-
-@implementation ChipsActionExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Action" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
 @interface ChipsCollectionExampleViewController (Supplemental)
 @end
 
@@ -77,18 +47,6 @@
 + (NSDictionary *)catalogMetadata {
   return @{
     @"breadcrumbs" : @[ @"Chips", @"Collections" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @NO,
-  };
-}
-
-@end
-
-@implementation ChipsCustomizedExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Customized" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };

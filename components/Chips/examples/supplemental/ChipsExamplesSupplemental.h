@@ -21,28 +21,8 @@
 @interface ExampleChipCollectionViewController : UICollectionViewController
 @end
 
-@interface ChipsChoiceExampleViewController
-    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
-@property(nonatomic, strong) NSArray<NSString *> *titles;
-@property(nonatomic, strong) UICollectionView *collectionView;
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end
-
-@interface ChipsActionExampleViewController
-    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
-@property(nonatomic, strong) NSArray<NSString *> *titles;
-@property(nonatomic, strong) UICollectionView *collectionView;
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end
-
 @interface ChipsCollectionExampleViewController
     : ExampleChipCollectionViewController <UICollectionViewDelegate, UICollectionViewDataSource>
-@property(nonatomic, strong) NSArray<NSString *> *titles;
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end
-
-@interface ChipsCustomizedExampleViewController
-    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
