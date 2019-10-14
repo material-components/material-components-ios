@@ -2531,15 +2531,7 @@ void MDCCatalogDrawNavigationBarTile(CGRect frame, id<MDCColorScheming> colorSch
       NSMutableParagraphStyle* labelStyle = [NSMutableParagraphStyle new];
       labelStyle.alignment = NSTextAlignmentCenter;
 
-      UIFont* font;
-      if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-        font = [UIFont systemFontOfSize:11 weight:UIFontWeightMedium];
-#pragma clang diagnostic pop
-      } else {
-        font = [UIFont systemFontOfSize:11];
-      }
+      UIFont* font = [UIFont systemFontOfSize:11 weight:UIFontWeightMedium];
       NSDictionary* labelFontAttributes = @{
         NSFontAttributeName : font,
         NSForegroundColorAttributeName : textForeground,
