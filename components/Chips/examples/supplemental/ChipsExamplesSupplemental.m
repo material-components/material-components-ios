@@ -78,33 +78,6 @@
 
 @end
 
-@interface ChipsInputExampleViewController (Supplemental)
-@end
-
-@implementation ChipsInputExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Input" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
-@implementation ChipsSizingExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Sizing" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @NO,
-  };
-}
-
-@end
-
 @implementation ChipsTypicalUseViewController (Supplemental)
 
 + (NSDictionary *)catalogMetadata {

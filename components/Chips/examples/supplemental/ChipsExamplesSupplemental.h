@@ -37,14 +37,6 @@
     : ChipsFilterExampleViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @end
 
-@interface ChipsInputExampleViewController : UIViewController
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end
-
-@interface ChipsSizingExampleViewController : UIViewController
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-@end
-
 @interface ChipsTypicalUseViewController
     : ExampleChipCollectionViewController <UICollectionViewDelegate,
                                            UICollectionViewDataSource,
