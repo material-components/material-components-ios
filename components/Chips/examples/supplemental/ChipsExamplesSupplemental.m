@@ -16,35 +16,7 @@
 
 #import "MaterialChips.h"
 
-static UIImage *DoneImage() {
-  NSBundle *bundle = [NSBundle bundleForClass:[ChipsTypicalUseViewController class]];
-  UIImage *image = [UIImage imageNamed:@"ic_done"
-                              inBundle:bundle
-         compatibleWithTraitCollection:nil];
-  return image;
-}
-
-static UIImage *FaceImage() {
-  NSBundle *bundle = [NSBundle bundleForClass:[ChipsTypicalUseViewController class]];
-  UIImage *image = [UIImage imageNamed:@"ic_mask"
-                              inBundle:bundle
-         compatibleWithTraitCollection:nil];
-  return image;
-}
-
-static UIButton *DeleteButton() {
-  NSBundle *bundle = [NSBundle bundleForClass:[ChipsTypicalUseViewController class]];
-  UIImage *image = [UIImage imageNamed:@"ic_cancel"
-                              inBundle:bundle
-         compatibleWithTraitCollection:nil];
-  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
-  UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
-  button.tintColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.7];
-  [button setImage:image forState:UIControlStateNormal];
-
-  return button;
-}
+#import "ChipsExampleAssets.h"
 
 @implementation ExampleChipCollectionViewController {
   BOOL _popRecognizerDelaysTouches;
@@ -122,10 +94,6 @@ static UIButton *DeleteButton() {
   };
 }
 
-- (UIImage *)doneImage {
-  return DoneImage();
-}
-
 @end
 
 @implementation ChipsFilterExampleViewController (Supplemental)
@@ -138,10 +106,6 @@ static UIButton *DeleteButton() {
   };
 }
 
-- (UIImage *)doneImage {
-  return DoneImage();
-}
-
 @end
 
 @implementation ChipsFilterAnimatedExampleViewController (Supplemental)
@@ -152,10 +116,6 @@ static UIButton *DeleteButton() {
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
-}
-
-- (UIImage *)doneImage {
-  return DoneImage();
 }
 
 @end
@@ -185,14 +145,6 @@ static UIButton *DeleteButton() {
   };
 }
 
-- (UIImage *)faceImage {
-  return FaceImage();
-}
-
-- (UIButton *)deleteButton {
-  return DeleteButton();
-}
-
 @end
 
 @implementation ChipsTypicalUseViewController (Supplemental)
@@ -206,10 +158,6 @@ static UIButton *DeleteButton() {
   };
 }
 
-- (UIImage *)doneImage {
-  return DoneImage();
-}
-
 @end
 
 @implementation ChipsShapingExampleViewController (Supplemental)
@@ -220,38 +168,6 @@ static UIButton *DeleteButton() {
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
-}
-
-- (UIImage *)faceImage {
-  return FaceImage();
-}
-
-- (UIButton *)deleteButton {
-  return DeleteButton();
-}
-
-@end
-
-@implementation ChipModel
-
-- (void)apply:(MDCChipView *)chipView {
-  chipView.enableRippleBehavior = YES;
-  chipView.titleLabel.text = self.title;
-  chipView.imageView.image = self.showProfilePic ? [self faceImage] : nil;
-  chipView.selectedImageView.image = self.showDoneImage ? [self doneImage] : nil;
-  chipView.accessoryView = self.showDeleteButton ? [self deleteButton] : nil;
-}
-
-- (UIImage *)faceImage {
-  return FaceImage();
-}
-
-- (UIImage *)doneImage {
-  return DoneImage();
-}
-
-- (UIButton *)deleteButton {
-  return DeleteButton();
 }
 
 @end

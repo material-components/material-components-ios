@@ -8,7 +8,7 @@ path: /catalog/ink/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Ink -->
+<!-- This file was auto-generated using ./scripts/generate_readme Ink -->
 
 # Ink
 

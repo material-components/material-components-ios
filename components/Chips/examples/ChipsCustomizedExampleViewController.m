@@ -17,15 +17,33 @@
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
+#import "supplemental/ChipsExampleAssets.h"
+
 @implementation ChipsCustomizedExampleViewController {
   UICollectionView *_collectionView;
-  MDCChipView *_sizingChip;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (id)init {
   self = [super init];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.titles = @[
+      @"Doorman",
+      @"Elevator",
+      @"Garage Parking",
+      @"Gym",
+      @"Laundry in Building",
+      @"Green Building",
+      @"Parking Available",
+      @"Pets Allowed",
+      @"Pied-a-Terre Allowed",
+      @"Swimming Pool",
+      @"Smoke-free",
+    ];
   }
   return self;
 }
@@ -56,8 +74,13 @@
 
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                       collectionViewLayout:layout];
+  _collectionView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _collectionView.dataSource = self;
   _collectionView.delegate = self;
   _collectionView.allowsMultipleSelection = YES;
@@ -67,22 +90,22 @@
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"MDCChipCollectionViewCell"];
 
-  _sizingChip = [[MDCChipView alloc] init];
-  [[self class] configureChip:_sizingChip];
-
   [self.view addSubview:_collectionView];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [_sizingChip applyThemeWithScheme:self.containerScheme];
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _collectionView.frame = self.view.bounds;
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [_collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -98,20 +121,11 @@
 
   [[self class] configureChip:cell.chipView];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
-  cell.chipView.selectedImageView.image = [self doneImage];
+  cell.chipView.selectedImageView.image = ChipsExampleAssets.doneImage;
+  cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
-  _sizingChip.selected = [selectedPaths containsObject:indexPath];
-  _sizingChip.titleLabel.text = self.titles[indexPath.row];
-  _sizingChip.selectedImageView.image = [self doneImage];
-  return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -122,25 +136,6 @@
 - (void)collectionView:(UICollectionView *)collectionView
     didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
-}
-
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"Doorman",
-      @"Elevator",
-      @"Garage Parking",
-      @"Gym",
-      @"Laundry in Building",
-      @"Green Building",
-      @"Parking Available",
-      @"Pets Allowed",
-      @"Pied-a-Terre Allowed",
-      @"Swimming Pool",
-      @"Smoke-free",
-    ];
-  }
-  return _titles;
 }
 
 @end

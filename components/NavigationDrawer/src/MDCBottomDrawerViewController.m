@@ -33,6 +33,9 @@
 
   // Used for forwarding touch events if enabled.
   __weak UIResponder *_cachedNextResponder;
+  // Used for tracking the presentation/dismissal animations.
+  BOOL _isDrawerClosed;
+  CGFloat _lastOffset;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -67,6 +70,8 @@
 
   _dismissOnBackgroundTap = YES;
   _shouldForwardBackgroundTouchEvents = NO;
+  _isDrawerClosed = YES;
+  _lastOffset = NSNotFound;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -299,6 +304,64 @@
   }
 }
 
+- (void)bottomDrawerPresentTransitionDidEnd:
+    (MDCBottomDrawerPresentationController *)presentationController {
+  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerDidEndOpenTransition:)]) {
+    [self.delegate bottomDrawerControllerDidEndOpenTransition:self];
+  }
+}
+
+- (void)bottomDrawerDismissTransitionDidEnd:
+    (MDCBottomDrawerPresentationController *)presentationController {
+  _isDrawerClosed = YES;
+  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerDidEndCloseTransition:)]) {
+    [self.delegate bottomDrawerControllerDidEndCloseTransition:self];
+  }
+}
+
+- (void)bottomDrawerPresentTransitionWillBegin:
+            (MDCBottomDrawerPresentationController *)presentationController
+                               withCoordinator:
+                                   (id<UIViewControllerTransitionCoordinator>)transitionCoordinator
+                                 targetYOffset:(CGFloat)targetYOffset {
+  _isDrawerClosed = NO;
+  _lastOffset = targetYOffset;
+  if ([self.delegate respondsToSelector:@selector
+                     (bottomDrawerControllerWillTransitionOpen:withCoordinator:targetYOffset:)]) {
+    [self.delegate bottomDrawerControllerWillTransitionOpen:self
+                                            withCoordinator:transitionCoordinator
+                                              targetYOffset:targetYOffset];
+  }
+}
+
+- (void)bottomDrawerDismissTransitionWillBegin:
+            (MDCBottomDrawerPresentationController *)presentationController
+                               withCoordinator:
+                                   (id<UIViewControllerTransitionCoordinator>)transitionCoordinator
+                                 targetYOffset:(CGFloat)targetYOffset {
+  _lastOffset = targetYOffset;
+  if ([self.delegate respondsToSelector:@selector
+                     (bottomDrawerControllerWillTransitionClosed:withCoordinator:targetYOffset:)]) {
+    [self.delegate bottomDrawerControllerWillTransitionClosed:self
+                                              withCoordinator:transitionCoordinator
+                                                targetYOffset:targetYOffset];
+  }
+}
+
+- (void)bottomDrawerTopDidChangeYOffset:
+            (MDCBottomDrawerPresentationController *)presentationController
+                                yOffset:(CGFloat)yOffset {
+  // Only forward changes along if the drawer is actually still on screen and the offset has
+  // changed. This will avoid sending thru duplicated offset changes or changes where the
+  // real value will be calculated soon (aka set to zero for prep, then layout pass happens).
+  if (!_isDrawerClosed && _lastOffset != yOffset &&
+      [self.delegate respondsToSelector:@selector(bottomDrawerControllerDidChangeTopYOffset:
+                                                                                    yOffset:)]) {
+    [self.delegate bottomDrawerControllerDidChangeTopYOffset:self yOffset:yOffset];
+  }
+  _lastOffset = yOffset;
+}
+
 - (void)bottomDrawerWillChangeState:
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
@@ -320,7 +383,11 @@
   if (!self.topHandleHidden) {
     topInset = MAX(topInset, (CGFloat)7.0);
   }
-  [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
+
+  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerDidChangeTopInset:
+                                                                                 topInset:)]) {
+    [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
+  }
 }
 
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
