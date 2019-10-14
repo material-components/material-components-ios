@@ -31,6 +31,8 @@
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
   BOOL _isMaskAppliedFirstTime;
 
+  // Used for forwarding touch events if enabled.
+  __weak UIResponder *_cachedNextResponder;
   // Used for tracking the presentation/dismissal animations.
   BOOL _isDrawerClosed;
   CGFloat _lastOffset;
@@ -65,6 +67,9 @@
   _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
   _elevation = MDCShadowElevationNavDrawer;
   _mdc_overrideBaseElevation = -1;
+
+  _dismissOnBackgroundTap = YES;
+  _shouldForwardBackgroundTouchEvents = NO;
   _isDrawerClosed = YES;
   _lastOffset = NSNotFound;
 }
@@ -201,6 +206,22 @@
   }
 }
 
+- (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
+  _dismissOnBackgroundTap = dismissOnBackgroundTap;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
+  }
+}
+
+- (void)setShouldForwardBackgroundTouchEvents:(BOOL)shouldForwardBackgroundTouchEvents {
+  _shouldForwardBackgroundTouchEvents = shouldForwardBackgroundTouchEvents;
+  if (shouldForwardBackgroundTouchEvents) {
+    [self setDismissOnBackgroundTap:NO];
+  }
+}
+
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
@@ -222,6 +243,25 @@
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
   }
+}
+
+- (void)setDelegate:(id<MDCBottomDrawerViewControllerDelegate>)delegate {
+  _delegate = delegate;
+  if ([delegate isKindOfClass:[UIResponder class]]) {
+    _cachedNextResponder = (UIResponder *)delegate;
+  } else {
+    _cachedNextResponder = nil;
+  }
+}
+
+- (UIResponder *)nextResponder {
+  // Allow the delegate to opt-in to the responder chain to handle events.
+  if (self.shouldForwardBackgroundTouchEvents && _cachedNextResponder) {
+    return _cachedNextResponder;
+  }
+
+  // Otherwise, just follow the normal path.
+  return [super nextResponder];
 }
 
 - (CGFloat)mdc_currentElevation {
