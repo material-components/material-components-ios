@@ -12,10 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "supplemental/ChipsExampleAssets.h"
 #import "supplemental/ChipsExamplesSupplemental.h"
 
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+
+@interface ChipModel : NSObject
+@property(nonatomic, strong) NSString *title;
+@property(nonatomic, assign) BOOL showProfilePic;
+@property(nonatomic, assign) BOOL showDoneImage;
+@property(nonatomic, assign) BOOL showDeleteButton;
+- (void)apply:(MDCChipView *)cell;
+@end
+
+@implementation ChipModel
+
+- (void)apply:(MDCChipView *)chipView {
+  chipView.enableRippleBehavior = YES;
+  chipView.titleLabel.text = self.title;
+  chipView.imageView.image = self.showProfilePic ? ChipsExampleAssets.faceImage : nil;
+  chipView.selectedImageView.image = self.showDoneImage ? ChipsExampleAssets.doneImage : nil;
+  chipView.accessoryView = self.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
+}
+
+@end
+
+static ChipModel *MakeModel(NSString *title,
+                            BOOL showProfilePic,
+                            BOOL showDoneImage,
+                            BOOL showDeleteButton) {
+  ChipModel *chip = [[ChipModel alloc] init];
+  chip.title = title;
+  chip.showProfilePic = showProfilePic;
+  chip.showDoneImage = showDoneImage;
+  chip.showDeleteButton = showDeleteButton;
+  return chip;
+};
 
 @implementation ChipsTypicalUseViewController
 
