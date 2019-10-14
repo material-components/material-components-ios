@@ -81,7 +81,7 @@
   layout.estimatedItemSize = [cell intrinsicContentSize];
 
   self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
-                                       collectionViewLayout:layout];
+                                           collectionViewLayout:layout];
   self.collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.collectionView.dataSource = self;
@@ -91,7 +91,7 @@
   self.collectionView.delaysContentTouches = NO;
   self.collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
   [self.collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"MDCChipCollectionViewCell"];
+          forCellWithReuseIdentifier:@"MDCChipCollectionViewCell"];
 
   [self.view addSubview:self.collectionView];
 }

@@ -57,7 +57,7 @@
   layout.estimatedItemSize = [cell intrinsicContentSize];
 
   self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
-                                       collectionViewLayout:layout];
+                                           collectionViewLayout:layout];
   self.collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
@@ -70,7 +70,7 @@
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
   [self.collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"Cell"];
+          forCellWithReuseIdentifier:@"Cell"];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -109,8 +109,8 @@
   [self.collectionView reloadData];
   for (NSIndexPath *path in indexPaths) {
     [self.collectionView selectItemAtIndexPath:path
-                                  animated:NO
-                            scrollPosition:UICollectionViewScrollPositionNone];
+                                      animated:NO
+                                scrollPosition:UICollectionViewScrollPositionNone];
   }
 }
 

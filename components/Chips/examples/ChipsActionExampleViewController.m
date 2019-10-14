@@ -56,7 +56,7 @@
   // Action chips should allow single selection, collection view default is based on single
   // selection. Note that MDCChipCollectionViewCell manages the state of the chip accordingly.
   self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
-                                       collectionViewLayout:layout];
+                                           collectionViewLayout:layout];
   self.collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
@@ -69,7 +69,7 @@
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
   [self.collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"Cell"];
+          forCellWithReuseIdentifier:@"Cell"];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
