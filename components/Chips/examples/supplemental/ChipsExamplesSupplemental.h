@@ -76,23 +76,3 @@
 @interface ChipsShapingExampleViewController : UIViewController
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
-
-@interface ChipModel : NSObject
-@property(nonatomic, strong) NSString *title;
-@property(nonatomic, assign) BOOL showProfilePic;
-@property(nonatomic, assign) BOOL showDoneImage;
-@property(nonatomic, assign) BOOL showDeleteButton;
-- (void)apply:(MDCChipView *)cell;
-@end
-
-static inline ChipModel *MakeModel(NSString *title,
-                                   BOOL showProfilePic,
-                                   BOOL showDoneImage,
-                                   BOOL showDeleteButton) {
-  ChipModel *chip = [[ChipModel alloc] init];
-  chip.title = title;
-  chip.showProfilePic = showProfilePic;
-  chip.showDoneImage = showDoneImage;
-  chip.showDeleteButton = showDeleteButton;
-  return chip;
-};

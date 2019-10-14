@@ -12,10 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "supplemental/ChipsExampleAssets.h"
 #import "supplemental/ChipsExamplesSupplemental.h"
 
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+
+@interface ChipModel : NSObject
+@property(nonatomic, strong) NSString *title;
+@property(nonatomic, assign) BOOL showProfilePic;
+@property(nonatomic, assign) BOOL showDoneImage;
+@property(nonatomic, assign) BOOL showDeleteButton;
+@end
+
+@implementation ChipModel
+@end
+
+static ChipModel *MakeModel(NSString *title,
+                            BOOL showProfilePic,
+                            BOOL showDoneImage,
+                            BOOL showDeleteButton) {
+  ChipModel *chip = [[ChipModel alloc] init];
+  chip.title = title;
+  chip.showProfilePic = showProfilePic;
+  chip.showDoneImage = showDoneImage;
+  chip.showDeleteButton = showDeleteButton;
+  return chip;
+};
 
 @implementation ChipsTypicalUseViewController
 
@@ -113,7 +136,13 @@
   cell.alwaysAnimateResize = YES;
 
   ChipModel *model = self.model[indexPath.row];
-  [model apply:cell.chipView];
+
+  cell.chipView.enableRippleBehavior = YES;
+  cell.chipView.titleLabel.text = model.title;
+  cell.chipView.imageView.image = model.showProfilePic ? ChipsExampleAssets.faceImage : nil;
+  cell.chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
+  cell.chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
+
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }

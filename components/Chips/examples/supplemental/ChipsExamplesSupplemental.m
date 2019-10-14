@@ -171,15 +171,3 @@
 }
 
 @end
-
-@implementation ChipModel
-
-- (void)apply:(MDCChipView *)chipView {
-  chipView.enableRippleBehavior = YES;
-  chipView.titleLabel.text = self.title;
-  chipView.imageView.image = self.showProfilePic ? ChipsExampleAssets.faceImage : nil;
-  chipView.selectedImageView.image = self.showDoneImage ? ChipsExampleAssets.doneImage : nil;
-  chipView.accessoryView = self.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
-}
-
-@end
