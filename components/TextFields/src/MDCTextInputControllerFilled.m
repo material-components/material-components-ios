@@ -190,7 +190,6 @@ static CGFloat _underlineHeightNormalDefault =
 - (void)updateLayout {
   [super updateLayout];
 
-  [self.textInput invalidateIntrinsicContentSize];
   if (!self.textInput) {
     return;
   }
