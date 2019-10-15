@@ -419,8 +419,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.accessoryView = self.accessoryView;
   self.alertView.titleFont = self.titleFont;
   self.alertView.messageFont = self.messageFont;
-  self.alertView.titleColor = self.titleColor;
-  self.alertView.messageColor = self.messageColor;
+  self.alertView.titleColor = self.titleColor ?: UIColor.blackColor;
+  self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   if (self.backgroundColor) {
@@ -495,12 +495,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if (self.titleColor == nil) {
-    self.alertView.titleColor = UIColor.blackColor;
-  }
-  if (self.messageColor == nil) {
-    self.alertView.messageColor = UIColor.blackColor;
-  }
   // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
   if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
       CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
