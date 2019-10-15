@@ -16,7 +16,6 @@
 
 #import "MaterialChips+ColorThemer.h"
 #import "MaterialChips+ShapeThemer.h"
-#import "MaterialChips+TypographyThemer.h"
 #import "MaterialTypography.h"
 
 @implementation MDCChipView (MaterialTheming)
