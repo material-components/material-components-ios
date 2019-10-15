@@ -1344,29 +1344,6 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  # MaskedTransition
-
-  mdc.subspec "MaskedTransition" do |component|
-    component.ios.deployment_target = '9.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = [
-      "components/#{component.base_name}/src/*.{h,m}",
-      "components/#{component.base_name}/src/private/*.{h,m}"
-    ]
-
-    component.dependency "MotionTransitioning", "~> 5.0"
-    component.dependency "MotionAnimator", "~> 2.0"
-    component.dependency "MotionInterchange", "~> 1.0"
-
-    component.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
-        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-    end
-  end
-
   # NavigationBar
 
   mdc.subspec "NavigationBar" do |component|
