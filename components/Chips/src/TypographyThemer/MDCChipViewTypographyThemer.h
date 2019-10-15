@@ -23,8 +23,7 @@
  @warning This API is deprecated. Learn more at
  docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Use Chips+Theming instead.")
-@interface MDCChipViewTypographyThemer : NSObject
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCChipView.
