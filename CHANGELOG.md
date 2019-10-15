@@ -1,3 +1,62 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### BottomSheet
+
+* [Disable pan gesture on UIControl (#8491)](https://github.com/material-components/material-components-ios/commit/948199ab047db4fba61fcdc818c0d41a7c97c393) (Linksmt)
+
+### Chips
+
+* [Add Dynamic Type support to ChipsActionExampleViewController. (#8565)](https://github.com/material-components/material-components-ios/commit/20102a792caaa2cadc1f0cbf44820b7f5bdf0e24) (featherless)
+* [Add Dynamic Type support to ChipsInputExampleViewController. (#8569)](https://github.com/material-components/material-components-ios/commit/eac0034d93a1f59d0318d4a7d3f60f0325481d9b) (featherless)
+* [Add Dynamic Type support to the remaining chip collection examples. (#8567)](https://github.com/material-components/material-components-ios/commit/dbfaa92f9b625ffad81a6544f28d7b3fc7f438bf) (featherless)
+* [Deprecate Chips+ChipThemer. (#8593)](https://github.com/material-components/material-components-ios/commit/27c4d5354a41c17589da90b899daf92cef8098a1) (featherless)
+* [Deprecate MDCChipViewFontThemer. (#8589)](https://github.com/material-components/material-components-ios/commit/8fdd809b2547195411e36a3b5f0e11ffb1f53dc6) (featherless)
+* [Move ChipModel into ChipsTypicalUseViewController. (#8579)](https://github.com/material-components/material-components-ios/commit/cf1a9010f18892dc41365163245c278f440511e1) (featherless)
+* [Move all example assets to a supplemental file. (#8577)](https://github.com/material-components/material-components-ios/commit/ecba8c89d66bd8606881e562d12c741ea4430d44) (featherless)
+* [Remove all lazy initialization of models from examples. (#8576)](https://github.com/material-components/material-components-ios/commit/4f7e1e00c308ba7510ce8424765e7dba9bd7700e) (featherless)
+* [Remove sizing chips from all remaining examples. (#8575)](https://github.com/material-components/material-components-ios/commit/acdbc6f1d66c21217c79fa3f917080cd100599de) (featherless)
+* [Remove unnecessary explicit layout code. (#8564)](https://github.com/material-components/material-components-ios/commit/332123d241fa6037cd9b7890cd55a6ed984f40a1) (featherless)
+* [Remove unnecessary theming logic. (#8562)](https://github.com/material-components/material-components-ios/commit/08ece1de1dc09e5630fceeccaa62d0eb09391928) (featherless)
+
+### Dialogs
+
+* [Explicitly set title and message color (#8588)](https://github.com/material-components/material-components-ios/commit/e4825c628b3a6dcc97708a42d2ad932935cb0b43) (Cody Weaver)
+
+### NavigationDrawer
+
+* [Add delegate methods to allow the presenting VC to gain access to the transitionCoordinator used during the present/dismiss transitions.  (#8566)](https://github.com/material-components/material-components-ios/commit/a91bf9c2ec7b04184d8d74151d678d48c33654b3) (Randall Li)
+* [Allow touch events to propagate to delegate for  MDCBottomNavigationDrawer (#8578)](https://github.com/material-components/material-components-ios/commit/b578f9ee67ab85cde3c8e7786c8d07c7720431cf) (Randall Li)
+
+### TextFields
+
+* [Allow customization of overflow and lines on OutlinedTextArea (#8570)](https://github.com/material-components/material-components-ios/commit/e3acbb9b863f27adbf15933723b9c77d5105e86b) (Yarden Eitan)
+
+### Typography
+
+* [Remove checks for `systemFontOfSize:weight:`. (#8581)](https://github.com/material-components/material-components-ios/commit/2550aa00b3a4ba765416c9c05b92897aa80a2ac4) (Robert Moore)
+
+## Multi-component changes
+
+* [Reran ./scripts/generate_all_readmes (#8557)](https://github.com/material-components/material-components-ios/commit/1eaff651f9502fcd156a93f96d6344c576b00500) (Randall Li)
+
+---
+
 # 92.3.1
 
 This minor hotfix adds a missing podspec dependency to TextFields+ContainedInputView extension.
