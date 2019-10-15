@@ -17,7 +17,6 @@
 #import "MaterialChips+ColorThemer.h"
 #import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips+TypographyThemer.h"
-#import "MaterialTypography.h"
 
 @implementation MDCChipView (MaterialTheming)
 
@@ -44,11 +43,7 @@
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  UIFont *titleFont = typographyScheme.body2;
-  if (typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
-    titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
-  }
-  self.titleFont = titleFont;
+  [MDCChipViewTypographyThemer applyTypographyScheme:typographyScheme toChipView:self];
 }
 
 #pragma mark - Outlined Chip
