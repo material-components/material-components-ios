@@ -11,12 +11,17 @@ This minor release deprecates Chips+ChipThemer and MDCChipViewFontThemer.
 MDCTextInputControllerOutlinedTextArea now allows users to specify `minimumLines` and `expandsOnOverflow`.
 
 ```objc
-self.textFieldController =
-      [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
 MDCTextInputControllerOutlinedTextArea *textInputControllerOutlinedTextArea =
-    (MDCTextInputControllerOutlinedTextArea *)self.textFieldController;
+    [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
 textInputControllerOutlinedTextArea.minimumLines = 1;
 textInputControllerOutlinedTextArea.expandsOnOverflow = YES;
+```
+
+```swift
+let textInputControllerOutlinedTextArea =
+    MDCTextInputControllerOutlinedTextArea(textInput: textField)
+textInputControllerOutlinedTextArea.minimumLines = 1
+textInputControllerOutlinedTextArea.expandsOnOverflow = true
 ```
 
 MDCBottomDrawerPresentationControllerDelegate has new methods that allow clients to respond to animation lifecycle events and touches to the scrim.
@@ -25,14 +30,24 @@ MDCBottomDrawerPresentationControllerDelegate has new methods that allow clients
 
 Touch events are propagated to delegate to allow clients to interpret touches in the scrim area.
 
-```
-  navigationDrawer.dismissOnBackgroundTap = false
-  navigationDrawer.shouldForwardTouchEvents = true
+```objc
+navigationDrawer.dismissOnBackgroundTap = NO;
+navigationDrawer.shouldForwardTouchEvents = YES;
 ...
-  override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-  }
-  public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-  }
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+}
+```
+
+```swift
+navigationDrawer.dismissOnBackgroundTap = false
+navigationDrawer.shouldForwardTouchEvents = true
+...
+override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+}
+public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+}
 
 ```
 
@@ -40,30 +55,51 @@ Touch events are propagated to delegate to allow clients to interpret touches in
 
 The animation lifecycle events are forwarded to the delegate so that clients can respond to them.
 
+```objc
+- (void)bottomDrawerControllerWillTransitionOpen:(nonnull MDCBottomDrawerViewController *)controller
+                                 withCoordinator:
+                                     (nullable id<UIViewControllerTransitionCoordinator>)
+                                         transitionCoordinator
+                                   targetYOffset:(CGFloat)targetYOffset {
+}
+
+- (void)bottomDrawerControllerDidEndOpenTransition:(MDCBottomDrawerViewController *)controller {
+}
+
+- (void)
+    bottomDrawerControllerWillTransitionClosed:(nonnull MDCBottomDrawerViewController *)controller
+                               withCoordinator:(nullable id<UIViewControllerTransitionCoordinator>)
+                                                   transitionCoordinator
+                                 targetYOffset:(CGFloat)targetYOffset {
+}
+
+- (void)bottomDrawerControllerDidEndCloseTransition:(MDCBottomDrawerViewController *)controller {
+}
+
+- (void)bottomDrawerControllerDidChangeTopYOffset:
+            (nonnull MDCBottomDrawerViewController *)controller
+                                          yOffset:(CGFloat)yOffset {
+}
 ```
-  public func bottomDrawerControllerWillTransitionOpen(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?, targetYOffset:CGFloat) {
-    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:targetYOffset)
-  }
 
-  public func bottomDrawerControllerDidEndOpenTransition(_ controller: MDCBottomDrawerViewController) {
-    NSLog("open transition ended")
-  }
+```swift
+public func bottomDrawerControllerWillTransitionOpen(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?, targetYOffset:CGFloat) {
+}
 
-  public func bottomDrawerControllerWillTransitionClosed(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?) {
-    // Drawer is transitioning off screen so lets move the floating view back to its initial position.
-    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:CGFloat.greatestFiniteMagnitude)
-  }
+public func bottomDrawerControllerDidEndOpenTransition(_ controller: MDCBottomDrawerViewController) {
+}
 
-  public func bottomDrawerControllerDidEndCloseTransition(_ controller: MDCBottomDrawerViewController) {
-    NSLog("close transition ended")
-  }
+public func bottomDrawerControllerWillTransitionClosed(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?) {
+}
 
-  public func bottomDrawerControllerDidChangeTopYOffset(_ controller: MDCBottomDrawerViewController, yOffset: CGFloat) {
-    self.transitionWith(controller, _transitionCoordinator: nil, yOffset:yOffset)
-  }
-  func transitionWith(_ controller: MDCBottomDrawerViewController, _transitionCoordinator: UIViewControllerTransitionCoordinator?, yOffset:CGFloat) {
-    NSLog("transition started")
-  }
+public func bottomDrawerControllerDidEndCloseTransition(_ controller: MDCBottomDrawerViewController) {
+}
+
+public func bottomDrawerControllerDidChangeTopYOffset(_ controller: MDCBottomDrawerViewController, yOffset: CGFloat) {
+}
+
+func transitionWith(_ controller: MDCBottomDrawerViewController, _transitionCoordinator: UIViewControllerTransitionCoordinator?, yOffset:CGFloat) {
+}
 ```
 
 ## Changes
