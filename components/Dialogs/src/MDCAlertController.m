@@ -495,6 +495,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  if (self.titleColor == nil) {
+    self.alertView.titleColor = UIColor.blackColor;
+  }
+  if (self.messageColor == nil) {
+    self.alertView.messageColor = UIColor.blackColor;
+  }
   // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
   if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
       CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
