@@ -19,14 +19,51 @@ textInputControllerOutlinedTextArea.minimumLines = 1;
 textInputControllerOutlinedTextArea.expandsOnOverflow = YES;
 ```
 
-MDCBottomDrawerPresentationControllerDelegate has many new methods. For example:
+MDCBottomDrawerPresentationControllerDelegate has new methods that allow clients to respond to animation lifecycle events and touches to the scrim.
 
-```objc
-- (void)bottomDrawerTopDidChangeYOffset:
-            (MDCBottomDrawerPresentationController *)presentationController
-                                yOffset:(CGFloat)yOffset {
-  // Make changes based off new information.
-}
+#### Touch events set to delegate
+
+Touch events are propagated to delegate to allow clients to interpret touches in the scrim area.
+
+```
+  navigationDrawer.shouldAutoDismissOnTap = false
+  navigationDrawer.shouldForwardTouchEvents = true
+...
+  override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+  }
+  public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+  }
+
+```
+
+### Animation events sent to delegate
+
+The animation lifecycle events are forwarded to the delegate so that clients can respond to them.
+
+```
+  public func bottomDrawerControllerWillTransitionOpen(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?, targetYOffset:CGFloat) {
+    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:targetYOffset)
+  }
+
+  public func bottomDrawerControllerDidEndOpenTransition(_ controller: MDCBottomDrawerViewController) {
+    NSLog("open transition ended")
+  }
+
+  public func bottomDrawerControllerWillTransitionClosed(_ controller: MDCBottomDrawerViewController, with transitionCoordinator: UIViewControllerTransitionCoordinator?) {
+    // Drawer is transitioning off screen so lets move the floating view back to its initial position.
+    self.transitionWith(controller, _transitionCoordinator: transitionCoordinator, yOffset:CGFloat.greatestFiniteMagnitude)
+  }
+
+  public func bottomDrawerControllerDidEndCloseTransition(_ controller: MDCBottomDrawerViewController) {
+    NSLog("close transition ended")
+  }
+
+  public func bottomDrawerControllerDidChangeTopYOffset(_ controller: MDCBottomDrawerViewController, yOffset: CGFloat) {
+    self.transitionWith(controller, _transitionCoordinator: nil, yOffset:yOffset)
+  }
+  func transitionWith(_ controller: MDCBottomDrawerViewController, _transitionCoordinator: UIViewControllerTransitionCoordinator?, yOffset:CGFloat) {
+    NSLog("transition started")
+  }
 ```
 
 ## Changes
