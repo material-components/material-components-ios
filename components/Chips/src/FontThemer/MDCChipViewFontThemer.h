@@ -24,8 +24,7 @@
  @warning This API is deprecated. Learn more at
  docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Use Chips+Theming instead.")
-@interface MDCChipViewFontThemer : NSObject
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewFontThemer : NSObject
 
 /**
  Applies the provided font scheme to the given Chip.
