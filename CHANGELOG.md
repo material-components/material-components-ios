@@ -1,18 +1,33 @@
-# #develop#
+# 92.4.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release addresses issues with Dialogs in Dark Mode, adds delegate methods for Navigation Drawer, and makes Outlined Text Areas more configurable.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+This minor release deprecates Chips+ChipThemer and MDCChipViewFontThemer.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+MDCTextInputControllerOutlinedTextArea now allows users to specify `minimumLines` and `expandsOnOverflow`.
 
-## Component changes
+```objc
+self.textFieldController =
+      [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
+MDCTextInputControllerOutlinedTextArea *textInputControllerOutlinedTextArea =
+    (MDCTextInputControllerOutlinedTextArea *)self.textFieldController;
+textInputControllerOutlinedTextArea.minimumLines = 1;
+textInputControllerOutlinedTextArea.expandsOnOverflow = YES;
+```
+
+MDCBottomDrawerPresentationControllerDelegate has many new methods. For example:
+
+```objc
+- (void)bottomDrawerTopDidChangeYOffset:
+            (MDCBottomDrawerPresentationController *)presentationController
+                                yOffset:(CGFloat)yOffset {
+  // Make changes based off new information.
+}
+```
 
 ## Changes
 
