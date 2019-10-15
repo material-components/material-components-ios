@@ -26,7 +26,7 @@ MDCBottomDrawerPresentationControllerDelegate has new methods that allow clients
 Touch events are propagated to delegate to allow clients to interpret touches in the scrim area.
 
 ```
-  navigationDrawer.shouldAutoDismissOnTap = false
+  navigationDrawer.dismissOnBackgroundTap = false
   navigationDrawer.shouldForwardTouchEvents = true
 ...
   override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
