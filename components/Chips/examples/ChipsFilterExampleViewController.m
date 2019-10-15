@@ -18,9 +18,10 @@
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
 
+#import "supplemental/ChipsExampleAssets.h"
+
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
-  MDCChipView *_sizingChip;
   NSMutableArray *_selectedIndecies;
   BOOL _isOutlined;
 }
@@ -29,6 +30,19 @@
   self = [super init];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.titles = @[
+      @"Doorman",
+      @"Elevator",
+      @"Garage Parking",
+      @"Gym",
+      @"Laundry in Building",
+      @"Green Building",
+      @"Parking Available",
+      @"Pets Allowed",
+      @"Pied-a-Terre Allowed",
+      @"Swimming Pool",
+      @"Smoke-free",
+    ];
   }
   return self;
 }
@@ -41,8 +55,13 @@
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                       collectionViewLayout:layout];
+  _collectionView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   // Filter chips should allow multiSelection, MDCChipCollectionViewCell manages the state of the
   // chip accordingly.
   _collectionView.allowsMultipleSelection = YES;
@@ -62,9 +81,6 @@
     _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
 
-  // This is used to calculate the size of each chip based on the chip setup
-  _sizingChip = [[MDCChipView alloc] init];
-
   [self.view addSubview:_collectionView];
 }
 
@@ -77,6 +93,17 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(switchStyle)];
+
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [_collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)switchStyle {
@@ -91,12 +118,6 @@
   }
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _collectionView.frame = self.view.bounds;
-}
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return self.titles.count;
@@ -108,10 +129,12 @@
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
 
+  chipView.mdc_adjustsFontForContentSizeCategory = YES;
+
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
-      [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [ChipsExampleAssets.doneImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   if (self.containerScheme.colorScheme) {
     chipView.selectedImageView.tintColor =
         [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
@@ -133,16 +156,6 @@
   return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  // The size of the chip depends on title, image and selection state.
-  _sizingChip.selected = [_selectedIndecies containsObject:indexPath];
-  _sizingChip.titleLabel.text = self.titles[indexPath.row];
-  _sizingChip.selectedImageView.image = [self doneImage];
-  return [_sizingChip sizeThatFits:collectionView.bounds.size];
-}
-
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [_selectedIndecies addObject:indexPath];
@@ -155,25 +168,6 @@
   [_selectedIndecies removeObject:indexPath];
   // Animating Chip Deselection
   [collectionView performBatchUpdates:nil completion:nil];
-}
-
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"Doorman",
-      @"Elevator",
-      @"Garage Parking",
-      @"Gym",
-      @"Laundry in Building",
-      @"Green Building",
-      @"Parking Available",
-      @"Pets Allowed",
-      @"Pied-a-Terre Allowed",
-      @"Swimming Pool",
-      @"Smoke-free",
-    ];
-  }
-  return _titles;
 }
 
 - (BOOL)shouldAnimateResize {

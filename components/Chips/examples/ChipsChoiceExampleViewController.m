@@ -19,16 +19,26 @@
 #import "MaterialContainerScheme.h"
 
 @interface ChipsChoiceExampleViewController ()
-@property(nonatomic, strong) MDCChipView *sizingChip;
 @property(nonatomic, assign, getter=isOutlined) BOOL outlined;
 @end
 
 @implementation ChipsChoiceExampleViewController
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (id)init {
   self = [super init];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.titles = @[
+      @"The Bronx",
+      @"Brooklyn",
+      @"Manhattan",
+      @"Queens",
+      @"Staten Island",
+    ];
   }
   return self;
 }
@@ -37,14 +47,16 @@
   [super loadView];
   self.view.backgroundColor = [UIColor whiteColor];
 
-  // This is used to calculate the size of each chip based on the chip setup
-  _sizingChip = [[MDCChipView alloc] init];
-
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                       collectionViewLayout:layout];
+  _collectionView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
   _collectionView.delaysContentTouches = NO;
@@ -66,7 +78,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self.sizingChip applyThemeWithScheme:self.containerScheme];
 
   self.outlined = NO;
   self.navigationItem.rightBarButtonItem =
@@ -74,6 +85,17 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(switchStyle)];
+
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [_collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)switchStyle {
@@ -89,12 +111,6 @@
   }
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _collectionView.frame = self.view.bounds;
-}
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return self.titles.count;
@@ -105,6 +121,8 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
+
+  chipView.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
@@ -118,27 +136,6 @@
   }
 
   return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  // The size of the chip depends on title here.
-  self.sizingChip.titleLabel.text = self.titles[indexPath.row];
-  return [self.sizingChip sizeThatFits:collectionView.bounds.size];
-}
-
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"The Bronx",
-      @"Brooklyn",
-      @"Manhattan",
-      @"Queens",
-      @"Staten Island",
-    ];
-  }
-  return _titles;
 }
 
 @end

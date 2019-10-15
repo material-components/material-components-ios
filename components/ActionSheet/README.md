@@ -110,10 +110,10 @@ let actionSheet = MDCActionSheetController(title: "Action Sheet",
                                            message: "Secondary line text")
 let actionOne = MDCActionSheetAction(title: "Home", 
                                      image: UIImage(named: "Home"), 
-                                     handler: { (action) in print("\(action.title) action")})
+                                     handler: { print("Home action" })
 let actionTwo = MDCActionSheetAction(title: "Email", 
                                      image: UIImage(named: "Email"), 
-                                     handler: { (action) in print("\(action.title) action")})
+                                     handler: { print("Email action" })
 actionSheet.addAction(actionOne)
 actionSheet.addAction(actionTwo)
 

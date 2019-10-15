@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsEarlGreyTests"
-  s.version      = "92.2.0"
+  s.version      = "92.3.1"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components EarlGrey tests."
   s.description  = "This spec is made for use in the MDC Catalog."
