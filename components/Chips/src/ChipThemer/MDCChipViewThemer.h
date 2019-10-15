@@ -24,8 +24,7 @@
  @warning This API is deprecated. Learn more at
  + docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Use Chips+Theming instead.")
-@interface MDCChipViewThemer : NSObject
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewThemer : NSObject
 
 /**
  Applies a chip view scheme's properties to an MDCChipView.
@@ -37,8 +36,8 @@ __deprecated_msg("Use Chips+Theming instead.")
  `MDCChipView`'s `-applyThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-+ (void)applyScheme:(nonnull id<MDCChipViewScheming>)scheme toChipView:(nonnull MDCChipView *)chip
-__deprecated_msg("Use Chips+Theming instead.");
++ (void)applyScheme:(nonnull id<MDCChipViewScheming>)scheme
+         toChipView:(nonnull MDCChipView *)chip __deprecated_msg("Use Chips+Theming instead.");
 
 /**
  Applies a chip view scheme's properties to an MDCChipView using the outlined style.
@@ -52,6 +51,6 @@ __deprecated_msg("Use Chips+Theming instead.");
  */
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCChipViewScheming>)scheme
                             toChipView:(nonnull MDCChipView *)chip
-__deprecated_msg("Use Chips+Theming instead.");
+    __deprecated_msg("Use Chips+Theming instead.");
 
 @end

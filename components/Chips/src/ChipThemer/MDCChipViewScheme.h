@@ -28,8 +28,7 @@
  @warning This API is deprecated. The replacement API is: `MDCContainerScheming`.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Use Chips+Theming instead.")
-@protocol MDCChipViewScheming
+__deprecated_msg("Use Chips+Theming instead.") @protocol MDCChipViewScheming
 
 /**
  The color scheme to apply to a chip view.
@@ -54,24 +53,24 @@ __deprecated_msg("Use Chips+Theming instead.")
  @warning This API is deprecated. The replacement API is: `MDCContainerScheme`.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Use Chips+Theming instead.")
-@interface MDCChipViewScheme : NSObject <MDCChipViewScheming>
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewScheme
+    : NSObject<MDCChipViewScheming>
 
 /**
  A mutable representation of a color scheme.
 
  By default, this is initialized with the latest color scheme defaults.
  */
-@property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme
-__deprecated_msg("Use Chips+Theming instead.");
+@property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme __deprecated_msg(
+    "Use Chips+Theming instead.");
 
 /**
  A mutable representation of a shape scheme.
 
  By default, this is initialized with the latest shape scheme defaults.
  */
-@property(nonnull, readwrite, nonatomic) id<MDCShapeScheming> shapeScheme
-__deprecated_msg("Use Chips+Theming instead.");
+@property(nonnull, readwrite, nonatomic) id<MDCShapeScheming> shapeScheme __deprecated_msg(
+    "Use Chips+Theming instead.");
 
 /**
  A mutable representation of a typography scheme.
@@ -79,6 +78,6 @@ __deprecated_msg("Use Chips+Theming instead.");
  By default, this is initialized with the latest typography scheme defaults.
  */
 @property(nonnull, readwrite, nonatomic) id<MDCTypographyScheming> typographyScheme
-__deprecated_msg("Use Chips+Theming instead.");
+    __deprecated_msg("Use Chips+Theming instead.");
 
 @end
