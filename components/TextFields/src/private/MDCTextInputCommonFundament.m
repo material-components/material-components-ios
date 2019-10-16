@@ -376,22 +376,20 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   ]];
 
   _leadingUnderlineTop = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
-                                                                attribute:NSLayoutAttributeTop
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:_underline
-                                                                attribute:NSLayoutAttributeBottom
-                                                               multiplier:1
-                                                                 constant:self.underlineLabelPadding];
+                                                      attribute:NSLayoutAttributeTop
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:_underline
+                                                      attribute:NSLayoutAttributeBottom
+                                                     multiplier:1
+                                                       constant:self.underlineLabelPadding];
 
-
-  _trailingUnderlineTop =
-      [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:_underline
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1
-                                    constant:self.underlineLabelPadding];
+  _trailingUnderlineTop = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
+                                                       attribute:NSLayoutAttributeTop
+                                                       relatedBy:NSLayoutRelationEqual
+                                                          toItem:_underline
+                                                       attribute:NSLayoutAttributeBottom
+                                                      multiplier:1
+                                                        constant:self.underlineLabelPadding];
 
   [NSLayoutConstraint activateConstraints:@[ _leadingUnderlineTop, _trailingUnderlineTop ]];
 
