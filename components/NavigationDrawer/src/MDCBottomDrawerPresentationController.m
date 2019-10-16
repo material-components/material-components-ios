@@ -22,6 +22,23 @@ static CGFloat kTopHandleHeight = (CGFloat)2.0;
 static CGFloat kTopHandleWidth = (CGFloat)24.0;
 static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
+/** View that allows touches that aren't handled from within the view to be propagated up the
+ responder chain. This is used to allow forwarding of tap events from the scrim view through to
+ the delegate if that has been enabled on the VC. */
+@interface MDCBottomDrawerScrimView : UIView
+@end
+
+@implementation MDCBottomDrawerScrimView
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  // Cause the responder chain to keep bubbling up and propagate touches from the scrim view thru
+  // to the presenting VC to possibly be handled by the drawer delegate.
+  UIView *view = [super hitTest:point withEvent:event];
+  return view == self ? nil : view;
+}
+
+@end
+
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
                                                      MDCBottomDrawerContainerViewControllerDelegate>
 
@@ -55,6 +72,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     _maximumInitialDrawerHeight = 0;
     _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _elevation = MDCShadowElevationNavDrawer;
+    _dismissOnBackgroundTap = YES;
   }
   return self;
 }
@@ -102,7 +120,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController = bottomDrawerContainerViewController;
   self.bottomDrawerContainerViewController.delegate = self;
 
-  self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
+  self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
   self.scrimView.backgroundColor =
       self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   self.scrimView.autoresizingMask =
@@ -174,14 +192,23 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
         self.scrimView.alpha = 1.0;
       }
                       completion:nil];
+
+  // Need to calculate the initial position of the drawer since the layout pass will
+  // not be complete before the animation begins.
+  CGRect frame = [self targetFrameOfDrawerContentOnPresentation];
+  [self.delegate bottomDrawerPresentTransitionWillBegin:self
+                                        withCoordinator:transitionCoordinator
+                                          targetYOffset:frame.origin.y];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
-  // Set up the tap recognizer to dimiss the drawer by.
-  UITapGestureRecognizer *tapGestureRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
-  [self.containerView addGestureRecognizer:tapGestureRecognizer];
-  tapGestureRecognizer.delegate = self;
+  if (self.dismissOnBackgroundTap) {
+    // Set up the tap recognizer to dimiss the drawer by.
+    UITapGestureRecognizer *tapGestureRecognizer =
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
+    [self.containerView addGestureRecognizer:tapGestureRecognizer];
+    tapGestureRecognizer.delegate = self;
+  }
 
   self.bottomDrawerContainerViewController.animatingPresentation = NO;
   [self.bottomDrawerContainerViewController.view setNeedsLayout];
@@ -189,9 +216,13 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }
+
+  [self.delegate bottomDrawerPresentTransitionDidEnd:self];
 }
 
 - (void)dismissalTransitionWillBegin {
+  self.bottomDrawerContainerViewController.animatingDismissal = YES;
+
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
   [transitionCoordinator
@@ -199,6 +230,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
         self.scrimView.alpha = 0.0;
       }
                       completion:nil];
+
+  [self.delegate bottomDrawerDismissTransitionWillBegin:self
+                                        withCoordinator:transitionCoordinator
+                                          targetYOffset:self.containerView.frame.size.height];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -213,12 +248,29 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }
+
+  self.bottomDrawerContainerViewController.animatingDismissal = NO;
+  [self.delegate bottomDrawerDismissTransitionDidEnd:self];
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
-
   [self.bottomDrawerContainerViewController.view layoutIfNeeded];
+}
+
+/** Estimate the target frame of the drawer content upon presentation. */
+- (CGRect)targetFrameOfDrawerContentOnPresentation {
+  CGSize containerSize = self.containerView.frame.size;
+  CGSize preferredSize = self.presentedViewController.preferredContentSize;
+
+  // Layout has yet to be completed so let's calculate the preferred height.
+  if (CGSizeEqualToSize(preferredSize, CGSizeZero)) {
+    preferredSize.height = self.bottomDrawerContainerViewController.maximumInitialDrawerHeight;
+    preferredSize.width = containerSize.width;
+  }
+
+  return CGRectMake(0, MAX(0.0f, containerSize.height - preferredSize.height), preferredSize.height,
+                    preferredSize.width);
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
@@ -314,6 +366,15 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                             completion:(void (^__nullable)(BOOL finished))completion {
   [self.bottomDrawerContainerViewController expandToFullscreenWithDuration:duration
                                                                 completion:completion];
+}
+
+- (void)bottomDrawerContainerViewControllerDidChangeYOffset:
+            (MDCBottomDrawerContainerViewController *)containerViewController
+                                                    yOffset:(CGFloat)yOffset {
+  id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopDidChangeYOffset:yOffset:)]) {
+    [strongDelegate bottomDrawerTopDidChangeYOffset:self yOffset:yOffset];
+  }
 }
 
 @end

@@ -419,8 +419,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.accessoryView = self.accessoryView;
   self.alertView.titleFont = self.titleFont;
   self.alertView.messageFont = self.messageFont;
-  self.alertView.titleColor = self.titleColor;
-  self.alertView.messageColor = self.messageColor;
+  self.alertView.titleColor = self.titleColor ?: UIColor.blackColor;
+  self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   if (self.backgroundColor) {

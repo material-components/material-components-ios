@@ -52,6 +52,24 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 @end
 
+/** View that allows touches that aren't handled from within the view to be propagated up the
+ responder chain. This is used to allow forwarding of tap events from the scroll view through to
+ the delegate if that has been enabled on the VC. */
+
+@interface MDCBottomDrawerScrollView : UIScrollView
+@end
+
+@implementation MDCBottomDrawerScrollView
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  // Cause the responder chain to keep bubbling up and propagate touches from the scroll view thru
+  // to the presenting VC to possibly be handled by the drawer delegate.
+  UIView *view = [super hitTest:point withEvent:event];
+  return view == self ? nil : view;
+}
+
+@end
+
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
 
 /**
@@ -639,6 +657,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1 : transitionPercentage;
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
                                                        transitionRatio:transitionPercentage];
+
   [self updateDrawerState:transitionPercentage];
   self.currentlyFullscreen =
       self.contentReachesFullscreen && headerTransitionToTop >= 1 && contentOffset.y > 0;
@@ -664,6 +683,21 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                         fullscreenHeaderHeight:fullscreenHeaderHeight];
   [self updateTopHeaderBottomShadowWithContentOffset:contentOffset];
   [self updateContentWithHeight:contentOffset.y];
+
+  // Calculate the current yOffset of the header and content.
+  CGFloat yOffset = self.contentViewController.view.frame.origin.y -
+                    self.headerViewController.view.frame.size.height - contentOffset.y;
+
+  // While animating open or closed, always send back the final target Y offset.
+  if (self.animatingPresentation) {
+    yOffset = self.contentHeaderTopInset;
+  }
+  if (self.animatingDismissal) {
+    yOffset = self.view.frame.size.height;
+  }
+
+  [self.delegate bottomDrawerContainerViewControllerDidChangeYOffset:self
+                                                             yOffset:MAX(0.0f, yOffset)];
 }
 
 - (void)updateContentHeaderWithTransitionToTop:(CGFloat)headerTransitionToTop
@@ -747,7 +781,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (UIScrollView *)scrollView {
   if (!_scrollView) {
-    _scrollView = [[UIScrollView alloc] init];
+    _scrollView = [[MDCBottomDrawerScrollView alloc] init];
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.alwaysBounceVertical = YES;
     _scrollView.backgroundColor = [UIColor clearColor];

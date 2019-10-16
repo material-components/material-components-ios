@@ -18,6 +18,8 @@
 #import "MaterialChips.h"
 #import "MaterialSlider.h"
 
+#import "supplemental/ChipsExampleAssets.h"
+
 @implementation ChipsSizingExampleViewController {
   MDCChipView *_chipView;
   MDCSlider *_widthSlider;
@@ -40,8 +42,8 @@
 
   _chipView = [[MDCChipView alloc] init];
   _chipView.titleLabel.text = @"Material";
-  _chipView.imageView.image = [self faceImage];
-  _chipView.accessoryView = [self deleteButton];
+  _chipView.imageView.image = ChipsExampleAssets.faceImage;
+  _chipView.accessoryView = ChipsExampleAssets.deleteButton;
   [_chipView applyThemeWithScheme:self.containerScheme];
   [self.view addSubview:_chipView];
 

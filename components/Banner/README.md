@@ -1,4 +1,4 @@
-<!-- This file was auto-generated using scripts/generate_readme Banner -->
+<!-- This file was auto-generated using ./scripts/generate_readme Banner -->
 
 # Banner
 

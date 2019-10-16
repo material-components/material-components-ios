@@ -8,7 +8,7 @@ path: /catalog/ripple/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Ripple -->
+<!-- This file was auto-generated using ./scripts/generate_readme Ripple -->
 
 # Ripple
 
