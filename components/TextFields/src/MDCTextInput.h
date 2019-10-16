@@ -119,6 +119,11 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  */
 @property(nonatomic, nonnull, strong, readonly) UILabel *leadingUnderlineLabel;
 
+/**
+ The padding between the underline and the underline labels. Defaults to 0.
+ */
+@property(nonatomic, assign) CGFloat underlineLabelPadding;
+
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
  UIContentSizeCategory changes.

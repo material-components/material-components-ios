@@ -25,7 +25,6 @@
 @property(nonatomic, strong) MDCTextInputControllerFilled *textFieldControllerFilled;
 @property(nonatomic, strong) MDCTextField *textFieldOutlined;
 @property(nonatomic, strong) MDCTextField *textFieldFilled;
-@property(nonatomic, strong) UITextField *uiTextField;
 @property(nonatomic, strong) UIImage *leadingImage;
 @property(nonatomic, strong) UIImage *trailingImage;
 
@@ -64,6 +63,30 @@
   self.textFieldOutlined = [[MDCTextField alloc] init];
   [self.view addSubview:self.textFieldOutlined];
   self.textFieldOutlined.translatesAutoresizingMaskIntoConstraints = NO;
+  self.textFieldOutlined.leadingUnderlineLabel.numberOfLines = 0;
+  self.textFieldOutlined.underlineLabelPadding = 10;
+
+  [NSLayoutConstraint constraintWithItem:self.textFieldOutlined
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:16].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.textFieldOutlined
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:-16].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.textFieldOutlined
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:240].active = YES;
 
   int characterCountMax = 25;
   self.textFieldOutlined.delegate = self;
@@ -73,6 +96,7 @@
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textFieldOutlined];
   self.textFieldControllerOutlined.placeholderText = @"MDCTextInputControllerOutlined";
   self.textFieldControllerOutlined.characterCountMax = characterCountMax;
+    [self.textFieldControllerOutlined setErrorText:@"Hello world this is an error text and it is really really long, potentially more than 1 line maybe 2 or something." errorAccessibilityValue:nil];
 
   [self.textFieldControllerOutlined mdc_setAdjustsFontForContentSizeCategory:YES];
 
@@ -80,25 +104,38 @@
   [self.view addSubview:self.textFieldFilled];
   self.textFieldFilled.translatesAutoresizingMaskIntoConstraints = NO;
 
+  [NSLayoutConstraint constraintWithItem:self.textFieldFilled
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:16].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.textFieldFilled
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:-16].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.textFieldFilled
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:120].active = YES;
+
   self.textFieldFilled.delegate = self;
 
   self.textFieldControllerFilled =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textFieldFilled];
   self.textFieldControllerFilled.placeholderText = @"MDCTextInputControllerFilled";
   self.textFieldControllerFilled.characterCountMax = characterCountMax;
+  [self.textFieldControllerFilled setErrorText:@"Hello world this is an error text and it is really really long, potentially more than 1 line maybe 2 or something." errorAccessibilityValue:nil];
+  self.textFieldFilled.leadingUnderlineLabel.numberOfLines = 0;
 
   [self.textFieldControllerFilled mdc_setAdjustsFontForContentSizeCategory:YES];
-
-  self.uiTextField = [[UITextField alloc] init];
-  self.uiTextField.backgroundColor = UIColor.lightGrayColor;
-  [self.view addSubview:self.uiTextField];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  self.textFieldFilled.frame = CGRectMake(16, 100, CGRectGetWidth(self.view.frame) - 32, 100);
-  self.uiTextField.frame = CGRectMake(16, 120, CGRectGetWidth(self.view.frame) - 32, 72);
 }
 
 #pragma mark - UITextFieldDelegate

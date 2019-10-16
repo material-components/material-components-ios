@@ -400,6 +400,14 @@
   return widthDidChange;
 }
 
+- (CGFloat)underlineLabelPadding {
+  return self.fundament.underlineLabelPadding;
+}
+
+- (void)setUnderlineLabelPadding:(CGFloat)underlineLabelPadding {
+  self.fundament.underlineLabelPadding = underlineLabelPadding;
+}
+
 #pragma mark - Touch (UIView)
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {

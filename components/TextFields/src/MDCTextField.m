@@ -768,6 +768,14 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   return self.inputLayoutStrut;
 }
 
+- (CGFloat)underlineLabelPadding {
+  return self.fundament.underlineLabelPadding;
+}
+
+- (void)setUnderlineLabelPadding:(CGFloat)underlineLabelPadding {
+  self.fundament.underlineLabelPadding = underlineLabelPadding;
+}
+
 #pragma mark - UITextField Notification Observation
 
 - (void)textFieldDidBeginEditing:(__unused NSNotification *)note {
