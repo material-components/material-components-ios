@@ -329,7 +329,9 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
-  cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
+  if (@available(iOS 10.0, *)) {
+    cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
+  }
   return cell;
 }
 
@@ -363,9 +365,10 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   }
 #endif
 
-  if (self.adjustsFontForContentSizeCategory) {
-    if (@available(iOS 10.0, *)) {
-      if (![self.traitCollection.preferredContentSizeCategory isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
+  if (@available(iOS 10.0, *)) {
+    if (self.adjustsFontForContentSizeCategory) {
+      if (![self.traitCollection.preferredContentSizeCategory
+              isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
         [self.view setNeedsLayout];
       }
     }
