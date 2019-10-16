@@ -1,6 +1,6 @@
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponentsBeta"
-  mdc.version      = "92.3.1"
+  mdc.version      = "92.4.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone alpha UI libraries that are not yet guaranteed to be ready for general production use. Use with caution."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
