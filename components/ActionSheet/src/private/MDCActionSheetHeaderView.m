@@ -213,7 +213,8 @@ static const CGFloat kMiddlePadding = 8;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   if (@available(iOS 10.0, *)) {
-    if (![previousTraitCollection.preferredContentSizeCategory isEqualToString:self.traitCollection.preferredContentSizeCategory]) {
+    if (![previousTraitCollection.preferredContentSizeCategory
+            isEqualToString:self.traitCollection.preferredContentSizeCategory]) {
       [self setNeedsLayout];
     }
   }

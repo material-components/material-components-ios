@@ -468,10 +468,12 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 }
 
 - (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
-  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-  self.header.titleLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
-  self.header.messageLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
-  [self updateTable];
+  if (@available(iOS 10.0, *)) {
+    _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+    self.header.titleLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+    self.header.messageLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+    [self updateTable];
+  }
 }
 
 #pragma mark - Table customization
