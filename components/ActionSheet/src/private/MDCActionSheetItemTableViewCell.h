@@ -27,6 +27,9 @@
 @property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
+/** Label for the action's title text. */
+@property(nonatomic, nonnull, readonly, strong) UILabel *actionLabel;
+
 @property(nonatomic, nonnull, strong) UIFont *actionFont;
 
 @property(nonatomic, strong, nullable) UIColor *actionTextColor;

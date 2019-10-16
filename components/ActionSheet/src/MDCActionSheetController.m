@@ -89,6 +89,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
@@ -328,6 +329,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
+  cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
   return cell;
 }
 
@@ -360,6 +362,14 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     }
   }
 #endif
+
+  if (self.adjustsFontForContentSizeCategory) {
+    if (@available(iOS 10.0, *)) {
+      if (![self.traitCollection.preferredContentSizeCategory isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
+        [self.view setNeedsLayout];
+      }
+    }
+  }
 
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
@@ -452,6 +462,13 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 - (void)updateFontsForDynamicType {
   [self updateTableFonts];
   [self.view setNeedsLayout];
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.header.titleLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+  self.header.messageLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+  [self updateTable];
 }
 
 #pragma mark - Table customization

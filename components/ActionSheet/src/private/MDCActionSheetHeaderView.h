@@ -21,6 +21,12 @@
 /** Header must be created with initWithFrame */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
+/** Shows the title of the Action Sheet. */
+@property(nonatomic, nonnull, strong, readonly) UILabel *titleLabel;
+
+/** Shows the message of the Action Sheet. */
+@property(nonatomic, nonnull, strong, readonly) UILabel *messageLabel;
+
 @property(nonatomic, nullable, copy) NSString *title;
 
 @property(nonatomic, nullable, copy) NSString *message;
