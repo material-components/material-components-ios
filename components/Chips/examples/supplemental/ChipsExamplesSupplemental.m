@@ -39,36 +39,6 @@
 
 @end
 
-@interface ChipsChoiceExampleViewController (Supplemental)
-@end
-
-@implementation ChipsChoiceExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Choice" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
-@interface ChipsActionExampleViewController (Supplemental)
-@end
-
-@implementation ChipsActionExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Action" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
 @interface ChipsCollectionExampleViewController (Supplemental)
 @end
 
@@ -77,18 +47,6 @@
 + (NSDictionary *)catalogMetadata {
   return @{
     @"breadcrumbs" : @[ @"Chips", @"Collections" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @NO,
-  };
-}
-
-@end
-
-@implementation ChipsCustomizedExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Customized" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
@@ -120,33 +78,6 @@
 
 @end
 
-@interface ChipsInputExampleViewController (Supplemental)
-@end
-
-@implementation ChipsInputExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Input" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
-@implementation ChipsSizingExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Sizing" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @NO,
-  };
-}
-
-@end
-
 @implementation ChipsTypicalUseViewController (Supplemental)
 
 + (NSDictionary *)catalogMetadata {
@@ -155,18 +86,6 @@
     @"description" : @"Chips are compact elements that represent an input, attribute, or action.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
-  };
-}
-
-@end
-
-@implementation ChipsShapingExampleViewController (Supplemental)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Chips", @"Shaped Chip" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @NO,
   };
 }
 

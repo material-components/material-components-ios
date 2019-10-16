@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
 
-@interface ChipsChoiceExampleViewController ()
+@interface ChipsChoiceExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, assign, getter=isOutlined) BOOL outlined;
 @end
 
@@ -31,8 +33,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.titles = @[
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _titles = @[
       @"The Bronx",
       @"Brooklyn",
       @"Manhattan",
@@ -45,6 +47,7 @@
 
 - (void)loadView {
   [super loadView];
+
   self.view.backgroundColor = [UIColor whiteColor];
 
   // Our preferred CollectionView Layout For chips
@@ -53,27 +56,27 @@
   MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
   layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
-                                       collectionViewLayout:layout];
-  _collectionView.autoresizingMask =
+  self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                           collectionViewLayout:layout];
+  self.collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
-  _collectionView.delaysContentTouches = NO;
+  self.collectionView.delaysContentTouches = NO;
 
   // Collection view setup
-  _collectionView.dataSource = self;
-  _collectionView.delegate = self;
-  _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
-  [_collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"Cell"];
+  self.collectionView.dataSource = self;
+  self.collectionView.delegate = self;
+  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
+  [self.collectionView registerClass:[MDCChipCollectionViewCell class]
+          forCellWithReuseIdentifier:@"Cell"];
 
   if (@available(iOS 11.0, *)) {
-    _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
 
-  [self.view addSubview:_collectionView];
+  [self.view addSubview:self.collectionView];
 }
 
 - (void)viewDidLoad {
@@ -95,19 +98,19 @@
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
-  [_collectionView.collectionViewLayout invalidateLayout];
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)switchStyle {
   self.outlined = !self.isOutlined;
   NSString *buttonTitle = self.isOutlined ? @"Filled Style" : @"Outlined Style";
   [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
-  NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
-  [_collectionView reloadData];
+  NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
+  [self.collectionView reloadData];
   for (NSIndexPath *path in indexPaths) {
-    [_collectionView selectItemAtIndexPath:path
-                                  animated:NO
-                            scrollPosition:UICollectionViewScrollPositionNone];
+    [self.collectionView selectItemAtIndexPath:path
+                                      animated:NO
+                                scrollPosition:UICollectionViewScrollPositionNone];
   }
 }
 
@@ -116,8 +119,8 @@
   return self.titles.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
@@ -136,6 +139,18 @@
   }
 
   return cell;
+}
+
+@end
+
+@implementation ChipsChoiceExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Choice" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
 }
 
 @end

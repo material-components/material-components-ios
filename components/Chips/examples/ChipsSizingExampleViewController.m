@@ -12,25 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialSlider.h"
 
 #import "supplemental/ChipsExampleAssets.h"
 
-@implementation ChipsSizingExampleViewController {
-  MDCChipView *_chipView;
-  MDCSlider *_widthSlider;
-  MDCSlider *_heightSlider;
-  UISegmentedControl *_horizontalAlignmentControl;
-}
+@interface ChipsSizingExampleViewController : UIViewController
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic, strong) MDCChipView *chipView;
+@property(nonatomic, strong) MDCSlider *widthSlider;
+@property(nonatomic, strong) MDCSlider *heightSlider;
+@property(nonatomic, strong) UISegmentedControl *horizontalAlignmentControl;
+@end
+
+@implementation ChipsSizingExampleViewController
 
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -40,73 +41,85 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _chipView = [[MDCChipView alloc] init];
-  _chipView.titleLabel.text = @"Material";
-  _chipView.imageView.image = ChipsExampleAssets.faceImage;
-  _chipView.accessoryView = ChipsExampleAssets.deleteButton;
-  [_chipView applyThemeWithScheme:self.containerScheme];
-  [self.view addSubview:_chipView];
+  self.chipView = [[MDCChipView alloc] init];
+  self.chipView.titleLabel.text = @"Material";
+  self.chipView.imageView.image = ChipsExampleAssets.faceImage;
+  self.chipView.accessoryView = ChipsExampleAssets.deleteButton;
+  [self.chipView applyThemeWithScheme:self.containerScheme];
+  [self.view addSubview:self.chipView];
 
-  CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
-  _chipView.frame = (CGRect){CGPointMake(20, 20), chipSize};
+  CGSize chipSize = [self.chipView sizeThatFits:self.view.bounds.size];
+  self.chipView.frame = (CGRect){CGPointMake(20, 20), chipSize};
 
-  _widthSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
-  _widthSlider.maximumValue = 200;
-  _widthSlider.value = _chipView.frame.size.width;
-  [_widthSlider addTarget:self
-                   action:@selector(widthSliderChanged:)
-         forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:_widthSlider];
+  self.widthSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
+  self.widthSlider.maximumValue = 200;
+  self.widthSlider.value = self.chipView.frame.size.width;
+  [self.widthSlider addTarget:self
+                       action:@selector(widthSliderChanged:)
+             forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:self.widthSlider];
 
-  _heightSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
-  _heightSlider.maximumValue = 100;
-  _heightSlider.value = _chipView.frame.size.height;
-  [_heightSlider addTarget:self
-                    action:@selector(heightSliderChanged:)
-          forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:_heightSlider];
+  self.heightSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
+  self.heightSlider.maximumValue = 100;
+  self.heightSlider.value = self.chipView.frame.size.height;
+  [self.heightSlider addTarget:self
+                        action:@selector(heightSliderChanged:)
+              forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:self.heightSlider];
 
-  _horizontalAlignmentControl =
+  self.horizontalAlignmentControl =
       [[UISegmentedControl alloc] initWithItems:@[ @"Default", @"Centered" ]];
-  _horizontalAlignmentControl.selectedSegmentIndex = 0;
-  [_horizontalAlignmentControl addTarget:self
-                                  action:@selector(horizontalAlignmentChanged:)
-                        forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:_horizontalAlignmentControl];
+  self.horizontalAlignmentControl.selectedSegmentIndex = 0;
+  [self.horizontalAlignmentControl addTarget:self
+                                      action:@selector(horizontalAlignmentChanged:)
+                            forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:self.horizontalAlignmentControl];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  CGSize sliderSize = [_widthSlider sizeThatFits:self.view.bounds.size];
-  _widthSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
-  _heightSlider.frame = CGRectMake(20, 140 + sliderSize.height + 20,
-                                   self.view.bounds.size.width - 40, sliderSize.height);
-  _horizontalAlignmentControl.frame =
-      CGRectMake(20, CGRectGetMaxY(_heightSlider.frame) + 20, self.view.bounds.size.width - 40,
-                 _horizontalAlignmentControl.frame.size.height);
+  CGSize sliderSize = [self.widthSlider sizeThatFits:self.view.bounds.size];
+  self.widthSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
+  self.heightSlider.frame = CGRectMake(20, 140 + sliderSize.height + 20,
+                                       self.view.bounds.size.width - 40, sliderSize.height);
+  self.horizontalAlignmentControl.frame =
+      CGRectMake(20, CGRectGetMaxY(self.heightSlider.frame) + 20, self.view.bounds.size.width - 40,
+                 self.horizontalAlignmentControl.frame.size.height);
 }
 
 - (void)widthSliderChanged:(MDCSlider *)slider {
-  CGRect frame = _chipView.frame;
+  CGRect frame = self.chipView.frame;
   frame.size.width = slider.value;
-  _chipView.frame = frame;
-  [_chipView layoutIfNeeded];
+  self.chipView.frame = frame;
+  [self.chipView layoutIfNeeded];
 }
 
 - (void)heightSliderChanged:(MDCSlider *)slider {
-  CGRect frame = _chipView.frame;
+  CGRect frame = self.chipView.frame;
   frame.size.height = slider.value;
-  _chipView.frame = frame;
-  [_chipView layoutIfNeeded];
+  self.chipView.frame = frame;
+  [self.chipView layoutIfNeeded];
 }
 
 - (void)horizontalAlignmentChanged:(UISegmentedControl *)segmentedControl {
   UIControlContentHorizontalAlignment alignment = (segmentedControl.selectedSegmentIndex == 0)
                                                       ? UIControlContentHorizontalAlignmentFill
                                                       : UIControlContentHorizontalAlignmentCenter;
-  _chipView.contentHorizontalAlignment = alignment;
-  [_chipView layoutIfNeeded];
+  self.chipView.contentHorizontalAlignment = alignment;
+  [self.chipView layoutIfNeeded];
+}
+
+@end
+
+@implementation ChipsSizingExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Sizing" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

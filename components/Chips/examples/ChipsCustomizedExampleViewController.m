@@ -12,16 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 #import "supplemental/ChipsExampleAssets.h"
 
-@implementation ChipsCustomizedExampleViewController {
-  UICollectionView *_collectionView;
-}
+@interface ChipsCustomizedExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@end
+
+@implementation ChipsCustomizedExampleViewController
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -30,8 +33,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.titles = @[
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _titles = @[
       @"Doorman",
       @"Elevator",
       @"Garage Parking",
@@ -77,20 +80,20 @@
   MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
   layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
-                                       collectionViewLayout:layout];
-  _collectionView.autoresizingMask =
+  self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                           collectionViewLayout:layout];
+  self.collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _collectionView.dataSource = self;
-  _collectionView.delegate = self;
-  _collectionView.allowsMultipleSelection = YES;
-  _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.delaysContentTouches = NO;
-  _collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
-  [_collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"MDCChipCollectionViewCell"];
+  self.collectionView.dataSource = self;
+  self.collectionView.delegate = self;
+  self.collectionView.allowsMultipleSelection = YES;
+  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.delaysContentTouches = NO;
+  self.collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
+  [self.collectionView registerClass:[MDCChipCollectionViewCell class]
+          forCellWithReuseIdentifier:@"MDCChipCollectionViewCell"];
 
-  [self.view addSubview:_collectionView];
+  [self.view addSubview:self.collectionView];
 }
 
 - (void)viewDidLoad {
@@ -105,7 +108,7 @@
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
-  [_collectionView.collectionViewLayout invalidateLayout];
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -113,8 +116,8 @@
   return self.titles.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"MDCChipCollectionViewCell"
                                                 forIndexPath:indexPath];
@@ -136,6 +139,18 @@
 - (void)collectionView:(UICollectionView *)collectionView
     didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
+}
+
+@end
+
+@implementation ChipsCustomizedExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Customized" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end
