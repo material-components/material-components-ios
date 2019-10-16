@@ -137,7 +137,6 @@
   textFieldZip.delegate = self;
   textFieldZip.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldZip.backgroundColor = [UIColor whiteColor];
-  textFieldZip.leadingUnderlineLabel.numberOfLines = 0;
 
   self.zipController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldZip];
   self.zipController.placeholderText = @"Zip Code";
@@ -327,7 +326,7 @@
     }
   } else if (textField == (UITextField *)self.zipController.textInput) {
     if ([textField.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length > 0) {
-      [self.zipController setErrorText:@"Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z"
+      [self.zipController setErrorText:@"Error: Zip can only contain numbers"
                errorAccessibilityValue:nil];
     } else if (textField.text.length > 5) {
       [self.zipController setErrorText:@"Error: Zip can only contain five digits"
@@ -390,7 +389,7 @@
 
   if (textField == (UITextField *)self.zipController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length > 0) {
-      [self.zipController setErrorText:@"Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z"
+      [self.zipController setErrorText:@"Error: Zip can only contain numbers"
                errorAccessibilityValue:nil];
     } else if (finishedString.length > 5) {
       [self.zipController setErrorText:@"Error: Zip can only contain five digits"

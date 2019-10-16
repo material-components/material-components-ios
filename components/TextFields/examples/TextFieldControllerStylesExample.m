@@ -23,8 +23,8 @@
 // Be sure to keep your controllers in memory somewhere like a property:
 @property(nonatomic, strong) MDCTextInputControllerOutlined *textFieldControllerOutlined;
 @property(nonatomic, strong) MDCTextInputControllerFilled *textFieldControllerFilled;
-@property(nonatomic, strong) MDCTextField *textFieldOutlined;
-@property(nonatomic, strong) MDCTextField *textFieldFilled;
+@property(nonatomic, strong) MDCTextInputControllerUnderline *textFieldControllerUnderline;
+
 @property(nonatomic, strong) UIImage *leadingImage;
 @property(nonatomic, strong) UIImage *trailingImage;
 
@@ -60,82 +60,163 @@
   // Default with Character Count and Floating Placeholder Text Fields
 
   // First the text field is added to the view hierarchy
-  self.textFieldOutlined = [[MDCTextField alloc] init];
-  [self.view addSubview:self.textFieldOutlined];
-  self.textFieldOutlined.translatesAutoresizingMaskIntoConstraints = NO;
-  self.textFieldOutlined.leadingUnderlineLabel.numberOfLines = 0;
-  self.textFieldOutlined.underlineLabelPadding = 10;
-
-  [NSLayoutConstraint constraintWithItem:self.textFieldOutlined
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:16].active = YES;
-  [NSLayoutConstraint constraintWithItem:self.textFieldOutlined
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:-16].active = YES;
-  [NSLayoutConstraint constraintWithItem:self.textFieldOutlined
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:240].active = YES;
+  MDCTextField *textFieldOutlined = [[MDCTextField alloc] init];
+  [self.scrollView addSubview:textFieldOutlined];
+  textFieldOutlined.translatesAutoresizingMaskIntoConstraints = NO;
 
   int characterCountMax = 25;
-  self.textFieldOutlined.delegate = self;
+  textFieldOutlined.delegate = self;
+  textFieldOutlined.clearButtonMode = UITextFieldViewModeAlways;
+
+  textFieldOutlined.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
+  textFieldOutlined.leadingViewMode = UITextFieldViewModeAlways;
+  textFieldOutlined.trailingView = [[UIImageView alloc] initWithImage:self.trailingImage];
+  textFieldOutlined.trailingViewMode = UITextFieldViewModeAlways;
 
   // Second the controller is created to manage the text field
   self.textFieldControllerOutlined =
-      [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textFieldOutlined];
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldOutlined];
   self.textFieldControllerOutlined.placeholderText = @"MDCTextInputControllerOutlined";
   self.textFieldControllerOutlined.characterCountMax = characterCountMax;
-    [self.textFieldControllerOutlined setErrorText:@"Hello world this is an error text and it is really really long, potentially more than 1 line maybe 2 or something." errorAccessibilityValue:nil];
 
   [self.textFieldControllerOutlined mdc_setAdjustsFontForContentSizeCategory:YES];
 
-  self.textFieldFilled = [[MDCTextField alloc] init];
-  [self.view addSubview:self.textFieldFilled];
-  self.textFieldFilled.translatesAutoresizingMaskIntoConstraints = NO;
+  MDCTextField *textFieldFilled = [[MDCTextField alloc] init];
+  [self.scrollView addSubview:textFieldFilled];
+  textFieldFilled.translatesAutoresizingMaskIntoConstraints = NO;
 
-  [NSLayoutConstraint constraintWithItem:self.textFieldFilled
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:16].active = YES;
-  [NSLayoutConstraint constraintWithItem:self.textFieldFilled
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:-16].active = YES;
-  [NSLayoutConstraint constraintWithItem:self.textFieldFilled
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.view
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:120].active = YES;
+  textFieldFilled.delegate = self;
+  textFieldFilled.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
-  self.textFieldFilled.delegate = self;
+  textFieldFilled.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
+  textFieldFilled.leadingViewMode = UITextFieldViewModeAlways;
+  textFieldFilled.trailingView = [[UIImageView alloc] initWithImage:self.trailingImage];
+  textFieldFilled.trailingViewMode = UITextFieldViewModeAlways;
 
   self.textFieldControllerFilled =
-      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textFieldFilled];
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:textFieldFilled];
   self.textFieldControllerFilled.placeholderText = @"MDCTextInputControllerFilled";
   self.textFieldControllerFilled.characterCountMax = characterCountMax;
-  [self.textFieldControllerFilled setErrorText:@"Hello world this is an error text and it is really really long, potentially more than 1 line maybe 2 or something." errorAccessibilityValue:nil];
-  self.textFieldFilled.leadingUnderlineLabel.numberOfLines = 0;
 
   [self.textFieldControllerFilled mdc_setAdjustsFontForContentSizeCategory:YES];
+
+  id<UILayoutSupport> topGuide = self.topLayoutGuide;
+  [NSLayoutConstraint
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:[topGuide]-[charMax]-[floating]"
+                                                  options:NSLayoutFormatAlignAllLeading |
+                                                          NSLayoutFormatAlignAllTrailing
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"topGuide" : topGuide,
+                                                      @"charMax" : textFieldOutlined,
+                                                      @"floating" : textFieldFilled
+                                                    }]];
+  [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeadingMargin
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTrailingMargin
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView
+                               attribute:NSLayoutAttributeTrailingMargin
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+
+  // Full Width Text Field
+  MDCTextField *textFieldUnderline = [[MDCTextField alloc] init];
+  [self.scrollView addSubview:textFieldUnderline];
+  textFieldUnderline.translatesAutoresizingMaskIntoConstraints = NO;
+
+  textFieldUnderline.delegate = self;
+  textFieldUnderline.clearButtonMode = UITextFieldViewModeUnlessEditing;
+
+  textFieldUnderline.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
+  textFieldUnderline.leadingViewMode = UITextFieldViewModeAlways;
+  textFieldUnderline.trailingView = [[UIImageView alloc] initWithImage:self.trailingImage];
+  textFieldUnderline.trailingViewMode = UITextFieldViewModeAlways;
+
+  self.textFieldControllerUnderline =
+      [[MDCTextInputControllerUnderline alloc] initWithTextInput:textFieldUnderline];
+  self.textFieldControllerUnderline.placeholderText = @"MDCTextInputControllerUnderline";
+  self.textFieldControllerUnderline.characterCountMax = characterCountMax;
+
+  [self.textFieldControllerUnderline mdc_setAdjustsFontForContentSizeCategory:YES];
+
+  [NSLayoutConstraint constraintWithItem:textFieldUnderline
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:textFieldFilled
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:1]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldUnderline
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeadingMargin
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldUnderline
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeTrailingMargin
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+
+  if (@available(iOS 11.0, *)) {
+    [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20]
+        .active = YES;
+    [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1
+                                  constant:-20]
+        .active = YES;
+  } else {
+    [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20]
+        .active = YES;
+    [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1
+                                  constant:-20]
+        .active = YES;
+  }
 }
 
 #pragma mark - UITextFieldDelegate
