@@ -43,9 +43,6 @@ static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
 /** The height of the bottom divider view. */
 static const CGFloat kBottomDividerHeight = 1;
 
-/// Default duration in seconds for selection change animations.
-static const NSTimeInterval kSelectionChangeAnimationDuration = 0.3;
-
 static NSString *const kSelectedImageKeyPath = @"selectedImage";
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
@@ -53,6 +50,9 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
 static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
 static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
+
+/// Default duration in seconds for selection change animations.
+const NSTimeInterval MDCTabBarSelectionChangeAnimationDuration = 0.3;
 
 @interface MDCTabBarView ()
 
@@ -117,7 +117,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView.userInteractionEnabled = NO;
     _selectionIndicatorView.tintColor = UIColor.blackColor;
-    _selectionIndicatorView.indicatorPathAnimationDuration = kSelectionChangeAnimationDuration;
+    _selectionIndicatorView.indicatorPathAnimationDuration = MDCTabBarSelectionChangeAnimationDuration;
     _selectionIndicatorView.indicatorPathTimingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
 
@@ -460,10 +460,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   CGRect frame = CGRectStandardize(self.itemViews[index].frame);
   return [coordinateSpace convertRect:frame fromCoordinateSpace:self];
-}
-
-- (CFTimeInterval)selectionChangeAnimationDuration {
-  return kSelectionChangeAnimationDuration;
 }
 
 - (CAMediaTimingFunction *)selectionChangeAnimationTimingFunction {
@@ -1078,9 +1074,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
     [CATransaction begin];
-    [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];
+    [CATransaction setAnimationDuration:MDCTabBarSelectionChangeAnimationDuration];
     [CATransaction setAnimationTimingFunction:easeInOutFunction];
-    [UIView animateWithDuration:self.selectionChangeAnimationDuration
+    [UIView animateWithDuration:MDCTabBarSelectionChangeAnimationDuration
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:animationBlock
