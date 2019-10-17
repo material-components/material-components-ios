@@ -117,7 +117,8 @@ const CFTimeInterval MDCTabBarSelectionChangeAnimationDuration = 0.3;
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView.userInteractionEnabled = NO;
     _selectionIndicatorView.tintColor = UIColor.blackColor;
-    _selectionIndicatorView.indicatorPathAnimationDuration = MDCTabBarSelectionChangeAnimationDuration;
+    _selectionIndicatorView.indicatorPathAnimationDuration =
+        MDCTabBarSelectionChangeAnimationDuration;
     _selectionIndicatorView.indicatorPathTimingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
 
