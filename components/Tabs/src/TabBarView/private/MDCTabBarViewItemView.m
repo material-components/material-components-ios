@@ -14,6 +14,8 @@
 
 #import "MDCTabBarViewItemView.h"
 
+#import "MDCTabBarView.h"
+
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "MaterialMath.h"
@@ -281,7 +283,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   };
 
   if (animated) {
-    [UIView animateWithDuration:0.3 animations:animationBlock];
+    [UIView animateWithDuration:MDCTabBarSelectionChangeAnimationDuration animations:animationBlock];
   } else {
     animationBlock();
   }
