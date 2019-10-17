@@ -49,6 +49,15 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
 };
 
 /**
+ The total duration for all animations that take place during a selection change.
+
+ This is guaranteed to be the total time between the start of the first animation and the end of
+ the last animation that takes place for selection changes. There may not be a specific animation
+ that has this exact duration.
+ */
+CG_EXTERN const CFTimeInterval MDCTabBarSelectionChangeAnimationDuration;
+
+/**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScrollView
@@ -100,15 +109,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCTabBarView *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection);
-
-/**
- The total duration for all animations that take place during a selection change.
-
- This is guaranteed to be the total time between the start of the first animation and the end of
- the last animation that takes place for selection changes. There may not be a specific animation
- that has this exact duration.
- */
-@property(nonatomic, readonly) CFTimeInterval selectionChangeAnimationDuration;
 
 /**
  The timing function used by the tab bar when selection changes are animated. This should be used
