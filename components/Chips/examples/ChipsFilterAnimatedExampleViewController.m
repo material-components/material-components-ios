@@ -21,3 +21,15 @@
 }
 
 @end
+
+@implementation ChipsFilterAnimatedExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Filter Animated" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+@end
