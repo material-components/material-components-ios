@@ -52,7 +52,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 /// Default duration in seconds for selection change animations.
-const NSTimeInterval MDCTabBarSelectionChangeAnimationDuration = 0.3;
+const CFTimeInterval MDCTabBarSelectionChangeAnimationDuration = 0.3;
 
 @interface MDCTabBarView ()
 
