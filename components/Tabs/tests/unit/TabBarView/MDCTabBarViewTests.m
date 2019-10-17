@@ -1240,7 +1240,7 @@ static UIImage *fakeImage(CGSize size) {
 
 - (void)testDefaultSelectionChangeAnimationDurationValue {
   // Then
-  XCTAssertEqualWithAccuracy(self.tabBarView.selectionChangeAnimationDuration, 0.3, 0.0001);
+  XCTAssertEqualWithAccuracy(MDCTabBarSelectionChangeAnimationDuration, 0.3, 0.0001);
 }
 
 - (void)testDefaultSelectionChangeAnimationTimingFunction {
