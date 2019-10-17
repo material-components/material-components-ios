@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+
+@interface ChipsCollectionExampleViewController : UICollectionViewController
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic) BOOL popRecognizerDelaysTouches;
+@end
 
 @implementation ChipsCollectionExampleViewController
 
@@ -50,18 +54,45 @@
           forCellWithReuseIdentifier:@"Cell"];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  self.popRecognizerDelaysTouches =
+      self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan;
+  self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+
+  self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan =
+      self.popRecognizerDelaysTouches;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return self.titles.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
+}
+
+@end
+
+@implementation ChipsCollectionExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Collections" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

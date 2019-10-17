@@ -175,3 +175,15 @@
 }
 
 @end
+
+@implementation ChipsFilterExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Filter" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
+}
+
+@end
