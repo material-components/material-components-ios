@@ -151,6 +151,9 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:action];
+  if (self.alwaysAlignTitleLeadingEdges && action.image) {
+    self.addLeadingPaddingToCell = YES;
+  }
   [self updateTable];
 }
 
