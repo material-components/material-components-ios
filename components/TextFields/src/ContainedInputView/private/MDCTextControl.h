@@ -122,6 +122,19 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 @property(nonatomic, assign, readonly) CGRect containerFrame;
 
 /**
+ This API allows the user to override the default height of the container. The container is the
+ rectangle within the view where the where the text input happens. It is located above the assistive
+ label area. It is the area inside the outline of an Outlined MDCTextControl and it refers to the
+ filled area in a Filled MDCTextControl. If this property is set to a value that's lower than the
+ default main content area height the value will be ignored in the calculation of the view's @c
+ intrinsicContentSize.
+
+ @note This property is not publicly exposed at this time. After the TextField has been in the wild
+ for some time we will decide to either delete this functionality or make it accessible to users.
+ */
+@property(nonatomic, assign) CGFloat preferredContainerHeight;
+
+/**
  The number of rows of text the MDCTextControl shows at one time. For textfields, this will always
  be 1. For other views it can be more than that.
  */
@@ -149,13 +162,15 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 - (UIFont *_Nonnull)floatingFontWithNormalFont:(nonnull UIFont *)font;
 
 /**
- This method returns an object that tells the view where to position it's views
+ This method returns an object that tells the view where to position its views
  vertically.
  */
 - (nonnull id<MDCTextControlVerticalPositioningReference>)
     positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                               normalFontLineHeight:(CGFloat)normalFontLineHeight
                                      textRowHeight:(CGFloat)textRowHeight
-                                  numberOfTextRows:(CGFloat)numberOfTextRows;
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
 @end

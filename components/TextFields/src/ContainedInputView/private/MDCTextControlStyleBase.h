@@ -18,8 +18,7 @@
 #import "MDCTextControl.h"
 
 /**
- A base implementation of MDCTextControlStyle. This is only used for base text controls, i.e.
- ones that are not filled or outlined.
+ A base implementation of MDCTextControlStyle.
  */
 @interface MDCTextControlStyleBase : NSObject <MDCTextControlStyle>
 @end
