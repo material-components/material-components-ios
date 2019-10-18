@@ -25,6 +25,16 @@ class ToggleButtonCell: MDCCardCollectionCell {
     return imageView
   }()
 
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setCustomToggleButton()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    setCustomToggleButton()
+  }
+
   func setCardImage(named imageName: String) {
 
     let bundle = Bundle(for: ToggleButtonCell.self)
@@ -36,17 +46,21 @@ class ToggleButtonCell: MDCCardCollectionCell {
     }
   }
 
+  /// Customize the toggle button icons of the cell, and making the cell selectable to enable its
+  /// toggle button behavior.
   func setCustomToggleButton() {
+    // Render the icon images as templates so they can be tinted.
     let bundle = Bundle(for: ToggleButtonCell.self)
     let selectedIcon = UIImage(named: "ic_favorite_24dp", in: bundle, compatibleWith: nil)?
       .withRenderingMode(.alwaysTemplate)
     let unselectedIcon = UIImage(named: "ic_favorite_border_24dp", in: bundle, compatibleWith: nil)?
       .withRenderingMode(.alwaysTemplate)
 
+    // Set the toggle button image and tint color.
     setImage(selectedIcon, for: .selected)
     setImage(unselectedIcon, for: .normal)
-    setImageTintColor(.white, for: .normal)
 
+    // Enable toggle button behavior in the card
     isSelectable = true
   }
 

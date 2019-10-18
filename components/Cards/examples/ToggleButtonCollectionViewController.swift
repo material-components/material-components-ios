@@ -94,17 +94,18 @@ extension ToggleButtonCollectionViewController {
   override func collectionView(
     _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
+    // Get our custom ToggleButtonCell with a custom toggle icon and the toggle mode enabled.
     let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: String(describing: ToggleButtonCell.self), for: indexPath)
     guard let cardCell = cell as? ToggleButtonCell else { return cell }
 
     let imagedata = dataSource[indexPath.item]
-    cardCell.applyTheme(withScheme: containerScheme) // apply the Material theme to the cards
     cardCell.setCardImage(named: imagedata.image)    // set the card's image based on the datasource
-    cardCell.setCustomToggleButton()                 // set the custom selected & unselected icons
 
-    cardCell.isSelectable = true                     // enable toggle button behavior in the card
-    cardCell.isSelected = imagedata.selected         // set the default state of the card
+    cardCell.applyTheme(withScheme: containerScheme) // apply the Material theme to the cards
+    cardCell.setImageTintColor(.white, for: .normal) // override the default toggle button color
+
+    cardCell.isSelected = imagedata.selected         // set the default selected state of the card
     if imagedata.selected {
       collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
     }
