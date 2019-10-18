@@ -34,8 +34,8 @@ class ToggleButtonCollectionViewController: UICollectionViewController,
   var dataSource = [
     (image: "toggle-button-image1", accessibilityLabel: "Creek", selected: false),
     (image: "toggle-button-image4", accessibilityLabel: "Bridge", selected: true),
-    (image: "toggle-button-image2", accessibilityLabel: "Street", selected: false),
-    (image: "toggle-button-image3", accessibilityLabel: "Vine", selected: true),
+    (image: "toggle-button-image2", accessibilityLabel: "Street", selected: true),
+    (image: "toggle-button-image3", accessibilityLabel: "Vine", selected: false),
     (image: "toggle-button-image1", accessibilityLabel: "Creek", selected: false),
     (image: "toggle-button-image4", accessibilityLabel: "Bridge", selected: false),
     (image: "toggle-button-image2", accessibilityLabel: "Street", selected: false),
@@ -95,12 +95,12 @@ extension ToggleButtonCollectionViewController {
     _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
 
-    // Get our custom ToggleButtonCell with a custom toggle icon and the toggle mode enabled.
+    // Get our custom cell, which is a card cell subclass, with a custom toggle icon.
     let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: String(describing: ToggleButtonCell.self), for: indexPath)
     guard let cardCell = cell as? ToggleButtonCell else { return cell }
 
-    // Get the cell's data from the data source.
+    // Get the card cell's data from the data source.
     let imagedata = dataSource[indexPath.item]
 
     // Set the card's image based on the datasource.
@@ -110,6 +110,9 @@ extension ToggleButtonCollectionViewController {
     // button color. In this example, we've overriden it with a white color.
     cardCell.applyTheme(withScheme: containerScheme)
     cardCell.setImageTintColor(.white, for: .normal) // Override the default toggle color.
+
+    // Enable toggle button behavior in the card.
+    cardCell.isSelectable = true
 
     // Select the card based on its state in the data source.
     cardCell.isSelected = imagedata.selected
