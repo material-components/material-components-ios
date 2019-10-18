@@ -79,6 +79,7 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
+  self.font = [self uiTextFieldDefaultFont];
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
@@ -496,12 +497,7 @@
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
-  static dispatch_once_t onceToken;
-  static UIFont *font;
-  dispatch_once(&onceToken, ^{
-    font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-  });
-  return font;
+  return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
 #pragma mark MDCTextControlState

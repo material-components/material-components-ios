@@ -40,9 +40,11 @@
 - (void)commonMDCTextControlAssistiveLabelViewInit {
   self.leftAssistiveLabel = [[UILabel alloc] init];
   self.leftAssistiveLabel.numberOfLines = 0;
+  self.leftAssistiveLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
   [self addSubview:self.leftAssistiveLabel];
   self.rightAssistiveLabel = [[UILabel alloc] init];
   self.rightAssistiveLabel.numberOfLines = 0;
+  self.rightAssistiveLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
   [self addSubview:self.rightAssistiveLabel];
 }
 
