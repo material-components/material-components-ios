@@ -39,9 +39,9 @@ class ToggleButtonCell: MDCCardCollectionCell {
 
   func setCustomToggleButton() {
     let bundle = Bundle(for: ToggleButtonCell.self)
-    let selectedIcon = UIImage(named: "selected", in: bundle, compatibleWith: nil)?
+    let selectedIcon = UIImage(named: "ic_favorite_24dp", in: bundle, compatibleWith: nil)?
       .withRenderingMode(.alwaysTemplate)
-    let unselectedIcon = UIImage(named: "unselected", in: bundle, compatibleWith: nil)?
+    let unselectedIcon = UIImage(named: "ic_favorite_border_24dp", in: bundle, compatibleWith: nil)?
       .withRenderingMode(.alwaysTemplate)
 
     setImage(selectedIcon, for: .selected)
