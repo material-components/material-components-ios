@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
-
 import MaterialComponents.MaterialCards_Theming
+import UIKit
 
 class ToggleButtonCell: MDCCardCollectionCell {
 
@@ -29,7 +28,7 @@ class ToggleButtonCell: MDCCardCollectionCell {
   func setCardImage(named imageName: String) {
 
     let bundle = Bundle(for: ToggleButtonCell.self)
-    imageView.image  = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+    imageView.image = UIImage(named: imageName, in: bundle, compatibleWith: nil)
 
     if imageView.superview == nil {
       contentView.addSubview(imageView)
@@ -57,20 +56,25 @@ class ToggleButtonCell: MDCCardCollectionCell {
         contentView.leftAnchor.constraint(equalTo: imageView.leftAnchor),
         contentView.rightAnchor.constraint(equalTo: imageView.rightAnchor),
         contentView.topAnchor.constraint(equalTo: imageView.topAnchor),
-        contentView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)])
+        contentView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
+      ])
     } else {
       preiOS11Constraints()
     }
   }
 
   func preiOS11Constraints() {
-    imageView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
-                                                            options: [],
-                                                            metrics: nil,
-                                                            views: ["view": contentView]))
-    imageView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
-                                                            options: [],
-                                                            metrics: nil,
-                                                            views: ["view": contentView]))
+    imageView.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[view]|",
+        options: [],
+        metrics: nil,
+        views: ["view": contentView]))
+    imageView.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[view]|",
+        options: [],
+        metrics: nil,
+        views: ["view": contentView]))
   }
 }

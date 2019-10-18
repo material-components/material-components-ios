@@ -17,13 +17,11 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-/**
- This example uses a custom toggle button in Cards. It uses a custom class (ToggleButtonCell), which
- is a subclass of MDCCardCollectionCell (a UICollectionCell subclass). ToggleButtonCell sets the
- card's image, its selected and unselecte icons, and the tint color of the selected/unselected icon.
- This example then customizes the cells while enabling the goggle button in
- [collectionView:cellForItemAt:].
- */
+/// This example uses a custom toggle button in Cards. It uses a custom class (ToggleButtonCell),
+/// which is a subclass of MDCCardCollectionCell (a UICollectionCell subclass). ToggleButtonCell
+/// sets the card's image, its selected and unselecte icons, and the tint color of the selected and
+/// unselected icon. This ToggleButtonCollectionViewController class customizes the collection cells
+/// and enables the toggle button in [collectionView:cellForItemAt:].
 
 class ToggleButtonCollectionViewController: UICollectionViewController,
   UICollectionViewDelegateFlowLayout
@@ -70,6 +68,13 @@ class ToggleButtonCollectionViewController: UICollectionViewController,
     self.title = "Cards Toggle Button"
   }
 
+  override func viewWillTransition(
+    to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator
+  ) {
+    super.viewWillTransition(to: size, with: coordinator)
+    // Recalculate cell size when orientation changes
+    collectionView.collectionViewLayout.invalidateLayout()
+  }
 }
 
 // MARK: UICollectionViewDataSource
@@ -104,7 +109,7 @@ extension ToggleButtonCollectionViewController {
       collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
     }
 
-    cardCell.isAccessibilityElement = true           // make sure the card is accessible
+    cardCell.isAccessibilityElement = true            // make sure the card is accessible
     cardCell.accessibilityLabel = imagedata.accessibilityLabel
     return cardCell
   }
