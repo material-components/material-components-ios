@@ -377,4 +377,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
 }
 
+- (void)bottomDrawerContainerViewControllerDidUpdateValueForScrollViewIsScrolledToBottom:
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                                                            scrollViewIsScrolledToBottom:
+                                                                (BOOL)scrollViewIsScrolledToBottom {
+  self.scrimView.hidden = scrollViewIsScrolledToBottom;
+}
+
 @end
