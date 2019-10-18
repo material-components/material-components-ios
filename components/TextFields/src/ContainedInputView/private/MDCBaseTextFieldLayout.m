@@ -14,8 +14,8 @@
 
 #import "MDCBaseTextFieldLayout.h"
 
-#import "MaterialMath.h"
 #import "MDCTextControlLabelState.h"
+#import "MaterialMath.h"
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
