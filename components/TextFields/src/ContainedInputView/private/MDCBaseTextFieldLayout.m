@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "MDCBaseTextFieldLayout.h"
+
+#import "MaterialMath.h"
 #import "MDCTextControlLabelState.h"
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
@@ -375,7 +377,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   if (assistiveLabelViewMaxY > maxY) {
     maxY = assistiveLabelViewMaxY;
   }
-  return maxY;
+  return MDCCeil(maxY);
 }
 
 @end
