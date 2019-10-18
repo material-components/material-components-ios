@@ -478,9 +478,13 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 - (void)setAlwaysAlignTitleLeadingEdges:(BOOL)alignTitles {
   _alwaysAlignTitleLeadingEdges = alignTitles;
-  // Check to make sure at least one action has an image. If not then all actions will align already
-  // and we don't need to add padding.
-  self.addLeadingPaddingToCell = [self anyActionHasAnImage];
+  if (alignTitles) {
+    // Check to make sure at least one action has an image. If not then all actions will align
+    // already and we don't need to add padding.
+    self.addLeadingPaddingToCell = [self anyActionHasAnImage];
+  } else {
+    self.addLeadingPaddingToCell = NO;
+  }
   [self.tableView reloadData];
 }
 
