@@ -41,7 +41,6 @@ target "MDCCatalog" do
     'LibraryInfo/UnitTests',
     'List/UnitTests',
     'List+Theming/UnitTests',
-    'MaskedTransition/UnitTests',
     'NavigationBar/UnitTests',
     'NavigationDrawer/UnitTests',
     'OverlayWindow/UnitTests',

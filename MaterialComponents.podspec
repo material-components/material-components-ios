@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "92.3.1"
+  mdc.version      = "92.4.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -822,8 +822,8 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ShapeThemer"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/schemes/Container"
+    extension.dependency "MaterialComponents/Typography"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -1341,29 +1341,6 @@ Pod::Spec.new do |mdc|
         "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
-  end
-
-  # MaskedTransition
-
-  mdc.subspec "MaskedTransition" do |component|
-    component.ios.deployment_target = '9.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = [
-      "components/#{component.base_name}/src/*.{h,m}",
-      "components/#{component.base_name}/src/private/*.{h,m}"
-    ]
-
-    component.dependency "MotionTransitioning", "~> 5.0"
-    component.dependency "MotionAnimator", "~> 2.0"
-    component.dependency "MotionInterchange", "~> 1.0"
-
-    component.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
-        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 

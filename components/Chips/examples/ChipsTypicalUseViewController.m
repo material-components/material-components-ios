@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExampleAssets.h"
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+
+#import "supplemental/ChipsExampleAssets.h"
 
 @interface ChipModel : NSObject
 @property(nonatomic, strong) NSString *title;
@@ -25,7 +24,11 @@
 @property(nonatomic, assign) BOOL showDeleteButton;
 @end
 
-@implementation ChipModel
+@interface ChipsTypicalUseViewController
+    : UICollectionViewController <UICollectionViewDelegateFlowLayout>
+@property(nonatomic, strong) NSArray<ChipModel *> *model;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic) BOOL popRecognizerDelaysTouches;
 @end
 
 static ChipModel *MakeModel(NSString *title,
@@ -39,6 +42,9 @@ static ChipModel *MakeModel(NSString *title,
   chip.showDeleteButton = showDeleteButton;
   return chip;
 };
+
+@implementation ChipModel
+@end
 
 @implementation ChipsTypicalUseViewController
 
@@ -105,6 +111,21 @@ static ChipModel *MakeModel(NSString *title,
   [self updateClearButton];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  self.popRecognizerDelaysTouches =
+      self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan;
+  self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+
+  self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan =
+      self.popRecognizerDelaysTouches;
+}
+
 - (void)contentSizeCategoryDidChange {
   [self.collectionView.collectionViewLayout invalidateLayout];
 }
@@ -128,8 +149,8 @@ static ChipModel *MakeModel(NSString *title,
   return self.model.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
@@ -151,6 +172,19 @@ static ChipModel *MakeModel(NSString *title,
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
   [self updateClearButton];
+}
+
+@end
+
+@implementation ChipsTypicalUseViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Chips" ],
+    @"description" : @"Chips are compact elements that represent an input, attribute, or action.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
 }
 
 @end
