@@ -590,6 +590,77 @@ static NSString *controlStateDescription(UIControlState controlState) {
                 self.button.titleLabel.font);
 }
 
+- (void)testTitleFontForStateDisabledAfterSettingFontsPreventsFontChange {
+  // Given
+  UIFont *normalFont = [UIFont systemFontOfSize:10];
+  UIFont *selectedFont = [UIFont systemFontOfSize:40];
+  UIFont *directlyAssignedFont = [UIFont systemFontOfSize:25];
+  [self.button setTitleFont:normalFont forState:UIControlStateNormal];
+  [self.button setTitleFont:selectedFont forState:UIControlStateSelected];
+
+  // When
+  self.button.enableTitleFontForState = NO;
+  self.button.titleLabel.font = directlyAssignedFont;
+  self.button.selected = YES;
+
+  // Then
+  XCTAssertEqualObjects(self.button.titleLabel.font, directlyAssignedFont);
+}
+
+- (void)testTitleFontForStateDisabledBeforeSettingFontsPreventsFontChange {
+  // Given
+  UIFont *normalFont = [UIFont systemFontOfSize:10];
+  UIFont *selectedFont = [UIFont systemFontOfSize:40];
+  UIFont *directlyAssignedFont = [UIFont systemFontOfSize:25];
+  self.button.enableTitleFontForState = NO;
+  self.button.titleLabel.font = directlyAssignedFont;
+
+  // When
+  [self.button setTitleFont:normalFont forState:UIControlStateNormal];
+  [self.button setTitleFont:selectedFont forState:UIControlStateSelected];
+  self.button.selected = YES;
+
+  // Then
+  XCTAssertEqualObjects(self.button.titleLabel.font, directlyAssignedFont);
+}
+
+- (void)testTitleFontForStateReenabledDoesNotImmediatelyUpdateFont {
+  // Given
+  UIFont *normalFont = [UIFont systemFontOfSize:10];
+  UIFont *selectedFont = [UIFont systemFontOfSize:40];
+  UIFont *directlyAssignedFont = [UIFont systemFontOfSize:25];
+  self.button.enableTitleFontForState = NO;
+  [self.button setTitleFont:normalFont forState:UIControlStateNormal];
+  [self.button setTitleFont:selectedFont forState:UIControlStateSelected];
+  self.button.titleLabel.font = directlyAssignedFont;
+  self.button.selected = YES;
+
+  // When
+  self.button.enableTitleFontForState = YES;
+
+  // Then
+  XCTAssertEqualObjects(self.button.titleLabel.font, directlyAssignedFont);
+}
+
+- (void)testTitleFontForStateReenabledUpdatesFontsOnNextStateChange {
+  // Given
+  UIFont *normalFont = [UIFont systemFontOfSize:10];
+  UIFont *selectedFont = [UIFont systemFontOfSize:40];
+  UIFont *directlyAssignedFont = [UIFont systemFontOfSize:25];
+  self.button.enableTitleFontForState = NO;
+  [self.button setTitleFont:normalFont forState:UIControlStateNormal];
+  [self.button setTitleFont:selectedFont forState:UIControlStateSelected];
+  self.button.titleLabel.font = directlyAssignedFont;
+  self.button.selected = YES;
+
+  // When
+  self.button.enableTitleFontForState = YES;
+  self.button.selected = NO;
+
+  // Then
+  XCTAssertEqualObjects(self.button.titleLabel.font, normalFont);
+}
+
 #pragma mark - shadowColor:forState:
 
 - (void)testRemovedShadowColorForState {
