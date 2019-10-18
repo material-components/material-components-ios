@@ -35,7 +35,7 @@ class ToggleButtonCollectionViewController: UICollectionViewController,
     (image: "toggle-button-image1", accessibilityLabel: "Creek", selected: false),
     (image: "toggle-button-image4", accessibilityLabel: "Bridge", selected: true),
     (image: "toggle-button-image2", accessibilityLabel: "Street", selected: false),
-    (image: "toggle-button-image3", accessibilityLabel: "Vine", selected: false),
+    (image: "toggle-button-image3", accessibilityLabel: "Vine", selected: true),
     (image: "toggle-button-image1", accessibilityLabel: "Creek", selected: false),
     (image: "toggle-button-image4", accessibilityLabel: "Bridge", selected: false),
     (image: "toggle-button-image2", accessibilityLabel: "Street", selected: false),
@@ -94,23 +94,31 @@ extension ToggleButtonCollectionViewController {
   override func collectionView(
     _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
+
     // Get our custom ToggleButtonCell with a custom toggle icon and the toggle mode enabled.
     let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: String(describing: ToggleButtonCell.self), for: indexPath)
     guard let cardCell = cell as? ToggleButtonCell else { return cell }
 
+    // Get the cell's data from the data source.
     let imagedata = dataSource[indexPath.item]
-    cardCell.setCardImage(named: imagedata.image)    // set the card's image based on the datasource
 
-    cardCell.applyTheme(withScheme: containerScheme) // apply the Material theme to the cards
-    cardCell.setImageTintColor(.white, for: .normal) // override the default toggle button color
+    // Set the card's image based on the datasource.
+    cardCell.setCardImage(named: imagedata.image)
 
-    cardCell.isSelected = imagedata.selected         // set the default selected state of the card
+    // Apply the Material theme to the cards, which uses the primary color to theme the toggle
+    // button color. In this example, we've overriden it with a white color.
+    cardCell.applyTheme(withScheme: containerScheme)
+    cardCell.setImageTintColor(.white, for: .normal) // Override the default toggle color.
+
+    // Select the card based on its state in the data source.
+    cardCell.isSelected = imagedata.selected
     if imagedata.selected {
       collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
     }
 
-    cardCell.isAccessibilityElement = true            // make sure the card is accessible
+    // Ensure the card is accessible.
+    cardCell.isAccessibilityElement = true
     cardCell.accessibilityLabel = imagedata.accessibilityLabel
     return cardCell
   }
