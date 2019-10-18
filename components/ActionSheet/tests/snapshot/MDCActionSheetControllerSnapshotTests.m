@@ -664,7 +664,7 @@ static NSString *const kLongTitle5Arabic =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
 
   // When
-  // Enable early due to previous bug in #8609
+  // Enable early to guard against implementation bugs identified in #8609
   controller.alwaysAlignTitleLeadingEdges = YES;
   [controller addAction:action1];
   [controller addAction:action2];
@@ -753,7 +753,7 @@ static NSString *const kLongTitle5Arabic =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
 
   // When
-  // Enable early due to previous bug in #8609
+  // Enable early to guard against implementation bugs identified in #8609
   controller.alwaysAlignTitleLeadingEdges = YES;
   [controller addAction:action1];
   [controller addAction:action2];
