@@ -123,10 +123,10 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 
 /**
  This API allows the user to override the default height of the container. The container is the
- rectangle within the view where the where the text input happens. It is located above the assistive
- label area. It is the area inside the outline of an Outlined MDCTextControl and it refers to the
- filled area in a Filled MDCTextControl. If this property is set to a value that's lower than the
- default main content area height the value will be ignored in the calculation of the view's @c
+ rectangle within the MDCTextControl where the text input happens. It is located above the assistive
+ label area. It is the area inside the outline of an Outlined MDCTextControl and it is the
+ filled area in a Filled MDCTextControl. If this property is set to a value that's smaller than the
+ default height of the container this value will be ignored in the calculation of the view's @c
  intrinsicContentSize.
 
  @note This property is not publicly exposed at this time. After the TextField has been in the wild
