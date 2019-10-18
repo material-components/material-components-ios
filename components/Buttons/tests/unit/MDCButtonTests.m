@@ -590,6 +590,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
                 self.button.titleLabel.font);
 }
 
+/**
+ Verifies that disabling the @c titleFont:forState: APIs after setting fonts preserves the
+ directly-assigned font on the button's @c titleLabel.
+ */
 - (void)testTitleFontForStateDisabledAfterSettingFontsPreventsFontChange {
   // Given
   UIFont *normalFont = [UIFont systemFontOfSize:10];
@@ -607,6 +611,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualObjects(self.button.titleLabel.font, directlyAssignedFont);
 }
 
+/**
+ Verifies that disabling @c titleFont:forState: APIs before setting fonts preserves the
+ directly-assigned font on the button's @c titleLabel.
+ */
 - (void)testTitleFontForStateDisabledBeforeSettingFontsPreventsFontChange {
   // Given
   UIFont *normalFont = [UIFont systemFontOfSize:10];
@@ -624,24 +632,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualObjects(self.button.titleLabel.font, directlyAssignedFont);
 }
 
-- (void)testTitleFontForStateReenabledDoesNotImmediatelyUpdateFont {
-  // Given
-  UIFont *normalFont = [UIFont systemFontOfSize:10];
-  UIFont *selectedFont = [UIFont systemFontOfSize:40];
-  UIFont *directlyAssignedFont = [UIFont systemFontOfSize:25];
-  self.button.enableTitleFontForState = NO;
-  [self.button setTitleFont:normalFont forState:UIControlStateNormal];
-  [self.button setTitleFont:selectedFont forState:UIControlStateSelected];
-  self.button.titleLabel.font = directlyAssignedFont;
-  self.button.selected = YES;
-
-  // When
-  self.button.enableTitleFontForState = YES;
-
-  // Then
-  XCTAssertEqualObjects(self.button.titleLabel.font, directlyAssignedFont);
-}
-
+/**
+ Verifies that after enabling @c titleFont:forState: APIs, that @c titleLabel.font will be
+ replaced by the next time the state is changed.
+ */
 - (void)testTitleFontForStateReenabledUpdatesFontsOnNextStateChange {
   // Given
   UIFont *normalFont = [UIFont systemFontOfSize:10];
