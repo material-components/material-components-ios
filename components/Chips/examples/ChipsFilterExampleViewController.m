@@ -23,12 +23,12 @@
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
-@property(nonatomic) UICollectionView *collectionView;
-@property(nonatomic) NSMutableArray *selectedIndicies;
-@property(nonatomic) UIBarButtonItem *styleButtonItem;
-@property(nonatomic) UIBarButtonItem *animatedButtonItem;
-@property(nonatomic) BOOL outlined;
-@property(nonatomic) BOOL animated;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) NSMutableArray *selectedIndicies;
+@property(nonatomic, strong) UIBarButtonItem *styleButtonItem;
+@property(nonatomic, strong) UIBarButtonItem *animatedButtonItem;
+@property(nonatomic, assign) BOOL outlined;
+@property(nonatomic, assign) BOOL animated;
 @end
 
 @implementation ChipsFilterExampleViewController
