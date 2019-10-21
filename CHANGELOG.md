@@ -1,7 +1,7 @@
 # 92.5.0
 
 This minor release prepares MDCButton for the deprecation and removal of its
-`font:forState:` APIs in a future release.
+`titleFont:forState:` APIs in a future release.
 
 ## Changes
 
