@@ -1,18 +1,13 @@
-# #develop#
+# 92.5.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release prepares MDCButton for the deprecation and removal of its
+`font:forState:` APIs in a future release.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Changes
 
-Replace this text with links to deprecation guides.
-## New features
+### Buttons
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [Add API to disable state-based fonts. (#8606)](https://github.com/material-components/material-components-ios/commit/72e50eb0a2c8944e46f656bd6aaa2d6c36f57329) (Robert Moore)
 
 ---
 
