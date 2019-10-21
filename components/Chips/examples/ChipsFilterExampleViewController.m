@@ -54,17 +54,15 @@
     _selectedIndicies = [NSMutableArray new];
 
     _outlined = NO;
-    _styleButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(switchStyle)];
-    _animatedButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Not animated"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(switchAnimation)];
-    self.navigationItem.rightBarButtonItems = @[_animatedButtonItem, _styleButtonItem];
+    _styleButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
+                                                        style:UIBarButtonItemStylePlain
+                                                       target:self
+                                                       action:@selector(switchStyle)];
+    _animatedButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Not animated"
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:self
+                                                          action:@selector(switchAnimation)];
+    self.navigationItem.rightBarButtonItems = @[ _animatedButtonItem, _styleButtonItem ];
   }
   return self;
 }
@@ -79,7 +77,7 @@
   layout.estimatedItemSize = [cell intrinsicContentSize];
 
   self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
-                                       collectionViewLayout:layout];
+                                           collectionViewLayout:layout];
   self.collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   // Filter chips should allow multiSelection, MDCChipCollectionViewCell manages the state of the
@@ -95,7 +93,7 @@
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
   [self.collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"Cell"];
+          forCellWithReuseIdentifier:@"Cell"];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -126,8 +124,8 @@
   [self.collectionView reloadData];
   for (NSIndexPath *path in self.selectedIndicies) {
     [self.collectionView selectItemAtIndexPath:path
-                                  animated:NO
-                            scrollPosition:UICollectionViewScrollPositionNone];
+                                      animated:NO
+                                scrollPosition:UICollectionViewScrollPositionNone];
   }
 }
 
