@@ -12,25 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
 
 #import "supplemental/ChipsExampleAssets.h"
 
-@implementation ChipsFilterExampleViewController {
-  UICollectionView *_collectionView;
-  NSMutableArray *_selectedIndecies;
-  BOOL _isOutlined;
-}
+@interface ChipsFilterExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) NSMutableArray *selectedIndicies;
+@property(nonatomic, strong) UIBarButtonItem *styleButtonItem;
+@property(nonatomic, strong) UIBarButtonItem *animatedButtonItem;
+@property(nonatomic, assign) BOOL outlined;
+@property(nonatomic, assign) BOOL animated;
+@end
+
+@implementation ChipsFilterExampleViewController
 
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.titles = @[
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _titles = @[
       @"Doorman",
       @"Elevator",
       @"Garage Parking",
@@ -43,6 +50,19 @@
       @"Swimming Pool",
       @"Smoke-free",
     ];
+
+    _selectedIndicies = [NSMutableArray new];
+
+    _outlined = NO;
+    _styleButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
+                                                        style:UIBarButtonItemStylePlain
+                                                       target:self
+                                                       action:@selector(switchStyle)];
+    _animatedButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Not animated"
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:self
+                                                          action:@selector(switchAnimation)];
+    self.navigationItem.rightBarButtonItems = @[ _animatedButtonItem, _styleButtonItem ];
   }
   return self;
 }
@@ -50,49 +70,40 @@
 - (void)loadView {
   [super loadView];
 
-  _selectedIndecies = [NSMutableArray new];
-
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
   MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
   layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
-                                       collectionViewLayout:layout];
-  _collectionView.autoresizingMask =
+  self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                           collectionViewLayout:layout];
+  self.collectionView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   // Filter chips should allow multiSelection, MDCChipCollectionViewCell manages the state of the
   // chip accordingly.
-  _collectionView.allowsMultipleSelection = YES;
+  self.collectionView.allowsMultipleSelection = YES;
 
   // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
-  _collectionView.delaysContentTouches = NO;
+  self.collectionView.delaysContentTouches = NO;
 
   // Collection view setup
-  _collectionView.dataSource = self;
-  _collectionView.delegate = self;
-  _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
-  [_collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"Cell"];
+  self.collectionView.dataSource = self;
+  self.collectionView.delegate = self;
+  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
+  [self.collectionView registerClass:[MDCChipCollectionViewCell class]
+          forCellWithReuseIdentifier:@"Cell"];
 
   if (@available(iOS 11.0, *)) {
-    _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
 
-  [self.view addSubview:_collectionView];
+  [self.view addSubview:self.collectionView];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  _isOutlined = NO;
-  self.navigationItem.rightBarButtonItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(switchStyle)];
 
   // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
   // cells change their dimensions because our chips use manual layout.
@@ -103,19 +114,25 @@
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
-  [_collectionView.collectionViewLayout invalidateLayout];
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)switchStyle {
-  _isOutlined = !_isOutlined;
-  NSString *buttonTitle = _isOutlined ? @"Filled Style" : @"Outlined Style";
-  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
-  [_collectionView reloadData];
-  for (NSIndexPath *path in _selectedIndecies) {
-    [_collectionView selectItemAtIndexPath:path
-                                  animated:NO
-                            scrollPosition:UICollectionViewScrollPositionNone];
+  self.outlined = !self.outlined;
+  NSString *buttonTitle = self.outlined ? @"Filled Style" : @"Outlined Style";
+  self.styleButtonItem.title = buttonTitle;
+  [self.collectionView reloadData];
+  for (NSIndexPath *path in self.selectedIndicies) {
+    [self.collectionView selectItemAtIndexPath:path
+                                      animated:NO
+                                scrollPosition:UICollectionViewScrollPositionNone];
   }
+}
+
+- (void)switchAnimation {
+  self.animated = !self.animated;
+  NSString *buttonTitle = self.animated ? @"Animated" : @"Not animated";
+  self.animatedButtonItem.title = buttonTitle;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -123,8 +140,8 @@
   return self.titles.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
@@ -144,10 +161,10 @@
     chipView.selectedImageView.tintColor =
         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
   }
-  chipView.selected = [_selectedIndecies containsObject:indexPath];
-  cell.alwaysAnimateResize = [self shouldAnimateResize];
+  chipView.selected = [self.selectedIndicies containsObject:indexPath];
+  cell.alwaysAnimateResize = self.animated;
 
-  if (_isOutlined) {
+  if (self.outlined) {
     [chipView applyOutlinedThemeWithScheme:self.containerScheme];
   } else {
     [chipView applyThemeWithScheme:self.containerScheme];
@@ -158,20 +175,16 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  [_selectedIndecies addObject:indexPath];
+  [self.selectedIndicies addObject:indexPath];
   // Animating Chip Selection
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-  [_selectedIndecies removeObject:indexPath];
+  [self.selectedIndicies removeObject:indexPath];
   // Animating Chip Deselection
   [collectionView performBatchUpdates:nil completion:nil];
-}
-
-- (BOOL)shouldAnimateResize {
-  return NO;
 }
 
 @end
