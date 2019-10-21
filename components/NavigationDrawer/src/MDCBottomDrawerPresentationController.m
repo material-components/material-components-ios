@@ -383,7 +383,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                                         scrollViewIsScrolledToEndOfContent:
                                                             (BOOL)
                                                                 scrollViewIsScrolledToEndOfContent {
-  self.scrimView.hidden = scrollViewIsScrolledToEndOfContent;
+  UIColor *normalScrimColor = self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+  self.scrimView.backgroundColor = scrollViewIsScrolledToEndOfContent ? self.trackingScrollView.backgroundColor : normalScrimColor;
 }
 
 @end
