@@ -146,6 +146,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)commonMDCButtonInit {
+  // TODO(b/142861610): Default to `NO`, then remove once all internal usage is migrated.
+  _enableTitleFontForState = YES;
   _disabledAlpha = MDCButtonDisabledAlpha;
   _enabledAlpha = self.alpha;
   _uppercaseTitle = YES;
@@ -926,6 +928,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateTitleFont {
+  if (!self.enableTitleFontForState) {
+    return;
+  }
+
   self.titleLabel.font = [self titleFontForState:self.state];
 
   [self setNeedsLayout];

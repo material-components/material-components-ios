@@ -1,3 +1,16 @@
+# 92.5.0
+
+This minor release prepares MDCButton for the deprecation and removal of its
+`titleFont:forState:` APIs in a future release.
+
+## Changes
+
+### Buttons
+
+* [Add API to disable state-based fonts. (#8606)](https://github.com/material-components/material-components-ios/commit/72e50eb0a2c8944e46f656bd6aaa2d6c36f57329) (Robert Moore)
+
+---
+
 # 92.4.0
 
 This minor release addresses issues with Dialogs in Dark Mode, adds delegate methods for Navigation Drawer, and makes Outlined Text Areas more configurable.
