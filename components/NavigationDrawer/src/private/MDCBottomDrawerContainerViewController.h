@@ -27,7 +27,7 @@
 
 /**
 This method is called when the bottom drawer updates its value for scrollViewIsScrolledToBottom when
-a trackingScrollView is used.
+a trackingScrollView is set.
 
 @param containerViewController the container view controller of the bottom drawer.
 @param scrollViewIsScrolledToEndOfContent whether or not the scroll view is scrolled to the end of
