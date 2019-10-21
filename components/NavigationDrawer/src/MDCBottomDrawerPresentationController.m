@@ -378,7 +378,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 - (void)
-    bottomDrawerContainerViewControllerDidUpdateValueForScrollViewIsScrolledToEndOfContent:
+    bottomDrawerContainerViewControllerDidReachEndOfContent:
         (MDCBottomDrawerContainerViewController *)containerViewController
                                                         scrollViewIsScrolledToEndOfContent:
                                                             (BOOL)

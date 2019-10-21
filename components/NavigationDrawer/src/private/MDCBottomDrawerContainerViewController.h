@@ -33,7 +33,7 @@ This method is called when the bottom drawer updates its value for scrollViewIsS
 the content.
 */
 - (void)
-    bottomDrawerContainerViewControllerDidUpdateValueForScrollViewIsScrolledToEndOfContent:
+    bottomDrawerContainerViewControllerDidReachEndOfContent:
         (nonnull MDCBottomDrawerContainerViewController *)containerViewController
                                                         scrollViewIsScrolledToEndOfContent:
                                                             (BOOL)
