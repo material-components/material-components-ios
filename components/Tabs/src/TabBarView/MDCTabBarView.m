@@ -208,8 +208,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     if ([item conformsToProtocol:@protocol(MDCTabBarItemCustomViewing)]) {
       UITabBarItem<MDCTabBarItemCustomViewing> *customItem =
           (UITabBarItem<MDCTabBarItemCustomViewing> *)item;
-      if (customItem.mdc_customView) {
-        itemView = customItem.mdc_customView;
+      UIView *customView = customItem.mdc_customView;
+      if (customView) {
+        itemView = customView;
       }
     }
     if (!itemView) {
