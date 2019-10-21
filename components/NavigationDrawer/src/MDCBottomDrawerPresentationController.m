@@ -383,11 +383,12 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                                         scrollViewIsScrolledToEndOfContent:
                                                             (BOOL)
                                                                 scrollViewIsScrolledToEndOfContent {
-  if (self.trackingScrollView){
+  if (self.trackingScrollView) {
     // This logic is to mittigate b/119714330. Dragging the drawer further up when already at the
     // bottom shows the scrim and the presenting view controller
-    self.scrimView.backgroundColor = scrollViewIsScrolledToEndOfContent ?
-        self.trackingScrollView.backgroundColor : self.scrimColor;
+    self.scrimView.backgroundColor = scrollViewIsScrolledToEndOfContent
+                                         ? self.trackingScrollView.backgroundColor
+                                         : self.scrimColor;
   }
 }
 
