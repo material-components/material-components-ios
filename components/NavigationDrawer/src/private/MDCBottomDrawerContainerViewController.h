@@ -29,12 +29,15 @@
 This method is called when the bottom drawer updates its value for scrollViewIsScrolledToBottom.
 
 @param containerViewController the container view controller of the bottom drawer.
-@param scrollViewIsScrolledToBottom whether or not the scroll view is scrolled to the bottom.
+@param scrollViewIsScrolledToEndOfContent whether or not the scroll view is scrolled to the end of
+the content.
 */
-- (void)bottomDrawerContainerViewControllerDidUpdateValueForScrollViewIsScrolledToBottom:
-            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
-                                                            scrollViewIsScrolledToBottom:
-                                                                (BOOL)scrollViewIsScrolledToBottom;
+- (void)
+    bottomDrawerContainerViewControllerDidUpdateValueForScrollViewIsScrolledToEndOfContent:
+        (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                                                        scrollViewIsScrolledToEndOfContent:
+                                                            (BOOL)
+                                                                scrollViewIsScrolledToEndOfContent;
 
 /**
  This method is called when the bottom drawer will change its presented state to one of the
