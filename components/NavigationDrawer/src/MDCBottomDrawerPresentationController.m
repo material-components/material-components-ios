@@ -377,12 +377,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
 }
 
-- (void)
-    bottomDrawerContainerViewControllerDidReachEndOfContent:
-        (MDCBottomDrawerContainerViewController *)containerViewController
-                                                        scrollViewIsScrolledToEndOfContent:
-                                                            (BOOL)
-                                                                scrollViewIsScrolledToEndOfContent {
+- (void)bottomDrawerContainerViewControllerDidReachEndOfContent:
+            (MDCBottomDrawerContainerViewController *)containerViewController
+                             scrollViewIsScrolledToEndOfContent:
+                                 (BOOL)scrollViewIsScrolledToEndOfContent {
   if (self.trackingScrollView) {
     // This logic is to mittigate b/119714330. Dragging the drawer further up when already at the
     // bottom shows the scrim and the presenting view controller

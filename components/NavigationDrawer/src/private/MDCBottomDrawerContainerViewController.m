@@ -434,16 +434,12 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (void)setScrollViewIsScrolledToEndOfContent:(BOOL)scrollViewIsScrolledToBottom {
   if (_scrollViewIsScrolledToEndOfContent != scrollViewIsScrolledToBottom) {
     _scrollViewIsScrolledToEndOfContent = scrollViewIsScrolledToBottom;
-    if ([self.delegate
-            respondsToSelector:@selector
-            (bottomDrawerContainerViewControllerDidReachEndOfContent:
-                                                                 scrollViewIsScrolledToEndOfContent:
-                                                                     )]) {
-      [self.delegate
-          bottomDrawerContainerViewControllerDidReachEndOfContent:
-              self
-                                                              scrollViewIsScrolledToEndOfContent:
-                                                                  _scrollViewIsScrolledToEndOfContent];
+    if ([self.delegate respondsToSelector:@selector
+                       (bottomDrawerContainerViewControllerDidReachEndOfContent:
+                                             scrollViewIsScrolledToEndOfContent:)]) {
+      [self.delegate bottomDrawerContainerViewControllerDidReachEndOfContent:self
+                                          scrollViewIsScrolledToEndOfContent:
+                                              _scrollViewIsScrolledToEndOfContent];
     }
   }
 }
