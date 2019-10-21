@@ -111,6 +111,7 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    collectionView.backgroundColor = colorScheme.surfaceColor
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     self.view.addSubview(collectionView)
