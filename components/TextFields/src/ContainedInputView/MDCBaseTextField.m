@@ -50,6 +50,7 @@
 @synthesize containerStyle = _containerStyle;
 @synthesize assistiveLabelDrawPriority = _assistiveLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
+@synthesize preferredContainerHeight = _preferredContainerHeight;
 
 #pragma mark Object Lifecycle
 
@@ -230,7 +231,9 @@
       positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
                                 normalFontLineHeight:self.normalFont.lineHeight
                                        textRowHeight:self.normalFont.lineHeight
-                                    numberOfTextRows:1];
+                                    numberOfTextRows:self.numberOfVisibleTextRows
+                                             density:0
+                            preferredContainerHeight:self.preferredContainerHeight];
 }
 
 - (CGFloat)clampedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
