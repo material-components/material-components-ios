@@ -1,3 +1,55 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Fix behavior of `alwaysAlignTitleLeadingEdges`. (#8610)](https://github.com/material-components/material-components-ios/commit/dede397d7e4d2fc488b225ead42bf09b8475a00c) (Robert Moore)
+
+### Buttons
+
+* [Add API to disable state-based fonts. (#8606)](https://github.com/material-components/material-components-ios/commit/86ebced717396768096df50dd962af4b8663b797) (Robert Moore)
+
+### Cards
+
+* [New toggle-button example (#8574)](https://github.com/material-components/material-components-ios/commit/89983ffbf4a9ed5852ab0d7f9b3548fa93a3bd1a) (Galia Kaufman)
+
+### Chips
+
+* [Add an "animated" button to the filter example. (#8615)](https://github.com/material-components/material-components-ios/commit/539f39215d52d1a2ea0666330127ca39e4db8123) (featherless)
+* [Deprecate MDCChipViewTypographyThemer. (#8590)](https://github.com/material-components/material-components-ios/commit/48eb3d723292bd23151df757036e78b81338a160) (featherless)
+* [Fold MDCChipViewTypographyThemer into the Theming extension. (#8591)](https://github.com/material-components/material-components-ios/commit/e7521ed500a14ebd6807e57cbe8d61116dd2dbe0) (featherless)
+* [Fold more supplemental code into the examples. (#8605)](https://github.com/material-components/material-components-ios/commit/d59cab0d9fb4b3250852f91e132cb189529cc410) (featherless)
+* [Fold supplemental code into the examples. (#8587)](https://github.com/material-components/material-components-ios/commit/588024d04fddb2f7b0334977f318a4bf328ed067) (featherless)
+
+### Dialogs
+
+* [Remove uncontrolled snapshot tests. (#8619)](https://github.com/material-components/material-components-ios/commit/5aeba560cd83d541d992b32398ba1e2b1072b012) (Robert Moore)
+
+### NavigationDrawer
+
+* [Fix over scrolled bottom navigation incorrectly showing the scrim and presenting view (#8618)](https://github.com/material-components/material-components-ios/commit/738682323f54197c3d6244740b2c5e0f2b9f53de) (Randall Li)
+
+### Tabs
+
+* [Optimization to avoid creating unnecessary views. (#8613)](https://github.com/material-components/material-components-ios/commit/d95bc29b04958b442eb2d86d32d7e8ac1413bd3b) (Mark Klara)
+
+---
+
 # 92.5.0
 
 This minor release prepares MDCButton for the deprecation and removal of its
