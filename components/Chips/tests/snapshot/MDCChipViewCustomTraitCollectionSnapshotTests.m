@@ -47,7 +47,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //          self.recordMode = YES;
+  //            self.recordMode = YES;
 
   self.chip = [[MDCChipViewWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   self.containerScheme = [[MDCContainerScheme alloc] init];
@@ -65,6 +65,10 @@
 #pragma mark - Helpers
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
+  CGSize aSize = [view sizeThatFits:CGSizeMake(300, INFINITY)];
+  view.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
+  [view layoutIfNeeded];
+
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
@@ -114,6 +118,59 @@
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
+}
+
+- (void)testPreferredFontForAXXXLContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    [self.chip applyThemeWithScheme:self.containerScheme];
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                               compatibleWithTraitCollection:xsTraitCollection];
+    self.chip.traitCollectionOverride = xsTraitCollection;
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    self.chip.titleLabel.text = @"Title";
+    self.chip.titleLabel.font = originalFont;
+    self.chip.titleLabel.adjustsFontForContentSizeCategory = YES;
+
+    // When
+    self.chip.traitCollectionOverride = aXXXLTraitCollection;
+    // Force the Dynamic Type system to update the button's font.
+    [self.chip drawViewHierarchyInRect:self.chip.bounds afterScreenUpdates:YES];
+
+    // Then
+    [self generateSnapshotAndVerifyForView:self.chip];
+  }
+}
+
+- (void)testPreferredFontForXSContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    [self.chip applyThemeWithScheme:self.containerScheme];
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                               compatibleWithTraitCollection:aXXXLTraitCollection];
+    self.chip.traitCollectionOverride = aXXXLTraitCollection;
+    self.chip.titleLabel.text = @"Title";
+    self.chip.titleLabel.font = originalFont;
+    self.chip.titleLabel.adjustsFontForContentSizeCategory = YES;
+
+    // When
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+
+    self.chip.traitCollectionOverride = xsTraitCollection;
+    // Force the Dynamic Type system to update the button's font.
+    [self.chip drawViewHierarchyInRect:self.chip.bounds afterScreenUpdates:YES];
+
+    // Then
+    [self generateSnapshotAndVerifyForView:self.chip];
+  }
 }
 
 @end
