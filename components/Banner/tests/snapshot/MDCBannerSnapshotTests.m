@@ -14,8 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialBanner.h"
 #import "MaterialBanner+Theming.h"
+#import "MaterialBanner.h"
 #import "MaterialButtons.h"
 #import "MaterialTypographyScheme.h"
 
@@ -468,7 +468,8 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
-        UIContentSizeCategoryExtraExtraLarge andVerifyForView:self.bannerView];
+              UIContentSizeCategoryExtraExtraLarge
+                                                    andVerifyForView:self.bannerView];
   }
 }
 
@@ -493,16 +494,16 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
     // When
     self.bannerView.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     self.bannerView.leadingButton.titleLabel.font =
-    [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     self.bannerView.trailingButton.titleLabel.font =
-    [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
     self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
 
     // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
-        UIContentSizeCategoryExtraSmall andVerifyForView:self.bannerView];
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
+                                                    andVerifyForView:self.bannerView];
   }
 }
 @end
