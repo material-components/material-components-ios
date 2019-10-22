@@ -1,18 +1,10 @@
-# #develop#
+# 93.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release deletes MaskedTransition, fixes bugs in ActionSheet and NavigationDrawer, and adds an API to Buttons related to fonts.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+MaskedTransition has been deleted.
 
 ## Changes
 
