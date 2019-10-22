@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MDCBaseTextField.h"
-#import "MDCTextControl.h"
 
-/**
- A UITextField subclass that attempts to do the following:
+#import "MDCTextControlVerticalPositioningReference.h"
 
- - Earnestly interpret and actualize the Material guidelines for text fields, which can be found
- here: https://material.io/design/components/text-fields.html#outlined-text-field
+@interface MDCTextControlVerticalPositioningReferenceOutlined
+    : NSObject <MDCTextControlVerticalPositioningReference>
 
- - Feel intuitive for someone used to the conventions of iOS development and UIKit controls.
+- (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                          normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                 textRowHeight:(CGFloat)textRowHeight
+                              numberOfTextRows:(CGFloat)numberOfTextRows
+                                       density:(CGFloat)density
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
- - Enable easy set up and reliable and predictable behavior.
-
- */
-@interface MDCBaseTextField (Private) <MDCTextControl>
 @end
