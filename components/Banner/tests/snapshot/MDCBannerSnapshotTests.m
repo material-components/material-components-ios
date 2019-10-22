@@ -14,7 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MDCBannerView.h"
+#import "MaterialBanner.h"
+#import "MaterialBanner+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypographyScheme.h"
 
@@ -437,4 +438,71 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   }
 }
 
+- (void)testPreferredFontForAXXLContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    self.bannerView = [[MDCBannerView alloc] init];
+    [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
+    self.bannerView.textView.text = kBannerLongText;
+    MDCButton *button1 = self.bannerView.leadingButton;
+    [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+    [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    button1.uppercaseTitle = YES;
+    button1.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    MDCButton *button2 = self.bannerView.trailingButton;
+    [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+    [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    button2.uppercaseTitle = YES;
+    button2.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    self.bannerView.imageView.hidden = YES;
+
+    // When
+    self.bannerView.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    self.bannerView.leadingButton.titleLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    self.bannerView.trailingButton.titleLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+        UIContentSizeCategoryExtraExtraLarge andVerifyForView:self.bannerView];
+  }
+}
+
+- (void)testPreferredFontForAXSContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    self.bannerView = [[MDCBannerView alloc] init];
+    [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
+    self.bannerView.textView.text = kBannerLongText;
+    MDCButton *button1 = self.bannerView.leadingButton;
+    [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+    [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    button1.uppercaseTitle = YES;
+    button1.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    MDCButton *button2 = self.bannerView.trailingButton;
+    [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+    [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    button2.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    button2.uppercaseTitle = YES;
+    self.bannerView.imageView.hidden = YES;
+
+    // When
+    self.bannerView.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    self.bannerView.leadingButton.titleLabel.font =
+    [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    self.bannerView.trailingButton.titleLabel.font =
+    [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+        UIContentSizeCategoryExtraSmall andVerifyForView:self.bannerView];
+  }
+}
 @end
