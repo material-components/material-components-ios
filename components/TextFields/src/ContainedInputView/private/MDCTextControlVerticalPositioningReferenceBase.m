@@ -66,20 +66,20 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
                                                 density:(CGFloat)density
                                preferredContainerHeight:(CGFloat)preferredContainerHeight {
   BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
-  CGFloat standardizedDensity = [self standardizeDensity:density];
+  CGFloat normalizedDensity = [self normalizeDensity:density];
 
   CGFloat paddingBetweenContainerTopAndFloatingLabelRange =
       kMaxPaddingBetweenContainerTopAndFloatingLabel -
       kMinPaddingBetweenContainerTopAndFloatingLabel;
   CGFloat paddingBetweenContainerTopAndFloatingLabelAddition =
-      paddingBetweenContainerTopAndFloatingLabelRange * (1 - standardizedDensity);
+      paddingBetweenContainerTopAndFloatingLabelRange * (1 - normalizedDensity);
   _paddingBetweenContainerTopAndFloatingLabel = kMinPaddingBetweenContainerTopAndFloatingLabel +
                                                 paddingBetweenContainerTopAndFloatingLabelAddition;
 
   CGFloat paddingBetweenFloatingLabelAndEditingTextRange =
       kMaxPaddingBetweenFloatingLabelAndEditingText - kMinPaddingBetweenFloatingLabelAndEditingText;
   CGFloat paddingBetweenFloatingLabelAndEditingTextAddition =
-      paddingBetweenFloatingLabelAndEditingTextRange * (1 - standardizedDensity);
+      paddingBetweenFloatingLabelAndEditingTextRange * (1 - normalizedDensity);
   _paddingBetweenFloatingLabelAndEditingText = kMinPaddingBetweenFloatingLabelAndEditingText +
                                                paddingBetweenFloatingLabelAndEditingTextAddition;
 
@@ -87,7 +87,7 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
       kMaxPaddingBetweenEditingTextAndContainerBottom -
       kMinPaddingBetweenEditingTextAndContainerBottom;
   CGFloat paddingBetweenEditingTextAndContainerBottomAddition =
-      paddingBetweenEditingTextAndContainerBottomRange * (1 - standardizedDensity);
+      paddingBetweenEditingTextAndContainerBottomRange * (1 - normalizedDensity);
   _paddingBetweenEditingTextAndContainerBottom =
       kMinPaddingBetweenEditingTextAndContainerBottom +
       paddingBetweenEditingTextAndContainerBottomAddition;
@@ -95,14 +95,14 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
   CGFloat paddingAboveAssistiveLabelsRange =
       kMaxPaddingAboveAssistiveLabels - kMinPaddingAboveAssistiveLabels;
   CGFloat paddingAboveAssistiveLabelsAddition =
-      paddingAboveAssistiveLabelsRange * (1 - standardizedDensity);
+      paddingAboveAssistiveLabelsRange * (1 - normalizedDensity);
   _paddingAboveAssistiveLabels =
       kMinPaddingAboveAssistiveLabels + paddingAboveAssistiveLabelsAddition;
 
   CGFloat paddingBelowAssistiveLabelsRange =
       kMaxPaddingBelowAssistiveLabels - kMinPaddingBelowAssistiveLabels;
   CGFloat paddingBelowAssistiveLabelsAddition =
-      paddingBelowAssistiveLabelsRange * (1 - standardizedDensity);
+      paddingBelowAssistiveLabelsRange * (1 - normalizedDensity);
   _paddingBelowAssistiveLabels =
       kMinPaddingBelowAssistiveLabels + paddingBelowAssistiveLabelsAddition;
 
@@ -157,14 +157,14 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
   }
 }
 
-- (CGFloat)standardizeDensity:(CGFloat)density {
-  CGFloat standardizedDensity = density;
-  if (standardizedDensity < 0) {
-    standardizedDensity = 0;
-  } else if (standardizedDensity > 1) {
-    standardizedDensity = 1;
+- (CGFloat)normalizeDensity:(CGFloat)density {
+  CGFloat normalizedDensity = density;
+  if (normalizedDensity < 0) {
+    normalizedDensity = 0;
+  } else if (normalizedDensity > 1) {
+    normalizedDensity = 1;
   }
-  return standardizedDensity;
+  return normalizedDensity;
 }
 
 - (CGFloat)calculateContainerHeightWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
