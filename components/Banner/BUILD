@@ -62,6 +62,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":Banner",
+        ":Theming",
         "//components/Buttons",
         "//components/schemes/Typography",
     ],
