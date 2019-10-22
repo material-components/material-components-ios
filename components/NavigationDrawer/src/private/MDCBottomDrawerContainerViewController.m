@@ -431,9 +431,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
 }
 
-- (void)setScrollViewIsScrolledToEndOfContent:(BOOL)scrollViewIsScrolledToBottom {
-  if (_scrollViewIsScrolledToEndOfContent != scrollViewIsScrolledToBottom) {
-    _scrollViewIsScrolledToEndOfContent = scrollViewIsScrolledToBottom;
+- (void)setScrollViewIsScrolledToEndOfContent:(BOOL)scrollViewIsScrolledToEndOfContent {
+  if (_scrollViewIsScrolledToEndOfContent != scrollViewIsScrolledToEndOfContent) {
+    _scrollViewIsScrolledToEndOfContent = scrollViewIsScrolledToEndOfContent;
     if ([self.delegate respondsToSelector:@selector
                        (bottomDrawerContainerViewControllerDidReachEndOfContent:
                                              scrollViewIsScrolledToEndOfContent:)]) {

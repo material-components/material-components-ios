@@ -26,7 +26,7 @@
 @protocol MDCBottomDrawerContainerViewControllerDelegate <NSObject>
 
 /**
-This method is called when the bottom drawer updates its value for scrollViewIsScrolledToBottom when
+This method is called when the bottom drawer updates its value for scrollViewIsScrolledToEndOfContent when
 a trackingScrollView is set.
 
 @param containerViewController the container view controller of the bottom drawer.
