@@ -121,13 +121,12 @@ class DrawerContentWithScrollViewController: UIViewController,
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 102
+    return 12
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     let colorPick = indexPath.row % 2 == 0
-    print(indexPath.item)
     cell.backgroundColor = colorPick ? colorScheme.surfaceColor : colorScheme.primaryColorVariant
     return cell
   }

@@ -261,7 +261,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     self.scrollViewIsDraggedToBottom = contentOffset.y == oldContentOffset.y
                                            ? self.scrollViewIsDraggedToBottom
                                            : contentOffset.y < oldContentOffset.y;
-
+//    NSLog(@"%@",@(self.scrollViewIsDraggedToBottom));
     // The normalized content offset takes the content offset and updates it if using the
     // performance logic that comes with setting the tracking scroll view. The reason we update
     // the content offset is because the performance logic stops the scrolling internally of the
@@ -303,6 +303,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       // If we still didn't reach the end of the content, or if we are scrolling up after reaching
       // the end of the content.
       self.scrollViewIsScrolledToEndOfContent = NO;
+      NSLog(@"NO");
 
       // Update the drawer's scrollView's offset to be static so the content will scroll instead.
       CGRect scrollViewBounds = self.scrollView.bounds;
@@ -322,6 +323,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       self.trackingScrollView.bounds = contentViewBounds;
     } else {
       self.scrollViewIsScrolledToEndOfContent = YES;
+      NSLog(@"YES");
 
       if (self.trackingScrollView.contentSize.height >=
           CGRectGetHeight(self.trackingScrollView.frame)) {
@@ -333,6 +335,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
         self.scrollView.contentSize = scrollViewContentSize;
       }
     }
+  } else {
+    NSLog(@"NO (new)");
+    self.scrollViewIsScrolledToEndOfContent = NO;
   }
   return normalizedYContentOffset;
 }
@@ -419,6 +424,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
         setContentOffset:CGPointMake(self.scrollView.contentOffset.x, calculatedYContentOffset)
                 animated:animated];
   }
+  NSLog(@"%@",@(self.scrollView.contentOffset.y));
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
