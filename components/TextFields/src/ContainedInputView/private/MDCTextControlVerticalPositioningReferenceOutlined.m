@@ -69,26 +69,23 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
                                preferredContainerHeight:(CGFloat)preferredContainerHeight {
   BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
   CGFloat normalizedDensity = [self normalizeDensity:density];
+  CGFloat halfOfFloatingLabelHeight = ((CGFloat)0.5 * floatingLabelHeight);
 
-  _paddingBetweenContainerTopAndFloatingLabel = (CGFloat)0 - ((CGFloat)0.5 * floatingLabelHeight);
+  _paddingBetweenContainerTopAndFloatingLabel = (CGFloat)0 - halfOfFloatingLabelHeight;
 
-  CGFloat paddingBetweenFloatingLabelAndEditingTextRange =
-      kMaxPaddingBetweenFloatingLabelAndEditingText - kMinPaddingBetweenFloatingLabelAndEditingText;
-  CGFloat paddingBetweenFloatingLabelAndEditingTextAddition =
-      paddingBetweenFloatingLabelAndEditingTextRange * (1 - normalizedDensity);
-  _paddingBetweenFloatingLabelAndEditingText = kMinPaddingBetweenFloatingLabelAndEditingText +
-                                               paddingBetweenFloatingLabelAndEditingTextAddition;
+  _paddingBetweenFloatingLabelAndEditingText =
+      [self paddingValueWithMinimumPadding:kMinPaddingBetweenFloatingLabelAndEditingText
+                            maximumPadding:kMaxPaddingBetweenFloatingLabelAndEditingText
+                                   density:normalizedDensity];
 
   _paddingBetweenContainerTopAndNormalLabel =
-      ((CGFloat)0.5 * floatingLabelHeight) + _paddingBetweenFloatingLabelAndEditingText;
+      halfOfFloatingLabelHeight + _paddingBetweenFloatingLabelAndEditingText;
   _paddingBetweenEditingTextAndContainerBottom = _paddingBetweenContainerTopAndNormalLabel;
 
-  CGFloat paddingAroundAssistiveLabelsRange =
-      kMaxPaddingAroundAssistiveLabels - kMinPaddingAroundAssistiveLabels;
-  CGFloat paddingAroundAssistiveLabelsAddition =
-      paddingAroundAssistiveLabelsRange * (1 - normalizedDensity);
   _paddingAroundAssistiveLabels =
-      kMinPaddingAroundAssistiveLabels + paddingAroundAssistiveLabelsAddition;
+      [self paddingValueWithMinimumPadding:kMinPaddingAroundAssistiveLabels
+                            maximumPadding:kMaxPaddingAroundAssistiveLabels
+                                   density:normalizedDensity];
 
   CGFloat containerHeightWithPaddingsDeterminedByDensity = [self
       calculateContainerHeightWithFoatingLabelHeight:floatingLabelHeight
