@@ -217,7 +217,8 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
     self.collectionViewLayout.estimatedItemSize = CGSizeMake(240, 150);
 
     // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraExtraLarge
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+              UIContentSizeCategoryExtraExtraLarge
                                                     andVerifyForView:self.collectionView];
   }
 }
@@ -270,10 +271,12 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   dequeuedCell.backgroundColor = UIColor.whiteColor;
   dequeuedCell.titleLabel.text = cell.titleLabel.text;
   dequeuedCell.titleLabel.font = cell.titleLabel.font;
-  dequeuedCell.titleLabel.adjustsFontForContentSizeCategory = cell.titleLabel.adjustsFontForContentSizeCategory;
+  dequeuedCell.titleLabel.adjustsFontForContentSizeCategory =
+      cell.titleLabel.adjustsFontForContentSizeCategory;
   dequeuedCell.detailLabel.text = cell.detailLabel.text;
   dequeuedCell.detailLabel.font = cell.detailLabel.font;
-  dequeuedCell.detailLabel.adjustsFontForContentSizeCategory = cell.detailLabel.adjustsFontForContentSizeCategory;
+  dequeuedCell.detailLabel.adjustsFontForContentSizeCategory =
+      cell.detailLabel.adjustsFontForContentSizeCategory;
   dequeuedCell.leadingImageView.image = cell.leadingImageView.image;
   dequeuedCell.trailingImageView.image = cell.trailingImageView.image;
   dequeuedCell.mdc_adjustsFontForContentSizeCategory = cell.mdc_adjustsFontForContentSizeCategory;
