@@ -433,12 +433,18 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
 }
 
--(void)setScrimShouldAdoptTrackingScrollViewBackgroundColor:(BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor {
-  if (_scrimShouldAdoptTrackingScrollViewBackgroundColor != scrimShouldAdoptTrackingScrollViewBackgroundColor) {
-    _scrimShouldAdoptTrackingScrollViewBackgroundColor = scrimShouldAdoptTrackingScrollViewBackgroundColor;
+- (void)setScrimShouldAdoptTrackingScrollViewBackgroundColor:
+    (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor {
+  if (_scrimShouldAdoptTrackingScrollViewBackgroundColor !=
+      scrimShouldAdoptTrackingScrollViewBackgroundColor) {
+    _scrimShouldAdoptTrackingScrollViewBackgroundColor =
+        scrimShouldAdoptTrackingScrollViewBackgroundColor;
     if ([self.delegate respondsToSelector:@selector
-                       (bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:scrimShouldAdoptTrackingScrollViewBackgroundColor:)]) {
-      [self.delegate bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:self scrimShouldAdoptTrackingScrollViewBackgroundColor:_scrimShouldAdoptTrackingScrollViewBackgroundColor];
+                       (bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
+                                    scrimShouldAdoptTrackingScrollViewBackgroundColor:)]) {
+      [self.delegate bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:self
+                                 scrimShouldAdoptTrackingScrollViewBackgroundColor:
+                                     _scrimShouldAdoptTrackingScrollViewBackgroundColor];
     }
   }
 }

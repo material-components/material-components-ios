@@ -378,9 +378,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 - (void)bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
-(nonnull MDCBottomDrawerContainerViewController *)containerViewController
-                 scrimShouldAdoptTrackingScrollViewBackgroundColor:
-(BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor {
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                    scrimShouldAdoptTrackingScrollViewBackgroundColor:
+                        (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor {
   if (self.trackingScrollView) {
     // This logic is to mitigate b/119714330. Dragging the drawer further up when already at the
     // bottom shows the scrim and the presenting view controller

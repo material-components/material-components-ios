@@ -26,15 +26,17 @@
 @protocol MDCBottomDrawerContainerViewControllerDelegate <NSObject>
 
 /**
-This method is called when the MDCBottomDrawerContainerViewControllerDelegate needs to update the appearance of the scrim.
+This method is called when the MDCBottomDrawerContainerViewControllerDelegate needs to update the
+appearance of the scrim.
 
 @param containerViewController the container view controller of the bottom drawer.
-@param scrimShouldAdoptTrackingScrollViewBackgroundColor whether or not the scrim view should adopt the backgroundColor of the trackingScrollView.
+@param scrimShouldAdoptTrackingScrollViewBackgroundColor whether or not the scrim view should adopt
+the backgroundColor of the trackingScrollView.
 */
 - (void)bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
             (nonnull MDCBottomDrawerContainerViewController *)containerViewController
-                             scrimShouldAdoptTrackingScrollViewBackgroundColor:
-                                 (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor;
+                    scrimShouldAdoptTrackingScrollViewBackgroundColor:
+                        (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor;
 
 /**
  This method is called when the bottom drawer will change its presented state to one of the
