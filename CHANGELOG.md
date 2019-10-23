@@ -1,6 +1,6 @@
 # 93.0.0
 
-This major release deletes MaskedTransition, fixes bugs in ActionSheet and NavigationDrawer, and adds an API to Buttons related to fonts.
+This major release deletes MaskedTransition, fixes bugs in ActionSheet, and adds an API to Buttons related to fonts.
 
 ## Breaking changes
 
@@ -16,10 +16,6 @@ MaskedTransition has been deleted.
 
 * [Add API to disable state-based fonts. (#8606)](https://github.com/material-components/material-components-ios/commit/86ebced717396768096df50dd962af4b8663b797) (Robert Moore)
 
-### Cards
-
-* [New toggle-button example (#8574)](https://github.com/material-components/material-components-ios/commit/89983ffbf4a9ed5852ab0d7f9b3548fa93a3bd1a) (Galia Kaufman)
-
 ### Chips
 
 * [Add an "animated" button to the filter example. (#8615)](https://github.com/material-components/material-components-ios/commit/539f39215d52d1a2ea0666330127ca39e4db8123) (featherless)
@@ -31,10 +27,6 @@ MaskedTransition has been deleted.
 ### Dialogs
 
 * [Remove uncontrolled snapshot tests. (#8619)](https://github.com/material-components/material-components-ios/commit/5aeba560cd83d541d992b32398ba1e2b1072b012) (Robert Moore)
-
-### NavigationDrawer
-
-* [Fix over scrolled bottom navigation incorrectly showing the scrim and presenting view (#8618)](https://github.com/material-components/material-components-ios/commit/738682323f54197c3d6244740b2c5e0f2b9f53de) (Randall Li)
 
 ### Tabs
 
