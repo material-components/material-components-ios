@@ -27,6 +27,23 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
+mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    visibility = [":test_targets"],
+    deps = [":Ripple"],
+)
+
+package_group(
+    name = "test_targets",
+    packages = [
+        "//components/ActionSheet/...",
+        "//components/BottomNavigation/...",
+        "//components/Ripple/...",
+        "//components/Tabs/...",
+    ],
+)
+
 mdc_public_objc_library(
     name = "Ripple",
     sdk_frameworks = [
@@ -39,12 +56,7 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    visibility = ["//visibility:private"],
-    deps = [":Ripple"],
-)
+
 
 mdc_examples_objc_library(
     name = "ObjcExamples",
