@@ -48,8 +48,9 @@
   if (@available(iOS 11.0, *)) {
     MDCTextAreaOutlinedControllerPreferredFontAXXXLSnapshotTestsFake *fakeTextField =
         [[MDCTextAreaOutlinedControllerPreferredFontAXXXLSnapshotTestsFake alloc] init];
-    fakeTextField.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    fakeTextField.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     self.textField = fakeTextField;
     self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
