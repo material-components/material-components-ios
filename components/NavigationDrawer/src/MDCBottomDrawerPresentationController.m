@@ -73,7 +73,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _elevation = MDCShadowElevationNavDrawer;
     _dismissOnBackgroundTap = YES;
-    _scrimColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   }
   return self;
 }
@@ -122,7 +121,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor = self.scrimColor;
+  self.scrimView.backgroundColor =
+      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
@@ -374,19 +374,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopDidChangeYOffset:yOffset:)]) {
     [strongDelegate bottomDrawerTopDidChangeYOffset:self yOffset:yOffset];
-  }
-}
-
-- (void)bottomDrawerContainerViewControllerDidReachEndOfContent:
-            (MDCBottomDrawerContainerViewController *)containerViewController
-                             scrollViewIsScrolledToEndOfContent:
-                                 (BOOL)scrollViewIsScrolledToEndOfContent {
-  if (self.trackingScrollView) {
-    // This logic is to mitigate b/119714330. Dragging the drawer further up when already at the
-    // bottom shows the scrim and the presenting view controller
-    self.scrimView.backgroundColor = scrollViewIsScrolledToEndOfContent
-                                         ? self.trackingScrollView.backgroundColor
-                                         : self.scrimColor;
   }
 }
 

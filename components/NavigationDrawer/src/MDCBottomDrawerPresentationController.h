@@ -130,7 +130,7 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
- The color applied to the background scrim. Default is a reasonable transparent black.
+ The color applied to the background scrim.
  */
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 

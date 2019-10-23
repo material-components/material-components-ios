@@ -147,9 +147,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 // The scroll view is currently being dragged towards bottom.
 @property(nonatomic) BOOL scrollViewIsDraggedToBottom;
 
-// The scroll view is currently scrolled completely to the bottom.
-@property(nonatomic) BOOL scrollViewIsScrolledToEndOfContent;
-
 // The scroll view has started its current drag from fullscreen.
 @property(nonatomic) BOOL scrollViewBeganDraggingFromFullscreen;
 
@@ -302,7 +299,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
       // If we still didn't reach the end of the content, or if we are scrolling up after reaching
       // the end of the content.
-      self.scrollViewIsScrolledToEndOfContent = NO;
 
       // Update the drawer's scrollView's offset to be static so the content will scroll instead.
       CGRect scrollViewBounds = self.scrollView.bounds;
@@ -321,8 +317,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(CGRectGetMinY(contentViewBounds), 0));
       self.trackingScrollView.bounds = contentViewBounds;
     } else {
-      self.scrollViewIsScrolledToEndOfContent = YES;
-
       if (self.trackingScrollView.contentSize.height >=
           CGRectGetHeight(self.trackingScrollView.frame)) {
         // Have the drawer's scrollView's content size be static so it will bounce when reaching the
@@ -429,19 +423,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
   _drawerShadowColor = drawerShadowColor;
   self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
-}
-
-- (void)setScrollViewIsScrolledToEndOfContent:(BOOL)scrollViewIsScrolledToEndOfContent {
-  if (_scrollViewIsScrolledToEndOfContent != scrollViewIsScrolledToEndOfContent) {
-    _scrollViewIsScrolledToEndOfContent = scrollViewIsScrolledToEndOfContent;
-    if ([self.delegate respondsToSelector:@selector
-                       (bottomDrawerContainerViewControllerDidReachEndOfContent:
-                                             scrollViewIsScrolledToEndOfContent:)]) {
-      [self.delegate bottomDrawerContainerViewControllerDidReachEndOfContent:self
-                                          scrollViewIsScrolledToEndOfContent:
-                                              _scrollViewIsScrolledToEndOfContent];
-    }
-  }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
