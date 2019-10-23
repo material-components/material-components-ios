@@ -117,9 +117,9 @@
     self.featureHighlightViewController.bodyText = @"Feature Highlight Body";
     UITraitCollection *xsTraitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                               compatibleWithTraitCollection:xsTraitCollection];
     self.featureHighlightViewController.traitCollectionOverride = xsTraitCollection;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
     self.featureHighlightViewController.titleFont = originalFont;
     self.featureHighlightViewController.bodyFont = originalFont;
 
@@ -164,9 +164,9 @@
     UITraitCollection *aXXXLTraitCollection =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                               compatibleWithTraitCollection:aXXXLTraitCollection];
     self.featureHighlightViewController.traitCollectionOverride = aXXXLTraitCollection;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
     self.featureHighlightViewController.titleFont = originalFont;
     self.featureHighlightViewController.bodyFont = originalFont;
 
