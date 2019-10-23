@@ -452,11 +452,11 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
     button2.enableTitleFontForState = NO;
 
     // When
-    self.bannerView.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    self.bannerView.leadingButton.titleLabel.font =
-        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    self.bannerView.trailingButton.titleLabel.font =
-        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    self.bannerView.textView.font = font;
+    self.bannerView.leadingButton.titleLabel.font = font;
+    self.bannerView.trailingButton.titleLabel.font = font;
     self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
     self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
@@ -482,11 +482,11 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
     button2.enableTitleFontForState = NO;
 
     // When
-    self.bannerView.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    self.bannerView.leadingButton.titleLabel.font =
-        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    self.bannerView.trailingButton.titleLabel.font =
-        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    self.bannerView.textView.font = font;
+    self.bannerView.leadingButton.titleLabel.font = font;
+    self.bannerView.trailingButton.titleLabel.font = font;
     self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
     self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
