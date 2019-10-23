@@ -82,6 +82,14 @@
   return self;
 }
 
+- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene {
+  self = [super initWithWindowScene:windowScene];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
+
 - (void)commonInit {
   self.backgroundColor = [UIColor clearColor];
 
