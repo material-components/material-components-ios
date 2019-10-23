@@ -73,7 +73,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _elevation = MDCShadowElevationNavDrawer;
     _dismissOnBackgroundTap = YES;
-    _scrimColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   }
   return self;
 }
@@ -122,7 +121,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor = self.scrimColor;
+  self.scrimView.backgroundColor =
+      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
