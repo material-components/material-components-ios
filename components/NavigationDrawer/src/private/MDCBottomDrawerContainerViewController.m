@@ -147,8 +147,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 // The scroll view is currently being dragged towards bottom.
 @property(nonatomic) BOOL scrollViewIsDraggedToBottom;
 
-// The scroll view is currently scrolled completely to the bottom.
-@property(nonatomic) BOOL scrollViewIsScrolledToEndOfContent;
+// Dictates whether the scrim should adopt the color of the trackingScrollView.
+@property(nonatomic) BOOL scrimShouldAdoptTrackingScrollViewBackgroundColor;
 
 // The scroll view has started its current drag from fullscreen.
 @property(nonatomic) BOOL scrollViewBeganDraggingFromFullscreen;
@@ -261,7 +261,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     self.scrollViewIsDraggedToBottom = contentOffset.y == oldContentOffset.y
                                            ? self.scrollViewIsDraggedToBottom
                                            : contentOffset.y < oldContentOffset.y;
-//    NSLog(@"%@",@(self.scrollViewIsDraggedToBottom));
+
     // The normalized content offset takes the content offset and updates it if using the
     // performance logic that comes with setting the tracking scroll view. The reason we update
     // the content offset is because the performance logic stops the scrolling internally of the
@@ -302,8 +302,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
       // If we still didn't reach the end of the content, or if we are scrolling up after reaching
       // the end of the content.
-      self.scrollViewIsScrolledToEndOfContent = NO;
-      NSLog(@"NO");
+      self.scrimShouldAdoptTrackingScrollViewBackgroundColor = NO;
 
       // Update the drawer's scrollView's offset to be static so the content will scroll instead.
       CGRect scrollViewBounds = self.scrollView.bounds;
@@ -322,8 +321,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(CGRectGetMinY(contentViewBounds), 0));
       self.trackingScrollView.bounds = contentViewBounds;
     } else {
-      self.scrollViewIsScrolledToEndOfContent = YES;
-      NSLog(@"YES");
+      self.scrimShouldAdoptTrackingScrollViewBackgroundColor = YES;
 
       if (self.trackingScrollView.contentSize.height >=
           CGRectGetHeight(self.trackingScrollView.frame)) {
@@ -336,8 +334,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       }
     }
   } else {
-    NSLog(@"NO (new)");
-    self.scrollViewIsScrolledToEndOfContent = NO;
+    self.scrimShouldAdoptTrackingScrollViewBackgroundColor = NO;
   }
   return normalizedYContentOffset;
 }
@@ -424,7 +421,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
         setContentOffset:CGPointMake(self.scrollView.contentOffset.x, calculatedYContentOffset)
                 animated:animated];
   }
-  NSLog(@"%@",@(self.scrollView.contentOffset.y));
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
@@ -437,15 +433,12 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
 }
 
-- (void)setScrollViewIsScrolledToEndOfContent:(BOOL)scrollViewIsScrolledToEndOfContent {
-  if (_scrollViewIsScrolledToEndOfContent != scrollViewIsScrolledToEndOfContent) {
-    _scrollViewIsScrolledToEndOfContent = scrollViewIsScrolledToEndOfContent;
+-(void)setScrimShouldAdoptTrackingScrollViewBackgroundColor:(BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor {
+  if (_scrimShouldAdoptTrackingScrollViewBackgroundColor != scrimShouldAdoptTrackingScrollViewBackgroundColor) {
+    _scrimShouldAdoptTrackingScrollViewBackgroundColor = scrimShouldAdoptTrackingScrollViewBackgroundColor;
     if ([self.delegate respondsToSelector:@selector
-                       (bottomDrawerContainerViewControllerDidReachEndOfContent:
-                                             scrollViewIsScrolledToEndOfContent:)]) {
-      [self.delegate bottomDrawerContainerViewControllerDidReachEndOfContent:self
-                                          scrollViewIsScrolledToEndOfContent:
-                                              _scrollViewIsScrolledToEndOfContent];
+                       (bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:scrimShouldAdoptTrackingScrollViewBackgroundColor:)]) {
+      [self.delegate bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:self scrimShouldAdoptTrackingScrollViewBackgroundColor:_scrimShouldAdoptTrackingScrollViewBackgroundColor];
     }
   }
 }

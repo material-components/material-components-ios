@@ -26,17 +26,15 @@
 @protocol MDCBottomDrawerContainerViewControllerDelegate <NSObject>
 
 /**
-This method is called when the bottom drawer updates its value for
-scrollViewIsScrolledToEndOfContent when a trackingScrollView is set.
+This method is called when the MDCBottomDrawerContainerViewControllerDelegate needs to update the appearance of the scrim.
 
 @param containerViewController the container view controller of the bottom drawer.
-@param scrollViewIsScrolledToEndOfContent whether or not the scroll view is scrolled to the end of
-the content.
+@param scrimShouldAdoptTrackingScrollViewBackgroundColor whether or not the scrim view should adopt the backgroundColor of the trackingScrollView.
 */
-- (void)bottomDrawerContainerViewControllerDidReachEndOfContent:
+- (void)bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
             (nonnull MDCBottomDrawerContainerViewController *)containerViewController
-                             scrollViewIsScrolledToEndOfContent:
-                                 (BOOL)scrollViewIsScrolledToEndOfContent;
+                             scrimShouldAdoptTrackingScrollViewBackgroundColor:
+                                 (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor;
 
 /**
  This method is called when the bottom drawer will change its presented state to one of the
