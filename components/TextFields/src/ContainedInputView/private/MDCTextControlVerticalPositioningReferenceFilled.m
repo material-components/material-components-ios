@@ -14,6 +14,11 @@
 
 #import "MDCTextControlVerticalPositioningReferenceFilled.h"
 
+/**
+ These values do not come from anywhere in particular. They are values I chose in an attempt to
+ achieve the look and feel of the textfields at
+ https://material.io/design/components/text-fields.html.
+*/
 static const CGFloat kMinPaddingBetweenContainerTopAndFloatingLabel = (CGFloat)6.0;
 static const CGFloat kMaxPaddingBetweenContainerTopAndFloatingLabel = (CGFloat)10.0;
 static const CGFloat kMinPaddingBetweenFloatingLabelAndEditingText = (CGFloat)3.0;
@@ -24,7 +29,10 @@ static const CGFloat kMinPaddingAroundAssistiveLabels = (CGFloat)3.0;
 static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
 
 /**
- For slightly more context on what this class is doing look at MDCTextControlVerticalPositioningReference. It's very similar and has some comments. Maybe at some point all the positioning references should be refactored to share a superclass, because there's currently a lot of duplicated code among the three of them.
+ For slightly more context on what this class is doing look at
+ MDCTextControlVerticalPositioningReferenceBase. It's very similar and has some comments. Maybe at
+ some point all the positioning references should be refactored to share a superclass, because
+ there's currently a lot of duplicated code among the three of them.
 */
 @interface MDCTextControlVerticalPositioningReferenceFilled ()
 @property(nonatomic, assign) CGFloat paddingAroundAssistiveLabels;
