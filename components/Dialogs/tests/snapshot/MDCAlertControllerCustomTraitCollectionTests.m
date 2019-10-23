@@ -288,38 +288,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraSmallAndLegacyEnabled {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)
-    testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLargeAndLegacyEnabled {
-  // Given
-  [self
-      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
 - (void)testDynamicColorSupport {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
