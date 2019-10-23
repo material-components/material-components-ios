@@ -446,15 +446,10 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
     self.bannerView.textView.text = kBannerLongText;
     MDCButton *button1 = self.bannerView.leadingButton;
     [button1 setTitle:@"Action1" forState:UIControlStateNormal];
-    [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    button1.uppercaseTitle = YES;
-    button1.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    button1.enableTitleFontForState = NO;
     MDCButton *button2 = self.bannerView.trailingButton;
     [button2 setTitle:@"Action2" forState:UIControlStateNormal];
-    [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    button2.uppercaseTitle = YES;
-    button2.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-    self.bannerView.imageView.hidden = YES;
+    button2.enableTitleFontForState = NO;
 
     // When
     self.bannerView.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -481,15 +476,10 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
     self.bannerView.textView.text = kBannerLongText;
     MDCButton *button1 = self.bannerView.leadingButton;
     [button1 setTitle:@"Action1" forState:UIControlStateNormal];
-    [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    button1.uppercaseTitle = YES;
-    button1.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    button1.enableTitleFontForState = NO;
     MDCButton *button2 = self.bannerView.trailingButton;
     [button2 setTitle:@"Action2" forState:UIControlStateNormal];
-    [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    button2.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-    button2.uppercaseTitle = YES;
-    self.bannerView.imageView.hidden = YES;
+    button2.enableTitleFontForState = NO;
 
     // When
     self.bannerView.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
