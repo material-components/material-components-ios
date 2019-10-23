@@ -18,7 +18,7 @@
 
 @interface MockOverlayWindow : MDCOverlayWindow
 
-@property (nonatomic) BOOL commonInitCalled;
+@property(nonatomic) BOOL commonInitCalled;
 
 - (void)commonInit;
 
@@ -79,6 +79,5 @@
   }
 #endif
 }
-
 
 @end
