@@ -44,6 +44,9 @@
   // update only that golden image.
   //  self.recordMode = YES;
 
+  // Skip empty tests since this is only testing Dynamic Type.
+  self.shouldExecuteEmptyTests = NO;
+
   if (@available(iOS 11.0, *)) {
     MDCTextFieldFilledControllerPreferredFontXSSnapshotTestsFake *fakeTextField =
         [[MDCTextFieldFilledControllerPreferredFontXSSnapshotTestsFake alloc] init];
