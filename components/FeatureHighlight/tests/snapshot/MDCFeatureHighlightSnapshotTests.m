@@ -47,7 +47,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  // self.recordMode = YES;
+   self.recordMode = YES;
 }
 
 - (void)tearDown {
@@ -122,6 +122,7 @@
     UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
     self.featureHighlightViewController.titleFont = originalFont;
     self.featureHighlightViewController.bodyFont = originalFont;
+    self.featureHighlightViewController.adjustsFontForContentSizeCategory = YES;
 
     // When
     UITraitCollection *aXXXLTraitCollection =
@@ -169,6 +170,7 @@
     UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
     self.featureHighlightViewController.titleFont = originalFont;
     self.featureHighlightViewController.bodyFont = originalFont;
+    self.featureHighlightViewController.adjustsFontForContentSizeCategory = YES;
 
     // When
     UITraitCollection *xsTraitCollection = [UITraitCollection

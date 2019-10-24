@@ -86,6 +86,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 @synthesize highlightRadius = _outerRadius;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
@@ -108,17 +109,19 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.textAlignment = NSTextAlignmentNatural;
-    _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-    _titleLabel.numberOfLines = 0;
+//    _titleLabel.textAlignment = NSTextAlignmentNatural;
+//    _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+//    _titleLabel.numberOfLines = 0;
+    _titleLabel.adjustsFontForContentSizeCategory = YES;
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
-    _bodyLabel.textAlignment = NSTextAlignmentNatural;
-    _bodyLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-    _bodyLabel.numberOfLines = 0;
+//    _bodyLabel.textAlignment = NSTextAlignmentNatural;
+//    _bodyLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+//    _bodyLabel.numberOfLines = 0;
+    _bodyLabel.adjustsFontForContentSizeCategory = YES;
     [self addSubview:_bodyLabel];
 
     UITapGestureRecognizer *tapRecognizer =
@@ -180,7 +183,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)updateTitleFont {
   if (!_titleFont) {
-    _titleFont = [MDCFeatureHighlightView defaultTitleFont];
+//    _titleFont = [MDCFeatureHighlightView defaultTitleFont];
   }
   if (_mdc_adjustsFontForContentSizeCategory) {
     if (_titleFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
@@ -193,7 +196,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
                                    scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     }
   } else {
-    _titleLabel.font = _titleFont;
+    if (_titleLabel.attributedText) {
+      NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithAttributedString:_titleLabel.attributedText];
+      [string addAttribute:NSFontAttributeName value:_titleFont range:NSMakeRange(0, string.length)];
+      _titleLabel.attributedText = string;
+    }
+//    _titleLabel.font = _titleFont;
   }
 
   [self setNeedsLayout];
@@ -654,6 +662,16 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   [self updateTitleFont];
   [self updateBodyFont];
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.bodyLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
 }
 
 // Handles UIContentSizeCategoryDidChangeNotifications
