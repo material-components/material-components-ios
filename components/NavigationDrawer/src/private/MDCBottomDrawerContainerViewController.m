@@ -447,6 +447,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                                      _scrimShouldAdoptTrackingScrollViewBackgroundColor];
     }
   }
+  self.shadowedView.layer.shadowColor = _scrimShouldAdoptTrackingScrollViewBackgroundColor
+                                            ? UIColor.clearColor.CGColor
+                                            : self.drawerShadowColor.CGColor;
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
