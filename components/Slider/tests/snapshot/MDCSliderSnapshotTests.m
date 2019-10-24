@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCSlider_Subclassable.h"
+#import "../../src/private/MDCSlider_Subclassable.h"
 #import "MaterialSlider.h"
 #import "MaterialThumbtrack.h"
 
