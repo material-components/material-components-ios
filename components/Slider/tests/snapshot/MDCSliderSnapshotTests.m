@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialSlider.h"
 #import "MDCSlider_Subclassable.h"
+#import "MaterialSlider.h"
 #import "MaterialThumbtrack.h"
 
 /**
@@ -227,8 +227,9 @@
     self.slider.value =
         self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
     self.slider.shouldDisplayDiscreteValueLabel = YES;
-    UITraitCollection *aXXXLTraitCollection = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-    UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     self.slider.traitCollectionOverride = aXXXLTraitCollection;
     // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
 
