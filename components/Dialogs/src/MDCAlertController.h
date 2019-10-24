@@ -73,9 +73,13 @@
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
-// b/117717380: Will be deprecated
-/** The font applied to the button of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIFont *buttonFont;
+/**
+ The font applied to the button of Alert Controller.
+
+ @note This property is deprecated and will be removed in an upcoming release.
+ */
+@property(nonatomic, strong, nullable)
+    UIFont *buttonFont __deprecated_msg("Please use buttonForAction: to set button properties.");
 
 // b/117717380: Will be deprecated
 /** The color applied to the button title text of Alert Controller.*/
