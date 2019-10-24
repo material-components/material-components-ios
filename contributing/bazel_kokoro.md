@@ -10,7 +10,7 @@ script is the `.kokoro` script in the root of the repo.
 
 ## Running kokoro presubmits locally
 
-First, ensure that you have [installed bazel 0.20](https://docs.bazel.build/versions/master/install-os-x.html#install-with-installer-mac-os-x) using the binary installer (not Homebrew)
+First, ensure that you have [installed bazel 0.20](https://docs.bazel.build/versions/master/install-os-x.html#install-with-installer-mac-os-x) using [the binary installer from the Release page](https://github.com/bazelbuild/bazel/releases/tag/0.20.0) (not Homebrew)
 and at least one version of Xcode.
 
 Run the following command from the root of your MDC-iOS repo to run the presubmits:
