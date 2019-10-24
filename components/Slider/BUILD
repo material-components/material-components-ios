@@ -73,6 +73,7 @@ mdc_unit_test_objc_library(
         ":ColorThemer",
         ":Slider",
         ":private",
+        "//components/private/ThumbTrack",
     ],
 )
 

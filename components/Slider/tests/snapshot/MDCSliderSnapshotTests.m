@@ -18,7 +18,7 @@
 
 #import "../../src/private/MDCSlider_Subclassable.h"
 #import "MaterialSlider.h"
-#import "MaterialThumbtrack.h"
+#import "MaterialThumbTrack.h"
 
 /**
  An MDCSlider subclass that allows the user to override the @c traitCollection property.
