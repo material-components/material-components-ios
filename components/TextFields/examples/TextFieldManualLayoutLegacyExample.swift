@@ -139,8 +139,6 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     stateZip.addSubview(zip)
     zip.delegate = self
     zipController.placeholderText = "Zip Code"
-    zip.leadingUnderlineLabel.numberOfLines = 0
-    zip.leadingUnderlineLabel.lineBreakMode = .byWordWrapping
     zipController.helperText = "XXXXX"
     allTextFieldControllers.append(zipController)
 
@@ -259,10 +257,10 @@ extension TextFieldManualLayoutLegacySwiftExample: UITextFieldDelegate {
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         String(fullString[range]).characterCount > 0 {
-        zipController.setErrorText("Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z",
+        zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {
-        zipController.setErrorText("Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z",
+        zipController.setErrorText("Error: Zip can only contain five digits",
                                    errorAccessibilityValue: nil)
       } else {
         zipController.setErrorText(nil, errorAccessibilityValue: nil)
