@@ -131,11 +131,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
      containerHeight:(CGFloat)containerHeight
      isLabelFloating:(BOOL)isLabelFloating
     outlineLineWidth:(CGFloat)outlineLineWidth {
-  UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
-                                            labelFrame:labelFrame
-                                       containerHeight:containerHeight
-                                             lineWidth:outlineLineWidth
-                                       isLabelFloating:isLabelFloating];
+  UIBezierPath *path = [MDCTextControlStyleOutlined outlinePathWithViewBounds:view.bounds
+                                                                   labelFrame:labelFrame
+                                                              containerHeight:containerHeight
+                                                                    lineWidth:outlineLineWidth
+                                                              isLabelFloating:isLabelFloating];
   self.outlinedSublayer.path = path.CGPath;
   self.outlinedSublayer.lineWidth = outlineLineWidth;
   if (self.outlinedSublayer.superlayer != view.layer) {
@@ -143,7 +143,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   }
 }
 
-- (UIBezierPath *)outlinePathWithViewBounds:(CGRect)viewBounds
++ (UIBezierPath *)outlinePathWithViewBounds:(CGRect)viewBounds
                                  labelFrame:(CGRect)labelFrame
                             containerHeight:(CGFloat)containerHeight
                                   lineWidth:(CGFloat)lineWidth
