@@ -12,62 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlStylePathDrawingUtils.h"
+#import "UIBezierPath+MDCTextControlStyle.h"
 
 #import "MaterialMath.h"
 
-@implementation MDCTextControlStylePathDrawingUtils
+// TODO: Consider looking into whether or not the Shapes library already has this functionality, as
+// recommended in https://github.com/material-components/material-components-ios/pull/8628.
+@implementation UIBezierPath (MDCTextControlStyle)
 
-+ (void)addTopRightCornerToPath:(UIBezierPath *)path
-                      fromPoint:(CGPoint)point1
-                        toPoint:(CGPoint)point2
-                     withRadius:(CGFloat)radius {
+- (void)mdc_addTopRightCornerFromPoint:(CGPoint)point1
+                               toPoint:(CGPoint)point2
+                            withRadius:(CGFloat)radius {
   CGFloat startAngle = -(CGFloat)(M_PI / 2);
   CGFloat endAngle = 0;
   CGPoint center = CGPointMake(point1.x, point2.y);
-  [path addArcWithCenter:center
+  [self addArcWithCenter:center
                   radius:radius
               startAngle:startAngle
                 endAngle:endAngle
                clockwise:YES];
 }
 
-+ (void)addBottomRightCornerToPath:(UIBezierPath *)path
-                         fromPoint:(CGPoint)point1
-                           toPoint:(CGPoint)point2
-                        withRadius:(CGFloat)radius {
+- (void)mdc_addBottomRightCornerFromPoint:(CGPoint)point1
+                                  toPoint:(CGPoint)point2
+                               withRadius:(CGFloat)radius {
   CGFloat startAngle = 0;
   CGFloat endAngle = -(CGFloat)((M_PI * 3) / 2);
   CGPoint center = CGPointMake(point2.x, point1.y);
-  [path addArcWithCenter:center
+  [self addArcWithCenter:center
                   radius:radius
               startAngle:startAngle
                 endAngle:endAngle
                clockwise:YES];
 }
 
-+ (void)addBottomLeftCornerToPath:(UIBezierPath *)path
-                        fromPoint:(CGPoint)point1
-                          toPoint:(CGPoint)point2
-                       withRadius:(CGFloat)radius {
+- (void)mdc_addBottomLeftCornerFromPoint:(CGPoint)point1
+                                 toPoint:(CGPoint)point2
+                              withRadius:(CGFloat)radius {
   CGFloat startAngle = -(CGFloat)((M_PI * 3) / 2);
   CGFloat endAngle = -(CGFloat)M_PI;
   CGPoint center = CGPointMake(point1.x, point2.y);
-  [path addArcWithCenter:center
+  [self addArcWithCenter:center
                   radius:radius
               startAngle:startAngle
                 endAngle:endAngle
                clockwise:YES];
 }
 
-+ (void)addTopLeftCornerToPath:(UIBezierPath *)path
-                     fromPoint:(CGPoint)point1
-                       toPoint:(CGPoint)point2
-                    withRadius:(CGFloat)radius {
+- (void)mdc_addTopLeftCornerFromPoint:(CGPoint)point1
+                              toPoint:(CGPoint)point2
+                           withRadius:(CGFloat)radius {
   CGFloat startAngle = -(CGFloat)M_PI;
   CGFloat endAngle = -(CGFloat)(M_PI / 2);
   CGPoint center = CGPointMake(point1.x + radius, point2.y + radius);
-  [path addArcWithCenter:center
+  [self addArcWithCenter:center
                   radius:radius
               startAngle:startAngle
                 endAngle:endAngle
