@@ -32,6 +32,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 @implementation MDCTextControlStyleOutlined
 
+#pragma mark Object Lifecycle
+
 - (instancetype)init {
   self = [super init];
   if (self) {
@@ -39,6 +41,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   }
   return self;
 }
+
+#pragma mark Setup
 
 - (void)commonMDCTextControlStyleOutlinedInit {
   [self setUpOutlineColors];
@@ -78,6 +82,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   self.outlineColors[@(state)] = outlineColor;
 }
 
+#pragma mark MDCTextControlStyle
+
 - (void)applyStyleToTextControl:(id<MDCTextControl>)TextControl {
   if (![TextControl isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:TextControl];
@@ -106,6 +112,24 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 - (void)removeStyleFrom:(id<MDCTextControl>)TextControl {
   [self.outlinedSublayer removeFromSuperlayer];
 }
+
+- (id<MDCTextControlVerticalPositioningReference>)
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  return [[MDCTextControlVerticalPositioningReferenceOutlined alloc]
+      initWithFloatingFontLineHeight:floatingLabelHeight
+                normalFontLineHeight:normalFontLineHeight
+                       textRowHeight:textRowHeight
+                    numberOfTextRows:numberOfTextRows
+                             density:density
+            preferredContainerHeight:preferredContainerHeight];
+}
+
+#pragma mark Internal Styling Methods
 
 - (void)applyStyleTo:(UIView *)view
           labelFrame:(CGRect)labelFrame
@@ -175,22 +199,6 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                            withRadius:radius];
 
   return path;
-}
-
-- (id<MDCTextControlVerticalPositioningReference>)
-    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
-                              normalFontLineHeight:(CGFloat)normalFontLineHeight
-                                     textRowHeight:(CGFloat)textRowHeight
-                                  numberOfTextRows:(CGFloat)numberOfTextRows
-                                           density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  return [[MDCTextControlVerticalPositioningReferenceOutlined alloc]
-      initWithFloatingFontLineHeight:floatingLabelHeight
-                normalFontLineHeight:normalFontLineHeight
-                       textRowHeight:textRowHeight
-                    numberOfTextRows:numberOfTextRows
-                             density:density
-            preferredContainerHeight:preferredContainerHeight];
 }
 
 @end
