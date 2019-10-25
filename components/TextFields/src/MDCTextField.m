@@ -402,13 +402,6 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
 #pragma mark - UITextField Property Overrides
 
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_10_0)
-- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
-  [super setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
-  [self mdc_setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
-}
-#endif
-
 - (NSAttributedString *)attributedPlaceholder {
   return _fundament.attributedPlaceholder;
 }
@@ -794,17 +787,23 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
 #pragma mark - Accessibility
 
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  if (@available(iOS 10.0, *)) {
+    [super setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
+    self.leadingUnderlineLabel.adjustsFontForContentSizeCategory =
+        adjustsFontForContentSizeCategory;
+    self.trailingUnderlineLabel.adjustsFontForContentSizeCategory =
+        adjustsFontForContentSizeCategory;
+    self.placeholderLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  }
+}
+
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _fundament.mdc_adjustsFontForContentSizeCategory;
 }
 
 // TODO: (larche) remove when we drop iOS 9
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  // Prior to iOS 10 dynamic type was not automatically applied.
-  if ([super respondsToSelector:@selector(setAdjustsFontForContentSizeCategory:)]) {
-    [super setAdjustsFontForContentSizeCategory:adjusts];
-  }
-
   [_fundament mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
