@@ -15,8 +15,8 @@
 #import "MDCTextControlStyleOutlined.h"
 
 #import "MDCTextControl.h"
-#import "UIBezierPath+MDCTextControlStyle.h"
 #import "MDCTextControlVerticalPositioningReferenceOutlined.h"
+#import "UIBezierPath+MDCTextControlStyle.h"
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
@@ -150,29 +150,29 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + radius);
   [path mdc_addTopRightCornerFromPoint:topRightCornerPoint1
-                                                       toPoint:topRightCornerPoint2
-                                                    withRadius:radius];
+                               toPoint:topRightCornerPoint2
+                            withRadius:radius];
 
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - radius);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - radius, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
   [path mdc_addBottomRightCornerFromPoint:bottomRightCornerPoint1
-                                                          toPoint:bottomRightCornerPoint2
-                                                       withRadius:radius];
+                                  toPoint:bottomRightCornerPoint2
+                               withRadius:radius];
 
   CGPoint bottomLeftCornerPoint1 = CGPointMake(radius, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - radius);
   [path addLineToPoint:bottomLeftCornerPoint1];
   [path mdc_addBottomLeftCornerFromPoint:bottomLeftCornerPoint1
-                                                         toPoint:bottomLeftCornerPoint2
-                                                      withRadius:radius];
+                                 toPoint:bottomLeftCornerPoint2
+                              withRadius:radius];
 
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + radius);
   CGPoint topLeftCornerPoint2 = CGPointMake(radius, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
   [path mdc_addTopLeftCornerFromPoint:topLeftCornerPoint1
-                                                      toPoint:topLeftCornerPoint2
-                                                   withRadius:radius];
+                              toPoint:topLeftCornerPoint2
+                           withRadius:radius];
 
   return path;
 }
