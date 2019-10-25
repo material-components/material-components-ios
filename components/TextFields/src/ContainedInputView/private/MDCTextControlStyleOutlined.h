@@ -19,7 +19,22 @@
 
 // TODO: When the MDCBaseTextField subclass that makes use of this style (and the path drawing logic
 // inside it) lands there should be snapshot tests for it.
+/**
+ This style object is used by MDCTextControls adopting the Material Outlined style.
+ */
 @interface MDCTextControlStyleOutlined : NSObject <MDCTextControlStyle>
-- (nonnull UIColor *)outlineColorForState:(MDCTextControlState)state;
+
+/**
+Sets the outline color for a given state.
+@param outlineColor The UIColor for the given state.
+@param state The MDCTextControlState.
+*/
 - (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(MDCTextControlState)state;
+
+/**
+Returns the outline color for a given state.
+@param state The MDCTextControlState.
+*/
+- (nonnull UIColor *)outlineColorForState:(MDCTextControlState)state;
+
 @end
