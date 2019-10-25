@@ -1,18 +1,12 @@
-# #develop#
+# 93.1.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch hotfix release addresses a bug in NavigationDrawer where the scrim is visible when the drawer's trackingScrollView is scrolled to the end of the content.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Changes
 
-Replace this text with links to deprecation guides.
-## New features
+### NavigationDrawer
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [Address issue where scrim is visible when scrolled to end of content. (#8638)](https://github.com/material-components/material-components-ios/commit/8b3ce02a7ae9cf9722c1c86ba8c98cb0e3a23eb7) (Andrew Overton)
 
 ---
 
