@@ -44,6 +44,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 @implementation MDCTextControlStyleFilled
 
+#pragma mark Object Lifecycle
+
 - (instancetype)init {
   self = [super init];
   if (self) {
@@ -51,6 +53,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   }
   return self;
 }
+
+#pragma mark Setup
 
 - (void)commonMDCTextControlStyleFilledInit {
   [self setUpUnderlineColors];
@@ -102,6 +106,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   self.filledBackgroundColors[@(state)] = filledBackgroundColor;
 }
 
+#pragma mark MDCTextControl
+
 - (void)applyStyleToTextControl:(id<MDCTextControl>)textControl {
   if (![textControl isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:textControl];
@@ -118,6 +124,30 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   [self.thinUnderlineLayer removeFromSuperlayer];
   [self.thickUnderlineLayer removeFromSuperlayer];
 }
+
+- (id<MDCTextControlVerticalPositioningReference>)
+    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                              normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                     textRowHeight:(CGFloat)textRowHeight
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  return [[MDCTextControlVerticalPositioningReferenceFilled alloc]
+      initWithFloatingFontLineHeight:floatingLabelHeight
+                normalFontLineHeight:normalFontLineHeight
+                       textRowHeight:textRowHeight
+                    numberOfTextRows:numberOfTextRows
+                             density:density
+            preferredContainerHeight:preferredContainerHeight];
+}
+
+- (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
+  CGFloat scaleFactor = kFilledFloatingLabelScaleFactor;
+  CGFloat floatingFontSize = font.pointSize * scaleFactor;
+  return [font fontWithSize:floatingFontSize];
+}
+
+#pragma mark Custotm Styling
 
 - (void)applyStyleToView:(UIView *)view
                    state:(MDCTextControlState)state
@@ -247,6 +277,22 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   [CATransaction commit];
 }
 
+- (BOOL)shouldShowThickUnderlineWithState:(MDCTextControlState)state {
+  BOOL shouldShow = NO;
+  switch (state) {
+    case MDCTextControlStateEditing:
+      shouldShow = YES;
+      break;
+    case MDCTextControlStateNormal:
+    case MDCTextControlStateDisabled:
+    default:
+      break;
+  }
+  return shouldShow;
+}
+
+#pragma mark Animation
+
 - (CABasicAnimation *)pathAnimationTo:(UIBezierPath *)path {
   CABasicAnimation *animation = [self basicAnimationWithKeyPath:@"path"];
   animation.toValue = (id)(path.CGPath);
@@ -295,19 +341,20 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   }
 }
 
-- (BOOL)shouldShowThickUnderlineWithState:(MDCTextControlState)state {
-  BOOL shouldShow = NO;
-  switch (state) {
-    case MDCTextControlStateEditing:
-      shouldShow = YES;
-      break;
-    case MDCTextControlStateNormal:
-    case MDCTextControlStateDisabled:
-    default:
-      break;
-  }
-  return shouldShow;
++ (NSString *)thinUnderlineShrinkKey {
+  return @"thinUnderlineShrinkKey";
 }
++ (NSString *)thinUnderlineGrowKey {
+  return @"thinUnderlineGrowKey";
+}
++ (NSString *)thickUnderlineShrinkKey {
+  return @"thickUnderlineShrinkKey";
+}
++ (NSString *)thickUnderlineGrowKey {
+  return @"thickUnderlineGrowKey";
+}
+
+#pragma mark Path Drawing
 
 - (UIBezierPath *)filledSublayerPathWithTextFieldBounds:(CGRect)viewBounds
                                         containerHeight:(CGFloat)containerHeight {
@@ -395,41 +442,6 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   [path mdc_addTopLeftCornerFromPoint:topLeftCornerPoint1 toPoint:topLeftCornerPoint2 withRadius:0];
 
   return path;
-}
-
-+ (NSString *)thinUnderlineShrinkKey {
-  return @"thinUnderlineShrinkKey";
-}
-+ (NSString *)thinUnderlineGrowKey {
-  return @"thinUnderlineGrowKey";
-}
-+ (NSString *)thickUnderlineShrinkKey {
-  return @"thickUnderlineShrinkKey";
-}
-+ (NSString *)thickUnderlineGrowKey {
-  return @"thickUnderlineGrowKey";
-}
-
-- (id<MDCTextControlVerticalPositioningReference>)
-    positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
-                              normalFontLineHeight:(CGFloat)normalFontLineHeight
-                                     textRowHeight:(CGFloat)textRowHeight
-                                  numberOfTextRows:(CGFloat)numberOfTextRows
-                                           density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  return [[MDCTextControlVerticalPositioningReferenceFilled alloc]
-      initWithFloatingFontLineHeight:floatingLabelHeight
-                normalFontLineHeight:normalFontLineHeight
-                       textRowHeight:textRowHeight
-                    numberOfTextRows:numberOfTextRows
-                             density:density
-            preferredContainerHeight:preferredContainerHeight];
-}
-
-- (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
-  CGFloat scaleFactor = kFilledFloatingLabelScaleFactor;
-  CGFloat floatingFontSize = font.pointSize * scaleFactor;
-  return [font fontWithSize:floatingFontSize];
 }
 
 @end
