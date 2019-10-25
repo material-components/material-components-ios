@@ -1,18 +1,48 @@
-# #develop#
+# 93.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release deprecates the `buttonFont` API of `MDCAlertController`.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
-## New features
+The `buttonFont` API on `MDCAlertController` is being deprecated and will soon
+be removed. Clients should instead use `buttonForAction:` to access and theme
+each button as desired.
 
-Replace this text with example code for each new feature.
+**Objective-C**
+
+```objc
+for (MDCAlertAction *action in self.actions) {
+  MDCButton *button = [self buttonForAction:action];
+  // Perform button customization
+}
+```
+
 ## API changes
 
-## Component changes
+### Dialogs
+
+#### MDCAlertController
+
+*modified* property: `buttonFont` in `MDCAlertController`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Please use buttonForAction: to set button properties.` |
+
+*modified* property: `buttonFont` in `MDCAlertController`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+## Changes
+
+### Dialogs
+
+* [Mark `buttonFont` deprecated. (#8649)](https://github.com/material-components/material-components-ios/commit/c2c1511f673b988f87f46f8e6d709eaa53337f39) (Robert Moore)
+
 
 ---
 
