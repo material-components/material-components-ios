@@ -128,16 +128,14 @@
     UITraitCollection *aXXXLTraitCollection =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    self.featureHighlightViewController.traitCollectionOverride =
-        aXXXLTraitCollection;
+    self.featureHighlightViewController.traitCollectionOverride = aXXXLTraitCollection;
     XCTestExpectation *expectation =
         [[XCTestExpectation alloc] initWithDescription:@"Feature highlight is presented"];
-    [currentViewController
-        presentViewController:self.featureHighlightViewController
-                     animated:YES
-                   completion:^{
-                     [expectation fulfill];
-                   }];
+    [currentViewController presentViewController:self.featureHighlightViewController
+                                        animated:YES
+                                      completion:^{
+                                        [expectation fulfill];
+                                      }];
 
     // Then
     [self waitForExpectations:@[ expectation ] timeout:5];
@@ -174,16 +172,14 @@
     // When
     UITraitCollection *xsTraitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    self.featureHighlightViewController.traitCollectionOverride =
-    xsTraitCollection;
+    self.featureHighlightViewController.traitCollectionOverride = xsTraitCollection;
     XCTestExpectation *expectation =
         [[XCTestExpectation alloc] initWithDescription:@"Feature highlight is presented"];
-    [currentViewController
-        presentViewController:self.featureHighlightViewController
-                     animated:YES
-                   completion:^{
-                     [expectation fulfill];
-                   }];
+    [currentViewController presentViewController:self.featureHighlightViewController
+                                        animated:YES
+                                      completion:^{
+                                        [expectation fulfill];
+                                      }];
 
     // Then
     [self waitForExpectations:@[ expectation ] timeout:5];

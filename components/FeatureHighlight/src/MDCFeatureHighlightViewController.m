@@ -74,8 +74,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   self.featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
   if (@available(iOS 10.0, *)) {
-      self.featureHighlightView.adjustsFontForContentSizeCategory =
-          _adjustsFontForContentSizeCategory;
+    self.featureHighlightView.adjustsFontForContentSizeCategory =
+        _adjustsFontForContentSizeCategory;
   }
   self.featureHighlightView.mdc_legacyFontScaling = _mdc_legacyFontScaling;
 
@@ -137,9 +137,13 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 - (void)viewWillLayoutSubviews {
   self.featureHighlightView.titleLabel.attributedText =
-  [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing font:_titleFont];
+      [self attributedStringForString:self.titleText
+                          lineSpacing:kMDCFeatureHighlightLineSpacing
+                                 font:_titleFont];
   self.featureHighlightView.bodyLabel.attributedText =
-  [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing font:_bodyFont];
+      [self attributedStringForString:self.bodyText
+                          lineSpacing:kMDCFeatureHighlightLineSpacing
+                                 font:_bodyFont];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -367,7 +371,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.lineSpacing = lineSpacing;
 
-  NSMutableDictionary *attrs = [[NSMutableDictionary alloc] initWithDictionary:@{NSParagraphStyleAttributeName : paragraphStyle}];
+  NSMutableDictionary *attrs = [[NSMutableDictionary alloc]
+      initWithDictionary:@{NSParagraphStyleAttributeName : paragraphStyle}];
 
   if (font) {
     [attrs setObject:font forKey:NSFontAttributeName];
