@@ -147,6 +147,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 // The scroll view is currently being dragged towards bottom.
 @property(nonatomic) BOOL scrollViewIsDraggedToBottom;
 
+// Dictates whether the scrim should adopt the color of the trackingScrollView.
+@property(nonatomic) BOOL scrimShouldAdoptTrackingScrollViewBackgroundColor;
+
 // The scroll view has started its current drag from fullscreen.
 @property(nonatomic) BOOL scrollViewBeganDraggingFromFullscreen;
 
@@ -299,6 +302,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
       // If we still didn't reach the end of the content, or if we are scrolling up after reaching
       // the end of the content.
+      self.scrimShouldAdoptTrackingScrollViewBackgroundColor = NO;
 
       // Update the drawer's scrollView's offset to be static so the content will scroll instead.
       CGRect scrollViewBounds = self.scrollView.bounds;
@@ -317,6 +321,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(CGRectGetMinY(contentViewBounds), 0));
       self.trackingScrollView.bounds = contentViewBounds;
     } else {
+      self.scrimShouldAdoptTrackingScrollViewBackgroundColor = YES;
+
       if (self.trackingScrollView.contentSize.height >=
           CGRectGetHeight(self.trackingScrollView.frame)) {
         // Have the drawer's scrollView's content size be static so it will bounce when reaching the
@@ -327,6 +333,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
         self.scrollView.contentSize = scrollViewContentSize;
       }
     }
+  } else {
+    self.scrimShouldAdoptTrackingScrollViewBackgroundColor = NO;
   }
   return normalizedYContentOffset;
 }
@@ -423,6 +431,26 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
   _drawerShadowColor = drawerShadowColor;
   self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
+}
+
+// This property and the logic associated with it were added to mitigate b/119714330
+- (void)setScrimShouldAdoptTrackingScrollViewBackgroundColor:
+    (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor {
+  if (_scrimShouldAdoptTrackingScrollViewBackgroundColor !=
+      scrimShouldAdoptTrackingScrollViewBackgroundColor) {
+    _scrimShouldAdoptTrackingScrollViewBackgroundColor =
+        scrimShouldAdoptTrackingScrollViewBackgroundColor;
+    if ([self.delegate respondsToSelector:@selector
+                       (bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
+                                    scrimShouldAdoptTrackingScrollViewBackgroundColor:)]) {
+      [self.delegate bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:self
+                                 scrimShouldAdoptTrackingScrollViewBackgroundColor:
+                                     _scrimShouldAdoptTrackingScrollViewBackgroundColor];
+    }
+  }
+  self.shadowedView.layer.shadowColor = _scrimShouldAdoptTrackingScrollViewBackgroundColor
+                                            ? UIColor.clearColor.CGColor
+                                            : self.drawerShadowColor.CGColor;
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
