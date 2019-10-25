@@ -43,7 +43,6 @@ static NSString *const reuseIdentifier = @"Cell";
   MDCButton *button = [[MDCButton alloc] init];
   self.button = button;
   [self.button setTitle:@"Feature" forState:UIControlStateNormal];
-
   [self.button sizeToFit];
   [self.view addSubview:self.button];
 

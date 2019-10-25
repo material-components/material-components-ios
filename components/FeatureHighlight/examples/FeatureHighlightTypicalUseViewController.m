@@ -36,17 +36,8 @@
                           toFeatureHighlightViewController:vc];
   [MDCFeatureHighlightTypographyThemer applyTypographyScheme:self.typographyScheme
                             toFeatureHighlightViewController:vc];
-  if (@available(iOS 11.0, *)) {
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:10]];
-    vc.titleFont = originalFont; //[UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    vc.bodyFont = originalFont; //[UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-  } else {
-    // Fallback on earlier versions
-  }
 
-  vc.adjustsFontForContentSizeCategory = YES;
-//  vc.mdc_adjustsFontForContentSizeCategory = YES;
+  vc.mdc_adjustsFontForContentSizeCategory = YES;
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
   vc.bodyText = @"This is the description of the feature highlight view controller.";

@@ -119,7 +119,7 @@
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     self.featureHighlightViewController.traitCollectionOverride = xsTraitCollection;
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
     self.featureHighlightViewController.titleFont = originalFont;
     self.featureHighlightViewController.bodyFont = originalFont;
     self.featureHighlightViewController.adjustsFontForContentSizeCategory = YES;
@@ -128,15 +128,14 @@
     UITraitCollection *aXXXLTraitCollection =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    self.featureHighlightViewController.traitCollectionOverride =
+        aXXXLTraitCollection;
     XCTestExpectation *expectation =
         [[XCTestExpectation alloc] initWithDescription:@"Feature highlight is presented"];
     [currentViewController
         presentViewController:self.featureHighlightViewController
                      animated:YES
                    completion:^{
-                     self.featureHighlightViewController.traitCollectionOverride =
-                         aXXXLTraitCollection;
-
                      [expectation fulfill];
                    }];
 
@@ -167,7 +166,7 @@
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     self.featureHighlightViewController.traitCollectionOverride = aXXXLTraitCollection;
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
     self.featureHighlightViewController.titleFont = originalFont;
     self.featureHighlightViewController.bodyFont = originalFont;
     self.featureHighlightViewController.adjustsFontForContentSizeCategory = YES;
@@ -175,14 +174,14 @@
     // When
     UITraitCollection *xsTraitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    self.featureHighlightViewController.traitCollectionOverride =
+    xsTraitCollection;
     XCTestExpectation *expectation =
         [[XCTestExpectation alloc] initWithDescription:@"Feature highlight is presented"];
     [currentViewController
         presentViewController:self.featureHighlightViewController
                      animated:YES
                    completion:^{
-                     self.featureHighlightViewController.traitCollectionOverride =
-                         xsTraitCollection;
                      [expectation fulfill];
                    }];
 

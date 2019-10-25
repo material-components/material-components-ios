@@ -28,8 +28,6 @@ typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *bodyLabel;
 @property(nonatomic, copy) MDCFeatureHighlightInteractionBlock interactionBlock;
-@property(nonatomic, strong) NSMutableAttributedString *titleAttributedString;
-@property(nonatomic, strong) NSMutableAttributedString *bodyAttributedString;
 
 @end
 

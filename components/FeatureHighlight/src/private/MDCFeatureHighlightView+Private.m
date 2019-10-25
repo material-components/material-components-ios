@@ -112,7 +112,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
-    _titleLabel.adjustsFontForContentSizeCategory = YES;
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -121,7 +120,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _bodyLabel.textAlignment = NSTextAlignmentNatural;
     _bodyLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _bodyLabel.numberOfLines = 0;
-    _bodyLabel.adjustsFontForContentSizeCategory = YES;
     [self addSubview:_bodyLabel];
 
     UITapGestureRecognizer *tapRecognizer =
