@@ -33,6 +33,6 @@
 - (BOOL)isPlaceholderUp;
 
 /** Calculates the actual number of lines for the label provded. */
-- (NSUInteger)calculatedNumberOfLinesForLabel:(UILabel *)label;
++ (NSUInteger)calculatedNumberOfLinesForLabel:(UILabel *)label;
 
 @end

@@ -257,10 +257,11 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  CGFloat leadingUnderlineLabelPreferredMaxLayoutWidth = self.leadingUnderlineLabel.preferredMaxLayoutWidth;
   self.leadingUnderlineLabel.preferredMaxLayoutWidth = size.width;
-  self.trailingUnderlineLabel.preferredMaxLayoutWidth = size.width;
   CGSize sizeThatFits = [self intrinsicContentSize];
   sizeThatFits.width = size.width;
+  self.leadingUnderlineLabel.preferredMaxLayoutWidth = leadingUnderlineLabelPreferredMaxLayoutWidth;
   return sizeThatFits;
 }
 

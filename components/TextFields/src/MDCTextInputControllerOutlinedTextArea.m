@@ -176,16 +176,15 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   if (self.textInput.leadingUnderlineLabel.text.length) {
     underlineLabelsOffset =
         MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+    underlineLabelsOffset =
+        MAX(underlineLabelsOffset, [MDCTextInputControllerBase calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] *
+        underlineLabelsOffset);
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
     underlineLabelsOffset =
         MAX(underlineLabelsOffset,
             MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale);
   }
-  underlineLabelsOffset =
-      MAX(underlineLabelsOffset,
-          [self calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] *
-              underlineLabelsOffset);
 
   CGFloat underlineOffset = underlineLabelsOffset;
   underlineOffset += MDCTextInputTextFieldOutlinedTextAreaHalfPadding;

@@ -274,12 +274,9 @@ static CGFloat _underlineHeightNormalDefault =
       MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   leadingOffset = MAX(
       leadingOffset,
-      [self calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] * leadingOffset);
+      [MDCTextInputControllerBase calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] * leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
-  trailingOffset = MAX(
-      trailingOffset, [self calculatedNumberOfLinesForLabel:self.textInput.trailingUnderlineLabel] *
-                          trailingOffset);
 
   CGFloat underlineOffset = 0;
   switch (self.textInput.textInsetsMode) {

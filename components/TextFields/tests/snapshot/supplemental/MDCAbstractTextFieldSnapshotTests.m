@@ -248,6 +248,7 @@
 
   // When
   self.textFieldController.helperText = self.longHelperText;
+  self.textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.textField.leadingUnderlineLabel.numberOfLines = 0;
   [self invokeWillGenerateSnapshotAndVerify];
 
@@ -262,6 +263,7 @@
 
   // When
   self.textFieldController.helperText = self.longHelperText;
+  self.textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.textField.leadingUnderlineLabel.numberOfLines = 0;
   [self.textField MDCtest_setIsEditing:YES];
   [self invokeWillGenerateSnapshotAndVerify];
@@ -277,6 +279,7 @@
 
   // When
   self.textFieldController.helperText = self.longHelperText;
+  self.textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.textField.leadingUnderlineLabel.numberOfLines = 0;
   self.textField.enabled = NO;
   [self invokeWillGenerateSnapshotAndVerify];
@@ -337,6 +340,7 @@
   // When
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
+  self.textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.textField.leadingUnderlineLabel.numberOfLines = 0;
   [self invokeWillGenerateSnapshotAndVerify];
 
@@ -352,6 +356,7 @@
   // When
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
+  self.textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.textField.leadingUnderlineLabel.numberOfLines = 0;
   [self.textField MDCtest_setIsEditing:YES];
   [self invokeWillGenerateSnapshotAndVerify];
@@ -368,6 +373,7 @@
   // When
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
+  self.textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.textField.leadingUnderlineLabel.numberOfLines = 0;
   self.textField.enabled = NO;
   [self invokeWillGenerateSnapshotAndVerify];

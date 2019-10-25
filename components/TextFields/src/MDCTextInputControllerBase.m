@@ -1418,12 +1418,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   leadingOffset = MAX(
       leadingOffset,
-      [self calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] * leadingOffset);
+      [MDCTextInputControllerBase calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] * leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
-  trailingOffset = MAX(
-      trailingOffset, [self calculatedNumberOfLinesForLabel:self.textInput.trailingUnderlineLabel] *
-                          trailingOffset);
 
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputControllerBaseDefaultPadding or the biggest estimated underlineLabel height +
@@ -1459,10 +1456,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return textInsets;
 }
 
-// This method is used to calculate the actual number of lines for the label at the time.
 // The logic was sourced from
 // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextLayout/Tasks/CountLines.html.
-- (NSUInteger)calculatedNumberOfLinesForLabel:(UILabel *)label {
++ (NSUInteger)calculatedNumberOfLinesForLabel:(UILabel *)label {
   NSTextStorage *textStorage =
       [[NSTextStorage alloc] initWithAttributedString:label.attributedText];
   NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
