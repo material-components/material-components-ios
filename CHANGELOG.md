@@ -1,3 +1,51 @@
+# 93.1.0
+
+This minor hotfix release deprecates the `buttonFont` API of
+`MDCAlertController`.
+
+## New deprecations
+
+The `buttonFont` API on `MDCAlertController` is being deprecated and will soon
+be removed. Clients should instead use `buttonForAction:` to access and theme
+each button as desired.
+
+**Objective-C**
+
+```objc
+for (MDCAlertAction *action in self.actions) {
+  MDCButton *button = [self buttonForAction:action];
+  // Perform button customization
+}
+```
+
+## API changes
+
+### Dialogs
+
+#### MDCAlertController
+
+*modified* property: `buttonFont` in `MDCAlertController`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Please use buttonForAction: to set button properties.` |
+
+*modified* property: `buttonFont` in `MDCAlertController`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+## Changes
+
+### Dialogs
+
+* [Mark `buttonFont` deprecated. (#8649)](https://github.com/material-components/material-components-ios/commit/c2c1511f673b988f87f46f8e6d709eaa53337f39) (Robert Moore)
+
+---
+
 # 93.0.0
 
 This major release deletes MaskedTransition, fixes bugs in ActionSheet, and adds an API to Buttons related to fonts.
