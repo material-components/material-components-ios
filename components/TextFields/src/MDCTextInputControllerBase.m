@@ -1452,7 +1452,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // .bottom = underlineOffset + MDCTextInputControllerBaseDefaultPadding
   // Legacy default has an additional padding here but this version does not.
   textInsets.bottom = underlineOffset + MDCTextInputControllerBaseDefaultPadding;
-
   return textInsets;
 }
 
@@ -1462,7 +1461,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:label.attributedText];
   NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
   [textStorage addLayoutManager:layoutManager];
-  NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(label.bounds.size.width, CGFLOAT_MAX)];
+  CGFloat intrinsicWidth = [label intrinsicContentSize].width;
+  NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(intrinsicWidth,
+                                                                                    CGFLOAT_MAX)];
   textContainer.lineFragmentPadding = 0;
   textContainer.lineBreakMode = label.lineBreakMode;
   [layoutManager addTextContainer:textContainer];
