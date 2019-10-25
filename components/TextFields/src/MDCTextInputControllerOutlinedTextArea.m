@@ -184,7 +184,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   }
   underlineLabelsOffset =
       MAX(underlineLabelsOffset,
-          [self calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] * underlineLabelsOffset);
+          [self calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] *
+              underlineLabelsOffset);
 
   CGFloat underlineOffset = underlineLabelsOffset;
   underlineOffset += MDCTextInputTextFieldOutlinedTextAreaHalfPadding;
