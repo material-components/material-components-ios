@@ -57,17 +57,6 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.actionButton];
 
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
-  if (@available(iOS 11.0, *)) {
-      UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-      UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
-      self.button.titleLabel.font = originalFont;
-      self.button.titleLabel.adjustsFontForContentSizeCategory = YES;
-  //    self.button.enableTitleFontForState = NO;
-
-    } else {
-      // Fallback on earlier versions
-    }
-
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:actionButton];
 
   UITapGestureRecognizer *tapRecognizer =

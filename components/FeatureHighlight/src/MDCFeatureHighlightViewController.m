@@ -137,9 +137,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 - (void)viewWillLayoutSubviews {
   self.featureHighlightView.titleLabel.attributedText =
-      [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
+  [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing font:_titleFont];
   self.featureHighlightView.bodyLabel.attributedText =
-      [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing];
+  [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing font:_bodyFont];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -359,14 +359,19 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 #pragma mark - Private
 
 - (NSAttributedString *)attributedStringForString:(NSString *)string
-                                      lineSpacing:(CGFloat)lineSpacing {
+                                      lineSpacing:(CGFloat)lineSpacing
+                                             font:(UIFont *)font {
   if (!string) {
     return nil;
   }
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.lineSpacing = lineSpacing;
 
-  NSDictionary *attrs = @{NSParagraphStyleAttributeName : paragraphStyle};
+  NSMutableDictionary *attrs = [[NSMutableDictionary alloc] initWithDictionary:@{NSParagraphStyleAttributeName : paragraphStyle}];
+
+  if (font) {
+    [attrs setObject:font forKey:NSFontAttributeName];
+  }
 
   return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }

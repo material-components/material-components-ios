@@ -38,7 +38,7 @@
                             toFeatureHighlightViewController:vc];
   if (@available(iOS 11.0, *)) {
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:10]];
     vc.titleFont = originalFont; //[UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     vc.bodyFont = originalFont; //[UIFont preferredFontForTextStyle:UIFontTextStyleBody];
   } else {

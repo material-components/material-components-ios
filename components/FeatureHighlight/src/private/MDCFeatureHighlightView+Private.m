@@ -109,18 +109,18 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//    _titleLabel.textAlignment = NSTextAlignmentNatural;
-//    _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-//    _titleLabel.numberOfLines = 0;
+    _titleLabel.textAlignment = NSTextAlignmentNatural;
+    _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    _titleLabel.numberOfLines = 0;
     _titleLabel.adjustsFontForContentSizeCategory = YES;
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
-//    _bodyLabel.textAlignment = NSTextAlignmentNatural;
-//    _bodyLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-//    _bodyLabel.numberOfLines = 0;
+    _bodyLabel.textAlignment = NSTextAlignmentNatural;
+    _bodyLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    _bodyLabel.numberOfLines = 0;
     _bodyLabel.adjustsFontForContentSizeCategory = YES;
     [self addSubview:_bodyLabel];
 
@@ -183,7 +183,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)updateTitleFont {
   if (!_titleFont) {
-//    _titleFont = [MDCFeatureHighlightView defaultTitleFont];
+    _titleFont = [MDCFeatureHighlightView defaultTitleFont];
   }
   if (_mdc_adjustsFontForContentSizeCategory) {
     if (_titleFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
@@ -196,12 +196,13 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
                                    scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     }
   } else {
-    if (_titleLabel.attributedText) {
-      NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithAttributedString:_titleLabel.attributedText];
-      [string addAttribute:NSFontAttributeName value:_titleFont range:NSMakeRange(0, string.length)];
-      _titleLabel.attributedText = string;
-    }
-//    _titleLabel.font = _titleFont;
+    _titleLabel.font = _titleFont;
+  }
+
+  if (_titleLabel.attributedText) {
+    NSMutableAttributedString *attributedString = [_titleLabel.attributedText mutableCopy];
+    [self setFont:_titleFont forAttributedString:attributedString];
+    _titleLabel.attributedText = attributedString;
   }
 
   [self setNeedsLayout];
@@ -235,6 +236,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     }
   } else {
     _bodyLabel.font = _bodyFont;
+  }
+
+  if (_bodyLabel.attributedText) {
+    NSMutableAttributedString *attributedString = [_bodyLabel.attributedText mutableCopy];
+    [self setFont:_bodyFont forAttributedString:attributedString];
+    _bodyLabel.attributedText = attributedString;
   }
 
   [self setNeedsLayout];
@@ -678,6 +685,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateTitleFont];
   [self updateBodyFont];
+}
+
+- (void)setFont:(UIFont *)font forAttributedString:(NSMutableAttributedString *)attributedString {
+  [attributedString beginEditing];
+  NSRange range = NSMakeRange(0, attributedString.length);
+  [attributedString removeAttribute:NSFontAttributeName range:range];
+  [attributedString addAttribute:NSFontAttributeName value:font range:range];
+  [attributedString endEditing];
 }
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)
