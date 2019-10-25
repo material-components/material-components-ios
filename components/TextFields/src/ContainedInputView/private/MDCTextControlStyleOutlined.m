@@ -84,15 +84,15 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
     return;
   }
   CGRect labelFrame = TextControl.label.frame;
-  BOOL isFloatingLabelFloating = TextControl.labelState == MDCTextControlLabelStateFloating;
+  BOOL isLabelFloating = TextControl.labelState == MDCTextControlLabelStateFloating;
   CGFloat containerHeight = CGRectGetMaxY(TextControl.containerFrame);
   CGFloat lineWidth = (CGFloat)self.outlineLineWidths[@(TextControl.textControlState)].doubleValue;
   UIView *uiView = (UIView *)TextControl;
   [self applyStyleTo:uiView
-                   labelFrame:labelFrame
-              containerHeight:containerHeight
-      isFloatingLabelFloating:isFloatingLabelFloating
-             outlineLineWidth:lineWidth];
+            labelFrame:labelFrame
+       containerHeight:containerHeight
+       isLabelFloating:isLabelFloating
+      outlineLineWidth:lineWidth];
   self.outlinedSublayer.strokeColor =
       ((UIColor *)self.outlineColors[@(TextControl.textControlState)]).CGColor;
 }
@@ -108,15 +108,15 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 }
 
 - (void)applyStyleTo:(UIView *)view
-                 labelFrame:(CGRect)labelFrame
-            containerHeight:(CGFloat)containerHeight
-    isFloatingLabelFloating:(BOOL)isFloatingLabelFloating
-           outlineLineWidth:(CGFloat)outlineLineWidth {
+          labelFrame:(CGRect)labelFrame
+     containerHeight:(CGFloat)containerHeight
+     isLabelFloating:(BOOL)isLabelFloating
+    outlineLineWidth:(CGFloat)outlineLineWidth {
   UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
                                             labelFrame:labelFrame
                                        containerHeight:containerHeight
                                              lineWidth:outlineLineWidth
-                               isFloatingLabelFloating:isFloatingLabelFloating];
+                                       isLabelFloating:isLabelFloating];
   self.outlinedSublayer.path = path.CGPath;
   self.outlinedSublayer.lineWidth = outlineLineWidth;
   if (self.outlinedSublayer.superlayer != view.layer) {
@@ -128,7 +128,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                  labelFrame:(CGRect)labelFrame
                             containerHeight:(CGFloat)containerHeight
                                   lineWidth:(CGFloat)lineWidth
-                    isFloatingLabelFloating:(BOOL)isFloatingLabelFloating {
+                            isLabelFloating:(BOOL)isLabelFloating {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat radius = kOutlinedContainerStyleCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
@@ -138,7 +138,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
   [path moveToPoint:startingPoint];
-  if (isFloatingLabelFloating) {
+  if (isLabelFloating) {
     CGFloat leftLineBreak = CGRectGetMinX(labelFrame) - kFloatingLabelOutlineSidePadding;
     CGFloat rightLineBreak = CGRectGetMaxX(labelFrame) + kFloatingLabelOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
