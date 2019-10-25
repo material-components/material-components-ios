@@ -17,6 +17,8 @@
 
 #import "MDCTextControl.h"
 
+// TODO: When the MDCBaseTextField subclass that makes use of this style (and the path drawing logic
+// inside it) lands there should be snapshot tests for it.
 @interface MDCTextControlStyleOutlined : NSObject <MDCTextControlStyle>
 - (nonnull UIColor *)outlineColorForState:(MDCTextControlState)state;
 - (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(MDCTextControlState)state;
