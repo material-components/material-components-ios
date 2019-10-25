@@ -712,7 +712,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat leadingUnderlineLabelPreferredMaxLayoutWidth = self.leadingUnderlineLabel.preferredMaxLayoutWidth;
+  CGFloat leadingUnderlineLabelPreferredMaxLayoutWidth =
+      self.leadingUnderlineLabel.preferredMaxLayoutWidth;
   self.leadingUnderlineLabel.preferredMaxLayoutWidth = size.width;
   CGSize sizeThatFits = [self intrinsicContentSize];
   sizeThatFits.width = size.width;
