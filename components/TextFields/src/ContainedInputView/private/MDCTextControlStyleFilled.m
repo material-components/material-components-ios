@@ -108,13 +108,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 #pragma mark MDCTextControl
 
-- (void)applyStyleToTextControl:(id<MDCTextControl>)textControl {
-  if (![textControl isKindOfClass:[UIView class]]) {
-    [self removeStyleFrom:textControl];
-    return;
-  }
-  UIView *uiView = (UIView *)textControl;
-  [self applyStyleToView:uiView
+- (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl {
+  [self applyStyleToView:textControl
                    state:textControl.textControlState
           containerFrame:textControl.containerFrame];
 }
