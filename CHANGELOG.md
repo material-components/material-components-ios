@@ -43,7 +43,6 @@ for (MDCAlertAction *action in self.actions) {
 
 * [Mark `buttonFont` deprecated. (#8649)](https://github.com/material-components/material-components-ios/commit/c2c1511f673b988f87f46f8e6d709eaa53337f39) (Robert Moore)
 
-
 ---
 
 # 93.0.0
