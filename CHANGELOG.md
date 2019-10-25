@@ -1,6 +1,7 @@
 # 93.1.0
 
-This minor release deprecates the `buttonFont` API of `MDCAlertController`.
+This minor hotfix release deprecates the `buttonFont` API of
+`MDCAlertController`.
 
 ## New deprecations
 
