@@ -84,16 +84,16 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 #pragma mark MDCTextControlStyle
 
-- (void)applyStyleToTextControl:(UIView <MDCTextControl> *)textControl {
+- (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl {
   CGRect labelFrame = textControl.label.frame;
   BOOL isLabelFloating = textControl.labelState == MDCTextControlLabelStateFloating;
   CGFloat containerHeight = CGRectGetMaxY(textControl.containerFrame);
   CGFloat lineWidth = (CGFloat)self.outlineLineWidths[@(textControl.textControlState)].doubleValue;
   [self applyStyleTo:textControl
-          labelFrame:labelFrame
-     containerHeight:containerHeight
-     isLabelFloating:isLabelFloating
-    outlineLineWidth:lineWidth];
+            labelFrame:labelFrame
+       containerHeight:containerHeight
+       isLabelFloating:isLabelFloating
+      outlineLineWidth:lineWidth];
   self.outlinedSublayer.strokeColor =
       ((UIColor *)self.outlineColors[@(textControl.textControlState)]).CGColor;
 }
