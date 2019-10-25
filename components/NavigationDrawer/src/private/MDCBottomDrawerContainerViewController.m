@@ -433,6 +433,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
 }
 
+// This property and the logic associated with it were added to mitigate b/119714330
 - (void)setScrimShouldAdoptTrackingScrollViewBackgroundColor:
     (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor {
   if (_scrimShouldAdoptTrackingScrollViewBackgroundColor !=
