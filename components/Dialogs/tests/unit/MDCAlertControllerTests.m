@@ -68,22 +68,18 @@
   XCTAssertEqualObjects(self.alert.message, @"message");
 }
 
-- (void)testAlertControllerTyphography {
+- (void)testAlertControllerTypography {
   // Given
   UIFont *testFont = [UIFont boldSystemFontOfSize:30];
 
   // When
   self.alert.titleFont = testFont;
   self.alert.messageFont = testFont;
-  self.alert.buttonFont = testFont;
 
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqualObjects(view.titleLabel.font, testFont);
   XCTAssertEqualObjects(view.messageLabel.font, testFont);
-  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
-    XCTAssertEqualObjects(button.titleLabel.font, testFont);
-  }
 }
 
 - (void)testAlertControllerColorSetting {
@@ -208,10 +204,8 @@
   self.alert.buttonInkColor = testColor;
   self.alert.titleFont = [UIFont systemFontOfSize:12];
   self.alert.messageFont = [UIFont systemFontOfSize:14];
-  self.alert.buttonFont = [UIFont systemFontOfSize:10];
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"test"
-                                                handler:^(MDCAlertAction *_Nonnull action){
-                                                }]];
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"test" handler:nil]];
+
   XCTAssertFalse(self.alert.isViewLoaded);
 }
 
@@ -358,12 +352,15 @@
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
-  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
-                                                       handler:^(MDCAlertAction *action){
-                                                       }];
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
   [self.alert addAction:fakeAction];
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
-  self.alert.buttonFont = fakeButtonFont;
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  if (button.enableTitleFontForState) {
+    [button setTitleFont:fakeButtonFont forState:UIControlStateNormal];
+  } else {
+    button.titleLabel.font = fakeButtonFont;
+  }
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
@@ -375,10 +372,14 @@
                 view.titleLabel.font, fakeTitleFont);
   XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
                 @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
-  MDCButton *button = [self.alert buttonForAction:fakeAction];
-  XCTAssertTrue([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
-                @"%@ is not equal to %@", [button titleFontForState:UIControlStateNormal],
-                fakeButtonFont);
+  if (button.enableTitleFontForState) {
+    XCTAssertTrue(
+        [[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+        @"%@ is not equal to %@", [button titleFontForState:UIControlStateNormal], fakeButtonFont);
+  } else {
+    XCTAssertTrue([button.titleLabel.font mdc_isSimplyEqual:fakeButtonFont],
+                  @"%@ is not equal to %@", button.titleLabel.font, fakeButtonFont);
+  }
 }
 
 - (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
@@ -392,7 +393,12 @@
                                                        }];
   [self.alert addAction:fakeAction];
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
-  self.alert.buttonFont = fakeButtonFont;
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  if (button.enableTitleFontForState) {
+    [button setTitleFont:fakeButtonFont forState:UIControlStateNormal];
+  } else {
+    button.titleLabel.font = fakeButtonFont;
+  }
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
@@ -404,10 +410,14 @@
                  view.titleLabel.font, fakeTitleFont);
   XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
                  view.messageLabel.font, fakeMessageFont);
-  MDCButton *button = [self.alert buttonForAction:fakeAction];
-  XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
-                 @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
-                 fakeButtonFont);
+  if (button.enableTitleFontForState) {
+    XCTAssertFalse(
+        [[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+        @"%@ is not equal to %@", [button titleFontForState:UIControlStateNormal], fakeButtonFont);
+  } else {
+    XCTAssertFalse([button.titleLabel.font mdc_isSimplyEqual:fakeButtonFont],
+                   @"%@ is not equal to %@", button.titleLabel.font, fakeButtonFont);
+  }
 }
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {

@@ -15,6 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCAlertController+ButtonForAction.h"
 #import "MaterialDialogs.h"
 #import "MaterialSnapshot.h"
 
@@ -92,7 +93,6 @@ static NSString *const kActionLowUrdu = @"کم";
     dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
   }
   self.alertController.messageFont = dialogBodyFont;
-  self.alertController.buttonFont = dialogButtonFont;
   MDCAlertAction *actionLow = [MDCAlertAction actionWithTitle:kActionLowUrdu
                                                      emphasis:MDCActionEmphasisLow
                                                       handler:nil];
@@ -102,8 +102,28 @@ static NSString *const kActionLowUrdu = @"کم";
   [self.alertController addAction:actionLow];
   [self.alertController addAction:actionMedium];
 
-  [self changeToRTL:self.alertController];
+  for (MDCAlertAction *action in self.alertController.actions) {
+    MDCButton *button = [self.alertController buttonForAction:action];
+    if (button.enableTitleFontForState) {
+      [button setTitleFont:dialogButtonFont forState:UIControlStateNormal];
+    } else {
+      button.titleLabel.font = dialogButtonFont;
+    }
+  }
+
+  // This is the same Dialog as DialogsTallTextAlertExampleViewController, but due to the artificial
+  // environment of snapshot/unit testing, an extra layout pass is required for the AlertView to
+  // update its `preferredContentSize`.
+  // Importantly, MDCAlertController assumes that the `preferredContentSize` is based on the current
+  // bounds of the alert view. Any layout pass must first set the bounds to what the
+  // `preferredContentSize` might be so that the controller's logic
   CGSize preferredContentSize = self.alertController.preferredContentSize;
+  self.alertController.view.bounds =
+      CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
+  [self.alertController.view layoutIfNeeded];
+
+  [self changeToRTL:self.alertController];
+  preferredContentSize = self.alertController.preferredContentSize;
   self.alertController.view.bounds =
       CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
 

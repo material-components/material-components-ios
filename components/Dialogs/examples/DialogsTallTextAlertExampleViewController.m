@@ -14,6 +14,7 @@
 
 #import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialDialogs+Theming.h>
+#import "MDCAlertController+ButtonForAction.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
@@ -93,7 +94,14 @@
     dialogButtonFont = [UIFont fontWithName:urduFontName size:20.0];
   }
   alert.messageFont = dialogBodyFont;
-  alert.buttonFont = dialogButtonFont;
+  for (MDCAlertAction *action in alert.actions) {
+    MDCButton *button = [alert buttonForAction:action];
+    if (button.enableTitleFontForState) {
+      [button setTitleFont:dialogButtonFont forState:UIControlStateNormal];
+    } else {
+      button.titleLabel.font = dialogButtonFont;
+    }
+  }
 
   [self presentViewController:alert animated:YES completion:nil];
 }

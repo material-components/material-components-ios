@@ -18,6 +18,7 @@
 #import <UIKit/UIKit.h>
 
 #import "../../src/private/MDCDialogShadowedView.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MaterialColor.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
@@ -91,7 +92,15 @@
   UIFont *buttonFont = [UIFont systemFontOfSize:15];
   buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
-  self.alertController.buttonFont = buttonFont;
+  for (MDCAlertAction *action in _alertController.actions) {
+    MDCButton *button = [_alertController buttonForAction:action];
+    if (button.enableTitleFontForState) {
+      [button setTitleFont:buttonFont forState:UIControlStateNormal];
+    } else {
+      button.titleLabel.font = buttonFont;
+    }
+  }
+
   self.alertController.view.bounds = CGRectMake(0, 0, 300, 300);
 }
 

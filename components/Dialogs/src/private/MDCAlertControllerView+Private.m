@@ -129,7 +129,16 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
       // reset the title to the default
       [button setTitleColor:_buttonColor forState:UIControlStateNormal];
     }
-    [button setTitleFont:_buttonFont forState:UIControlStateNormal];
+    if (button.enableTitleFontForState) {
+      if (![button titleFontForState:UIControlStateNormal]) {
+        [button setTitleFont:[MDCAlertControllerView buttonFontDefault]
+                    forState:UIControlStateNormal];
+      }
+    } else {
+      if (!button.titleLabel.font) {
+        button.titleLabel.font = [MDCAlertControllerView buttonFontDefault];
+      }
+    }
     button.enableRippleBehavior = self.enableRippleBehavior;
     button.inkColor = self.buttonInkColor;
     // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
@@ -283,23 +292,28 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   [self setNeedsLayout];
 }
 
-- (void)setButtonFont:(UIFont *)font {
-  _buttonFont = font;
-
-  [self updateButtonFont];
-}
-
 - (void)updateButtonFont {
-  UIFont *finalButtonFont = self.buttonFont ?: [[self class] buttonFontDefault];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      finalButtonFont = [finalButtonFont
-          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-    }
-  }
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+    if (self.mdc_adjustsFontForContentSizeCategory) {
+      UIFont *finalButtonFont = [MDCAlertControllerView buttonFontDefault];
+      if (button.enableTitleFontForState) {
+        finalButtonFont = [button titleFontForState:UIControlStateNormal] ?: finalButtonFont;
+      } else {
+        finalButtonFont = button.titleLabel.font ?: finalButtonFont;
+      }
+
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable &&
+          (finalButtonFont.mdc_scalingCurve == nil)) {
+        finalButtonFont = [finalButtonFont
+            mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                         scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      }
+      if (button.enableTitleFontForState) {
+        [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+      } else {
+        button.titleLabel.font = finalButtonFont;
+      }
+    }
   }
 
   [self setNeedsLayout];
