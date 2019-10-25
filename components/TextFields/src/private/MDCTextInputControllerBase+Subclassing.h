@@ -32,4 +32,7 @@
 /** Refreshes the layout and style of the border view. Called within updateLayout. */
 - (BOOL)isPlaceholderUp;
 
+/** Calculates the actual number of lines for the label provded. */
+- (NSUInteger)calculatedNumberOfLinesForLabel:(UILabel *)label;
+
 @end

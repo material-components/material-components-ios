@@ -135,6 +135,8 @@
   textFieldZip.translatesAutoresizingMaskIntoConstraints = NO;
 
   textFieldZip.delegate = self;
+  textFieldZip.leadingUnderlineLabel.numberOfLines = 0;
+  textFieldZip.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
   textFieldZip.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldZip.backgroundColor = [UIColor whiteColor];
 
@@ -326,10 +328,10 @@
     }
   } else if (textField == (UITextField *)self.zipController.textInput) {
     if ([textField.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length > 0) {
-      [self.zipController setErrorText:@"Error: Zip can only contain numbers"
+      [self.zipController setErrorText:@"Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z"
                errorAccessibilityValue:nil];
     } else if (textField.text.length > 5) {
-      [self.zipController setErrorText:@"Error: Zip can only contain five digits"
+      [self.zipController setErrorText:@"Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z"
                errorAccessibilityValue:nil];
     } else {
       [self.zipController setErrorText:nil errorAccessibilityValue:nil];
@@ -389,10 +391,10 @@
 
   if (textField == (UITextField *)self.zipController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length > 0) {
-      [self.zipController setErrorText:@"Error: Zip can only contain numbers"
+      [self.zipController setErrorText:@"Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z"
                errorAccessibilityValue:nil];
     } else if (finishedString.length > 5) {
-      [self.zipController setErrorText:@"Error: Zip can only contain five digits"
+      [self.zipController setErrorText:@"Error: Zip can only contain numbers a b c d e f g h i j k l m n o p q r s t u v w x y z"
                errorAccessibilityValue:nil];
     } else {
       [self.zipController setErrorText:nil errorAccessibilityValue:nil];

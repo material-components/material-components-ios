@@ -301,6 +301,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _leadingUnderlineLabel.textColor = MDCTextInputDefaultPlaceholderTextColor();
     _leadingUnderlineLabel.font = _textInput.font;
     _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
+    _leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
     [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -309,7 +310,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _trailingUnderlineLabel.textColor = [UIColor grayColor];
     _trailingUnderlineLabel.font = _textInput.font;
-    _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
+    _trailingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
+    _trailingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
     [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -760,7 +762,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * scale) / scale;
-
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
   // MDCTextInputHalfPadding. It's also dependent on the .textInsetsMode.
