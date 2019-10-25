@@ -62,7 +62,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
   self.alertController = [[AlertControllerCustomTraitCollectionSnapshotTestFake alloc] init];
   self.alertController.title = @"Material";
@@ -78,17 +78,17 @@
                                                        }];
   [self.alertController addAction:fakeAction];
   MDCFontScaler *titleFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
-  UIFont *titleFont = [UIFont systemFontOfSize:14];
+  UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:14];
   titleFont = [titleFontScaler scaledFontWithFont:titleFont];
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   self.alertController.titleFont = titleFont;
   MDCFontScaler *messageFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody2];
-  UIFont *messageFont = [UIFont systemFontOfSize:15];
+  UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:14];
   messageFont = [messageFontScaler scaledFontWithFont:messageFont];
   messageFont = [messageFont mdc_scaledFontAtDefaultSize];
   self.alertController.messageFont = messageFont;
   MDCFontScaler *buttonFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleButton];
-  UIFont *buttonFont = [UIFont systemFontOfSize:15];
+  UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:14];
   buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
   self.alertController.buttonFont = buttonFont;
