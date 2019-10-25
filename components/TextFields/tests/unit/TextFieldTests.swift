@@ -123,7 +123,7 @@ class TextFieldTests: XCTestCase {
 
     if #available(iOS 10, *) {
       XCTAssertNotEqual(textField.mdc_adjustsFontForContentSizeCategory,
-                     textField.adjustsFontForContentSizeCategory)
+                        textField.adjustsFontForContentSizeCategory)
     }
   }
 
