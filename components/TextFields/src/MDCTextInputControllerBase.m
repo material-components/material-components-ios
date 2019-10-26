@@ -1486,9 +1486,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [textStorage addLayoutManager:layoutManager];
   CGFloat labelWidth = CGRectGetWidth(label.bounds);
   // Also take int
-  CGFloat calculatedWidth =
-      labelWidth > 0 ? labelWidth
-                     : [label intrinsicContentSize].width - deductedWidthForLeadingLabel;
+  CGFloat calculatedWidth = labelWidth > 0
+                                ? labelWidth
+                                : [label intrinsicContentSize].width - deductedWidthForLeadingLabel;
   NSTextContainer *textContainer =
       [[NSTextContainer alloc] initWithSize:CGSizeMake(calculatedWidth, CGFLOAT_MAX)];
   textContainer.maximumNumberOfLines = label.numberOfLines;
