@@ -1491,6 +1491,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                      : [label intrinsicContentSize].width - availableWidthForLeadingLabel;
   NSTextContainer *textContainer =
       [[NSTextContainer alloc] initWithSize:CGSizeMake(calculatedWidth, CGFLOAT_MAX)];
+  textContainer.maximumNumberOfLines = label.numberOfLines;
   textContainer.lineFragmentPadding = 0;
   textContainer.lineBreakMode = label.lineBreakMode;
   [layoutManager addTextContainer:textContainer];
