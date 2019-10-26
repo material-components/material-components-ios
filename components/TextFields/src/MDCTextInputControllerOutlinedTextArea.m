@@ -179,7 +179,9 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
     underlineLabelsOffset =
         MAX(underlineLabelsOffset,
             [MDCTextInputControllerBase
-                calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel givenTrailingLabel:self.textInput.trailingUnderlineLabel insets:insets] *
+                calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
+                                    givenTrailingLabel:self.textInput.trailingUnderlineLabel
+                                                insets:insets] *
                 underlineLabelsOffset);
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
