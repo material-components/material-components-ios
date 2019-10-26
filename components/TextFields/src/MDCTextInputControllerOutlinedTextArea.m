@@ -106,6 +106,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  defaultInsets.left = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
+  defaultInsets.right = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
   textInsets.top = MDCTextInputTextFieldOutlinedTextAreaHalfPadding +
                    MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment +
@@ -117,11 +119,9 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
   // Legacy has an additional half padding here but this version does not.
-  CGFloat underlineOffset = [self underlineOffset];
+  CGFloat underlineOffset = [self underlineOffsetWithInsets:defaultInsets];
 
   textInsets.bottom = underlineOffset;
-  textInsets.left = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
-  textInsets.right = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
 
   return textInsets;
 }
@@ -167,7 +167,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 }
 
 // The measurement from bottom to underline center Y.
-- (CGFloat)underlineOffset {
+- (CGFloat)underlineOffsetWithInsets:(UIEdgeInsets)insets {
   // The amount of space underneath the underline depends on whether there is content in the
   // underline labels.
   CGFloat underlineLabelsOffset = 0;
@@ -179,7 +179,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
     underlineLabelsOffset =
         MAX(underlineLabelsOffset,
             [MDCTextInputControllerBase
-                calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] *
+                calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel givenTrailingLabel:self.textInput.trailingUnderlineLabel insets:insets] *
                 underlineLabelsOffset);
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {

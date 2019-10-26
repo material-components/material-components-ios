@@ -168,6 +168,8 @@ static CGFloat _underlineHeightNormalDefault =
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  defaultInsets.left = MDCTextInputControllerFilledFullPadding;
+  defaultInsets.right = MDCTextInputControllerFilledHalfPadding;
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
   if (self.isFloatingEnabled) {
     textInsets.top =
@@ -179,10 +181,7 @@ static CGFloat _underlineHeightNormalDefault =
     textInsets.top = MDCTextInputControllerFilledNormalPlaceholderPadding;
   }
 
-  textInsets.bottom = [self beneathInputPadding] + [self underlineOffset];
-
-  textInsets.left = MDCTextInputControllerFilledFullPadding;
-  textInsets.right = MDCTextInputControllerFilledHalfPadding;
+  textInsets.bottom = [self beneathInputPadding] + [self underlineOffsetWithInsets:defaultInsets];
 
   return textInsets;
 }
@@ -265,7 +264,7 @@ static CGFloat _underlineHeightNormalDefault =
 }
 
 // The measurement from bottom to underline bottom. Only used in non-floating case.
-- (CGFloat)underlineOffset {
+- (CGFloat)underlineOffsetWithInsets:(UIEdgeInsets)insets {
   // The amount of space underneath the underline may depend on whether there is content in the
   // underline labels.
 
@@ -274,7 +273,7 @@ static CGFloat _underlineHeightNormalDefault =
       MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   leadingOffset =
       MAX(leadingOffset, [MDCTextInputControllerBase
-                             calculatedNumberOfLinesForLabel:self.textInput.leadingUnderlineLabel] *
+                          calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel givenTrailingLabel:self.textInput.trailingUnderlineLabel insets:insets] *
                              leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;

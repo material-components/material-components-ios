@@ -33,6 +33,6 @@
 - (BOOL)isPlaceholderUp;
 
 /** Calculates the actual number of lines for the label provded. */
-+ (NSUInteger)calculatedNumberOfLinesForLabel:(UILabel *)label;
++ (NSUInteger)calculatedNumberOfLinesForLeadingLabel:(UILabel *)label givenTrailingLabel:(UILabel *)trailingLabel insets:(UIEdgeInsets)insets;
 
 @end
