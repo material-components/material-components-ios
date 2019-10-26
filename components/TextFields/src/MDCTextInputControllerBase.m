@@ -1468,10 +1468,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (!label.text) {
     return 1;
   }
-  CGFloat availableWidthForLeadingLabel = 0;
+  CGFloat deductedWidthForLeadingLabel = 0;
   // Take into account the width the trailingLabel takes up when calculating the available width.
   if (trailingLabel && trailingLabel.text.length > 0) {
-    availableWidthForLeadingLabel =
+    deductedWidthForLeadingLabel =
         [trailingLabel.text boundingRectWithSize:trailingLabel.frame.size
                                          options:NSStringDrawingUsesLineFragmentOrigin
                                       attributes:@{NSFontAttributeName : trailingLabel.font}
@@ -1480,7 +1480,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
   // Also take into account the left and right padding of the label when calculating the available
   // width.
-  availableWidthForLeadingLabel -= insets.left - insets.right;
+  deductedWidthForLeadingLabel += insets.left + insets.right;
   NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:label.text];
   NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
   [textStorage addLayoutManager:layoutManager];
@@ -1488,7 +1488,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // Also take int
   CGFloat calculatedWidth =
       labelWidth > 0 ? labelWidth
-                     : [label intrinsicContentSize].width - availableWidthForLeadingLabel;
+                     : [label intrinsicContentSize].width - deductedWidthForLeadingLabel;
   NSTextContainer *textContainer =
       [[NSTextContainer alloc] initWithSize:CGSizeMake(calculatedWidth, CGFLOAT_MAX)];
   textContainer.maximumNumberOfLines = label.numberOfLines;
