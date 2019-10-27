@@ -1480,7 +1480,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // Also take into account the left and right padding of the label when calculating the available
   // width.
   deductedWidthForLeadingLabel += insets.left + insets.right;
-  NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:label.attributedText];
+  NSTextStorage *textStorage =
+      [[NSTextStorage alloc] initWithAttributedString:label.attributedText];
   NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
   [textStorage addLayoutManager:layoutManager];
   CGFloat labelWidth = CGRectGetWidth(label.bounds);
