@@ -19,6 +19,7 @@
 
 - (void)setUp {
   [super setUp];
+  self.recordMode = YES;
   // NOTE: Please keep the default value as `YES` so test authors don't forget to set this property.
   // Turning off "empty" tests is an optimization and it's better not to skip them.
   self.shouldExecuteEmptyTests = YES;

@@ -132,6 +132,10 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
 
 - (void)changeViewLayoutToRTL:(UIView *)view {
   view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  if ([view isKindOfClass:[UILabel class]]) {
+    UILabel *label = (UILabel *)view;
+    label.textAlignment = NSTextAlignmentRight;
+  }
   for (UIView *subview in view.subviews) {
     [self changeViewLayoutToRTL:subview];
   }

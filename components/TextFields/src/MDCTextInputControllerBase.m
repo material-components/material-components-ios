@@ -1404,14 +1404,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
   UIEdgeInsets textInsets = defaultInsets;
 
-  if (!self.isFloatingEnabled) {
-    return textInsets;
+  if (self.isFloatingEnabled) {
+    textInsets.top = MDCTextInputControllerBaseDefaultPadding +
+                     MDCRint(self.textInput.placeholderLabel.font.lineHeight *
+                             (CGFloat)self.floatingPlaceholderScale.floatValue) +
+                     MDCTextInputControllerBaseDefaultPadding;
   }
-
-  textInsets.top = MDCTextInputControllerBaseDefaultPadding +
-                   MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-                           (CGFloat)self.floatingPlaceholderScale.floatValue) +
-                   MDCTextInputControllerBaseDefaultPadding;
 
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat leadingOffset =
@@ -1468,6 +1466,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (!label.text) {
     return 1;
   }
+
   CGFloat deductedWidthForLeadingLabel = 0;
   // Take into account the width the trailingLabel takes up when calculating the available width.
   if (trailingLabel && trailingLabel.text.length > 0) {
@@ -1481,7 +1480,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // Also take into account the left and right padding of the label when calculating the available
   // width.
   deductedWidthForLeadingLabel += insets.left + insets.right;
-  NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:label.text];
+  NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:label.attributedText];
   NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
   [textStorage addLayoutManager:layoutManager];
   CGFloat labelWidth = CGRectGetWidth(label.bounds);
@@ -1501,6 +1500,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     (void)[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
     index = NSMaxRange(lineRange);
   }
+
   return numberOfLines;
 }
 
