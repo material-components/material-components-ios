@@ -32,7 +32,7 @@
  @param defaultInsets The value of text container insets that the MDCTextInput has calculated by
  default.
  */
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets;
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint;
 
 /**
  The area that inputted text should be displayed while isEditing = true.

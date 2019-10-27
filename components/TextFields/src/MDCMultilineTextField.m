@@ -257,13 +257,19 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat leadingUnderlineLabelPreferredMaxLayoutWidth =
-      self.leadingUnderlineLabel.preferredMaxLayoutWidth;
-  self.leadingUnderlineLabel.preferredMaxLayoutWidth = size.width;
+  self.sizeThatFitsWidthHint = size.width;
   CGSize sizeThatFits = [self intrinsicContentSize];
-  sizeThatFits.width = size.width;
-  self.leadingUnderlineLabel.preferredMaxLayoutWidth = leadingUnderlineLabelPreferredMaxLayoutWidth;
+  sizeThatFits.width = self.sizeThatFitsWidthHint;
+  self.sizeThatFitsWidthHint = 0;
   return sizeThatFits;
+}
+
+- (void)setSizeThatFitsWidthHint:(CGFloat)sizeThatFitsWidthHint {
+  self.fundament.sizeThatFitsWidthHint = sizeThatFitsWidthHint;
+}
+
+- (CGFloat)sizeThatFitsWidthHint {
+  return self.fundament.sizeThatFitsWidthHint;
 }
 
 - (void)layoutSubviews {

@@ -1398,7 +1398,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  underlineLabelsOffset                                                // Depends on text insets mode
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint {
   // NOTE: UITextFields have a centerY based layout. And you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
@@ -1419,7 +1419,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           [MDCTextInputControllerBase
               calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
                                   givenTrailingLabel:self.textInput.trailingUnderlineLabel
-                                              insets:defaultInsets] *
+                                              insets:defaultInsets
+           widthHint:widthHint] *
               leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
@@ -1462,8 +1463,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextLayout/Tasks/CountLines.html.
 + (NSUInteger)calculatedNumberOfLinesForLeadingLabel:(UILabel *)label
                                   givenTrailingLabel:(UILabel *)trailingLabel
-                                              insets:(UIEdgeInsets)insets {
+                                              insets:(UIEdgeInsets)insets
+                                           widthHint:(CGFloat)widthHint {
   if (!label.text) {
+    return 1;
+  }
+  if (widthHint <= 0 && CGRectGetWidth(label.bounds) <= 0) {
     return 1;
   }
 
@@ -1488,7 +1493,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // Also take int
   CGFloat calculatedWidth = labelWidth > 0
                                 ? labelWidth
-                                : [label intrinsicContentSize].width - deductedWidthForLeadingLabel;
+                                : widthHint - deductedWidthForLeadingLabel;
   NSTextContainer *textContainer =
       [[NSTextContainer alloc] initWithSize:CGSizeMake(calculatedWidth, CGFLOAT_MAX)];
   textContainer.maximumNumberOfLines = label.numberOfLines;

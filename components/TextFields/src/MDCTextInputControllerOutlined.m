@@ -142,10 +142,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
  underlineLabelsOffset                                                // From super class.
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint {
   defaultInsets.left = MDCTextInputOutlinedTextFieldFullPadding;
   defaultInsets.right = MDCTextInputOutlinedTextFieldFullPadding;
-  UIEdgeInsets textInsets = [super textInsets:defaultInsets];
+  UIEdgeInsets textInsets = [super textInsets:defaultInsets withSizeThatFitsWidthHint:widthHint];
   CGFloat textVerticalOffset = self.textInput.placeholderLabel.font.lineHeight * (CGFloat)0.5;
 
   CGFloat scale = UIScreen.mainScreen.scale;

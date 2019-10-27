@@ -97,6 +97,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize underline = _underline;
 @synthesize hasTextContent = _hasTextContent;
 @synthesize textInsetsMode = _textInsetsMode;
+@synthesize sizeThatFitsWidthHint = _sizeThatFitsWidthHint;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -129,6 +130,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
     [self setupBorder];
     [self subscribeForKVO];
+
+    _sizeThatFitsWidthHint = 0.f;
   }
   return self;
 }
@@ -789,8 +792,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   // .bottom = underlineOffset + the half padding ABOVE the line but below the text field
   textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
 
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
-    return [self.positioningDelegate textInsets:textInsets];
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:withSizeThatFitsWidthHint:)]) {
+    return [self.positioningDelegate textInsets:textInsets withSizeThatFitsWidthHint:self.sizeThatFitsWidthHint];
   }
   return textInsets;
 }
