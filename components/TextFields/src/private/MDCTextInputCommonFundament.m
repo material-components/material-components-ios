@@ -792,8 +792,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   // .bottom = underlineOffset + the half padding ABOVE the line but below the text field
   textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
 
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:withSizeThatFitsWidthHint:)]) {
-    return [self.positioningDelegate textInsets:textInsets withSizeThatFitsWidthHint:self.sizeThatFitsWidthHint];
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:
+                                                       withSizeThatFitsWidthHint:)]) {
+    return [self.positioningDelegate textInsets:textInsets
+                      withSizeThatFitsWidthHint:self.sizeThatFitsWidthHint];
   }
   return textInsets;
 }

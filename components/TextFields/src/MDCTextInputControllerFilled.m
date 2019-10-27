@@ -167,7 +167,8 @@ static CGFloat _underlineHeightNormalDefault =
  underlineLabelsOffset                                                // Depends on text insets mode. See the super class.
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
+    withSizeThatFitsWidthHint:(CGFloat)widthHint {
   defaultInsets.left = MDCTextInputControllerFilledFullPadding;
   defaultInsets.right = MDCTextInputControllerFilledHalfPadding;
   UIEdgeInsets textInsets = [super textInsets:defaultInsets withSizeThatFitsWidthHint:widthHint];
@@ -181,7 +182,8 @@ static CGFloat _underlineHeightNormalDefault =
     textInsets.top = MDCTextInputControllerFilledNormalPlaceholderPadding;
   }
 
-  textInsets.bottom = [self beneathInputPadding] + [self underlineOffsetWithInsets:defaultInsets widthHint:widthHint];
+  textInsets.bottom = [self beneathInputPadding] + [self underlineOffsetWithInsets:defaultInsets
+                                                                         widthHint:widthHint];
 
   return textInsets;
 }
@@ -277,7 +279,7 @@ static CGFloat _underlineHeightNormalDefault =
               calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
                                   givenTrailingLabel:self.textInput.trailingUnderlineLabel
                                               insets:insets
-           widthHint:widthHint] *
+                                           widthHint:widthHint] *
               leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;

@@ -1398,7 +1398,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  underlineLabelsOffset                                                // Depends on text insets mode
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
+    withSizeThatFitsWidthHint:(CGFloat)widthHint {
   // NOTE: UITextFields have a centerY based layout. And you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
@@ -1420,7 +1421,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
               calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
                                   givenTrailingLabel:self.textInput.trailingUnderlineLabel
                                               insets:defaultInsets
-           widthHint:widthHint] *
+                                           widthHint:widthHint] *
               leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
@@ -1491,9 +1492,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   [textStorage addLayoutManager:layoutManager];
   CGFloat labelWidth = CGRectGetWidth(label.bounds);
   // Also take int
-  CGFloat calculatedWidth = labelWidth > 0
-                                ? labelWidth
-                                : widthHint - deductedWidthForLeadingLabel;
+  CGFloat calculatedWidth = labelWidth > 0 ? labelWidth : widthHint - deductedWidthForLeadingLabel;
   NSTextContainer *textContainer =
       [[NSTextContainer alloc] initWithSize:CGSizeMake(calculatedWidth, CGFLOAT_MAX)];
   textContainer.maximumNumberOfLines = label.numberOfLines;
