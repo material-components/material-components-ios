@@ -22,6 +22,28 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 
+static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
+  static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    scalingCurve = @{
+      UIContentSizeCategoryExtraSmall : @99,
+      UIContentSizeCategorySmall : @98,
+      UIContentSizeCategoryMedium : @97,
+      UIContentSizeCategoryLarge : @96,
+      UIContentSizeCategoryExtraLarge : @95,
+      UIContentSizeCategoryExtraExtraLarge : @94,
+      UIContentSizeCategoryExtraExtraExtraLarge : @93,
+      UIContentSizeCategoryAccessibilityMedium : @92,
+      UIContentSizeCategoryAccessibilityLarge : @91,
+      UIContentSizeCategoryAccessibilityExtraLarge : @90,
+      UIContentSizeCategoryAccessibilityExtraExtraLarge : @89,
+      UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @88
+    };
+  });
+  return scalingCurve;
+}
+
 /**
  A @c MDCAlertController test fake to override the @c traitCollection to test for dynamic type.
  */
@@ -78,17 +100,17 @@
                                                        }];
   [self.alertController addAction:fakeAction];
   MDCFontScaler *titleFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
-  UIFont *titleFont = [UIFont systemFontOfSize:14];
+  UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:14];
   titleFont = [titleFontScaler scaledFontWithFont:titleFont];
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   self.alertController.titleFont = titleFont;
   MDCFontScaler *messageFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody2];
-  UIFont *messageFont = [UIFont systemFontOfSize:15];
+  UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:14];
   messageFont = [messageFontScaler scaledFontWithFont:messageFont];
   messageFont = [messageFont mdc_scaledFontAtDefaultSize];
   self.alertController.messageFont = messageFont;
   MDCFontScaler *buttonFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleButton];
-  UIFont *buttonFont = [UIFont systemFontOfSize:15];
+  UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:14];
   buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
   self.alertController.buttonFont = buttonFont;
@@ -121,6 +143,138 @@
 
   self.alertController.traitCollectionOverride = traitCollection;
 }
+
+#pragma mark - Dynamic Type
+
+/** Tests the basic behavior when the combination of fonts and settings don't allow font scaling. */
+- (void)testSystemFontNotScaledWhenScaledFontUnavailableForContentSizeExtraSmall {
+  // Given
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // When
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+/** Tests the basic behavior when the combination of fonts and settings don't allow font scaling. */
+- (void)testSystemFontNotScaledWhenScaledFontUnavailableForContentSizeAXXXL {
+  // Given
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self
+      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // When
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+/**
+ Tests the original MDCTypography behavior for Dynamic Type.
+
+ @note The output depends on the host simulator and is equal to
+       @c testSystemFontScaledWhenScaledFontUnavailableForContentSizeAXXXL as a result.
+ */
+- (void)testSystemFontScaledWhenScaledFontUnavailableForContentSizeExtraSmall {
+  // Given
+
+  // Although the font is initialized with point size 1, the MDCTypography behavior will select a
+  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which is
+  // not 1.
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+/**
+ Tests the original MDCTypography behavior for Dynamic Type.
+
+ @note The output depends on the host simulator and is equal to
+       @c testSystemFontScaledWhenScaledFontUnavailableForContentSizeExtraSmall as a result.
+ */
+- (void)testSystemFontScaledWhenScaledFontUnavailableForContentSizeAXXXL {
+  // Given
+
+  // Although the font is initialized with point size 1, the MDCTypography behavior will select a
+  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which is
+  // not 1.
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self
+      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+/** Tests behavior when a font generated from a FontScaler is provided. */
+- (void)testFontScalerFontScaledForContentSizeExtraSmall {
+  // Given
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  // Simulates a font scaler by providing scaling curve dictionary.
+  originalFont.mdc_scalingCurve = CustomScalingCurve();
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
+
+  // When
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+/** Tests behavior when a font generated from a FontScaler is provided. */
+- (void)testFontScalerFontScaledForContentSizeAXXXL {
+  // Given
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  // Simulates a font scaler by providing scaling curve dictionary.
+  originalFont.mdc_scalingCurve = CustomScalingCurve();
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self
+      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+
+  // When
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// TODO(https://github.com/material-components/material-components-ios/issues/8671): Add tests for
+// UIFontMetrics fonts and adjustsFontForContentSizeCategory = YES.
+
+#pragma mark - Dynamic Color
 
 - (void)testDynamicColorSupport {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
