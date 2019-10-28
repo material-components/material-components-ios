@@ -21,8 +21,8 @@
 /components/Cards/                @yarneo
 /components/Chips/                @romoore
 /components/CollectionCells/      @yarneo
-/components/CollectionLayoutAttributes/ @ianegordon
-/components/Collections/          @ianegordon
+/components/CollectionLayoutAttributes/ @featherless
+/components/Collections/          @featherless
 /components/Dialogs/              @galiak11
 /components/FeatureHighlight/     @codeman7
 /components/FlexibleHeader/       @jverkoey
@@ -38,8 +38,8 @@
 /components/Palettes/             @featherless
 /components/ProgressView/         @romoore
 /components/Ripple                @yarneo
-/components/ShadowElevations/     @ianegordon
-/components/ShadowLayer/          @ianegordon
+/components/ShadowElevations/     @featherless
+/components/ShadowLayer/          @featherless
 /components/Slider/               @romoore
 /components/Snackbar/             @yarneo
 /components/Tabs/                 @romoore
