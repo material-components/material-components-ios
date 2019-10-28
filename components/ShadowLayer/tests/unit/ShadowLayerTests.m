@@ -59,6 +59,8 @@
   XCTAssertNotNil([someView.layer animationForKey:@"position"]);
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.origin"]);
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.size"]);
+  XCTAssertNil(someView.layer.superlayer);
+  XCTAssertEqualWithAccuracy(someView.layer.speed, 1, 0.001);
   XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"position"].duration, 0.1, 0.001);
   XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.origin"].duration, 0.1,
                              0.001);
@@ -89,6 +91,7 @@
   // Then
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.origin"]);
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.size"]);
+  XCTAssertEqualWithAccuracy(someView.layer.speed, 1, 0.001);
   XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.origin"].duration, 0.1,
                              0.001);
   XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.size"].duration, 0.1, 0.001);
