@@ -1415,14 +1415,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat leadingOffset =
       MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat calculatedNumberOfLinesForLeadingLabel = [MDCTextInputControllerBase
+      calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
+                          givenTrailingLabel:self.textInput.trailingUnderlineLabel
+                                      insets:defaultInsets
+                                   widthHint:widthHint]
   leadingOffset =
-      MAX(leadingOffset,
-          [MDCTextInputControllerBase
-              calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
-                                  givenTrailingLabel:self.textInput.trailingUnderlineLabel
-                                              insets:defaultInsets
-                                           widthHint:widthHint] *
-              leadingOffset);
+      MAX(leadingOffset,calculatedNumberOfLinesForLeadingLabel * leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
 
