@@ -15,7 +15,7 @@
 #import <XCTest/XCTest.h>
 #import "MaterialShadowLayer.h"
 
-@interface ShadowLayerTestsView: UIView
+@interface ShadowLayerTestsView : UIView
 @end
 
 @implementation ShadowLayerTestsView
@@ -45,20 +45,23 @@
   UIView *someView = [[ShadowLayerTestsView alloc] init];
 
   // When
-  [UIView animateWithDuration:0.1 animations:^{
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:0.5];
-    someView.frame = CGRectMake(0, 0, 100, 50);
-    someView.layer.shadowPath = [UIBezierPath bezierPathWithRect:someView.bounds].CGPath;
-    [CATransaction commit];
-  }];
+  [UIView animateWithDuration:0.1
+                   animations:^{
+                     [CATransaction begin];
+                     [CATransaction setAnimationDuration:0.5];
+                     someView.frame = CGRectMake(0, 0, 100, 50);
+                     someView.layer.shadowPath =
+                         [UIBezierPath bezierPathWithRect:someView.bounds].CGPath;
+                     [CATransaction commit];
+                   }];
 
   // Then
   XCTAssertNotNil([someView.layer animationForKey:@"position"]);
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.origin"]);
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.size"]);
   XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"position"].duration, 0.1, 0.001);
-  XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.origin"].duration, 0.1, 0.001);
+  XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.origin"].duration, 0.1,
+                             0.001);
   XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.size"].duration, 0.1, 0.001);
 
   for (CALayer *sublayer in someView.layer.sublayers) {
@@ -73,18 +76,21 @@
   UIView *someView = [[ShadowLayerTestsView alloc] init];
 
   // When
-  [UIView animateWithDuration:0.1 animations:^{
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:0.5];
-    someView.bounds = CGRectMake(0, 0, 100, 50);
-    someView.layer.shadowPath = [UIBezierPath bezierPathWithRect:someView.bounds].CGPath;
-    [CATransaction commit];
-  }];
+  [UIView animateWithDuration:0.1
+                   animations:^{
+                     [CATransaction begin];
+                     [CATransaction setAnimationDuration:0.5];
+                     someView.bounds = CGRectMake(0, 0, 100, 50);
+                     someView.layer.shadowPath =
+                         [UIBezierPath bezierPathWithRect:someView.bounds].CGPath;
+                     [CATransaction commit];
+                   }];
 
   // Then
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.origin"]);
   XCTAssertNotNil([someView.layer animationForKey:@"bounds.size"]);
-  XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.origin"].duration, 0.1, 0.001);
+  XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.origin"].duration, 0.1,
+                             0.001);
   XCTAssertEqualWithAccuracy([someView.layer animationForKey:@"bounds.size"].duration, 0.1, 0.001);
 
   for (CALayer *sublayer in someView.layer.sublayers) {
@@ -104,17 +110,19 @@
   shadowLayer.shadowPath = [UIBezierPath bezierPathWithRect:CGRectZero].CGPath;
   [window.layer addSublayer:shadowLayer];
   [window makeKeyAndVisible];
-  [CATransaction flush]; // Mounts the layer
+  [CATransaction flush];  // Mounts the layer
 
   // When
   // Note: headless layers animate using the CATransaction context rather than the UIKit context.
-  [UIView animateWithDuration:0.1 animations:^{
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:0.5];
-    shadowLayer.bounds = CGRectMake(0, 0, 100, 50);
-    shadowLayer.shadowPath = [UIBezierPath bezierPathWithRect:shadowLayer.bounds].CGPath;
-    [CATransaction commit];
-  }];
+  [UIView animateWithDuration:0.1
+                   animations:^{
+                     [CATransaction begin];
+                     [CATransaction setAnimationDuration:0.5];
+                     shadowLayer.bounds = CGRectMake(0, 0, 100, 50);
+                     shadowLayer.shadowPath =
+                         [UIBezierPath bezierPathWithRect:shadowLayer.bounds].CGPath;
+                     [CATransaction commit];
+                   }];
 
   // Then
   CAAnimation *boundsAnimation = [shadowLayer animationForKey:@"bounds"];
