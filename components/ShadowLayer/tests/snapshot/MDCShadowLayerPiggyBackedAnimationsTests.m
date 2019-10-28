@@ -48,12 +48,12 @@
   // Then
   CAAnimation *boundsAnimation = [shadowLayer animationForKey:@"bounds"];
   XCTAssertNotNil(boundsAnimation);
-  XCTAssertEqualWithAccuracy(boundsAnimation.duration, 0.5, 0.001);
+  CFTimeInterval boundsDuration = [shadowLayer animationForKey:@"bounds"].duration;
 
   for (CALayer *sublayer in shadowLayer.sublayers) {
     CAAnimation *animation = [sublayer animationForKey:@"shadowPath"];
     XCTAssertNotNil(animation);
-    XCTAssertEqualWithAccuracy(animation.duration, 0.5, 0.001);
+    XCTAssertEqualWithAccuracy(animation.duration, boundsDuration, 0.001);
   }
 }
 
