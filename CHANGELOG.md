@@ -1,3 +1,15 @@
+# 93.1.1
+
+This patch hotfix release addresses a bug in NavigationDrawer where the scrim is visible when the drawer's trackingScrollView is scrolled to the end of the content.
+
+## Changes
+
+### NavigationDrawer
+
+* [Address issue where scrim is visible when scrolled to end of content. (#8638)](https://github.com/material-components/material-components-ios/commit/8b3ce02a7ae9cf9722c1c86ba8c98cb0e3a23eb7) (Andrew Overton)
+
+---
+
 # 93.1.0
 
 This minor hotfix release deprecates the `buttonFont` API of
