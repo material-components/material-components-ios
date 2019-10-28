@@ -22,7 +22,41 @@
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
 
+static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
+  static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    scalingCurve = @{
+      UIContentSizeCategoryExtraSmall : @99,
+      UIContentSizeCategorySmall : @98,
+      UIContentSizeCategoryMedium : @97,
+      UIContentSizeCategoryLarge : @96,
+      UIContentSizeCategoryExtraLarge : @95,
+      UIContentSizeCategoryExtraExtraLarge : @94,
+      UIContentSizeCategoryExtraExtraExtraLarge : @93,
+      UIContentSizeCategoryAccessibilityMedium : @92,
+      UIContentSizeCategoryAccessibilityLarge : @91,
+      UIContentSizeCategoryAccessibilityExtraLarge : @90,
+      UIContentSizeCategoryAccessibilityExtraExtraLarge : @89,
+      UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @88
+    };
+  });
+  return scalingCurve;
+}
+
 #pragma mark - Subclasses for testing
+
+@interface MDCAlertControllerTestsControllerFake : MDCAlertController
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCAlertControllerTestsControllerFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
 
 @interface MDCAlertController (Testing)
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
@@ -408,6 +442,205 @@
   XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
                  @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
                  fakeButtonFont);
+}
+
+/**
+ Verifies that assigning non-MDCFontScaler fonts results in their being replaced for Material
+ scaling.
+ */
+// TODO(https://github.com/material-components/material-components-ios/issues/8673): Re-enable
+- (void)testMDCAdjustsFontForContentSizeCategoryScalesCustomNonFontScalerFont {
+  // Given
+  UIFont *baseFont = [UIFont fontWithName:@"Zapfino" size:1];
+
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  [self.alert addAction:action];
+
+  self.alert.titleFont = baseFont;
+  self.alert.messageFont = baseFont;
+  MDCButton *actionButton = [self.alert buttonForAction:action];
+  if (actionButton.enableTitleFontForState) {
+    [actionButton setTitleFont:baseFont forState:UIControlStateNormal];
+  } else {
+    actionButton.titleLabel.font = baseFont;
+  }
+
+  // When
+  [self.alert loadViewIfNeeded];
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  XCTAssertEqualObjects(self.alert.alertView.messageLabel.font.fontName, baseFont.fontName);
+  XCTAssertGreaterThan(self.alert.alertView.messageLabel.font.pointSize, baseFont.pointSize);
+  XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, baseFont.fontName);
+  XCTAssertGreaterThan(self.alert.alertView.titleLabel.font.pointSize, baseFont.pointSize);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+  // these are equal
+  if (actionButton.enableTitleFontForState) {
+    XCTAssertNotEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
+                             baseFont.fontName);
+    XCTAssertGreaterThan([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                         baseFont.pointSize);
+  } else {
+    XCTAssertNotEqualObjects(actionButton.titleLabel.font.fontName, baseFont.fontName);
+    XCTAssertGreaterThan(actionButton.titleLabel.font.pointSize, baseFont.pointSize);
+  }
+}
+
+/** Verifies that assigning MDCFontScaler fonts results in their being used for Material scaling. */
+// TODO(https://github.com/material-components/material-components-ios/issues/8673): Re-enable
+- (void)testMDCAdjustsFontForContentSizeCategoryUsesFontScalerFonts {
+  // Given
+  UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+  scaledFont.mdc_scalingCurve = CustomScalingCurve();
+
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  [self.alert addAction:action];
+
+  self.alert.titleFont = scaledFont;
+  self.alert.messageFont = scaledFont;
+  MDCButton *actionButton = [self.alert buttonForAction:action];
+  if (actionButton.enableTitleFontForState) {
+    [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+  } else {
+    actionButton.titleLabel.font = scaledFont;
+  }
+
+  // When
+  [self.alert loadViewIfNeeded];
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  XCTAssertEqualObjects(self.alert.alertView.messageLabel.font.fontName, scaledFont.fontName);
+  XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, scaledFont.fontName);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+  // these are equal
+  if (actionButton.enableTitleFontForState) {
+    XCTAssertNotEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
+                             scaledFont.fontName);
+  } else {
+    XCTAssertNotEqualObjects(actionButton.titleLabel.font.fontName, scaledFont.fontName);
+  }
+}
+
+/**
+ Verifies that MDCFontScaler fonts get scaled to greater point sizes for size categories greater
+ than @c UIContentSizeCategoryLarge.
+ */
+- (void)testMDCAdjustsFontForContentSizeCategoryUpscalesFontScalerFontsWithLocalTraitCollection {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCAlertControllerTestsControllerFake *alert =
+        [[MDCAlertControllerTestsControllerFake alloc] init];
+    alert.title = @"Title";
+    alert.message = @"A message.";
+    alert.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+
+    UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+    scaledFont.mdc_scalingCurve = CustomScalingCurve();
+    scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
+
+    MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+    [alert addAction:action];
+
+    alert.titleFont = scaledFont;
+    alert.messageFont = scaledFont;
+    MDCButton *actionButton = [alert buttonForAction:action];
+    if (actionButton.enableTitleFontForState) {
+      [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+    } else {
+      actionButton.titleLabel.font = scaledFont;
+    }
+
+    // When
+    [alert loadViewIfNeeded];
+    alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    CGFloat expectedPointSize =
+        (CGFloat)CustomScalingCurve()[UIContentSizeCategoryAccessibilityExtraExtraExtraLarge]
+            .doubleValue;
+    // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
+    // these are equal.
+    XCTAssertNotEqualWithAccuracy(alert.alertView.messageLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
+    // these are equal
+    XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+    // these are equal
+    if (actionButton.enableTitleFontForState) {
+      XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                                    expectedPointSize, 0.001);
+    } else {
+      XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, scaledFont.pointSize,
+                                    0.001);
+    }
+  }
+}
+
+/**
+Verifies that MDCFontScaler fonts get scaled to lesser point sizes for size categories greater
+than @c UIContentSizeCategoryLarge.
+*/
+- (void)testMDCAdjustsFontForContentSizeCategoryDownscalesFontScalerFontsWithLocalTraitCollection {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCAlertControllerTestsControllerFake *alert =
+        [[MDCAlertControllerTestsControllerFake alloc] init];
+    alert.title = @"Title";
+    alert.message = @"A message.";
+    alert.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+
+    UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+    scaledFont.mdc_scalingCurve = CustomScalingCurve();
+    scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
+
+    MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+    [alert addAction:action];
+
+    alert.titleFont = scaledFont;
+    alert.messageFont = scaledFont;
+    MDCButton *actionButton = [alert buttonForAction:action];
+    if (actionButton.enableTitleFontForState) {
+      [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+    } else {
+      actionButton.titleLabel.font = scaledFont;
+    }
+
+    // When
+    [alert loadViewIfNeeded];
+    alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    CGFloat expectedPointSize =
+        (CGFloat)CustomScalingCurve()[UIContentSizeCategoryExtraSmall].doubleValue;
+    // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
+    // these are equal.
+    XCTAssertNotEqualWithAccuracy(alert.alertView.messageLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
+    // these are equal
+    XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+    // these are equal
+    if (actionButton.enableTitleFontForState) {
+      XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                                    expectedPointSize, 0.001);
+    } else {
+      XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, expectedPointSize,
+                                    0.001);
+    }
+  }
 }
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
