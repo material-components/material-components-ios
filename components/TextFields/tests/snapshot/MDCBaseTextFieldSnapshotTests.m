@@ -16,10 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextFields+ContainedInputView.h"
+#import "../../src/ContainedInputView/private/MDCTextControl.h"
 #import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "MDCTextControlSnapshotTestHelpers.h"
-#import "../../src/ContainedInputView/private/MDCTextControl.h"
+#import "MaterialTextFields+ContainedInputView.h"
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCBaseTextField *textField;
@@ -64,7 +64,7 @@
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
   [MDCTextControlSnapshotTestHelpers validateTextControl:(UIView<MDCTextControl> *)textField
-                                           withTestCase:self];
+                                            withTestCase:self];
 }
 
 #pragma mark - Tests

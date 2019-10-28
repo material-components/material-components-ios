@@ -38,7 +38,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
     // large effect on the appearance of the text control.
     UIView *textControlSnapshot = [textControl snapshotViewAfterScreenUpdates:YES];
     [MDCTextControlSnapshotTestHelpers generateSnapshotAndVerifyForView:textControlSnapshot
-                                                          withTestCase:testCase];
+                                                           withTestCase:testCase];
     [expectation fulfill];
   });
   [testCase waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
