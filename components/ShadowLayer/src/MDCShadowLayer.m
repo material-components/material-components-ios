@@ -446,7 +446,7 @@ static const float kAmbientShadowOpacity = (float)0.08;
     // animation created by UIKit and copy the configuration to our custom animation.
     CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
     if (!boundsAction) {
-      // Headless layers will animate bounds directly instead of the decomposing
+      // Headless layers will animate bounds directly instead of decomposing
       // bounds.size/bounds.position. A headless layer is a CALayer without a delegate (usually
       // would be a UIView).
       boundsAction = [self.animationSourceLayer animationForKey:@"bounds"];
