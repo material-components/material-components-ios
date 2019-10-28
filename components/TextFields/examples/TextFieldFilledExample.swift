@@ -165,8 +165,6 @@ final class TextFieldFilledSwiftExample: UIViewController {
 
     stateZip.addSubview(zip)
     zip.delegate = self
-    zip.leadingUnderlineLabel.numberOfLines = 0
-    zip.leadingUnderlineLabel.lineBreakMode = .byWordWrapping
     zipController.placeholderText = "Zip Code"
     zipController.setHelperText("XXXXX", helperAccessibilityLabel: "5 digits")
     allTextFieldControllers.append(zipController)
@@ -343,7 +341,7 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
         String(fullString[range]).characterCount > 0 {
-        stateController.setErrorText("Error: State can only contain letters fewf ewfe wfew fewf ewf ewf ewfew",
+        stateController.setErrorText("Error: State can only contain letters",
                                      errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
@@ -351,10 +349,10 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
     } else if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
         String(fullString[range]).characterCount > 0 {
-        zipController.setErrorText("Error: Zip can only contain numbers fewf wef wef ewf ewfew fwef",
+        zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {
-        zipController.setErrorText("Error: Zip can only contain five digits fewf ewf ewf wef ewf ewf ew",
+        zipController.setErrorText("Error: Zip can only contain five digits",
                                    errorAccessibilityValue: nil)
       } else {
         zipController.setErrorText(nil, errorAccessibilityValue: nil)
