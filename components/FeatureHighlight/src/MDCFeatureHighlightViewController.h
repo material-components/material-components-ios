@@ -41,7 +41,7 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  @note Due to a bug in the iOS simulator it is possible that the feature highlight will not render
  correctly in the simulator. If you're encountering issues make sure to test on device.
  */
-@interface MDCFeatureHighlightViewController : UIViewController
+@interface MDCFeatureHighlightViewController : UIViewController <UIContentSizeCategoryAdjusting>
 
 /**
  Initializes the controller.

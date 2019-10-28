@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCFeatureHighlightView : UIView
+@interface MDCFeatureHighlightView : UIView <UIContentSizeCategoryAdjusting>
 
 @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
