@@ -157,6 +157,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -175,6 +176,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -201,6 +203,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -228,6 +231,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -246,6 +250,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -265,6 +270,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
       setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
