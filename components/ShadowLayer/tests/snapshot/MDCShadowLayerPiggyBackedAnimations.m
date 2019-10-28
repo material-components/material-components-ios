@@ -16,7 +16,7 @@
 
 #import "MaterialShadowLayer.h"
 
-@interface MDCShadowLayerPiggyBackedAnimations : XCTest
+@interface MDCShadowLayerPiggyBackedAnimations : XCTestCase
 @end
 
 @implementation MDCShadowLayerPiggyBackedAnimations
