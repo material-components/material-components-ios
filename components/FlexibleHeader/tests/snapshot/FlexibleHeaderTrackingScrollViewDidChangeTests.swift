@@ -57,14 +57,20 @@ class FlexibleHeaderTrackingScrollViewDidChangeTests: XCTestCase {
     XCTAssertNotNil(fhvc.headerView.layer.animation(forKey: "bounds.origin"))
     XCTAssertNotNil(fhvc.headerView.layer.animation(forKey: "position"))
 
-    let animationDuration =
-        try XCTUnwrap(fhvc.headerView.layer.animation(forKey: "bounds.size")?.duration)
+    guard let animationDuration =
+        fhvc.headerView.layer.animation(forKey: "bounds.size")?.duration else {
+      XCTFail("Missing bounds.size animation")
+    }
 
-    let sublayers = try XCTUnwrap(shadowLayer.sublayers)
+    guard let sublayers = shadowLayer.sublayers else {
+      XCTFail("Missing sublayers.")
+    }
     XCTAssertGreaterThan(sublayers.count, 0)
 
     for sublayer in sublayers {
-      let animation = try XCTUnwrap(sublayer.animation(forKey: "shadowPath"))
+      guard let animation = sublayer.animation(forKey: "shadowPath") else {
+        XCTFail("Missing shadowPath animation.")
+      }
       XCTAssertNotNil(animation)
       XCTAssertEqual(animation.duration, animationDuration, accuracy: 0.001)
     }
