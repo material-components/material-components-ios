@@ -734,7 +734,8 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 
 #pragma mark - MDCTextInputPositioningDelegate
 
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
+    withSizeThatFitsWidthHint:(CGFloat)widthHint {
   CGRect lastChipFrame = self.chips.lastObject.frame;
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     lastChipFrame = MDFRectFlippedHorizontally(lastChipFrame, CGRectGetWidth(self.bounds));
