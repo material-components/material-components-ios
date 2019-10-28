@@ -16,10 +16,10 @@
 
 #import "MaterialShadowLayer.h"
 
-@interface MDCShadowLayerPiggyBackedAnimations : XCTestCase
+@interface MDCShadowLayerPiggyBackedAnimationsTests : XCTestCase
 @end
 
-@implementation MDCShadowLayerPiggyBackedAnimations
+@implementation MDCShadowLayerPiggyBackedAnimationsTests
 
 // A headless layer is a CALayer without a delegate (usually would be a UIView).
 // A mounted layer is one that has been flushed to the render server (either via a runloop pump or
