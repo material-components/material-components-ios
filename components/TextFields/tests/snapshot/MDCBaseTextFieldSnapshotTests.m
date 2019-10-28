@@ -33,7 +33,7 @@
 
   self.areAnimationsEnabled = UIView.areAnimationsEnabled;
   [UIView setAnimationsEnabled:NO];
-  self.textField = [self createBaseTextField];
+  self.textField = [self createBaseTextFieldInKeyWindow];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
   //      self.recordMode = YES;
@@ -46,7 +46,7 @@
   [UIView setAnimationsEnabled:self.areAnimationsEnabled];
 }
 
-- (MDCBaseTextField *)createBaseTextField {
+- (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
   textField.borderStyle = UITextBorderStyleRoundedRect;
 
