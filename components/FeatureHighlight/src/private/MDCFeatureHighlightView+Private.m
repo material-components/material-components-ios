@@ -673,10 +673,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   self.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   self.bodyLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(contentSizeCategoryDidChange:)
-                                               name:UIContentSizeCategoryDidChangeNotification
-                                             object:nil];
 }
 
 // Handles UIContentSizeCategoryDidChangeNotifications
