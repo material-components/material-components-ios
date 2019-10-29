@@ -317,6 +317,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentNatural;
     _label.numberOfLines = 0;
+    _label.adjustsFontSizeToFitWidth = YES;
     _label.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_label setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh

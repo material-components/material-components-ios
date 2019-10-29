@@ -27,6 +27,9 @@ static const CGFloat kWidth = 180;
 /** Height of a Snackbar with 1 line of message text. */
 static const CGFloat kHeightSingleLineText = 48;
 
+/** TODO */
+static const CGFloat kHeightMultiLineText = 100;
+
 static NSString *const kItemTitleShort1Latin = @"Quando";
 static NSString *const kItemTitleShort2Latin = @"No";
 
@@ -48,6 +51,16 @@ static NSString *const kItemTitleLong2Arabic =
 /** SnackbarManager to assign to snackbar views. */
 @property(nonatomic, strong) MDCSnackbarManager *testManager;
 
+@end
+
+@interface MDCSnackbarMessageViewWithCustomTraitCollection : MDCSnackbarMessageView
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCSnackbarMessageViewWithCustomTraitCollection
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
 @end
 
 @implementation MDCSnackbarMessageViewSnapshotTests
@@ -201,6 +214,130 @@ static NSString *const kItemTitleLong2Arabic =
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
+}
+
+- (void)testPreferredFontForXXXLContentSizeCategoryWithTitle {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
+    MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
+        [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
+                                                                  dismissHandler:nil
+                                                                 snackbarManager:self.testManager];
+    messageView.frame = CGRectMake(0, 0, kWidth, kHeightMultiLineText);
+
+    // When
+    UITraitCollection *xsTraitCollection =
+        [UITraitCollection
+          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    messageView.traitCollectionOverride = xsTraitCollection;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+
+    UITraitCollection *aXXXLTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    messageView.traitCollectionOverride = aXXXLTraitCollection;
+
+    // Then
+    [self generateSnapshotAndVerifyForView:messageView];
+  }
+}
+
+- (void)testPreferredFontForXXXLContentSizeCategoryWithTitleAndAction {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
+    MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+    action.title = @"Action";
+    message.action = action;
+
+    MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
+        [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
+                                                                  dismissHandler:nil
+                                                                 snackbarManager:self.testManager];
+    messageView.frame = CGRectMake(0, 0, kWidth, kHeightMultiLineText);
+
+    // When
+    UITraitCollection *xsTraitCollection =
+        [UITraitCollection
+          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    messageView.traitCollectionOverride = xsTraitCollection;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    messageView.messageFont = originalFont;
+    messageView.buttonFont = originalFont;
+
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    messageView.traitCollectionOverride = aXXXLTraitCollection;
+
+    // Then
+    [self generateSnapshotAndVerifyForView:messageView];
+  }
+}
+
+- (void)testPreferredFontForXSContentSizeCategoryWithTitle {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
+    MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
+        [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
+                                                                  dismissHandler:nil
+                                                                 snackbarManager:self.testManager];
+    messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+
+    // When
+    UITraitCollection *aXXXLTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    messageView.traitCollectionOverride = aXXXLTraitCollection;
+
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+
+    UITraitCollection *xsTraitCollection =
+        [UITraitCollection
+          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    messageView.traitCollectionOverride = xsTraitCollection;
+
+    // Then
+    [self generateSnapshotAndVerifyForView:messageView];
+  }
+}
+
+- (void)testPreferredFontForXSContentSizeCategoryWithTitleAndAction {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
+    MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+    action.title = @"Action";
+    message.action = action;
+
+    MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
+        [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
+                                                                  dismissHandler:nil
+                                                                 snackbarManager:self.testManager];
+    messageView.frame = CGRectMake(0, 0, kWidth, kHeightMultiLineText);
+
+    // When
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    messageView.traitCollectionOverride = aXXXLTraitCollection;
+
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    messageView.messageFont = originalFont;
+    messageView.buttonFont = originalFont;
+
+    UITraitCollection *xsTraitCollection =
+        [UITraitCollection
+          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    messageView.traitCollectionOverride = xsTraitCollection;
+
+    // Then
+    [self generateSnapshotAndVerifyForView:messageView];
+  }
 }
 
 @end
