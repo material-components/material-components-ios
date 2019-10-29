@@ -1570,7 +1570,10 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (wasTrackingScrollView && shouldAnimate) {
     [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
                      animations:animate
-                     completion:completion];
+                     completion:^(BOOL finished) {
+      [self.animationDelegate flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
+      completion(finished);
+    }];
   } else {
     animate();
     completion(YES);
