@@ -18,6 +18,13 @@
 
 #import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 
+/**
+ This class puts the configuration for TextControl based TextField snapshot tests in one place so
+ that snapshot test cases for the MDCFilledTextField and MDCOutlinedTextField can test the same
+ things being tested for MDCBaseTextField. When b/133313258 is fixed this configuration code will
+ probably be moved back to a MDCBaseTextField snapshot test case that will have a subclass for each
+ MDCBaseTextField subclass.
+ */
 @implementation MDCBaseTextFieldTestsSnapshotTestHelpers
 
 #pragma mark "When" configurations
