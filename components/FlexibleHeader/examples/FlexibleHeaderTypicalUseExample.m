@@ -16,11 +16,16 @@
 
 #import "MaterialFlexibleHeader+ColorThemer.h"
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderTypicalUseSupplemental.h"
 
-@interface FlexibleHeaderTypicalUseViewController ()
+@class FlexibleHeaderTypicalUseInstructionsView;
+
+@interface FlexibleHeaderTypicalUseViewController : UIViewController
 
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
+
+@property(nonatomic, strong) IBOutlet UIView *exampleView;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) IBOutlet UIImageView *imageView;
 
 @end
 
@@ -98,6 +103,44 @@
 // to customize it.
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return self.fhvc;
+}
+
+#pragma mark - Supplemental
+
+- (void)setupExampleViews {
+  NSBundle *bundle = [NSBundle bundleForClass:[FlexibleHeaderTypicalUseViewController class]];
+  [bundle loadNibNamed:@"FlexibleHeaderTypicalUseInstructionsView" owner:self options:nil];
+
+  self.imageView.image =
+      [self.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [self.scrollView addSubview:self.exampleView];
+
+  self.view.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  self.exampleView.frame = self.view.bounds;
+  self.scrollView.contentSize = self.view.bounds.size;
+}
+
+@end
+
+@implementation FlexibleHeaderTypicalUseViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Flexible Header" ],
+    @"description" : @"The Flexible Header is a container view whose height and vertical offset "
+                     @"react to UIScrollViewDelegate events.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end
