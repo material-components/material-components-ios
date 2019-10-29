@@ -1,15 +1,28 @@
-# #develop#
+# 93.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release FeatureHighlight better supports Dynamic Type, OverlayWindow supports iOS 13 UIWindow scene initializer API, TextFields support multiline error/helper text, along with FlexibleHeader shadow animation fix, PageControl dot placement fix, and additional component testing.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### FeatureHighlight
+
+You can now set `adjustsFontForContentSizeCategory` on `MDCFeatureHighlightViewController` to automatically update your scalable font when content size category changes.
+Namely, when `adjustsFontForContentSizeCategory` is set to `YES` the title and body fonts will scale appropriately if given a scalable font. 
+
+### OverlayWindow
+
+`MDCOverlayWindow` now supports being initialized with `initWithWindowScene:` as part of the new `UIWindow` iOS 13 APIs.
+
+### TextFields
+
+`MDCTextField` now supports multiline error and helper texts. To set this up you will need to change the number of lines and word wrapping of the label:
+
+```objc
+MDCTextField *textField = [[MDCTextField alloc] init];
+textField.leadingUnderlineLabel.numberOfLines = 0;
+textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
+```
+
 ## API changes
 
 ## Component changes
@@ -35,7 +48,6 @@ Replace this text with example code for each new feature.
 ### Dialogs
 
 * [Add tests for Dynamic Type. (#8675)](https://github.com/material-components/material-components-ios/commit/27b170cf91b79f9e548b22bd59ab428fc2a5ae04) (Robert Moore)
-* [Mark `buttonFont` deprecated. (#8649)](https://github.com/material-components/material-components-ios/commit/fcd8a16f71cdd3fd97724891f3a0cdf2da17202d) (Robert Moore)
 * [Remove broken snapshot tests. (#8676)](https://github.com/material-components/material-components-ios/commit/70591f73b6e68846fb5ff7ca2ef7a4a05cb14b14) (Robert Moore)
 
 ### FeatureHighlight
@@ -51,10 +63,6 @@ Replace this text with example code for each new feature.
 ### List
 
 * [Add snapshot tests for setting preferredFont with adjustsFontForContentSizeCategory (#8636)](https://github.com/material-components/material-components-ios/commit/6123da4c55f4aa7a230279ecc25f700f3ca86222) (Yarden Eitan)
-
-### NavigationDrawer
-
-* [Nav drawer fix pt 2 (#8638)](https://github.com/material-components/material-components-ios/commit/8b3ce02a7ae9cf9722c1c86ba8c98cb0e3a23eb7) (Andrew Overton)
 
 ### OverlayWindow
 
@@ -76,9 +84,7 @@ Replace this text with example code for each new feature.
 * [Add outlined style object (#8658)](https://github.com/material-components/material-components-ios/commit/8f02dc8ffc20f6fe5d3c5f93b938ca828de49475) (Andrew Overton)
 * [Add path drawing utils for style objects (#8628)](https://github.com/material-components/material-components-ios/commit/d78853c4c23e48950b65be74a69fe402a75fbe3b) (Andrew Overton)
 * [Add tests for preferredFont APIs. (#8635)](https://github.com/material-components/material-components-ios/commit/bdf183db464e2298bb11e1afa06e45caf1acc686) (Robert Moore)
-
-## Multi-component changes
-
+* [Bring back original textInsets API for clients sub… (#8688)](https://github.com/material-components/material-components-ios/commit/10802395af704baf1daad54013f51add7820dbc1) (Yarden Eitan)
 * [Add support for multi-line in helper and error tex… (#8665)](https://github.com/material-components/material-components-ios/commit/2c99391aef7db5ee761cecdfa67e60d6b126fbbc) (Yarden Eitan)
 
 ---
