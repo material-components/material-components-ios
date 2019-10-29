@@ -95,6 +95,7 @@
   MDCSnackbarManager.alignment = MDCSnackbarAlignmentLeading;
   MDCSnackbarManager.buttonFont = [UIFont systemFontOfSize:72];
   MDCSnackbarManager.delegate = delegate;
+  [MDCSnackbarManager setAdjustsFontForContentSizeCategory:YES];
   [MDCSnackbarManager mdc_setAdjustsFontForContentSizeCategory:YES];
   MDCSnackbarManager.messageFont = [UIFont systemFontOfSize:66];
   MDCSnackbarManager.messageTextColor = UIColor.orangeColor;
@@ -107,6 +108,8 @@
   XCTAssertEqual(manager.alignment, MDCSnackbarManager.alignment);
   XCTAssertEqualObjects(manager.buttonFont, MDCSnackbarManager.buttonFont);
   XCTAssertEqual(manager.delegate, MDCSnackbarManager.delegate);
+  XCTAssertEqual(manager.adjustsFontForContentSizeCategory,
+                 MDCSnackbarManager.adjustsFontForContentSizeCategory);
   XCTAssertEqual(manager.mdc_adjustsFontForContentSizeCategory,
                  MDCSnackbarManager.mdc_adjustsFontForContentSizeCategory);
   XCTAssertEqualObjects(manager.messageFont, MDCSnackbarManager.messageFont);
