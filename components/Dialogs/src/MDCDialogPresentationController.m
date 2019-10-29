@@ -336,6 +336,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     self.presentedView.frame = presentedViewFrame;
     self.trackingView.frame = presentedViewFrame;
   }
+  //  [self.presentedView layoutIfNeeded];
 }
 
 #pragma mark - Internal

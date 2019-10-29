@@ -643,6 +643,38 @@ than @c UIContentSizeCategoryLarge.
   }
 }
 
+- (void)testAdjustsFontForContentSizeCategoryUpdatesFontWhenTraitCollectionChanges {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    MDCAlertControllerTestsControllerFake *alert =
+        [[MDCAlertControllerTestsControllerFake alloc] init];
+    alert.title = @"Title";
+    alert.message = @"Message";
+    [alert addAction:[MDCAlertAction actionWithTitle:@"Action 1" handler:nil]];
+
+    // Prepare the Dynamic Type environment
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UITraitCollection *extraSmallTraits = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+    originalFont = [bodyMetrics scaledFontForFont:originalFont
+                    compatibleWithTraitCollection:extraSmallTraits];
+    alert.adjustsFontForContentSizeCategory = YES;
+    alert.titleFont = originalFont;
+    [alert loadViewIfNeeded];
+
+    // When
+    alert.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    [alert traitCollectionDidChange:nil];
+
+    // Then
+    XCTAssertEqualObjects(alert.alertView.titleLabel.font.fontName, originalFont.fontName);
+    XCTAssertGreaterThan(alert.alertView.titleLabel.font.pointSize, originalFont.pointSize);
+  }
+}
+
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   MDCAlertController *alertController = [[MDCAlertController alloc] init];
