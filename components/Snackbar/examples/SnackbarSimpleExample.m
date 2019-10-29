@@ -52,6 +52,15 @@
                                     target:self
                                     action:@selector(toggleDynamicType)]
   ];
+
+  if (@available(iOS 11.0, *)) {
+    MDCSnackbarManager.adjustsFontForContentSizeCategory = YES;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
+    MDCSnackbarManager.messageFont = font;
+    MDCSnackbarManager.buttonFont = font;
+  }
+
   MDCSnackbarManager.delegate = self;
 }
 
@@ -80,12 +89,14 @@
 - (void)showSimpleSnackbar:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
+  message.duration = 100000;
   [MDCSnackbarManager showMessage:message];
 }
 
 - (void)showSnackbarWithAction:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
+  message.duration = 100000;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
@@ -201,6 +212,8 @@
       break;
   }
 }
+
+#pragma mark - MDCSnackbarManagerDelegate
 
 - (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
   NSLog(@"A snackbar will be presented");
