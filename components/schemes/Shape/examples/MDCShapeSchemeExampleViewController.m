@@ -265,10 +265,11 @@
 - (void)updateComponentShapes {
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.containedButton];
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.outlinedButton];
-  [MDCCardsShapeThemer applyShapeScheme:_shapeScheme toCard:self.card];
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.presentBottomSheetButton];
   [self updateComponentShapesWithBaselineOverrides:self.includeBaselineOverridesToggle
                                                        .selectedSegmentIndex == 0];
+
+  [self.card applyThemeWithScheme:self.containerScheme];
 }
 
 - (MDCShapeCategory *)changedCategoryFromType:(UISegmentedControl *)sender
