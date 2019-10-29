@@ -97,7 +97,7 @@
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
-      configureTextFieldWithLeadingViewWhileEditing:textField];
+      configureTextFieldWithLeadingViewAndTextWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];
@@ -108,7 +108,7 @@
   MDCBaseTextField *textField = self.textField;
 
   // When
-  [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithTrailingView:textField];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithTrailingViewAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -120,7 +120,7 @@
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
-      configureTextFieldWithLeadingViewAndTrailingView:textField];
+      configureTextFieldWithLeadingViewAndTrailingViewAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -131,7 +131,8 @@
   MDCBaseTextField *textField = self.textField;
 
   // When
-  [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithVisibleClearButton:textField];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithVisibleClearButtonAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -143,7 +144,7 @@
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
-      configureFloatingLabelWithCustomColorWhileEditing:textField];
+      configureWithColoredFloatingLabelTextAndTextWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];
@@ -154,7 +155,8 @@
   MDCBaseTextField *textField = self.textField;
 
   // When
-  [MDCBaseTextFieldTestsSnapshotTestHelpers configureDisabledTextField:textField];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureDisabledTextFieldWithLabelTextAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -166,7 +168,7 @@
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
-      configureEditingTextFieldWithVisiblePlaceholder:textField];
+      configureEditingTextFieldWithVisiblePlaceholderAndLabelText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -177,7 +179,8 @@
   MDCBaseTextField *textField = self.textField;
 
   // When
-  [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithAssistiveLabelText:textField];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithColoredAssistiveLabelText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -189,7 +192,7 @@
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
-      configureTextFieldWithAssistiveLabelTextWhileEditing:textField];
+      configureTextFieldWithColoredAssistiveLabelTextWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];
@@ -201,7 +204,7 @@
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
-      configureTextFieldWithAssistiveLabelTextWhileDisabled:textField];
+      configureTextFieldWithColoredAssistiveLabelTextWhileDisabled:textField];
 
   // Then
   [self validateTextField:textField];

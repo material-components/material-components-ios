@@ -19,16 +19,16 @@
 #import "../../src/ContainedInputView/MDCBaseTextField.h"
 
 @interface MDCBaseTextFieldTestsSnapshotTestHelpers : NSObject
-+ (void)configureTextFieldWithAssistiveLabelText:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithColoredAssistiveLabelText:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithText:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithLeadingView:(MDCBaseTextField *)textField;
-+ (void)configureTextFieldWithLeadingViewWhileEditing:(MDCBaseTextField *)textField;
-+ (void)configureTextFieldWithTrailingView:(MDCBaseTextField *)textField;
-+ (void)configureTextFieldWithLeadingViewAndTrailingView:(MDCBaseTextField *)textField;
-+ (void)configureTextFieldWithVisibleClearButton:(MDCBaseTextField *)textField;
-+ (void)configureFloatingLabelWithCustomColorWhileEditing:(MDCBaseTextField *)textField;
-+ (void)configureDisabledTextField:(MDCBaseTextField *)textField;
-+ (void)configureEditingTextFieldWithVisiblePlaceholder:(MDCBaseTextField *)textField;
-+ (void)configureTextFieldWithAssistiveLabelTextWhileEditing:(MDCBaseTextField *)textField;
-+ (void)configureTextFieldWithAssistiveLabelTextWhileDisabled:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithLeadingViewAndTextWhileEditing:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithTrailingViewAndText:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithLeadingViewAndTrailingViewAndText:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithVisibleClearButtonAndText:(MDCBaseTextField *)textField;
++ (void)configureWithColoredFloatingLabelTextAndTextWhileEditing:(MDCBaseTextField *)textField;
++ (void)configureDisabledTextFieldWithLabelTextAndText:(MDCBaseTextField *)textField;
++ (void)configureEditingTextFieldWithVisiblePlaceholderAndLabelText:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithColoredAssistiveLabelTextWhileEditing:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithColoredAssistiveLabelTextWhileDisabled:(MDCBaseTextField *)textField;
 @end

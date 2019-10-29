@@ -29,7 +29,7 @@
 
 #pragma mark "When" configurations
 
-+ (void)configureTextFieldWithAssistiveLabelText:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithColoredAssistiveLabelText:(MDCBaseTextField *)textField {
   textField.text = @"text";
   textField.leadingAssistiveLabel.text = @"leading assistive label text";
   textField.trailingAssistiveLabel.text = @"trailing assistive label text";
@@ -47,20 +47,20 @@
   textField.leadingViewMode = UITextFieldViewModeAlways;
 }
 
-+ (void)configureTextFieldWithLeadingViewWhileEditing:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithLeadingViewAndTextWhileEditing:(MDCBaseTextField *)textField {
   textField.leadingView = [self createRedSideView];
   textField.leadingViewMode = UITextFieldViewModeWhileEditing;
   textField.text = @"Text";
   [textField becomeFirstResponder];
 }
 
-+ (void)configureTextFieldWithTrailingView:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithTrailingViewAndText:(MDCBaseTextField *)textField {
   textField.text = @"Text";
   textField.trailingView = [self createBlueSideView];
   textField.trailingViewMode = UITextFieldViewModeAlways;
 }
 
-+ (void)configureTextFieldWithLeadingViewAndTrailingView:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithLeadingViewAndTrailingViewAndText:(MDCBaseTextField *)textField {
   textField.text = @"Text";
   textField.leadingView = [self createBlueSideView];
   textField.trailingView = [self createRedSideView];
@@ -68,31 +68,31 @@
   textField.leadingViewMode = UITextFieldViewModeAlways;
 }
 
-+ (void)configureTextFieldWithVisibleClearButton:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithVisibleClearButtonAndText:(MDCBaseTextField *)textField {
   textField.clearButtonMode = UITextFieldViewModeAlways;
   textField.text = @"Text";
 }
 
-+ (void)configureFloatingLabelWithCustomColorWhileEditing:(MDCBaseTextField *)textField {
++ (void)configureWithColoredFloatingLabelTextAndTextWhileEditing:(MDCBaseTextField *)textField {
   textField.label.text = @"Floating label text";
   textField.text = @"Text";
   [textField setFloatingLabelColor:[UIColor purpleColor] forState:MDCTextControlStateEditing];
   [textField becomeFirstResponder];
 }
 
-+ (void)configureDisabledTextField:(MDCBaseTextField *)textField {
++ (void)configureDisabledTextFieldWithLabelTextAndText:(MDCBaseTextField *)textField {
   textField.label.text = @"Floating label text";
   textField.text = @"Text";
   textField.enabled = NO;
 }
 
-+ (void)configureEditingTextFieldWithVisiblePlaceholder:(MDCBaseTextField *)textField {
++ (void)configureEditingTextFieldWithVisiblePlaceholderAndLabelText:(MDCBaseTextField *)textField {
   textField.label.text = @"Floating label text";
   textField.placeholder = @"Placeholder";
   [textField becomeFirstResponder];
 }
 
-+ (void)configureTextFieldWithAssistiveLabelTextWhileEditing:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithColoredAssistiveLabelTextWhileEditing:(MDCBaseTextField *)textField {
   textField.text = @"text";
   textField.leadingAssistiveLabel.text = @"leading assistive label text";
   textField.trailingAssistiveLabel.text = @"trailing assistive label text";
@@ -101,7 +101,7 @@
   [textField becomeFirstResponder];
 }
 
-+ (void)configureTextFieldWithAssistiveLabelTextWhileDisabled:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithColoredAssistiveLabelTextWhileDisabled:(MDCBaseTextField *)textField {
   textField.text = @"text";
   textField.leadingAssistiveLabel.text = @"leading assistive label text";
   textField.trailingAssistiveLabel.text = @"trailing assistive label text";
