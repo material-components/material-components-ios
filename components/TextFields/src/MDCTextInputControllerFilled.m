@@ -265,10 +265,6 @@ static CGFloat _underlineHeightNormalDefault =
   }
 }
 
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
-  return [self textInsets:defaultInsets withSizeThatFitsWidthHint:0];
-}
-
 // The measurement from bottom to underline bottom. Only used in non-floating case.
 - (CGFloat)underlineOffsetWithInsets:(UIEdgeInsets)insets widthHint:(CGFloat)widthHint {
   // The amount of space underneath the underline may depend on whether there is content in the
