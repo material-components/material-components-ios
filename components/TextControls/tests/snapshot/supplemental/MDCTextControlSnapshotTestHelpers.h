@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "../../src/ContainedInputView/private/MDCTextControl.h"
+#import "../../../src/private/MDCTextControl.h"
 
 @interface MDCTextControlSnapshotTestHelpers : NSObject
 

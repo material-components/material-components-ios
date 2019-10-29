@@ -14,10 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../../src/ContainedInputView/private/MDCBaseTextFieldLayout.h"
-#import "../../../src/ContainedInputView/private/MDCTextControlAssistiveLabelView.h"
-#import "../../../src/ContainedInputView/private/MDCTextControlVerticalPositioningReferenceBase.h"
-#import "MaterialTextFields+ContainedInputView.h"
+#import "MaterialTextControls.h"
+
+#import "../../src/private/MDCBaseTextFieldLayout.h"
+#import "../../src/private/MDCTextControlAssistiveLabelView.h"
+#import "../../src/private/MDCTextControlVerticalPositioningReferenceBase.h"
 
 @interface MDCBaseTextFieldLayout (Testing)
 - (CGFloat)textHeightWithFont:(UIFont *)font;
