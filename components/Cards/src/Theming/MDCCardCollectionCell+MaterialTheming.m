@@ -22,15 +22,6 @@ static const MDCShadowElevation kHighlightedElevation = 1;
 static const MDCShadowElevation kSelectedElevation = 1;
 static const CGFloat kBorderWidth = 1;
 
-static id<MDCShapeGenerating> CardShapeGeneratorFromScheme(id<MDCShapeScheming>shapeScheme) {
-  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  rectangleShape.topLeftCorner = shapeScheme.mediumComponentShape.topLeftCorner;
-  rectangleShape.topRightCorner = shapeScheme.mediumComponentShape.topRightCorner;
-  rectangleShape.bottomLeftCorner = shapeScheme.mediumComponentShape.bottomLeftCorner;
-  rectangleShape.bottomRightCorner = shapeScheme.mediumComponentShape.bottomRightCorner;
-  return rectangleShape;
-}
-
 @implementation MDCCardCollectionCell (MaterialTheming)
 
 #pragma mark - Standard Card
@@ -61,7 +52,12 @@ static id<MDCShapeGenerating> CardShapeGeneratorFromScheme(id<MDCShapeScheming>s
 }
 
 - (void)applyThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
-  self.shapeGenerator = CardShapeGeneratorFromScheme(shapeScheme);
+  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
+  rectangleShape.topLeftCorner = shapeScheme.mediumComponentShape.topLeftCorner;
+  rectangleShape.topRightCorner = shapeScheme.mediumComponentShape.topRightCorner;
+  rectangleShape.bottomLeftCorner = shapeScheme.mediumComponentShape.bottomLeftCorner;
+  rectangleShape.bottomRightCorner = shapeScheme.mediumComponentShape.bottomRightCorner;
+  self.shapeGenerator = rectangleShape;
 }
 
 #pragma mark - Outlined Card
