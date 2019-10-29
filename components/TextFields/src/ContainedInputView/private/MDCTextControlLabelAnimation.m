@@ -36,23 +36,23 @@
   }
 
   CGRect currentFrame = label.frame;
-  CGAffineTransform trasformNeededToMakeViewWithTargetFrameLookLikeItHasCurrentFrame =
-      [self transformFromRect:targetFrame toRect:currentFrame];
-
-  label.frame = targetFrame;
-  label.font = targetFont;
-  label.transform = trasformNeededToMakeViewWithTargetFrameLookLikeItHasCurrentFrame;
+  CGAffineTransform transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame =
+      [self transformFromRect:currentFrame toRect:targetFrame];
 
   CAMediaTimingFunction *timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
   [UIView mdc_animateWithTimingFunction:timingFunction
-                               duration:kMDCTextControlDefaultAnimationDuration
-                                  delay:0
-                                options:0
-                             animations:^{
-                               label.transform = CGAffineTransformIdentity;
-                             }
-                             completion:nil];
+      duration:kMDCTextControlDefaultAnimationDuration
+      delay:0
+      options:0
+      animations:^{
+        label.transform = transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame;
+      }
+      completion:^(BOOL finished) {
+        label.transform = CGAffineTransformIdentity;
+        label.frame = targetFrame;
+        label.font = targetFont;
+      }];
 }
 
 /**
