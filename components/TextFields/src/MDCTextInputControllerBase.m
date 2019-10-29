@@ -1468,7 +1468,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                   givenTrailingLabel:(UILabel *)trailingLabel
                                               insets:(UIEdgeInsets)insets
                                            widthHint:(CGFloat)widthHint {
-  if (!label.text) {
+  if (!label.text || label.numberOfLines == 1) {
     return 1;
   }
   if (widthHint <= 0 && CGRectGetWidth(label.bounds) <= 0) {
