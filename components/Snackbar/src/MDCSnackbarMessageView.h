@@ -100,6 +100,14 @@
  Indicates whether the Snackbar should automatically update its font when the device’s
  UIContentSizeCategory is changed.
 
+ Default is set to NO.
+ */
+@property(nonatomic, readwrite) BOOL adjustsFontForContentSizeCategory;
+
+/**
+ Indicates whether the Snackbar should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
@@ -109,7 +117,7 @@
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR NS_DEPRECATED_IOS(8_0, 11_0);
 
 /**
  Affects the fallback behavior for when a scaled font is not provided.
@@ -120,10 +128,11 @@
  If disabled, the font size will only be adjusted if a scaled font has been provided.
  This behavior most closely matches UIKit's.
 
- Default value is YES, but this flag will eventually default to NO and then be deprecated
- and deleted.
+ Default value is NO.
  */
-@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+@property(nonatomic, assign)
+    BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable __deprecated_msg(
+        "Please provide a scaled font and set adjustsFontForContentSizeCategory to YES.");
 
 /**
  A block that is invoked when the MDCSnackbarMessageView receives a call to @c

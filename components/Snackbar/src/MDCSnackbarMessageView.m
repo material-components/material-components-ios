@@ -218,6 +218,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
             ?: MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
     _buttonTitleColors[@(UIControlStateHighlighted)] =
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?: UIColor.whiteColor;
+    _adjustsFontForContentSizeCategory = manager.adjustsFontForContentSizeCategory;
     _mdc_adjustsFontForContentSizeCategory = manager.mdc_adjustsFontForContentSizeCategory;
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
         manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
@@ -289,31 +290,34 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // font from the UIFont standardFont API.
     [self updateMessageFont];
 
-    NSMutableAttributedString *messageString = [message.attributedText mutableCopy];
-
-    if (!_messageFont && !_mdc_adjustsFontForContentSizeCategory) {
-      // Find any of the bold attributes in the string, and set the proper font for those ranges.
-      // Use NSAttributedStringEnumerationLongestEffectiveRangeNotRequired as opposed to 0,
-      // otherwise it will only work if bold text is in the end.
-      [messageString
-          enumerateAttribute:MDCSnackbarMessageBoldAttributeName
-                     inRange:NSMakeRange(0, messageString.length)
-                     options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-                  usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
-                    UIFont *font = [MDCTypography body1Font];
-                    if ([value boolValue]) {
-                      font = [MDCTypography body2Font];
-                    }
-                    [messageString setAttributes:@{NSFontAttributeName : font} range:range];
-                  }];
+    if (message.attributedText != nil) {
+      NSMutableAttributedString *messageString = [message.attributedText mutableCopy];
+      if (!_messageFont && !_mdc_adjustsFontForContentSizeCategory) {
+        // Find any of the bold attributes in the string, and set the proper font for those ranges.
+        // Use NSAttributedStringEnumerationLongestEffectiveRangeNotRequired as opposed to 0,
+        // otherwise it will only work if bold text is in the end.
+        [messageString
+         enumerateAttribute:MDCSnackbarMessageBoldAttributeName
+         inRange:NSMakeRange(0, messageString.length)
+         options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+         usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
+          UIFont *font = [MDCTypography body1Font];
+          if ([value boolValue]) {
+            font = [MDCTypography body2Font];
+          }
+          [messageString setAttributes:@{NSFontAttributeName : font} range:range];
+        }];
+      }
+      _label.attributedText = messageString;
+    } else {
+      _label.text = message.text;
     }
 
     // Apply 'global' attributes along the whole string.
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentNatural;
-    _label.adjustsFontSizeToFitWidth = YES;
-    _label.attributedText = messageString;
     _label.numberOfLines = 0;
+    _label.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_label setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh
                                             forAxis:UILayoutConstraintAxisHorizontal];
@@ -1109,6 +1113,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 #pragma mark - Dynamic Type Support
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  _label.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  for (UIButton *button in _buttons) {
+    button.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  }
+}
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;

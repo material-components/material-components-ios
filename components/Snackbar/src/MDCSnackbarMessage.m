@@ -32,7 +32,6 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
 @implementation MDCSnackbarMessage
 static BOOL _usesLegacySnackbar = NO;
 @synthesize accessibilityIdentifier;
-@dynamic text;
 
 + (instancetype)messageWithText:(NSString *)text {
   MDCSnackbarMessage *message = [[[self class] alloc] init];
@@ -61,6 +60,7 @@ static BOOL _usesLegacySnackbar = NO;
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCSnackbarMessage *copy = [[[self class] alloc] init];
   copy.attributedText = self.attributedText;
+  copy.text = self.text;
   copy.duration = self.duration;
   copy.category = self.category;
   copy.accessibilityLabel = self.accessibilityLabel;
@@ -82,16 +82,6 @@ static BOOL _usesLegacySnackbar = NO;
 
 - (dispatch_queue_t)targetQueue {
   return dispatch_get_main_queue();
-}
-
-#pragma mark Text
-
-- (void)setText:(NSString *)text {
-  self.attributedText = [[NSAttributedString alloc] initWithString:[text copy]];
-}
-
-- (NSString *)text {
-  return [self.attributedText string];
 }
 
 #pragma mark - Duration

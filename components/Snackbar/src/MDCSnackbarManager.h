@@ -226,6 +226,13 @@
 - (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
 
 /**
+ Sets adjustsFontForContentSizeCategory on MDCSnackbarMessageView labels and buttons.
+
+ Default is set to NO.
+ */
+@property(nonatomic, readwrite) BOOL adjustsFontForContentSizeCategory;
+
+/**
  Indicates whether the Snackbar should automatically update its font when the device’s
  UIContentSizeCategory is changed.
 
@@ -384,6 +391,12 @@
  Calls @c -setButtonTitleColor:forState: on the @c defaultManager instance.
  */
 + (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
+
+/**
+ Bound to @c adjustsFontForContentSizeCategory on the @c defaultManager instance.
+ */
+@property(class, nonatomic, readwrite, setter=setAdjustsFontForContentSizeCategory:)
+    BOOL adjustsFontForContentSizeCategory;
 
 /**
  Bound to @c mdc_adjustsFontForContentSizeCategory on the @c defaultManager instance.

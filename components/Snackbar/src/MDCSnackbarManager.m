@@ -554,7 +554,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _uppercaseButtonTitle = YES;
     _disabledButtonAlpha = (CGFloat)0.12;
     _messageElevation = MDCShadowElevationSnackbar;
-    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
     _mdc_overrideBaseElevation = -1;
   }
   return self;
@@ -815,6 +815,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   }
 }
 
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.internalManager.currentSnackbar.adjustsFontForContentSizeCategory =
+      adjustsFontForContentSizeCategory;
+}
+
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
 }
@@ -975,6 +981,15 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 + (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state {
   [MDCSnackbarManager.defaultManager setButtonTitleColor:titleColor forState:state];
+}
+
++ (BOOL)adjustsFontForContentSizeCategory {
+  return MDCSnackbarManager.defaultManager.adjustsFontForContentSizeCategory;
+}
+
++ (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  [MDCSnackbarManager.defaultManager
+      setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
 }
 
 + (BOOL)mdc_adjustsFontForContentSizeCategory {
