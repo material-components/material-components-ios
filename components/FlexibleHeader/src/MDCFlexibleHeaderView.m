@@ -182,6 +182,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // layout guide. Once we drop iOS 8 support this can be changed to a UILayoutGuide instead.
   UIView *_topSafeAreaGuide;
 
+  // Whether the flexible header is currently within an animate block for changing the tracking
+  // scroll view.
+  BOOL _isAnimatingTrackingScrollViewChange;
+
   MDCStatusBarShifter *_statusBarShifter;
 
   // Layers for header shadows.
@@ -385,8 +389,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   [self fhv_updateShadowColor];
   [self fhv_updateShadowPath];
+
   [CATransaction begin];
-  [CATransaction setDisableActions:YES];
+  BOOL allowCAActions = _isAnimatingTrackingScrollViewChange;
+  [CATransaction setDisableActions:!allowCAActions];
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
   _shadowLayer.frame = self.bounds;
@@ -1554,8 +1560,29 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   }
 
+  CFTimeInterval duration = kTrackingScrollViewDidChangeAnimationDuration;
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+
   void (^animate)(void) = ^{
+    self->_isAnimatingTrackingScrollViewChange = YES;
+
+    [CATransaction begin];
+#if TARGET_IPHONE_SIMULATOR
+    [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
+#else
+    [CATransaction setAnimationDuration:duration];
+#endif
+    [CATransaction setAnimationTimingFunction:timingFunction];
+
     [self fhv_updateLayout];
+
+    // Force any layout changes to be committed during this animation block.
+    [self layoutIfNeeded];
+
+    [CATransaction commit];
+
+    self->_isAnimatingTrackingScrollViewChange = NO;
   };
   void (^completion)(BOOL) = ^(BOOL finished) {
     if (!finished) {
@@ -1568,9 +1595,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   };
   if (wasTrackingScrollView && shouldAnimate) {
-    [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
-                     animations:animate
-                     completion:completion];
+    [UIView animateWithDuration:duration animations:animate completion:completion];
   } else {
     animate();
     completion(YES);
