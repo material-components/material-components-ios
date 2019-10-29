@@ -178,6 +178,12 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                    underlineThickness:thinUnderlineThickness
                                        underlineWidth:viewWidth];
 
+  if (animationDuration <= 0) {
+    self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
+    self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+    return;
+  }
+
   CABasicAnimation *preexistingThickUnderlineShrinkAnimation =
       (CABasicAnimation *)[self.thickUnderlineLayer
           animationForKey:self.class.thickUnderlineShrinkKey];
@@ -191,93 +197,90 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
       (CABasicAnimation *)[self.thinUnderlineLayer
           animationForKey:self.class.thinUnderlineShrinkKey];
 
-  if (animationDuration > 0) {
-    [CATransaction begin];
-    {
-      if (shouldShowThickUnderline) {
-        if (preexistingThickUnderlineShrinkAnimation) {
-          [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
-        }
-        BOOL needsThickUnderlineGrowAnimation = NO;
-        if (preexistingThickUnderlineGrowAnimation) {
-          CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineGrowAnimation.toValue;
-          if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
-            [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineGrowKey];
-            needsThickUnderlineGrowAnimation = YES;
-            self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
-          }
-        } else {
-          needsThickUnderlineGrowAnimation = YES;
-        }
-        if (needsThickUnderlineGrowAnimation) {
-          [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
-                                          forKey:self.class.thickUnderlineGrowKey];
-        }
+  [CATransaction begin];
+  {
+    [CATransaction setAnimationDuration:animationDuration];
 
-        if (preexistingThinUnderlineGrowAnimation) {
-          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
-        }
-        BOOL needsThinUnderlineShrinkAnimation = NO;
-        if (preexistingThinUnderlineShrinkAnimation) {
-          CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineShrinkAnimation.toValue;
-          if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
-            [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
-            needsThinUnderlineShrinkAnimation = YES;
-            self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
-          }
-        } else {
-          needsThinUnderlineShrinkAnimation = YES;
-        }
-        if (needsThinUnderlineShrinkAnimation) {
-          [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
-                                         forKey:self.class.thinUnderlineShrinkKey];
-        }
-
-      } else {
-        if (preexistingThickUnderlineGrowAnimation) {
+    if (shouldShowThickUnderline) {
+      if (preexistingThickUnderlineShrinkAnimation) {
+        [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
+      }
+      BOOL needsThickUnderlineGrowAnimation = NO;
+      if (preexistingThickUnderlineGrowAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineGrowAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
           [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineGrowKey];
-        }
-        BOOL needsThickUnderlineShrinkAnimation = NO;
-        if (preexistingThickUnderlineShrinkAnimation) {
-          CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineShrinkAnimation.toValue;
-          if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
-            [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
-            needsThickUnderlineShrinkAnimation = YES;
-            self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
-          }
-        } else {
-          needsThickUnderlineShrinkAnimation = YES;
-        }
-        if (needsThickUnderlineShrinkAnimation) {
-          [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
-                                          forKey:self.class.thickUnderlineShrinkKey];
-        }
-
-        if (preexistingThinUnderlineShrinkAnimation) {
-          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
-        }
-        BOOL needsThickUnderlineGrowAnimation = NO;
-        if (preexistingThinUnderlineGrowAnimation) {
-          CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineGrowAnimation.toValue;
-          if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
-            [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
-            needsThickUnderlineGrowAnimation = YES;
-            self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
-          }
-        } else {
           needsThickUnderlineGrowAnimation = YES;
+          self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
         }
-        if (needsThickUnderlineGrowAnimation) {
-          [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
-                                         forKey:self.class.thinUnderlineGrowKey];
+      } else {
+        needsThickUnderlineGrowAnimation = YES;
+      }
+      if (needsThickUnderlineGrowAnimation) {
+        [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
+                                        forKey:self.class.thickUnderlineGrowKey];
+      }
+
+      if (preexistingThinUnderlineGrowAnimation) {
+        [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
+      }
+      BOOL needsThinUnderlineShrinkAnimation = NO;
+      if (preexistingThinUnderlineShrinkAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineShrinkAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
+          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
+          needsThinUnderlineShrinkAnimation = YES;
+          self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
         }
+      } else {
+        needsThinUnderlineShrinkAnimation = YES;
+      }
+      if (needsThinUnderlineShrinkAnimation) {
+        [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
+                                       forKey:self.class.thinUnderlineShrinkKey];
+      }
+
+    } else {
+      if (preexistingThickUnderlineGrowAnimation) {
+        [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineGrowKey];
+      }
+      BOOL needsThickUnderlineShrinkAnimation = NO;
+      if (preexistingThickUnderlineShrinkAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineShrinkAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
+          [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
+          needsThickUnderlineShrinkAnimation = YES;
+          self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+        }
+      } else {
+        needsThickUnderlineShrinkAnimation = YES;
+      }
+      if (needsThickUnderlineShrinkAnimation) {
+        [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
+                                        forKey:self.class.thickUnderlineShrinkKey];
+      }
+
+      if (preexistingThinUnderlineShrinkAnimation) {
+        [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
+      }
+      BOOL needsThickUnderlineGrowAnimation = NO;
+      if (preexistingThinUnderlineGrowAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineGrowAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
+          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
+          needsThickUnderlineGrowAnimation = YES;
+          self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
+        }
+      } else {
+        needsThickUnderlineGrowAnimation = YES;
+      }
+      if (needsThickUnderlineGrowAnimation) {
+        [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
+                                       forKey:self.class.thinUnderlineGrowKey];
       }
     }
-    [CATransaction commit];
-  } else {
-    self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
-    self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
   }
+  [CATransaction commit];
 }
 
 - (BOOL)shouldShowThickUnderlineWithState:(MDCTextControlState)state {
@@ -304,7 +307,6 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (CABasicAnimation *)basicAnimationWithKeyPath:(NSString *)keyPath {
   CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
-  animation.duration = kMDCTextControlDefaultAnimationDuration;
   animation.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   animation.repeatCount = 0;
