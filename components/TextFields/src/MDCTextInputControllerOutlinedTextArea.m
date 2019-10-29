@@ -127,6 +127,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   return textInsets;
 }
 
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  return [self textInsets:defaultInsets withSizeThatFitsWidthHint:0];
+}
+
 #pragma mark - Layout
 
 - (void)updateBorder {

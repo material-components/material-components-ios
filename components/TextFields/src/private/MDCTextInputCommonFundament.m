@@ -796,6 +796,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                        withSizeThatFitsWidthHint:)]) {
     return [self.positioningDelegate textInsets:textInsets
                       withSizeThatFitsWidthHint:self.sizeThatFitsWidthHint];
+  } else if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+    return [self.positioningDelegate textInsets:textInsets];
   }
   return textInsets;
 }

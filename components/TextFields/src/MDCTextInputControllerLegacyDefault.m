@@ -141,6 +141,10 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   return textInsets;
 }
 
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  return [self textInsets:defaultInsets withSizeThatFitsWidthHint:0];
+}
+
 - (UIOffset)floatingPlaceholderOffset {
   CGFloat vertical = MDCTextInputControllerLegacyDefaultVerticalPadding;
 

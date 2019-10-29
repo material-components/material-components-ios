@@ -229,7 +229,7 @@ static CGFloat _underlineHeightNormalDefault =
     self.placeholderTop.active = YES;
   }
 
-  UIEdgeInsets textInsets = [self textInsets:UIEdgeInsetsZero withSizeThatFitsWidthHint:0];
+  UIEdgeInsets textInsets = [self textInsets:UIEdgeInsetsZero];
   CGFloat underlineBottomConstant =
       textInsets.top + [self estimatedTextHeight] + [self beneathInputPadding];
   // When floating placeholders are turned off, the underline will drift up unless this is set. Even
@@ -263,6 +263,10 @@ static CGFloat _underlineHeightNormalDefault =
   } else {
     self.underlineBottom.constant = underlineBottomConstant;
   }
+}
+
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  return [self textInsets:defaultInsets withSizeThatFitsWidthHint:0];
 }
 
 // The measurement from bottom to underline bottom. Only used in non-floating case.

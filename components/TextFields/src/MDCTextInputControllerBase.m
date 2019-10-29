@@ -1458,6 +1458,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   return textInsets;
 }
 
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  return [self textInsets:defaultInsets withSizeThatFitsWidthHint:0];
+}
+
 // Part of the counting lines logic was sourced from
 // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextLayout/Tasks/CountLines.html.
 + (NSUInteger)calculatedNumberOfLinesForLeadingLabel:(UILabel *)label
