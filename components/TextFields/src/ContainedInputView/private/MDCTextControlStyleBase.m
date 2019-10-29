@@ -26,7 +26,8 @@
   return font;
 }
 
-- (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl {
+- (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl
+              animationDuration:(NSTimeInterval)animationDuration {
 }
 
 - (void)removeStyleFrom:(id<MDCTextControl>)textControl {

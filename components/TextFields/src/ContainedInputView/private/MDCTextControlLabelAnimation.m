@@ -24,7 +24,8 @@
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
-          floatingFont:(nonnull UIFont *)floatingFont {
+          floatingFont:(nonnull UIFont *)floatingFont
+     animationDuration:(NSTimeInterval)animationDuration {
   UIFont *targetFont;
   CGRect targetFrame;
   if (labelState == MDCTextControlLabelStateFloating) {

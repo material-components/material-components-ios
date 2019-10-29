@@ -23,7 +23,6 @@
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCBaseTextField *textField;
-@property(nonatomic, assign) BOOL areAnimationsEnabled;
 @end
 
 @implementation MDCBaseTextFieldTestsSnapshotTests
@@ -31,8 +30,6 @@
 - (void)setUp {
   [super setUp];
 
-  self.areAnimationsEnabled = UIView.areAnimationsEnabled;
-  [UIView setAnimationsEnabled:NO];
   self.textField = [self createBaseTextFieldInKeyWindow];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
@@ -43,11 +40,11 @@
   [super tearDown];
   [self.textField removeFromSuperview];
   self.textField = nil;
-  [UIView setAnimationsEnabled:self.areAnimationsEnabled];
 }
 
 - (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
+  textField.animationDuration = 0;
   textField.borderStyle = UITextBorderStyleRoundedRect;
 
   // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,

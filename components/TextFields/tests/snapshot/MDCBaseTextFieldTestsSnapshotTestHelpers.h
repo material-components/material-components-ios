@@ -18,6 +18,10 @@
 
 #import "../../src/ContainedInputView/MDCBaseTextField.h"
 
+@interface MDCBaseTextField (AnimationDuration)
+@property(nonatomic, assign) NSTimeInterval animationDuration;
+@end
+
 @interface MDCBaseTextFieldTestsSnapshotTestHelpers : NSObject
 + (void)configureTextFieldWithColoredAssistiveLabelText:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithText:(MDCBaseTextField *)textField;
