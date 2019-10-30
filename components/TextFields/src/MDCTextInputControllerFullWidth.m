@@ -1039,10 +1039,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return editingRect;
 }
 
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
-  return [self textInsets:defaultInsets withSizeThatFitsWidthHint:0];
-}
-
 #pragma mark - UITextField & UITextView Notification Observation
 
 - (void)textInputDidBeginEditing:(__unused NSNotification *)note {

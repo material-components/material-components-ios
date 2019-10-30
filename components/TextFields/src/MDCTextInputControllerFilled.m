@@ -229,7 +229,7 @@ static CGFloat _underlineHeightNormalDefault =
     self.placeholderTop.active = YES;
   }
 
-  UIEdgeInsets textInsets = [self textInsets:UIEdgeInsetsZero];
+  UIEdgeInsets textInsets = [self textInsets:UIEdgeInsetsZero withSizeThatFitsWidthHint:0];
   CGFloat underlineBottomConstant =
       textInsets.top + [self estimatedTextHeight] + [self beneathInputPadding];
   // When floating placeholders are turned off, the underline will drift up unless this is set. Even
