@@ -19,7 +19,6 @@ load(
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
-    "mdc_snapshot_swift_library",
     "mdc_snapshot_test",
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
@@ -129,18 +128,7 @@ mdc_snapshot_objc_library(
     ],
 )
 
-mdc_snapshot_swift_library(
-    name = "snapshot_test_lib_swift",
-    deps = [
-        ":FlexibleHeader",
-        "//components/ShadowLayer",
-    ],
-)
-
 mdc_snapshot_test(
     name = "snapshot_tests",
-    deps = [
-        ":snapshot_test_lib",
-        ":snapshot_test_lib_swift"
-    ],
+    deps = [":snapshot_test_lib"],
 )
