@@ -87,8 +87,10 @@
 #pragma mark - Event Handling
 
 - (void)showSimpleSnackbar:(id)sender {
+  NSString *kItemTitleShort1Arabic = @"عل";
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-  message.text = @"Snackbar Message";
+//  message.text = @"Snackbar Message";
+  message.text = kItemTitleShort1Arabic;
   message.duration = 100000;
   [MDCSnackbarManager showMessage:message];
 }

@@ -434,7 +434,6 @@
     MDCSnackbarMessageViewTestsFakeView *messageView =
         [[MDCSnackbarMessageViewTestsFakeView alloc] init];
     messageView.mdc_adjustsFontForContentSizeCategory = YES;
-    messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
     MDCButton *button = [[MDCButton alloc] init];
     [messageView.actionButtons addObject:button];
     UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
@@ -464,7 +463,7 @@
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
 
   // Then
-  XCTAssertTrue(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertFalse(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 @end

@@ -386,12 +386,17 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     button.accessibilityIdentifier = message.action.accessibilityIdentifier;
     button.accessibilityHint = message.action.accessibilityHint;
 
+    if (self.adjustsFontForContentSizeCategory) {
+      button.titleLabel.adjustsFontForContentSizeCategory = YES;
+      button.enableTitleFontForState = NO;
+    }
+
     [button setTitle:message.action.title forState:UIControlStateNormal];
     [button setTitle:message.action.title forState:UIControlStateHighlighted];
 
     [button addTarget:self
-                  action:@selector(handleButtonTapped:)
-        forControlEvents:UIControlEventTouchUpInside];
+               action:@selector(handleButtonTapped:)
+     forControlEvents:UIControlEventTouchUpInside];
 
     button.uppercaseTitle = manager.uppercaseButtonTitle;
     button.disabledAlpha = manager.disabledButtonAlpha;
@@ -626,8 +631,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   }
 
   for (MDCButton *button in _actionButtons) {
-    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
-    [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
+    if (self.adjustsFontForContentSizeCategory) {
+      button.titleLabel.font = finalButtonFont;
+    } else {
+      [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+      [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
+    }
   }
 
   [self setNeedsLayout];
@@ -1118,7 +1127,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
   _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   _label.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-  for (UIButton *button in _buttons) {
+  for (MDCButton *button in _buttons) {
+    button.enableTitleFontForState = NO;
     button.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   }
 }
