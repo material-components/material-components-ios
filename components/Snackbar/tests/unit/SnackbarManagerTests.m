@@ -112,7 +112,7 @@
   MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
 
   // Then
-  XCTAssertTrue(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertFalse(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 - (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
