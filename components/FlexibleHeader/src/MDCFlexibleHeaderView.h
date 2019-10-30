@@ -368,6 +368,18 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL sharedWithManyScrollViews;
 
 /**
+ Whether to allow shadow frame animations when animating changes to the tracking scroll view.
+
+ Enabling this property allows layoutSubviews to animate the shadow frames as part of the animation
+ that occurs when changing tracking scroll views.
+
+ This property will eventually be enabled by default and then deleted.
+
+ Default is NO.
+ */
+@property(nonatomic, assign) BOOL allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView;
+
+/**
  If enabled, the trackingScrollView doesn't adjust the content inset when its
  contentInsetAdjustmentBehavior is set to be UIScrollViewContentInsetAdjustmentNever.
 
