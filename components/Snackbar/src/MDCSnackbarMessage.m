@@ -18,7 +18,7 @@
 
 static const NSTimeInterval kDefaultDuration = 4;
 
-const NSTimeInterval MDCSnackbarMessageDurationMax = 99999999;
+const NSTimeInterval MDCSnackbarMessageDurationMax = 10;
 NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAttributeName";
 
 @interface MDCSnackbarMessage ()
