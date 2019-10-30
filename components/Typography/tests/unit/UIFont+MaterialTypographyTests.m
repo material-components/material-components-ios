@@ -69,7 +69,7 @@
   }
 
   // Given
-//  XCTAssertNil(UIApplication.sharedApplication);
+  XCTAssertNil(UIApplication.sharedApplication);
   UIFont *font = [UIFont systemFontOfSize:22.0];
   font = [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
   MDCTypographyMockTraitEnvironment *traitEnvironment =
