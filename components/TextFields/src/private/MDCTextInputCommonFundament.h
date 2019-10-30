@@ -34,10 +34,6 @@ UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 /** The color of the input's text. */
 @property(nonatomic, nullable, strong) UIColor *textColor;
 
-/** The width provided by sizeThatFits: used as a hint to calculate the correct height of the
- * textfield. */
-@property(nonatomic, assign) CGFloat sizeThatFitsWidthHint;
-
 /** Designated initializer with the controlled text input. */
 - (nonnull instancetype)initWithTextInput:(UIView<MDCTextInput> *_Nonnull)textInput
     NS_DESIGNATED_INITIALIZER;

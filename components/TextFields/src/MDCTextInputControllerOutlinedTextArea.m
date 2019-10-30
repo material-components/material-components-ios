@@ -105,11 +105,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
                                                                       // underlineLabelsOffset From super class.
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
-    withSizeThatFitsWidthHint:(CGFloat)widthHint {
-  defaultInsets.left = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
-  defaultInsets.right = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
-  UIEdgeInsets textInsets = [super textInsets:defaultInsets withSizeThatFitsWidthHint:widthHint];
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  UIEdgeInsets textInsets = [super textInsets:defaultInsets];
   textInsets.top = MDCTextInputTextFieldOutlinedTextAreaHalfPadding +
                    MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment +
                    MDCRint(self.textInput.placeholderLabel.font.lineHeight *
@@ -120,9 +117,11 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
   // Legacy has an additional half padding here but this version does not.
-  CGFloat underlineOffset = [self underlineOffsetWithInsets:defaultInsets widthHint:widthHint];
+  CGFloat underlineOffset = [self underlineOffset];
 
   textInsets.bottom = underlineOffset;
+  textInsets.left = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
+  textInsets.right = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
 
   return textInsets;
 }
@@ -168,7 +167,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 }
 
 // The measurement from bottom to underline center Y.
-- (CGFloat)underlineOffsetWithInsets:(UIEdgeInsets)insets widthHint:(CGFloat)widthHint {
+- (CGFloat)underlineOffset {
   // The amount of space underneath the underline depends on whether there is content in the
   // underline labels.
   CGFloat underlineLabelsOffset = 0;
@@ -177,14 +176,6 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   if (self.textInput.leadingUnderlineLabel.text.length) {
     underlineLabelsOffset =
         MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
-    underlineLabelsOffset =
-        MAX(underlineLabelsOffset,
-            [MDCTextInputControllerBase
-                calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
-                                    givenTrailingLabel:self.textInput.trailingUnderlineLabel
-                                                insets:insets
-                                             widthHint:widthHint] *
-                underlineLabelsOffset);
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
     underlineLabelsOffset =

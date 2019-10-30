@@ -31,10 +31,8 @@
 
  @param defaultInsets The value of text container insets that the MDCTextInput has calculated by
  default.
- @param widthHint The width provided by sizeThatFits: and used as a hint for calculating the
- textfield size.
  */
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint;
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets;
 
 /**
  The area that inputted text should be displayed while isEditing = true.
