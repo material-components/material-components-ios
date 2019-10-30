@@ -30,7 +30,10 @@ static CGFloat const kDefaultPadding = 15.0;
 @property(nonatomic, strong) MDCBaseTextField *baseTextField;
 
 /** The MDCFilledTextField for this example. */
-@property(nonatomic, strong) MDCBaseTextField *filledTextField;
+@property(nonatomic, strong) MDCFilledTextField *filledTextField;
+
+/** The MDCOutlinedTextField for this example. */
+@property(nonatomic, strong) MDCOutlinedTextField *outlinedTextField;
 
 /** The UIButton that makes the textfield stop being the first responder. */
 @property(nonatomic, strong) MDCButton *resignFirstResponderButton;
@@ -66,6 +69,12 @@ static CGFloat const kDefaultPadding = 15.0;
   self.filledTextField.placeholder = @"This is placeholder text";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.view addSubview:self.filledTextField];
+
+  self.outlinedTextField = [[MDCOutlinedTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
+  self.outlinedTextField.label.text = @"This is a label";
+  self.outlinedTextField.placeholder = @"This is placeholder text";
+  self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  [self.view addSubview:self.outlinedTextField];
 }
 
 - (MDCButton *)createFirstResponderButton {
@@ -81,6 +90,7 @@ static CGFloat const kDefaultPadding = 15.0;
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.baseTextField resignFirstResponder];
   [self.filledTextField resignFirstResponder];
+  [self.outlinedTextField resignFirstResponder];
 }
 
 - (CGFloat)preferredResignFirstResponderMinY {
@@ -105,6 +115,7 @@ static CGFloat const kDefaultPadding = 15.0;
   [self.resignFirstResponderButton sizeToFit];
   [self.baseTextField sizeToFit];
   [self.filledTextField sizeToFit];
+  [self.outlinedTextField sizeToFit];
 
   self.resignFirstResponderButton.frame =
       CGRectMake(kDefaultPadding, self.preferredResignFirstResponderMinY,
@@ -115,8 +126,12 @@ static CGFloat const kDefaultPadding = 15.0;
       kDefaultPadding, CGRectGetMaxY(self.resignFirstResponderButton.frame) + kDefaultPadding,
       CGRectGetWidth(self.filledTextField.frame), CGRectGetHeight(self.filledTextField.frame));
 
-  self.baseTextField.frame = CGRectMake(
+  self.outlinedTextField.frame = CGRectMake(
       kDefaultPadding, CGRectGetMaxY(self.filledTextField.frame) + kDefaultPadding,
+      CGRectGetWidth(self.outlinedTextField.frame), CGRectGetHeight(self.outlinedTextField.frame));
+
+  self.baseTextField.frame = CGRectMake(
+      kDefaultPadding, CGRectGetMaxY(self.outlinedTextField.frame) + kDefaultPadding,
       CGRectGetWidth(self.baseTextField.frame), CGRectGetHeight(self.baseTextField.frame));
 }
 

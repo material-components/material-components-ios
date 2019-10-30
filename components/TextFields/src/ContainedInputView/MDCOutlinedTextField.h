@@ -12,8 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
+
 #import "MDCBaseTextField.h"
-#import "MDCFilledTextField.h"
-#import "MDCOutlinedTextField.h"
-#import "MDCTextControlLabelBehavior.h"
-#import "MDCTextControlState.h"
+
+/**
+ An implementation of a Material outlined text field.
+ */
+__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCBaseTextField
+
+/**
+ Sets the outline color for a given state.
+ @param outlineColor The UIColor for the given state.
+ @param state The MDCTextControlState.
+ */
+- (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(MDCTextControlState)state;
+/**
+ Returns the outline color for a given state.
+ @param state The MDCTextControlState.
+ */
+- (nonnull UIColor *)outlineColorForState:(MDCTextControlState)state;
+
+@end
