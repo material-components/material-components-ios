@@ -387,10 +387,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     button.accessibilityHint = message.action.accessibilityHint;
 
     if (self.adjustsFontForContentSizeCategory) {
-      button.titleLabel.adjustsFontForContentSizeCategory = YES;
       button.enableTitleFontForState = NO;
     }
 
+    button.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     [button setTitle:message.action.title forState:UIControlStateNormal];
     [button setTitle:message.action.title forState:UIControlStateHighlighted];
 

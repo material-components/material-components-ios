@@ -245,7 +245,7 @@
  Default is set to NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory NS_DEPRECATED_IOS(8_0, 11_0);
 
 /**
  Affects the fallback behavior for when a scaled font is not provided.
@@ -256,10 +256,11 @@
  If disabled, the font size will only be adjusted if a scaled font has been provided.
  This behavior most closely matches UIKit's.
 
- Default value is YES, but this flag will eventually default to NO and then be deprecated
- and deleted.
+ Default value is NO.
  */
-@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+@property(nonatomic, assign)
+    BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable __deprecated_msg(
+        "Please provide a scaled font and set adjustsFontForContentSizeCategory to YES.");
 
 /**
  If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views by

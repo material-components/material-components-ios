@@ -24,10 +24,13 @@
 /** The width of the Snackbar for testing. */
 static const CGFloat kWidth = 180;
 
+/** The width of the Snackbar for testing XXXL fonts. */
+static const CGFloat kXXXLWidth = 320;
+
 /** Height of a Snackbar with 1 line of message text. */
 static const CGFloat kHeightSingleLineText = 48;
 
-/** Height of a Snackbar with XXXL text  */
+/** Height of a Snackbar with an XXXL font size  */
 static const CGFloat kHeightXXXLText = 100;
 
 static NSString *const kItemTitleShort1Latin = @"Quando";
@@ -220,11 +223,13 @@ static NSString *const kItemTitleLong2Arabic =
   if (@available(iOS 11.0, *)) {
     // Given
     MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
+
+    self.testManager.adjustsFontForContentSizeCategory = YES;
     MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
         [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
                                                                   dismissHandler:nil
                                                                  snackbarManager:self.testManager];
-    messageView.frame = CGRectMake(0, 0, kWidth, kHeightXXXLText);
+    messageView.frame = CGRectMake(0, 0, kXXXLWidth, kHeightXXXLText);
 
     // When
     UITraitCollection *xsTraitCollection =
@@ -232,7 +237,7 @@ static NSString *const kItemTitleLong2Arabic =
           traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     messageView.traitCollectionOverride = xsTraitCollection;
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
 
     UITraitCollection *aXXXLTraitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
@@ -248,14 +253,15 @@ static NSString *const kItemTitleLong2Arabic =
     // Given
     MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
     MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-    action.title = @"Action";
+    action.title = @"Tap me";
     message.action = action;
 
+    self.testManager.adjustsFontForContentSizeCategory = YES;
     MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
         [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
                                                                   dismissHandler:nil
                                                                  snackbarManager:self.testManager];
-    messageView.frame = CGRectMake(0, 0, kWidth, kHeightXXXLText);
+    messageView.frame = CGRectMake(0, 0, kXXXLWidth, kHeightXXXLText);
 
     // When
     UITraitCollection *xsTraitCollection =
@@ -263,7 +269,7 @@ static NSString *const kItemTitleLong2Arabic =
           traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     messageView.traitCollectionOverride = xsTraitCollection;
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
     messageView.messageFont = originalFont;
     messageView.buttonFont = originalFont;
 
@@ -281,6 +287,8 @@ static NSString *const kItemTitleLong2Arabic =
   if (@available(iOS 11.0, *)) {
     // Given
     MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
+
+    self.testManager.adjustsFontForContentSizeCategory = YES;
     MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
         [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
                                                                   dismissHandler:nil
@@ -293,7 +301,7 @@ static NSString *const kItemTitleLong2Arabic =
     messageView.traitCollectionOverride = aXXXLTraitCollection;
 
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
 
     UITraitCollection *xsTraitCollection =
         [UITraitCollection
@@ -310,9 +318,10 @@ static NSString *const kItemTitleLong2Arabic =
     // Given
     MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"Testing"];
     MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-    action.title = @"Action";
+    action.title = @"Tap me";
     message.action = action;
 
+    self.testManager.adjustsFontForContentSizeCategory = YES;
     MDCSnackbarMessageViewWithCustomTraitCollection *messageView =
         [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
                                                                   dismissHandler:nil
@@ -326,7 +335,7 @@ static NSString *const kItemTitleLong2Arabic =
     messageView.traitCollectionOverride = aXXXLTraitCollection;
 
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
     messageView.messageFont = originalFont;
     messageView.buttonFont = originalFont;
 
