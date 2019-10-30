@@ -27,8 +27,8 @@ static const CGFloat kWidth = 180;
 /** Height of a Snackbar with 1 line of message text. */
 static const CGFloat kHeightSingleLineText = 48;
 
-/** TODO */
-static const CGFloat kHeightMultiLineText = 100;
+/** Height of a Snackbar with XXXL text  */
+static const CGFloat kHeightXXXLText = 100;
 
 static NSString *const kItemTitleShort1Latin = @"Quando";
 static NSString *const kItemTitleShort2Latin = @"No";
