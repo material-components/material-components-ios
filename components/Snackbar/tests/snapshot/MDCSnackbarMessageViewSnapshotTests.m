@@ -70,7 +70,7 @@ static NSString *const kItemTitleLong2Arabic =
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+//    self.recordMode = YES;
 
   self.testManager = [[MDCSnackbarManager alloc] init];
 }
@@ -224,7 +224,7 @@ static NSString *const kItemTitleLong2Arabic =
         [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
                                                                   dismissHandler:nil
                                                                  snackbarManager:self.testManager];
-    messageView.frame = CGRectMake(0, 0, kWidth, kHeightMultiLineText);
+    messageView.frame = CGRectMake(0, 0, kWidth, kHeightXXXLText);
 
     // When
     UITraitCollection *xsTraitCollection =
@@ -255,7 +255,7 @@ static NSString *const kItemTitleLong2Arabic =
         [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
                                                                   dismissHandler:nil
                                                                  snackbarManager:self.testManager];
-    messageView.frame = CGRectMake(0, 0, kWidth, kHeightMultiLineText);
+    messageView.frame = CGRectMake(0, 0, kWidth, kHeightXXXLText);
 
     // When
     UITraitCollection *xsTraitCollection =
@@ -317,7 +317,7 @@ static NSString *const kItemTitleLong2Arabic =
         [[MDCSnackbarMessageViewWithCustomTraitCollection alloc] initWithMessage:message
                                                                   dismissHandler:nil
                                                                  snackbarManager:self.testManager];
-    messageView.frame = CGRectMake(0, 0, kWidth, kHeightMultiLineText);
+    messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
 
     // When
     UITraitCollection *aXXXLTraitCollection =
