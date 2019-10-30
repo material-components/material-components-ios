@@ -48,6 +48,7 @@
 
 - (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
+  textField.animationDuration = 0;
   textField.borderStyle = UITextBorderStyleRoundedRect;
 
   // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,
