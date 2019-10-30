@@ -297,16 +297,16 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         // Use NSAttributedStringEnumerationLongestEffectiveRangeNotRequired as opposed to 0,
         // otherwise it will only work if bold text is in the end.
         [messageString
-         enumerateAttribute:MDCSnackbarMessageBoldAttributeName
-         inRange:NSMakeRange(0, messageString.length)
-         options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-         usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
-          UIFont *font = [MDCTypography body1Font];
-          if ([value boolValue]) {
-            font = [MDCTypography body2Font];
-          }
-          [messageString setAttributes:@{NSFontAttributeName : font} range:range];
-        }];
+            enumerateAttribute:MDCSnackbarMessageBoldAttributeName
+                       inRange:NSMakeRange(0, messageString.length)
+                       options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                    usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
+                      UIFont *font = [MDCTypography body1Font];
+                      if ([value boolValue]) {
+                        font = [MDCTypography body2Font];
+                      }
+                      [messageString setAttributes:@{NSFontAttributeName : font} range:range];
+                    }];
       }
       _label.attributedText = messageString;
     } else {
@@ -395,8 +395,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [button setTitle:message.action.title forState:UIControlStateHighlighted];
 
     [button addTarget:self
-               action:@selector(handleButtonTapped:)
-     forControlEvents:UIControlEventTouchUpInside];
+                  action:@selector(handleButtonTapped:)
+        forControlEvents:UIControlEventTouchUpInside];
 
     button.uppercaseTitle = manager.uppercaseButtonTitle;
     button.disabledAlpha = manager.disabledButtonAlpha;

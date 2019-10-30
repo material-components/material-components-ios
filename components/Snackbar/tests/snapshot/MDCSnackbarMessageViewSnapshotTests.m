@@ -232,15 +232,16 @@ static NSString *const kItemTitleLong2Arabic =
     messageView.frame = CGRectMake(0, 0, kXXXLWidth, kHeightXXXLText);
 
     // When
-    UITraitCollection *xsTraitCollection =
-        [UITraitCollection
-          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     messageView.traitCollectionOverride = xsTraitCollection;
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
+    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino"
+                                                                             size:14]];
 
-    UITraitCollection *aXXXLTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     messageView.traitCollectionOverride = aXXXLTraitCollection;
 
     // Then
@@ -264,9 +265,8 @@ static NSString *const kItemTitleLong2Arabic =
     messageView.frame = CGRectMake(0, 0, kXXXLWidth, kHeightXXXLText);
 
     // When
-    UITraitCollection *xsTraitCollection =
-        [UITraitCollection
-          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     messageView.traitCollectionOverride = xsTraitCollection;
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
     UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
@@ -296,16 +296,17 @@ static NSString *const kItemTitleLong2Arabic =
     messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
 
     // When
-    UITraitCollection *aXXXLTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     messageView.traitCollectionOverride = aXXXLTraitCollection;
 
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:14]];
+    messageView.messageFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino"
+                                                                             size:14]];
 
-    UITraitCollection *xsTraitCollection =
-        [UITraitCollection
-          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     messageView.traitCollectionOverride = xsTraitCollection;
 
     // Then
@@ -339,9 +340,8 @@ static NSString *const kItemTitleLong2Arabic =
     messageView.messageFont = originalFont;
     messageView.buttonFont = originalFont;
 
-    UITraitCollection *xsTraitCollection =
-        [UITraitCollection
-          traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     messageView.traitCollectionOverride = xsTraitCollection;
 
     // Then
