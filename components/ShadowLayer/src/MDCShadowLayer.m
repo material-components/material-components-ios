@@ -445,6 +445,12 @@ static const float kAmbientShadowOpacity = (float)0.08;
     // In order to synchronize our animation with UIKit animations we have to fetch the resizing
     // animation created by UIKit and copy the configuration to our custom animation.
     CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
+    if (!boundsAction) {
+      // Headless layers will animate bounds directly instead of decomposing
+      // bounds.size/bounds.position. A headless layer is a CALayer without a delegate (usually
+      // would be a UIView).
+      boundsAction = [self.animationSourceLayer animationForKey:@"bounds"];
+    }
     if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
       CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
       animation.keyPath = self.keyPath;

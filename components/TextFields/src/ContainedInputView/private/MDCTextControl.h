@@ -148,7 +148,7 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
  This method allows objects conforming to MDCTextControlStyle to apply themselves to objects
  conforming to MDCTextControl.
  */
-- (void)applyStyleToTextControl:(nonnull id<MDCTextControl>)textControl;
+- (void)applyStyleToTextControl:(nonnull UIView<MDCTextControl> *)textControl;
 /**
  This method allows objects conforming to MDCTextControlStyle to remove the styling
  previously applied to objects conforming to MDCTextControl.

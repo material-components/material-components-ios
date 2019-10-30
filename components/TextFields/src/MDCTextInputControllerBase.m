@@ -1398,24 +1398,29 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
  underlineLabelsOffset                                                // Depends on text insets mode
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
+    withSizeThatFitsWidthHint:(CGFloat)widthHint {
   // NOTE: UITextFields have a centerY based layout. And you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
   UIEdgeInsets textInsets = defaultInsets;
 
-  if (!self.isFloatingEnabled) {
-    return textInsets;
+  if (self.isFloatingEnabled) {
+    textInsets.top = MDCTextInputControllerBaseDefaultPadding +
+                     MDCRint(self.textInput.placeholderLabel.font.lineHeight *
+                             (CGFloat)self.floatingPlaceholderScale.floatValue) +
+                     MDCTextInputControllerBaseDefaultPadding;
   }
-
-  textInsets.top = MDCTextInputControllerBaseDefaultPadding +
-                   MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-                           (CGFloat)self.floatingPlaceholderScale.floatValue) +
-                   MDCTextInputControllerBaseDefaultPadding;
 
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat leadingOffset =
       MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat calculatedNumberOfLinesForLeadingLabel = [MDCTextInputControllerBase
+      calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
+                          givenTrailingLabel:self.textInput.trailingUnderlineLabel
+                                      insets:defaultInsets
+                                   widthHint:widthHint];
+  leadingOffset = MAX(leadingOffset, calculatedNumberOfLinesForLeadingLabel * leadingOffset);
   CGFloat trailingOffset =
       MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
 
@@ -1450,8 +1455,56 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // .bottom = underlineOffset + MDCTextInputControllerBaseDefaultPadding
   // Legacy default has an additional padding here but this version does not.
   textInsets.bottom = underlineOffset + MDCTextInputControllerBaseDefaultPadding;
-
   return textInsets;
+}
+
+// Part of the counting lines logic was sourced from
+// https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextLayout/Tasks/CountLines.html.
++ (NSUInteger)calculatedNumberOfLinesForLeadingLabel:(UILabel *)label
+                                  givenTrailingLabel:(UILabel *)trailingLabel
+                                              insets:(UIEdgeInsets)insets
+                                           widthHint:(CGFloat)widthHint {
+  if (!label.text) {
+    return 1;
+  }
+  if (widthHint <= 0 && CGRectGetWidth(label.bounds) <= 0) {
+    return 1;
+  }
+
+  CGFloat deductedWidthForLeadingLabel = 0;
+  // Take into account the width the trailingLabel takes up when calculating the available width.
+  if (trailingLabel && trailingLabel.text.length > 0) {
+    deductedWidthForLeadingLabel =
+        [trailingLabel.text boundingRectWithSize:trailingLabel.frame.size
+                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                      attributes:@{NSFontAttributeName : trailingLabel.font}
+                                         context:nil]
+            .size.width;
+  }
+  // Also take into account the left and right padding of the label when calculating the available
+  // width.
+  deductedWidthForLeadingLabel += insets.left + insets.right;
+  NSTextStorage *textStorage =
+      [[NSTextStorage alloc] initWithAttributedString:label.attributedText];
+  NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+  [textStorage addLayoutManager:layoutManager];
+  CGFloat labelWidth = CGRectGetWidth(label.bounds);
+  // Also take int
+  CGFloat calculatedWidth = labelWidth > 0 ? labelWidth : widthHint - deductedWidthForLeadingLabel;
+  NSTextContainer *textContainer =
+      [[NSTextContainer alloc] initWithSize:CGSizeMake(calculatedWidth, CGFLOAT_MAX)];
+  textContainer.maximumNumberOfLines = label.numberOfLines;
+  textContainer.lineFragmentPadding = 0;
+  textContainer.lineBreakMode = label.lineBreakMode;
+  [layoutManager addTextContainer:textContainer];
+  NSUInteger numberOfLines, index, numberOfGlyphs = [layoutManager numberOfGlyphs];
+  NSRange lineRange;
+  for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
+    (void)[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+    index = NSMaxRange(lineRange);
+  }
+
+  return numberOfLines;
 }
 
 - (void)textInputDidLayoutSubviews {

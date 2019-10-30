@@ -146,6 +146,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (void)setCurrentPage:(NSInteger)currentPage animated:(BOOL)animated {
   [self setCurrentPage:currentPage animated:animated duration:0];
 }
+
 - (void)setCurrentPage:(NSInteger)currentPage
               animated:(BOOL)animated
               duration:(NSTimeInterval)duration {
@@ -192,8 +193,9 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                        completion:completionBlock];
   } else {
     // If not animated, simply move indicator to new position and reset track.
+    [self positionAnimatedIndicatorAtCurrentPage];
+
     CGPoint point = [_indicatorPositions[currentPage] CGPointValue];
-    [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
     [_trackLayer resetAtPoint:point];
 
     [CATransaction begin];
@@ -353,6 +355,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   if (sendAction) {
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
+
+  [self positionAnimatedIndicatorAtCurrentPage];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -361,6 +365,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   BOOL shouldReverse = (_currentPage > scrolledPageNumber);
   _currentPage = scrolledPageNumber;
   [self revealIndicatorsReversed:shouldReverse];
+  [self positionAnimatedIndicatorAtCurrentPage];
 }
 
 #pragma mark - Indicators
@@ -530,12 +535,16 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // Add animated indicator that will travel freely across the container. Its transform will be
   // updated by calling its -updateIndicatorTransformX method.
   CGPoint center = CGPointMake(radius, radius);
-  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
   _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
-  [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
+  [self positionAnimatedIndicatorAtCurrentPage];
   [_containerView.layer addSublayer:_animatedIndicator];
 
   [self setNeedsLayout];
+}
+
+- (void)positionAnimatedIndicatorAtCurrentPage {
+  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
+  [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
 }
 
 #pragma mark - Strings

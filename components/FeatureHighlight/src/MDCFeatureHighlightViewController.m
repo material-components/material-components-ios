@@ -40,6 +40,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   UIView *_highlightedView;
 }
 
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                     andShowView:(nonnull UIView *)displayedView
                                      completion:(nullable MDCFeatureHighlightCompletion)completion {
@@ -71,6 +73,10 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
+  if (@available(iOS 10.0, *)) {
+    self.featureHighlightView.adjustsFontForContentSizeCategory =
+        _adjustsFontForContentSizeCategory;
+  }
   self.featureHighlightView.mdc_legacyFontScaling = _mdc_legacyFontScaling;
 
   __weak MDCFeatureHighlightViewController *weakSelf = self;
@@ -131,9 +137,13 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 - (void)viewWillLayoutSubviews {
   self.featureHighlightView.titleLabel.attributedText =
-      [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
+      [self attributedStringForString:self.titleText
+                          lineSpacing:kMDCFeatureHighlightLineSpacing
+                                 font:_titleFont];
   self.featureHighlightView.bodyLabel.attributedText =
-      [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing];
+      [self attributedStringForString:self.bodyText
+                          lineSpacing:kMDCFeatureHighlightLineSpacing
+                                 font:_bodyFont];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -232,6 +242,13 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   _bodyFont = bodyFont;
   if (self.isViewLoaded) {
     self.featureHighlightView.bodyFont = bodyFont;
+  }
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  if (self.isViewLoaded) {
+    self.featureHighlightView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   }
 }
 
@@ -346,14 +363,20 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 #pragma mark - Private
 
 - (NSAttributedString *)attributedStringForString:(NSString *)string
-                                      lineSpacing:(CGFloat)lineSpacing {
+                                      lineSpacing:(CGFloat)lineSpacing
+                                             font:(UIFont *)font {
   if (!string) {
     return nil;
   }
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.lineSpacing = lineSpacing;
 
-  NSDictionary *attrs = @{NSParagraphStyleAttributeName : paragraphStyle};
+  NSMutableDictionary *attrs = [[NSMutableDictionary alloc]
+      initWithDictionary:@{NSParagraphStyleAttributeName : paragraphStyle}];
+
+  if (font) {
+    [attrs setObject:font forKey:NSFontAttributeName];
+  }
 
   return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }
