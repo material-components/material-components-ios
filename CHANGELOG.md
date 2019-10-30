@@ -1,3 +1,93 @@
+# 93.2.0
+
+In this minor release TextFields support multiline error/helper text, FeatureHighlight supports Dynamic Type, OverlayWindow supports iOS 13 UIWindow scene initializer API, along with a PageControl dot placement fix, and additional component testing.
+
+## New features
+
+### FeatureHighlight
+
+You can now set `adjustsFontForContentSizeCategory` on `MDCFeatureHighlightViewController` to automatically update your scalable font when content size category changes.
+Namely, when `adjustsFontForContentSizeCategory` is set to `YES` the title and body fonts will scale appropriately if given a scalable font. 
+
+### OverlayWindow
+
+`MDCOverlayWindow` now supports being initialized with `initWithWindowScene:` as part of the new `UIWindow` iOS 13 APIs.
+
+### TextFields
+
+`MDCTextField` now supports multiline error and helper texts. To set this up you will need to change the number of lines and word wrapping of the label:
+
+```objc
+MDCTextField *textField = [[MDCTextField alloc] init];
+textField.leadingUnderlineLabel.numberOfLines = 0;
+textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
+```
+
+## API changes
+
+## Component changes
+
+## Changes
+
+### Banner
+
+* [Add snapshot tests for setting preferredFont with adjustsFontForContentSizeCategory (#8623)](https://github.com/material-components/material-components-ios/commit/dc66b7fe8764a7da914a7d33616b5546fdf67594) (Yarden Eitan)
+
+### Buttons
+
+* [Support non-stateful fonts in theming. (#8650)](https://github.com/material-components/material-components-ios/commit/9c96aa99686f25934b62bf4156c6855996631320) (Robert Moore)
+
+### Cards
+
+* [New toggle-button example (#8663)](https://github.com/material-components/material-components-ios/commit/8c103b0fc965f117a8444aa9e692ce77eb8d03b3) (Galia Kaufman)
+
+### Chips
+
+* [Add snapshot tests for setting preferredFont with adjustsFontForContentSizeCategory (#8624)](https://github.com/material-components/material-components-ios/commit/d05629ca09db043175a6b55e9c36b452216ea33c) (Yarden Eitan)
+
+### Dialogs
+
+* [Add tests for Dynamic Type. (#8675)](https://github.com/material-components/material-components-ios/commit/27b170cf91b79f9e548b22bd59ab428fc2a5ae04) (Robert Moore)
+* [Remove broken snapshot tests. (#8676)](https://github.com/material-components/material-components-ios/commit/70591f73b6e68846fb5ff7ca2ef7a4a05cb14b14) (Robert Moore)
+
+### FeatureHighlight
+
+* [Add adjustsFontForContentSizeCategory suppor… (#8655)](https://github.com/material-components/material-components-ios/commit/ee10e067aac7f4244580421acd58827c6363cb9c) (Yarden Eitan)
+* [Add snapshot tests for setting preferredFont with adjustsFontForContentSizeCategory (#8629)](https://github.com/material-components/material-components-ios/commit/115780b1a384f4a60898f9c8342867228f88fd6e) (Yarden Eitan)
+
+### FlexibleHeader
+
+* [Remove unnecessary caching of CATransaction's disableActions. (#8668)](https://github.com/material-components/material-components-ios/commit/060cbfd23f1aed3d0ad26bd48d10b5d00592457b) (featherless)
+
+### List
+
+* [Add snapshot tests for setting preferredFont with adjustsFontForContentSizeCategory (#8636)](https://github.com/material-components/material-components-ios/commit/6123da4c55f4aa7a230279ecc25f700f3ca86222) (Yarden Eitan)
+
+### OverlayWindow
+
+* [Add initWithWindowScene: initializer (#8633)](https://github.com/material-components/material-components-ios/commit/3ff88f1aaccdd3695886e85498e8668f59b9397d) (Bryan Oltman)
+
+### PageControl
+
+* [Position active page indicator correctly after scrolling (#8662)](https://github.com/material-components/material-components-ios/commit/5610dd39b0c7b6c6f64ae296fd9a27123599c9ea) (Bryan Oltman)
+
+### ShadowLayer
+
+* [Fix bug where headless layers would not piggyback shadowPath changes. (#8666)](https://github.com/material-components/material-components-ios/commit/37e92a1acb9919808844bc076637f1fdd0c2e41d) (featherless)
+
+### TextFields
+
+* [Add density and preferredContainerHeight as private functionality (#8607)](https://github.com/material-components/material-components-ios/commit/e2d88e87478f58adb28a69792bdb427b74bd2a22) (Andrew Overton)
+* [Add filled and outlined positioning references (#8627)](https://github.com/material-components/material-components-ios/commit/9dcbc6bc117767d70b5af0b9b64823b5cc36a88f) (Andrew Overton)
+* [Add filled style object (#8657)](https://github.com/material-components/material-components-ios/commit/09499f2771f3a61064d8c8816a2ac82acefe526e) (Andrew Overton)
+* [Add outlined style object (#8658)](https://github.com/material-components/material-components-ios/commit/8f02dc8ffc20f6fe5d3c5f93b938ca828de49475) (Andrew Overton)
+* [Add path drawing utils for style objects (#8628)](https://github.com/material-components/material-components-ios/commit/d78853c4c23e48950b65be74a69fe402a75fbe3b) (Andrew Overton)
+* [Add tests for preferredFont APIs. (#8635)](https://github.com/material-components/material-components-ios/commit/bdf183db464e2298bb11e1afa06e45caf1acc686) (Robert Moore)
+* [Bring back original textInsets API for clients sub… (#8688)](https://github.com/material-components/material-components-ios/commit/10802395af704baf1daad54013f51add7820dbc1) (Yarden Eitan)
+* [Add support for multi-line in helper and error tex… (#8665)](https://github.com/material-components/material-components-ios/commit/2c99391aef7db5ee761cecdfa67e60d6b126fbbc) (Yarden Eitan)
+
+---
+
 # 93.1.1
 
 This patch hotfix release addresses a bug in NavigationDrawer where the scrim is visible when the drawer's trackingScrollView is scrolled to the end of the content.

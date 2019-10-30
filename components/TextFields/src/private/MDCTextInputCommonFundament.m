@@ -97,6 +97,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize underline = _underline;
 @synthesize hasTextContent = _hasTextContent;
 @synthesize textInsetsMode = _textInsetsMode;
+@synthesize sizeThatFitsWidthHint = _sizeThatFitsWidthHint;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -129,6 +130,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
     [self setupBorder];
     [self subscribeForKVO];
+
+    _sizeThatFitsWidthHint = 0.f;
   }
   return self;
 }
@@ -309,7 +312,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _trailingUnderlineLabel.textColor = [UIColor grayColor];
     _trailingUnderlineLabel.font = _textInput.font;
-    _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
+    _trailingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
 
     [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -760,7 +763,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * scale) / scale;
-
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
   // MDCTextInputHalfPadding. It's also dependent on the .textInsetsMode.
@@ -790,7 +792,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   // .bottom = underlineOffset + the half padding ABOVE the line but below the text field
   textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
 
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:
+                                                       withSizeThatFitsWidthHint:)]) {
+    return [self.positioningDelegate textInsets:textInsets
+                      withSizeThatFitsWidthHint:self.sizeThatFitsWidthHint];
+  } else if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
     return [self.positioningDelegate textInsets:textInsets];
   }
   return textInsets;

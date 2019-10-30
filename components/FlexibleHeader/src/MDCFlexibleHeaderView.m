@@ -386,12 +386,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [self fhv_updateShadowColor];
   [self fhv_updateShadowPath];
   [CATransaction begin];
-  BOOL disableActions = [CATransaction disableActions];
   [CATransaction setDisableActions:YES];
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
   _shadowLayer.frame = self.bounds;
-  [CATransaction setDisableActions:disableActions];
   [CATransaction commit];
 }
 

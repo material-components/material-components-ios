@@ -20,36 +20,32 @@
 #import "MDCTextControl.h"
 #import "MDCTextControlVerticalPositioningReferenceBase.h"
 
-static const CGFloat kBaseFloatingLabelScaleFactor = 0.5;
-
 @implementation MDCTextControlStyleBase
 
 - (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
-  CGFloat scaleFactor = kBaseFloatingLabelScaleFactor;
-  CGFloat floatingFontSize = font.pointSize * scaleFactor;
-  return [font fontWithSize:floatingFontSize];
+  return font;
 }
 
-- (void)applyStyleToTextControl:(id<MDCTextControl>)textControl {
+- (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl {
 }
 
 - (void)removeStyleFrom:(id<MDCTextControl>)textControl {
-}
-
-- (id<MDCTextControlVerticalPositioningReference>)positioningReference {
-  return [[MDCTextControlVerticalPositioningReferenceBase alloc] init];
 }
 
 - (id<MDCTextControlVerticalPositioningReference>)
     positioningReferenceWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                               normalFontLineHeight:(CGFloat)normalFontLineHeight
                                      textRowHeight:(CGFloat)textRowHeight
-                                  numberOfTextRows:(CGFloat)numberOfTextRows {
+                                  numberOfTextRows:(CGFloat)numberOfTextRows
+                                           density:(CGFloat)density
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
   return [[MDCTextControlVerticalPositioningReferenceBase alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight
-                    numberOfTextRows:numberOfTextRows];
+                    numberOfTextRows:numberOfTextRows
+                             density:density
+            preferredContainerHeight:preferredContainerHeight];
 }
 
 @end

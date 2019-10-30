@@ -19,15 +19,11 @@
 @interface MDCTextControlVerticalPositioningReferenceBase
     : NSObject <MDCTextControlVerticalPositioningReference>
 
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
-@property(nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
-@property(nonatomic, assign, readonly) CGFloat containerHeight;
-
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                           normalFontLineHeight:(CGFloat)normalFontLineHeight
                                  textRowHeight:(CGFloat)textRowHeight
-                              numberOfTextRows:(CGFloat)numberOfTextRows;
+                              numberOfTextRows:(CGFloat)numberOfTextRows
+                                       density:(CGFloat)density
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
 @end
