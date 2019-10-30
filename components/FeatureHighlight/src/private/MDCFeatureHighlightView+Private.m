@@ -86,6 +86,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 @synthesize highlightRadius = _outerRadius;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
@@ -196,6 +197,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _titleLabel.font = _titleFont;
   }
 
+  if (_titleLabel.attributedText) {
+    NSMutableAttributedString *attributedString = [_titleLabel.attributedText mutableCopy];
+    [self setFont:_titleFont forAttributedString:attributedString];
+    _titleLabel.attributedText = attributedString;
+  }
+
   [self setNeedsLayout];
 }
 
@@ -227,6 +234,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     }
   } else {
     _bodyLabel.font = _bodyFont;
+  }
+
+  if (_bodyLabel.attributedText) {
+    NSMutableAttributedString *attributedString = [_bodyLabel.attributedText mutableCopy];
+    [self setFont:_bodyFont forAttributedString:attributedString];
+    _bodyLabel.attributedText = attributedString;
   }
 
   [self setNeedsLayout];
@@ -656,10 +669,24 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   [self updateBodyFont];
 }
 
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.bodyLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+}
+
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateTitleFont];
   [self updateBodyFont];
+}
+
+- (void)setFont:(UIFont *)font forAttributedString:(NSMutableAttributedString *)attributedString {
+  [attributedString beginEditing];
+  NSRange range = NSMakeRange(0, attributedString.length);
+  [attributedString removeAttribute:NSFontAttributeName range:range];
+  [attributedString addAttribute:NSFontAttributeName value:font range:range];
+  [attributedString endEditing];
 }
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)

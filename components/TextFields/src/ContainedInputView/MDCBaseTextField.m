@@ -36,6 +36,7 @@
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCTextControlState textControlState;
 @property(nonatomic, assign) MDCTextControlLabelState labelState;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 /**
  This property maps MDCTextControlStates as NSNumbers to
@@ -80,6 +81,7 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
+  self.animationDuration = kMDCTextControlDefaultAnimationDuration;
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
@@ -163,8 +165,9 @@
                            normalLabelFrame:self.layout.labelFrameNormal
                          floatingLabelFrame:self.layout.labelFrameFloating
                                  normalFont:self.normalFont
-                               floatingFont:self.floatingFont];
-  [self.containerStyle applyStyleToTextControl:self];
+                               floatingFont:self.floatingFont
+                          animationDuration:self.animationDuration];
+  [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
@@ -412,7 +415,7 @@
     [oldStyle removeStyleFrom:self];
   }
   _containerStyle = containerStyle;
-  [_containerStyle applyStyleToTextControl:self];
+  [_containerStyle applyStyleToTextControl:self animationDuration:0];
 }
 
 - (CGRect)containerFrame {

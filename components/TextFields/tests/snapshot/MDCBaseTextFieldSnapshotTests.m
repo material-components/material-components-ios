@@ -16,11 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "../../src/ContainedInputView/private/MDCTextControl.h"
+#import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
+#import "MDCTextControlSnapshotTestHelpers.h"
 #import "MaterialTextFields+ContainedInputView.h"
-
-// This timeout value is intended to be temporary. These snapshot tests currently take longer than
-// we'd want them to.
-static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 
 @interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCBaseTextField *textField;
@@ -49,6 +48,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 
 - (MDCBaseTextField *)createBaseTextFieldInKeyWindow {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
+  textField.animationDuration = 0;
   textField.borderStyle = UITextBorderStyleRoundedRect;
 
   // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,
@@ -64,40 +64,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
-  [textField sizeToFit];
-  [textField setNeedsLayout];
-  [textField layoutIfNeeded];
-  XCTestExpectation *expectation =
-      [[XCTestExpectation alloc] initWithDescription:@"textfield_validation_expectation"];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    // We take a snapshot of the textfield so we don't have to remove it from the app
-    // host's key window. Removing the textfield from the app host's key window
-    // before validation can affect the textfield's editing behavior, which has a
-    // large effect on the appearance of the textfield.
-    UIView *textFieldSnapshot = [textField snapshotViewAfterScreenUpdates:YES];
-    [self generateSnapshotAndVerifyForView:textFieldSnapshot];
-    [expectation fulfill];
-  });
-  [self waitForExpectations:@[ expectation ] timeout:kTextFieldValidationAnimationTimeout];
-}
-
-- (UIView *)createBlueSideView {
-  return [self createSideViewWithColor:[UIColor blueColor]];
-}
-
-- (UIView *)createRedSideView {
-  return [self createSideViewWithColor:[UIColor redColor]];
-}
-
-- (UIView *)createSideViewWithColor:(UIColor *)color {
-  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-  view.backgroundColor = color;
-  return view;
-}
-
-- (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  UIView *snapshotView = [view mdc_addToBackgroundView];
-  [self snapshotVerifyView:snapshotView];
+  [MDCTextControlSnapshotTestHelpers validateTextControl:(UIView<MDCTextControl> *)textField
+                                            withTestCase:self];
 }
 
 #pragma mark - Tests
@@ -107,7 +75,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.text = @"Text";
+  [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -118,9 +86,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.text = @"Text";
-  textField.leadingView = [self createRedSideView];
-  textField.leadingViewMode = UITextFieldViewModeAlways;
+  [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithLeadingView:textField];
 
   // Then
   [self validateTextField:textField];
@@ -131,10 +97,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.leadingView = [self createRedSideView];
-  textField.leadingViewMode = UITextFieldViewModeWhileEditing;
-  textField.text = @"Text";
-  [textField becomeFirstResponder];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithLeadingViewAndTextWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];
@@ -145,9 +109,7 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.text = @"Text";
-  textField.trailingView = [self createBlueSideView];
-  textField.trailingViewMode = UITextFieldViewModeAlways;
+  [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithTrailingViewAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -158,11 +120,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.text = @"Text";
-  textField.leadingView = [self createBlueSideView];
-  textField.trailingView = [self createRedSideView];
-  textField.trailingViewMode = UITextFieldViewModeAlways;
-  textField.leadingViewMode = UITextFieldViewModeAlways;
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithLeadingViewAndTrailingViewAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -173,8 +132,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.clearButtonMode = UITextFieldViewModeAlways;
-  textField.text = @"Text";
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithVisibleClearButtonAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -185,10 +144,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.label.text = @"Floating label text";
-  textField.text = @"Text";
-  [textField setFloatingLabelColor:[UIColor purpleColor] forState:MDCTextControlStateEditing];
-  [textField becomeFirstResponder];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureWithColoredFloatingLabelTextAndTextWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];
@@ -199,9 +156,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.label.text = @"Floating label text";
-  textField.text = @"Text";
-  textField.enabled = NO;
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureDisabledTextFieldWithLabelTextAndText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -212,9 +168,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.label.text = @"Floating label text";
-  textField.placeholder = @"Placeholder";
-  [textField becomeFirstResponder];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureEditingTextFieldWithVisiblePlaceholderAndLabelText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -225,11 +180,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.text = @"text";
-  textField.leadingAssistiveLabel.text = @"leading assistive label text";
-  textField.trailingAssistiveLabel.text = @"trailing assistive label text";
-  [textField setLeadingAssistiveLabelColor:[UIColor blueColor] forState:MDCTextControlStateNormal];
-  [textField setTrailingAssistiveLabelColor:[UIColor redColor] forState:MDCTextControlStateNormal];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithColoredAssistiveLabelText:textField];
 
   // Then
   [self validateTextField:textField];
@@ -240,12 +192,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.text = @"text";
-  textField.leadingAssistiveLabel.text = @"leading assistive label text";
-  textField.trailingAssistiveLabel.text = @"trailing assistive label text";
-  [textField setLeadingAssistiveLabelColor:[UIColor blueColor] forState:MDCTextControlStateEditing];
-  [textField setTrailingAssistiveLabelColor:[UIColor redColor] forState:MDCTextControlStateEditing];
-  [textField becomeFirstResponder];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithColoredAssistiveLabelTextWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];
@@ -256,14 +204,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   MDCBaseTextField *textField = self.textField;
 
   // When
-  textField.text = @"text";
-  textField.leadingAssistiveLabel.text = @"leading assistive label text";
-  textField.trailingAssistiveLabel.text = @"trailing assistive label text";
-  [textField setLeadingAssistiveLabelColor:[UIColor blueColor]
-                                  forState:MDCTextControlStateDisabled];
-  [textField setTrailingAssistiveLabelColor:[UIColor redColor]
-                                   forState:MDCTextControlStateDisabled];
-  textField.enabled = NO;
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithColoredAssistiveLabelTextWhileDisabled:textField];
 
   // Then
   [self validateTextField:textField];

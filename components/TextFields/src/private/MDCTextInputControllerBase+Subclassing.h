@@ -32,4 +32,10 @@
 /** Refreshes the layout and style of the border view. Called within updateLayout. */
 - (BOOL)isPlaceholderUp;
 
+/** Calculates the actual number of lines for the label provded. */
++ (NSUInteger)calculatedNumberOfLinesForLeadingLabel:(UILabel *)label
+                                  givenTrailingLabel:(UILabel *)trailingLabel
+                                              insets:(UIEdgeInsets)insets
+                                           widthHint:(CGFloat)widthHint;
+
 @end

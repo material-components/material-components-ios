@@ -31,5 +31,6 @@
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
-          floatingFont:(nonnull UIFont *)floatingFont;
+          floatingFont:(nonnull UIFont *)floatingFont
+     animationDuration:(NSTimeInterval)animationDuration;
 @end
