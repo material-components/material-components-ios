@@ -1,6 +1,6 @@
 # 93.2.0
 
-In this minor release FeatureHighlight better supports Dynamic Type, OverlayWindow supports iOS 13 UIWindow scene initializer API, TextFields support multiline error/helper text, along with FlexibleHeader shadow animation fix, PageControl dot placement fix, and additional component testing.
+In this minor release TextFields support multiline error/helper text, FeatureHighlight supports Dynamic Type, OverlayWindow supports iOS 13 UIWindow scene initializer API, along with a PageControl dot placement fix, and additional component testing.
 
 ## New features
 
@@ -57,7 +57,6 @@ textField.leadingUnderlineLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
 ### FlexibleHeader
 
-* [Fix bug where shadowPath did not animate when using MDCShadowLayer. (#8679)](https://github.com/material-components/material-components-ios/commit/df5d5ebf8819bb49870cec239b8ca0c3c9f8501c) (featherless)
 * [Remove unnecessary caching of CATransaction's disableActions. (#8668)](https://github.com/material-components/material-components-ios/commit/060cbfd23f1aed3d0ad26bd48d10b5d00592457b) (featherless)
 
 ### List
