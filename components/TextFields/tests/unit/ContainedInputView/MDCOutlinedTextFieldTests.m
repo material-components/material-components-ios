@@ -23,6 +23,20 @@
 
 #pragma mark Tests
 
+- (void)testOutlineColorDefaults {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
+  MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:textFieldFrame];
+
+  // Then
+  XCTAssertEqualObjects([UIColor blackColor],
+                        [textField outlineColorForState:MDCTextControlStateNormal]);
+  XCTAssertEqualObjects([UIColor blackColor],
+                        [textField outlineColorForState:MDCTextControlStateEditing]);
+  XCTAssertEqualObjects([[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60],
+                        [textField outlineColorForState:MDCTextControlStateDisabled]);
+}
+
 - (void)testOutlineColorAccessors {
   // Given
   CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
