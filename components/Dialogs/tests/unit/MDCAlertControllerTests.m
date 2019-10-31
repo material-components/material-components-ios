@@ -693,10 +693,10 @@ than @c UIContentSizeCategoryLarge.
     window.traitCollectionOverride =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    [window makeKeyWindow];
     [window addSubview:alert.view];
 
     // When
+    // Triggers UIFontMetrics-based fonts to resize within UILabel.
     [alert.view layoutIfNeeded];
 
     // Then
