@@ -22,12 +22,17 @@
 /** The text color of the label. */
 @property(nonatomic, retain, nonnull) UIColor *textColor;
 
-/** The size of the value label. */
-@property(nonatomic) CGFloat fontSize __deprecated_msg("Use the font property instead.");
+/**
+ The size of the value label.
+
+ @note This property is deprecated and will be removed in an upcoming release.
+ */
+@property(nonatomic) CGFloat fontSize __deprecated_msg("Please use the font property instead.");
 
 /** The text to be displayed in the value label. */
 @property(nonatomic, copy, nonnull) NSString *text;
 
+/** The font of the value label. */
 @property(nonatomic, strong, null_resettable) UIFont *font;
 
 @end

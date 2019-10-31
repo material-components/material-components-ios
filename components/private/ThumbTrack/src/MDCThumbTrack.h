@@ -226,6 +226,14 @@
  */
 @property(nonatomic, assign) BOOL tapsAllowedOnThumb;
 
+/**
+ The font of the discrete value label.
+
+ This font will come into effect only when @c numDiscreteValues is larger than 0 and when @c shouldDisplayDiscreteValueLabel is
+ @c YES.
+
+ Defaults to [[MDCTypography fontLoader] regularFontOfSize:12].
+ */
 @property(nonatomic, strong, null_resettable) UIFont *discreteValueLabelFont;
 
 /**
