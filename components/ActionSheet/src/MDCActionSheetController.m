@@ -89,6 +89,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
@@ -321,6 +322,9 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   MDCActionSheetAction *action = _actions[indexPath.row];
   cell.action = action;
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+  if (@available(iOS 10.0, *)) {
+    cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
+  }
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
@@ -363,6 +367,15 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     }
   }
 #endif
+
+  if (@available(iOS 10.0, *)) {
+    if (self.adjustsFontForContentSizeCategory) {
+      if (![self.traitCollection.preferredContentSizeCategory
+              isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
+        [self.view setNeedsLayout];
+      }
+    }
+  }
 
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
@@ -422,6 +435,15 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 }
 
 #pragma mark - Dynamic Type
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  if (@available(iOS 10.0, *)) {
+    _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+    self.header.titleLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+    self.header.messageLabel.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+    [self updateTable];
+  }
+}
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;

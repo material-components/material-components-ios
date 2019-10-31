@@ -31,6 +31,9 @@
 
 @property(nonatomic, strong, nullable) UIColor *actionTextColor;
 
+/** Label for the action's title text. */
+@property(nonatomic, nonnull, readonly, strong) UILabel *actionLabel;
+
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**

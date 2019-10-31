@@ -30,7 +30,6 @@ static inline UIColor *RippleColor() {
 }
 
 @interface MDCActionSheetItemTableViewCell ()
-@property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
@@ -179,6 +178,9 @@ static inline UIColor *RippleColor() {
 }
 
 - (void)setActionFont:(UIFont *)actionFont {
+  if ([actionFont isEqual:_actionFont]) {
+    return;
+  }
   _actionFont = actionFont;
   [self updateTitleFont];
 }
@@ -197,6 +199,9 @@ static inline UIColor *RippleColor() {
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  if (_mdc_adjustsFontForContentSizeCategory == adjusts) {
+    return;
+  }
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateTitleFont];
 }

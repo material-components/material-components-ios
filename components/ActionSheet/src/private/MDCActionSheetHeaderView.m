@@ -26,11 +26,6 @@ static const CGFloat kTrailingPadding = 0;
 static const CGFloat kTitleOnlyPadding = 18;
 static const CGFloat kMiddlePadding = 8;
 
-@interface MDCActionSheetHeaderView ()
-@property(nonatomic, strong) UILabel *titleLabel;
-@property(nonatomic, strong) UILabel *messageLabel;
-@end
-
 @implementation MDCActionSheetHeaderView
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -213,6 +208,16 @@ static const CGFloat kMiddlePadding = 8;
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
   _messageTextColor = messageTextColor;
   [self updateLabelColors];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (@available(iOS 10.0, *)) {
+    if (![previousTraitCollection.preferredContentSizeCategory
+            isEqualToString:self.traitCollection.preferredContentSizeCategory]) {
+      [self setNeedsLayout];
+    }
+  }
 }
 
 @end

@@ -36,4 +36,10 @@
 
 @property(nonatomic, strong, nullable) UIColor *messageTextColor;
 
+/** Shows the title of the Action Sheet. */
+@property(nonatomic, nonnull, strong, readonly) UILabel *titleLabel;
+
+/** Shows the message of the Action Sheet. */
+@property(nonatomic, nonnull, strong, readonly) UILabel *messageLabel;
+
 @end
