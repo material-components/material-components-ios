@@ -20,7 +20,7 @@
 @property(nonatomic, retain, nonnull) UIColor *backgroundColor;
 
 /** The text color of the label. */
-@property(nonatomic, retain, nonnull) UIColor *textColor;
+@property(nonatomic, retain, null_resettable) UIColor *textColor;
 
 /**
  The size of the value label.
@@ -30,7 +30,7 @@
 @property(nonatomic) CGFloat fontSize __deprecated_msg("Please use the font property instead.");
 
 /** The text to be displayed in the value label. */
-@property(nonatomic, copy, nonnull) NSString *text;
+@property(nonatomic, copy, nullable) NSString *text;
 
 /** The font of the value label. */
 @property(nonatomic, strong, null_resettable) UIFont *font;
