@@ -19,7 +19,7 @@
 @class MDCThumbView;
 @protocol MDCThumbTrackDelegate;
 
-@interface MDCThumbTrack : UIControl
+@interface MDCThumbTrack : UIControl <UIContentSizeCategoryAdjusting>
 
 /** The delegate for the thumb track. */
 @property(nullable, nonatomic, weak) id<MDCThumbTrackDelegate> delegate;
@@ -225,6 +225,8 @@
  The default value of this property is NO.
  */
 @property(nonatomic, assign) BOOL tapsAllowedOnThumb;
+
+@property(nonatomic, strong, null_resettable) UIFont *discreteValueLabelFont;
 
 /**
  Initialize an instance with a particular frame and color group.

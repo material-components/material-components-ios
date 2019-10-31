@@ -22,6 +22,7 @@
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialRipple.h"
+#import "MaterialTypography.h"
 
 #pragma mark - ThumbTrack constants
 
@@ -36,7 +37,6 @@ static const CGFloat kMinTouchSize = 48;
 static const CGFloat kThumbSlopFactor = (CGFloat)3.5;
 static const CGFloat kValueLabelHeight = 48;
 static const CGFloat kValueLabelWidth = (CGFloat)0.81 * kValueLabelHeight;
-static const CGFloat kValueLabelFontSize = 12;
 
 static UIColor *ValueLabelTextColorDefault() {
   return UIColor.whiteColor;
@@ -56,6 +56,10 @@ static UIColor *ThumbEnabledColorDefault() {
 
 static UIColor *InkColorDefault() {
   return [UIColor.blueColor colorWithAlphaComponent:kTrackOnAlpha];
+}
+
+static UIFont *ValueLabelFontDefault() {
+  return [[MDCTypography fontLoader] regularFontOfSize:12];
 }
 
 @implementation MDCDiscreteDotView
@@ -166,6 +170,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   BOOL _shouldDisplayRipple;
   MDCNumericValueLabel *_valueLabel;
   UIPanGestureRecognizer *_dummyPanRecognizer;
+  CGFloat _valueLabelHeight;
 
   // Attributes to handle interaction. To associate touches to previous touches, we keep a reference
   // to the current touch, since the system reuses the same memory address when sending subsequent
@@ -198,6 +203,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _filledTrackAnchorValue = kDefaultFilledTrackAnchorValue;
     _shouldDisplayInk = YES;
     _shouldDisplayRipple = YES;
+    _valueLabelHeight = kValueLabelHeight;
 
     // Default thumb view.
     CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
@@ -240,6 +246,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _valueLabelTextColor = ValueLabelTextColorDefault();
     _trackOnTickColor = UIColor.blackColor;
     _trackOffTickColor = UIColor.blackColor;
+    _discreteValueLabelFont = ValueLabelFontDefault();
     [self setNeedsLayout];
 
     // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
@@ -409,10 +416,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   if (shouldDisplayDiscreteValueLabel) {
     _valueLabel = [[MDCNumericValueLabel alloc]
-        initWithFrame:CGRectMake(0, 0, kValueLabelWidth, kValueLabelHeight)];
+        initWithFrame:CGRectMake(0, 0, kValueLabelWidth, _valueLabelHeight)];
     // Effectively 0, but setting it to 0 results in animation not happening
     _valueLabel.transform = CGAffineTransformMakeScale((CGFloat)0.001, (CGFloat)0.001);
-    _valueLabel.fontSize = kValueLabelFontSize;
     [self addSubview:_valueLabel];
   } else {
     [_valueLabel removeFromSuperview];
@@ -585,6 +591,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [_rippleView removeFromSuperview];
     [self.touchController addInkView];
   }
+}
+
+- (void)setDiscreteValueLabelFont:(UIFont *)discreteValueLabelFont {
+  _discreteValueLabelFont = discreteValueLabelFont ?: ValueLabelFontDefault();
+  _valueLabel.font = _discreteValueLabelFont;
+  [self setNeedsLayout];
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _valueLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+}
+
+- (BOOL)adjustsFontForContentSizeCategory {
+  return _valueLabel.adjustsFontForContentSizeCategory;
 }
 
 #pragma mark - MDCInkTouchControllerDelegate
@@ -822,14 +842,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if ([_delegate respondsToSelector:@selector(thumbTrack:stringForValue:)]) {
       _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
       if (CGRectGetWidth(_valueLabel.frame) > 1) {
+        CGFloat scale = UIScreen.mainScreen.scale;
+        _valueLabelHeight = MAX(kValueLabelHeight, MDCCeil(_valueLabel.font.lineHeight * scale) / scale);
+        CGFloat valueLabelWidth = MAX((CGFloat)0.81 * _valueLabelHeight,
+                                      [_valueLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, _valueLabelHeight)].height);
         // Reset the size prior to pixel alignement since previous alignement likely increased it
         CGRect valueLabelFrame = CGRectMake(_valueLabel.frame.origin.x, _valueLabel.frame.origin.y,
-                                            kValueLabelWidth, kValueLabelHeight);
+                                            valueLabelWidth, _valueLabelHeight);
         // TODO(https://github.com/material-components/material-components-ios/issues/3326 ):
         //   Don't assign the frame AND the center (above). Do it only once to avoid extra layout
         //   passes. This is the cause of the visual glitch seen when coloring the "active" tick
         //   marks in the _discreteDots view.
         _valueLabel.frame = MDCRectAlignToScale(valueLabelFrame, [UIScreen mainScreen].scale);
+        _valueLabel.center = [self numericValueLabelPositionForValue:_value];
       }
     }
   }

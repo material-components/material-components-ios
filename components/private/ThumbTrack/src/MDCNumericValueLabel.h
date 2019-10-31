@@ -14,18 +14,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCNumericValueLabel : UIView
+@interface MDCNumericValueLabel : UIView <UIContentSizeCategoryAdjusting>
 
 /** The background color of the value label. */
-@property(nonatomic, retain) UIColor *backgroundColor;
+@property(nonatomic, retain, nonnull) UIColor *backgroundColor;
 
 /** The text color of the label. */
-@property(nonatomic, retain) UIColor *textColor;
+@property(nonatomic, retain, nonnull) UIColor *textColor;
 
 /** The size of the value label. */
-@property(nonatomic) CGFloat fontSize;
+@property(nonatomic) CGFloat fontSize __deprecated_msg("Use the font property instead.");
 
 /** The text to be displayed in the value label. */
-@property(nonatomic, copy) NSString *text;
+@property(nonatomic, copy, nonnull) NSString *text;
+
+@property(nonatomic, strong, null_resettable) UIFont *font;
 
 @end
