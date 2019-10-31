@@ -160,19 +160,13 @@
 
 - (void)postLayoutSubviews {
   self.label.hidden = self.labelState == MDCTextControlLabelStateNone;
-  [MDCTextControlLabelAnimation layOutLabel:self.label
-                                      state:self.labelState
-                           normalLabelFrame:self.layout.labelFrameNormal
-                         floatingLabelFrame:self.layout.labelFrameFloating
-                                 normalFont:self.normalFont
-                               floatingFont:self.floatingFont
-                          animationDuration:self.animationDuration];
-  [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
+  [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
+  [self animateLabel];
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
@@ -558,6 +552,37 @@
 }
 
 #pragma mark Label
+
+- (void)animateLabel {
+  __weak MDCBaseTextField *weakSelf = self;
+  [MDCTextControlLabelAnimation animateLabel:self.label
+                                       state:self.labelState
+                            normalLabelFrame:self.layout.labelFrameNormal
+                          floatingLabelFrame:self.layout.labelFrameFloating
+                                  normalFont:self.normalFont
+                                floatingFont:self.floatingFont
+                           animationDuration:self.animationDuration
+                                  completion:^(BOOL finished) {
+                                    if (finished) {
+                                      // Ensure that the label position is correct in case of
+                                      // competing animations.
+                                      [weakSelf positionLabel];
+                                    }
+                                  }];
+}
+
+- (void)positionLabel {
+  if (self.labelState == MDCTextControlLabelStateFloating) {
+    self.label.frame = self.layout.labelFrameFloating;
+    self.label.hidden = NO;
+  } else if (self.labelState == MDCTextControlLabelStateNormal) {
+    self.label.frame = self.layout.labelFrameNormal;
+    self.label.hidden = NO;
+  } else {
+    self.label.frame = CGRectZero;
+    self.label.hidden = YES;
+  }
+}
 
 - (BOOL)canLabelFloat {
   return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
