@@ -436,6 +436,8 @@ IB_DESIGNABLE
 /**
  Informs the receiver that the flexible header view's animation changing to a new tracking scroll
  view has completed.
+
+ Only invoked if an animation occurred when the tracking scroll view was changed.
  */
 - (void)flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:
     (nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
