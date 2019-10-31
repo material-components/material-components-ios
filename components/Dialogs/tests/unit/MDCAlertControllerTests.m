@@ -46,7 +46,25 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
 #pragma mark - Subclasses for testing
 
+/** A test fake for setting the @c traitCollection on the alert's view. */
+@interface MDCAlertControllerTestsFakeWindow : UIWindow
+
+/** Set to override the @c traitCollection property of the receiver. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCAlertControllerTestsFakeWindow
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
+/** A test fake to override the @c traitCollection of an @c MDCAlertController. */
 @interface MDCAlertControllerTestsControllerFake : MDCAlertController
+
+/** Set to override the value of @c traitCollection of the receiver. */
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
@@ -58,17 +76,22 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
 @end
 
+/** Expose private properties for testing. */
 @interface MDCAlertController (Testing)
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @end
 
+/** Expose private properties for testing. */
 @interface MDCDialogPresentationController (Testing)
 @property(nonatomic) MDCDialogShadowedView *trackingView;
 @end
 
 #pragma mark - Tests
 
+/** Unit tests for @c MDCAlertController. */
 @interface MDCAlertControllerTests : XCTestCase
+
+/** The @c MDCAlertController being tested. */
 @property(nonatomic, nullable) MDCAlertController *alert;
 @end
 
@@ -643,6 +666,10 @@ than @c UIContentSizeCategoryLarge.
   }
 }
 
+/**
+ Tests that setting a UIFontMetrics-based font will be updated based on changes to the
+ @c prefrredContentSizeCategory of the view's @c traitCollection.
+ */
 - (void)testAdjustsFontForContentSizeCategoryUpdatesFontWhenTraitCollectionChanges {
   if (@available(iOS 11.0, *)) {
     // Given
@@ -662,12 +689,15 @@ than @c UIContentSizeCategoryLarge.
     alert.adjustsFontForContentSizeCategory = YES;
     alert.titleFont = originalFont;
     [alert loadViewIfNeeded];
-
-    // When
-    alert.traitCollectionOverride =
+    MDCAlertControllerTestsFakeWindow *window = [[MDCAlertControllerTestsFakeWindow alloc] init];
+    window.traitCollectionOverride =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    [alert traitCollectionDidChange:nil];
+    [window makeKeyWindow];
+    [window addSubview:alert.view];
+
+    // When
+    [alert.view layoutIfNeeded];
 
     // Then
     XCTAssertEqualObjects(alert.alertView.titleLabel.font.fontName, originalFont.fontName);

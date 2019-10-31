@@ -140,7 +140,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
             isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
       self.preferredContentSize = [self.alertView
           calculatePreferredContentSizeForBounds:CGRectStandardize(self.view.bounds).size];
-      //  [self.alertView setNeedsLayout];
     }
   }
 }
@@ -438,8 +437,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setupAlertView {
   self.alertView.titleLabel.text = self.title;
-  self.alertView.titleLabel.adjustsFontForContentSizeCategory =
-      self.adjustsFontForContentSizeCategory;
+  if (@available(iOS 10.0, *)) {
+    self.alertView.titleLabel.adjustsFontForContentSizeCategory =
+        self.adjustsFontForContentSizeCategory;
+  }
   self.alertView.messageLabel.text = self.message;
   // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
   // adjustsFontForContentSizeCategory for messageLabel
@@ -482,9 +483,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)viewDidLayoutSubviews {
-  // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
+  /*
+  // Recalculate preferredContentSize and potentially the view frame.
   BOOL boundsSizeChanged =
       !CGSizeEqualToSize(CGRectStandardize(self.view.bounds).size, _previousLayoutSize);
+
+  // UIContentSizeCategoryAdjusting behavior only updates fonts after -viewWillLayoutSubviews and
+  // before -viewDidLayoutSubviews. Because `preferredContentSize` may have changed as a result,
+  // it is necessary to check if it changed here and possibly require a second layout pass.
+
   CGSize currentPreferredContentSize = self.preferredContentSize;
   CGSize calculatedPreferredContentSize = [self.alertView
       calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
@@ -493,9 +500,26 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (preferredContentSizeChanged) {
     // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
     self.preferredContentSize = calculatedPreferredContentSize;
-    [self.alertView setNeedsLayout];
   }
+
   if (preferredContentSizeChanged || boundsSizeChanged) {
+    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
+    [self.view setNeedsLayout];
+  }
+   */
+
+  // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
+  if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
+      CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
+    CGSize currentPreferredContentSize = self.preferredContentSize;
+    CGSize calculatedPreferredContentSize = [self.alertView
+                                             calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
+
+    if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
+      // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
+      self.preferredContentSize = calculatedPreferredContentSize;
+    }
+
     _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
   }
 }
