@@ -77,15 +77,19 @@
 - (nonnull instancetype)init;
 
 /**
- Initializes the controller.
+ Initializes the controller and based on the deferred parameter is adding the ripple view immediately as subview of the priovided view.
 
-Note:
- - If defer is YES and rippleTouchController:insertRippleView:intoView: is *not* implemented the ripple view will be automatically added to the given as the top subview in the time of the first tap on the
- - If defer is YES and rippleTouchController:insertRippleView:intoView: *is* implemented it's the responsibility of the delegate to add the ripple view in the proper position within view's hierarchy.
+ Note: If YES is passed for the deferred parameter and the -[MDCRippleTouchControllerDelegate  rippleTouchController:insertRippleView:intoView:] is
+ *not* implemented the rippleview will be automatically added as top subview to the given
+ view if the first on tap event is happening. In case -[MDCRippleTouchControllerDelegate
+ rippleTouchController:insertRippleView:intoView:] *is* implemented, it's the
+ responsibility of the delegate to add the ripple view in the proper position within view's
+ hierarchy if the delegate method is called.
 
  @param view The view that responds to the touch events for the ripple. The ripple
  is added to it as a subview.
- @param deferred TBD
+ @param deferred Wheter the insertion of the rippleView to the provided view should be
+ happened deferred
  @return an MDCRippleTouchController instance.
  */
 - (nonnull instancetype)initWithView:(nonnull UIView *)view deferred:(BOOL)deferred;

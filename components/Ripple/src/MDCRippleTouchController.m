@@ -30,7 +30,11 @@
   self = [self init];
   if (self) {
     _deferred = deferred;
-    [self attachGestureRecognizerToView:view];
+    if (deferred) {
+      [self attachGestureRecognizerToView:view];
+    } else {
+      [self configureRippleWithView:view];
+    }
   }
   return self;
 }

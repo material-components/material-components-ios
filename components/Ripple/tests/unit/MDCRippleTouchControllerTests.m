@@ -83,8 +83,6 @@
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   MDCRippleTouchController *touchController =
       [[MDCRippleTouchController alloc] initWithView:parentView];
-  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
-  [touchController handleRippleGesture:touchController.gestureRecognizer];
 
   // Then
   XCTAssertEqualObjects(parentView, touchController.view);
@@ -97,6 +95,19 @@
                 NSStringFromCGRect(parentView.bounds));
 }
 
+- (void)testInitWithViewDeferred {
+  // Given
+  UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  MDCRippleTouchController *touchController =
+  [[MDCRippleTouchController alloc] initWithView:parentView deferred:YES];
+
+  // Then
+  XCTAssertEqualObjects(parentView, touchController.view);
+  XCTAssertNotNil(touchController.rippleView);
+  XCTAssertNil(touchController.rippleView.superview);
+  XCTAssertNotNil(touchController.gestureRecognizer);
+}
+
 - (void)testAddRippleToView {
   // Given
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
@@ -104,12 +115,29 @@
 
   // When
   [touchController addRippleToView:parentView];
-  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
-  [touchController handleRippleGesture:touchController.gestureRecognizer];
 
   // Then
   XCTAssertEqualObjects(parentView, touchController.view);
   XCTAssertNotNil(touchController.rippleView);
+  XCTAssertEqualObjects(touchController.rippleView.superview, parentView);
+  XCTAssertTrue(touchController.shouldProcessRippleWithScrollViewGestures);
+  XCTAssertNotNil(touchController.gestureRecognizer);
+  XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds),
+                @"(%@) is not equal to (%@)", NSStringFromCGRect(touchController.rippleView.frame),
+                NSStringFromCGRect(parentView.bounds));
+}
+
+- (void)testDeferredAddingOfRippleView {
+  // Given
+  UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  MDCRippleTouchController *touchController =
+  [[MDCRippleTouchController alloc] initWithView:parentView deferred:YES];
+
+  // Given
+  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
+  [touchController handleRippleGesture:touchController.gestureRecognizer];
+
+  // Then
   XCTAssertEqualObjects(touchController.rippleView.superview, parentView);
   XCTAssertTrue(touchController.shouldProcessRippleWithScrollViewGestures);
   XCTAssertNotNil(touchController.gestureRecognizer);
@@ -124,15 +152,12 @@
   MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
   FakeMDCRippleTouchControllerDelegate *delegate =
       [[FakeMDCRippleTouchControllerDelegate alloc] init];
-  delegate.shouldProcessRippleTouchesAtTouchLocation = YES;
   touchController.delegate = delegate;
   delegate.rippleTouchController = touchController;
 
   // When
   [parentView addSubview:[[UIView alloc] init]];
   [touchController addRippleToView:parentView];
-  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
-  [touchController handleRippleGesture:touchController.gestureRecognizer];
 
   // Then
   XCTAssertEqualObjects(parentView.subviews[0], touchController.rippleView);
@@ -188,5 +213,6 @@
   // Then
   XCTAssertFalse(delegate.didProcessRippleViewCalled);
 }
+
 
 @end
