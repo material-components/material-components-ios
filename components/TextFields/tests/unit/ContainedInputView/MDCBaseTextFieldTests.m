@@ -14,7 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import <objc/runtime.h>
 #import "MaterialTextFields+ContainedInputView.h"
 
 #import "../../../src/ContainedInputView/private/MDCTextControlLabelState.h"

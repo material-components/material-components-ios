@@ -72,7 +72,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)setUpFilledBackgroundColors {
   self.filledBackgroundColors = [NSMutableDictionary new];
-  UIColor *filledBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.1];
+  UIColor *filledBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.05];
   self.filledBackgroundColors[@(MDCTextControlStateNormal)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateEditing)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateDisabled)] = filledBackgroundColor;

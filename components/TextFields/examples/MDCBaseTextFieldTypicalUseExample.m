@@ -18,15 +18,19 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTextFields+ContainedInputView.h"
 
-static NSString *const kExampleTitle = @"MDCBaseTextField";
+static NSString *const kExampleTitle = @"MDCTextControl TextFields";
+static CGFloat const kDefaultPadding = 15.0;
 
 /**
  Typical use example showing how to place an @c MDCBaseTextField in a UIViewController.
  */
 @interface MDCBaseTextFieldTypicalExampleViewController : UIViewController
 
-/** The TextField for this example. */
-@property(nonatomic, strong) MDCBaseTextField *textField;
+/** The MDCBaseTextField for this example. */
+@property(nonatomic, strong) MDCBaseTextField *baseTextField;
+
+/** The MDCFilledTextField for this example. */
+@property(nonatomic, strong) MDCBaseTextField *filledTextField;
 
 /** The UIButton that makes the textfield stop being the first responder. */
 @property(nonatomic, strong) MDCButton *resignFirstResponderButton;
@@ -46,16 +50,22 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
     self.containerScheme = [[MDCContainerScheme alloc] init];
   }
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
-  self.textField = [[MDCBaseTextField alloc] initWithFrame:self.preferredTextFieldFrame];
-  self.textField.borderStyle = UITextBorderStyleRoundedRect;
-  self.textField.label.text = @"This is a label";
-  self.textField.placeholder = @"This is placeholder text";
-  self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  [self.view addSubview:self.textField];
-
   self.resignFirstResponderButton = [self createFirstResponderButton];
   [self.view addSubview:self.resignFirstResponderButton];
+
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  self.baseTextField = [[MDCBaseTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
+  self.baseTextField.borderStyle = UITextBorderStyleRoundedRect;
+  self.baseTextField.label.text = @"This is a label";
+  self.baseTextField.placeholder = @"This is placeholder text";
+  self.baseTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  [self.view addSubview:self.baseTextField];
+
+  self.filledTextField = [[MDCFilledTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
+  self.filledTextField.label.text = @"This is a label";
+  self.filledTextField.placeholder = @"This is placeholder text";
+  self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  [self.view addSubview:self.filledTextField];
 }
 
 - (MDCButton *)createFirstResponderButton {
@@ -69,20 +79,45 @@ static NSString *const kExampleTitle = @"MDCBaseTextField";
 }
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
-  [self.textField resignFirstResponder];
+  [self.baseTextField resignFirstResponder];
+  [self.filledTextField resignFirstResponder];
 }
 
-- (CGRect)preferredTextFieldFrame {
-  return CGRectMake(15, 120, CGRectGetWidth(self.view.frame) - 30, 50);
+- (CGFloat)preferredResignFirstResponderMinY {
+  if (@available(iOS 11.0, *)) {
+    return (CGFloat)(self.view.safeAreaInsets.top + kDefaultPadding);
+  } else {
+    return (CGFloat)120;
+  }
+}
+
+- (CGFloat)preferredTextFieldWidth {
+  return CGRectGetWidth(self.view.frame) - (2 * kDefaultPadding);
+}
+
+- (CGRect)placeholderTextFieldFrame {
+  return CGRectMake(0, 0, self.preferredTextFieldWidth, 0);
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  [self.textField sizeToFit];
+
+  [self.resignFirstResponderButton sizeToFit];
+  [self.baseTextField sizeToFit];
+  [self.filledTextField sizeToFit];
+
   self.resignFirstResponderButton.frame =
-      CGRectMake(CGRectGetMinX(self.textField.frame), CGRectGetMaxY(self.textField.frame) + 20,
+      CGRectMake(kDefaultPadding, self.preferredResignFirstResponderMinY,
                  CGRectGetWidth(self.resignFirstResponderButton.frame),
                  CGRectGetHeight(self.resignFirstResponderButton.frame));
+
+  self.filledTextField.frame = CGRectMake(
+      kDefaultPadding, CGRectGetMaxY(self.resignFirstResponderButton.frame) + kDefaultPadding,
+      CGRectGetWidth(self.filledTextField.frame), CGRectGetHeight(self.filledTextField.frame));
+
+  self.baseTextField.frame = CGRectMake(
+      kDefaultPadding, CGRectGetMaxY(self.filledTextField.frame) + kDefaultPadding,
+      CGRectGetWidth(self.baseTextField.frame), CGRectGetHeight(self.baseTextField.frame));
 }
 
 @end
