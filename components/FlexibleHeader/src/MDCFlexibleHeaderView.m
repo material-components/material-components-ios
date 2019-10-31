@@ -1571,9 +1571,10 @@ static BOOL isRunningiOS10_3OrAbove() {
     [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
                      animations:animate
                      completion:^(BOOL finished) {
-      [self.animationDelegate flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
-      completion(finished);
-    }];
+                       [self.animationDelegate
+                           flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
+                       completion(finished);
+                     }];
   } else {
     animate();
     completion(YES);
