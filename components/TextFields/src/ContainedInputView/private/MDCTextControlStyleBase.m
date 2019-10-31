@@ -20,10 +20,14 @@
 #import "MDCTextControl.h"
 #import "MDCTextControlVerticalPositioningReferenceBase.h"
 
+static const CGFloat kBaseFloatingLabelScaleFactor = 0.8;
+
 @implementation MDCTextControlStyleBase
 
 - (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
-  return font;
+  CGFloat scaleFactor = kBaseFloatingLabelScaleFactor;
+  CGFloat floatingFontSize = font.pointSize * scaleFactor;
+  return [font fontWithSize:floatingFontSize];
 }
 
 - (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl

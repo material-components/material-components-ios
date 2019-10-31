@@ -263,6 +263,14 @@
 
 #pragma mark UITextField Accessor Overrides
 
+- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
+  if ([self.containerStyle isKindOfClass:[MDCTextControlStyleBase class]]) {
+    [super setBorderStyle:borderStyle];
+  } else {
+    [super setBorderStyle:UITextBorderStyleNone];
+  }
+}
+
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
 
