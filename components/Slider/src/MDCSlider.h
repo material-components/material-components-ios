@@ -371,7 +371,8 @@ IB_DESIGNABLE
 /**
  The font of the discrete value label.
 
- This font will come into effect only when @c numberOfDiscreteValues is larger than 0 and when @c shouldDisplayDiscreteValueLabel is
+ This font will come into effect only when @c numberOfDiscreteValues is larger than 0 and when @c
+ shouldDisplayDiscreteValueLabel is
  @c YES.
 
  Defaults to [[MDCTypography fontLoader] regularFontOfSize:12].
