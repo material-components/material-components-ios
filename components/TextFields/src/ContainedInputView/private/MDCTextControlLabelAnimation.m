@@ -19,13 +19,21 @@
 
 @implementation MDCTextControlLabelAnimation
 
-+ (void)layOutLabel:(nonnull UILabel *)label
++ (void)animateLabel:(nonnull UILabel *)label
                  state:(MDCTextControlLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
           floatingFont:(nonnull UIFont *)floatingFont
-     animationDuration:(NSTimeInterval)animationDuration {
+     animationDuration:(NSTimeInterval)animationDuration
+            completion:(void (^__nullable)(BOOL))completion {
+  if (label.layer.animationKeys.count > 0) {
+    if (completion) {
+      completion(NO);
+    }
+    return;
+  }
+
   UIFont *targetFont;
   CGRect targetFrame;
   if (labelState == MDCTextControlLabelStateFloating) {
@@ -40,20 +48,33 @@
   CGAffineTransform transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame =
       [self transformFromRect:currentFrame toRect:targetFrame];
 
-  CAMediaTimingFunction *timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
-  [UIView mdc_animateWithTimingFunction:timingFunction
-      duration:animationDuration
-      delay:0
-      options:0
-      animations:^{
-        label.transform = transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame;
-      }
-      completion:^(BOOL finished) {
-        label.transform = CGAffineTransformIdentity;
-        label.frame = targetFrame;
-        label.font = targetFont;
-      }];
+  void (^completionBlock)(BOOL finished) = ^void(BOOL finished) {
+    label.transform = CGAffineTransformIdentity;
+    label.frame = targetFrame;
+    label.font = targetFont;
+    if (completion) {
+      completion(YES);
+    }
+  };
+
+  if (animationDuration > 0) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      CAMediaTimingFunction *timingFunction =
+          [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+      [UIView
+          mdc_animateWithTimingFunction:timingFunction
+                               duration:animationDuration
+                                  delay:0
+                                options:0
+                             animations:^{
+                               label.transform =
+                                   transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame;
+                             }
+                             completion:completionBlock];
+    });
+  } else {
+    completionBlock(YES);
+  }
 }
 
 /**

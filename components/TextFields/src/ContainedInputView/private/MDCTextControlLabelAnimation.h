@@ -26,11 +26,12 @@
  This method lays out the label in an animated fashion, often from normal position to the floating
  position, and vice versa.
  */
-+ (void)layOutLabel:(nonnull UILabel *)floatingLabel
++ (void)animateLabel:(nonnull UILabel *)label
                  state:(MDCTextControlLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
           floatingFont:(nonnull UIFont *)floatingFont
-     animationDuration:(NSTimeInterval)animationDuration;
+     animationDuration:(NSTimeInterval)animationDuration
+            completion:(void (^__nullable)(BOOL))completion;
 @end
