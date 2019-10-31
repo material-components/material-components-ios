@@ -564,6 +564,8 @@
                            animationDuration:self.animationDuration
                                   completion:^(BOOL finished) {
                                     if (finished) {
+                                      // Ensure that the label position is correct in case of
+                                      // competing animations.
                                       [weakSelf positionLabel];
                                     }
                                   }];
