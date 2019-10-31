@@ -17,7 +17,6 @@
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
 #import "../../src/private/MDCRippleTouchController+Testing.h"
-#import "MaterialRipple.h"
 
 @interface FakeMDCRippleTouchControllerDelegate : NSObject <MDCRippleTouchControllerDelegate>
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
