@@ -483,7 +483,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)viewDidLayoutSubviews {
-  /*
   // Recalculate preferredContentSize and potentially the view frame.
   BOOL boundsSizeChanged =
       !CGSizeEqualToSize(CGRectStandardize(self.view.bounds).size, _previousLayoutSize);
@@ -505,22 +504,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (preferredContentSizeChanged || boundsSizeChanged) {
     _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
     [self.view setNeedsLayout];
-  }
-   */
-
-  // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
-  if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
-      CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
-    CGSize currentPreferredContentSize = self.preferredContentSize;
-    CGSize calculatedPreferredContentSize = [self.alertView
-        calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
-
-    if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
-      // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
-      self.preferredContentSize = calculatedPreferredContentSize;
-    }
-
-    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
   }
 }
 

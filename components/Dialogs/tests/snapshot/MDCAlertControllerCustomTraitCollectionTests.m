@@ -327,7 +327,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
     self.alertController.view.frame = window.bounds;
 
     // Then
-    [self generateSnapshotAndVerifyForView:window];
+    [window layoutIfNeeded];
+    [self snapshotVerifyView:window];
   }
 }
 
@@ -367,7 +368,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
     self.alertController.view.frame = window.bounds;
 
     // Then
-    [self generateSnapshotAndVerifyForView:window];
+    [window layoutIfNeeded];
+    [self snapshotVerifyView:window];
   }
 }
 
