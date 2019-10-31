@@ -20,7 +20,7 @@
 #import "MDCTextControl.h"
 #import "MDCTextControlVerticalPositioningReferenceBase.h"
 
-static const CGFloat kBaseFloatingLabelScaleFactor = 0.8;
+static const CGFloat kBaseFloatingLabelScaleFactor = (CGFloat)0.8;
 
 @implementation MDCTextControlStyleBase
 
