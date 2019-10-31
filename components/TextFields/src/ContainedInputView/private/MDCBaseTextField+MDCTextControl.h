@@ -12,7 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
 #import "MDCBaseTextField.h"
-#import "MDCFilledTextField.h"
-#import "MDCTextControlLabelBehavior.h"
-#import "MDCTextControlState.h"
+#import "MDCTextControl.h"
+
+/**
+ This category is imported from MDCBaseTextField subclasses and categories, as well as categories of
+ MDCBaseTextField subclasses, to make MDCTextControl conformance visible.
+ */
+@interface MDCBaseTextField (Private) <MDCTextControl>
+@end
