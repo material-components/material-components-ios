@@ -267,6 +267,8 @@
   if ([self.containerStyle isKindOfClass:[MDCTextControlStyleBase class]]) {
     [super setBorderStyle:borderStyle];
   } else {
+    NSLog(@"Setting borderStyle on Material styled TextFields, such as MDCFilledTextField and "
+          @"MDCOutlinedTextFIeld, is not allowed.");
     [super setBorderStyle:UITextBorderStyleNone];
   }
 }
