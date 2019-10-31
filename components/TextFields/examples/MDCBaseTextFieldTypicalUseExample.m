@@ -70,7 +70,8 @@ static CGFloat const kDefaultPadding = 15.0;
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.view addSubview:self.filledTextField];
 
-  self.outlinedTextField = [[MDCOutlinedTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
+  self.outlinedTextField =
+      [[MDCOutlinedTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
   self.outlinedTextField.label.text = @"This is a label";
   self.outlinedTextField.placeholder = @"This is placeholder text";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
