@@ -25,6 +25,10 @@
 /**
  This method lays out the label in an animated fashion, often from normal position to the floating
  position, and vice versa.
+
+ This method does not attempt an animation and passes @c NO to the completion block if an animation
+ is already in progress. It does the animation and passes @c YES to the completion block if there is
+ no animation in progress.
  */
 + (void)animateLabel:(nonnull UILabel *)label
                  state:(MDCTextControlLabelState)labelState

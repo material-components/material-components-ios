@@ -27,7 +27,8 @@
           floatingFont:(nonnull UIFont *)floatingFont
      animationDuration:(NSTimeInterval)animationDuration
             completion:(void (^__nullable)(BOOL))completion {
-  if (label.layer.animationKeys.count > 0) {
+  BOOL isAnimationInProgress = label.layer.animationKeys.count > 0;
+  if (isAnimationInProgress) {
     if (completion) {
       completion(NO);
     }
@@ -57,7 +58,8 @@
     }
   };
 
-  if (animationDuration > 0) {
+  BOOL shouldPerformAnimation = animationDuration > 0;
+  if (shouldPerformAnimation) {
     dispatch_async(dispatch_get_main_queue(), ^{
       CAMediaTimingFunction *timingFunction =
           [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
