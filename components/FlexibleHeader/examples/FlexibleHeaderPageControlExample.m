@@ -17,16 +17,16 @@
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialPageControl.h"
-#import "supplemental/FlexibleHeaderPageControlSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200;
 
-@interface FlexibleHeaderPageControlExample () <UIScrollViewDelegate>
+@interface FlexibleHeaderPageControlExample : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
-@property(nonatomic) MDCPageControl *pageControl;
-@property(nonatomic) NSArray *pages;
-@property(nonatomic) UIScrollView *pageScrollView;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) MDCPageControl *pageControl;
+@property(nonatomic, copy) NSArray *pages;
+@property(nonatomic, strong) UIScrollView *pageScrollView;
 
 @end
 
@@ -179,6 +179,34 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
   CGPoint offset = self.pageScrollView.contentOffset;
   offset.x = sender.currentPage * self.pageScrollView.bounds.size.width;
   [self.pageScrollView setContentOffset:offset animated:YES];
+}
+
+#pragma mark - Supplemental
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  self.scrollView.contentSize = self.view.bounds.size;
+}
+
+@end
+
+@implementation FlexibleHeaderPageControlExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Page Control in Flexible Header" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

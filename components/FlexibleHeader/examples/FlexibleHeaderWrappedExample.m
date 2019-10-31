@@ -15,13 +15,13 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderWrappedSupplemental.h"
 
-@interface FlexibleHeaderWrappedExample () <UIScrollViewDelegate>
+@interface FlexibleHeaderWrappedExample : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
-@property(nonatomic) UILabel *label;
-@property(nonatomic) UIViewController *wrappedViewController;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) UILabel *label;
+@property(nonatomic, strong) UIViewController *wrappedViewController;
 
 @end
 
@@ -120,6 +120,28 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self.fhvc scrollViewDidScroll:scrollView];
+}
+
+#pragma mark - Supplemental
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+@end
+
+@implementation FlexibleHeaderWrappedExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Wrapped View Controller" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end
