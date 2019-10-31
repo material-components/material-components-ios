@@ -201,6 +201,10 @@
     self.slider.value =
         self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
     self.slider.shouldDisplayDiscreteValueLabel = YES;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+    self.slider.discreteValueLabelFont = originalFont;
+    self.slider.adjustsFontForContentSizeCategory = YES;
     UITraitCollection *xsTraitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     self.slider.traitCollectionOverride = xsTraitCollection;
@@ -211,11 +215,13 @@
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     self.slider.traitCollectionOverride = aXXXLTraitCollection;
+    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+    valueLabel.transform = CGAffineTransformIdentity;
     [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
 
     // Then
     UIView *snapshotView =
-        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(100, 0, 0, 0)];
     [self generateSnapshotAndVerifyForView:snapshotView];
   }
 }
@@ -227,6 +233,10 @@
     self.slider.value =
         self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
     self.slider.shouldDisplayDiscreteValueLabel = YES;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+    self.slider.discreteValueLabelFont = originalFont;
+    self.slider.adjustsFontForContentSizeCategory = YES;
     UITraitCollection *aXXXLTraitCollection =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
@@ -237,6 +247,8 @@
     UITraitCollection *xsTraitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     self.slider.traitCollectionOverride = xsTraitCollection;
+    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+    valueLabel.transform = CGAffineTransformIdentity;
     [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
 
     // Then
