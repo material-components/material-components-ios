@@ -513,7 +513,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
     CGSize currentPreferredContentSize = self.preferredContentSize;
     CGSize calculatedPreferredContentSize = [self.alertView
-                                             calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
+        calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
 
     if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
       // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
