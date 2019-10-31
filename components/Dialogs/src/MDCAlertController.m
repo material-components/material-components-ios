@@ -490,7 +490,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   // UIContentSizeCategoryAdjusting behavior only updates fonts after -viewWillLayoutSubviews and
   // before -viewDidLayoutSubviews. Because `preferredContentSize` may have changed as a result,
   // it is necessary to check if it changed here and possibly require a second layout pass.
-
   CGSize currentPreferredContentSize = self.preferredContentSize;
   CGSize calculatedPreferredContentSize = [self.alertView
       calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];

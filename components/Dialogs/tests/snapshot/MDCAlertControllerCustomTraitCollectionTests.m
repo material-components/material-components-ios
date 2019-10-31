@@ -44,8 +44,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   return scalingCurve;
 }
 
+/** A test fake window that allows overriding its @c traitCollection. */
 @interface MDCAlertControllerCustomTraitCollectionTestsWindowFake : UIWindow
 
+/** Set to override the value of @c traitCollection. */
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 
 @end
@@ -291,6 +293,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
+/**
+ Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a larger size when
+ the preferred content size category increases.
+ */
 - (void)testAdjustsFontForContentSizeUpscalesUIFontMetricsFontsForSizeCategoryAXXXL {
   if (@available(iOS 11.0, *)) {
     // Given
@@ -327,11 +333,16 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
     self.alertController.view.frame = window.bounds;
 
     // Then
+    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
     [window layoutIfNeeded];
     [self snapshotVerifyView:window];
   }
 }
 
+/**
+ Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a smaller size
+ when the preferred content size category decreases.
+ */
 - (void)testAdjustsFontForContentSizeDownscalesUIFontMetricsFontsForSizeCategoryXS {
   if (@available(iOS 11.0, *)) {
     // Given
@@ -368,6 +379,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
     self.alertController.view.frame = window.bounds;
 
     // Then
+    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
     [window layoutIfNeeded];
     [self snapshotVerifyView:window];
   }
