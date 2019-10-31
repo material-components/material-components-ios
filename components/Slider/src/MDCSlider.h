@@ -38,7 +38,8 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl <MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
+@interface MDCSlider
+    : UIControl <MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
 
 /** When @c YES, the forState: APIs are enabled. Defaults to @c NO. */
 @property(nonatomic, assign, getter=isStatefulAPIEnabled) BOOL statefulAPIEnabled;

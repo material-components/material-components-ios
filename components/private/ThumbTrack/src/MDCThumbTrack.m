@@ -843,9 +843,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
       if (CGRectGetWidth(_valueLabel.frame) > 1) {
         CGFloat scale = UIScreen.mainScreen.scale;
-        _valueLabelHeight = MAX(kValueLabelHeight, MDCCeil(_valueLabel.font.lineHeight * scale) / scale);
-        CGFloat valueLabelWidth = MAX((CGFloat)0.81 * _valueLabelHeight,
-                                      [_valueLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, _valueLabelHeight)].height);
+        _valueLabelHeight =
+            MAX(kValueLabelHeight, MDCCeil(_valueLabel.font.lineHeight * scale) / scale);
+        CGFloat valueLabelWidth =
+            MAX((CGFloat)0.81 * _valueLabelHeight,
+                [_valueLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, _valueLabelHeight)].height);
         // Reset the size prior to pixel alignement since previous alignement likely increased it
         CGRect valueLabelFrame = CGRectMake(_valueLabel.frame.origin.x, _valueLabel.frame.origin.y,
                                             valueLabelWidth, _valueLabelHeight);
