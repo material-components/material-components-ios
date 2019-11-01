@@ -79,6 +79,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
  @note Defaults to @c NO.
  */
 @property(nonatomic, assign) BOOL addLeadingPaddingToCell;
+
+@property(nonatomic, assign) BOOL needToLayoutTable;
 @end
 
 @implementation MDCActionSheetController {
@@ -166,7 +168,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   [super viewDidLoad];
 
   self.view.backgroundColor = self.backgroundColor;
-  //self.tableView.frame = self.view.bounds;
+  self.tableView.frame = self.view.bounds;
   self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
   self.view.preservesSuperviewLayoutMargins = YES;
   if (@available(iOS 11.0, *)) {
@@ -181,13 +183,22 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  if (self.needToLayoutTable) {
+    [self.tableView layoutIfNeeded];
+    self.needToLayoutTable = NO;
+  }
   CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   CGFloat totalHeight = self.tableView.contentSize.height + size.height + dividerHeight;
+  if (@available(iOS 10.0, *)) {
+    NSLog(@"Table view's contentSize = %f\nTraitCollection.contentSize = %@", self.tableView.contentSize.height, self.traitCollection.preferredContentSizeCategory);
+  }
   if (totalHeight > (CGRectGetHeight(self.view.bounds) / 2)) {
-    self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = CGRectGetHeight(self.view.bounds) / 2;
+    NSLog(@"We came to [self openingSheetHeight] %f", CGRectGetHeight(self.view.bounds) / 2);
   } else {
-    self.mdc_bottomSheetPresentationController.preferredSheetHeight = 0;
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = totalHeight;
+    NSLog(@"We came to totalHeight");
   }
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   self.headerDividerView.frame =
@@ -198,7 +209,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   }
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
-  self.tableView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), totalHeight);
 }
 
 - (CGFloat)openingSheetHeight {
@@ -324,9 +334,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   MDCActionSheetAction *action = _actions[indexPath.row];
   cell.action = action;
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-  if (@available(iOS 10.0, *)) {
-    cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
-  }
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
@@ -337,6 +344,9 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
+  if (@available(iOS 10.0, *)) {
+    cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
+  }
   return cell;
 }
 
@@ -374,7 +384,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     if (self.adjustsFontForContentSizeCategory) {
       if (![self.traitCollection.preferredContentSizeCategory
               isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
-        [self.view setNeedsLayout];
+        [self updateTable];
+        self.needToLayoutTable = YES;
       }
     }
   }
