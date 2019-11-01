@@ -24,6 +24,7 @@
 @end
 
 @implementation MDCFilledTextField
+@dynamic borderStyle;
 
 #pragma mark Object Lifecycle
 
@@ -45,18 +46,6 @@
 
 - (void)commonMDCFilledTextFieldInit {
   self.containerStyle = [[MDCTextControlStyleFilled alloc] init];
-  self.borderStyle = UITextBorderStyleNone;
-}
-
-#pragma mark UITextField Overrides
-
-- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
-  if (borderStyle == UITextBorderStyleNone) {
-    [super setBorderStyle:borderStyle];
-  } else {
-    NSLog(@"Setting borderStyle on MDCFilledTextField is not allowed.");
-    [super setBorderStyle:UITextBorderStyleNone];
-  }
 }
 
 #pragma mark Stateful Color APIs

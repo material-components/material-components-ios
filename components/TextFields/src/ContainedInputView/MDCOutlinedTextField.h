@@ -22,6 +22,11 @@
 __attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCBaseTextField
 
 /**
+ MDCOutlinedTextField does not support UITextBorderStyle borders.
+ */
+@property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
+
+/**
  Sets the outline color for a given state.
  @param outlineColor The UIColor for the given state.
  @param state The MDCTextControlState.
