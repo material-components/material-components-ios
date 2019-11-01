@@ -71,7 +71,7 @@ class FlexibleHeaderTrackingScrollViewDidChangeTests: XCTestCase {
 
     for sublayer in sublayers {
       guard let animation = sublayer.animation(forKey: "shadowPath") else {
-        XCTFail("Missing shadowPath animation.")
+        XCTFail("Missing shadowPath animation. \(sublayer)")
         return
       }
       XCTAssertNotNil(animation)
