@@ -153,9 +153,10 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                    state:(MDCTextControlState)state
           containerFrame:(CGRect)containerFrame
        animationDuration:(NSTimeInterval)animationDuration {
-  BOOL aBoundsChangeHasTakenPlace = NO;
+  BOOL didChangeBounds = NO;
   if (!CGRectEqualToRect(self.mostRecentBounds, view.bounds)) {
-    aBoundsChangeHasTakenPlace = YES;
+    didChangeBounds = YES;
+    self.mostRecentBounds = view.bounds;
   }
 
   self.filledSublayer.fillColor = [self.filledBackgroundColors[@(state)] CGColor];
@@ -167,8 +168,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                                                    containerHeight:containerHeight];
   self.filledSublayer.path = filledSublayerBezier.CGPath;
 
-  BOOL isNotYetInTextControlLayerHierarchy = self.filledSublayer.superlayer != view.layer;
-  if (isNotYetInTextControlLayerHierarchy) {
+  BOOL styleIsNotAppliedToView = self.filledSublayer.superlayer != view.layer;
+  if (styleIsNotAppliedToView) {
     [view.layer insertSublayer:self.filledSublayer atIndex:0];
   }
 
@@ -188,7 +189,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                    underlineThickness:thinUnderlineThickness
                                        underlineWidth:viewWidth];
 
-  if (animationDuration <= 0 || isNotYetInTextControlLayerHierarchy || aBoundsChangeHasTakenPlace) {
+  if (animationDuration <= 0 || styleIsNotAppliedToView || didChangeBounds) {
     self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
     self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
     return;
