@@ -198,7 +198,6 @@ mdc_snapshot_objc_library(
         ":privateTabBarView",
         "//components/AppBar",
         "//components/HeaderStackView",
-        "//components/Ripple:private",
     ],
 )
 

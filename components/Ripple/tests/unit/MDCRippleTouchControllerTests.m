@@ -16,7 +16,7 @@
 
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
-#import "../../src/private/MDCRippleTouchController+Testing.h"
+#import "MaterialRipple.h"
 
 @interface FakeMDCRippleTouchControllerDelegate : NSObject <MDCRippleTouchControllerDelegate>
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
@@ -57,6 +57,10 @@
   return _shouldProcessRippleTouchesAtTouchLocation;
 }
 
+@end
+
+@interface MDCRippleTouchController (UnitTests)
+- (void)handleRippleGesture:(UILongPressGestureRecognizer *)recognizer;
 @end
 
 /** Unit tests for MDCRippleTouchController. */

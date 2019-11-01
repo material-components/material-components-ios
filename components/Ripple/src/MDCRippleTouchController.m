@@ -15,7 +15,6 @@
 #import "MDCRippleTouchController.h"
 
 @implementation MDCRippleTouchController {
-  MDCRippleView *_rippleView;
   BOOL _tapWentOutsideOfBounds;
   BOOL _deferred;
 
@@ -24,6 +23,12 @@
     unsigned int rippleTouchControllerDidProcessRippleViewAtTouchLocation : 1;
     unsigned int rippleTouchControllerInsertRippleViewIntoView : 1;
   } _delegateFlags;
+}
+
+@synthesize rippleView = _rippleView;
+
+- (instancetype)initWithView:(UIView *)view {
+  return [self initWithView:view deferred:NO];
 }
 
 - (nonnull instancetype)initWithView:(nonnull UIView *)view deferred:(BOOL)deferred {
@@ -35,14 +40,6 @@
     } else {
       [self configureRippleWithView:view];
     }
-  }
-  return self;
-}
-
-- (instancetype)initWithView:(UIView *)view {
-  self = [self init];
-  if (self) {
-    [self configureRippleWithView:view];
   }
   return self;
 }
