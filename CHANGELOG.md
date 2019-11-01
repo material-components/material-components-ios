@@ -1,3 +1,21 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+---
+
 # 93.2.0
 
 In this minor release TextFields support multiline error/helper text, FeatureHighlight supports Dynamic Type, OverlayWindow supports iOS 13 UIWindow scene initializer API, along with a PageControl dot placement fix, and additional component testing.
