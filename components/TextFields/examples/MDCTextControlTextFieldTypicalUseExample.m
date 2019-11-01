@@ -24,7 +24,7 @@ static CGFloat const kDefaultPadding = 15.0;
 /**
  Typical use example showing how to place an @c MDCBaseTextField in a UIViewController.
  */
-@interface MDCBaseTextFieldTypicalExampleViewController : UIViewController
+@interface MDCTextControlTextFieldTypicalUseExample : UIViewController
 
 /** The MDCBaseTextField for this example. */
 @property(nonatomic, strong) MDCBaseTextField *baseTextField;
@@ -43,7 +43,7 @@ static CGFloat const kDefaultPadding = 15.0;
 
 @end
 
-@implementation MDCBaseTextFieldTypicalExampleViewController
+@implementation MDCTextControlTextFieldTypicalUseExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -140,11 +140,11 @@ static CGFloat const kDefaultPadding = 15.0;
 
 #pragma mark - CatalogByConvention
 
-@implementation MDCBaseTextFieldTypicalExampleViewController (CatalogByConvention)
+@implementation MDCTextControlTextFieldTypicalUseExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Text Field", kExampleTitle ],
+    @"breadcrumbs" : @[ @"Text Controls", kExampleTitle ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
