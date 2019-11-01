@@ -49,6 +49,12 @@
   CGAffineTransform transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame =
       [self transformFromRect:currentFrame toRect:targetFrame];
 
+  BOOL willChangeFrame = !CGRectEqualToRect(currentFrame, targetFrame);
+  BOOL currentFrameIsCGRectZero = CGRectEqualToRect(currentFrame, CGRectZero);
+  BOOL isNormalTransition = willChangeFrame && !currentFrameIsCGRectZero;
+  BOOL nonZeroDuration = animationDuration > 0;
+  BOOL shouldPerformAnimation = nonZeroDuration && isNormalTransition;
+
   void (^completionBlock)(BOOL finished) = ^void(BOOL finished) {
     label.transform = CGAffineTransformIdentity;
     label.frame = targetFrame;
@@ -58,7 +64,6 @@
     }
   };
 
-  BOOL shouldPerformAnimation = animationDuration > 0;
   if (shouldPerformAnimation) {
     dispatch_async(dispatch_get_main_queue(), ^{
       CAMediaTimingFunction *timingFunction =

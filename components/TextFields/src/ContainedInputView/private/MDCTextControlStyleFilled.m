@@ -40,6 +40,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 @property(strong, nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *underlineColors;
 @property(strong, nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *filledBackgroundColors;
 
+@property(nonatomic, assign) CGRect mostRecentBounds;
+
 @end
 
 @implementation MDCTextControlStyleFilled
@@ -60,6 +62,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   [self setUpUnderlineColors];
   [self setUpFilledBackgroundColors];
   [self setUpSublayers];
+  self.mostRecentBounds = CGRectZero;
 }
 
 - (void)setUpUnderlineColors {
@@ -150,6 +153,12 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                    state:(MDCTextControlState)state
           containerFrame:(CGRect)containerFrame
        animationDuration:(NSTimeInterval)animationDuration {
+  BOOL didChangeBounds = NO;
+  if (!CGRectEqualToRect(self.mostRecentBounds, view.bounds)) {
+    didChangeBounds = YES;
+    self.mostRecentBounds = view.bounds;
+  }
+
   self.filledSublayer.fillColor = [self.filledBackgroundColors[@(state)] CGColor];
   self.thinUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
   self.thickUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
@@ -158,7 +167,9 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   UIBezierPath *filledSublayerBezier = [self filledSublayerPathWithTextFieldBounds:view.bounds
                                                                    containerHeight:containerHeight];
   self.filledSublayer.path = filledSublayerBezier.CGPath;
-  if (self.filledSublayer.superlayer != view.layer) {
+
+  BOOL styleIsNotAppliedToView = self.filledSublayer.superlayer != view.layer;
+  if (styleIsNotAppliedToView) {
     [view.layer insertSublayer:self.filledSublayer atIndex:0];
   }
 
@@ -178,7 +189,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                    underlineThickness:thinUnderlineThickness
                                        underlineWidth:viewWidth];
 
-  if (animationDuration <= 0) {
+  if (animationDuration <= 0 || styleIsNotAppliedToView || didChangeBounds) {
     self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
     self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
     return;

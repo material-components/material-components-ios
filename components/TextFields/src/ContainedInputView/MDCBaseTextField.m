@@ -110,7 +110,7 @@
 }
 
 - (void)setUpLabel {
-  self.label = [[UILabel alloc] initWithFrame:self.bounds];
+  self.label = [[UILabel alloc] init];
   [self addSubview:self.label];
 }
 
