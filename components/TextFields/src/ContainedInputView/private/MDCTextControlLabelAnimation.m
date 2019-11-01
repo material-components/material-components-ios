@@ -49,9 +49,9 @@
   CGAffineTransform transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame =
       [self transformFromRect:currentFrame toRect:targetFrame];
 
-  BOOL didChangeFrame = !CGRectEqualToRect(currentFrame, targetFrame);
+  BOOL willChangeFrame = !CGRectEqualToRect(currentFrame, targetFrame);
   BOOL currentFrameIsCGRectZero = CGRectEqualToRect(currentFrame, CGRectZero);
-  BOOL isNormalTransition = didChangeFrame && !currentFrameIsCGRectZero;
+  BOOL isNormalTransition = willChangeFrame && !currentFrameIsCGRectZero;
   BOOL nonZeroDuration = animationDuration > 0;
   BOOL shouldPerformAnimation = nonZeroDuration && isNormalTransition;
 
