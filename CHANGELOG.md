@@ -6,7 +6,7 @@ scroll views (such as tabbed interfaces).
 ## New features
 
 MDCFlexibleHeaderView has a new API,
-`allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView`, which can be used to enable shadow
+`allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView`, that can be used to enable shadow
 layer frame animations when the header's height is animated after switching to a new tracking
 scroll view. This flag is false by default, but will be enabled and then deleted in the future, so
 please consider enabling it wherever you instantiate a flexible header or app bar.
