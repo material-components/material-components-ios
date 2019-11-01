@@ -24,6 +24,7 @@
 @end
 
 @implementation MDCFilledTextField
+@dynamic borderStyle;
 
 #pragma mark Object Lifecycle
 
@@ -45,7 +46,6 @@
 
 - (void)commonMDCFilledTextFieldInit {
   self.containerStyle = [[MDCTextControlStyleFilled alloc] init];
-  self.borderStyle = UITextBorderStyleNone;
 }
 
 #pragma mark Stateful Color APIs

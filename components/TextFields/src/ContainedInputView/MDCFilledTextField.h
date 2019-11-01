@@ -22,6 +22,11 @@
 __attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDCBaseTextField
 
 /**
+ MDCFilledTextField does not support UITextBorderStyle borders.
+ */
+@property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
+
+/**
  Sets the filled background color for a given state.
  @param filledBackgroundColor The UIColor for the given state.
  @param state The MDCTextControlState.
@@ -31,6 +36,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDC
 /**
  Returns the filled background color for a given state.
  @param state The MDCTextControlState.
+
+ The default value is a light shade of gray.
  */
 - (nonnull UIColor *)filledBackgroundColorForState:(MDCTextControlState)state;
 
@@ -44,6 +51,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDC
 /**
  Returns the underline color for a given state.
  @param state The MDCTextControlState.
+
+ The default values are sensible shades of black.
  */
 - (nonnull UIColor *)underlineColorForState:(MDCTextControlState)state;
 

@@ -257,16 +257,6 @@
 
 #pragma mark UITextField Accessor Overrides
 
-- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
-  if ([self.containerStyle isKindOfClass:[MDCTextControlStyleBase class]]) {
-    [super setBorderStyle:borderStyle];
-  } else {
-    NSLog(@"Setting borderStyle on Material styled TextFields, such as MDCFilledTextField and "
-          @"MDCOutlinedTextFIeld, is not allowed.");
-    [super setBorderStyle:UITextBorderStyleNone];
-  }
-}
-
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
 
