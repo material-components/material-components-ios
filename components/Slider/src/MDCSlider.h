@@ -376,6 +376,7 @@ IB_DESIGNABLE
  @c YES.
 
  Defaults to [[MDCTypography fontLoader] regularFontOfSize:12].
+ Note: MDCTypography is planned for deprecation in the future and therefore this value may change.
  */
 @property(nonatomic, strong, null_resettable) UIFont *discreteValueLabelFont;
 

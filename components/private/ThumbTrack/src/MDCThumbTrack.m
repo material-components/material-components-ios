@@ -842,7 +842,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if ([_delegate respondsToSelector:@selector(thumbTrack:stringForValue:)]) {
       _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
       if (CGRectGetWidth(_valueLabel.frame) > 1) {
-        CGFloat scale = UIScreen.mainScreen.scale;
+        CGFloat scale = self.window.screen.scale > 0 ?: UIScreen.mainScreen.scale;
         _valueLabelHeight =
             MAX(kValueLabelHeight, MDCCeil(_valueLabel.font.lineHeight * scale) / scale);
         CGFloat valueLabelWidth =

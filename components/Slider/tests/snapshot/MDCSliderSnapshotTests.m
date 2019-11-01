@@ -215,6 +215,11 @@
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     self.slider.traitCollectionOverride = aXXXLTraitCollection;
+    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+    // transform adjustment was made so it can let the logic know we are actually interacting with
+    // the thumb in the test.
     UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
     valueLabel.transform = CGAffineTransformIdentity;
     [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
@@ -247,6 +252,11 @@
     UITraitCollection *xsTraitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     self.slider.traitCollectionOverride = xsTraitCollection;
+    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+    // transform adjustment was made so it can let the logic know we are actually interacting with
+    // the thumb in the test.
     UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
     valueLabel.transform = CGAffineTransformIdentity;
     [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];

@@ -17,10 +17,10 @@
 @interface MDCNumericValueLabel : UIView <UIContentSizeCategoryAdjusting>
 
 /** The background color of the value label. */
-@property(nonatomic, retain, nonnull) UIColor *backgroundColor;
+@property(nonatomic, strong, nonnull) UIColor *backgroundColor;
 
 /** The text color of the label. */
-@property(nonatomic, retain, null_resettable) UIColor *textColor;
+@property(nonatomic, strong, null_resettable) UIColor *textColor;
 
 /**
  The size of the value label.
