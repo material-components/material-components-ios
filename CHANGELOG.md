@@ -1,18 +1,25 @@
-# #develop#
+# 93.3.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release adds two new APIs to FlexibleHeader for contexts involving multiple tracking
+scroll views (such as tabbed interfaces).
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+MDCFlexibleHeaderView has a new API,
+`allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView`, which can be used to enable shadow
+layer frame animations when the header's height is animated after switching to a new tracking
+scroll view. This flag is false by default, but will be enabled and then deleted in the future, so
+please consider enabling it wherever you instantiate a flexible header or app bar.
+
+MDCFlexibleHeaderView has a new `animationDelegate` API that can be used to react to the completion
+of the animation that occurs when changing tracking scroll views.
 
 ## Component changes
+
+### FlexibleHeader
+
+* [Add behavioral flag for animating shadow layer frames when tracking scroll view is changed (#8715)](https://github.com/material-components/material-components-ios/commit/06c6be082a7d02c674902e78c0154668761cf983) (featherless)
+* [Expose an animation delegate on MDCFlexibleHeaderView. (#8712)](https://github.com/material-components/material-components-ios/commit/96d6880071352be0a6aa25be599ad18cffeda765) (featherless)
 
 ---
 
