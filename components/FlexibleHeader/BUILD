@@ -133,6 +133,7 @@ mdc_snapshot_swift_library(
     name = "snapshot_test_lib_swift",
     deps = [
         ":FlexibleHeader",
+        "//components/ShadowLayer",
     ],
 )
 
