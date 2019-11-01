@@ -128,14 +128,14 @@
   [actionSheet addAction:emailAction3];
   [actionSheet addAction:emailAction4];
   [actionSheet applyThemeWithScheme:self.containerScheme];
-//  actionSheet.title = @"Choose Your Adventure";
-//  actionSheet.message = @"Consider carefully before you make your choice. Your next step may lead to riches or utter defeat!";
+  actionSheet.title = @"Choose Your Adventure";
+  actionSheet.message = @"Consider carefully before you make your choice. Your next step may lead to riches or utter defeat!";
 
   UIFont *font = [UIFont fontWithName:@"Zapfino" size:8];
   if (@available(iOS 11.0, *)) {
     actionSheet.actionFont = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody] scaledFontForFont:font];
-//    actionSheet.titleFont = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleTitle2] scaledFontForFont:font];
-//    actionSheet.messageFont = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleSubheadline] scaledFontForFont:font];
+    actionSheet.titleFont = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleTitle2] scaledFontForFont:font];
+    actionSheet.messageFont = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleSubheadline] scaledFontForFont:font];
   }
   actionSheet.adjustsFontForContentSizeCategory = YES;
   [self presentViewController:actionSheet animated:YES completion:nil];

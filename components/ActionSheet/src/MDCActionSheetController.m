@@ -185,13 +185,15 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
   if (self.needToLayoutTable) {
     [self.tableView layoutIfNeeded];
+    [self.header setNeedsLayout];
+    [self.header layoutIfNeeded];
     self.needToLayoutTable = NO;
   }
   CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   CGFloat totalHeight = self.tableView.contentSize.height + size.height + dividerHeight;
   if (@available(iOS 10.0, *)) {
-    NSLog(@"Table view's contentSize = %f\nTraitCollection.contentSize = %@", self.tableView.contentSize.height, self.traitCollection.preferredContentSizeCategory);
+    NSLog(@"Table view's contentSize = %f\nHeader's size = %f\nTraitCollection.contentSize = %@", self.tableView.contentSize.height, size.height, self.traitCollection.preferredContentSizeCategory);
   }
   if (totalHeight > (CGRectGetHeight(self.view.bounds) / 2)) {
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = CGRectGetHeight(self.view.bounds) / 2;
