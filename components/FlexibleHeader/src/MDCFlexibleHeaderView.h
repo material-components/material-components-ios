@@ -46,6 +46,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
   MDCFlexibleHeaderScrollPhaseOverExtending,
 };
 
+@protocol MDCFlexibleHeaderViewAnimationDelegate;
 @protocol MDCFlexibleHeaderViewDelegate;
 
 /**
@@ -367,6 +368,18 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL sharedWithManyScrollViews;
 
 /**
+ Whether to allow shadow frame animations when animating changes to the tracking scroll view.
+
+ Enabling this property allows layoutSubviews to animate the shadow frames as part of the animation
+ that occurs when changing tracking scroll views.
+
+ This property will eventually be enabled by default and then deleted.
+
+ Default is NO.
+ */
+@property(nonatomic, assign) BOOL allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView;
+
+/**
  If enabled, the trackingScrollView doesn't adjust the content inset when its
  contentInsetAdjustmentBehavior is set to be UIScrollViewContentInsetAdjustmentNever.
 
@@ -376,10 +389,13 @@ IB_DESIGNABLE
     BOOL disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever API_AVAILABLE(
         ios(11.0), tvos(11.0));
 
-#pragma mark Header View Delegate
+#pragma mark Delegation
 
 /** The delegate for this header view. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewDelegate> delegate;
+
+/** The animation delegate will be notified of any animations to the flexible header view. */
+@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewAnimationDelegate> animationDelegate;
 
 /**
  A block that is invoked when the FlexibleHeaderView receives a call to @c
@@ -419,6 +435,24 @@ IB_DESIGNABLE
  is in.
  */
 - (void)flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)headerView;
+
+@end
+
+/**
+ An object may conform to this protocol in order to receive animation events caused by a
+ MDCFlexibleHeaderView.
+ */
+@protocol MDCFlexibleHeaderViewAnimationDelegate <NSObject>
+@required
+
+/**
+ Informs the receiver that the flexible header view's animation changing to a new tracking scroll
+ view has completed.
+
+ Only invoked if an animation occurred when the tracking scroll view was changed.
+ */
+- (void)flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:
+    (nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end
 
