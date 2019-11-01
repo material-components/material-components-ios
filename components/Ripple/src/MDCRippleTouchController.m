@@ -95,7 +95,7 @@
   MDCRippleView *rippleView = self.rippleView;
 
   [self attachGestureRecognizerToView:view];
-  [self insertRippleView:rippleView intoView:_view];
+  [self insertRippleView:rippleView intoView:view];
 }
 
 - (void)attachGestureRecognizerToView:(UIView *)view {
