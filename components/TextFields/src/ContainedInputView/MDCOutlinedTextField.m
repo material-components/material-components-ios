@@ -25,6 +25,8 @@
 
 @implementation MDCOutlinedTextField
 
+#pragma mark Object Lifecycle
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -46,6 +48,17 @@
   self.borderStyle = UITextBorderStyleNone;
 }
 
+#pragma mark UITextField Overrides
+
+- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
+  if (borderStyle == UITextBorderStyleNone) {
+    [super setBorderStyle:borderStyle];
+  } else {
+    NSLog(@"Setting borderStyle on MDCOutlinedTextField is not allowed.");
+    [super setBorderStyle:UITextBorderStyleNone];
+  }
+}
+
 #pragma mark Stateful Color APIs
 
 - (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(MDCTextControlState)state {
@@ -56,6 +69,8 @@
 - (nonnull UIColor *)outlineColorForState:(MDCTextControlState)state {
   return [self.outlinedStyle outlineColorForState:state];
 }
+
+#pragma mark Private Helpers
 
 - (MDCTextControlStyleOutlined *)outlinedStyle {
   MDCTextControlStyleOutlined *outlinedStyle = nil;

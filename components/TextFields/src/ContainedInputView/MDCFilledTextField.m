@@ -48,6 +48,17 @@
   self.borderStyle = UITextBorderStyleNone;
 }
 
+#pragma mark UITextField Overrides
+
+- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
+  if (borderStyle == UITextBorderStyleNone) {
+    [super setBorderStyle:borderStyle];
+  } else {
+    NSLog(@"Setting borderStyle on MDCFilledTextField is not allowed.");
+    [super setBorderStyle:UITextBorderStyleNone];
+  }
+}
+
 #pragma mark Stateful Color APIs
 
 - (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
