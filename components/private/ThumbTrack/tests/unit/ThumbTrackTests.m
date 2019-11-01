@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 #import "../../src/private/MDCThumbTrack+Private.h"
 #import "MaterialThumbTrack.h"
+#import "MaterialTypography.h"
 
 @interface ThumbTrackTests : XCTestCase
 
@@ -359,6 +360,28 @@
 
   // Then
   XCTAssertEqualObjects(thumbTrack.numericValueLabel.backgroundColor, UIColor.cyanColor);
+}
+
+- (void)testDiscreteValueLabelFontDefaultValue {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.discreteValueLabelFont,
+                        [[MDCTypography fontLoader] regularFontOfSize:12]);
+}
+
+- (void)testDiscreteValueLabelFontSettingToNilValue {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+  thumbTrack.discreteValueLabelFont = [UIFont systemFontOfSize:20];
+
+  // When
+  thumbTrack.discreteValueLabelFont = nil;
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.discreteValueLabelFont,
+                        [[MDCTypography fontLoader] regularFontOfSize:12]);
 }
 
 @end
