@@ -75,6 +75,8 @@
 - (void)setDelegate:(id<MDCRippleTouchControllerDelegate>)delegate {
   _delegate = delegate;
 
+  // The delegate's behavior - in terms of which optional methods are deemed to be
+  // implemented - is cached at assignment rather than inspected on each invocation.
   _delegateFlags.rippleTouchControllerShouldProcessRippleTouchesAtTouchLocation =
       [_delegate respondsToSelector:@selector(rippleTouchController:
                                         shouldProcessRippleTouchesAtTouchLocation:)];
