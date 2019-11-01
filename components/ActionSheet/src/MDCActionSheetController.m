@@ -166,7 +166,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   [super viewDidLoad];
 
   self.view.backgroundColor = self.backgroundColor;
-  self.tableView.frame = self.view.bounds;
+  //self.tableView.frame = self.view.bounds;
   self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
   self.view.preservesSuperviewLayoutMargins = YES;
   if (@available(iOS 11.0, *)) {
@@ -181,14 +181,15 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if (self.tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
+  CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
+  CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
+  CGFloat totalHeight = self.tableView.contentSize.height + size.height + dividerHeight;
+  if (totalHeight > (CGRectGetHeight(self.view.bounds) / 2)) {
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
   } else {
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = 0;
   }
-  CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
-  CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
   self.headerDividerView.frame =
       CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), dividerHeight);
   UIEdgeInsets insets = UIEdgeInsetsMake(size.height + dividerHeight, 0, 0, 0);
@@ -197,6 +198,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   }
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
+  self.tableView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), totalHeight);
 }
 
 - (CGFloat)openingSheetHeight {
