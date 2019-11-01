@@ -87,6 +87,7 @@ mdc_unit_test_objc_library(
 mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
     deps = [
+        ":ButtonBar",
         "//components/Typography",
     ],
 )
