@@ -66,6 +66,22 @@ static NSString *const kLongTitle5Arabic =
 
 @end
 
+/** A test fake window that allows overriding its @c traitCollection. */
+@interface MDCActionSheetControllerCustomTraitCollectionTestsWindowFake : UIWindow
+
+/** Set to override the value of @c traitCollection. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation MDCActionSheetControllerCustomTraitCollectionTestsWindowFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 /** Snapshot tests for MDCActionSheetController's view. */
 @interface MDCActionSheetControllerSnapshotTests : MDCSnapshotTestCase
 
@@ -967,5 +983,114 @@ static NSString *const kLongTitle5Arabic =
   // Then
   [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
 }
+
+/**
+  Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a larger size when
+  the preferred content size category increases.
+  */
+ - (void)testAdjustsFontForContentSizeUpscalesUIFontMetricsFontsForSizeCategoryAXXXL {
+   if (@available(iOS 11.0, *)) {
+     // Given
+     self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:@"Foo" message:@"Bar"];
+     self.actionSheetController.adjustsFontForContentSizeCategory = YES;
+     MDCActionSheetAction *action =
+         [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                         image:nil
+                                       handler:nil];
+     [self.actionSheetController addAction:action];
+     UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+     UITraitCollection *extraSmallTraits = [UITraitCollection
+         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+     // Setup title font
+     UIFontMetrics *titleMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleTitle1];
+     UIFont *titleFont = [titleMetrics scaledFontForFont:originalFont
+                     compatibleWithTraitCollection:extraSmallTraits];
+     self.actionSheetController.titleFont = titleFont;
+     // Setup message font
+     UIFontMetrics *messageMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleSubheadline];
+     UIFont *messageFont = [messageMetrics scaledFontForFont:originalFont compatibleWithTraitCollection:extraSmallTraits];
+     self.actionSheetController.messageFont = messageFont;
+     // Setup actions font
+     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+     UIFont *bodyFont = [bodyMetrics scaledFontForFont:originalFont compatibleWithTraitCollection:extraSmallTraits];
+     self.actionSheetController.actionFont = bodyFont;
+     self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+
+     // Create a window so the Action Sheet's view can inherit the trait environment.
+     MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
+         [[MDCActionSheetControllerCustomTraitCollectionTestsWindowFake alloc] init];
+     [window makeKeyWindow];
+     window.hidden = NO;
+     [window addSubview:self.actionSheetController.view];
+
+     // When
+     window.traitCollectionOverride =
+         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+     [window traitCollectionDidChange:nil];
+     [self.actionSheetController.view layoutIfNeeded];
+     window.bounds = CGRectMake(0, 0, 320, 200);
+     self.actionSheetController.view.frame = window.bounds;
+
+     // Then
+     // Can't add a UIWindow to a UIView, so just screenshot the window directly.
+     [window layoutIfNeeded];
+     [self snapshotVerifyView:window];
+   }
+ }
+
+ /**
+  Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a smaller size
+  when the preferred content size category decreases.
+  */
+ - (void)testAdjustsFontForContentSizeDownscalesUIFontMetricsFontsForSizeCategoryXS {
+   if (@available(iOS 11.0, *)) {
+     // Given
+          self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:@"Foo" message:@"Bar"];
+     self.actionSheetController.adjustsFontForContentSizeCategory = YES;
+     MDCActionSheetAction *action =
+         [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                         image:nil
+                                       handler:nil];
+     [self.actionSheetController addAction:action];
+     UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+     UITraitCollection *extraSmallTraits = [UITraitCollection
+         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+     // Setup title font
+     UIFontMetrics *titleMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleTitle1];
+     UIFont *titleFont = [titleMetrics scaledFontForFont:originalFont
+                     compatibleWithTraitCollection:extraSmallTraits];
+     self.actionSheetController.titleFont = titleFont;
+     // Setup message font
+     UIFontMetrics *messageMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleSubheadline];
+     UIFont *messageFont = [messageMetrics scaledFontForFont:originalFont compatibleWithTraitCollection:extraSmallTraits];
+     self.actionSheetController.messageFont = messageFont;
+     // Setup actions font
+     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+     UIFont *bodyFont = [bodyMetrics scaledFontForFont:originalFont compatibleWithTraitCollection:extraSmallTraits];
+     self.actionSheetController.actionFont = bodyFont;
+     self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+
+     // Create a window so the Action Sheet's view can inherit the trait environment.
+     MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
+         [[MDCActionSheetControllerCustomTraitCollectionTestsWindowFake alloc] init];
+     [window makeKeyWindow];
+     window.hidden = NO;
+     [window addSubview:self.actionSheetController.view];
+
+     // When
+     window.traitCollectionOverride = [UITraitCollection
+         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+     [window traitCollectionDidChange:nil];
+     [self.actionSheetController.view layoutIfNeeded];
+     window.bounds = CGRectMake(0, 0, 320, 200);
+     self.actionSheetController.view.frame = window.bounds;
+
+     // Then
+     // Can't add a UIWindow to a UIView, so just screenshot the window directly.
+     [window layoutIfNeeded];
+     [self snapshotVerifyView:window];
+   }
+ }
 
 @end
