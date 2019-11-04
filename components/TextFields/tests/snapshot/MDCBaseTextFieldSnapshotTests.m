@@ -37,7 +37,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //          self.recordMode = YES;
+  //      self.recordMode = YES;
 }
 
 - (void)tearDown {
@@ -49,7 +49,7 @@
 }
 
 - (void)validateTextField:(MDCBaseTextField *)textField {
-  [MDCTextControlSnapshotTestHelpers validateTextControl:(UIView<MDCTextControl> *)self.textField
+  [MDCTextControlSnapshotTestHelpers validateTextControl:(UIView<MDCTextControl> *)textField
                                             withTestCase:self];
 }
 
