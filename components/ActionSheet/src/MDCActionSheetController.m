@@ -80,7 +80,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
  */
 @property(nonatomic, assign) BOOL addLeadingPaddingToCell;
 
-@property(nonatomic, assign) BOOL needToLayoutTable;
 @end
 
 @implementation MDCActionSheetController {
@@ -183,12 +182,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  if (self.needToLayoutTable) {
-    [self.tableView layoutIfNeeded];
-    [self.header setNeedsLayout];
-    [self.header layoutIfNeeded];
-    self.needToLayoutTable = NO;
-  }
   CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   CGFloat totalHeight = self.tableView.contentSize.height + size.height + dividerHeight;
@@ -382,7 +375,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
       if (![self.traitCollection.preferredContentSizeCategory
               isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
         [self updateTable];
-        self.needToLayoutTable = YES;
       }
     }
   }
