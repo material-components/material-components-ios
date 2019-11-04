@@ -33,8 +33,8 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 + (void)addTextControlToKeyWindow:(UIView<MDCTextControl> *)textControl {
   // Add the text control to a container view. This is the view we snapshot. Snapshotting this view
   // instead of the text control allows us to see the floating label go outside the bounds for the
-  // outlined style.
-  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+  // outlined style
+  UIView *container = [[UIView alloc] init];
   container.layer.borderColor = UIColor.blackColor.CGColor;
   container.layer.borderWidth = (CGFloat)1;
   [container addSubview:textControl];
@@ -77,9 +77,13 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   CGRect textControlFrame = textControl.frame;
   CGFloat textControlWidth = CGRectGetWidth(textControlFrame);
   CGFloat textControlHeight = CGRectGetHeight(textControlFrame);
-  CGRect newContainerFrame = CGRectMake(0, 0, textControlWidth + 30, textControlHeight + 30);
+  CGFloat containerPadding = (CGFloat)15.0;
+  CGFloat containerWidth = textControlWidth + (CGFloat)2.0 * containerPadding;
+  CGFloat containerHeight = textControlHeight + (CGFloat)2.0 * containerPadding;
+  CGRect newContainerFrame = CGRectMake(0, 0, containerWidth, containerHeight);
   CGRect newTextControlFrame =
-      CGRectMake(15, 15, CGRectGetWidth(textControlFrame), CGRectGetHeight(textControlFrame));
+      CGRectMake(containerPadding, containerPadding, CGRectGetWidth(textControlFrame),
+                 CGRectGetHeight(textControlFrame));
   container.frame = newContainerFrame;
   textControl.frame = newTextControlFrame;
 }
