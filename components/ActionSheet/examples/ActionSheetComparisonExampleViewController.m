@@ -82,8 +82,8 @@
 
 - (void)showMaterialActionSheet {
   MDCActionSheetController *actionSheet =
-      [MDCActionSheetController actionSheetControllerWithTitle:nil
-                                                       message:nil];
+      [MDCActionSheetController actionSheetControllerWithTitle:@"Action Sheet Title"
+      message:@"Action Sheet Message"];
   MDCActionSheetAction *homeAction =
       [MDCActionSheetAction actionWithTitle:@"Home"
                                       image:[UIImage imageNamed:@"Home"]
@@ -106,8 +106,6 @@
   [actionSheet addAction:favoriteAction];
   [actionSheet addAction:emailAction];
   [actionSheet applyThemeWithScheme:self.containerScheme];
-  actionSheet.title = @"Choose Your Adventure";
-  actionSheet.message = @"Consider carefully before you make your choice. Your next step may lead to riches or utter defeat!";
 
   UIFont *font = [UIFont fontWithName:@"Zapfino" size:8];
   if (@available(iOS 11.0, *)) {

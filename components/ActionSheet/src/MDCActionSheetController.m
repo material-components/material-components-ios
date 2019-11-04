@@ -186,7 +186,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   CGFloat totalHeight = self.tableView.contentSize.height + size.height + dividerHeight;
   if (totalHeight > (CGRectGetHeight(self.view.bounds) / 2)) {
-    self.mdc_bottomSheetPresentationController.preferredSheetHeight = CGRectGetHeight(self.view.bounds) / 2;
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
   } else {
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = totalHeight;
   }
