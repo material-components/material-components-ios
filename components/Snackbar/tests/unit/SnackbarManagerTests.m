@@ -112,7 +112,10 @@
   MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
 
   // Then
-  XCTAssertTrue(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  XCTAssertFalse(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+#pragma clang diagnostic pop
 }
 
 - (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
