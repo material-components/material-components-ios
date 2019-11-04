@@ -96,26 +96,7 @@
                                     handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Favorite Action");
                                     }];
-  MDCActionSheetAction *emailAction1 =
-      [MDCActionSheetAction actionWithTitle:@"Email"
-                                      image:[UIImage imageNamed:@"Email"]
-                                    handler:^(MDCActionSheetAction *action) {
-                                      NSLog(@"Email Action");
-                                    }];
-
-  MDCActionSheetAction *emailAction2 =
-      [MDCActionSheetAction actionWithTitle:@"Email"
-                                      image:[UIImage imageNamed:@"Email"]
-                                    handler:^(MDCActionSheetAction *action) {
-                                      NSLog(@"Email Action");
-                                    }];
-  MDCActionSheetAction *emailAction3 =
-      [MDCActionSheetAction actionWithTitle:@"Email"
-                                      image:[UIImage imageNamed:@"Email"]
-                                    handler:^(MDCActionSheetAction *action) {
-                                      NSLog(@"Email Action");
-                                    }];
-  MDCActionSheetAction *emailAction4 =
+  MDCActionSheetAction *emailAction =
       [MDCActionSheetAction actionWithTitle:@"Email"
                                       image:[UIImage imageNamed:@"Email"]
                                     handler:^(MDCActionSheetAction *action) {
@@ -123,10 +104,7 @@
                                     }];
   [actionSheet addAction:homeAction];
   [actionSheet addAction:favoriteAction];
-  [actionSheet addAction:emailAction1];
-  [actionSheet addAction:emailAction2];
-  [actionSheet addAction:emailAction3];
-  [actionSheet addAction:emailAction4];
+  [actionSheet addAction:emailAction];
   [actionSheet applyThemeWithScheme:self.containerScheme];
   actionSheet.title = @"Choose Your Adventure";
   actionSheet.message = @"Consider carefully before you make your choice. Your next step may lead to riches or utter defeat!";
