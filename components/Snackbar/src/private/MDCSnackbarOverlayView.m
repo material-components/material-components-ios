@@ -46,9 +46,6 @@ static const CGFloat MDCSnackbarSideMargin_CompactWidth = 8;
 static const CGFloat MDCSnackbarLegacySideMargin_CompactWidth = 0;
 static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24;
 
-// The maximum height of the Snackbar.
-static const CGFloat kMaximumHeight = 80;
-
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 @interface MDCSnackbarOverlayView () <CAAnimationDelegate>
 @end
@@ -84,11 +81,6 @@ static const CGFloat kMaximumHeight = 80;
  to a negative value will cause Snackbars to appear from a point above the bottom of the screen.
  */
 @property(nonatomic) NSLayoutConstraint *bottomConstraint;
-
-/**
- The layout constraint which determines the maximum height of the Snackbar .
- */
-@property(nonatomic) NSLayoutConstraint *maximumHeightConstraint;
 
 /**
  The view which actually houses the Snackbar. This view is sized to be the same width and height as
@@ -378,18 +370,6 @@ static const CGFloat kMaximumHeight = 80;
         _snackbarOffscreenConstraint.priority = UILayoutPriorityDefaultLow;
       }
       [container addConstraint:_snackbarOffscreenConstraint];
-
-      // Always limit the height of the Snackbar.
-      self.maximumHeightConstraint =
-          [NSLayoutConstraint constraintWithItem:snackbarView
-                                       attribute:NSLayoutAttributeHeight
-                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                          toItem:nil
-                                       attribute:NSLayoutAttributeNotAnAttribute
-                                      multiplier:1.0
-                                        constant:self.maximumHeight];
-
-      [container addConstraint:self.maximumHeightConstraint];
     }
   }
 }
@@ -429,17 +409,6 @@ static const CGFloat kMaximumHeight = 80;
                       toCoordinateSpace:window.screen.coordinateSpace];
 }
 
-- (CGFloat)maximumHeight {
-  // Maximum height must be extended to include the bottom content safe area.
-  CGFloat maximumHeight = kMaximumHeight;
-  if (self.anchoredToScreenBottom && MDCSnackbarMessage.usesLegacySnackbar) {
-    if (@available(iOS 11.0, *)) {
-      maximumHeight += self.safeAreaInsets.bottom;
-    }
-  }
-  return maximumHeight;
-}
-
 - (BOOL)anchoredToScreenBottom {
   return [self dynamicBottomMargin] == 0;
 }
@@ -447,7 +416,6 @@ static const CGFloat kMaximumHeight = 80;
 #pragma mark - Safe Area Insets
 
 - (void)safeAreaInsetsDidChange {
-  self.maximumHeightConstraint.constant = self.maximumHeight;
   [self triggerSnackbarLayoutChange];
 }
 
@@ -636,7 +604,6 @@ static const CGFloat kMaximumHeight = 80;
   if (_bottomOffset != bottomOffset) {
     _bottomOffset = bottomOffset;
 
-    self.maximumHeightConstraint.constant = self.maximumHeight;
     self.bottomConstraint.constant = -self.dynamicBottomMargin;
     [self triggerSnackbarLayoutChange];
 
