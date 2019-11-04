@@ -137,8 +137,13 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                                               containerHeight:containerHeight
                                                                     lineWidth:outlineLineWidth
                                                               isLabelFloating:isLabelFloating];
+
+  [CATransaction begin];
+  [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
   self.outlinedSublayer.path = path.CGPath;
   self.outlinedSublayer.lineWidth = outlineLineWidth;
+  [CATransaction commit];
+
   if (self.outlinedSublayer.superlayer != view.layer) {
     [view.layer insertSublayer:self.outlinedSublayer atIndex:0];
   }

@@ -165,8 +165,8 @@
   [self.assistiveLabelView setNeedsLayout];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
-  [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   [self animateLabel];
+  [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
