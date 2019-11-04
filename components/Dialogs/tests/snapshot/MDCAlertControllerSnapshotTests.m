@@ -328,6 +328,12 @@ static NSString *const kMessageLongArabic =
   // Then
   [self waitForExpectations:@[ expectation ] timeout:5];
   [self snapshotVerifyViewForIOS13:window];
+  expectation = [self expectationWithDescription:@"Alert dismissed."];
+  [currentViewController dismissViewControllerAnimated:NO
+                                            completion:^{
+                                              [expectation fulfill];
+                                            }];
+  [self waitForExpectations:@[ expectation ] timeout:5];
 }
 
 @end

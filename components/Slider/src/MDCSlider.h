@@ -38,7 +38,8 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl <MDCElevatable, MDCElevationOverriding>
+@interface MDCSlider
+    : UIControl <MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
 
 /** When @c YES, the forState: APIs are enabled. Defaults to @c NO. */
 @property(nonatomic, assign, getter=isStatefulAPIEnabled) BOOL statefulAPIEnabled;
@@ -366,6 +367,18 @@ IB_DESIGNABLE
  Defaults to @c NO
  */
 @property(nonatomic, assign) BOOL shouldEnableHapticsForAllDiscreteValues;
+
+/**
+ The font of the discrete value label.
+
+ This font will come into effect only when @c numberOfDiscreteValues is larger than 0 and when @c
+ shouldDisplayDiscreteValueLabel is
+ @c YES.
+
+ Defaults to [[MDCTypography fontLoader] regularFontOfSize:12].
+ Note: MDCTypography is planned for deprecation in the future and therefore this value may change.
+ */
+@property(nonatomic, strong, null_resettable) UIFont *discreteValueLabelFont;
 
 @end
 

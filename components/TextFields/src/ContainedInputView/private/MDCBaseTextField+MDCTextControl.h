@@ -1,4 +1,4 @@
-// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** IMPORTANT:
- This file contains supplemental code used to populate the examples with dummy data and/or
- instructions. It is not necessary to import this file to use Material Components iOS.
- */
-
 #import <UIKit/UIKit.h>
+#import "MDCBaseTextField.h"
+#import "MDCTextControl.h"
 
-@interface FlexibleHeaderPageControlExample : UIViewController
-
-@property(nonatomic, strong, nullable) UIScrollView *scrollView;
-
-@end
-
-@interface FlexibleHeaderPageControlExample (Supplemental)
-
+/**
+ This category is imported from MDCBaseTextField subclasses and categories, as well as categories of
+ MDCBaseTextField subclasses, to make MDCTextControl conformance visible.
+ */
+@interface MDCBaseTextField (Private) <MDCTextControl>
 @end

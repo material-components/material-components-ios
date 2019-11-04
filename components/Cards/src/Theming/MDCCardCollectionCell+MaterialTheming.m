@@ -52,7 +52,12 @@ static const CGFloat kBorderWidth = 1;
 }
 
 - (void)applyThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
-  [MDCCardsShapeThemer applyShapeScheme:shapeScheme toCardCell:self];
+  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
+  rectangleShape.topLeftCorner = shapeScheme.mediumComponentShape.topLeftCorner;
+  rectangleShape.topRightCorner = shapeScheme.mediumComponentShape.topRightCorner;
+  rectangleShape.bottomLeftCorner = shapeScheme.mediumComponentShape.bottomLeftCorner;
+  rectangleShape.bottomRightCorner = shapeScheme.mediumComponentShape.bottomRightCorner;
+  self.shapeGenerator = rectangleShape;
 }
 
 #pragma mark - Outlined Card

@@ -141,6 +141,6 @@ mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [
         ":snapshot_test_lib",
-        ":snapshot_test_lib_swift"
+        ":snapshot_test_lib_swift",
     ],
 )

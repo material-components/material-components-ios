@@ -15,12 +15,13 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderTopLayoutGuideSupplemental.h"
+#import "MaterialPalettes.h"
 
-@interface FlexibleHeaderTopLayoutGuideExample () <MDCFlexibleHeaderViewLayoutDelegate,
-                                                   UIScrollViewDelegate>
+@interface FlexibleHeaderTopLayoutGuideExample
+    : UIViewController <MDCFlexibleHeaderViewLayoutDelegate, UIScrollViewDelegate>
 
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic, strong) UIView *constrainedView;
 
 @end
@@ -179,6 +180,70 @@
     [self.fhvc.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
                                                     targetContentOffset:targetContentOffset];
   }
+}
+
+#pragma mark - Supplemental
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+- (void)setupScrollViewContent {
+  UIColor *color = MDCPalette.greyPalette.tint700;
+  UIView *scrollViewContent =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width,
+                                               self.scrollView.frame.size.height * 2)];
+  scrollViewContent.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  UILabel *pullDownLabel = [[UILabel alloc]
+      initWithFrame:CGRectMake(20, 150, self.scrollView.frame.size.width - 40, 50)];
+  pullDownLabel.textColor = color;
+  pullDownLabel.text = @"Pull Down";
+  pullDownLabel.textAlignment = NSTextAlignmentCenter;
+  pullDownLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                                   UIViewAutoresizingFlexibleLeftMargin |
+                                   UIViewAutoresizingFlexibleRightMargin;
+  [scrollViewContent addSubview:pullDownLabel];
+
+  UILabel *pushUpLabel = [[UILabel alloc]
+      initWithFrame:CGRectMake(20, 225, self.scrollView.frame.size.width - 40, 50)];
+  pushUpLabel.textColor = color;
+  pushUpLabel.text = @"Push Up";
+  pushUpLabel.textAlignment = NSTextAlignmentCenter;
+  pushUpLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                                 UIViewAutoresizingFlexibleLeftMargin |
+                                 UIViewAutoresizingFlexibleRightMargin;
+  [scrollViewContent addSubview:pushUpLabel];
+
+  UILabel *downResultsLabel = [[UILabel alloc]
+      initWithFrame:CGRectMake(20, 325, self.scrollView.frame.size.width - 40, 50)];
+  downResultsLabel.textColor = color;
+  downResultsLabel.text = @"UIView Stays Constrained to TopLayoutGuide of Parent View Controller.";
+  downResultsLabel.numberOfLines = 0;
+  downResultsLabel.textAlignment = NSTextAlignmentCenter;
+  downResultsLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                                      UIViewAutoresizingFlexibleLeftMargin |
+                                      UIViewAutoresizingFlexibleRightMargin;
+  [scrollViewContent addSubview:downResultsLabel];
+
+  [self.scrollView addSubview:scrollViewContent];
+  self.scrollView.contentSize = scrollViewContent.frame.size;
+}
+
+@end
+
+@implementation FlexibleHeaderTopLayoutGuideExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Utilizing Top Layout Guide" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

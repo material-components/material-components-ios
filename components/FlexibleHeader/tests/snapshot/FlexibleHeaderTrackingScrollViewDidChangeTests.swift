@@ -33,6 +33,7 @@ class FlexibleHeaderTrackingScrollViewDidChangeTests: XCTestCase {
     fhvc.headerView.minMaxHeightIncludesSafeArea = false
     fhvc.headerView.sharedWithManyScrollViews = true
     fhvc.headerView.maximumHeight = 200
+    fhvc.headerView.allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView = true
     let scrollView1 = UIScrollView()
     let scrollView2 = UIScrollView()
     let largeScrollableArea = CGSize(width: fhvc.headerView.frame.width, height: 1000)
@@ -71,7 +72,7 @@ class FlexibleHeaderTrackingScrollViewDidChangeTests: XCTestCase {
 
     for sublayer in sublayers {
       guard let animation = sublayer.animation(forKey: "shadowPath") else {
-        XCTFail("Missing shadowPath animation.")
+        XCTFail("Missing shadowPath animation. \(sublayer)")
         return
       }
       XCTAssertNotNil(animation)

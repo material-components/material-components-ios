@@ -182,10 +182,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // layout guide. Once we drop iOS 8 support this can be changed to a UILayoutGuide instead.
   UIView *_topSafeAreaGuide;
 
-  // Whether the flexible header is currently within an animate block for changing the tracking
-  // scroll view.
-  BOOL _isAnimatingTrackingScrollViewChange;
-
   MDCStatusBarShifter *_statusBarShifter;
 
   // Layers for header shadows.
@@ -194,6 +190,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   // The block executed when shadow intensity changes.
   MDCFlexibleHeaderShadowIntensityChangeBlock _shadowIntensityChangeBlock;
+
+  // Whether the flexible header is currently within an animate block for changing the tracking
+  // scroll view.
+  BOOL _isAnimatingTrackingScrollViewChange;
 
   Class _wkWebViewClass;
 
@@ -1564,26 +1564,33 @@ static BOOL isRunningiOS10_3OrAbove() {
   CAMediaTimingFunction *timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 
-  void (^animate)(void) = ^{
-    self->_isAnimatingTrackingScrollViewChange = YES;
+  void (^animate)(void);
+  if (self.allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView) {
+    animate = ^{
+      self->_isAnimatingTrackingScrollViewChange = YES;
 
-    [CATransaction begin];
+      [CATransaction begin];
 #if TARGET_IPHONE_SIMULATOR
-    [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
+      [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
 #else
-    [CATransaction setAnimationDuration:duration];
+      [CATransaction setAnimationDuration:duration];
 #endif
-    [CATransaction setAnimationTimingFunction:timingFunction];
+      [CATransaction setAnimationTimingFunction:timingFunction];
 
-    [self fhv_updateLayout];
+      [self fhv_updateLayout];
 
-    // Force any layout changes to be committed during this animation block.
-    [self layoutIfNeeded];
+      // Force any layout changes to be committed during this animation block.
+      [self layoutIfNeeded];
 
-    [CATransaction commit];
+      [CATransaction commit];
 
-    self->_isAnimatingTrackingScrollViewChange = NO;
-  };
+      self->_isAnimatingTrackingScrollViewChange = NO;
+    };
+  } else {
+    animate = ^{
+      [self fhv_updateLayout];
+    };
+  }
   void (^completion)(BOOL) = ^(BOOL finished) {
     if (!finished) {
       return;
@@ -1595,7 +1602,13 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   };
   if (wasTrackingScrollView && shouldAnimate) {
-    [UIView animateWithDuration:duration animations:animate completion:completion];
+    [UIView animateWithDuration:duration
+                     animations:animate
+                     completion:^(BOOL finished) {
+                       [self.animationDelegate
+                           flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
+                       completion(finished);
+                     }];
   } else {
     animate();
     completion(YES);
