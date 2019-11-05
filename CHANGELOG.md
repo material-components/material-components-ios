@@ -1,24 +1,20 @@
-# #develop#
+# 93.4.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release adds a new Filled and Outlined TextFields that will eventually replace MDCTextField's filled and outlined controllers. Additionally, it fixes dynamic type issues for multiple components, and removes deprecated themers.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-### Dialogs
+### TextFields
 
-* [Title supports Dynamic Type. (#8691)](https://github.com/material-components/material-components-ios/commit/8c445f613865ae9c29e5ec6ab1b11435c1e2b34c) (Robert Moore)
+* [Add filled textfields (#8674)](https://github.com/material-components/material-components-ios/commit/f2e5fe4fbd17735858b1897765ce6c4f55147cb9) (Andrew Overton)
+* [Add outlined textfield (#8705)](https://github.com/material-components/material-components-ios/commit/cfc699b1992c56e2e67cfc082e568863ac80da18) (Andrew Overton)
 
-Replace this text with example code for each new feature.
 ## API changes
 
 ### FlexibleHeader
 
 * [Add behavioral flag for animating shadow layer frames when tracking scroll view is changed (#8715)](https://github.com/material-components/material-components-ios/commit/06f9328350646cf7215e952e6cd22333e1c0eb1e) (featherless)
+
 * [Expose an animation delegate on MDCFlexibleHeaderView. (#8712)](https://github.com/material-components/material-components-ios/commit/bd39f8483b750816bcfae30e2906aad782cc9665) (featherless)
 * [Move all supplemental code into the examples. (#8690)](https://github.com/material-components/material-components-ios/commit/f758365a6e931a401b756b396679bfb08cf8ca35) (featherless)
 
@@ -28,29 +24,33 @@ Replace this text with example code for each new feature.
 
 ## Component changes
 
+### Dialogs
+
+* [Title supports Dynamic Type. (#8691)](https://github.com/material-components/material-components-ios/commit/8c445f613865ae9c29e5ec6ab1b11435c1e2b34c) (Robert Moore)
+
 ### TextFields
 
 * [Add animation duration property to properly snapshot test MDCBaseTextField's subclasses (#8693)](https://github.com/material-components/material-components-ios/commit/2ea2f012074a4eb93d6f5613591f832445662939) (Andrew Overton)
-* [Add filled textfields (#8674)](https://github.com/material-components/material-components-ios/commit/f2e5fe4fbd17735858b1897765ce6c4f55147cb9) (Andrew Overton)
-* [Add outlined textfield (#8705)](https://github.com/material-components/material-components-ios/commit/cfc699b1992c56e2e67cfc082e568863ac80da18) (Andrew Overton)
-* [Add safety return to new multiline logic to make i… (#8695)](https://github.com/material-components/material-components-ios/commit/5707f863a1bb4f036b25600f9a8d0856c274fa5e) (Yarden Eitan)
-* [Bring back original textInsets API for clients sub… (#8688)](https://github.com/material-components/material-components-ios/commit/8dbebd1c6ca99e75e0480c5e16c87f6aa3a7939a) (Yarden Eitan)
 * [Change base textfield floating label scale factor. (#8704)](https://github.com/material-components/material-components-ios/commit/cc5d2c15047bb02dcf74b666aee354dcd7b981b6) (Andrew Overton)
 * [Change label animation again (#8703)](https://github.com/material-components/material-components-ios/commit/4fb5f96a4429c1f90629d208a2a1565a1b4f3bd7) (Andrew Overton)
 * [Fix minor animation glitch when opening example (#8716)](https://github.com/material-components/material-components-ios/commit/918dd0b0423964f09843e2ea8e08ae494ab049f1) (Andrew Overton)
 * [Refactor label animation (#8700)](https://github.com/material-components/material-components-ios/commit/64ff7086dc40bc230d947fea4e359c0d4929d59e) (Andrew Overton)
 * [Refactor snapshots in preparation for more types of textfields (#8670)](https://github.com/material-components/material-components-ios/commit/f5e955d85498e26855285dccf989b32079b7769f) (Andrew Overton)
-
-## Multi-component changes
-
-* [Deprecate the ShapeThemer extension. (#8697)](https://github.com/material-components/material-components-ios/commit/8b9f0bbea6165c14ceaf76c9debe92cf669e758f) (featherless)
-* [[ThumbTrack] Add Font API and Dynamic Type support (#8708)](https://github.com/material-components/material-components-ios/commit/8f9dd740d07b880d038ab6a6daa8dfe253070536) (Yarden Eitan)
-
-## Changes
+* [Capture snapshots outside of view (#8718)](https://github.com/material-components/material-components-ios/commit/dec1670f8b34b75f2d78b27e460a72567326cb07) (Andrew Overton)
+* [Add safety return to new multiline logic to make i… (#8695)](https://github.com/material-components/material-components-ios/commit/5707f863a1bb4f036b25600f9a8d0856c274fa5e) (Yarden Eitan)
+* [Bring back original textInsets API for clients sub… (#8688)](https://github.com/material-components/material-components-ios/commit/8dbebd1c6ca99e75e0480c5e16c87f6aa3a7939a) (Yarden Eitan)
 
 ### Slider
 
 * [Add snapshot tests for setting preferredFont with adju… (#8645)](https://github.com/material-components/material-components-ios/commit/1b7b249805276bd8aab0c0331a433b2364d7151f) (Yarden Eitan)
+
+### ThumbTrack
+
+* [[ThumbTrack] Add Font API and Dynamic Type support (#8708)](https://github.com/material-components/material-components-ios/commit/8f9dd740d07b880d038ab6a6daa8dfe253070536) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Deprecate the ShapeThemer extension. (#8697)](https://github.com/material-components/material-components-ios/commit/8b9f0bbea6165c14ceaf76c9debe92cf669e758f) (featherless)
 
 
 ---
