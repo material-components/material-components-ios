@@ -322,7 +322,7 @@ IB_DESIGNABLE
 /**
  The height of the track that the thumb moves along.
 
- Defaults to 2.
+ Default value is 2 points.
  */
 @property(nonatomic, assign) CGFloat trackHeight;
 
