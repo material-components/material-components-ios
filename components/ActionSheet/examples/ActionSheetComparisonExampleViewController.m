@@ -106,17 +106,6 @@
   [actionSheet addAction:favoriteAction];
   [actionSheet addAction:emailAction];
   [actionSheet applyThemeWithScheme:self.containerScheme];
-
-  UIFont *font = [UIFont fontWithName:@"Zapfino" size:8];
-  if (@available(iOS 11.0, *)) {
-    actionSheet.actionFont =
-        [[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody] scaledFontForFont:font];
-    actionSheet.titleFont =
-        [[UIFontMetrics metricsForTextStyle:UIFontTextStyleTitle2] scaledFontForFont:font];
-    actionSheet.messageFont =
-        [[UIFontMetrics metricsForTextStyle:UIFontTextStyleSubheadline] scaledFontForFont:font];
-  }
-  actionSheet.adjustsFontForContentSizeCategory = YES;
   [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
