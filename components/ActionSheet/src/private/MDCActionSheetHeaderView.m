@@ -26,9 +26,19 @@ static const CGFloat kTrailingPadding = 0;
 static const CGFloat kTitleOnlyPadding = 18;
 static const CGFloat kMiddlePadding = 8;
 
+@interface MDCActionSheetHeaderView ()
+
+/** Shows the title of the Action Sheet. */
+@property(nonatomic, nonnull, strong, readonly) UILabel *titleLabel;
+
+/** Shows the message of the Action Sheet. */
+@property(nonatomic, nonnull, strong, readonly) UILabel *messageLabel;
+@end
+
 @implementation MDCActionSheetHeaderView
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -167,6 +177,12 @@ static const CGFloat kMiddlePadding = 8;
   }
 
   [self setNeedsLayout];
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.messageLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {

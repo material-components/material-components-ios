@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCActionSheetHeaderView : UIView
+@interface MDCActionSheetHeaderView : UIView<UIContentSizeCategoryAdjusting>
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
 
@@ -35,11 +35,5 @@
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 @property(nonatomic, strong, nullable) UIColor *messageTextColor;
-
-/** Shows the title of the Action Sheet. */
-@property(nonatomic, nonnull, strong, readonly) UILabel *titleLabel;
-
-/** Shows the message of the Action Sheet. */
-@property(nonatomic, nonnull, strong, readonly) UILabel *messageLabel;
 
 @end
