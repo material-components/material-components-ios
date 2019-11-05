@@ -33,7 +33,7 @@
 
   self.areAnimationsEnabled = UIView.areAnimationsEnabled;
   [UIView setAnimationsEnabled:NO];
-  self.textField = [self createFilledTextFieldInKeyWindow];
+  self.textField = [MDCBaseTextFieldTestsSnapshotTestHelpers createFilledTextField];
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
 
@@ -42,26 +42,10 @@
 
 - (void)tearDown {
   [super tearDown];
-  [self.textField removeFromSuperview];
+  [MDCTextControlSnapshotTestHelpers
+      removeTextControlFromKeyWindow:(UIView<MDCTextControl> *)self.textField];
   self.textField = nil;
   [UIView setAnimationsEnabled:self.areAnimationsEnabled];
-}
-
-- (MDCFilledTextField *)createFilledTextFieldInKeyWindow {
-  MDCFilledTextField *textField =
-      [[MDCFilledTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
-  textField.animationDuration = 0;
-
-  // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,
-  // at least locally.
-  UIView *dummyInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-  textField.inputView = dummyInputView;
-
-  // Add the textfield to the window so it's part of a valid view hierarchy and things like
-  // `-becomeFirstResponder` work.
-  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-  [keyWindow addSubview:textField];
-  return textField;
 }
 
 - (void)validateTextField:(MDCFilledTextField *)textField {

@@ -17,6 +17,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
+#import "MDCTextControlSnapshotTestHelpers.h"
+
+@interface MDCBaseTextField (AnimationDuration)
+@property(nonatomic, assign) NSTimeInterval animationDuration;
+@end
 
 /**
  This class puts the configuration for TextControl based TextField snapshot tests in one place so
@@ -26,6 +31,43 @@
  MDCBaseTextField subclass.
  */
 @implementation MDCBaseTextFieldTestsSnapshotTestHelpers
+
++ (MDCBaseTextField *)createBaseTextField {
+  CGRect frame = [MDCBaseTextFieldTestsSnapshotTestHelpers defaultTextFieldFrame];
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:frame];
+  textField.borderStyle = UITextBorderStyleRoundedRect;
+  [MDCBaseTextFieldTestsSnapshotTestHelpers prepareTextFieldForSnapshotTesting:textField];
+  return textField;
+}
+
++ (MDCFilledTextField *)createFilledTextField {
+  CGRect frame = [MDCBaseTextFieldTestsSnapshotTestHelpers defaultTextFieldFrame];
+  MDCFilledTextField *textField = [[MDCFilledTextField alloc] initWithFrame:frame];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers prepareTextFieldForSnapshotTesting:textField];
+  return textField;
+}
+
++ (MDCOutlinedTextField *)createOutlinedTextField {
+  CGRect frame = [MDCBaseTextFieldTestsSnapshotTestHelpers defaultTextFieldFrame];
+  MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:frame];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers prepareTextFieldForSnapshotTesting:textField];
+  return textField;
+}
+
++ (CGRect)defaultTextFieldFrame {
+  return CGRectMake(0, 0, 200, 60);
+}
+
++ (void)prepareTextFieldForSnapshotTesting:(MDCBaseTextField *)textField {
+  textField.animationDuration = 0;
+
+  // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,
+  // at least locally.
+  UIView *dummyInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+  textField.inputView = dummyInputView;
+
+  [MDCTextControlSnapshotTestHelpers addTextControlToKeyWindow:(UIView<MDCTextControl> *)textField];
+}
 
 #pragma mark "When" configurations
 

@@ -32,6 +32,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : M
  @param state The MDCTextControlState.
  */
 - (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(MDCTextControlState)state;
+
 /**
  Returns the outline color for a given state.
  @param state The MDCTextControlState.
