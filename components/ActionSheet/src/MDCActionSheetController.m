@@ -177,8 +177,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   [self.view addSubview:self.headerDividerView];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
 
   if (self.tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
