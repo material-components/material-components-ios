@@ -29,7 +29,8 @@
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.
  */
-@interface MDCAlertController : UIViewController <MDCElevatable, MDCElevationOverriding>
+@interface MDCAlertController
+    : UIViewController <MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
 
 /**
  Convenience constructor to create and return a view controller for displaying an alert to the user.

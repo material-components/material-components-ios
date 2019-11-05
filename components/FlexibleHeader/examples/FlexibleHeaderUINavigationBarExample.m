@@ -16,14 +16,14 @@
 
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderUINavigationBarSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200;
 
-@interface FlexibleHeaderUINavigationBarExample () <UIScrollViewDelegate>
+@interface FlexibleHeaderUINavigationBarExample : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
-@property(nonatomic) UIButton *button;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) UIButton *button;
 
 @end
 
@@ -176,6 +176,34 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self.fhvc scrollViewDidScroll:scrollView];
+}
+
+#pragma mark - Supplemental
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  self.scrollView.contentSize = self.view.bounds.size;
+}
+
+@end
+
+@implementation FlexibleHeaderUINavigationBarExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Standard UINavigationBar" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

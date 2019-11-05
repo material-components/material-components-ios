@@ -1,3 +1,28 @@
+# 93.3.0
+
+This minor release adds two new APIs to FlexibleHeader for contexts involving multiple tracking
+scroll views (such as tabbed interfaces).
+
+## New features
+
+MDCFlexibleHeaderView has a new API,
+`allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView`, that can be used to enable shadow
+layer frame animations when the header's height is animated after switching to a new tracking
+scroll view. This flag is false by default, but will be enabled and then deleted in the future, so
+please consider enabling it wherever you instantiate a flexible header or app bar.
+
+MDCFlexibleHeaderView has a new `animationDelegate` API that can be used to react to the completion
+of the animation that occurs when changing tracking scroll views.
+
+## Component changes
+
+### FlexibleHeader
+
+* [Add behavioral flag for animating shadow layer frames when tracking scroll view is changed (#8715)](https://github.com/material-components/material-components-ios/commit/06c6be082a7d02c674902e78c0154668761cf983) (featherless)
+* [Expose an animation delegate on MDCFlexibleHeaderView. (#8712)](https://github.com/material-components/material-components-ios/commit/96d6880071352be0a6aa25be599ad18cffeda765) (featherless)
+
+---
+
 # 93.2.0
 
 In this minor release TextFields support multiline error/helper text, FeatureHighlight supports Dynamic Type, OverlayWindow supports iOS 13 UIWindow scene initializer API, along with a PageControl dot placement fix, and additional component testing.

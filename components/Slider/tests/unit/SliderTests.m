@@ -18,6 +18,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialThumbTrack.h"
+#import "MaterialTypography.h"
 #import "MockUIImpactFeedbackGenerator.h"
 
 static const int kNumberOfRepeats = 20;
@@ -1378,6 +1379,24 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   XCTAssertFalse(blockCalled);
+}
+
+- (void)testDiscreteValueLabelFontDefaultValue {
+  // Then
+  XCTAssertEqualObjects(self.slider.discreteValueLabelFont,
+                        [[MDCTypography fontLoader] regularFontOfSize:12]);
+}
+
+- (void)testDiscreteValueLabelFontSettingToNilValue {
+  // Given
+  self.slider.discreteValueLabelFont = [UIFont systemFontOfSize:20];
+
+  // When
+  self.slider.discreteValueLabelFont = nil;
+
+  // Then
+  XCTAssertEqualObjects(self.slider.discreteValueLabelFont,
+                        [[MDCTypography fontLoader] regularFontOfSize:12]);
 }
 
 #pragma mark Private test helpers

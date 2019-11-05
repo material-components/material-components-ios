@@ -70,37 +70,19 @@ static inline UIColor *RippleColor() {
   } else {
     leadingConstant = kImageLeadingPadding;
   }
-  [NSLayoutConstraint constraintWithItem:_actionLabel
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:kActionItemTitleVerticalPadding]
+  [_actionLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+                                         constant:kActionItemTitleVerticalPadding]
       .active = YES;
-  [NSLayoutConstraint constraintWithItem:_actionLabel
-                               attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeBottom
-                              multiplier:1
-                                constant:-kActionItemTitleVerticalPadding]
+  [_actionLabel.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor
+                                            constant:-kActionItemTitleVerticalPadding]
       .active = YES;
-  _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
-                                                         attribute:NSLayoutAttributeLeadingMargin
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:self.contentView
-                                                         attribute:NSLayoutAttributeLeadingMargin
-                                                        multiplier:1
-                                                          constant:leadingConstant];
+  _titleLeadingConstraint = [_actionLabel.layoutMarginsGuide.leadingAnchor
+      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor
+                     constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  _titleTrailingConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
-                                                          attribute:NSLayoutAttributeTrailingMargin
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:_actionLabel
-                                                          attribute:NSLayoutAttributeTrailingMargin
-                                                         multiplier:1
-                                                           constant:kTitleTrailingPadding];
+  _titleTrailingConstraint = [self.contentView.layoutMarginsGuide.trailingAnchor
+      constraintEqualToAnchor:_actionLabel.layoutMarginsGuide.trailingAnchor
+                     constant:kTitleTrailingPadding];
   _titleTrailingConstraint.active = YES;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
@@ -114,38 +96,15 @@ static inline UIColor *RippleColor() {
   _actionImageView = [[UIImageView alloc] init];
   [self.contentView addSubview:_actionImageView];
   _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [NSLayoutConstraint constraintWithItem:_actionImageView
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:kImageTopPadding]
+  [_actionImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+                                             constant:kImageTopPadding]
       .active = YES;
-  [NSLayoutConstraint constraintWithItem:_actionImageView
-                               attribute:NSLayoutAttributeLeadingMargin
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeLeadingMargin
-                              multiplier:1
-                                constant:kImageLeadingPadding]
+  [_actionImageView.layoutMarginsGuide.leadingAnchor
+      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor
+                     constant:kImageLeadingPadding]
       .active = YES;
-  [NSLayoutConstraint constraintWithItem:_actionImageView
-                               attribute:NSLayoutAttributeWidth
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:nil
-                               attribute:NSLayoutAttributeNotAnAttribute
-                              multiplier:1
-                                constant:kImageHeightAndWidth]
-      .active = YES;
-  [NSLayoutConstraint constraintWithItem:_actionImageView
-                               attribute:NSLayoutAttributeHeight
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:nil
-                               attribute:NSLayoutAttributeNotAnAttribute
-                              multiplier:1
-                                constant:kImageHeightAndWidth]
-      .active = YES;
+  [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
+  [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
 }
 
 - (void)layoutSubviews {

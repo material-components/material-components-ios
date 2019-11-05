@@ -408,6 +408,30 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.valueLabelBackgroundColor;
 }
 
+- (void)setDiscreteValueLabelFont:(UIFont *)discreteValueLabelFont {
+  _thumbTrack.discreteValueLabelFont = discreteValueLabelFont;
+}
+
+- (UIFont *)discreteValueLabelFont {
+  return _thumbTrack.discreteValueLabelFont;
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _thumbTrack.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+}
+
+- (BOOL)adjustsFontForContentSizeCategory {
+  return _thumbTrack.adjustsFontForContentSizeCategory;
+}
+
+- (CGFloat)trackHeight {
+  return _thumbTrack.trackHeight;
+}
+
+- (void)setTrackHeight:(CGFloat)trackHeight {
+  _thumbTrack.trackHeight = trackHeight;
+}
+
 #pragma mark - MDCThumbTrackDelegate methods
 
 - (NSString *)thumbTrack:(__unused MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {

@@ -19,13 +19,22 @@
 
 @implementation MDCTextControlLabelAnimation
 
-+ (void)layOutLabel:(nonnull UILabel *)label
++ (void)animateLabel:(nonnull UILabel *)label
                  state:(MDCTextControlLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
           floatingFont:(nonnull UIFont *)floatingFont
-     animationDuration:(NSTimeInterval)animationDuration {
+     animationDuration:(NSTimeInterval)animationDuration
+            completion:(void (^__nullable)(BOOL))completion {
+  BOOL isAnimationInProgress = label.layer.animationKeys.count > 0;
+  if (isAnimationInProgress) {
+    if (completion) {
+      completion(NO);
+    }
+    return;
+  }
+
   UIFont *targetFont;
   CGRect targetFrame;
   if (labelState == MDCTextControlLabelStateFloating) {
@@ -40,20 +49,39 @@
   CGAffineTransform transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame =
       [self transformFromRect:currentFrame toRect:targetFrame];
 
-  CAMediaTimingFunction *timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
-  [UIView mdc_animateWithTimingFunction:timingFunction
-      duration:kMDCTextControlDefaultAnimationDuration
-      delay:0
-      options:0
-      animations:^{
-        label.transform = transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame;
-      }
-      completion:^(BOOL finished) {
-        label.transform = CGAffineTransformIdentity;
-        label.frame = targetFrame;
-        label.font = targetFont;
-      }];
+  BOOL willChangeFrame = !CGRectEqualToRect(currentFrame, targetFrame);
+  BOOL currentFrameIsCGRectZero = CGRectEqualToRect(currentFrame, CGRectZero);
+  BOOL isNormalTransition = willChangeFrame && !currentFrameIsCGRectZero;
+  BOOL nonZeroDuration = animationDuration > 0;
+  BOOL shouldPerformAnimation = nonZeroDuration && isNormalTransition;
+
+  void (^completionBlock)(BOOL finished) = ^void(BOOL finished) {
+    label.transform = CGAffineTransformIdentity;
+    label.frame = targetFrame;
+    label.font = targetFont;
+    if (completion) {
+      completion(YES);
+    }
+  };
+
+  if (shouldPerformAnimation) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      CAMediaTimingFunction *timingFunction =
+          [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+      [UIView
+          mdc_animateWithTimingFunction:timingFunction
+                               duration:animationDuration
+                                  delay:0
+                                options:0
+                             animations:^{
+                               label.transform =
+                                   transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame;
+                             }
+                             completion:completionBlock];
+    });
+  } else {
+    completionBlock(YES);
+  }
 }
 
 /**

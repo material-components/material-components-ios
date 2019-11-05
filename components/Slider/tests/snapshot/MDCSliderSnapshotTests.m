@@ -16,10 +16,36 @@
 
 #import <UIKit/UIKit.h>
 
+#import "../../src/private/MDCSlider_Subclassable.h"
 #import "MaterialSlider.h"
+#import "MaterialThumbTrack.h"
+
+/**
+ An MDCSlider subclass that allows the user to override the @c traitCollection property.
+ */
+@interface MDCSliderWithCustomTraitCollection : MDCSlider
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@property(nonatomic, strong) MDCThumbTrack *thumbTrack;
+
+@end
+
+@implementation MDCSliderWithCustomTraitCollection
+
+- (MDCThumbTrack *)thumbTrack {
+  return _thumbTrack;
+}
+
+- (void)setThumbTrack:(MDCThumbTrack *)thumbTrack {
+  _thumbTrack = thumbTrack;
+}
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+@end
 
 @interface MDCSliderSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCSlider *slider;
+@property(nonatomic, strong) MDCSliderWithCustomTraitCollection *slider;
 @end
 
 @implementation MDCSliderSnapshotTests
@@ -31,7 +57,8 @@
   // test you wish to recreate the golden for).
   // self.recordMode = YES;
 
-  self.slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
+  self.slider =
+      [[MDCSliderWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
   self.slider.statefulAPIEnabled = YES;
   self.slider.minimumValue = -10;
   self.slider.maximumValue = 10;
@@ -165,6 +192,120 @@
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
+}
+
+- (void)testPreferredFontForAXXXLContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    [self makeSliderDiscrete:self.slider];
+    self.slider.value =
+        self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+    self.slider.shouldDisplayDiscreteValueLabel = YES;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+    self.slider.discreteValueLabelFont = originalFont;
+    self.slider.adjustsFontForContentSizeCategory = YES;
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    self.slider.traitCollectionOverride = xsTraitCollection;
+    // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
+
+    // When
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    self.slider.traitCollectionOverride = aXXXLTraitCollection;
+    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+    // transform adjustment was made so it can let the logic know we are actually interacting with
+    // the thumb in the test.
+    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+    valueLabel.transform = CGAffineTransformIdentity;
+    [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+    // Then
+    UIView *snapshotView =
+        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(100, 0, 0, 0)];
+    [self generateSnapshotAndVerifyForView:snapshotView];
+  }
+}
+
+- (void)testPreferredFontForXSContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    [self makeSliderDiscrete:self.slider];
+    self.slider.value =
+        self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+    self.slider.shouldDisplayDiscreteValueLabel = YES;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+    self.slider.discreteValueLabelFont = originalFont;
+    self.slider.adjustsFontForContentSizeCategory = YES;
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    self.slider.traitCollectionOverride = aXXXLTraitCollection;
+    // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
+
+    // When
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    self.slider.traitCollectionOverride = xsTraitCollection;
+    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+    // transform adjustment was made so it can let the logic know we are actually interacting with
+    // the thumb in the test.
+    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+    valueLabel.transform = CGAffineTransformIdentity;
+    [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+    // Then
+    UIView *snapshotView =
+        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+    [self generateSnapshotAndVerifyForView:snapshotView];
+  }
+}
+
+- (void)testContinuousSliderLargerTrackHeight {
+  // When
+  self.slider.trackHeight = 6;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testContinuousSliderSmallerTrackHeight {
+  // When
+  self.slider.trackHeight = 1;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderLargerTrackHeight {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 6;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderSmallerTrackHeight {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 1;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
 }
 
 @end

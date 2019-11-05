@@ -191,6 +191,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // The block executed when shadow intensity changes.
   MDCFlexibleHeaderShadowIntensityChangeBlock _shadowIntensityChangeBlock;
 
+  // Whether the flexible header is currently within an animate block for changing the tracking
+  // scroll view.
+  BOOL _isAnimatingTrackingScrollViewChange;
+
   Class _wkWebViewClass;
 
 #if DEBUG
@@ -385,8 +389,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   [self fhv_updateShadowColor];
   [self fhv_updateShadowPath];
+
   [CATransaction begin];
-  [CATransaction setDisableActions:YES];
+  BOOL allowCAActions = _isAnimatingTrackingScrollViewChange;
+  [CATransaction setDisableActions:!allowCAActions];
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
   _shadowLayer.frame = self.bounds;
@@ -1554,9 +1560,37 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   }
 
-  void (^animate)(void) = ^{
-    [self fhv_updateLayout];
-  };
+  CFTimeInterval duration = kTrackingScrollViewDidChangeAnimationDuration;
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+
+  void (^animate)(void);
+  if (self.allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView) {
+    animate = ^{
+      self->_isAnimatingTrackingScrollViewChange = YES;
+
+      [CATransaction begin];
+#if TARGET_IPHONE_SIMULATOR
+      [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
+#else
+      [CATransaction setAnimationDuration:duration];
+#endif
+      [CATransaction setAnimationTimingFunction:timingFunction];
+
+      [self fhv_updateLayout];
+
+      // Force any layout changes to be committed during this animation block.
+      [self layoutIfNeeded];
+
+      [CATransaction commit];
+
+      self->_isAnimatingTrackingScrollViewChange = NO;
+    };
+  } else {
+    animate = ^{
+      [self fhv_updateLayout];
+    };
+  }
   void (^completion)(BOOL) = ^(BOOL finished) {
     if (!finished) {
       return;
@@ -1568,9 +1602,13 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   };
   if (wasTrackingScrollView && shouldAnimate) {
-    [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
+    [UIView animateWithDuration:duration
                      animations:animate
-                     completion:completion];
+                     completion:^(BOOL finished) {
+                       [self.animationDelegate
+                           flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
+                       completion(finished);
+                     }];
   } else {
     animate();
     completion(YES);
