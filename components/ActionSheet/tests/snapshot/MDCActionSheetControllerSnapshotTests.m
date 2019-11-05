@@ -1016,7 +1016,7 @@ static NSString *const kLongTitle5Arabic =
     UIFont *bodyFont = [bodyMetrics scaledFontForFont:originalFont
                         compatibleWithTraitCollection:extraSmallTraits];
     self.actionSheetController.actionFont = bodyFont;
-    self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+    self.actionSheetController.view.bounds = CGRectMake(0, 0, 1000, 1000);
 
     // Create a window so the Action Sheet's view can inherit the trait environment.
     MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
@@ -1031,7 +1031,7 @@ static NSString *const kLongTitle5Arabic =
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     [window traitCollectionDidChange:nil];
     [self.actionSheetController.view layoutIfNeeded];
-    window.bounds = CGRectMake(0, 0, 320, 200);
+    window.bounds = CGRectMake(0, 0, 1000, 1000);
     self.actionSheetController.view.frame = window.bounds;
 
     // Then
@@ -1073,7 +1073,7 @@ static NSString *const kLongTitle5Arabic =
     UIFont *bodyFont = [bodyMetrics scaledFontForFont:originalFont
                         compatibleWithTraitCollection:extraSmallTraits];
     self.actionSheetController.actionFont = bodyFont;
-    self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+    self.actionSheetController.view.bounds = CGRectMake(0, 0, 1000, 1000);
 
     // Create a window so the Action Sheet's view can inherit the trait environment.
     MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
@@ -1087,7 +1087,7 @@ static NSString *const kLongTitle5Arabic =
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     [window traitCollectionDidChange:nil];
     [self.actionSheetController.view layoutIfNeeded];
-    window.bounds = CGRectMake(0, 0, 320, 200);
+    window.bounds = CGRectMake(0, 0, 1000, 1000);
     self.actionSheetController.view.frame = window.bounds;
 
     // Then
