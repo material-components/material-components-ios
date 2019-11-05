@@ -9,20 +9,12 @@ Replace this explanations for how to resolve the breaking changes.
 Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
-
-## Changes
-
-### ActivityIndicator
-
-* [Delete MDCActivityIndicatorColorThemer. (#8694)](https://github.com/material-components/material-components-ios/commit/79fb766e0158628aec39bdf81e963edb317f6f3d) (featherless)
-
 ### Dialogs
 
 * [Title supports Dynamic Type. (#8691)](https://github.com/material-components/material-components-ios/commit/8c445f613865ae9c29e5ec6ab1b11435c1e2b34c) (Robert Moore)
+
+Replace this text with example code for each new feature.
+## API changes
 
 ### FlexibleHeader
 
@@ -30,9 +22,11 @@ Replace this text with example code for each new feature.
 * [Expose an animation delegate on MDCFlexibleHeaderView. (#8712)](https://github.com/material-components/material-components-ios/commit/bd39f8483b750816bcfae30e2906aad782cc9665) (featherless)
 * [Move all supplemental code into the examples. (#8690)](https://github.com/material-components/material-components-ios/commit/f758365a6e931a401b756b396679bfb08cf8ca35) (featherless)
 
-### Slider
+### ActivityIndicator
 
-* [Add snapshot tests for setting preferredFont with adju… (#8645)](https://github.com/material-components/material-components-ios/commit/1b7b249805276bd8aab0c0331a433b2364d7151f) (Yarden Eitan)
+* [Delete MDCActivityIndicatorColorThemer. (#8694)](https://github.com/material-components/material-components-ios/commit/79fb766e0158628aec39bdf81e963edb317f6f3d) (featherless)
+
+## Component changes
 
 ### TextFields
 
@@ -51,6 +45,13 @@ Replace this text with example code for each new feature.
 
 * [Deprecate the ShapeThemer extension. (#8697)](https://github.com/material-components/material-components-ios/commit/8b9f0bbea6165c14ceaf76c9debe92cf669e758f) (featherless)
 * [[ThumbTrack] Add Font API and Dynamic Type support (#8708)](https://github.com/material-components/material-components-ios/commit/8f9dd740d07b880d038ab6a6daa8dfe253070536) (Yarden Eitan)
+
+## Changes
+
+### Slider
+
+* [Add snapshot tests for setting preferredFont with adju… (#8645)](https://github.com/material-components/material-components-ios/commit/1b7b249805276bd8aab0c0331a433b2364d7151f) (Yarden Eitan)
+
 
 ---
 
