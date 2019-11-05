@@ -461,7 +461,17 @@ IB_DESIGNABLE
  MDCFlexibleHeaderView.
  */
 @protocol MDCFlexibleHeaderViewAnimationDelegate <NSObject>
-@required
+@optional
+
+/**
+ Informs the receiver that the flexible header view's tracking scroll view has changed.
+
+ @param animated If YES, then this method is being invoked from within an animation block. Changes
+ made to the flexible header as a result of this invocation will be animated alongside the header's
+ animation.
+ */
+- (void)flexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView
+    didChangeTrackingScrollViewAnimated:(BOOL)animated;
 
 /**
  Informs the receiver that the flexible header view's animation changing to a new tracking scroll
