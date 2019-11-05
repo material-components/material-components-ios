@@ -268,4 +268,20 @@
   }
 }
 
+- (void)testLargerTrackHeight {
+  // When
+  self.slider.trackHeight = 6;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testSmallerTrackHeight {
+  // When
+  self.slider.trackHeight = 1;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
 @end
