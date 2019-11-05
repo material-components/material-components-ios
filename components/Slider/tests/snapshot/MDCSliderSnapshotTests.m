@@ -268,7 +268,7 @@
   }
 }
 
-- (void)testLargerTrackHeight {
+- (void)testContinuousSliderLargerTrackHeight {
   // When
   self.slider.trackHeight = 6;
 
@@ -276,9 +276,33 @@
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testSmallerTrackHeight {
+- (void)testContinuousSliderSmallerTrackHeight {
   // When
   self.slider.trackHeight = 1;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderLargerTrackHeight {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 6;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderSmallerTrackHeight {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 1;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.slider];
