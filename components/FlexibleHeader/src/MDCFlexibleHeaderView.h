@@ -170,6 +170,24 @@ IB_DESIGNABLE
  */
 - (void)changeContentInsets:(nonnull MDCFlexibleHeaderChangeContentInsetsBlock)block;
 
+#pragma mark - Animating changes to the header
+
+/**
+ Animates any changes resulting from executing the animations block.
+
+ Use this method to animate changes alongside animations to the flexible header.
+
+ The following occurs when this method is invoked:
+
+ 1. The provided `animations` block is invoked within a `[UIView animate...:]` block.
+ 2. Within that same animation block and after invoking `animations`, the flexible header updates
+    any relevant aspects of its layout including its height, offset, and shadow layer frames.
+ 3. Upon completion of the resulting animation, the provided completion block is invoked if one was
+    provided.
+ */
+- (void)animateWithBlock:(void (^_Nonnull)(void))animations
+              completion:(void (^_Nullable)(BOOL))completion;
+
 #pragma mark Forwarding Touch Events
 
 /**
