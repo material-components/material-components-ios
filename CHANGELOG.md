@@ -9,20 +9,12 @@ This minor release adds a new Filled and Outlined TextFields that will eventuall
 * [Add filled textfields (#8674)](https://github.com/material-components/material-components-ios/commit/f2e5fe4fbd17735858b1897765ce6c4f55147cb9) (Andrew Overton)
 * [Add outlined textfield (#8705)](https://github.com/material-components/material-components-ios/commit/cfc699b1992c56e2e67cfc082e568863ac80da18) (Andrew Overton)
 
-## API changes
 
-### FlexibleHeader
-
-* [Add behavioral flag for animating shadow layer frames when tracking scroll view is changed (#8715)](https://github.com/material-components/material-components-ios/commit/06f9328350646cf7215e952e6cd22333e1c0eb1e) (featherless)
-
-* [Expose an animation delegate on MDCFlexibleHeaderView. (#8712)](https://github.com/material-components/material-components-ios/commit/bd39f8483b750816bcfae30e2906aad782cc9665) (featherless)
-* [Move all supplemental code into the examples. (#8690)](https://github.com/material-components/material-components-ios/commit/f758365a6e931a401b756b396679bfb08cf8ca35) (featherless)
+## Component changes
 
 ### ActivityIndicator
 
 * [Delete MDCActivityIndicatorColorThemer. (#8694)](https://github.com/material-components/material-components-ios/commit/79fb766e0158628aec39bdf81e963edb317f6f3d) (featherless)
-
-## Component changes
 
 ### Dialogs
 
@@ -39,6 +31,13 @@ This minor release adds a new Filled and Outlined TextFields that will eventuall
 * [Capture snapshots outside of view (#8718)](https://github.com/material-components/material-components-ios/commit/dec1670f8b34b75f2d78b27e460a72567326cb07) (Andrew Overton)
 * [Add safety return to new multiline logic to make i… (#8695)](https://github.com/material-components/material-components-ios/commit/5707f863a1bb4f036b25600f9a8d0856c274fa5e) (Yarden Eitan)
 * [Bring back original textInsets API for clients sub… (#8688)](https://github.com/material-components/material-components-ios/commit/8dbebd1c6ca99e75e0480c5e16c87f6aa3a7939a) (Yarden Eitan)
+
+### FlexibleHeader
+
+* [Add behavioral flag for animating shadow layer frames when tracking scroll view is changed (#8715)](https://github.com/material-components/material-components-ios/commit/06f9328350646cf7215e952e6cd22333e1c0eb1e) (featherless)
+
+* [Expose an animation delegate on MDCFlexibleHeaderView. (#8712)](https://github.com/material-components/material-components-ios/commit/bd39f8483b750816bcfae30e2906aad782cc9665) (featherless)
+* [Move all supplemental code into the examples. (#8690)](https://github.com/material-components/material-components-ios/commit/f758365a6e931a401b756b396679bfb08cf8ca35) (featherless)
 
 ### Slider
 
