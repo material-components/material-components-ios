@@ -241,7 +241,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if (snackbarView.accessibilityViewIsModal ||
+              if (snackbarView.accessibilityViewIsModal || message.focusOnShow ||
                   ![self isSnackbarTransient:snackbarView]) {
                 UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
                                                 snackbarView);

@@ -467,4 +467,24 @@
   XCTAssertTrue(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
+- (void)testMessageStaysWhenFocusOnShowIsEnabled {
+  // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  self.message.focusOnShow = YES;
+  self.message.duration = 0.1;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_time_t popTime =
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC));
+  dispatch_after(popTime, dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
+}
+
 @end
