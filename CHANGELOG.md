@@ -9,7 +9,6 @@ This minor release adds a new Filled and Outlined TextFields that will eventuall
 * [Add filled textfields (#8674)](https://github.com/material-components/material-components-ios/commit/f2e5fe4fbd17735858b1897765ce6c4f55147cb9) (Andrew Overton)
 * [Add outlined textfield (#8705)](https://github.com/material-components/material-components-ios/commit/cfc699b1992c56e2e67cfc082e568863ac80da18) (Andrew Overton)
 
-
 ## Component changes
 
 ### ActivityIndicator
