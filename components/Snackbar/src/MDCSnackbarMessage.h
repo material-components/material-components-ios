@@ -162,8 +162,8 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
  Whether to focus on the Snackbar message when VoiceOver is enabled.
  The message is announced but not focused when set to NO.
 
- Note: Setting this to YES will ensure the entire snackbar message is read during VoiceOver, and that the message persists until an action
- is made or the focus is removed.
+ Note: Setting this to YES will ensure the entire snackbar message is read during VoiceOver, and
+ that the message persists until an action is made or the focus is removed.
 
  Defaults to NO.
  */
