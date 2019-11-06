@@ -32,14 +32,14 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
 @end
 
-@interface SliderTests : XCTestCase
+@interface MDCSliderTests : XCTestCase
 @property(nonatomic, nullable) MDCSlider *slider;
 @property(nonatomic, nullable) UIColor *aNonDefaultColor;
 @property(nonatomic, nullable) UIColor *defaultBlue;
 @property(nonatomic, nullable) UIColor *defaultGray;
 @end
 
-@implementation SliderTests {
+@implementation MDCSliderTests {
   MockUIImpactFeedbackGenerator *_mockFeedbackGenerator API_AVAILABLE(ios(10.0));
 }
 
@@ -889,6 +889,30 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
                         [self.slider backgroundTrackTickColorForState:UIControlStateHighlighted |
                                                                       UIControlStateSelected]);
+}
+
+#pragma mark - trackTickVisibility
+
+- (void)testTrackTickVisibilityDefaultForContinuousSlider {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+
+  // When
+  slider.continuous = YES;
+
+  // Then
+  XCTAssertEqual(slider.trackTickVisibility, MDCSliderTrackTickVisibilityNever);
+}
+
+- (void)testTrackTickVisibilityDefaultForDiscreteSlider {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+
+  // When
+  slider.continuous = NO;
+
+  // Then
+  XCTAssertEqual(slider.trackTickVisibility, MDCSliderTrackTickVisibilityWhenDragging);
 }
 
 #pragma mark - InkColor

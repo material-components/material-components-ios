@@ -204,6 +204,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _shouldDisplayInk = YES;
     _shouldDisplayRipple = YES;
     _valueLabelHeight = kValueLabelHeight;
+    _discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
 
     // Default thumb view.
     CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
@@ -400,19 +401,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return _thumbView.shadowColor;
 }
 
-- (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
-  if (_shouldDisplayDiscreteDots != shouldDisplayDiscreteDots) {
-    if (shouldDisplayDiscreteDots) {
+- (void)setDiscreteDotVisibility:(MDCThumbDiscreteDotVisibility)discreteDotVisibility {
+  if (_discreteDotVisibility != discreteDotVisibility) {
+    if (discreteDotVisibility == MDCThumbDiscreteDotVisibilityNever) {
+      [_discreteDots removeFromSuperview];
+      _discreteDots = nil;
+    } else if (!_discreteDots) {
       _discreteDots = [[MDCDiscreteDotView alloc] init];
       _discreteDots.alpha = 0.0;
       _discreteDots.activeDotColor = self.trackOnTickColor;
       _discreteDots.inactiveDotColor = self.trackOffTickColor;
       [_trackView addSubview:_discreteDots];
-    } else {
-      [_discreteDots removeFromSuperview];
-      _discreteDots = nil;
     }
-    _shouldDisplayDiscreteDots = shouldDisplayDiscreteDots;
+    _discreteDotVisibility = discreteDotVisibility;
   }
 }
 
@@ -911,12 +912,16 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  */
 - (void)updateViewsForThumbAfterMoveIsAnimated:(BOOL)animated
                                   withDuration:(NSTimeInterval)duration {
-  if (_shouldDisplayDiscreteDots) {
-    if (self.enabled && _isDraggingThumb) {
-      _discreteDots.alpha = 1.0;
-    } else {
-      _discreteDots.alpha = 0.0;
-    }
+  switch (self.discreteDotVisibility) {
+    case MDCThumbDiscreteDotVisibilityNever:
+      _discreteDots.alpha = 0;
+      break;
+    case MDCThumbDiscreteDotVisibilityAlways:
+      _discreteDots.alpha = 1;
+      break;
+    case MDCThumbDiscreteDotVisibilityWhenDragging:
+      _discreteDots.alpha = (self.enabled && _isDraggingThumb) ? 1 : 0;
+      break;
   }
 
   if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
@@ -1293,7 +1298,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [_delegate thumbTrack:self willAnimateToValue:value];
   }
 
-  if (isTap && _numDiscreteValues > 1 && _shouldDisplayDiscreteDots) {
+  if (isTap && _numDiscreteValues > 1 &&
+      ((_discreteDotVisibility == MDCThumbDiscreteDotVisibilityAlways) ||
+       (_discreteDotVisibility == MDCThumbDiscreteDotVisibilityWhenDragging))) {
     _discreteDots.alpha = 1.0;
   }
 
