@@ -395,7 +395,55 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testDiscreteSliderLargerTrackHeight {
+- (void)testDiscreteSliderWithTrackHeight1Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 1;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight2Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 2;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight3Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 3;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight4Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 4;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight6Points {
   // Given
   [self makeSliderDiscrete:self.slider];
 
@@ -407,12 +455,12 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testDiscreteSliderSmallerTrackHeight {
+- (void)testDiscreteSliderWithTrackHeight10Points {
   // Given
   [self makeSliderDiscrete:self.slider];
 
   // When
-  self.slider.trackHeight = 1;
+  self.slider.trackHeight = 10;
   [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
 
   // Then
