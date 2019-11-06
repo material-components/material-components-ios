@@ -104,13 +104,11 @@ static UIFont *ValueLabelFontDefault() {
   if (_numDiscreteDots >= 2) {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
 
-    // The dot should be:
-    // +  (1, 1) at trackHeight == 1
-    // +  (2, 2) at trackHeight == 2
-    // +  (2, 2) at trackHeight == 4
-    // +  (2.5, 2.5) at trackHeight == 5
-    // +  (3, 3) at trackHeight == 6
-    // +  ... and so on.
+    // The "dot" is a circle that gradually transforms into a rounded rectangle.
+    // *   At 1- and 2-point track heights, use a circle filling the height.
+    // *   At 3- and 4-point track heights, use a vertically-centered circle 2 points tall.
+    // *   At greater track heights, create a vertically-centered rounded rectangle 2-points wide
+    //     and half the track height.
     CGFloat trackHeight = CGRectGetHeight(self.bounds);
     CGFloat dotHeight = MIN(2, trackHeight);
     CGFloat dotWidth = MIN(2, trackHeight);
