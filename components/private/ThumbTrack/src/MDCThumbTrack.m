@@ -340,6 +340,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self setNeedsLayout];
 }
 
+- (void)setTrackHeight:(CGFloat)trackHeight {
+  if (MDCCGFloatEqual(trackHeight, _trackHeight)) {
+    return;
+  }
+
+  _trackHeight = trackHeight;
+  [self setNeedsLayout];
+}
+
 - (void)setTrackOffColor:(UIColor *)trackOffColor {
   _trackOffColor = trackOffColor;
   [self setNeedsLayout];

@@ -455,6 +455,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.adjustsFontForContentSizeCategory;
 }
 
+- (CGFloat)trackHeight {
+  return _thumbTrack.trackHeight;
+}
+
+- (void)setTrackHeight:(CGFloat)trackHeight {
+  _thumbTrack.trackHeight = trackHeight;
+}
+
 #pragma mark - MDCThumbTrackDelegate methods
 
 - (NSString *)thumbTrack:(__unused MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value {

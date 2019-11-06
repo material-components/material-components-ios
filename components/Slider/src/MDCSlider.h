@@ -339,6 +339,13 @@ IB_DESIGNABLE
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCSlider *_Nonnull slider, UITraitCollection *_Nullable previousTraitCollection);
 
+/**
+ The height of the track that the thumb moves along.
+
+ Default value is 2 points.
+ */
+@property(nonatomic, assign) CGFloat trackHeight;
+
 #pragma mark - To be deprecated
 
 /**

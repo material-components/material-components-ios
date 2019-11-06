@@ -70,7 +70,7 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 + (nonnull instancetype)messageWithAttributedText:(nonnull NSAttributedString *)attributedText;
 
 /**
- Use the older legacy version of Snackbar. Default is YES.
+ Use the older legacy version of Snackbar. Default is NO.
  */
 @property(class, nonatomic, assign) BOOL usesLegacySnackbar;
 
