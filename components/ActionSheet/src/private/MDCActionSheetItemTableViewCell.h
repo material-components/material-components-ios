@@ -17,7 +17,7 @@
 #import "MDCActionSheetController.h"
 #import "MaterialInk.h"
 
-@interface MDCActionSheetItemTableViewCell : UITableViewCell
+@interface MDCActionSheetItemTableViewCell : UITableViewCell<UIContentSizeCategoryAdjusting>
 /**
   The action contains the title, image, and handler
   If you need to change any of the three you must pass a new action in.
@@ -30,9 +30,6 @@
 @property(nonatomic, nonnull, strong) UIFont *actionFont;
 
 @property(nonatomic, strong, nullable) UIColor *actionTextColor;
-
-/** Label for the action's title text. */
-@property(nonatomic, nonnull, readonly, strong) UILabel *actionLabel;
 
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
