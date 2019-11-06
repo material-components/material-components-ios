@@ -912,7 +912,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  */
 - (void)updateViewsForThumbAfterMoveIsAnimated:(BOOL)animated
                                   withDuration:(NSTimeInterval)duration {
-  switch(self.discreteDotVisibility) {
+  switch (self.discreteDotVisibility) {
     case MDCThumbDiscreteDotVisibilityNever:
       _discreteDots.alpha = 0.0;
       break;
