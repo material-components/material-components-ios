@@ -102,19 +102,16 @@
 }
 
 - (void)setNavigationBarHidden:(BOOL)navigationBarHidden {
-  // TODO: Consider using this API to hide the top view controller's flexible header.
-  NSAssert(navigationBarHidden, @"%@ requires that the system navigation bar remain hidden.",
-           NSStringFromClass([self class]));
-
-  [super setNavigationBarHidden:YES];
+  [self setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)setNavigationBarHidden:(BOOL)navigationBarHidden animated:(BOOL)animated {
-  // TODO: Consider using this API to hide the top view controller's flexible header.
-  NSAssert(navigationBarHidden, @"%@ requires that the system navigation bar remain hidden.",
-           NSStringFromClass([self class]));
-
   [super setNavigationBarHidden:YES animated:animated];
+
+  UIViewController *child = [super childViewControllerForStatusBarStyle];
+  MDCAppBar *appBar = [self appBarForViewController:child];
+  MDCFlexibleHeaderView *headerView = appBar.appBarViewController.headerView;
+  [headerView setHidden:navigationBarHidden animated:animated];
 }
 
 #pragma mark - Private

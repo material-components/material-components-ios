@@ -302,6 +302,13 @@ IB_DESIGNABLE
  */
 @property(nonatomic) BOOL resetShadowAfterTrackingScrollViewIsReset;
 
+/**
+ This method is called from MDCAppBarNavigationController's override of
+ -setNavigationBarHidden:animated:. It hides the MDCFlexibleHeaderView with a mechanism other than
+ -setHidden:.
+ */
+- (void)setHidden:(BOOL)hidden animated:(BOOL)animated;
+
 #pragma mark Scroll View Tracking
 
 /**

@@ -94,6 +94,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 @property(nonatomic, strong) MDCFlexibleHeaderTopSafeArea *topSafeArea;
 @property(nonatomic, strong) MDCFlexibleHeaderMinMaxHeight *minMaxHeight;
 
+// Cached min/max height values used by `-setHidden:animated:`
+@property(nonatomic, assign) CGFloat cachedMaxHeight;
+@property(nonatomic, assign) CGFloat cachedMinHeight;
+
 @end
 
 // All injections into the content and scroll indicator insets are tracked here. It's super
@@ -1944,6 +1948,68 @@ static BOOL isRunningiOS10_3OrAbove() {
 
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
+}
+
+- (void)setHidden:(BOOL)hidden animated:(BOOL)animated {
+  BOOL isCurrentlyHidden = self.cachedMaxHeight > 0;
+  if (isCurrentlyHidden == hidden) {
+    return;
+  }
+
+  if (!animated) {
+    if (hidden) {
+      self.cachedMinHeight = self.minimumHeight;
+      self.cachedMaxHeight = self.maximumHeight;
+      self.maximumHeight = 0;
+      self.layer.opacity = 0;
+    } else {
+      self.minimumHeight = self.cachedMinHeight;
+      self.maximumHeight = self.cachedMaxHeight;
+      self.layer.opacity = 1;
+    }
+    return;
+  }
+
+  CGFloat height = 0;
+  if (isCurrentlyHidden) {
+    height = self.cachedMaxHeight + 20;
+  } else {
+    height = self.maximumHeight + 20;
+  }
+  CGAffineTransform shifted = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -1 * height);
+
+  CGFloat safeArea = 0;
+  if (@available(iOS 11.0, *)) {
+    safeArea = self.safeAreaInsets.top;
+  } else {
+    safeArea = 20;
+  }
+
+  CGFloat animationDuration = (CGFloat)0.15;
+  if (hidden) {
+    self.cachedMinHeight = self.minimumHeight;
+    self.cachedMaxHeight = self.maximumHeight;
+    [UIView animateWithDuration:animationDuration
+        animations:^{
+          self.transform = shifted;
+          self.maximumHeight = 0;
+        }
+        completion:^(BOOL finished) {
+          self.transform = CGAffineTransformIdentity;
+          self.layer.opacity = 0;
+        }];
+  } else {
+    self.maximumHeight = self.cachedMaxHeight;
+    self.minimumHeight = self.cachedMinHeight;
+    self.cachedMaxHeight = 0;
+    self.cachedMinHeight = 0;
+    self.transform = shifted;
+    self.layer.opacity = 1;
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                       self.transform = CGAffineTransformIdentity;
+                     }];
+  }
 }
 
 @end
