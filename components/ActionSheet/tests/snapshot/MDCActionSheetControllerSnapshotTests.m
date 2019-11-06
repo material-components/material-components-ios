@@ -1021,8 +1021,6 @@ static NSString *const kLongTitle5Arabic =
     // Create a window so the Action Sheet's view can inherit the trait environment.
     MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
         [[MDCActionSheetControllerCustomTraitCollectionTestsWindowFake alloc] init];
-    [window makeKeyWindow];
-    window.hidden = NO;
     [window addSubview:self.actionSheetController.view];
 
     // When
@@ -1031,13 +1029,9 @@ static NSString *const kLongTitle5Arabic =
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
     [window traitCollectionDidChange:nil];
     [self.actionSheetController.view layoutIfNeeded];
-    window.bounds = CGRectMake(0, 0, 1000, 1000);
-    self.actionSheetController.view.frame = window.bounds;
 
     // Then
-    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
-    [window layoutIfNeeded];
-    [self snapshotVerifyView:window];
+    [self snapshotVerifyView:self.actionSheetController.view];
   }
 }
 
@@ -1078,8 +1072,6 @@ static NSString *const kLongTitle5Arabic =
     // Create a window so the Action Sheet's view can inherit the trait environment.
     MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
         [[MDCActionSheetControllerCustomTraitCollectionTestsWindowFake alloc] init];
-    [window makeKeyWindow];
-    window.hidden = NO;
     [window addSubview:self.actionSheetController.view];
 
     // When
@@ -1087,13 +1079,9 @@ static NSString *const kLongTitle5Arabic =
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
     [window traitCollectionDidChange:nil];
     [self.actionSheetController.view layoutIfNeeded];
-    window.bounds = CGRectMake(0, 0, 1000, 1000);
-    self.actionSheetController.view.frame = window.bounds;
 
     // Then
-    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
-    [window layoutIfNeeded];
-    [self snapshotVerifyView:window];
+    [self snapshotVerifyView:self.actionSheetController.view];
   }
 }
 
