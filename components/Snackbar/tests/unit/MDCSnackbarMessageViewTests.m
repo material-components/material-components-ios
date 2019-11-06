@@ -477,7 +477,7 @@
   [self.manager showMessage:self.message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
   dispatch_time_t popTime =
-      dispatch_time(DISPATCH_TIME_NOW, (int64_t)((CGFloat)0.1 * NSEC_PER_SEC));
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)((CGFloat)0.2 * NSEC_PER_SEC));
   dispatch_after(popTime, dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
