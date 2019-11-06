@@ -17,7 +17,7 @@
 #import "MDCActionSheetController.h"
 #import "MaterialInk.h"
 
-@interface MDCActionSheetItemTableViewCell : UITableViewCell<UIContentSizeCategoryAdjusting>
+@interface MDCActionSheetItemTableViewCell : UITableViewCell <UIContentSizeCategoryAdjusting>
 /**
   The action contains the title, image, and handler
   If you need to change any of the three you must pass a new action in.

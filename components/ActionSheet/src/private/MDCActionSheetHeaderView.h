@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCActionSheetHeaderView : UIView<UIContentSizeCategoryAdjusting>
+@interface MDCActionSheetHeaderView : UIView <UIContentSizeCategoryAdjusting>
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
 
