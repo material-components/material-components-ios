@@ -112,17 +112,16 @@ static UIFont *ValueLabelFontDefault() {
     // +  (3, 3) at trackHeight == 6
     // +  ... and so on.
     CGFloat trackHeight = CGRectGetHeight(self.bounds);
-    CGFloat circleDimension = MIN(2, trackHeight);
-    CGFloat circleOriginY = (trackHeight - circleDimension) / 2;
+    CGFloat dotHeight = MIN(2, trackHeight);
+    CGFloat dotWidth = MIN(2, trackHeight);
+    CGFloat circleOriginY = (trackHeight - dotHeight) / 2;
     if (trackHeight > 4) {
-      circleDimension = trackHeight / 2;
-      circleOriginY = (trackHeight - circleDimension) / 2;
+      dotHeight = trackHeight / 2;
+      circleOriginY = (trackHeight - dotHeight) / 2;
     }
-    CGRect circleRect = CGRectMake(0, (CGRectGetHeight(self.bounds) - circleDimension) / 2,
-                                   circleDimension, circleDimension);
+    CGRect dotRect = CGRectMake(0, (trackHeight - dotHeight) / 2, dotWidth, dotHeight);
     // Increment within the bounds
-    CGFloat absoluteIncrement =
-        (CGRectGetWidth(self.bounds) - circleDimension) / (_numDiscreteDots - 1);
+    CGFloat absoluteIncrement = (CGRectGetWidth(self.bounds) - dotWidth) / (_numDiscreteDots - 1);
     // Increment within 0..1
     CGFloat relativeIncrement = (CGFloat)1.0 / (_numDiscreteDots - 1);
 
@@ -137,8 +136,14 @@ static UIFont *ValueLabelFontDefault() {
       } else {
         [self.inactiveDotColor setFill];
       }
-      circleRect.origin.x = (i * absoluteIncrement);
-      CGContextFillEllipseInRect(contextRef, circleRect);
+      dotRect.origin.x = (i * absoluteIncrement);
+      // Clear any previous paths from the context
+      CGContextBeginPath(contextRef);
+      CGPathRef rectPathRef =
+          CGPathCreateWithRoundedRect(dotRect, dotWidth / 2, dotWidth / 2, NULL);
+      CGContextAddPath(contextRef, rectPathRef);
+      CGContextFillPath(contextRef);
+      CGPathRelease(rectPathRef);
     }
   }
 }
