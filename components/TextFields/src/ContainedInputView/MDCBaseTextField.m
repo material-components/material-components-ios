@@ -36,6 +36,7 @@
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCTextControlState textControlState;
 @property(nonatomic, assign) MDCTextControlLabelState labelState;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 /**
  This property maps MDCTextControlStates as NSNumbers to
@@ -80,6 +81,7 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
+  self.animationDuration = kMDCTextControlDefaultAnimationDuration;
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
@@ -108,7 +110,7 @@
 }
 
 - (void)setUpLabel {
-  self.label = [[UILabel alloc] initWithFrame:self.bounds];
+  self.label = [[UILabel alloc] init];
   [self addSubview:self.label];
 }
 
@@ -158,18 +160,13 @@
 
 - (void)postLayoutSubviews {
   self.label.hidden = self.labelState == MDCTextControlLabelStateNone;
-  [MDCTextControlLabelAnimation layOutLabel:self.label
-                                      state:self.labelState
-                           normalLabelFrame:self.layout.labelFrameNormal
-                         floatingLabelFrame:self.layout.labelFrameFloating
-                                 normalFont:self.normalFont
-                               floatingFont:self.floatingFont];
-  [self.containerStyle applyStyleToTextControl:self];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
+  [self animateLabel];
+  [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
@@ -412,7 +409,7 @@
     [oldStyle removeStyleFrom:self];
   }
   _containerStyle = containerStyle;
-  [_containerStyle applyStyleToTextControl:self];
+  [_containerStyle applyStyleToTextControl:self animationDuration:0];
 }
 
 - (CGRect)containerFrame {
@@ -555,6 +552,37 @@
 }
 
 #pragma mark Label
+
+- (void)animateLabel {
+  __weak MDCBaseTextField *weakSelf = self;
+  [MDCTextControlLabelAnimation animateLabel:self.label
+                                       state:self.labelState
+                            normalLabelFrame:self.layout.labelFrameNormal
+                          floatingLabelFrame:self.layout.labelFrameFloating
+                                  normalFont:self.normalFont
+                                floatingFont:self.floatingFont
+                           animationDuration:self.animationDuration
+                                  completion:^(BOOL finished) {
+                                    if (finished) {
+                                      // Ensure that the label position is correct in case of
+                                      // competing animations.
+                                      [weakSelf positionLabel];
+                                    }
+                                  }];
+}
+
+- (void)positionLabel {
+  if (self.labelState == MDCTextControlLabelStateFloating) {
+    self.label.frame = self.layout.labelFrameFloating;
+    self.label.hidden = NO;
+  } else if (self.labelState == MDCTextControlLabelStateNormal) {
+    self.label.frame = self.layout.labelFrameNormal;
+    self.label.hidden = NO;
+  } else {
+    self.label.frame = CGRectZero;
+    self.label.hidden = YES;
+  }
+}
 
 - (BOOL)canLabelFloat {
   return self.labelBehavior == MDCTextControlLabelBehaviorFloats;

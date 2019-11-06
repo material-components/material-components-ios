@@ -29,7 +29,11 @@ static const CGFloat kBorderWidth = 1;
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
   card.interactable = YES;
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCard:card];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
+#pragma clang diagnostic pop
 }
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
@@ -39,7 +43,11 @@ static const CGFloat kBorderWidth = 1;
   [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
   cardCell.interactable = YES;
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCardCell:cardCell];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
+#pragma clang diagnostic pop
 }
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
@@ -52,7 +60,11 @@ static const CGFloat kBorderWidth = 1;
   }
 
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCard:card];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
+#pragma clang diagnostic pop
 }
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
@@ -64,7 +76,11 @@ static const CGFloat kBorderWidth = 1;
   }
 
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCardCell:cardCell];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
+#pragma clang diagnostic pop
 }
 
 @end

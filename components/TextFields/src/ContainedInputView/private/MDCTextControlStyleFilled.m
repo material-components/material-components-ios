@@ -40,6 +40,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 @property(strong, nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *underlineColors;
 @property(strong, nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *filledBackgroundColors;
 
+@property(nonatomic, assign) CGRect mostRecentBounds;
+
 @end
 
 @implementation MDCTextControlStyleFilled
@@ -60,6 +62,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   [self setUpUnderlineColors];
   [self setUpFilledBackgroundColors];
   [self setUpSublayers];
+  self.mostRecentBounds = CGRectZero;
 }
 
 - (void)setUpUnderlineColors {
@@ -72,7 +75,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)setUpFilledBackgroundColors {
   self.filledBackgroundColors = [NSMutableDictionary new];
-  UIColor *filledBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.1];
+  UIColor *filledBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.05];
   self.filledBackgroundColors[@(MDCTextControlStateNormal)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateEditing)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateDisabled)] = filledBackgroundColor;
@@ -108,10 +111,12 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 #pragma mark MDCTextControl
 
-- (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl {
+- (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl
+              animationDuration:(NSTimeInterval)animationDuration {
   [self applyStyleToView:textControl
                    state:textControl.textControlState
-          containerFrame:textControl.containerFrame];
+          containerFrame:textControl.containerFrame
+       animationDuration:animationDuration];
 }
 
 - (void)removeStyleFrom:(id<MDCTextControl>)textControl {
@@ -146,7 +151,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)applyStyleToView:(UIView *)view
                    state:(MDCTextControlState)state
-          containerFrame:(CGRect)containerFrame {
+          containerFrame:(CGRect)containerFrame
+       animationDuration:(NSTimeInterval)animationDuration {
+  BOOL didChangeBounds = NO;
+  if (!CGRectEqualToRect(self.mostRecentBounds, view.bounds)) {
+    didChangeBounds = YES;
+    self.mostRecentBounds = view.bounds;
+  }
+
   self.filledSublayer.fillColor = [self.filledBackgroundColors[@(state)] CGColor];
   self.thinUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
   self.thickUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
@@ -155,7 +167,9 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
   UIBezierPath *filledSublayerBezier = [self filledSublayerPathWithTextFieldBounds:view.bounds
                                                                    containerHeight:containerHeight];
   self.filledSublayer.path = filledSublayerBezier.CGPath;
-  if (self.filledSublayer.superlayer != view.layer) {
+
+  BOOL styleIsNotAppliedToView = self.filledSublayer.superlayer != view.layer;
+  if (styleIsNotAppliedToView) {
     [view.layer insertSublayer:self.filledSublayer atIndex:0];
   }
 
@@ -175,6 +189,12 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
                                    underlineThickness:thinUnderlineThickness
                                        underlineWidth:viewWidth];
 
+  if (animationDuration <= 0 || styleIsNotAppliedToView || didChangeBounds) {
+    self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
+    self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+    return;
+  }
+
   CABasicAnimation *preexistingThickUnderlineShrinkAnimation =
       (CABasicAnimation *)[self.thickUnderlineLayer
           animationForKey:self.class.thickUnderlineShrinkKey];
@@ -190,6 +210,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
   [CATransaction begin];
   {
+    [CATransaction setAnimationDuration:animationDuration];
+
     if (shouldShowThickUnderline) {
       if (preexistingThickUnderlineShrinkAnimation) {
         [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
@@ -296,7 +318,6 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (CABasicAnimation *)basicAnimationWithKeyPath:(NSString *)keyPath {
   CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
-  animation.duration = kMDCTextControlDefaultAnimationDuration;
   animation.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   animation.repeatCount = 0;

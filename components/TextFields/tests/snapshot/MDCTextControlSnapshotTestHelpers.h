@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,4 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCActivityIndicatorColorThemer.h"
+#import "MaterialSnapshot.h"
+
+#import <UIKit/UIKit.h>
+
+#import "../../src/ContainedInputView/private/MDCTextControl.h"
+
+@interface MDCTextControlSnapshotTestHelpers : NSObject
+
++ (void)removeTextControlFromKeyWindow:(UIView<MDCTextControl> *)textControl;
++ (void)addTextControlToKeyWindow:(UIView<MDCTextControl> *)textControl;
+
++ (void)validateTextControl:(UIView<MDCTextControl> *)textControl
+               withTestCase:(MDCSnapshotTestCase *)testCase;
+@end
