@@ -914,13 +914,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                                   withDuration:(NSTimeInterval)duration {
   switch (self.discreteDotVisibility) {
     case MDCThumbDiscreteDotVisibilityNever:
-      _discreteDots.alpha = 0.0;
+      _discreteDots.alpha = 0;
       break;
     case MDCThumbDiscreteDotVisibilityAlways:
-      _discreteDots.alpha = 1.0;
+      _discreteDots.alpha = 1;
       break;
     case MDCThumbDiscreteDotVisibilityWhenDragging:
-      _discreteDots.alpha = (self.enabled && _isDraggingThumb) ? 1.0 : 0.0;
+      _discreteDots.alpha = (self.enabled && _isDraggingThumb) ? 1 : 0;
       break;
   }
 
