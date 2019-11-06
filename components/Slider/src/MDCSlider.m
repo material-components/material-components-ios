@@ -583,7 +583,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (self.numberOfDiscreteValues > 1) {
+    if (!self.continuous && self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }
     CGFloat newValue = self.value + adjustmentAmount;
@@ -601,7 +601,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (self.numberOfDiscreteValues > 1) {
+    if (!self.continuous && self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }
     CGFloat newValue = self.value - adjustmentAmount;
