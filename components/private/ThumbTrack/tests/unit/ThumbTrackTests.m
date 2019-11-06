@@ -173,7 +173,7 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
   thumbTrack.trackOnTickColor = UIColor.cyanColor;
 
   // Then
@@ -186,9 +186,9 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = NO;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
   thumbTrack.trackOnTickColor = UIColor.cyanColor;
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
 
   // Then
   XCTAssertEqualObjects(thumbTrack.trackOnTickColor, UIColor.cyanColor);
@@ -210,7 +210,7 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
   thumbTrack.trackOffTickColor = UIColor.cyanColor;
 
   // Then
@@ -223,9 +223,9 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = NO;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
   thumbTrack.trackOffTickColor = UIColor.cyanColor;
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
 
   // Then
   XCTAssertEqualObjects(thumbTrack.trackOffTickColor, UIColor.cyanColor);

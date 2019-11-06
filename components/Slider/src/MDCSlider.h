@@ -18,6 +18,16 @@
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
+/** The visibility of the track tick marks. */
+typedef NS_ENUM(NSUInteger, MDCSliderTrackTickVisibility) {
+  /** Track tick marks are never shown. */
+  MDCSliderTrackTickVisibilityNever = 0,
+  /** Track tick marks are only shown when the thumb is pressed or dragging. */
+  MDCSliderTrackTickVisibilityWhenDragging = 1U,
+  /** Track tick marks are always shown. */
+  MDCSliderTrackTickVisibilityAlways = 2U,
+};
+
 @protocol MDCSliderDelegate;
 
 /**
@@ -211,6 +221,16 @@ IB_DESIGNABLE
  The default value is zero.
  */
 @property(nonatomic, assign) NSUInteger numberOfDiscreteValues;
+
+/**
+ Configures the visibility of the track tick marks.
+
+ @note Unless this property is set explicitly, its value will change based on the value of
+       @c continuous. When @c continuous is @c true, @c trackTickVisibility is
+       @c MDCSliderTrackTickVisibilityNever. When @c continuous is false, @c trackTickVisibility
+       is @c MDCSliderTrackTickVisibilityWhenDragging.
+ */
+@property(nonatomic, assign) MDCSliderTrackTickVisibility trackTickVisibility;
 
 /**
  The value of the slider.
