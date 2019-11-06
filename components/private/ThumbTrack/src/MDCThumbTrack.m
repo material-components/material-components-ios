@@ -104,10 +104,22 @@ static UIFont *ValueLabelFontDefault() {
   if (_numDiscreteDots >= 2) {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
 
-    CGRect circleRect = CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.height);
+    // The "dot" is a circle that gradually transforms into a rounded rectangle.
+    // *   At 1- and 2-point track heights, use a circle filling the height.
+    // *   At 3- and 4-point track heights, use a vertically-centered circle 2 points tall.
+    // *   At greater track heights, create a vertically-centered rounded rectangle 2-points wide
+    //     and half the track height.
+    CGFloat trackHeight = CGRectGetHeight(self.bounds);
+    CGFloat dotHeight = MIN(2, trackHeight);
+    CGFloat dotWidth = MIN(2, trackHeight);
+    CGFloat circleOriginY = (trackHeight - dotHeight) / 2;
+    if (trackHeight > 4) {
+      dotHeight = trackHeight / 2;
+      circleOriginY = (trackHeight - dotHeight) / 2;
+    }
+    CGRect dotRect = CGRectMake(0, (trackHeight - dotHeight) / 2, dotWidth, dotHeight);
     // Increment within the bounds
-    CGFloat absoluteIncrement =
-        (self.bounds.size.width - self.bounds.size.height) / (_numDiscreteDots - 1);
+    CGFloat absoluteIncrement = (CGRectGetWidth(self.bounds) - dotWidth) / (_numDiscreteDots - 1);
     // Increment within 0..1
     CGFloat relativeIncrement = (CGFloat)1.0 / (_numDiscreteDots - 1);
 
@@ -122,8 +134,14 @@ static UIFont *ValueLabelFontDefault() {
       } else {
         [self.inactiveDotColor setFill];
       }
-      circleRect.origin.x = (i * absoluteIncrement);
-      CGContextFillEllipseInRect(contextRef, circleRect);
+      dotRect.origin.x = (i * absoluteIncrement);
+      // Clear any previous paths from the context
+      CGContextBeginPath(contextRef);
+      CGPathRef rectPathRef =
+          CGPathCreateWithRoundedRect(dotRect, dotWidth / 2, dotWidth / 2, NULL);
+      CGContextAddPath(contextRef, rectPathRef);
+      CGContextFillPath(contextRef);
+      CGPathRelease(rectPathRef);
     }
   }
 }
