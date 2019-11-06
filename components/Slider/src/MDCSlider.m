@@ -44,10 +44,12 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   NSMutableDictionary *_trackBackgroundColorsForState;
   NSMutableDictionary *_filledTickColorsForState;
   NSMutableDictionary *_backgroundTickColorsForState;
+  BOOL _isTrackTickVisibilityAutomatic;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize trackTickVisibility = _trackTickVisibility;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -77,7 +79,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.thumbGrowsWhenDragging = YES;
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.shouldDisplayRipple = YES;
-  _thumbTrack.shouldDisplayDiscreteDots = YES;
+  _thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
   _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
@@ -124,6 +126,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _shouldEnableHapticsForAllDiscreteValues = NO;
 
   _previousValue = -CGFLOAT_MAX;
+  _isTrackTickVisibilityAutomatic = YES;
 }
 
 #pragma mark - Color customization methods
@@ -278,6 +281,30 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.numDiscreteValues;
 }
 
+- (void)setTrackTickVisibility:(MDCSliderTrackTickVisibility)trackTickVisibility {
+  _trackTickVisibility = trackTickVisibility;
+  _isTrackTickVisibilityAutomatic = NO;
+  switch (trackTickVisibility) {
+    case MDCSliderTrackTickVisibilityNever:
+      self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
+      break;
+    case MDCSliderTrackTickVisibilityWhenDragging:
+      self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
+      break;
+    case MDCSliderTrackTickVisibilityAlways:
+      self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityAlways;
+      break;
+  }
+}
+
+- (MDCSliderTrackTickVisibility)trackTickVisibility {
+  if (_isTrackTickVisibilityAutomatic) {
+    return self.continuous ? MDCSliderTrackTickVisibilityNever
+                           : MDCSliderTrackTickVisibilityWhenDragging;
+  }
+  return _trackTickVisibility;
+}
+
 - (UIColor *)thumbShadowColor {
   return _thumbTrack.thumbShadowColor;
 }
@@ -296,6 +323,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setContinuous:(BOOL)continuous {
   _thumbTrack.continuousUpdateEvents = continuous;
+  if (_isTrackTickVisibilityAutomatic) {
+    _thumbTrack.discreteDotVisibility =
+        continuous ? MDCThumbDiscreteDotVisibilityNever : MDCThumbDiscreteDotVisibilityWhenDragging;
+  }
 }
 
 - (CGFloat)value {

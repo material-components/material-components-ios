@@ -16,6 +16,16 @@
 
 #import "MaterialShadowElevations.h"
 
+/** The visibility of the discrete dots. */
+typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
+  /** Discrete dots are never shown. */
+  MDCThumbDiscreteDotVisibilityNever = 0,
+  /** Discrete dots are only shown when the thumb is pressed or dragging. */
+  MDCThumbDiscreteDotVisibilityWhenDragging = 1U,
+  /** Discrete dots are always shown. */
+  MDCThumbDiscreteDotVisibilityAlways = 2U,
+};
+
 @class MDCThumbView;
 @protocol MDCThumbTrackDelegate;
 
@@ -161,8 +171,10 @@
 /** Whether the thumb should display ripple splashes on touch. */
 @property(nonatomic, assign) BOOL shouldDisplayRipple;
 
-/** Whether or not to display dots indicating discrete locations. Default is NO. */
-@property(nonatomic, assign) BOOL shouldDisplayDiscreteDots;
+/**
+ Configures the visibility of the discrete dots.
+*/
+@property(nonatomic, assign) MDCThumbDiscreteDotVisibility discreteDotVisibility;
 
 /**
  Whether or not to show the numeric value label when dragging a discrete slider.
