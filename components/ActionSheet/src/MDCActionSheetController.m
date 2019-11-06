@@ -335,7 +335,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   if (@available(iOS 10.0, *)) {
-    cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
+    cell.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
   }
   return cell;
 }
