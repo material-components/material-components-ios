@@ -104,10 +104,25 @@ static UIFont *ValueLabelFontDefault() {
   if (_numDiscreteDots >= 2) {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
 
-    CGRect circleRect = CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.height);
+    // The dot should be:
+    // +  (1, 1) at trackHeight == 1
+    // +  (2, 2) at trackHeight == 2
+    // +  (2, 2) at trackHeight == 4
+    // +  (2.5, 2.5) at trackHeight == 5
+    // +  (3, 3) at trackHeight == 6
+    // +  ... and so on.
+    CGFloat trackHeight = CGRectGetHeight(self.bounds);
+    CGFloat circleDimension = MIN(2, trackHeight);
+    CGFloat circleOriginY = (trackHeight - circleDimension) / 2;
+    if (trackHeight > 4) {
+      circleDimension = trackHeight / 2;
+      circleOriginY = (trackHeight - circleDimension) / 2;
+    }
+    CGRect circleRect = CGRectMake(0, (CGRectGetHeight(self.bounds) - circleDimension) / 2,
+                                   circleDimension, circleDimension);
     // Increment within the bounds
     CGFloat absoluteIncrement =
-        (self.bounds.size.width - self.bounds.size.height) / (_numDiscreteDots - 1);
+        (CGRectGetWidth(self.bounds) - circleDimension) / (_numDiscreteDots - 1);
     // Increment within 0..1
     CGFloat relativeIncrement = (CGFloat)1.0 / (_numDiscreteDots - 1);
 
