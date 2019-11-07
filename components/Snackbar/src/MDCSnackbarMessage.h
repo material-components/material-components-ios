@@ -171,8 +171,9 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic) BOOL focusOnShow;
 
 /**
- A block that is invoked when the corresponding @c MDCSnackbarMessageView of the @c MDCSnackbarMessage instance
- will be presented. Use this to customize @c MDCSnackbarMessageView before presentation.
+ A block that is invoked when the corresponding @c MDCSnackbarMessageView of the @c
+ MDCSnackbarMessage instance will be presented. Use this to customize @c MDCSnackbarMessageView
+ before presentation.
  */
 @property(nonatomic, copy, nullable) void (^snackbarMessageWillPresentBlock)
     (MDCSnackbarMessage *_Nonnull message, MDCSnackbarMessageView *_Nonnull messageView);
