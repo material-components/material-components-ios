@@ -489,10 +489,10 @@
 
 - (void)testMessageCustomizationUsingWillPresentBlock {
   // Given
-  self.message.snackbarMessageWillPresentBlock = ^(MDCSnackbarMessage *snackbarMessage,
-                                              MDCSnackbarMessageView *messageView) {
-    messageView.backgroundColor = UIColor.blueColor;
-  };
+  self.message.snackbarMessageWillPresentBlock =
+      ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
+        messageView.backgroundColor = UIColor.blueColor;
+      };
 
   // When
   [self.manager showMessage:self.message];

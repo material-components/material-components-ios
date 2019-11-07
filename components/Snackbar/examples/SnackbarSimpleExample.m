@@ -178,15 +178,15 @@
   action.title = @"Tap Me";
   message.action = action;
   message.enableRippleBehavior = YES;
-  message.snackbarMessageWillPresentBlock = ^(MDCSnackbarMessage *snackbarMessage,
-                                              MDCSnackbarMessageView *messageView) {
-    messageView.backgroundColor = UIColor.blueColor;
-    messageView.messageTextColor = UIColor.whiteColor;
-    for (MDCButton *button in messageView.actionButtons) {
-      [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-      [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
-    }
-  };
+  message.snackbarMessageWillPresentBlock =
+      ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
+        messageView.backgroundColor = UIColor.blueColor;
+        messageView.messageTextColor = UIColor.whiteColor;
+        for (MDCButton *button in messageView.actionButtons) {
+          [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+          [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
+        }
+      };
   [MDCSnackbarManager showMessage:message];
 }
 
