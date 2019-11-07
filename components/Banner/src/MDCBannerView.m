@@ -78,7 +78,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTop;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTrailing;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintCenterY;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintBaseLineWithTrailingButton;
+@property(nonatomic, readwrite, strong)
+    NSLayoutConstraint *leadingButtonConstraintBaseLineWithTrailingButton;
 @property(nonatomic, readwrite, strong)
     NSLayoutConstraint *leadingButtonConstraintTrailingWithTrailingButton;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintBottom;
@@ -276,8 +277,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       constraintEqualToAnchor:self.buttonContainerView.trailingAnchor];
   self.leadingButtonConstraintCenterY = [self.leadingButton.centerYAnchor
       constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
-  self.leadingButtonConstraintBaseLineWithTrailingButton =
-      [self.leadingButton.lastBaselineAnchor constraintEqualToAnchor:self.trailingButton.lastBaselineAnchor];
+  self.leadingButtonConstraintBaseLineWithTrailingButton = [self.leadingButton.lastBaselineAnchor
+      constraintEqualToAnchor:self.trailingButton.lastBaselineAnchor];
   self.leadingButtonConstraintTrailingWithTrailingButton =
       [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.trailingButton.leadingAnchor
                                                         constant:-kButtonHorizontalIntervalSpace];
