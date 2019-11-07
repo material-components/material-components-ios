@@ -1,3 +1,68 @@
+# 93.5.0
+
+This minor release introduces new APIs for Slider. The track height and the
+visibility of track tick marks can be customized.
+
+## New features
+
+`MDCSlider` allows customization of the track height.
+
+**Objective-C**
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+slider.trackHeight = 4;
+```
+
+**Swift**
+
+```swift
+let slider = MDCSlider()
+slider.trackHeight = 4
+```
+
+`MDCSlider` also allows controlling the display of the track tick marks for
+continuous and discrete sliders.  Setting this property disables the automatic
+conversion of a slider to "discrete" when setting `numberOfDiscreteValues`.
+
+**Objective-C**
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+// Track tick marks are always shown. Remains a continuous slider.
+slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+slider.minimumValue = 0;
+slider.maximumValue = 100;
+// Show tick marks at 0, 10, 20, ..., 100
+slider.numberOfDiscreteValues = 11;
+```
+
+**Swift**
+
+```swift
+let slider = MDCSlider()
+// Track tick marks are always shown. Remains a continuous slider.
+slider.trackTickVisibility = .always
+slider.minimumValue = 0;
+slider.maximumValue = 100;
+// Show tick marks at 0, 10, 20, ..., 100
+slider.numberOfDiscreteValues = 11;
+```
+
+## Component changes
+
+### ThumbTrack
+
+* [Discrete dots scale slowly with track height. (#8744)](https://github.com/material-components/material-components-ios/commit/8209a86761f81fe9e3b36689608f53cebcff3d40) (Robert Moore)
+
+### Multi-component changes
+
+* [Add API to control showing tick marks. (#8743)](https://github.com/material-components/material-components-ios/commit/826779f2a470a708a95ddfdcba491fe7dd47e5b4) (Robert Moore)
+* [Add trackHeight property (#8740)](https://github.com/material-components/material-components-ios/commit/f0647ad0fe20d586599a7c2170982d0d8b645230) (Bryan Oltman)
+* [Continuous sliders show tick marks. (#8745)](https://github.com/material-components/material-components-ios/commit/a742a6132e5aa69ce9eec6dcfc2a74bd0c93765e) (Robert Moore)
+
+---
+
 # 93.4.0
 
 This minor release adds a new Filled and Outlined TextFields that will eventually replace MDCTextField's filled and outlined controllers. Additionally, it fixes dynamic type issues for multiple components, and removes deprecated themers.
