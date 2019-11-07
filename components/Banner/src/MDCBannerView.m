@@ -395,8 +395,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 - (void)updateConstraints {
-  MDCBannerViewLayoutStyle layoutStyle = [self layoutStyleForSizeToFit:self.bounds.size];
-  [self updateConstraintsWithLayoutStyle:layoutStyle];
+  if (!CGSizeEqualToSize(self.bounds.size, CGSizeZero)) {
+    MDCBannerViewLayoutStyle layoutStyle = [self layoutStyleForSizeToFit:self.bounds.size];
+    [self updateConstraintsWithLayoutStyle:layoutStyle];
+  }
 
   [super updateConstraints];
 }
