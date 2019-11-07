@@ -18,6 +18,16 @@
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
+/** The visibility of the track tick marks. */
+typedef NS_ENUM(NSUInteger, MDCSliderTrackTickVisibility) {
+  /** Track tick marks are never shown. */
+  MDCSliderTrackTickVisibilityNever = 0,
+  /** Track tick marks are only shown when the thumb is pressed or dragging. */
+  MDCSliderTrackTickVisibilityWhenDragging = 1U,
+  /** Track tick marks are always shown. */
+  MDCSliderTrackTickVisibilityAlways = 2U,
+};
+
 @protocol MDCSliderDelegate;
 
 /**
@@ -213,6 +223,19 @@ IB_DESIGNABLE
 @property(nonatomic, assign) NSUInteger numberOfDiscreteValues;
 
 /**
+ Configures the visibility of the track tick marks.
+
+ After this property is explicitly set, the receiver will no longer use
+ @c numberOfDiscreteValues to implicitly determine if it is a discrete or continuous slider.
+
+ @note Unless this property is set explicitly, its value will change based on the value of
+       @c continuous. When @c continuous is @c true, @c trackTickVisibility is
+       @c MDCSliderTrackTickVisibilityNever. When @c continuous is false, @c trackTickVisibility
+       is @c MDCSliderTrackTickVisibilityWhenDragging.
+ */
+@property(nonatomic, assign) MDCSliderTrackTickVisibility trackTickVisibility;
+
+/**
  The value of the slider.
 
  To animate from the current value to the new value, instead use @see setValue:animated:. The value
@@ -318,6 +341,13 @@ IB_DESIGNABLE
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCSlider *_Nonnull slider, UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ The height of the track that the thumb moves along.
+
+ Default value is 2 points.
+ */
+@property(nonatomic, assign) CGFloat trackHeight;
 
 #pragma mark - To be deprecated
 

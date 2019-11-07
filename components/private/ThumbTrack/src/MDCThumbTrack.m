@@ -104,10 +104,22 @@ static UIFont *ValueLabelFontDefault() {
   if (_numDiscreteDots >= 2) {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
 
-    CGRect circleRect = CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.height);
+    // The "dot" is a circle that gradually transforms into a rounded rectangle.
+    // *   At 1- and 2-point track heights, use a circle filling the height.
+    // *   At 3- and 4-point track heights, use a vertically-centered circle 2 points tall.
+    // *   At greater track heights, create a vertically-centered rounded rectangle 2-points wide
+    //     and half the track height.
+    CGFloat trackHeight = CGRectGetHeight(self.bounds);
+    CGFloat dotHeight = MIN(2, trackHeight);
+    CGFloat dotWidth = MIN(2, trackHeight);
+    CGFloat circleOriginY = (trackHeight - dotHeight) / 2;
+    if (trackHeight > 4) {
+      dotHeight = trackHeight / 2;
+      circleOriginY = (trackHeight - dotHeight) / 2;
+    }
+    CGRect dotRect = CGRectMake(0, (trackHeight - dotHeight) / 2, dotWidth, dotHeight);
     // Increment within the bounds
-    CGFloat absoluteIncrement =
-        (self.bounds.size.width - self.bounds.size.height) / (_numDiscreteDots - 1);
+    CGFloat absoluteIncrement = (CGRectGetWidth(self.bounds) - dotWidth) / (_numDiscreteDots - 1);
     // Increment within 0..1
     CGFloat relativeIncrement = (CGFloat)1.0 / (_numDiscreteDots - 1);
 
@@ -122,8 +134,14 @@ static UIFont *ValueLabelFontDefault() {
       } else {
         [self.inactiveDotColor setFill];
       }
-      circleRect.origin.x = (i * absoluteIncrement);
-      CGContextFillEllipseInRect(contextRef, circleRect);
+      dotRect.origin.x = (i * absoluteIncrement);
+      // Clear any previous paths from the context
+      CGContextBeginPath(contextRef);
+      CGPathRef rectPathRef =
+          CGPathCreateWithRoundedRect(dotRect, dotWidth / 2, dotWidth / 2, NULL);
+      CGContextAddPath(contextRef, rectPathRef);
+      CGContextFillPath(contextRef);
+      CGPathRelease(rectPathRef);
     }
   }
 }
@@ -204,6 +222,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _shouldDisplayInk = YES;
     _shouldDisplayRipple = YES;
     _valueLabelHeight = kValueLabelHeight;
+    _discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
 
     // Default thumb view.
     CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
@@ -285,6 +304,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 #pragma mark - Properties
 
+- (void)setContinuousUpdateEvents:(BOOL)continuousUpdateEvents {
+  _requireExplicitDiscreteMode = YES;
+  _continuousUpdateEvents = continuousUpdateEvents;
+}
+
+- (BOOL)isContinuous {
+  if (self.requireExplicitDiscreteMode) {
+    return _continuousUpdateEvents;
+  }
+  return _numDiscreteValues < 2;
+}
+
 - (void)setPrimaryColor:(UIColor *)primaryColor {
   _primaryColor = primaryColor ?: TrackOnColorDefault();
 
@@ -336,6 +367,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setThumbDisabledColor:(UIColor *)thumbDisabledColor {
   _thumbDisabledColor = thumbDisabledColor;
+  [self setNeedsLayout];
+}
+
+- (void)setTrackHeight:(CGFloat)trackHeight {
+  if (MDCCGFloatEqual(trackHeight, _trackHeight)) {
+    return;
+  }
+
+  _trackHeight = trackHeight;
   [self setNeedsLayout];
 }
 
@@ -391,19 +431,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return _thumbView.shadowColor;
 }
 
-- (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
-  if (_shouldDisplayDiscreteDots != shouldDisplayDiscreteDots) {
-    if (shouldDisplayDiscreteDots) {
+- (void)setDiscreteDotVisibility:(MDCThumbDiscreteDotVisibility)discreteDotVisibility {
+  if (_discreteDotVisibility != discreteDotVisibility) {
+    if (discreteDotVisibility == MDCThumbDiscreteDotVisibilityNever) {
+      [_discreteDots removeFromSuperview];
+      _discreteDots = nil;
+    } else if (!_discreteDots) {
       _discreteDots = [[MDCDiscreteDotView alloc] init];
       _discreteDots.alpha = 0.0;
       _discreteDots.activeDotColor = self.trackOnTickColor;
       _discreteDots.inactiveDotColor = self.trackOffTickColor;
+      _discreteDots.numDiscreteDots = _numDiscreteValues;
       [_trackView addSubview:_discreteDots];
-    } else {
-      [_discreteDots removeFromSuperview];
-      _discreteDots = nil;
     }
-    _shouldDisplayDiscreteDots = shouldDisplayDiscreteDots;
+    _discreteDotVisibility = discreteDotVisibility;
   }
 }
 
@@ -833,7 +874,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _discreteDots.frame = [_trackView bounds];
 
   // Make sure Numeric Value Label matches up
-  if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+  if (!self.continuous && _shouldDisplayDiscreteValueLabel) {
     // Note that "center" here doesn't refer to the actual center, but rather the anchor point,
     // which is re-defined to be slightly below the bottom of the label
     _valueLabel.center = [self numericValueLabelPositionForValue:_value];
@@ -902,15 +943,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  */
 - (void)updateViewsForThumbAfterMoveIsAnimated:(BOOL)animated
                                   withDuration:(NSTimeInterval)duration {
-  if (_shouldDisplayDiscreteDots) {
-    if (self.enabled && _isDraggingThumb) {
-      _discreteDots.alpha = 1.0;
-    } else {
-      _discreteDots.alpha = 0.0;
-    }
+  switch (self.discreteDotVisibility) {
+    case MDCThumbDiscreteDotVisibilityNever:
+      _discreteDots.alpha = 0;
+      break;
+    case MDCThumbDiscreteDotVisibilityAlways:
+      _discreteDots.alpha = 1;
+      break;
+    case MDCThumbDiscreteDotVisibilityWhenDragging:
+      _discreteDots.alpha = (self.enabled && _isDraggingThumb) ? 1 : 0;
+      break;
   }
 
-  if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+  if (!self.continuous && _shouldDisplayDiscreteValueLabel) {
     if (self.enabled && _isDraggingThumb) {
       _valueLabel.transform = CGAffineTransformIdentity;
     } else {
@@ -932,7 +977,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   CGFloat radius;
   if (_isDraggingThumb) {
-    if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+    if (!self.continuous && _shouldDisplayDiscreteValueLabel) {
       radius = 0;
     } else {
       radius = _thumbRadius + _trackHeight;
@@ -995,9 +1040,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
   radius = MAX(radius, _thumbRadius);
 
-  if ((!self.enabled && _disabledTrackHasThumbGaps) ||
+  BOOL isDisabledWithThumbGaps = !self.enabled && _disabledTrackHasThumbGaps;
+  BOOL isNotDiscreteWithValueLabelWhileDraggingThumb =
+      !(!self.continuous && _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 0 &&
+        _isDraggingThumb);
+  BOOL isMinValueWithHollowThumbAndNotDiscreteWhileDraggingThumb =
       ([self isValueAtMinimum] && _thumbIsHollowAtStart &&
-       !(_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 0 && _isDraggingThumb))) {
+       isNotDiscreteWithValueLabelWhileDraggingThumb);
+  if (isDisabledWithThumbGaps || isMinValueWithHollowThumbAndNotDiscreteWhileDraggingThumb) {
     // The reason we calculate this explicitly instead of just using _thumbView.frame is because
     // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
     // is disabled or if a user is dragging the thumb.
@@ -1093,7 +1143,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
-  if (_numDiscreteValues < 2) {
+  if (self.continuous) {
     return targetValue;
   }
   if (MDCCGFloatEqual(_minimumValue, _maximumValue)) {
@@ -1183,7 +1233,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat previousValue = _value;
   CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
 
-  BOOL shouldAnimate = _numDiscreteValues > 1;
+  BOOL shouldAnimate = !self.continuous;
   [self setValue:value
                    animated:shouldAnimate
       animateThumbAfterMove:YES
@@ -1271,7 +1321,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // Having two discrete values is a special case (e.g. the switch) in which any tap just flips the
   // value between the two discrete values, irrespective of the tap location.
   CGFloat value;
-  if (isTap && _numDiscreteValues == 2) {
+  if (isTap && !self.continuous && _numDiscreteValues == 2) {
     // If we are at the maximum then make it the minimum:
     // For switch like thumb tracks where there is only 2 values we ignore the position of the tap
     // and toggle between the minimum and maximum values.
@@ -1284,7 +1334,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [_delegate thumbTrack:self willAnimateToValue:value];
   }
 
-  if (isTap && _numDiscreteValues > 1 && _shouldDisplayDiscreteDots) {
+  if (isTap && _numDiscreteValues > 1 &&
+      ((_discreteDotVisibility == MDCThumbDiscreteDotVisibilityAlways) ||
+       (_discreteDotVisibility == MDCThumbDiscreteDotVisibilityWhenDragging))) {
     _discreteDots.alpha = 1.0;
   }
 
