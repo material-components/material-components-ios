@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCSnackbarMessageAction;
+@class MDCSnackbarMessageView;
 
 /**
  Called when a message is finished displaying, regardless of whether or not buttons were tapped.
@@ -168,6 +169,14 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
  Defaults to NO.
  */
 @property(nonatomic) BOOL focusOnShow;
+
+/**
+ A block that is invoked when the corresponding @c MDCSnackbarMessageView of the @c
+ MDCSnackbarMessage instance will be presented. Use this to customize @c MDCSnackbarMessageView
+ before presentation.
+ */
+@property(nonatomic, copy, nullable) void (^snackbarMessageWillPresentBlock)
+    (MDCSnackbarMessage *_Nonnull message, MDCSnackbarMessageView *_Nonnull messageView);
 
 @end
 

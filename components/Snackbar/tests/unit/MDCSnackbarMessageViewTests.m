@@ -487,4 +487,24 @@
   XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
 }
 
+- (void)testMessageCustomizationUsingWillPresentBlock {
+  // Given
+  __block BOOL blockCalled = NO;
+  self.message.snackbarMessageWillPresentBlock =
+      ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
+        blockCalled = YES;
+      };
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
 @end
