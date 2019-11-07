@@ -1,25 +1,48 @@
 # 93.5.0
 
-This minor release introduces new customization APIs for Slider. The track
-height and the visibility of track tick marks can be customized.
+This minor release introduces new APIs for Slider. The track height and the
+visibility of track tick marks can be customized.
 
 ## New features
 
-`MDCSlider` allow customization of the track height.
+`MDCSlider` allows customization of the track height.
+
+**Objective-C**
 
 ```objc
 MDCSlider *slider = [[MDCSlider alloc] init];
 slider.trackHeight = 4;
 ```
 
+**Swift**
+
+```swift
+let slider = MDCSlider()
+slider.trackHeight = 4
+```
+
 `MDCSlider` also allows controlling the display of the track tick marks for
 continuous and discrete sliders.  Setting this property disables the automatic
 conversion of a slider to "discrete" when setting `numberOfDiscreteValues`.
+
+**Objective-C**
 
 ```objc
 MDCSlider *slider = [[MDCSlider alloc] init];
 // Track tick marks are always shown. Remains a continuous slider.
 slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+slider.minimumValue = 0;
+slider.maximumValue = 100;
+// Show tick marks at 0, 10, 20, ..., 100
+slider.numberOfDiscreteValues = 11;
+```
+
+**Swift**
+
+```swift
+let slider = MDCSlider()
+// Track tick marks are always shown. Remains a continuous slider.
+slider.trackTickVisibility = .always
 slider.minimumValue = 0;
 slider.maximumValue = 100;
 // Show tick marks at 0, 10, 20, ..., 100
