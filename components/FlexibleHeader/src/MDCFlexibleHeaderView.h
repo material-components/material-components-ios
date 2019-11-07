@@ -173,14 +173,14 @@ IB_DESIGNABLE
 #pragma mark - Animating changes to the header
 
 /**
- Animates any changes resulting from executing the animations block.
+ Animates any changes resulting from executing the @c animations block.
 
  Use this method to animate changes alongside animations to the flexible header.
 
  The following occurs when this method is invoked:
 
- 1. The provided `animations` block is invoked within a `[UIView animate...:]` block.
- 2. Within that same animation block and after invoking `animations`, the flexible header updates
+ 1. The provided @c animations block is invoked within a @code [UIView animate...:] @endcode block.
+ 2. Within that same animation block and after invoking @c animations, the flexible header updates
     any relevant aspects of its layout including its height, offset, and shadow layer frames.
  3. Upon completion of the resulting animation, the provided completion block is invoked if one was
     provided.
