@@ -131,12 +131,17 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
+  [self generateSnapshotAndVerifyForView:view supportIOS13:NO];
+}
+
+- (void)generateSnapshotAndVerifyForView:(UIView *)view
+                            supportIOS13:(BOOL)supportIOS13 {
   CGSize aSize = [view sizeThatFits:CGSizeMake(350, INFINITY)];
   view.frame = CGRectMake(0, 0, aSize.width, aSize.height);
   [view layoutIfNeeded];
 
   UIView *snapshotView = [view mdc_addToBackgroundView];
-  [self snapshotVerifyView:snapshotView];
+  [self snapshotVerifyView:snapshotView tolerance:0 supportIOS13:supportIOS13];
 }
 
 // TODO(https://github.com/material-components/material-components-ios/issues/7487):
@@ -248,9 +253,10 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   button2.uppercaseTitle = YES;
   self.bannerView.imageView.hidden = YES;
   XCUIDevice.sharedDevice.orientation = UIDeviceOrientationLandscapeLeft;
+  XCUIDevice.sharedDevice.orientation = UIDeviceOrientationPortrait;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.bannerView];
+  [self generateSnapshotAndVerifyForView:self.bannerView supportIOS13:YES];
 }
 
 - (void)testLongTextWithTwoActionsRTLInArabic {
