@@ -82,7 +82,7 @@ static void TouchThumbInSlider(MDCSlider *slider) {
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  // self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.slider =
       [[MDCSliderWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
@@ -246,6 +246,96 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   self.slider.value = self.slider.maximumValue;
 
   // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testContinuousSliderInactiveThumbTrackTickMarksNever {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testContinuousSliderActiveThumbTrackTickMarksNever {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testContinuousSliderInactiveThumbTrackTickMarksWhenDragging {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testContinuousSliderActiveThumbTrackTickMarksWhenDragging {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testContinuousSliderInactiveThumbTrackTickMarksAlways {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testContinuousSliderActiveThumbTrackTickMarksAlways {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
