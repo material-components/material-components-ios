@@ -1,8 +1,7 @@
 # 93.5.0
 
 This minor release introduces new customization APIs for Slider. The track
-height can be customized, and the visibility of track tick marks can be
-customized.
+height and the visibility of track tick marks can be customized.
 
 ## New features
 
@@ -13,7 +12,7 @@ MDCSlider *slider = [[MDCSlider alloc] init];
 slider.trackHeight = 4;
 ```
 
-`MDCSlider` also allow controlling the display of the track tick marks for
+`MDCSlider` also allows controlling the display of the track tick marks for
 continuous and discrete sliders.  Setting this property disables the automatic
 conversion of a slider to "discrete" when setting `numberOfDiscreteValues`.
 
