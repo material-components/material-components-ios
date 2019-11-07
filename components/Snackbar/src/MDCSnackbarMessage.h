@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCSnackbarMessageAction;
+@class MDCSnackbarMessageView;
 
 /**
  Called when a message is finished displaying, regardless of whether or not buttons were tapped.
@@ -157,6 +158,13 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ A block that is invoked when the corresponding MDCSnackbarMessageView of the MDCSnackbarMessage instance
+ will present itself.
+ */
+@property(nonatomic, copy, nullable) void (^snackbarMessageWillPresentBlock)
+    (MDCSnackbarMessage *_Nonnull message, MDCSnackbarMessageView *_Nonnull messageView);
 
 @end
 
