@@ -32,14 +32,14 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
 @end
 
-@interface SliderTests : XCTestCase
+@interface MDCSliderTests : XCTestCase
 @property(nonatomic, nullable) MDCSlider *slider;
 @property(nonatomic, nullable) UIColor *aNonDefaultColor;
 @property(nonatomic, nullable) UIColor *defaultBlue;
 @property(nonatomic, nullable) UIColor *defaultGray;
 @end
 
-@implementation SliderTests {
+@implementation MDCSliderTests {
   MockUIImpactFeedbackGenerator *_mockFeedbackGenerator API_AVAILABLE(ios(10.0));
 }
 
@@ -171,6 +171,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
       @"Setting the slider's min to higher than the value must change the value also.");
 }
 
+/**
+ When there are only two discrete values allowed, a value in the lower half snaps to the minimum.
+ */
 - (void)testDiscreteValues2 {
   // Given
   self.slider.maximumValue = 10;
@@ -182,6 +185,24 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
+}
+
+/**
+ Explicit track tick visibility disables "automatic" conversion to a discrete slider.
+ */
+- (void)testDiscreteValues2WithExplicitTickVisibilityRetainsContinuousBehavior {
+  // Given
+  self.slider.maximumValue = 10;
+  self.slider.minimumValue = 0;
+  u_int32_t expectedValue = arc4random_uniform((u_int32_t)(self.slider.maximumValue / 2));
+  self.slider.value = expectedValue;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+  self.slider.numberOfDiscreteValues = 2;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValues2SetValue {
@@ -208,6 +229,21 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
+}
+
+- (void)testDiscreteValues3WithExplicitTickVisibilityRetainsContinuousBehavior {
+  // Given
+  self.slider.maximumValue = 100;
+  self.slider.minimumValue = 0;
+  u_int32_t expectedValue = arc4random_uniform((u_int32_t)(self.slider.maximumValue / 6));
+  self.slider.value = expectedValue;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  self.slider.numberOfDiscreteValues = 3;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValues3SetValue {
@@ -889,6 +925,30 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
                         [self.slider backgroundTrackTickColorForState:UIControlStateHighlighted |
                                                                       UIControlStateSelected]);
+}
+
+#pragma mark - trackTickVisibility
+
+- (void)testTrackTickVisibilityDefaultForContinuousSlider {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+
+  // When
+  slider.continuous = YES;
+
+  // Then
+  XCTAssertEqual(slider.trackTickVisibility, MDCSliderTrackTickVisibilityNever);
+}
+
+- (void)testTrackTickVisibilityDefaultForDiscreteSlider {
+  // Given
+  MDCSlider *slider = [[MDCSlider alloc] init];
+
+  // When
+  slider.continuous = NO;
+
+  // Then
+  XCTAssertEqual(slider.trackTickVisibility, MDCSliderTrackTickVisibilityWhenDragging);
 }
 
 #pragma mark - InkColor
