@@ -1917,30 +1917,30 @@ static BOOL isRunningiOS10_3OrAbove() {
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   [UIView animateWithDuration:duration
                         delay:0.f
-                        // Note: this should match the timing function above.
+                      // Note: this should match the timing function above.
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
-    self->_isAnimatingLayoutUpdate = YES;
+                     self->_isAnimatingLayoutUpdate = YES;
 
-    [CATransaction begin];
-  #if TARGET_IPHONE_SIMULATOR
-    [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
-  #else
-    [CATransaction setAnimationDuration:duration];
-  #endif
-    [CATransaction setAnimationTimingFunction:timingFunction];
+                     [CATransaction begin];
+#if TARGET_IPHONE_SIMULATOR
+                     [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
+#else
+        [CATransaction setAnimationDuration:duration];
+#endif
+                     [CATransaction setAnimationTimingFunction:timingFunction];
 
-    animations();
+                     animations();
 
-    [self fhv_updateLayout];
+                     [self fhv_updateLayout];
 
-    // Force any layout changes to be committed during this animation block.
-    [self layoutIfNeeded];
+                     // Force any layout changes to be committed during this animation block.
+                     [self layoutIfNeeded];
 
-    [CATransaction commit];
+                     [CATransaction commit];
 
-    self->_isAnimatingLayoutUpdate = NO;
-  }
+                     self->_isAnimatingLayoutUpdate = NO;
+                   }
                    completion:completion];
 }
 
