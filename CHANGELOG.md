@@ -1,3 +1,21 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+---
+
 # 93.4.0
 
 This minor release adds a new Filled and Outlined TextFields that will eventually replace MDCTextField's filled and outlined controllers. Additionally, it fixes dynamic type issues for multiple components, and removes deprecated themers.
