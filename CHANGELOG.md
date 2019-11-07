@@ -1,18 +1,43 @@
-# #develop#
+# 93.5.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces new customization APIs for Slider. The track
+height can be customized, and the visibility of track tick marks can be
+customized.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+`MDCSlider` allow customization of the track height.
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+slider.trackHeight = 4;
+```
+
+`MDCSlider` also allow controlling the display of the track tick marks for
+continuous and discrete sliders.  Setting this property disables the automatic
+conversion of a slider to "discrete" when setting `numberOfDiscreteValues`.
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+// Track tick marks are always shown. Remains a continuous slider.
+slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+slider.minimumValue = 0;
+slider.maximumValue = 100;
+// Show tick marks at 0, 10, 20, ..., 100
+slider.numberOfDiscreteValues = 11;
+```
 
 ## Component changes
+
+## ThumbTrack
+
+* [Discrete dots scale slowly with track height. (#8744)](https://github.com/material-components/material-components-ios/commit/8209a86761f81fe9e3b36689608f53cebcff3d40) (Robert Moore)
+
+## Multi-component changes
+
+* [Add API to control showing tick marks. (#8743)](https://github.com/material-components/material-components-ios/commit/826779f2a470a708a95ddfdcba491fe7dd47e5b4) (Robert Moore)
+* [Add trackHeight property (#8740)](https://github.com/material-components/material-components-ios/commit/f0647ad0fe20d586599a7c2170982d0d8b645230) (Bryan Oltman)
+* [Continuous sliders show tick marks. (#8745)](https://github.com/material-components/material-components-ios/commit/a742a6132e5aa69ce9eec6dcfc2a74bd0c93765e) (Robert Moore)
 
 ---
 
