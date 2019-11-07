@@ -28,11 +28,11 @@ slider.numberOfDiscreteValues = 11;
 
 ## Component changes
 
-## ThumbTrack
+### ThumbTrack
 
 * [Discrete dots scale slowly with track height. (#8744)](https://github.com/material-components/material-components-ios/commit/8209a86761f81fe9e3b36689608f53cebcff3d40) (Robert Moore)
 
-## Multi-component changes
+### Multi-component changes
 
 * [Add API to control showing tick marks. (#8743)](https://github.com/material-components/material-components-ios/commit/826779f2a470a708a95ddfdcba491fe7dd47e5b4) (Robert Moore)
 * [Add trackHeight property (#8740)](https://github.com/material-components/material-components-ios/commit/f0647ad0fe20d586599a7c2170982d0d8b645230) (Bryan Oltman)
