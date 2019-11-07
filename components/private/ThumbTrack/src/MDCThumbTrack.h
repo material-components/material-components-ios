@@ -172,6 +172,19 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 @property(nonatomic, assign) BOOL shouldDisplayRipple;
 
 /**
+ @c YES if this Thumb Track is functionally continuous, else @c NO. A functionally continuous thumb
+ track may display track tick marks, but permits any value within its range.
+ */
+@property(nonatomic, readonly, assign, getter=isContinuous) BOOL continuous;
+
+/**
+ When @c NO, setting @c numDiscreteValues > 1 places the Thumb Track in "discrete" mode.
+ When @c YES, @c continuousUpdateEvents must be @c NO for the Thumb Track to be in "discrete" mode.
+ Default is @c NO.
+ */
+@property(nonatomic, assign) BOOL requireExplicitDiscreteMode;
+
+/**
  Configures the visibility of the discrete dots.
 */
 @property(nonatomic, assign) MDCThumbDiscreteDotVisibility discreteDotVisibility;
