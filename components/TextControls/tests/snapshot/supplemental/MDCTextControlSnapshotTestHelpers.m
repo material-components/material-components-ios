@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "../../src/ContainedInputView/MaterialTextFields+ContainedInputView.h"
+#import "MaterialTextControls.h"
 
 #import "MDCTextControlSnapshotTestHelpers.h"
 

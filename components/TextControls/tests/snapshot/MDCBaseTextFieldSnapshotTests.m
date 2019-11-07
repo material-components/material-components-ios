@@ -16,27 +16,27 @@
 
 #import <UIKit/UIKit.h>
 
-#import "../../src/ContainedInputView/private/MDCTextControl.h"
-#import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
-#import "MDCTextControlSnapshotTestHelpers.h"
-#import "MaterialTextFields+ContainedInputView.h"
+#import "../../src/private/MDCTextControl.h"
+#import "MaterialTextControls.h"
+#import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
+#import "supplemental/MDCTextControlSnapshotTestHelpers.h"
 
-@interface MDCOutlinedTextFieldTestsSnapshotTests : MDCSnapshotTestCase
-@property(strong, nonatomic) MDCOutlinedTextField *textField;
+@interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
+@property(strong, nonatomic) MDCBaseTextField *textField;
 @property(nonatomic, assign) BOOL areAnimationsEnabled;
 @end
 
-@implementation MDCOutlinedTextFieldTestsSnapshotTests
+@implementation MDCBaseTextFieldTestsSnapshotTests
 
 - (void)setUp {
   [super setUp];
 
   self.areAnimationsEnabled = UIView.areAnimationsEnabled;
   [UIView setAnimationsEnabled:NO];
-  self.textField = [MDCBaseTextFieldTestsSnapshotTestHelpers createOutlinedTextField];
+  self.textField = [MDCBaseTextFieldTestsSnapshotTestHelpers createBaseTextField];
+
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-
   //      self.recordMode = YES;
 }
 
@@ -48,7 +48,7 @@
   [UIView setAnimationsEnabled:self.areAnimationsEnabled];
 }
 
-- (void)validateTextField:(MDCOutlinedTextField *)textField {
+- (void)validateTextField:(MDCBaseTextField *)textField {
   [MDCTextControlSnapshotTestHelpers validateTextControl:(UIView<MDCTextControl> *)textField
                                             withTestCase:self];
 }
@@ -57,7 +57,7 @@
 
 - (void)testTextFieldWithText {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithText:textField];
@@ -68,7 +68,7 @@
 
 - (void)testTextFieldWithLeadingView {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithLeadingView:textField];
@@ -79,7 +79,7 @@
 
 - (void)testTextFieldWithLeadingViewWhileEditing {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -91,7 +91,7 @@
 
 - (void)testTextFieldWithTrailingView {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithTrailingViewAndText:textField];
@@ -102,7 +102,7 @@
 
 - (void)testTextFieldWithLeadingViewAndTrailingView {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -114,7 +114,7 @@
 
 - (void)testTextFieldWithVisibleClearButton {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -126,7 +126,7 @@
 
 - (void)testFloatingLabelWithCustomColorWhileEditing {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -138,7 +138,7 @@
 
 - (void)testDisabledTextField {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -150,7 +150,7 @@
 
 - (void)testEditingTextFieldWithVisiblePlaceholder {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -162,7 +162,7 @@
 
 - (void)testTextFieldWithAssistiveLabelText {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -174,7 +174,7 @@
 
 - (void)testTextFieldWithAssistiveLabelTextWhileEditing {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -186,7 +186,7 @@
 
 - (void)testTextFieldWithAssistiveLabelTextWhileDisabled {
   // Given
-  MDCOutlinedTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
