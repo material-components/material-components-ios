@@ -1970,20 +1970,20 @@ static BOOL isRunningiOS10_3OrAbove() {
     return;
   }
 
-  CGFloat height = 0;
-  if (isCurrentlyHidden) {
-    height = self.cachedMaxHeight + 20;
-  } else {
-    height = self.maximumHeight + 20;
-  }
-  CGAffineTransform shifted = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -1 * height);
-
   CGFloat safeArea = 0;
   if (@available(iOS 11.0, *)) {
     safeArea = self.safeAreaInsets.top;
   } else {
     safeArea = 20;
   }
+
+  CGFloat height = 0;
+  if (isCurrentlyHidden) {
+    height = self.cachedMaxHeight + safeArea;
+  } else {
+    height = self.maximumHeight + safeArea;
+  }
+  CGAffineTransform shifted = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -1 * height);
 
   CGFloat animationDuration = (CGFloat)0.15;
   if (hidden) {
