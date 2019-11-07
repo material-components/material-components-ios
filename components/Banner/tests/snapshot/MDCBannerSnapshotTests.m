@@ -89,7 +89,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  // self.recordMode = YES;
+   self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
   if (@available(iOS 11.0, *)) {
@@ -230,6 +230,24 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button2.uppercaseTitle = YES;
   self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testLongTextWithTwoActionsWithTwoOrientationChangeActions {
+  // When
+  self.bannerView.textView.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.imageView.hidden = YES;
+  XCUIDevice.sharedDevice.orientation = UIDeviceOrientationLandscapeLeft;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
