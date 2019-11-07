@@ -80,6 +80,7 @@
 - (void)showSimpleSnackbar:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
+  message.focusOnShow = YES;
   [MDCSnackbarManager showMessage:message];
 }
 
