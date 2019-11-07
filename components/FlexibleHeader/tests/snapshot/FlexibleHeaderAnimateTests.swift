@@ -20,15 +20,7 @@ class FlexibleHeaderAnimateTests: XCTestCase {
 
   func testAnimatingMaximumHeightAnimatesHeight() throws {
     // Given
-    let window = UIWindow()
     let fhvc = MDCFlexibleHeaderViewController()
-    let shadowLayer = MDCShadowLayer()
-    fhvc.headerView.setShadowLayer(shadowLayer) { layer, elevation in
-      guard let shadowLayer = layer as? MDCShadowLayer else {
-        return
-      }
-      shadowLayer.elevation = .init(4 * elevation)
-    }
     fhvc.headerView.frame = CGRect(x: 0, y: 0, width: 100, height: 0)
     fhvc.headerView.minMaxHeightIncludesSafeArea = false
     fhvc.headerView.maximumHeight = 200
@@ -37,6 +29,8 @@ class FlexibleHeaderAnimateTests: XCTestCase {
     scrollView.contentSize = largeScrollableArea
     scrollView.contentOffset = CGPoint(x: 0, y: -200)
     fhvc.headerView.trackingScrollView = scrollView
+
+    let window = UIWindow()
     window.rootViewController = fhvc
     window.makeKeyAndVisible()
     CATransaction.flush()
