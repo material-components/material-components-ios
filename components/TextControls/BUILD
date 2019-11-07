@@ -15,19 +15,16 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
-    "mdc_examples_swift_library",
-    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
-    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
-licenses(["notice"])  # Apache 2.0
+licenses(["notice"])
 
 mdc_objc_library(
     name = "private",
@@ -39,135 +36,60 @@ mdc_objc_library(
 package_group(
     name = "test_targets",
     packages = [
-        "//components/Chips/...",
-        "//components/TextFields/...",
+        "//components/TextControls/...",
     ],
 )
 
 mdc_public_objc_library(
-    name = "TextFields",
+    name = "TextControls",
     sdk_frameworks = [
         "QuartzCore",
     ],
     deps = [
         "//components/AnimationTiming",
-        "//components/Elevation",
-        "//components/Palettes",
-        "//components/Typography",
+        "@material_internationalization_ios//:MDFInternationalization",
         "//components/private/Math",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "Theming",
-    deps = [
-        ":ColorThemer",
-        ":TextFields",
-        ":TypographyThemer",
-        "//components/schemes/Container",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":TextFields",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":TextFields",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":TextFields",
-        "//components/schemes/Typography",
     ],
 )
 
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
-        ":ColorThemer",
-        ":TextFields",
-        ":TypographyThemer",
+        "TextControls",
         "//components/Buttons",
         "//components/schemes/Container",
-    ],
-)
-
-mdc_examples_swift_library(
-    name = "SwiftExamples",
-    deps = [
-        ":ColorThemer",
-        ":TextFields",
-        ":TypographyThemer",
-        "//components/AppBar",
     ],
 )
 
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
-        ":ColorThemer",
-        ":FontThemer",
-        ":TextFields",
-        ":TypographyThemer",
+        ":TextControls",
         ":private",
     ],
 )
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
-    asset_catalogs = [
-        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
-        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
-    ],
     sdk_frameworks = [
         "CoreGraphics",
     ],
     deps = [
-        ":ColorThemer",
-        ":FontThemer",
-        ":TextFields",
-        ":TypographyThemer",
+        ":TextControls",
+        ":private",
     ],
 )
 
 mdc_snapshot_test(
     name = "snapshot_tests",
-    # Tests have sometimes taken more than 5 minutes to launch the simulator
-    # and execute
     timeout = "long",
     deps = ["snapshot_test_lib"],
-)
-
-mdc_unit_test_swift_library(
-    name = "unit_test_swift_sources",
-    extra_srcs = glob([
-        "tests/unit/Theming/*.swift",
-    ]),
-    deps = [
-        ":ColorThemer",
-        ":TextFields",
-        ":Theming",
-        "//components/Palettes",
-        "//components/private/Math",
-    ],
 )
 
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
-        ":unit_test_swift_sources",
     ],
     # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
     use_autobot_environment_runner = False,
