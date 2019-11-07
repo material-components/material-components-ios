@@ -489,9 +489,10 @@
 
 - (void)testMessageCustomizationUsingWillPresentBlock {
   // Given
+  __block BOOL blockCalled = NO;
   self.message.snackbarMessageWillPresentBlock =
       ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
-        messageView.backgroundColor = UIColor.blueColor;
+        blockCalled = YES;
       };
 
   // When
@@ -503,8 +504,7 @@
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  XCTAssertEqualObjects(self.manager.internalManager.currentSnackbar.backgroundColor,
-                        UIColor.blueColor);
+  XCTAssertTrue(blockCalled);
 }
 
 @end
