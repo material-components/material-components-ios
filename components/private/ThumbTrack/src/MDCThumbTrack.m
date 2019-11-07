@@ -304,6 +304,18 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 #pragma mark - Properties
 
+- (void)setContinuousUpdateEvents:(BOOL)continuousUpdateEvents {
+  _requireExplicitDiscreteMode = YES;
+  _continuousUpdateEvents = continuousUpdateEvents;
+}
+
+- (BOOL)isContinuous {
+  if (self.requireExplicitDiscreteMode) {
+    return _continuousUpdateEvents;
+  }
+  return _numDiscreteValues < 2;
+}
+
 - (void)setPrimaryColor:(UIColor *)primaryColor {
   _primaryColor = primaryColor ?: TrackOnColorDefault();
 
@@ -862,7 +874,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _discreteDots.frame = [_trackView bounds];
 
   // Make sure Numeric Value Label matches up
-  if (!_continuousUpdateEvents && _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+  if (!self.continuous && _shouldDisplayDiscreteValueLabel) {
     // Note that "center" here doesn't refer to the actual center, but rather the anchor point,
     // which is re-defined to be slightly below the bottom of the label
     _valueLabel.center = [self numericValueLabelPositionForValue:_value];
@@ -943,7 +955,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       break;
   }
 
-  if (!_continuousUpdateEvents && _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+  if (!self.continuous && _shouldDisplayDiscreteValueLabel) {
     if (self.enabled && _isDraggingThumb) {
       _valueLabel.transform = CGAffineTransformIdentity;
     } else {
@@ -965,7 +977,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   CGFloat radius;
   if (_isDraggingThumb) {
-    if (!_continuousUpdateEvents && _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+    if (!self.continuous && _shouldDisplayDiscreteValueLabel) {
       radius = 0;
     } else {
       radius = _thumbRadius + _trackHeight;
@@ -1030,7 +1042,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   BOOL isDisabledWithThumbGaps = !self.enabled && _disabledTrackHasThumbGaps;
   BOOL isNotDiscreteWithValueLabelWhileDraggingThumb =
-      !(!_continuousUpdateEvents && _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 0 &&
+      !(!self.continuous && _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 0 &&
         _isDraggingThumb);
   BOOL isMinValueWithHollowThumbAndNotDiscreteWhileDraggingThumb =
       ([self isValueAtMinimum] && _thumbIsHollowAtStart &&
@@ -1131,7 +1143,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
-  if (_continuousUpdateEvents || _numDiscreteValues < 2) {
+  if (self.continuous) {
     return targetValue;
   }
   if (MDCCGFloatEqual(_minimumValue, _maximumValue)) {
@@ -1221,7 +1233,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat previousValue = _value;
   CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
 
-  BOOL shouldAnimate = !_continuousUpdateEvents && _numDiscreteValues > 1;
+  BOOL shouldAnimate = !self.continuous;
   [self setValue:value
                    animated:shouldAnimate
       animateThumbAfterMove:YES
@@ -1309,7 +1321,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // Having two discrete values is a special case (e.g. the switch) in which any tap just flips the
   // value between the two discrete values, irrespective of the tap location.
   CGFloat value;
-  if (isTap && !_continuousUpdateEvents && _numDiscreteValues == 2) {
+  if (isTap && !self.continuous && _numDiscreteValues == 2) {
     // If we are at the maximum then make it the minimum:
     // For switch like thumb tracks where there is only 2 values we ignore the position of the tap
     // and toggle between the minimum and maximum values.

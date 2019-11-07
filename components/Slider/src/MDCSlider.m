@@ -284,6 +284,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)setTrackTickVisibility:(MDCSliderTrackTickVisibility)trackTickVisibility {
   _trackTickVisibility = trackTickVisibility;
   _isTrackTickVisibilityAutomatic = NO;
+  self.thumbTrack.requireExplicitDiscreteMode = YES;
   switch (trackTickVisibility) {
     case MDCSliderTrackTickVisibilityNever:
       self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
@@ -318,7 +319,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (BOOL)isContinuous {
-  return _thumbTrack.continuousUpdateEvents;
+  return _thumbTrack.continuous;
 }
 
 - (void)setContinuous:(BOOL)continuous {
