@@ -77,6 +77,7 @@ static BOOL _usesLegacySnackbar = NO;
   // heap, so we're pretty safe just using the same block.
   copy.completionHandler = self.completionHandler;
   copy.action = self.action;
+  copy.snackbarMessageWillPresentBlock = self.snackbarMessageWillPresentBlock;
 
   return copy;
 }
