@@ -134,8 +134,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [self generateSnapshotAndVerifyForView:view supportIOS13:NO];
 }
 
-- (void)generateSnapshotAndVerifyForView:(UIView *)view
-                            supportIOS13:(BOOL)supportIOS13 {
+- (void)generateSnapshotAndVerifyForView:(UIView *)view supportIOS13:(BOOL)supportIOS13 {
   CGSize aSize = [view sizeThatFits:CGSizeMake(350, INFINITY)];
   view.frame = CGRectMake(0, 0, aSize.width, aSize.height);
   [view layoutIfNeeded];
