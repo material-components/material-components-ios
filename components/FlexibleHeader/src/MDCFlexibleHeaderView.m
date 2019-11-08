@@ -1926,7 +1926,10 @@ static BOOL isRunningiOS10_3OrAbove() {
 #if TARGET_IPHONE_SIMULATOR
                      [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
 #else
-        [CATransaction setAnimationDuration:duration];
+        // clang-format is trying to indent this line too far to the left.
+        // clang-format off
+                     [CATransaction setAnimationDuration:duration];
+    // clang-format on
 #endif
                      [CATransaction setAnimationTimingFunction:timingFunction];
 
