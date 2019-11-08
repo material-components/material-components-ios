@@ -118,7 +118,7 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
     wait(for: [didCompleteExpectation], timeout: 0.1)
   }
 
-  func testAnimationCallbackIsInvokedNotAnimatedWhenTheTrackingScrollViewIsChanged() {
+  func testAnimationCallbackIsInvokedWithAnimatedYesWhenTheTrackingScrollViewIsChanged() {
     // Given
     let fhv = MDCFlexibleHeaderView()
     fhv.frame = CGRect(x: 0, y: 0, width: 100, height: 0)
@@ -142,7 +142,7 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
     window.layer.speed = 100000
     CATransaction.flush()
 
-    let didChangeAnimatedExpectation = expectation(description: "didComplete")
+    let didChangeAnimatedExpectation = expectation(description: "didChangeAnimated")
     let mockDelegate =
       MockMDCFlexibleHeaderViewAnimationDelegate(didChangeAnimatedExpectation: didChangeAnimatedExpectation,
                                                  didChangeNotAnimatedExpectation: nil,
