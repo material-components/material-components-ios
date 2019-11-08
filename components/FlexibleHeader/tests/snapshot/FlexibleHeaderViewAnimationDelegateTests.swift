@@ -16,9 +16,9 @@ import XCTest
 import MaterialComponents.MaterialFlexibleHeader
 
 private class MockMDCFlexibleHeaderViewAnimationDelegate: NSObject, MDCFlexibleHeaderViewAnimationDelegate {
-  var didChangeAnimatedExpectation: XCTestExpectation?
-  var didChangeNotAnimatedExpectation: XCTestExpectation?
-  var didCompleteExpectation: XCTestExpectation?
+  let didChangeAnimatedExpectation: XCTestExpectation?
+  let didChangeNotAnimatedExpectation: XCTestExpectation?
+  let didCompleteExpectation: XCTestExpectation?
   init(didChangeAnimatedExpectation: XCTestExpectation?,
        didChangeNotAnimatedExpectation: XCTestExpectation?,
        didCompleteExpectation: XCTestExpectation?) {
