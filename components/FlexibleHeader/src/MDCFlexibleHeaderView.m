@@ -1560,7 +1560,13 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   }
 
+  BOOL animated = wasTrackingScrollView && shouldAnimate;
+
   void (^animations)(void) = ^{
+    if ([self.animationDelegate respondsToSelector:@selector(flexibleHeaderView:
+                                                       didChangeTrackingScrollViewAnimated:)]) {
+      [self.animationDelegate flexibleHeaderView:self didChangeTrackingScrollViewAnimated:animated];
+    }
     [self fhv_updateLayout];
   };
   void (^completion)(BOOL) = ^(BOOL finished) {
@@ -1574,9 +1580,14 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   };
 
-  if (wasTrackingScrollView && shouldAnimate) {
+  if (animated) {
     void (^completionWithDelegate)(BOOL) = ^(BOOL finished) {
-      [self.animationDelegate flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
+      if ([self.animationDelegate
+              respondsToSelector:@selector
+              (flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:)]) {
+        [self.animationDelegate
+            flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
+      }
       completion(finished);
     };
     if (self.allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView) {
