@@ -1,3 +1,46 @@
+# 94.0.0
+
+This major release adds a new configuration block to MDCSnackBarMessage and moves the currently in development MDCTextControl based TextFields from the TextFields component directory to their own TextControls directory. While there are no API changes associated with this move, it does have the potential to break anyone importing these textfields from their old location, hence the major version bump.
+
+## New features
+
+MDCSnackBarMessage now provides a block that is called before the message is presented. This allows clients to perform last minute configurations.
+
+**Objective-C**
+
+```objc
+MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+message.snackbarMessageWillPresentBlock =
+  ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
+      // Configure snackbar message.
+    };
+[MDCSnackbarManager showMessage:message];
+```
+
+**Swift**
+
+```swift
+let message = MDCSnackbarMessage()
+message.snackbarMessageWillPresentBlock = { snackbarMessage, messageView in
+  // Configure snackbar message.
+}
+MDCSnackbarManager.showMessage(message)
+```
+
+## Component changes
+
+### TextControls
+
+* [Move new TextFields into TextControls directory. (#8726)](https://github.com/material-components/material-components-ios/commit/02f9c9f01d049305a8f79eb2afd16bff5caf71d2) (Andrew Overton)
+
+### Snackbar
+
+* [Fix MDCSnackbarMessage convenience class methods (#8746)](https://github.com/material-components/material-components-ios/commit/f2821ce66ae3cb7360dd14f9dfdd8d80e01b2613) (Yarden Eitan)
+
+* [Fix MDCSnackbarMessage convenience class methods (#8751)](https://github.com/material-components/material-components-ios/commit/e5a94aea1fe5c7f5d96ae11984c36416c641e1d5) (Yarden Eitan)
+
+---
+
 # 93.5.0
 
 This minor release introduces new APIs for Slider. The track height and the
