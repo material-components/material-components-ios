@@ -193,7 +193,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   // Whether the flexible header is currently within an animate block for changing the tracking
   // scroll view.
-  BOOL _isAnimatingTrackingScrollViewChange;
+  BOOL _isAnimatingLayoutUpdate;
 
   Class _wkWebViewClass;
 
@@ -391,7 +391,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [self fhv_updateShadowPath];
 
   [CATransaction begin];
-  BOOL allowCAActions = _isAnimatingTrackingScrollViewChange;
+  BOOL allowCAActions = _isAnimatingLayoutUpdate;
   [CATransaction setDisableActions:!allowCAActions];
   _defaultShadowLayer.frame = self.bounds;
   _customShadowLayer.frame = self.bounds;
@@ -1560,37 +1560,15 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
   }
 
-  CFTimeInterval duration = kTrackingScrollViewDidChangeAnimationDuration;
-  CAMediaTimingFunction *timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+  BOOL animated = wasTrackingScrollView && shouldAnimate;
 
-  void (^animate)(void);
-  if (self.allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView) {
-    animate = ^{
-      self->_isAnimatingTrackingScrollViewChange = YES;
-
-      [CATransaction begin];
-#if TARGET_IPHONE_SIMULATOR
-      [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
-#else
-      [CATransaction setAnimationDuration:duration];
-#endif
-      [CATransaction setAnimationTimingFunction:timingFunction];
-
-      [self fhv_updateLayout];
-
-      // Force any layout changes to be committed during this animation block.
-      [self layoutIfNeeded];
-
-      [CATransaction commit];
-
-      self->_isAnimatingTrackingScrollViewChange = NO;
-    };
-  } else {
-    animate = ^{
-      [self fhv_updateLayout];
-    };
-  }
+  void (^animations)(void) = ^{
+    if ([self.animationDelegate respondsToSelector:@selector(flexibleHeaderView:
+                                                       didChangeTrackingScrollViewAnimated:)]) {
+      [self.animationDelegate flexibleHeaderView:self didChangeTrackingScrollViewAnimated:animated];
+    }
+    [self fhv_updateLayout];
+  };
   void (^completion)(BOOL) = ^(BOOL finished) {
     if (!finished) {
       return;
@@ -1601,16 +1579,26 @@ static BOOL isRunningiOS10_3OrAbove() {
       [self fhv_accumulatorDidChange];
     }
   };
-  if (wasTrackingScrollView && shouldAnimate) {
-    [UIView animateWithDuration:duration
-                     animations:animate
-                     completion:^(BOOL finished) {
-                       [self.animationDelegate
-                           flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
-                       completion(finished);
-                     }];
+
+  if (animated) {
+    void (^completionWithDelegate)(BOOL) = ^(BOOL finished) {
+      if ([self.animationDelegate
+              respondsToSelector:@selector
+              (flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:)]) {
+        [self.animationDelegate
+            flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:self];
+      }
+      completion(finished);
+    };
+    if (self.allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView) {
+      [self animateWithAnimations:animations completion:completionWithDelegate];
+    } else {
+      [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
+                       animations:animations
+                       completion:completionWithDelegate];
+    }
   } else {
-    animate();
+    animations();
     completion(YES);
   }
 }
@@ -1929,6 +1917,45 @@ static BOOL isRunningiOS10_3OrAbove() {
   // Translucent content means that the status bar shifter should not use snapshotting. Otherwise,
   // stale visual content under the status bar region may be snapshotted.
   _statusBarShifter.snapshottingEnabled = !contentIsTranslucent;
+}
+
+- (void)animateWithAnimations:(void (^_Nonnull)(void))animations
+                   completion:(void (^_Nullable)(BOOL))completion {
+  NSTimeInterval duration = kTrackingScrollViewDidChangeAnimationDuration;
+
+  // Note: this should match the easing curve passed to UIView's animateWithDuration:... below.
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+  [UIView animateWithDuration:duration
+                        delay:0.f
+                      // Note: this should match the timing function above.
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     self->_isAnimatingLayoutUpdate = YES;
+
+                     [CATransaction begin];
+#if TARGET_IPHONE_SIMULATOR
+                     [CATransaction setAnimationDuration:duration * [self fhv_dragCoefficient]];
+#else
+        // clang-format is trying to indent this line too far to the left.
+        // clang-format off
+                     [CATransaction setAnimationDuration:duration];
+    // clang-format on
+#endif
+                     [CATransaction setAnimationTimingFunction:timingFunction];
+
+                     animations();
+
+                     [self fhv_updateLayout];
+
+                     // Force any layout changes to be committed during this animation block.
+                     [self layoutIfNeeded];
+
+                     [CATransaction commit];
+
+                     self->_isAnimatingLayoutUpdate = NO;
+                   }
+                   completion:completion];
 }
 
 #pragma mark - MDCElevation

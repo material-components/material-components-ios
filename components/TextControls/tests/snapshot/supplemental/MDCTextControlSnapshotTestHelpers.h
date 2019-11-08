@@ -16,9 +16,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "../../src/ContainedInputView/private/MDCTextControl.h"
+#import "../../../src/private/MDCTextControl.h"
 
 @interface MDCTextControlSnapshotTestHelpers : NSObject
+
++ (void)removeTextControlFromKeyWindow:(UIView<MDCTextControl> *)textControl;
++ (void)addTextControlToKeyWindow:(UIView<MDCTextControl> *)textControl;
+
 + (void)validateTextControl:(UIView<MDCTextControl> *)textControl
                withTestCase:(MDCSnapshotTestCase *)testCase;
 @end

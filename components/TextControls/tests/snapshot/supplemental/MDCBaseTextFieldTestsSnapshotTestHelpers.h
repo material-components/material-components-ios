@@ -16,13 +16,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "../../src/ContainedInputView/MDCBaseTextField.h"
-
-@interface MDCBaseTextField (AnimationDuration)
-@property(nonatomic, assign) NSTimeInterval animationDuration;
-@end
+#import "MaterialTextControls.h"
 
 @interface MDCBaseTextFieldTestsSnapshotTestHelpers : NSObject
+
++ (MDCBaseTextField *)createBaseTextField;
++ (MDCFilledTextField *)createFilledTextField;
++ (MDCOutlinedTextField *)createOutlinedTextField;
+
 + (void)configureTextFieldWithColoredAssistiveLabelText:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithText:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithLeadingView:(MDCBaseTextField *)textField;
