@@ -1,0 +1,107 @@
+#!/bin/bash -e
+#
+# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+usage() {
+  echo
+  echo "Usage: $0 <Topic> <path>"
+  echo
+  echo "Generates a root readme file by combining multiple readme files from a subfolder."
+  echo
+  echo "Example usage: $0 releasing contributing"
+}
+
+if [ "$#" -ne 2 ]; then
+  usage
+  exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+    echo "No arguments supplied"
+fi
+
+# Expand all files inline
+# Args: $1 - tempoaray output path (ie: #$TMP_README_PATH or TMP_TOPIC_PATH)
+#       $2 - topic doc path (ie: $COMPONENT_PATH/docs or $TOPIC_PATH)
+#				$3 - expanded topic path (ie: $TMP_EXPANDED_README_PATH or $TMP_EXPANDED_TOPIC_PATH)
+# Example Usage: expand_inline_references $TMP_TOPIC_PATH 
+expand_inline_references() {
+
+  tmp_output_path="$1"			# $TMP_TOPIC_PATH
+  topic_doc_path="$2" 			# $TOPIC_PATH
+  expanded_topic_path="$3"	# $TMP_EXPANDED_TOPIC_PATH
+	IFS='' # Don't trim whitespace from lines
+	cat "$tmp_output_path" | while read line; do
+	  if [[ $(echo $line | grep -e "^- \[.*\]\(.*\)$") ]]; then
+	    file=$(echo $line | cut -d'(' -f2 | cut -d')' -f1)
+	    file_path="$topic_doc_path/$file"
+	    echo "<!-- Extracted from $topic_doc_path/$file -->" >> "$expanded_topic_path"
+	    echo >> "$expanded_topic_path"
+	    cat "$file_path" >> "$expanded_topic_path"
+	    echo >> "$expanded_topic_path" # Ensure that there is always a newline between files.
+	  else
+	    echo "$line" >> "$expanded_topic_path"
+	  fi
+	done
+
+}
+
+TOPIC="$1"
+DOC_PATH=$(echo $2 | sed 's:/*$::')    #Remove trailing slash if exists
+TOPIC_PATH="$DOC_PATH/$TOPIC"
+TEMPLATE_FILE="$TOPIC"_template.md
+SITE_TOPIC_PATH="$DOC_PATH/$TOPIC.md"
+
+if [ ! -d "$DOC_PATH" ]; then
+  echo "The folder: $DOC_PATH does not exist. Aborting."
+  exit 1
+fi
+
+if [ ! -d "$TOPIC_PATH" ]; then
+  echo "The folder: $TOPIC_PATH does not exist. Aborting."
+  exit 1
+fi
+
+if [ ! -f "$TOPIC_PATH/$TEMPLATE_FILE" ]; then
+  echo "The template file: $TOPIC_PATH/$TEMPLATE_FILE does not exist. Aborting."
+  exit 1
+fi
+
+TMP_PATH=$(mktemp -d)
+TMP_TOPIC_PATH="$TMP_PATH/$TOPIC.md"
+TMP_EXPANDED_TOPIC_PATH="$TMP_PATH/$TOPIC.md.expanded"
+
+touch "$TMP_TOPIC_PATH"
+
+echo "Generating template readme..."
+
+echo >> "$TMP_TOPIC_PATH"
+echo "<!--  This document must not be edited directly." >> "$TMP_TOPIC_PATH"
+echo "      To update this document, update the files found in: $TOPIC_PATH -->" >> "$TMP_TOPIC_PATH"
+echo >> "$TMP_TOPIC_PATH"
+
+cat "$TOPIC_PATH/$TEMPLATE_FILE" >> "$TMP_TOPIC_PATH"
+
+echo "Expanding all articles inline..."
+
+expand_inline_references $TMP_TOPIC_PATH $TOPIC_PATH $TMP_EXPANDED_TOPIC_PATH
+
+rm -f $TMP_TOPIC_PATH
+
+echo "Generating table of contents..."
+
+mv "$TMP_EXPANDED_TOPIC_PATH" "$SITE_TOPIC_PATH"
+
+echo "Done."
