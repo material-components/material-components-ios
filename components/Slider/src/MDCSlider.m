@@ -79,6 +79,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.shouldDisplayRipple = YES;
   _thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
+  _thumbTrack.snapsToDiscreteValues = YES;
   _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
@@ -277,6 +278,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (NSUInteger)numberOfDiscreteValues {
   return _thumbTrack.numDiscreteValues;
+}
+
+- (BOOL)snapsToDiscreteValues {
+  return _thumbTrack.snapsToDiscreteValues;
+}
+
+- (void)setSnapsToDiscreteValues:(BOOL)snapsToDiscreteValues {
+  _thumbTrack.snapsToDiscreteValues = snapsToDiscreteValues;
 }
 
 - (void)setTrackTickVisibility:(MDCSliderTrackTickVisibility)trackTickVisibility {

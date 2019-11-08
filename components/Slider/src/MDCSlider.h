@@ -214,14 +214,21 @@ IB_DESIGNABLE
 /**
  The number of discrete values that the slider can take.
 
- If greater than or equal to 2, the thumb will snap to the nearest discrete value when the user
- lifts their finger or taps. The discrete values are evenly spaced between the @c minimumValue and
+ The discrete values are evenly spaced between the @c minimumValue and
  @c maximumValue. If 0 or 1, the slider's value will not change when the user releases the thumb.
 
  The default value is zero.
  */
 @property(nonatomic, assign) NSUInteger numberOfDiscreteValues;
 
+/**
+ If @c YES and @c numberOfDiscreteValues is greater than 1, the thumb will snap to the nearest
+ discrete value when the user drags the Thumb or taps.
+
+ Defaults to @c YES.
+
+ @note This property has no effect if @c numberOfDiscreteValues is less than 2.
+ */
 @property(nonatomic, assign) BOOL snapsToDiscreteValues;
 
 /**

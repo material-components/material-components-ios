@@ -93,18 +93,27 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 @property(null_resettable, nonatomic, strong) UIColor *valueLabelBackgroundColor;
 
 /**
- The number of discrete values that the thumb can take along the track. If this property is zero,
- then the slider operates continuously and doesn't do any snapping after the user releases the
- thumb. If this property is greater or equal to two, then the thumb will snap to the nearest
- discrete value on when the user lifts their finger or taps. The set of discrete values is
- equivalent to
+ The number of discrete values that the thumb can take along the track.
+
+ The set of discrete values is equivalent to
  { minimumValue +  (i / (numDiscreteValues - 1.0)) * (maximumValue - minimumValue) } for
  i = 0..numDiscreteValues-1.
 
- The default value is zero. If numDiscreteValues is set to one, then the thumb track will act as
- if numDiscreteValues is zero and will judge you silently.
+ The default value is zero. If @c numDiscreteValues is set to one, then the thumb track will act as
+ if @c numDiscreteValues is zero.
  */
 @property(nonatomic, assign) NSUInteger numDiscreteValues;
+
+/**
+ When @c YES, and @c numDiscreteValues is greater than 2, then the value can only ever be one of the
+ calculated discrete values. The snapped value is the one closest to the current position of the
+ touch that is dragging the thumb.
+
+ Defaults to @c YES.
+
+ @note This property has no effect if @c numDiscreteValues is less than 2.
+ */
+@property(nonatomic, assign) BOOL snapsToDiscreteValues;
 
 /**
   The value of the thumb along the track.
