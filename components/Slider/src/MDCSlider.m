@@ -44,7 +44,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   NSMutableDictionary *_trackBackgroundColorsForState;
   NSMutableDictionary *_filledTickColorsForState;
   NSMutableDictionary *_backgroundTickColorsForState;
-  BOOL _isTrackTickVisibilityAutomatic;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -126,7 +125,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _shouldEnableHapticsForAllDiscreteValues = NO;
 
   _previousValue = -CGFLOAT_MAX;
-  _isTrackTickVisibilityAutomatic = YES;
 }
 
 #pragma mark - Color customization methods
@@ -283,8 +281,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setTrackTickVisibility:(MDCSliderTrackTickVisibility)trackTickVisibility {
   _trackTickVisibility = trackTickVisibility;
-  _isTrackTickVisibilityAutomatic = NO;
-  self.thumbTrack.requireExplicitDiscreteMode = YES;
   switch (trackTickVisibility) {
     case MDCSliderTrackTickVisibilityNever:
       self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
@@ -299,10 +295,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (MDCSliderTrackTickVisibility)trackTickVisibility {
-  if (_isTrackTickVisibilityAutomatic) {
-    return self.continuous ? MDCSliderTrackTickVisibilityNever
-                           : MDCSliderTrackTickVisibilityWhenDragging;
-  }
   return _trackTickVisibility;
 }
 
@@ -319,15 +311,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (BOOL)isContinuous {
-  return _thumbTrack.continuous;
+  return _thumbTrack.continuousUpdateEvents;
 }
 
 - (void)setContinuous:(BOOL)continuous {
   _thumbTrack.continuousUpdateEvents = continuous;
-  if (_isTrackTickVisibilityAutomatic) {
-    _thumbTrack.discreteDotVisibility =
-        continuous ? MDCThumbDiscreteDotVisibilityNever : MDCThumbDiscreteDotVisibilityWhenDragging;
-  }
 }
 
 - (CGFloat)value {
@@ -584,7 +572,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (!self.continuous && self.numberOfDiscreteValues > 1) {
+    if (self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }
     CGFloat newValue = self.value + adjustmentAmount;
@@ -602,7 +590,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (!self.continuous && self.numberOfDiscreteValues > 1) {
+    if (self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }
     CGFloat newValue = self.value - adjustmentAmount;

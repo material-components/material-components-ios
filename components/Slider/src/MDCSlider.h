@@ -222,11 +222,10 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign) NSUInteger numberOfDiscreteValues;
 
+@property(nonatomic, assign) BOOL snapsToDiscreteValues;
+
 /**
  Configures the visibility of the track tick marks.
-
- After this property is explicitly set, the receiver will no longer use
- @c numberOfDiscreteValues to implicitly determine if it is a discrete or continuous slider.
 
  @note Unless this property is set explicitly, its value will change based on the value of
        @c continuous. When @c continuous is @c true, @c trackTickVisibility is
