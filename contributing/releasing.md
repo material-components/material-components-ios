@@ -1,8 +1,14 @@
+
+<!--  This document must not be edited directly.
+      To update this document, update the files found in: contributing/releasing -->
+
 # Releasing
 
 These instructions describe how to cut a new release.
 
 **You should always start from this doc when initiating a release.**
+
+<!-- Extracted from contributing/releasing/release_start.md -->
 
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
@@ -147,6 +153,8 @@ If this fails or MaterialComponents is not listed [register an account and sessi
 
 You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#requirements).
 
+<!-- Extracted from contributing/releasing/release_verify.md -->
+
 ### Resolve any failures
 
 Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
@@ -164,6 +172,8 @@ pull request *targeting `release-candidate`* and get it reviewed.
 
 Note that in both cases, changes made to the release candidate branch will be merged back into
 `develop` at the end of the release.
+
+<!-- Extracted from contributing/releasing/release_version.md -->
 
 ## Determining the new version and drafting the release notes
 
@@ -296,6 +306,8 @@ go-ahead from the following clients:
 
 ---
 
+<!-- Extracted from contributing/releasing/release_merge.md -->
+
 ## Merge the release candidate branch
 
 Once the release-candidate has **passed all "Required" GitHub presubmit tests** and **all internal presubmit tests**, you may merge the release into the
@@ -324,8 +336,10 @@ synchronization within Google.
 
     git push origin stable develop
 
-You can now sync to the desired stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). Once you've submitted
-the internal CL, continue below to tag and publish the release.
+You can now sync to the desired stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). 
+Once you've submitted the internal CL, continue below to tag and publish the release.
+
+<!-- Extracted from contributing/releasing/release_publish.md -->
 
 ## Publish the official release
 
