@@ -35,9 +35,9 @@ MDCSnackbarManager.showMessage(message)
 
 ### Snackbar
 
-* [Fix MDCSnackbarMessage convenience class methods (#7724)](https://github.com/material-components/material-components-ios/commit/f2821ce66ae3cb7360dd14f9dfdd8d80e01b2613) (Yarden Eitan)
+* [Fix MDCSnackbarMessage convenience class methods (#8746)](https://github.com/material-components/material-components-ios/commit/f2821ce66ae3cb7360dd14f9dfdd8d80e01b2613) (Yarden Eitan)
 
-* [Fix MDCSnackbarMessage convenience class methods (#7724)](https://github.com/material-components/material-components-ios/commit/e5a94aea1fe5c7f5d96ae11984c36416c641e1d5) (Yarden Eitan)
+* [Fix MDCSnackbarMessage convenience class methods (#8751)](https://github.com/material-components/material-components-ios/commit/e5a94aea1fe5c7f5d96ae11984c36416c641e1d5) (Yarden Eitan)
 
 ---
 
