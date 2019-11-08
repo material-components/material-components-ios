@@ -48,7 +48,7 @@ class FlexibleHeaderAnimateTests: XCTestCase {
 
     guard let sizeAnimation =
         fhvc.headerView.layer.animation(forKey: "bounds.size") as? CABasicAnimation else {
-      XCTFail("Missing bounds.size animation")
+      XCTFail("bounds.size animation is not a CABasicAnimation")
       return
     }
 
