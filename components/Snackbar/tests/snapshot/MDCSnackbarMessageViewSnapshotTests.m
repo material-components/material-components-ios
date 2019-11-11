@@ -23,6 +23,13 @@
 #import "../../src/private/MDCSnackbarOverlayView.h"
 // clang-format on
 
+/** The snackbar's animate-in duration, pulled from MDCSnackbarOverlayView.m */
+NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
+NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
+
+/** Extra delay to ensure the snackbar finishes animating in */
+NSTimeInterval const MDCSnackbarDurationPadding = 0.05;
+
 /** The width of the Snackbar for testing. */
 static const CGFloat kWidth = 180;
 
@@ -44,13 +51,13 @@ static NSString *const kItemTitleLong1Arabic =
 static NSString *const kItemTitleLong2Arabic =
     @"وتم عل والقرى إتفاقية, عن هذا وباءت الغالي وفرنسا.";
 
-@interface MDCSnackbarManagerInternal ()
+@interface MDCSnackbarManagerInternal (TestInterface)
 
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
 
 @end
 
-@interface MDCSnackbarManager ()
+@interface MDCSnackbarManager (TestInterface)
 
 @property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
 
@@ -77,6 +84,7 @@ static NSString *const kItemTitleLong2Arabic =
 }
 
 - (void)tearDown {
+  MDCSnackbarMessage.usesLegacySnackbar = NO;
   self.testManager = nil;
 
   [super tearDown];
@@ -217,6 +225,61 @@ static NSString *const kItemTitleLong2Arabic =
   [self generateSnapshotAndVerifyForView:messageView];
 }
 
+- (void)testLegacyWithTallHeight {
+  // Given
+  MDCSnackbarMessage.usesLegacySnackbar = YES;
+  MDCSnackbarMessage *message = [MDCSnackbarMessage
+      messageWithText:
+          @"long text long text long text long text long text long text long text long text long "
+          @"text long text long text long text long text long text long text long text long text "
+          @"long text long text long text long text long text long text long text"];
+  self.testManager.internalManager.overlayView.backgroundColor = UIColor.whiteColor;
+
+  // When
+  [self.testManager showMessage:message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarLegacyTransitionDuration +
+                                                             MDCSnackbarDurationPadding) *
+                                                            NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+                   [self.testManager.internalManager.overlayView layoutSubviews];
+                   [expectation fulfill];
+                 });
+  [self waitForExpectationsWithTimeout:2 handler:nil];
+
+  // Then
+  [self snapshotVerifyView:self.testManager.internalManager.overlayView];
+}
+
+- (void)testLegacyWithTallHeightAndAction {
+  // Given
+  MDCSnackbarMessage.usesLegacySnackbar = YES;
+  MDCSnackbarMessage *message = [MDCSnackbarMessage
+      messageWithText:
+          @"long text long text long text long text long text long text long text long text long "
+          @"text long text long text long text long text long text long text long text long text "
+          @"long text long text long text long text long text long text long text"];
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap me";
+  message.action = action;
+  self.testManager.internalManager.overlayView.backgroundColor = UIColor.whiteColor;
+
+  // When
+  [self.testManager showMessage:message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarLegacyTransitionDuration +
+                                                             MDCSnackbarDurationPadding) *
+                                                            NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+                   [self.testManager.internalManager.overlayView layoutSubviews];
+                   [expectation fulfill];
+                 });
+  [self waitForExpectationsWithTimeout:2 handler:nil];
+
+  // Then
+  [self snapshotVerifyView:self.testManager.internalManager.overlayView];
+}
+
 - (void)testWithTallHeight {
   // Given
   MDCSnackbarMessage *message = [MDCSnackbarMessage
@@ -229,12 +292,40 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   [self.testManager showMessage:message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  NSTimeInterval snackbarAnimateInDuration = 0.20;
   dispatch_after(
-      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(snackbarAnimateInDuration * NSEC_PER_SEC)),
+      dispatch_time(DISPATCH_TIME_NOW,
+                    (int64_t)((MDCSnackbarEnterTransitionDuration + MDCSnackbarDurationPadding) *
+                              NSEC_PER_SEC)),
       dispatch_get_main_queue(), ^{
         [expectation fulfill];
       });
+  [self waitForExpectationsWithTimeout:2 handler:nil];
+
+  // Then
+  [self snapshotVerifyView:self.testManager.internalManager.overlayView];
+}
+
+- (void)testWithTallHeightAndAction {
+  // Given
+  MDCSnackbarMessage *message = [MDCSnackbarMessage
+      messageWithText:
+          @"long text long text long text long text long text long text long text long text long "
+          @"text long text long text long text long text long text long text long text long text "
+          @"long text long text long text long text long text long text long text"];
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap me";
+  message.action = action;
+  self.testManager.internalManager.overlayView.backgroundColor = UIColor.whiteColor;
+
+  // When
+  [self.testManager showMessage:message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarEnterTransitionDuration +
+                                                             MDCSnackbarDurationPadding) *
+                                                            NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+                   [expectation fulfill];
+                 });
   [self waitForExpectationsWithTimeout:2 handler:nil];
 
   // Then
