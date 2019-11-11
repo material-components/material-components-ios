@@ -92,7 +92,7 @@
 - (void)testEnableFlexibleHeaderSetToNOBehavior {
   // Given
   MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
-  CGFloat navigationBarHeight = [appBarController.navigationBar intrinsicContentSize].height;
+  CGFloat navigationBarHeight = [appBarController.navigationBar sizeThatFits:appBarController.headerView.frame.size].height;
   UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
   appBarController.headerStackView.bottomBar = bottomBar;
 
