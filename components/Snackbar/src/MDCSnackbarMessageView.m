@@ -219,8 +219,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _buttonTitleColors[@(UIControlStateHighlighted)] =
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?: UIColor.whiteColor;
     _mdc_adjustsFontForContentSizeCategory = manager.mdc_adjustsFontForContentSizeCategory;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
         manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+#pragma clang diagnostic pop
     _messageFont = manager.messageFont;
     _buttonFont = manager.buttonFont;
     _message = message;

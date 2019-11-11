@@ -14,6 +14,7 @@
 
 #import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialDialogs+Theming.h>
+#import "MDCAlertController+ButtonForAction.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
@@ -93,7 +94,10 @@
     dialogButtonFont = [UIFont fontWithName:urduFontName size:20.0];
   }
   alert.messageFont = dialogBodyFont;
-  alert.buttonFont = dialogButtonFont;
+  MDCButton *buttonForRetryAction = [alert buttonForAction:retryAction];
+  buttonForRetryAction.titleLabel.font = dialogButtonFont;
+  MDCButton *buttonForCancelAction = [alert buttonForAction:cancelAction];
+  buttonForCancelAction.titleLabel.font = dialogButtonFont;
 
   [self presentViewController:alert animated:YES completion:nil];
 }
