@@ -89,4 +89,21 @@
   XCTAssertTrue(blockCalled);
 }
 
+- (void)testEnableFlexibleHeaderSetToNOBehavior {
+  // Given
+  MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
+  CGFloat navigationBarHeight = [appBarController.navigationBar intrinsicContentSize].height;
+  UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
+  appBarController.headerStackView.bottomBar = bottomBar;
+
+  // When
+  appBarController.enableFlexibleHeader = NO;
+
+  // Then
+  CGFloat minHeight = appBarController.headerView.minimumHeight;
+  CGFloat maxHeight = appBarController.headerView.maximumHeight;
+  XCTAssertEqual(minHeight, maxHeight);
+  XCTAssertEqualWithAccuracy(minHeight, 200 + navigationBarHeight, 0.01);
+}
+
 @end

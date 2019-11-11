@@ -36,6 +36,13 @@
  */
 @property(nonatomic, strong, nonnull) MDCHeaderStackView *headerStackView;
 
+/**
+ When this flag is set to NO, the flexible header behavior will be turned off. Which means the height of the app bar will be fixed to the sum of the top bar height and the bottom bar height.
+
+ Defaults to YES.
+*/
+@property(nonatomic) BOOL enableFlexibleHeader;
+
 @end
 
 #pragma mark - To be deprecated
