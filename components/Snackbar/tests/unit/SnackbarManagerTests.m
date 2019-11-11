@@ -114,7 +114,7 @@
   // Then
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  XCTAssertFalse(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertTrue(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 #pragma clang diagnostic pop
 }
 

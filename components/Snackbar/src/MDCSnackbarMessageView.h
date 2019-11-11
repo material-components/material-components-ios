@@ -120,7 +120,7 @@
  If disabled, the font size will only be adjusted if a scaled font has been provided.
  This behavior most closely matches UIKit's.
 
- Default value is NO.
+ Default value is YES.
  */
 @property(nonatomic, assign)
     BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable __deprecated_msg(

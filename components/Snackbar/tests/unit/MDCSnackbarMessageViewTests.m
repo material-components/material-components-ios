@@ -464,7 +464,7 @@
   // Then
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  XCTAssertFalse(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertTrue(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 #pragma clang diagnostic pop
 }
 
