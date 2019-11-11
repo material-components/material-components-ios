@@ -18,7 +18,9 @@
 // isn't imported first.
 // clang-format off
 #import "MaterialSnackbar.h"
+#import "../../src/private/MDCSnackbarManagerInternal.h"
 #import "../../src/private/MDCSnackbarMessageViewInternal.h"
+#import "../../src/private/MDCSnackbarOverlayView.h"
 // clang-format on
 
 /** The width of the Snackbar for testing. */
@@ -41,6 +43,18 @@ static NSString *const kItemTitleLong1Arabic =
     @"عل أخذ استطاعوا الانجليزية. قد وحتّى بزمام التبرعات مكن.";
 static NSString *const kItemTitleLong2Arabic =
     @"وتم عل والقرى إتفاقية, عن هذا وباءت الغالي وفرنسا.";
+
+@interface MDCSnackbarManagerInternal ()
+
+@property(nonatomic) MDCSnackbarOverlayView *overlayView;
+
+@end
+
+@interface MDCSnackbarManager ()
+
+@property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
+
+@end
 
 /** Snapshot tests for MDCSnackbarMessageView. */
 @interface MDCSnackbarMessageViewSnapshotTests : MDCSnapshotTestCase
@@ -201,6 +215,30 @@ static NSString *const kItemTitleLong2Arabic =
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
+}
+
+- (void)testWithTallHeight {
+  // Given
+  MDCSnackbarMessage *message = [MDCSnackbarMessage
+      messageWithText:
+          @"long text long text long text long text long text long text long text long text long "
+          @"text long text long text long text long text long text long text long text long text "
+          @"long text long text long text long text long text long text long text"];
+  self.testManager.internalManager.overlayView.backgroundColor = UIColor.whiteColor;
+
+  // When
+  [self.testManager showMessage:message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  NSTimeInterval snackbarAnimateInDuration = 0.20;
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(snackbarAnimateInDuration * NSEC_PER_SEC)),
+      dispatch_get_main_queue(), ^{
+        [expectation fulfill];
+      });
+  [self waitForExpectationsWithTimeout:2 handler:nil];
+
+  // Then
+  [self snapshotVerifyView:self.testManager.internalManager.overlayView];
 }
 
 @end
