@@ -25,6 +25,8 @@
 
 /** The snackbar's animate-in duration, pulled from MDCSnackbarOverlayView.m */
 NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
+
+/** The legacy snackbar's animate-in duration, pulled from MDCSnackbarOverlayView.m */
 NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 
 /** Extra delay to ensure the snackbar finishes animating in */
@@ -51,13 +53,13 @@ static NSString *const kItemTitleLong1Arabic =
 static NSString *const kItemTitleLong2Arabic =
     @"وتم عل والقرى إتفاقية, عن هذا وباءت الغالي وفرنسا.";
 
-@interface MDCSnackbarManagerInternal (TestInterface)
+@interface MDCSnackbarManagerInternal (MDCSnackbarMessageViewSnapshotTests)
 
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
 
 @end
 
-@interface MDCSnackbarManager (TestInterface)
+@interface MDCSnackbarManager (MDCSnackbarMessageViewSnapshotTests)
 
 @property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
 
