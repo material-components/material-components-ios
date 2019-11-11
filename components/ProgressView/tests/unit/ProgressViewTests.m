@@ -90,4 +90,13 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testAccessibilityLabelMatchesUIProgressView {
+  // Given
+  UIProgressView *uiProgressView = [[UIProgressView alloc] init];
+  MDCProgressView *mdcProgressView = [[MDCProgressView alloc] init];
+
+  // Then
+  XCTAssertEqual(uiProgressView.accessibilityLabel, mdcProgressView.accessibilityLabel);
+}
+
 @end
