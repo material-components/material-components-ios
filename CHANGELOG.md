@@ -1,3 +1,61 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Fix crash in example (#8734)](https://github.com/material-components/material-components-ios/commit/762ef5e4840234233a22514cb1eb79553f8df707) (Cody Weaver)
+* [Move layout code to `viewDidLayoutSubviews` (#8735)](https://github.com/material-components/material-components-ios/commit/9fc4f0afbc4b6fd11a0620b10905e30f76dc5075) (Cody Weaver)
+* [Use anchor-based constraints. (#8731)](https://github.com/material-components/material-components-ios/commit/779ca64b7e36654d446e88fbad074919602aeff3) (Robert Moore)
+
+### Banner
+
+* [Use lastBaseLineAnchor to align buttons if they are on the same line. (#8752)](https://github.com/material-components/material-components-ios/commit/628b2ecb9020b0287f44b384b93946977fd07b8a) (Wenyu Zhang)
+* [stop updating custom constraints before bound size is set. (#8749)](https://github.com/material-components/material-components-ios/commit/35188a5d5cc81d70ae059fbf9b0b12b00adbac11) (Wenyu Zhang)
+
+### FlexibleHeader
+
+* [Add a flexibleHeaderView:didChangeTrackingScrollViewAnimated: event to MDCFlexibleHeaderViewAnimationDelegate. (#8757)](https://github.com/material-components/material-components-ios/commit/e3aa7eace2a1528110fad59ef9dce2d745e790c6) (featherless)
+* [Add an animateWithAnimations:completion: API. (#8739)](https://github.com/material-components/material-components-ios/commit/1bcdfc77ca2a5df0034c3ae038193df73859b911) (featherless)
+
+### Ripple
+
+* [Improve MDCRippleTouchController (#8631)](https://github.com/material-components/material-components-ios/commit/3b4c9d170a9f1d9760d7da147f30832bc1e78398) (Michael Schneider)
+
+### Snackbar
+
+* [Add focusOnShow API (#8746)](https://github.com/material-components/material-components-ios/commit/f2821ce66ae3cb7360dd14f9dfdd8d80e01b2613) (Yarden Eitan)
+* [Add will present block to allow customization of sna… (#8751)](https://github.com/material-components/material-components-ios/commit/e5a94aea1fe5c7f5d96ae11984c36416c641e1d5) (Yarden Eitan)
+* [Update documentation on default. #8736](https://github.com/material-components/material-components-ios/commit/5516c5f6c9a8267020369eb5c55eaf4225b9d679) (Yarden Eitan)
+
+### TextFields
+
+* [Capture snapshots outside of view (#8718)](https://github.com/material-components/material-components-ios/commit/dec1670f8b34b75f2d78b27e460a72567326cb07) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add API to control showing tick marks. (#8743)](https://github.com/material-components/material-components-ios/commit/61f901fdc7f4552ba936d44f489b494cc4642f8d) (Robert Moore)
+* [Add trackHeight property (#8740)](https://github.com/material-components/material-components-ios/commit/d6d13cdface5a5b5019b2d597fda64ff8ec2ba98) (Bryan Oltman)
+* [Continuous sliders show tick marks. (#8745)](https://github.com/material-components/material-components-ios/commit/5d6941b61d55ee8e9ea65f23c3eaa894a9a32aa7) (Robert Moore)
+* [Discrete dots scale slowly with track height. (#8744)](https://github.com/material-components/material-components-ios/commit/ed7b654e4accb273af8197ecc4595a8d9b096b34) (Robert Moore)
+* [Move new TextFields into TextControls directory (#8726)](https://github.com/material-components/material-components-ios/commit/02f9c9f01d049305a8f79eb2afd16bff5caf71d2) (Andrew Overton)
+
+---
+
 # 94.0.0
 
 This major release adds a new configuration block to MDCSnackBarMessage and moves the currently in development MDCTextControl based TextFields from the TextFields component directory to their own TextControls directory. While there are no API changes associated with this move, it does have the potential to break anyone importing these textfields from their old location, hence the major version bump.
