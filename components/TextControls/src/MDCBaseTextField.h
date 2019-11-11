@@ -150,7 +150,7 @@
 @interface MDCBaseTextField (UIAccessibility)
 
 /**
- If accessibilityLabel is not set, this value will be a concatenation of any @c label text, @c
+ If @c accessibilityLabel is not set, this value will be a concatenation of any @c label text, @c
  leadingAssistiveLabel text, and @c trailingAssistiveLabel text.
  */
 @property(nullable, nonatomic, copy) NSString *accessibilityLabel;
