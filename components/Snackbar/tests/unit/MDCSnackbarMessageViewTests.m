@@ -405,6 +405,10 @@
     MDCSnackbarMessageViewTestsFakeView *messageView =
         [[MDCSnackbarMessageViewTestsFakeView alloc] init];
     messageView.mdc_adjustsFontForContentSizeCategory = YES;
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    #pragma clang diagnostic pop
     UIFont *messageFont = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
     MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
     messageFont = [fontScaler scaledFontWithFont:messageFont];
@@ -433,6 +437,10 @@
     MDCSnackbarMessageViewTestsFakeView *messageView =
         [[MDCSnackbarMessageViewTestsFakeView alloc] init];
     messageView.mdc_adjustsFontForContentSizeCategory = YES;
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    #pragma clang diagnostic pop
     MDCButton *button = [[MDCButton alloc] init];
     [messageView.actionButtons addObject:button];
     UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
