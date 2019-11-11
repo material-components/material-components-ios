@@ -1,6 +1,6 @@
-# #develop#
+# 94.1.0
 
-This minor release intoduces new API to FlexibleHeader, SnackBar and ThumbTrack and includes bug fixes for multiple components.
+This minor release intoduces new API to FlexibleHeader, SnackBar and Ripple. It also includes bug fixes for multiple components.
 
 ## Component changes
 
