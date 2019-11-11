@@ -293,8 +293,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)enforceHeaderViewMinMaxHeightToHeaderViewHeight {
   CGFloat heightSum = 0;
-  heightSum += [self.headerStackView.topBar sizeThatFits: self.view.frame.size].height;
-  heightSum += [self.headerStackView.bottomBar sizeThatFits: self.view.frame.size].height;
+  heightSum += [self.headerStackView.topBar sizeThatFits:self.view.frame.size].height;
+  heightSum += [self.headerStackView.bottomBar sizeThatFits:self.view.frame.size].height;
   self.headerView.minimumHeight = self.headerView.maximumHeight = heightSum;
 }
 
