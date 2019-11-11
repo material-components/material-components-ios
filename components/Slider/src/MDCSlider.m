@@ -578,13 +578,33 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return traits;
 }
 
+/**
+ Returns the absolute change in value for the @c accessibilityIncrement and
+ @c accessibilityDecrement methods.
+
+ The value is decided using the following rules. If @c numberOfDiscreteValues is less than 2, then
+ the adjustment value is 10% of the slider's value range. If @c numberOfDiscreteValues is greater
+ than or equal to 2 and @c discrete is @c YES, the slider returns the "size" of the discrete step.
+ If @c numberOfDiscreteValues is greater than or equal to 2 and @c discrete is @c NO, the slider
+ returns the minimum of 10% of the range and the discrete value step size.
+ */
+- (CGFloat)accessibilityAdjustmentAmount {
+  CGFloat range = self.maximumValue - self.minimumValue;
+  CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
+  if (self.numberOfDiscreteValues > 1) {
+    CGFloat discreteAdjustmentAmount = range / (self.numberOfDiscreteValues - 1);
+    if (self.discrete) {
+      adjustmentAmount = discreteAdjustmentAmount;
+    } else {
+      adjustmentAmount = MIN(adjustmentAmount, discreteAdjustmentAmount);
+    }
+  }
+  return adjustmentAmount;
+}
+
 - (void)accessibilityIncrement {
   if (self.enabled) {
-    CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (self.numberOfDiscreteValues > 1) {
-      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
-    }
+    CGFloat adjustmentAmount = [self accessibilityAdjustmentAmount];
     CGFloat newValue = self.value + adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO
@@ -598,11 +618,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)accessibilityDecrement {
   if (self.enabled) {
-    CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (self.numberOfDiscreteValues > 1) {
-      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
-    }
+    CGFloat adjustmentAmount = [self accessibilityAdjustmentAmount];
     CGFloat newValue = self.value - adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO

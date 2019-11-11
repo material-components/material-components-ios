@@ -1093,7 +1093,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects([self.slider accessibilityValue], expected);
 }
 
-- (void)testAccessibilityIncrement {
+- (void)testAccessibilityIncrementForNonDiscreteSlider {
   // Given
   self.slider.value = [self randomPercent] - (CGFloat)0.1;
   CGFloat expectedValue = self.slider.value + (CGFloat)0.1;
@@ -1105,7 +1105,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
 }
 
-- (void)testAccessibilityDecrement {
+- (void)testAccessibilityDecrementForNonDiscreteSlider {
   // Given
   self.slider.value = [self randomPercent] + (CGFloat)0.1;
   CGFloat expectedValue = self.slider.value - (CGFloat)0.1;
@@ -1117,7 +1117,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
 }
 
-- (void)testAccessibilityActivate {
+- (void)testAccessibilityActivateForNonDiscreteSlider {
   // Given
   self.slider.value = 0;
 
@@ -1129,7 +1129,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(self.slider.value, newValue, kEpsilonAccuracy);
 }
 
-- (void)testAccessibilityIncrementWithLargerMax {
+- (void)testAccessibilityIncrementWithLargerMaxForNonDiscreteSlider {
   // Given
   self.slider.maximumValue = [self randomNumber];
   self.slider.value = ([self randomPercent] - (CGFloat)0.1) * self.slider.maximumValue;
@@ -1151,9 +1151,10 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertTrue(self.slider.accessibilityTraits & UIAccessibilityTraitAdjustable);
 }
 
-- (void)testAccessibilityIncrementDiscreteSlider {
+- (void)testAccessibilityIncrementForDiscreteSlider {
+  // Given
+  self.slider.discrete = YES;
   for (NSUInteger i = 2; i < 20; ++i) {
-    // Given
     self.slider.numberOfDiscreteValues = i;
     self.slider.minimumValue = 0;
     self.slider.maximumValue = 1;
@@ -1166,6 +1167,84 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     CGFloat stepValue = (self.slider.maximumValue - self.slider.minimumValue) /
                         (self.slider.numberOfDiscreteValues - 1);
     CGFloat expectedValue = self.slider.minimumValue + stepValue;
+    XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy,
+                               @"A slider with (%lu) discrete values should have step of '%.3f'.",
+                               (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
+  }
+}
+
+- (void)testAccessibilityDecrementForDiscreteSlider {
+  // Given
+  self.slider.discrete = YES;
+  for (NSUInteger i = 2; i < 20; ++i) {
+    self.slider.numberOfDiscreteValues = i;
+    self.slider.minimumValue = 0;
+    self.slider.maximumValue = 1;
+    self.slider.value = self.slider.maximumValue;
+
+    // When
+    [self.slider accessibilityDecrement];
+
+    // Then
+    CGFloat stepValue = (self.slider.maximumValue - self.slider.minimumValue) /
+                        (self.slider.numberOfDiscreteValues - 1);
+    CGFloat expectedValue = self.slider.maximumValue - stepValue;
+    XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy,
+                               @"A slider with (%lu) discrete values should have step of '%.3f'.",
+                               (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
+  }
+}
+
+/**
+ When the number of discrete values results in a step size smaller than the non-discrete value of
+ 10%, use that value. Otherwise use 10% of the total range.
+ */
+- (void)testAccessibilityIncrementForNonDiscreteSliderWithDiscreteValuesUsesAdaptiveStepSize {
+  // Given
+  self.slider.discrete = NO;
+  for (NSUInteger i = 2; i < 20; ++i) {
+    self.slider.numberOfDiscreteValues = i;
+    self.slider.minimumValue = 0;
+    self.slider.maximumValue = 1;
+    self.slider.value = self.slider.minimumValue;
+
+    // When
+    [self.slider accessibilityIncrement];
+
+    // Then
+    CGFloat sliderRange = self.slider.maximumValue - self.slider.minimumValue;
+    CGFloat nonDiscreteStepValue = (CGFloat)(0.1 * sliderRange);
+    CGFloat discreteStepValue = sliderRange / (self.slider.numberOfDiscreteValues - 1);
+    CGFloat stepValue = MIN(nonDiscreteStepValue, discreteStepValue);
+    CGFloat expectedValue = self.slider.minimumValue + stepValue;
+    XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy,
+                               @"A slider with (%lu) discrete values should have step of '%.3f'.",
+                               (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
+  }
+}
+
+/**
+ When the number of discrete values results in a step size smaller than the non-discrete value of
+ 10%, use that value. Otherwise use 10% of the total range.
+ */
+- (void)testAccessibilityDecrementForNonDiscreteSliderWithDiscreteValuesUsesAdaptiveStepSize {
+  // Given
+  self.slider.discrete = NO;
+  for (NSUInteger i = 2; i < 20; ++i) {
+    self.slider.numberOfDiscreteValues = i;
+    self.slider.minimumValue = 0;
+    self.slider.maximumValue = 1;
+    self.slider.value = self.slider.maximumValue;
+
+    // When
+    [self.slider accessibilityDecrement];
+
+    // Then
+    CGFloat sliderRange = self.slider.maximumValue - self.slider.minimumValue;
+    CGFloat nonDiscreteStepValue = (CGFloat)(0.1 * sliderRange);
+    CGFloat discreteStepValue = sliderRange / (self.slider.numberOfDiscreteValues - 1);
+    CGFloat stepValue = MIN(nonDiscreteStepValue, discreteStepValue);
+    CGFloat expectedValue = self.slider.maximumValue - stepValue;
     XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy,
                                @"A slider with (%lu) discrete values should have step of '%.3f'.",
                                (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
@@ -1193,7 +1272,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
-- (void)testSettingshouldEnableHapticsForAllDiscreteValuesValue {
+- (void)testSettingShouldEnableHapticsForAllDiscreteValuesValue {
   if (@available(iOS 10.0, *)) {
     for (NSUInteger i = 0; i < 5; ++i) {
       // When
