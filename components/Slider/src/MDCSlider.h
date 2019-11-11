@@ -214,8 +214,7 @@ IB_DESIGNABLE
 /**
  The number of discrete values that the slider can take.
 
- If greater than or equal to 2, the thumb will snap to the nearest discrete value when the user
- lifts their finger or taps. The discrete values are evenly spaced between the @c minimumValue and
+ The discrete values are evenly spaced between the @c minimumValue and
  @c maximumValue. If 0 or 1, the slider's value will not change when the user releases the thumb.
 
  The default value is zero.
@@ -223,10 +222,17 @@ IB_DESIGNABLE
 @property(nonatomic, assign) NSUInteger numberOfDiscreteValues;
 
 /**
- Configures the visibility of the track tick marks.
+ If @c YES and @c numberOfDiscreteValues is greater than 1, the thumb will snap to the nearest
+ discrete value when the user drags the Thumb or taps.
 
- After this property is explicitly set, the receiver will no longer use
- @c numberOfDiscreteValues to implicitly determine if it is a discrete or continuous slider.
+ Defaults to @c YES.
+
+ @note This property has no effect if @c numberOfDiscreteValues is less than 2.
+ */
+@property(nonatomic, assign, getter=isDiscrete) BOOL discrete;
+
+/**
+ Configures the visibility of the track tick marks.
 
  @note Unless this property is set explicitly, its value will change based on the value of
        @c continuous. When @c continuous is @c true, @c trackTickVisibility is
