@@ -24,10 +24,10 @@
 // clang-format on
 
 /** The snackbar's animate-in duration, pulled from MDCSnackbarOverlayView.m */
-NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
+NSTimeInterval const TransitionDuration = 0.15;
 
 /** The legacy snackbar's animate-in duration, pulled from MDCSnackbarOverlayView.m */
-NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
+NSTimeInterval const LegacyTransitionDuration = 0.5;
 
 /** Extra delay to ensure the snackbar finishes animating in */
 NSTimeInterval const MDCSnackbarDurationPadding = 0.05;
@@ -240,9 +240,9 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   [self.testManager showMessage:message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarLegacyTransitionDuration +
-                                                             MDCSnackbarDurationPadding) *
-                                                            NSEC_PER_SEC)),
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                               (int64_t)((LegacyTransitionDuration + MDCSnackbarDurationPadding) *
+                                         NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
                    [self.testManager.internalManager.overlayView layoutSubviews];
                    [expectation fulfill];
@@ -269,9 +269,9 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   [self.testManager showMessage:message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarLegacyTransitionDuration +
-                                                             MDCSnackbarDurationPadding) *
-                                                            NSEC_PER_SEC)),
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                               (int64_t)((LegacyTransitionDuration + MDCSnackbarDurationPadding) *
+                                         NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
                    [self.testManager.internalManager.overlayView layoutSubviews];
                    [expectation fulfill];
@@ -294,12 +294,12 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   [self.testManager showMessage:message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarEnterTransitionDuration +
-                                                             MDCSnackbarDurationPadding) *
-                                                            NSEC_PER_SEC)),
-                 dispatch_get_main_queue(), ^{
-                   [expectation fulfill];
-                 });
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW,
+                    (int64_t)((TransitionDuration + MDCSnackbarDurationPadding) * NSEC_PER_SEC)),
+      dispatch_get_main_queue(), ^{
+        [expectation fulfill];
+      });
   [self waitForExpectationsWithTimeout:2 handler:nil];
 
   // Then
@@ -321,12 +321,12 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   [self.testManager showMessage:message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarEnterTransitionDuration +
-                                                             MDCSnackbarDurationPadding) *
-                                                            NSEC_PER_SEC)),
-                 dispatch_get_main_queue(), ^{
-                   [expectation fulfill];
-                 });
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW,
+                    (int64_t)((TransitionDuration + MDCSnackbarDurationPadding) * NSEC_PER_SEC)),
+      dispatch_get_main_queue(), ^{
+        [expectation fulfill];
+      });
   [self waitForExpectationsWithTimeout:2 handler:nil];
 
   // Then
