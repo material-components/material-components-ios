@@ -36,8 +36,13 @@
 
 @end
 
-/** Performs a touch event on the thumb of the provided slider. */
-static void TouchThumbInSlider(MDCSlider *slider) {
+/**
+ Performs a touch event on the thumb of the provided slider.
+
+ @param slider The Slider to touch.
+ @return The touch object used.
+ */
+static MDCSliderSnapshotTestTouchFake *TouchThumbInSlider(MDCSlider *slider) {
   CGRect thumbViewBounds = slider.thumbTrack.thumbView.bounds;
   CGPoint thumbPosition = [slider.thumbTrack
       convertPoint:CGPointMake(CGRectGetMidX(thumbViewBounds), CGRectGetMidY(thumbViewBounds))
@@ -45,6 +50,31 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   MDCSliderSnapshotTestTouchFake *thumbTouch = [[MDCSliderSnapshotTestTouchFake alloc] init];
   thumbTouch.mdc_touchPoint = thumbPosition;
   [slider.thumbTrack touchesBegan:[NSSet setWithObject:thumbTouch] withEvent:nil];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  return thumbTouch;
+}
+
+/**
+ Moves the Slider Thumb to a position relative to the slider width. A relative value of 0 is the
+ minimum and a relative value of 1 is the maximum.
+
+ @param slider The Slider to touch.
+ @param touch The initial touch passed to @c touchesBegan:withEvent:.
+ @param relativePosition The new position of the touch, relative to the bounds of the Slider's
+                         track.
+ */
+static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
+                                              MDCSliderSnapshotTestTouchFake *touch,
+                                              CGFloat relativePosition) {
+  // This calculation is generated from the code in MDCThumbTrack valueForThumbPosition.
+  // relativeX = (thumbPosition.x - thumbRadius) / thumbPanRange
+  CGPoint touchPoint = CGPointMake(
+      (CGRectGetWidth(slider.thumbTrack.bounds) - (slider.thumbRadius * 2)) * relativePosition +
+          slider.thumbTrack.thumbRadius,
+      CGRectGetMidY(slider.thumbTrack.bounds));
+  touch.mdc_touchPoint = touchPoint;
+  [slider.thumbTrack touchesMoved:[NSSet setWithObject:touch] withEvent:nil];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 }
 
 /**
@@ -82,7 +112,7 @@ static void TouchThumbInSlider(MDCSlider *slider) {
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
   self.slider =
       [[MDCSliderWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
@@ -101,7 +131,7 @@ static void TouchThumbInSlider(MDCSlider *slider) {
 }
 
 - (void)makeSliderDiscrete:(MDCSlider *)slider {
-  slider.continuous = NO;
+  slider.discrete = YES;
   slider.numberOfDiscreteValues = (NSUInteger)(slider.maximumValue - slider.minimumValue + 1);
 }
 
@@ -164,7 +194,6 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   TouchThumbInSlider(self.slider);
 
   // Then
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
@@ -192,7 +221,6 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   TouchThumbInSlider(self.slider);
 
   // Then
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
@@ -220,11 +248,14 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   TouchThumbInSlider(self.slider);
 
   // Then
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderAtMinimum {
+- (void)testImplicitlyNonDiscreteSliderAtMinimum {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
   // When
   self.slider.value = self.slider.minimumValue;
 
@@ -232,7 +263,23 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderAtMidpoint {
+- (void)testExplicitlyNonDiscreteSliderAtMinimum {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.value = self.slider.minimumValue;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderAtMidpoint {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
   // When
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
@@ -241,7 +288,24 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderAtMaximum {
+- (void)testExplicitlyNonDiscreteSliderAtMidpoint {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderAtMaximum {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
   // When
   self.slider.value = self.slider.maximumValue;
 
@@ -249,12 +313,24 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderInactiveThumbTrackTickMarksNever {
+- (void)testExplicitlyNonDiscreteSliderAtMaximum {
   // Given
   [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.value = self.slider.maximumValue;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksNever {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-  self.slider.continuous = YES;
 
   // When
   self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
@@ -263,28 +339,56 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderActiveThumbTrackTickMarksNever {
+- (void)testExplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksNever {
   // Given
   [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderActiveThumbTrackTickMarksNever {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
 
   // When
   self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
   TouchThumbInSlider(self.slider);
 
   // Then
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderInactiveThumbTrackTickMarksWhenDragging {
+- (void)testExplicitlyNonDiscreteSliderActiveThumbTrackTickMarksNever {
   // Given
   [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksWhenDragging {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
 
   // When
   self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
@@ -293,28 +397,56 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderActiveThumbTrackTickMarksWhenDragging {
+- (void)testExplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksWhenDragging {
   // Given
   [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderActiveThumbTrackTickMarksWhenDragging {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
 
   // When
   self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
   TouchThumbInSlider(self.slider);
 
   // Then
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderInactiveThumbTrackTickMarksAlways {
+- (void)testExplicitlyNonDiscreteSliderActiveThumbTrackTickMarksWhenDragging {
   // Given
   [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksAlways {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
 
   // When
   self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
@@ -323,19 +455,86 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderActiveThumbTrackTickMarksAlways {
+- (void)testExplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksAlways {
   // Given
   [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-  self.slider.continuous = YES;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderActiveThumbTrackTickMarksAlways {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
 
   // When
   self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
   TouchThumbInSlider(self.slider);
 
   // Then
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderActiveThumbTrackTickMarksAlways {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderAlignsToSnappedValue {
+  // Given
+  self.slider.numberOfDiscreteValues = 5;
+  self.slider.discrete = YES;
+
+  // When
+  MDCSliderSnapshotTestTouchFake *touch = TouchThumbInSlider(self.slider);
+  MoveSliderThumbToRelativePosition(self.slider, touch, (CGFloat)0.15);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderAlignsToThumbPosiition {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
+  // When
+  MDCSliderSnapshotTestTouchFake *touch = TouchThumbInSlider(self.slider);
+  MoveSliderThumbToRelativePosition(self.slider, touch, (CGFloat)0.15);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderAlignsToThumbPosition {
+  // Given
+  self.slider.numberOfDiscreteValues = 5;
+  self.slider.discrete = NO;
+
+  // When
+  MDCSliderSnapshotTestTouchFake *touch = TouchThumbInSlider(self.slider);
+  MoveSliderThumbToRelativePosition(self.slider, touch, (CGFloat)0.15);
+
+  // Then
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
@@ -469,7 +668,10 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   }
 }
 
-- (void)testContinuousSliderLargerTrackHeight {
+- (void)testNonDiscreteSliderLargerTrackHeight {
+  // Given
+  self.slider.discrete = NO;
+
   // When
   self.slider.trackHeight = 6;
 
@@ -477,7 +679,10 @@ static void TouchThumbInSlider(MDCSlider *slider) {
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderSmallerTrackHeight {
+- (void)testNonDiscreteSliderSmallerTrackHeight {
+  // Given
+  self.slider.discrete = NO;
+
   // When
   self.slider.trackHeight = 1;
 

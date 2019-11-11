@@ -229,7 +229,7 @@ IB_DESIGNABLE
 
  @note This property has no effect if @c numberOfDiscreteValues is less than 2.
  */
-@property(nonatomic, assign) BOOL snapsToDiscreteValues;
+@property(nonatomic, assign, getter=isDiscrete) BOOL discrete;
 
 /**
  Configures the visibility of the track tick marks.

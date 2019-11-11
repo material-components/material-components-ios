@@ -106,14 +106,14 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 
 /**
  When @c YES, and @c numDiscreteValues is greater than 2, then the value can only ever be one of the
- calculated discrete values. The snapped value is the one closest to the current position of the
+ calculated discrete values. The resulting value is the one closest to the current position of the
  touch that is dragging the thumb.
 
  Defaults to @c YES.
 
  @note This property has no effect if @c numDiscreteValues is less than 2.
  */
-@property(nonatomic, assign) BOOL snapsToDiscreteValues;
+@property(nonatomic, assign, getter=isDiscrete) BOOL discrete;
 
 /**
   The value of the thumb along the track.

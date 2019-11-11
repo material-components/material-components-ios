@@ -188,9 +188,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 /**
- Explicit track tick visibility disables "automatic" conversion to a discrete slider.
+ Explicit track tick visibility retains default behavior of @c snapsToValue.
  */
-- (void)testDiscreteValues2WithExplicitTickVisibilityRetainsContinuousBehavior {
+- (void)testDiscreteValues2WithExplicitTickVisibilityRetainsValueSnapping {
   // Given
   self.slider.maximumValue = 10;
   self.slider.minimumValue = 0;
@@ -202,7 +202,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.numberOfDiscreteValues = 2;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValues2SetValue {
@@ -231,7 +231,10 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
-- (void)testDiscreteValues3WithExplicitTickVisibilityRetainsContinuousBehavior {
+/**
+ Explicit track tick visibility retains default behavior of @c snapsToValue.
+ */
+- (void)testDiscreteValues3WithExplicitTickVisibilityRetainsValueSnapping {
   // Given
   self.slider.maximumValue = 100;
   self.slider.minimumValue = 0;
@@ -243,7 +246,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.numberOfDiscreteValues = 3;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.value, self.slider.minimumValue, kEpsilonAccuracy);
 }
 
 - (void)testDiscreteValues3SetValue {
@@ -929,15 +932,15 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 #pragma mark - trackTickVisibility
 
-- (void)testTrackTickVisibilityDefaultForContinuousSlider {
+- (void)testTrackTickVisibilityDefaultForNonDiscreteSlider {
   // Given
   MDCSlider *slider = [[MDCSlider alloc] init];
 
   // When
-  slider.continuous = YES;
+  slider.discrete = NO;
 
   // Then
-  XCTAssertEqual(slider.trackTickVisibility, MDCSliderTrackTickVisibilityNever);
+  XCTAssertEqual(slider.trackTickVisibility, MDCSliderTrackTickVisibilityWhenDragging);
 }
 
 - (void)testTrackTickVisibilityDefaultForDiscreteSlider {
@@ -945,7 +948,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   MDCSlider *slider = [[MDCSlider alloc] init];
 
   // When
-  slider.continuous = NO;
+  slider.numberOfDiscreteValues = 2;
 
   // Then
   XCTAssertEqual(slider.trackTickVisibility, MDCSliderTrackTickVisibilityWhenDragging);
