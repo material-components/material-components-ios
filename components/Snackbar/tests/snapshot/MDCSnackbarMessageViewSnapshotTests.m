@@ -294,13 +294,12 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   [self.testManager showMessage:message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  dispatch_after(
-      dispatch_time(DISPATCH_TIME_NOW,
-                    (int64_t)((MDCSnackbarEnterTransitionDuration + MDCSnackbarDurationPadding) *
-                              NSEC_PER_SEC)),
-      dispatch_get_main_queue(), ^{
-        [expectation fulfill];
-      });
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MDCSnackbarEnterTransitionDuration +
+                                                             MDCSnackbarDurationPadding) *
+                                                            NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+                   [expectation fulfill];
+                 });
   [self waitForExpectationsWithTimeout:2 handler:nil];
 
   // Then
