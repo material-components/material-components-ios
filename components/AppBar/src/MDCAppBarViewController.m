@@ -70,7 +70,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
   self.headerStackView.translatesAutoresizingMaskIntoConstraints = NO;
   self.headerStackView.topBar = self.navigationBar;
-  self.enableFlexibleHeader = YES;
 }
 
 #pragma mark - Properties
@@ -150,11 +149,11 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   return backBarButtonItem;
 }
 
-- (void)setEnableFlexibleHeader:(BOOL)enableFlexibleHeader {
-  _enableFlexibleHeader = enableFlexibleHeader;
-  if (!enableFlexibleHeader) {
+- (void)setShouldAdjustHeightBasedOnHeaderStackView:(BOOL)shouldAdjustHeightBasedOnHeaderStackView {
+  _shouldAdjustHeightBasedOnHeaderStackView = shouldAdjustHeightBasedOnHeaderStackView;
+  if (shouldAdjustHeightBasedOnHeaderStackView) {
     self.headerView.minMaxHeightIncludesSafeArea = NO;
-    [self enforceHeaderViewMinMaxHeightToHeaderViewHeight];
+    [self adjustHeightBasedOnHeaderStackView];
   }
 }
 
@@ -252,8 +251,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
     _verticalConstraint.constant = MDCDeviceTopSafeAreaInset();
   }
 
-  if (!self.enableFlexibleHeader) {
-    [self enforceHeaderViewMinMaxHeightToHeaderViewHeight];
+  if (self.shouldAdjustHeightBasedOnHeaderStackView) {
+    [self adjustHeightBasedOnHeaderStackView];
   }
 }
 
@@ -291,7 +290,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 #pragma mark - Private
 
-- (void)enforceHeaderViewMinMaxHeightToHeaderViewHeight {
+- (void)adjustHeightBasedOnHeaderStackView {
   CGFloat heightSum = 0;
   heightSum += [self.headerStackView.topBar sizeThatFits:self.view.frame.size].height;
   heightSum += [self.headerStackView.bottomBar sizeThatFits:self.view.frame.size].height;

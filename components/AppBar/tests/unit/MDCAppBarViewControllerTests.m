@@ -89,7 +89,7 @@
   XCTAssertTrue(blockCalled);
 }
 
-- (void)testEnableFlexibleHeaderSetToNOBehavior {
+- (void)testShouldAdjustHeightBasedOnHeaderStackViewSetToYES {
   // Given
   MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
   CGFloat navigationBarHeight =
@@ -98,7 +98,7 @@
   appBarController.headerStackView.bottomBar = bottomBar;
 
   // When
-  appBarController.enableFlexibleHeader = NO;
+  appBarController.shouldAdjustHeightBasedOnHeaderStackView = YES;
 
   // Then
   CGFloat minHeight = appBarController.headerView.minimumHeight;
