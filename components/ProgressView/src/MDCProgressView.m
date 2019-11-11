@@ -265,6 +265,10 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   }
 }
 
+- (NSString *)accessibilityLabel {
+  return self.accessibilityProgressView.accessibilityLabel;
+}
+
 #pragma mark Private
 
 + (NSTimeInterval)animationDuration {
