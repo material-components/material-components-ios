@@ -662,6 +662,27 @@
   return colorViewModel;
 }
 
+#pragma mark Accessibility Overrides
+
+- (NSString *)accessibilityLabel {
+  NSString *superAccessibilityLabel = [super accessibilityLabel];
+  if (superAccessibilityLabel.length > 0) {
+    return superAccessibilityLabel;
+  }
+
+  NSMutableArray *accessibilityLabelComponents = [NSMutableArray new];
+  if (self.label.text.length > 0) {
+    [accessibilityLabelComponents addObject:self.label.text];
+  }
+  if (self.leadingAssistiveLabel.text.length > 0) {
+    [accessibilityLabelComponents addObject:self.leadingAssistiveLabel.text];
+  }
+  if (self.trailingAssistiveLabel.text.length > 0) {
+    [accessibilityLabelComponents addObject:self.trailingAssistiveLabel.text];
+  }
+  return [accessibilityLabelComponents componentsJoinedByString:@", "];
+}
+
 #pragma mark Color Accessors
 
 - (void)setNormalLabelColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {

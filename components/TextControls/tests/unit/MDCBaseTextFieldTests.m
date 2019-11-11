@@ -338,4 +338,38 @@
                                      labelState:MDCTextControlLabelStateFloating]);
 }
 
+- (void)testDefaultAccessibilityLabel {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  NSString *labelText = @"label text";
+  NSString *leadingAssistiveLabelText = @"leading assistive label text";
+
+  // When
+  textField.label.text = labelText;
+  textField.leadingAssistiveLabel.text = leadingAssistiveLabelText;
+
+  // Then
+  NSString *concatenatedText =
+      [NSString stringWithFormat:@"%@, %@", labelText, leadingAssistiveLabelText];
+  XCTAssertTrue([concatenatedText isEqualToString:textField.accessibilityLabel]);
+}
+
+- (void)testClientSpecifiedAccessibilityLabel {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  NSString *labelText = @"label text";
+  NSString *leadingAssistiveLabelText = @"leading assistive label text";
+  NSString *userSpecifiedAccessibilityLabel = @"user specified accessibility label";
+
+  // When
+  textField.label.text = labelText;
+  textField.leadingAssistiveLabel.text = leadingAssistiveLabelText;
+  textField.accessibilityLabel = userSpecifiedAccessibilityLabel÷;
+
+  // Then
+  XCTAssertTrue([userSpecifiedAccessibilityLabel isEqualToString:textField.accessibilityLabel]);
+}
+
 @end
