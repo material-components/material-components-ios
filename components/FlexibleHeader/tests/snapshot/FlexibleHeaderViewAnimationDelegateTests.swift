@@ -16,15 +16,32 @@ import XCTest
 import MaterialComponents.MaterialFlexibleHeader
 
 private class MockMDCFlexibleHeaderViewAnimationDelegate: NSObject, MDCFlexibleHeaderViewAnimationDelegate {
-  var didCompleteExpectation: XCTestExpectation
-  init(didCompleteExpectation: XCTestExpectation) {
+  let didChangeAnimatedExpectation: XCTestExpectation?
+  let didChangeNotAnimatedExpectation: XCTestExpectation?
+  let didCompleteExpectation: XCTestExpectation?
+  init(didChangeAnimatedExpectation: XCTestExpectation?,
+       didChangeNotAnimatedExpectation: XCTestExpectation?,
+       didCompleteExpectation: XCTestExpectation?) {
+    self.didChangeAnimatedExpectation = didChangeAnimatedExpectation
+    self.didChangeNotAnimatedExpectation = didChangeNotAnimatedExpectation
     self.didCompleteExpectation = didCompleteExpectation
 
     super.init()
   }
 
+  @objc
+  func flexibleHeaderView(_ flexibleHeaderView: MDCFlexibleHeaderView,
+                          didChangeTrackingScrollViewAnimated animated: Bool) {
+    if animated {
+      didChangeAnimatedExpectation?.fulfill()
+    } else {
+      didChangeNotAnimatedExpectation?.fulfill()
+    }
+  }
+
+  @objc
   func flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete(_ flexibleHeaderView: MDCFlexibleHeaderView) {
-    didCompleteExpectation.fulfill()
+    didCompleteExpectation?.fulfill()
   }
 }
 
@@ -48,8 +65,11 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
     window.layer.speed = 100000
     CATransaction.flush()
 
-    let mockDelegate = MockMDCFlexibleHeaderViewAnimationDelegate(didCompleteExpectation:
-        expectation(description: "didComplete"))
+    let didCompleteExpectation = expectation(description: "didComplete")
+    let mockDelegate =
+      MockMDCFlexibleHeaderViewAnimationDelegate(didChangeAnimatedExpectation: nil,
+                                                 didChangeNotAnimatedExpectation: nil,
+                                                 didCompleteExpectation: didCompleteExpectation)
     fhv.animationDelegate = mockDelegate
 
     // When
@@ -57,7 +77,7 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
 
     // Then
     let waiter = XCTWaiter()
-    let result = waiter.wait(for: [mockDelegate.didCompleteExpectation], timeout: 0.01)
+    let result = waiter.wait(for: [didCompleteExpectation], timeout: 0.01)
     XCTAssertEqual(result, .timedOut)
   }
 
@@ -83,8 +103,11 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
     window.layer.speed = 100000
     CATransaction.flush()
 
-    let mockDelegate = MockMDCFlexibleHeaderViewAnimationDelegate(didCompleteExpectation:
-        expectation(description: "didComplete"))
+    let didCompleteExpectation = expectation(description: "didComplete")
+    let mockDelegate =
+      MockMDCFlexibleHeaderViewAnimationDelegate(didChangeAnimatedExpectation: nil,
+                                                 didChangeNotAnimatedExpectation: nil,
+                                                 didCompleteExpectation: didCompleteExpectation)
     fhv.animationDelegate = mockDelegate
 
     // When
@@ -92,6 +115,44 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
     fhv.trackingScrollView = scrollView2
 
     // Then
-    wait(for: [mockDelegate.didCompleteExpectation], timeout: 0.1)
+    wait(for: [didCompleteExpectation], timeout: 0.1)
+  }
+
+  func testAnimationCallbackIsInvokedWithAnimatedYesWhenTheTrackingScrollViewIsChanged() {
+    // Given
+    let fhv = MDCFlexibleHeaderView()
+    fhv.frame = CGRect(x: 0, y: 0, width: 100, height: 0)
+    fhv.minMaxHeightIncludesSafeArea = false
+    fhv.sharedWithManyScrollViews = true
+    fhv.maximumHeight = 200
+    let scrollView1 = UIScrollView()
+    let scrollView2 = UIScrollView()
+    let largeScrollableArea = CGSize(width: fhv.frame.width, height: 1000)
+    scrollView1.contentSize = largeScrollableArea
+    scrollView2.contentSize = largeScrollableArea
+    // Fully expanded.
+    scrollView1.contentOffset = CGPoint(x: 0, y: -200)
+    // Fully collapsed.
+    scrollView2.contentOffset = CGPoint(x: 0, y: 300)
+    fhv.trackingScrollView = scrollView1
+
+    let window = UIWindow()
+    window.addSubview(fhv)
+    window.makeKeyAndVisible()
+    window.layer.speed = 100000
+    CATransaction.flush()
+
+    let didChangeAnimatedExpectation = expectation(description: "didChangeAnimated")
+    let mockDelegate =
+      MockMDCFlexibleHeaderViewAnimationDelegate(didChangeAnimatedExpectation: didChangeAnimatedExpectation,
+                                                 didChangeNotAnimatedExpectation: nil,
+                                                 didCompleteExpectation: nil)
+    fhv.animationDelegate = mockDelegate
+
+    // When
+    fhv.trackingScrollView = scrollView2
+
+    // Then
+    wait(for: [didChangeAnimatedExpectation], timeout: 0.1)
   }
 }

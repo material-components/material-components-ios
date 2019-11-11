@@ -230,6 +230,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   snackbarView.accessibilityViewIsModal =
       self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
+  if (message.snackbarMessageWillPresentBlock) {
+    message.snackbarMessageWillPresentBlock(message, snackbarView);
+  }
   self.currentSnackbar = snackbarView;
   self.overlayView.accessibilityViewIsModal = snackbarView.accessibilityViewIsModal;
   self.overlayView.hidden = NO;
@@ -241,7 +244,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if (snackbarView.accessibilityViewIsModal ||
+              if (snackbarView.accessibilityViewIsModal || message.focusOnShow ||
                   ![self isSnackbarTransient:snackbarView]) {
                 UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
                                                 snackbarView);

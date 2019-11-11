@@ -16,55 +16,39 @@
 
 #import <UIKit/UIKit.h>
 
-#import "../../src/ContainedInputView/private/MDCTextControl.h"
-#import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
-#import "MDCTextControlSnapshotTestHelpers.h"
-#import "MaterialTextFields+ContainedInputView.h"
+#import "../../src/private/MDCTextControl.h"
+#import "MaterialTextControls.h"
+#import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
+#import "supplemental/MDCTextControlSnapshotTestHelpers.h"
 
-@interface MDCFilledTextFieldTestsSnapshotTests : MDCSnapshotTestCase
-@property(strong, nonatomic) MDCFilledTextField *textField;
+@interface MDCBaseTextFieldTestsSnapshotTests : MDCSnapshotTestCase
+@property(strong, nonatomic) MDCBaseTextField *textField;
 @property(nonatomic, assign) BOOL areAnimationsEnabled;
 @end
 
-@implementation MDCFilledTextFieldTestsSnapshotTests
+@implementation MDCBaseTextFieldTestsSnapshotTests
 
 - (void)setUp {
   [super setUp];
 
   self.areAnimationsEnabled = UIView.areAnimationsEnabled;
   [UIView setAnimationsEnabled:NO];
-  self.textField = [self createFilledTextFieldInKeyWindow];
+  self.textField = [MDCBaseTextFieldTestsSnapshotTestHelpers createBaseTextField];
+
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-
-  //    self.recordMode = YES;
+  //      self.recordMode = YES;
 }
 
 - (void)tearDown {
   [super tearDown];
-  [self.textField removeFromSuperview];
+  [MDCTextControlSnapshotTestHelpers
+      removeTextControlFromKeyWindow:(UIView<MDCTextControl> *)self.textField];
   self.textField = nil;
   [UIView setAnimationsEnabled:self.areAnimationsEnabled];
 }
 
-- (MDCFilledTextField *)createFilledTextFieldInKeyWindow {
-  MDCFilledTextField *textField =
-      [[MDCFilledTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
-  textField.animationDuration = 0;
-
-  // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,
-  // at least locally.
-  UIView *dummyInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-  textField.inputView = dummyInputView;
-
-  // Add the textfield to the window so it's part of a valid view hierarchy and things like
-  // `-becomeFirstResponder` work.
-  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-  [keyWindow addSubview:textField];
-  return textField;
-}
-
-- (void)validateTextField:(MDCFilledTextField *)textField {
+- (void)validateTextField:(MDCBaseTextField *)textField {
   [MDCTextControlSnapshotTestHelpers validateTextControl:(UIView<MDCTextControl> *)textField
                                             withTestCase:self];
 }
@@ -73,7 +57,7 @@
 
 - (void)testTextFieldWithText {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithText:textField];
@@ -84,7 +68,7 @@
 
 - (void)testTextFieldWithLeadingView {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithLeadingView:textField];
@@ -95,7 +79,7 @@
 
 - (void)testTextFieldWithLeadingViewWhileEditing {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -107,7 +91,7 @@
 
 - (void)testTextFieldWithTrailingView {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers configureTextFieldWithTrailingViewAndText:textField];
@@ -118,7 +102,7 @@
 
 - (void)testTextFieldWithLeadingViewAndTrailingView {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -130,7 +114,7 @@
 
 - (void)testTextFieldWithVisibleClearButton {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -142,7 +126,7 @@
 
 - (void)testFloatingLabelWithCustomColorWhileEditing {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -154,7 +138,7 @@
 
 - (void)testDisabledTextField {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -166,7 +150,7 @@
 
 - (void)testEditingTextFieldWithVisiblePlaceholder {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -178,7 +162,7 @@
 
 - (void)testTextFieldWithAssistiveLabelText {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -190,7 +174,7 @@
 
 - (void)testTextFieldWithAssistiveLabelTextWhileEditing {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
@@ -202,7 +186,7 @@
 
 - (void)testTextFieldWithAssistiveLabelTextWhileDisabled {
   // Given
-  MDCFilledTextField *textField = self.textField;
+  MDCBaseTextField *textField = self.textField;
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers

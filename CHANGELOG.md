@@ -1,3 +1,166 @@
+# 94.0.0
+
+This major release adds a new configuration block to MDCSnackBarMessage and moves the currently in development MDCTextControl based TextFields from the TextFields component directory to their own TextControls directory. While there are no API changes associated with this move, it does have the potential to break anyone importing these textfields from their old location, hence the major version bump.
+
+## New features
+
+MDCSnackBarMessage now provides a block that is called before the message is presented. This allows clients to perform last minute configurations.
+
+**Objective-C**
+
+```objc
+MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+message.snackbarMessageWillPresentBlock =
+  ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
+      // Configure snackbar message.
+    };
+[MDCSnackbarManager showMessage:message];
+```
+
+**Swift**
+
+```swift
+let message = MDCSnackbarMessage()
+message.snackbarMessageWillPresentBlock = { snackbarMessage, messageView in
+  // Configure snackbar message.
+}
+MDCSnackbarManager.showMessage(message)
+```
+
+## Component changes
+
+### TextControls
+
+* [Move new TextFields into TextControls directory. (#8726)](https://github.com/material-components/material-components-ios/commit/02f9c9f01d049305a8f79eb2afd16bff5caf71d2) (Andrew Overton)
+
+### Snackbar
+
+* [Fix MDCSnackbarMessage convenience class methods (#8746)](https://github.com/material-components/material-components-ios/commit/f2821ce66ae3cb7360dd14f9dfdd8d80e01b2613) (Yarden Eitan)
+
+* [Fix MDCSnackbarMessage convenience class methods (#8751)](https://github.com/material-components/material-components-ios/commit/e5a94aea1fe5c7f5d96ae11984c36416c641e1d5) (Yarden Eitan)
+
+---
+
+# 93.5.0
+
+This minor release introduces new APIs for Slider. The track height and the
+visibility of track tick marks can be customized.
+
+## New features
+
+`MDCSlider` allows customization of the track height.
+
+**Objective-C**
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+slider.trackHeight = 4;
+```
+
+**Swift**
+
+```swift
+let slider = MDCSlider()
+slider.trackHeight = 4
+```
+
+`MDCSlider` also allows controlling the display of the track tick marks for
+continuous and discrete sliders.  Setting this property disables the automatic
+conversion of a slider to "discrete" when setting `numberOfDiscreteValues`.
+
+**Objective-C**
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+// Track tick marks are always shown. Remains a continuous slider.
+slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+slider.minimumValue = 0;
+slider.maximumValue = 100;
+// Show tick marks at 0, 10, 20, ..., 100
+slider.numberOfDiscreteValues = 11;
+```
+
+**Swift**
+
+```swift
+let slider = MDCSlider()
+// Track tick marks are always shown. Remains a continuous slider.
+slider.trackTickVisibility = .always
+slider.minimumValue = 0;
+slider.maximumValue = 100;
+// Show tick marks at 0, 10, 20, ..., 100
+slider.numberOfDiscreteValues = 11;
+```
+
+## Component changes
+
+### ThumbTrack
+
+* [Discrete dots scale slowly with track height. (#8744)](https://github.com/material-components/material-components-ios/commit/8209a86761f81fe9e3b36689608f53cebcff3d40) (Robert Moore)
+
+### Multi-component changes
+
+* [Add API to control showing tick marks. (#8743)](https://github.com/material-components/material-components-ios/commit/826779f2a470a708a95ddfdcba491fe7dd47e5b4) (Robert Moore)
+* [Add trackHeight property (#8740)](https://github.com/material-components/material-components-ios/commit/f0647ad0fe20d586599a7c2170982d0d8b645230) (Bryan Oltman)
+* [Continuous sliders show tick marks. (#8745)](https://github.com/material-components/material-components-ios/commit/a742a6132e5aa69ce9eec6dcfc2a74bd0c93765e) (Robert Moore)
+
+---
+
+# 93.4.0
+
+This minor release adds a new Filled and Outlined TextFields that will eventually replace MDCTextField's filled and outlined controllers. Additionally, it fixes dynamic type issues for multiple components, and removes deprecated themers.
+
+## New features
+
+### TextFields
+
+* [Add filled textfields (#8674)](https://github.com/material-components/material-components-ios/commit/f2e5fe4fbd17735858b1897765ce6c4f55147cb9) (Andrew Overton)
+* [Add outlined textfield (#8705)](https://github.com/material-components/material-components-ios/commit/cfc699b1992c56e2e67cfc082e568863ac80da18) (Andrew Overton)
+
+## Component changes
+
+### ActivityIndicator
+
+* [Delete MDCActivityIndicatorColorThemer. (#8694)](https://github.com/material-components/material-components-ios/commit/79fb766e0158628aec39bdf81e963edb317f6f3d) (featherless)
+
+### Dialogs
+
+* [Title supports Dynamic Type. (#8691)](https://github.com/material-components/material-components-ios/commit/8c445f613865ae9c29e5ec6ab1b11435c1e2b34c) (Robert Moore)
+
+### TextFields
+
+* [Add animation duration property to properly snapshot test MDCBaseTextField's subclasses (#8693)](https://github.com/material-components/material-components-ios/commit/2ea2f012074a4eb93d6f5613591f832445662939) (Andrew Overton)
+* [Change base textfield floating label scale factor. (#8704)](https://github.com/material-components/material-components-ios/commit/cc5d2c15047bb02dcf74b666aee354dcd7b981b6) (Andrew Overton)
+* [Change label animation again (#8703)](https://github.com/material-components/material-components-ios/commit/4fb5f96a4429c1f90629d208a2a1565a1b4f3bd7) (Andrew Overton)
+* [Fix minor animation glitch when opening example (#8716)](https://github.com/material-components/material-components-ios/commit/918dd0b0423964f09843e2ea8e08ae494ab049f1) (Andrew Overton)
+* [Refactor label animation (#8700)](https://github.com/material-components/material-components-ios/commit/64ff7086dc40bc230d947fea4e359c0d4929d59e) (Andrew Overton)
+* [Refactor snapshots in preparation for more types of textfields (#8670)](https://github.com/material-components/material-components-ios/commit/f5e955d85498e26855285dccf989b32079b7769f) (Andrew Overton)
+* [Capture snapshots outside of view (#8718)](https://github.com/material-components/material-components-ios/commit/dec1670f8b34b75f2d78b27e460a72567326cb07) (Andrew Overton)
+* [Add safety return to new multiline logic to make i… (#8695)](https://github.com/material-components/material-components-ios/commit/5707f863a1bb4f036b25600f9a8d0856c274fa5e) (Yarden Eitan)
+* [Bring back original textInsets API for clients sub… (#8688)](https://github.com/material-components/material-components-ios/commit/8dbebd1c6ca99e75e0480c5e16c87f6aa3a7939a) (Yarden Eitan)
+
+### FlexibleHeader
+
+* [Add behavioral flag for animating shadow layer frames when tracking scroll view is changed (#8715)](https://github.com/material-components/material-components-ios/commit/06f9328350646cf7215e952e6cd22333e1c0eb1e) (featherless)
+
+* [Expose an animation delegate on MDCFlexibleHeaderView. (#8712)](https://github.com/material-components/material-components-ios/commit/bd39f8483b750816bcfae30e2906aad782cc9665) (featherless)
+* [Move all supplemental code into the examples. (#8690)](https://github.com/material-components/material-components-ios/commit/f758365a6e931a401b756b396679bfb08cf8ca35) (featherless)
+
+### Slider
+
+* [Add snapshot tests for setting preferredFont with adju… (#8645)](https://github.com/material-components/material-components-ios/commit/1b7b249805276bd8aab0c0331a433b2364d7151f) (Yarden Eitan)
+
+### ThumbTrack
+
+* [[ThumbTrack] Add Font API and Dynamic Type support (#8708)](https://github.com/material-components/material-components-ios/commit/8f9dd740d07b880d038ab6a6daa8dfe253070536) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Deprecate the ShapeThemer extension. (#8697)](https://github.com/material-components/material-components-ios/commit/8b9f0bbea6165c14ceaf76c9debe92cf669e758f) (featherless)
+
+
+---
+
 # 93.3.0
 
 This minor release adds two new APIs to FlexibleHeader for contexts involving multiple tracking

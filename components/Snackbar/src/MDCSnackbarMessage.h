@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCSnackbarMessageAction;
+@class MDCSnackbarMessageView;
 
 /**
  Called when a message is finished displaying, regardless of whether or not buttons were tapped.
@@ -70,7 +71,7 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 + (nonnull instancetype)messageWithAttributedText:(nonnull NSAttributedString *)attributedText;
 
 /**
- Use the older legacy version of Snackbar. Default is YES.
+ Use the older legacy version of Snackbar. Default is NO.
  */
 @property(class, nonatomic, assign) BOOL usesLegacySnackbar;
 
@@ -157,6 +158,25 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ Whether to focus on the Snackbar message when VoiceOver is enabled.
+ The message is announced but not focused when set to NO.
+
+ Note: Setting this to YES will ensure the entire snackbar message is read during VoiceOver, and
+ that the message persists until an action is made on the message.
+
+ Defaults to NO.
+ */
+@property(nonatomic) BOOL focusOnShow;
+
+/**
+ A block that is invoked when the corresponding @c MDCSnackbarMessageView of the @c
+ MDCSnackbarMessage instance will be presented. Use this to customize @c MDCSnackbarMessageView
+ before presentation.
+ */
+@property(nonatomic, copy, nullable) void (^snackbarMessageWillPresentBlock)
+    (MDCSnackbarMessage *_Nonnull message, MDCSnackbarMessageView *_Nonnull messageView);
 
 @end
 
