@@ -174,7 +174,6 @@ static NSString *const exampleSuperLongText =
   }
   self.bannerView.frame =
       CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
-  [self.bannerView setNeedsUpdateConstraints];
 }
 
 #pragma mark - Internal helpers
