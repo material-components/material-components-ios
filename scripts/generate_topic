@@ -100,8 +100,18 @@ echo "Expanding all articles inline..."
 
 # Expand all files inline
 IFS='' # Don't trim whitespace from lines
-source $(dirname "$0")/expand_readme
-expand_inline_references $TMP_README_PATH $TMP_EXPANDED_README_PATH $COMPONENT_PATH docs $COMPONENT_NAME
+cat "$TMP_README_PATH" | while read line; do
+  if [[ $(echo $line | grep -e "^- \[.*\]\(.*\)$") ]]; then
+    file=$(echo $line | cut -d'(' -f2 | cut -d')' -f1)
+    file_path="$COMPONENT_PATH/docs/$file"
+    echo "<!-- Extracted from docs/$file -->" >> "$TMP_EXPANDED_README_PATH"
+    echo >> "$TMP_EXPANDED_README_PATH"
+    cat "$file_path" | sed "s/<#ComponentName#>/$COMPONENT_NAME/" >> "$TMP_EXPANDED_README_PATH"
+    echo >> "$TMP_EXPANDED_README_PATH" # Ensure that there is always a newline between files.
+  else
+    echo "$line" >> "$TMP_EXPANDED_README_PATH"
+  fi
+done
 
 rm "$TMP_README_PATH"
 

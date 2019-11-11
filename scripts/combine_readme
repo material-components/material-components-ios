@@ -32,32 +32,6 @@ if [ "$#" -eq 0 ]; then
     echo "No arguments supplied"
 fi
 
-# Expand all files inline
-# Args: $1 - tempoaray output path (ie: #$TMP_README_PATH or TMP_TOPIC_PATH)
-#       $2 - topic doc path (ie: $COMPONENT_PATH/docs or $TOPIC_PATH)
-#				$3 - expanded topic path (ie: $TMP_EXPANDED_README_PATH or $TMP_EXPANDED_TOPIC_PATH)
-# Example Usage: expand_inline_references $TMP_TOPIC_PATH 
-expand_inline_references() {
-
-  tmp_output_path="$1"			# $TMP_TOPIC_PATH
-  topic_doc_path="$2" 			# $TOPIC_PATH
-  expanded_topic_path="$3"	# $TMP_EXPANDED_TOPIC_PATH
-	IFS='' # Don't trim whitespace from lines
-	cat "$tmp_output_path" | while read line; do
-	  if [[ $(echo $line | grep -e "^- \[.*\]\(.*\)$") ]]; then
-	    file=$(echo $line | cut -d'(' -f2 | cut -d')' -f1)
-	    file_path="$topic_doc_path/$file"
-	    echo "<!-- Extracted from $topic_doc_path/$file -->" >> "$expanded_topic_path"
-	    echo >> "$expanded_topic_path"
-	    cat "$file_path" >> "$expanded_topic_path"
-	    echo >> "$expanded_topic_path" # Ensure that there is always a newline between files.
-	  else
-	    echo "$line" >> "$expanded_topic_path"
-	  fi
-	done
-
-}
-
 TOPIC="$1"
 DOC_PATH=$(echo $2 | sed 's:/*$::')    #Remove trailing slash if exists
 TOPIC_PATH="$DOC_PATH/$TOPIC"
@@ -96,7 +70,9 @@ cat "$TOPIC_PATH/$TEMPLATE_FILE" >> "$TMP_TOPIC_PATH"
 
 echo "Expanding all articles inline..."
 
-expand_inline_references $TMP_TOPIC_PATH $TOPIC_PATH $TMP_EXPANDED_TOPIC_PATH
+IFS='' # Don't trim whitespace from lines
+source $(dirname "$0")/expand_readme
+expand_inline_references $TMP_TOPIC_PATH $TMP_EXPANDED_TOPIC_PATH $TOPIC_PATH
 
 rm -f $TMP_TOPIC_PATH
 

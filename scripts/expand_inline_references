@@ -1,0 +1,59 @@
+#!/bin/bash -e
+#
+# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Expand inline all files references by a readme
+#
+# Args: $1 - tempoaray output path
+#       $2 - topic doc path
+#				$3 - expanded topic path
+#
+# Usage Examples (from generate_readme and combine_readme): 
+#   expand_inline_references $TMP_README_PATH $TMP_EXPANDED_README_PATH $COMPONENT_PATH docs $COMPONENT_NAME
+#		expand_inline_references $TMP_TOPIC_PATH $TMP_EXPANDED_TOPIC_PATH $TOPIC_PATH
+#
+# Note: Make sure to setup whitespace trimming if needed (IFS='')
+#
+expand_inline_references() {
+
+  tmp_output_path="$1"
+  expanded_topic_path="$2"
+	topic_doc_path="$3/$4"
+	doc_path="$4"
+	component_name="$5"
+	echo "DEBUG: $component_name"
+	if [[ -z "$4" ]]; then
+		topic_doc_path="$3"
+		doc_path=$topic_doc_path
+	fi
+  IFS='' # Don't trim whitespace from lines
+	cat "$tmp_output_path" | while read line; do
+	  if [[ $(echo $line | grep -e "^- \[.*\]\(.*\)$") ]]; then
+	    file=$(echo $line | cut -d'(' -f2 | cut -d')' -f1)
+	    file_path="$topic_doc_path/$file"
+	    echo "<!-- Extracted from $doc_path/$file -->" >> "$expanded_topic_path"
+	    echo >> "$expanded_topic_path"
+	    if [[ -z "$component_name" ]]; then
+		    cat "$file_path" >> "$expanded_topic_path"
+		   else
+		    cat "$file_path" | sed "s/<#ComponentName#>/$component_name/" >> "$expanded_topic_path"
+		   fi
+	    echo >> "$expanded_topic_path" # Ensure that there is always a newline between files.
+	  else
+	    echo "$line" >> "$expanded_topic_path"
+	  fi
+	done
+
+}
