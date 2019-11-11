@@ -680,7 +680,12 @@
   if (self.trailingAssistiveLabel.text.length > 0) {
     [accessibilityLabelComponents addObject:self.trailingAssistiveLabel.text];
   }
-  return [accessibilityLabelComponents componentsJoinedByString:@", "];
+
+  if (accessibilityLabelComponents.count > 0) {
+    return [accessibilityLabelComponents componentsJoinedByString:@", "];
+  }
+
+  return nil;
 }
 
 #pragma mark Color Accessors
