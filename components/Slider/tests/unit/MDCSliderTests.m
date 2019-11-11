@@ -188,7 +188,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 /**
- Explicit track tick visibility retains default behavior of @c snapsToValue.
+ Explicit track tick visibility retains default behavior of @c discrete.
  */
 - (void)testDiscreteValues2WithExplicitTickVisibilityRetainsValueSnapping {
   // Given
@@ -232,7 +232,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 /**
- Explicit track tick visibility retains default behavior of @c snapsToValue.
+ Explicit track tick visibility retains default behavior of @c discrete.
  */
 - (void)testDiscreteValues3WithExplicitTickVisibilityRetainsValueSnapping {
   // Given
