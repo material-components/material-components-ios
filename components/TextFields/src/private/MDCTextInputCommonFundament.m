@@ -206,7 +206,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     clearButton.inkStyle = MDCInkStyleUnbounded;
     clearButton.clipsToBounds = NO;
     clearButton.contentEdgeInsets = UIEdgeInsetsZero;
-    clearButton.layer.cornerRadius = MDCTextInputClearButtonImageSquareWidthHeight / 2.0f;
     _clearButton = clearButton;
   }
   _clearButton.translatesAutoresizingMaskIntoConstraints = NO;
