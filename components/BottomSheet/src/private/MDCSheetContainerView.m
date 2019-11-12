@@ -54,7 +54,11 @@ static const CGFloat kSheetBounceBuffer = 150;
                    scrollView:(UIScrollView *)scrollView {
   self = [super initWithFrame:frame];
   if (self) {
-    _sheetState = MDCSheetStatePreferred;
+    if (UIAccessibilityIsVoiceOverRunning()) {
+      _sheetState = MDCSheetStateExtended;
+    } else {
+      _sheetState = MDCSheetStatePreferred;
+    }
 
     // Don't set the frame yet because we're going to change the anchor point.
     _sheet = [[MDCDraggableView alloc] initWithFrame:CGRectZero scrollView:scrollView];
@@ -295,11 +299,7 @@ static const CGFloat kSheetBounceBuffer = 150;
   CGPoint targetPoint;
   switch (self.sheetState) {
     case MDCSheetStatePreferred:
-      if (UIAccessibilityIsVoiceOverRunning()) {
-        targetPoint = CGPointMake(midX, bottomY - [self maximumSheetHeight]);
-      } else {
-        targetPoint = CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
-      }
+      targetPoint = CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
       break;
     case MDCSheetStateExtended:
       targetPoint = CGPointMake(midX, bottomY - [self maximumSheetHeight]);
