@@ -80,18 +80,14 @@ mdc_unit_test_objc_library(
     deps = [
         ":ButtonBar",
         ":ColorThemer",
-        ":Theming",
         ":private",
     ],
 )
 
 mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    extra_srcs = native.glob([
-        "tests/unit/Theming/*.swift",
-    ]),
     deps = [
-        ":Theming",
+        ":ButtonBar",
         "//components/Typography",
     ],
 )
@@ -110,7 +106,6 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":ButtonBar",
-        ":Theming",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
@@ -131,17 +126,5 @@ mdc_extension_objc_library(
     deps = [
         ":ButtonBar",
         "//components/schemes/Typography",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "Theming",
-    deprecation = "ButtonBar is not intended to be themed as a standalone component." +
-                  " Please theme it via the AppBar component's Theming extension instead.",
-    deps = [
-        ":ButtonBar",
-        ":ColorThemer",
-        ":TypographyThemer",
-        "//components/schemes/Container",
     ],
 )
