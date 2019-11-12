@@ -34,9 +34,6 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = [":test_targets"],
-    deps = [
-        "//components/Buttons",
-    ],
 )
 
 package_group(
@@ -54,6 +51,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/AnimationTiming",
+        "//components/Buttons",
         "//components/Elevation",
         "//components/Palettes",
         "//components/Typography",
