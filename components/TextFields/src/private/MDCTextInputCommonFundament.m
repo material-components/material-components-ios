@@ -201,7 +201,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     clearButton.backgroundColor = UIColor.clearColor;
     // This ink color was taken from the MDCButton+MaterialTheming behavior, with UIColor.blackColor
     // taken from the onSurfaceColor value of the MDCColorSchemeDefaultsMaterial201907 color scheme.
-    clearButton.inkColor = [UIColor.blackColor colorWithAlphaComponent:0.12];
+    clearButton.inkColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.12];
     clearButton.enableRippleBehavior = YES;
     clearButton.inkStyle = MDCInkStyleUnbounded;
     clearButton.clipsToBounds = NO;
