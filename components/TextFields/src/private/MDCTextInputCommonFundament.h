@@ -13,12 +13,16 @@
 // limitations under the License.
 
 #import "MDCTextInput.h"
+#import "MDCButton.h"
 
 extern const CGFloat MDCTextInputBorderRadius;
 extern const CGFloat MDCTextInputFullPadding;
 extern const CGFloat MDCTextInputHalfPadding;
 
 UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
+
+@interface MDCTextInputClearButton : MDCButton
+@end
 
 /** A controller for common traits shared by text inputs. */
 @interface MDCTextInputCommonFundament : NSObject <MDCTextInput, NSCopying>

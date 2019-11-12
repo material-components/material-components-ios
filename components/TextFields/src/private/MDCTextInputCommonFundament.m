@@ -39,6 +39,7 @@ static const CGFloat MDCTextInputHintTextOpacity = (CGFloat)0.54;
 static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2;
 const CGFloat MDCTextInputFullPadding = 16;
 const CGFloat MDCTextInputHalfPadding = 8;
+const CGFloat MDCTextInputClearButtonTouchTargetSize = 48;
 
 UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette bluePalette].accent700;
@@ -55,6 +56,27 @@ static inline UIColor *MDCTextInputTextColor() {
 static inline UIColor *MDCTextInputUnderlineColor() {
   return [UIColor lightGrayColor];
 }
+
+@implementation MDCTextInputClearButton
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  CGFloat width = CGRectGetWidth(self.bounds);
+  CGFloat height = CGRectGetHeight(self.bounds);
+  CGFloat verticalInset = MIN(0, -(MDCTextInputClearButtonTouchTargetSize - height) / 2);
+  CGFloat horizontalInset = MIN(0, -(MDCTextInputClearButtonTouchTargetSize - width) / 2);
+  self.hitAreaInsets =
+      UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+  if (!UIEdgeInsetsEqualToEdgeInsets(self.hitAreaInsets, UIEdgeInsetsZero)) {
+    return CGRectContainsPoint(
+        UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), self.hitAreaInsets), point);
+  }
+  return [super pointInside:point withEvent:event];
+}
+@end
 
 @interface MDCTextInputCommonFundament () {
   BOOL _mdc_adjustsFontForContentSizeCategory;
@@ -197,7 +219,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (!_clearButton) {
     // The following MDCButton configuration creates an MDCButton that mimics a UIButton with a
     // "clear" icon and adds a ripple effect.
-    MDCButton *clearButton = [[MDCButton alloc] init];
+    MDCTextInputClearButton *clearButton = [[MDCTextInputClearButton alloc] init];
     clearButton.backgroundColor = UIColor.clearColor;
     // This ink color was taken from the MDCButton+MaterialTheming behavior, with UIColor.blackColor
     // taken from the onSurfaceColor value of the MDCColorSchemeDefaultsMaterial201907 color scheme.
