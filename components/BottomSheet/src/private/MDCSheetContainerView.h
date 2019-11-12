@@ -29,7 +29,6 @@
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder NS_UNAVAILABLE;
-- (void)updateSheetState;
 
 @end
 
