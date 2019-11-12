@@ -94,7 +94,8 @@
   MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
   CGFloat navigationBarHeight =
       [appBarController.navigationBar sizeThatFits:appBarController.headerView.frame.size].height;
-  UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
+  CGFloat bottomBarHeight = 200;
+  UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, bottomBarHeight)];
   appBarController.headerStackView.bottomBar = bottomBar;
 
   // When
@@ -104,7 +105,7 @@
   CGFloat minHeight = appBarController.headerView.minimumHeight;
   CGFloat maxHeight = appBarController.headerView.maximumHeight;
   XCTAssertEqual(minHeight, maxHeight);
-  XCTAssertEqualWithAccuracy(minHeight, 200 + navigationBarHeight, 0.01);
+  XCTAssertEqualWithAccuracy(minHeight, bottomBarHeight + navigationBarHeight, 0.01);
 }
 
 @end

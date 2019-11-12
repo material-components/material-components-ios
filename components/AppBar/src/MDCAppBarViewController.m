@@ -292,9 +292,10 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)adjustHeightBasedOnHeaderStackView {
   CGFloat heightSum = 0;
-  heightSum += [self.headerStackView.topBar sizeThatFits:self.view.frame.size].height;
-  heightSum += [self.headerStackView.bottomBar sizeThatFits:self.view.frame.size].height;
-  self.headerView.minimumHeight = self.headerView.maximumHeight = heightSum;
+  heightSum += [self.headerStackView.topBar sizeThatFits:self.view.bounds.size].height;
+  heightSum += [self.headerStackView.bottomBar sizeThatFits:self.view.bounds.size].height;
+  self.headerView.minimumHeight = heightSum;
+  self.headerView.maximumHeight = heightSum;
 }
 
 @end
