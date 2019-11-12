@@ -14,6 +14,12 @@
 
 #import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
+#import "MaterialButtons.h"
+#import "MaterialRipple.h"
+
+@interface MDCButton (MDCAbstractTextFieldSnapshotTests)
+@property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
+@end
 
 @implementation MDCAbstractTextFieldSnapshotTests
 
@@ -654,6 +660,23 @@
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
   self.textField.enabled = NO;
+  [self invokeWillGenerateSnapshotAndVerify];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testClearButtonHasRipple {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textField.text = self.longInputText;
+  MDCButton *clearButton = (MDCButton *)self.textField.clearButton;
+  [clearButton.rippleView beginRippleTouchDownAtPoint:clearButton.center
+                                             animated:NO
+                                           completion:nil];
   [self invokeWillGenerateSnapshotAndVerify];
 
   // Then
