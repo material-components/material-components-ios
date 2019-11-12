@@ -120,6 +120,7 @@ static const CGFloat kSheetBounceBuffer = 150;
     // Adjust the sheet height as necessary for VO.
     [self animatePaneWithInitialVelocity:CGPointZero];
   }
+  [self updateSheetState];
 }
 
 #pragma mark UIView
@@ -236,19 +237,20 @@ static const CGFloat kSheetBounceBuffer = 150;
 }
 
 - (void)updateSheetState {
-  CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
-  self.sheetState = (currentSheetHeight >= [self maximumSheetHeight] ? MDCSheetStateExtended
-                                                                     : MDCSheetStatePreferred);
+  if (UIAccessibilityIsVoiceOverRunning()) {
+    // Always return the full height when VO is running, so that the entire content is on-screen
+    // and accessibile.
+    self.sheetState = MDCSheetStateExtended;
+  } else {
+    CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
+    self.sheetState = (currentSheetHeight >= [self maximumSheetHeight] ? MDCSheetStateExtended
+                                                                       : MDCSheetStatePreferred);
+  }
 }
 
 // Returns |preferredSheetHeight|, truncated as necessary, so that it never exceeds the height of
 // the view.
 - (CGFloat)truncatedPreferredSheetHeight {
-  // Always return the full height when VO is running, so that the entire content is on-screen
-  // and accessibile.
-  if (UIAccessibilityIsVoiceOverRunning()) {
-    return [self maximumSheetHeight];
-  }
   return MIN(self.preferredSheetHeight, [self maximumSheetHeight]);
 }
 
@@ -293,7 +295,11 @@ static const CGFloat kSheetBounceBuffer = 150;
   CGPoint targetPoint;
   switch (self.sheetState) {
     case MDCSheetStatePreferred:
-      targetPoint = CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
+      if (UIAccessibilityIsVoiceOverRunning()) {
+        targetPoint = CGPointMake(midX, bottomY - [self maximumSheetHeight]);
+      } else {
+        targetPoint = CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
+      }
       break;
     case MDCSheetStateExtended:
       targetPoint = CGPointMake(midX, bottomY - [self maximumSheetHeight]);

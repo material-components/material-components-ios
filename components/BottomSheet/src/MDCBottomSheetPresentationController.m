@@ -142,6 +142,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
+  [self.sheetView updateSheetState];
   if (!completed) {
     [_dimmingView removeFromSuperview];
   }
