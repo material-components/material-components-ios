@@ -201,7 +201,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 
 #### `-accessibilityActivate`
 
-MDCSlider closely resembles what UISlider does but it's not an exact match. On an
+MDCSlider's behavior is very similar to that of UISlider, but it's not exactly the same. On an
 `accessibilityActivate` event, the value moves one sixth of the amount between the current value and the 
 midpoint value.
 
