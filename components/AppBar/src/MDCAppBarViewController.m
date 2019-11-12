@@ -149,6 +149,14 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   return backBarButtonItem;
 }
 
+- (void)setShouldAdjustHeightBasedOnHeaderStackView:(BOOL)shouldAdjustHeightBasedOnHeaderStackView {
+  _shouldAdjustHeightBasedOnHeaderStackView = shouldAdjustHeightBasedOnHeaderStackView;
+  if (shouldAdjustHeightBasedOnHeaderStackView) {
+    self.headerView.minMaxHeightIncludesSafeArea = NO;
+    [self adjustHeightBasedOnHeaderStackView];
+  }
+}
+
 - (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
   [super setInferTopSafeAreaInsetFromViewController:inferTopSafeAreaInsetFromViewController];
 
@@ -242,6 +250,10 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
     // height to make it smaller when the status bar is hidden.
     _verticalConstraint.constant = MDCDeviceTopSafeAreaInset();
   }
+
+  if (self.shouldAdjustHeightBasedOnHeaderStackView) {
+    [self adjustHeightBasedOnHeaderStackView];
+  }
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
@@ -274,6 +286,16 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   } else {
     [pvc dismissViewControllerAnimated:YES completion:nil];
   }
+}
+
+#pragma mark - Private
+
+- (void)adjustHeightBasedOnHeaderStackView {
+  CGFloat heightSum = 0;
+  heightSum += [self.headerStackView.topBar sizeThatFits:self.view.bounds.size].height;
+  heightSum += [self.headerStackView.bottomBar sizeThatFits:self.view.bounds.size].height;
+  self.headerView.minimumHeight = heightSum;
+  self.headerView.maximumHeight = heightSum;
 }
 
 @end
