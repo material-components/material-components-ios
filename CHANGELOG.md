@@ -1,6 +1,17 @@
 # 94.1.0
 
-This minor release intoduces new API to FlexibleHeader, SnackBar and Ripple. It also includes bug fixes for multiple components.
+This minor release intoduces new APIs to FlexibleHeader and Ripple, and updates MDCSnackbar appearance from legacy to 2018. The release also includes bug fixes for multiple components.
+
+## New Features
+
+### FlexibleHeader
+
+* [Add a flexibleHeaderView:didChangeTrackingScrollViewAnimated: event to MDCFlexibleHeaderViewAnimationDelegate. (#8757)](https://github.com/material-components/material-components-ios/commit/e3aa7eace2a1528110fad59ef9dce2d745e790c6) (featherless)
+* [Add an animateWithAnimations:completion: API. (#8739)](https://github.com/material-components/material-components-ios/commit/1bcdfc77ca2a5df0034c3ae038193df73859b911) (featherless)
+
+### Ripple
+
+* [Improve MDCRippleTouchController (#8631)](https://github.com/material-components/material-components-ios/commit/3b4c9d170a9f1d9760d7da147f30832bc1e78398) (Michael Schneider)
 
 ## Component changes
 
@@ -15,32 +26,14 @@ This minor release intoduces new API to FlexibleHeader, SnackBar and Ripple. It 
 * [Use lastBaseLineAnchor to align buttons if they are on the same line. (#8752)](https://github.com/material-components/material-components-ios/commit/628b2ecb9020b0287f44b384b93946977fd07b8a) (Wenyu Zhang)
 * [stop updating custom constraints before bound size is set. (#8749)](https://github.com/material-components/material-components-ios/commit/35188a5d5cc81d70ae059fbf9b0b12b00adbac11) (Wenyu Zhang)
 
-### FlexibleHeader
-
-* [Add a flexibleHeaderView:didChangeTrackingScrollViewAnimated: event to MDCFlexibleHeaderViewAnimationDelegate. (#8757)](https://github.com/material-components/material-components-ios/commit/e3aa7eace2a1528110fad59ef9dce2d745e790c6) (featherless)
-* [Add an animateWithAnimations:completion: API. (#8739)](https://github.com/material-components/material-components-ios/commit/1bcdfc77ca2a5df0034c3ae038193df73859b911) (featherless)
-
-### Ripple
-
-* [Improve MDCRippleTouchController (#8631)](https://github.com/material-components/material-components-ios/commit/3b4c9d170a9f1d9760d7da147f30832bc1e78398) (Michael Schneider)
-
 ### Snackbar
 
-* [Add focusOnShow API (#8746)](https://github.com/material-components/material-components-ios/commit/f2821ce66ae3cb7360dd14f9dfdd8d80e01b2613) (Yarden Eitan)
-* [Add will present block to allow customization of sna… (#8751)](https://github.com/material-components/material-components-ios/commit/e5a94aea1fe5c7f5d96ae11984c36416c641e1d5) (Yarden Eitan)
 * [Update documentation on default. #8736](https://github.com/material-components/material-components-ios/commit/5516c5f6c9a8267020369eb5c55eaf4225b9d679) (Yarden Eitan)
 
 ### TextFields
 
 * [Capture snapshots outside of view (#8718)](https://github.com/material-components/material-components-ios/commit/dec1670f8b34b75f2d78b27e460a72567326cb07) (Andrew Overton)
 
-## Multi-component changes
-
-* [Add API to control showing tick marks. (#8743)](https://github.com/material-components/material-components-ios/commit/61f901fdc7f4552ba936d44f489b494cc4642f8d) (Robert Moore)
-* [Add trackHeight property (#8740)](https://github.com/material-components/material-components-ios/commit/d6d13cdface5a5b5019b2d597fda64ff8ec2ba98) (Bryan Oltman)
-* [Continuous sliders show tick marks. (#8745)](https://github.com/material-components/material-components-ios/commit/5d6941b61d55ee8e9ea65f23c3eaa894a9a32aa7) (Robert Moore)
-* [Discrete dots scale slowly with track height. (#8744)](https://github.com/material-components/material-components-ios/commit/ed7b654e4accb273af8197ecc4595a8d9b096b34) (Robert Moore)
-* [Move new TextFields into TextControls directory (#8726)](https://github.com/material-components/material-components-ios/commit/02f9c9f01d049305a8f79eb2afd16bff5caf71d2) (Andrew Overton)
 
 ---
 
