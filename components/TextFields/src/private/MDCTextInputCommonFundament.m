@@ -14,6 +14,7 @@
 
 #import "MDCTextInputCommonFundament.h"
 
+#import "MDCButton.h"
 #import "MDCMultilineTextField.h"
 #import "MDCMultilineTextInputDelegate.h"
 #import "MDCTextField.h"
@@ -194,7 +195,19 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setupClearButton {
   if (!_clearButton) {
-    _clearButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    // The following MDCButton configuration creates an MDCButton that mimics a UIButton with a
+    // "clear" icon and adds a ripple effect.
+    MDCButton *clearButton = [[MDCButton alloc] init];
+    clearButton.backgroundColor = UIColor.clearColor;
+    // This ink color was taken from the MDCButton+MaterialTheming behavior, with UIColor.blackColor
+    // taken from the onSurfaceColor value of the MDCColorSchemeDefaultsMaterial201907 color scheme.
+    clearButton.inkColor = [UIColor.blackColor colorWithAlphaComponent:0.12];
+    clearButton.enableRippleBehavior = YES;
+    clearButton.inkStyle = MDCInkStyleUnbounded;
+    clearButton.clipsToBounds = NO;
+    clearButton.contentEdgeInsets = UIEdgeInsetsZero;
+    clearButton.layer.cornerRadius = MDCTextInputClearButtonImageSquareWidthHeight / 2.0f;
+    _clearButton = clearButton;
   }
   _clearButton.translatesAutoresizingMaskIntoConstraints = NO;
   [_clearButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
