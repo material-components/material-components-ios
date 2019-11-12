@@ -673,12 +673,6 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
         CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height;
     self.contentScrollView.frame = contentScrollViewRect;
   }
-
-  CGRect messageFrameInWindow = [self convertRect:self.messageLabel.frame toView:self.window];
-  CGRect contentScrollFrameInWindow = [self convertRect:self.contentScrollView.frame
-                                                 toView:self.window];
-  CGRect visibleMessageRect = CGRectIntersection(messageFrameInWindow, contentScrollFrameInWindow);
-  self.messageLabel.accessibilityFrame = visibleMessageRect;
 }
 
 #pragma mark - Dynamic Type
