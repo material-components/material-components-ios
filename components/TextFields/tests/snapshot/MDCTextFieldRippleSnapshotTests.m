@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextFieldSnapshotTestCase.h"
-#import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialButtons.h"
 #import "MaterialRipple.h"
-#import "SnapshotFakeMDCTextField.h"
+#import "supplemental/MDCTextFieldSnapshotTestCase.h"
+#import "supplemental/MDCTextFieldSnapshotTestsStrings.h"
+#import "supplemental/SnapshotFakeMDCTextField.h"
 
 @interface MDCButton (MDCAbstractTextFieldSnapshotTests)
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
