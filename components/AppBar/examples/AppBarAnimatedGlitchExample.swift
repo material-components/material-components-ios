@@ -186,7 +186,7 @@ extension AppBarAnimatedJumpExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }
