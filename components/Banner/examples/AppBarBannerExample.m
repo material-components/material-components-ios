@@ -14,11 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+Theming.h"
-#import "MaterialBanner.h"
+#import "MaterialAppBar.h"
 #import "MaterialBanner+Theming.h"
-#import "MDCFlexibleHeaderView+canAlwaysExpandToMaximumHeight.h"
+#import "MaterialBanner.h"
 
 @interface AppBarBannerExample : UITableViewController
 
@@ -41,16 +40,12 @@
     _containerScheme = [[MDCContainerScheme alloc] init];
     _appBarViewController = [[MDCAppBarViewController alloc] init];
     [_appBarViewController applyPrimaryThemeWithScheme:_containerScheme];
-    _banner = [[MDCBannerView alloc] init];
-    [_banner applyThemeWithScheme:_containerScheme];
 
     // Behavioral flags.
     _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
-    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
-    _appBarViewController.headerView.canAlwaysExpandToMaximumHeight = NO;
     _appBarViewController.headerView.sharedWithManyScrollViews = YES;
     _appBarViewController.headerView.canOverExtend = NO;
-    _appBarViewController.enableFlexibleHeader = NO;
+    _appBarViewController.shouldAdjustHeightBasedOnHeaderStackView = YES;
 
     self.title = @"Banner";
     [self addChildViewController:_appBarViewController];
@@ -61,19 +56,16 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.banner.textView.text = @"This banner has been set as bottomBar of this AppBar.";
-  [self.banner.leadingButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [self.banner.leadingButton addTarget:self
-                                action:@selector(dismissBanner)
-                      forControlEvents:UIControlEventTouchUpInside];
-  self.banner.trailingButton.hidden = YES;
-  [self.banner sizeToFit];
-  self.appBarViewController.headerStackView.bottomBar = self.banner;
-
   self.appBarViewController.headerView.trackingScrollView = self.tableView;
   self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
   [self.view addSubview:self.appBarViewController.view];
   [self.appBarViewController didMoveToParentViewController:self];
+
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Banner"
+                                       style:UIBarButtonItemStyleDone
+                                      target:self
+                                      action:@selector(showBanner)];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -88,6 +80,19 @@
 - (void)dismissBanner {
   self.appBarViewController.headerStackView.bottomBar = nil;
   self.banner = nil;
+}
+
+- (void)showBanner {
+  self.banner = [[MDCBannerView alloc] init];
+  [self.banner applyThemeWithScheme:_containerScheme];
+  self.banner.textView.text = @"This banner has been set as bottomBar of this AppBar.";
+  [self.banner.leadingButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [self.banner.leadingButton addTarget:self
+                                action:@selector(dismissBanner)
+                      forControlEvents:UIControlEventTouchUpInside];
+  self.banner.trailingButton.hidden = YES;
+  [self.banner sizeToFit];
+  self.appBarViewController.headerStackView.bottomBar = self.banner;
 }
 
 @end
@@ -107,7 +112,7 @@
 + (NSDictionary *)catalogMetadata {
   // clang-format off
   return @{
-    @"breadcrumbs" : @[ @"App Bar", @"Banner" ],
+    @"breadcrumbs" : @[ @"Banner", @"App Bar + Banner" ],
     @"primaryDemo" : @NO,
     @"presentable" : @YES
   };
@@ -136,6 +141,7 @@
                                   reuseIdentifier:@"cell"];
   }
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  cell.textLabel.text = [@(indexPath.row) stringValue];
   return cell;
 }
 

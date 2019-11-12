@@ -50,6 +50,7 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Banner",
+        "//components/AppBar",
         "//components/Buttons",
         "//components/Buttons:Theming",
         "//components/schemes/Color",
