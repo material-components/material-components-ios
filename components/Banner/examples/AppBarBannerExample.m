@@ -91,7 +91,6 @@
                                 action:@selector(dismissBanner)
                       forControlEvents:UIControlEventTouchUpInside];
   self.banner.trailingButton.hidden = YES;
-  [self.banner sizeToFit];
   self.appBarViewController.headerStackView.bottomBar = self.banner;
 }
 
