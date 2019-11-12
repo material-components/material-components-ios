@@ -51,6 +51,7 @@ mdc_examples_objc_library(
     deps = [
         ":Banner",
         "//components/AppBar",
+        "//components/AppBar:Theming",
         "//components/Buttons",
         "//components/Buttons:Theming",
         "//components/schemes/Color",
