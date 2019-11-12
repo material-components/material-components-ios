@@ -131,7 +131,7 @@ extension BottomNavigationResetExample {
     ]
   }
 
-  class func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }
