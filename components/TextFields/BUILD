@@ -139,6 +139,8 @@ mdc_snapshot_objc_library(
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
+        "//components/Buttons",
+        "//components/Ripple",
     ],
 )
 
