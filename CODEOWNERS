@@ -28,14 +28,14 @@
 /components/FlexibleHeader/       @jverkoey
 /components/HeaderStackView/      @jverkoey
 /components/Ink/                  @yarneo
-/components/LibraryInfo/          @featherless
+/components/LibraryInfo/          @jverkoey
 /components/List                  @andrewoverton
 /components/MaskedTransition/     @jverkoey
 /components/NavigationBar/        @yarneo @jverkoey
 /components/NavigationDrawer/     @yarneo
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
-/components/Palettes/             @featherless
+/components/Palettes/             @jverkoey
 /components/ProgressView/         @romoore
 /components/Ripple                @yarneo
 /components/ShadowElevations/     @jverkoey
@@ -44,5 +44,5 @@
 /components/Snackbar/             @yarneo
 /components/Tabs/                 @romoore
 /components/TextFields/           @andrewoverton
-/components/Themes/               @featherless
+/components/Themes/               @jverkoey
 /components/Typography/           @romoore
