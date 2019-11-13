@@ -48,8 +48,10 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  The attributed text string of the placeholder label.
  Bringing convenience API found in UITextField to all MDCTextInputs. Maps to the .attributedText of
  the placeholder label.
- 
- Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance..
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. This property most similarly aligns with the `label
+ text` as described in the guidance..
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedPlaceholder;
 
@@ -111,8 +113,10 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 
 /**
  Should it have the standard behavior of disappearing when you type? Defaults to YES.
- 
- Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance..
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. This property most similarly aligns with the `label
+ text` as described in the guidance..
  */
 @property(nonatomic, assign) BOOL hidesPlaceholderOnInput;
 
@@ -140,16 +144,20 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  The text string of the placeholder label.
  Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .text of the
  placeholder label.
- 
- Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance..
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. This property most similarly aligns with the `label
+ text` as described in the guidance..
  */
 @property(nonatomic, nullable, copy) NSString *placeholder;
 
 /**
  The label displaying text when no input text has been entered.
- 
 
- Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance..
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. This property most similarly aligns with the `label
+ text` as described in the guidance..
  */
 @property(nonatomic, nonnull, strong, readonly) UILabel *placeholderLabel;
 

@@ -60,7 +60,9 @@
 
  Note: Inherited from MDCTextInput protocol. Added here to declare Interface Builder support
  (IBInspectable).
- Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance.
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. This property most similarly aligns with the `label
+ text` as described in the guidance.
  */
 @property(nonatomic, nullable, copy) IBInspectable NSString *placeholder;
 

@@ -28,15 +28,19 @@
 
 /**
  Refreshes the layout and style of the placeholder label. Called within updateLayout.
- 
- Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance.
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. This property most similarly aligns with the `label
+ text` as described in the guidance.
  */
 - (void)updatePlaceholder;
 
 /**
  Refreshes the layout and style of the border view. Called within updateLayout.
- 
- Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance.
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. This property most similarly aligns with the `label
+ text` as described in the guidance.
  */
 - (BOOL)isPlaceholderUp;
 
