@@ -142,6 +142,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 @property(nonatomic, strong) UIView *contentView;
 
 /**
+ An invisible hit target to ensure that tapping the horizontal area between the button and the edge
+ of the screen triggers a button tap instead of dismissing the snackbar.
+ */
+@property(nonatomic, strong) UIControl *buttonGutterTapTarget;
+
+/**
  Holds onto the dismissal handler, called when the Snackbar should dismiss due to user interaction.
  */
 @property(nonatomic, copy) MDCSnackbarMessageDismissHandler dismissalHandler;
@@ -258,6 +264,13 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [_containerView addTarget:self
                        action:@selector(handleBackgroundTapped:)
              forControlEvents:UIControlEventTouchUpInside];
+
+    _buttonGutterTapTarget = [[UIControl alloc] init];
+    _buttonGutterTapTarget.translatesAutoresizingMaskIntoConstraints = NO;
+    [_buttonGutterTapTarget addTarget:self
+                               action:@selector(handleButtonGutterTapped:)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_buttonGutterTapTarget];
 
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       UISwipeGestureRecognizer *swipeRightGesture =
@@ -685,6 +698,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"container" : self.containerView,
     @"content" : self.contentView,
     @"buttons" : self.buttonView,
+    @"buttonGutter" : self.buttonGutterTapTarget,
   };
 
   BOOL hasButtons = (self.buttons.count > 0);
@@ -743,22 +757,37 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                              metrics:metrics
                                                                                views:views]];
   } else {  // This is a horizontal layout, and there are buttons present.
-    // Align the content and buttons horizontally.
-    formatString = @"H:[content]-(==kTitleButtonPadding)-[buttons]-(==kRightMargin)-|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint
-                                         constraintsWithVisualFormat:formatString
-                                                             options:NSLayoutFormatAlignAllCenterY
-                                                             metrics:metrics
-                                                               views:views]];
-
     if (MDCSnackbarMessage.usesLegacySnackbar) {
+      // Align the content and buttons horizontally.
+      formatString = @"H:[content]-(==kTitleButtonPadding)-[buttons][buttonGutter(==kRightMargin)]|";
+      [constraints addObjectsFromArray:[NSLayoutConstraint
+                                           constraintsWithVisualFormat:formatString
+                                                               options:NSLayoutFormatAlignAllCenterY
+                                                               metrics:metrics
+                                                                 views:views]];
+
       // The buttons should take up the entire height of the container view.
       formatString = @"V:|[buttons]|";
       [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
                                                                                options:0
                                                                                metrics:metrics
                                                                                  views:views]];
+
+      // The button gutter tap target should take up the entire height of the container view.
+      formatString = @"V:|[buttonGutter]|";
+      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
+                                                                               options:0
+                                                                               metrics:metrics
+                                                                                 views:views]];
     } else {
+      // Align the content and buttons horizontally.
+      formatString = @"H:[content]-(==kTitleButtonPadding)-[buttons]-(==kRightMargin)-|";
+      [constraints addObjectsFromArray:[NSLayoutConstraint
+                                           constraintsWithVisualFormat:formatString
+                                                               options:NSLayoutFormatAlignAllCenterY
+                                                               metrics:metrics
+                                                                 views:views]];
+
       formatString = @"V:|-(>=kMinVerticalButtonPadding)-[buttons]-(>=kMinVerticalButtonPadding)-|";
       [constraints addObjectsFromArray:[NSLayoutConstraint
                                            constraintsWithVisualFormat:formatString
@@ -1016,6 +1045,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)handleBackgroundTapped:(__unused UIButton *)sender {
   [self dismissWithAction:nil userInitiated:YES];
+}
+
+- (void)handleButtonGutterTapped:(__unused UIControl *)sender {
+  [self handleButtonTapped:nil];
 }
 
 - (void)handleButtonTapped:(__unused UIButton *)sender {
