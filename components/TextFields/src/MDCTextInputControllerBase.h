@@ -54,6 +54,8 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
  Underline Height Normal - 0p
 
  Underline View Mode - While editing
+ 
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats placeholder as distinct from `label text`. This property most similarly aligns with the `label text` as described in the guidance.
 */
 @interface MDCTextInputControllerBase : NSObject <MDCTextInputControllerFloatingPlaceholder>
 
