@@ -347,6 +347,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
 
+  [self deactivateAllConstraints];
   [self setNeedsUpdateConstraints];
 }
 
