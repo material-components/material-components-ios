@@ -121,6 +121,8 @@
 
 /**
  A custom accessibility label for the title.
+
+ When @c nil the title accessibilityLabel will be set to the value of the @c title.
  */
 @property(nonatomic, nullable, copy) NSString *titleAccessibilityLabel;
 

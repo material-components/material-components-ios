@@ -257,7 +257,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertEqual(view.messageLabel.text, message);
 }
 
-- (void)testAlertControllerSetTitleAccessibilityLabelWhenTitleIsSet {
+- (void)testAlertControllerSetTitleAccessibilityLabelWhenTitleIsSetWhenViewIsNotLoaded {
   // Given
   NSString *title = @"Foo";
   NSString *titleAccessibilityLabel = @"Bar";
@@ -265,9 +265,9 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // When
   self.alert.title = title;
   self.alert.titleAccessibilityLabel = titleAccessibilityLabel;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqualObjects(view.titleLabel.accessibilityLabel, titleAccessibilityLabel);
 }
 
@@ -293,6 +293,19 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alert.title = title;
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   self.alert.titleAccessibilityLabel = nil;
+
+  // Then
+  XCTAssertEqualObjects(view.titleLabel.accessibilityLabel, title);
+}
+
+- (void)testAlertControllerTitleAccessibilityLabelWhenOnlyTitleIsSetWhenViewIsNotLoaded {
+  // Given
+  NSString *title = @"Foo";
+
+  // When
+  self.alert.title = title;
+  self.alert.titleAccessibilityLabel = nil;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
   XCTAssertEqualObjects(view.titleLabel.accessibilityLabel, title);
