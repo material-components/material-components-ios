@@ -20,9 +20,11 @@
 
 @interface MDCTextControlSnapshotTestHelpers : NSObject
 
-+ (void)removeTextControlFromKeyWindow:(UIView<MDCTextControl> *)textControl;
-+ (void)addTextControlToKeyWindow:(UIView<MDCTextControl> *)textControl;
-
++ (void)setUpViewControllerHierarchy;
++ (void)tearDownViewControllerHierarchy;
++ (void)applyContentSizeCategory:(UIContentSizeCategory)contentSizeCategory;
++ (void)removeTextControlFromViewHierarchy:(UIView<MDCTextControl> *)textControl;
++ (void)addTextControlToViewHierarchy:(UIView<MDCTextControl> *)textControl;
 + (void)validateTextControl:(UIView<MDCTextControl> *)textControl
                withTestCase:(MDCSnapshotTestCase *)testCase;
 @end
