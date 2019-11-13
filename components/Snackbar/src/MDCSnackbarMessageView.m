@@ -759,7 +759,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   } else {  // This is a horizontal layout, and there are buttons present.
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       // Align the content and buttons horizontally.
-      formatString = @"H:[content]-(==kTitleButtonPadding)-[buttons][buttonGutter(==kRightMargin)]|";
+      formatString =
+          @"H:[content]-(==kTitleButtonPadding)-[buttons][buttonGutter(==kRightMargin)]|";
       [constraints addObjectsFromArray:[NSLayoutConstraint
                                            constraintsWithVisualFormat:formatString
                                                                options:NSLayoutFormatAlignAllCenterY
