@@ -1,3 +1,88 @@
+# 94.1.0
+
+This minor release introduces new APIs to FlexibleHeader and Ripple, and updates the appearance of `MDCSnackbar` to the latest style. The release also includes bug fixes for multiple components.
+
+## New Features
+
+### FlexibleHeader
+
+FlexibleHeader can now inform the receiver that its view's tracking scroll view has changed through the `flexibleHeaderView:didChangeTrackingScrollViewAnimated:` API. Example:
+
+**Swift**
+
+```swift
+class MyAnimationDelegate: NSObject, MDCFlexibleHeaderViewAnimationDelegate {
+  func flexibleHeaderView(_ flexibleHeaderView: MDCFlexibleHeaderView,
+                          didChangeTrackingScrollViewAnimated animated: Bool) {
+  if animated {
+    // ...
+  }
+}
+```
+
+**Objective-C**
+
+```objc
+-(BOOL)flexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView 
+	didChangeTrackingScrollViewAnimated:(BOOL)animated {
+  if (animated) {
+    // ...
+  }
+}
+```
+
+Additionally, you can now animate your own changes alongside the default animations of the flexible header, by passing an animation sequence and a completion block to `animateWithAnimations:completion:`. Example:
+
+**Swift**
+
+```swift
+myHeaderView.animate(animations: {
+  scrollView.contentOffset = CGPoint(x: 0, y: -100)
+  myHeaderView.maximumHeight = 100
+})
+```
+
+**Objective-C**
+
+```objc
+[myHeaderView animate:^{
+  scrollView.contentOffset = CGPointMake(0, -100.f);
+  myHeaderView.maximumHeight = 100.f;
+}];
+```
+
+## Component changes
+
+### ActionSheet
+
+* [Fix crash in example (#8734)](https://github.com/material-components/material-components-ios/commit/762ef5e4840234233a22514cb1eb79553f8df707) (Cody Weaver)
+* [Move layout code to `viewDidLayoutSubviews` (#8735)](https://github.com/material-components/material-components-ios/commit/9fc4f0afbc4b6fd11a0620b10905e30f76dc5075) (Cody Weaver)
+* [Use anchor-based constraints. (#8731)](https://github.com/material-components/material-components-ios/commit/779ca64b7e36654d446e88fbad074919602aeff3) (Robert Moore)
+
+### Banner
+
+* [Use lastBaseLineAnchor to align buttons if they are on the same line. (#8752)](https://github.com/material-components/material-components-ios/commit/628b2ecb9020b0287f44b384b93946977fd07b8a) (Wenyu Zhang)
+* [stop updating custom constraints before bound size is set. (#8749)](https://github.com/material-components/material-components-ios/commit/35188a5d5cc81d70ae059fbf9b0b12b00adbac11) (Wenyu Zhang)
+
+### FlexibleHeader
+
+* [Add a flexibleHeaderView:didChangeTrackingScrollViewAnimated: event to MDCFlexibleHeaderViewAnimationDelegate. (#8757)](https://github.com/material-components/material-components-ios/commit/e3aa7eace2a1528110fad59ef9dce2d745e790c6) (featherless)
+* [Add an animateWithAnimations:completion: API. (#8739)](https://github.com/material-components/material-components-ios/commit/1bcdfc77ca2a5df0034c3ae038193df73859b911) (featherless)
+
+### Ripple
+
+* [Improve MDCRippleTouchController (#8631)](https://github.com/material-components/material-components-ios/commit/3b4c9d170a9f1d9760d7da147f30832bc1e78398) (Michael Schneider)
+
+### Snackbar
+
+* [Update documentation on default. #8736](https://github.com/material-components/material-components-ios/commit/5516c5f6c9a8267020369eb5c55eaf4225b9d679) (Yarden Eitan)
+
+### TextFields
+
+* [Capture snapshots outside of view (#8718)](https://github.com/material-components/material-components-ios/commit/dec1670f8b34b75f2d78b27e460a72567326cb07) (Andrew Overton)
+
+---
+
 # 94.0.0
 
 This major release adds a new configuration block to MDCSnackBarMessage and moves the currently in development MDCTextControl based TextFields from the TextFields component directory to their own TextControls directory. While there are no API changes associated with this move, it does have the potential to break anyone importing these textfields from their old location, hence the major version bump.
