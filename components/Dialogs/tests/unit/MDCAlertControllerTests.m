@@ -257,7 +257,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertEqual(view.messageLabel.text, message);
 }
 
-- (void)testAlertControllerSetMessageAccessibilityLabelWhenMessageIsSet {
+- (void)testAlertControllerSetMessageAccessibilityLabelWhenMessageIsSetWhenViewIsNotLoaded {
   // Given
   NSString *message = @"Foo";
   NSString *messageAccessibilityLabel = @"Bar";
@@ -265,9 +265,9 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // When
   self.alert.message = message;
   self.alert.messageAccessibilityLabel = messageAccessibilityLabel;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, messageAccessibilityLabel);
 }
 
@@ -293,6 +293,19 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alert.message = message;
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   self.alert.messageAccessibilityLabel = nil;
+
+  // Then
+  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, message);
+}
+
+- (void)testAlertControllerMessageAccessibilityLabelWhenOnlyMessageIsSetWhenViewIsNotLoaded {
+  // Given
+  NSString *message = @"Foo";
+
+  // When
+  self.alert.message = message;
+  self.alert.messageAccessibilityLabel = nil;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
   XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, message);
