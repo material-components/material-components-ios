@@ -33,6 +33,7 @@
 
   self.areAnimationsEnabled = UIView.areAnimationsEnabled;
   [UIView setAnimationsEnabled:NO];
+  [MDCTextControlSnapshotTestHelpers setUpViewControllerHierarchy];
   self.textField = [MDCBaseTextFieldTestsSnapshotTestHelpers createBaseTextField];
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
@@ -43,8 +44,9 @@
 - (void)tearDown {
   [super tearDown];
   [MDCTextControlSnapshotTestHelpers
-      removeTextControlFromKeyWindow:(UIView<MDCTextControl> *)self.textField];
+      removeTextControlFromViewHierarchy:(UIView<MDCTextControl> *)self.textField];
   self.textField = nil;
+  [MDCTextControlSnapshotTestHelpers tearDownViewControllerHierarchy];
   [UIView setAnimationsEnabled:self.areAnimationsEnabled];
 }
 
@@ -191,6 +193,18 @@
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
       configureTextFieldWithColoredAssistiveLabelTextWhileDisabled:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithScaledFontsAndXXXLargeContentSize {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithScaledFontsAndAXXXLargeContentSize:textField];
 
   // Then
   [self validateTextField:textField];
