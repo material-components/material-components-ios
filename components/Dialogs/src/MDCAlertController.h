@@ -122,6 +122,9 @@
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
 
+/** A custom accessibility label for the message. */
+@property(nonatomic, nullable, copy) NSString *messageAccessibilityLabel;
+
 /**
  Accessory view that contains custom UI.
 
