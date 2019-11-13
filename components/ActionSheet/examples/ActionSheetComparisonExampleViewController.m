@@ -126,7 +126,10 @@
                                                         style:UIAlertActionStyleDefault
                                                       handler:nil];
   [alertController addAction:emailAction];
-
+  if (self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+    alertController.modalPresentationStyle = UIModalPresentationPopover;
+    alertController.popoverPresentationController.sourceView = self.showUIKitButton;
+  }
   [self presentViewController:alertController animated:YES completion:nil];
 }
 
