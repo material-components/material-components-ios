@@ -29,8 +29,13 @@ mdc_public_objc_library(
     name = "Typography",
     deps = [
         ":BasicFontScheme",
+        ":Scheming",
         "//components/Typography",
     ],
+)
+
+mdc_extension_objc_library(
+    name = "Scheming",
 )
 
 mdc_extension_objc_library(
