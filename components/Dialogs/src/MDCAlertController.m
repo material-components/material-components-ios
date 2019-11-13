@@ -170,6 +170,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return _alertTitle;
 }
 
+- (void)setTitleAccessibilityLabel:(NSString *)titleAccessibilityLabel {
+  _titleAccessibilityLabel = [titleAccessibilityLabel copy];
+  if (self.alertView && titleAccessibilityLabel) {
+    self.alertView.titleLabel.accessibilityLabel = titleAccessibilityLabel;
+  }
+}
+
 - (void)setMessage:(NSString *)message {
   _message = [message copy];
   if (self.alertView) {
@@ -451,6 +458,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
         self.adjustsFontForContentSizeCategory;
   }
   self.alertView.messageLabel.text = self.message;
+  self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
   self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
   // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
   // adjustsFontForContentSizeCategory for messageLabel

@@ -59,14 +59,17 @@
 }
 
 + (void)prepareTextFieldForSnapshotTesting:(MDCBaseTextField *)textField {
+  // Set the animation duration to 0 so we don't take a snapshot during an animation
   textField.animationDuration = 0;
 
-  // Using a dummy inputView instead of the system keyboard cuts the execution time roughly in half,
-  // at least locally.
+  // Use a dummy inputView instead of the system keyboard because it cuts the execution time roughly
+  // in half, at least locally.
   UIView *dummyInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
   textField.inputView = dummyInputView;
 
-  [MDCTextControlSnapshotTestHelpers addTextControlToKeyWindow:(UIView<MDCTextControl> *)textField];
+  // Add the text field to a valid view hierarchy so things like `-becomeFirstResponder` work
+  UIView<MDCTextControl> *textControl = (UIView<MDCTextControl> *)textField;
+  [MDCTextControlSnapshotTestHelpers addTextControlToViewHierarchy:textControl];
 }
 
 #pragma mark "When" configurations
@@ -152,6 +155,31 @@
   [textField setTrailingAssistiveLabelColor:[UIColor redColor]
                                    forState:MDCTextControlStateDisabled];
   textField.enabled = NO;
+}
+
++ (void)configureTextFieldWithScaledFontsAndAXXXLargeContentSize:(MDCBaseTextField *)textField {
+  [MDCTextControlSnapshotTestHelpers
+      applyContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+
+  textField.text = @"text";
+  textField.label.text = @"label text";
+  textField.leadingAssistiveLabel.text = @"leading assistive label text";
+  textField.adjustsFontForContentSizeCategory = YES;
+
+  if (@available(iOS 11.0, *)) {
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFontMetrics *caption2Metrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleCaption2];
+    textField.font = [bodyMetrics scaledFontForFont:textField.font
+                      compatibleWithTraitCollection:textField.traitCollection];
+    textField.leadingAssistiveLabel.font =
+        [caption2Metrics scaledFontForFont:textField.leadingAssistiveLabel.font
+             compatibleWithTraitCollection:textField.traitCollection];
+    textField.trailingAssistiveLabel.font =
+        [caption2Metrics scaledFontForFont:textField.trailingAssistiveLabel.font
+             compatibleWithTraitCollection:textField.traitCollection];
+  }
+
+  [textField becomeFirstResponder];
 }
 
 #pragma mark Helpers

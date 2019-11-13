@@ -119,6 +119,13 @@
  */
 @property(nonatomic, nullable, copy) NSString *title;
 
+/**
+ A custom accessibility label for the title.
+
+ When @c nil the title accessibilityLabel will be set to the value of the @c title.
+ */
+@property(nonatomic, nullable, copy) NSString *titleAccessibilityLabel;
+
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
 

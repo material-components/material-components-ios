@@ -2062,6 +2062,7 @@ Pod::Spec.new do |mdc|
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
       scheme.dependency "MaterialComponents/Typography"
       scheme.dependency "MaterialComponents/schemes/Typography+BasicFontScheme"
+      scheme.dependency "MaterialComponents/schemes/Typography+Scheming"
 
       scheme.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [
@@ -2072,6 +2073,14 @@ Pod::Spec.new do |mdc|
       end
     end
     scheme_spec.subspec "Typography+BasicFontScheme" do |extension|
+      extension.ios.deployment_target = '9.0'
+      extension.public_header_files = "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+      extension.source_files = [
+        "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
+        "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+      ]
+    end
+    scheme_spec.subspec "Typography+Scheming" do |extension|
       extension.ios.deployment_target = '9.0'
       extension.public_header_files = "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
       extension.source_files = [
