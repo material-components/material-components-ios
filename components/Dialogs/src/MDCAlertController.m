@@ -187,10 +187,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)setMessageAccessibilityLabel:(NSString *)messageAccessibilityLabel {
-  _messageAccessibilityLabel = [messageAccessibilityLabel
-                                copy];
+  _messageAccessibilityLabel = [messageAccessibilityLabel copy];
   if (self.alertView && messageAccessibilityLabel) {
-
     self.alertView.messageLabel.accessibilityLabel = messageAccessibilityLabel;
   }
 }
