@@ -45,7 +45,7 @@ class AppBarAnimatedJumpExample: UIViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Tab Bar Example"
+    self.title = "Manual Tabs Jump (Animated)"
   }
 
   required init?(coder aDecoder: NSCoder) {
