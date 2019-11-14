@@ -15,7 +15,11 @@
 #import <Foundation/Foundation.h>
 
 /**
- A simple protocol that custom views rendered in MDCTabBarView must conform to.
+ A simple protocol that custom views rendered in MDCTabBarView must adopt.
+
+ @note `intrinsicContentSize` must always return the correct content size for the view, even before
+       layout has occurred.  If the value changes, it may be necessary to force the tab bar to lay
+       out its subviews.
 
  @seealso MDCTabBarViewIndicatorTemplate
  */
@@ -31,16 +35,6 @@
  the content.
  */
 @property(readonly) CGRect contentFrame;
-
-/**
- Identical to UIView's @c intrinsicContentSize in behavior.  The returned size is used by the
- @c MDCTabBarView to determine the bounds of the receiver. If this value changes, it may be
- necessary to immediately layout the tab bar.
-
- @note The receiver must always return the correct size for its content, even before it has been
-       laid-out or provided a bounds.
- */
-@property(nonatomic, readonly) CGSize intrinsicContentSize NS_AVAILABLE_IOS(6_0);
 
 /**
  Called when the view should change its appearance based on its selection status.
