@@ -2,6 +2,44 @@
 
 This minor release introduces new APIs to MDCAppBarViewController and MDCSlider. Additionally, it includes some fixes for Banner constraints.
 
+## New Features
+
+### AppBar
+
+`MDCAppBarViewController` allows automatically adjust the height of the app bar based on its `headerStackView`.
+
+**Objective-C**
+
+```objc
+MDCAppBarViewController *appBar= [[MDCAppBarViewController alloc] init];
+appBar.shouldAdjustHeightBasedOnHeaderStackView = YES;
+```
+
+**Swift**
+
+```swift
+let appBar = MDCAppBarViewController()
+appBar.shouldAdjustHeightBasedOnHeaderStackView = true
+```
+
+### Slider 
+
+`MDCSlider` allows snapping the thumb to the nearest discrete value when the user drags the thumb.
+
+**Objective-C**
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+slider.discrete = YES;
+```
+
+**Swift**
+
+```swift
+let slider = MDCSlider()
+slider.discrete = true
+```
+
 ## API changes
 
 #### AppBar
