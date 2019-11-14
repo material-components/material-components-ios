@@ -108,4 +108,21 @@
   XCTAssertTrue(CGPathEqualToPath(maskShapeLayer.path, parentView.layer.shadowPath));
 }
 
+- (void)testDoesNotInheritParentShadowPathWhenRippleStyleSetToBoundedWhenUsesSuperviewShadowLayerAsMaskDisabled {
+  // Given
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  UIView *parentView = [[UIView alloc] init];
+  [parentView addSubview:rippleView];
+  parentView.frame = CGRectMake(0, 0, 100, 50);
+  rippleView.frame = CGRectMake(10, 10, 30, 30);
+
+  // When
+  rippleView.usesSuperviewShadowLayerAsMask = NO; // Disable the incorrect behavior.
+  parentView.layer.shadowPath = [UIBezierPath bezierPathWithRect:parentView.bounds].CGPath;
+  rippleView.rippleStyle = MDCRippleStyleBounded;
+
+  // Then
+  XCTAssertNil(rippleView.layer.mask);
+}
+
 @end
