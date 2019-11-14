@@ -40,7 +40,7 @@
  @note The receiver must always return the correct size for its content, even before it has been
        laid-out or provided a bounds.
  */
-@property(nonatomic, readonly) CGSize intrinsicContentSize;
+@property(nonatomic, readonly) CGSize intrinsicContentSize NS_AVAILABLE_IOS(6_0);
 
 /**
  Called when the view should change its appearance based on its selection status.
