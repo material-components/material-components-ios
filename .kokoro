@@ -258,7 +258,7 @@ run_bazel_affected() {
     fi
 
     # Required to resolve the error "The authorization was denied since no user interaction was possible".
-    xcodebuild --runFirstLaunch
+    xcodebuild -runFirstLaunch
     
     # Output the affected targets to the logs. This also gives the affected_targets script the
     # opportunity to fail.
