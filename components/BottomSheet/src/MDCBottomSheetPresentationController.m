@@ -213,7 +213,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   // Only dismiss if the tap is outside of the presented view.
   UIView *contentView = self.presentedViewController.view;
   CGPoint pointInContentView = [tapRecognizer locationInView:contentView];
-  if ([contentView pointInside:pointInContentView withEvent:nil]) {
+  if (!UIAccessibilityIsVoiceOverRunning() && [contentView pointInside:pointInContentView
+                                                             withEvent:nil]) {
     return;
   }
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
