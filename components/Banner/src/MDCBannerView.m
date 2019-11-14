@@ -344,6 +344,13 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 #pragma mark - UIView overrides
 
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+
+  [self deactivateAllConstraints];
+  [self setNeedsUpdateConstraints];
+}
+
 - (CGSize)sizeThatFits:(CGSize)size {
   MDCBannerViewLayoutStyle layoutStyle = [self layoutStyleForSizeToFit:size];
   CGFloat frameHeight = 0.0f;

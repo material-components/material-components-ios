@@ -89,4 +89,23 @@
   XCTAssertTrue(blockCalled);
 }
 
+- (void)testShouldAdjustHeightBasedOnHeaderStackViewSetToYES {
+  // Given
+  MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
+  CGFloat navigationBarHeight =
+      [appBarController.navigationBar sizeThatFits:appBarController.headerView.frame.size].height;
+  CGFloat bottomBarHeight = 200;
+  UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, bottomBarHeight)];
+  appBarController.headerStackView.bottomBar = bottomBar;
+
+  // When
+  appBarController.shouldAdjustHeightBasedOnHeaderStackView = YES;
+
+  // Then
+  CGFloat minHeight = appBarController.headerView.minimumHeight;
+  CGFloat maxHeight = appBarController.headerView.maximumHeight;
+  XCTAssertEqual(minHeight, maxHeight);
+  XCTAssertEqualWithAccuracy(minHeight, bottomBarHeight + navigationBarHeight, 0.01);
+}
+
 @end
