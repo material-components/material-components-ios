@@ -386,6 +386,7 @@ Example usage:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 // During initialization:
 rippleView.usesSuperviewShadowLayerAsMask = false
@@ -397,6 +398,7 @@ rippleView.layer.mask = rippleViewMask
 ```
 
 #### Objective-C
+
 ```objc
 // During initialization:
 rippleView.usesSuperviewShadowLayerAsMask = NO;
