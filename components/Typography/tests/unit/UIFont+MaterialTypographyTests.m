@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 #import "MDCTypographyMockTraitEnvironment.h"
 #import "MaterialTypography.h"
+#import "MaterialApplication.h"
 
 @interface UIFont_MaterialTypographyTests : XCTestCase
 @end
@@ -69,7 +70,7 @@
   }
 
   // Given
-  XCTAssertNil(UIApplication.sharedApplication);
+  XCTAssertNil([UIApplication mdc_safeSharedApplication]);
   UIFont *font = [UIFont systemFontOfSize:22.0];
   font = [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
   MDCTypographyMockTraitEnvironment *traitEnvironment =
