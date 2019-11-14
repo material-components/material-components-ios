@@ -1138,6 +1138,24 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
 }
 
+#pragma mark - UIAccessibility
+
+- (void)testTabBarViewNotAccessibilityElement {
+  // Then
+  XCTAssertFalse(self.tabBarView.isAccessibilityElement);
+}
+
+- (void)testTabBarViewAlwaysBehavesAsTabBarOniOS10 {
+  // When
+  self.tabBarView.accessibilityTraits = UIAccessibilityTraitLink;
+
+  if (@available(iOS 10.0, *)) {
+    // Then
+    XCTAssertEqual(self.tabBarView.accessibilityTraits,
+                   UIAccessibilityTraitTabBar | UIAccessibilityTraitLink);
+  }
+}
+
 #pragma mark - Custom APIs
 
 - (void)testAccessibilityElementForItemNotInItemsArrayReturnsNil {
