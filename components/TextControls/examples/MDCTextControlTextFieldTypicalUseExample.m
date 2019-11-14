@@ -53,9 +53,11 @@ static CGFloat const kDefaultPadding = 15.0;
   }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     self.view.backgroundColor = [UIColor systemBackgroundColor];
   }
+#endif
 
   self.resignFirstResponderButton = [self createFirstResponderButton];
   [self.view addSubview:self.resignFirstResponderButton];
