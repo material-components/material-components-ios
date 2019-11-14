@@ -24,20 +24,22 @@ appBar.shouldAdjustHeightBasedOnHeaderStackView = true
 
 ### Slider 
 
-`MDCSlider` allows snapping the thumb to the nearest discrete value when the user drags the thumb.
+`MDCSlider` allows having a continuous Slider that shows track tick marks.
 
 **Objective-C**
 
 ```objc
 MDCSlider *slider = [[MDCSlider alloc] init];
-slider.discrete = YES;
+slider.discrete = NO;
+slider.numberOfDiscreteValues = 5;
 ```
 
 **Swift**
 
 ```swift
 let slider = MDCSlider()
-slider.discrete = true
+slider.discrete = false
+slider.numberOfDiscreteValues = 5;
 ```
 
 ## API changes
