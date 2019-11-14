@@ -16,6 +16,12 @@
 
 #import "MaterialRipple.h"
 
+/**
+ These tests demonstrate how a ripple view added as a subview can end up with an incorrect layer
+ mask if the ripple view's frame does not match the bounds of the parent view and the parent view's
+ layer has a shadowPath. All of the tests intentionally pass, with the final test demonstrating the
+ incorrect behavior.
+ */
 @interface MDCRippleViewUsesSuperviewShadowLayerAsMaskTests : XCTestCase
 @end
 
@@ -75,7 +81,7 @@
   XCTAssertNil(rippleView.layer.mask);
 }
 
-- (void)testInheritsParentShadowPathWhenRippleStyleSetToBoundedEvenWhenFrameDoesNotEqualBounds {
+- (void)testIncorrectlyInheritsParentShadowPathWhenRippleStyleSetToBoundedEvenWhenFrameDoesNotEqualBounds {
   // Given
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
   UIView *parentView = [[UIView alloc] init];
