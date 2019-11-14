@@ -256,6 +256,9 @@ run_bazel_affected() {
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
       upgrade_kokoro_bazel_if_needed
     fi
+
+    # Required to resolve the error "The authorization was denied since no user interaction was possible".
+    xcodebuild --runFirstLaunch
     
     # Output the affected targets to the logs. This also gives the affected_targets script the
     # opportunity to fail.
