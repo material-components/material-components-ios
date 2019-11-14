@@ -41,10 +41,10 @@
   UIColor *trailingAssistiveLabelColor = [UIColor darkGrayColor];
   if (@available(iOS 13.0, *)) {
     textColor = [UIColor labelColor];
-    floatingLabelColor = [UIColor secondaryLabelColor];
-    normalLabelColor = [UIColor secondaryLabelColor];
-    leadingAssistiveLabelColor = [UIColor secondaryLabelColor];
-    trailingAssistiveLabelColor = [UIColor secondaryLabelColor];
+    floatingLabelColor = [UIColor labelColor];
+    normalLabelColor = [UIColor labelColor];
+    leadingAssistiveLabelColor = [UIColor labelColor];
+    trailingAssistiveLabelColor = [UIColor labelColor];
   }
   CGFloat disabledAlpha = (CGFloat)0.60;
   switch (state) {
