@@ -47,17 +47,17 @@ static CGFloat const kDefaultPadding = 15.0;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   self.title = kExampleTitle;
+
   if (!self.containerScheme) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+    self.containerScheme = containerScheme;
   }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-  if (@available(iOS 13.0, *)) {
-    self.view.backgroundColor = [UIColor systemBackgroundColor];
-  }
-#endif
 
   self.resignFirstResponderButton = [self createFirstResponderButton];
   [self.view addSubview:self.resignFirstResponderButton];
