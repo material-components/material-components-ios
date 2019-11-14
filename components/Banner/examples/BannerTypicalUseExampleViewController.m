@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialAppBar.h"
+#import "MaterialApplication.h"
 #import "MaterialBanner.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
@@ -168,12 +170,20 @@ static NSString *const exampleSuperLongText =
 
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
   // Adjust bannerViewContainer's frame
-  CGFloat topAreaInset = 0.0f;
+  CGFloat yOrigin = 0.0f;
   if (@available(iOS 11.0, *)) {
-    topAreaInset = self.view.safeAreaInsets.top;
+    yOrigin = self.view.safeAreaInsets.top;
+  } else {
+    if ([self.parentViewController isKindOfClass:[MDCAppBarContainerViewController class]]) {
+      MDCAppBarContainerViewController *containerViewController =
+          (MDCAppBarContainerViewController *)self.parentViewController;
+      UIApplication *safeApplication = [UIApplication mdc_safeSharedApplication];
+      yOrigin = CGRectGetMaxY(containerViewController.appBarViewController.navigationBar.frame) +
+                CGRectGetHeight(safeApplication.statusBarFrame);
+    }
   }
-  self.bannerView.frame =
-      CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+
+  self.bannerView.frame = CGRectMake(0.0f, yOrigin, bannerViewSize.width, bannerViewSize.height);
 }
 
 #pragma mark - Internal helpers
