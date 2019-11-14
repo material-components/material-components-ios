@@ -81,7 +81,8 @@
   XCTAssertNil(rippleView.layer.mask);
 }
 
-- (void)testIncorrectlyInheritsParentShadowPathWhenRippleStyleSetToBoundedEvenWhenFrameDoesNotEqualBounds {
+- (void)
+    testIncorrectlyInheritsParentShadowPathWhenRippleStyleSetToBoundedEvenWhenFrameDoesNotEqualBounds {
   // Given
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
   UIView *parentView = [[UIView alloc] init];
