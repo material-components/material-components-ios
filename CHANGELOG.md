@@ -1,3 +1,21 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+---
+
 # 94.1.0
 
 This minor release introduces new APIs to FlexibleHeader and Ripple, and updates the appearance of `MDCSnackbar` to the latest style. The release also includes bug fixes for multiple components.
