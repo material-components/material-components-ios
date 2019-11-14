@@ -1,19 +1,37 @@
-# #develop#
+# 94.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces new APIs to MDCAppBarViewController and MDCSlider. Additionally, it includes some fixes for Banner constraints.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
+
+#### AppBar
+
+#### MDCAppBarViewController
+
+*new* property: `shouldAdjustHeightBasedOnHeaderStackView` in `MDCAppBarViewController`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `discrete` in `MDCSlider`
 
 ## Component changes
 
+### AppBar
+
+* [Add API to auto adjust height based on HeaderStackView for app bar. (#8764)](https://github.com/material-components/material-components-ios/commit/2f52dece95bc24d63d4505d9dd58db09de291975) (Wenyu Zhang)
+
+### Banner
+
+* [Add an example to show how Banner can be used as bottom bar in AppBar. (#8785)](https://github.com/material-components/material-components-ios/commit/509d6bff90b7a9a704a1ea9e8714100615ae1244) (Wenyu Zhang)
+* [Deactivate custom constraints when there is a need to update constraints.(#8793)](https://github.com/material-components/material-components-ios/commit/f69b7d54e919d4796f747446cfc31a24d6c7a978) (Wenyu Zhang)
+* [update constraint when frame is changed. (#8765)](https://github.com/material-components/material-components-ios/commit/6d7edec5815ce03f1c56930abc76cf23982f30d6) (Wenyu Zhang)
+
+## Slider
+
+* [Fix event handling. (#8759)](https://github.com/material-components/material-components-ios/commit/f588ea9dbe560a9e89457d8b8b3015f7c3e1f394) (Robert Moore)
+ 
 ---
 
 # 94.1.0
