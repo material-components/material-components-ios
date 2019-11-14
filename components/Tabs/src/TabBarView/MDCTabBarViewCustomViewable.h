@@ -33,6 +33,16 @@
 @property(readonly) CGRect contentFrame;
 
 /**
+ Identical to UIView's @c intrinsicContentSize in behavior.  The returned size is used by the
+ @c MDCTabBarView to determine the bounds of the receiver. If this value changes, it may be
+ necessary to immediately layout the tab bar.
+
+ @note The receiver must always return the correct size for its content, even before it has been
+       laid-out or provided a bounds.
+ */
+@property(nonatomic, readonly) CGSize intrinsicContentSize;
+
+/**
  Called when the view should change its appearance based on its selection status.
 
  @param selected The new selection state of the view.
