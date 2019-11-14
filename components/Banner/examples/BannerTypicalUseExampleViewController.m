@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialAppBar.h"
-#import "MaterialApplication.h"
 #import "MaterialBanner.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
@@ -174,13 +172,7 @@ static NSString *const exampleSuperLongText =
   if (@available(iOS 11.0, *)) {
     yOrigin = self.view.safeAreaInsets.top;
   } else {
-    if ([self.parentViewController isKindOfClass:[MDCAppBarContainerViewController class]]) {
-      MDCAppBarContainerViewController *containerViewController =
-          (MDCAppBarContainerViewController *)self.parentViewController;
-      UIApplication *safeApplication = [UIApplication mdc_safeSharedApplication];
-      yOrigin = CGRectGetMaxY(containerViewController.appBarViewController.navigationBar.frame) +
-                CGRectGetHeight(safeApplication.statusBarFrame);
-    }
+    yOrigin = self.topLayoutGuide.length;
   }
 
   self.bannerView.frame = CGRectMake(0.0f, yOrigin, bannerViewSize.width, bannerViewSize.height);
