@@ -210,13 +210,18 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   if (!_dismissOnBackgroundTap) {
     return;
   }
-  // Only dismiss if the tap is outside of the presented view.
   UIView *contentView = self.presentedViewController.view;
-  CGPoint pointInContentView = [tapRecognizer locationInView:contentView];
-  BOOL isVoiceOverFocusedOnScrim =
-      UIAccessibilityIsVoiceOverRunning() && [_dimmingView accessibilityElementIsFocused];
-  if (!isVoiceOverFocusedOnScrim && [contentView pointInside:pointInContentView withEvent:nil]) {
-    return;
+  if (UIAccessibilityIsVoiceOverRunning()) {
+    // If VoiceOver is running, only dismiss if the background view is focused.
+    if (![_dimmingView accessibilityElementIsFocused]) {
+      return;
+    }
+  } else {
+    // If VoiceOver is not running, only dismiss if the tap is outside of the presented view.
+    CGPoint pointInContentView = [tapRecognizer locationInView:contentView];
+    if ([contentView pointInside:pointInContentView withEvent:nil]) {
+      return;
+    }
   }
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
