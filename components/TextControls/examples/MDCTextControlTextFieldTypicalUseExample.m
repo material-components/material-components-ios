@@ -48,26 +48,31 @@ static CGFloat const kDefaultPadding = 15.0;
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.title = kExampleTitle;
-
   if (!self.containerScheme) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  if (@available(iOS 13.0, *)) {
+    self.view.backgroundColor = [UIColor systemBackgroundColor];
   }
 
   self.resignFirstResponderButton = [self createFirstResponderButton];
   [self.view addSubview:self.resignFirstResponderButton];
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   self.baseTextField = [[MDCBaseTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
   self.baseTextField.borderStyle = UITextBorderStyleRoundedRect;
   self.baseTextField.label.text = @"This is a label";
   self.baseTextField.placeholder = @"This is placeholder text";
   self.baseTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  self.baseTextField.leadingAssistiveLabel.text = @"This is leading assistive text";
   [self.view addSubview:self.baseTextField];
 
   self.filledTextField = [[MDCFilledTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
   self.filledTextField.label.text = @"This is a label";
   self.filledTextField.placeholder = @"This is placeholder text";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  self.filledTextField.leadingAssistiveLabel.text = @"This is leading assistive text";
   [self.view addSubview:self.filledTextField];
 
   self.outlinedTextField =
@@ -75,6 +80,7 @@ static CGFloat const kDefaultPadding = 15.0;
   self.outlinedTextField.label.text = @"This is a label";
   self.outlinedTextField.placeholder = @"This is placeholder text";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  self.outlinedTextField.leadingAssistiveLabel.text = @"This is leading assistive text";
   [self.view addSubview:self.outlinedTextField];
 }
 

@@ -68,6 +68,9 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 - (void)setUpUnderlineColors {
   self.underlineColors = [NSMutableDictionary new];
   UIColor *underlineColor = [UIColor blackColor];
+  if (@available(iOS 13.0, *)) {
+    underlineColor = [UIColor labelColor];
+  }
   self.underlineColors[@(MDCTextControlStateNormal)] = underlineColor;
   self.underlineColors[@(MDCTextControlStateEditing)] = underlineColor;
   self.underlineColors[@(MDCTextControlStateDisabled)] = underlineColor;
@@ -75,7 +78,12 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)setUpFilledBackgroundColors {
   self.filledBackgroundColors = [NSMutableDictionary new];
-  UIColor *filledBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.05];
+  UIColor *filledBackgroundColor = [UIColor blackColor];
+  filledBackgroundColor = [filledBackgroundColor colorWithAlphaComponent:(CGFloat)0.05];
+  if (@available(iOS 13.0, *)) {
+    filledBackgroundColor = [UIColor secondarySystemBackgroundColor];
+  }
+
   self.filledBackgroundColors[@(MDCTextControlStateNormal)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateEditing)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateDisabled)] = filledBackgroundColor;

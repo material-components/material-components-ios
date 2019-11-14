@@ -39,6 +39,13 @@
   UIColor *normalLabelColor = [UIColor darkGrayColor];
   UIColor *leadingAssistiveLabelColor = [UIColor darkGrayColor];
   UIColor *trailingAssistiveLabelColor = [UIColor darkGrayColor];
+  if (@available(iOS 13.0, *)) {
+    textColor = [UIColor labelColor];
+    floatingLabelColor = [UIColor secondaryLabelColor];
+    normalLabelColor = [UIColor secondaryLabelColor];
+    leadingAssistiveLabelColor = [UIColor secondaryLabelColor];
+    trailingAssistiveLabelColor = [UIColor secondaryLabelColor];
+  }
   CGFloat disabledAlpha = (CGFloat)0.60;
   switch (state) {
     case MDCTextControlStateNormal:
