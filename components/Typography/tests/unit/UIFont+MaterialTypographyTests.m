@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 #import "MDCTypographyMockTraitEnvironment.h"
-#import "MaterialTypography.h"
 #import "MaterialApplication.h"
+#import "MaterialTypography.h"
 
 @interface UIFont_MaterialTypographyTests : XCTestCase
 @end
