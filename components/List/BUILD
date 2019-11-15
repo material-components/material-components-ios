@@ -121,6 +121,7 @@ mdc_examples_objc_library(
         ":List",
         ":ListThemer",
         "//components/private/Icons/icons/ic_info",
+        "//components/schemes/Container",
     ],
 )
 
