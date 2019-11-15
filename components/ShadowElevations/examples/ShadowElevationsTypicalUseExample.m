@@ -66,8 +66,8 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
     self.sliderControl.translatesAutoresizingMaskIntoConstraints = NO;
     self.sliderControl.accessibilityLabel = @"Displayed shadow elevation";
     [self.sliderControl addTarget:self
-                      action:@selector(sliderValueChanged:)
-            forControlEvents:UIControlEventValueChanged];
+                           action:@selector(sliderValueChanged:)
+                 forControlEvents:UIControlEventValueChanged];
     [self addSubview:self.sliderControl];
 
     [NSLayoutConstraint constraintWithItem:self.sliderControl
