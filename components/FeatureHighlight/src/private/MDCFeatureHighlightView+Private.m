@@ -109,11 +109,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer = [[MDCFeatureHighlightLayer alloc] init];
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
-    _accessibilityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    _accessibilityView = [[UIView alloc] initWithFrame:self.bounds];
+    _accessibilityView.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _accessibilityView.isAccessibilityElement = YES;
     _accessibilityView.accessibilityTraits = UIAccessibilityTraitButton;
     _accessibilityView.accessibilityLabel = @"Dismiss";
     [self addSubview:_accessibilityView];
+    [self sendSubviewToBack:_accessibilityView];
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
@@ -315,7 +318,13 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _displayedView = displayedView;
   [self addSubview:_displayedView];
   _displayedView.layer.mask = _displayMaskLayer;
-  self.accessibilityElements = @[ _titleLabel, _bodyLabel, _displayedView, _accessibilityView ];
+}
+
+- (NSArray *)accessibilityElements {
+  if (_displayedView) {
+    return @[ _titleLabel, _bodyLabel, _displayedView, _accessibilityView ];
+  }
+  return @[ _titleLabel, _bodyLabel, _accessibilityView ];
 }
 
 - (void)setHighlightPoint:(CGPoint)highlightPoint {
