@@ -14,6 +14,7 @@
 
 import UIKit
 
+import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
@@ -45,17 +46,17 @@ class ActionSheetSwiftExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
+    if let appBarContainer = parent as? MDCAppBarContainerViewController {
+      appBarContainer.appBarViewController.headerView.trackingScrollView = tableView
+    }
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.frame = view.bounds
+    tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 56
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    
-    view.backgroundColor = containerScheme.colorScheme.backgroundColor
-    tableView.frame = view.frame
-    tableView.frame.origin.y = 0.0
     view.addSubview(tableView)
   }
 

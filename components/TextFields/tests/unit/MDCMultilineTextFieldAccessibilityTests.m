@@ -16,26 +16,26 @@
 
 #import "MaterialTextFields.h"
 
-@interface MDCTextFieldAccessibilityTests : XCTestCase
+@interface MDCMultiLineTextFieldAccessibilityTests : XCTestCase
 
 @end
 
-@implementation MDCTextFieldAccessibilityTests
+@implementation MDCMultiLineTextFieldAccessibilityTests
 
 - (void)testUITextFieldAccessibilityLabel {
   // Given
-  UITextField *field = [[UITextField alloc] init];
+  UITextView *view = [[UITextView alloc] init];
 
   // When
-  field.accessibilityLabel = @"main accessibility label";
+  view.accessibilityLabel = @"main accessibility label";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"main accessibility label");
+  XCTAssertEqualObjects(view.accessibilityLabel, @"main accessibility label");
 }
 
 - (void)testAccessibilityLabel {
   // Given
-  MDCTextField *field = [[MDCTextField alloc] init];
+  MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
   // When
   field.accessibilityLabel = @"main accessibility label";
@@ -46,7 +46,7 @@
 
 - (void)testAccessibilityLabelUnderlineLabels {
   // Given
-  MDCTextField *field = [[MDCTextField alloc] init];
+  MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
   // When
   field.accessibilityLabel = @"main accessibility label";
@@ -60,8 +60,7 @@
 
 - (void)testAccessibilityLabelPlaceholder {
   // Given
-  MDCTextField *field = [[MDCTextField alloc] init];
-  field.hidesPlaceholderOnInput = NO;
+  MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
   // When
   field.accessibilityLabel = nil;
@@ -74,41 +73,9 @@
                         @"placeholder, leading underline, trailing underline");
 }
 
-- (void)testAccessibilityLabelPlaceholderWithHiddenPlaceholder {
-  // Given
-  MDCTextField *field = [[MDCTextField alloc] init];
-  field.hidesPlaceholderOnInput = YES;
-
-  // When
-  field.accessibilityLabel = nil;
-  field.placeholderLabel.accessibilityLabel = @"placeholder";
-  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
-  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
-
-  // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"leading underline, traling underline");
-}
-
 - (void)testAccessibilityLabelPlaceholderAndLabel {
   // Given
-  MDCTextField *field = [[MDCTextField alloc] init];
-  field.hidesPlaceholderOnInput = NO;
-
-  // When
-  field.accessibilityLabel = @"main accessibility label";
-  field.placeholderLabel.accessibilityLabel = @"placeholder";
-  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
-  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
-
-  // Then
-  XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"main accessibility label, leading underline, traling underline");
-}
-
-- (void)testAccessibilityLabelPlaceholderAndLabelWithHiddenPlaceholder {
-  // Given
-  MDCTextField *field = [[MDCTextField alloc] init];
-  field.hidesPlaceholderOnInput = YES;
+  MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
   // When
   field.accessibilityLabel = @"main accessibility label";

@@ -17,12 +17,14 @@ import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialBottomNavigation_Theming
 import MaterialComponents.MaterialContainerScheme
 
-class BottomNavigationNilBadges : UIViewController {
+class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelegate {
 
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
+  let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
+  let tabBarItem2 = UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -39,6 +41,7 @@ class BottomNavigationNilBadges : UIViewController {
 
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
+    bottomNavBar.delegate = self
 
     // Always show bottom navigation bar item titles.
     bottomNavBar.titleVisibility = .always
@@ -47,9 +50,8 @@ class BottomNavigationNilBadges : UIViewController {
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.
-    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
-    let tabBarItem2 =
-      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
+    tabBarItem1.accessibilityValue = "New items"
+
     bottomNavBar.items = [ tabBarItem1, tabBarItem2 ]
 
     // Select a bottom navigation bar item.
@@ -90,6 +92,16 @@ class BottomNavigationNilBadges : UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+  func bottomNavigationBar(
+    _ bottomNavigationBar: MDCBottomNavigationBar,
+    didSelect item: UITabBarItem
+  ) {
+    if (item == tabBarItem1) {
+      tabBarItem1.badgeValue = nil
+      tabBarItem1.accessibilityValue = ""
+    }
   }
 }
 
