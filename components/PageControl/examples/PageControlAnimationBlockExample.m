@@ -200,16 +200,16 @@
   CGPoint offset = _scrollView.contentOffset;
   offset.x = nextPage * CGRectGetWidth(_scrollView.frame);
   [UIView animateWithDuration:0.2
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^{
-                     self->_scrollView.contentOffset = offset;
-                   }
-                   completion:^(BOOL completed) {
-    if (completed) {
-      [self updateButtonStates];
-    }
-  }];
+      delay:0
+      options:UIViewAnimationOptionCurveEaseOut
+      animations:^{
+        self->_scrollView.contentOffset = offset;
+      }
+      completion:^(BOOL completed) {
+        if (completed) {
+          [self updateButtonStates];
+        }
+      }];
 }
 
 #pragma mark - CatalogByConvention
