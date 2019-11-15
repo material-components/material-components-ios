@@ -23,7 +23,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BAQ-GJ-1pn" customClass="MDCCard">
                     <rect key="frame" x="26" y="150.33333333333334" width="323" height="511.66666666666663"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-image" translatesAutoresizingMaskIntoConstraints="NO" id="ldt-3r-Agk" customClass="CardImageView" customModule="MaterialComponentsExamples" customModuleProvider="target">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-image" translatesAutoresizingMaskIntoConstraints="NO" id="ldt-3r-Agk">
                             <rect key="frame" x="0.0" y="0.0" width="323" height="323"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ldt-3r-Agk" secondAttribute="height" multiplier="15:15" id="OUj-9G-eou"/>
