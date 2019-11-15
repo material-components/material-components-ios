@@ -33,7 +33,7 @@
   XCTAssertEqualObjects(view.accessibilityLabel, @"main accessibility label");
 }
 
-- (void)testMDCMultilineTextFieldaccessibilityLabel {
+- (void)testAccessibilityLabel {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
@@ -44,7 +44,7 @@
   XCTAssertEqualObjects(field.accessibilityLabel, @"main accessibility label");
 }
 
-- (void)testMDCMultilineTextFieldAccessibilityLabelUnderlineLabels {
+- (void)testAccessibilityLabelUnderlineLabels {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
@@ -58,7 +58,7 @@
                         @"main accessibility label, leading underline, trailing underline");
 }
 
-- (void)testMDCMultilineTextFieldAccessibilityLabelPlaceholder {
+- (void)testAccessibilityLabelPlaceholder {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
@@ -73,7 +73,7 @@
                         @"placeholder, leading underline, trailing underline");
 }
 
-- (void)testMDCMultilineTextFieldAccessibilityLabelPlaceholderAndLabel {
+- (void)testAccessibilityLabelPlaceholderAndLabel {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 

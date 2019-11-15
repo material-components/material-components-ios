@@ -782,6 +782,23 @@
   return value;
 }
 
+- (NSString *)accessibilityLabel {
+  NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
+  if ([super accessibilityLabel].length > 0) {
+    [accessibilityStrings addObject:[super accessibilityLabel]];
+  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+  }
+  if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+  }
+  if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
+  }
+  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
+                                        : nil;
+}
+
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _fundament.mdc_adjustsFontForContentSizeCategory;
 }
