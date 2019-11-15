@@ -57,7 +57,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 }
 
 - (void)commonMDCRippleViewInit {
-  self.usesSuperviewShadowLayerAsMask = YES;
+  _usesSuperviewShadowLayerAsMask = YES;
   self.userInteractionEnabled = NO;
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
