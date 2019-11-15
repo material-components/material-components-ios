@@ -436,8 +436,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _pulseLayer.fillColor = _innerHighlightColor.CGColor;
   _innerLayer.fillColor = _innerHighlightColor.CGColor;
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
-
-  _accessibilityView.accessibilityFrame = self.bounds;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
