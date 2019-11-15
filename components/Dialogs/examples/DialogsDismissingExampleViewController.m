@@ -225,6 +225,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
   [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (BOOL)accessibilityPerformEscape {
+  [self dismissViewControllerAnimated:YES completion:nil];
+  return YES;
+}
+
 @end
 
 #pragma mark - OpenURLViewController
@@ -276,6 +281,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
   // Use mdc_safeSharedApplication to avoid a compiler warning about extensions
   [[UIApplication mdc_safeSharedApplication] performSelector:@selector(openURL:)
                                                   withObject:testURL];
+}
+
+- (BOOL)accessibilityPerformEscape {
+  [self dismissViewControllerAnimated:YES completion:nil];
+  return YES;
 }
 
 @end
