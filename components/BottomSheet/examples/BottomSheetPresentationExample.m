@@ -30,11 +30,15 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
+    MDCBottomSheetTransitionController *transitionController = [[MDCBottomSheetTransitionController alloc] init];
+    transitionController.dismissOnBackgroundTap = YES;
+    _transitionController = transitionController;
     self.transitioningDelegate = _transitionController;
     self.modalPresentationStyle = UIModalPresentationCustom;
 
     self.view.backgroundColor = UIColor.purpleColor;
+    self.view.isAccessibilityElement = YES;
+    self.view.accessibilityLabel = @"Example content";
   }
   return self;
 }
