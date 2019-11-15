@@ -41,8 +41,9 @@
 
 #pragma mark - UIViewController
 
-- (id)init {
-  self = [super init];
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+  self = [super initWithCoder:coder];
   if (self) {
     _containerScheme = [[MDCContainerScheme alloc] init];
   }
@@ -60,6 +61,7 @@
   [self.floatingActionButton setContentEdgeInsets:UIEdgeInsetsMake(40, 40, 0, 0)
                                          forShape:MDCFloatingButtonShapeDefault
                                            inMode:MDCFloatingButtonModeNormal];
+  self.floatingActionButton.accessibilityLabel = @"Floating Button";
 
   [self updateInkStyle:self.inkBoundingSwitch.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
 }
