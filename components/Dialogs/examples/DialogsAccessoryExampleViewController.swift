@@ -112,7 +112,12 @@ extension DialogsAccessoryExampleViewController {
                                                   for: indexPath)
     guard let customCell = cell as? MDCCollectionViewTextCell else { return cell }
 
-    customCell.textLabel?.text = menu[indexPath.row]
+    customCell.isAccessibilityElement = true
+    customCell.accessibilityTraits = .button
+
+    let cellTitle = menu[indexPath.row]
+    customCell.accessibilityLabel = cellTitle
+    customCell.textLabel?.text = cellTitle
 
     return customCell
   }
