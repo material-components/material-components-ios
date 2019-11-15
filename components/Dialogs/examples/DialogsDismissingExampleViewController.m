@@ -112,8 +112,8 @@
 }
 
 - (IBAction)didTapOpenURL {
-  OpenURLViewController *viewController =
-      [[OpenURLViewController alloc] initWithNibName:nil bundle:nil];
+  OpenURLViewController *viewController = [[OpenURLViewController alloc] initWithNibName:nil
+                                                                                  bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
   viewController.containerScheme = self.containerScheme;
