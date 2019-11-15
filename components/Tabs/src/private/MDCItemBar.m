@@ -229,6 +229,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 #pragma mark - Accessibility
 
+- (UIAccessibilityTraits)accessibilityTraits {
+  if (@available(iOS 10.0, *)) {
+    return [super accessibilityTraits] | UIAccessibilityTraitTabBar;
+  }
+  return [super accessibilityTraits];
+}
+
 - (id)accessibilityElementForItem:(UITabBarItem *)item {
   NSUInteger index = [_items indexOfObject:item];
   if (index != NSNotFound) {
