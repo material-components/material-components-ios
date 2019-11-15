@@ -33,6 +33,10 @@ class ShapedCardCollectionCell: MDCCardCollectionCell {
     let shapeGenerator = MDCRectangleShapeGenerator()
     shapeGenerator.topLeftCorner = MDCCutCornerTreatment(cut: 20)
     self.shapeGenerator = shapeGenerator
+
+    self.isAccessibilityElement = true
+    self.accessibilityTraits = .button
+    self.accessibilityLabel = "Shaped collection cell"
   }
 }
 
