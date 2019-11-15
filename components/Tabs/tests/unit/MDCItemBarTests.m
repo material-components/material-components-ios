@@ -98,12 +98,14 @@
   NSOperatingSystemVersion iOS10Version = {10, 0, 0};
   if (![NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
     // When
-    UIView *view = [self.itemBar accessibilityElementForItem:self.itemBar.items.firstObject];
-    XCTAssertTrue([view isKindOfClass:[UIView class]]);
-    if ([view isKindOfClass:[UIView class]]) {
-      NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
-      XCTAssertTrue([accessibilityLabel localizedCaseInsensitiveContainsString:@"tab"],
-                    @"Item bar items should include the faked 'tab' information on iOS 9.");
+    for (UITabBarItem *item in self.itemBar.items) {
+      UIView *view = [self.itemBar accessibilityElementForItem:item];
+      XCTAssertTrue([view isKindOfClass:[UIView class]]);
+      if ([view isKindOfClass:[UIView class]]) {
+        NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
+        XCTAssertTrue([accessibilityLabel localizedCaseInsensitiveContainsString:@"tab"],
+                      @"Item bar items should include the faked 'tab' information on iOS 9.");
+      }
     }
   }
 }
@@ -111,12 +113,14 @@
 - (void)testItemBarViewDoesNotIncludesTabInAccessibilityLabelOniOS10Plus {
   if (@available(iOS 10.0, *)) {
     // When
-    UIView *view = [self.itemBar accessibilityElementForItem:self.itemBar.items.firstObject];
-    XCTAssertTrue([view isKindOfClass:[UIView class]]);
-    if ([view isKindOfClass:[UIView class]]) {
-      NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
-      XCTAssertFalse([accessibilityLabel localizedCaseInsensitiveContainsString:@"tab"],
-                     @"Item bar items should not include the faked 'tab' information on iOS 9.");
+    for (UITabBarItem *item in self.itemBar.items) {
+      UIView *view = [self.itemBar accessibilityElementForItem:item];
+      XCTAssertTrue([view isKindOfClass:[UIView class]]);
+      if ([view isKindOfClass:[UIView class]]) {
+        NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
+        XCTAssertFalse([accessibilityLabel localizedCaseInsensitiveContainsString:@"tab"],
+                       @"Item bar items should not include the faked 'tab' information on iOS 9.");
+      }
     }
   }
 }
