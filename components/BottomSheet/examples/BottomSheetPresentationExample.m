@@ -30,7 +30,8 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    MDCBottomSheetTransitionController *transitionController = [[MDCBottomSheetTransitionController alloc] init];
+    MDCBottomSheetTransitionController *transitionController =
+        [[MDCBottomSheetTransitionController alloc] init];
     transitionController.dismissOnBackgroundTap = YES;
     _transitionController = transitionController;
     self.transitioningDelegate = _transitionController;
