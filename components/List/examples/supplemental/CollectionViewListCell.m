@@ -146,10 +146,10 @@ static inline UIFont *defaultDetailsFont(void) {
                                                                   metrics:metrics
                                                                     views:views]];
   [constraints
-   addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
-                                                               options:0
-                                                               metrics:metrics
-                                                                 views:views]];
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+                                                                  options:0
+                                                                  metrics:metrics
+                                                                    views:views]];
 
   _imageLeftPaddingConstraint = [NSLayoutConstraint constraintWithItem:_imageView
                                                              attribute:NSLayoutAttributeLeft
@@ -185,10 +185,11 @@ static inline UIFont *defaultDetailsFont(void) {
                                                                     views:views]];
 
   [constraints
-      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[contentWrapper]-(kImagePadding)-|"
-                                                                  options:0
-                                                                  metrics:metrics
-                                                                    views:views]];
+      addObjectsFromArray:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:[contentWrapper]-(kImagePadding)-|"
+                                                  options:0
+                                                  metrics:metrics
+                                                    views:views]];
 
   [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[titleLabel]|"
                                                                            options:0

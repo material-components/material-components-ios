@@ -95,15 +95,11 @@ static const CGFloat kSmallArbitraryCellWidth = 100;
     ]];
     [_content addObject:@[
       [NSString stringWithFormat:@"Two line text with %@ alignment and truncation", alignmentKey],
-      alignmentValues[alignmentKey],
-      kExampleDetailText,
-      alignmentValues[alignmentKey]
+      alignmentValues[alignmentKey], kExampleDetailText, alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
       [NSString stringWithFormat:@"Three line text with %@ alignment and wrapping", alignmentKey],
-      alignmentValues[alignmentKey],
-      kExampleDetailText,
-      alignmentValues[alignmentKey]
+      alignmentValues[alignmentKey], kExampleDetailText, alignmentValues[alignmentKey]
     ]];
   }
 
