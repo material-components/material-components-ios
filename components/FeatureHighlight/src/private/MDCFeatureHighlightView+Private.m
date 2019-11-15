@@ -315,7 +315,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _displayedView = displayedView;
   [self addSubview:_displayedView];
   _displayedView.layer.mask = _displayMaskLayer;
-  self.accessibilityElements = @[_titleLabel, _bodyLabel, _displayedView, _accessibilityView];
+  self.accessibilityElements = @[ _titleLabel, _bodyLabel, _displayedView, _accessibilityView ];
 }
 
 - (void)setHighlightPoint:(CGPoint)highlightPoint {
