@@ -828,7 +828,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
   if ([super accessibilityLabel].length > 0) {
     [accessibilityStrings addObject:[super accessibilityLabel]];
-  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
+  } else if (!self.hidesPlaceholderOnInput && self.placeholderLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
   }
   if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {

@@ -55,11 +55,14 @@
 
 /**
  The text string of the placeholder label.
- Bringing convenience api found in UITextField to all MDCTextInputs. Maps to the .text of the
+ Bringing convenience API found in UITextField to all MDCTextInputs. Maps to the .text of the
  placeholder label.
 
  Note: Inherited from MDCTextInput protocol. Added here to declare Interface Builder support
  (IBInspectable).
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, nullable, copy) IBInspectable NSString *placeholder;
 

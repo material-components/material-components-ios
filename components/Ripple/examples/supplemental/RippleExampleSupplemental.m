@@ -32,6 +32,9 @@
     bigView.backgroundColor = UIColor.whiteColor;
     bigView.layer.borderColor = UIColor.lightGrayColor.CGColor;
     bigView.layer.borderWidth = (CGFloat)0.5;
+    bigView.isAccessibilityElement = YES;
+    bigView.accessibilityLabel = @"Big view with ripple";
+    bigView.accessibilityTraits = UIAccessibilityTraitButton;
     [self addSubview:bigView];
 
     CGFloat buttonViewDim = 50;
@@ -46,6 +49,9 @@
     pseudoButtonView.layer.borderWidth = (CGFloat)0.5;
     pseudoButtonView.layer.cornerRadius = 5;
     pseudoButtonView.clipsToBounds = YES;
+    pseudoButtonView.isAccessibilityElement = YES;
+    pseudoButtonView.accessibilityLabel = @"Small view with ripple";
+    pseudoButtonView.accessibilityTraits = UIAccessibilityTraitButton;
     [self addSubview:pseudoButtonView];
 
     CGFloat pseudoFABViewFrameLeft =
@@ -59,6 +65,9 @@
     pseudoFABView.layer.borderWidth = (CGFloat)0.5;
     pseudoFABView.layer.cornerRadius = 28;
     pseudoFABView.clipsToBounds = YES;
+    pseudoFABView.isAccessibilityElement = YES;
+    pseudoFABView.accessibilityLabel = @"Small circular view with ripple";
+    pseudoFABView.accessibilityTraits = UIAccessibilityTraitButton;
     [self addSubview:pseudoFABView];
 
     self.autoresizingMask =

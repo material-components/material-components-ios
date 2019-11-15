@@ -13,11 +13,13 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialBottomNavigation
+import MaterialComponents.MaterialBottomNavigation_Theming
+import MaterialComponents.MaterialContainerScheme
 
 class BottomNavigationNilBadges : UIViewController {
 
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -35,7 +37,7 @@ class BottomNavigationNilBadges : UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
     // Always show bottom navigation bar item titles.
@@ -52,16 +54,14 @@ class BottomNavigationNilBadges : UIViewController {
     bottomNavBar.items = [ tabBarItem1, tabBarItem2 ]
 
     // Select a bottom navigation bar item.
-    bottomNavBar.selectedItem = tabBarItem2;
+    bottomNavBar.selectedItem = tabBarItem2
 
     // Test that
-    tabBarItem1.badgeValue = "";
-    tabBarItem2.badgeValue = nil;
+    tabBarItem1.badgeValue = ""
+    tabBarItem2.badgeValue = nil
 
     // Theme the bottom navigation bar.
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar);
-
+    bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
   }
   
   func layoutBottomNavBar() {

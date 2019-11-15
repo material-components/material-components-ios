@@ -33,7 +33,7 @@
   XCTAssertEqualObjects(field.accessibilityLabel, @"main accessibility label");
 }
 
-- (void)testMDCTextFieldaccessibilityLabel {
+- (void)testMDCTextFieldAccessibilityLabel {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
 
@@ -51,16 +51,33 @@
   // When
   field.accessibilityLabel = @"main accessibility label";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
-  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"main accessibility label, leading underline, traling underline");
+                        @"main accessibility label, leading underline, trailing underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholder {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
+  field.hidesPlaceholderOnInput = NO;
+
+  // When
+  field.accessibilityLabel = nil;
+  field.placeholderLabel.accessibilityLabel = @"placeholder";
+  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
+
+  // Then
+  XCTAssertEqualObjects(field.accessibilityLabel,
+                        @"placeholder, leading underline, trailing underline");
+}
+
+- (void)testMDCTextFieldAccessibilityLabelPlaceholderWithHiddenPlaceholder {
+  // Given
+  MDCTextField *field = [[MDCTextField alloc] init];
+  field.hidesPlaceholderOnInput = YES;
 
   // When
   field.accessibilityLabel = nil;
@@ -69,13 +86,13 @@
   field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"placeholder, leading underline, traling underline");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"leading underline, traling underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholderAndLabel {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
+  field.hidesPlaceholderOnInput = NO;
 
   // When
   field.accessibilityLabel = @"main accessibility label";
@@ -86,6 +103,22 @@
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
                         @"main accessibility label, leading underline, traling underline");
+}
+
+- (void)testMDCTextFieldAccessibilityLabelPlaceholderAndLabelWithHiddenPlaceholder {
+  // Given
+  MDCTextField *field = [[MDCTextField alloc] init];
+  field.hidesPlaceholderOnInput = YES;
+
+  // When
+  field.accessibilityLabel = @"main accessibility label";
+  field.placeholderLabel.accessibilityLabel = @"placeholder";
+  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
+
+  // Then
+  XCTAssertEqualObjects(field.accessibilityLabel,
+                        @"main accessibility label, leading underline, trailing underline");
 }
 
 @end

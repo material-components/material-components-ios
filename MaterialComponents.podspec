@@ -2007,6 +2007,7 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+	  unit_tests.dependency "MaterialComponents/private/Application"
     end
   end
 

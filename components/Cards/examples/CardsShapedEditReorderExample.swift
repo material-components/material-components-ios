@@ -33,10 +33,14 @@ class ShapedCardCollectionCell: MDCCardCollectionCell {
     let shapeGenerator = MDCRectangleShapeGenerator()
     shapeGenerator.topLeftCorner = MDCCutCornerTreatment(cut: 20)
     self.shapeGenerator = shapeGenerator
+
+    self.isAccessibilityElement = true
+    self.accessibilityTraits = .button
+    self.accessibilityLabel = "Shaped collection cell"
   }
 }
 
-class EditReorderShapedCollectionViewController: UIViewController,
+class CardsShapedEditReorderExampleViewController: UIViewController,
   UICollectionViewDelegate,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
@@ -207,7 +211,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
 
 }
 
-extension EditReorderShapedCollectionViewController {
+extension CardsShapedEditReorderExampleViewController {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [

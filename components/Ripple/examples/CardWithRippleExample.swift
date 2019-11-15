@@ -64,6 +64,11 @@ class CardWithRippleExample: UIViewController {
     button.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal,
                                             toItem: nil, attribute: .notAnAttribute, multiplier: 1,
                                             constant: 60))
+
+    view.accessibilityElements = [card, button]
+    card.isAccessibilityElement = true
+    card.accessibilityTraits = .button
+    card.accessibilityLabel = "Card with button"
   }
 
   override public var traitCollection: UITraitCollection {
