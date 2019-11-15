@@ -42,10 +42,21 @@ class CustomShadowViewController: UIViewController {
     bodyLabel.sizeToFit()
     self.view.addSubview(bodyLabel)
 
+    self.view.isAccessibilityElement = true
+    self.view.accessibilityTraits = .button
+    self.view.accessibilityLabel = bodyLabel.text
+    self.view.accessibilityHint = "Dismiss this dialog"
+    let tap = UITapGestureRecognizer(target: self, action: #selector(dismissSelf))
+    view.addGestureRecognizer(tap)
+
     NSLayoutConstraint.activate(
       NSLayoutConstraint.constraints(withVisualFormat: "H:|-[body]-|", options: [], metrics: nil, views: [ "body": bodyLabel]))
     NSLayoutConstraint.activate(
       NSLayoutConstraint.constraints(withVisualFormat: "V:|-[body]-|", options: [], metrics: nil, views: [ "body": bodyLabel]))
+  }
+
+  @objc func dismissSelf() {
+    dismiss(animated: true)
   }
 
   override var preferredContentSize: CGSize {
