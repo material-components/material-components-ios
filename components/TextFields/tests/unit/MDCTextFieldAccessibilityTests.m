@@ -27,10 +27,10 @@
   UITextField *field = [[UITextField alloc] init];
 
   // When
-  field.accessibilityLabel = @"User entered text";
+  field.accessibilityLabel = @"main accessibility label";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"main accessibility label");
 }
 
 - (void)testMDCTextFieldaccessibilityLabel {
@@ -38,10 +38,10 @@
   MDCTextField *field = [[MDCTextField alloc] init];
 
   // When
-  field.accessibilityLabel = @"User entered text";
+  field.accessibilityLabel = @"main accessibility label";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"main accessibility label");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelUnderlineLabels {
@@ -49,13 +49,13 @@
   MDCTextField *field = [[MDCTextField alloc] init];
 
   // When
-  field.accessibilityLabel = @"User entered text";
+  field.accessibilityLabel = @"main accessibility label";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
   field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"User entered text, leading underline, traling underline");
+                        @"main accessibility label, leading underline, traling underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholder {
@@ -78,14 +78,14 @@
   MDCTextField *field = [[MDCTextField alloc] init];
 
   // When
-  field.accessibilityLabel = @"User entered text";
+  field.accessibilityLabel = @"main accessibility label";
   field.placeholderLabel.accessibilityLabel = @"placeholder";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
   field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"User entered text, leading underline, traling underline");
+                        @"main accessibility label, leading underline, traling underline");
 }
 
 @end
