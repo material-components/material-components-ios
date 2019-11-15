@@ -35,7 +35,12 @@ class MDCDragonsTableViewCell: UITableViewCell {
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+
     self.accessoryView = self.defaultButton
+
+    // Treat the entire cell as an accessibility button for VoiceOver purposes.
+    self.isAccessibilityElement = true
+    self.accessibilityTraits = .button
   }
 
   required init?(coder aDecoder: NSCoder) {
