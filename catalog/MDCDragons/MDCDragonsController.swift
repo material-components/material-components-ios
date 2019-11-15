@@ -102,6 +102,8 @@ class MDCDragonsController: UIViewController,
     tableView.backgroundColor = Constants.bgColor
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 44
     view.addSubview(tableView)
     view.backgroundColor = Constants.bgColor
 

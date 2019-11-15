@@ -1,3 +1,79 @@
+# 94.2.0
+
+This minor release introduces new APIs to MDCAppBarViewController and MDCSlider. Additionally, it includes some fixes for Banner constraints.
+
+## New Features
+
+### AppBar
+
+`MDCAppBarViewController` allows automatically adjust the height of the app bar based on its `headerStackView`.
+
+**Objective-C**
+
+```objc
+MDCAppBarViewController *appBar= [[MDCAppBarViewController alloc] init];
+appBar.shouldAdjustHeightBasedOnHeaderStackView = YES;
+```
+
+**Swift**
+
+```swift
+let appBar = MDCAppBarViewController()
+appBar.shouldAdjustHeightBasedOnHeaderStackView = true
+```
+
+### Slider 
+
+`MDCSlider` allows having a continuous Slider that shows track tick marks.
+
+**Objective-C**
+
+```objc
+MDCSlider *slider = [[MDCSlider alloc] init];
+slider.discrete = NO;
+slider.numberOfDiscreteValues = 5;
+```
+
+**Swift**
+
+```swift
+let slider = MDCSlider()
+slider.discrete = false
+slider.numberOfDiscreteValues = 5;
+```
+
+## API changes
+
+#### AppBar
+
+#### MDCAppBarViewController
+
+*new* property: `shouldAdjustHeightBasedOnHeaderStackView` in `MDCAppBarViewController`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `discrete` in `MDCSlider`
+
+## Component changes
+
+### AppBar
+
+* [Add API to auto adjust height based on HeaderStackView for app bar. (#8764)](https://github.com/material-components/material-components-ios/commit/2f52dece95bc24d63d4505d9dd58db09de291975) (Wenyu Zhang)
+
+### Banner
+
+* [Add an example to show how Banner can be used as bottom bar in AppBar. (#8785)](https://github.com/material-components/material-components-ios/commit/509d6bff90b7a9a704a1ea9e8714100615ae1244) (Wenyu Zhang)
+* [Deactivate custom constraints when there is a need to update constraints.(#8793)](https://github.com/material-components/material-components-ios/commit/f69b7d54e919d4796f747446cfc31a24d6c7a978) (Wenyu Zhang)
+* [update constraint when frame is changed. (#8765)](https://github.com/material-components/material-components-ios/commit/6d7edec5815ce03f1c56930abc76cf23982f30d6) (Wenyu Zhang)
+
+## Slider
+
+* [Fix event handling. (#8759)](https://github.com/material-components/material-components-ios/commit/f588ea9dbe560a9e89457d8b8b3015f7c3e1f394) (Robert Moore)
+ 
+---
+
 # 94.1.0
 
 This minor release introduces new APIs to FlexibleHeader and Ripple, and updates the appearance of `MDCSnackbar` to the latest style. The release also includes bug fixes for multiple components.

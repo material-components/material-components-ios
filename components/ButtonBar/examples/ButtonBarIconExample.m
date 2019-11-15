@@ -17,6 +17,7 @@
 #import "MaterialButtonBar.h"
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialIcons+ic_info.h"
+#import "MaterialPalettes.h"
 
 @interface ButtonBarIconExample : UIViewController
 @end
@@ -27,7 +28,7 @@
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
-  buttonBar.tintColor = UIColor.whiteColor;
+  buttonBar.tintColor = MDCPalette.indigoPalette.tint500;
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
