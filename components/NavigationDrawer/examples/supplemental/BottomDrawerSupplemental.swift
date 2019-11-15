@@ -56,6 +56,15 @@ class DrawerContentViewController: UIViewController {
 
 class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
   let preferredHeight: CGFloat = 80
+
+  lazy var closeButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("Close", for: .normal)
+    button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+    button.setTitleColor(.black, for: .normal)
+    return button
+  }()
+
   let titleLabel : UILabel = {
     let label = UILabel(frame: .zero)
     label.text = "Example Header"
@@ -72,23 +81,23 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
     }
   }
 
-  init() {
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.addSubview(closeButton)
     view.addSubview(titleLabel)
   }
 
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
+    closeButton.sizeToFit()
+    closeButton.center =
+      CGPoint(x: 30, y: self.preferredHeight - 20)
     titleLabel.center =
       CGPoint(x: self.view.frame.size.width / 2, y: self.preferredHeight - 20)
   }
 
+  @objc
+  func closeButtonTapped() {
+    dismiss(animated: true)
+  }
 }
