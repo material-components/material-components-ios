@@ -177,6 +177,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   transition.duration = kActivityIndicatorExampleAnimationDuration;
   transition.completion = ^{
     self->_button.enabled = YES;
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self->_button);
   };
 
   [_activityIndicator stopAnimatingWithTransition:transition];
