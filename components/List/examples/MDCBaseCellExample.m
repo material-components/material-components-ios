@@ -83,6 +83,8 @@
   cell.layer.borderWidth = 1;
   cell.enableRippleBehavior = YES;
   cell.rippleColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityLabel = [NSString stringWithFormat:@"Cell number %d", indexPath.item];
   return cell;
 }
 
@@ -90,12 +92,14 @@
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCBaseCell *cell = (MDCBaseCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
   cell.elevation = 10;
+  cell.accessibilityTraits |= UIAccessibilityTraitSelected;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCBaseCell *cell = (MDCBaseCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
   cell.elevation = 0;
+  cell.accessibilityTraits &= ~UIAccessibilityTraitSelected;
 }
 
 #pragma mark - CatalogByConvention
