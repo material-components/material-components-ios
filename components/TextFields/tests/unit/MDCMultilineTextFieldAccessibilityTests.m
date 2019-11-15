@@ -86,8 +86,7 @@
   field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"leading underline, trailing underline");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"leading underline, trailing underline");
 }
 
 - (void)testAccessibilityLabelPlaceholderAndLabel {
