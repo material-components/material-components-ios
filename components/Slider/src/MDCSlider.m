@@ -593,7 +593,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
   if (self.numberOfDiscreteValues > 1) {
     CGFloat discreteAdjustmentAmount = range / (self.numberOfDiscreteValues - 1);
-    if (self.discrete) {
+    if (self.isDiscrete) {
       adjustmentAmount = discreteAdjustmentAmount;
     } else {
       adjustmentAmount = MIN(adjustmentAmount, discreteAdjustmentAmount);
