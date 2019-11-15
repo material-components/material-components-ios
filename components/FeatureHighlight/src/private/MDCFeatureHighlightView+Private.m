@@ -75,6 +75,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   MDCFeatureHighlightLayer *_pulseLayer;
   MDCFeatureHighlightLayer *_innerLayer;
   MDCFeatureHighlightLayer *_displayMaskLayer;
+  UIView *_accessibilityView;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
@@ -107,6 +108,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
     _displayMaskLayer = [[MDCFeatureHighlightLayer alloc] init];
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
+
+    _accessibilityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    _accessibilityView.isAccessibilityElement = YES;
+    _accessibilityView.accessibilityTraits = UIAccessibilityTraitButton;
+    _accessibilityView.accessibilityLabel = @"Dismiss highlight button";
+    [self addSubview:_accessibilityView];
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.textAlignment = NSTextAlignmentNatural;
@@ -308,6 +315,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _displayedView = displayedView;
   [self addSubview:_displayedView];
   _displayedView.layer.mask = _displayMaskLayer;
+  self.accessibilityElements = @[_titleLabel, _bodyLabel, _displayedView, _accessibilityView];
 }
 
 - (void)setHighlightPoint:(CGPoint)highlightPoint {
@@ -419,6 +427,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _pulseLayer.fillColor = _innerHighlightColor.CGColor;
   _innerLayer.fillColor = _innerHighlightColor.CGColor;
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
+
+  _accessibilityView.accessibilityFrame = self.bounds;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -700,11 +710,11 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 #pragma mark - UIAccessibility
 
 - (void)setAccessibilityHint:(NSString *)accessibilityHint {
-  _titleLabel.accessibilityHint = accessibilityHint;
+  _accessibilityView.accessibilityHint = accessibilityHint;
 }
 
 - (NSString *)accessibilityHint {
-  return _titleLabel.accessibilityHint;
+  return _accessibilityView.accessibilityHint;
 }
 
 @end
