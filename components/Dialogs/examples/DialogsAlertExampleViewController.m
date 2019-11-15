@@ -286,6 +286,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = self.modes[indexPath.row];
+  cell.textLabel.isAccessibilityElement = NO;
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityLabel = cell.textLabel.text;
+  cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
+
   return cell;
 }
 
