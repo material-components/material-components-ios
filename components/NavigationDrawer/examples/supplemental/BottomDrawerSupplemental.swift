@@ -68,6 +68,7 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
   let titleLabel : UILabel = {
     let label = UILabel(frame: .zero)
     label.text = "Example Header"
+    label.accessibilityTraits = .header
     label.sizeToFit()
     return label
   }()
