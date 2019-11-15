@@ -27,10 +27,10 @@
   UITextField *field = [[UITextField alloc] init];
   
   // When
-  field.accessibilityLabel = @"blah";
+  field.accessibilityLabel = @"User entered text";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"blah");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text");
 }
 
 - (void)testMDCTextFieldaccessibilityLabel {
@@ -38,10 +38,10 @@
   MDCTextField *field = [[MDCTextField alloc] init];
   
   // When
-  field.accessibilityLabel = @"blah";
+  field.accessibilityLabel = @"User entered text";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"blah");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelUnderlineLabels {
@@ -49,12 +49,12 @@
   MDCTextField *field = [[MDCTextField alloc] init];
   
   // When
-  field.accessibilityLabel = @"blah";
-  field.leadingUnderlineLabel.accessibilityLabel = @"bloog";
-  field.trailingUnderlineLabel.accessibilityLabel = @"flah";
+  field.accessibilityLabel = @"User entered text";
+  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"blah, bloog, flah");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text, leading underline, traling underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholder {
@@ -63,12 +63,12 @@
   
   // When
   field.accessibilityLabel = nil;
-  field.placeholderLabel.accessibilityLabel = @"blah";
-  field.leadingUnderlineLabel.accessibilityLabel = @"bloog";
-  field.trailingUnderlineLabel.accessibilityLabel = @"flah";
+  field.placeholderLabel.accessibilityLabel = @"placeholder";
+  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"blah, bloog, flah");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"placeholder, leading underline, traling underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholderAndLabel {
@@ -76,13 +76,13 @@
   MDCTextField *field = [[MDCTextField alloc] init];
   
   // When
-  field.accessibilityLabel = @"hai";
-  field.placeholderLabel.accessibilityLabel = @"blah";
-  field.leadingUnderlineLabel.accessibilityLabel = @"bloog";
-  field.trailingUnderlineLabel.accessibilityLabel = @"flah";
+  field.accessibilityLabel = @"User entered text";
+  field.placeholderLabel.accessibilityLabel = @"placeholder";
+  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"hai, blah, bloog, flah");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text, leading underline, traling underline");
 }
 
 @end
