@@ -62,7 +62,7 @@
  (IBInspectable).
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
  placeholder as distinct from `label text`. The placeholder-related properties of this class most
- closely align with the "label text" as described in the guidance..
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, nullable, copy) IBInspectable NSString *placeholder;
 

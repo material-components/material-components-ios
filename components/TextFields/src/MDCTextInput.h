@@ -50,8 +50,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  the placeholder label.
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance..
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedPlaceholder;
 
@@ -115,8 +115,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  Should it have the standard behavior of disappearing when you type? Defaults to YES.
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance..
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, assign) BOOL hidesPlaceholderOnInput;
 
@@ -146,8 +146,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  placeholder label.
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance..
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, nullable, copy) NSString *placeholder;
 
@@ -156,8 +156,8 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance..
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, nonnull, strong, readonly) UILabel *placeholderLabel;
 

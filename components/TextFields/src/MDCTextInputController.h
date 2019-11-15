@@ -106,8 +106,8 @@
  Default is inlinePlaceholderColorDefault.
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance..
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor;
 
@@ -115,8 +115,8 @@
  Default value for inlinePlaceholderColor.
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance..
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
@@ -137,8 +137,8 @@
  Default is inlinePlaceholderFontDefault;
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance.
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFont;
 
@@ -146,8 +146,8 @@
  Default value for inlinePlaceholderFont.
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance.
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(class, nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFontDefault;
 
@@ -200,8 +200,8 @@
  The text displayed in the placeholder label.
 
  Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
- placeholder as distinct from `label text`. This property most similarly aligns with the `label
- text` as described in the guidance.
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, nullable, copy) NSString *placeholderText;
 
