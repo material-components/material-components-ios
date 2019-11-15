@@ -61,6 +61,7 @@
 - (void)testAccessibilityLabelPlaceholder {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
+  field.hidesPlaceholderOnInput = NO;
 
   // When
   field.accessibilityLabel = nil;
@@ -71,6 +72,22 @@
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
                         @"placeholder, leading underline, trailing underline");
+}
+
+- (void)testAccessibilityLabelPlaceholderWithHiddenPlaceholder {
+  // Given
+  MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
+  field.hidesPlaceholderOnInput = YES;
+
+  // When
+  field.accessibilityLabel = nil;
+  field.placeholderLabel.accessibilityLabel = @"placeholder";
+  field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
+
+  // Then
+  XCTAssertEqualObjects(field.accessibilityLabel,
+                        @"leading underline, trailing underline");
 }
 
 - (void)testAccessibilityLabelPlaceholderAndLabel {
