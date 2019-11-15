@@ -102,9 +102,11 @@ mdc_examples_objc_library(
     deps = [
         ":AppBar",
         ":ColorThemer",
+        ":Theming",
         ":TypographyThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
     ],
 )
 
