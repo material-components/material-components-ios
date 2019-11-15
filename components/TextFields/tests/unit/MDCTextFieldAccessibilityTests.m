@@ -74,7 +74,6 @@
                         @"placeholder, leading underline, traling underline");
 }
 
-
 - (void)testMDCTextFieldAccessibilityLabelPlaceholderWithHiddenPlaceholder {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
@@ -87,8 +86,7 @@
   field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"leading underline, traling underline");
+  XCTAssertEqualObjects(field.accessibilityLabel, @"leading underline, traling underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholderAndLabel {
