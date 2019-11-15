@@ -104,10 +104,20 @@
  The color applied to the placeholder when inline (not floating).
 
  Default is inlinePlaceholderColorDefault.
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor;
 
-/** Default value for inlinePlaceholderColor. */
+/**
+ Default value for inlinePlaceholderColor.
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
+ */
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /**
@@ -125,10 +135,20 @@
  The font applied to the placeholder when inline (not floating).
 
  Default is inlinePlaceholderFontDefault;
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
  */
 @property(nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFont;
 
-/** Default value for inlinePlaceholderFont. */
+/**
+ Default value for inlinePlaceholderFont.
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
+ */
 @property(class, nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFontDefault;
 
 /**
@@ -176,7 +196,13 @@
 /** Default value for normalColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *normalColorDefault;
 
-/** The text displayed in the placeholder label.*/
+/**
+ The text displayed in the placeholder label.
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
+ */
 @property(nonatomic, nullable, copy) NSString *placeholderText;
 
 /**
