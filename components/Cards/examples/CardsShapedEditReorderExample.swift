@@ -36,7 +36,7 @@ class ShapedCardCollectionCell: MDCCardCollectionCell {
   }
 }
 
-class EditReorderShapedCollectionViewController: UIViewController,
+class CardsShapedEditReorderExampleViewController: UIViewController,
   UICollectionViewDelegate,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
@@ -207,7 +207,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
 
 }
 
-extension EditReorderShapedCollectionViewController {
+extension CardsShapedEditReorderExampleViewController {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
