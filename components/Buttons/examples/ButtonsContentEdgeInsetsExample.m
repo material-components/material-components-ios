@@ -41,13 +41,23 @@
 
 #pragma mark - UIViewController
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    [self commonButtonContentEdgeInsetsExampleInitializer];
+  }
+  return self;
+}
+
+- (void)commonButtonContentEdgeInsetsExampleInitializer {
+  _containerScheme = [[MDCContainerScheme alloc] init];
 }
 
 - (void)viewDidLoad {
@@ -61,7 +71,7 @@
   [self.floatingActionButton setContentEdgeInsets:UIEdgeInsetsMake(40, 40, 0, 0)
                                          forShape:MDCFloatingButtonShapeDefault
                                            inMode:MDCFloatingButtonModeNormal];
-  self.floatingActionButton.accessibilityLabel = @"Floating Button";
+  self.floatingActionButton.accessibilityLabel = @"Floating button";
 
   [self updateInkStyle:self.inkBoundingSwitch.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
 }
