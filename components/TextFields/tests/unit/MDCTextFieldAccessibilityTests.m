@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@
 - (void)testUITextFieldAccessibilityLabel {
   // Given
   UITextField *field = [[UITextField alloc] init];
+  
+  // When
   field.accessibilityLabel = @"blah";
 
   // Then
@@ -34,6 +36,8 @@
 - (void)testMDCTextFieldaccessibilityLabel {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
+  
+  // When
   field.accessibilityLabel = @"blah";
 
   // Then
@@ -43,6 +47,8 @@
 - (void)testMDCTextFieldAccessibilityLabelUnderlineLabels {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
+  
+  // When
   field.accessibilityLabel = @"blah";
   field.leadingUnderlineLabel.accessibilityLabel = @"bloog";
   field.trailingUnderlineLabel.accessibilityLabel = @"flah";
@@ -54,6 +60,8 @@
 - (void)testMDCTextFieldAccessibilityLabelPlaceholder {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
+  
+  // When
   field.accessibilityLabel = nil;
   field.placeholderLabel.accessibilityLabel = @"blah";
   field.leadingUnderlineLabel.accessibilityLabel = @"bloog";
@@ -62,4 +70,19 @@
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel, @"blah, bloog, flah");
 }
+
+- (void)testMDCTextFieldAccessibilityLabelPlaceholderAndLabel {
+  // Given
+  MDCTextField *field = [[MDCTextField alloc] init];
+  
+  // When
+  field.accessibilityLabel = @"hai";
+  field.placeholderLabel.accessibilityLabel = @"blah";
+  field.leadingUnderlineLabel.accessibilityLabel = @"bloog";
+  field.trailingUnderlineLabel.accessibilityLabel = @"flah";
+
+  // Then
+  XCTAssertEqualObjects(field.accessibilityLabel, @"hai, blah, bloog, flah");
+}
+
 @end
