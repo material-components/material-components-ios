@@ -44,6 +44,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
+    [self commonButtonContentEdgeInsetsExampleInitializer];
   }
   return self;
 }
