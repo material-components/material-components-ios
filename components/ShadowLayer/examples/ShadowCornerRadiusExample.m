@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialContainerScheme.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialSlider.h"
 #import "ShadowRadiusLabel.h"
@@ -26,6 +27,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 
 @property(nonatomic) ShadowRadiusLabel *paper;
 @property(nonatomic) UILabel *elevationLabel;
+@property(nonatomic) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -34,11 +36,13 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.backgroundColor = [UIColor whiteColor];
+    _containerScheme = [[MDCContainerScheme alloc] init];
 
+    self.backgroundColor = _containerScheme.colorScheme.backgroundColor;
     _elevationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, frame.size.width, 100)];
     _elevationLabel.textAlignment = NSTextAlignmentCenter;
     _elevationLabel.text = @"8 pt";
+    _elevationLabel.textColor = _containerScheme.colorScheme.onBackgroundColor;
     [self addSubview:_elevationLabel];
 
     CGFloat paperDim = 200;
@@ -46,7 +50,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
     _paper = [[ShadowRadiusLabel alloc] initWithFrame:paperFrame];
     _paper.cornerRadius = 8.0;
     _paper.elevation = 12.0;
-    _paper.backgroundColor = UIColor.grayColor;
+    _paper.backgroundColor = _containerScheme.colorScheme.onSurfaceColor;
     [self addSubview:_paper];
 
     CGFloat margin = 20;
@@ -84,6 +88,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 
 @interface ShadowCornerRadiusViewController : UIViewController
 @property(nonatomic) ShadowCornerRadiusView *shadowsView;
+@property(nonatomic) id<MDCContainerScheming> containerScheme;
 @end
 
 @implementation ShadowCornerRadiusViewController
@@ -91,7 +96,10 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  if (self.containerScheme == nil) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   self.title = @"Shadow Corner Radius";
   _shadowsView = [[ShadowCornerRadiusView alloc] initWithFrame:self.view.bounds];
   _shadowsView.autoresizingMask =
