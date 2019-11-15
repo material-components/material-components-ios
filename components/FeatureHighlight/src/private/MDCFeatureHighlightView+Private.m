@@ -112,7 +112,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _accessibilityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     _accessibilityView.isAccessibilityElement = YES;
     _accessibilityView.accessibilityTraits = UIAccessibilityTraitButton;
-    _accessibilityView.accessibilityLabel = @"Dismiss highlight button";
+    _accessibilityView.accessibilityLabel = @"Dismiss";
     [self addSubview:_accessibilityView];
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
