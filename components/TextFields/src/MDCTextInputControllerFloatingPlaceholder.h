@@ -14,7 +14,13 @@
 
 #import "MDCTextInputController.h"
 
-/** Controllers that have the ability to move the placeholder to a title position. */
+/**
+ Controllers that have the ability to move the placeholder to a title position.
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
+ */
 @protocol MDCTextInputControllerFloatingPlaceholder <MDCTextInputController>
 
 /**
