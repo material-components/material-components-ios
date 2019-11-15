@@ -25,7 +25,7 @@
 - (void)testUITextFieldAccessibilityLabel {
   // Given
   UITextField *field = [[UITextField alloc] init];
-  
+
   // When
   field.accessibilityLabel = @"User entered text";
 
@@ -36,7 +36,7 @@
 - (void)testMDCTextFieldaccessibilityLabel {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
-  
+
   // When
   field.accessibilityLabel = @"User entered text";
 
@@ -47,20 +47,21 @@
 - (void)testMDCTextFieldAccessibilityLabelUnderlineLabels {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
-  
+
   // When
   field.accessibilityLabel = @"User entered text";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
   field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text, leading underline, traling underline");
+  XCTAssertEqualObjects(field.accessibilityLabel,
+                        @"User entered text, leading underline, traling underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholder {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
-  
+
   // When
   field.accessibilityLabel = nil;
   field.placeholderLabel.accessibilityLabel = @"placeholder";
@@ -68,13 +69,14 @@
   field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"placeholder, leading underline, traling underline");
+  XCTAssertEqualObjects(field.accessibilityLabel,
+                        @"placeholder, leading underline, traling underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholderAndLabel {
   // Given
   MDCTextField *field = [[MDCTextField alloc] init];
-  
+
   // When
   field.accessibilityLabel = @"User entered text";
   field.placeholderLabel.accessibilityLabel = @"placeholder";
@@ -82,7 +84,8 @@
   field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel, @"User entered text, leading underline, traling underline");
+  XCTAssertEqualObjects(field.accessibilityLabel,
+                        @"User entered text, leading underline, traling underline");
 }
 
 @end
