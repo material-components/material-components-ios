@@ -71,9 +71,10 @@
   field.text = @"";
 
   // Then
-  XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"leading underline, trailing underline");
-  // Note: UIKit verbalizes (in a lower tone) the placeholder content when no text has been entered on a UITextField. Therefore we do not also add the placeholder content when there is no user entered text.
+  XCTAssertEqualObjects(field.accessibilityLabel, @"leading underline, trailing underline");
+  // Note: UIKit verbalizes (in a lower tone) the placeholder content when no text has been entered
+  // on a UITextField. Therefore we do not also add the placeholder content when there is no user
+  // entered text.
 }
 
 - (void)testAccessibilityLabelPlaceholderWithHiddenPlaceholderAndText {
@@ -90,7 +91,9 @@
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel, @"leading underline, traling underline");
-  // Note: UIKit verbalizes (in a lower tone) the placeholder content when no text has been entered on a UITextField. Therefore we do not also add the placeholder content when there is no user entered text.
+  // Note: UIKit verbalizes (in a lower tone) the placeholder content when no text has been entered
+  // on a UITextField. Therefore we do not also add the placeholder content when there is no user
+  // entered text.
 }
 
 - (void)testAccessibilityLabelPlaceholderAndLabel {
