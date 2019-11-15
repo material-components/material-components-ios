@@ -80,7 +80,7 @@
   // Disabled raised button
 
   MDCButton *disabledContainedButton = [[MDCButton alloc] init];
-  [disabledContainedButton setTitle:@"Disabled" forState:UIControlStateNormal];
+  [disabledContainedButton setTitle:@"Curved Cut" forState:UIControlStateNormal];
   [disabledContainedButton applyContainedThemeWithScheme:self.containerScheme];
 
   MDCRectangleShapeGenerator *disabledRaisedShapeGenerator =
@@ -115,23 +115,24 @@
   // Custom outlined button
 
   MDCButton *outlinedButton = [self buildCustomOutlinedButton];
-  [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [outlinedButton setTitle:@"Triangular" forState:UIControlStateNormal];
   [outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
 
-  MDCSlantedRectShapeGenerator *outlinedShapeGenerator = [[MDCSlantedRectShapeGenerator alloc] init];
+  MDCSlantedRectShapeGenerator *outlinedShapeGenerator =
+      [[MDCSlantedRectShapeGenerator alloc] init];
   outlinedShapeGenerator.slant = 10;
   outlinedButton.shapeGenerator = outlinedShapeGenerator;
 
   [outlinedButton sizeToFit];
   [outlinedButton addTarget:self
-                    action:@selector(didTap:)
-          forControlEvents:UIControlEventTouchUpInside];
+                     action:@selector(didTap:)
+           forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:outlinedButton];
 
   // Disabled custom outlined button
 
   MDCButton *disabledOutlinedButton = [self buildCustomOutlinedButton];
-  [disabledOutlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [disabledOutlinedButton setTitle:@"Freeform" forState:UIControlStateNormal];
   [disabledOutlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
 
   MDCRectangleShapeGenerator *disabledOutlinedShapeGenerator =
@@ -152,8 +153,8 @@
 
   [disabledOutlinedButton sizeToFit];
   [disabledOutlinedButton addTarget:self
-                            action:@selector(didTap:)
-                  forControlEvents:UIControlEventTouchUpInside];
+                             action:@selector(didTap:)
+                   forControlEvents:UIControlEventTouchUpInside];
   [disabledOutlinedButton setEnabled:NO];
   [self.view addSubview:disabledOutlinedButton];
 
@@ -163,6 +164,7 @@
   [self.floatingButton setTitleColor:titleColor forState:UIControlStateNormal];
   [self.floatingButton setImageTintColor:UIColor.whiteColor forState:UIControlStateNormal];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
+  self.floatingButton.accessibilityLabel = @"Floating Action Diamond";
   [self.floatingButton sizeToFit];
 
   MDCRectangleShapeGenerator *floatingShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
