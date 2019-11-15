@@ -39,6 +39,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
     _elevationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, frame.size.width, 100)];
     _elevationLabel.textAlignment = NSTextAlignmentCenter;
     _elevationLabel.text = @"8 pt";
+    _elevationLabel.textColor = UIColor.blackColor;
     [self addSubview:_elevationLabel];
 
     CGFloat paperDim = 200;
@@ -55,6 +56,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
     sliderControl.numberOfDiscreteValues = (NSUInteger)kShadowElevationsMax + 1;
     sliderControl.maximumValue = kShadowElevationsMax;
+    sliderControl.minimumValue = 0;
     sliderControl.value = kShadowElevationsDefault;
     sliderControl.delegate = self;
     sliderControl.autoresizingMask =
@@ -65,6 +67,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
             forControlEvents:UIControlEventValueChanged];
     sliderControl.accessibilityLabel = @"Change corner radius";
     sliderControl.accessibilityHint = @"Updates the corner radius of the example view";
+    sliderControl.accessibilityValue = [NSString stringWithFormat:@"%f", sliderControl.value];
     [self addSubview:sliderControl];
   }
   return self;
