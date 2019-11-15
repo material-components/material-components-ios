@@ -48,6 +48,9 @@
   // ExampleShapes is a custom UIView with several subviews of various shapes.
   self.shapes = [[ExampleShapes alloc] initWithFrame:customFrame];
   self.legacyShape = [[UIView alloc] initWithFrame:legacyFrame];
+  self.legacyShape.isAccessibilityElement = YES;
+  self.legacyShape.accessibilityTraits = UIAccessibilityTraitButton;
+  self.legacyShape.accessibilityLabel = @"Legacy ink view";
 
   [self setupExampleViews];
 
@@ -157,6 +160,9 @@
         CGRectMake(padding, padding, CGRectGetWidth(frame) - 2 * padding, bigViewFrameHeight);
     UIView *bigView = [[UIView alloc] initWithFrame:bigViewFrame];
     bigView.backgroundColor = MDCPalette.greyPalette.tint800;
+    bigView.isAccessibilityElement = YES;
+    bigView.accessibilityTraits = UIAccessibilityTraitButton;
+    bigView.accessibilityLabel = @"Large ink view";
     [self addSubview:bigView];
 
     CGFloat buttonViewDim = 50;
@@ -169,6 +175,9 @@
     pseudoButtonView.backgroundColor = MDCPalette.greyPalette.tint800;
     pseudoButtonView.layer.cornerRadius = 5;
     pseudoButtonView.clipsToBounds = YES;
+    pseudoButtonView.isAccessibilityElement = YES;
+    pseudoButtonView.accessibilityTraits = UIAccessibilityTraitButton;
+    pseudoButtonView.accessibilityLabel = @"Button-shaped ink view";
     [self addSubview:pseudoButtonView];
 
     CGFloat pseudoFABViewFrameLeft =
@@ -180,6 +189,9 @@
     pseudoFABView.backgroundColor = MDCPalette.greyPalette.tint800;
     pseudoFABView.layer.cornerRadius = 28;
     pseudoFABView.clipsToBounds = YES;
+    pseudoFABView.isAccessibilityElement = YES;
+    pseudoFABView.accessibilityTraits = UIAccessibilityTraitButton;
+    pseudoFABView.accessibilityLabel = @"Floating action button-shaped ink view";
     [self addSubview:pseudoFABView];
 
     self.autoresizingMask =
