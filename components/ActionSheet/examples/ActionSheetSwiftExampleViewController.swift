@@ -45,6 +45,10 @@ class ActionSheetSwiftExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
+    if let appBarContainer = parent as? MDCAppBarContainerViewController {
+      appBarContainer.appBarViewController.headerView.trackingScrollView = tableView
+    }
     tableView.delegate = self
     tableView.dataSource = self
     tableView.frame = view.bounds
@@ -53,14 +57,6 @@ class ActionSheetSwiftExampleViewController: UIViewController {
     tableView.estimatedRowHeight = 56
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     view.addSubview(tableView)
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-
-    view.backgroundColor = containerScheme.colorScheme.backgroundColor
-    let firstRowHeight = tableView.rectForRow(at: IndexPath(row: 0, section: 0)).size.height
-    tableView.contentInset = UIEdgeInsets(top: firstRowHeight / 2, left: 0, bottom: 0, right: 0)
   }
 
   func showActionSheet(_ type: ActionSheetExampleType) {
