@@ -113,7 +113,7 @@ static CGFloat const kDefaultPadding = 15.0;
   if (@available(iOS 11.0, *)) {
     return (CGFloat)(self.view.safeAreaInsets.top + kDefaultPadding);
   } else {
-    return (CGFloat)120;
+    return (CGFloat)self.topLayoutGuide.length;
   }
 }
 
@@ -171,15 +171,6 @@ static CGFloat const kDefaultPadding = 15.0;
 
 @implementation MDCTextControlTextFieldTypicalUseExample
 
-#pragma mark Object Lifecycle
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
-}
-
 #pragma mark View Controller Lifecycle
 
 - (void)viewDidLoad {
@@ -195,6 +186,7 @@ static CGFloat const kDefaultPadding = 15.0;
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+
   [self.decreaseContentSizeButton sizeToFit];
   [self.increaseContentSizeButton sizeToFit];
   CGFloat viewWidth = CGRectGetWidth(self.view.frame);
@@ -215,6 +207,7 @@ static CGFloat const kDefaultPadding = 15.0;
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
+
   [self.contentViewController.view setNeedsLayout];
 }
 
@@ -345,7 +338,7 @@ static CGFloat const kDefaultPadding = 15.0;
   if (@available(iOS 11.0, *)) {
     return (CGFloat)(self.view.safeAreaInsets.top + kDefaultPadding);
   } else {
-    return (CGFloat)120;
+    return (CGFloat)self.topLayoutGuide.length;
   }
 }
 
