@@ -47,16 +47,20 @@ class ActionSheetSwiftExampleViewController: UIViewController {
 
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.frame = view.bounds
+    tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 56
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+    view.addSubview(tableView)
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    
+
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
-    tableView.frame = view.frame
-    tableView.frame.origin.y = 0.0
-    view.addSubview(tableView)
+    let firstRowHeight = tableView.rectForRow(at: IndexPath(row: 0, section: 0)).size.height
+    tableView.contentInset = UIEdgeInsets(top: firstRowHeight / 2, left: 0, bottom: 0, right: 0)
   }
 
   func showActionSheet(_ type: ActionSheetExampleType) {
