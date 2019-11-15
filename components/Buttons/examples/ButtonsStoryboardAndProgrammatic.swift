@@ -84,13 +84,13 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(floatingPlusShapeLayer)
     floatingButton.applySecondaryTheme(withScheme: containerScheme)
-    floatingButton.accessibilityLabel = "Programmatic FAB"
+    floatingButton.accessibilityLabel = "Programmatic floating action button"
     innerContainerView.addSubview(floatingButton)
 
     let storyboardPlusShapeLayer =
       ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     storyboardFloating.applySecondaryTheme(withScheme: containerScheme)
-    storyboardFloating.accessibilityLabel = "Storyboard FAB"
+    storyboardFloating.accessibilityLabel = "Storyboard floating action button"
     storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
 
     storyboardContained.applyContainedTheme(withScheme: containerScheme)
