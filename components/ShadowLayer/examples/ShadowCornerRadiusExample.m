@@ -63,6 +63,8 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
     [sliderControl addTarget:self
                       action:@selector(sliderValueChanged:)
             forControlEvents:UIControlEventValueChanged];
+    sliderControl.accessibilityLabel = @"Change corner radius";
+    sliderControl.accessibilityHint = @"Updates the corner radius of the example view";
     [self addSubview:sliderControl];
   }
   return self;
