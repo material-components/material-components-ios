@@ -92,10 +92,11 @@
   CGFloat contentBottomEdge = CGRectGetMaxY(self.chipView.frame);
 
   CGSize sliderSize = [self.widthSlider sizeThatFits:self.view.bounds.size];
-  self.widthSlider.frame = CGRectMake(20, contentBottomEdge + 16, self.view.bounds.size.width - 40, sliderSize.height);
+  self.widthSlider.frame =
+      CGRectMake(20, contentBottomEdge + 16, self.view.bounds.size.width - 40, sliderSize.height);
   contentBottomEdge = CGRectGetMaxY(self.widthSlider.frame);
-  self.heightSlider.frame = CGRectMake(20, contentBottomEdge + 16,
-                                       self.view.bounds.size.width - 40, sliderSize.height);
+  self.heightSlider.frame =
+      CGRectMake(20, contentBottomEdge + 16, self.view.bounds.size.width - 40, sliderSize.height);
   contentBottomEdge = CGRectGetMaxY(self.heightSlider.frame);
   self.horizontalAlignmentControl.frame =
       CGRectMake(20, contentBottomEdge + 16, self.view.bounds.size.width - 40,
