@@ -46,6 +46,7 @@ class BottomNavigationNilBadges : UIViewController {
 
     // Add items to the bottom navigation bar.
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
+    tabBarItem1.accessibilityValue = "New items"
     let tabBarItem2 =
       UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
     bottomNavBar.items = [ tabBarItem1, tabBarItem2 ]
