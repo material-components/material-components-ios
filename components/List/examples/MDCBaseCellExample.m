@@ -84,7 +84,7 @@
   cell.enableRippleBehavior = YES;
   cell.rippleColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
   cell.isAccessibilityElement = YES;
-  cell.accessibilityLabel = [NSString stringWithFormat:@"Cell number %ld", indexPath.item];
+  cell.accessibilityLabel = [NSString stringWithFormat:@"Cell number %@", @(indexPath.item)];
   return cell;
 }
 
