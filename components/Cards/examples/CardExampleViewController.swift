@@ -19,7 +19,7 @@ import MaterialComponents.MaterialCards_Theming
 import MaterialComponents.MaterialButtons_Theming
 
 class CardExampleViewController: UIViewController {
-  @IBOutlet weak var imageView: CardImageView!
+  @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
 
@@ -49,6 +49,10 @@ class CardExampleViewController: UIViewController {
 
     imageView.isAccessibilityElement = true
     imageView.accessibilityLabel = "Missing Dish"
+    imageView.layer.cornerRadius = card.layer.cornerRadius
+    if #available(iOSApplicationExtension 11.0, *) {
+      imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
   }
 
   override public var traitCollection: UITraitCollection {
@@ -70,21 +74,4 @@ extension CardExampleViewController {
       "presentable": true,
     ]
   }
-}
-
-class CardImageView: UIImageView {
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    self.curveImageToCorners()
-  }
-
-  func curveImageToCorners() {
-    // The main image from the xib is taken from: https://unsplash.com/photos/wMzx2nBdeng
-    // License details: https://unsplash.com/license
-    if let card = self.superview as? MDCCard,
-      let shapedShadowLayer = card.layer as? MDCShapedShadowLayer {
-      self.layer.mask = shapedShadowLayer.shapeLayer
-    }
-  }
-
 }
