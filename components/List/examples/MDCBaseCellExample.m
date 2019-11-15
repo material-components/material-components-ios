@@ -14,12 +14,15 @@
 
 #import "MDCBaseCellExample.h"
 
-#import "MDCBaseCell.h"
+#import "MaterialList.h"
 
 @implementation MDCBaseCellExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  if (!self.containerScheme) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
   self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
   self.automaticallyAdjustsScrollViewInsets = NO;
   [self createCollectionView];
@@ -77,12 +80,31 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  static NSDictionary<NSString *, UIColor *> *colorNameToColorMap;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    colorNameToColorMap = @{
+      @"Red" : UIColor.redColor,
+      @"Green" : UIColor.greenColor,
+      @"Blue" : UIColor.blueColor,
+      @"Orange" : UIColor.orangeColor,
+      @"Yellow" : UIColor.yellowColor,
+      @"Brown" : UIColor.brownColor,
+      @"Cyan" : UIColor.cyanColor,
+      @"Purple" : UIColor.purpleColor,
+    };
+  });
   MDCBaseCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kBaseCellIdentifier
                                                                 forIndexPath:indexPath];
-  cell.layer.borderColor = [UIColor darkGrayColor].CGColor;
+  cell.layer.borderColor = self.containerScheme.colorScheme.onBackgroundColor.CGColor;
+  NSInteger styleIndex = (NSInteger)(indexPath.row % colorNameToColorMap.count);
+  NSString *colorName = colorNameToColorMap.allKeys[styleIndex];
+  cell.backgroundColor = colorNameToColorMap[colorName];
+  cell.accessibilityLabel = colorName;
   cell.layer.borderWidth = 1;
   cell.enableRippleBehavior = YES;
   cell.rippleColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
+  cell.isAccessibilityElement = YES;
   return cell;
 }
 
@@ -90,12 +112,14 @@
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCBaseCell *cell = (MDCBaseCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
   cell.elevation = 10;
+  cell.accessibilityTraits |= UIAccessibilityTraitSelected;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCBaseCell *cell = (MDCBaseCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
   cell.elevation = 0;
+  cell.accessibilityTraits &= ~UIAccessibilityTraitSelected;
 }
 
 #pragma mark - CatalogByConvention

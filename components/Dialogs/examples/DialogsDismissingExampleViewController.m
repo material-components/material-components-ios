@@ -158,6 +158,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = self.modes[indexPath.row];
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityTraits = UIAccessibilityTraitButton;
+  cell.accessibilityLabel = cell.textLabel.text;
   return cell;
 }
 
@@ -225,6 +228,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
   [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (BOOL)accessibilityPerformEscape {
+  [self dismissViewControllerAnimated:YES completion:nil];
+  return YES;
+}
+
 @end
 
 #pragma mark - OpenURLViewController
@@ -276,6 +284,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
   // Use mdc_safeSharedApplication to avoid a compiler warning about extensions
   [[UIApplication mdc_safeSharedApplication] performSelector:@selector(openURL:)
                                                   withObject:testURL];
+}
+
+- (BOOL)accessibilityPerformEscape {
+  [self dismissViewControllerAnimated:YES completion:nil];
+  return YES;
 }
 
 @end

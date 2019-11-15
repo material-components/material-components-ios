@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialContainerScheme.h"
+#import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialSlider.h"
 #import "ShadowRadiusLabel.h"
@@ -59,6 +60,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
     sliderControl.numberOfDiscreteValues = (NSUInteger)kShadowElevationsMax + 1;
     sliderControl.maximumValue = kShadowElevationsMax;
+    sliderControl.minimumValue = 0;
     sliderControl.value = kShadowElevationsDefault;
     sliderControl.delegate = self;
     sliderControl.autoresizingMask =
@@ -67,21 +69,29 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
     [sliderControl addTarget:self
                       action:@selector(sliderValueChanged:)
             forControlEvents:UIControlEventValueChanged];
+    sliderControl.accessibilityLabel = @"Change corner radius";
+    sliderControl.accessibilityHint = @"Updates the corner radius of the example view";
+    sliderControl.accessibilityValue = [NSString stringWithFormat:@"%f", sliderControl.value];
     [self addSubview:sliderControl];
   }
   return self;
 }
 
 - (NSString *)slider:(MDCSlider *)slider displayedStringForValue:(CGFloat)value {
-  NSInteger points = (NSInteger)round(value);
+  NSInteger points = (NSInteger)MDCRound(value);
   return [NSString stringWithFormat:@"%ld pt", (long)points];
 }
 
 // TODO: (#4848) [ShadowLayer] cornerRadius changes don't render
 - (void)sliderValueChanged:(MDCSlider *)slider {
-  NSInteger points = (NSInteger)round(slider.value);
+  NSInteger points = (NSInteger)MDCRound(slider.value);
   _paper.cornerRadius = (CGFloat)points;
   _elevationLabel.text = [NSString stringWithFormat:@"%ld pt", (long)points];
+}
+
+- (NSString *)slider:(MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value {
+  NSInteger points = (NSInteger)MDCRound(slider.value);
+  return [NSString stringWithFormat:@"%ld points", (long)points];
 }
 
 @end

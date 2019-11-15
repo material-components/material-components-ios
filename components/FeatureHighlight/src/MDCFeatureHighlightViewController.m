@@ -57,8 +57,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
     _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
 
-    _viewAccessiblityHint = [[self class] dismissAccessibilityHint];
-
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
@@ -350,14 +348,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 - (NSString *)accessibilityHint {
   return _viewAccessiblityHint;
-}
-
-+ (NSString *)dismissAccessibilityHint {
-  NSString *key =
-      kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
-  NSString *localizedString = NSLocalizedStringFromTableInBundle(
-      key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
-  return localizedString;
 }
 
 #pragma mark - Private
