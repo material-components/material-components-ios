@@ -51,11 +51,11 @@
   // When
   field.accessibilityLabel = @"main accessibility label";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
-  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"main accessibility label, leading underline, traling underline");
+                        @"main accessibility label, leading underline, trailing underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholder {
@@ -66,11 +66,11 @@
   field.accessibilityLabel = nil;
   field.placeholderLabel.accessibilityLabel = @"placeholder";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
-  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"placeholder, leading underline, traling underline");
+                        @"placeholder, leading underline, trailing underline");
 }
 
 - (void)testMDCTextFieldAccessibilityLabelPlaceholderAndLabel {
@@ -81,11 +81,11 @@
   field.accessibilityLabel = @"main accessibility label";
   field.placeholderLabel.accessibilityLabel = @"placeholder";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
-  field.trailingUnderlineLabel.accessibilityLabel = @"traling underline";
+  field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
-                        @"main accessibility label, leading underline, traling underline");
+                        @"main accessibility label, leading underline, trailing underline");
 }
 
 @end
