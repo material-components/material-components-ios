@@ -120,8 +120,6 @@
   self.chipView.frame = frame;
   [self.chipView layoutIfNeeded];
 
-  [self.view layoutIfNeeded];
-
   // The vertical layout changes when this slider is adjusted.
   UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
