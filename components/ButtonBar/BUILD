@@ -55,6 +55,7 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ButtonBar",
+        "//components/Palettes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Icons/icons/ic_info",
         "//components/schemes/Container",

@@ -76,6 +76,11 @@
   [self setUpColorViewModels];
   [self setUpLabel];
   [self setUpAssistiveLabels];
+  [self observeContentSizeCategoryNotifications];
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark View Setup
@@ -502,6 +507,29 @@
     font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   });
   return font;
+}
+
+#pragma mark Dynamic Type
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  if (@available(iOS 10.0, *)) {
+    [super setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
+    self.leadingAssistiveLabel.adjustsFontForContentSizeCategory =
+        adjustsFontForContentSizeCategory;
+    self.trailingAssistiveLabel.adjustsFontForContentSizeCategory =
+        adjustsFontForContentSizeCategory;
+  }
+}
+
+- (void)observeContentSizeCategoryNotifications {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self setNeedsLayout];
 }
 
 #pragma mark MDCTextControlState

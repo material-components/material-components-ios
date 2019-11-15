@@ -45,7 +45,7 @@ class AppBarJumpExample: UIViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Tab Bar Example"
+    self.title = "Manual Tabs Jump"
     self.firstTab.title = "First"
     self.secondTab.title = "Second"
   }
