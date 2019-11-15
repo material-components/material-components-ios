@@ -23,6 +23,8 @@
 - (void)presentBottomSheet {
   BottomSheetDummyStaticViewController *viewController =
       [[BottomSheetDummyStaticViewController alloc] init];
+  viewController.view.isAccessibilityElement = YES;
+  viewController.view.accessibilityLabel = @"Example content";
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
@@ -37,6 +39,8 @@
   BottomSheetDummyStaticViewController *viewController =
       [[BottomSheetDummyStaticViewController alloc] init];
   viewController.preferredContentSize = CGSizeMake(200, 200);
+  viewController.view.isAccessibilityElement = YES;
+  viewController.view.accessibilityLabel = @"Example content";
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
