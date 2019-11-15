@@ -196,10 +196,10 @@ class MDCDragonsController: UIViewController,
     let node = nodeData.node
     if !node.isExample() && !isSearchActive {
       if nodeData.expanded {
-        cell.accessoryView = cell.expandedButton
+        cell.accessoryView = cell.expandedAccessoryView
         cell.textLabel?.textColor = Constants.headerColor
       } else {
-        cell.accessoryView = cell.defaultButton
+        cell.accessoryView = cell.collapsedAccessoryView
         cell.textLabel?.textColor = Constants.titleColor
       }
     } else {
@@ -228,11 +228,11 @@ class MDCDragonsController: UIViewController,
       self.tableView.beginUpdates()
       if nodeData.expanded {
         collapseCells(at: indexPath)
-        cell.accessoryView = cell.defaultButton
+        cell.accessoryView = cell.collapsedAccessoryView
         cell.textLabel?.textColor = Constants.titleColor
       } else {
         expandCells(at: indexPath)
-        cell.accessoryView = cell.expandedButton
+        cell.accessoryView = cell.expandedAccessoryView
         cell.textLabel?.textColor = Constants.headerColor
       }
       self.tableView.endUpdates()

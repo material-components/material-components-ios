@@ -440,6 +440,19 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return UIEdgeInsetsZero;
 }
 
+#pragma mark - UIAccessibility
+
+- (BOOL)isAccessibilityElement {
+  return NO;
+}
+
+- (UIAccessibilityTraits)accessibilityTraits {
+  if (@available(iOS 10.0, *)) {
+    return [super accessibilityTraits] | UIAccessibilityTraitTabBar;
+  }
+  return [super accessibilityTraits];
+}
+
 #pragma mark - Custom APIs
 
 - (id)accessibilityElementForItem:(UITabBarItem *)item {

@@ -18,39 +18,32 @@ import MaterialComponents.MaterialIcons_ic_arrow_back
 
 class MDCDragonsTableViewCell: UITableViewCell {
 
-  lazy var defaultButton: UIButton = {
+  lazy var collapsedAccessoryView: UIView = {
     let image = MDCIcons.imageFor_ic_chevron_right()
-    let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-    button.setImage(image, for: .normal)
-    return button
+    let view = UIImageView(image: image)
+    view.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+    return view
   }()
 
-  lazy var expandedButton: UIButton = {
+  lazy var expandedAccessoryView: UIView = {
     let image = MDCIcons.imageFor_ic_chevron_right()
-    let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-    button.setImage(image, for: .normal)
-    button.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-    return button
+    let view = UIImageView(image: image)
+    view.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+    view.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+    return view
   }()
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    self.accessoryView = self.defaultButton
+
+    self.accessoryView = self.collapsedAccessoryView
+
+    // Treat the entire cell as an accessibility button for VoiceOver purposes.
+    self.isAccessibilityElement = true
+    self.accessibilityTraits = .button
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
-  override func awakeFromNib() {
-      super.awakeFromNib()
-
-  }
-
-  override func setSelected(_ selected: Bool, animated: Bool) {
-      super.setSelected(selected, animated: animated)
-
-      // Configure the view for the selected state
-  }
-
 }
