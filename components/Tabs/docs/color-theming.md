@@ -10,6 +10,7 @@ pod 'MaterialComponents/Tabs+ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialTabs_ColorThemer
