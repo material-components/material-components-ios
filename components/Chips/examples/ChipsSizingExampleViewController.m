@@ -18,7 +18,7 @@
 
 #import "supplemental/ChipsExampleAssets.h"
 
-@interface ChipsSizingExampleViewController : UIViewController
+@interface ChipsSizingExampleViewController : UIViewController <MDCSliderDelegate>
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, strong) MDCChipView *chipView;
 @property(nonatomic, strong) MDCSlider *widthSlider;
@@ -54,6 +54,8 @@
   self.widthSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   self.widthSlider.maximumValue = 200;
   self.widthSlider.value = self.chipView.frame.size.width;
+  self.widthSlider.accessibilityLabel = @"Width of the chip";
+  self.widthSlider.delegate = self;
   [self.widthSlider addTarget:self
                        action:@selector(widthSliderChanged:)
              forControlEvents:UIControlEventValueChanged];
@@ -62,6 +64,8 @@
   self.heightSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   self.heightSlider.maximumValue = 100;
   self.heightSlider.value = self.chipView.frame.size.height;
+  self.heightSlider.accessibilityLabel = @"Height of the chip";
+  self.heightSlider.delegate = self;
   [self.heightSlider addTarget:self
                         action:@selector(heightSliderChanged:)
               forControlEvents:UIControlEventValueChanged];
@@ -115,6 +119,9 @@
   frame.size.height = slider.value;
   self.chipView.frame = frame;
   [self.chipView layoutIfNeeded];
+
+  // The vertical layout changes when this slider is adjusted.
+  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
 - (void)horizontalAlignmentChanged:(UISegmentedControl *)segmentedControl {
@@ -123,6 +130,17 @@
                                                       : UIControlContentHorizontalAlignmentCenter;
   self.chipView.contentHorizontalAlignment = alignment;
   [self.chipView layoutIfNeeded];
+}
+
+#pragma mark - MDCSliderDelegate
+
+- (NSString *)slider:(MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value {
+  if (slider == self.widthSlider) {
+    return [NSString stringWithFormat:@"Width of %@", @((NSInteger)slider.value)];
+  } else if (slider == self.heightSlider) {
+    return [NSString stringWithFormat:@"Height of %@", @((NSInteger)slider.value)];
+  }
+  return nil;
 }
 
 @end
