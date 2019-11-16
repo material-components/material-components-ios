@@ -82,6 +82,8 @@
     MDCMultilineTextField *_Nonnull textField, UITraitCollection *_Nullable previousTraitCollection)
     ;
 
++ (void)setupAccessibilityElements:(nonnull MDCMultilineTextField *)multilineTextField;
+
 @end
 
 /** Delegate for MDCTextInput size changes. */

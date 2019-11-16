@@ -782,21 +782,24 @@
   return value;
 }
 
-- (NSString *)accessibilityLabel {
++ (void)setupAccessibilityElements:(MDCMultilineTextField *)multilineTextField {
+  multilineTextField.accessibilityElements = @[ multilineTextField.textView ];
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
-  if ([super accessibilityLabel].length > 0) {
-    [accessibilityStrings addObject:[super accessibilityLabel]];
-  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
-    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+  if ([multilineTextField accessibilityLabel].length > 0) {
+    [accessibilityStrings addObject:[multilineTextField accessibilityLabel]];
+  } else if (multilineTextField.placeholderLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:multilineTextField.placeholderLabel.accessibilityLabel];
   }
-  if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
-    [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+  if (multilineTextField.leadingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:multilineTextField.leadingUnderlineLabel.accessibilityLabel];
   }
-  if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
-    [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
+  if (multilineTextField.trailingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:multilineTextField.trailingUnderlineLabel.accessibilityLabel];
   }
-  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
+  NSString *label = accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
                                         : nil;
+
+  multilineTextField.textView.accessibilityLabel = label;
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {

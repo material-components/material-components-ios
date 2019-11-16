@@ -45,23 +45,22 @@ final class TextFieldFilledSwiftExample: UIViewController {
   }()
   let cityController: MDCTextInputControllerFilled
 
-  let state: MDCTextField = {
-    let state = MDCTextField()
+  let state: MDCMultilineTextField = {
+    let state = MDCMultilineTextField()
     state.translatesAutoresizingMaskIntoConstraints = false
-    state.autocapitalizationType = .allCharacters
     return state
   }()
   let stateController: MDCTextInputControllerFilled
 
-  let zip: MDCTextField = {
-    let zip = MDCTextField()
+  let zip: MDCMultilineTextField = {
+    let zip = MDCMultilineTextField()
     zip.translatesAutoresizingMaskIntoConstraints = false
     return zip
   }()
   let zipController: MDCTextInputControllerFilled
 
-  let phone: MDCTextField = {
-    let phone = MDCTextField()
+  let phone: MDCMultilineTextField = {
+    let phone = MDCMultilineTextField()
     phone.translatesAutoresizingMaskIntoConstraints = false
     return phone
   }()
@@ -160,20 +159,20 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.addSubview(stateZip)
 
     stateZip.addSubview(state)
-    state.delegate = self
     stateController.placeholderText = "State"
+    MDCMultilineTextField.setupAccessibilityElements(state)
     allTextFieldControllers.append(stateController)
 
     stateZip.addSubview(zip)
-    zip.delegate = self
     zipController.placeholderText = "Zip Code"
     zipController.setHelperText("XXXXX", helperAccessibilityLabel: "5 digits")
+    MDCMultilineTextField.setupAccessibilityElements(zip)
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
     let phoneController = MDCTextInputControllerFilled(textInput: phone)
-    phone.delegate = self
     phoneController.placeholderText = "Phone Number"
+    MDCMultilineTextField.setupAccessibilityElements(phone)
     allTextFieldControllers.append(phoneController)
 
     scrollView.addSubview(message)
@@ -185,6 +184,10 @@ final class TextFieldFilledSwiftExample: UIViewController {
     It can even handle new lines.
     """
     messageController.placeholderText = "Message"
+    messageController.setHelperText("help you out", helperAccessibilityLabel: "help you out")
+    messageController.characterCountMax = 20
+//    messageController.setErrorText("error out", errorAccessibilityValue: "error out")
+    MDCMultilineTextField.setupAccessibilityElements(message)
     allTextFieldControllers.append(messageController)
 
     var tag = 0
