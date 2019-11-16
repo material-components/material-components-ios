@@ -783,7 +783,7 @@
 }
 
 + (void)setupAccessibilityElements:(MDCMultilineTextField *)multilineTextField {
-  multilineTextField.accessibilityElements = @[ multilineTextField.textView ];
+  multilineTextField.accessibilityElements = @[ multilineTextField.textView, multilineTextField.clearButton ];
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
   if ([multilineTextField accessibilityLabel].length > 0) {
     [accessibilityStrings addObject:[multilineTextField accessibilityLabel]];
