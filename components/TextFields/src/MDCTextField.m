@@ -828,7 +828,11 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
   if ([super accessibilityLabel].length > 0) {
     [accessibilityStrings addObject:[super accessibilityLabel]];
-  } else if (!self.hidesPlaceholderOnInput && self.placeholderLabel.accessibilityLabel.length > 0) {
+  } else if (!self.hidesPlaceholderOnInput && self.placeholderLabel.accessibilityLabel.length > 0 &&
+             [self hasTextContent]) {
+    // Note: UIKit verbalizes (in a lower tone) the placeholder content when no text has been
+    // entered on a UITextField. Therefore we do not also add the placeholder content when there is
+    // no user entered text.
     [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
   }
   if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
