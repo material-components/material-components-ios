@@ -112,6 +112,7 @@ mdc_examples_objc_library(
         ":ColorThemer",
         ":TabBarView",
         ":Tabs",
+        ":Theming",
         ":TypographyThemer",
         "//components/ActionSheet",
         "//components/ActionSheet:Theming",
