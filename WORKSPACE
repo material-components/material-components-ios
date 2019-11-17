@@ -18,7 +18,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 git_repository(
     name = "build_bazel_rules_apple",
     remote = "https://github.com/bazelbuild/rules_apple.git",
-    tag = "0.9.0",
+    commit = "6c9fcae7a3597aabd43f28be89466afe0eab18de",  # 0.18.0
 )
 
 load(
@@ -28,12 +28,6 @@ load(
 
 apple_rules_dependencies()
 
-git_repository(
-    name = "build_bazel_rules_swift",
-    remote = "https://github.com/bazelbuild/rules_swift.git",
-    tag = "0.4.0",
-)
-
 load(
     "@build_bazel_rules_swift//swift:repositories.bzl",
     "swift_rules_dependencies",
@@ -41,10 +35,18 @@ load(
 
 swift_rules_dependencies()
 
+load(
+    "@build_bazel_apple_support//lib:repositories.bzl",
+    "apple_support_dependencies",
+)
+
+apple_support_dependencies()
+
 git_repository(
     name = "bazel_skylib",
     remote = "https://github.com/bazelbuild/bazel-skylib.git",
-    tag = "0.7.0",
+    commit = "2b38b2f8bd4b8603d610cfc651fcbb299498147f",  # 0.9.0
+    shallow_since = "1562957722 -0400"
 )
 
 git_repository(

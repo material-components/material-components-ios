@@ -210,14 +210,14 @@ upload_bazel_test_artifacts() {
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
 }
 
-# Upgrades kokoro's current bazel version to at least 0.20.0
+# Upgrades kokoro's current bazel version to at least 0.28.1
 upgrade_kokoro_bazel_if_needed() {
   bazel version
 
   if [ -f "$KOKORO_GFILE_DIR/use_bazel.sh" ]; then
-    bash "$KOKORO_GFILE_DIR/use_bazel.sh" 0.20.0
+    bash "$KOKORO_GFILE_DIR/use_bazel.sh" 0.28.1
   else
-    use_bazel.sh 0.20.0
+    use_bazel.sh 0.28.1
   fi
   bazel version
 }
@@ -252,7 +252,7 @@ run_bazel_affected() {
     base_sha=$(git merge-base "$target_branch" HEAD)
 
     # We must upgrade bazel prior to running bazel query because we rely on features in bazel
-    # 0.20.
+    # 0.28.
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
       upgrade_kokoro_bazel_if_needed
     fi

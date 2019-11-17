@@ -42,7 +42,7 @@ mdc_public_objc_library(
 mdc_objc_library(
     name = "private_headers",
     testonly = 1,
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     visibility = ["//visibility:private"],
     deps = [":ThumbTrack"],
 )

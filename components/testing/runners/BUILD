@@ -45,7 +45,7 @@ ios_test_runner(
     visibility = ["//visibility:public"],
 )
 
-native.config_setting(
+config_setting(
     name = "xcode_9_0",
     values = {"xcode_version": "9.0"},
 )

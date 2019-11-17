@@ -32,7 +32,7 @@ licenses(["notice"])  # Apache 2.0
 mdc_objc_library(
     name = "BottomNavigation",
     srcs =
-        native.glob(
+        glob(
             [
                 "src/*.m",
                 "src/private/*.h",
@@ -45,14 +45,14 @@ mdc_objc_library(
             ],
         ),
     hdrs =
-        native.glob(
+        glob(
             ["src/*.h"],
             exclude = [
                 "src/MDCBottomNavigationBarController.h",
                 "src/MaterialBottomNavigationBeta.h",
             ],
         ),
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     enable_modules = 1,
     includes = ["src"],
     sdk_frameworks = [
@@ -77,7 +77,7 @@ mdc_objc_library(
 # that can be rolled-up into the main target.
 mdc_objc_library(
     name = "privateHeaders",
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     visibility = ["//visibility:private"],
 )
 
@@ -116,7 +116,7 @@ filegroup(
     ]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )
@@ -169,7 +169,7 @@ mdc_examples_swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob(
+    srcs = glob(
         [
             "tests/unit/*.m",
             "tests/unit/*.h",

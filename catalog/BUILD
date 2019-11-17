@@ -57,13 +57,13 @@ ios_application(
 
 mdc_objc_library(
     name = "MDCCatalogObjcLib",
-    srcs = native.glob(["MDCCatalog/*.h"]),
+    srcs = glob(["MDCCatalog/*.h"]),
     visibility = ["//visibility:private"],
 )
 
 swift_library(
     name = "MDCCatalogLib",
-    srcs = native.glob(["MDCCatalog/*.swift"]),
+    srcs = glob(["MDCCatalog/*.swift"]),
     copts = [
         "-swift-version",
         "4.2",
@@ -108,8 +108,8 @@ swift_library(
 
 mdc_objc_library(
     name = "MaterialCatalog",
-    srcs = native.glob(["MaterialCatalog/*.m"]),
-    hdrs = native.glob(["MaterialCatalog/*.h"]),
+    srcs = glob(["MaterialCatalog/*.m"]),
+    hdrs = glob(["MaterialCatalog/*.h"]),
     deps = [
         "//components/Themes",
     ],
@@ -117,7 +117,7 @@ mdc_objc_library(
 
 swift_library(
     name = "MDCDragonsLib",
-    srcs = native.glob(["MDCDragons/*.swift"]),
+    srcs = glob(["MDCDragons/*.swift"]),
     copts = [
         "-swift-version",
         "4.2",
@@ -141,7 +141,7 @@ swift_library(
 
 mdc_objc_library(
     name = "MDCActionExtension",
-    srcs = native.glob(["MDCActionExtension/*.m"]),
-    hdrs = native.glob(["MDCActionExtension/*.h"]),
+    srcs = glob(["MDCActionExtension/*.m"]),
+    hdrs = glob(["MDCActionExtension/*.h"]),
     deps = ["@catalog_by_convention//:CatalogByConvention"],
 )

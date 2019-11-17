@@ -26,12 +26,13 @@ load(
     "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
+load("@build_bazel_rules_apple//apple:resources.bzl", "apple_bundle_import")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Snackbar",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     sdk_frameworks = [
         "CoreGraphics",
         "QuartzCore",
@@ -59,7 +60,7 @@ filegroup(
     ]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )
@@ -106,7 +107,7 @@ mdc_examples_objc_library(
 
 mdc_objc_library(
     name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     visibility = ["//visibility:private"],
 )
 

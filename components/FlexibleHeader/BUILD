@@ -56,7 +56,7 @@ mdc_extension_objc_library(
 mdc_objc_library(
     name = "private",
     testonly = 1,
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = [":test_targets"],
 )

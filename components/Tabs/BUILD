@@ -25,12 +25,13 @@ load(
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_apple//apple:resources.bzl", "apple_bundle_import")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Tabs",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     deps = [
         "//components/AnimationTiming",
         "//components/Elevation",
@@ -51,7 +52,7 @@ filegroup(
     ]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )
@@ -149,13 +150,13 @@ mdc_examples_swift_library(
 
 mdc_objc_library(
     name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
     name = "privateTabBarView",
-    hdrs = native.glob(["src/TabBarView/private/*.h"]),
+    hdrs = glob(["src/TabBarView/private/*.h"]),
     visibility = ["//visibility:private"],
 )
 
@@ -190,7 +191,7 @@ mdc_unit_test_suite(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
-    extra_srcs = native.glob(["tests/snapshot/*/*.m"]),
+    extra_srcs = glob(["tests/snapshot/*/*.m"]),
     deps = [
         ":TabBarView",
         ":Tabs",

@@ -27,12 +27,13 @@ load(
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
+load("@build_bazel_rules_apple//apple:resources.bzl", "apple_bundle_import")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "AppBar",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",
@@ -59,7 +60,7 @@ filegroup(
     ]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )
@@ -92,7 +93,7 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
@@ -152,7 +153,7 @@ mdc_unit_test_suite(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
-    extra_srcs = native.glob(["tests/snapshot/Theming/*.m"]),
+    extra_srcs = glob(["tests/snapshot/Theming/*.m"]),
     deps = [
         ":AppBar",
         ":Theming",

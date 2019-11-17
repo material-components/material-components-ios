@@ -83,7 +83,7 @@ mdc_extension_objc_library(
 mdc_objc_library(
     name = "privateHeaders",
     testonly = 1,
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     deps = [":ActionSheet"],
 )
 

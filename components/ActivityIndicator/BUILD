@@ -26,12 +26,13 @@ load(
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
+load("@build_bazel_rules_apple//apple:resources.bzl", "apple_bundle_import")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "ActivityIndicator",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     sdk_frameworks = [
         "QuartzCore",
         "UIKit",
@@ -52,7 +53,7 @@ filegroup(
     ]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )

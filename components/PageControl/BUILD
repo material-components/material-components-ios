@@ -25,12 +25,13 @@ load(
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_apple//apple:resources.bzl", "apple_bundle_import")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "PageControl",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     sdk_frameworks = [
         "QuartzCore",
         "CoreGraphics",
@@ -47,7 +48,7 @@ filegroup(
     ]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )
@@ -62,7 +63,7 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     visibility = ["//visibility:private"],
 )
 

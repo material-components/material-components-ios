@@ -22,12 +22,13 @@ load(
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_apple//apple:resources.bzl", "apple_bundle_import")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Collections",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     sdk_frameworks = [
         "CoreGraphics",
     ],
@@ -64,7 +65,7 @@ filegroup(
     ]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )
@@ -72,7 +73,7 @@ objc_bundle(
 mdc_objc_library(
     name = "private",
     testonly = 1,
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
 )

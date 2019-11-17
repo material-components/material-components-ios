@@ -24,7 +24,7 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_objc_library(
     name = "SnapshotSourceDummies",
-    srcs = native.glob([
+    srcs = glob([
         "src/SourceDummies/*.h",
         "src/SourceDummies/*.m",
     ]),

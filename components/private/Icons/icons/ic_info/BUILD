@@ -14,12 +14,13 @@
 # limitations under the License.
 
 load("//:material_components_ios.bzl", "mdc_public_objc_library")
+load("@build_bazel_rules_apple//apple:resources.bzl", "apple_bundle_import")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "ic_info",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
     sdk_frameworks = ["UIKit"],
     deps = ["//components/private/Icons"],
 )
@@ -29,7 +30,7 @@ filegroup(
     srcs = glob(["src/MaterialIcons_ic_info.bundle/**"]),
 )
 
-objc_bundle(
+apple_bundle_import(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )

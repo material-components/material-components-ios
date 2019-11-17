@@ -107,7 +107,7 @@ mdc_extension_objc_library(
 mdc_objc_library(
     name = "private",
     testonly = 1,
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     visibility = [":test_targets"],
 )
 
@@ -153,7 +153,7 @@ mdc_unit_test_objc_library(
         "tests/unit/supplemental/*.m",
         "tests/unit/supplemental/*.h",
     ]),
-    xibs = native.glob(["tests/unit/resources/*.xib"]),
+    xibs = glob(["tests/unit/resources/*.xib"]),
     deps = [
         ":ButtonThemer",
         ":Buttons",
@@ -169,7 +169,7 @@ mdc_unit_test_objc_library(
 
 mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    extra_srcs = native.glob([
+    extra_srcs = glob([
         "tests/unit/Theming/*.swift",
     ]),
     deps = [

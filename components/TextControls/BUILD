@@ -28,7 +28,7 @@ licenses(["notice"])
 
 mdc_objc_library(
     name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
+    hdrs = glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = [":test_targets"],
 )

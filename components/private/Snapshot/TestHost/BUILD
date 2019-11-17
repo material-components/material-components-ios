@@ -18,10 +18,10 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_objc_library(
     name = "test_host_lib",
-    srcs = native.glob([
+    srcs = glob([
         "src/*.m",
     ]),
-    hdrs = native.glob([
+    hdrs = glob([
         "src/*.h",
     ]),
     enable_modules = 1,
