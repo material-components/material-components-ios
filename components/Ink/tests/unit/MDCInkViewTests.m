@@ -135,4 +135,16 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testNullResettableInkColor {
+  // Given
+  MDCInkView *testInkView = [[MDCInkView alloc] init];
+  testInkView.inkColor = UIColor.redColor;
+
+  // When
+  testInkView.inkColor = nil;
+
+  // Then
+  XCTAssertEqual(testInkView.inkColor, testInkView.defaultInkColor);
+}
+
 @end

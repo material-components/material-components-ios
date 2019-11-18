@@ -133,9 +133,9 @@
   }
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
+- (void)setInkColor:(nullable UIColor *)inkColor {
   if (inkColor == nil) {
-    return;
+    inkColor = self.defaultInkColor;
   }
   self.inkLayer.inkColor = inkColor;
 }
