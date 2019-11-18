@@ -28,7 +28,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
     ]
   }
 
-  var containerScheme = MDCContainerScheme()
+  @objc var containerScheme = MDCContainerScheme()
+  var flatButtonDynamic = MDCButton()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,7 +49,6 @@ class ButtonsDynamicTypeViewController: UIViewController {
     view.addSubview(flatButtonStatic)
 
     containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201902)
-    let flatButtonDynamic = MDCButton()
     flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
     flatButtonDynamic.setTitleColor(titleColor, for: .normal)
     flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
@@ -84,6 +84,13 @@ class ButtonsDynamicTypeViewController: UIViewController {
       NSLayoutConstraint.constraints(withVisualFormat:
           "V:[flatStatic]-40-[flatDynamic]-40-[flatDynamicLegacy]",
               options: .alignAllCenterX, metrics: nil, views: views))
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    let buttonFont = containerScheme.typographyScheme.button.mdc_scaledFont(for: view)
+    flatButtonDynamic.setTitleFont(buttonFont, for: .normal)
   }
 
   // MARK: Private
