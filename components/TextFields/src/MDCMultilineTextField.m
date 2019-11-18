@@ -783,7 +783,8 @@
 }
 
 + (void)setupAccessibilityElements:(MDCMultilineTextField *)multilineTextField {
-  multilineTextField.accessibilityElements = @[ multilineTextField.textView, multilineTextField.clearButton ];
+  multilineTextField.accessibilityElements =
+      @[ multilineTextField.textView, multilineTextField.clearButton ];
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
   if (multilineTextField.placeholderLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:multilineTextField.placeholderLabel.accessibilityLabel];
@@ -794,8 +795,8 @@
   if (multilineTextField.trailingUnderlineLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:multilineTextField.trailingUnderlineLabel.accessibilityLabel];
   }
-  NSString *label = accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
-                                        : nil;
+  NSString *label =
+      accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "] : nil;
 
   multilineTextField.textView.accessibilityLabel = label;
 }
