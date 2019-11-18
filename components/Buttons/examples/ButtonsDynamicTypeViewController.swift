@@ -15,18 +15,11 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialTypography
 
 class ButtonsDynamicTypeViewController: UIViewController {
-
-  @objc class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
-      "primaryDemo": false,
-      "presentable": false,
-    ]
-  }
 
   @objc var containerScheme = MDCContainerScheme()
   var flatButtonDynamic = MDCButton()
@@ -118,5 +111,15 @@ class ButtonsDynamicTypeViewController: UIViewController {
   @objc func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
+}
 
+// MARK: Catalog by conventions
+extension ButtonsDynamicTypeViewController {
+  @objc class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
+  }
 }
