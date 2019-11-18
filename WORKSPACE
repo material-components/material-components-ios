@@ -43,30 +43,14 @@ load(
 apple_support_dependencies()
 
 git_repository(
-    name = "bazel_skylib",
-    remote = "https://github.com/bazelbuild/bazel-skylib.git",
-    commit = "2b38b2f8bd4b8603d610cfc651fcbb299498147f",  # 0.9.0
-    shallow_since = "1562957722 -0400"
-)
-
-git_repository(
     name = "bazel_ios_warnings",
     remote = "https://github.com/material-foundation/bazel_ios_warnings.git",
     tag = "v3.0.0",
 )
 
-# TODO: https://github.com/material-components/material-components-ios/issues/8182
-# Restore this back to google/xctestrunner repository once Xcode 11's fix is in their new release
-http_file(
-    name = "xctestrunner",
-    executable = 1,
-    urls = ["https://github.com/material-foundation/xctestrunner/releases/download/0.2.9/ios_test_runner.par"],
-)
-
-git_repository(
+local_repository(
     name = "material_internationalization_ios",
-    remote = "https://github.com/material-foundation/material-internationalization-ios.git",
-    tag = "v2.0.1",
+    path = "/Users/featherless/workbench/material-internationalization-ios",
 )
 
 git_repository(
