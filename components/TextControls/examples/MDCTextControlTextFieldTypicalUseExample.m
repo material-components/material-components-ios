@@ -16,6 +16,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTextControls+Theming.h"
 #import "MaterialTextControls.h"
 
 static NSString *const kExampleTitle = @"MDCTextControl TextFields";
@@ -63,6 +64,7 @@ static CGFloat const kDefaultPadding = 15.0;
       [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
   self.baseTextField.trailingAssistiveLabel.font =
       [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+
   [self.view addSubview:self.baseTextField];
 
   self.filledTextField = [[MDCFilledTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
@@ -127,6 +129,8 @@ static CGFloat const kDefaultPadding = 15.0;
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+
+  [self.filledTextField applyThemeWithScheme:self.containerScheme];
 
   [self.resignFirstResponderButton sizeToFit];
   [self.baseTextField sizeToFit];
