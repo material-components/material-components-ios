@@ -797,6 +797,9 @@
   NSString *label = accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
                                         : nil;
 
+  UIView *view = multilineTextField.borderView;
+  CGRect frame = [view convertRect:view.bounds toView:view.window];
+  multilineTextField.textView.accessibilityFrame = frame;
   multilineTextField.textView.accessibilityLabel = label;
 }
 
