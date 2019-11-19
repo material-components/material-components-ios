@@ -65,14 +65,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGFloat height = CGRectGetHeight(self.bounds);
   CGFloat verticalInset = MIN(0, -(MDCTextInputClearButtonTouchTargetSize - height) / 2);
   CGFloat horizontalInset = MIN(0, -(MDCTextInputClearButtonTouchTargetSize - width) / 2);
-  self.hitAreaInsets =
+  self.minimumTouchTargetInsets =
       UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  if (!UIEdgeInsetsEqualToEdgeInsets(self.hitAreaInsets, UIEdgeInsetsZero)) {
+  if (!UIEdgeInsetsEqualToEdgeInsets(self.minimumTouchTargetInsets, UIEdgeInsetsZero)) {
     return CGRectContainsPoint(
-        UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), self.hitAreaInsets), point);
+        UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), self.minimumTouchTargetInsets),
+        point);
   }
   return [super pointInside:point withEvent:event];
 }

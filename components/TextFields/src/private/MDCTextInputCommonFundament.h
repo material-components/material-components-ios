@@ -22,6 +22,7 @@ extern const CGFloat MDCTextInputHalfPadding;
 UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 
 @interface MDCTextInputClearButton : MDCButton
+@property(nonatomic, assign) UIEdgeInsets minimumTouchTargetInsets;
 @end
 
 /** A controller for common traits shared by text inputs. */

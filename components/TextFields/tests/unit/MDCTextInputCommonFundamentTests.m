@@ -86,9 +86,10 @@
 
   // Then
   CGFloat negativeFifteen = (CGFloat)(-1 * 15);
-  UIEdgeInsets hitAreaInsets =
+  UIEdgeInsets minimumTouchTargetInsets =
       UIEdgeInsetsMake(negativeFifteen, negativeFifteen, negativeFifteen, negativeFifteen);
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(clearButton.hitAreaInsets, hitAreaInsets));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(clearButton.minimumTouchTargetInsets,
+                                              minimumTouchTargetInsets));
 }
 
 @end
