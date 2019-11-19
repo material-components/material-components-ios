@@ -58,13 +58,6 @@ static CGFloat const kDefaultPadding = 15.0;
   self.baseTextField.placeholder = @"This is placeholder text";
   self.baseTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.baseTextField.leadingAssistiveLabel.text = @"This is leading assistive text";
-  self.baseTextField.adjustsFontForContentSizeCategory = YES;
-  self.baseTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-  self.baseTextField.leadingAssistiveLabel.font =
-      [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-  self.baseTextField.trailingAssistiveLabel.font =
-      [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-
   [self.view addSubview:self.baseTextField];
 
   self.filledTextField = [[MDCFilledTextField alloc] initWithFrame:self.placeholderTextFieldFrame];
@@ -72,12 +65,6 @@ static CGFloat const kDefaultPadding = 15.0;
   self.filledTextField.placeholder = @"This is placeholder text";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.filledTextField.leadingAssistiveLabel.text = @"This is leading assistive text";
-  self.filledTextField.adjustsFontForContentSizeCategory = YES;
-  self.filledTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-  self.filledTextField.leadingAssistiveLabel.font =
-      [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-  self.filledTextField.trailingAssistiveLabel.font =
-      [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
   [self.view addSubview:self.filledTextField];
 
   self.outlinedTextField =
@@ -86,13 +73,43 @@ static CGFloat const kDefaultPadding = 15.0;
   self.outlinedTextField.placeholder = @"This is placeholder text";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.outlinedTextField.leadingAssistiveLabel.text = @"This is leading assistive text";
-  self.outlinedTextField.adjustsFontForContentSizeCategory = YES;
-  self.outlinedTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-  self.outlinedTextField.leadingAssistiveLabel.font =
-      [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-  self.outlinedTextField.trailingAssistiveLabel.font =
-      [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
   [self.view addSubview:self.outlinedTextField];
+}
+
+- (void)usePreferredFonts {
+  if (@available(iOS 10.0, *)) {
+    self.filledTextField.adjustsFontForContentSizeCategory = YES;
+    self.filledTextField.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+            compatibleWithTraitCollection:self.filledTextField.traitCollection];
+    self.filledTextField.leadingAssistiveLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+            compatibleWithTraitCollection:self.filledTextField.traitCollection];
+    self.filledTextField.trailingAssistiveLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+            compatibleWithTraitCollection:self.filledTextField.traitCollection];
+
+    self.outlinedTextField.adjustsFontForContentSizeCategory = YES;
+    self.outlinedTextField.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+            compatibleWithTraitCollection:self.outlinedTextField.traitCollection];
+    self.outlinedTextField.leadingAssistiveLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+            compatibleWithTraitCollection:self.outlinedTextField.traitCollection];
+    self.outlinedTextField.trailingAssistiveLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+            compatibleWithTraitCollection:self.outlinedTextField.traitCollection];
+
+    self.baseTextField.adjustsFontForContentSizeCategory = YES;
+    self.baseTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                                  compatibleWithTraitCollection:self.baseTextField.traitCollection];
+    self.baseTextField.leadingAssistiveLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+            compatibleWithTraitCollection:self.baseTextField.traitCollection];
+    self.baseTextField.trailingAssistiveLabel.font =
+        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+            compatibleWithTraitCollection:self.baseTextField.traitCollection];
+  }
 }
 
 - (MDCButton *)createFirstResponderButton {
@@ -131,6 +148,7 @@ static CGFloat const kDefaultPadding = 15.0;
   [super viewWillLayoutSubviews];
 
   [self.filledTextField applyThemeWithScheme:self.containerScheme];
+  [self usePreferredFonts];
 
   [self.resignFirstResponderButton sizeToFit];
   [self.baseTextField sizeToFit];

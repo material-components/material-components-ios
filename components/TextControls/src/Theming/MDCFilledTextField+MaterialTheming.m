@@ -160,7 +160,7 @@
   UIColor *filledSublayerFillColorDisabled =
       [filledSublayerFillColorNormal colorWithAlphaComponent:disabledOpacity * (CGFloat)0.12];
 
-  self.tintColor = colorScheme.primaryColor;
+  self.tintColor = colorScheme.errorColor;
 
   [self setFloatingLabelColor:floatingLabelColorNormal forState:MDCTextControlStateNormal];
   [self setFloatingLabelColor:floatingLabelColorEditing forState:MDCTextControlStateEditing];
