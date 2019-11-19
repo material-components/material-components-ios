@@ -50,8 +50,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
 
     let flatButtonDynamicLegacy = MDCButton()
     flatButtonDynamicLegacy.applyContainedTheme(withScheme: containerScheme)
-    let buttonFont = MDCTypographyScheme(defaults: .material201804).button
-    flatButtonDynamicLegacy.setTitleFont(buttonFont, for: .normal)
+    let legacyButtonFont = MDCTypographyScheme(defaults: .material201804).button
+    flatButtonDynamicLegacy.setTitleFont(legacyButtonFont, for: .normal)
     flatButtonDynamicLegacy.setTitle("Dynamic (legacy)", for: UIControl.State())
     flatButtonDynamicLegacy.sizeToFit()
     flatButtonDynamicLegacy.translatesAutoresizingMaskIntoConstraints = false
