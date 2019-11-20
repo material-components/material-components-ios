@@ -168,7 +168,7 @@
       [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
   UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
   UIColor *filledSublayerFillColorDisabled =
-      [filledSublayerFillColorNormal colorWithAlphaComponent:disabledOpacity * (CGFloat)0.12];
+      [filledSublayerFillColorNormal colorWithAlphaComponent:disabledOpacity];
 
   UIColor *tintColor = self.colorScheme.primaryColor;
 
@@ -261,7 +261,7 @@
       [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
   UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
   UIColor *filledSublayerFillColorDisabled =
-      [filledSublayerFillColorNormal colorWithAlphaComponent:disabledOpacity * (CGFloat)0.12];
+      [filledSublayerFillColorNormal colorWithAlphaComponent:disabledOpacity];
 
   UIColor *tintColor = self.colorScheme.errorColor;
 
