@@ -86,6 +86,8 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  clipped ripple effect. Consider disabling this behavior and explicitly setting a layer mask
  instead.
 
+ Changing this value to NO does not clear the mask if it was already set.
+
  Default value is YES.
  */
 @property(nonatomic, assign) BOOL usesSuperviewShadowLayerAsMask;

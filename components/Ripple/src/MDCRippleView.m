@@ -102,6 +102,14 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [self updateRippleStyle];
 }
 
+- (void)setUsesSuperviewShadowLayerAsMask:(BOOL)usesSuperviewShadowLayerAsMask {
+  _usesSuperviewShadowLayerAsMask = usesSuperviewShadowLayerAsMask;
+
+  if (_usesSuperviewShadowLayerAsMask) {
+    [self setNeedsLayout];
+  }
+}
+
 - (void)updateRippleStyle {
   self.layer.masksToBounds = (self.rippleStyle == MDCRippleStyleBounded);
   if (self.rippleStyle == MDCRippleStyleBounded) {
