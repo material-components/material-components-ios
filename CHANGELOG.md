@@ -127,6 +127,7 @@ This minor release primarily consists of accessibility improvements. A number of
 
 * [Delete non-functional ShadowElevationsTypicalUseViewController.swift (#8955)](https://github.com/material-components/material-components-ios/commit/655604fe58e82b9fb967e608d34c34984c111d8f) (Bryan Oltman)
 * [Provide semantic VoiceOver labels when interacting with the typical use example. (#8930)](https://github.com/material-components/material-components-ios/commit/74f6530d154a58886f3b7ad2dd619628d370d807) (featherless)
+* [Delete swift example target since there is no input file. (#8955)](https://github.com/material-components/material-components-ios/commit/ef4aad367748f60ddc4fd31cfaadf1a005cd76e7) (Wenyu Zhang)
 
 ### ShadowLayer
 
