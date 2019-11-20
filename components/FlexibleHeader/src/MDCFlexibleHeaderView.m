@@ -756,6 +756,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
           _shiftAccumulator < [self fhv_accumulatorMax]);
 }
 
+- (BOOL)fhv_isFullyShifted {
+  return ([self fhv_isDetachedFromTopOfContent] && _shiftAccumulator > 0 &&
+          _shiftAccumulator >= [self fhv_accumulatorMax]);
+}
+
 - (BOOL)fhv_isPartiallyExpanded {
   return ([self fhv_isDetachedFromTopOfContent] && _shiftAccumulator < 0 &&
           _shiftAccumulator > -(self.maximumHeight - self.minimumHeight));
@@ -1956,6 +1961,10 @@ static BOOL isRunningiOS10_3OrAbove() {
                      self->_isAnimatingLayoutUpdate = NO;
                    }
                    completion:completion];
+}
+
+- (BOOL)shiftedOffscreen {
+  return _wantsToBeHidden || [self fhv_isFullyShifted];
 }
 
 #pragma mark - MDCElevation

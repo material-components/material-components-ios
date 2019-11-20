@@ -129,6 +129,9 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
 /** Asks the receiver to take the header off-screen if it's currently on-screen. */
 - (void)shiftHeaderOffScreenAnimated:(BOOL)animated;
 
+/** Indicates whether the header is presently shifted offscreen. */
+@property(nonatomic, readonly) BOOL shiftedOffscreen;
+
 #pragma mark - UIScrollViewDelegate APIs required for shift behavior
 
 /**
