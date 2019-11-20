@@ -331,6 +331,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
+  cell.contentEdgeInsets = self.contentEdgeInsets;
   return cell;
 }
 
