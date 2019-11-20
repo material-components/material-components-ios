@@ -83,6 +83,8 @@
 
 /**
  When set to false, the bottom sheet controller can't be dismissed by dragging the sheet down.
+
+ Defaults to @c YES.
  */
 @property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;
 

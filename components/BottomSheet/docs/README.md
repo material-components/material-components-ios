@@ -95,6 +95,32 @@ _button = [[UIButton alloc] initWithFrame:CGRectZero];
 ```
 <!--</div>-->
 
+### Behavioral Customizations
+
+You can also choose to have your bottom sheet not be dismissable when dragged downards by using the dismissOnDraggingDownSheet property on MDCBottomSheetController.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let viewController: ViewController = ViewController()
+let bottomSheet: MDCBottomSheetController = MDCBottomSheetController(contentViewController: viewController)
+
+bottomSheet.dismissOnDraggingDownSheet = false
+
+present(bottomSheet, animated: true, completion: nil)
+```
+
+#### Objective-C
+```objc
+ViewController *viewController = [[ViewController alloc] init];
+MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+
+bottomSheet.dismissOnDraggingDownSheet = NO;
+
+[self presentViewController:bottomSheet animated:true completion:nil];
+```
+<!--</div>-->
+
 ## Extensions
 
 - [Shape Theming](shape-theming.md)

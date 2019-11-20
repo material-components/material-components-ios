@@ -104,6 +104,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.accessibilityLabel = _scrimAccessibilityLabel;
   _dimmingView.accessibilityHint = _scrimAccessibilityHint;
 
+  _dismissOnDraggingDownSheet = YES;
+
   UIScrollView *scrollView = self.trackingScrollView;
   if (scrollView == nil) {
     scrollView = MDCBottomSheetGetPrimaryScrollView(self.presentedViewController);
