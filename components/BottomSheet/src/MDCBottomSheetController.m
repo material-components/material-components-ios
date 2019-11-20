@@ -155,7 +155,8 @@
 
 - (void)setDismissOnDraggingDownSheet:(BOOL)dismissOnDraggingDownSheet {
   _transitionController.dismissOnDraggingDownSheet = dismissOnDraggingDownSheet;
-  self.mdc_bottomSheetPresentationController.dismissOnDraggingDownSheet = dismissOnDraggingDownSheet;
+  self.mdc_bottomSheetPresentationController.dismissOnDraggingDownSheet =
+      dismissOnDraggingDownSheet;
 }
 
 - (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet

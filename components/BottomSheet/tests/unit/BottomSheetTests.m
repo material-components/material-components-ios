@@ -192,9 +192,9 @@
   // Then
   XCTAssertNotNil(self.bottomSheet.presentationController);
   XCTAssertTrue([self.bottomSheet.presentationController
-                 isKindOfClass:[MDCBottomSheetPresentationController class]]);
-  XCTAssertFalse(((MDCBottomSheetPresentationController *)
-                  self.bottomSheet.presentationController).dismissOnDraggingDownSheet);
+      isKindOfClass:[MDCBottomSheetPresentationController class]]);
+  XCTAssertFalse(((MDCBottomSheetPresentationController *)self.bottomSheet.presentationController)
+                     .dismissOnDraggingDownSheet);
 }
 
 @end

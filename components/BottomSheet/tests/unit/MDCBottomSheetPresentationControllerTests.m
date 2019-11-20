@@ -346,7 +346,7 @@
 
   // When
   BOOL shouldBeginDragging = [self.sheetView draggableView:self.sheetView.sheet
-      shouldBeginDraggingWithVelocity:CGPointMake(0, 0)];
+                           shouldBeginDraggingWithVelocity:CGPointMake(0, 0)];
 
   // Then
   XCTAssertFalse(shouldBeginDragging);
