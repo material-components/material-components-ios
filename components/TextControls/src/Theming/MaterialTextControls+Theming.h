@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCFilledTextField+MaterialTheming.h"
+#import "MDCOutlinedTextField+MaterialTheming.h"
