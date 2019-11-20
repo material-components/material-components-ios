@@ -135,6 +135,7 @@ This minor release primarily consists of accessibility improvements. A number of
 ### Slider
 
 * [Update documentation to match behavior. (#8782)](https://github.com/material-components/material-components-ios/commit/3671e05bde32bf2bfb693d3eb6e21dcf87abe4e8) (Robert Moore)
+* [Fix event handling. (#8759)](https://github.com/material-components/material-components-ios/commit/4194c01fbe880d02ad6798c5a02ea471e37da0be) (Robert Moore)
 
 ### Snackbar
 
@@ -168,6 +169,7 @@ This minor release primarily consists of accessibility improvements. A number of
 * [Update announcement text for fields with a character limit (#8777)](https://github.com/material-components/material-components-ios/commit/be03cec76744914a7861e9dc6d77c6fcd5e38bef) (Bryan Oltman)
 * [Update character count announcement in MDCTextInputControllerFullWidth (#8789)](https://github.com/material-components/material-components-ios/commit/118dfa3d58b69fed2d8bbfdbaf263a4cbf51e1ca) (Bryan Oltman)
 * [simplify test names since the name of the file already gives context. (#8952)](https://github.com/material-components/material-components-ios/commit/d6ae7f6782bb554d043879b5965e9b2708145a60) (Randall Li)
+* [Add accessibilityLabel override to MDCBaseTextField (#8773)](https://github.com/material-components/material-components-ios/commit/d5e69512644fee50c3c78e44ef62242826b2785a) (Andrew Overton)
 
 ### Typography
 
@@ -179,9 +181,7 @@ This minor release primarily consists of accessibility improvements. A number of
 
 ## Multi-component changes
 
-* [Add accessibilityLabel override to MDCBaseTextField (#8773)](https://github.com/material-components/material-components-ios/commit/d5e69512644fee50c3c78e44ef62242826b2785a) (Andrew Overton)
 * [Annotate all catalogShouldHideNavigation invocations with @objc. (#8791)](https://github.com/material-components/material-components-ios/commit/5425884431d6cd48d3ebb5f875d859a3a08ed059) (featherless)
-* [Fix event handling. (#8759)](https://github.com/material-components/material-components-ios/commit/4194c01fbe880d02ad6798c5a02ea471e37da0be) (Robert Moore)
 
 ---
 
