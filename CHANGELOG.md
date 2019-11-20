@@ -1,20 +1,14 @@
-# #develop#
+# 94.3.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release primarily consists of accessibility improvements. A number of components now provide increased support for VoiceOver and Dynamic Type, and many components have been audited to make sure minimum touch target requirements and minimum color contrast requirements are met. Additionally, many examples in our Catalog and Dragons apps have been improved from an accessibility standpoint.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
-## New features
+* `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSnackbarManager`
 
-Replace this text with example code for each new feature.
-## API changes
+* `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSnackbarMessageView`
 
 ## Component changes
-
-## Changes
 
 ### ActionSheet
 
@@ -26,7 +20,6 @@ Replace this text with example code for each new feature.
 
 ### AppBar
 
-* [Add API to auto adjust height based on HeaderStackView for app bar. (#8764)](https://github.com/material-components/material-components-ios/commit/f791b575978360c4e2630c5bcc17323cf0a304b7) (Wenyu Zhang)
 * [AppBar example has low-contrast text (#8966)](https://github.com/material-components/material-components-ios/commit/af583a58285bc2ddb3b70d7a0d1d880ff25133e7) (Galia Kaufman)
 * [Make example titles more accurate. (#8828)](https://github.com/material-components/material-components-ios/commit/bd832a416caa863dea3bd283164c93fd0d90ac44) (Robert Moore)
 
