@@ -44,15 +44,6 @@ mdc_examples_objc_library(
     ],
 )
 
-mdc_examples_swift_library(
-    name = "SwiftExamples",
-    deps = [
-        ":ShadowElevations",
-        "//components/AppBar",
-        "//components/ShadowLayer",
-    ],
-)
-
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [":ShadowElevations"],
