@@ -410,6 +410,7 @@ static NSString *const kLongTitle5Arabic =
 
   // When
   superview.customSafeAreaInsets = UIEdgeInsetsMake(90, 80, 40, 20);
+  [controller.view layoutIfNeeded];
   [self changeViewToRTL:controller.view];
   [controller.view setNeedsLayout];
   [controller.view layoutIfNeeded];
@@ -455,6 +456,7 @@ static NSString *const kLongTitle5Arabic =
 
   // When
   superview.customSafeAreaInsets = UIEdgeInsetsMake(120, 120, 0, 0);
+  [controller.view layoutIfNeeded];
   [self changeViewToRTL:controller.view];
   [controller.view setNeedsLayout];
   [controller.view layoutIfNeeded];
@@ -500,6 +502,7 @@ static NSString *const kLongTitle5Arabic =
 
   // When
   superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 0, 80, 80);
+  [controller.view layoutIfNeeded];
   [self changeViewToRTL:controller.view];
   [controller.view setNeedsLayout];
   [controller.view layoutIfNeeded];
