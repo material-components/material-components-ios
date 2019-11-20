@@ -114,6 +114,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                                                      scrollView:scrollView];
   self.sheetView.delegate = self;
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+  self.sheetView.dismissOnDraggingDownSheet = self.dismissOnDraggingDownSheet;
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
@@ -282,6 +283,13 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
+- (void)setDismissOnDraggingDownSheet:(BOOL)dismissOnDraggingDownSheet {
+  _dismissOnDraggingDownSheet = dismissOnDraggingDownSheet;
+  if (self.sheetView) {
+    self.sheetView.dismissOnDraggingDownSheet = dismissOnDraggingDownSheet;
   }
 }
 

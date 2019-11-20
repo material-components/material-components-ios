@@ -343,6 +343,10 @@ static const CGFloat kSheetBounceBuffer = 150;
     shouldBeginDraggingWithVelocity:(CGPoint)velocity {
   [self updateSheetState];
 
+  if (!self.dismissOnDraggingDownSheet) {
+    return NO;
+  }
+
   switch (self.sheetState) {
     case MDCSheetStatePreferred:
       return YES;

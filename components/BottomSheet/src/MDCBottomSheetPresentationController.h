@@ -82,6 +82,11 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ When set to false, the bottom sheet controller can't be dismissed by dragging the sheet down.
+ */
+@property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;
+
+/**
  This is used to set a custom height on the sheet view.
 
  @note If a positive value is passed then the sheet view will be that height even if
