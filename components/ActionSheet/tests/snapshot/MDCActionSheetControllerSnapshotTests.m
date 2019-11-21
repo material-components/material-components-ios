@@ -370,6 +370,138 @@ static NSString *const kLongTitle5Arabic =
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
+#pragma mark - contentEdgeInsets
+
+- (void)testContentEdgeInsetsIncreaseActionRowHeight {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.contentEdgeInsets = UIEdgeInsetsMake(-30, 0, -30, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testContentEdgeInsetsDecreaseActionRowHeight {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testContentEdgeInsetsShiftActionRowToRightInLTR {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.contentEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 50);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testContentEdgeInsetsShiftActionRowToLeftInLTR {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testContentEdgeInsetsShiftActionRowToLeftInRTL {
+  // Given
+  [self changeToLongArabicTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  [controller.view layoutIfNeeded];
+  [self changeViewToRTL:controller.view];
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.contentEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 50);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testContentEdgeInsetsShiftActionRowToRightInRTL {
+  // Given
+  [self changeToLongArabicTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  [controller.view layoutIfNeeded];
+  [self changeViewToRTL:controller.view];
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
 #pragma mark - Safe Area
 
 - (void)testSafeAreaTopLeftBottomRightLTR {

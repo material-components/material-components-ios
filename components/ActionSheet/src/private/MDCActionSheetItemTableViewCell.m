@@ -60,14 +60,14 @@ static inline UIColor *RippleColor() {
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
-  _contentContainerView = [[UIView alloc] initWithFrame:self.contentView.bounds];
+  _contentContainerView = [[UIView alloc] initWithFrame:self.bounds];
   _contentContainerView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_contentContainerView];
   _contentContainerTopConstraint =
-      [_contentContainerView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor];
+      [self.contentView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor];
   _contentContainerTopConstraint.active = YES;
-  _contentContainerLeadingConstraint = [_contentContainerView.leadingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor];
+  _contentContainerLeadingConstraint = [self.contentView.layoutMarginsGuide.leadingAnchor
+      constraintEqualToAnchor:_contentContainerView.leadingAnchor];
   _contentContainerLeadingConstraint.active = YES;
   _contentContainerBottomConstraint =
       [_contentContainerView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor];
@@ -91,9 +91,10 @@ static inline UIColor *RippleColor() {
   [_actionLabel.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
                                          constant:kActionItemTitleVerticalPadding]
       .active = YES;
-  [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
-                                            constant:-kActionItemTitleVerticalPadding]
-      .active = YES;
+  NSLayoutConstraint *labelBottomConstraint = [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
+                                                                                        constant:-kActionItemTitleVerticalPadding];
+  labelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
+  labelBottomConstraint.active = YES;
   _titleLeadingConstraint =
       [_actionLabel.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor
                                                  constant:leadingConstant];
@@ -142,6 +143,14 @@ static inline UIColor *RippleColor() {
   self.actionLabel.text = _itemAction.title;
   self.actionImageView.image = _itemAction.image;
   [self setNeedsLayout];
+}
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  _contentEdgeInsets = contentEdgeInsets;
+  _contentContainerTopConstraint.constant = contentEdgeInsets.top;
+  _contentContainerLeadingConstraint.constant = contentEdgeInsets.left;
+  _contentContainerBottomConstraint.constant = contentEdgeInsets.bottom;
+  _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
 }
 
 - (MDCActionSheetAction *)action {

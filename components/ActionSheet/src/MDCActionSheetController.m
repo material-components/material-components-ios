@@ -335,6 +335,14 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   return cell;
 }
 
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, content)) {
+    return;
+  }
+  _contentEdgeInsets = contentEdgeInsets;
+  [self.tableView reloadData];
+}
+
 - (void)setTitle:(NSString *)title {
   self.header.title = title;
   [self.view setNeedsLayout];
