@@ -132,8 +132,9 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
 /**
  Indicates whether the header is or will be shifted offscreen.
 
- @returns YES if the header has been asked to shift offscreen by @c -shiftHeaderOffScreenAnimated: or if the
- user has fully shifted the header off-screen as a result of scrolling the tracking scroll view.
+ @returns YES if the header has been asked to shift offscreen by @c -shiftHeaderOffScreenAnimated:
+ or if the user has fully shifted the header off-screen as a result of scrolling the tracking scroll
+ view.
  */
 @property(nonatomic, readonly, getter=isShiftedOffscreen) BOOL shiftedOffscreen;
 
