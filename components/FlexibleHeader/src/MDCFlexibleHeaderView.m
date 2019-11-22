@@ -1963,7 +1963,7 @@ static BOOL isRunningiOS10_3OrAbove() {
                    completion:completion];
 }
 
-- (BOOL)shiftedOffscreen {
+- (BOOL)isShiftedOffscreen {
   return _wantsToBeHidden || [self fhv_isFullyShifted];
 }
 

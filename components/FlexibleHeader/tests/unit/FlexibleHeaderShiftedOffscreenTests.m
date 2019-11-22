@@ -30,7 +30,7 @@
   MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
 
   // Then
-  XCTAssertFalse(fhvc.shiftedOffscreen);
+  XCTAssertFalse(fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), 0, 0.001);
 }
 
@@ -42,11 +42,11 @@
   [fhvc shiftHeaderOffScreenAnimated:NO];
 
   // Then
-  XCTAssertTrue(fhvc.shiftedOffscreen);
+  XCTAssertTrue(fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), -fhvc.maximumHeight, 0.001);
 }
 
-- (void)testBecomesTrueWhenShiftedOffscreenAnimatedWithoutTrackingScrollView {
+- (void)testBecomesTrueBeforeAnimationWhenShiftedOffscreenAnimatedWithoutTrackingScrollView {
   // Given
   MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
 
@@ -54,7 +54,7 @@
   [fhvc shiftHeaderOffScreenAnimated:YES];
 
   // Then
-  XCTAssertTrue(fhvc.shiftedOffscreen);
+  XCTAssertTrue(fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), 0, 0.001);
 }
 
@@ -69,23 +69,7 @@
   fhvc.trackingScrollView = scrollView;
 
   // Then
-  XCTAssertFalse(fhvc.shiftedOffscreen);
-  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), 0, 0.001);
-}
-
-- (void)testBecomesTrueWhenShiftedOffscreenAnimatedWithTrackingScrollView {
-  // Given
-  MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
-  UIScrollView *scrollView = [[UIScrollView alloc] init];
-  scrollView.frame = CGRectMake(0, 0, 100, 1000);
-  scrollView.contentSize = CGSizeMake(100, 1000);
-  fhvc.trackingScrollView = scrollView;
-
-  // When
-  [fhvc shiftHeaderOffScreenAnimated:YES];
-
-  // Then
-  XCTAssertTrue(fhvc.shiftedOffscreen);
+  XCTAssertFalse(fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), 0, 0.001);
 }
 
@@ -101,13 +85,29 @@
   [fhvc shiftHeaderOffScreenAnimated:NO];
 
   // Then
-  XCTAssertTrue(fhvc.shiftedOffscreen);
+  XCTAssertTrue(fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), -fhvc.maximumHeight, 0.001);
+}
+
+- (void)testBecomesTrueBeforeAnimationWhenShiftedOffscreenAnimatedWithTrackingScrollView {
+  // Given
+  MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  scrollView.frame = CGRectMake(0, 0, 100, 1000);
+  scrollView.contentSize = CGSizeMake(100, 1000);
+  fhvc.trackingScrollView = scrollView;
+
+  // When
+  [fhvc shiftHeaderOffScreenAnimated:YES];
+
+  // Then
+  XCTAssertTrue(fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), 0, 0.001);
 }
 
 #pragma mark - Interactive shifting via trackingScrollViewDidScroll
 
-- (void)testBecomesTrueWhenDraggedOffscreen {
+- (void)testDefaultIsFalseWithUndraggedTrackingScrollView {
   // Given
   MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
   UIScrollView *scrollView = [[UIScrollView alloc] init];
@@ -117,16 +117,12 @@
   fhvc.trackingScrollView = scrollView;
   [fhvc trackingScrollViewDidScroll];
 
-  // When
-  scrollView.contentOffset = CGPointMake(0, 400);
-  [fhvc trackingScrollViewDidScroll];
-
   // Then
-  XCTAssertTrue(fhvc.shiftedOffscreen);
-  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), -fhvc.maximumHeight, 0.001);
+  XCTAssertFalse(fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), 0, 0.001);
 }
 
-- (void)testStaysFalseWhenDraggedPartiallyOffscreen {
+- (void)testStaysFalseWhenScrolledMuchLessThanTheHeightOfTheHeader {
   // Given
   MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
   UIScrollView *scrollView = [[UIScrollView alloc] init];
@@ -141,8 +137,86 @@
   [fhvc trackingScrollViewDidScroll];
 
   // Then
-  XCTAssertFalse(fhvc.shiftedOffscreen);
+  XCTAssertFalse(fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), -scrollView.contentOffset.y, 0.001);
+}
+
+- (void)testStaysFalseWhenAlmostScrolledTheFullHeightOfTheHeader {
+  // Given
+  MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  scrollView.frame = CGRectMake(0, 0, 100, 100);
+  scrollView.contentSize = CGSizeMake(100, 1000);
+  fhvc.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+  fhvc.trackingScrollView = scrollView;
+  [fhvc trackingScrollViewDidScroll];
+
+  // When
+  scrollView.contentOffset = CGPointMake(0, fhvc.maximumHeight - 1);
+  [fhvc trackingScrollViewDidScroll];
+
+  // Then
+  XCTAssertFalse(fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), -scrollView.contentOffset.y, 0.001);
+}
+
+- (void)testBecomesTrueWhenScrolledExactlyTheHeightOfTheHeader {
+  // Given
+  MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  scrollView.frame = CGRectMake(0, 0, 100, 100);
+  scrollView.contentSize = CGSizeMake(100, 1000);
+  fhvc.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+  fhvc.trackingScrollView = scrollView;
+  [fhvc trackingScrollViewDidScroll];
+
+  // When
+  scrollView.contentOffset = CGPointMake(0, fhvc.maximumHeight);
+  [fhvc trackingScrollViewDidScroll];
+
+  // Then
+  XCTAssertTrue(fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), -fhvc.maximumHeight, 0.001);
+}
+
+- (void)testBecomesTrueWhenScrolledGreaterThanTheHeightOfTheHeader {
+  // Given
+  MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  scrollView.frame = CGRectMake(0, 0, 100, 100);
+  scrollView.contentSize = CGSizeMake(100, 1000);
+  fhvc.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+  fhvc.trackingScrollView = scrollView;
+  [fhvc trackingScrollViewDidScroll];
+
+  // When
+  scrollView.contentOffset = CGPointMake(0, 400);
+  [fhvc trackingScrollViewDidScroll];
+
+  // Then
+  XCTAssertTrue(fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), -fhvc.maximumHeight, 0.001);
+}
+
+- (void)testBecomesFalseWhenScrolledGreaterThanTheHeightOfTheHeaderAndThenBackToTheContentTop {
+  // Given
+  MDCFlexibleHeaderView *fhvc = [[MDCFlexibleHeaderView alloc] init];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  scrollView.frame = CGRectMake(0, 0, 100, 100);
+  scrollView.contentSize = CGSizeMake(100, 1000);
+  fhvc.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+  fhvc.trackingScrollView = scrollView;
+  [fhvc trackingScrollViewDidScroll];
+
+  // When
+  scrollView.contentOffset = CGPointMake(0, fhvc.maximumHeight + 100);
+  [fhvc trackingScrollViewDidScroll];
+  scrollView.contentOffset = CGPointMake(0, 0);
+  [fhvc trackingScrollViewDidScroll];
+
+  // Then
+  XCTAssertFalse(fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(fhvc.frame), 0, 0.001);
 }
 
 @end
