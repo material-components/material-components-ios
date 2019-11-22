@@ -109,7 +109,7 @@ _button = [[UIButton alloc] initWithFrame:CGRectZero];
 
 ### Behavioral Customizations
 
-You can also choose to have your bottom sheet not be dismissable when dragged downards by using the dismissOnDraggingDownSheet property on MDCBottomSheetController.
+You can also choose to have your bottom sheet not be dismissable when dragged downwards by using the dismissOnDraggingDownSheet property on MDCBottomSheetController.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
