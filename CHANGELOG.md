@@ -26,11 +26,8 @@ This minor release primarily consists of accessibility improvements. A number of
 ### Banner
 
 * [Add a snapshot for banner with no action case. (#8968)](https://github.com/material-components/material-components-ios/commit/e1ceaf955b7a3f4ee0f94d16dae1a1e10e025741) (Wenyu Zhang)
-* [Add an example to show how Banner can be used as bottom bar in AppBar. (#8785)](https://github.com/material-components/material-components-ios/commit/070865bfa4b278bc5383c2d0993e43d406bce58a) (Wenyu Zhang)
-* [Deactivate custom constraints when there is a need to update constraints.(#8793)](https://github.com/material-components/material-components-ios/commit/3637fb5dd6207b2b1a5a2ffb0e685dd622adab9d) (Wenyu Zhang)
 * [Fix Banner positioning in example for iOS 10 (#8829)](https://github.com/material-components/material-components-ios/commit/bd0d571ae35eb54b29c0e6bf4cbf32c40c593753) (Bryan Oltman)
 * [Support use case where no button appears on Banner. (#8951)](https://github.com/material-components/material-components-ios/commit/97e435ae881fe5e755196fcac6951f4a7b6f5c76) (Wenyu Zhang)
-* [update constraint when frame is changed. (#8765)](https://github.com/material-components/material-components-ios/commit/52361f8ac8dc48ff8482c2fc821016cbd624c647) (Wenyu Zhang)
 
 ### BottomNavigation
 
@@ -136,7 +133,6 @@ This minor release primarily consists of accessibility improvements. A number of
 ### Slider
 
 * [Update documentation to match behavior. (#8782)](https://github.com/material-components/material-components-ios/commit/3671e05bde32bf2bfb693d3eb6e21dcf87abe4e8) (Robert Moore)
-* [Fix event handling. (#8759)](https://github.com/material-components/material-components-ios/commit/4194c01fbe880d02ad6798c5a02ea471e37da0be) (Robert Moore)
 
 ### Snackbar
 
@@ -163,13 +159,10 @@ This minor release primarily consists of accessibility improvements. A number of
 * [Added accessibility label tests for MDCMultilineTextFields (#8902)](https://github.com/material-components/material-components-ios/commit/1c17792b3656ff2f73f2261ddc9e2d1b0b1b78ed) (Randall Li)
 * [Added header comment: placeholder APIs are for `label text` (#8803)](https://github.com/material-components/material-components-ios/commit/3c0d7953ada34365c0de9aed9664eed46984f431) (Randall Li)
 * [Added tests for accessibilityLabel (#8830)](https://github.com/material-components/material-components-ios/commit/3d1b6f9acc0eeea2f5a2ae820d7c6ede437df628) (Randall Li)
-* [Check if placeholder is hidden before verbalizing it in voice over. (#8804)](https://github.com/material-components/material-components-ios/commit/f9c17caf1bffd8e4538ee2c587d780e55437243c) (Randall Li)
 * [Convert clear button to MDCButton (#8784)](https://github.com/material-components/material-components-ios/commit/42e220d9c1bcf133a1dcf1186023395a4303a0e9) (Bryan Oltman)
-* [Correction to the accessibility label (#8976)](https://github.com/material-components/material-components-ios/commit/c498516b358998c9853e9934df9b643d4256b9da) (Randall Li)
 * [Fix spelling mistake (#8910)](https://github.com/material-components/material-components-ios/commit/a4decc6c8e17ecab74aceab006bf36e676c3acfa) (Randall Li)
 * [Update announcement text for fields with a character limit (#8777)](https://github.com/material-components/material-components-ios/commit/be03cec76744914a7861e9dc6d77c6fcd5e38bef) (Bryan Oltman)
 * [Update character count announcement in MDCTextInputControllerFullWidth (#8789)](https://github.com/material-components/material-components-ios/commit/118dfa3d58b69fed2d8bbfdbaf263a4cbf51e1ca) (Bryan Oltman)
-* [simplify test names since the name of the file already gives context. (#8952)](https://github.com/material-components/material-components-ios/commit/d6ae7f6782bb554d043879b5965e9b2708145a60) (Randall Li)
 * [Add accessibilityLabel override to MDCBaseTextField (#8773)](https://github.com/material-components/material-components-ios/commit/d5e69512644fee50c3c78e44ef62242826b2785a) (Andrew Overton)
 
 ### Typography
