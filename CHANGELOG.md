@@ -84,6 +84,7 @@ This minor release primarily consists of accessibility improvements. A number of
 * [Add a voiceover dismissal affordance for the feature highlight. (#8959)](https://github.com/material-components/material-components-ios/commit/4c7402857c173db101f846409ad716fac8ada4a3) (Yarden Eitan)
 * [Make "Color" example accessible. (#8957)](https://github.com/material-components/material-components-ios/commit/8e9eff85f846f15e2bb954854586c91fe7bf814b) (Robert Moore)
 * [Positions label not hidden behind nav bar. (#8969)](https://github.com/material-components/material-components-ios/commit/db709613cc58397dfb2ee7a9d0d21a8be8d9a2d9) (Yarden Eitan)
+* [Fix accessibility tests. (#9018)](https://github.com/material-components/material-components-ios/commits/84007513b71c6b9a35c0d7304ea9129fc1855087) (Robert Moore)
 
 ### Ink
 
