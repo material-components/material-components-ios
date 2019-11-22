@@ -87,6 +87,7 @@ class ActionSheetSwiftExampleViewController: UIViewController {
         actionSheet.addAction(action)
         actionSheet.addAction(action)
         actionSheet.backgroundColor = .green
+        actionSheet.contentEdgeInsets = UIEdgeInsets(top: -10, left: 0, bottom: -10, right: 0)
       }
     case .thirtyOptions:
       actionSheet = ActionSheetSwiftExampleViewController.thirtyOptions()
@@ -222,6 +223,7 @@ extension ActionSheetSwiftExampleViewController {
 
   static func thirtyOptions() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
+
     for i in 1...30 {
       let action = MDCActionSheetAction(title: "Action \(i)",
                                         image: UIImage(named: "Home"),

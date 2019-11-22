@@ -32,11 +32,17 @@ static inline UIColor *RippleColor() {
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
+/** Container view holding all custom content so it can be inset. */
+@property(nonatomic, strong) UIView *contentContainerView;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   NSLayoutConstraint *_titleLeadingConstraint;
+  NSLayoutConstraint *_contentContainerTopConstraint;
+  NSLayoutConstraint *_contentContainerLeadingConstraint;
+  NSLayoutConstraint *_contentContainerBottomConstraint;
+  NSLayoutConstraint *_contentContainerTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -54,9 +60,24 @@ static inline UIColor *RippleColor() {
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
+  _contentContainerView = [[UIView alloc] initWithFrame:self.bounds];
+  _contentContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.contentView addSubview:_contentContainerView];
+  _contentContainerTopConstraint =
+      [self.contentView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor];
+  _contentContainerTopConstraint.active = YES;
+  _contentContainerLeadingConstraint = [self.contentView.layoutMarginsGuide.leadingAnchor
+      constraintEqualToAnchor:_contentContainerView.leadingAnchor];
+  _contentContainerLeadingConstraint.active = YES;
+  _contentContainerBottomConstraint =
+      [_contentContainerView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor];
+  _contentContainerBottomConstraint.active = YES;
+  _contentContainerTrailingConstraint = [_contentContainerView.trailingAnchor
+      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
+  _contentContainerTrailingConstraint.active = YES;
 
   _actionLabel = [[UILabel alloc] init];
-  [self.contentView addSubview:_actionLabel];
+  [_contentContainerView addSubview:_actionLabel];
   _actionLabel.numberOfLines = 0;
   _actionLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_actionLabel sizeToFit];
@@ -67,19 +88,21 @@ static inline UIColor *RippleColor() {
   if (_itemAction.image || _addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
   }
-  [_actionLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+  [_actionLabel.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
                                          constant:kActionItemTitleVerticalPadding]
       .active = YES;
-  [_actionLabel.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor
-                                            constant:-kActionItemTitleVerticalPadding]
-      .active = YES;
-  _titleLeadingConstraint = [_actionLabel.leadingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor
-                     constant:leadingConstant];
+  NSLayoutConstraint *labelBottomConstraint =
+      [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
+                                                constant:-kActionItemTitleVerticalPadding];
+  labelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
+  labelBottomConstraint.active = YES;
+  _titleLeadingConstraint =
+      [_actionLabel.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor
+                                                 constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  [self.contentView.layoutMarginsGuide.trailingAnchor
-      constraintEqualToAnchor:_actionLabel.trailingAnchor]
+  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.trailingAnchor]
       .active = YES;
+
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
@@ -90,13 +113,12 @@ static inline UIColor *RippleColor() {
   }
 
   _actionImageView = [[UIImageView alloc] init];
-  [self.contentView addSubview:_actionImageView];
+  [_contentContainerView addSubview:_actionImageView];
   _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [_actionImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+  [_actionImageView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
                                              constant:kImageTopPadding]
       .active = YES;
-  [_actionImageView.leadingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor]
+  [_actionImageView.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor]
       .active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
@@ -122,6 +144,14 @@ static inline UIColor *RippleColor() {
   self.actionLabel.text = _itemAction.title;
   self.actionImageView.image = _itemAction.image;
   [self setNeedsLayout];
+}
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  _contentEdgeInsets = contentEdgeInsets;
+  _contentContainerTopConstraint.constant = contentEdgeInsets.top;
+  _contentContainerLeadingConstraint.constant = contentEdgeInsets.left;
+  _contentContainerBottomConstraint.constant = contentEdgeInsets.bottom;
+  _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
 }
 
 - (MDCActionSheetAction *)action {
