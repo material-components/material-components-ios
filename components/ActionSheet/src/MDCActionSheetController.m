@@ -336,7 +336,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 }
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
-  if (UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, content)) {
+  if (UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, contentEdgeInsets)) {
     return;
   }
   _contentEdgeInsets = contentEdgeInsets;

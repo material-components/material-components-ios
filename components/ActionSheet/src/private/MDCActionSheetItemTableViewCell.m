@@ -20,7 +20,7 @@
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
-static const CGFloat kTitleLeadingPadding = 56;  // 16 (margins) + 24 (image) + 16
+static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 static inline UIColor *RippleColor() {
@@ -91,8 +91,9 @@ static inline UIColor *RippleColor() {
   [_actionLabel.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
                                          constant:kActionItemTitleVerticalPadding]
       .active = YES;
-  NSLayoutConstraint *labelBottomConstraint = [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
-                                                                                        constant:-kActionItemTitleVerticalPadding];
+  NSLayoutConstraint *labelBottomConstraint =
+      [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
+                                                constant:-kActionItemTitleVerticalPadding];
   labelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
   labelBottomConstraint.active = YES;
   _titleLeadingConstraint =
