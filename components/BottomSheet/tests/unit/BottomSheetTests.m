@@ -41,6 +41,7 @@
   // Then
   XCTAssertFalse(self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
   XCTAssertEqualWithAccuracy(self.bottomSheet.elevation, MDCShadowElevationModalBottomSheet, 0.001);
+  XCTAssertTrue(self.bottomSheet.dismissOnDraggingDownSheet);
 }
 
 - (void)testSetShowScrollIndicatorsResultsInCorrectValue {
@@ -180,6 +181,20 @@
 
   // Then
   XCTAssertFalse(blockCalled);
+}
+
+#pragma mark - dismissOnDraggingDownSheet
+
+- (void)testSettingDismissOnDraggingDownSheetOnBottomSheetController {
+  // Given
+  self.bottomSheet.dismissOnDraggingDownSheet = NO;
+
+  // Then
+  XCTAssertNotNil(self.bottomSheet.presentationController);
+  XCTAssertTrue([self.bottomSheet.presentationController
+      isKindOfClass:[MDCBottomSheetPresentationController class]]);
+  XCTAssertFalse(((MDCBottomSheetPresentationController *)self.bottomSheet.presentationController)
+                     .dismissOnDraggingDownSheet);
 }
 
 @end
