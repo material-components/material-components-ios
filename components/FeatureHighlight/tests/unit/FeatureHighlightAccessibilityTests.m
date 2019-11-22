@@ -37,13 +37,35 @@
                                                               completion:nil];
 
   // When (cause the view to load)
-  (void)controller.view;
+  [controller loadViewIfNeeded];
 
   // Then
-  // TODO(https://github.com/material-components/material-components-ios/issues/3644 ):
-  // Switch these to XCTAssertNil (or refactor tests) once the default is removed.
-  XCTAssertNotNil(controller.accessibilityHint);
-  XCTAssertNotNil(controller.view.accessibilityHint);
+  XCTAssertNil(controller.accessibilityHint);
+  XCTAssertNil(controller.view.accessibilityHint);
+}
+
+- (void)testAccessibilityDismissElementAfterLoadingView {
+  // Given
+  UIView *view = [[UIView alloc] init];
+  UIView *view2 = [[UIView alloc] init];
+  MDCFeatureHighlightViewController *controller =
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:view
+                                                             andShowView:view2
+                                                              completion:nil];
+
+  // When (cause the view to load)
+  [controller loadViewIfNeeded];
+
+  // Then
+  id dismissElement = controller.view.accessibilityElements.lastObject;
+  if (![dismissElement isKindOfClass:[UIView class]]) {
+    XCTFail(@"There must be at least one accessibility element and the last must be a UIView.");
+    return;
+  }
+  UIView *dismissView = (UIView *)dismissElement;
+  XCTAssertTrue(dismissView.isAccessibilityElement);
+  XCTAssertEqualObjects(dismissView.accessibilityLabel, @"Dismiss");
+  XCTAssertNil(dismissView.accessibilityHint);
 }
 
 - (void)testSetAccessibilityHint {
@@ -58,22 +80,13 @@
   controller.accessibilityHint = accessibilityHint;
 
   // Then
-  XCTAssertEqualObjects(controller.view.accessibilityHint, accessibilityHint);
-}
-
-- (void)testSetAccessibilityHintNil {
-  // Given
-  UIView *view = [[UIView alloc] init];
-  UIView *view2 = [[UIView alloc] init];
-  MDCFeatureHighlightViewController *controller =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:view
-                                                             andShowView:view2
-                                                              completion:nil];
-  controller.accessibilityHint = nil;
-
-  // Then
-  XCTAssertNil(controller.accessibilityHint);
-  XCTAssertNil(controller.view.accessibilityHint);
+  id dismissElement = controller.view.accessibilityElements.lastObject;
+  if (![dismissElement isKindOfClass:[UIView class]]) {
+    XCTFail(@"There must be at least one accessibility element and the last must be a UIView.");
+    return;
+  }
+  UIView *dismissView = (UIView *)dismissElement;
+  XCTAssertEqualObjects(dismissView.accessibilityHint, accessibilityHint);
 }
 
 @end
