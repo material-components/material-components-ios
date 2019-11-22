@@ -18,11 +18,9 @@
 #import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
-static const CGFloat kImageLeadingPadding = 8;
 static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
-static const CGFloat kTitleLeadingPadding = 64;
-static const CGFloat kTitleTrailingPadding = 8;
+static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 static inline UIColor *RippleColor() {
@@ -39,7 +37,6 @@ static inline UIColor *RippleColor() {
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   NSLayoutConstraint *_titleLeadingConstraint;
-  NSLayoutConstraint *_titleTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -57,6 +54,7 @@ static inline UIColor *RippleColor() {
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
+
   _actionLabel = [[UILabel alloc] init];
   [self.contentView addSubview:_actionLabel];
   _actionLabel.numberOfLines = 0;
@@ -65,11 +63,9 @@ static inline UIColor *RippleColor() {
   _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
-  CGFloat leadingConstant;
+  CGFloat leadingConstant = 0;
   if (_itemAction.image || _addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
-  } else {
-    leadingConstant = kImageLeadingPadding;
   }
   [_actionLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
                                          constant:kActionItemTitleVerticalPadding]
@@ -77,14 +73,13 @@ static inline UIColor *RippleColor() {
   [_actionLabel.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor
                                             constant:-kActionItemTitleVerticalPadding]
       .active = YES;
-  _titleLeadingConstraint = [_actionLabel.layoutMarginsGuide.leadingAnchor
+  _titleLeadingConstraint = [_actionLabel.leadingAnchor
       constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor
                      constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  _titleTrailingConstraint = [self.contentView.layoutMarginsGuide.trailingAnchor
-      constraintEqualToAnchor:_actionLabel.layoutMarginsGuide.trailingAnchor
-                     constant:kTitleTrailingPadding];
-  _titleTrailingConstraint.active = YES;
+  [self.contentView.layoutMarginsGuide.trailingAnchor
+      constraintEqualToAnchor:_actionLabel.trailingAnchor]
+      .active = YES;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
@@ -100,9 +95,8 @@ static inline UIColor *RippleColor() {
   [_actionImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
                                              constant:kImageTopPadding]
       .active = YES;
-  [_actionImageView.layoutMarginsGuide.leadingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor
-                     constant:kImageLeadingPadding]
+  [_actionImageView.leadingAnchor
+      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor]
       .active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
@@ -113,14 +107,11 @@ static inline UIColor *RippleColor() {
 
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
-  CGFloat leadingConstant;
+  CGFloat leadingConstant = 0;
   if (_itemAction.image || self.addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
-  } else {
-    leadingConstant = kImageLeadingPadding;
   }
   _titleLeadingConstraint.constant = leadingConstant;
-  _titleTrailingConstraint.constant = kTitleTrailingPadding;
 
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
