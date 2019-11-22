@@ -100,7 +100,7 @@ echo "Expanding all articles inline..."
 
 # Expand all files inline
 IFS='' # Don't trim whitespace from lines
-source $(dirname "$0")/expand_readme
+source $(dirname "$0")/expand_inline_references
 expand_inline_references $TMP_README_PATH $TMP_EXPANDED_README_PATH $COMPONENT_PATH docs $COMPONENT_NAME
 
 rm "$TMP_README_PATH"

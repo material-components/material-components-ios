@@ -1,6 +1,6 @@
 #!/bin/bash -e
 #
-# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
+# Copyright 2019-present The Material Components for iOS Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ cat "$TOPIC_PATH/$TEMPLATE_FILE" >> "$TMP_TOPIC_PATH"
 echo "Expanding all articles inline..."
 
 IFS='' # Don't trim whitespace from lines
-source $(dirname "$0")/expand_readme
+source $(dirname "$0")/expand_inline_references
 expand_inline_references $TMP_TOPIC_PATH $TMP_EXPANDED_TOPIC_PATH $TOPIC_PATH
 
 rm -f $TMP_TOPIC_PATH
