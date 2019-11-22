@@ -36,6 +36,8 @@ the screen and displays actions a user can take.
 - [Usage](#usage)
   - [Typical use](#typical-use)
 - [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
+- [Customization](#customization)
+  - [Positioning Action Sheet Actions](#positioning-action-sheet-actions)
 - [Extensions](#extensions)
   - [Theming](#theming)
 - [Accessibility](#accessibility)
@@ -164,6 +166,35 @@ Material UIAlertController please see the `MDCAlertController` class.
 3. MDCActionSheetController does not support text fields.
 
 4. MDCActionSheetController does not have a preferredAction.
+
+<!-- Extracted from docs/customization.md -->
+
+## Customization
+
+### Positioning Action Sheet Actions
+
+The layout of the Action Sheet list items can be adjusted with the
+`contentEdgeInsets` API. Positive values will inset the content and negative
+values will outset the conent. The insets apply to all action items.
+
+<img src="docs/assets/actionsheet-default appearance.png" alt="Action Sheet showing three items with default content insets." width="375">
+<!--{: .article__asset.article__asset--screenshot }-->
+Action Sheet showing three items with default content insets.
+
+For example, setting top and bottom insets (positive values) will reduce the
+height of the Action list items. 
+
+<img src="docs/assets/actionsheet-top and bottom insets.png" alt="Action Sheet showing three items with top and bottom content edge insets." width="375">
+<!--{: .article__asset.article__asset--screenshot }-->
+Action Sheet showing three items with top and bottom content edge insets.
+
+Setting a left outset (negative value) and right inset (positive value) will
+shift the Action's content to the trailing edge.
+
+<img src="docs/assets/actionsheet-left outset right inset.png" alt="Action Sheet showing three items with a left outset and right inset shifting content to the right." width="375">
+<!--{: .article__asset.article__asset--screenshot }-->
+Action Sheet showing three items with a left outset and right inset shifting content to the right.
+
 
 ## Extensions
 
