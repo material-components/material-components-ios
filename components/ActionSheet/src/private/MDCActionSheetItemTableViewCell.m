@@ -19,7 +19,7 @@
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 /** Default value for @c imageEdgeInsets. */
-static const UIEdgeInsets kDefaultImageEdgeInsets = {16, 0, 0, 0};
+static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, 0};
 static const CGFloat kImageHeightAndWidth = 24;
 static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
@@ -94,12 +94,12 @@ static inline UIColor *RippleColor() {
                                                        forAxis:UILayoutConstraintAxisVertical];
   [_contentContainerView addSubview:_imageContainerView];
   _imageContainerTopConstriant =
-      [_imageContainerView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
-                                                    constant:_imageEdgeInsets.top];
+      [_contentContainerView.topAnchor constraintEqualToAnchor:_imageContainerView.topAnchor
+                                                      constant:_imageEdgeInsets.top];
   _imageContainerTopConstriant.active = YES;
   _imageContainerLeadingConstriant =
-      [_imageContainerView.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor
-                                                        constant:_imageEdgeInsets.left];
+      [_contentContainerView.leadingAnchor constraintEqualToAnchor:_imageContainerView.leadingAnchor
+                                                          constant:_imageEdgeInsets.left];
   _imageContainerLeadingConstriant.active = YES;
   _imageContainerBottomConstriant =
       [_imageContainerView.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
