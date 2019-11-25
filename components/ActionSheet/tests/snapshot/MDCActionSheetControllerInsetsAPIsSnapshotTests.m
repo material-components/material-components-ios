@@ -80,7 +80,7 @@ static NSString *const kLongTitle5Arabic =
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
   self.action1 = [MDCActionSheetAction
       actionWithTitle:kShortTitle1Latin
@@ -318,6 +318,29 @@ static NSString *const kLongTitle5Arabic =
   [self changeViewToRTL:controller.view];
   controller.view.bounds = CGRectMake(0, 0, 320, 640);
   controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+#pragma mark - imageEdgeInsets
+
+- (void)testImageEdgeInsetsIncreaseActionRowHeight {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  //  controller.imageEdgeInsets = UIEdgeInsetsMake(-30, 0, -30, 0);
 
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
