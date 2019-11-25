@@ -340,7 +340,28 @@ static NSString *const kLongTitle5Arabic =
 
   // When
   controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  //  controller.imageEdgeInsets = UIEdgeInsetsMake(-30, 0, -30, 0);
+  controller.imageEdgeInsets = UIEdgeInsetsMake(-50, 0, -50, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testImageEdgeInsetsDecreaseActionRowHeight {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.imageEdgeInsets = UIEdgeInsetsMake(12, 0, 12, 0);
 
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];

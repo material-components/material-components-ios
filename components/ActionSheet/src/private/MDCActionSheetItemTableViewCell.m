@@ -191,6 +191,14 @@ static inline UIColor *RippleColor() {
   _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
 }
 
+- (void)setImageEdgeInsets:(UIEdgeInsets)imageEdgeInsets {
+  _imageEdgeInsets = imageEdgeInsets;
+  _imageContainerTopConstriant.constant = imageEdgeInsets.top;
+  _imageContainerLeadingConstriant.constant = imageEdgeInsets.left;
+  _imageContainerBottomConstriant.constant = imageEdgeInsets.bottom;
+  _imageContainerTrailingConstriant.constant = imageEdgeInsets.right;
+}
+
 - (MDCActionSheetAction *)action {
   return _itemAction;
 }
