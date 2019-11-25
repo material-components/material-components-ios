@@ -55,20 +55,8 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":Chips",
-        ":ColorThemer",
-        ":ShapeThemer",
         "//components/Typography",
         "//components/schemes/Container",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "ChipThemer",
-    deps = [
-        ":Chips",
-        ":ColorThemer",
-        ":ShapeThemer",
-        ":TypographyThemer",
     ],
 )
 
@@ -80,46 +68,11 @@ mdc_objc_library(
     deps = [":Chips"],
 )
 
-mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":Chips",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":Chips",
-        "//components/schemes/Color",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "ShapeThemer",
-    deps = [
-        ":Chips",
-        "//components/schemes/Shape",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":Chips",
-        "//components/Typography",
-        "//components/schemes/Typography",
-    ],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Chips",
-        ":ShapeThemer",
         ":Theming",
-        ":TypographyThemer",
         "//components/ShapeLibrary",
         "//components/Shapes",
         "//components/Slider",
@@ -159,12 +112,7 @@ mdc_unit_test_swift_library(
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
-        ":ChipThemer",
         ":Chips",
-        ":ColorThemer",
-        ":FontThemer",
-        ":ShapeThemer",
-        ":TypographyThemer",
         ":privateHeaders",
         "//components/ShapeLibrary",
         "//components/TextFields:private",
