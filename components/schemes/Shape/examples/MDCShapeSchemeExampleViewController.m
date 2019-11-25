@@ -149,7 +149,8 @@
   [self.view addConstraints:bottomSheetConstraints];
 
   NSArray<NSLayoutConstraint *> *componentConstraints = [NSLayoutConstraint
-      constraintsWithVisualFormat:@"V:|-(30)-[containedButton]-(20)-[floatingButton]-(20)-[card(80)]-(20)-[presentBottomSheetButton]"
+      constraintsWithVisualFormat:@"V:|-(30)-[containedButton]-(20)-[floatingButton]-(20)-[card(80)"
+                                  @"]-(20)-[presentBottomSheetButton]"
                           options:NSLayoutFormatAlignAllCenterX
                           metrics:nil
                             views:@{
