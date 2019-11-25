@@ -58,6 +58,7 @@
 @property(nonatomic) MDCSheetState sheetState;
 - (CGPoint)targetPoint;
 - (void)draggableView:(MDCDraggableView *)view didPanToOffset:(CGFloat)offset;
+- (BOOL)draggableView:(MDCDraggableView *)view shouldBeginDraggingWithVelocity:(CGPoint)velocity;
 @end
 
 /**
@@ -87,13 +88,13 @@
 }
 @end
 
-@interface MDCBottomSheetPresentationControllerPreferredSheetHeightTests : XCTestCase
+@interface MDCBottomSheetPresentationControllerTests : XCTestCase
 @property(nonatomic, strong) FakeSheetView *sheetView;
 @property(nonatomic, strong) MDCBottomSheetPresentationController *presentationController;
 @property(nonatomic, strong, nullable) MDCBottomSheetDelegateTest *delegateTest;
 @end
 
-@implementation MDCBottomSheetPresentationControllerPreferredSheetHeightTests
+@implementation MDCBottomSheetPresentationControllerTests
 
 - (void)setUp {
   [super setUp];
@@ -327,6 +328,28 @@
 
   // Then
   XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
+}
+
+#pragma mark - dismissOnDraggingDownSheet
+
+- (void)testSettingDismissOnDraggingDownSheetOnPresentationController {
+  // Given
+  self.presentationController.dismissOnDraggingDownSheet = NO;
+
+  // Then
+  XCTAssertFalse(self.sheetView.dismissOnDraggingDownSheet);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetViewBlocksGesture {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = NO;
+
+  // When
+  BOOL shouldBeginDragging = [self.sheetView draggableView:self.sheetView.sheet
+                           shouldBeginDraggingWithVelocity:CGPointMake(0, 0)];
+
+  // Then
+  XCTAssertFalse(shouldBeginDragging);
 }
 
 @end
