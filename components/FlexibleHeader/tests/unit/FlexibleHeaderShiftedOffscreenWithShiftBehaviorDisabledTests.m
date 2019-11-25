@@ -74,7 +74,6 @@
 
 - (void)testShiftsBackOnScreenWhenDragged {
   // Given
-  self.fhvc.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
   [self.fhvc shiftHeaderOffScreenAnimated:NO];
 
   // When
@@ -92,7 +91,6 @@
 
 - (void)testDoesNotShiftBackOffScreenWhenDragged {
   // Given
-  self.fhvc.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
   [self.fhvc shiftHeaderOffScreenAnimated:NO];
 
   // When
