@@ -80,7 +80,7 @@ static NSString *const kLongTitle5Arabic =
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.action1 = [MDCActionSheetAction
       actionWithTitle:kShortTitle1Latin
@@ -346,7 +346,7 @@ static NSString *const kLongTitle5Arabic =
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
-- (void)testImageEdgeInsetsDecreaseActionRowHeight {
+- (void)testImageEdgeInsetsZeroPositionsImageAtTopOfCell {
   // Given
   [self changeToLongLatinTitles];
 
@@ -361,7 +361,120 @@ static NSString *const kLongTitle5Arabic =
 
   // When
   controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  controller.imageEdgeInsets = UIEdgeInsetsMake(12, 0, 12, 0);
+  controller.imageEdgeInsets = UIEdgeInsetsZero;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testImageEdgeInsetsTopInsetMovesImageViewOutsideCell {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.imageEdgeInsets = UIEdgeInsetsMake(12, 0, 0, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testImageEdgeInsetsShiftIconToRightInLTR {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.imageEdgeInsets =
+      UIEdgeInsetsMake(controller.imageEdgeInsets.top, -50, controller.imageEdgeInsets.bottom, 50);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testImageEdgeInsetsShiftIconToLeftInLTR {
+  // Given
+  [self changeToLongLatinTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.imageEdgeInsets =
+      UIEdgeInsetsMake(controller.imageEdgeInsets.top, 20, controller.imageEdgeInsets.bottom, -20);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testImageEdgeInsetsShiftIconToLeftInRTL {
+  // Given
+  [self changeToLongArabicTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  [controller.view layoutIfNeeded];
+  [self changeViewToRTL:controller.view];
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.imageEdgeInsets =
+      UIEdgeInsetsMake(controller.imageEdgeInsets.top, -50, controller.imageEdgeInsets.bottom, 50);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testImageEdgeInsetsShiftIconToRightInRTL {
+  // Given
+  [self changeToLongArabicTitles];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
+
+  // When
+  [controller.view layoutIfNeeded];
+  [self changeViewToRTL:controller.view];
+  controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  controller.imageEdgeInsets =
+      UIEdgeInsetsMake(controller.imageEdgeInsets.top, 20, controller.imageEdgeInsets.bottom, -20);
 
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
