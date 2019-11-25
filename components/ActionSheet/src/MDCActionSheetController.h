@@ -231,7 +231,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
 /**
- The inset or outset margins for the rectangle surrounding all of each action's image.
+ The inset or outset margins for the rectangle surrounding each action's image.
 
  Defaults to (-16, 0, 0, -32).
  */
