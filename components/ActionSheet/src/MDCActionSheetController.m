@@ -331,7 +331,16 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
+  cell.contentEdgeInsets = self.contentEdgeInsets;
   return cell;
+}
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, contentEdgeInsets)) {
+    return;
+  }
+  _contentEdgeInsets = contentEdgeInsets;
+  [self.tableView reloadData];
 }
 
 - (void)setTitle:(NSString *)title {

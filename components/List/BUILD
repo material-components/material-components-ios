@@ -129,6 +129,7 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":List",
+        "//components/schemes/Container",
     ],
 )
 

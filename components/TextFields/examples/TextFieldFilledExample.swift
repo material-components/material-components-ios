@@ -88,7 +88,6 @@ final class TextFieldFilledSwiftExample: UIViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerFilled(textInput: city)
     stateController = MDCTextInputControllerFilled(textInput: state)
-    stateController.isFloatingEnabled = false
     zipController = MDCTextInputControllerFilled(textInput: zip)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
