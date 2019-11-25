@@ -15,7 +15,6 @@
 #import "MDCShapeSchemeExampleViewController.h"
 
 #import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
-#import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
 #import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 
@@ -31,9 +30,6 @@
 #import "MaterialCards+ShapeThemer.h"
 #import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
-#import "MaterialChips+ShapeThemer.h"
-#import "MaterialChips+Theming.h"
-#import "MaterialChips.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialShapeLibrary.h"
@@ -61,7 +57,6 @@
 @property(strong, nonatomic) MDCButton *containedButton;
 @property(strong, nonatomic) MDCButton *outlinedButton;
 @property(strong, nonatomic) MDCFloatingButton *floatingButton;
-@property(strong, nonatomic) MDCChipView *chipView;
 @property(strong, nonatomic) MDCCard *card;
 @property(strong, nonatomic) MDCButton *presentBottomSheetButton;
 @property(strong, nonatomic) MDCBottomSheetController *bottomSheetController;
@@ -124,15 +119,6 @@
   self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.floatingButton];
 
-  self.chipView = [[MDCChipView alloc] init];
-  self.chipView.titleLabel.text = @"Material";
-  self.chipView.imageView.image = [self faceImage];
-  self.chipView.accessoryView = [self deleteButton];
-  self.chipView.minimumSize = CGSizeMake(140, 33);
-  self.chipView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.chipView applyThemeWithScheme:self.containerScheme];
-  [self.componentContentView addSubview:self.chipView];
-
   self.card = [[MDCCard alloc] init];
   self.card.translatesAutoresizingMaskIntoConstraints = NO;
   [self.card applyThemeWithScheme:self.containerScheme];
@@ -163,14 +149,12 @@
   [self.view addConstraints:bottomSheetConstraints];
 
   NSArray<NSLayoutConstraint *> *componentConstraints = [NSLayoutConstraint
-      constraintsWithVisualFormat:@"V:|-(30)-[containedButton]-(20)-[floatingButton]-(20)-["
-                                  @"chipView]-(20)-[card(80)]-(20)-[presentBottomSheetButton]"
+      constraintsWithVisualFormat:@"V:|-(30)-[containedButton]-(20)-[floatingButton]-(20)-[card(80)]-(20)-[presentBottomSheetButton]"
                           options:NSLayoutFormatAlignAllCenterX
                           metrics:nil
                             views:@{
                               @"containedButton" : self.containedButton,
                               @"floatingButton" : self.floatingButton,
-                              @"chipView" : self.chipView,
                               @"card" : self.card,
                               @"presentBottomSheetButton" : self.presentBottomSheetButton
                             }];
@@ -335,14 +319,12 @@
     // We don't want baseline overrides.
     [MDCBottomSheetControllerShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
                                                 toBottomSheetController:self.bottomSheetController];
-    [MDCChipViewShapeThemerDefaultMapping applyShapeScheme:_shapeScheme toChipView:self.chipView];
     [MDCFloatingButtonShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
                                                         toButton:self.floatingButton];
   } else {
     // We do want baseline overrides.
     [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
                                   toBottomSheetController:self.bottomSheetController];
-    [MDCChipViewShapeThemer applyShapeScheme:_shapeScheme toChipView:self.chipView];
     [MDCFloatingButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.floatingButton];
   }
 }
