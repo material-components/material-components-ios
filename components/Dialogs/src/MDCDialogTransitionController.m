@@ -18,13 +18,19 @@
 
 @implementation MDCDialogTransitionController
 
-static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
+static const CGFloat MDCScaleFactor = 0.8;
+
+static const NSTimeInterval MDCDialogOpacityTransitionDuration = 0.15;
+
+static const NSTimeInterval MDCDialogScaleTransitionDuration = 0.08333;
+
+static const NSTimeInterval MDCDialogScrimOpacityTransitionDuration = 0.15;
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:
     (__unused id<UIViewControllerContextTransitioning>)transitionContext {
-  return MDCDialogTransitionDuration;
+  return MDCDialogOpacityTransitionDuration;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -60,30 +66,85 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
   CGFloat endingAlpha = presenting ? 1 : 0;
 
   animatingView.frame = [transitionContext finalFrameForViewController:animatingViewController];
-  animatingView.alpha = startingAlpha;
 
-  NSTimeInterval transitionDuration = [self transitionDuration:transitionContext];
+//  animatingView.alpha = startingAlpha;
+
+//  NSTimeInterval transitionDuration = [self transitionDuration:transitionContext];
   UIViewAnimationOptions options =
       UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
-  [UIView animateWithDuration:transitionDuration
-      delay:0.0
-      options:options
-      animations:^{
-        animatingView.alpha = endingAlpha;
-      }
-      completion:^(__unused BOOL finished) {
-        // If we're dismissing, remove the presented view from the hierarchy
-        if (!presenting) {
-          [fromView removeFromSuperview];
-        }
+  CGAffineTransform startingTransform = presenting ? CGAffineTransformMakeScale(MDCScaleFactor, MDCScaleFactor) : CGAffineTransformIdentity;
+  CGAffineTransform endingTransform = CGAffineTransformIdentity;
 
-        // From ADC : UIViewControllerContextTransitioning
-        // When you do create transition animations, always call the
-        // completeTransition: from an appropriate completion block to let UIKit know
-        // when all of your animations have finished.
-        [transitionContext completeTransition:YES];
-      }];
+  animatingView.transform = startingTransform;
+
+  UIViewAnimationOptions scaleOptions = options | UIViewAnimationOptionCurveEaseOut;
+  [UIView animateWithDuration:MDCDialogScaleTransitionDuration
+                        delay:0
+                      options:scaleOptions
+                   animations:^{
+    animatingView.transform = endingTransform;
+  }
+   completion:nil];
+
+  if ([animatingViewController.presentationController isKindOfClass:[MDCDialogPresentationController class]]) {
+    MDCDialogPresentationController *presentationController = (MDCDialogPresentationController *)animatingViewController.presentationController;
+
+    UIColor *startingColor = presenting ? UIColor.clearColor : presentationController.scrimColor;
+    UIColor *endingColor = presenting ? presentationController.scrimColor : UIColor.clearColor;
+
+    UIColor *startingTrackingColor = presenting ? UIColor.clearColor : presentationController.dialogShadowColor;
+    UIColor *endingTrackingColor = presenting ? presentationController.dialogShadowColor : UIColor.clearColor;
+
+    presentationController.scrimColor = startingColor;
+    presentationController.dialogShadowColor = startingTrackingColor;
+    [UIView animateWithDuration:MDCDialogScrimOpacityTransitionDuration
+                          delay:0
+                        options:options
+                     animations:^{
+      presentationController.scrimColor = endingColor;
+      presentationController.dialogShadowColor = endingTrackingColor;
+    }
+                     completion:nil];
+    presentationController.presentedView.alpha = startingAlpha;
+    [UIView animateWithDuration:MDCDialogOpacityTransitionDuration
+        delay:0.0
+        options:options
+        animations:^{
+      presentationController.presentedView.alpha = endingAlpha;
+        }
+                     completion:^(__unused BOOL finished) {
+                       // If we're dismissing, remove the presented view from the hierarchy
+                       if (!presenting) {
+                         [fromView removeFromSuperview];
+                       }
+
+                       // From ADC : UIViewControllerContextTransitioning
+                       // When you do create transition animations, always call the
+                       // completeTransition: from an appropriate completion block to let UIKit know
+                       // when all of your animations have finished.
+                       [transitionContext completeTransition:YES];
+                     }];
+  } else {
+    [UIView animateWithDuration:MDCDialogOpacityTransitionDuration
+        delay:0.0
+        options:options
+        animations:^{
+          animatingView.alpha = endingAlpha;
+        }
+        completion:^(__unused BOOL finished) {
+          // If we're dismissing, remove the presented view from the hierarchy
+          if (!presenting) {
+            [fromView removeFromSuperview];
+          }
+
+          // From ADC : UIViewControllerContextTransitioning
+          // When you do create transition animations, always call the
+          // completeTransition: from an appropriate completion block to let UIKit know
+          // when all of your animations have finished.
+          [transitionContext completeTransition:YES];
+        }];
+  }
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
