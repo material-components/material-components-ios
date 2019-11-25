@@ -67,9 +67,9 @@
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
 /**
- The inset or outset margins for the rectangle surrounding all of the cell's content.
+ The inset or outset margins for the rectangle surrounding the cell's image view.
 
- Defaults to {0, 0, 0, -32}.
+ Defaults to {-16, 0, 0, -32}.
  */
 @property(nonatomic, assign) UIEdgeInsets imageEdgeInsets;
 

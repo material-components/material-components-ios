@@ -25,7 +25,7 @@ static const CGFloat kActionImageAlpha = (CGFloat)0.6;
 static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 /** Default edge insets for each action's image view. */
-static const UIEdgeInsets kDefaultImageEdgeInsets = (UIEdgeInsets){-16, 0, 0, 0};
+static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
 
 @interface MDCActionSheetAction ()
 

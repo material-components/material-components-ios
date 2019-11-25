@@ -19,7 +19,7 @@
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 /** Default value for @c imageEdgeInsets. */
-static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, 0};
+static const UIEdgeInsets kDefaultImageEdgeInsets = {16, 0, 0, -32};
 static const CGFloat kImageHeightAndWidth = 24;
 static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
