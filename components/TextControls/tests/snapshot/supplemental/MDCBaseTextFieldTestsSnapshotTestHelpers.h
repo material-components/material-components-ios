@@ -36,4 +36,6 @@
 + (void)configureEditingTextFieldWithVisiblePlaceholderAndLabelText:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithColoredAssistiveLabelTextWhileEditing:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithColoredAssistiveLabelTextWhileDisabled:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithScaledFontsAndAXXXLargeContentSize:(MDCBaseTextField *)textField;
+
 @end

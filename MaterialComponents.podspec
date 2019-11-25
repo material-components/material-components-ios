@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "94.2.0"
+  mdc.version      = "94.3.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -1866,6 +1866,7 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Typography"
@@ -2007,6 +2008,7 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+	  unit_tests.dependency "MaterialComponents/private/Application"
     end
   end
 
@@ -2062,6 +2064,7 @@ Pod::Spec.new do |mdc|
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
       scheme.dependency "MaterialComponents/Typography"
       scheme.dependency "MaterialComponents/schemes/Typography+BasicFontScheme"
+      scheme.dependency "MaterialComponents/schemes/Typography+Scheming"
 
       scheme.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [
@@ -2072,6 +2075,14 @@ Pod::Spec.new do |mdc|
       end
     end
     scheme_spec.subspec "Typography+BasicFontScheme" do |extension|
+      extension.ios.deployment_target = '9.0'
+      extension.public_header_files = "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+      extension.source_files = [
+        "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
+        "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+      ]
+    end
+    scheme_spec.subspec "Typography+Scheming" do |extension|
       extension.ios.deployment_target = '9.0'
       extension.public_header_files = "components/schemes/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
       extension.source_files = [

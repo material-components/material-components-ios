@@ -51,6 +51,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/AnimationTiming",
+        "//components/Buttons",
         "//components/Elevation",
         "//components/Palettes",
         "//components/Typography",
@@ -138,6 +139,8 @@ mdc_snapshot_objc_library(
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
+        "//components/Buttons",
+        "//components/Ripple",
     ],
 )
 

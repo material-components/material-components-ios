@@ -23,6 +23,7 @@
 - (void)presentBottomSheet {
   BottomSheetDummyCollectionViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:6];
+  viewController.collectionView.accessibilityLabel = @"Example content";
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];

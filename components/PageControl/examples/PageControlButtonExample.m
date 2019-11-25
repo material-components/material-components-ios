@@ -33,9 +33,9 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-    [UIColor colorWithWhite:(CGFloat)0.9 alpha:1], [UIColor colorWithWhite:(CGFloat)0.8 alpha:1],
     [UIColor colorWithWhite:(CGFloat)0.7 alpha:1], [UIColor colorWithWhite:(CGFloat)0.6 alpha:1],
-    [UIColor colorWithWhite:(CGFloat)0.5 alpha:1]
+    [UIColor colorWithWhite:(CGFloat)0.5 alpha:1], [UIColor colorWithWhite:(CGFloat)0.4 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.3 alpha:1]
   ];
 
   // Scroll view configuration
@@ -68,6 +68,8 @@
   // Page control configuration.
   _pageControl = [[MDCPageControl alloc] init];
   _pageControl.numberOfPages = pageColors.count;
+  _pageControl.currentPageIndicatorTintColor = UIColor.whiteColor;
+  _pageControl.pageIndicatorTintColor = UIColor.lightGrayColor;
 
   // We want the page control to span the bottom of the screen.
   CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
@@ -88,6 +90,7 @@
   [_nextButton addTarget:self
                   action:@selector(didTapButton:)
         forControlEvents:UIControlEventTouchUpInside];
+  [_nextButton setTitleColor:UIColor.lightGrayColor forState:UIControlStateDisabled];
   [self.view addSubview:_nextButton];
 }
 
@@ -126,6 +129,16 @@
   CGFloat buttonCenterX =
       boundsWidth - CGRectGetWidth(_nextButton.frame) / 2 - 16 - edgeInsets.right;
   _nextButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
+
+  [self updateButtonState];
+}
+
+- (void)updateButtonState {
+  if (_pageControl.currentPage == _pageControl.numberOfPages - 1) {
+    _nextButton.enabled = NO;
+  } else {
+    _nextButton.enabled = YES;
+  }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -136,6 +149,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   [_pageControl scrollViewDidEndDecelerating:scrollView];
+  [self updateButtonState];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -156,6 +170,7 @@
   offset.x = nextPage * CGRectGetWidth(_scrollView.frame);
   [_scrollView setContentOffset:offset animated:YES];
   [_pageControl setCurrentPage:nextPage animated:YES];
+  [self updateButtonState];
 }
 
 #pragma mark - CatalogByConvention

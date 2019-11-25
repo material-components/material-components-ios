@@ -41,6 +41,10 @@ static NSString *const kReusableIdentifierItem = @"cell";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = @"Show Dialog";
+  cell.textLabel.isAccessibilityElement = NO;
+  cell.accessibilityLabel = cell.textLabel.text;
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
   return cell;
 }
 

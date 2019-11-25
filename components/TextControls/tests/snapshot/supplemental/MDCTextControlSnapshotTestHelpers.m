@@ -30,7 +30,61 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 
 #pragma mark Validation
 
-+ (void)addTextControlToKeyWindow:(UIView<MDCTextControl> *)textControl {
++ (void)setUpViewControllerHierarchy {
+  // We test the text controls in a child view controller of the root view controller so we can
+  // override the trait collection
+  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+  UIViewController *rootViewController = keyWindow.rootViewController;
+  UIViewController *childViewController = [UIViewController new];
+  [rootViewController addChildViewController:childViewController];
+  [rootViewController.view addSubview:childViewController.view];
+}
+
++ (void)tearDownViewControllerHierarchy {
+  UIViewController *textControlViewController =
+      [MDCTextControlSnapshotTestHelpers textControlViewController];
+  [textControlViewController.view removeFromSuperview];
+  [textControlViewController removeFromParentViewController];
+}
+
+// The app host's root view controller
++ (UIViewController *)rootViewController {
+  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+  UIViewController *rootViewController = keyWindow.rootViewController;
+  return rootViewController;
+}
+
+// The view controller the text control is in
++ (UIViewController *)textControlViewController {
+  UIViewController *rootViewController = [MDCTextControlSnapshotTestHelpers rootViewController];
+  UIViewController *childViewController = [[rootViewController childViewControllers] firstObject];
+  return childViewController;
+}
+
++ (void)applyContentSizeCategory:(UIContentSizeCategory)contentSizeCategory {
+  if (@available(iOS 10.0, *)) {
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:contentSizeCategory];
+    [MDCTextControlSnapshotTestHelpers updateTraitCollectionWithTraitCollection:traitCollection];
+  }
+}
+
++ (void)updateTraitCollectionWithTraitCollection:(UITraitCollection *)traitCollection {
+  UITraitCollection *previousTraitCollection =
+      [MDCTextControlSnapshotTestHelpers textControlViewController].view.traitCollection;
+  NSArray *traitCollections = @[ previousTraitCollection, traitCollection ];
+
+  UITraitCollection *newTraitCollection =
+      [UITraitCollection traitCollectionWithTraitsFromCollections:traitCollections];
+
+  UIViewController *rootViewController = [MDCTextControlSnapshotTestHelpers rootViewController];
+  UIViewController *childViewController =
+      [MDCTextControlSnapshotTestHelpers textControlViewController];
+  [rootViewController setOverrideTraitCollection:newTraitCollection
+                          forChildViewController:childViewController];
+}
+
++ (void)addTextControlToViewHierarchy:(UIView<MDCTextControl> *)textControl {
   // Add the text control to a container view. This is the view we snapshot. Snapshotting this view
   // instead of the text control allows us to see the floating label go outside the bounds for the
   // outlined style
@@ -39,13 +93,13 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
   container.layer.borderWidth = (CGFloat)1;
   [container addSubview:textControl];
 
-  // Add the textfield to the window so it's part of a valid view hierarchy and things like
-  // `-becomeFirstResponder` work.
-  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-  [keyWindow addSubview:container];
+  // Add the container view to the child view controller's view
+  UIViewController *textControlViewController =
+      [MDCTextControlSnapshotTestHelpers textControlViewController];
+  [textControlViewController.view addSubview:container];
 }
 
-+ (void)removeTextControlFromKeyWindow:(UIView<MDCTextControl> *)textControl {
++ (void)removeTextControlFromViewHierarchy:(UIView<MDCTextControl> *)textControl {
   UIView *container = [textControl superview];
   [textControl removeFromSuperview];
   [container removeFromSuperview];

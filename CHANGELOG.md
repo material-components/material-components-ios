@@ -1,3 +1,185 @@
+# 94.3.0
+
+This minor release primarily consists of accessibility improvements. A number of components now provide increased support for VoiceOver and Dynamic Type, and many components have been audited to make sure minimum touch target requirements and minimum color contrast requirements are met. Additionally, many examples in our Catalog and Dragons apps have been improved from an accessibility standpoint.
+
+## New deprecations
+
+* `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSnackbarManager`
+
+* `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSnackbarMessageView`
+
+## Component changes
+
+### ActionSheet
+
+* [Allow Swift example to support dynamic type (#8946)](https://github.com/material-components/material-components-ios/commit/5310c5c448776beec0f5b379b47b10c497134a9c) (Cody Weaver)
+
+### ActivityIndicator
+
+* [Add a voiceover layout change notification… (#8909)](https://github.com/material-components/material-components-ios/commit/c0a0d2b1de326006ac35a133559f28ea04a0b722) (Yarden Eitan)
+
+### AppBar
+
+* [AppBar example has low-contrast text (#8966)](https://github.com/material-components/material-components-ios/commit/af583a58285bc2ddb3b70d7a0d1d880ff25133e7) (Galia Kaufman)
+* [Make example titles more accurate. (#8828)](https://github.com/material-components/material-components-ios/commit/bd832a416caa863dea3bd283164c93fd0d90ac44) (Robert Moore)
+
+### Banner
+
+* [Add a snapshot for banner with no action case. (#8968)](https://github.com/material-components/material-components-ios/commit/e1ceaf955b7a3f4ee0f94d16dae1a1e10e025741) (Wenyu Zhang)
+* [Fix Banner positioning in example for iOS 10 (#8829)](https://github.com/material-components/material-components-ios/commit/bd0d571ae35eb54b29c0e6bf4cbf32c40c593753) (Bryan Oltman)
+* [Support use case where no button appears on Banner. (#8951)](https://github.com/material-components/material-components-ios/commit/97e435ae881fe5e755196fcac6951f4a7b6f5c76) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Add accessibility value for badge (#8920)](https://github.com/material-components/material-components-ios/commit/ba3bc2b15a3376f412e12d8f00590fdec7b9a354) (Cody Weaver)
+* [Clean up badge value test example (#8921)](https://github.com/material-components/material-components-ios/commit/98ec8abdbfdc9ffbd8a817c5f18030ebdd3cda80) (Cody Weaver)
+
+### BottomSheet
+
+* [Add VoiceOver support to BottomSheetShortCollectionExample (#8849)](https://github.com/material-components/material-components-ios/commit/adfe99ed30c5a46eb264b692e1cbf2b690e701fe) (Bryan Oltman)
+* [Add accessibility elements to BottomSheetExamples (#8923)](https://github.com/material-components/material-components-ios/commit/78fe3701d073eb1fe932df507d0205da0e0e2ed2) (Bryan Oltman)
+* [Make bottom sheet be in extended state when voiceover is on (#8787)](https://github.com/material-components/material-components-ios/commit/7807cf53fa10a1af71501d9509eb485ddd5b7b09) (Andrew Overton)
+* [Remove scrim accessibility logic from BottomSheetUIControlExample (#8848)](https://github.com/material-components/material-components-ios/commit/5b826f163a574291f7193450907988e687a69f60) (Bryan Oltman)
+
+### ButtonBar
+
+* [Darken ButtonBarIconExample icon colors (#8826)](https://github.com/material-components/material-components-ios/commit/4baa770fde0c12dcd9583fb91a24bc3c98d1061b) (Bryan Oltman)
+* [Delete the Theming extension. (#8696)](https://github.com/material-components/material-components-ios/commit/fb36f304ba1ed53608606763be45dee2bc47d15e) (featherless)
+
+### Buttons
+
+* [Fix a11y issues in Buttons (Content Edge Insets) exam… (#8900)](https://github.com/material-components/material-components-ios/commit/f6855caa775a461ca0cc1b3f433cfd250b2a465e) (Yarden Eitan)
+* [Improve accessibility of Shaped Buttons. (#8964)](https://github.com/material-components/material-components-ios/commit/b12a4cba54b0c11a93da4912d521b4984000c6c2) (Robert Moore)
+* [Update accessibility label for FABs (#8911)](https://github.com/material-components/material-components-ios/commit/98cafa6756916de88b7ac429d118364870f09fb0) (Cody Weaver)
+
+### Cards
+
+* [Fix bug in the "Typical use" example where the image would not appear. (#8943)](https://github.com/material-components/material-components-ios/commit/be33d3196a60602de1f367e1efef1f77bb096cb1) (featherless)
+* [Make the "Typical use" example title label an a11y heading. (#8945)](https://github.com/material-components/material-components-ios/commit/f6f2ff28215ef572c0b3b384992ee2c873f2828a) (featherless)
+* [Make the Shaped Edit/Reorder example class/files match the name of the example. (#8899)](https://github.com/material-components/material-components-ios/commit/ae7db6f03d55a69af118cbe5736d767355fd9a65) (featherless)
+* [Make the shaped collection cell an accessibility button. (#8901)](https://github.com/material-components/material-components-ios/commit/28b838cc9da7bdc6dc9f2799140acb6bfa51923a) (featherless)
+
+### Chips
+
+* [Fix layout of ChipsSizingExampleViewController. (#8940)](https://github.com/material-components/material-components-ios/commit/e9e913b4dddcf57a4879bdc92723a42d06a86e63) (featherless)
+* [Give the ChipsSizing example's sliders a11y labels and values. (#8942)](https://github.com/material-components/material-components-ios/commit/a0dd0a34b3b756fef038c6a62949e720d2096f93) (featherless)
+* [Set UIAccessibilityTraitButton on MDCChipView's accessibilityTraits. (#8792)](https://github.com/material-components/material-components-ios/commit/edca5401bf810572a6fcab9ff0bd90acd73b4282) (featherless)
+
+### Dialogs
+
+* [Allow clients to customize message accessibility label  (#8801)](https://github.com/material-components/material-components-ios/commit/8becfc1ec55d2142d09b22700fd8980ab9c301e8) (Cody Weaver)
+* [Allow clients to customize title accessibilityLabel. (#8799)](https://github.com/material-components/material-components-ios/commit/0796e543321a6e059b401a04c115ac588b101eb2) (Cody Weaver)
+* [Fix bug in "Dismissing Dialogs" dialogs where the buttons were not themed. (#8967)](https://github.com/material-components/material-components-ios/commit/a331cb6a1a8dbd704fe5d86e63c00bdf50e86bc7) (featherless)
+* [Implement the a11y escape gesture on all custom dialogs in the "Dismissing Dialogs" example. (#8965)](https://github.com/material-components/material-components-ios/commit/5d8e992963920b70c1ef609af0fb6593ba157daf) (featherless)
+* [Make all "Dismissing Dialogs" cells a11y buttons. (#8956)](https://github.com/material-components/material-components-ios/commit/7cfb460a01341b67efa58a7a34e0937b92d0b605) (featherless)
+* [Make the "Dialogs with accessory view" example's cells accessibility buttons. (#8939)](https://github.com/material-components/material-components-ios/commit/88d3bed28ab87a975ed74799b3a22941a68aa1c3) (featherless)
+* [Make the "View with corner radius" example's dialog escapable in VoiceOver. (#8950)](https://github.com/material-components/material-components-ios/commit/34b0ad9ba249e125cd0ca74341d8e7dafdcbb841) (featherless)
+* [More Material Alerts examples is more accessible. (#8960)](https://github.com/material-components/material-components-ios/commit/bde962e51179989977b819b92f3e2580c193b5f4) (Robert Moore)
+* [Provide accessibility traits for Input Field example (#8958)](https://github.com/material-components/material-components-ios/commit/32ba0c927e6cc0a2ac1100a5e2a2f5a462d4c473) (Robert Moore)
+* [Remove usage of `buttonFont` in example (#8772)](https://github.com/material-components/material-components-ios/commit/524ca5cab9874b437fef0c0138b3ee9f8bf99cb6) (Cody Weaver)
+* [Set dialog message accessibilityFrame based on visible message text (#8786)](https://github.com/material-components/material-components-ios/commit/c83333f56518399f374b1b8914eac0d853fa20da) (Bryan Oltman)
+
+### FeatureHighlight
+
+* [Add a voiceover dismissal affordance for the feature highlight. (#8959)](https://github.com/material-components/material-components-ios/commit/4c7402857c173db101f846409ad716fac8ada4a3) (Yarden Eitan)
+* [Make "Color" example accessible. (#8957)](https://github.com/material-components/material-components-ios/commit/8e9eff85f846f15e2bb954854586c91fe7bf814b) (Robert Moore)
+* [Positions label not hidden behind nav bar. (#8969)](https://github.com/material-components/material-components-ios/commit/db709613cc58397dfb2ee7a9d0d21a8be8d9a2d9) (Yarden Eitan)
+* [Fix accessibility tests. (#9018)](https://github.com/material-components/material-components-ios/commits/84007513b71c6b9a35c0d7304ea9129fc1855087) (Robert Moore)
+
+### Ink
+
+* [Consolidate example code into a single file. (#8890)](https://github.com/material-components/material-components-ios/commit/cdaf0977567486546a633704809c759211f80b94) (featherless)
+* [Make the ink views accessibility elements. (#8891)](https://github.com/material-components/material-components-ios/commit/baf74b9336ca8ac12422a7291bd85cad0acd0237) (featherless)
+
+### List
+
+* [Fix MDCBaseCell Example to work with Voice Over (#8953)](https://github.com/material-components/material-components-ios/commit/722399ddce71f214211651d01bdbf344f9c9829c) (Galia Kaufman)
+* [Fix accessibility labels and layout in CollectionListCellExampleTypicalUse (#8944)](https://github.com/material-components/material-components-ios/commit/c89ac31d2b02bf345c97c0019ed132d63149def9) (Bryan Oltman)
+* [Fix catalog compile issue (#8974)](https://github.com/material-components/material-components-ios/commit/f660c8a73226410927cb906155e76a198d53d0b8) (Cody Weaver)
+* [Make Base Cell example more accessible. (#8947)](https://github.com/material-components/material-components-ios/commit/009af8be8159ff460bfa8908dd2d320eec8ad9a4) (Robert Moore)
+* [Make Base Cell example more accessible. (#8982)](https://github.com/material-components/material-components-ios/commit/90fcc9281a2e8505bc8cd6daaf42efd4ce04f0ef) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add close button to bottom drawer example header (#8963)](https://github.com/material-components/material-components-ios/commit/e67d2e5b660d1880bc879c4377cc231beb8b749b) (Bryan Oltman)
+* [Remove container view when dismiss transitio… (#8660)](https://github.com/material-components/material-components-ios/commit/36d2ec7618fc8dcc3b4cf57759e3c84674eabee9) (Jonathan Willing)
+
+### PageControl
+
+* [Fixes contrast ratio and button interactivity for… (#8922)](https://github.com/material-components/material-components-ios/commit/e550e27089883cb4bde1de40341c5d1d9c1ed107) (Yarden Eitan)
+* [Improve contrast ratio in PageControlSwiftExampleViewController (#8938)](https://github.com/material-components/material-components-ios/commit/111da2c00c44a704e7e812a9d31c05cae99bb4f0) (Bryan Oltman)
+* [Improve contrast ratio in PageControlTypicalUseViewController (#8941)](https://github.com/material-components/material-components-ios/commit/f40e7f09ca6e05212563cad7eb862f7b7ec6a6f9) (Bryan Oltman)
+* [adds a11y support for page control with next button example (#8932)](https://github.com/material-components/material-components-ios/commit/f58c3451f5dab1482448c2f7838559873dda39de) (Yarden Eitan)
+
+### ProgressView
+
+* [Add accessibilityLabel (#8775)](https://github.com/material-components/material-components-ios/commit/a049592f235a23b7f563f910e5fce786b350d7a5) (Bryan Oltman)
+
+### Ripple
+
+* [Add tests demonstrating unexpected layer.mask behavior. (#8808)](https://github.com/material-components/material-components-ios/commit/9123dc603e62d8068d5f3ed7423216148b1bfde1) (featherless)
+* [Ripple typical example now can be used with Voice Over (#8924)](https://github.com/material-components/material-components-ios/commit/83d465eedc8dd8e7007a34448708b1ca0b45aaee) (Yarden Eitan)
+* [make card with ripple example a5able (#8929)](https://github.com/material-components/material-components-ios/commit/b18c7481239a2cf4c6d9141caebbe9947426ef76) (Yarden Eitan)
+
+### ShadowElevations
+
+* [Delete non-functional ShadowElevationsTypicalUseViewController.swift (#8955)](https://github.com/material-components/material-components-ios/commit/655604fe58e82b9fb967e608d34c34984c111d8f) (Bryan Oltman)
+* [Provide semantic VoiceOver labels when interacting with the typical use example. (#8930)](https://github.com/material-components/material-components-ios/commit/74f6530d154a58886f3b7ad2dd619628d370d807) (featherless)
+* [Delete swift example target since there is no input file. (#8955)](https://github.com/material-components/material-components-ios/commit/ef4aad367748f60ddc4fd31cfaadf1a005cd76e7) (Wenyu Zhang)
+
+### ShadowLayer
+
+* [Make Shadow Corner Radius example more accessible. (#8962)](https://github.com/material-components/material-components-ios/commit/69e8021b2af5627534b5051ab832d74b02604157) (Cody Weaver)
+
+### Slider
+
+* [Update documentation to match behavior. (#8782)](https://github.com/material-components/material-components-ios/commit/3671e05bde32bf2bfb693d3eb6e21dcf87abe4e8) (Robert Moore)
+
+### Snackbar
+
+* [Add invisible hit target for legacy snackbar (#8807)](https://github.com/material-components/material-components-ios/commit/bd938100fb6a0b9fc000e16c6dbd113e4f558dc0) (Bryan Oltman)
+* [Deprecate adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable (#8728)](https://github.com/material-components/material-components-ios/commit/6717fca5942b5fb49b0c3678746a5e63f90e6877) (Bryan Oltman)
+
+### Tabs
+
+* [Add newlines after all Swift doc headers. (#8931)](https://github.com/material-components/material-components-ios/commit/71ad8292e155152813dce8dd22456108e094c0b3) (featherless)
+* [Improve accessibility for TabBar example. (#8983)](https://github.com/material-components/material-components-ios/commit/93700ab4d9ae04afb24cb45dead0585fed814e7c) (Robert Moore)
+* [Improve custom view documentation. (#8813)](https://github.com/material-components/material-components-ios/commit/deab4b91ffae9aa04df921fd0b997dbaf39fbefa) (Robert Moore)
+* [Mark TabBarView as accessibility tab bar. (#8811)](https://github.com/material-components/material-components-ios/commit/ed8acbbc71a919f7340b9b0e38295fd9d56bd903) (Robert Moore)
+* [Use built-in "tabs" behavior on iOS 10+ (#8812)](https://github.com/material-components/material-components-ios/commit/a4a17a58dac1c6068f275e54b30961605bde808e) (Robert Moore)
+
+### TextControls
+
+* [Add adjusts content size category behavior (#8802)](https://github.com/material-components/material-components-ios/commit/c1dc83ed445b6dcab734251bf7d838b94020a0ff) (Andrew Overton)
+* [Add dynamic type functionality to text controls example (#8847)](https://github.com/material-components/material-components-ios/commit/d93ddfbc1be6b65606fed710a077cb6bbd6fc348) (Andrew Overton)
+* [Snapshot test with AXXXL sizes (#8781)](https://github.com/material-components/material-components-ios/commit/53a925d96d101777080aea05e5f1d9125fa12708) (Andrew Overton)
+* [Use system dynamic colors for sensible defaults in iOS 13 (#8818)](https://github.com/material-components/material-components-ios/commit/9b9edf9f462fd0470a6a4486fd8e013471f69574) (Andrew Overton)
+
+### TextFields
+
+* [Added accessibility label tests for MDCMultilineTextFields (#8902)](https://github.com/material-components/material-components-ios/commit/1c17792b3656ff2f73f2261ddc9e2d1b0b1b78ed) (Randall Li)
+* [Added header comment: placeholder APIs are for `label text` (#8803)](https://github.com/material-components/material-components-ios/commit/3c0d7953ada34365c0de9aed9664eed46984f431) (Randall Li)
+* [Added tests for accessibilityLabel (#8830)](https://github.com/material-components/material-components-ios/commit/3d1b6f9acc0eeea2f5a2ae820d7c6ede437df628) (Randall Li)
+* [Convert clear button to MDCButton (#8784)](https://github.com/material-components/material-components-ios/commit/42e220d9c1bcf133a1dcf1186023395a4303a0e9) (Bryan Oltman)
+* [Fix spelling mistake (#8910)](https://github.com/material-components/material-components-ios/commit/a4decc6c8e17ecab74aceab006bf36e676c3acfa) (Randall Li)
+* [Update announcement text for fields with a character limit (#8777)](https://github.com/material-components/material-components-ios/commit/be03cec76744914a7861e9dc6d77c6fcd5e38bef) (Bryan Oltman)
+* [Update character count announcement in MDCTextInputControllerFullWidth (#8789)](https://github.com/material-components/material-components-ios/commit/118dfa3d58b69fed2d8bbfdbaf263a4cbf51e1ca) (Bryan Oltman)
+* [Add accessibilityLabel override to MDCBaseTextField (#8773)](https://github.com/material-components/material-components-ios/commit/d5e69512644fee50c3c78e44ef62242826b2785a) (Andrew Overton)
+
+### Typography
+
+* [Using safeSharedApplication in test (#8815)](https://github.com/material-components/material-components-ios/commit/afbd7351b50bcb8c0c7b97ec5e12f3002d6021c9) (Randall Li)
+
+### schemes/Typography
+
+* [Separate protocol target. (#8798)](https://github.com/material-components/material-components-ios/commit/692c743f34421d4bf06acc733f1f77886d65b092) (Robert Moore)
+
+## Multi-component changes
+
+* [Annotate all catalogShouldHideNavigation invocations with @objc. (#8791)](https://github.com/material-components/material-components-ios/commit/5425884431d6cd48d3ebb5f875d859a3a08ed059) (featherless)
+
+---
+
 # 94.2.0
 
 This minor release introduces new APIs to MDCAppBarViewController and MDCSlider. Additionally, it includes some fixes for Banner constraints.

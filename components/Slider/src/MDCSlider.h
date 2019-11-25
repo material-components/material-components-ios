@@ -234,10 +234,7 @@ IB_DESIGNABLE
 /**
  Configures the visibility of the track tick marks.
 
- @note Unless this property is set explicitly, its value will change based on the value of
-       @c continuous. When @c continuous is @c true, @c trackTickVisibility is
-       @c MDCSliderTrackTickVisibilityNever. When @c continuous is false, @c trackTickVisibility
-       is @c MDCSliderTrackTickVisibilityWhenDragging.
+ The default value is @c MDCSliderTrackTickVisibilityWhenDragging.
  */
 @property(nonatomic, assign) MDCSliderTrackTickVisibility trackTickVisibility;
 

@@ -1,22 +1,40 @@
 ### Differences from UISlider
 
-Does not have api to:
+#### UISlider APIs not present in MDCSlider
 
-- set right and left icons
-- set the thumb image
-- set the right and left track images (for a custom track)
-- set the right (background track) color
+`MDCSlider` does not support the following `UISlider` APIs:
 
-Same features:
+*   Setting the left/right icons via `minimumValueImage` and `maximumValueImage`.
+*   Setting the thumb image via `setThumbImage:forState:`.
+*   Setting the right/left track images (for a custom track) via `setMinimumTrackImage:forState:` and `setMaximumTrackImage:forState:`.
 
-- set color for thumb via @c thumbColor
-- set color of track via @c trackColor
+#### UISlider APIs with different names in MDCSlider
 
-New features:
+*   The UISlider API `minimumTrackTintColor` has an equivalent API `setTrackFillColor:forState:` in 
+    MDCSlider.  This API must first be enabled by setting `statefulAPIEnabled = YES`. 
+*   The UISlider API `maximumTrackTintColor` has an equivalent API `setTrackBackgroundColor:forState:`
+    in MDCSlider.  This API must first be enabled by setting `statefulAPIEnabled = YES`.
+*   The UISlider API `thumbTintColor` has an equivalent API `setThumbColor:forState:` in MDCSlider.  This
+    API must first be enabled by setting `statefulAPIEnabled = YES`.     
 
-- making the slider a snap to discrete values via property numberOfDiscreteValues
+#### MDCSlider enhancements not in MDCSlider
+
+*   MDCSlider can behave as a [Material Discrete Slider](https://material.io/components/sliders/#discrete-slider) by
+    setting `discrete = YES` and `numberOfDiscreteValues` to a value greater than or equal to 2. Discrete 
+    Sliders only allow their calculated discrete values to be selected as the Slider's value.  If 
+    `numberOfDiscreteValues` is less than 2, then the Slider will behave as a 
+    [Material Continuous Slider](https://material.io/components/sliders/#continuous-slider).
+*   For Discrete Sliders, the track tick color is configured with the `setFilledTrackTickColor:forState:` and
+    `setBackgroundTrackTickColor:forState:` APIs.  The filled track ticks are those overlapping the 
+    filled/active part of the Slider.  The background track ticks are found in any other portions of the track.  These 
+    APIs must first be enabled by setting `statefulAPIEnabled = YES`.
+*   Track tick marks can be made shown always, never, or only when dragging via the `trackTickVisibility` 
+    API.  If `numberOfDiscreteValues` is less than 2, then tick marks will never be shown.
+*   An anchor point can be set via `filledTrackAnchorValue` to control the starting position of the filled track.
+*   The track can be made taller (or shorter) by setting the value of `trackHeight`. 
 
 #### `-accessibilityActivate`
 
-Our implementation closely resembles what UISlider does but it's not an exact match. On an
-`accessibilityActivate` we move one sixth of the amount between the current value and the midpoint value.
+MDCSlider's behavior is very similar to that of UISlider, but it's not exactly the same. On an
+`accessibilityActivate` event, the value moves one sixth of the amount between the current value and the 
+midpoint value.

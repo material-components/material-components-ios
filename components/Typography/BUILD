@@ -65,6 +65,7 @@ mdc_unit_test_objc_library(
     deps = [
         ":Typography",
         ":private",
+        "//components/private/Application",
     ],
 )
 

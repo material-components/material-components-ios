@@ -76,6 +76,11 @@
   [self setUpColorViewModels];
   [self setUpLabel];
   [self setUpAssistiveLabels];
+  [self observeContentSizeCategoryNotifications];
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark View Setup
@@ -504,6 +509,29 @@
   return font;
 }
 
+#pragma mark Dynamic Type
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  if (@available(iOS 10.0, *)) {
+    [super setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
+    self.leadingAssistiveLabel.adjustsFontForContentSizeCategory =
+        adjustsFontForContentSizeCategory;
+    self.trailingAssistiveLabel.adjustsFontForContentSizeCategory =
+        adjustsFontForContentSizeCategory;
+  }
+}
+
+- (void)observeContentSizeCategoryNotifications {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self setNeedsLayout];
+}
+
 #pragma mark MDCTextControlState
 
 - (MDCTextControlState)determineCurrentTextControlState {
@@ -660,6 +688,32 @@
     colorViewModel = [[MDCTextControlColorViewModel alloc] initWithState:textControlState];
   }
   return colorViewModel;
+}
+
+#pragma mark Accessibility Overrides
+
+- (NSString *)accessibilityLabel {
+  NSString *superAccessibilityLabel = [super accessibilityLabel];
+  if (superAccessibilityLabel.length > 0) {
+    return superAccessibilityLabel;
+  }
+
+  NSMutableArray *accessibilityLabelComponents = [NSMutableArray new];
+  if (self.label.text.length > 0) {
+    [accessibilityLabelComponents addObject:self.label.text];
+  }
+  if (self.leadingAssistiveLabel.text.length > 0) {
+    [accessibilityLabelComponents addObject:self.leadingAssistiveLabel.text];
+  }
+  if (self.trailingAssistiveLabel.text.length > 0) {
+    [accessibilityLabelComponents addObject:self.trailingAssistiveLabel.text];
+  }
+
+  if (accessibilityLabelComponents.count > 0) {
+    return [accessibilityLabelComponents componentsJoinedByString:@", "];
+  }
+
+  return nil;
 }
 
 #pragma mark Color Accessors

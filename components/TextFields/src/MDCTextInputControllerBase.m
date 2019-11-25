@@ -1578,12 +1578,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
         [self.characterCounter characterCountForTextInput:self.textInput];
     NSString *announcementString;
     if (!announcementString.length) {
-      announcementString =
-          [NSString stringWithFormat:@"%lu characters remaining",
-                                     charactersForTextInput > self.characterCountMax
-                                         ? 0U
-                                         : (unsigned long)(MAX(0U, self.characterCountMax -
-                                                                       charactersForTextInput))];
+      announcementString = [NSString stringWithFormat:@"%lu of %lu characters",
+                                                      (unsigned long)charactersForTextInput,
+                                                      (unsigned long)self.characterCountMax];
     }
 
     // Simply sending a layout change notification does not seem to

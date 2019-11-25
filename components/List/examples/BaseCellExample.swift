@@ -14,6 +14,7 @@
 
 import Foundation
 
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialList
 import MaterialComponents.MaterialShadowElevations
 
@@ -21,6 +22,7 @@ class BaseCellExample : UIViewController {
   private let arbitraryCellHeight: CGFloat = 75
   fileprivate let baseCellIdentifier: String = "baseCellIdentifier"
   fileprivate let numberOfCells: Int = 100
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   private lazy var collectionView: UICollectionView = {
     return UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -51,7 +53,7 @@ class BaseCellExample : UIViewController {
     collectionViewLayout.estimatedItemSize = collectionViewEstimatedCellSize
     collectionViewLayout.minimumInteritemSpacing = 5
     collectionViewLayout.minimumLineSpacing = 5
-    collectionView.backgroundColor = .white
+    collectionView.backgroundColor = containerScheme.colorScheme.backgroundColor
     collectionView.register(MDCBaseCell.self, forCellWithReuseIdentifier: baseCellIdentifier)
     collectionView.delegate = self
     collectionView.dataSource = self
@@ -102,12 +104,33 @@ extension BaseCellExample: UICollectionViewDataSource {
     return numberOfCells
   }
 
+  static let colorNames: [String] = [
+    "Red", "Green", "Blue", "Orange", "Yellow", "Brown", "Cyan", "Purple"
+  ]
+  static let colorNameToColorMap: [String: UIColor] = [
+    "Red": .red,
+    "Green": .green,
+    "Blue": .blue,
+    "Orange": .orange,
+    "Yellow": .yellow,
+    "Brown": .brown,
+    "Cyan": .cyan,
+    "Purple": .purple
+  ]
+
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: baseCellIdentifier,
                                                         for: indexPath) as? MDCBaseCell
       else { fatalError() }
-    cell.layer.borderColor = UIColor.darkGray.cgColor
+
+    cell.layer.borderColor = containerScheme.colorScheme.onBackgroundColor.cgColor
+    let styleIndex = indexPath.row % BaseCellExample.colorNames.count
+    let colorName = BaseCellExample.colorNames[styleIndex]
+    let backgroundColor = BaseCellExample.colorNameToColorMap[colorName]
+    cell.accessibilityLabel = colorName
+    cell.isAccessibilityElement = true
+    cell.backgroundColor = backgroundColor
     cell.layer.borderWidth = 1
     cell.inkColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
     return cell

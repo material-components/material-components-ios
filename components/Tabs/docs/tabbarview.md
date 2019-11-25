@@ -18,6 +18,7 @@ to configure your project to use `MDCTabBarView`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 import MaterialComponentsBeta.MaterialTabs_TabBarView
 ```
@@ -33,6 +34,7 @@ import MaterialComponentsBeta.MaterialTabs_TabBarView
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 let tabBarView = MDCTabBarView()
 addSubview(tabBarView)
@@ -120,6 +122,7 @@ subclass conforming to the `MDCTabBarItemCustomViewing` protocol is provided as
 <!--<div class="material-code-render" markdown="1">-->
 
 ##### Swift
+
 ```swift
 let customView = MyCustomTabView()
 let customItem = MDCTabBarItem()

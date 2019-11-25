@@ -156,11 +156,13 @@ mdc_examples_swift_library(
         ":BottomNavigation",
         ":BottomNavigationBeta",
         ":ColorThemer",
+        ":Theming",
         ":ObjcExamples",
         ":TypographyThemer",
         "//components/AppBar",
         "//components/Buttons",
         "//components/Palettes",
+        "//components/schemes/Container",
     ],
 )
 

@@ -71,9 +71,14 @@ class ZShadowViewController: UIViewController {
     
     let tap = UITapGestureRecognizer(target: self, action: #selector(squaresTapped))
     contentView.greenTappable.addGestureRecognizer(tap)
+    contentView.greenTappable.isAccessibilityElement = true
+    contentView.greenTappable.accessibilityTraits = .button
+    contentView.greenTappable.accessibilityLabel = "Toggle Material Shadow"
     let tap2 = UITapGestureRecognizer(target: self, action: #selector(squaresTapped))
     contentView.blueTappable.addGestureRecognizer(tap2)
-    
+    contentView.blueTappable.isAccessibilityElement = true
+    contentView.blueTappable.accessibilityTraits = .button
+    contentView.blueTappable.accessibilityLabel = "Toggle UIKit Shadow"
   }
   
   @objc func squaresTapped() {
