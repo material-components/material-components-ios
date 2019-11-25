@@ -19,8 +19,8 @@
 // Validates the behavior of isShiftedOffscreen and flexible header shifting when shiftBehavior
 // is MDCFlexibleHeaderShiftBehaviorDisabled.
 @interface FlexibleHeaderShiftedOffscreenWithShiftBehaviorDisabledTests : XCTestCase
-@property (nonatomic, strong) MDCFlexibleHeaderView *fhvc;
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderView *fhvc;
+@property(nonatomic, strong) UIScrollView *scrollView;
 @end
 
 @implementation FlexibleHeaderShiftedOffscreenWithShiftBehaviorDisabledTests
@@ -85,7 +85,9 @@
   [self.fhvc trackingScrollViewDidScroll];
 
   // Then
-  XCTAssertTrue(self.fhvc.isShiftedOffscreen); // TODO( https://github.com/material-components/material-components-ios/issues/9022 ): This should be false.
+  XCTAssertTrue(self.fhvc.isShiftedOffscreen);  // TODO(
+                                                // https://github.com/material-components/material-components-ios/issues/9022
+                                                // ): This should be false.
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame), 0, 0.001);
 }
 
@@ -105,7 +107,9 @@
   [self.fhvc trackingScrollViewDidScroll];
 
   // Then
-  XCTAssertTrue(self.fhvc.isShiftedOffscreen); // TODO( https://github.com/material-components/material-components-ios/issues/9022 ): This should be false.
+  XCTAssertTrue(self.fhvc.isShiftedOffscreen);  // TODO(
+                                                // https://github.com/material-components/material-components-ios/issues/9022
+                                                // ): This should be false.
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame), 0, 0.001);
 }
 
