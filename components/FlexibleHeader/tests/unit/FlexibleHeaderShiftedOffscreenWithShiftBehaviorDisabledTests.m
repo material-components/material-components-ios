@@ -85,9 +85,8 @@
   [self.fhvc trackingScrollViewDidScroll];
 
   // Then
-  XCTAssertTrue(self.fhvc.isShiftedOffscreen);  // TODO(
-                                                // https://github.com/material-components/material-components-ios/issues/9022
-                                                // ): This should be false.
+  // TODO(https://github.com/material-components/material-components-ios/issues/9022): This should be false.
+  XCTAssertTrue(self.fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame), 0, 0.001);
 }
 
@@ -107,9 +106,8 @@
   [self.fhvc trackingScrollViewDidScroll];
 
   // Then
-  XCTAssertTrue(self.fhvc.isShiftedOffscreen);  // TODO(
-                                                // https://github.com/material-components/material-components-ios/issues/9022
-                                                // ): This should be false.
+  // TODO(https://github.com/material-components/material-components-ios/issues/9022): This should be false.
+  XCTAssertTrue(self.fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame), 0, 0.001);
 }
 
