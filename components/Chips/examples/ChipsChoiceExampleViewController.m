@@ -12,61 +12,75 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
 
-@interface ChipsChoiceExampleViewController ()
-@property(nonatomic, strong) MDCChipView *sizingChip;
+@interface ChipsChoiceExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, assign, getter=isOutlined) BOOL outlined;
 @end
 
 @implementation ChipsChoiceExampleViewController
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _titles = @[
+      @"The Bronx",
+      @"Brooklyn",
+      @"Manhattan",
+      @"Queens",
+      @"Staten Island",
+    ];
   }
   return self;
 }
 
 - (void)loadView {
   [super loadView];
-  self.view.backgroundColor = [UIColor whiteColor];
 
-  // This is used to calculate the size of each chip based on the chip setup
-  _sizingChip = [[MDCChipView alloc] init];
+  self.view.backgroundColor = [UIColor whiteColor];
 
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                           collectionViewLayout:layout];
+  self.collectionView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
-  _collectionView.delaysContentTouches = NO;
+  self.collectionView.delaysContentTouches = NO;
 
   // Collection view setup
-  _collectionView.dataSource = self;
-  _collectionView.delegate = self;
-  _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
-  [_collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"Cell"];
+  self.collectionView.dataSource = self;
+  self.collectionView.delegate = self;
+  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
+  [self.collectionView registerClass:[MDCChipCollectionViewCell class]
+          forCellWithReuseIdentifier:@"Cell"];
 
   if (@available(iOS 11.0, *)) {
-    _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
 
-  [self.view addSubview:_collectionView];
+  [self.view addSubview:self.collectionView];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self.sizingChip applyThemeWithScheme:self.containerScheme];
 
   self.outlined = NO;
   self.navigationItem.rightBarButtonItem =
@@ -74,25 +88,30 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(switchStyle)];
+
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)switchStyle {
   self.outlined = !self.isOutlined;
   NSString *buttonTitle = self.isOutlined ? @"Filled Style" : @"Outlined Style";
   [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
-  NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
-  [_collectionView reloadData];
+  NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
+  [self.collectionView reloadData];
   for (NSIndexPath *path in indexPaths) {
-    [_collectionView selectItemAtIndexPath:path
-                                  animated:NO
-                            scrollPosition:UICollectionViewScrollPositionNone];
+    [self.collectionView selectItemAtIndexPath:path
+                                      animated:NO
+                                scrollPosition:UICollectionViewScrollPositionNone];
   }
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _collectionView.frame = self.view.bounds;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -100,11 +119,13 @@
   return self.titles.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
+
+  chipView.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
@@ -120,25 +141,16 @@
   return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  // The size of the chip depends on title here.
-  self.sizingChip.titleLabel.text = self.titles[indexPath.row];
-  return [self.sizingChip sizeThatFits:collectionView.bounds.size];
-}
+@end
 
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"The Bronx",
-      @"Brooklyn",
-      @"Manhattan",
-      @"Queens",
-      @"Staten Island",
-    ];
-  }
-  return _titles;
+@implementation ChipsChoiceExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Choice" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
 }
 
 @end

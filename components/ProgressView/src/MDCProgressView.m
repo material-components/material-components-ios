@@ -123,6 +123,17 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   self.trackView.backgroundColor = trackTintColor;
 }
 
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  _cornerRadius = cornerRadius;
+
+  _progressView.layer.cornerRadius = cornerRadius;
+  _trackView.layer.cornerRadius = cornerRadius;
+
+  BOOL hasNonZeroCornerRadius = !MDCCGFloatIsExactlyZero(cornerRadius);
+  _progressView.clipsToBounds = hasNonZeroCornerRadius;
+  _trackView.clipsToBounds = hasNonZeroCornerRadius;
+}
+
 - (void)setProgress:(float)progress {
   if (progress > 1)
     progress = 1;
@@ -252,6 +263,10 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                     [self accessibilityValue]);
   }
+}
+
+- (NSString *)accessibilityLabel {
+  return self.accessibilityProgressView.accessibilityLabel;
 }
 
 #pragma mark Private

@@ -12,20 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
-@implementation ChipsCustomizedExampleViewController {
-  UICollectionView *_collectionView;
-  MDCChipView *_sizingChip;
+#import "supplemental/ChipsExampleAssets.h"
+
+@interface ChipsCustomizedExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@end
+
+@implementation ChipsCustomizedExampleViewController
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _titles = @[
+      @"Doorman",
+      @"Elevator",
+      @"Garage Parking",
+      @"Gym",
+      @"Laundry in Building",
+      @"Green Building",
+      @"Parking Available",
+      @"Pets Allowed",
+      @"Pied-a-Terre Allowed",
+      @"Swimming Pool",
+      @"Smoke-free",
+    ];
   }
   return self;
 }
@@ -56,33 +77,38 @@
 
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-  _collectionView.dataSource = self;
-  _collectionView.delegate = self;
-  _collectionView.allowsMultipleSelection = YES;
-  _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.delaysContentTouches = NO;
-  _collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
-  [_collectionView registerClass:[MDCChipCollectionViewCell class]
-      forCellWithReuseIdentifier:@"MDCChipCollectionViewCell"];
+  self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
+                                           collectionViewLayout:layout];
+  self.collectionView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  self.collectionView.dataSource = self;
+  self.collectionView.delegate = self;
+  self.collectionView.allowsMultipleSelection = YES;
+  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.delaysContentTouches = NO;
+  self.collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
+  [self.collectionView registerClass:[MDCChipCollectionViewCell class]
+          forCellWithReuseIdentifier:@"MDCChipCollectionViewCell"];
 
-  _sizingChip = [[MDCChipView alloc] init];
-  [[self class] configureChip:_sizingChip];
-
-  [self.view addSubview:_collectionView];
+  [self.view addSubview:self.collectionView];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [_sizingChip applyThemeWithScheme:self.containerScheme];
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _collectionView.frame = self.view.bounds;
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -90,28 +116,19 @@
   return self.titles.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"MDCChipCollectionViewCell"
                                                 forIndexPath:indexPath];
 
   [[self class] configureChip:cell.chipView];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
-  cell.chipView.selectedImageView.image = [self doneImage];
+  cell.chipView.selectedImageView.image = ChipsExampleAssets.doneImage;
+  cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
-  _sizingChip.selected = [selectedPaths containsObject:indexPath];
-  _sizingChip.titleLabel.text = self.titles[indexPath.row];
-  _sizingChip.selectedImageView.image = [self doneImage];
-  return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -124,23 +141,16 @@
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
-- (NSArray *)titles {
-  if (!_titles) {
-    _titles = @[
-      @"Doorman",
-      @"Elevator",
-      @"Garage Parking",
-      @"Gym",
-      @"Laundry in Building",
-      @"Green Building",
-      @"Parking Available",
-      @"Pets Allowed",
-      @"Pied-a-Terre Allowed",
-      @"Swimming Pool",
-      @"Smoke-free",
-    ];
-  }
-  return _titles;
+@end
+
+@implementation ChipsCustomizedExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Customized" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

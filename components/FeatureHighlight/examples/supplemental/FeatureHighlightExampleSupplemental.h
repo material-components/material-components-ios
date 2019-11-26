@@ -31,7 +31,7 @@
 @end
 
 @interface FeatureHighlightColorExample : MDCCollectionViewController
-@property(nonatomic) NSArray *colors;
+@property(nonatomic) NSDictionary<NSString *, UIColor *> *colorNameToColorMap;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 

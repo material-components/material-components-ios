@@ -18,6 +18,7 @@ to configure your project to use `MDCTabBarView`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 import MaterialComponentsBeta.MaterialTabs_TabBarView
 ```
@@ -33,6 +34,7 @@ import MaterialComponentsBeta.MaterialTabs_TabBarView
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 let tabBarView = MDCTabBarView()
 addSubview(tabBarView)
@@ -57,6 +59,13 @@ MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
 Subclassing is not supported by `MDCTabBarView`. Any requirements that you have
 for Material Tabs that are not met by the public APIs should be filed as a
 feature request or bug against `MDCTabBarView`.
+
+#### Selected Item Behavior
+
+`MDCTabBarView` does not automatically mark any item as *selected* when the
+`items` array is set, unless the previously-selected item is in the new
+`items` array.  This is a change from `MDCTabBar`, but ensures that the view
+and its APIs present equivalent information.
 
 #### Colors, Fonts, and Theming
 
@@ -111,7 +120,9 @@ subclass conforming to the `MDCTabBarItemCustomViewing` protocol is provided as
 `MDCTabBarItem`.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 ##### Swift
+
 ```swift
 let customView = MyCustomTabView()
 let customItem = MDCTabBarItem()

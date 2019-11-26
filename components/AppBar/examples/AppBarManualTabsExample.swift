@@ -49,7 +49,7 @@ class AppBarManualTabsExample: UIViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Tab Bar Example"
+    self.title = "Manual Tabs"
     self.firstTab.title = "First"
     self.secondTab.title = "Second"
   }
@@ -155,7 +155,7 @@ extension AppBarManualTabsExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

@@ -69,6 +69,24 @@ static NSString *const kLongTitle5Arabic =
 /** Snapshot tests for MDCActionSheetController's view. */
 @interface MDCActionSheetControllerSnapshotTests : MDCSnapshotTestCase
 
+/** The action sheet being tested. */
+@property(nonatomic, strong, nullable) MDCActionSheetController *actionSheetController;
+
+/** An Action Sheet action. */
+@property(nonatomic, strong) MDCActionSheetAction *action1;
+
+/** An Action Sheet action. */
+@property(nonatomic, strong) MDCActionSheetAction *action2;
+
+/** An Action Sheet action. */
+@property(nonatomic, strong) MDCActionSheetAction *action3;
+
+/** An Action Sheet action. */
+@property(nonatomic, strong) MDCActionSheetAction *action4;
+
+/** An Action Sheet action. */
+@property(nonatomic, strong) MDCActionSheetAction *action5;
+
 @end
 
 @implementation MDCActionSheetControllerSnapshotTests
@@ -79,6 +97,52 @@ static NSString *const kLongTitle5Arabic =
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
+
+  self.action1 = [MDCActionSheetAction
+      actionWithTitle:kShortTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
+  self.action2 = [MDCActionSheetAction
+      actionWithTitle:kShortTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleRectangles]
+              handler:nil];
+  self.action3 = [MDCActionSheetAction
+      actionWithTitle:kShortTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleEllipses]
+              handler:nil];
+  self.action4 = [MDCActionSheetAction
+      actionWithTitle:kShortTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+              handler:nil];
+  self.action5 = [MDCActionSheetAction
+      actionWithTitle:kShortTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleFramedX]
+              handler:nil];
+}
+
+- (void)tearDown {
+  if (self.actionSheetController.presentingViewController) {
+    XCTestExpectation *expectation =
+        [[XCTestExpectation alloc] initWithDescription:@"Action sheet is dismissed"];
+    [self.actionSheetController dismissViewControllerAnimated:NO
+                                                   completion:^{
+                                                     [expectation fulfill];
+                                                   }];
+    [self waitForExpectations:@[ expectation ] timeout:5];
+  }
+  self.action1 = nil;
+  self.action2 = nil;
+  self.action3 = nil;
+  self.action4 = nil;
+  self.action5 = nil;
+  self.actionSheetController = nil;
+
+  [super tearDown];
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -86,44 +150,75 @@ static NSString *const kLongTitle5Arabic =
   [self snapshotVerifyView:snapshotView];
 }
 
+/** Update the @c MDCActionSheetAction properties to use short Arabic text. */
+- (void)changeToShortArabicTitles {
+  self.action1 = [MDCActionSheetAction actionWithTitle:kShortTitle1Arabic
+                                                 image:self.action1.image
+                                               handler:nil];
+  self.action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Arabic
+                                                 image:self.action2.image
+                                               handler:nil];
+  self.action3 = [MDCActionSheetAction actionWithTitle:kShortTitle3Arabic
+                                                 image:self.action3.image
+                                               handler:nil];
+  self.action4 = [MDCActionSheetAction actionWithTitle:kShortTitle4Arabic
+                                                 image:self.action4.image
+                                               handler:nil];
+  self.action5 = [MDCActionSheetAction actionWithTitle:kShortTitle5Arabic
+                                                 image:self.action5.image
+                                               handler:nil];
+}
+
+/** Update the @c MDCActionSheetAction properties to use long Arabic text. */
+- (void)changeToLongArabicTitles {
+  self.action1 = [MDCActionSheetAction actionWithTitle:kLongTitle1Arabic
+                                                 image:self.action1.image
+                                               handler:nil];
+  self.action2 = [MDCActionSheetAction actionWithTitle:kLongTitle2Arabic
+                                                 image:self.action2.image
+                                               handler:nil];
+  self.action3 = [MDCActionSheetAction actionWithTitle:kLongTitle3Arabic
+                                                 image:self.action3.image
+                                               handler:nil];
+  self.action4 = [MDCActionSheetAction actionWithTitle:kLongTitle4Arabic
+                                                 image:self.action4.image
+                                               handler:nil];
+  self.action5 = [MDCActionSheetAction actionWithTitle:kLongTitle5Arabic
+                                                 image:self.action5.image
+                                               handler:nil];
+}
+
+/** Update the @c MDCActionSheetAction properties to use long Latin text. */
+- (void)changeToLongLatinTitles {
+  self.action1 = [MDCActionSheetAction actionWithTitle:kLongTitle1Latin
+                                                 image:self.action1.image
+                                               handler:nil];
+  self.action2 = [MDCActionSheetAction actionWithTitle:kLongTitle2Latin
+                                                 image:self.action2.image
+                                               handler:nil];
+  self.action3 = [MDCActionSheetAction actionWithTitle:kLongTitle3Latin
+                                                 image:self.action3.image
+                                               handler:nil];
+  self.action4 = [MDCActionSheetAction actionWithTitle:kLongTitle4Latin
+                                                 image:self.action4.image
+                                               handler:nil];
+  self.action5 = [MDCActionSheetAction actionWithTitle:kLongTitle5Latin
+                                                 image:self.action5.image
+                                               handler:nil];
+}
+
 #pragma mark - Tests
 
 - (void)testFiveActionsSufficientSizeShortTextLTR {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
-
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kShortTitle4Latin
                                                        message:kShortTitle2Latin];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   controller.view.bounds = CGRectMake(0, 0, 320, 480);
@@ -134,40 +229,16 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testFiveActionsSufficientSizeShortTextRTL {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle2Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle3Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle4Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle5Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
+  [self changeToShortArabicTitles];
 
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kShortTitle4Arabic
                                                        message:kShortTitle2Arabic];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   [controller.view layoutIfNeeded];
@@ -180,40 +251,16 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testFiveActionsSufficientSizeLongTextLTR {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle2Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle3Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle4Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle5Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
+  [self changeToLongLatinTitles];
 
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
                                                        message:kLongTitle2Latin];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   controller.view.bounds = CGRectMake(0, 0, 320, 640);
@@ -224,40 +271,16 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testFiveActionsSufficientSizeLongTextRTL {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle2Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle3Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle4Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle5Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
+  [self changeToLongArabicTitles];
 
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
                                                        message:kLongTitle2Arabic];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   [controller.view layoutIfNeeded];
@@ -270,40 +293,14 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testFiveActionsTooShortLTR {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
-
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
                                                        message:kLongTitle2Latin];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   controller.view.bounds = CGRectMake(0, 0, 320, 180);
@@ -314,40 +311,15 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testFiveActionsTooShortRTL {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle2Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle3Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle4Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle5Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
-
+  [self changeToShortArabicTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
                                                        message:kLongTitle2Arabic];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   [controller.view layoutIfNeeded];
@@ -360,40 +332,15 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testFiveActionsTooNarrowLTR {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle2Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle3Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle4Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle5Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
-
+  [self changeToLongLatinTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
                                                        message:kLongTitle2Latin];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   controller.view.bounds = CGRectMake(0, 0, 120, 480);
@@ -404,40 +351,15 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testFiveActionsTooNarrowRTL {
   // Given
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-  MDCActionSheetAction *action2 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle2Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleRectangles]
-              handler:nil];
-  MDCActionSheetAction *action3 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle3Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleEllipses]
-              handler:nil];
-  MDCActionSheetAction *action4 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle4Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleDiagonalLines]
-              handler:nil];
-  MDCActionSheetAction *action5 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle5Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleFramedX]
-              handler:nil];
-
+  [self changeToLongArabicTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
                                                        message:kLongTitle2Arabic];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
-  [controller addAction:action4];
-  [controller addAction:action5];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
+  [controller addAction:self.action4];
+  [controller addAction:self.action5];
 
   // When
   [controller.view layoutIfNeeded];
@@ -455,16 +377,11 @@ static NSString *const kLongTitle5Arabic =
   MDCActionSheetControllerSnapshotTestsSuperview *superview =
       [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
           initWithFrame:CGRectMake(0, 0, 360, 240)];
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-
+  [self changeToLongLatinTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
                                                        message:kLongTitle2Latin];
-  [controller addAction:action1];
+  [controller addAction:self.action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
 
@@ -482,21 +399,18 @@ static NSString *const kLongTitle5Arabic =
   MDCActionSheetControllerSnapshotTestsSuperview *superview =
       [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
           initWithFrame:CGRectMake(0, 0, 360, 240)];
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
+  [self changeToLongArabicTitles];
 
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
                                                        message:kLongTitle2Arabic];
-  [controller addAction:action1];
+  [controller addAction:self.action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
 
   // When
   superview.customSafeAreaInsets = UIEdgeInsetsMake(90, 80, 40, 20);
+  [controller.view layoutIfNeeded];
   [self changeViewToRTL:controller.view];
   [controller.view setNeedsLayout];
   [controller.view layoutIfNeeded];
@@ -510,16 +424,11 @@ static NSString *const kLongTitle5Arabic =
   MDCActionSheetControllerSnapshotTestsSuperview *superview =
       [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
           initWithFrame:CGRectMake(0, 0, 360, 240)];
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-
+  [self changeToLongLatinTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
                                                        message:kLongTitle2Latin];
-  [controller addAction:action1];
+  [controller addAction:self.action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
 
@@ -537,21 +446,17 @@ static NSString *const kLongTitle5Arabic =
   MDCActionSheetControllerSnapshotTestsSuperview *superview =
       [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
           initWithFrame:CGRectMake(0, 0, 360, 240)];
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-
+  [self changeToLongArabicTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
                                                        message:kLongTitle2Arabic];
-  [controller addAction:action1];
+  [controller addAction:self.action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
 
   // When
   superview.customSafeAreaInsets = UIEdgeInsetsMake(120, 120, 0, 0);
+  [controller.view layoutIfNeeded];
   [self changeViewToRTL:controller.view];
   [controller.view setNeedsLayout];
   [controller.view layoutIfNeeded];
@@ -565,16 +470,11 @@ static NSString *const kLongTitle5Arabic =
   MDCActionSheetControllerSnapshotTestsSuperview *superview =
       [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
           initWithFrame:CGRectMake(0, 0, 360, 240)];
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Latin
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-
+  [self changeToLongLatinTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
                                                        message:kLongTitle2Latin];
-  [controller addAction:action1];
+  [controller addAction:self.action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
 
@@ -592,21 +492,17 @@ static NSString *const kLongTitle5Arabic =
   MDCActionSheetControllerSnapshotTestsSuperview *superview =
       [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
           initWithFrame:CGRectMake(0, 0, 360, 240)];
-  MDCActionSheetAction *action1 = [MDCActionSheetAction
-      actionWithTitle:kLongTitle1Arabic
-                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
-              handler:nil];
-
+  [self changeToLongArabicTitles];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
                                                        message:kLongTitle2Arabic];
-  [controller addAction:action1];
+  [controller addAction:self.action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
 
   // When
   superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 0, 80, 80);
+  [controller.view layoutIfNeeded];
   [self changeViewToRTL:controller.view];
   [controller.view setNeedsLayout];
   [controller.view layoutIfNeeded];
@@ -645,11 +541,33 @@ static NSString *const kLongTitle5Arabic =
                                                                 handler:nil];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [controller addAction:action1];
-  [controller addAction:action2];
 
   // When
+  // Enable early to guard against implementation bugs identified in #8609
   controller.alwaysAlignTitleLeadingEdges = YES;
+  [controller addAction:action1];
+  [controller addAction:action2];
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testActionSheetWhenActionsOnlyHaveTitlesAndAlignTitlesDisabled {
+  // Given
+  MDCActionSheetAction *action1 = [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+
+  // When
+  [controller addAction:action1];
+  [controller addAction:action2];
+  controller.alwaysAlignTitleLeadingEdges = NO;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
@@ -678,6 +596,29 @@ static NSString *const kLongTitle5Arabic =
 }
 
 - (void)
+    testActionSheetWhenSomeActionsHaveIconsAndTitlesAndSomeActionsOnlyHavingTitlesAndAlignTitlesDisabled {
+  // Given
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+
+  // When
+  [controller addAction:action1];
+  [controller addAction:action2];
+  controller.alwaysAlignTitleLeadingEdges = NO;
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)
     testActionSheetWhenSomeActionsHaveIconsAndTitlesAndSomeActionsOnlyHavingTitlesAndAlignTitlesEnabled {
   // Given
   MDCActionSheetAction *action1 =
@@ -689,11 +630,12 @@ static NSString *const kLongTitle5Arabic =
                                                                 handler:nil];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [controller addAction:action1];
-  [controller addAction:action2];
 
   // When
+  // Enable early to guard against implementation bugs identified in #8609
   controller.alwaysAlignTitleLeadingEdges = YES;
+  [controller addAction:action1];
+  [controller addAction:action2];
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
@@ -702,27 +644,15 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testActionSheetWithCustomActionSheetControllerTitleColorAndOneActionCustomTitleColor {
   // Given
-  MDCActionSheetAction *action1 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action2 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action3 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
 
   // When
   controller.actionTextColor = UIColor.blueColor;
-  action2.titleColor = UIColor.orangeColor;
+  self.action2.titleColor = UIColor.orangeColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
@@ -731,28 +661,16 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testActionSheetWhenEveryActionHasCustomTitleColor {
   // Given
-  MDCActionSheetAction *action1 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action2 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action3 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
 
   // When
-  action1.titleColor = UIColor.blueColor;
-  action2.titleColor = UIColor.redColor;
-  action3.titleColor = UIColor.greenColor;
+  self.action1.titleColor = UIColor.blueColor;
+  self.action2.titleColor = UIColor.redColor;
+  self.action3.titleColor = UIColor.greenColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
@@ -761,27 +679,15 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testActionSheetWithCustomActionSheetControllerTintColorAndOneActionCustomTintColor {
   // Given
-  MDCActionSheetAction *action1 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action2 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action3 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
 
   // When
   controller.actionTintColor = UIColor.blueColor;
-  action2.tintColor = UIColor.orangeColor;
+  self.action2.tintColor = UIColor.orangeColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
@@ -790,32 +696,79 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testActionSheetWhenEveryActionHasCustomTintColor {
   // Given
-  MDCActionSheetAction *action1 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action2 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
-  MDCActionSheetAction *action3 =
-      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
   MDCActionSheetController *controller =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [controller addAction:action1];
-  [controller addAction:action2];
-  [controller addAction:action3];
+  [controller addAction:self.action1];
+  [controller addAction:self.action2];
+  [controller addAction:self.action3];
 
   // When
-  action1.tintColor = UIColor.blueColor;
-  action2.tintColor = UIColor.redColor;
-  action3.tintColor = UIColor.greenColor;
+  self.action1.tintColor = UIColor.blueColor;
+  self.action2.tintColor = UIColor.redColor;
+  self.action3.tintColor = UIColor.greenColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testThreeActionsSufficientSizeShortTextLTRWithDefaultPresentationStyleOniOS13 {
+  // Given
+  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [self.actionSheetController addAction:self.action1];
+  [self.actionSheetController addAction:self.action2];
+  [self.actionSheetController addAction:self.action3];
+  self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // When
+  UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+  UIViewController *currentViewController = window.rootViewController;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"Action sheet is presented"];
+  [currentViewController presentViewController:self.actionSheetController
+                                      animated:NO
+                                    completion:^{
+                                      [expectation fulfill];
+                                    }];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:5];
+  [self snapshotVerifyViewForIOS13:window];
+}
+
+- (void)testActionSheetWithHeaderShown {
+  // Given
+  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:@"Foo"];
+  [self.actionSheetController addAction:self.action1];
+  [self.actionSheetController addAction:self.action2];
+  self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // When
+  self.actionSheetController.showsHeaderDivider = YES;
+  self.actionSheetController.headerDividerColor = UIColor.blackColor;
+  [self.actionSheetController.view setNeedsLayout];
+  [self.actionSheetController.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
+}
+
+- (void)testActionSheetWithHeaderShownButNoTitleOrMessage {
+  // Given
+  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:nil
+                                                                                message:nil];
+  [self.actionSheetController addAction:self.action1];
+  [self.actionSheetController addAction:self.action2];
+  self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // When
+  self.actionSheetController.showsHeaderDivider = YES;
+  self.actionSheetController.headerDividerColor = UIColor.blackColor;
+  [self.actionSheetController.view setNeedsLayout];
+  [self.actionSheetController.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
 }
 
 @end

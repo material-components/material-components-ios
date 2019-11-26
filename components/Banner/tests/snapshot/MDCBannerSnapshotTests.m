@@ -14,7 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MDCBannerView.h"
+#import "MaterialBanner+Theming.h"
+#import "MaterialBanner.h"
 #import "MaterialButtons.h"
 #import "MaterialTypographyScheme.h"
 
@@ -158,6 +159,18 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 }
 
 #pragma mark - Tests
+
+- (void)testShortTextWithNoAction {
+  // When
+  self.bannerView.textView.text = kBannerShortText;
+  self.bannerView.textView.textAlignment = NSTextAlignmentCenter;
+  self.bannerView.leadingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
+  self.bannerView.trailingButton.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
 
 - (void)testShortTextWithSingleActionLTR {
   // When
@@ -437,4 +450,62 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   }
 }
 
+- (void)testPreferredFontForAXXLContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    self.bannerView = [[MDCBannerView alloc] init];
+    [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
+    self.bannerView.textView.text = kBannerLongText;
+    MDCButton *button1 = self.bannerView.leadingButton;
+    [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+    button1.enableTitleFontForState = NO;
+    MDCButton *button2 = self.bannerView.trailingButton;
+    [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+    button2.enableTitleFontForState = NO;
+
+    // When
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    self.bannerView.textView.font = font;
+    self.bannerView.leadingButton.titleLabel.font = font;
+    self.bannerView.trailingButton.titleLabel.font = font;
+    self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+              UIContentSizeCategoryExtraExtraLarge
+                                                    andVerifyForView:self.bannerView];
+  }
+}
+
+- (void)testPreferredFontForAXSContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    self.bannerView = [[MDCBannerView alloc] init];
+    [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
+    self.bannerView.textView.text = kBannerLongText;
+    MDCButton *button1 = self.bannerView.leadingButton;
+    [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+    button1.enableTitleFontForState = NO;
+    MDCButton *button2 = self.bannerView.trailingButton;
+    [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+    button2.enableTitleFontForState = NO;
+
+    // When
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+    self.bannerView.textView.font = font;
+    self.bannerView.leadingButton.titleLabel.font = font;
+    self.bannerView.trailingButton.titleLabel.font = font;
+    self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
+                                                    andVerifyForView:self.bannerView];
+  }
+}
 @end

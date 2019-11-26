@@ -14,6 +14,7 @@
 
 #import "MDCTextInputCommonFundament.h"
 
+#import "MDCButton.h"
 #import "MDCMultilineTextField.h"
 #import "MDCMultilineTextInputDelegate.h"
 #import "MDCTextField.h"
@@ -97,6 +98,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize underline = _underline;
 @synthesize hasTextContent = _hasTextContent;
 @synthesize textInsetsMode = _textInsetsMode;
+@synthesize sizeThatFitsWidthHint = _sizeThatFitsWidthHint;
 
 - (instancetype)init {
   [self doesNotRecognizeSelector:_cmd];
@@ -129,6 +131,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
     [self setupBorder];
     [self subscribeForKVO];
+
+    _sizeThatFitsWidthHint = 0.f;
   }
   return self;
 }
@@ -191,7 +195,18 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setupClearButton {
   if (!_clearButton) {
-    _clearButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    // The following MDCButton configuration creates an MDCButton that mimics a UIButton with a
+    // "clear" icon and adds a ripple effect.
+    MDCButton *clearButton = [[MDCButton alloc] init];
+    clearButton.backgroundColor = UIColor.clearColor;
+    // This ink color was taken from the MDCButton+MaterialTheming behavior, with UIColor.blackColor
+    // taken from the onSurfaceColor value of the MDCColorSchemeDefaultsMaterial201907 color scheme.
+    clearButton.inkColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.12];
+    clearButton.enableRippleBehavior = YES;
+    clearButton.inkStyle = MDCInkStyleUnbounded;
+    clearButton.clipsToBounds = NO;
+    clearButton.contentEdgeInsets = UIEdgeInsetsZero;
+    _clearButton = clearButton;
   }
   _clearButton.translatesAutoresizingMaskIntoConstraints = NO;
   [_clearButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
@@ -309,7 +324,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _trailingUnderlineLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _trailingUnderlineLabel.textColor = [UIColor grayColor];
     _trailingUnderlineLabel.font = _textInput.font;
-    _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
+    _trailingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
 
     [_trailingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -760,7 +775,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * scale) / scale;
-
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
   // MDCTextInputHalfPadding. It's also dependent on the .textInsetsMode.
@@ -790,7 +804,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   // .bottom = underlineOffset + the half padding ABOVE the line but below the text field
   textInsets.bottom = underlineOffset + MDCTextInputHalfPadding;
 
-  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
+  if ([self.positioningDelegate respondsToSelector:@selector(textInsets:
+                                                       withSizeThatFitsWidthHint:)]) {
+    return [self.positioningDelegate textInsets:textInsets
+                      withSizeThatFitsWidthHint:self.sizeThatFitsWidthHint];
+  } else if ([self.positioningDelegate respondsToSelector:@selector(textInsets:)]) {
     return [self.positioningDelegate textInsets:textInsets];
   }
   return textInsets;
@@ -973,9 +991,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updateClearButton];
 }
 
-- (void)didSetFont {
+- (void)didSetFont:(UIFont *)previousFont {
   UIFont *font = self.textInput.font;
-  self.placeholderLabel.font = font;
+  // Don't replace a custom placeholderLabel font.
+  if (!self.placeholderLabel.font || self.placeholderLabel.font == previousFont) {
+    self.placeholderLabel.font = font;
+  }
 
   [self updatePlaceholderPosition];
 }

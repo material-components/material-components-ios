@@ -405,7 +405,10 @@
     MDCSnackbarMessageViewTestsFakeView *messageView =
         [[MDCSnackbarMessageViewTestsFakeView alloc] init];
     messageView.mdc_adjustsFontForContentSizeCategory = YES;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+#pragma clang diagnostic pop
     UIFont *messageFont = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
     MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
     messageFont = [fontScaler scaledFontWithFont:messageFont];
@@ -434,7 +437,10 @@
     MDCSnackbarMessageViewTestsFakeView *messageView =
         [[MDCSnackbarMessageViewTestsFakeView alloc] init];
     messageView.mdc_adjustsFontForContentSizeCategory = YES;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+#pragma clang diagnostic pop
     MDCButton *button = [[MDCButton alloc] init];
     [messageView.actionButtons addObject:button];
     UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
@@ -464,7 +470,50 @@
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
 
   // Then
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   XCTAssertTrue(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+#pragma clang diagnostic pop
+}
+
+- (void)testMessageStaysWhenFocusOnShowIsEnabled {
+  // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  self.message.focusOnShow = YES;
+  self.message.duration = 0.1;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_time_t popTime =
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)((CGFloat)0.2 * NSEC_PER_SEC));
+  dispatch_after(popTime, dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
+}
+
+- (void)testMessageCustomizationUsingWillPresentBlock {
+  // Given
+  __block BOOL blockCalled = NO;
+  self.message.snackbarMessageWillPresentBlock =
+      ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
+        blockCalled = YES;
+      };
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertTrue(blockCalled);
 }
 
 @end

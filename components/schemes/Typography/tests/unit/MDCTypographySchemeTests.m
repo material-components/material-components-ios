@@ -167,29 +167,4 @@
   XCTAssertFalse(scheme.useCurrentContentSizeCategoryWhenApplied);
 }
 
-- (void)
-    testMdc_adjustsFontForContentSizeCategoryIsMappedToUseCurrentContentSizeCategoryWhenApplied {
-  // Given
-  MDCTypographyScheme *scheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-
-  // When
-  scheme.mdc_adjustsFontForContentSizeCategory = YES;
-
-  // Then
-  XCTAssertTrue(scheme.useCurrentContentSizeCategoryWhenApplied);
-
-  // When
-  scheme.mdc_adjustsFontForContentSizeCategory = NO;
-
-  // Then
-  XCTAssertFalse(scheme.useCurrentContentSizeCategoryWhenApplied);
-
-  // When (just in case the initial "truth" equality was a coincidence)
-  scheme.mdc_adjustsFontForContentSizeCategory = YES;
-
-  // Then
-  XCTAssertTrue(scheme.useCurrentContentSizeCategoryWhenApplied);
-}
-
 @end

@@ -37,9 +37,11 @@
 @end
 
 @interface ProgrammaticViewController : UIViewController
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
 @interface OpenURLViewController : UIViewController
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
 #pragma mark - DialogsDismissingExampleViewController Implementation
@@ -84,10 +86,11 @@
 }
 
 - (IBAction)didTapProgrammatic {
-  UIViewController *viewController = [[ProgrammaticViewController alloc] initWithNibName:nil
-                                                                                  bundle:nil];
+  ProgrammaticViewController *viewController =
+      [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
+  viewController.containerScheme = self.containerScheme;
 
   // Apply a presentation theme to the custom view controller
   [viewController.mdc_dialogPresentationController applyThemeWithScheme:self.containerScheme];
@@ -95,10 +98,11 @@
 }
 
 - (IBAction)didTapModalProgrammatic {
-  UIViewController *viewController = [[ProgrammaticViewController alloc] initWithNibName:nil
-                                                                                  bundle:nil];
+  ProgrammaticViewController *viewController =
+      [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
+  viewController.containerScheme = self.containerScheme;
 
   MDCDialogPresentationController *presentationController =
       viewController.mdc_dialogPresentationController;
@@ -108,9 +112,11 @@
 }
 
 - (IBAction)didTapOpenURL {
-  UIViewController *viewController = [[OpenURLViewController alloc] initWithNibName:nil bundle:nil];
+  OpenURLViewController *viewController = [[OpenURLViewController alloc] initWithNibName:nil
+                                                                                  bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
+  viewController.containerScheme = self.containerScheme;
 
   [viewController.mdc_dialogPresentationController applyThemeWithScheme:self.containerScheme];
   [self presentViewController:viewController animated:YES completion:NULL];
@@ -158,6 +164,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.textLabel.text = self.modes[indexPath.row];
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityTraits = UIAccessibilityTraitButton;
+  cell.accessibilityLabel = cell.textLabel.text;
   return cell;
 }
 
@@ -181,8 +190,6 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @interface ProgrammaticViewController ()
 
 @property(nonatomic, strong) MDCButton *dismissButton;
-
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -210,6 +217,13 @@ static NSString *const kReusableIdentifierItem = @"cell";
   [self.view addSubview:self.dismissButton];
 }
 
+- (void)setContainerScheme:(id<MDCContainerScheming>)containerScheme {
+  _containerScheme = containerScheme;
+
+  [self.dismissButton applyTextThemeWithScheme:_containerScheme];
+  self.view.backgroundColor = _containerScheme.colorScheme.backgroundColor;
+}
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   [_dismissButton sizeToFit];
@@ -225,6 +239,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
   [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (BOOL)accessibilityPerformEscape {
+  [self dismissViewControllerAnimated:YES completion:nil];
+  return YES;
+}
+
 @end
 
 #pragma mark - OpenURLViewController
@@ -232,8 +251,6 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @interface OpenURLViewController ()
 
 @property(nonatomic, strong) MDCButton *dismissButton;
-
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -276,6 +293,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
   // Use mdc_safeSharedApplication to avoid a compiler warning about extensions
   [[UIApplication mdc_safeSharedApplication] performSelector:@selector(openURL:)
                                                   withObject:testURL];
+}
+
+- (BOOL)accessibilityPerformEscape {
+  [self dismissViewControllerAnimated:YES completion:nil];
+  return YES;
 }
 
 @end

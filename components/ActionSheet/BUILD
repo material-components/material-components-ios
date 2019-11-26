@@ -51,6 +51,7 @@ mdc_extension_objc_library(
         "//components/Elevation",
         "//components/private/Color",
         "//components/schemes/Container",
+        "//components/ShadowElevations",
     ],
 )
 
@@ -104,6 +105,7 @@ mdc_examples_swift_library(
     deps = [
         ":ActionSheet",
         ":Theming",
+        "//components/AppBar",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",

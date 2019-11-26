@@ -57,19 +57,10 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":ActivityIndicator",
-        "//components/schemes/Color",
-    ],
-)
-
 mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
     deps = [
         ":ActivityIndicator",
-        ":ColorThemer",
     ],
 )
 
@@ -77,7 +68,6 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":ActivityIndicator",
-        ":ColorThemer",
     ],
 )
 
@@ -93,7 +83,6 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ActivityIndicator",
-        ":ColorThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
         "//components/Collections",

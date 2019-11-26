@@ -115,7 +115,7 @@ extension AppBarWithUITableViewController {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

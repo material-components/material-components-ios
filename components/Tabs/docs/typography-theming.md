@@ -9,6 +9,7 @@ pod 'MaterialComponents/Tabs+TypographyThemer'
 ```
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialTabs_TypographyThemer

@@ -123,7 +123,8 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   // Not implemented. Corners are not rounded.
 }
 
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
+    withSizeThatFitsWidthHint:(CGFloat)widthHint {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields

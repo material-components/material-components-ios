@@ -96,6 +96,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
                                  message:(nullable NSString *)message {
@@ -134,6 +135,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
+  if (@available(iOS 10.0, *)) {
+    if (![self.traitCollection.preferredContentSizeCategory
+            isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
+      self.preferredContentSize = [self.alertView
+          calculatePreferredContentSizeForBounds:CGRectStandardize(self.view.bounds).size];
+    }
+  }
 }
 
 /* Disable setter. Always use internal transition controller */
@@ -162,6 +170,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return _alertTitle;
 }
 
+- (void)setTitleAccessibilityLabel:(NSString *)titleAccessibilityLabel {
+  _titleAccessibilityLabel = [titleAccessibilityLabel copy];
+  if (self.alertView && titleAccessibilityLabel) {
+    self.alertView.titleLabel.accessibilityLabel = titleAccessibilityLabel;
+  }
+}
+
 - (void)setMessage:(NSString *)message {
   _message = [message copy];
   if (self.alertView) {
@@ -169,6 +184,32 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   }
+}
+
+- (void)setMessageAccessibilityLabel:(NSString *)messageAccessibilityLabel {
+  _messageAccessibilityLabel = [messageAccessibilityLabel copy];
+  if (self.alertView && messageAccessibilityLabel) {
+    self.alertView.messageLabel.accessibilityLabel = messageAccessibilityLabel;
+  }
+}
+
+- (void)setAccessoryView:(UIView *)accessoryView {
+  if (_accessoryView == accessoryView) {
+    return;
+  }
+
+  _accessoryView = accessoryView;
+
+  if (self.alertView) {
+    self.alertView.accessoryView = accessoryView;
+    [self setAccessoryViewNeedsLayout];
+  }
+}
+
+- (void)setAccessoryViewNeedsLayout {
+  [self.alertView setNeedsLayout];
+  self.preferredContentSize =
+      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
 - (NSArray<MDCAlertAction *> *)actions {
@@ -305,6 +346,20 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.mdc_dialogPresentationController.dialogShadowColor = shadowColorCopy;
 }
 
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  if (@available(iOS 11.0, *)) {
+    if (self.viewLoaded) {
+      self.alertView.titleLabel.adjustsFontForContentSizeCategory =
+          adjustsFontForContentSizeCategory;
+      // TODO(https://github.com/material-components/material-components-ios/issues/8673): Add
+      // Buttons
+      // TODO(https://github.com/material-components/material-components-ios/issues/8671): Add
+      // Message
+    }
+  }
+}
+
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
@@ -396,11 +451,20 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setupAlertView {
   self.alertView.titleLabel.text = self.title;
+  if (@available(iOS 10.0, *)) {
+    self.alertView.titleLabel.adjustsFontForContentSizeCategory =
+        self.adjustsFontForContentSizeCategory;
+  }
   self.alertView.messageLabel.text = self.message;
+  self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
+  self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
+  // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
+  // adjustsFontForContentSizeCategory for messageLabel
+  self.alertView.accessoryView = self.accessoryView;
   self.alertView.titleFont = self.titleFont;
   self.alertView.messageFont = self.messageFont;
-  self.alertView.titleColor = self.titleColor;
-  self.alertView.messageColor = self.messageColor;
+  self.alertView.titleColor = self.titleColor ?: UIColor.blackColor;
+  self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   if (self.backgroundColor) {
@@ -435,19 +499,26 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)viewDidLayoutSubviews {
-  // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
-  if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
-      CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
-    CGSize currentPreferredContentSize = self.preferredContentSize;
-    CGSize calculatedPreferredContentSize = [self.alertView
-        calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
+  // Recalculate preferredContentSize and potentially the view frame.
+  BOOL boundsSizeChanged =
+      !CGSizeEqualToSize(CGRectStandardize(self.view.bounds).size, _previousLayoutSize);
 
-    if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
-      // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
-      self.preferredContentSize = calculatedPreferredContentSize;
-    }
+  // UIContentSizeCategoryAdjusting behavior only updates fonts after -viewWillLayoutSubviews and
+  // before -viewDidLayoutSubviews. Because `preferredContentSize` may have changed as a result,
+  // it is necessary to check if it changed here and possibly require a second layout pass.
+  CGSize currentPreferredContentSize = self.preferredContentSize;
+  CGSize calculatedPreferredContentSize = [self.alertView
+      calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
+  BOOL preferredContentSizeChanged =
+      !CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize);
+  if (preferredContentSizeChanged) {
+    // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
+    self.preferredContentSize = calculatedPreferredContentSize;
+  }
 
+  if (preferredContentSizeChanged || boundsSizeChanged) {
     _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
+    [self.view setNeedsLayout];
   }
 }
 

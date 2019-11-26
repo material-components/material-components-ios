@@ -34,9 +34,9 @@
   CGFloat boundsHeight = CGRectGetHeight(standardizedFrame);
 
   NSArray *pageColors = @[
-    [UIColor colorWithWhite:(CGFloat)0.9 alpha:1],
-    [UIColor colorWithWhite:(CGFloat)0.8 alpha:1],
-    [UIColor colorWithWhite:(CGFloat)0.7 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.3 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
   ];
 
   // Scroll view configuration
@@ -61,7 +61,7 @@
     CGFloat offsetMultiplier = [self offsetMultiplierForPage:i numberOfPages:pageColors.count];
     page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)offsetMultiplier + 1];
     page.font = [UIFont systemFontOfSize:50];
-    page.textColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.8];
+    page.textColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =
@@ -79,6 +79,8 @@
   _pageControl = [[MDCPageControl alloc] initWithFrame:CGRectZero];
   _pageControl.numberOfPages = pageColors.count;
   _pageControl.respectsUserInterfaceLayoutDirection = YES;
+  _pageControl.currentPageIndicatorTintColor = UIColor.whiteColor;
+  _pageControl.pageIndicatorTintColor = UIColor.lightGrayColor;
 
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)

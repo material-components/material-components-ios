@@ -12,24 +12,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
-@implementation ChipsTypicalUseViewController {
-  MDCChipView *_sizingChip;
-}
+#import "supplemental/ChipsExampleAssets.h"
+
+@interface ChipModel : NSObject
+@property(nonatomic, strong) NSString *title;
+@property(nonatomic, assign) BOOL showProfilePic;
+@property(nonatomic, assign) BOOL showDoneImage;
+@property(nonatomic, assign) BOOL showDeleteButton;
+@end
+
+@interface ChipsTypicalUseViewController
+    : UICollectionViewController <UICollectionViewDelegateFlowLayout>
+@property(nonatomic, strong) NSArray<ChipModel *> *model;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic) BOOL popRecognizerDelaysTouches;
+@end
+
+static ChipModel *MakeModel(NSString *title,
+                            BOOL showProfilePic,
+                            BOOL showDoneImage,
+                            BOOL showDeleteButton) {
+  ChipModel *chip = [[ChipModel alloc] init];
+  chip.title = title;
+  chip.showProfilePic = showProfilePic;
+  chip.showDoneImage = showDoneImage;
+  chip.showDeleteButton = showDeleteButton;
+  return chip;
+};
+
+@implementation ChipModel
+@end
+
+@implementation ChipsTypicalUseViewController
 
 - (instancetype)init {
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  layout.estimatedItemSize = [cell intrinsicContentSize];
 
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    _sizingChip = [[MDCChipView alloc] init];
-    _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
     self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.model = @[
+      MakeModel(@"Chip", NO, YES, NO),
+      MakeModel(@"Chip", YES, NO, NO),
+      MakeModel(@"Chip", YES, NO, YES),
+      MakeModel(@"Chip", NO, NO, YES),
+      MakeModel(@"Chip", NO, YES, YES),
+      MakeModel(@"Chip", YES, YES, YES),
+    ];
   }
   return self;
 }
@@ -42,8 +77,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  [_sizingChip applyThemeWithScheme:self.containerScheme];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -78,6 +111,21 @@
   [self updateClearButton];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  self.popRecognizerDelaysTouches =
+      self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan;
+  self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+
+  self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan =
+      self.popRecognizerDelaysTouches;
+}
+
 - (void)contentSizeCategoryDidChange {
   [self.collectionView.collectionViewLayout invalidateLayout];
 }
@@ -101,15 +149,21 @@
   return self.model.count;
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                           cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
 
   ChipModel *model = self.model[indexPath.row];
-  [model apply:cell.chipView];
+
+  cell.chipView.enableRippleBehavior = YES;
+  cell.chipView.titleLabel.text = model.title;
+  cell.chipView.imageView.image = model.showProfilePic ? ChipsExampleAssets.faceImage : nil;
+  cell.chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
+  cell.chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
+
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
@@ -120,29 +174,17 @@
   [self updateClearButton];
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
-  _sizingChip.selected = [selectedPaths containsObject:indexPath];
+@end
 
-  ChipModel *model = self.model[indexPath.row];
-  [model apply:_sizingChip];
-  return [_sizingChip sizeThatFits:collectionView.bounds.size];
-}
+@implementation ChipsTypicalUseViewController (CatalogByConvention)
 
-- (NSArray *)model {
-  if (!_model) {
-    _model = @[
-      MakeModel(@"Chip", NO, YES, NO),
-      MakeModel(@"Chip", YES, NO, NO),
-      MakeModel(@"Chip", YES, NO, YES),
-      MakeModel(@"Chip", NO, NO, YES),
-      MakeModel(@"Chip", NO, YES, YES),
-      MakeModel(@"Chip", YES, YES, YES),
-    ];
-  }
-  return _model;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Chips" ],
+    @"description" : @"Chips are compact elements that represent an input, attribute, or action.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
 }
 
 @end

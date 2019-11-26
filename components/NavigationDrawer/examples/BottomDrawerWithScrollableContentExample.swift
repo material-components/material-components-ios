@@ -38,8 +38,15 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
     bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
-    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                                   to: bottomAppBar)
+
+    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+
     view.addSubview(bottomAppBar)
   }
 
@@ -119,7 +126,6 @@ class DrawerContentWithScrollViewController: UIViewController,
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     let colorPick = indexPath.row % 2 == 0
-    print(indexPath.item)
     cell.backgroundColor = colorPick ? colorScheme.surfaceColor : colorScheme.primaryColorVariant
     return cell
   }

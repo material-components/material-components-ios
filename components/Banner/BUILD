@@ -50,6 +50,9 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Banner",
+        ":Theming",
+        "//components/AppBar",
+        "//components/AppBar:Theming",
         "//components/Buttons",
         "//components/Buttons:Theming",
         "//components/schemes/Color",
@@ -62,6 +65,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":Banner",
+        ":Theming",
         "//components/Buttons",
         "//components/schemes/Typography",
     ],

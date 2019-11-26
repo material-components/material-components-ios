@@ -88,6 +88,7 @@ mdc_examples_objc_library(
     deps = [
         ":ProgressView",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )

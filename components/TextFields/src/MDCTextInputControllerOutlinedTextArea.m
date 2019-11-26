@@ -38,6 +38,8 @@ static const CGFloat MDCTextInputTextFieldOutlinedTextAreaHalfPadding = 8;
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
 static const CGFloat MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment = 1;
+static const NSUInteger MDCTextInputTextFieldOutlinedTextAreaMinimumLines = 5;
+static const BOOL MDCTextInputTextFieldOutlinedTextAreaExpandsOnOverflow = NO;
 
 #pragma mark - Class Properties
 
@@ -56,6 +58,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
            @"This design is meant for multi-line text fields only.");
   self = [super initWithTextInput:input];
   if (self) {
+    super.expandsOnOverflow = MDCTextInputTextFieldOutlinedTextAreaExpandsOnOverflow;
+    super.minimumLines = MDCTextInputTextFieldOutlinedTextAreaMinimumLines;
   }
   return self;
 }
@@ -101,8 +105,11 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
                                                                       // underlineLabelsOffset From super class.
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
-  UIEdgeInsets textInsets = [super textInsets:defaultInsets];
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
+    withSizeThatFitsWidthHint:(CGFloat)widthHint {
+  defaultInsets.left = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
+  defaultInsets.right = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
+  UIEdgeInsets textInsets = [super textInsets:defaultInsets withSizeThatFitsWidthHint:widthHint];
   textInsets.top = MDCTextInputTextFieldOutlinedTextAreaHalfPadding +
                    MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment +
                    MDCRint(self.textInput.placeholderLabel.font.lineHeight *
@@ -113,11 +120,9 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   // .bottom = underlineOffset + the half padding above the line but below the text field and any
   // space needed for the labels and / or line.
   // Legacy has an additional half padding here but this version does not.
-  CGFloat underlineOffset = [self underlineOffset];
+  CGFloat underlineOffset = [self underlineOffsetWithInsets:defaultInsets widthHint:widthHint];
 
   textInsets.bottom = underlineOffset;
-  textInsets.left = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
-  textInsets.right = MDCTextInputTextFieldOutlinedTextAreaFullPadding;
 
   return textInsets;
 }
@@ -146,9 +151,6 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
     return;
   }
 
-  ((UIView<MDCMultilineTextInput> *)self.textInput).expandsOnOverflow = NO;
-  ((UIView<MDCMultilineTextInput> *)self.textInput).minimumLines = 5;
-
   self.textInput.underline.alpha = 0;
 
   if (!self.placeholderTop) {
@@ -166,7 +168,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 }
 
 // The measurement from bottom to underline center Y.
-- (CGFloat)underlineOffset {
+- (CGFloat)underlineOffsetWithInsets:(UIEdgeInsets)insets widthHint:(CGFloat)widthHint {
   // The amount of space underneath the underline depends on whether there is content in the
   // underline labels.
   CGFloat underlineLabelsOffset = 0;
@@ -175,6 +177,14 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   if (self.textInput.leadingUnderlineLabel.text.length) {
     underlineLabelsOffset =
         MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+    underlineLabelsOffset =
+        MAX(underlineLabelsOffset,
+            [MDCTextInputControllerBase
+                calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
+                                    givenTrailingLabel:self.textInput.trailingUnderlineLabel
+                                                insets:insets
+                                             widthHint:widthHint] *
+                underlineLabelsOffset);
   }
   if (self.textInput.trailingUnderlineLabel.text.length || self.characterCountMax) {
     underlineLabelsOffset =

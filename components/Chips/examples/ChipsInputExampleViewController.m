@@ -12,24 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/ChipsExamplesSupplemental.h"
-
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTextFields.h"
 
-@interface ChipsInputExampleViewController () <MDCChipFieldDelegate>
+@interface ChipsInputExampleViewController : UIViewController <MDCChipFieldDelegate>
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic, strong) MDCChipField *chipField;
 @end
 
-@implementation ChipsInputExampleViewController {
-  MDCChipField *_chipField;
-}
+@implementation ChipsInputExampleViewController
 
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -45,28 +43,46 @@
     self.view.backgroundColor = colorScheme.backgroundColor;
   }
 
-  _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
-  _chipField.delegate = self;
-  _chipField.textField.placeholderLabel.text = @"This is a chip field.";
+  self.chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
+  self.chipField.delegate = self;
+  self.chipField.textField.placeholderLabel.text = @"This is a chip field.";
+  self.chipField.textField.mdc_adjustsFontForContentSizeCategory = YES;
   if (self.containerScheme.colorScheme) {
-    _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
+    self.chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
   } else {
     MDCSemanticColorScheme *colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _chipField.backgroundColor = colorScheme.surfaceColor;
+    self.chipField.backgroundColor = colorScheme.surfaceColor;
   }
-  [self.view addSubview:_chipField];
+  [self.view addSubview:self.chipField];
+
+  // When Dynamic Type changes we need to invalidate the collection view layout in order to let the
+  // cells change their dimensions because our chips use manual layout.
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)contentSizeCategoryDidChange:(NSNotification *)notification {
+  [self updateLayout];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  [self updateLayout];
+}
+
+- (void)updateLayout {
   CGRect frame = CGRectInset(self.view.bounds, 10, 10);
   if (@available(iOS 11.0, *)) {
     frame = UIEdgeInsetsInsetRect(frame, self.view.safeAreaInsets);
   }
-  frame.size = [_chipField sizeThatFits:frame.size];
-  _chipField.frame = frame;
+  MDCChipView *chip = self.chipField.chips.lastObject;
+  [self recomputeChipFieldChipHeightWithChip:chip];
+  frame.size = [self.chipField sizeThatFits:frame.size];
+  self.chipField.frame = frame;
 }
 
 - (void)chipFieldHeightDidChange:(MDCChipField *)chipField {
@@ -80,9 +96,30 @@
   } else {
     [chip applyThemeWithScheme:self.containerScheme];
   }
-  [chip sizeToFit];
+  chip.mdc_adjustsFontForContentSizeCategory = YES;
+  [self recomputeChipFieldChipHeightWithChip:chip];
+
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);
   chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0);
+}
+
+- (void)recomputeChipFieldChipHeightWithChip:(MDCChipView *)chip {
+  [chip sizeToFit];
+  if (chip.frame.size.height > 0) {
+    self.chipField.chipHeight = chip.frame.size.height;
+  }
+}
+
+@end
+
+@implementation ChipsInputExampleViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Chips", @"Input" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
 }
 
 @end

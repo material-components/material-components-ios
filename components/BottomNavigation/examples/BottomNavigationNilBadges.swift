@@ -13,14 +13,18 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialBottomNavigation
+import MaterialComponents.MaterialBottomNavigation_Theming
+import MaterialComponents.MaterialContainerScheme
 
-class BottomNavigationNilBadges : UIViewController {
+class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelegate {
 
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
+  let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
+  let tabBarItem2 = UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -35,8 +39,9 @@ class BottomNavigationNilBadges : UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
+    bottomNavBar.delegate = self
 
     // Always show bottom navigation bar item titles.
     bottomNavBar.titleVisibility = .always
@@ -45,22 +50,19 @@ class BottomNavigationNilBadges : UIViewController {
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.
-    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
-    let tabBarItem2 =
-      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
+    tabBarItem1.accessibilityValue = "New items"
+
     bottomNavBar.items = [ tabBarItem1, tabBarItem2 ]
 
     // Select a bottom navigation bar item.
-    bottomNavBar.selectedItem = tabBarItem2;
+    bottomNavBar.selectedItem = tabBarItem2
 
     // Test that
-    tabBarItem1.badgeValue = "";
-    tabBarItem2.badgeValue = nil;
+    tabBarItem1.badgeValue = ""
+    tabBarItem2.badgeValue = nil
 
     // Theme the bottom navigation bar.
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar);
-
+    bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
   }
   
   func layoutBottomNavBar() {
@@ -90,6 +92,16 @@ class BottomNavigationNilBadges : UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+  func bottomNavigationBar(
+    _ bottomNavigationBar: MDCBottomNavigationBar,
+    didSelect item: UITabBarItem
+  ) {
+    if (item == tabBarItem1) {
+      tabBarItem1.badgeValue = nil
+      tabBarItem1.accessibilityValue = ""
+    }
   }
 }
 

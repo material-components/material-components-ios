@@ -37,6 +37,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
 
 @property(nonatomic) ShadowElevationsPointsLabel *paper;
 @property(nonatomic) UILabel *elevationLabel;
+@property(nonatomic) MDCSlider *sliderControl;
 
 @end
 
@@ -57,17 +58,19 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
     [self addSubview:_elevationLabel];
 
     // Add slider control
-    MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:CGRectZero];
-    sliderControl.numberOfDiscreteValues = (NSUInteger)kShadowElevationsMax + 1;
-    sliderControl.maximumValue = kShadowElevationsMax;
-    sliderControl.value = kShadowElevationsDefault;
-    sliderControl.delegate = self;
-    sliderControl.translatesAutoresizingMaskIntoConstraints = NO;
-    [sliderControl addTarget:self
-                      action:@selector(sliderValueChanged:)
-            forControlEvents:UIControlEventValueChanged];
-    [self addSubview:sliderControl];
-    [NSLayoutConstraint constraintWithItem:sliderControl
+    self.sliderControl = [[MDCSlider alloc] initWithFrame:CGRectZero];
+    self.sliderControl.numberOfDiscreteValues = (NSUInteger)kShadowElevationsMax + 1;
+    self.sliderControl.maximumValue = kShadowElevationsMax;
+    self.sliderControl.value = kShadowElevationsDefault;
+    self.sliderControl.delegate = self;
+    self.sliderControl.translatesAutoresizingMaskIntoConstraints = NO;
+    self.sliderControl.accessibilityLabel = @"Displayed shadow elevation";
+    [self.sliderControl addTarget:self
+                           action:@selector(sliderValueChanged:)
+                 forControlEvents:UIControlEventValueChanged];
+    [self addSubview:self.sliderControl];
+
+    [NSLayoutConstraint constraintWithItem:self.sliderControl
                                  attribute:NSLayoutAttributeTop
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:_elevationLabel
@@ -75,7 +78,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
                                 multiplier:1.0
                                   constant:kShadowElevationsElementSpace]
         .active = YES;
-    [NSLayoutConstraint constraintWithItem:sliderControl
+    [NSLayoutConstraint constraintWithItem:self.sliderControl
                                  attribute:NSLayoutAttributeHeight
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:nil
@@ -83,7 +86,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
                                 multiplier:1.0
                                   constant:kShadowElevationsSliderFrameHeight]
         .active = YES;
-    [NSLayoutConstraint constraintWithItem:sliderControl
+    [NSLayoutConstraint constraintWithItem:self.sliderControl
                                  attribute:NSLayoutAttributeLeftMargin
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self
@@ -91,7 +94,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
                                 multiplier:1.0
                                   constant:kShadowElevationsSliderFrameMargin]
         .active = YES;
-    [NSLayoutConstraint constraintWithItem:sliderControl
+    [NSLayoutConstraint constraintWithItem:self.sliderControl
                                  attribute:NSLayoutAttributeRightMargin
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self
@@ -118,7 +121,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
     [NSLayoutConstraint constraintWithItem:_paper
                                  attribute:NSLayoutAttributeTop
                                  relatedBy:NSLayoutRelationEqual
-                                    toItem:sliderControl
+                                    toItem:self.sliderControl
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1.0
                                   constant:kShadowElevationsElementSpace]
@@ -159,13 +162,27 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
 }
 
 - (void)sliderValueChanged:(MDCSlider *)slider {
-  MDCShadowElevation points = MDCRound(slider.value);
+  MDCShadowElevation points = [self shadowElevationFromSliderValue:slider.value];
   self.paper.text = [NSString stringWithFormat:@"%ld pt", (long)points];
   self.paper.elevation = points;
   self.elevationLabel.text = [[self class] elevationStringForShadowElevationValue:points];
 }
 
+- (NSString *)slider:(MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value {
+  MDCShadowElevation points = [self shadowElevationFromSliderValue:slider.value];
+  NSString *elevationName = [[self class] elevationStringForShadowElevationValue:points];
+  if (elevationName.length > 0) {
+    return elevationName;
+  } else {
+    return [NSString stringWithFormat:@"Unlabeled elevation of %@", @((NSInteger)points)];
+  }
+}
+
 #pragma mark - Internal methods
+
+- (MDCShadowElevation)shadowElevationFromSliderValue:(CGFloat)sliderValue {
+  return MDCRound(sliderValue);
+}
 
 + (NSString *)elevationStringForShadowElevationValue:(MDCShadowElevation)shadowElevationValue {
   NSString *elevationString = kDefaultShadowElevationLabelString;

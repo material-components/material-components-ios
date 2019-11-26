@@ -257,10 +257,19 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  self.sizeThatFitsWidthHint = size.width;
   CGSize sizeThatFits = [self intrinsicContentSize];
-  sizeThatFits.width = size.width;
-
+  sizeThatFits.width = self.sizeThatFitsWidthHint;
+  self.sizeThatFitsWidthHint = 0;
   return sizeThatFits;
+}
+
+- (void)setSizeThatFitsWidthHint:(CGFloat)sizeThatFitsWidthHint {
+  self.fundament.sizeThatFitsWidthHint = sizeThatFitsWidthHint;
+}
+
+- (CGFloat)sizeThatFitsWidthHint {
+  return self.fundament.sizeThatFitsWidthHint;
 }
 
 - (void)layoutSubviews {
@@ -606,8 +615,9 @@
 
 - (void)setFont:(UIFont *)font {
   if (self.textView.font != font) {
+    UIFont *previousFont = self.textView.font;
     [self.textView setFont:font];
-    [_fundament didSetFont];
+    [_fundament didSetFont:previousFont];
   }
 }
 
@@ -770,6 +780,23 @@
   }
 
   return value;
+}
+
+- (NSString *)accessibilityLabel {
+  NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
+  if ([super accessibilityLabel].length > 0) {
+    [accessibilityStrings addObject:[super accessibilityLabel]];
+  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+  }
+  if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+  }
+  if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
+  }
+  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
+                                        : nil;
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {

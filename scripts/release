@@ -142,6 +142,7 @@ cut_release() {
   fi
   echo $branch_message
   git checkout -b release-candidate $branch
+  git checkout origin/stable -- .gitattributes
 
   touch "$rootdir/CHANGELOG.md"
   if ! grep "# #develop#" "$rootdir/CHANGELOG.md" >> /dev/null; then
@@ -307,8 +308,11 @@ merge_release() {
     git checkout develop
   fi
   git rebase origin/develop
-  git merge --no-ff release-candidate --no-edit
-
+  # The following lines will only create one commit thanks to the --no-commit argument here.
+  git merge --no-ff --no-commit release-candidate --no-edit
+  git reset HEAD .gitattributes
+  git checkout -- .gitattributes
+  git commit -m "merged release-candidate"
   git branch -D release-candidate
 
   git checkout stable
@@ -341,7 +345,7 @@ publish_release() {
     echo
     echo "And then get an auth token by running:"
     echo
-    echo "    gh user --whoami"
+    echo "    gh user"
     echo
     exit 1
   fi

@@ -193,24 +193,6 @@
 /* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
 
-/**
- The font used by the button's @c title for @c state.
-
- @param state The state.
- @return The font.
- */
-- (nullable UIFont *)titleFontForState:(UIControlState)state;
-
-/**
- The font used by the button's @c title.
-
- If left unset or reset to nil for a given state, then a default font is used.
-
- @param font The font.
- @param state The state.
- */
-- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
-
 /** Sets the enabled state with optional animation. */
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
 
@@ -334,22 +316,38 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - Deprecated
+#pragma mark - To Be Deprecated
 
 /**
- This property sets/gets the title color for UIControlStateNormal.
+ Enables the state-based font behavior of the receiver.
+
+ If @c NO, then @c titleFont:forState: and @c setTitleFont:forState: have no effect.  Defaults to
+ @c YES.
+
+ @note This API will eventually be deprecated and removed.
  */
-@property(nonatomic, strong, nullable)
-    UIColor *customTitleColor UI_APPEARANCE_SELECTOR __deprecated_msg(
-        "Use setTitleColor:forState: instead");
+@property(nonatomic, assign) BOOL enableTitleFontForState;
 
-@property(nonatomic)
-    BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
-        ;
+/**
+ The font used by the button's @c title.
 
-@property(nonatomic) BOOL shouldCapitalizeTitle __deprecated_msg("Use uppercaseTitle instead.");
+ If left unset or reset to nil for a given state, then a default font is used.
 
-@property(nonatomic, strong, nullable)
-    UIColor *underlyingColor __deprecated_msg("Use underlyingColorHint instead.");
+ @param font The font.
+ @param state The state.
+
+ @note This API will eventually be deprecated and removed.
+ */
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ The font used by the button's @c title for @c state.
+
+ @param state The state.
+ @return The font.
+
+ @note This API will eventually be deprecated and removed.
+ */
+- (nullable UIFont *)titleFontForState:(UIControlState)state;
 
 @end

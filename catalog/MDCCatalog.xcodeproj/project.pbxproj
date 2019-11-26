@@ -318,13 +318,13 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = EQHXZ8M8AV;
 						LastSwiftMigration = 0810;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					664524B21C6BA62A001ADBF8 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = EQHXZ8M8AV;
 						LastSwiftMigration = 0810;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -423,7 +423,6 @@
 				"${BUILT_PRODUCTS_DIR}/MaterialComponentsSnapshotTests/MaterialComponentsSnapshotTests.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
-				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -437,7 +436,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsSnapshotTests.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -591,11 +589,13 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
 				INFOPLIST_FILE = MDCActionExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog.MDCActionExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Google Development";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 			};
@@ -611,11 +611,13 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
 				INFOPLIST_FILE = MDCActionExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.google.mdc-catalog.MDCActionExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Google Development";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 			};
@@ -735,11 +737,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
 				INFOPLIST_FILE = MDCCatalog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Google Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "MDCCatalog/MDCCatalog-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -754,11 +758,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
 				INFOPLIST_FILE = MDCCatalog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCCatalog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Google Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "MDCCatalog/MDCCatalog-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};

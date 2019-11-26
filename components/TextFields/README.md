@@ -38,6 +38,7 @@ For more information on text field styles, and animated images of each style in 
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerUnderline">MDCTextInputControllerUnderline</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html">MDCMultilineTextField</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">MDCTextField</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputBorderView.html">MDCTextInputBorderView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputControllerBase.html">MDCTextInputControllerBase</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputControllerFullWidth.html">MDCTextInputControllerFullWidth</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputUnderlineView.html">MDCTextInputUnderlineView</a></li>

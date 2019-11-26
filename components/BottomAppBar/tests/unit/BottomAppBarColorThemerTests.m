@@ -40,7 +40,10 @@
       [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.cyanColor];
 
   // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCBottomAppBarColorThemer applyColorScheme:scheme toBottomAppBarView:self.bottomAppBar];
+#pragma clang diagnostic pop
 
   // Then
   XCTAssertEqualObjects(self.bottomAppBar.barTintColor, scheme.primaryColor);
@@ -56,8 +59,11 @@
   colorScheme.onSurfaceColor = UIColor.purpleColor;
 
   // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:colorScheme
                                                       toBottomAppBarView:self.bottomAppBar];
+#pragma clang diagnostic pop
 
   // Then
   UIColor *barItemTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6];

@@ -22,6 +22,44 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 
+static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
+  static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    scalingCurve = @{
+      UIContentSizeCategoryExtraSmall : @99,
+      UIContentSizeCategorySmall : @98,
+      UIContentSizeCategoryMedium : @97,
+      UIContentSizeCategoryLarge : @96,
+      UIContentSizeCategoryExtraLarge : @95,
+      UIContentSizeCategoryExtraExtraLarge : @94,
+      UIContentSizeCategoryExtraExtraExtraLarge : @93,
+      UIContentSizeCategoryAccessibilityMedium : @92,
+      UIContentSizeCategoryAccessibilityLarge : @91,
+      UIContentSizeCategoryAccessibilityExtraLarge : @90,
+      UIContentSizeCategoryAccessibilityExtraExtraLarge : @89,
+      UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @88
+    };
+  });
+  return scalingCurve;
+}
+
+/** A test fake window that allows overriding its @c traitCollection. */
+@interface MDCAlertControllerCustomTraitCollectionTestsWindowFake : UIWindow
+
+/** Set to override the value of @c traitCollection. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation MDCAlertControllerCustomTraitCollectionTestsWindowFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 /**
  A @c MDCAlertController test fake to override the @c traitCollection to test for dynamic type.
  */
@@ -78,17 +116,17 @@
                                                        }];
   [self.alertController addAction:fakeAction];
   MDCFontScaler *titleFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
-  UIFont *titleFont = [UIFont systemFontOfSize:14];
+  UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:14];
   titleFont = [titleFontScaler scaledFontWithFont:titleFont];
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   self.alertController.titleFont = titleFont;
   MDCFontScaler *messageFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody2];
-  UIFont *messageFont = [UIFont systemFontOfSize:15];
+  UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:14];
   messageFont = [messageFontScaler scaledFontWithFont:messageFont];
   messageFont = [messageFont mdc_scaledFontAtDefaultSize];
   self.alertController.messageFont = messageFont;
   MDCFontScaler *buttonFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleButton];
-  UIFont *buttonFont = [UIFont systemFontOfSize:15];
+  UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:14];
   buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
   self.alertController.buttonFont = buttonFont;
@@ -122,203 +160,232 @@
   self.alertController.traitCollectionOverride = traitCollection;
 }
 
-- (void)testScaledFontDynamicTypeForContentSizeCategorySmall {
+#pragma mark - Dynamic Type
+
+/** Tests the basic behavior when the combination of fonts and settings don't allow font scaling. */
+- (void)testSystemFontNotScaledWhenScaledFontUnavailableForContentSizeExtraSmall {
   // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategorySmall];
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-- (void)testScaledFontDynamicTypeForContentSizeCategoryMedium {
+/** Tests the basic behavior when the combination of fonts and settings don't allow font scaling. */
+- (void)testSystemFontNotScaledWhenScaledFontUnavailableForContentSizeAXXXL {
   // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryMedium];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryLarge {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraLarge {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraExtraLarge {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraExtraExtraLarge {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraExtraExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityMedium {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityMedium];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityLarge {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraLarge {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraLarge {
-  // Given
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
-  // Given
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
   [self
       setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraSmallAndLegacyEnabled {
+/**
+ Tests the original MDCTypography behavior for Dynamic Type.
+
+ @note The output depends on the host simulator and is equal to
+       @c testSystemFontScaledWhenScaledFontUnavailableForContentSizeAXXXL as a result.
+ */
+- (void)testSystemFontScaledWhenScaledFontUnavailableForContentSizeExtraSmall {
   // Given
+
+  // Although the font is initialized with point size 1, the MDCTypography behavior will select a
+  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which is
+  // not 1.
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
   [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-- (void)
-    testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLargeAndLegacyEnabled {
+/**
+ Tests the original MDCTypography behavior for Dynamic Type.
+
+ @note The output depends on the host simulator and is equal to
+       @c testSystemFontScaledWhenScaledFontUnavailableForContentSizeExtraSmall as a result.
+ */
+- (void)testSystemFontScaledWhenScaledFontUnavailableForContentSizeAXXXL {
   // Given
+
+  // Although the font is initialized with point size 1, the MDCTypography behavior will select a
+  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which is
+  // not 1.
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
   [self
       setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
+  [self.alertController loadViewIfNeeded];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
+
+/** Tests behavior when a font generated from a FontScaler is provided. */
+- (void)testFontScalerFontScaledForContentSizeExtraSmall {
+  // Given
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  // Simulates a font scaler by providing scaling curve dictionary.
+  originalFont.mdc_scalingCurve = CustomScalingCurve();
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
+
+  // When
+  [self.alertController loadViewIfNeeded];
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+/** Tests behavior when a font generated from a FontScaler is provided. */
+- (void)testFontScalerFontScaledForContentSizeAXXXL {
+  // Given
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
+  // Simulates a font scaler by providing scaling curve dictionary.
+  originalFont.mdc_scalingCurve = CustomScalingCurve();
+  self.alertController.messageFont = originalFont;
+  self.alertController.titleFont = originalFont;
+  self.alertController.buttonFont = originalFont;
+  [self
+      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+
+  // When
+  [self.alertController loadViewIfNeeded];
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+/**
+ Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a larger size when
+ the preferred content size category increases.
+ */
+- (void)testAdjustsFontForContentSizeUpscalesUIFontMetricsFontsForSizeCategoryAXXXL {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UITraitCollection *extraSmallTraits = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    originalFont = [bodyMetrics scaledFontForFont:originalFont
+                    compatibleWithTraitCollection:extraSmallTraits];
+    self.alertController.titleFont = originalFont;
+    self.alertController.adjustsFontForContentSizeCategory = YES;
+    [self.alertController loadViewIfNeeded];
+
+    // The initial size is calculated without constraints, so start the view bounds there.
+    CGSize alertSize = self.alertController.preferredContentSize;
+    self.alertController.view.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+
+    // Create a window so the Alert's view can inherit the trait environment.
+    MDCAlertControllerCustomTraitCollectionTestsWindowFake *window =
+        [[MDCAlertControllerCustomTraitCollectionTestsWindowFake alloc] init];
+    [window makeKeyWindow];
+    window.hidden = NO;
+    [window addSubview:self.alertController.view];
+
+    // When
+    window.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    [window traitCollectionDidChange:nil];
+    // Recalculates the preferredContentSize of the AlertController.
+    [self.alertController.view layoutIfNeeded];
+    alertSize = self.alertController.preferredContentSize;
+    window.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+    self.alertController.view.frame = window.bounds;
+
+    // Then
+    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
+    [window layoutIfNeeded];
+    [self snapshotVerifyView:window];
+  }
+}
+
+/**
+ Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a smaller size
+ when the preferred content size category decreases.
+ */
+- (void)testAdjustsFontForContentSizeDownscalesUIFontMetricsFontsForSizeCategoryXS {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UITraitCollection *aXXXLTraits =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    originalFont = [bodyMetrics scaledFontForFont:originalFont
+                    compatibleWithTraitCollection:aXXXLTraits];
+    self.alertController.titleFont = originalFont;
+    self.alertController.adjustsFontForContentSizeCategory = YES;
+    [self.alertController loadViewIfNeeded];
+
+    // The initial size is calculated without constraints, so start the view bounds there.
+    CGSize alertSize = self.alertController.preferredContentSize;
+    self.alertController.view.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+
+    // Create a window so the Alert's view can inherit the trait environment.
+    MDCAlertControllerCustomTraitCollectionTestsWindowFake *window =
+        [[MDCAlertControllerCustomTraitCollectionTestsWindowFake alloc] init];
+    [window makeKeyWindow];
+    window.hidden = NO;
+    [window addSubview:self.alertController.view];
+
+    // When
+    window.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    [window traitCollectionDidChange:nil];
+    // Recalculates the preferredContentSize of the AlertController.
+    [self.alertController.view layoutIfNeeded];
+    alertSize = self.alertController.preferredContentSize;
+    window.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+    self.alertController.view.frame = window.bounds;
+
+    // Then
+    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
+    [window layoutIfNeeded];
+    [self snapshotVerifyView:window];
+  }
+}
+
+#pragma mark - Dynamic Color
 
 - (void)testDynamicColorSupport {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)

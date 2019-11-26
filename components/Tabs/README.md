@@ -301,15 +301,15 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 ### Theming Extensions
 
- `MDCTabBar` supports Material Theming using a Container Scheme.
+`MDCTabBar` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of a MDCTabBar, which are the Primary Theme
 and the Surface Theme.
 
- <!--<div class="material-code-render" markdown="1">-->
+<!--<div class="material-code-render" markdown="1">-->
 
- #### Swift
+#### Swift
 
- ```swift
+```swift
 // Import the Tabs Theming Extensions module
 import MaterialComponents.MaterialTabs_MaterialTheming
  ...
@@ -321,9 +321,9 @@ tabBar.applyPrimaryTheme(withScheme: containerScheme)
 tabBar.applySurfaceTheme(withScheme: containerScheme)
 ```
 
- #### Objective-C
+#### Objective-C
 
- ```objc
+```objc
 // Import the Tabs Theming Extensions header
 #import <MaterialComponents/MaterialTabBar+MaterialTheming.h>
  ...
@@ -402,6 +402,13 @@ Subclassing is not supported by `MDCTabBarView`. Any requirements that you have
 for Material Tabs that are not met by the public APIs should be filed as a
 feature request or bug against `MDCTabBarView`.
 
+#### Selected Item Behavior
+
+`MDCTabBarView` does not automatically mark any item as *selected* when the
+`items` array is set, unless the previously-selected item is in the new
+`items` array.  This is a change from `MDCTabBar`, but ensures that the view
+and its APIs present equivalent information.
+
 #### Colors, Fonts, and Theming
 
 To set the image tint colors, use `- setImageTintColor:forState:`. The
@@ -455,6 +462,7 @@ subclass conforming to the `MDCTabBarItemCustomViewing` protocol is provided as
 `MDCTabBarItem`.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 ##### Swift
 ```swift
 let customView = MyCustomTabView()

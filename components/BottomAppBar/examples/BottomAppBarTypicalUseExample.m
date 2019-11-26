@@ -82,8 +82,18 @@
   [self commonBottomBarSetup];
 
   [self.bottomBarView.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
-  [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:self.colorScheme
-                                                      toBottomAppBarView:self.bottomBarView];
+
+  self.bottomBarView.barTintColor = self.colorScheme.surfaceColor;
+  UIColor *barItemTintColor =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6];
+  self.bottomBarView.leadingBarItemsTintColor = barItemTintColor;
+  self.bottomBarView.trailingBarItemsTintColor = barItemTintColor;
+  [self.bottomBarView.floatingButton setBackgroundColor:self.colorScheme.primaryColor
+                                               forState:UIControlStateNormal];
+  [self.bottomBarView.floatingButton setTitleColor:self.colorScheme.onPrimaryColor
+                                          forState:UIControlStateNormal];
+  [self.bottomBarView.floatingButton setImageTintColor:self.colorScheme.onPrimaryColor
+                                              forState:UIControlStateNormal];
 }
 
 - (void)didTapFloatingButton:(id)sender {

@@ -22,6 +22,7 @@
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialRipple.h"
+#import "MaterialTypography.h"
 
 #pragma mark - ThumbTrack constants
 
@@ -36,7 +37,6 @@ static const CGFloat kMinTouchSize = 48;
 static const CGFloat kThumbSlopFactor = (CGFloat)3.5;
 static const CGFloat kValueLabelHeight = 48;
 static const CGFloat kValueLabelWidth = (CGFloat)0.81 * kValueLabelHeight;
-static const CGFloat kValueLabelFontSize = 12;
 
 static UIColor *ValueLabelTextColorDefault() {
   return UIColor.whiteColor;
@@ -56,6 +56,10 @@ static UIColor *ThumbEnabledColorDefault() {
 
 static UIColor *InkColorDefault() {
   return [UIColor.blueColor colorWithAlphaComponent:kTrackOnAlpha];
+}
+
+static UIFont *ValueLabelFontDefault() {
+  return [[MDCTypography fontLoader] regularFontOfSize:12];
 }
 
 @implementation MDCDiscreteDotView
@@ -100,10 +104,22 @@ static UIColor *InkColorDefault() {
   if (_numDiscreteDots >= 2) {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
 
-    CGRect circleRect = CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.height);
+    // The "dot" is a circle that gradually transforms into a rounded rectangle.
+    // *   At 1- and 2-point track heights, use a circle filling the height.
+    // *   At 3- and 4-point track heights, use a vertically-centered circle 2 points tall.
+    // *   At greater track heights, create a vertically-centered rounded rectangle 2-points wide
+    //     and half the track height.
+    CGFloat trackHeight = CGRectGetHeight(self.bounds);
+    CGFloat dotHeight = MIN(2, trackHeight);
+    CGFloat dotWidth = MIN(2, trackHeight);
+    CGFloat circleOriginY = (trackHeight - dotHeight) / 2;
+    if (trackHeight > 4) {
+      dotHeight = trackHeight / 2;
+      circleOriginY = (trackHeight - dotHeight) / 2;
+    }
+    CGRect dotRect = CGRectMake(0, (trackHeight - dotHeight) / 2, dotWidth, dotHeight);
     // Increment within the bounds
-    CGFloat absoluteIncrement =
-        (self.bounds.size.width - self.bounds.size.height) / (_numDiscreteDots - 1);
+    CGFloat absoluteIncrement = (CGRectGetWidth(self.bounds) - dotWidth) / (_numDiscreteDots - 1);
     // Increment within 0..1
     CGFloat relativeIncrement = (CGFloat)1.0 / (_numDiscreteDots - 1);
 
@@ -118,8 +134,14 @@ static UIColor *InkColorDefault() {
       } else {
         [self.inactiveDotColor setFill];
       }
-      circleRect.origin.x = (i * absoluteIncrement);
-      CGContextFillEllipseInRect(contextRef, circleRect);
+      dotRect.origin.x = (i * absoluteIncrement);
+      // Clear any previous paths from the context
+      CGContextBeginPath(contextRef);
+      CGPathRef rectPathRef =
+          CGPathCreateWithRoundedRect(dotRect, dotWidth / 2, dotWidth / 2, NULL);
+      CGContextAddPath(contextRef, rectPathRef);
+      CGContextFillPath(contextRef);
+      CGPathRelease(rectPathRef);
     }
   }
 }
@@ -166,6 +188,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   BOOL _shouldDisplayRipple;
   MDCNumericValueLabel *_valueLabel;
   UIPanGestureRecognizer *_dummyPanRecognizer;
+  CGFloat _valueLabelHeight;
 
   // Attributes to handle interaction. To associate touches to previous touches, we keep a reference
   // to the current touch, since the system reuses the same memory address when sending subsequent
@@ -198,6 +221,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _filledTrackAnchorValue = kDefaultFilledTrackAnchorValue;
     _shouldDisplayInk = YES;
     _shouldDisplayRipple = YES;
+    _valueLabelHeight = kValueLabelHeight;
+    _discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
+    _discrete = YES;
 
     // Default thumb view.
     CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
@@ -240,6 +266,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _valueLabelTextColor = ValueLabelTextColorDefault();
     _trackOnTickColor = UIColor.blackColor;
     _trackOffTickColor = UIColor.blackColor;
+    _discreteValueLabelFont = ValueLabelFontDefault();
     [self setNeedsLayout];
 
     // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
@@ -332,6 +359,15 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self setNeedsLayout];
 }
 
+- (void)setTrackHeight:(CGFloat)trackHeight {
+  if (MDCCGFloatEqual(trackHeight, _trackHeight)) {
+    return;
+  }
+
+  _trackHeight = trackHeight;
+  [self setNeedsLayout];
+}
+
 - (void)setTrackOffColor:(UIColor *)trackOffColor {
   _trackOffColor = trackOffColor;
   [self setNeedsLayout];
@@ -384,19 +420,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return _thumbView.shadowColor;
 }
 
-- (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
-  if (_shouldDisplayDiscreteDots != shouldDisplayDiscreteDots) {
-    if (shouldDisplayDiscreteDots) {
+- (void)setDiscreteDotVisibility:(MDCThumbDiscreteDotVisibility)discreteDotVisibility {
+  if (_discreteDotVisibility != discreteDotVisibility) {
+    if (discreteDotVisibility == MDCThumbDiscreteDotVisibilityNever) {
+      [_discreteDots removeFromSuperview];
+      _discreteDots = nil;
+    } else if (!_discreteDots) {
       _discreteDots = [[MDCDiscreteDotView alloc] init];
       _discreteDots.alpha = 0.0;
       _discreteDots.activeDotColor = self.trackOnTickColor;
       _discreteDots.inactiveDotColor = self.trackOffTickColor;
+      _discreteDots.numDiscreteDots = _numDiscreteValues;
       [_trackView addSubview:_discreteDots];
-    } else {
-      [_discreteDots removeFromSuperview];
-      _discreteDots = nil;
     }
-    _shouldDisplayDiscreteDots = shouldDisplayDiscreteDots;
+    _discreteDotVisibility = discreteDotVisibility;
   }
 }
 
@@ -409,10 +446,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   if (shouldDisplayDiscreteValueLabel) {
     _valueLabel = [[MDCNumericValueLabel alloc]
-        initWithFrame:CGRectMake(0, 0, kValueLabelWidth, kValueLabelHeight)];
+        initWithFrame:CGRectMake(0, 0, kValueLabelWidth, _valueLabelHeight)];
     // Effectively 0, but setting it to 0 results in animation not happening
     _valueLabel.transform = CGAffineTransformMakeScale((CGFloat)0.001, (CGFloat)0.001);
-    _valueLabel.fontSize = kValueLabelFontSize;
     [self addSubview:_valueLabel];
   } else {
     [_valueLabel removeFromSuperview];
@@ -531,6 +567,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self setValue:_value];
 }
 
+- (void)setDiscrete:(BOOL)discrete {
+  _discrete = discrete;
+  [self setValue:_value];
+}
+
 - (void)setThumbRadius:(CGFloat)thumbRadius {
   _thumbRadius = thumbRadius;
   [self setDisplayThumbRadius:_thumbRadius];
@@ -585,6 +626,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [_rippleView removeFromSuperview];
     [self.touchController addInkView];
   }
+}
+
+- (void)setDiscreteValueLabelFont:(UIFont *)discreteValueLabelFont {
+  _discreteValueLabelFont = discreteValueLabelFont ?: ValueLabelFontDefault();
+  _valueLabel.font = _discreteValueLabelFont;
+  [self setNeedsLayout];
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _valueLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+}
+
+- (BOOL)adjustsFontForContentSizeCategory {
+  return _valueLabel.adjustsFontForContentSizeCategory;
 }
 
 #pragma mark - MDCInkTouchControllerDelegate
@@ -813,7 +868,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _discreteDots.frame = [_trackView bounds];
 
   // Make sure Numeric Value Label matches up
-  if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+  if (_shouldDisplayDiscreteValueLabel && _discrete && _numDiscreteValues > 1) {
     // Note that "center" here doesn't refer to the actual center, but rather the anchor point,
     // which is re-defined to be slightly below the bottom of the label
     _valueLabel.center = [self numericValueLabelPositionForValue:_value];
@@ -822,14 +877,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if ([_delegate respondsToSelector:@selector(thumbTrack:stringForValue:)]) {
       _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
       if (CGRectGetWidth(_valueLabel.frame) > 1) {
+        CGFloat scale = self.window.screen.scale > 0 ?: UIScreen.mainScreen.scale;
+        _valueLabelHeight =
+            MAX(kValueLabelHeight, MDCCeil(_valueLabel.font.lineHeight * scale) / scale);
+        CGFloat valueLabelWidth =
+            MAX((CGFloat)0.81 * _valueLabelHeight,
+                [_valueLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, _valueLabelHeight)].height);
         // Reset the size prior to pixel alignement since previous alignement likely increased it
         CGRect valueLabelFrame = CGRectMake(_valueLabel.frame.origin.x, _valueLabel.frame.origin.y,
-                                            kValueLabelWidth, kValueLabelHeight);
+                                            valueLabelWidth, _valueLabelHeight);
         // TODO(https://github.com/material-components/material-components-ios/issues/3326 ):
         //   Don't assign the frame AND the center (above). Do it only once to avoid extra layout
         //   passes. This is the cause of the visual glitch seen when coloring the "active" tick
         //   marks in the _discreteDots view.
         _valueLabel.frame = MDCRectAlignToScale(valueLabelFrame, [UIScreen mainScreen].scale);
+        _valueLabel.center = [self numericValueLabelPositionForValue:_value];
       }
     }
   }
@@ -875,15 +937,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  */
 - (void)updateViewsForThumbAfterMoveIsAnimated:(BOOL)animated
                                   withDuration:(NSTimeInterval)duration {
-  if (_shouldDisplayDiscreteDots) {
-    if (self.enabled && _isDraggingThumb) {
-      _discreteDots.alpha = 1.0;
-    } else {
-      _discreteDots.alpha = 0.0;
-    }
+  switch (self.discreteDotVisibility) {
+    case MDCThumbDiscreteDotVisibilityNever:
+      _discreteDots.alpha = 0;
+      break;
+    case MDCThumbDiscreteDotVisibilityAlways:
+      _discreteDots.alpha = 1;
+      break;
+    case MDCThumbDiscreteDotVisibilityWhenDragging:
+      _discreteDots.alpha = (self.enabled && _isDraggingThumb) ? 1 : 0;
+      break;
   }
 
-  if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+  if (_shouldDisplayDiscreteValueLabel && _discrete && _numDiscreteValues > 1) {
     if (self.enabled && _isDraggingThumb) {
       _valueLabel.transform = CGAffineTransformIdentity;
     } else {
@@ -905,7 +971,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   CGFloat radius;
   if (_isDraggingThumb) {
-    if (_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+    if (_shouldDisplayDiscreteValueLabel && _discrete && _numDiscreteValues > 1) {
       radius = 0;
     } else {
       radius = _thumbRadius + _trackHeight;
@@ -968,9 +1034,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
   radius = MAX(radius, _thumbRadius);
 
-  if ((!self.enabled && _disabledTrackHasThumbGaps) ||
+  BOOL isDisabledWithThumbGaps = !self.enabled && _disabledTrackHasThumbGaps;
+  BOOL isNotDiscreteWithValueLabelWhileDraggingThumb = !(
+      _shouldDisplayDiscreteValueLabel && _discrete && _numDiscreteValues > 1 && _isDraggingThumb);
+  BOOL isMinValueWithHollowThumbAndNotDiscreteWhileDraggingThumb =
       ([self isValueAtMinimum] && _thumbIsHollowAtStart &&
-       !(_shouldDisplayDiscreteValueLabel && _numDiscreteValues > 0 && _isDraggingThumb))) {
+       isNotDiscreteWithValueLabelWhileDraggingThumb);
+  if (isDisabledWithThumbGaps || isMinValueWithHollowThumbAndNotDiscreteWhileDraggingThumb) {
     // The reason we calculate this explicitly instead of just using _thumbView.frame is because
     // the thumb view might not be have the exact radius of _thumbRadius, depending on if the track
     // is disabled or if a user is dragging the thumb.
@@ -1066,7 +1136,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 }
 
 - (CGFloat)closestValueToTargetValue:(CGFloat)targetValue {
-  if (_numDiscreteValues < 2) {
+  if (!_discrete || _numDiscreteValues < 2) {
     return targetValue;
   }
   if (MDCCGFloatEqual(_minimumValue, _maximumValue)) {
@@ -1156,7 +1226,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat previousValue = _value;
   CGFloat value = [self valueForThumbPosition:CGPointMake(thumbPosition, 0)];
 
-  BOOL shouldAnimate = _numDiscreteValues > 1;
+  BOOL shouldAnimate = _discrete && _numDiscreteValues > 1;
   [self setValue:value
                    animated:shouldAnimate
       animateThumbAfterMove:YES
@@ -1244,7 +1314,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // Having two discrete values is a special case (e.g. the switch) in which any tap just flips the
   // value between the two discrete values, irrespective of the tap location.
   CGFloat value;
-  if (isTap && _numDiscreteValues == 2) {
+  if (isTap && _discrete && _numDiscreteValues == 2) {
     // If we are at the maximum then make it the minimum:
     // For switch like thumb tracks where there is only 2 values we ignore the position of the tap
     // and toggle between the minimum and maximum values.
@@ -1257,7 +1327,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [_delegate thumbTrack:self willAnimateToValue:value];
   }
 
-  if (isTap && _numDiscreteValues > 1 && _shouldDisplayDiscreteDots) {
+  if (isTap && _numDiscreteValues > 1 &&
+      ((_discreteDotVisibility == MDCThumbDiscreteDotVisibilityAlways) ||
+       (_discreteDotVisibility == MDCThumbDiscreteDotVisibilityWhenDragging))) {
     _discreteDots.alpha = 1.0;
   }
 

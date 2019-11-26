@@ -29,7 +29,8 @@
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.
  */
-@interface MDCAlertController : UIViewController <MDCElevatable, MDCElevationOverriding>
+@interface MDCAlertController
+    : UIViewController <MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
 
 /**
  Convenience constructor to create and return a view controller for displaying an alert to the user.
@@ -73,9 +74,13 @@
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
-// b/117717380: Will be deprecated
-/** The font applied to the button of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIFont *buttonFont;
+/**
+ The font applied to the button of Alert Controller.
+
+ @note This property is deprecated and will be removed in an upcoming release.
+ */
+@property(nonatomic, strong, nullable)
+    UIFont *buttonFont __deprecated_msg("Please use buttonForAction: to set button properties.");
 
 // b/117717380: Will be deprecated
 /** The color applied to the button title text of Alert Controller.*/
@@ -114,8 +119,43 @@
  */
 @property(nonatomic, nullable, copy) NSString *title;
 
+/**
+ A custom accessibility label for the title.
+
+ When @c nil the title accessibilityLabel will be set to the value of the @c title.
+ */
+@property(nonatomic, nullable, copy) NSString *titleAccessibilityLabel;
+
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
+
+/**
+ A custom accessibility label for the message.
+
+ When @c nil the message accessibilityLabel will be set to the value of the @c message.
+ */
+@property(nonatomic, nullable, copy) NSString *messageAccessibilityLabel;
+
+/**
+ Accessory view that contains custom UI.
+
+ The size of the accessory view is determined through Auto Layout. If your view uses manual layout,
+ you can either add a height constraint (e.g. `[view.heightAnchor constraintEqualToConstant:100]`),
+ or you can override
+ `-systemLayoutSizeFittingSize:withHorizontalFittingPriority:verticalFittingPriority:`.
+
+ If the content of the view changes and the height needs to be recalculated, call
+ `[alert setAccessoryViewNeedsLayout]`. Note that MDCAccessorizedAlertController will automatically
+ recalculate the accessory view's size if the alert's width changes.
+ */
+@property(nonatomic, strong, nullable) UIView *accessoryView;
+
+/**
+ Notifies the alert controller that the size of the accessory view needs to be recalculated due to
+ content changes. Note that MDCAccessorizedAlertController will automatically recalculate the
+ accessory view's size if the alert's width changes.
+ */
+- (void)setAccessoryViewNeedsLayout;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s

@@ -73,6 +73,7 @@ mdc_unit_test_objc_library(
         ":ColorThemer",
         ":Slider",
         ":private",
+        "//components/private/ThumbTrack",
     ],
 )
 
@@ -87,6 +88,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":Slider",
+        ":private",
     ],
 )
 

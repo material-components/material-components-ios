@@ -52,6 +52,7 @@ static NSString *const kMessageLongArabic =
 @property(nonatomic, strong) MDCAlertAction *actionMedium;
 @property(nonatomic, strong) MDCAlertAction *actionLow;
 @property(nonatomic, strong) UIImage *iconImage;
+@property(nonatomic, strong) UIView *accessoryView;
 @end
 
 @implementation MDCAlertControllerSnapshotTests
@@ -74,6 +75,8 @@ static NSString *const kMessageLongArabic =
                                            handler:nil];
   self.iconImage = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+  [self.accessoryView setBackgroundColor:[UIColor redColor]];
   self.alertController = [[MDCAlertController alloc] init];
   self.alertController.view.bounds = CGRectMake(0, 0, 300, 300);
   [self.alertController addAction:self.actionHigh];
@@ -92,6 +95,7 @@ static NSString *const kMessageLongArabic =
     [self waitForExpectations:@[ expectation ] timeout:5];
   }
   self.alertController = nil;
+  self.accessoryView = nil;
   self.actionLow = nil;
   self.actionMedium = nil;
   self.actionHigh = nil;
@@ -212,6 +216,14 @@ static NSString *const kMessageLongArabic =
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
+- (void)testDefaultAppearanceWithAccessoryView {
+  // When
+  [self.alertController setAccessoryView:self.accessoryView];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
 - (void)testPreferredContentSizeWithLargeIconLongTitleLongMessageLatin {
   // When
   self.alertController.title = kTitleLongLatin;
@@ -231,6 +243,32 @@ static NSString *const kMessageLongArabic =
   self.alertController.titleIcon = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  self.alertController.view.bounds =
+      CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testPreferredContentSizeWithAccessoryView {
+  // When
+  [self.alertController setAccessoryView:self.accessoryView];
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  self.alertController.view.bounds =
+      CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testPreferredContentSizeWithLargeIconLongTitleLongMessageArabicAccessoryView {
+  // When
+  self.alertController.title = kTitleLongArabic;
+  self.alertController.titleIcon = self.iconImage;
+  self.alertController.message = kMessageLongArabic;
+  [self changeToRTL:self.alertController];
+  [self.alertController setAccessoryView:self.accessoryView];
   CGSize preferredContentSize = self.alertController.preferredContentSize;
   self.alertController.view.bounds =
       CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
@@ -262,6 +300,17 @@ static NSString *const kMessageLongArabic =
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
+- (void)testSizeToFitWithShortTitleShortMessageLatinAccessoryView {
+  // When
+  self.alertController.title = kMessageShortLatin;
+  self.alertController.message = kMessageShortLatin;
+  [self.alertController setAccessoryView:self.accessoryView];
+  [self.alertController.view sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
 - (void)testDefaultPresentationStyleWithShortTitleShortMessageLatinOniOS13 {
   // When
   UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
@@ -279,6 +328,12 @@ static NSString *const kMessageLongArabic =
   // Then
   [self waitForExpectations:@[ expectation ] timeout:5];
   [self snapshotVerifyViewForIOS13:window];
+  expectation = [self expectationWithDescription:@"Alert dismissed."];
+  [currentViewController dismissViewControllerAnimated:NO
+                                            completion:^{
+                                              [expectation fulfill];
+                                            }];
+  [self waitForExpectations:@[ expectation ] timeout:5];
 }
 
 @end

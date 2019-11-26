@@ -15,7 +15,11 @@
 #import <Foundation/Foundation.h>
 
 /**
- A simple protocol that custom views rendered in MDCTabBarView must conform to.
+ A simple protocol that custom views rendered in MDCTabBarView must adopt.
+
+ @note `intrinsicContentSize` must always return the correct content size for the view, even before
+       layout has occurred.  If the value changes, it may be necessary to force the tab bar to lay
+       out its subviews.
 
  @seealso MDCTabBarViewIndicatorTemplate
  */

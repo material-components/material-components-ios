@@ -51,17 +51,11 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/AnimationTiming",
+        "//components/Buttons",
         "//components/Elevation",
         "//components/Palettes",
         "//components/Typography",
         "//components/private/Math",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "ContainedInputView",
-    deps = [
-        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
@@ -103,9 +97,9 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ColorThemer",
-        ":ContainedInputView",
         ":TextFields",
         ":TypographyThemer",
+        "//components/Buttons",
         "//components/schemes/Container",
     ],
 )
@@ -120,26 +114,14 @@ mdc_examples_swift_library(
     ],
 )
 
-mdc_objc_library(
-    name = "ContainedInputViewPrivateHeaders",
-    hdrs = native.glob(["src/ContainedInputView/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
-)
-
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    extra_srcs = glob([
-        "tests/unit/ContainedInputView/*.m",
-        "tests/unit/ContainedInputView/private/*.m",
-    ]),
     deps = [
         ":ColorThemer",
-        ":ContainedInputView",
-        ":ContainedInputViewPrivateHeaders",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
+        ":private",
     ],
 )
 
@@ -154,10 +136,11 @@ mdc_snapshot_objc_library(
     ],
     deps = [
         ":ColorThemer",
-        ":ContainedInputView",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
+        "//components/Buttons",
+        "//components/Ripple",
     ],
 )
 

@@ -51,29 +51,11 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":ButtonBar",
-        "//components/schemes/Typography",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "Theming",
-    deps = [
-        ":ButtonBar",
-        ":ColorThemer",
-        ":TypographyThemer",
-        "//components/schemes/Container",
-    ],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ButtonBar",
-        ":Theming",
+        "//components/Palettes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Icons/icons/ic_info",
         "//components/schemes/Container",
@@ -84,7 +66,6 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":ButtonBar",
-        ":Theming",
         "//components/schemes/Container",
     ],
 )
@@ -100,37 +81,32 @@ mdc_unit_test_objc_library(
     deps = [
         ":ButtonBar",
         ":ColorThemer",
-        ":Theming",
         ":private",
     ],
 )
 
 mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    extra_srcs = native.glob([
-        "tests/unit/Theming/*.swift",
-    ]),
     deps = [
-        ":Theming",
+        ":ButtonBar",
         "//components/Typography",
     ],
 )
 
 mdc_unit_test_suite(
     name = "unit_tests",
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
-    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
-    use_autobot_environment_runner = False,
 )
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":ButtonBar",
-        ":Theming",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
@@ -140,4 +116,16 @@ mdc_snapshot_objc_library(
 mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
+)
+
+# Deprecated
+
+mdc_extension_objc_library(
+    name = "TypographyThemer",
+    deprecation = "ButtonBar is not intended to be themed as a standalone component." +
+                  " Please theme it via the AppBar component's Theming extension instead.",
+    deps = [
+        ":ButtonBar",
+        "//components/schemes/Typography",
+    ],
 )

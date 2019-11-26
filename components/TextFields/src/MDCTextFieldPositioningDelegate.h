@@ -29,10 +29,24 @@
  The actual input view and the rendered inputted text's position is determined by applying these
  insets to the bounds.
 
+ Note: This is a convenience method that calls `textInsets:withSizeThatFitsWidthHint:` with a width
+ hint of 0.
+
  @param defaultInsets The value of text container insets that the MDCTextInput has calculated by
  default.
  */
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets;
+
+/**
+ The actual input view and the rendered inputted text's position is determined by applying these
+ insets to the bounds.
+
+ @param defaultInsets The value of text container insets that the MDCTextInput has calculated by
+ default.
+ @param widthHint The width provided by sizeThatFits: and used as a hint for calculating the
+ textfield size.
+ */
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets withSizeThatFitsWidthHint:(CGFloat)widthHint;
 
 /**
  The area that inputted text should be displayed while isEditing = true.

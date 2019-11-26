@@ -57,7 +57,7 @@ mdc_extension_objc_library(
         ":Chips",
         ":ColorThemer",
         ":ShapeThemer",
-        ":TypographyThemer",
+        "//components/Typography",
         "//components/schemes/Container",
     ],
 )

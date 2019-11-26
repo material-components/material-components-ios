@@ -28,38 +28,87 @@ class ButtonsThemingTest: XCTestCase {
   static let disabledOpacity: CGFloat = 0.38
   static let disabledBackgroundOpacity: CGFloat = 0.12
   static let inkOpacity: CGFloat = 0.32
+  let testScheme: MDCContainerScheme = {
+    let defaultScheme = MDCContainerScheme()
 
-  func testContainedTheme() {
+    let typographyScheme = MDCTypographyScheme()
+    typographyScheme.button = UIFont(name: "Zapfino", size: 54)!
+    defaultScheme.typographyScheme = typographyScheme
+
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    defaultScheme.colorScheme = colorScheme
+
+    return defaultScheme
+  }()
+
+  func testContainedThemeWithFontForStateAPI() {
     // Given
     let button = MDCButton()
-    let scheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
     let baselineCornerRadius: CGFloat = 4
 
     // When
-    button.applyContainedTheme(withScheme: scheme)
+    button.enableTitleFontForState = true
+    button.applyContainedTheme(withScheme: testScheme)
+
+    // Then
+    // Test Colors
+    XCTAssertEqual(button.backgroundColor(for: .normal), testScheme.colorScheme.primaryColor)
+    XCTAssertEqual(
+        button.backgroundColor(for: .disabled),
+        testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledBackgroundOpacity))
+    XCTAssertEqual(button.titleColor(for: .normal), testScheme.colorScheme.onPrimaryColor)
+    XCTAssertEqual(
+        button.titleColor(for: .disabled),
+        testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+    XCTAssertEqual(button.imageTintColor(for: .normal), testScheme.colorScheme.onPrimaryColor)
+    XCTAssertEqual(
+        button.imageTintColor(for: .disabled),
+        testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+    XCTAssertEqual(button.inkColor,
+                   testScheme.colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
+    // Test shape
+    XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
+    // Test typography
+    XCTAssertEqual(button.titleFont(for: .normal), testScheme.typographyScheme.button)
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.raisedButtonResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.raisedButtonPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+    XCTAssertEqual(button.minimumSize.width, 0, accuracy: 0.001)
+    XCTAssertEqual(button.minimumSize.height, 36, accuracy: 0.001)
+  }
+
+  func testContainedThemeWithoutFontForStateAPI() {
+    // Given
+    let button = MDCButton()
+    let colorScheme = testScheme.colorScheme
+    let typographyScheme = testScheme.typographyScheme
+    let baselineCornerRadius: CGFloat = 4
+
+    // When
+    button.enableTitleFontForState = false
+    button.applyContainedTheme(withScheme: testScheme)
 
     // Then
     // Test Colors
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
     XCTAssertEqual(
-        button.backgroundColor(for: .disabled),
-        colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledBackgroundOpacity))
+      button.backgroundColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledBackgroundOpacity))
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
     XCTAssertEqual(
-        button.titleColor(for: .disabled),
-        colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+      button.titleColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
     XCTAssertEqual(
-        button.imageTintColor(for: .disabled),
-        colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+      button.imageTintColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
     XCTAssertEqual(button.inkColor,
                    colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
     // Test shape
     XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
     // Test typography
-    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+    XCTAssertEqual(button.titleLabel?.font, typographyScheme.button)
     // Test remaining properties
     XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.raisedButtonResting)
     XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.raisedButtonPressed)
@@ -90,16 +139,16 @@ class ButtonsThemingTest: XCTestCase {
     }
   }
 
-  func testOutlinedTheme() {
+  func testOutlinedThemeWithFontForStateAPI() {
     // Given
     let button = MDCButton()
-    let scheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let colorScheme = testScheme.colorScheme
+    let typographyScheme = testScheme.typographyScheme
     let baselineCornerRadius: CGFloat = 4
 
     // When
-    button.applyOutlinedTheme(withScheme: scheme)
+    button.enableTitleFontForState = true
+    button.applyOutlinedTheme(withScheme: testScheme)
 
     // Then
     // Test Colors
@@ -130,6 +179,46 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.borderWidth(for: .disabled), 1, accuracy: 0.001)
   }
 
+  func testOutlinedThemeWithoutFontForStateAPI() {
+    // Given
+    let button = MDCButton()
+    let colorScheme = testScheme.colorScheme
+    let typographyScheme = testScheme.typographyScheme
+    let baselineCornerRadius: CGFloat = 4
+
+    // When
+    button.enableTitleFontForState = false
+    button.applyOutlinedTheme(withScheme: testScheme)
+
+    // Then
+    // Test Colors
+    XCTAssertEqual(button.backgroundColor(for: .normal), .clear)
+    XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.primaryColor)
+    XCTAssertEqual(
+      button.imageTintColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(button.titleColor(for: .normal), colorScheme.primaryColor)
+    XCTAssertEqual(
+      button.titleColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(button.disabledAlpha,1)
+    XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.12))
+    XCTAssertEqual(
+      button.borderColor(for: .normal),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.12))
+    // Test shape
+    XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
+    // Test typography
+    XCTAssertEqual(button.titleLabel?.font, typographyScheme.button)
+    // Test remaining properties
+    XCTAssertEqual(button.minimumSize.width, 0, accuracy: 0.001)
+    XCTAssertEqual(button.minimumSize.height, 36, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .normal), 1, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), 1, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), 1, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), 1, accuracy: 0.001)
+  }
+
   func testOutlinedThemeWithShapeScheme() {
     // Given
     let button = MDCButton()
@@ -151,13 +240,25 @@ class ButtonsThemingTest: XCTestCase {
     }
   }
 
-  func testTextThemeWithDefaultScheme() {
+  func testTextThemeWithFontForStateAPI() {
     // Given
     let button = MDCButton()
-    let scheme = MDCContainerScheme()
 
     // When
-    button.applyTextTheme(withScheme: scheme)
+    button.enableTitleFontForState = true
+    button.applyTextTheme(withScheme: testScheme)
+
+    // Then
+    helperAssertTextTheme(button: button)
+  }
+
+  func testTextThemeWithoutFontForStateAPI() {
+    // Given
+    let button = MDCButton()
+
+    // When
+    button.enableTitleFontForState = false
+    button.applyTextTheme(withScheme: testScheme)
 
     // Then
     helperAssertTextTheme(button: button)
@@ -183,11 +284,10 @@ class ButtonsThemingTest: XCTestCase {
   func testConvertContainedToTextTheme() {
     // Given
     let button = MDCButton()
-    let scheme = MDCContainerScheme()
 
     // When
-    button.applyContainedTheme(withScheme: scheme)
-    button.applyTextTheme(withScheme: scheme)
+    button.applyContainedTheme(withScheme: testScheme)
+    button.applyTextTheme(withScheme: testScheme)
 
     // Then
     helperAssertTextTheme(button: button)
@@ -196,8 +296,8 @@ class ButtonsThemingTest: XCTestCase {
   // MARK: Helpers
 
   func helperAssertTextTheme(button: MDCButton) {
-    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let colorScheme = testScheme.colorScheme
+    let typographyScheme = testScheme.typographyScheme
 
     // Test colors
     XCTAssertEqual(button.backgroundColor(for: .normal), .clear)
@@ -213,7 +313,11 @@ class ButtonsThemingTest: XCTestCase {
                    colorScheme.onSurfaceColor.withAlphaComponent(0.38))
 
     // Test typography
-    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+    if button.enableTitleFontForState {
+      XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+    } else {
+      XCTAssertEqual(button.titleLabel?.font, typographyScheme.button)
+    }
 
     // Test shape
     XCTAssertEqual(button.layer.cornerRadius, 4.0, accuracy: 0.001)

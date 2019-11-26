@@ -8,7 +8,7 @@ and the outlined theme.
 
  #### Swift
 
- ```swift
+```swift
 // Import the Cards Theming Extensions module
 import MaterialComponents.MaterialCards_MaterialTheming
  ...
@@ -22,7 +22,7 @@ card.applyOutlinedTheme(withScheme: containerScheme)
 
  #### Objective-C
 
- ```objc
+```objc
 // Import the Cards Theming Extensions header
 #import <MaterialComponents/MaterialCards+MaterialTheming.h>
  ...

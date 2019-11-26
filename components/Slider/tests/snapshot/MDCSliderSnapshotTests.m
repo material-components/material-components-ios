@@ -16,10 +16,93 @@
 
 #import <UIKit/UIKit.h>
 
+#import "../../src/private/MDCSlider+Private.h"
+#import "../../src/private/MDCSlider_Subclassable.h"
 #import "MaterialSlider.h"
+#import "MaterialThumbTrack.h"
+
+/** A @c UITouch subclass where the location can be set. */
+@interface MDCSliderSnapshotTestTouchFake : UITouch
+
+/** The location of the touch in the target view. */
+@property(nonatomic, assign) CGPoint mdc_touchPoint;
+@end
+
+@implementation MDCSliderSnapshotTestTouchFake
+
+- (CGPoint)locationInView:(UIView *)view {
+  return self.mdc_touchPoint;
+}
+
+@end
+
+/**
+ Performs a touch event on the thumb of the provided slider.
+
+ @param slider The Slider to touch.
+ @return The touch object used.
+ */
+static MDCSliderSnapshotTestTouchFake *TouchThumbInSlider(MDCSlider *slider) {
+  CGRect thumbViewBounds = slider.thumbTrack.thumbView.bounds;
+  CGPoint thumbPosition = [slider.thumbTrack
+      convertPoint:CGPointMake(CGRectGetMidX(thumbViewBounds), CGRectGetMidY(thumbViewBounds))
+          fromView:slider.thumbTrack.thumbView];
+  MDCSliderSnapshotTestTouchFake *thumbTouch = [[MDCSliderSnapshotTestTouchFake alloc] init];
+  thumbTouch.mdc_touchPoint = thumbPosition;
+  [slider.thumbTrack touchesBegan:[NSSet setWithObject:thumbTouch] withEvent:nil];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  return thumbTouch;
+}
+
+/**
+ Moves the Slider Thumb to a position relative to the slider width. A relative value of 0 is the
+ minimum and a relative value of 1 is the maximum.
+
+ @param slider The Slider to touch.
+ @param touch The initial touch passed to @c touchesBegan:withEvent:.
+ @param relativePosition The new position of the touch, relative to the bounds of the Slider's
+                         track.
+ */
+static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
+                                              MDCSliderSnapshotTestTouchFake *touch,
+                                              CGFloat relativePosition) {
+  // This calculation is generated from the code in MDCThumbTrack valueForThumbPosition.
+  // relativeX = (thumbPosition.x - thumbRadius) / thumbPanRange
+  CGPoint touchPoint = CGPointMake(
+      (CGRectGetWidth(slider.thumbTrack.bounds) - (slider.thumbRadius * 2)) * relativePosition +
+          slider.thumbTrack.thumbRadius,
+      CGRectGetMidY(slider.thumbTrack.bounds));
+  touch.mdc_touchPoint = touchPoint;
+  [slider.thumbTrack touchesMoved:[NSSet setWithObject:touch] withEvent:nil];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+}
+
+/**
+ An MDCSlider subclass that allows the user to override the @c traitCollection property.
+ */
+@interface MDCSliderWithCustomTraitCollection : MDCSlider
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@property(nonatomic, strong) MDCThumbTrack *thumbTrack;
+
+@end
+
+@implementation MDCSliderWithCustomTraitCollection
+
+- (MDCThumbTrack *)thumbTrack {
+  return _thumbTrack;
+}
+
+- (void)setThumbTrack:(MDCThumbTrack *)thumbTrack {
+  _thumbTrack = thumbTrack;
+}
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+@end
 
 @interface MDCSliderSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCSlider *slider;
+@property(nonatomic, strong) MDCSliderWithCustomTraitCollection *slider;
 @end
 
 @implementation MDCSliderSnapshotTests
@@ -29,9 +112,10 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  // self.recordMode = YES;
+  //  self.recordMode = YES;
 
-  self.slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
+  self.slider =
+      [[MDCSliderWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
   self.slider.statefulAPIEnabled = YES;
   self.slider.minimumValue = -10;
   self.slider.maximumValue = 10;
@@ -47,7 +131,7 @@
 }
 
 - (void)makeSliderDiscrete:(MDCSlider *)slider {
-  slider.continuous = NO;
+  slider.discrete = YES;
   slider.numberOfDiscreteValues = (NSUInteger)(slider.maximumValue - slider.minimumValue + 1);
 }
 
@@ -86,7 +170,92 @@
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderAtMinimum {
+- (void)testDiscreteSliderInactiveThumbTrackTickMarksNever {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderActiveThumbTrackTickMarksNever {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderInactiveThumbTrackTickMarksWhenDragging {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderActiveThumbTrackTickMarksWhenDragging {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderInactiveThumbTrackTickMarksAlways {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderActiveThumbTrackTickMarksAlways {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderAtMinimum {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
   // When
   self.slider.value = self.slider.minimumValue;
 
@@ -94,7 +263,23 @@
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderAtMidpoint {
+- (void)testExplicitlyNonDiscreteSliderAtMinimum {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.value = self.slider.minimumValue;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderAtMidpoint {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
   // When
   self.slider.value =
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
@@ -103,9 +288,251 @@
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testContinuousSliderAtMaximum {
+- (void)testExplicitlyNonDiscreteSliderAtMidpoint {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderAtMaximum {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
   // When
   self.slider.value = self.slider.maximumValue;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderAtMaximum {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.value = self.slider.maximumValue;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksNever {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksNever {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderActiveThumbTrackTickMarksNever {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderActiveThumbTrackTickMarksNever {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityNever;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksWhenDragging {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksWhenDragging {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderActiveThumbTrackTickMarksWhenDragging {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderActiveThumbTrackTickMarksWhenDragging {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksAlways {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderInactiveThumbTrackTickMarksAlways {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderActiveThumbTrackTickMarksAlways {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderActiveThumbTrackTickMarksAlways {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.discrete = NO;
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+
+  // When
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  TouchThumbInSlider(self.slider);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderAlignsToSnappedValue {
+  // Given
+  self.slider.numberOfDiscreteValues = 5;
+  self.slider.discrete = YES;
+
+  // When
+  MDCSliderSnapshotTestTouchFake *touch = TouchThumbInSlider(self.slider);
+  MoveSliderThumbToRelativePosition(self.slider, touch, (CGFloat)0.15);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testImplicitlyNonDiscreteSliderAlignsToThumbPosiition {
+  // Given
+  self.slider.discrete = YES;
+  self.slider.numberOfDiscreteValues = 0;
+
+  // When
+  MDCSliderSnapshotTestTouchFake *touch = TouchThumbInSlider(self.slider);
+  MoveSliderThumbToRelativePosition(self.slider, touch, (CGFloat)0.15);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testExplicitlyNonDiscreteSliderAlignsToThumbPosition {
+  // Given
+  self.slider.numberOfDiscreteValues = 5;
+  self.slider.discrete = NO;
+
+  // When
+  MDCSliderSnapshotTestTouchFake *touch = TouchThumbInSlider(self.slider);
+  MoveSliderThumbToRelativePosition(self.slider, touch, (CGFloat)0.15);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.slider];
@@ -165,6 +592,174 @@
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
+}
+
+- (void)testPreferredFontForAXXXLContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    [self makeSliderDiscrete:self.slider];
+    self.slider.value =
+        self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+    self.slider.shouldDisplayDiscreteValueLabel = YES;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+    self.slider.discreteValueLabelFont = originalFont;
+    self.slider.adjustsFontForContentSizeCategory = YES;
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    self.slider.traitCollectionOverride = xsTraitCollection;
+    // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
+
+    // When
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    self.slider.traitCollectionOverride = aXXXLTraitCollection;
+    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+    // transform adjustment was made so it can let the logic know we are actually interacting with
+    // the thumb in the test.
+    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+    valueLabel.transform = CGAffineTransformIdentity;
+    [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+    // Then
+    UIView *snapshotView =
+        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(100, 0, 0, 0)];
+    [self generateSnapshotAndVerifyForView:snapshotView];
+  }
+}
+
+- (void)testPreferredFontForXSContentSizeCategory {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    [self makeSliderDiscrete:self.slider];
+    self.slider.value =
+        self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+    self.slider.shouldDisplayDiscreteValueLabel = YES;
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+    self.slider.discreteValueLabelFont = originalFont;
+    self.slider.adjustsFontForContentSizeCategory = YES;
+    UITraitCollection *aXXXLTraitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    self.slider.traitCollectionOverride = aXXXLTraitCollection;
+    // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
+
+    // When
+    UITraitCollection *xsTraitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    self.slider.traitCollectionOverride = xsTraitCollection;
+    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+    // transform adjustment was made so it can let the logic know we are actually interacting with
+    // the thumb in the test.
+    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+    valueLabel.transform = CGAffineTransformIdentity;
+    [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+    // Then
+    UIView *snapshotView =
+        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+    [self generateSnapshotAndVerifyForView:snapshotView];
+  }
+}
+
+- (void)testNonDiscreteSliderLargerTrackHeight {
+  // Given
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.trackHeight = 6;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testNonDiscreteSliderSmallerTrackHeight {
+  // Given
+  self.slider.discrete = NO;
+
+  // When
+  self.slider.trackHeight = 1;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight1Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 1;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight2Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 2;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight3Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 3;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight4Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 4;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight6Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 6;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithTrackHeight10Points {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+
+  // When
+  self.slider.trackHeight = 10;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
 }
 
 @end

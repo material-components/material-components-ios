@@ -8,7 +8,7 @@ and the outlined theme.
 
  #### Swift
 
- ```swift
+```swift
 // Import the Chips Theming Extensions module
 import MaterialComponents.MaterialChips_MaterialTheming
  ...
@@ -22,7 +22,7 @@ chip.applyOutlinedTheme(withScheme: containerScheme)
 
  #### Objective-C
 
- ```objc
+```objc
 // Import the Tabs Theming Extensions header
 #import <MaterialComponents/MaterialChips+MaterialTheming.h>
  ...

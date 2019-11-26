@@ -36,6 +36,10 @@
 
 #pragma mark - Tests
 
+- (void)testCornerRadius {
+  XCTAssertEqual(_progressView.cornerRadius, 0);
+}
+
 - (void)testInitialProgress {
   XCTAssertEqual(_progressView.progress, 0);
 }
@@ -84,6 +88,15 @@
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedProgressView, _progressView);
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+- (void)testAccessibilityLabelMatchesUIProgressView {
+  // Given
+  UIProgressView *uiProgressView = [[UIProgressView alloc] init];
+  MDCProgressView *mdcProgressView = [[MDCProgressView alloc] init];
+
+  // Then
+  XCTAssertEqual(uiProgressView.accessibilityLabel, mdcProgressView.accessibilityLabel);
 }
 
 @end

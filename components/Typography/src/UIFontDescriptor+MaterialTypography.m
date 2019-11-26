@@ -36,17 +36,8 @@
   dispatch_once(&onceToken, ^{
     UIFont *smallSystemFont;
     UIFont *largeSystemFont;
-    if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-      smallSystemFont = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
-      largeSystemFont = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
-#pragma clang diagnostic pop
-    } else {
-      // TODO: Remove this fallback once we are 8.2+
-      smallSystemFont = [UIFont systemFontOfSize:12];
-      largeSystemFont = [UIFont systemFontOfSize:20];
-    }
+    smallSystemFont = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+    largeSystemFont = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
     smallSystemFontFamilyName = [smallSystemFont.familyName copy];
     largeSystemFontFamilyName = [largeSystemFont.familyName copy];
   });

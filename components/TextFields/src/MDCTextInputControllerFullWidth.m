@@ -981,7 +981,8 @@ static UIFont *_trailingUnderlineLabelFontDefault;
  MDCTextInputControllerFullWidthVerticalPadding                       // Bottom padding
  */
 // clang-format on
-- (UIEdgeInsets)textInsets:(__unused UIEdgeInsets)defaultInsets {
+- (UIEdgeInsets)textInsets:(__unused UIEdgeInsets)defaultInsets
+    withSizeThatFitsWidthHint:(CGFloat)widthHint {
   // NOTE: UITextFields have a centerY based layout. But you can change EITHER the height or the Y.
   // Not both. Don't know why. So, we have to leave the text rect as big as the bounds and move it
   // to a Y that works. In other words, no bottom inset will make a difference here for UITextFields
@@ -1038,6 +1039,10 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   return editingRect;
 }
 
+- (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
+  return [self textInsets:defaultInsets withSizeThatFitsWidthHint:0];
+}
+
 #pragma mark - UITextField & UITextView Notification Observation
 
 - (void)textInputDidBeginEditing:(__unused NSNotification *)note {
@@ -1062,11 +1067,11 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   if (self.textInput.isEditing && self.characterCountMax > 0) {
     NSString *announcementString;
     if (!announcementString.length) {
-      announcementString = [NSString
-          stringWithFormat:@"%lu characters remaining",
-                           (unsigned long)(self.characterCountMax -
-                                           [self.characterCounter
-                                               characterCountForTextInput:self.textInput])];
+      announcementString =
+          [NSString stringWithFormat:@"%lu of %lu characters",
+                                     (unsigned long)[self.characterCounter
+                                         characterCountForTextInput:self.textInput],
+                                     (unsigned long)self.characterCountMax];
     }
 
     // Simply sending a layout change notification does not seem to

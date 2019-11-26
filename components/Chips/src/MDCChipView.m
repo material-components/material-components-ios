@@ -138,6 +138,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.rippleAllowsSelection = YES;
   self.isAccessibilityElement = YES;
+  self.accessibilityTraits = UIAccessibilityTraitButton;
   _mdc_overrideBaseElevation = -1;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 }
@@ -265,14 +266,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (id)shapeGenerator {
   return self.layer.shapeGenerator;
-}
-
-- (void)setInkColor:(UIColor *)inkColor {
-  [self setInkColor:inkColor forState:UIControlStateNormal];
-}
-
-- (UIColor *)inkColor {
-  return [self inkColorForState:UIControlStateNormal];
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {

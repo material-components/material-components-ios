@@ -16,14 +16,14 @@
 
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderFABSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200;
 
-@interface FlexibleHeaderFABExample () <UIScrollViewDelegate>
+@interface FlexibleHeaderFABExample : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
-@property(nonatomic) MDCFloatingButton *floatingButton;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) MDCFloatingButton *floatingButton;
 
 @end
 
@@ -133,6 +133,34 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
   }
   self.floatingButton.center =
       CGPointMake(self.floatingButton.center.x, CGRectGetMaxY(self.fhvc.headerView.frame));
+}
+
+#pragma mark - Supplemental
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  self.scrollView.contentSize = self.view.bounds.size;
+}
+
+@end
+
+@implementation FlexibleHeaderFABExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Floating Action Button" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

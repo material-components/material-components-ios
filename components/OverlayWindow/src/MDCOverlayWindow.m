@@ -82,6 +82,16 @@
   return self;
 }
 
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene {
+  self = [super initWithWindowScene:windowScene];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
+#endif
+
 - (void)commonInit {
   self.backgroundColor = [UIColor clearColor];
 

@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 // Do not modify directly.
 
 #import "MaterialIcons+ic_more_horiz.h"
-
-#import "MaterialIcons.h"
 
 static NSString *const kBundleName = @"MaterialIcons_ic_more_horiz";
 static NSString *const kIconName = @"ic_more_horiz";

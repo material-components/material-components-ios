@@ -15,20 +15,25 @@
 import Foundation
 
 import MaterialComponents.MaterialPageControl
-import MaterialComponents.MaterialPalettes
 
 class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
 
   static let pageColors = [
-    MDCPalette.cyan.tint300,
-    MDCPalette.cyan.tint500,
-    MDCPalette.cyan.tint700,
-    MDCPalette.cyan.tint300,
-    MDCPalette.cyan.tint500,
-    MDCPalette.cyan.tint700
+    UIColor(white: 0.3, alpha: 1),
+    UIColor(white: 0.2, alpha: 1),
+    UIColor(white: 0.3, alpha: 1),
+    UIColor(white: 0.2, alpha: 1),
+    UIColor(white: 0.3, alpha: 1),
+    UIColor(white: 0.2, alpha: 1),
   ]
 
-  let pageControl = MDCPageControl()
+  let pageControl: MDCPageControl = {
+    let pageControl = MDCPageControl()
+    pageControl.currentPageIndicatorTintColor = .white
+    pageControl.pageIndicatorTintColor = .lightGray
+    return pageControl
+  }()
+
   let scrollView = UIScrollView()
   let pageLabels: [UILabel] = PageControlSwiftExampleViewController.pageColors.enumerated().map {
       enumeration in
@@ -36,7 +41,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     let pageLabel = UILabel()
     pageLabel.text = "Page \(i + 1)"
     pageLabel.font = pageLabel.font.withSize(50)
-    pageLabel.textColor = UIColor(white: 0, alpha: 0.8)
+    pageLabel.textColor = UIColor(white: 1, alpha: 0.8)
     pageLabel.backgroundColor = pageColor
     pageLabel.textAlignment = NSTextAlignment.center
     pageLabel.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin]

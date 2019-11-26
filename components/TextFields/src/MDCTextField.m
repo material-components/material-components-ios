@@ -341,6 +341,14 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   return self.fundament.textInsets;
 }
 
+- (CGFloat)sizeThatFitsWidthHint {
+  return self.fundament.sizeThatFitsWidthHint;
+}
+
+- (void)setSizeThatFitsWidthHint:(CGFloat)sizeThatFitsWidthHint {
+  self.fundament.sizeThatFitsWidthHint = sizeThatFitsWidthHint;
+}
+
 - (MDCTextInputTextInsetsMode)textInsetsMode {
   return self.fundament.textInsetsMode;
 }
@@ -433,8 +441,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 }
 
 - (void)setFont:(UIFont *)font {
+  UIFont *previousFont = self.font;
   [super setFont:font];
-  [_fundament didSetFont];
+  [_fundament didSetFont:previousFont];
 }
 
 - (void)setEnabled:(BOOL)enabled {
@@ -711,9 +720,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  self.sizeThatFitsWidthHint = size.width;
   CGSize sizeThatFits = [self intrinsicContentSize];
-  sizeThatFits.width = size.width;
-
+  sizeThatFits.width = self.sizeThatFitsWidthHint;
+  self.sizeThatFitsWidthHint = 0;
   return sizeThatFits;
 }
 

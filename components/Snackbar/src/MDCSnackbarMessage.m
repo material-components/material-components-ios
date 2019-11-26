@@ -70,12 +70,14 @@ static BOOL _usesLegacySnackbar = NO;
   copy.buttonTextColor = self.buttonTextColor;
 #pragma clang diagnostic pop
   copy.enableRippleBehavior = self.enableRippleBehavior;
+  copy.focusOnShow = self.focusOnShow;
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the
   // heap, so we're pretty safe just using the same block.
   copy.completionHandler = self.completionHandler;
   copy.action = self.action;
+  copy.snackbarMessageWillPresentBlock = self.snackbarMessageWillPresentBlock;
 
   return copy;
 }
