@@ -231,6 +231,13 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
 /**
+ The inset or outset margins for the rectangle surrounding each action's image.
+
+ Defaults to (-16, 0, 0, -32).
+ */
+@property(nonatomic, assign) UIEdgeInsets imageEdgeInsets;
+
+/**
  Determines the alignment behavior of all title leading edges.
 
  When YES, all title leading edges will be aligned with one another.
