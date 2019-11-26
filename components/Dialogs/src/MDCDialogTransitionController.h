@@ -35,24 +35,17 @@
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
 /**
- Duration of the dialog fade in/out alpha animation.
+ Duration of transition animation.
 
  Defaults to 0.27.
  */
-@property(nonatomic, assign) NSTimeInterval dialogOpacityAnimationDuration;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 /**
- Duration of the dialog scale up/down animation.
+ The starting scale factor of the dialog, between 0 and 1. The "animate in" transition scales the dialog from this value to 1.0.
 
- Defaults to 0 (scale does not animate)
+ Defaults to 1.0 (no scaling is performed).
  */
-@property(nonatomic, assign) NSTimeInterval dialogScaleAnimationDuration;
-
-/**
- Duration of the scrim fade in/out alpha animation.
-
- Defaults to 0.27.
- */
-@property(nonatomic, assign) NSTimeInterval scrimOpacityAnimationDuration;
+@property(nonatomic, assign) CGFloat dialogScaleFactor;
 
 @end
