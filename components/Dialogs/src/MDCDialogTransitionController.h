@@ -34,4 +34,26 @@
 @interface MDCDialogTransitionController
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
+/**
+ Duration of the dialog fade in/out alpha animation.
+
+ Defaults to 0.27.
+ */
+@property(nonatomic, assign) NSTimeInterval dialogOpacityAnimationDuration;
+
+/**
+ Duration of the dialog scale up/down animation.
+
+ Defaults to 0 (scale does not animate)
+ */
+@property(nonatomic, assign) NSTimeInterval dialogScaleAnimationDuration;
+
+/**
+ Duration of the scrim fade in/out alpha animation.
+
+ Defaults to 0.27.
+ */
+@property(nonatomic, assign) NSTimeInterval scrimOpacityAnimationDuration;
+
+
 @end

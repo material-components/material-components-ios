@@ -18,19 +18,25 @@
 
 @implementation MDCDialogTransitionController
 
-static const CGFloat MDCScaleFactor = 0.8;
+static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
 
-static const NSTimeInterval MDCDialogOpacityTransitionDuration = 0.15;
+static const CGFloat MDCDialogScaleFactor = 0.8;
 
-static const NSTimeInterval MDCDialogScaleTransitionDuration = 0.08333;
-
-static const NSTimeInterval MDCDialogScrimOpacityTransitionDuration = 0.15;
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.dialogOpacityAnimationDuration = MDCDialogTransitionDuration;
+    self.dialogScaleAnimationDuration = 0.0f;
+    self.scrimOpacityAnimationDuration = MDCDialogTransitionDuration;
+  }
+  return self
+}
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:
     (__unused id<UIViewControllerContextTransitioning>)transitionContext {
-  return MDCDialogOpacityTransitionDuration;
+  return MAX(MAX(self.dialogOpacityAnimationDuration, self.dialogScaleAnimationDuration), self.scrimOpacityAnimationDuration);
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -67,25 +73,22 @@ static const NSTimeInterval MDCDialogScrimOpacityTransitionDuration = 0.15;
 
   animatingView.frame = [transitionContext finalFrameForViewController:animatingViewController];
 
-//  animatingView.alpha = startingAlpha;
-
-//  NSTimeInterval transitionDuration = [self transitionDuration:transitionContext];
   UIViewAnimationOptions options =
       UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
-  CGAffineTransform startingTransform = presenting ? CGAffineTransformMakeScale(MDCScaleFactor, MDCScaleFactor) : CGAffineTransformIdentity;
+  CGAffineTransform startingTransform = presenting ? CGAffineTransformMakeScale(MDCDialogScaleFactor, MDCDialogScaleFactor) : CGAffineTransformIdentity;
   CGAffineTransform endingTransform = CGAffineTransformIdentity;
 
   animatingView.transform = startingTransform;
 
-  UIViewAnimationOptions scaleOptions = options | UIViewAnimationOptionCurveEaseOut;
-  [UIView animateWithDuration:MDCDialogScaleTransitionDuration
+  UIViewAnimationOptions scaleAnimationOptions = options | UIViewAnimationOptionCurveEaseOut;
+  [UIView animateWithDuration:self.dialogScaleAnimationDuration
                         delay:0
-                      options:scaleOptions
+                      options:scaleAnimationOptions
                    animations:^{
     animatingView.transform = endingTransform;
   }
-   completion:nil];
+                   completion:nil];
 
   if ([animatingViewController.presentationController isKindOfClass:[MDCDialogPresentationController class]]) {
     MDCDialogPresentationController *presentationController = (MDCDialogPresentationController *)animatingViewController.presentationController;
@@ -98,7 +101,7 @@ static const NSTimeInterval MDCDialogScrimOpacityTransitionDuration = 0.15;
 
     presentationController.scrimColor = startingColor;
     presentationController.dialogShadowColor = startingTrackingColor;
-    [UIView animateWithDuration:MDCDialogScrimOpacityTransitionDuration
+    [UIView animateWithDuration:self.scrimOpacityAnimationDuration
                           delay:0
                         options:options
                      animations:^{
@@ -107,44 +110,35 @@ static const NSTimeInterval MDCDialogScrimOpacityTransitionDuration = 0.15;
     }
                      completion:nil];
     presentationController.presentedView.alpha = startingAlpha;
-    [UIView animateWithDuration:MDCDialogOpacityTransitionDuration
+    [UIView animateWithDuration:self.dialogOpacityAnimationDuration
         delay:0.0
         options:options
         animations:^{
       presentationController.presentedView.alpha = endingAlpha;
         }
-                     completion:^(__unused BOOL finished) {
-                       // If we're dismissing, remove the presented view from the hierarchy
-                       if (!presenting) {
-                         [fromView removeFromSuperview];
-                       }
-
-                       // From ADC : UIViewControllerContextTransitioning
-                       // When you do create transition animations, always call the
-                       // completeTransition: from an appropriate completion block to let UIKit know
-                       // when all of your animations have finished.
-                       [transitionContext completeTransition:YES];
-                     }];
+                     completion:nil];
   } else {
-    [UIView animateWithDuration:MDCDialogOpacityTransitionDuration
+    [UIView animateWithDuration:self.dialogOpacityAnimationDuration
         delay:0.0
         options:options
         animations:^{
           animatingView.alpha = endingAlpha;
         }
-        completion:^(__unused BOOL finished) {
-          // If we're dismissing, remove the presented view from the hierarchy
-          if (!presenting) {
-            [fromView removeFromSuperview];
-          }
-
-          // From ADC : UIViewControllerContextTransitioning
-          // When you do create transition animations, always call the
-          // completeTransition: from an appropriate completion block to let UIKit know
-          // when all of your animations have finished.
-          [transitionContext completeTransition:YES];
-        }];
+        completion:nil];
   }
+
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)([self transitionDuration:transitionContext] * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    // If we're dismissing, remove the presented view from the hierarchy
+    if (!presenting) {
+      [fromView removeFromSuperview];
+    }
+
+    // From ADC : UIViewControllerContextTransitioning
+    // When you do create transition animations, always call the
+    // completeTransition: from an appropriate completion block to let UIKit know
+    // when all of your animations have finished.
+    [transitionContext completeTransition:YES];
+  });
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
