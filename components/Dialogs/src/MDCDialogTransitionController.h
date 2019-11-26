@@ -42,7 +42,8 @@
 @property(nonatomic, assign) NSTimeInterval animationDuration;
 
 /**
- The starting scale factor of the dialog, between 0 and 1. The "animate in" transition scales the dialog from this value to 1.0.
+ The starting scale factor of the dialog, between 0 and 1. The "animate in" transition scales the
+ dialog from this value to 1.0.
 
  Defaults to 1.0 (no scaling is performed).
  */

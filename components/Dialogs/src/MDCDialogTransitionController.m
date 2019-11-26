@@ -81,14 +81,16 @@ static const CGFloat MDCDialogDefaultScaleFactor = 1.0f;
                         delay:0
                       options:options
                    animations:^{
-    animatingView.alpha = endingAlpha;
+                     animatingView.alpha = endingAlpha;
                    }
                    completion:nil];
 
   // Scale animation
   MDCDialogPresentationController *presentationController = nil;
-  if ([animatingViewController.presentationController isKindOfClass:[MDCDialogPresentationController class]]) {
-    presentationController = (MDCDialogPresentationController *)animatingViewController.presentationController;
+  if ([animatingViewController.presentationController
+          isKindOfClass:[MDCDialogPresentationController class]]) {
+    presentationController =
+        (MDCDialogPresentationController *)animatingViewController.presentationController;
   }
 
   CGAffineTransform startingTransform =
@@ -103,24 +105,26 @@ static const CGFloat MDCDialogDefaultScaleFactor = 1.0f;
                       options:scaleAnimationOptions
                    animations:^{
                      animatingView.transform = endingTransform;
-    presentationController.dialogTransform = endingTransform;
+                     presentationController.dialogTransform = endingTransform;
                    }
                    completion:nil];
 
   // Use dispatch_after to avoid animateWithDuration immediately executing its completion block.
-  // This can happen if the animation has no effect (changing animatingView.transform from CGAffineTransformIdentity to CGAffineTransformIdentity, in this case).
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_animationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    // If we're dismissing, remove the presented view from the hierarchy
-    if (!presenting) {
-      [fromView removeFromSuperview];
-    }
+  // This can happen if the animation has no effect (changing animatingView.transform from
+  // CGAffineTransformIdentity to CGAffineTransformIdentity, in this case).
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_animationDuration * NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+                   // If we're dismissing, remove the presented view from the hierarchy
+                   if (!presenting) {
+                     [fromView removeFromSuperview];
+                   }
 
-    // From ADC : UIViewControllerContextTransitioning
-    // When you do create transition animations, always call the
-    // completeTransition: from an appropriate completion block to let UIKit know
-    // when all of your animations have finished.
-    [transitionContext completeTransition:YES];
-  });
+                   // From ADC : UIViewControllerContextTransitioning
+                   // When you do create transition animations, always call the
+                   // completeTransition: from an appropriate completion block to let UIKit know
+                   // when all of your animations have finished.
+                   [transitionContext completeTransition:YES];
+                 });
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
