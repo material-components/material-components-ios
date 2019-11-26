@@ -270,6 +270,17 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
                 NSStringFromUIEdgeInsets(expectedImageEdgeInsets));
 }
 
+- (void)testDefaultTitleEdgeInsets {
+  // When
+  MDCActionSheetController *controller = [[MDCActionSheetController alloc] init];
+
+  // Then
+  UIEdgeInsets expectedTitleEdgeInsets = UIEdgeInsetsMake(-18, 0, -18, 0);
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(controller.titleEdgeInsets, expectedTitleEdgeInsets),
+                @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(controller.titleEdgeInsets),
+                NSStringFromUIEdgeInsets(expectedTitleEdgeInsets));
+}
+
 #pragma mark - Opening height
 
 - (CGRect)setUpActionSheetWithHeight:(CGFloat)height

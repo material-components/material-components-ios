@@ -20,9 +20,8 @@
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 /** Default value for @c imageEdgeInsets. */
 static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
+static const UIEdgeInsets kDefaultTitleEdgeInsets = {-18, 0, -18, 0};
 static const CGFloat kImageHeightAndWidth = 24;
-static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
-static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 static inline UIColor *RippleColor() {
   return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
@@ -41,7 +40,6 @@ static inline UIColor *RippleColor() {
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
-  NSLayoutConstraint *_titleLeadingConstraint;
   NSLayoutConstraint *_contentContainerTopConstraint;
   NSLayoutConstraint *_contentContainerLeadingConstraint;
   NSLayoutConstraint *_contentContainerBottomConstraint;
@@ -50,6 +48,11 @@ static inline UIColor *RippleColor() {
   NSLayoutConstraint *_imageContainerLeadingConstriant;
   NSLayoutConstraint *_imageContainerBottomConstriant;
   NSLayoutConstraint *_imageContainerTrailingConstriant;
+  NSLayoutConstraint *_actionLabelTopConstraint;
+  NSLayoutConstraint *_actionLabelLeadingEdgeToImageConstraint;
+  NSLayoutConstraint *_actionLabelLeadingEdgeToContainerViewConstraint;
+  NSLayoutConstraint *_actionLabelBottomConstraint;
+  NSLayoutConstraint *_actionLabelTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -69,6 +72,7 @@ static inline UIColor *RippleColor() {
   self.accessibilityTraits = UIAccessibilityTraitButton;
 
   _imageEdgeInsets = kDefaultImageEdgeInsets;
+  _titleEdgeInsets = kDefaultTitleEdgeInsets;
   _contentContainerView = [[UIView alloc] initWithFrame:self.bounds];
   _contentContainerView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_contentContainerView];
@@ -114,28 +118,33 @@ static inline UIColor *RippleColor() {
   [_contentContainerView addSubview:_actionLabel];
   _actionLabel.numberOfLines = 0;
   _actionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [_actionLabel sizeToFit];
   _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
-  CGFloat leadingConstant = 0;
+  _actionLabelTopConstraint =
+      [_contentContainerView.topAnchor constraintEqualToAnchor:_actionLabel.topAnchor
+                                                      constant:_titleEdgeInsets.top];
+  _actionLabelTopConstraint.active = YES;
+  _actionLabelLeadingEdgeToImageConstraint =
+      [_imageContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.leadingAnchor
+                                                         constant:_titleEdgeInsets.left];
+  _actionLabelLeadingEdgeToContainerViewConstraint =
+      [_contentContainerView.leadingAnchor constraintEqualToAnchor:_actionLabel.leadingAnchor
+                                                          constant:_titleEdgeInsets.left];
   if (_itemAction.image || _addLeadingPadding) {
-    leadingConstant = kTitleLeadingPadding;
+    _actionLabelLeadingEdgeToImageConstraint.active = YES;
+  } else {
+    _actionLabelLeadingEdgeToContainerViewConstraint.active = YES;
   }
-  [_actionLabel.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
-                                         constant:kActionItemTitleVerticalPadding]
-      .active = YES;
-  NSLayoutConstraint *labelBottomConstraint =
+  _actionLabelBottomConstraint =
       [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
-                                                constant:-kActionItemTitleVerticalPadding];
-  labelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
-  labelBottomConstraint.active = YES;
-  _titleLeadingConstraint =
-      [_actionLabel.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor
-                                                 constant:leadingConstant];
-  _titleLeadingConstraint.active = YES;
-  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.trailingAnchor]
-      .active = YES;
+                                                constant:_titleEdgeInsets.bottom];
+  _actionLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
+  _actionLabelBottomConstraint.active = YES;
+  _actionLabelTrailingConstraint =
+      [_actionLabel.trailingAnchor constraintEqualToAnchor:_contentContainerView.trailingAnchor
+                                                  constant:_titleEdgeInsets.right];
+  _actionLabelTrailingConstraint.active = YES;
 
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
@@ -166,12 +175,6 @@ static inline UIColor *RippleColor() {
 
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
-  CGFloat leadingConstant = 0;
-  if (_itemAction.image || self.addLeadingPadding) {
-    leadingConstant = kTitleLeadingPadding;
-  }
-  _titleLeadingConstraint.constant = leadingConstant;
-
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
 
@@ -197,6 +200,15 @@ static inline UIColor *RippleColor() {
   _imageContainerLeadingConstriant.constant = imageEdgeInsets.left;
   _imageContainerBottomConstriant.constant = imageEdgeInsets.bottom;
   _imageContainerTrailingConstriant.constant = imageEdgeInsets.right;
+}
+
+- (void)setTitleEdgeInsets:(UIEdgeInsets)titleEdgeInsets {
+  _titleEdgeInsets = titleEdgeInsets;
+  _actionLabelTopConstraint.constant = titleEdgeInsets.top;
+  _actionLabelLeadingEdgeToContainerViewConstraint.constant = titleEdgeInsets.left;
+  _actionLabelLeadingEdgeToImageConstraint.constant = titleEdgeInsets.left;
+  _actionLabelBottomConstraint.constant = titleEdgeInsets.bottom;
+  _actionLabelTrailingConstraint.constant = titleEdgeInsets.right;
 }
 
 - (MDCActionSheetAction *)action {
@@ -266,6 +278,17 @@ static inline UIColor *RippleColor() {
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
   _imageRenderingMode = imageRenderingMode;
   [self setNeedsLayout];
+}
+
+- (void)setAddLeadingPadding:(BOOL)addLeadingPadding {
+  _addLeadingPadding = addLeadingPadding;
+  if (addLeadingPadding) {
+    _actionLabelLeadingEdgeToContainerViewConstraint.active = NO;
+    _actionLabelLeadingEdgeToImageConstraint.active = YES;
+  } else {
+    _actionLabelLeadingEdgeToImageConstraint.active = NO;
+    _actionLabelLeadingEdgeToContainerViewConstraint.active = YES;
+  }
 }
 
 @end

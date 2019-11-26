@@ -327,4 +327,15 @@
                 NSStringFromUIEdgeInsets(expectedImageEdgeInsets));
 }
 
+- (void)testDefaultTitleEdgeInsets {
+  // Given
+  MDCActionSheetItemTableViewCell *cell = [[MDCActionSheetItemTableViewCell alloc] init];
+
+  // Then
+  UIEdgeInsets expectedTitleEdgeInsets = UIEdgeInsetsMake(-18, 0, -18, 0);
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(cell.titleEdgeInsets, expectedTitleEdgeInsets),
+                @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(cell.titleEdgeInsets),
+                NSStringFromUIEdgeInsets(expectedTitleEdgeInsets));
+}
+
 @end

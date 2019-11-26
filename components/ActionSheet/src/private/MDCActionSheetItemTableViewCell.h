@@ -73,4 +73,11 @@
  */
 @property(nonatomic, assign) UIEdgeInsets imageEdgeInsets;
 
+/**
+ The inset or outset margins for the rectangle surrounding the cell's action label.
+
+ Defaults to {-18, 0, -18, 0}.
+ */
+@property(nonatomic, assign) UIEdgeInsets titleEdgeInsets;
+
 @end
