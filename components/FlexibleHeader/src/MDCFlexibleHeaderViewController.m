@@ -572,6 +572,19 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   return _headerView.useAdditionalSafeAreaInsetsForWebKitScrollViews;
 }
 
+- (void)setPermitInferringTopSafeAreaFromTopLayoutGuideViewController:
+    (BOOL)permitInferringTopSafeAreaFromTopLayoutGuideViewController {
+  if (@available(iOS 11, *)) {
+    _permitInferringTopSafeAreaFromTopLayoutGuideViewController =
+        permitInferringTopSafeAreaFromTopLayoutGuideViewController;
+    [self fhv_inferTopSafeAreaSourceViewController];
+  } else {
+    NSAssert(
+        NO,
+        @"permitInferringTopSafeAreaFromTopLayoutGuideViewController is only supported on iOS 11+");
+  }
+}
+
 #pragma mark - Top safe area inset extraction
 
 - (BOOL)fhv_isViewControllerDescendantOfTopLayoutGuideViewController:(UIViewController *)child {
@@ -615,12 +628,18 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   if (ancestor == nil) {
     ancestor = [self fhv_rootAncestorOfViewController:parent];
 
-    // Are we attempting to extract the top safe area inset from our top layout guide view
-    // controller?
-    if (self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController) {
-      // We can't use the provided ancestor because it's a child of the top layout guide view
-      // controller. Doing so would result in the top layout guide being infinitely increased.
-      ancestor = nil;
+    // Use instance variable here instead of property, as property is marked as available only on
+    // iOS 11+.
+    if (_permitInferringTopSafeAreaFromTopLayoutGuideViewController) {
+      // On iOS 11, we can subtract the additional safe area insets to find the correct value.
+    } else {
+      // Are we attempting to extract the top safe area inset from our top layout guide view
+      // controller?
+      if (self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController) {
+        // We can't use the provided ancestor because it's a child of the top layout guide view
+        // controller. Doing so would result in the top layout guide being infinitely increased.
+        ancestor = nil;
+      }
     }
   }
 
@@ -633,6 +652,11 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   if (_headerView.topSafeAreaSourceViewController != ancestor) {
     _headerView.topSafeAreaSourceViewController = ancestor;
+    _headerView.subtractsAdditionalSafeAreaInsets =
+        // Use instance variable here instead of property, as property is marked as available only
+        // on iOS 11+.
+        _permitInferringTopSafeAreaFromTopLayoutGuideViewController &&
+        self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController;
 
     BOOL shouldObserveLayoutGuide = YES;
     if (@available(iOS 11.0, *)) {
