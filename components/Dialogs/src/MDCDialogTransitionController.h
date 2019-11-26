@@ -55,5 +55,4 @@
  */
 @property(nonatomic, assign) NSTimeInterval scrimOpacityAnimationDuration;
 
-
 @end

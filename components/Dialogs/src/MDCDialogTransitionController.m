@@ -29,14 +29,15 @@ static const CGFloat MDCDialogScaleFactor = 0.8;
     self.dialogScaleAnimationDuration = 0.0f;
     self.scrimOpacityAnimationDuration = MDCDialogTransitionDuration;
   }
-  return self
+  return self;
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:
     (__unused id<UIViewControllerContextTransitioning>)transitionContext {
-  return MAX(MAX(self.dialogOpacityAnimationDuration, self.dialogScaleAnimationDuration), self.scrimOpacityAnimationDuration);
+  return MAX(MAX(self.dialogOpacityAnimationDuration, self.dialogScaleAnimationDuration),
+             self.scrimOpacityAnimationDuration);
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -76,28 +77,34 @@ static const CGFloat MDCDialogScaleFactor = 0.8;
   UIViewAnimationOptions options =
       UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
-  CGAffineTransform startingTransform = presenting ? CGAffineTransformMakeScale(MDCDialogScaleFactor, MDCDialogScaleFactor) : CGAffineTransformIdentity;
+  // Scale animation
+  CGAffineTransform startingTransform =
+      presenting ? CGAffineTransformMakeScale(MDCDialogScaleFactor, MDCDialogScaleFactor)
+                 : CGAffineTransformIdentity;
   CGAffineTransform endingTransform = CGAffineTransformIdentity;
-
   animatingView.transform = startingTransform;
-
   UIViewAnimationOptions scaleAnimationOptions = options | UIViewAnimationOptionCurveEaseOut;
   [UIView animateWithDuration:self.dialogScaleAnimationDuration
                         delay:0
                       options:scaleAnimationOptions
                    animations:^{
-    animatingView.transform = endingTransform;
-  }
+                     animatingView.transform = endingTransform;
+                   }
                    completion:nil];
 
-  if ([animatingViewController.presentationController isKindOfClass:[MDCDialogPresentationController class]]) {
-    MDCDialogPresentationController *presentationController = (MDCDialogPresentationController *)animatingViewController.presentationController;
+  // Opacity animation(s)
+  if ([animatingViewController.presentationController
+          isKindOfClass:[MDCDialogPresentationController class]]) {
+    MDCDialogPresentationController *presentationController =
+        (MDCDialogPresentationController *)animatingViewController.presentationController;
 
     UIColor *startingColor = presenting ? UIColor.clearColor : presentationController.scrimColor;
     UIColor *endingColor = presenting ? presentationController.scrimColor : UIColor.clearColor;
 
-    UIColor *startingTrackingColor = presenting ? UIColor.clearColor : presentationController.dialogShadowColor;
-    UIColor *endingTrackingColor = presenting ? presentationController.dialogShadowColor : UIColor.clearColor;
+    UIColor *startingTrackingColor =
+        presenting ? UIColor.clearColor : presentationController.dialogShadowColor;
+    UIColor *endingTrackingColor =
+        presenting ? presentationController.dialogShadowColor : UIColor.clearColor;
 
     presentationController.scrimColor = startingColor;
     presentationController.dialogShadowColor = startingTrackingColor;
@@ -105,40 +112,43 @@ static const CGFloat MDCDialogScaleFactor = 0.8;
                           delay:0
                         options:options
                      animations:^{
-      presentationController.scrimColor = endingColor;
-      presentationController.dialogShadowColor = endingTrackingColor;
-    }
+                       presentationController.scrimColor = endingColor;
+                       presentationController.dialogShadowColor = endingTrackingColor;
+                     }
                      completion:nil];
     presentationController.presentedView.alpha = startingAlpha;
     [UIView animateWithDuration:self.dialogOpacityAnimationDuration
-        delay:0.0
-        options:options
-        animations:^{
-      presentationController.presentedView.alpha = endingAlpha;
-        }
+                          delay:0.0
+                        options:options
+                     animations:^{
+                       presentationController.presentedView.alpha = endingAlpha;
+                     }
                      completion:nil];
   } else {
     [UIView animateWithDuration:self.dialogOpacityAnimationDuration
-        delay:0.0
-        options:options
-        animations:^{
-          animatingView.alpha = endingAlpha;
-        }
-        completion:nil];
+                          delay:0.0
+                        options:options
+                     animations:^{
+                       animatingView.alpha = endingAlpha;
+                     }
+                     completion:nil];
   }
 
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)([self transitionDuration:transitionContext] * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    // If we're dismissing, remove the presented view from the hierarchy
-    if (!presenting) {
-      [fromView removeFromSuperview];
-    }
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW,
+                    (int64_t)([self transitionDuration:transitionContext] * NSEC_PER_SEC)),
+      dispatch_get_main_queue(), ^{
+        // If we're dismissing, remove the presented view from the hierarchy
+        if (!presenting) {
+          [fromView removeFromSuperview];
+        }
 
-    // From ADC : UIViewControllerContextTransitioning
-    // When you do create transition animations, always call the
-    // completeTransition: from an appropriate completion block to let UIKit know
-    // when all of your animations have finished.
-    [transitionContext completeTransition:YES];
-  });
+        // From ADC : UIViewControllerContextTransitioning
+        // When you do create transition animations, always call the
+        // completeTransition: from an appropriate completion block to let UIKit know
+        // when all of your animations have finished.
+        [transitionContext completeTransition:YES];
+      });
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
