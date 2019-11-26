@@ -46,10 +46,10 @@ static inline UIColor *RippleColor() {
   NSLayoutConstraint *_contentContainerLeadingConstraint;
   NSLayoutConstraint *_contentContainerBottomConstraint;
   NSLayoutConstraint *_contentContainerTrailingConstraint;
-  NSLayoutConstraint *_imageContainerTopConstriant;
-  NSLayoutConstraint *_imageContainerLeadingConstriant;
-  NSLayoutConstraint *_imageContainerBottomConstriant;
-  NSLayoutConstraint *_imageContainerTrailingConstriant;
+  NSLayoutConstraint *_imageContainerTopConstraint;
+  NSLayoutConstraint *_imageContainerLeadingConstraint;
+  NSLayoutConstraint *_imageContainerBottomConstraint;
+  NSLayoutConstraint *_imageContainerTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -93,22 +93,22 @@ static inline UIColor *RippleColor() {
   [_imageContainerView setContentCompressionResistancePriority:UILayoutPriorityRequired
                                                        forAxis:UILayoutConstraintAxisVertical];
   [_contentContainerView addSubview:_imageContainerView];
-  _imageContainerTopConstriant =
+  _imageContainerTopConstraint =
       [_contentContainerView.topAnchor constraintEqualToAnchor:_imageContainerView.topAnchor
                                                       constant:_imageEdgeInsets.top];
-  _imageContainerTopConstriant.active = YES;
-  _imageContainerLeadingConstriant =
+  _imageContainerTopConstraint.active = YES;
+  _imageContainerLeadingConstraint =
       [_contentContainerView.leadingAnchor constraintEqualToAnchor:_imageContainerView.leadingAnchor
                                                           constant:_imageEdgeInsets.left];
-  _imageContainerLeadingConstriant.active = YES;
-  _imageContainerBottomConstriant =
+  _imageContainerLeadingConstraint.active = YES;
+  _imageContainerBottomConstraint =
       [_imageContainerView.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
                                                        constant:_imageEdgeInsets.bottom];
-  _imageContainerBottomConstriant.active = YES;
-  _imageContainerTrailingConstriant = [_imageContainerView.trailingAnchor
+  _imageContainerBottomConstraint.active = YES;
+  _imageContainerTrailingConstraint = [_imageContainerView.trailingAnchor
       constraintEqualToAnchor:_contentContainerView.trailingAnchor
                      constant:_imageEdgeInsets.right];
-  _imageContainerTrailingConstriant.active = YES;
+  _imageContainerTrailingConstraint.active = YES;
 
   _actionLabel = [[UILabel alloc] init];
   [_contentContainerView addSubview:_actionLabel];
@@ -193,10 +193,10 @@ static inline UIColor *RippleColor() {
 
 - (void)setImageEdgeInsets:(UIEdgeInsets)imageEdgeInsets {
   _imageEdgeInsets = imageEdgeInsets;
-  _imageContainerTopConstriant.constant = imageEdgeInsets.top;
-  _imageContainerLeadingConstriant.constant = imageEdgeInsets.left;
-  _imageContainerBottomConstriant.constant = imageEdgeInsets.bottom;
-  _imageContainerTrailingConstriant.constant = imageEdgeInsets.right;
+  _imageContainerTopConstraint.constant = imageEdgeInsets.top;
+  _imageContainerLeadingConstraint.constant = imageEdgeInsets.left;
+  _imageContainerBottomConstraint.constant = imageEdgeInsets.bottom;
+  _imageContainerTrailingConstraint.constant = imageEdgeInsets.right;
 }
 
 - (MDCActionSheetAction *)action {
