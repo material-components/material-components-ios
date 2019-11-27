@@ -18,6 +18,7 @@
 
 @interface AppBarNavigationControllerNavigationBarHiddenTests : XCTestCase
 @property(nonatomic, strong) MDCAppBarNavigationController *appBarNavigationController;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @end
 
 @implementation AppBarNavigationControllerNavigationBarHiddenTests
@@ -28,6 +29,7 @@
   self.appBarNavigationController = [[MDCAppBarNavigationController alloc] init];
   self.appBarNavigationController.shouldSetNavigationBarHiddenHideAppBar = NO;
   [self.appBarNavigationController pushViewController:[[UIViewController alloc] init] animated:NO];
+  self.appBarViewController = [self.appBarNavigationController appBarViewControllerForViewController:self.appBarNavigationController.visibleViewController];
 }
 
 - (void)tearDown {
@@ -39,6 +41,7 @@
 - (void)testDefaultIsHidden {
   // Then
   XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), 0, 0.001);
 }
 
 - (void)testStillHiddenAfterSettingNavigationBarHidden {
@@ -47,6 +50,7 @@
 
   // Then
   XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), 0, 0.001);
 }
 
 - (void)testStillHiddenAfterSettingNavigationBarHiddenAnimated {
@@ -55,6 +59,7 @@
 
   // Then
   XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), 0, 0.001);
 }
 
 // Note: it is not possible to write tests for `navigationBarHidden = NO;` because this throws an

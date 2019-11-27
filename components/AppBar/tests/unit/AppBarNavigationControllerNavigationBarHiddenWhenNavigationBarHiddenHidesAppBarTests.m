@@ -18,6 +18,7 @@
 
 @interface AppBarNavigationControllerNavigationBarHiddenWhenNavigationBarHiddenHidesAppBarTests : XCTestCase
 @property(nonatomic, strong) MDCAppBarNavigationController *appBarNavigationController;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @end
 
 @implementation AppBarNavigationControllerNavigationBarHiddenWhenNavigationBarHiddenHidesAppBarTests
@@ -28,6 +29,7 @@
   self.appBarNavigationController = [[MDCAppBarNavigationController alloc] init];
   self.appBarNavigationController.shouldSetNavigationBarHiddenHideAppBar = YES;
   [self.appBarNavigationController pushViewController:[[UIViewController alloc] init] animated:NO];
+  self.appBarViewController = [self.appBarNavigationController appBarViewControllerForViewController:self.appBarNavigationController.visibleViewController];
 }
 
 - (void)tearDown {
@@ -39,6 +41,7 @@
 - (void)testDefaultIsVisible {
   // Then
   XCTAssertFalse(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), 0, 0.001);
 }
 
 - (void)testBecomesHiddenAfterSettingNavigationBarHidden {
@@ -47,6 +50,7 @@
 
   // Then
   XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), -self.appBarViewController.headerView.maximumHeight, 0.001);
 }
 
 - (void)testBecomesHiddenAfterSettingNavigationBarHiddenAnimated {
@@ -55,6 +59,17 @@
 
   // Then
   XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), 0, 0.001);
+}
+
+- (void)testBecomesVisibleAfterTogglingTheVisibility {
+  // When
+  self.appBarNavigationController.navigationBarHidden = YES;
+  self.appBarNavigationController.navigationBarHidden = NO;
+
+  // Then
+  XCTAssertFalse(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), 0, 0.001);
 }
 
 @end
