@@ -156,6 +156,9 @@
     return;
   }
 
+  // If the shift behavior is presently disabled (the default), then adjust it to be hideable
+  // instead, otherwise we do not make any adjustments to the shift behavior because it's likely
+  // that the shift behavior was explicitly set to something else.
   if (appBarViewController.headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled) {
     appBarViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHideable;
   }
