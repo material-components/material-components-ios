@@ -71,6 +71,7 @@ target "MDCCatalog" do
     'Tabs+Theming/UnitTests',
     'TextFields/UnitTests',
     'TextControls/UnitTests',
+    'TextControls+Theming/UnitTests',
     'TextFields+Theming/UnitTests',
     'Themes/UnitTests',
     'Typography/UnitTests',

@@ -31,7 +31,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 @property(nonatomic, strong) UILabel *messageLabel;
 @end
 
-@interface MDCActionSheetTest : XCTestCase
+@interface MDCActionSheetControllerTests : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @end
 
@@ -46,7 +46,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
 @end
 
-@implementation MDCActionSheetTest
+@implementation MDCActionSheetControllerTests
 
 - (void)setUp {
   [super setUp];

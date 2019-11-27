@@ -15,55 +15,43 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialTypography
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
-  @objc class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
-      "primaryDemo": false,
-      "presentable": false,
-    ]
-  }
-
-  var containerScheme = MDCContainerScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
-    let titleColor = UIColor.white
-    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     let flatButtonStatic = MDCButton()
     flatButtonStatic.applyContainedTheme(withScheme: containerScheme)
-    flatButtonStatic.setTitleColor(titleColor, for: .normal)
-    flatButtonStatic.setBackgroundColor(backgroundColor, for: .normal)
     flatButtonStatic.setTitle("Static", for: UIControl.State())
     flatButtonStatic.sizeToFit()
     flatButtonStatic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonStatic.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(flatButtonStatic)
 
-    containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201902)
     let flatButtonDynamic = MDCButton()
     flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
-    flatButtonDynamic.setTitleColor(titleColor, for: .normal)
-    flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
+    let buttonFont = containerScheme.typographyScheme.button.mdc_scaledFont(for: view)
+    flatButtonDynamic.setTitleFont(buttonFont, for: .normal)
+    flatButtonDynamic.mdc_adjustsFontForContentSizeCategory = true
     flatButtonDynamic.setTitle("Dynamic", for: UIControl.State())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonDynamic.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    flatButtonDynamic.mdc_adjustsFontForContentSizeCategory = true
+
     view.addSubview(flatButtonDynamic)
 
-    containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201804)
     let flatButtonDynamicLegacy = MDCButton()
     flatButtonDynamicLegacy.applyContainedTheme(withScheme: containerScheme)
-    flatButtonDynamicLegacy.setTitleColor(titleColor, for: .normal)
-    flatButtonDynamicLegacy.setBackgroundColor(backgroundColor, for: .normal)
+    let legacyButtonFont = MDCTypographyScheme(defaults: .material201804).button
+    flatButtonDynamicLegacy.setTitleFont(legacyButtonFont, for: .normal)
     flatButtonDynamicLegacy.setTitle("Dynamic (legacy)", for: UIControl.State())
     flatButtonDynamicLegacy.sizeToFit()
     flatButtonDynamicLegacy.translatesAutoresizingMaskIntoConstraints = false
@@ -111,5 +99,15 @@ class ButtonsDynamicTypeViewController: UIViewController {
   @objc func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
+}
 
+// MARK: Catalog by conventions
+extension ButtonsDynamicTypeViewController {
+  @objc class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
+  }
 }
