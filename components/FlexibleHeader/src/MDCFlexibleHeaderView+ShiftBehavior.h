@@ -67,8 +67,6 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
  @note If self.observesTrackingScrollViewScrollEvents is YES, then this property can only be
  MDCFlexibleHeaderShiftBehaviorDisabled. Attempts to set shiftBehavior to any other value if
  self.observesTrackingScrollViewScrollEvents is YES will result in an assertion being thrown.
-
- Default: MDCFlexibleHeaderShiftBehaviorDisabled
  */
 @property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
 
