@@ -109,10 +109,6 @@ static inline UIColor *RippleColor() {
       [_imageContainerView.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
                                                        constant:_imageEdgeInsets.bottom];
   _imageContainerBottomConstriant.active = YES;
-  _imageContainerTrailingConstriant = [_imageContainerView.trailingAnchor
-      constraintEqualToAnchor:_contentContainerView.trailingAnchor
-                     constant:_imageEdgeInsets.right];
-  _imageContainerTrailingConstriant.active = YES;
 
   _actionLabel = [[UILabel alloc] init];
   [_contentContainerView addSubview:_actionLabel];
@@ -163,9 +159,10 @@ static inline UIColor *RippleColor() {
       .active = YES;
   [_actionImageView.bottomAnchor constraintLessThanOrEqualToAnchor:_imageContainerView.bottomAnchor]
       .active = YES;
-  [_actionImageView.trailingAnchor
-      constraintLessThanOrEqualToAnchor:_imageContainerView.trailingAnchor]
-      .active = YES;
+  _imageContainerTrailingConstriant =
+      [_actionImageView.trailingAnchor constraintEqualToAnchor:_imageContainerView.trailingAnchor
+                                                      constant:_imageEdgeInsets.right];
+  _imageContainerTrailingConstriant.active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
 }
@@ -175,14 +172,36 @@ static inline UIColor *RippleColor() {
 
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
+  BOOL isActionImageCurrentlyNil = self.actionImageView.image == nil;
+  BOOL isLatestActionImageNil = _itemAction.image == nil;
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
+  if (isActionImageCurrentlyNil != isLatestActionImageNil) {
+    if (isLatestActionImageNil) {
+      _actionLabelLeadingEdgeToImageConstraint.active = NO;
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = YES;
+    } else {
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = NO;
+      _actionLabelLeadingEdgeToImageConstraint.active = YES;
+    }
+  }
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
+  BOOL isActionImageCurrentlyNil = self.actionImageView.image == nil;
+  BOOL isLatestActionImageNil = action.image == nil;
   self.actionImageView.image = _itemAction.image;
+  if (isActionImageCurrentlyNil != isLatestActionImageNil) {
+    if (isLatestActionImageNil) {
+      _actionLabelLeadingEdgeToImageConstraint.active = NO;
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = YES;
+    } else {
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = NO;
+      _actionLabelLeadingEdgeToImageConstraint.active = YES;
+    }
+  }
   [self setNeedsLayout];
 }
 
@@ -282,7 +301,7 @@ static inline UIColor *RippleColor() {
 
 - (void)setAddLeadingPadding:(BOOL)addLeadingPadding {
   _addLeadingPadding = addLeadingPadding;
-  if (addLeadingPadding) {
+  if (addLeadingPadding || self.actionImageView.image) {
     _actionLabelLeadingEdgeToContainerViewConstraint.active = NO;
     _actionLabelLeadingEdgeToImageConstraint.active = YES;
   } else {
