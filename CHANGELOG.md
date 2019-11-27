@@ -1,10 +1,10 @@
 # 94.4.0
 
-This minor release introduces new APIs to ActionSheet, BottomSheet and FlexibleHeader. Additionally, it includes new theming extension for TextControls component.
+This minor release introduces new APIs to ActionSheet, BottomSheet and FlexibleHeader. Additionally, it includes new theming extensions for TextControls component.
 
 ## New features
 
-TextControls component now has a theming extension.
+TextControls component now has theming extensions.
 
 ```objc
 MDCFilledTextField *filledTextField = [[MDCFilledTextField alloc] init];
