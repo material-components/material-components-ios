@@ -161,10 +161,10 @@ static inline UIColor *RippleColor() {
       .active = YES;
   [_actionImageView.bottomAnchor constraintLessThanOrEqualToAnchor:_imageContainerView.bottomAnchor]
       .active = YES;
-  _imageContainerTrailingConstriant =
+  _imageContainerTrailingConstraint =
       [_actionImageView.trailingAnchor constraintEqualToAnchor:_imageContainerView.trailingAnchor
                                                       constant:_imageEdgeInsets.right];
-  _imageContainerTrailingConstriant.active = YES;
+  _imageContainerTrailingConstraint.active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
 }
