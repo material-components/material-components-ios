@@ -96,6 +96,8 @@ static inline UIColor *RippleColor() {
                                                        forAxis:UILayoutConstraintAxisHorizontal];
   [_imageContainerView setContentCompressionResistancePriority:UILayoutPriorityRequired
                                                        forAxis:UILayoutConstraintAxisVertical];
+  [_imageContainerView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+  [_imageContainerView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
   [_contentContainerView addSubview:_imageContainerView];
   _imageContainerTopConstriant =
       [_contentContainerView.topAnchor constraintEqualToAnchor:_imageContainerView.topAnchor
