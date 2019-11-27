@@ -30,4 +30,28 @@
   XCTAssertTrue(appBarNavigationController.navigationBarHidden);
 }
 
+- (void)testStillHiddenAfterSettingNavigationBarHidden {
+  // Given
+  MDCAppBarNavigationController *appBarNavigationController =
+      [[MDCAppBarNavigationController alloc] init];
+
+  // When
+  appBarNavigationController.navigationBarHidden = YES;
+
+  // Then
+  XCTAssertTrue(appBarNavigationController.navigationBarHidden);
+}
+
+- (void)testStillHiddenAfterSettingNavigationBarHiddenAnimated {
+  // Given
+  MDCAppBarNavigationController *appBarNavigationController =
+  [[MDCAppBarNavigationController alloc] init];
+
+  // When
+  [appBarNavigationController setNavigationBarHidden:YES animated:YES];
+
+  // Then
+  XCTAssertTrue(appBarNavigationController.navigationBarHidden);
+}
+
 @end
