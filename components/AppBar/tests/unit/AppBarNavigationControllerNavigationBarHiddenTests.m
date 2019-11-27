@@ -17,41 +17,47 @@
 #import "MaterialAppBar.h"
 
 @interface AppBarNavigationControllerNavigationBarHiddenTests : XCTestCase
+@property(nonatomic, strong) MDCAppBarNavigationController *appBarNavigationController;
 @end
 
 @implementation AppBarNavigationControllerNavigationBarHiddenTests
 
-- (void)testDefaultIsHidden {
-  // Given
-  MDCAppBarNavigationController *appBarNavigationController =
-      [[MDCAppBarNavigationController alloc] init];
+- (void)setUp {
+  [super setUp];
 
+  self.appBarNavigationController = [[MDCAppBarNavigationController alloc] init];
+  self.appBarNavigationController.shouldSetNavigationBarHiddenHideAppBar = NO;
+  [self.appBarNavigationController pushViewController:[[UIViewController alloc] init] animated:NO];
+}
+
+- (void)tearDown {
+  self.appBarNavigationController = nil;
+
+  [super tearDown];
+}
+
+- (void)testDefaultIsHidden {
   // Then
-  XCTAssertTrue(appBarNavigationController.navigationBarHidden);
+  XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
 }
 
 - (void)testStillHiddenAfterSettingNavigationBarHidden {
-  // Given
-  MDCAppBarNavigationController *appBarNavigationController =
-      [[MDCAppBarNavigationController alloc] init];
-
   // When
-  appBarNavigationController.navigationBarHidden = YES;
+  self.appBarNavigationController.navigationBarHidden = YES;
 
   // Then
-  XCTAssertTrue(appBarNavigationController.navigationBarHidden);
+  XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
 }
 
 - (void)testStillHiddenAfterSettingNavigationBarHiddenAnimated {
-  // Given
-  MDCAppBarNavigationController *appBarNavigationController =
-  [[MDCAppBarNavigationController alloc] init];
-
   // When
-  [appBarNavigationController setNavigationBarHidden:YES animated:YES];
+  [self.appBarNavigationController setNavigationBarHidden:YES animated:YES];
 
   // Then
-  XCTAssertTrue(appBarNavigationController.navigationBarHidden);
+  XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
 }
+
+// Note: it is not possible to write tests for `navigationBarHidden = NO;` because this throws an
+// assertion.
 
 @end

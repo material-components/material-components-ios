@@ -27,14 +27,21 @@
 
   self.appBarNavigationController = [[MDCAppBarNavigationController alloc] init];
   self.appBarNavigationController.shouldSetNavigationBarHiddenHideAppBar = YES;
+  [self.appBarNavigationController pushViewController:[[UIViewController alloc] init] animated:NO];
 }
 
-- (void)testDefaultIsHidden {
+- (void)tearDown {
+  self.appBarNavigationController = nil;
+
+  [super tearDown];
+}
+
+- (void)testDefaultIsVisible {
   // Then
-  XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
+  XCTAssertFalse(self.appBarNavigationController.navigationBarHidden);
 }
 
-- (void)testStillHiddenAfterSettingNavigationBarHidden {
+- (void)testBecomesHiddenAfterSettingNavigationBarHidden {
   // When
   self.appBarNavigationController.navigationBarHidden = YES;
 
@@ -42,7 +49,7 @@
   XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
 }
 
-- (void)testStillHiddenAfterSettingNavigationBarHiddenAnimated {
+- (void)testBecomesHiddenAfterSettingNavigationBarHiddenAnimated {
   // When
   [self.appBarNavigationController setNavigationBarHidden:YES animated:YES];
 
