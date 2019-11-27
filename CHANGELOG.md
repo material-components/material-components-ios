@@ -1,16 +1,54 @@
-# #develop#
+# 94.4.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces new APIs to ActionSheet, BottomSheet and FlexibleHeader. Additionally, it includes new theming extension for TextControls component.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+TextControls component now has a theming extension.
+
+```objc
+MDCFilledTextField *filledTextField = [[MDCFilledTextField alloc] init];
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+[filledTextField applyThemeWithScheme:containerScheme];
+```
+
+```swift
+let filledTextField = MDCFilledTextField()
+let scheme = MDCContainerScheme()
+
+filledTextField.applyTheme(withScheme: scheme)
+```
+
 ## API changes
+
+### ActionSheet
+
+#### MDCActionSheetController
+
+*new* property: `contentEdgeInsets` in `MDCActionSheetController`
+
+*new* property: `imageEdgeInsets` in `MDCActionSheetController`
+
+### BottomSheet
+
+#### MDCBottomSheetController
+
+*new* property: `dismissOnDraggingDownSheet` in `MDCBottomSheetController`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `dismissOnDraggingDownSheet` in `MDCBottomSheetPresentationController`
+
+#### MDCBottomSheetTransitionController
+
+*new* property: `dismissOnDraggingDownSheet` in `MDCBottomSheetTransitionController`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView(ShiftBehavior)
+
+*new* property: `shiftedOffscreen` in `MDCFlexibleHeaderView(ShiftBehavior)`
 
 ## Component changes
 
@@ -52,9 +90,6 @@ Replace this text with example code for each new feature.
 ### TextControls
 
 * [Add Outlined theming extension (#9002)](https://github.com/material-components/material-components-ios/commit/f3daf9b4986e8f0b45b55bc517913cb11e4441ac) (Andrew Overton)
-
-## Multi-component changes
-
 * [Add MDCFilledTextField theming extension (#8993)](https://github.com/material-components/material-components-ios/commit/c806e4b9d0acfcee53336fa54459a0ef22bc30fb) (Andrew Overton)
 
 ---
