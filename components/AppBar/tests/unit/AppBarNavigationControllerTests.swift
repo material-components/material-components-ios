@@ -25,7 +25,7 @@ private class MockAppBarNavigationControllerDelegate:
   }
 }
 
-class MDCAppBarNavigationControllerTests: XCTestCase {
+class AppBarNavigationControllerTests: XCTestCase {
 
   var navigationController: MDCAppBarNavigationController!
   override func setUp() {

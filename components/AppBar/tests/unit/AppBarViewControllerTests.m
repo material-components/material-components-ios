@@ -16,11 +16,11 @@
 
 #import "MDCAppBarViewController.h"
 
-@interface MDCAppBarViewControllerTests : XCTestCase
+@interface AppBarViewControllerTests : XCTestCase
 
 @end
 
-@implementation MDCAppBarViewControllerTests
+@implementation AppBarViewControllerTests
 
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
   // Given
