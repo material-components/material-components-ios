@@ -16,12 +16,6 @@
 
 #import "MaterialActionSheet.h"
 
-static NSString *const kShortTitle1Latin = @"Item 1";
-static NSString *const kShortTitle2Latin = @"Item 2";
-static NSString *const kShortTitle3Latin = @"Item 3";
-static NSString *const kShortTitle4Latin = @"Item 4";
-static NSString *const kShortTitle5Latin = @"Item 5";
-
 static NSString *const kLongTitle1Latin =
     @"Lorem ipsum dolor sit amet, ex graecis intellegam eos, vis tantas nusquam.";
 static NSString *const kLongTitle2Latin =
@@ -32,12 +26,6 @@ static NSString *const kLongTitle4Latin =
     @"Duo eu. Et fabulas platonem eum, ei semper animal accusamus eos.";
 static NSString *const kLongTitle5Latin =
     @"Quot mazim liber sea et, eam latine sadipscing referrentur et, commune pertinax pro at.";
-
-static NSString *const kShortTitle1Arabic = @"قد وحتّى";
-static NSString *const kShortTitle2Arabic = @"بزمام";
-static NSString *const kShortTitle3Arabic = @"لالتبر";
-static NSString *const kShortTitle4Arabic = @"ل أخذ";
-static NSString *const kShortTitle5Arabic = @"الانجليزية";
 
 static NSString *const kLongTitle1Arabic =
     @"أضف إذ أراضي أطراف, وحتى العالم، بحث لم. وصل كل ويعزى اوروبا.";
@@ -54,7 +42,7 @@ static NSString *const kLongTitle5Arabic =
 @interface MDCActionSheetControllerInsetsAPIsSnapshotTests : MDCSnapshotTestCase
 
 /** The action sheet being tested. */
-@property(nonatomic, strong, nullable) MDCActionSheetController *actionSheetController;
+@property(nonatomic, strong, nullable) MDCActionSheetController *controller;
 
 /** An Action Sheet action. */
 @property(nonatomic, strong) MDCActionSheetAction *action1;
@@ -83,40 +71,51 @@ static NSString *const kLongTitle5Arabic =
   //  self.recordMode = YES;
 
   self.action1 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle1Latin
+      actionWithTitle:kLongTitle1Latin
                 image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
                                          withStyle:MDCSnapshotTestImageStyleCheckerboard]
               handler:nil];
   self.action2 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle2Latin
+      actionWithTitle:kLongTitle2Latin
                 image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
                                          withStyle:MDCSnapshotTestImageStyleRectangles]
               handler:nil];
   self.action3 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle3Latin
+      actionWithTitle:kLongTitle3Latin
                 image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
                                          withStyle:MDCSnapshotTestImageStyleEllipses]
               handler:nil];
   self.action4 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle4Latin
+      actionWithTitle:kLongTitle4Latin
                 image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
                                          withStyle:MDCSnapshotTestImageStyleDiagonalLines]
               handler:nil];
   self.action5 = [MDCActionSheetAction
-      actionWithTitle:kShortTitle5Latin
+      actionWithTitle:kLongTitle5Latin
                 image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
                                          withStyle:MDCSnapshotTestImageStyleFramedX]
               handler:nil];
+
+  self.controller = [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                                     message:kLongTitle2Latin];
+}
+
+- (void)addAllFiveActions {
+  [self.controller addAction:self.action1];
+  [self.controller addAction:self.action2];
+  [self.controller addAction:self.action3];
+  [self.controller addAction:self.action4];
+  [self.controller addAction:self.action5];
 }
 
 - (void)tearDown {
-  if (self.actionSheetController.presentingViewController) {
+  if (self.controller.presentingViewController) {
     XCTestExpectation *expectation =
         [[XCTestExpectation alloc] initWithDescription:@"Action sheet is dismissed"];
-    [self.actionSheetController dismissViewControllerAnimated:NO
-                                                   completion:^{
-                                                     [expectation fulfill];
-                                                   }];
+    [self.controller dismissViewControllerAnimated:NO
+                                        completion:^{
+                                          [expectation fulfill];
+                                        }];
     [self waitForExpectations:@[ expectation ] timeout:5];
   }
   self.action1 = nil;
@@ -124,7 +123,7 @@ static NSString *const kLongTitle5Arabic =
   self.action3 = nil;
   self.action4 = nil;
   self.action5 = nil;
-  self.actionSheetController = nil;
+  self.controller = nil;
 
   [super tearDown];
 }
@@ -134,27 +133,10 @@ static NSString *const kLongTitle5Arabic =
   [self snapshotVerifyView:snapshotView];
 }
 
-/** Update the @c MDCActionSheetAction properties to use short Arabic text. */
-- (void)changeToShortArabicTitles {
-  self.action1 = [MDCActionSheetAction actionWithTitle:kShortTitle1Arabic
-                                                 image:self.action1.image
-                                               handler:nil];
-  self.action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Arabic
-                                                 image:self.action2.image
-                                               handler:nil];
-  self.action3 = [MDCActionSheetAction actionWithTitle:kShortTitle3Arabic
-                                                 image:self.action3.image
-                                               handler:nil];
-  self.action4 = [MDCActionSheetAction actionWithTitle:kShortTitle4Arabic
-                                                 image:self.action4.image
-                                               handler:nil];
-  self.action5 = [MDCActionSheetAction actionWithTitle:kShortTitle5Arabic
-                                                 image:self.action5.image
-                                               handler:nil];
-}
-
-/** Update the @c MDCActionSheetAction properties to use long Arabic text. */
-- (void)changeToLongArabicTitles {
+/** Configure the ActionSheetController to use long Arabic strings. */
+- (void)useArabicStrings {
+  self.controller.title = kLongTitle4Arabic;
+  self.controller.message = kLongTitle2Arabic;
   self.action1 = [MDCActionSheetAction actionWithTitle:kLongTitle1Arabic
                                                  image:self.action1.image
                                                handler:nil];
@@ -170,157 +152,85 @@ static NSString *const kLongTitle5Arabic =
   self.action5 = [MDCActionSheetAction actionWithTitle:kLongTitle5Arabic
                                                  image:self.action5.image
                                                handler:nil];
-}
-
-/** Update the @c MDCActionSheetAction properties to use long Latin text. */
-- (void)changeToLongLatinTitles {
-  self.action1 = [MDCActionSheetAction actionWithTitle:kLongTitle1Latin
-                                                 image:self.action1.image
-                                               handler:nil];
-  self.action2 = [MDCActionSheetAction actionWithTitle:kLongTitle2Latin
-                                                 image:self.action2.image
-                                               handler:nil];
-  self.action3 = [MDCActionSheetAction actionWithTitle:kLongTitle3Latin
-                                                 image:self.action3.image
-                                               handler:nil];
-  self.action4 = [MDCActionSheetAction actionWithTitle:kLongTitle4Latin
-                                                 image:self.action4.image
-                                               handler:nil];
-  self.action5 = [MDCActionSheetAction actionWithTitle:kLongTitle5Latin
-                                                 image:self.action5.image
-                                               handler:nil];
+  [self addAllFiveActions];
 }
 
 #pragma mark - contentEdgeInsets
 
 - (void)testContentEdgeInsetsIncreaseActionRowHeight {
   // Given
-  [self changeToLongLatinTitles];
-
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
-                                                       message:kLongTitle2Latin];
-  [controller addAction:self.action1];
-  [controller addAction:self.action2];
-  [controller addAction:self.action3];
-  [controller addAction:self.action4];
-  [controller addAction:self.action5];
+  [self addAllFiveActions];
 
   // When
-  controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  controller.contentEdgeInsets = UIEdgeInsetsMake(-30, 0, -30, 0);
+  self.controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  self.controller.contentEdgeInsets = UIEdgeInsetsMake(-30, 0, -30, 0);
 
   // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
+  [self generateSnapshotAndVerifyForView:self.controller.view];
 }
 
 - (void)testContentEdgeInsetsDecreaseActionRowHeight {
   // Given
-  [self changeToLongLatinTitles];
-
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
-                                                       message:kLongTitle2Latin];
-  [controller addAction:self.action1];
-  [controller addAction:self.action2];
-  [controller addAction:self.action3];
-  [controller addAction:self.action4];
-  [controller addAction:self.action5];
+  [self addAllFiveActions];
 
   // When
-  controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  controller.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
+  self.controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  self.controller.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
 
   // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
+  [self generateSnapshotAndVerifyForView:self.controller.view];
 }
 
 - (void)testContentEdgeInsetsShiftActionRowToRightInLTR {
   // Given
-  [self changeToLongLatinTitles];
-
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
-                                                       message:kLongTitle2Latin];
-  [controller addAction:self.action1];
-  [controller addAction:self.action2];
-  [controller addAction:self.action3];
-  [controller addAction:self.action4];
-  [controller addAction:self.action5];
+  [self addAllFiveActions];
 
   // When
-  controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  controller.contentEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 50);
+  self.controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  self.controller.contentEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 50);
 
   // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
+  [self generateSnapshotAndVerifyForView:self.controller.view];
 }
 
 - (void)testContentEdgeInsetsShiftActionRowToLeftInLTR {
   // Given
-  [self changeToLongLatinTitles];
-
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
-                                                       message:kLongTitle2Latin];
-  [controller addAction:self.action1];
-  [controller addAction:self.action2];
-  [controller addAction:self.action3];
-  [controller addAction:self.action4];
-  [controller addAction:self.action5];
+  [self addAllFiveActions];
 
   // When
-  controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
+  self.controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  self.controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
 
   // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
+  [self generateSnapshotAndVerifyForView:self.controller.view];
 }
 
 - (void)testContentEdgeInsetsShiftActionRowToLeftInRTL {
   // Given
-  [self changeToLongArabicTitles];
-
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
-                                                       message:kLongTitle2Arabic];
-  [controller addAction:self.action1];
-  [controller addAction:self.action2];
-  [controller addAction:self.action3];
-  [controller addAction:self.action4];
-  [controller addAction:self.action5];
+  [self useArabicStrings];
 
   // When
-  [controller.view layoutIfNeeded];
-  [self changeViewToRTL:controller.view];
-  controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  controller.contentEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 50);
+  [self.controller.view layoutIfNeeded];
+  [self changeViewToRTL:self.controller.view];
+  self.controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  self.controller.contentEdgeInsets = UIEdgeInsetsMake(0, -50, 0, 50);
 
   // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
+  [self generateSnapshotAndVerifyForView:self.controller.view];
 }
 
 - (void)testContentEdgeInsetsShiftActionRowToRightInRTL {
   // Given
-  [self changeToLongArabicTitles];
-
-  MDCActionSheetController *controller =
-      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
-                                                       message:kLongTitle2Arabic];
-  [controller addAction:self.action1];
-  [controller addAction:self.action2];
-  [controller addAction:self.action3];
-  [controller addAction:self.action4];
-  [controller addAction:self.action5];
+  [self useArabicStrings];
 
   // When
-  [controller.view layoutIfNeeded];
-  [self changeViewToRTL:controller.view];
-  controller.view.bounds = CGRectMake(0, 0, 320, 640);
-  controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
+  self.[controller.view layoutIfNeeded];
+  [self changeViewToRTL:self.controller.view];
+  self.controller.view.bounds = CGRectMake(0, 0, 320, 640);
+  self.controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
 
   // Then
-  [self generateSnapshotAndVerifyForView:controller.view];
+  [self generateSnapshotAndVerifyForView:self.controller.view];
 }
 
 @end
