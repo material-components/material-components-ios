@@ -38,6 +38,16 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderShiftBehavior) {
    MDCFlexibleHeaderShiftBehaviorEnabled.
    */
   MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar,
+
+  /**
+   Allows the header to be shifted on- and off-screen only via the @c shiftHeaderOnScreenAnimated:
+   and @c shiftHeaderOffScreenAnimated APIs. Scroll events will not affect the visibility of the
+   header.
+
+   Analogous to UINavigationController's setNavigationBarHidden: behavior, in that the visibility of
+   the navigation bar persists regardless of the user's subsequent interactions.
+   */
+  MDCFlexibleHeaderShiftBehaviorHideable,
 };
 
 /** The importance of content contained within the flexible header view. */
