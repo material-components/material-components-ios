@@ -29,7 +29,8 @@
   self.appBarNavigationController = [[MDCAppBarNavigationController alloc] init];
   self.appBarNavigationController.shouldSetNavigationBarHiddenHideAppBar = NO;
   [self.appBarNavigationController pushViewController:[[UIViewController alloc] init] animated:NO];
-  self.appBarViewController = [self.appBarNavigationController appBarViewControllerForViewController:self.appBarNavigationController.visibleViewController];
+  self.appBarViewController = [self.appBarNavigationController
+      appBarViewControllerForViewController:self.appBarNavigationController.visibleViewController];
 }
 
 - (void)tearDown {

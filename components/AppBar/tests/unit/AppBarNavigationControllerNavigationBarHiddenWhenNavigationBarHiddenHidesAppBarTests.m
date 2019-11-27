@@ -16,7 +16,8 @@
 
 #import "MaterialAppBar.h"
 
-@interface AppBarNavigationControllerNavigationBarHiddenWhenNavigationBarHiddenHidesAppBarTests : XCTestCase
+@interface AppBarNavigationControllerNavigationBarHiddenWhenNavigationBarHiddenHidesAppBarTests
+    : XCTestCase
 @property(nonatomic, strong) MDCAppBarNavigationController *appBarNavigationController;
 @property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @end
@@ -29,7 +30,8 @@
   self.appBarNavigationController = [[MDCAppBarNavigationController alloc] init];
   self.appBarNavigationController.shouldSetNavigationBarHiddenHideAppBar = YES;
   [self.appBarNavigationController pushViewController:[[UIViewController alloc] init] animated:NO];
-  self.appBarViewController = [self.appBarNavigationController appBarViewControllerForViewController:self.appBarNavigationController.visibleViewController];
+  self.appBarViewController = [self.appBarNavigationController
+      appBarViewControllerForViewController:self.appBarNavigationController.visibleViewController];
 }
 
 - (void)tearDown {
@@ -50,7 +52,8 @@
 
   // Then
   XCTAssertTrue(self.appBarNavigationController.navigationBarHidden);
-  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame), -self.appBarViewController.headerView.maximumHeight, 0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.appBarViewController.headerView.frame),
+                             -self.appBarViewController.headerView.maximumHeight, 0.001);
 }
 
 - (void)testBecomesHiddenAfterSettingNavigationBarHiddenAnimated {
