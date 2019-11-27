@@ -28,8 +28,6 @@ filledTextField.applyTheme(withScheme: scheme)
 
 *new* property: `contentEdgeInsets` in `MDCActionSheetController`
 
-*new* property: `imageEdgeInsets` in `MDCActionSheetController`
-
 ### BottomSheet
 
 #### MDCBottomSheetController
@@ -57,12 +55,9 @@ filledTextField.applyTheme(withScheme: scheme)
 ### ActionSheet
 
 * [Add `contentEdgeInsets` API. (#9008)](https://github.com/material-components/material-components-ios/commit/8fb17f7b0ae42be323967d53ddcb43a18f9f1e7e) (Robert Moore)
-* [Add `imageEdgeInsets` API. (#9024)](https://github.com/material-components/material-components-ios/commit/52dbc6c0b7eec2cdb7214b3b146450ab9fec2f0e) (Robert Moore)
 * [Align title/image to their leading edges directly. (#9013)](https://github.com/material-components/material-components-ios/commit/b5fef2ef75dda92d28c72c61232ab57bea1ff307) (Robert Moore)
 * [Correct RTL snapshot tests. (#9011)](https://github.com/material-components/material-components-ios/commit/8405097173b3430c47d43c1fca65be2a38828dee) (Robert Moore)
-* [Fix spelling error for "constraint". (#9030)](https://github.com/material-components/material-components-ios/commit/c56de0ef5ff4a58c4b6fe46121d53b1100262f6e) (Robert Moore)
 * [Name unit tests to match class. (#9003)](https://github.com/material-components/material-components-ios/commit/06ea8732d21d7ba6f4376c794206247a2271e1a9) (Robert Moore)
-* [Refactor insets snapshot test. (#9029)](https://github.com/material-components/material-components-ios/commit/55c4ab9b8b100f83a117a9e985f1a74b8ce20fa6) (Robert Moore)
 * [Refactor snapshot tests. (#8999)](https://github.com/material-components/material-components-ios/commit/a14720f7d7d4b560a87ad1581ec3a1a692d83bc1) (Robert Moore)
 * [Split "insets" API snapshot tests to separate file. (#9020)](https://github.com/material-components/material-components-ios/commit/c33be81182f6dfb0b61564f3f3ccbfe51baf11f5) (Robert Moore)
 
