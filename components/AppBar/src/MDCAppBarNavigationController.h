@@ -123,6 +123,53 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
  */
 @property(nonatomic, weak, nullable) id<MDCAppBarNavigationControllerDelegate> delegate;
 
+#pragma mark - Behavioral flags
+
+/**
+ Controls whether the @c setNavigationBarHidden: and @c setNavigationBarHidden:animated: methods
+ will toggle visiblity of the currently visible injected App Bar.
+
+ When enabled, invocations to @c setNavigationBarHidden: and @c setNavigationBarHidden:animated:
+ will change the visibility of the currently visible view controller's App Bar. This only affects
+ visibility of injected App Bar view controllers.
+
+ When disabled, invocations to @c setNavigationBarHidden: and @c setNavigationBarHidden:animated:
+ will always result in the UIKit navigation bar being hidden, regardless of the provided value of @c
+ hidden, and the currently visible view controller's App Bar visibility will not be affected.
+
+ The result of changing this property after app bars have already been presented and/or hidden is
+ undefined.
+
+ Default value is NO.
+ */
+@property(nonatomic, assign) BOOL shouldSetNavigationBarHiddenHideAppBar;
+
+/**
+ This property's getter and setter behavior are defined by the value of @c
+ shouldSetNavigationBarHiddenHideAppBar.
+
+ ## Getter behavior
+
+ When @c shouldSetNavigationBarHiddenHideAppBar is enabled, this property will return the visibility
+ of the current view controller's injected app bar, if one exists. Otherwise it will always return
+ YES.
+
+ When @c shouldSetNavigationBarHiddenHideAppBar is disabled, this property will return the
+ visibility of the UINavigationBar.
+
+ ## Setter behavior
+
+ When @c shouldSetNavigationBarHiddenHideAppBar is enabled, invocations of this method will change
+ the visibility of the currently visible view controller's App Bar. This only affects visibility of
+ injected App Bar view controllers.
+
+ When @c shouldSetNavigationBarHiddenHideAppBar is disabled, invocations of this method
+ will always result in the UIKit navigation bar being hidden, regardless of the provided value of @c
+ hidden, and the currently visible view controller's App Bar visibility will not be affected.
+ Attempting to set this property to @c YES will result in a runtime assertion.
+ */
+@property(nonatomic, getter=isNavigationBarHidden) BOOL navigationBarHidden;
+
 #pragma mark - Getting App Bar view controller instances
 
 /**
