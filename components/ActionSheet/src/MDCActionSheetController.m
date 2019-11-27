@@ -24,8 +24,6 @@ static NSString *const kReuseIdentifier = @"BaseCell";
 static const CGFloat kActionImageAlpha = (CGFloat)0.6;
 static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
-/** Default edge insets for each action's image view. */
-static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
 
 @interface MDCActionSheetAction ()
 
@@ -116,7 +114,6 @@ static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
      */
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
-    _imageEdgeInsets = kDefaultImageEdgeInsets;
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _transitionController.trackingScrollView = _tableView;
     _tableView.autoresizingMask =
@@ -335,7 +332,6 @@ static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   cell.contentEdgeInsets = self.contentEdgeInsets;
-  cell.imageEdgeInsets = self.imageEdgeInsets;
   return cell;
 }
 
@@ -344,14 +340,6 @@ static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
     return;
   }
   _contentEdgeInsets = contentEdgeInsets;
-  [self.tableView reloadData];
-}
-
-- (void)setImageEdgeInsets:(UIEdgeInsets)imageEdgeInsets {
-  if (UIEdgeInsetsEqualToEdgeInsets(_imageEdgeInsets, imageEdgeInsets)) {
-    return;
-  }
-  _imageEdgeInsets = imageEdgeInsets;
   [self.tableView reloadData];
 }
 
