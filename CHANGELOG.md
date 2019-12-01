@@ -1,3 +1,94 @@
+# 94.4.0
+
+This minor release introduces new APIs to ActionSheet, BottomSheet and FlexibleHeader. Additionally, it includes new theming extensions for TextControls component.
+
+## New features
+
+TextControls component now has theming extensions.
+
+```objc
+MDCFilledTextField *filledTextField = [[MDCFilledTextField alloc] init];
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+[filledTextField applyThemeWithScheme:containerScheme];
+```
+
+```swift
+let filledTextField = MDCFilledTextField()
+let scheme = MDCContainerScheme()
+
+filledTextField.applyTheme(withScheme: scheme)
+```
+
+## API changes
+
+### ActionSheet
+
+#### MDCActionSheetController
+
+*new* property: `contentEdgeInsets` in `MDCActionSheetController`
+
+### BottomSheet
+
+#### MDCBottomSheetController
+
+*new* property: `dismissOnDraggingDownSheet` in `MDCBottomSheetController`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `dismissOnDraggingDownSheet` in `MDCBottomSheetPresentationController`
+
+#### MDCBottomSheetTransitionController
+
+*new* property: `dismissOnDraggingDownSheet` in `MDCBottomSheetTransitionController`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView(ShiftBehavior)
+
+*new* property: `shiftedOffscreen` in `MDCFlexibleHeaderView(ShiftBehavior)`
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Add `contentEdgeInsets` API. (#9008)](https://github.com/material-components/material-components-ios/commit/8fb17f7b0ae42be323967d53ddcb43a18f9f1e7e) (Robert Moore)
+* [Align title/image to their leading edges directly. (#9013)](https://github.com/material-components/material-components-ios/commit/b5fef2ef75dda92d28c72c61232ab57bea1ff307) (Robert Moore)
+* [Correct RTL snapshot tests. (#9011)](https://github.com/material-components/material-components-ios/commit/8405097173b3430c47d43c1fca65be2a38828dee) (Robert Moore)
+* [Name unit tests to match class. (#9003)](https://github.com/material-components/material-components-ios/commit/06ea8732d21d7ba6f4376c794206247a2271e1a9) (Robert Moore)
+* [Refactor snapshot tests. (#8999)](https://github.com/material-components/material-components-ios/commit/a14720f7d7d4b560a87ad1581ec3a1a692d83bc1) (Robert Moore)
+* [Split "insets" API snapshot tests to separate file. (#9020)](https://github.com/material-components/material-components-ios/commit/c33be81182f6dfb0b61564f3f3ccbfe51baf11f5) (Robert Moore)
+
+### BottomSheet
+
+* [Add API to not allow dragging of Bottom Sheet to dismiss. (#9004)](https://github.com/material-components/material-components-ios/commit/8841f90ff478e547c7eb328a393b6f7610d713ad) (Yarden Eitan)
+
+### Buttons
+
+* [Fix dynamic type example. (#8992)](https://github.com/material-components/material-components-ios/commit/613ad1104324e621fd4088284659b09c053a6f4a) (Cody Weaver)
+
+### FeatureHighlight
+
+* [Fix accessibility tests. (#9018)](https://github.com/material-components/material-components-ios/commit/36d950545f34d23867d4a94e50e47bb69d3d0905) (Robert Moore)
+
+### FlexibleHeader
+
+* [Add FlexibleHeaderShiftedOffscreenWithShiftBehaviorDisabledTests. (#9023)](https://github.com/material-components/material-components-ios/commit/91803e3516278684094722205c05c2e68c46b9eb) (featherless)
+* [Expose a shiftedOffscreen property. (#9014)](https://github.com/material-components/material-components-ios/commit/61458cca02693614895f222eefbfb02f50c839a7) (featherless)
+
+### ShadowElevations
+
+* [Delete swift example target since there is no input file. (#9005)](https://github.com/material-components/material-components-ios/commit/ef4aad367748f60ddc4fd31cfaadf1a005cd76e7) (Wenyu Zhang)
+
+### TextControls
+
+* [Add Outlined theming extension (#9002)](https://github.com/material-components/material-components-ios/commit/f3daf9b4986e8f0b45b55bc517913cb11e4441ac) (Andrew Overton)
+* [Add MDCFilledTextField theming extension (#8993)](https://github.com/material-components/material-components-ios/commit/c806e4b9d0acfcee53336fa54459a0ef22bc30fb) (Andrew Overton)
+
+---
+
 # 94.3.0
 
 This minor release primarily consists of accessibility improvements. A number of components now provide increased support for VoiceOver and Dynamic Type, and many components have been audited to make sure minimum touch target requirements and minimum color contrast requirements are met. Additionally, many examples in our Catalog and Dragons apps have been improved from an accessibility standpoint.

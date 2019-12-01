@@ -57,6 +57,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 }
 
 - (void)commonMDCRippleViewInit {
+  _usesSuperviewShadowLayerAsMask = YES;
   self.userInteractionEnabled = NO;
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
@@ -101,10 +102,18 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [self updateRippleStyle];
 }
 
+- (void)setUsesSuperviewShadowLayerAsMask:(BOOL)usesSuperviewShadowLayerAsMask {
+  _usesSuperviewShadowLayerAsMask = usesSuperviewShadowLayerAsMask;
+
+  if (_usesSuperviewShadowLayerAsMask) {
+    [self setNeedsLayout];
+  }
+}
+
 - (void)updateRippleStyle {
   self.layer.masksToBounds = (self.rippleStyle == MDCRippleStyleBounded);
   if (self.rippleStyle == MDCRippleStyleBounded) {
-    if (self.superview.layer.shadowPath) {
+    if (self.usesSuperviewShadowLayerAsMask && self.superview.layer.shadowPath) {
       if (!self.maskLayer) {
         // Use mask layer when the superview has a shadowPath.
         self.maskLayer = [CAShapeLayer layer];
