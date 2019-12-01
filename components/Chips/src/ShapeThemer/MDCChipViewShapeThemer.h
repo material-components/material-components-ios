@@ -22,14 +22,11 @@
 /**
  The Material Design shape system's themer for instances of MDCChipView.
 
- @warning This API will eventually be deprecated. See the individual method documentation for
+ @warning This API will eventually be deleted. See the individual method documentation for
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCChipViewShapeThemer : NSObject
-@end
-
-@interface MDCChipViewShapeThemer (ToBeDeprecated)
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewShapeThemer : NSObject
 
 /**
  Applies a shape scheme's properties to an MDCChipView.
