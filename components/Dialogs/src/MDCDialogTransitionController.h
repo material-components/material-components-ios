@@ -37,9 +37,9 @@
 /**
  Duration of transition animation.
 
- Defaults to 0.27.
+ Defaults to 0.27 seconds.
  */
-@property(nonatomic, assign) NSTimeInterval animationDuration;
+@property(nonatomic, assign) NSTimeInterval transitionDuration;
 
 /**
  The starting scale factor of the dialog, between 0 and 1. The "animate in" transition scales the
@@ -47,6 +47,6 @@
 
  Defaults to 1.0 (no scaling is performed).
  */
-@property(nonatomic, assign) CGFloat dialogScaleFactor;
+@property(nonatomic, assign) CGFloat dialogInitialScaleFactor;
 
 @end

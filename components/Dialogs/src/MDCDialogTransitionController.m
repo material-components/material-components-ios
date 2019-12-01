@@ -18,15 +18,17 @@
 
 @implementation MDCDialogTransitionController
 
-static const NSTimeInterval MDCDialogDefaultTransitionDuration = 0.27;
+// The default duration of this transition
+static const NSTimeInterval kDefaultTransitionDuration = 0.27;
 
-static const CGFloat MDCDialogDefaultScaleFactor = 1.0f;
+// The default starting X and Y scale of the presented dialog
+static const CGFloat kDefaultInitialScaleFactor = 1.0f;
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.animationDuration = MDCDialogDefaultTransitionDuration;
-    self.dialogScaleFactor = MDCDialogDefaultScaleFactor;
+    _transitionDuration = kDefaultTransitionDuration;
+    _dialogInitialScaleFactor = kDefaultInitialScaleFactor;
   }
   return self;
 }
@@ -35,7 +37,7 @@ static const CGFloat MDCDialogDefaultScaleFactor = 1.0f;
 
 - (NSTimeInterval)transitionDuration:
     (__unused id<UIViewControllerContextTransitioning>)transitionContext {
-  return self.animationDuration;
+  return self.transitionDuration;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -77,7 +79,7 @@ static const CGFloat MDCDialogDefaultScaleFactor = 1.0f;
 
   // Opacity animation
   animatingView.alpha = startingAlpha;
-  [UIView animateWithDuration:_animationDuration / 2
+  [UIView animateWithDuration:self.transitionDuration / 2
                         delay:0
                       options:options
                    animations:^{
@@ -94,13 +96,13 @@ static const CGFloat MDCDialogDefaultScaleFactor = 1.0f;
   }
 
   CGAffineTransform startingTransform =
-      presenting ? CGAffineTransformMakeScale(_dialogScaleFactor, _dialogScaleFactor)
+      presenting ? CGAffineTransformMakeScale(self.dialogInitialScaleFactor, self.dialogInitialScaleFactor)
                  : CGAffineTransformIdentity;
   CGAffineTransform endingTransform = CGAffineTransformIdentity;
   animatingView.transform = startingTransform;
   presentationController.dialogTransform = startingTransform;
   UIViewAnimationOptions scaleAnimationOptions = options | UIViewAnimationOptionCurveEaseOut;
-  [UIView animateWithDuration:_animationDuration
+  [UIView animateWithDuration:self.transitionDuration
                         delay:0
                       options:scaleAnimationOptions
                    animations:^{
@@ -112,7 +114,7 @@ static const CGFloat MDCDialogDefaultScaleFactor = 1.0f;
   // Use dispatch_after to avoid animateWithDuration immediately executing its completion block.
   // This can happen if the animation has no effect (changing animatingView.transform from
   // CGAffineTransformIdentity to CGAffineTransformIdentity, in this case).
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_animationDuration * NSEC_PER_SEC)),
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.transitionDuration * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
                    // If we're dismissing, remove the presented view from the hierarchy
                    if (!presenting) {
