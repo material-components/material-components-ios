@@ -28,7 +28,7 @@
 
 @end
 
-@interface MDCChipViewColorThemer (ToBeDeprecated)
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCChipView.

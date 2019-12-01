@@ -29,7 +29,7 @@
 @interface MDCChipViewShapeThemer : NSObject
 @end
 
-@interface MDCChipViewShapeThemer (ToBeDeprecated)
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewShapeThemer
 
 /**
  Applies a shape scheme's properties to an MDCChipView.
