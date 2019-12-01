@@ -25,3 +25,7 @@ Ripple is a material design implementation of touch feedback and is a successor 
 ## Usage
 
 - [Typical use](typical-use.md)
+
+## Migrations
+
+- [usesSuperviewShadowLayerAsMask]](migration-usesSuperviewShadowLayerAsMask.md)
