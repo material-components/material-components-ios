@@ -19,7 +19,7 @@
 @implementation MDCDialogTransitionController
 
 // The default duration of this transition
-static const NSTimeInterval kDefaultTransitionDuration = 0.27;
+static const NSTimeInterval kDefaultTransitionDuration = 0.54;
 
 // The default starting X and Y scale of the presented dialog
 static const CGFloat kDefaultInitialScaleFactor = 1.0f;
