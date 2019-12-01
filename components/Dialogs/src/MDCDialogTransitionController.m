@@ -41,6 +41,9 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+  [CATransaction begin];
+  [CATransaction setAnimationDuration:self.transitionDuration];
+
   // If a view in the transitionContext is nil, it likely hasn't been loaded by its ViewController
   // yet.  Ask for it directly to initiate a loadView on the ViewController.
   UIViewController *fromViewController =
@@ -64,6 +67,19 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
   UIView *animatingView = presenting ? toView : fromView;
 
   UIView *containerView = transitionContext.containerView;
+
+  [CATransaction setCompletionBlock:^{
+    // If we're dismissing, remove the presented view from the hierarchy
+    if (!presenting) {
+      [fromView removeFromSuperview];
+    }
+
+    // From ADC : UIViewControllerContextTransitioning
+    // When you do create transition animations, always call the
+    // completeTransition: from an appropriate completion block to let UIKit know
+    // when all of your animations have finished.
+    [transitionContext completeTransition:YES];
+  }];
 
   if (presenting) {
     [containerView addSubview:toView];
@@ -111,22 +127,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
                    }
                    completion:nil];
 
-  // Use dispatch_after to avoid animateWithDuration immediately executing its completion block.
-  // This can happen if the animation has no effect (changing animatingView.transform from
-  // CGAffineTransformIdentity to CGAffineTransformIdentity, in this case).
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.transitionDuration * NSEC_PER_SEC)),
-                 dispatch_get_main_queue(), ^{
-                   // If we're dismissing, remove the presented view from the hierarchy
-                   if (!presenting) {
-                     [fromView removeFromSuperview];
-                   }
-
-                   // From ADC : UIViewControllerContextTransitioning
-                   // When you do create transition animations, always call the
-                   // completeTransition: from an appropriate completion block to let UIKit know
-                   // when all of your animations have finished.
-                   [transitionContext completeTransition:YES];
-                 });
+  [CATransaction commit];
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
