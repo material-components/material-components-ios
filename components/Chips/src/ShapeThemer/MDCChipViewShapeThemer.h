@@ -26,7 +26,7 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewShapeThemer: NSObject
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewShapeThemer : NSObject
 
 /**
  Applies a shape scheme's properties to an MDCChipView.
