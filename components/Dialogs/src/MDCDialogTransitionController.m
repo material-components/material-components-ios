@@ -18,8 +18,11 @@
 
 @implementation MDCDialogTransitionController
 
-// The default duration of this transition
-static const NSTimeInterval kDefaultTransitionDuration = 0.54;
+// The default duration of the dialog fade-in or fade-out animation
+static const NSTimeInterval kDefaultOpacityTransitionDuration = 0.2f;
+
+// The default duration of the dialog scale-up or scale-down animation
+static const NSTimeInterval kDefaultScaleTransitionDuration = 0.f;
 
 // The default starting X and Y scale of the presented dialog
 static const CGFloat kDefaultInitialScaleFactor = 1.0f;
@@ -27,7 +30,8 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _transitionDuration = kDefaultTransitionDuration;
+    _opacityAnimationDuration = kDefaultOpacityTransitionDuration;
+    _scaleAnimationDuration = kDefaultScaleTransitionDuration;
     _dialogInitialScaleFactor = kDefaultInitialScaleFactor;
   }
   return self;
@@ -37,12 +41,12 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
 
 - (NSTimeInterval)transitionDuration:
     (__unused id<UIViewControllerContextTransitioning>)transitionContext {
-  return self.transitionDuration;
+  return MAX(self.opacityAnimationDuration, self.scaleAnimationDuration);
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   [CATransaction begin];
-  [CATransaction setAnimationDuration:self.transitionDuration];
+  [CATransaction setAnimationDuration:[self transitionDuration:transitionContext]];
 
   // If a view in the transitionContext is nil, it likely hasn't been loaded by its ViewController
   // yet.  Ask for it directly to initiate a loadView on the ViewController.
@@ -95,7 +99,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
 
   // Opacity animation
   animatingView.alpha = startingAlpha;
-  [UIView animateWithDuration:self.transitionDuration / 2
+  [UIView animateWithDuration:self.opacityAnimationDuration
                         delay:0
                       options:options
                    animations:^{
@@ -119,7 +123,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
   animatingView.transform = startingTransform;
   presentationController.dialogTransform = startingTransform;
   UIViewAnimationOptions scaleAnimationOptions = options | UIViewAnimationOptionCurveEaseOut;
-  [UIView animateWithDuration:self.transitionDuration
+  [UIView animateWithDuration:self.scaleAnimationDuration
                         delay:0
                       options:scaleAnimationOptions
                    animations:^{

@@ -35,11 +35,18 @@
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
 /**
- Duration of transition animation.
+ Duration of the dialog fade-in or fade-out animation.
 
  Defaults to 0.27 seconds.
  */
-@property(nonatomic, assign) NSTimeInterval transitionDuration;
+@property(nonatomic, assign) NSTimeInterval opacityAnimationDuration;
+
+/**
+ Duration of dialog scale-up or scale-down animation.
+
+ Defaults to 0 seconds (no animation is performed).
+ */
+@property(nonatomic, assign) NSTimeInterval scaleAnimationDuration;
 
 /**
  The starting scale factor of the dialog, between 0 and 1. The "animate in" transition scales the
