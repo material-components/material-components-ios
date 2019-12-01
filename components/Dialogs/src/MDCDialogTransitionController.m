@@ -112,8 +112,9 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0f;
   }
 
   CGAffineTransform startingTransform =
-      presenting ? CGAffineTransformMakeScale(self.dialogInitialScaleFactor, self.dialogInitialScaleFactor)
-                 : CGAffineTransformIdentity;
+      presenting
+          ? CGAffineTransformMakeScale(self.dialogInitialScaleFactor, self.dialogInitialScaleFactor)
+          : CGAffineTransformIdentity;
   CGAffineTransform endingTransform = CGAffineTransformIdentity;
   animatingView.transform = startingTransform;
   presentationController.dialogTransform = startingTransform;
