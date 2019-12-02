@@ -68,7 +68,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
   BOOL presenting = (toPresentingViewController == fromViewController) ? YES : NO;
 
   UIViewController *animatingViewController = presenting ? toViewController : fromViewController;
-  UIView *animatingView = presenting ? toView : fromView;
+  UIView *dialogView = presenting ? toView : fromView;
 
   UIView *containerView = transitionContext.containerView;
 
@@ -93,18 +93,18 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
   CGFloat startingAlpha = presenting ? 0 : 1;
   CGFloat endingAlpha = presenting ? 1 : 0;
 
-  animatingView.frame = [transitionContext finalFrameForViewController:animatingViewController];
+  dialogView.frame = [transitionContext finalFrameForViewController:animatingViewController];
 
   UIViewAnimationOptions options =
       UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
   // Opacity animation
-  animatingView.alpha = startingAlpha;
+  dialogView.alpha = startingAlpha;
   [UIView animateWithDuration:self.opacityAnimationDuration
                         delay:0
                       options:options
                    animations:^{
-                     animatingView.alpha = endingAlpha;
+                     dialogView.alpha = endingAlpha;
                    }
                    completion:nil];
 
@@ -121,14 +121,14 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
           ? CGAffineTransformMakeScale(self.dialogInitialScaleFactor, self.dialogInitialScaleFactor)
           : CGAffineTransformIdentity;
   CGAffineTransform endingTransform = CGAffineTransformIdentity;
-  animatingView.transform = startingTransform;
+  dialogView.transform = startingTransform;
   presentationController.dialogTransform = startingTransform;
   UIViewAnimationOptions scaleAnimationOptions = options | UIViewAnimationOptionCurveEaseOut;
   [UIView animateWithDuration:self.scaleAnimationDuration
                         delay:0
                       options:scaleAnimationOptions
                    animations:^{
-                     animatingView.transform = endingTransform;
+                     dialogView.transform = endingTransform;
                      presentationController.dialogTransform = endingTransform;
                    }
                    completion:nil];
