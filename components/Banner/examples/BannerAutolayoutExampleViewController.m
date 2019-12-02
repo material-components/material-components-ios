@@ -68,7 +68,7 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
          forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:bannerView];
   NSLayoutConstraint *bannerViewConstraintTop =
-      [bannerView.topAnchor constraintEqualToAnchor:self.view.layoutMarginsGuide.topAnchor];
+      [bannerView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor];
   bannerViewConstraintTop.active = YES;
   NSLayoutConstraint *bannerViewConstraintLeft =
       [bannerView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor];
