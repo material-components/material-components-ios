@@ -16,13 +16,13 @@
 
 #import "MaterialAppBar.h"
 
-@interface MDCAppBarNavigationControllerTests : XCTestCase
+@interface AppBarNavigationControllerTests : XCTestCase
 
 @property(nonatomic, strong) MDCAppBarNavigationController *navigationController;
 
 @end
 
-@implementation MDCAppBarNavigationControllerTests
+@implementation AppBarNavigationControllerTests
 
 - (void)setUp {
   [super setUp];
