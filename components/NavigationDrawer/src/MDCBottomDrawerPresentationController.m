@@ -257,7 +257,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
-  
   [self.bottomDrawerContainerViewController.view layoutIfNeeded];
 }
 
