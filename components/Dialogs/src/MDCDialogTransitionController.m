@@ -22,7 +22,7 @@
 static const NSTimeInterval kDefaultOpacityTransitionDuration = 0.2;
 
 // The default duration of the dialog scale-up or scale-down animation
-static const NSTimeInterval kDefaultScaleTransitionDuration = 0.;
+static const NSTimeInterval kDefaultScaleTransitionDuration = 0;
 
 // The default starting X and Y scale of the presented dialog
 static const CGFloat kDefaultInitialScaleFactor = 1.0;
