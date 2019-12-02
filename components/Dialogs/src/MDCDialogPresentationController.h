@@ -113,7 +113,7 @@
  The transform applied to the @c MDCDialogPresentationController. Used to ensure the shadow
  properly tracks the view.
 
- The default value is CGAffineTransformIdentity.
+ The default value is @c CGAffineTransformIdentity.
  */
 @property(nonatomic, assign) CGAffineTransform dialogTransform;
 
