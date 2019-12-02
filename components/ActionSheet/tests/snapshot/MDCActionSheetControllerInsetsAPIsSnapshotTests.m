@@ -224,7 +224,7 @@ static NSString *const kLongTitle5Arabic =
   [self useArabicStrings];
 
   // When
-  self.[controller.view layoutIfNeeded];
+  [self.controller.view layoutIfNeeded];
   [self changeViewToRTL:self.controller.view];
   self.controller.view.bounds = CGRectMake(0, 0, 320, 640);
   self.controller.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, -20);
