@@ -45,9 +45,6 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:[self transitionDuration:transitionContext]];
-
   // If a view in the transitionContext is nil, it likely hasn't been loaded by its ViewController
   // yet.  Ask for it directly to initiate a loadView on the ViewController.
   UIViewController *fromViewController =
@@ -72,6 +69,13 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
 
   UIView *containerView = transitionContext.containerView;
 
+  if (presenting) {
+    [containerView addSubview:toView];
+  }
+
+  dialogView.frame = [transitionContext finalFrameForViewController:animatingViewController];
+
+  [CATransaction begin];
   [CATransaction setCompletionBlock:^{
     // If we're dismissing, remove the presented view from the hierarchy
     if (!presenting) {
@@ -86,19 +90,12 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
     [transitionContext completeTransition:YES];
   }];
 
-  if (presenting) {
-    [containerView addSubview:toView];
-  }
-
-  CGFloat startingAlpha = presenting ? 0 : 1;
-  CGFloat endingAlpha = presenting ? 1 : 0;
-
-  dialogView.frame = [transitionContext finalFrameForViewController:animatingViewController];
-
   UIViewAnimationOptions options =
       UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState;
 
   // Opacity animation
+  CGFloat startingAlpha = presenting ? 0 : 1;
+  CGFloat endingAlpha = presenting ? 1 : 0;
   dialogView.alpha = startingAlpha;
   [UIView animateWithDuration:self.opacityAnimationDuration
                         delay:0
