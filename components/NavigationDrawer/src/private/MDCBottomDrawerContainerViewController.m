@@ -618,7 +618,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
-
   _shouldPresentAtFullscreen = NO;
   [self resetCachedState];
   [self setupLayout];
