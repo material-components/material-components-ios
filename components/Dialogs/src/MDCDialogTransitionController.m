@@ -79,6 +79,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
     }
 
     // From ADC : UIViewControllerContextTransitioning
+    // (https://developer.apple.com/documentation/uikit/uiviewcontrollercontexttransitioning/1622042-completetransition)
     // When you do create transition animations, always call the
     // completeTransition: from an appropriate completion block to let UIKit know
     // when all of your animations have finished.
