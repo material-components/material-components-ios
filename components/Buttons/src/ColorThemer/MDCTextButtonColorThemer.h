@@ -27,7 +27,8 @@
 @interface MDCTextButtonColorThemer : NSObject
 @end
 
-@interface MDCTextButtonColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use [MDCButton applyTextThemeWithScheme:] instead. (Note: Color theming is no longer available as an independent API.)")
+    @interface MDCTextButtonColorThemer(ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCButton using the text button style.
