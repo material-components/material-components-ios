@@ -1,3 +1,59 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Refactor edge insets API snapshot tests. (#9035)](https://github.com/material-components/material-components-ios/commit/c87d65330f840a57ede6aaef03a08bddbb118238) (Robert Moore)
+
+### AppBar
+
+* [Add a shouldSetNavigationBarHiddenHideAppBar behavior flag. (#9001)](https://github.com/material-components/material-components-ios/commit/ae532421091d416476fdc39b9dc7ff0be6bd973c) (featherless)
+* [Rename test cases to match component conventions. (#9038)](https://github.com/material-components/material-components-ios/commit/d0322ef8c2eb2bbf967b9afda77dd9fb76800663) (featherless)
+
+### Banner
+
+* [Fix top layout constraint in Autolayout example on pre iOS 11 OSes. (#9042)](https://github.com/material-components/material-components-ios/commit/5e98e17c9767c4c0a395c1524618a599af3626bd) (Wenyu Zhang)
+
+### Buttons
+
+* [Deprecating MDCContainedButtonColorThemer (#9051)](https://github.com/material-components/material-components-ios/commit/0ff791396ea53caf817ffe42bfd0509d147b754f) (Galia Kaufman)
+* [Deprecating MDCFloatingButtonColorThemer (#9050)](https://github.com/material-components/material-components-ios/commit/75e616f915f0f8c6e5213a0d7514de841d45a136) (Galia Kaufman)
+
+### Chips
+
+* [Mark MDCChipViewColorThemer and MDCChipViewShapeThemer as deprecated (#9040)](https://github.com/material-components/material-components-ios/commit/c360df15878ab0b510dcfc634217650bd11e538b) (Bryan Oltman)
+
+### Dialogs
+
+* [Add configuration options to MDCDialogTransitionController (#9033)](https://github.com/material-components/material-components-ios/commit/0aba80cfdfda07f8d79aa7c115cd0ba55812034d) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Add MDCFlexibleHeaderShiftBehaviorHideable. (#9026)](https://github.com/material-components/material-components-ios/commit/a24c11f7fc637252c50334fa89fb081a77752137) (featherless)
+* [Add test that validates all defaults. (#9036)](https://github.com/material-components/material-components-ios/commit/337af58b066ca1868d1f0dfc44afd9a692265d12) (featherless)
+* [Document the default value of shiftBehavior. (#9037)](https://github.com/material-components/material-components-ios/commit/10c2b1205e13fca4e25ec0b6aba0fb83c9465a80) (featherless)
+
+### Ripple
+
+* [Add usesSuperviewShadowLayerAsMask flag. (#8822)](https://github.com/material-components/material-components-ios/commit/9d60c22e29802d2a5e5df6433aa26287e5c75a83) (featherless)
+
+---
+
 # 94.4.0
 
 This minor release introduces new APIs to ActionSheet, BottomSheet and FlexibleHeader. Additionally, it includes new theming extensions for TextControls component.
