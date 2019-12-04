@@ -171,6 +171,10 @@ cut_release() {
   git commit -m "Automatic changelog preparation for release."
   git push origin release-candidate -u
 
+  git add snapshot_test_goldens/*
+  git commit -m "Automatic add snapshot changes to release."
+  git push origin release-candidate -u
+
   RELEASE_SHA=$(git merge-base --fork-point release-candidate $branch)
   PULL_REQUEST_URL="https://github.com/material-components/material-components-ios/compare/stable...release-candidate"
   echo "${B}You can now start the release-candidate pull request:${N}"
