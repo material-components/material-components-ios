@@ -1,6 +1,8 @@
 # 94.5.0
 
-This minor release introduces new APIs to AppBar ActionSheet, BottomSheet and FlexibleHeader. Additionally, it includes new theming extensions for TextControls component.
+This minor release introduces new APIs to AppBar, FlexibleHeader and Dialogs. AppBar and
+FlexibleHeader adds behavior to mimic the behavior of UINavigationController's
+`setNavigationBarHidden:`. Dialogs exposes transition APIs to customize the presentation animations.
 
 ## Breaking changes
 
