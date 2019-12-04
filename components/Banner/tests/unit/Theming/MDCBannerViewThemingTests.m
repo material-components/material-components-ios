@@ -17,6 +17,8 @@
 #import "MaterialBanner+Theming.h"
 #import "MaterialBanner.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialMath.h"
+#import "UIColor+MaterialDynamic.h"
 
 // The opacity value applied to text view.
 static CGFloat const kTextViewOpacity = (CGFloat)0.87;
@@ -88,6 +90,7 @@ This class is used for creating a @UIWindow with customized size category.
 
   [super tearDown];
 }
+
 - (void)testThemingWithDefaultValues {
   // When
   [self.bannerView applyThemeWithScheme:self.containerScheme];
@@ -205,6 +208,29 @@ This class is used for creating a @UIWindow with customized size category.
   }
 }
 
+- (void)testBannerViewBackgroundColorChangeWhenUIUserInterfaceStyleChangeOnIOS13 {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *darkSurfaceColor = UIColor.blackColor;
+    UIColor *lightSurfaceColor = UIColor.whiteColor;
+
+    UIColor *dynamicSurfaceColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkSurfaceColor
+                                                                    defaultColor:lightSurfaceColor];
+    self.containerScheme.colorScheme.surfaceColor = dynamicSurfaceColor;
+    self.containerScheme.colorScheme.elevationOverlayEnabledForDarkMode = YES;
+
+    // When
+    [self.bannerView applyThemeWithScheme:self.containerScheme];
+    UITraitCollection *previousTraitCollection = [self.bannerView.traitCollection copy];
+    self.bannerView.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+    [self.bannerView traitCollectionDidChange:previousTraitCollection];
+
+    // Then
+    XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:self.bannerView.backgroundColor
+                                                      secondColor:darkSurfaceColor]);
+  }
+}
+
 - (void)assertTraitCollectionAndElevationBlockForBannerView:(MDCBannerView *)bannerView
                                                 colorScheme:(id<MDCColorScheming>)colorScheme {
   if (colorScheme.elevationOverlayEnabledForDarkMode) {
@@ -214,6 +240,18 @@ This class is used for creating a @UIWindow with customized size category.
     XCTAssertNil(bannerView.mdc_elevationDidChangeBlock);
     XCTAssertNil(bannerView.traitCollectionDidChangeBlock);
   }
+}
+
+// TODO(https://github.com/material-components/material-components-ios/issues/8532): Replace the usage of this method with generic macro when available.
+- (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
+                                      secondColor:(UIColor *)secondColor {
+  CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
+  [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
+  CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
+  [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
+
+  return (MDCCGFloatEqual(fRed, sRed) && MDCCGFloatEqual(fGreen, sGreen) &&
+          MDCCGFloatEqual(fBlue, sBlue) && MDCCGFloatEqual(fAlpha, sAlpha));
 }
 
 @end
