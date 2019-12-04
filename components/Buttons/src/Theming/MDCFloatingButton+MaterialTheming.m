@@ -14,7 +14,6 @@
 
 #import "MDCFloatingButton+MaterialTheming.h"
 
-#import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
 
 @implementation MDCFloatingButton (MaterialTheming)
@@ -45,8 +44,13 @@
   [self setElevation:MDCShadowElevationNone forState:UIControlStateDisabled];
 }
 
-- (void)applySecondaryThemeWithColorScheme:(id<MDCColorScheming>)scheme {
-  [MDCFloatingButtonColorThemer applySemanticColorScheme:scheme toButton:self];
+- (void)applySecondaryThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+  [self resetUIControlStatesForButtonTheming];
+  [self setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateNormal];
+  [self setTitleColor:colorScheme.onSecondaryColor forState:UIControlStateNormal];
+  [self setImageTintColor:colorScheme.onSecondaryColor forState:UIControlStateNormal];
+
+  self.disabledAlpha = 1;
 }
 
 - (void)applySecondaryThemeWithShapeScheme:(id<MDCShapeScheming>)scheme {
@@ -60,6 +64,19 @@
     [self setTitleFont:nil forState:state];
   }
   [self setTitleFont:scheme.button forState:UIControlStateNormal];
+}
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                        toButton:(nonnull MDCFloatingButton *)button {
+}
+
+- (void)resetUIControlStatesForButtonTheming {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setBackgroundColor:nil forState:state];
+    [self setTitleColor:nil forState:state];
+  }
 }
 
 @end
