@@ -134,10 +134,10 @@
   [self setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
   [self setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [self setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
-               forState:UIControlStateDisabled];
+             forState:UIControlStateDisabled];
   [self setImageTintColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [self setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
-                   forState:UIControlStateDisabled];
+                 forState:UIControlStateDisabled];
   self.disabledAlpha = 1;
   self.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16];
 }
@@ -178,7 +178,7 @@
 
 - (void)resetUIControlStatesForButtonTheming {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBackgroundColor:nil forState:state];
     [self setTitleColor:nil forState:state];
