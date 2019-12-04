@@ -1,15 +1,60 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
+This minor release introduces new APIs to AppBar, FlexibleHeader and Dialogs. AppBar and
+FlexibleHeader adds behavior to mimic the behavior of UINavigationController's
+`setNavigationBarHidden:`. Dialogs exposes transition APIs to customize the presentation animations.
+
 ## Breaking changes
 
 Replace this explanations for how to resolve the breaking changes.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+`MDCChipViewColorThemer` and `MDCChipViewShapeThemer` are marked depreacted. Use Chips+Theming
+instead.
+
 ## New features
 
-Replace this text with example code for each new feature.
+###AppBar
+
+The new `shouldSetNavigationBarHiddenHideAppBar` flag allows view controllers to control the
+visibility of their app bar via the standard UINavigationController setNavigationBarHidden: APIs
+
+```swift
+    let contentViewController = PresentedViewController()
+    let navigationController = MDCAppBarNavigationController()
+    navigationController.shouldSetNavigationBarHiddenHideAppBar = true
+    navigationController.delegate = self
+    navigationController.pushViewController(contentViewController, animated: false)
+```
+
+###FlexibleHeader
+
+This new shift behavior mode enables the flexible header to mimic the behavior of
+UINavigationController's `setNavigationBarHidden:`. 
+
+#### Swift
+
+```swift
+headerViewController.headerView.shiftBehavior = .hideable
+// You can now toggle visibility of the header view using the following invocations:
+headerViewController.headerView.shiftHeaderOffScreen(animated: true)
+headerViewController.headerView.shiftHeaderOnScreen(animated: true)
+override func childViewControllerForStatusBarHidden() -> UIViewController? {
+  return headerViewController
+}
+```
+#### Objective-C
+
+```objc
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHideable;
+// You can now toggle visibility of the header view using the following invocations:
+[headerViewController.headerView shiftHeaderOffScreenAnimated:YES];
+[headerViewController.headerView shiftHeaderOnScreenAnimated:YES];
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _headerViewController;
+}
+
 ## API changes
 
 ## Component changes
