@@ -475,14 +475,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   self.layer.shadowColor = snackbarMessageViewShadowColor.CGColor;
 }
 
-- (void)setSnackbarMessageViewTextColor:(UIColor *)snackbarMessageViewTextColor {
-  self.messageTextColor = snackbarMessageViewTextColor;
-}
-
-- (UIColor *)snackbarMessageViewTextColor {
-  return self.messageTextColor;
-}
-
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
   _messageTextColor = messageTextColor;
   if (_messageTextColor) {
