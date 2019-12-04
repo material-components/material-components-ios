@@ -242,7 +242,8 @@ This class is used for creating a @UIWindow with customized size category.
   }
 }
 
-// TODO(https://github.com/material-components/material-components-ios/issues/8532): Replace the usage of this method with generic macro when available.
+// TODO(https://github.com/material-components/material-components-ios/issues/8532): Replace the
+// usage of this method with generic macro when available.
 - (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
                                       secondColor:(UIColor *)secondColor {
   CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
