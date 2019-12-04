@@ -24,10 +24,9 @@
  `MDCButton`'s `-applyContainedThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCContainedButtonColorThemer : NSObject
-@end
-
-@interface MDCContainedButtonColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use [MDCButton applyContainedThemeWithScheme:] instead. (Note: Color "
+                 "theming is no longer available as an independent API.)")
+    @interface MDCContainedButtonColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCButton using the contained button style.
