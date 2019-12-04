@@ -3,6 +3,7 @@
 This minor release introduces new APIs to AppBar, FlexibleHeader and Dialogs. AppBar and
 FlexibleHeader adds behavior to mimic the behavior of UINavigationController's
 `setNavigationBarHidden:`. Dialogs exposes transition APIs to customize the presentation animations.
+We also deprecated some themers for Chips and Buttons.
 
 ## Breaking changes
 
@@ -75,6 +76,32 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHi
 ```
 
 ## API changes
+
+### AppBar
+
+*new* property: `navigationBarHidden` in MDCAppBarNavigationController
+*new* property: `shouldSetNavigationBarHiddenHideAppBar;
+
+### Chips
+
+*deprecated* class: MDCChipViewColorThemer. Use Chips+Theming instead.
+*deprecated* class: MDCChipViewColorThemer. Use Chips+Theming instead.
+
+### Dialogs
+
+*new* property: `dialogTransform` in MDCDialogPresentationController
+
+*new* property: `opacityAnimationDuration` in MDCDialogTransitionController
+*new* property: `scaleAnimationDuration` in MDCDialogTransitionController
+*new* property: `dialogInitialScaleFactor` in MDCDialogTransitionController
+
+### Flexible header
+
+*new* enum value: `MDCFlexibleHeaderShiftBehaviorHideable` in MDCFlexibleHeaderShiftBehavior
+
+### Ripple
+
+*new* property: `usesSuperviewShadowLayerAsMask` in MDCRippleView
 
 ## Component changes
 
