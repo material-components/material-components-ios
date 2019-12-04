@@ -40,7 +40,19 @@
 }
 
 - (void)applyContainedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:self];
+  [self resetButtonColorsForAllStates];
+
+  [self setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [self setBackgroundColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]
+                  forState:UIControlStateDisabled];
+  [self setTitleColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
+  [self setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
+             forState:UIControlStateDisabled];
+  [self setImageTintColor:colorScheme.onPrimaryColor forState:UIControlStateNormal];
+  [self setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
+                 forState:UIControlStateDisabled];
+  self.disabledAlpha = 1;
+  self.inkColor = [colorScheme.onPrimaryColor colorWithAlphaComponent:(CGFloat)0.32];
 }
 
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
