@@ -209,6 +209,7 @@ This class is used for creating a @UIWindow with customized size category.
 }
 
 - (void)testBannerViewBackgroundColorChangeWhenUIUserInterfaceStyleChangeOnIOS13 {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *darkSurfaceColor = UIColor.blackColor;
@@ -229,6 +230,7 @@ This class is used for creating a @UIWindow with customized size category.
     XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:self.bannerView.backgroundColor
                                                       secondColor:darkSurfaceColor]);
   }
+#endif
 }
 
 - (void)assertTraitCollectionAndElevationBlockForBannerView:(MDCBannerView *)bannerView
