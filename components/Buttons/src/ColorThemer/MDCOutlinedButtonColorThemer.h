@@ -22,11 +22,8 @@
  `MDCButton`'s `-applyOutlinedThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCOutlinedButtonColorThemer : NSObject
-@end
-
 __deprecated_msg("Please use [MDCButton applyOutlinedThemeWithScheme:] instead. (Note: Color theming is no longer available as an independent API.")
-    @interface MDCOutlinedButtonColorThemer(ToBeDeprecated)
+    @interface MDCOutlinedButtonColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCButton using the outlined button style.
