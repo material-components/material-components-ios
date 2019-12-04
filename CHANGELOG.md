@@ -10,8 +10,25 @@ Replace this explanations for how to resolve the breaking changes.
 
 ## New deprecations
 
-`MDCChipViewColorThemer` and `MDCChipViewShapeThemer` are marked depreacted. Use Chips+Theming
-instead.
+### Chips
+
+####MDCChipViewColorThemer
+
+Use Chips+Theming instead.
+
+####MDCChipViewShapeThemer
+
+Use Chips+Theming instead.
+
+### Buttons
+
+#### MDCFloatingButtonColorThemer
+
+Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead.
+
+#### MDCContainedButtonColorThemer
+
+Please use [MDCButton applyContainedThemeWithScheme:] instead.
 
 ## New features
 
@@ -44,6 +61,7 @@ override func childViewControllerForStatusBarHidden() -> UIViewController? {
   return headerViewController
 }
 ```
+
 #### Objective-C
 
 ```objc
@@ -54,6 +72,7 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHi
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return _headerViewController;
 }
+```
 
 ## API changes
 
