@@ -41,30 +41,27 @@ static const CGFloat kChipViewBaselineShapePercentageValue = (CGFloat)0.5;
   UIColor *onSurface12Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   UIColor *onSurface16Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
+
+  UIColor *backgroundColor = [MDCSemanticColorScheme blendColor:onSurface12Opacity
+                                            withBackgroundColor:colorScheme.surfaceColor];
   UIColor *selectedBackgroundColor = [MDCSemanticColorScheme blendColor:onSurface12Opacity
-                                                    withBackgroundColor:colorScheme.surfaceColor];
-  UIColor *borderColor = [MDCSemanticColorScheme blendColor:onSurface12Opacity
-                                        withBackgroundColor:colorScheme.surfaceColor];
+                                                    withBackgroundColor:backgroundColor];
   UIColor *textColor = [MDCSemanticColorScheme blendColor:onSurface87Opacity
-                                      withBackgroundColor:colorScheme.surfaceColor];
+                                      withBackgroundColor:backgroundColor];
   UIColor *selectedTextColor = [MDCSemanticColorScheme blendColor:onSurface87Opacity
                                               withBackgroundColor:selectedBackgroundColor];
 
   [self setInkColor:onSurface16Opacity forState:UIControlStateNormal];
   [self setTitleColor:textColor forState:UIControlStateNormal];
-  [self setBackgroundColor:colorScheme.surfaceColor forState:UIControlStateNormal];
-  [self setBorderColor:borderColor forState:UIControlStateNormal];
+  [self setBackgroundColor:backgroundColor forState:UIControlStateNormal];
 
   [self setTitleColor:selectedTextColor forState:UIControlStateSelected];
   [self setBackgroundColor:selectedBackgroundColor forState:UIControlStateSelected];
-  [self setBorderColor:[UIColor clearColor] forState:UIControlStateSelected];
 
   [self setTitleColor:[textColor colorWithAlphaComponent:(CGFloat)0.38]
              forState:UIControlStateDisabled];
-  [self setBackgroundColor:[colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.38]
+  [self setBackgroundColor:[backgroundColor colorWithAlphaComponent:(CGFloat)0.38]
                   forState:UIControlStateDisabled];
-  [self setBorderColor:[borderColor colorWithAlphaComponent:(CGFloat)0.38]
-              forState:UIControlStateDisabled];
 }
 
 - (void)applyThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
