@@ -25,10 +25,7 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCCardThemer : NSObject
-@end
-
-@interface MDCCardThemer (ToBeDeprecated)
+__deprecated_msg("Please use MaterialCards+Theming instead.") @interface MDCCardThemer : NSObject
 
 /**
  Applies the material card style using the card scheme data.
