@@ -315,16 +315,10 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  */
 @property(nonatomic, copy, nullable) UIColor *tintColor;
 
-@end
-
-@interface MDCActionSheetController (ToBeDeprecated)
-
 /**
  The ink color for the action items within an action sheet.
- @warning This method will eventually be deprecated. Opt-in to Ripple by setting
- enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
  */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
+@property(nonatomic, strong, nullable) UIColor *inkColor __deprecated_msg(
+    "Opt-in to Ripple by setting enableRippleBehavior to YES, and then use rippleColor instead.");
 
 @end
