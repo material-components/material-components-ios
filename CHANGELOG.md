@@ -5,21 +5,17 @@ FlexibleHeader adds behavior to mimic the behavior of UINavigationController's
 `setNavigationBarHidden:`. Dialogs exposes transition APIs to customize the presentation animations.
 We also deprecated some themers for Chips and Buttons.
 
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-
 ## New deprecations
 
 ### Chips
 
 ####MDCChipViewColorThemer
 
-Use Chips+Theming instead.
+Use Chips+Theming to theme the ChipView instead.
 
 ####MDCChipViewShapeThemer
 
-Use Chips+Theming instead.
+Use Chips+Theming to theme the ChipView instead.
 
 ### Buttons
 
@@ -85,7 +81,7 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHi
 ### Chips
 
 *deprecated* class: MDCChipViewColorThemer. Use Chips+Theming instead.
-*deprecated* class: MDCChipViewColorThemer. Use Chips+Theming instead.
+*deprecated* class: MDCChipViewShapeThemer. Use Chips+Theming instead.
 
 ### Dialogs
 
