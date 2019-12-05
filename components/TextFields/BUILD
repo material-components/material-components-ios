@@ -62,9 +62,18 @@ mdc_public_objc_library(
 mdc_extension_objc_library(
     name = "Theming",
     deps = [
+        ":ColorThemer",
         ":TextFields",
         ":TypographyThemer",
         "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "ColorThemer",
+    deps = [
+        ":TextFields",
+        "//components/Themes",
     ],
 )
 
@@ -87,6 +96,7 @@ mdc_extension_objc_library(
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
+        ":ColorThemer",
         ":TextFields",
         ":TypographyThemer",
         "//components/Buttons",
@@ -97,6 +107,7 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
+        ":ColorThemer",
         ":TextFields",
         ":TypographyThemer",
         "//components/AppBar",
@@ -106,6 +117,7 @@ mdc_examples_swift_library(
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
+        ":ColorThemer",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
@@ -123,6 +135,7 @@ mdc_snapshot_objc_library(
         "CoreGraphics",
     ],
     deps = [
+        ":ColorThemer",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
@@ -145,6 +158,7 @@ mdc_unit_test_swift_library(
         "tests/unit/Theming/*.swift",
     ]),
     deps = [
+        ":ColorThemer",
         ":TextFields",
         ":Theming",
         "//components/Palettes",
