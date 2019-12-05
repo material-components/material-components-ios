@@ -115,8 +115,11 @@
 
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toBottomNavigationBar:self.bottomNavBar];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
                                            toBottomNavigation:self.bottomNavBar];
+#pragma clang diagnostic pop
   self.view.backgroundColor = self.colorScheme.backgroundColor;
 }
 
