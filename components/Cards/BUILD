@@ -87,6 +87,8 @@ mdc_unit_test_swift_library(
     ]),
     deps = [
         ":Cards",
+        ":ColorThemer",
+        ":ShapeThemer",
         ":Theming",
     ],
 )
