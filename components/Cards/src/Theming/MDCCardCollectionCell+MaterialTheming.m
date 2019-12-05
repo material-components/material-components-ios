@@ -14,9 +14,6 @@
 
 #import "MDCCardCollectionCell+MaterialTheming.h"
 
-#import "MaterialCards+ColorThemer.h"
-#import "MaterialCards+ShapeThemer.h"
-
 static const MDCShadowElevation kNormalElevation = 1;
 static const MDCShadowElevation kHighlightedElevation = 1;
 static const MDCShadowElevation kSelectedElevation = 1;

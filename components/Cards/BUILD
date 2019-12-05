@@ -51,8 +51,6 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":Cards",
-        ":ColorThemer",
-        ":ShapeThemer",
         "//components/schemes/Container",
     ],
 )
@@ -89,8 +87,6 @@ mdc_unit_test_swift_library(
     ]),
     deps = [
         ":Cards",
-        ":ColorThemer",
-        ":ShapeThemer",
         ":Theming",
     ],
 )
