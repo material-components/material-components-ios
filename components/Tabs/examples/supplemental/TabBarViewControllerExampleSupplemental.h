@@ -19,14 +19,14 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTabs.h"
 #import "MaterialTypographyScheme.h"
 
 typedef void (^MDCButtonActionBlock)(void);
 
 @interface TabBarViewControllerExample : MDCTabBarViewController
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @end
 

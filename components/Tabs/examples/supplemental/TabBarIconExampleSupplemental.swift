@@ -30,8 +30,8 @@ extension TabBarIconSwiftExample {
     let alignmentButton = MDCButton()
 
     let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
+    buttonScheme.colorScheme = containerScheme.colorScheme
+    buttonScheme.typographyScheme = containerScheme.typographyScheme
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: alignmentButton)
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
@@ -65,8 +65,8 @@ extension TabBarIconSwiftExample {
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
     appBarViewController.headerView.minimumHeight = 56 + 72
     appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    MDCAppBarColorThemer.applyColorScheme(containerScheme.colorScheme, to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(containerScheme.typographyScheme, to: appBarViewController)
 
     appBarViewController.headerStackView.bottomBar = self.tabBar
     appBarViewController.headerStackView.setNeedsLayout()
