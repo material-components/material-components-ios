@@ -636,4 +636,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   }
 }
 
+#pragma mark - Accessibility
+
+-(NSArray *)accessibilityElements {
+  return @[ self.textView, self.leadingButton, self.trailingButton];
+}
+
 @end
