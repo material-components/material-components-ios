@@ -144,6 +144,7 @@ mdc_examples_objc_library(
         ":BottomNavigation",
         "//components/Palettes",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
