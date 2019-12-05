@@ -19,15 +19,9 @@
 
 /**
  The Material Design color system's text field themer.
-
- @warning This API will eventually be deprecated. See the individual method documentation for
- details on replacement APIs.
- Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCTextFieldColorThemer : NSObject
-@end
-
-@interface MDCTextFieldColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use the MaterialTextFields+Theming instead.")
+    @interface MDCTextFieldColorThemer : NSObject
 
 /**
  Applies a color scheme to theme MDCTextField in MDCTextInputController.

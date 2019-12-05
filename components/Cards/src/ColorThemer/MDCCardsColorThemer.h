@@ -19,15 +19,9 @@
 
 /**
  The Material Design color system's themer for instances of MDCCard and MDCCardCollectionCell.
-
- @warning This API will eventually be deprecated. See the individual method documentation for
- details on replacement APIs.
- Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCCardsColorThemer : NSObject
-@end
-
-@interface MDCCardsColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use MaterialCards+Theming instead.") @interface MDCCardsColorThemer
+    : NSObject
 
 /**
  Applies a color scheme's properties to an MDCCard.

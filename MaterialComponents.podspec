@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "94.4.0"
+  mdc.version      = "94.5.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -260,6 +260,8 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
+      unit_tests.dependency "MaterialComponents/private/Color"
+      unit_tests.dependency "MaterialComponents/private/Math"
     end
   end
 
@@ -804,8 +806,6 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ShapeThemer"
     extension.dependency "MaterialComponents/schemes/Container"
     extension.dependency "MaterialComponents/Typography"
 
