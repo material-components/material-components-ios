@@ -14,16 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomNavigation+ColorThemer.h"
-#import "MaterialBottomNavigation+TypographyThemer.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
 @interface BottomNavigationBlurExample : UIViewController <UICollectionViewDataSource>
 
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UIImage *blurOnIcon;
@@ -35,10 +33,11 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = containerScheme;
   }
   return self;
 }
@@ -95,17 +94,9 @@
 }
 
 - (void)applyTheming {
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toBottomNavigationBar:self.bottomNavBar];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-                                           toBottomNavigation:self.bottomNavBar];
-#pragma clang diagnostic pop
-  self.bottomNavBar.barTintColor =
-      [self.bottomNavBar.barTintColor colorWithAlphaComponent:(CGFloat)0.85];
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
-  self.collectionView.backgroundColor = self.colorScheme.backgroundColor;
+  [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  self.collectionView.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 }
 
 - (void)viewDidLoad {

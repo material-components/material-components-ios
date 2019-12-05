@@ -13,21 +13,24 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialTypographyScheme
 
 // Example to show different icons for selected and unselected states
 class BottomNavigationSelectedIconExample: UIViewController {
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  let containerScheme: MDCContainerScheming = {
+    let containerScheme = MDCContainerScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme()
+    containerScheme.colorScheme.backgroundColor = .white
+    containerScheme.typographyScheme = MDCTypographyScheme()
+    return containerScheme
+  }()
 
   let bottomNavBar = MDCBottomNavigationBar()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    colorScheme.backgroundColor = .white
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
     let tabBarItem2 = UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 1)
@@ -38,8 +41,7 @@ class BottomNavigationSelectedIconExample: UIViewController {
     bottomNavBar.selectedItem = tabBarItem1
     view.addSubview(bottomNavBar)
 
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar)
+    bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
   }
 
   func layoutBottomNavBar() {

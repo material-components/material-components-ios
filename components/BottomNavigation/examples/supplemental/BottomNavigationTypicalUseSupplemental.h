@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MaterialContainerScheme.h"
 
 @interface BottomNavigationTypicalUseExample : UIViewController
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end

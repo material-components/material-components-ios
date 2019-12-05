@@ -142,8 +142,6 @@ mdc_examples_objc_library(
     includes = ["examples/supplemental"],
     deps = [
         ":BottomNavigation",
-        ":ColorThemer",
-        ":TypographyThemer",
         "//components/Palettes",
         "//components/schemes/Color",
         "//components/schemes/Typography",
@@ -155,10 +153,8 @@ mdc_examples_swift_library(
     deps = [
         ":BottomNavigation",
         ":BottomNavigationBeta",
-        ":ColorThemer",
         ":Theming",
         ":ObjcExamples",
-        ":TypographyThemer",
         "//components/AppBar",
         "//components/Buttons",
         "//components/Palettes",

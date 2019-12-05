@@ -16,8 +16,7 @@
 
 #import "BottomNavigationTypicalUseSupplemental.h"
 
-#import "MaterialBottomNavigation+ColorThemer.h"
-#import "MaterialBottomNavigation+TypographyThemer.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 
@@ -25,6 +24,7 @@
 
 @property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
+
 @end
 
 @implementation BottomNavigationTypicalUseExample
@@ -33,9 +33,11 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom Navigation";
-    _colorScheme =
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = containerScheme;
   }
   return self;
 }
@@ -113,14 +115,8 @@
 
   [self commonBottomNavigationTypicalUseExampleViewDidLoad];
 
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toBottomNavigationBar:self.bottomNavBar];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-                                           toBottomNavigation:self.bottomNavBar];
-#pragma clang diagnostic pop
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 }
 
 - (void)viewDidLayoutSubviews {

@@ -21,13 +21,18 @@ import MaterialComponents.MaterialColorScheme
 
 class BottomNavigationControllerExampleFixedChildViewController: UIViewController {
 
-  var colorScheme: MDCColorScheming = MDCSemanticColorScheme(defaults: .material201804)
+  var containerScheme: MDCContainerScheming = {
+    let containerScheme = MDCContainerScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    return containerScheme
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.view.backgroundColor = colorScheme.secondaryColor
+    self.view.backgroundColor = containerScheme.colorScheme.secondaryColor
   }
+
   override var prefersHomeIndicatorAutoHidden: Bool {
     return false
   }
@@ -87,15 +92,9 @@ class BottomNavigationControllerExampleScrollableChildViewController: UICollecti
 
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
 
-  @objc public var colorScheme: MDCColorScheming  = MDCSemanticColorScheme() {
+  var containerScheme: MDCContainerScheming = MDCContainerScheme() {
     didSet {
-      apply(colorScheme: colorScheme)
-    }
-  }
-
-  @objc public var typographyScheme: MDCTypographyScheming = MDCTypographyScheme() {
-    didSet {
-      apply(typographyScheme: typographyScheme)
+      apply(containerScheme: containerScheme)
     }
   }
 
@@ -107,15 +106,15 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.estimatedItemSize = CGSize(width: 96, height: 48)
     let viewController1 = BottomNavigationControllerExampleScrollableChildViewController(collectionViewLayout: flowLayout)
-    viewController1.collectionView.backgroundColor = colorScheme.primaryColorVariant
+    viewController1.collectionView.backgroundColor = containerScheme.colorScheme.primaryColorVariant
     viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)
 
     let viewController2 = BottomNavigationControllerExampleFixedChildViewController()
-    viewController2.colorScheme = self.colorScheme
+    viewController2.containerScheme = containerScheme
     viewController2.tabBarItem = UITabBarItem(title: "Item 2", image: UIImage(named: "Favorite"), tag: 1)
 
     let viewController3 = UIViewController()
-    viewController3.view.backgroundColor = colorScheme.surfaceColor
+    viewController3.view.backgroundColor = containerScheme.colorScheme.surfaceColor
     viewController3.tabBarItem = UITabBarItem(title: "Item 3", image: UIImage(named: "Search"), tag: 2)
 
     viewControllers = [ viewController1, viewController2, viewController3 ]
@@ -132,12 +131,7 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
 // MARK: Private Functions
 
 extension BottomNavigationControllerExampleViewController {
-  fileprivate func apply(colorScheme: MDCColorScheming) {
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme, toBottomNavigation: self.navigationBar)
-  }
-
-  fileprivate func apply(typographyScheme: MDCTypographyScheming) {
-    MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme,
-                                                                 to: self.navigationBar)
+  fileprivate func apply(containerScheme: MDCContainerScheming) {
+    navigationBar.applyPrimaryTheme(withScheme: containerScheme)
   }
 }
