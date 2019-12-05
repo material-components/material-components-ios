@@ -117,15 +117,3 @@ mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
 )
-
-# Deprecated
-
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deprecation = "ButtonBar is not intended to be themed as a standalone component." +
-                  " Please theme it via the AppBar component's Theming extension instead.",
-    deps = [
-        ":ButtonBar",
-        "//components/schemes/Typography",
-    ],
-)
