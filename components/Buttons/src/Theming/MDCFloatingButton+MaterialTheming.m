@@ -16,6 +16,8 @@
 
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
 
+static const CGFloat kFloatingButtonBaselineShapePercentageValue = (CGFloat)0.5;
+
 @implementation MDCFloatingButton (MaterialTheming)
 
 - (void)applySecondaryThemeWithScheme:(id<MDCContainerScheming>)scheme {
@@ -54,7 +56,13 @@
 }
 
 - (void)applySecondaryThemeWithShapeScheme:(id<MDCShapeScheming>)scheme {
-  [MDCFloatingButtonShapeThemer applyShapeScheme:scheme toButton:self];
+  // This is an override of the default scheme to fit the baseline values.
+  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCornerTreatment *cornerTreatment =
+      [MDCCornerTreatment cornerWithRadius:kFloatingButtonBaselineShapePercentageValue
+                                 valueType:MDCCornerTreatmentValueTypePercentage];
+  [rectangleShape setCorners:cornerTreatment];
+  self.shapeGenerator = rectangleShape;
 }
 
 - (void)applySecondaryThemeWithTypographyScheme:(id<MDCTypographyScheming>)scheme {
