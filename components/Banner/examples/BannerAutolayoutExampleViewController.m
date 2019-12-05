@@ -88,6 +88,7 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
 
 - (void)didTapButton {
   self.bannerView.hidden = NO;
+  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.bannerView);
 }
 
 - (void)didTapDismissOnBannerView {

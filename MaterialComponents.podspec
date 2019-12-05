@@ -260,6 +260,8 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
+      unit_tests.dependency "MaterialComponents/private/Color"
+      unit_tests.dependency "MaterialComponents/private/Math"
     end
   end
 
@@ -804,8 +806,6 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ShapeThemer"
     extension.dependency "MaterialComponents/schemes/Container"
     extension.dependency "MaterialComponents/Typography"
 

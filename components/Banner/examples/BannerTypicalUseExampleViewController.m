@@ -271,8 +271,7 @@ static NSString *const exampleSuperLongText =
   margins.left = exampleBannerContentPadding;
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
-  [self.view addSubview:bannerView];
-  self.bannerView = bannerView;
+  [self addBannerView:bannerView];
 
   MDCButton *button = bannerView.leadingButton;
   [button applyTextThemeWithScheme:self.containerScheme];
@@ -310,8 +309,7 @@ static NSString *const exampleSuperLongText =
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
   bannerView.imageView.hidden = YES;
-  [self.view addSubview:bannerView];
-  self.bannerView = bannerView;
+  [self addBannerView:bannerView];
 
   MDCButton *dismissButton = bannerView.leadingButton;
   [dismissButton applyTextThemeWithScheme:self.containerScheme];
@@ -351,8 +349,7 @@ static NSString *const exampleSuperLongText =
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
   bannerView.imageView.hidden = YES;
-  [self.view addSubview:bannerView];
-  self.bannerView = bannerView;
+  [self addBannerView:bannerView];
 
   MDCButton *dismissButton = bannerView.leadingButton;
   [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
@@ -392,8 +389,7 @@ static NSString *const exampleSuperLongText =
   margins.left = exampleBannerContentPadding;
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
-  [self.view addSubview:bannerView];
-  self.bannerView = bannerView;
+  [self addBannerView:bannerView];
 
   MDCButton *button = bannerView.leadingButton;
   [button applyTextThemeWithScheme:self.containerScheme];
@@ -418,8 +414,7 @@ static NSString *const exampleSuperLongText =
   margins.left = exampleBannerContentPadding;
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
-  [self.view addSubview:bannerView];
-  self.bannerView = bannerView;
+  [self addBannerView:bannerView];
 
   MDCButton *button = bannerView.leadingButton;
   [button applyTextThemeWithScheme:self.containerScheme];
@@ -457,8 +452,7 @@ static NSString *const exampleSuperLongText =
   margins.left = exampleBannerContentPadding;
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
-  [self.view addSubview:bannerView];
-  self.bannerView = bannerView;
+  [self addBannerView:bannerView];
 
   MDCButton *button = bannerView.leadingButton;
   [button applyTextThemeWithScheme:self.containerScheme];
@@ -484,8 +478,7 @@ static NSString *const exampleSuperLongText =
   margins.left = exampleBannerContentPadding;
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
-  [self.view addSubview:bannerView];
-  self.bannerView = bannerView;
+  [self addBannerView:bannerView];
 
   MDCButton *button = bannerView.leadingButton;
   [button applyTextThemeWithScheme:self.containerScheme];
@@ -497,6 +490,12 @@ static NSString *const exampleSuperLongText =
   [button addTarget:self
                 action:@selector(dismissBanner)
       forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)addBannerView:(MDCBannerView *)bannerView {
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.bannerView);
 }
 
 - (void)dismissBanner {

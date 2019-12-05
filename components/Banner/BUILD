@@ -85,6 +85,8 @@ mdc_unit_test_objc_library(
         ":Banner",
         ":Theming",
         "//components/Buttons",
+        "//components/private/Color",
+        "//components/private/Math",
         "//components/Typography",
     ],
 )
