@@ -96,7 +96,7 @@ static const CGFloat kChipViewBaselineShapePercentageValue = (CGFloat)0.5;
 }
 
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-    [self resetUIControlStatesForChipTheming];
+  [self resetUIControlStatesForChipTheming];
 
   UIColor *onSurface12Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
