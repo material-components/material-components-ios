@@ -140,6 +140,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
         [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultAlpha];
     _mdc_overrideBaseElevation = -1;
     _elevation = MDCShadowElevationModalBottomSheet;
+    _enableRippleBehavior = YES;
   }
 
   return self;

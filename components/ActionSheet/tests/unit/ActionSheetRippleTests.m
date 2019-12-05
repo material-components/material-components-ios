@@ -55,16 +55,16 @@
 /**
  Test to confirm behavior of initializing a @c MDCActionSheetController without any customization.
  */
-- (void)testRippleIsDisabledAndInkIsEnabledForAllCellsAndTheirPropertiesAreCorrect {
+- (void)testRippleIsEnabledAndInkIsDisabledForAllCellsAndTheirPropertiesAreCorrect {
   // When
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
   // Then
-  XCTAssertFalse(self.actionSheetController.enableRippleBehavior);
+  XCTAssertTrue(self.actionSheetController.enableRippleBehavior);
   XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   XCTAssertEqualObjects(self.actionSheetController.inkColor, nil);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertFalse(cell.enableRippleBehavior);
+    XCTAssertTrue(cell.enableRippleBehavior);
     XCTAssertNotNil(cell.rippleTouchController);
     XCTAssertNotNil(cell.inkTouchController);
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
@@ -73,8 +73,8 @@
                           [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
     XCTAssertEqual(cell.inkTouchController.defaultInkView.inkStyle, MDCInkStyleBounded);
     XCTAssertEqual(cell.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleBounded);
-    XCTAssertNil(cell.rippleTouchController.rippleView.superview);
-    XCTAssertNotNil(cell.inkTouchController.defaultInkView.superview);
+    XCTAssertNotNil(cell.rippleTouchController.rippleView.superview);
+    XCTAssertNil(cell.inkTouchController.defaultInkView.superview);
 
     CGRect cellBounds = CGRectStandardize(cell.bounds);
     CGRect inkBounds = CGRectStandardize(cell.inkTouchController.defaultInkView.bounds);
