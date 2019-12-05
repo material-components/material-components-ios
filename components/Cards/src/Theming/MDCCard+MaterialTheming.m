@@ -46,7 +46,10 @@ static const CGFloat kBorderWidth = 1;
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsColorThemer applySemanticColorScheme:colorScheme toCard:self];
+#pragma clang diagnostic pop
 }
 
 - (void)applyThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -84,7 +87,10 @@ static const CGFloat kBorderWidth = 1;
 }
 
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:colorScheme toCard:self];
+#pragma clang diagnostic pop
 }
 
 @end
