@@ -15,7 +15,6 @@
 #import "MDCShapeSchemeExampleViewController.h"
 
 #import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
-#import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
 #import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 
@@ -31,7 +30,6 @@
 #import "MaterialCards+ShapeThemer.h"
 #import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
-#import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
@@ -124,6 +122,12 @@
   self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.floatingButton];
 
+  self.card = [[MDCCard alloc] init];
+  self.card.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.card applyThemeWithScheme:self.containerScheme];
+  self.card.backgroundColor = _colorScheme.primaryColor;
+  [self.componentContentView addSubview:self.card];
+
   self.chipView = [[MDCChipView alloc] init];
   self.chipView.titleLabel.text = @"Material";
   self.chipView.imageView.image = [self faceImage];
@@ -132,12 +136,6 @@
   self.chipView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.chipView applyThemeWithScheme:self.containerScheme];
   [self.componentContentView addSubview:self.chipView];
-
-  self.card = [[MDCCard alloc] init];
-  self.card.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.card applyThemeWithScheme:self.containerScheme];
-  self.card.backgroundColor = _colorScheme.primaryColor;
-  [self.componentContentView addSubview:self.card];
 
   NSArray<NSLayoutConstraint *> *cardConstraints =
       [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[card]-|"
@@ -335,16 +333,28 @@
     // We don't want baseline overrides.
     [MDCBottomSheetControllerShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
                                                 toBottomSheetController:self.bottomSheetController];
-    [MDCChipViewShapeThemerDefaultMapping applyShapeScheme:_shapeScheme toChipView:self.chipView];
+    [MDCShapeSchemeExampleViewController applyShapeScheme:_shapeScheme toChipView:self.chipView];
     [MDCFloatingButtonShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
                                                         toButton:self.floatingButton];
   } else {
     // We do want baseline overrides.
     [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
                                   toBottomSheetController:self.bottomSheetController];
-    [MDCChipViewShapeThemer applyShapeScheme:_shapeScheme toChipView:self.chipView];
+    [self.chipView applyThemeWithScheme:self.containerScheme];
     [MDCFloatingButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.floatingButton];
   }
+}
+
+#pragma mark - Support
+
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+              toChipView:(nonnull MDCChipView *)chipView {
+  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
+  rectangleShape.topLeftCorner = shapeScheme.smallComponentShape.topLeftCorner;
+  rectangleShape.topRightCorner = shapeScheme.smallComponentShape.topRightCorner;
+  rectangleShape.bottomLeftCorner = shapeScheme.smallComponentShape.bottomLeftCorner;
+  rectangleShape.bottomRightCorner = shapeScheme.smallComponentShape.bottomRightCorner;
+  chipView.shapeGenerator = rectangleShape;
 }
 
 @end
