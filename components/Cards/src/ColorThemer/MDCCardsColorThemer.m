@@ -16,7 +16,10 @@
 
 static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCCardsColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card {
