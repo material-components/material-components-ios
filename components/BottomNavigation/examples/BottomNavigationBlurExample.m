@@ -95,6 +95,8 @@
 
 - (void)applyTheming {
   [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
+  self.bottomNavBar.barTintColor =
+      [self.bottomNavBar.barTintColor colorWithAlphaComponent:(CGFloat)0.85];
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   self.collectionView.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 }
