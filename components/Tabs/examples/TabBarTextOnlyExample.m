@@ -18,8 +18,8 @@
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTabs+ColorThemer.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 
@@ -29,8 +29,7 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -68,7 +67,7 @@
                                     tag:0],
   ];
 
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;

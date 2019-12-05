@@ -16,7 +16,7 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
-#import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
 #import "supplemental/TabBarViewControllerExampleSupplemental.h"
 
@@ -25,9 +25,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -46,7 +44,7 @@
   self.viewControllers = viewControllers;
   self.selectedViewController = self.viewControllers.firstObject;
   self.tabBar.enableRippleBehavior = YES;
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 }
 
 @end
