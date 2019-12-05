@@ -182,6 +182,12 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic, strong, nullable) UIColor *actionTintColor;
 
 /**
+ The ink color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor __deprecated_msg(
+    "Opt-in to Ripple by setting enableRippleBehavior to YES, and then use rippleColor instead.");
+
+/**
  By setting this property to @c YES, the Ripple component will be used instead of Ink
  to display visual feedback to the user.
 
@@ -314,11 +320,5 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  @note If no @c tintColor is provided then the @c actionTintColor from the controller will be used.
  */
 @property(nonatomic, copy, nullable) UIColor *tintColor;
-
-/**
- The ink color for the action items within an action sheet.
- */
-@property(nonatomic, strong, nullable) UIColor *inkColor __deprecated_msg(
-    "Opt-in to Ripple by setting enableRippleBehavior to YES, and then use rippleColor instead.");
 
 @end

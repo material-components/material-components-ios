@@ -39,7 +39,10 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   actionSheetController.actionTextColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   actionSheetController.inkColor = rippleColor;
+#pragma clang diagnostic pop
   actionSheetController.rippleColor = rippleColor;
 }
 
