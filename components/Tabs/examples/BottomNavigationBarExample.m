@@ -28,7 +28,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -39,7 +39,7 @@
   _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
   _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
-  [_bottomNavigationBar applyPrimaryThemeWithScheme:_containerScheme];
+  [_bottomNavigationBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   _bottomNavigationBar.inkColor = [UIColor colorWithRed:0
                                                   green:(CGFloat)0.5

@@ -29,7 +29,7 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
-    self.containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
