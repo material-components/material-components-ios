@@ -260,6 +260,8 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
+      unit_tests.dependency "MaterialComponents/private/Color"
+      unit_tests.dependency "MaterialComponents/private/Math"
     end
   end
 
