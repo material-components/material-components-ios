@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #import "MDCBaseCell+MaterialTheming.h"
-#import "MaterialList+ColorThemer.h"
+
+static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @implementation MDCBaseCell (MaterialTheming)
 
@@ -27,7 +28,9 @@
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  [MDCListColorThemer applySemanticColorScheme:colorScheme toBaseCell:self];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  self.inkColor = rippleColor;
+  self.rippleColor = rippleColor;
 }
 
 @end
