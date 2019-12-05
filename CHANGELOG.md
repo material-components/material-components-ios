@@ -1,3 +1,72 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### Banner
+
+* [Add unit test to test background color change when user interface changes. (#9073)](https://github.com/material-components/material-components-ios/commit/8a2650d5c31cddd73f3ca497a8a9e5f64bb6bdb4) (Wenyu Zhang)
+* [Implement UIAccessibilityContainer informal protocol to correct accessibility order. (#9116)](https://github.com/material-components/material-components-ios/commit/8a9a81a74811112de32c92215819dada5cd4672e) (Wenyu Zhang)
+* [Post accessibility notification when Banner shows on the screen in examples. (#9111)](https://github.com/material-components/material-components-ios/commit/0fcef85a440e108745cdf74d1e698fd47563881c) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Deprecate MDCBottomNavigationBarColorThemer (#9126)](https://github.com/material-components/material-components-ios/commit/352a110b81ca1f8b562ad7d150715b7448d4e6e2) (Bryan Oltman)
+
+### ButtonBar
+
+* [delete-MDCButtonBarTypographyThemer (#9117)](https://github.com/material-components/material-components-ios/commit/7ece2c118751771fab24fbf27642e0066ef826cc) (Andrew Overton)
+
+### Buttons
+
+* [Delete MDCButton cornerRadius (#9121)](https://github.com/material-components/material-components-ios/commit/c0464f44da0a4c460f6fc28daef5f4b00f18295a) (Bryan Oltman)
+* [Deprecate MDCOutlinedButtonColorThemer (#9048)](https://github.com/material-components/material-components-ios/commit/92ac86ec863564cfad5e618c8d17ca63f2ade3c7) (Galia Kaufman)
+* [Deprecating MDCTextButtonColorThemer (#9049)](https://github.com/material-components/material-components-ios/commit/705dfd7788ba8f9ef03ca6d9cbeb2d2c7d56a63c) (Galia Kaufman)
+
+### Cards
+
+* [Deprecate MDCCardsColorThemer (#9078)](https://github.com/material-components/material-components-ios/commit/285c8898c094ed314b6b38cfe63f2f1bdb50232c) (Bryan Oltman)
+
+### Chips
+
+* [Move themer code to MDCChipView+MaterialTheming (#9110)](https://github.com/material-components/material-components-ios/commit/322d162c5ef3035f3447f51adc206aedb8ed995e) (Bryan Oltman)
+
+### Ink
+
+* [Delete deprecated MDCInkTouchControllerLegacyDelegate (#9077)](https://github.com/material-components/material-components-ios/commit/0aa91cca0a1cacdb11c327413f119c41a7e611dd) (Bryan Oltman)
+
+### Tabs
+
+* [Deprecate MDCTabbarFontThemer (#9114)](https://github.com/material-components/material-components-ios/commit/23ddfe27155f4eef619a8291ec8f38c14419cb39) (Andrew Overton)
+* [Don't use MDCTabBarColorThemer in examples (#9125)](https://github.com/material-components/material-components-ios/commit/38840677fff750814bf31d4ac5ae15eb4d9f0882) (Andrew Overton)
+
+### TextFields
+
+* [Mark MDCTextFieldColorThemer as deprecated (#9076)](https://github.com/material-components/material-components-ios/commit/9adc054ce046bb5f938f229f32f62f63697923b6) (Bryan Oltman)
+
+### private/ThumbTrack
+
+* [deprecate-MDCThumbTrack-thumbMaxRippleRadius (#9120)](https://github.com/material-components/material-components-ios/commit/8e1dae7e3ec64ed08864eb3c3616499d4270a593) (Andrew Overton)
+
+## Multi-component changes
+
+* [Delete Themers (#9028)](https://github.com/material-components/material-components-ios/commit/f848eaf5eed5a242fc02b0a7b815541e11041979) (Bryan Oltman)
+
+---
+
 # 94.5.0
 
 This minor release introduces new APIs to AppBar, FlexibleHeader and Dialogs. AppBar and
