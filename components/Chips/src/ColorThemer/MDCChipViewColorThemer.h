@@ -20,15 +20,11 @@
 /**
  The Material Design color system's themer for instances of MDCChipView.
 
- @warning This API will eventually be deprecated. See the individual method documentation for
+ @warning This API will eventually be deleted. See the individual method documentation for
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCChipViewColorThemer : NSObject
-
-@end
-
-@interface MDCChipViewColorThemer (ToBeDeprecated)
+__deprecated_msg("Use Chips+Theming instead.") @interface MDCChipViewColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCChipView.

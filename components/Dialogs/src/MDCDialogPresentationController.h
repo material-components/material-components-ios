@@ -110,6 +110,14 @@
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /**
+ The transform applied to the @c MDCDialogPresentationController. Used to ensure the shadow
+ properly tracks the view.
+
+ The default value is @c CGAffineTransformIdentity.
+ */
+@property(nonatomic, assign) CGAffineTransform dialogTransform;
+
+/**
  Returns the size of the specified child view controller's content.
 
  The size is initially based on container.preferredSize. Width is will have a minimum of 280 and a

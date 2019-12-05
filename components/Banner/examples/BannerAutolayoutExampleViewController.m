@@ -67,8 +67,14 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
                    action:@selector(didTapDismissOnBannerView)
          forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:bannerView];
-  NSLayoutConstraint *bannerViewConstraintTop =
-      [bannerView.topAnchor constraintEqualToAnchor:self.view.layoutMarginsGuide.topAnchor];
+  NSLayoutConstraint *bannerViewConstraintTop;
+  if (@available(iOS 11.0, *)) {
+    bannerViewConstraintTop =
+        [bannerView.topAnchor constraintEqualToAnchor:self.view.layoutMarginsGuide.topAnchor];
+  } else {
+    bannerViewConstraintTop =
+        [bannerView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor];
+  }
   bannerViewConstraintTop.active = YES;
   NSLayoutConstraint *bannerViewConstraintLeft =
       [bannerView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor];
