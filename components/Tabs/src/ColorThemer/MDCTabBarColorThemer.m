@@ -18,7 +18,10 @@ static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
 static const CGFloat kUnselectedImageOpacity = (CGFloat)0.54;
 static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCTabBarColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toTabs:(nonnull MDCTabBar *)tabBar {
