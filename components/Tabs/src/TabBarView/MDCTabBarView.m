@@ -226,6 +226,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       mdcItemView.image = item.image;
       mdcItemView.selectedImage = item.selectedImage;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
+      mdcItemView.rippleTouchController.shouldProcessRippleWithScrollViewGestures = NO;
       itemView = mdcItemView;
     }
     UITapGestureRecognizer *tapGesture =
