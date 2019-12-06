@@ -17,7 +17,10 @@
 #import "MaterialTextFields.h"
 #import "MaterialThemes.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCTextFieldFontThemer
+#pragma clang diagnostic pop
 
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
     toTextInputController:(id<MDCTextInputController>)textInputController {
