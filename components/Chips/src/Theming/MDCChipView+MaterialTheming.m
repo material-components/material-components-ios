@@ -21,6 +21,15 @@ static const CGFloat kChipViewBaselineShapePercentageValue = (CGFloat)0.5;
 
 @implementation MDCChipView (MaterialTheming)
 
+#pragma mark - Common Values
+
+- (void)applyPaddingValues {
+  self.contentPadding = UIEdgeInsetsMake(0, 4, 0, 8);
+  self.titlePadding = UIEdgeInsetsMake(0, 8, 0, 4);
+  self.accessoryPadding = UIEdgeInsetsMake(0, 4, 0, 0);
+  self.imagePadding = UIEdgeInsetsZero;
+}
+
 #pragma mark - Standard Chip
 
 - (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme {
@@ -33,6 +42,7 @@ static const CGFloat kChipViewBaselineShapePercentageValue = (CGFloat)0.5;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBorderWidth:0 forState:state];
   }
+  [self applyPaddingValues];
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
@@ -93,6 +103,7 @@ static const CGFloat kChipViewBaselineShapePercentageValue = (CGFloat)0.5;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBorderWidth:1 forState:state];
   }
+  [self applyPaddingValues];
 }
 
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
