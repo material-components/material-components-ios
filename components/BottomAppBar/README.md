@@ -106,6 +106,7 @@ import MaterialComponents.MaterialBottomAppBar
 MDCBottomAppBarView can be added to a view hierarchy like any UIView. Material Design guidelines
 recommend always placing the bottom app bar at the bottom of the screen.
 
+
 ## Extensions
 
 <!-- Extracted from docs/color-theming.md -->
