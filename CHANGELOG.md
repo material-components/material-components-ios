@@ -5,6 +5,47 @@ In this major release we deleted a bunch of APIs already marked deprecated in th
 
 ## Breaking changes
 
+### Button
+
+`MDCButton` removed `cornerRadius`.
+
+#### Chips
+
+We removed a bunch of themer classes and protocols that are not part of our latest theming offering.
+
+## New deprecations
+
+### Navigation Bar
+
+We deprecated the color themer in preperation of deleting it. Use theming instead.
+
+### Outlined Button
+
+We deprecated the color themer in preperation of deleting it. Use theming instead.
+
+### Text Button
+
+We deprecated the color themer in preperation of deleting it. Use theming instead.
+
+### Cards
+
+We deprecated the color themer in preperation of deleting it. Use theming instead.
+
+### Tab Bar
+
+We deprecated the color themer in preperation of deleting it. Use theming instead.
+
+
+### Text Field
+
+We deprecated the color themer in preperation of deleting it. Use theming instead.
+
+### Thumb Track
+
+We deprecated the private thumbtrack component's `thumbMaxRippleRadius`. 
+
+## API changes
+
 #### MDCButton
 
 *removed* property: `cornerRadius` in `MDCButton`
@@ -22,8 +63,6 @@ In this major release we deleted a bunch of APIs already marked deprecated in th
 *removed* class: `MDCChipViewShapeThemer`. Use Chips+Theming instead.
 
 *removed* class: `MDCChipViewTypographyThemer`. Use Chips+Theming instead.
-
-## New deprecations
 
 #### Navigation Bar
 
@@ -52,14 +91,11 @@ instead. (Note: Color theming is no longer available as an independent API.)")
 
 *deprecated* class: MDCTextFieldColorThemer. Please use the MaterialTextFields+Theming instead.
 
+#### Thumb Track
+
 *deprecated* property: `thumbMaxRippleRadius` in `MDCThumbTrack`. Opt-in to Ripple by setting
 enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at
 https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
 
 ## Component changes
 
