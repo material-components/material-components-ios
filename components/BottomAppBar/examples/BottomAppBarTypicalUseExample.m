@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"
