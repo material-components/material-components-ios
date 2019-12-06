@@ -22,10 +22,9 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCTextFieldTypographyThemer : NSObject
-@end
-
-@interface MDCTextFieldTypographyThemer (ToBeDeprecated)
+__deprecated_msg("Please use MDCTextInputControllerFilled+MaterialTheming.h or "
+                 "MDCTextInputControllerOutlined+MaterialTheming.h instead.")
+    @interface MDCTextFieldTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to a text input controller.
@@ -39,7 +38,9 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-        toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
+        toTextInputController:(nonnull id<MDCTextInputController>)textInputController
+    __deprecated_msg("Please use MDCTextInputControllerFilled+MaterialTheming.h or "
+                     "MDCTextInputControllerOutlined+MaterialTheming.h instead.");
 
 /**
  Applies a typography scheme to theme an specific class type responding to MDCTextInputController
@@ -54,7 +55,9 @@
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
-    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
+    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:))
+        __deprecated_msg("Please use MDCTextInputControllerFilled+MaterialTheming.h or "
+                         "MDCTextInputControllerOutlined+MaterialTheming.h instead.");
 
 /**
  Applies a typography scheme's properties to a text input.
@@ -66,6 +69,8 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-                  toTextInput:(nonnull id<MDCTextInput>)textInput;
+                  toTextInput:(nonnull id<MDCTextInput>)textInput
+    __deprecated_msg("Please use MDCTextInputControllerFilled+MaterialTheming.h or "
+                     "MDCTextInputControllerOutlined+MaterialTheming.h instead.");
 
 @end
