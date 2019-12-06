@@ -24,13 +24,13 @@
  @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheming`.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@protocol MDCCardScheming
+__deprecated_msg("MDCCardScheming was made obsolete by theming with MDCContainerSchemes.") @protocol MDCCardScheming
 
 /** The color scheme to apply to cards. */
-@property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
+@property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme __deprecated_msg("MDCCardScheming was made obsolete by theming with MDCContainerSchemes.");
 
 /** The shape scheme to apply to cards. */
-@property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
+@property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme __deprecated_msg("MDCCardScheming was made obsolete by theming with MDCContainerSchemes.");
 
 @end
 
@@ -40,7 +40,7 @@
  @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheme`.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCCardScheme : NSObject <MDCCardScheming>
+__deprecated_msg("MDCCardScheming was made obsolete by theming with MDCContainerSchemes.") @interface MDCCardScheme : NSObject <MDCCardScheming>
 
 // Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;

@@ -22,6 +22,8 @@ static const MDCShadowElevation kHighlightedElevation = 4;
 static const MDCShadowElevation kSelectedElevation = 4;
 static const CGFloat kBorderWidth = 1;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCCardThemer
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme toCard:(nonnull MDCCard *)card {
@@ -29,11 +31,8 @@ static const CGFloat kBorderWidth = 1;
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
   card.interactable = YES;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCard:card];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
-#pragma clang diagnostic pop
 }
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
@@ -43,11 +42,8 @@ static const CGFloat kBorderWidth = 1;
   [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
   cardCell.interactable = YES;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCardCell:cardCell];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
-#pragma clang diagnostic pop
 }
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
@@ -59,11 +55,8 @@ static const CGFloat kBorderWidth = 1;
     [card setShadowElevation:0 forState:state];
   }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCard:card];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
-#pragma clang diagnostic pop
 }
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
@@ -74,11 +67,10 @@ static const CGFloat kBorderWidth = 1;
     [cardCell setShadowElevation:0 forState:state];
   }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCardCell:cardCell];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
-#pragma clang diagnostic pop
 }
 
 @end
+
+#pragma clang diagnostic pop
