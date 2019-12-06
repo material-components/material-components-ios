@@ -24,10 +24,8 @@
  Track progress here: https://github.com/material-components/material-components-ios/issues/7172
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCBottomNavigationBarTypographyThemer : NSObject
-@end
-
-@interface MDCBottomNavigationBarTypographyThemer (ToBeDeprecated)
+__deprecated_msg("Please use the Theming extension instead.")
+    @interface MDCBottomNavigationBarTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCBottomNavigationBar.
@@ -40,6 +38,7 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-        toBottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar;
+        toBottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
+    __deprecated_msg("Please use the Theming extension instead.");
 
 @end
