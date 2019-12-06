@@ -136,13 +136,3 @@
      UITraitCollection *_Nullable previousTraitCollection);
 
 @end
-
-// clang-format off
-@interface MDCSnackbarMessageView ()
-
-/** @see messsageTextColor */
-@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewTextColor UI_APPEARANCE_SELECTOR
-__deprecated_msg("Use messsageTextColor instead.");
-
-@end
-// clang-format on
