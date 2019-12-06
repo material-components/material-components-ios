@@ -72,7 +72,8 @@
   self.delegateShouldBeginEditing = NO;
 
   // When
-  BOOL shouldBeginEditing = [self.chip.textField.delegate textFieldShouldBeginEditing:self.chip.textField];
+  BOOL shouldBeginEditing =
+      [self.chip.textField.delegate textFieldShouldBeginEditing:self.chip.textField];
 
   // Then
   XCTAssertFalse(shouldBeginEditing);
@@ -84,7 +85,8 @@
   self.delegateShouldBeginEditing = YES;
 
   // When
-  BOOL shouldBeginEditing = [self.chip.textField.delegate textFieldShouldBeginEditing:self.chip.textField];
+  BOOL shouldBeginEditing =
+      [self.chip.textField.delegate textFieldShouldBeginEditing:self.chip.textField];
 
   // Then
   XCTAssertTrue(shouldBeginEditing);
