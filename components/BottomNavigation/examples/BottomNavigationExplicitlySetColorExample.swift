@@ -13,16 +13,15 @@
 // limitations under the License.
 
 import Foundation
+import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialPalettes
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
-  @objc var colorScheme = MDCSemanticColorScheme()
-
+  @objc let containerScheme = MDCContainerScheme()
   let bottomNavBar = MDCBottomNavigationBar()
-
   let redButton = MDCButton()
   let blueButton = MDCButton()
 
@@ -99,8 +98,7 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     blueButton.addTarget(self, action: #selector(blueTheme), for: .touchUpInside)
     view.addSubview(blueButton)
 
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar)
+    bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
     bottomNavBar.backgroundColor = MDCPalette.grey.tint700
   }
 
