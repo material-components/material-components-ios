@@ -32,8 +32,7 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
   - [Typical use](#typical-use)
   - [Supported UIBarButtonItem properties](#supported-uibarbuttonitem-properties)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
 
 - - -
 
@@ -175,15 +174,10 @@ buttonBar.items = items;
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Color Theming
+### Theming
 
-MDCButtonBar is intended to be themed through the AppBar component's theming extension.
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-MDCButtonBar is intended to be themed through the AppBar component's theming extension.
+MDCButtonBar is intended to be themed through the AppBar component's theming extension. More
+information can be found at https://github.com/material-components/material-components-ios/tree/develop/components/AppBar#theming.
 
