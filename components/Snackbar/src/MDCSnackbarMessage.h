@@ -171,8 +171,8 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic) BOOL focusOnShow;
 
 /**
- Element to focus on HUD message dismiss. Focuses the first element on screen
- after dismiss by default. The focus will change to the element only if the focus is on the HUD
+ Element to focus on snackbar message dismiss. Focuses the first element on screen
+ after dismiss by default. The focus will change to the element only if the focus is on the snackbar
  message.
 
  Defaults to nil.
