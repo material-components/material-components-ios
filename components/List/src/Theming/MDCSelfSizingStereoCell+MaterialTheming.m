@@ -14,8 +14,10 @@
 
 #import "MDCSelfSizingStereoCell+MaterialTheming.h"
 
-#import "MaterialList+ColorThemer.h"
 #import "MaterialList+TypographyThemer.h"
+
+static const CGFloat kHighAlpha = (CGFloat)0.87;
+static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @implementation MDCSelfSizingStereoCell (MaterialTheming)
 
@@ -36,7 +38,14 @@
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  [MDCListColorThemer applySemanticColorScheme:colorScheme toSelfSizingStereoCell:self];
+  self.titleLabel.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  self.detailLabel.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  self.leadingImageView.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  self.trailingImageView.tintColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  self.inkColor = rippleColor;
+  self.rippleColor = rippleColor;
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {

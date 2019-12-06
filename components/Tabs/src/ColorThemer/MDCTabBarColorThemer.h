@@ -22,10 +22,9 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCTabBarColorThemer : NSObject
-@end
-
-@interface MDCTabBarColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use the Theming extension instead.") @interface MDCTabBarColorThemer
+    : NSObject
+;
 
 /**
  Applies a color scheme's properties to an MDCTabBar using the primary mapping.
@@ -40,7 +39,8 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                          toTabs:(nonnull MDCTabBar *)tabBar;
+                          toTabs:(nonnull MDCTabBar *)tabBar
+    __deprecated_msg("Please use the Theming extension instead.");
 
 /**
  Applies a color scheme's properties to an MDCTabBar using the surface mapping.
@@ -55,7 +55,8 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                                    toTabs:(nonnull MDCTabBar *)tabBar;
+                                    toTabs:(nonnull MDCTabBar *)tabBar
+    __deprecated_msg("Please use the Theming extension instead.");
 
 /**
  Applies a color scheme to theme a MDCTabBar.
@@ -68,6 +69,7 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-                toTabBar:(nonnull MDCTabBar *)tabBar;
+                toTabBar:(nonnull MDCTabBar *)tabBar
+    __deprecated_msg("Please use the Theming extension instead.");
 
 @end

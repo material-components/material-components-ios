@@ -171,6 +171,15 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic) BOOL focusOnShow;
 
 /**
+ Element to focus on snackbar message dismiss. Focuses the first element on screen
+ after dismiss by default. The focus will change to the element only if the focus is on the snackbar
+ message.
+
+ Defaults to nil.
+ */
+@property(nonatomic, weak, nullable) UIView *elementToFocusOnDismiss;
+
+/**
  A block that is invoked when the corresponding @c MDCSnackbarMessageView of the @c
  MDCSnackbarMessage instance will be presented. Use this to customize @c MDCSnackbarMessageView
  before presentation.

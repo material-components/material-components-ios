@@ -16,10 +16,26 @@
 #import "MaterialChips.h"
 #import "MaterialSnapshot.h"
 
+/** A test fake for @c MDCChipView that allows overriding some read-only properties. */
+@interface MDCChipViewSnapshotTestsChipFake : MDCChipView
+
+/** Override value for the Chip's @c traitCollection. */
+@property(nonatomic, assign) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation MDCChipViewSnapshotTestsChipFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 @interface MDCChipViewSnapshotTests : MDCSnapshotTestCase
 
 @property(nonatomic, strong) MDCContainerScheme *scheme;
-@property(nonatomic, strong) MDCChipView *chip;
+@property(nonatomic, strong) MDCChipViewSnapshotTestsChipFake *chip;
 
 @end
 
@@ -32,7 +48,7 @@
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.chip = [[MDCChipView alloc] init];
+  self.chip = [[MDCChipViewSnapshotTestsChipFake alloc] init];
   self.chip.titleLabel.text = @"A Chip";
   self.scheme = [[MDCContainerScheme alloc] init];
 }
@@ -109,7 +125,7 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
-- (void)testBaselineThemedChipWithImage {
+- (void)testBaselineThemedChipWithImageLTR {
   // When
   self.chip.imageView.image = [self leadingImage];
   [self.chip applyThemeWithScheme:self.scheme];
@@ -118,7 +134,37 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
-- (void)testOutlinedThemedChipWithImage {
+- (void)testBaselineThemedChipWithImageRTL {
+  // Given
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  [self.chip applyThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithImageLTR {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithImageRTL {
+  // Given
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
   // When
   self.chip.imageView.image = [self leadingImage];
   [self.chip applyOutlinedThemeWithScheme:self.scheme];
@@ -137,7 +183,7 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
-- (void)testBaselineThemedChipWithAccessoryView {
+- (void)testBaselineThemedChipWithAccessoryViewLTR {
   // When
   self.chip.accessoryView = [self deleteButton];
   [self.chip applyThemeWithScheme:self.scheme];
@@ -146,7 +192,37 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
-- (void)testOutlinedThemedChipWithAccessoryView {
+- (void)testBaselineThemedChipWithAccessoryViewRTL {
+  // Given
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
+  // When
+  self.chip.accessoryView = [self deleteButton];
+  [self.chip applyThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithAccessoryViewLTR {
+  // When
+  self.chip.accessoryView = [self deleteButton];
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithAccessoryViewRTL {
+  // Given
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
   // When
   self.chip.accessoryView = [self deleteButton];
   [self.chip applyOutlinedThemeWithScheme:self.scheme];
@@ -166,7 +242,7 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
-- (void)testBaselineThemedChipWithImageAndAccessoryView {
+- (void)testBaselineThemedChipWithImageAndAccessoryViewLTR {
   // When
   self.chip.imageView.image = [self leadingImage];
   self.chip.accessoryView = [self deleteButton];
@@ -176,7 +252,39 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
-- (void)testOutlinedThemedChipWithImageAndAccessoryView {
+- (void)testBaselineThemedChipWithImageAndAccessoryViewRTL {
+  // Given
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  self.chip.accessoryView = [self deleteButton];
+  [self.chip applyThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithImageAndAccessoryViewLTR {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  self.chip.accessoryView = [self deleteButton];
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithImageAndAccessoryViewRTL {
+  // Given
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
   // When
   self.chip.imageView.image = [self leadingImage];
   self.chip.accessoryView = [self deleteButton];
