@@ -17,7 +17,7 @@
 static const MDCShadowElevation kNormalElevation = 1;
 static const MDCShadowElevation kHighlightedElevation = 1;
 static const CGFloat kBorderWidth = 1;
-static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
+static const CGFloat kOutlinedVariantBorderOpacity = (CGFloat)0.37;
 
 @implementation MDCCard (MaterialTheming)
 
@@ -90,7 +90,7 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
   self.backgroundColor = colorScheme.surfaceColor;
   UIColor *borderColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedVariantBorderOpacity];
   [self setBorderColor:borderColor forState:UIControlStateNormal];
 }
 
