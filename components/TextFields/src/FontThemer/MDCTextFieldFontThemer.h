@@ -23,15 +23,9 @@
 
 /**
  Used to apply a font scheme to theme a MDCTextField/MDCTextInputController.
-
- @warning This API will eventually be deprecated. See the individual method documentation for
- details on replacement APIs.
- Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCTextFieldFontThemer : NSObject
-@end
-
-@interface MDCTextFieldFontThemer (ToBeDeprecated)
+__deprecated_msg("Use MaterialTextFields+Theming instead.") @interface MDCTextFieldFontThemer
+    : NSObject
 
 /**
  Applies a font scheme to theme a MDCTextInputController instance.

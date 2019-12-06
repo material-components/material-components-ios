@@ -24,6 +24,9 @@
 
 @implementation TextFieldsFontThemerTests
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (void)tearDown {
   [super tearDown];
   // Reset class default values.
@@ -107,5 +110,7 @@
   XCTAssertEqual([floatingInputController.floatingPlaceholderScale doubleValue],
                  fontScheme.caption.pointSize / fontScheme.body1.pointSize);
 }
+
+#pragma clang diagnostic pop
 
 @end
