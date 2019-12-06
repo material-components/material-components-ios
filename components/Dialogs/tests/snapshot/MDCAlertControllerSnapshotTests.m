@@ -329,8 +329,8 @@ static NSString *const kMessageLongArabic =
 
 - (void)testAlertWithLongButtonTitlesRTL {
   // Given
-  MDCAlertController *controller = [MDCAlertController alertControllerWithTitle:kTitleShortArabic
-                                                                        message:kMessageLongArabic];
+  MDCAlertController *controller =
+      [MDCAlertController alertControllerWithTitle:kTitleShortArabic message:kMessageShortArabic];
 
   // When
   MDCAlertAction *shortAction = [MDCAlertAction actionWithTitle:kTitleShortArabic handler:nil];
