@@ -44,17 +44,6 @@ We deprecated the color themer in preperation of deleting it. Use theming instea
 
 We deprecated the private thumbtrack component's `thumbMaxRippleRadius`. 
 
-
-## New features
-
-### Banner
-
-Banner can now be announced and focused when popped up.
-
-```objc
-  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.bannerView);
-```
-
 ## API changes
 
 #### MDCButton
