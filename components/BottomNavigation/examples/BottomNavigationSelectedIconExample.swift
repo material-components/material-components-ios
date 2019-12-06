@@ -17,7 +17,7 @@ import MaterialComponents.MaterialTypographyScheme
 
 // Example to show different icons for selected and unselected states
 class BottomNavigationSelectedIconExample: UIViewController {
-  let containerScheme: MDCContainerScheming = {
+  @objc var containerScheme: MDCContainerScheming = {
     let containerScheme = MDCContainerScheme()
     containerScheme.colorScheme.backgroundColor = .white
     return containerScheme

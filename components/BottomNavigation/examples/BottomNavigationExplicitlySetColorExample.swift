@@ -18,7 +18,7 @@ import MaterialComponents.MaterialPalettes
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
-  let containerScheme = MDCContainerScheme()
+  @objc let containerScheme = MDCContainerScheme()
   let bottomNavBar = MDCBottomNavigationBar()
   let redButton = MDCButton()
   let blueButton = MDCButton()

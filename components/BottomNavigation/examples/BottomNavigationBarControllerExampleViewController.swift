@@ -21,7 +21,7 @@ import MaterialComponents.MaterialContainerScheme
 
 class BottomNavigationControllerExampleFixedChildViewController: UIViewController {
 
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()

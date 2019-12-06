@@ -20,7 +20,7 @@ import MaterialComponents.MaterialTypographyScheme
 /// Example to showcase a reorder of the tabs from an user action
 class BottomNavigationResetExample: UIViewController {
 
-  let containerScheme = MDCContainerScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   let bottomNavBar = MDCBottomNavigationBar()
 
