@@ -19,9 +19,7 @@ import MaterialComponents.MaterialTypographyScheme
 class BottomNavigationSelectedIconExample: UIViewController {
   let containerScheme: MDCContainerScheming = {
     let containerScheme = MDCContainerScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme()
     containerScheme.colorScheme.backgroundColor = .white
-    containerScheme.typographyScheme = MDCTypographyScheme()
     return containerScheme
   }()
 
