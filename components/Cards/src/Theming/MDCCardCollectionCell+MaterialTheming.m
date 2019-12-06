@@ -14,13 +14,11 @@
 
 #import "MDCCardCollectionCell+MaterialTheming.h"
 
-#import "MaterialCards+ColorThemer.h"
-#import "MaterialCards+ShapeThemer.h"
-
 static const MDCShadowElevation kNormalElevation = 1;
 static const MDCShadowElevation kHighlightedElevation = 1;
 static const MDCShadowElevation kSelectedElevation = 1;
 static const CGFloat kBorderWidth = 1;
+static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
 @implementation MDCCardCollectionCell (MaterialTheming)
 
@@ -48,10 +46,8 @@ static const CGFloat kBorderWidth = 1;
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  [MDCCardsColorThemer applySemanticColorScheme:colorScheme toCardCell:self];
-#pragma clang diagnostic pop
+  self.backgroundColor = colorScheme.surfaceColor;
+  [self setImageTintColor:colorScheme.primaryColor forState:MDCCardCellStateNormal];
 }
 
 - (void)applyThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -88,10 +84,16 @@ static const CGFloat kBorderWidth = 1;
 }
 
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:colorScheme toCardCell:self];
-#pragma clang diagnostic pop
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setBorderColor:nil forState:state];
+  }
+
+  self.backgroundColor = colorScheme.surfaceColor;
+  UIColor *borderColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];
+  [self setBorderColor:borderColor forState:MDCCardCellStateNormal];
 }
 
 @end
