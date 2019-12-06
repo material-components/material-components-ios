@@ -14,13 +14,11 @@
 
 // swiftlint:disable function_body_length
 
-import MaterialComponents.MaterialTextFields_ColorThemer
-import MaterialComponents.MaterialTextFields_TypographyThemer
+import MaterialComponents.MaterialTextFields_Theming
 
 final class TextFieldSemanticColorThemer: UIViewController {
 
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   let textfieldStandard: MDCTextField = {
     let textfield = MDCTextField()
@@ -62,11 +60,9 @@ final class TextFieldSemanticColorThemer: UIViewController {
     addGestureRecognizer()
 
     // Apply the themes to the controllers
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: standardController)
-    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: standardController)
+    standardController.applyTheme(withScheme: containerScheme)
 
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: alternativeController)
-    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: alternativeController)
+    alternativeController.applyTheme(withScheme: containerScheme)
   }
 
   func setupTextFields() {
