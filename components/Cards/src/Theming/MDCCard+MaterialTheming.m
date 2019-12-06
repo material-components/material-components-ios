@@ -29,7 +29,7 @@ static const CGFloat kOutlinedVariantBorderOpacity = (CGFloat)0.37;
     colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  [self applyThemeWithColorScheme:colorScheme];
+  self.backgroundColor = colorScheme.surfaceColor;
 
   id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
   if (shapeScheme) {
@@ -41,10 +41,6 @@ static const CGFloat kOutlinedVariantBorderOpacity = (CGFloat)0.37;
   [self setShadowElevation:kNormalElevation forState:UIControlStateNormal];
   [self setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
   self.interactable = YES;  // To achieve baseline themed, the card should be interactable.
-}
-
-- (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  self.backgroundColor = colorScheme.surfaceColor;
 }
 
 - (void)applyThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
