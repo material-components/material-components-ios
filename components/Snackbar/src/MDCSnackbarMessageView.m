@@ -40,6 +40,17 @@ static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
                          alpha:(a)];
 }
 
+/** Test whether any of the accessibility elements of a view is focused */
+static BOOL UIViewHasFocusedAccessibilityElement(UIView *view) {
+  for (NSInteger i = 0; i < [view accessibilityElementCount]; i++) {
+    id accessibilityElement = [view accessibilityElementAtIndex:i];
+    if ([accessibilityElement accessibilityElementIsFocused]) {
+      return YES;
+    }
+  }
+  return NO;
+};
+
 /**
  The thickness of the Snackbar border.
  */
@@ -420,6 +431,16 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
   if (self.dismissalHandler) {
     self.dismissalHandler(userInitiated, action);
+
+    // Change focus only if the focus is on this view.
+    if (self.message.elementToFocusOnDismiss) {
+      BOOL hasVoiceOverFocus =
+          UIAccessibilityIsVoiceOverRunning() && UIViewHasFocusedAccessibilityElement(self);
+      if (hasVoiceOverFocus) {
+        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
+                                        self.message.elementToFocusOnDismiss);
+      }
+    }
 
     // In case our dismissal handler has a reference to us, release the block.
     self.dismissalHandler = nil;
