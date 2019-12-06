@@ -17,15 +17,9 @@
 
 /**
  The Material Design color system's themer for instances of MDCBottomNavigationBar.
-
- @warning This API will eventually be deprecated. There is no replacement yet.
- Track progress here: https://github.com/material-components/material-components-ios/issues/7172
- Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCBottomNavigationBarColorThemer : NSObject
-@end
-
-@interface MDCBottomNavigationBarColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use MaterialBottomNavigation+Theming instead.")
+    @interface MDCBottomNavigationBarColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCBottomNavigationBar.

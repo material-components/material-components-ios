@@ -336,7 +336,12 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
  enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
  */
-@property(nonatomic, assign) CGFloat thumbMaxRippleRadius;
+@property(nonatomic, assign) CGFloat thumbMaxRippleRadius __deprecated_msg(
+    "Opt-in to Ripple by setting enableRippleBehavior to YES, and then use "
+    "thumbRippleMaximumRadius instead. Learn more at "
+    "https://github.com/material-components/material-components-ios/tree/develop/components/"
+    "Ink#migration-guide-ink-to-ripple");
+;
 
 @end
 

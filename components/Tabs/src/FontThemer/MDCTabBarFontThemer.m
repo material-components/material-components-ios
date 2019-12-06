@@ -14,7 +14,10 @@
 
 #import "MDCTabBarFontThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCTabBarFontThemer
+#pragma clang diagnostic pop
 
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toTabBar:(MDCTabBar *)tabBar {
   tabBar.selectedItemTitleFont = fontScheme.button;

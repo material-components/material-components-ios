@@ -92,6 +92,8 @@
                       forControlEvents:UIControlEventTouchUpInside];
   self.banner.trailingButton.hidden = YES;
   self.appBarViewController.headerStackView.bottomBar = self.banner;
+
+  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.banner);
 }
 
 @end

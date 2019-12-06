@@ -109,7 +109,6 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     data = [":TabsExamplesAssets"],
     deps = [
-        ":ColorThemer",
         ":TabBarView",
         ":Tabs",
         ":Theming",
@@ -135,8 +134,8 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":ColorThemer",
         ":Tabs",
+        ":Theming",
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",

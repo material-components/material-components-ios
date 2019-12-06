@@ -97,8 +97,11 @@
 - (void)applyTheming {
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toBottomNavigationBar:self.bottomNavBar];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
                                            toBottomNavigation:self.bottomNavBar];
+#pragma clang diagnostic pop
   self.bottomNavBar.barTintColor =
       [self.bottomNavBar.barTintColor colorWithAlphaComponent:(CGFloat)0.85];
   self.view.backgroundColor = self.colorScheme.backgroundColor;
