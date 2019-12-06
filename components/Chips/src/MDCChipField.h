@@ -163,6 +163,13 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 @optional
 
 /**
+ Asks the delegate if editing should begin in the specified chip field.
+
+ @param chipField The @c MDCChipField where is about to begin.
+ */
+- (BOOL)chipFieldShouldBeginEditing:(nonnull MDCChipField *)chipField;
+
+/**
  Tells the delegate that editing began in the specified chip field.
 
  @param chipField The MDCChipField where editing began.

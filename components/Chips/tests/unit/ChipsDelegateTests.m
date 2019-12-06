@@ -22,6 +22,8 @@
 
 @property(nonatomic, nullable) MDCChipField *chip;
 @property(nonatomic, copy, nullable) NSString *delegateTextInput;
+@property(nonatomic) BOOL delegateShouldBeginEditing;
+@property(nonatomic) BOOL delegateDidBeginEditingCalled;
 
 @end
 
@@ -32,12 +34,15 @@
   self.delegateTextInput = nil;
   self.chip = [[MDCChipField alloc] init];
   self.chip.delegate = self;
+  self.delegateShouldBeginEditing = YES;
 }
 
 - (void)tearDown {
   self.delegateTextInput = nil;
   self.chip.delegate = nil;
   self.chip = nil;
+  self.delegateShouldBeginEditing = YES;
+  self.delegateDidBeginEditingCalled = NO;
   [super tearDown];
 }
 
@@ -62,10 +67,42 @@
   XCTAssertEqual((unsigned long)self.delegateTextInput.length, 0UL);
 }
 
+- (void)testDelegateShouldNotBeginEditingDoesNotTriggerDidBeginEditing {
+  // Given
+  self.delegateShouldBeginEditing = NO;
+
+  // When
+  BOOL shouldBeginEditing = [self.chip.textField.delegate textFieldShouldBeginEditing:self.chip.textField];
+
+  // Then
+  XCTAssertFalse(shouldBeginEditing);
+  XCTAssertFalse(self.delegateDidBeginEditingCalled);
+}
+
+- (void)testShouldBeginEditingTriggersDidBeginEditing {
+  // Given
+  self.delegateShouldBeginEditing = YES;
+
+  // When
+  BOOL shouldBeginEditing = [self.chip.textField.delegate textFieldShouldBeginEditing:self.chip.textField];
+
+  // Then
+  XCTAssertTrue(shouldBeginEditing);
+  XCTAssertTrue(self.delegateDidBeginEditingCalled);
+}
+
 #pragma mark - MDCChipFieldDelegate
 
 - (void)chipField:(nonnull MDCChipField *)chipField didChangeInput:(nullable NSString *)input {
   self.delegateTextInput = input;
+}
+
+- (BOOL)chipFieldShouldBeginEditing:(MDCChipField *)chipField {
+  return self.delegateShouldBeginEditing;
+}
+
+- (void)chipFieldDidBeginEditing:(MDCChipField *)chipField {
+  self.delegateDidBeginEditingCalled = YES;
 }
 
 @end
