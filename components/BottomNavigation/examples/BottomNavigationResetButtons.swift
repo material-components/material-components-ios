@@ -15,8 +15,7 @@
 import Foundation
 import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialTypographyScheme
+import MaterialComponents.MaterialContainerScheme
 
 /// Example to showcase a reorder of the tabs from an user action
 class BottomNavigationResetExample: UIViewController {

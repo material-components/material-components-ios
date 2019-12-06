@@ -15,6 +15,7 @@
 import Foundation
 import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialPalettes
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {

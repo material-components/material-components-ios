@@ -17,7 +17,6 @@ import UIKit
 import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialBottomNavigation_Theming
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 
 class BottomNavigationControllerExampleFixedChildViewController: UIViewController {
