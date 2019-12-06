@@ -172,7 +172,8 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 
 /**
  Element to focus on HUD message dismiss. Focuses the first element on screen
- after dismiss by default. The focus will change to the element only if the focus is on the HUD message.
+ after dismiss by default. The focus will change to the element only if the focus is on the HUD
+ message.
 
  Defaults to nil.
  */
