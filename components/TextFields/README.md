@@ -333,18 +333,6 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 <!--</div>-->
 
 
-<!-- Extracted from docs/color-theming.md -->
-
-### Text Fields Color Theming
-
-You can theme a text field with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/TextFields+ColorThemer'
-```
-
 <!-- Extracted from docs/typography-theming.md -->
 
 ### Text Fields Typography Theming
