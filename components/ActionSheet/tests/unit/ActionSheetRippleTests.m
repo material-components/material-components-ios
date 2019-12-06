@@ -59,10 +59,13 @@
   // When
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
-  // Then
+// Then
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   XCTAssertTrue(self.actionSheetController.enableRippleBehavior);
-  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   XCTAssertEqualObjects(self.actionSheetController.inkColor, nil);
+#pragma clang diagnostic pop
+  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertTrue(cell.enableRippleBehavior);
     XCTAssertNotNil(cell.rippleTouchController);
@@ -89,13 +92,15 @@
 - (void)
     testRippleIsEnabledAndInkIsDisabledForAllCellsAndTheirPropertiesAreCorrectWhenRippleBehaviorIsEnabled {
   // When
-  self.actionSheetController.enableRippleBehavior = YES;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
-  // Then
+// Then
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   XCTAssertTrue(self.actionSheetController.enableRippleBehavior);
-  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   XCTAssertEqualObjects(self.actionSheetController.inkColor, nil);
+#pragma clang diagnostic pop
+  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertTrue(cell.enableRippleBehavior);
     XCTAssertNotNil(cell.rippleTouchController);
@@ -120,9 +125,12 @@
  Test to confirm toggling @c enableRippleBehavior removes the @c rippleView as a subview.
  */
 - (void)testSetEnableRippleBehaviorToYesThenNoRemovesRippleViewAsSubviewOfCell {
-  // When
+// When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.actionSheetController.enableRippleBehavior = YES;
   self.actionSheetController.enableRippleBehavior = NO;
+#pragma clang diagnostic pop
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
   // Then

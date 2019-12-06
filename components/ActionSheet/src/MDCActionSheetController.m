@@ -325,9 +325,12 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   cell.inkColor = self.inkColor;
-  cell.rippleColor = self.rippleColor;
   cell.enableRippleBehavior = self.enableRippleBehavior;
+#pragma clang diagnostic pop
+  cell.rippleColor = self.rippleColor;
   cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
