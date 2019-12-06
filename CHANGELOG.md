@@ -5,6 +5,12 @@ during rotation while VoiceOver is on.
 
 ## Component changes
 
+## Changes
+
+### Dialogs
+
+* [Revert "[Dialogs] Set dialog message accessibilityFrame based on visible message text (#8786)" (#9171)](https://github.com/material-components/material-components-ios/commit/f1fb666ed56086c612daa89d1446d0a8c81c57cf) (Bryan Oltman)
+
 ---
 
 # 95.0.0
