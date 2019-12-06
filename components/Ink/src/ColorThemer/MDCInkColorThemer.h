@@ -25,10 +25,7 @@
  @warning This class will soon be deprecated. There is no direct replacement. Ink color must be
  set by the owning component in a context-specific manner.
  */
-@interface MDCInkColorThemer : NSObject
-@end
-
-@interface MDCInkColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use Ripple instead.") @interface MDCInkColorThemer : NSObject
 
 /**
  Applies a color scheme to theme a MDCInkView.
@@ -40,6 +37,7 @@
  @param inkView A MDCInkView instance to apply a color scheme.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-               toInkView:(nonnull MDCInkView *)inkView;
+               toInkView:(nonnull MDCInkView *)inkView
+    __deprecated_msg("Please use Ripple instead.");
 
 @end
