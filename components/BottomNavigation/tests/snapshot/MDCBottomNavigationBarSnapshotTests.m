@@ -270,10 +270,6 @@ static const CGFloat kHeightShort = 48;
 - (void)testMaterialBaselineTheme {
   // Given
   MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   // When
   [self.navigationBar applyPrimaryThemeWithScheme:containerScheme];
