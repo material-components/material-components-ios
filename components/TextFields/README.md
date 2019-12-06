@@ -71,7 +71,6 @@ For more information on text field styles, and animated images of each style in 
   - [Text Field with Character Count and Inline Placeholder](#text-field-with-character-count-and-inline-placeholder)
 - [Extensions](#extensions)
   - [Theming Extensions](#theming-extensions)
-  - [Text Fields Color Theming](#text-fields-color-theming)
   - [Text Fields Typography Theming](#text-fields-typography-theming)
 - [Accessibility](#accessibility)
   - [MDCTextField Accessibility](#mdctextfield-accessibility)
