@@ -33,11 +33,7 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom Navigation";
-    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-    containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-    _containerScheme = containerScheme;
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }

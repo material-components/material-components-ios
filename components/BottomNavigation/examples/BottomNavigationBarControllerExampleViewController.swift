@@ -17,15 +17,10 @@ import UIKit
 import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialBottomNavigation_TypographyThemer
-import MaterialComponents.MaterialColorScheme
 
 class BottomNavigationControllerExampleFixedChildViewController: UIViewController {
 
-  var containerScheme: MDCContainerScheming = {
-    let containerScheme = MDCContainerScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    return containerScheme
-  }()
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()

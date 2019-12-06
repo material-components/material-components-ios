@@ -19,14 +19,8 @@ import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
-  let containerScheme: MDCContainerScheming = {
-    let containerScheme = MDCContainerScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme()
-    return containerScheme
-  }()
-
+  let containerScheme = MDCContainerScheme()
   let bottomNavBar = MDCBottomNavigationBar()
-
   let redButton = MDCButton()
   let blueButton = MDCButton()
 
