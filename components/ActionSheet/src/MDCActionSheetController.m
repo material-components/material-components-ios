@@ -328,9 +328,9 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   cell.inkColor = self.inkColor;
+  cell.enableRippleBehavior = self.enableRippleBehavior;
 #pragma clang diagnostic pop
   cell.rippleColor = self.rippleColor;
-  cell.enableRippleBehavior = self.enableRippleBehavior;
   cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
