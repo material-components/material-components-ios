@@ -1,12 +1,61 @@
-# #develop#
+# 95.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we deleted a bunch of APIs already marked deprecated in the Button Bar,
+ Button, Ink, Chip componnts.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+#### MDCButton
+
+*removed* property: `cornerRadius` in `MDCButton`
+
+#### Chips
+
+*removed* protocol: `MDCChipViewScheming`. Use Chips+Theming instead.
+
+*removed* class: `MDCChipViewThemer`. Use Chips+Theming instead.
+
+*removed* class: `MDCChipViewColorThemer`. Use Chips+Theming instead.
+
+*removed* class: `MDCChipViewFontThemer`. Use Chips+Theming instead.
+
+*removed* class: `MDCChipViewShapeThemer`. Use Chips+Theming instead.
+
+*removed* class: `MDCChipViewTypographyThemer`. Use Chips+Theming instead.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+#### Navigation Bar
+
+*deprecated* class: MDCBottomNavigationBarColorThemer. Use MaterialBottomNavigation+Theming instead.
+
+#### Outlined Button
+
+*deprecated* class: MDCOutlinedButtonColorThemer. Please use
+[MDCButton applyOutlinedThemeWithScheme:] instead. (Note: Color theming is no longer available as an
+independent API.
+
+#### Text Button
+
+*deprecated* class: MDCTextButtonColorThemer. Please use [MDCButton applyTextThemeWithScheme:]
+instead. (Note: Color theming is no longer available as an independent API.)")
+
+#### Cards
+
+*deprecated* class: MDCCardsColorThemer. Please use MaterialCards+Theming instead.
+
+#### Tab Bar
+
+*deprecated* class: MDCTabBarFontThemer. Please use the theming extension instead.
+
+#### Text Field
+
+*deprecated* class: MDCTextFieldColorThemer. Please use the MaterialTextFields+Theming instead.
+
+*deprecated* property: `thumbMaxRippleRadius` in `MDCThumbTrack`. Opt-in to Ripple by setting
+enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at
+https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
 ## New features
 
 Replace this text with example code for each new feature.
