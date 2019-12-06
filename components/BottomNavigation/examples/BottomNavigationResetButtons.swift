@@ -13,8 +13,6 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
-import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
