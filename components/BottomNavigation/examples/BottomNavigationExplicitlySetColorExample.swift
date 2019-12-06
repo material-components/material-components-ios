@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Foundation
+import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialPalettes
 

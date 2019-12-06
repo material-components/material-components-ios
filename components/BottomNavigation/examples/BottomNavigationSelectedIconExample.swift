@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Foundation
+import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialTypographyScheme
 
 // Example to show different icons for selected and unselected states
