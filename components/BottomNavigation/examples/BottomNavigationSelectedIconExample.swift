@@ -14,6 +14,7 @@
 
 import Foundation
 import MaterialComponents.MaterialBottomNavigation
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 
 // Example to show different icons for selected and unselected states
