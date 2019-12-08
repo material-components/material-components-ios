@@ -73,21 +73,11 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_extension_objc_library(
-    name = "ListThemer",
-    deps = [
-        ":ColorThemer",
-        ":List",
-        ":TypographyThemer",
-    ],
-)
-
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":ColorThemer",
         ":List",
-        ":ListThemer",
         ":TypographyThemer",
         "//components/Typography",
         "//components/schemes/Typography",
@@ -119,7 +109,7 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":List",
-        ":ListThemer",
+        ":Theming",
         "//components/private/Icons/icons/ic_info",
         "//components/schemes/Container",
     ],
