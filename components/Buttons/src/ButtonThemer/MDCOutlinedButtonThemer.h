@@ -23,10 +23,8 @@
  `MDCButton`'s `-applyOutlinedThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCOutlinedButtonThemer : NSObject
-@end
-
-@interface MDCOutlinedButtonThemer (ToBeDeprecated)
+__deprecated_msg("Please use MDCButton:applyOutlinedThemeWithScheme: instead.")
+    @interface MDCOutlinedButtonThemer : NSObject
 
 /**
  Applies a button scheme's properties to an MDCButton using the outlined button style.
