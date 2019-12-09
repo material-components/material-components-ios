@@ -1,15 +1,79 @@
-# #develop#
+# 96.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we deleted and deprecated a bunch of APIs in BottomAppBar, Snackbar,
+TextField, ActionSheet, BottomNavigation, ButtonBar, Cards, Feature highlight, Ink, Page control,
+and Tabs. We also enables ripple by default on Action Sheet. It was using a legacy ink animation.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+### BottomAppBar
+
+Delete deprecated MDCBottomAppBarColorThemer
+
+### Snackbar
+
+Delete snackbarMessageViewTextColor 
+
+### TextField
+
+Delete MDCTextFieldColorThemer
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+### ActionSheet
+
+Deprecated inkColor. Use the ripple APIs.
+
+### BottomNavigation
+
+Deprecate MDCBottomNavigationTypography themer
+
+### ButtonBar
+
+Deprecate MDCButtonBarColorThemer
+
+### Button
+
+Deprecate MDCFloatingButtonShapeThemer
+
+### Cards
+
+Deprecate MDCCardThemer
+
+### Feature highlight
+
+Deprecate MDCFeatureHighlightFontThemer
+
+### Ink
+
+Deprecate MDCInkColorThemer
+
+### Page Control
+
+Deprecate-MDCPageControlColorThemer-applyColorScheme-toPageContro
+
+### Snackbar
+
+Deprecate MDCSnackbarColorThemer 
+
+### Tabs
+
+Deprecate MDCTabBarColorThemer
+
+### TextFields
+
+Deprecate MDCTextFieldFontThemer
+
 ## New features
 
-Replace this text with example code for each new feature.
+### Chips
+
+ChipFieldShouldBeginEditing method to MDCChipFieldDelegate
+
+### Snackbar
+
+Adds elementToFocusOnDismiss to MDCSnackbar
+
 ## API changes
 
 ## Component changes
@@ -56,7 +120,6 @@ Replace this text with example code for each new feature.
 
 ### Dialogs
 
-* [Revert "[Dialogs] Set dialog message accessibilityFrame based on visible message text (#8786)" (#9171)](https://github.com/material-components/material-components-ios/commit/de41711f4050cc63e4de40ba44de13ae2849d06c) (Bryan Oltman)
 * [Snapshot tests for long action titles. (#9154)](https://github.com/material-components/material-components-ios/commit/a73bc32e9fa870a7a95fe6eed9e8505cab26830c) (Robert Moore)
 
 ### FeatureHighlight
