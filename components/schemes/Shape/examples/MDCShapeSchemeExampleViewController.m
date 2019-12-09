@@ -42,7 +42,7 @@
 @property(strong, nonatomic) MDCSemanticColorScheme *colorScheme;
 @property(strong, nonatomic) MDCShapeScheme *shapeScheme;
 @property(strong, nonatomic) MDCTypographyScheme *typographyScheme;
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 
 @property(weak, nonatomic) IBOutlet MDCShapedView *smallComponentShape;
 @property(weak, nonatomic) IBOutlet MDCShapedView *mediumComponentShape;
@@ -84,15 +84,16 @@
 }
 
 - (void)commonShapeSchemeExampleInit {
-  self.colorScheme =
+  _colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  self.shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  self.typographyScheme =
+  _shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  _typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  self.containerScheme = [[MDCContainerScheme alloc] init];
-  self.containerScheme.colorScheme = self.colorScheme;
-  self.containerScheme.shapeScheme = self.shapeScheme;
-  self.containerScheme.typographyScheme = self.typographyScheme;
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme = _colorScheme;
+  containerScheme.shapeScheme = _shapeScheme;
+  containerScheme.typographyScheme = _typographyScheme;
+  _containerScheme = containerScheme;
 }
 
 - (void)viewDidLoad {

@@ -23,7 +23,7 @@
 @property(weak, nonatomic) IBOutlet MDCButton *containedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
 @property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 @end
 
 @implementation ButtonsContentEdgeInsetsExample

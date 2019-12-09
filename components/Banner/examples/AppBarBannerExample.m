@@ -18,12 +18,13 @@
 #import "MaterialAppBar.h"
 #import "MaterialBanner+Theming.h"
 #import "MaterialBanner.h"
+#import "MaterialContainerScheme.h"
 
 @interface AppBarBannerExample : UITableViewController
 
 @property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCBannerView *banner;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 

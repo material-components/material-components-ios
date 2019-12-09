@@ -28,7 +28,7 @@ static const CGFloat kProgressViewHeight = 4;
 @property(nonatomic, strong) MDCProgressView *progressView;
 @property(nonatomic, strong) UILabel *progressLabel;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
