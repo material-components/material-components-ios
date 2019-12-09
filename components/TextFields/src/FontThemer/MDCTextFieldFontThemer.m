@@ -17,7 +17,10 @@
 #import "MaterialTextFields.h"
 #import "MaterialThemes.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCTextFieldFontThemer
+#pragma clang diagnostic pop
 
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
     toTextInputController:(id<MDCTextInputController>)textInputController {
@@ -44,12 +47,6 @@
   textField.trailingUnderlineLabel.font = fontScheme.caption;
 }
 
-// TODO: (larche) Drop this "#if !defined..." and the pragmas when we drop Xcode 8 support.
-// This is to silence a warning that doesn't appear in Xcode 9 when you use Class as an object.
-#if !defined(__IPHONE_11_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wobjc-method-access"
-#endif
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
     toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   [textInputControllerClass setInlinePlaceholderFontDefault:fontScheme.body1];
@@ -67,8 +64,5 @@
     }
   }
 }
-#if !defined(__IPHONE_11_0)
-#pragma clang diagnostic pop
-#endif
 
 @end
