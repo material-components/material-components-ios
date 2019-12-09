@@ -48,7 +48,7 @@
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, readonly, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, readonly, strong) id<MDCContainerScheming> containerScheme;
 
 - (void)didTapButton:(id)sender;
 @end

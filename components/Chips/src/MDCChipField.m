@@ -569,13 +569,19 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-  if (textField == self.textField) {
-    [self deselectAllChips];
+  BOOL shouldBeginEditing = YES;
+  if ([self.delegate respondsToSelector:@selector(chipFieldShouldBeginEditing:)]) {
+    shouldBeginEditing = [self.delegate chipFieldShouldBeginEditing:self];
   }
-  if ([self.delegate respondsToSelector:@selector(chipFieldDidBeginEditing:)]) {
-    [self.delegate chipFieldDidBeginEditing:self];
+  if (shouldBeginEditing) {
+    if (textField == self.textField) {
+      [self deselectAllChips];
+    }
+    if ([self.delegate respondsToSelector:@selector(chipFieldDidBeginEditing:)]) {
+      [self.delegate chipFieldDidBeginEditing:self];
+    }
   }
-  return YES;
+  return shouldBeginEditing;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {

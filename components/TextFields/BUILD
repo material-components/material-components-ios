@@ -98,7 +98,7 @@ mdc_examples_objc_library(
     deps = [
         ":ColorThemer",
         ":TextFields",
-        ":TypographyThemer",
+        ":Theming",
         "//components/Buttons",
         "//components/schemes/Container",
     ],
@@ -109,7 +109,7 @@ mdc_examples_swift_library(
     deps = [
         ":ColorThemer",
         ":TextFields",
-        ":TypographyThemer",
+        ":Theming",
         "//components/AppBar",
     ],
 )
@@ -138,7 +138,7 @@ mdc_snapshot_objc_library(
         ":ColorThemer",
         ":FontThemer",
         ":TextFields",
-        ":TypographyThemer",
+        ":Theming",
         "//components/Buttons",
         "//components/Ripple",
     ],

@@ -24,7 +24,7 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
 
 @interface BannerAutolayoutExampleViewController : UIViewController
 
-@property(nonatomic, readwrite, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, readwrite, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, readwrite, strong) MDCBannerView *bannerView;
 
 @end

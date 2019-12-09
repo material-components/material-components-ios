@@ -122,14 +122,6 @@ objc_bundle(
 )
 
 mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":BottomNavigation",
-        "//components/schemes/Color",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":BottomNavigation",
@@ -182,7 +174,6 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":BottomNavigation",
-        ":ColorThemer",
         ":Theming",
         ":TypographyThemer",
         ":privateHeaders",
@@ -224,7 +215,6 @@ mdc_snapshot_objc_library(
     deps = [
         ":BottomNavigation",
         ":BottomNavigationBeta",
-        ":ColorThemer",
         ":Theming",
         ":TypographyThemer",
         ":privateHeaders",

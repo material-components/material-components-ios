@@ -14,8 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
 
 NSString *kButtonLabel = @"Create";
 NSString *kMiniButtonLabel = @"Add";
@@ -25,7 +26,7 @@ NSString *kMiniButtonLabel = @"Add";
 @property(nonatomic, strong) MDCFloatingButton *miniFloatingButton;
 @property(nonatomic, strong) MDCFloatingButton *defaultFloatingButton;
 @property(nonatomic, strong) MDCFloatingButton *largeIconFloatingButton;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
 @implementation FloatingButtonExampleViewController
@@ -33,8 +34,9 @@ NSString *kMiniButtonLabel = @"Add";
 - (id)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    _containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    _containerScheme = containerScheme;
   }
   return self;
 }

@@ -22,7 +22,7 @@
 
 @interface PresentedDemoViewController : UICollectionViewController
 @property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
 @implementation PresentedDemoViewController
@@ -127,7 +127,7 @@
 @interface AppBarPresentedExample : UIViewController
 
 @property(nonatomic, strong) PresentedDemoViewController *demoViewController;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 

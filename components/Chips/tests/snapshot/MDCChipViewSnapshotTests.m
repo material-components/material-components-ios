@@ -183,6 +183,110 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
+- (void)testDefaultChipWithAccessoryViewAndPositiveTopLeftAccessoryPaddingLTR {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(10, 10, 0, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithAccessoryViewAndPositiveTopLeftAccessoryPaddingRTL {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(10, 10, 0, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithAccessoryViewAndPositiveBottomRightAccessoryPaddingLTR {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(0, 0, 10, 10);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithAccessoryViewAndPositiveBottomRightAccessoryPaddingRTL {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(0, 0, 10, 10);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithAccessoryViewAndNegativeTopLeftAccessoryPaddingLTR {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(-6, -6, 0, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithAccessoryViewAndNegativeTopLeftAccessoryPaddingRTL {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(-6, -6, 0, 0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithAccessoryViewAndNegativeBottomRightAccessoryPaddingLTR {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(0, 0, -6, -6);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithAccessoryViewAndNegativeBottomRightAccessoryPaddingRTL {
+  // Given
+  self.chip.accessoryView = [self deleteButton];
+  if (@available(iOS 10.0, *)) {
+    self.chip.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+  }
+
+  // When
+  self.chip.accessoryPadding = UIEdgeInsetsMake(0, 0, -6, -6);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
 - (void)testBaselineThemedChipWithAccessoryViewLTR {
   // When
   self.chip.accessoryView = [self deleteButton];

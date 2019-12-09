@@ -24,10 +24,8 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCProgressViewColorThemer : NSObject
-@end
-
-@interface MDCProgressViewColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use the Theming extension instead.") @interface MDCProgressViewColorThemer
+    : NSObject
 
 /**
  Applies a color scheme to theme a MDCProgressView.
@@ -40,6 +38,7 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-          toProgressView:(nonnull MDCProgressView *)progressView;
+          toProgressView:(nonnull MDCProgressView *)progressView
+    __deprecated_msg("Please use the Theming extension instead.");
 
 @end

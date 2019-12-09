@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "95.0.0"
+  mdc.version      = "95.0.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -286,20 +286,7 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/BottomAppBar+ColorThemer"
     end
-  end
-
-  mdc.subspec "BottomAppBar+ColorThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/Themes"
   end
 
   # BottomNavigation
@@ -338,21 +325,8 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/BottomNavigation+ColorThemer"
       unit_tests.dependency "MaterialComponents/BottomNavigation+TypographyThemer"
     end
-  end
-
-  mdc.subspec "BottomNavigation+ColorThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/schemes/Color"
   end
 
   mdc.subspec "BottomNavigation+TypographyThemer" do |extension|
@@ -1378,19 +1352,6 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  mdc.subspec "PageControl+ColorThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/Themes"
-  end
-
   # Palettes
 
   mdc.subspec "Palettes" do |component|
@@ -1701,37 +1662,9 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/Tabs+ColorThemer"
-      unit_tests.dependency "MaterialComponents/Tabs+FontThemer"
       unit_tests.dependency "MaterialComponents/Tabs+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
     end
-  end
-
-  mdc.subspec "Tabs+ColorThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/schemes/Color"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-  end
-
-  mdc.subspec "Tabs+FontThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/Themes"
   end
 
   mdc.subspec "Tabs+TypographyThemer" do |extension|
@@ -1755,7 +1688,6 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/schemes/Container"
 

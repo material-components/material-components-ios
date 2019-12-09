@@ -28,10 +28,9 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCTextFieldFontThemer : NSObject
-@end
-
-@interface MDCTextFieldFontThemer (ToBeDeprecated)
+__deprecated_msg(
+    "Please use the Theming extension, or MDCTextControls and their theming extensions instead.")
+    @interface MDCTextFieldFontThemer : NSObject
 
 /**
  Applies a font scheme to theme a MDCTextInputController instance.
@@ -45,7 +44,9 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-    toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
+    toTextInputController:(nonnull id<MDCTextInputController>)textInputController
+    __deprecated_msg("Please use the Theming extension, or MDCTextControls and their theming "
+                     "extensions instead.");
 
 /**
  Applies a font scheme to theme a specific class type responding to MDCTextInputController protocol.
@@ -59,7 +60,9 @@
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
-    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
+    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:))
+        __deprecated_msg("Please use the Theming extension, or MDCTextControls and their theming "
+                         "extensions instead.");
 
 /**
  Applies a font scheme to a MDCTextField instance.
@@ -71,6 +74,8 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-            toTextField:(nullable MDCTextField *)textField;
+            toTextField:(nullable MDCTextField *)textField
+    __deprecated_msg("Please use the Theming extension, or MDCTextControls and their theming "
+                     "extensions instead.");
 
 @end

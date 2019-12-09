@@ -14,7 +14,10 @@
 
 #import "MDCInkColorThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCInkColorThemer
+#pragma clang diagnostic pop
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme toInkView:(MDCInkView *)inkView {
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
