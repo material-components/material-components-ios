@@ -1675,23 +1675,9 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/Tabs+FontThemer"
       unit_tests.dependency "MaterialComponents/Tabs+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
     end
-  end
-
-  mdc.subspec "Tabs+FontThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/Themes"
   end
 
   mdc.subspec "Tabs+TypographyThemer" do |extension|

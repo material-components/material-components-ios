@@ -57,14 +57,6 @@ objc_bundle(
 )
 
 mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":Tabs",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":Tabs",
@@ -158,7 +150,6 @@ mdc_unit_test_objc_library(
         "tests/unit/TabBarView/*.m",
     ]),
     deps = [
-        ":FontThemer",
         ":TabBarView",
         ":Tabs",
         ":Theming",
