@@ -24,10 +24,9 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCOutlinedTextFieldColorThemer : NSObject
-@end
 
-@interface MDCOutlinedTextFieldColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use the Theming extension on MDCTextInputControllerOutlined instead.")
+    @interface MDCOutlinedTextFieldColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to a text field using the outlined style.
