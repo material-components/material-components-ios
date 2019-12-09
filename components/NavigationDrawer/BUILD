@@ -57,9 +57,19 @@ mdc_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
+        ":ColorThemer",
         ":NavigationDrawer",
         "//components/BottomAppBar",
         "//components/schemes/Color",
+    ],
+)
+
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    deps = [
+        ":ColorThemer",
+        ":NavigationDrawer",
+        ":private",
     ],
 )
 
