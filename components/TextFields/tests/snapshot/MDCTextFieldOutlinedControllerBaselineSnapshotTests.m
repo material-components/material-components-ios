@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields.h"
 #import "MaterialTextFields+Theming.h"
+#import "MaterialTextFields.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 
 @interface MDCTextFieldOutlinedControllerBaselineSnapshotTests : MDCAbstractTextFieldSnapshotTests
@@ -40,9 +40,9 @@
   MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
   containerScheme.colorScheme = colorScheme;
   containerScheme.typographyScheme = typographyScheme;
-  MDCTextInputControllerOutlined *outlinedController = (MDCTextInputControllerOutlined *)self.textFieldController;
+  MDCTextInputControllerOutlined *outlinedController =
+      (MDCTextInputControllerOutlined *)self.textFieldController;
   [outlinedController applyThemeWithScheme:containerScheme];
-
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

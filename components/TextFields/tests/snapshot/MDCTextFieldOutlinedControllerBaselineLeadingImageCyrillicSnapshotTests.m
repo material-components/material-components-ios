@@ -48,7 +48,8 @@
   MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
   containerScheme.colorScheme = colorScheme;
   containerScheme.typographyScheme = typographyScheme;
-  MDCTextInputControllerOutlined *outlinedController = (MDCTextInputControllerOutlined *)self.textFieldController;
+  MDCTextInputControllerOutlined *outlinedController =
+      (MDCTextInputControllerOutlined *)self.textFieldController;
   [outlinedController applyThemeWithScheme:containerScheme];
 
   [self changeStringsToCyrillic];

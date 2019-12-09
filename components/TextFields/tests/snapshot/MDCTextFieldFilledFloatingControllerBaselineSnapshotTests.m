@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields.h"
 #import "MaterialTextFields+Theming.h"
+#import "MaterialTextFields.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 
 @interface MDCTextFieldFilledFloatingControllerBaselineSnapshotTests
@@ -44,7 +44,8 @@
   MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
   containerScheme.colorScheme = colorScheme;
   containerScheme.typographyScheme = typographyScheme;
-  MDCTextInputControllerFilled *filledController = (MDCTextInputControllerFilled *)self.textFieldController;
+  MDCTextInputControllerFilled *filledController =
+      (MDCTextInputControllerFilled *)self.textFieldController;
   [filledController applyThemeWithScheme:containerScheme];
 }
 
