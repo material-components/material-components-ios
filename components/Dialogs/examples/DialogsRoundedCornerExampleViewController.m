@@ -39,11 +39,6 @@ static const CGFloat kCornerRadiusUnthemed = 12;
     self.containerScheme = [[MDCContainerScheme alloc] init];
   }
 
-  if (self.containerScheme.colorScheme == nil) {
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-
   self.dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -90,11 +85,6 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 
   if (self.containerScheme == nil) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
-  }
-
-  if (self.containerScheme.colorScheme == nil) {
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   // We must create and store a strong reference to the transitionController.

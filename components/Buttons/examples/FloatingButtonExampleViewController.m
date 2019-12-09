@@ -34,8 +34,9 @@ NSString *kMiniButtonLabel = @"Add";
 - (id)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    _containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    _containerScheme = containerScheme;
   }
   return self;
 }
