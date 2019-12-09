@@ -56,6 +56,8 @@ mdc_examples_objc_library(
         "//components/AppBar:Theming",
         "//components/Buttons",
         "//components/Buttons:Theming",
+        "//components/OverlayWindow",
+        "//components/private/Application",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
