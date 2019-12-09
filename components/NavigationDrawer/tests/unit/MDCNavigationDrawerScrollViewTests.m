@@ -1064,9 +1064,8 @@
 
   // Then
   MDCBottomDrawerContainerViewController *drawerContainer =
-        self.presentationController.bottomDrawerContainerViewController;
-  XCTAssertEqualObjects(drawerContainer.trackingScrollView,
-                        newTrackingScrollView);
+      self.presentationController.bottomDrawerContainerViewController;
+  XCTAssertEqualObjects(drawerContainer.trackingScrollView, newTrackingScrollView);
 }
 
 @end
