@@ -1,3 +1,18 @@
+# 95.0.1
+
+In this hotfix we revert c83333f to address issue where dialog messages are not properly displayed
+during rotation while VoiceOver is on.
+
+## Component changes
+
+## Changes
+
+### Dialogs
+
+* [Revert "[Dialogs] Set dialog message accessibilityFrame based on visible message text (#8786)" (#9171)](https://github.com/material-components/material-components-ios/commit/f1fb666ed56086c612daa89d1446d0a8c81c57cf) (Bryan Oltman)
+
+---
+
 # 95.0.0
 
 In this major release we deleted a bunch of APIs already marked deprecated in the Button Bar,
