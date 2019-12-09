@@ -37,7 +37,9 @@ __deprecated_msg("Please use MaterialCards+Theming instead.") @interface MDCCard
  `MDCCard`'s `-applyThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-+ (void)applyScheme:(nonnull id<MDCCardScheming>)scheme toCard:(nonnull MDCCard *)card;
++ (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
+             toCard:(nonnull MDCCard *)card
+    __deprecated_msg("Please use the Theming extension instead.");
 
 /**
  Applies the material card style using the card scheme data.
@@ -50,7 +52,8 @@ __deprecated_msg("Please use MaterialCards+Theming instead.") @interface MDCCard
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
-         toCardCell:(nonnull MDCCardCollectionCell *)cardCell;
+         toCardCell:(nonnull MDCCardCollectionCell *)cardCell
+    __deprecated_msg("Please use the Theming extension instead.");
 
 /**
  Applies the material outlined card style using the card scheme data.
@@ -63,7 +66,8 @@ __deprecated_msg("Please use MaterialCards+Theming instead.") @interface MDCCard
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
-                                toCard:(nonnull MDCCard *)card;
+                                toCard:(nonnull MDCCard *)card
+    __deprecated_msg("Please use the Theming extension instead.");
 
 /**
  Applies the material outlined card style using the card scheme data.
@@ -76,6 +80,7 @@ __deprecated_msg("Please use MaterialCards+Theming instead.") @interface MDCCard
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
-                            toCardCell:(nonnull MDCCardCollectionCell *)cardCell;
+                            toCardCell:(nonnull MDCCardCollectionCell *)cardCell
+    __deprecated_msg("Please use the Theming extension instead.");
 
 @end

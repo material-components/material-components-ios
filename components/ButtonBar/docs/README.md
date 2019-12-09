@@ -38,5 +38,4 @@ Button Bar supports a subset of UIBarButtonItem's properties. Learn more by read
 
 ## Extensions
 
-- [Color Theming](color-theming.md)
-- [Typography Theming](typography-theming.md)
+- [Theming](theming.md)
