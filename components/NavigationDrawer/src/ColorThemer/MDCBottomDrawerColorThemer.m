@@ -16,7 +16,10 @@
 
 static const CGFloat kScrimAlpha = (CGFloat)0.32;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCBottomDrawerColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
                   toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer {
