@@ -42,6 +42,7 @@
 
   [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
                                       toTextInputController:self.textFieldController];
+  //TODO: Theme the MDCTextInputController with a theming extension (to be added in #9199)
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
