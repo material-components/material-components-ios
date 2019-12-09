@@ -76,6 +76,65 @@ Adds elementToFocusOnDismiss to MDCSnackbar
 
 ## API changes
 
+
+#### ActionSheet
+
+*deprecated* property: `inkColor` in `MDCActionSheetController`. Use rippleColor instead.
+
+*deprecated* property: `enableRippleBehavior` in `MDCActionSheetController`. Use ripple.
+
+#### BottomAppBar
+
+*deprecated* class: `MDCBottomAppBarColorThemer`. No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+#### BottomNavigationBar
+
+*deprecated* class: `MDCBottomNavigationBarTypographyThemer`. Please use the Theming extension instead.
+
+#### ButtonBar
+
+*deprecated* class: `MDCButtonBarColorThemer`. ButtonBar is not intended to be themed as a standalone component. Please theme it via the AppBar component's Theming extension instead.
+
+#### Button
+
+*deprecated* class: `MDCFloatingButtonShapeThemer`. Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead. (Note: Shape theming is no longer available as an independent API.
+
+#### Cards
+
+*deprecated* protocol: `MDCCardScheming`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
+
+*deprecated* class: `MDCCardScheme`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
+
+*deprecated* class: `MDCCardThemer`. Please use MaterialCards+Theming instead.
+
+#### ChipField
+
+*new* method: `-chipFieldShouldBeginEditing:` in `MDCChipFieldDelegate`. Asks the delegate if editing should begin in the specified chip field.
+
+#### FeatureHighlight
+
+*deprecated* class: `MDCFeatureHighlightFontThemer`. No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+#### Ink
+
+*deprecated* class: `MDCInkColorThemer`. Please use Ripple instead.
+
+#### Page Control
+
+*deprecated* class: `MDCPageControlColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+#### Snackbar
+
+*removed* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView`. Use messsageTextColor instead.
+
+*deprecated* class: `MDCSnackbarColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+	
+*new* property: `elementToFocusOnDismiss` in `MDCSnackbarMessage`.  Element to focus on snackbar message dismiss. Focuses the first element on screen after dismiss by default. The focus will change to the element only if the focus is on the snackbar message.
+
+#### Tabs
+
+*deprecated* class: `MDCTabBarColorThemer`.  Please use the Theming extension instead.
+
 ## Component changes
 
 ## Changes
