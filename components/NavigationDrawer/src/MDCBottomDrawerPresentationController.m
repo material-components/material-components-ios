@@ -320,6 +320,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.drawerShadowColor = drawerShadowColor;
 }
 
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _trackingScrollView = trackingScrollView;
+  self.bottomDrawerContainerViewController.trackingScrollView = trackingScrollView;
+}
+
 - (BOOL)contentReachesFullscreen {
   return self.bottomDrawerContainerViewController.contentReachesFullscreen;
 }
