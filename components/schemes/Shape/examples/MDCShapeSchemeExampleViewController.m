@@ -42,7 +42,7 @@
 @property(strong, nonatomic) MDCSemanticColorScheme *colorScheme;
 @property(strong, nonatomic) MDCShapeScheme *shapeScheme;
 @property(strong, nonatomic) MDCTypographyScheme *typographyScheme;
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 
 @property(weak, nonatomic) IBOutlet MDCShapedView *smallComponentShape;
 @property(weak, nonatomic) IBOutlet MDCShapedView *mediumComponentShape;

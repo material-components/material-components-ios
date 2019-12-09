@@ -17,6 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
+#import "MaterialContainerScheme.h"
 
 static const CGFloat kCornerRadiusThemed = 3;
 static const CGFloat kCornerRadiusUnthemed = 12;
@@ -25,7 +26,7 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 
 @property(nonatomic, strong) MDCButton *dismissButton;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -78,7 +79,7 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 @interface DialogsRoundedCornerExampleViewController () <MDCDialogPresentationControllerDelegate>
 
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
