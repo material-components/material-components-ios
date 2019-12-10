@@ -105,6 +105,7 @@ static inline UIColor *RippleColor() {
   _rippleColor = RippleColor();
   if (!_rippleTouchController) {
     _rippleTouchController = [[MDCRippleTouchController alloc] init];
+    [_rippleTouchController addRippleToView:self];
     _rippleTouchController.rippleView.rippleColor = _rippleColor;
   }
 
