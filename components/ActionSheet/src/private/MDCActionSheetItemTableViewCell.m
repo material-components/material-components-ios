@@ -186,7 +186,7 @@ static inline UIColor *RippleColor() {
 
 - (void)setRippleColor:(UIColor *)rippleColor {
   _rippleColor = rippleColor ?: RippleColor();
-  self.rippleTouchController.rippleView.rippleColor = rippleColor;
+  self.rippleTouchController.rippleView.rippleColor = _rippleColor;
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
