@@ -30,7 +30,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
 @property(nonatomic, strong) NSArray *randomStrings;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, assign) NSInteger numberOfCells;
 @end
 
@@ -40,7 +40,9 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   [super viewDidLoad];
   self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
   self.automaticallyAdjustsScrollViewInsets = NO;
-  self.containerScheme = [[MDCContainerScheme alloc] init];
+  if (self.containerScheme == nil) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
   [self createDataSource];
   [self createCollectionView];
 }
