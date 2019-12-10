@@ -24,10 +24,10 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCFeatureHighlightTypographyThemer : NSObject
-@end
-
-@interface MDCFeatureHighlightTypographyThemer (ToBeDeprecated)
+__deprecated_msg("No replacement exists. Please comment on"
+                 " https://github.com/material-components/material-components-ios/issues/7172"
+                 " in order to indicate interest in a replacement API.")
+    @interface MDCFeatureHighlightTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCFeatureHighlightViewController.
