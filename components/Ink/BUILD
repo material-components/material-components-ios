@@ -37,14 +37,6 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":Ink",
-        "//components/Themes",
-    ],
-)
-
 mdc_objc_library(
     name = "private",
     testonly = 1,
@@ -65,7 +57,6 @@ mdc_examples_objc_library(
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
-        ":ColorThemer",
         ":Ink",
         ":private",
     ],
