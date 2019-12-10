@@ -20,7 +20,10 @@ static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = (CGFloat)0.6;
 static CGFloat const kOutlinedTextFieldDisabledAlpha = (CGFloat)0.38;
 static CGFloat const kOutlinedTextFieldIconAlpha = (CGFloat)0.54;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCOutlinedTextFieldColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
            toTextInputController:(id<MDCTextInputController>)textInputController {
