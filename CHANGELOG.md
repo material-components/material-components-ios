@@ -68,14 +68,23 @@ Deprecate MDCTextFieldFontThemer
 
 ### Chips
 
-ChipFieldShouldBeginEditing method to MDCChipFieldDelegate
+ChipFieldShouldBeginEditing method to MDCChipFieldDelegate to control if editing is allowed.
+
+```
+- (BOOL)chipFieldShouldBeginEditing:(MDCChipField *)chipField {
+  return YES;
+}
+````
 
 ### Snackbar
 
-Adds elementToFocusOnDismiss to MDCSnackbar
+Adds elementToFocusOnDismiss to MDCSnackbarMessage so a client can specify a view to focus on after the snackbar message is dismissed.
+
+```objc
+snackBarMessage.elementToFocusOnDismiss = view;
+```
 
 ## API changes
-
 
 #### ActionSheet
 
@@ -273,7 +282,6 @@ We deprecated the color themer in preperation of deleting it. Use theming instea
 ### Tab Bar
 
 We deprecated the color themer in preperation of deleting it. Use theming instead.
-
 
 ### Text Field
 
