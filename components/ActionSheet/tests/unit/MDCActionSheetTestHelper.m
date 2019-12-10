@@ -35,9 +35,7 @@
   CIColor *ciColor = [[CIColor alloc] initWithColor:UIColor.blackColor];
   UIColor *uiColorFromCIColor = [UIColor colorWithCIColor:ciColor];
   UIColor *whiteColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)0.5];
-  NSArray *tmp = @[  rgbColor, hsbColor, blackWithAlpha, black, uiColorFromCIColor, whiteColor ];
-  (void)tmp;
-  return @[ black, uiColorFromCIColor];
+  return @[ rgbColor, hsbColor, blackWithAlpha, black, uiColorFromCIColor, whiteColor ];
 }
 
 + (void)addNumberOfActions:(NSUInteger)actionsCount
