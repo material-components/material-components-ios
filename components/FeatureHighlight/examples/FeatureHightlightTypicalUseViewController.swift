@@ -17,7 +17,6 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialFeatureHighlight
 import MaterialComponents.MaterialFeatureHighlight_ColorThemer
-import MaterialComponents.MaterialFeatureHighlight_TypographyThemer
 import MaterialComponents.MaterialTypographyScheme
 
 /// Example to show how to use a feature highlight

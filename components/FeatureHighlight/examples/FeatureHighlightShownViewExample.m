@@ -16,7 +16,6 @@
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
-#import "MaterialFeatureHighlight+TypographyThemer.h"
 #import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 

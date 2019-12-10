@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MaterialFeatureHighlight+ColorThemer.h"
-#import "MaterialFeatureHighlight+TypographyThemer.h"
 #import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
