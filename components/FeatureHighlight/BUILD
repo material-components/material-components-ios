@@ -100,7 +100,6 @@ mdc_examples_objc_library(
         ":ColorThemer",
         ":FeatureHighlight",
         ":FeatureHighlightAccessibilityMutator",
-        ":TypographyThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
         "//components/Buttons:Theming",
@@ -119,7 +118,6 @@ mdc_examples_swift_library(
     deps = [
         ":ColorThemer",
         ":FeatureHighlight",
-        ":TypographyThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
         "//components/schemes/Color",
