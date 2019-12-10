@@ -23,7 +23,6 @@
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;
-static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -193,8 +192,6 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
                           [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
     XCTAssertEqualObjects(cell.actionLabel.textColor,
                           [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
-    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
   }
 }
 
