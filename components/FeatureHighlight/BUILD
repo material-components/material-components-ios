@@ -63,14 +63,6 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":FeatureHighlight",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":FeatureHighlight",
@@ -131,7 +123,6 @@ mdc_unit_test_objc_library(
         ":ColorThemer",
         ":FeatureHighlight",
         ":FeatureHighlightAccessibilityMutator",
-        ":FontThemer",
         ":TypographyThemer",
         ":private",
     ],
