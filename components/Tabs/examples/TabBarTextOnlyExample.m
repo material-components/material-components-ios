@@ -28,8 +28,8 @@
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
     _containerScheme = [[MDCContainerScheme alloc] init];
+    [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
   }
   return self;
 }
