@@ -21,7 +21,7 @@
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;
-static const CGFloat kInkAlpha = (CGFloat)0.16;
+static const CGFloat kRippleAlpha = (CGFloat)0.16;
 
 @interface MDCActionSheetController (Testing)
 @property(nonatomic, strong) UITableView *tableView;
@@ -95,7 +95,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   XCTAssertEqualObjects(actionSheetCell.actionLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
   XCTAssertEqualObjects(actionSheetCell.inkTouchController.defaultInkView.inkColor,
-                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kRippleAlpha]);
   XCTAssertEqualObjects(actionSheetCell.actionLabel.font, typographyScheme.subtitle1);
 
   // Elevation
