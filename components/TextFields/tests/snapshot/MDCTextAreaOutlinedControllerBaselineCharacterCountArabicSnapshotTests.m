@@ -41,8 +41,6 @@
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
   self.textFieldController.characterCountMax = 50;
   self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // TODO: Theme the MDCTextInputController with a theming extension (to be added in #9199)
   [self changeStringsToArabic];
