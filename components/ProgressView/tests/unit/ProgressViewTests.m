@@ -66,6 +66,14 @@
   XCTAssertEqual(_progressView.progress, 1);
 }
 
+- (void)testIndeterminateProgressView {
+  _progressView.mode = MDCProgressViewModeIndeterminate;
+  [_progressView startAnimating];
+  XCTAssertTrue(_progressView.isAnimating);
+  [_progressView stopAnimating];
+  XCTAssertFalse(_progressView.isAnimating);
+}
+
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   XCTestExpectation *expectation =
