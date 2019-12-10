@@ -148,25 +148,4 @@ IB_DESIGNABLE
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCProgressView *_Nonnull progressView, UITraitCollection *_Nullable previousTraitCollection);
 
-/**
- Changes the Determinate state, optionally animating the change.
-
- @param mode The mode to change the progress view to.
- @param animated Whether the change should be animated.
- @param completion The completion block executed at the end of the animation.
- */
-- (void)setMode:(MDCProgressViewMode)mode
-       animated:(BOOL)animated
-     completion:(void (^__nullable)(BOOL finished))completion;
-
-/**
- Start the progress bar's indeterminate animation.
- */
-- (void)startAnimating;
-
-/**
- Stop the progress bar's indeterminate animation.
- */
-- (void)stopAnimating;
-
 @end
