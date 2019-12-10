@@ -30,7 +30,6 @@ static inline UIColor *RippleColor() {
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 /** Container view holding all custom content so it can be inset. */
 @property(nonatomic, strong) UIView *contentContainerView;
@@ -103,13 +102,10 @@ static inline UIColor *RippleColor() {
   [_contentContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.trailingAnchor]
       .active = YES;
 
-  if (!_inkTouchController) {
-    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];
-  }
-
+  _rippleColor = RippleColor();
   if (!_rippleTouchController) {
     _rippleTouchController = [[MDCRippleTouchController alloc] init];
+    _rippleTouchController.rippleView.rippleColor = _rippleColor;
   }
 
   _actionImageView = [[UIImageView alloc] init];
@@ -187,35 +183,11 @@ static inline UIColor *RippleColor() {
       actionTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
-  _inkColor = inkColor;
-  // If no ink color then reset to the default ink color
-  self.inkTouchController.defaultInkView.inkColor = inkColor ?: RippleColor();
-}
-
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (rippleColor != nil && (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor])) {
-    return;
-  }
   _rippleColor = rippleColor;
 
   // If no ripple color then reset to the default ripple color.
   self.rippleTouchController.rippleView.rippleColor = rippleColor ?: RippleColor();
-}
-
-- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
-  if (_enableRippleBehavior == enableRippleBehavior) {
-    return;
-  }
-  _enableRippleBehavior = enableRippleBehavior;
-
-  if (enableRippleBehavior) {
-    [self.inkTouchController.defaultInkView removeFromSuperview];
-    [self.rippleTouchController addRippleToView:self];
-  } else {
-    [self.rippleTouchController.rippleView removeFromSuperview];
-    [self.inkTouchController addInkView];
-  }
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
