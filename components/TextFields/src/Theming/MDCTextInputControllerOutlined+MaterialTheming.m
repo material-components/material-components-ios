@@ -34,24 +34,24 @@ static CGFloat const kOutlinedTextFieldIconAlpha = (CGFloat)0.54;
 - (void)applyColorThemeWithScheme:(nonnull id<MDCColorScheming>)colorScheme {
   UIColor *onSurfaceOpacity =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldOnSurfaceAlpha];
-  textInputController.activeColor = colorScheme.primaryColor;
-  textInputController.errorColor = colorScheme.errorColor;
-  textInputController.trailingUnderlineLabelTextColor = onSurfaceOpacity;
-  textInputController.normalColor = onSurfaceOpacity;
-  textInputController.inlinePlaceholderColor = onSurfaceOpacity;
-  textInputController.textInput.textColor =
+  self.activeColor = colorScheme.primaryColor;
+  self.errorColor = colorScheme.errorColor;
+  self.trailingUnderlineLabelTextColor = onSurfaceOpacity;
+  self.normalColor = onSurfaceOpacity;
+  self.inlinePlaceholderColor = onSurfaceOpacity;
+  self.textInput.textColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldActiveAlpha];
-  textInputController.leadingUnderlineLabelTextColor = onSurfaceOpacity;
-  textInputController.disabledColor =
+  self.leadingUnderlineLabelTextColor = onSurfaceOpacity;
+  self.disabledColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldDisabledAlpha];
 
   self.textInputClearButtonTintColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldIconAlpha];
 
-  if ([textInputController
+  if ([self
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
-        (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
+        (id<MDCTextInputControllerFloatingPlaceholder>)self;
     if ([textInputControllerFloatingPlaceholder
             respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
       textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurfaceOpacity;
