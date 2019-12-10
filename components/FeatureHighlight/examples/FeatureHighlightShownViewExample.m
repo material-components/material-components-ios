@@ -58,8 +58,8 @@
   [MDCFeatureHighlightAccessibilityMutator mutate:vc];
   [MDCFeatureHighlightColorThemer applySemanticColorScheme:self.colorScheme
                           toFeatureHighlightViewController:vc];
-  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:self.typographyScheme
-                            toFeatureHighlightViewController:vc];
+  vc.titleFont = self.typographyScheme.headline6;
+  vc.bodyFont = self.typographyScheme.body2;
   vc.titleText = @"Shown views can be interactive";
   vc.bodyText = @"The shown button has custom tap animations.";
   [self presentViewController:vc animated:YES completion:nil];

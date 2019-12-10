@@ -60,7 +60,8 @@ class FeatureHighlightSwiftViewController: UIViewController {
     let vc = MDCFeatureHighlightViewController(highlightedView: featureButton,
                                                completion: nil)
     MDCFeatureHighlightColorThemer.applySemanticColorScheme(colorScheme, to: vc)
-    MDCFeatureHighlightTypographyThemer.applyTypographyScheme(typographyScheme, to: vc)
+    vc.titleFont = typographyScheme.headline6
+    vc.bodyFont = typographyScheme.body2
     vc.mdc_adjustsFontForContentSizeCategory = true
     vc.titleText = "Hey this is a title for the Feature Highlight"
     vc.bodyText = "This is the description of the feature highlight view controller"

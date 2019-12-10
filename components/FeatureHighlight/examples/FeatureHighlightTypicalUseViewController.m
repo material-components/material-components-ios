@@ -34,9 +34,8 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
   [MDCFeatureHighlightColorThemer applySemanticColorScheme:self.colorScheme
                           toFeatureHighlightViewController:vc];
-  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:self.typographyScheme
-                            toFeatureHighlightViewController:vc];
-
+  vc.titleFont = self.typographyScheme.headline6;
+  vc.bodyFont = self.typographyScheme.body2;
   vc.mdc_adjustsFontForContentSizeCategory = YES;
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
