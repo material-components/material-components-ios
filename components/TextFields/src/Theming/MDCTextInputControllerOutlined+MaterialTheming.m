@@ -48,8 +48,7 @@ static CGFloat const kOutlinedTextFieldIconAlpha = (CGFloat)0.54;
   self.textInputClearButtonTintColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldIconAlpha];
 
-  if ([self
-          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+  if ([self conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)self;
     if ([textInputControllerFloatingPlaceholder
