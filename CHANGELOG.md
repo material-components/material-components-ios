@@ -146,8 +146,6 @@ snackBarMessage.elementToFocusOnDismiss = view;
 
 ## Component changes
 
-## Changes
-
 ### ActionSheet
 
 * [Action sheet enable ripple (#9135)](https://github.com/material-components/material-components-ios/commit/96cebca8cdf5bdb52f4f508f222e51bf011a8348) (Bryan Oltman)
