@@ -330,19 +330,6 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
  */
 @property(nonatomic, assign) BOOL shouldDisplayInk;
 
-/**
- The max radius of the ripple when the user touches the thumb.
- @warning This method will eventually be deprecated. Opt-in to Ripple by setting
- enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
- */
-@property(nonatomic, assign) CGFloat thumbMaxRippleRadius __deprecated_msg(
-    "Opt-in to Ripple by setting enableRippleBehavior to YES, and then use "
-    "thumbRippleMaximumRadius instead. Learn more at "
-    "https://github.com/material-components/material-components-ios/tree/develop/components/"
-    "Ink#migration-guide-ink-to-ripple");
-;
-
 @end
 
 /** MDCThumbtrack delegate which allows setting custom behavior. */
