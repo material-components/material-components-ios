@@ -523,11 +523,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
-    return;
-  }
   _rippleColor = rippleColor;
-
   [self.tableView reloadData];
 }
 
