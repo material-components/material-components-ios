@@ -51,8 +51,6 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":Cards",
-        ":ColorThemer",
-        ":ShapeThemer",
         "//components/schemes/Container",
     ],
 )

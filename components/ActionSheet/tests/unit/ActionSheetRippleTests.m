@@ -55,16 +55,19 @@
 /**
  Test to confirm behavior of initializing a @c MDCActionSheetController without any customization.
  */
-- (void)testRippleIsDisabledAndInkIsEnabledForAllCellsAndTheirPropertiesAreCorrect {
+- (void)testRippleIsEnabledAndInkIsDisabledForAllCellsAndTheirPropertiesAreCorrect {
   // When
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
-  // Then
-  XCTAssertFalse(self.actionSheetController.enableRippleBehavior);
-  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
+// Then
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  XCTAssertTrue(self.actionSheetController.enableRippleBehavior);
   XCTAssertEqualObjects(self.actionSheetController.inkColor, nil);
+#pragma clang diagnostic pop
+  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertFalse(cell.enableRippleBehavior);
+    XCTAssertTrue(cell.enableRippleBehavior);
     XCTAssertNotNil(cell.rippleTouchController);
     XCTAssertNotNil(cell.inkTouchController);
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
@@ -73,8 +76,8 @@
                           [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
     XCTAssertEqual(cell.inkTouchController.defaultInkView.inkStyle, MDCInkStyleBounded);
     XCTAssertEqual(cell.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleBounded);
-    XCTAssertNil(cell.rippleTouchController.rippleView.superview);
-    XCTAssertNotNil(cell.inkTouchController.defaultInkView.superview);
+    XCTAssertNotNil(cell.rippleTouchController.rippleView.superview);
+    XCTAssertNil(cell.inkTouchController.defaultInkView.superview);
 
     CGRect cellBounds = CGRectStandardize(cell.bounds);
     CGRect inkBounds = CGRectStandardize(cell.inkTouchController.defaultInkView.bounds);
@@ -89,13 +92,15 @@
 - (void)
     testRippleIsEnabledAndInkIsDisabledForAllCellsAndTheirPropertiesAreCorrectWhenRippleBehaviorIsEnabled {
   // When
-  self.actionSheetController.enableRippleBehavior = YES;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
-  // Then
+// Then
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   XCTAssertTrue(self.actionSheetController.enableRippleBehavior);
-  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   XCTAssertEqualObjects(self.actionSheetController.inkColor, nil);
+#pragma clang diagnostic pop
+  XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertTrue(cell.enableRippleBehavior);
     XCTAssertNotNil(cell.rippleTouchController);
@@ -120,9 +125,12 @@
  Test to confirm toggling @c enableRippleBehavior removes the @c rippleView as a subview.
  */
 - (void)testSetEnableRippleBehaviorToYesThenNoRemovesRippleViewAsSubviewOfCell {
-  // When
+// When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.actionSheetController.enableRippleBehavior = YES;
   self.actionSheetController.enableRippleBehavior = NO;
+#pragma clang diagnostic pop
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
   // Then

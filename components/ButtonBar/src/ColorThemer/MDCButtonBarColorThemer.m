@@ -14,6 +14,8 @@
 
 #import "MDCButtonBarColorThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCButtonBarColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
@@ -27,3 +29,4 @@
 }
 
 @end
+#pragma clang diagnostic pop

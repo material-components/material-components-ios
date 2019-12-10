@@ -87,7 +87,6 @@
   [actionSheet addAction:homeAction];
   [actionSheet addAction:favoriteAction];
   [actionSheet addAction:emailAction];
-  actionSheet.enableRippleBehavior = YES;
   [actionSheet applyThemeWithScheme:self.containerScheme];
   [self presentViewController:actionSheet animated:YES completion:nil];
 }
