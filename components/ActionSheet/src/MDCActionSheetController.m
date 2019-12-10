@@ -140,7 +140,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
         [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultAlpha];
     _mdc_overrideBaseElevation = -1;
     _elevation = MDCShadowElevationModalBottomSheet;
-    _enableRippleBehavior = YES;
   }
 
   return self;
@@ -325,11 +324,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  cell.inkColor = self.inkColor;
-  cell.enableRippleBehavior = self.enableRippleBehavior;
-#pragma clang diagnostic pop
+  cell.enableRippleBehavior = YES;
   cell.rippleColor = self.rippleColor;
   cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
@@ -513,26 +508,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   return NO;
 }
 
-- (UIColor *)inkColor {
-  return _inkColor;
-}
-
-- (void)setInkColor:(UIColor *)inkColor {
-  _inkColor = inkColor;
-  [self.tableView reloadData];
-}
-
 - (void)setRippleColor:(UIColor *)rippleColor {
   _rippleColor = rippleColor;
-  [self.tableView reloadData];
-}
-
-- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
-  if (_enableRippleBehavior == enableRippleBehavior) {
-    return;
-  }
-  _enableRippleBehavior = enableRippleBehavior;
-
   [self.tableView reloadData];
 }
 

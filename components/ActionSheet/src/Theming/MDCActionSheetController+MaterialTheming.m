@@ -57,12 +57,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   self.imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
   self.actionTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
   self.actionTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
-  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  self.inkColor = rippleColor;
-#pragma clang diagnostic pop
-  self.rippleColor = rippleColor;
+  self.rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
