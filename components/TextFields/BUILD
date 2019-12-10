@@ -78,14 +78,6 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":TextFields",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":TextFields",
@@ -118,7 +110,6 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":ColorThemer",
-        ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
         ":private",
@@ -135,7 +126,6 @@ mdc_snapshot_objc_library(
         "CoreGraphics",
     ],
     deps = [
-        ":FontThemer",
         ":TextFields",
         ":Theming",
         "//components/Buttons",
