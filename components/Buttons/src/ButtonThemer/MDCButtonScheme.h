@@ -27,7 +27,7 @@
  @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheming`.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@protocol MDCButtonScheming
+__deprecated_msg("Please use MDCContainerScheming") @protocol MDCButtonScheming
 
 /**
  The color scheme to be applied to a button.
@@ -62,7 +62,8 @@
  @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheme`.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCButtonScheme : NSObject <MDCButtonScheming>
+__deprecated_msg("Please use MDCContainerScheme") @interface MDCButtonScheme
+    : NSObject<MDCButtonScheming>
 
 /**
  A mutable representation of a color scheme.
