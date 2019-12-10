@@ -135,7 +135,6 @@ mdc_snapshot_objc_library(
         "CoreGraphics",
     ],
     deps = [
-        ":ColorThemer",
         ":FontThemer",
         ":TextFields",
         ":Theming",
