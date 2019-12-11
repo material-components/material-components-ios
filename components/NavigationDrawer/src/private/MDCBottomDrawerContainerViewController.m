@@ -853,7 +853,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
-  _shouldPresentAtFullscreen = YES;
   [self cacheLayoutCalculations];
 }
 
