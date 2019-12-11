@@ -848,6 +848,14 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   _addedContentHeight = NSNotFound;
 }
 
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _trackingScrollView = trackingScrollView;
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [self cacheLayoutCalculations];
+}
+
 #pragma mark UIScrollViewDelegate (Private)
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
