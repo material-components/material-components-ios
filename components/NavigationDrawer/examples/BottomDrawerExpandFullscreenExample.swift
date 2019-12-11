@@ -97,10 +97,13 @@ class ExpandFullscreenContentViewController: UITableViewController {
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    self.tableView.layoutIfNeeded()
-    self.preferredContentSize = CGSize(width: view.bounds.width,
-                                       height: tableView.contentSize.height)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if self.preferredContentSize == .zero {
+      self.tableView.layoutIfNeeded()
+      self.preferredContentSize = CGSize(width: view.bounds.width,
+                                         height: tableView.contentSize.height)
+    }
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
