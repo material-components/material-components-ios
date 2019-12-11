@@ -58,7 +58,11 @@ class TabBarViewExample: UIViewController {
 
     view.backgroundColor = containerScheme.colorScheme.backgroundColor;
     view.addSubview(tabBar)
-    view.layoutMarginsGuide.topAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
+    if #available(iOS 11.0, *) {
+      view.layoutMarginsGuide.topAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
+    } else {
+      topLayoutGuide.bottomAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
+    }
     view.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor).isActive = true
     view.trailingAnchor.constraint(equalTo: tabBar.trailingAnchor).isActive = true
 
