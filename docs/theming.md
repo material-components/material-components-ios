@@ -364,8 +364,8 @@ In order to use the components, themers and subsystem schemes you'll need to add
 <!--<div class="material-code-render" markdown="1">-->
 
 ```bash
-pod 'MaterialComponents/BottomNavigation'
-pod 'MaterialComponents/BottomNavigation+ColorThemer'
+pod 'MaterialComponents/TextFields'
+pod 'MaterialComponents/TextFields+ColorThemer'
 pod 'MaterialComponents/schemes/Color'
 ```
 <!--</div>-->
@@ -400,25 +400,28 @@ colorScheme.backgroundColor = UIColor.lightGrayColor
 #### Swift
 
 ```swift
-import MaterialComponents.MaterialBottomNavigation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialTextFields_ColorThemer
 
 let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-let bottomNavBar = MDCBottomNavigationBar()
-MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-toBottomNavigation: bottomNavBar)
+let textField = MDCTextField()
+let controller = MDCTextInputControllerFilled(textInput:textField)
+
+MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: controller)
 ```
 
 #### Objective-C
 
 ```objc
-#import <MaterialComponents/MaterialBottomNavigation.h>
-#import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>
+#import <MaterialComponents/MaterialTextFields.h>
+#import <MaterialComponents/MaterialTextFields+ColorThemer.h>
 
 MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];
-[MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-toBottomNavigation:_bottomNavBar];
+MDCTextField *textField = [[MDCTextField alloc] init];
+MDCTextInputControllerFilled *controller =
+    [[MDCTextInputControllerFilled alloc] initWithTextInput:textField];
+[MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
+    toTextInputControllerFilled:controller];
 ```
 <!--</div>-->
 
