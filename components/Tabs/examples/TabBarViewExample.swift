@@ -15,7 +15,6 @@
 import UIKit
 
 import MaterialComponentsBeta.MaterialTabs_TabBarView
-import MaterialComponents.MaterialTabs
 
 class TabBarViewExample: UIViewController {
 
