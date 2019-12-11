@@ -28,7 +28,6 @@ class TabBarViewExample: UIViewController {
     tabBar.items = self.tabBarItems
     tabBar.tabBarDelegate = self
     tabBar.translatesAutoresizingMaskIntoConstraints = false
-
     return tabBar
   }()
 
@@ -58,7 +57,6 @@ class TabBarViewExample: UIViewController {
     applyFixForInjectedAppBar()
 
     view.backgroundColor = containerScheme.colorScheme.backgroundColor;
-
     view.addSubview(tabBar)
     view.layoutMarginsGuide.topAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
     view.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor).isActive = true
