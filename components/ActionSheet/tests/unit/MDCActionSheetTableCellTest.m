@@ -20,7 +20,6 @@
 @interface MDCActionSheetItemTableViewCell (Testing)
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @end
 
 @interface MDCActionSheetTableCellTest : XCTestCase
@@ -120,17 +119,6 @@
       // Then
       XCTAssertEqualObjects(cell.actionImageView.tintColor, color);
     }
-  }
-}
-
-- (void)testDefaultInkColor {
-  // When
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
-
-  // Then
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
   }
 }
 
