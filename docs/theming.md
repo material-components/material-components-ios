@@ -226,12 +226,12 @@ In CocoaPods:
 
 ```ruby
 // Old
-pod 'MaterialComponents/Cards'
-pod 'MaterialComponents/Cards+ColorThemer'
+pod 'MaterialComponents/TextFields'
+pod 'MaterialComponents/TextFields+ColorThemer'
 
 // New
-pod 'MaterialComponents/Cards'
-pod 'MaterialComponents/Cards+Theming'
+pod 'MaterialComponents/TextFields'
+pod 'MaterialComponents/TextFields+Theming'
 ```
 
 In Bazel:
@@ -239,14 +239,14 @@ In Bazel:
 ```ruby
 // Old
   deps = [
-      "//components/schemes/Cards",
-      "//components/schemes/Cards:ColorThemer",
+      "//components/schemes/TextFields",
+      "//components/schemes/TextFields:ColorThemer",
   ],
 
 // New
   deps = [
-      "//components/schemes/Cards",
-      "//components/schemes/Cards:Theming",
+      "//components/schemes/TextFields",
+      "//components/schemes/TextFields:Theming",
   ],
 ```
 
@@ -259,20 +259,20 @@ Replace any Themer import with the component's Theming import:
 
 ```swift
 // Old
-import MaterialComponents.MaterialCards_ColorThemer
+import MaterialComponents.MaterialTextFields_ColorThemer
 
 // New
-import MaterialComponents.MaterialCards_Theming
+import MaterialComponents.MaterialTextFields_Theming
 ```
 
 ##### Objective-C
 
 ```objc
 // Old
-#import <MaterialComponents/MaterialCards+ColorThemer.h>
+#import <MaterialComponents/MaterialTextFields+ColorThemer.h>
 
 // New
-#import <MaterialComponents/MaterialCards+Theming.h>
+#import <MaterialComponents/MaterialTextFields+Theming.h>
 ```
 <!--</div>-->
 
@@ -287,11 +287,11 @@ equivalent Theming extension is described in the Themer's header documentation.
 ```swift
 // Old
 let colorScheme = MDCSemanticColorScheme()
-MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
+MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textField)
 
 // New
 let scheme = MDCContainerScheme()
-card.applyTheme(withScheme: scheme)
+textField.applyTheme(withScheme: scheme)
 ```
 
 ##### Objective-C
@@ -299,11 +299,12 @@ card.applyTheme(withScheme: scheme)
 ```objc
 // Old
 MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-[MDCCardsColorThemer applySemanticColorScheme:colorScheme toCard:card];
+[MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
+                            toTextInputControllerFilled:textFields];
 
 // New
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-[card applyThemeWithScheme:containerScheme];
+[textField applyThemeWithScheme:containerScheme];
 ```
 <!--</div>-->
 
@@ -392,35 +393,6 @@ MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDe
 colorScheme.backgroundColor = UIColor.lightGrayColor
 ```
 <!--</div>-->
-
-### Examples
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-import MaterialComponents.MaterialBottomNavigation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
-
-let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-let bottomNavBar = MDCBottomNavigationBar()
-MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-toBottomNavigation: bottomNavBar)
-```
-
-#### Objective-C
-
-```objc
-#import <MaterialComponents/MaterialBottomNavigation.h>
-#import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>
-
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];
-[MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-toBottomNavigation:_bottomNavBar];
-```
-<!--</div>-->
-
 
 ## Additional links
 
