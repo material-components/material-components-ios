@@ -394,10 +394,10 @@ colorScheme.backgroundColor = UIColor.lightGrayColor
 ```
 <!--</div>-->
 
-### Examples	
+### Examples
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Swift	
+#### Swift
 
 ```swift
 import MaterialComponents.MaterialBottomNavigation
@@ -409,9 +409,9 @@ MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
 toBottomNavigation: bottomNavBar)
 ```
 
-#### Objective-C	
+#### Objective-C
 
-```objc	
+```objc
 #import <MaterialComponents/MaterialBottomNavigation.h>
 #import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>
 
@@ -419,11 +419,10 @@ MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDe
 MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];
 [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
 toBottomNavigation:_bottomNavBar];
-```	
-<!--</div>-->	
+```
+<!--</div>-->
 
 ## Additional links
-
 
 * [Material Guidelines introduction to Theming](https://material.io/design/material-theming/overview.html)
 * [Material Theming at Google I/O](https://youtu.be/3VUMl_l-_fI)
