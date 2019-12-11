@@ -111,7 +111,7 @@ extension TabBarViewExample {
     return [
       "breadcrumbs" : ["Tab Bar", TabBarViewExample.title],
       "primaryDemo" : false,
-      "presentable" : true,
+      "presentable" : false,
     ]
   }
 }
