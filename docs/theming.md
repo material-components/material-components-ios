@@ -395,28 +395,35 @@ colorScheme.backgroundColor = UIColor.lightGrayColor
 <!--</div>-->
 
 ### Examples	
-<!--<div class="material-code-render" markdown="1">-->	
+
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift	
-```swift	
-import MaterialComponents.MaterialBottomNavigation	
-import MaterialComponents.MaterialBottomNavigation_ColorThemer	
-let colorScheme = MDCSemanticColorScheme(defaults: .material201804)	
-let bottomNavBar = MDCBottomNavigationBar()	
-MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,	
-toBottomNavigation: bottomNavBar)	
-```	
+
+```swift
+import MaterialComponents.MaterialBottomNavigation
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
+
+let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+let bottomNavBar = MDCBottomNavigationBar()
+MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
+toBottomNavigation: bottomNavBar)
+```
+
 #### Objective-C	
+
 ```objc	
-#import <MaterialComponents/MaterialBottomNavigation.h>	
-#import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>	
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];	
-MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];	
-[MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme	
-toBottomNavigation:_bottomNavBar];	
+#import <MaterialComponents/MaterialBottomNavigation.h>
+#import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>
+
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];
+[MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+toBottomNavigation:_bottomNavBar];
 ```	
 <!--</div>-->	
 
 ## Additional links
+
 
 * [Material Guidelines introduction to Theming](https://material.io/design/material-theming/overview.html)
 * [Material Theming at Google I/O](https://youtu.be/3VUMl_l-_fI)
