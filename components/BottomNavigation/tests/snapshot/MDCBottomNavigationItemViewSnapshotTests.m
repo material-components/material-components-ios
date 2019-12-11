@@ -58,7 +58,7 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
   self.itemView = [[MDCBottomNavigationItemView alloc] init];
   self.itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
@@ -75,6 +75,12 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
 }
 
 - (void)changeToRTLAndArabicWithBadgeValue:(NSString *)badgeValue {
+  static UIFont *urduFont;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    urduFont = [UIFont fontWithName:@"NotoNastaliqUrdu" size:14];
+  });
+  self.itemView.itemTitleFont = urduFont;
   self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   self.itemView.title = MDCBottomNavigationTestLongTitleArabic;
   self.itemView.badgeValue = badgeValue;

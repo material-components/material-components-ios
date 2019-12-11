@@ -40,7 +40,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
   self.navigationBar = [[MDCFakeBottomNavigationBar alloc] init];
 
@@ -110,6 +110,12 @@
 }
 
 - (void)changeToRTLAndArabicWithTitle:(NSString *)title {
+  static UIFont *urduFont;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    urduFont = [UIFont fontWithName:@"NotoNastaliqUrdu" size:14];
+  });
+  self.navigationBar.itemTitleFont = urduFont;
   self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   for (UITabBarItem *item in self.navigationBar.items) {
     item.title = title;
