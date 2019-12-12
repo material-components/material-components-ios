@@ -50,7 +50,6 @@ Delete MDCSnackbarColorThemer
 ### Tabs
 
 Delete MDCTabBarFontThemer
-Delete MDCTabBarColorThemer
 
 ### TextFields
 
@@ -69,6 +68,10 @@ Deprecating MDCButtonTypographyThemer
 Deprecating MDCContainedButtonThemer
 Deprecating MDCOutlinedButtonThemer
 
+### Cards
+
+Delete Themer classes
+
 ### FeatureHighlight
 
 Deprecate MDCFeatureHighlightTypographyThemer
@@ -78,6 +81,7 @@ Deprecate MDCFeatureHighlightTypographyThemer
 Deprecate MDCBottomDrawerColorTHemer
 
 ### TextFields
+
 Deprecate MDCTextFieldTypographyThemer
 Deprecate MDCOutlinedTextFieldColorThemer
 
@@ -162,7 +166,6 @@ Replace this text with example code for each new feature.
 
 * [Delete MDCTabBarFontThemer (#9201)](https://github.com/material-components/material-components-ios/commit/da280903ddbec822d497f8a97cd9a8093f50029c) (Andrew Overton)
 * [Fix examples. (#9233)](https://github.com/material-components/material-components-ios/commit/1606c38d208e295610c32d22dd334a8d7369c21e) (Robert Moore)
-* [Remove MDCTabBarColorThemer (#9200)](https://github.com/material-components/material-components-ios/commit/ca2f2ad64046b4a2583abbe7cb705e42ed5f0ae7) (Andrew Overton)
 
 ### TextFields
 
