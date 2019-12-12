@@ -193,6 +193,16 @@
 
 #pragma mark - ImagePadding
 
+- (void)testChipImagePaddingWithoutImagesLTR {
+  // When
+  self.chipView.imageView.image = nil;
+  self.chipView.selectedImageView.image = nil;
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
 - (void)testChipImagePaddingAllPositiveValuesLTR {
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
