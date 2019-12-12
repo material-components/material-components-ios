@@ -65,14 +65,6 @@ objc_bundle(
 )
 
 mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":Snackbar",
-        "//components/schemes/Color",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "FontThemer",
     deps = [
         ":Snackbar",
@@ -91,7 +83,6 @@ mdc_extension_objc_library(
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
-        ":ColorThemer",
         ":Snackbar",
         ":TypographyThemer",
         "//components/Buttons",
@@ -113,7 +104,6 @@ mdc_objc_library(
 mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
     deps = [
-        ":ColorThemer",
         ":Snackbar",
         ":TypographyThemer",
         ":private",
@@ -127,7 +117,6 @@ mdc_unit_test_objc_library(
         "tests/unit/supplemental/*.h",
     ]),
     deps = [
-        ":ColorThemer",
         ":FontThemer",
         ":Snackbar",
         ":private",

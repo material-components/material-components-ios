@@ -134,16 +134,16 @@
   }
 }
 
-- (void)testSetInkColor {
+- (void)testSetRippleColor {
   // When
   NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
 
   for (UIColor *color in colors) {
-    self.actionSheet.inkColor = color;
+    self.actionSheet.rippleColor = color;
     NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then
-      XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor, color);
+      XCTAssertEqualObjects(cell.rippleColor, color);
     }
   }
 }

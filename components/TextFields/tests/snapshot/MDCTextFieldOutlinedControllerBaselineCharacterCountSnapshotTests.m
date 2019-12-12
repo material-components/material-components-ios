@@ -14,8 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTextFields+ColorThemer.h"
-#import "MaterialTextFields+TypographyThemer.h"
+#import "MaterialTextFields+Theming.h"
 #import "MaterialTextFields.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 
@@ -53,11 +52,12 @@
   MDCTypographyScheme *typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                      toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
-                                toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme = colorScheme;
+  containerScheme.typographyScheme = typographyScheme;
+  MDCTextInputControllerOutlined *outlinedController =
+      (MDCTextInputControllerOutlined *)self.textFieldController;
+  [outlinedController applyThemeWithScheme:containerScheme];
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

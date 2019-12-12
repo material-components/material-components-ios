@@ -65,14 +65,6 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":Tabs",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":Tabs",

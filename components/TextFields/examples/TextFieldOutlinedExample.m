@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields+ColorThemer.h"
-#import "MaterialTextFields+TypographyThemer.h"
+#import "MaterialTextFields+Theming.h"
 #import "MaterialTextFields.h"
 
 @interface TextFieldOutlinedObjectiveCExample
@@ -28,8 +27,7 @@
 
 @property(nonatomic) MDCTextInputControllerOutlinedTextArea *messageController;
 
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @property(nonatomic) UIScrollView *scrollView;
 
@@ -42,26 +40,21 @@
 }
 
 - (void)styleTextInputController:(id<MDCTextInputController>)controller {
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:self.colorScheme
-                                      toTextInputController:controller];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:self.typographyScheme
-                                toTextInputController:controller];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toTextInput:controller.textInput];
+  if ([controller isKindOfClass:[MDCTextInputControllerOutlined class]]) {
+    MDCTextInputControllerOutlined *outlinedController =
+        (MDCTextInputControllerOutlined *)controller;
+    [outlinedController applyThemeWithScheme:self.containerScheme];
+  }
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (!self.colorScheme) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  if (!self.typographyScheme) {
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  if (!self.containerScheme) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
 
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   [self registerKeyboardNotifications];
 

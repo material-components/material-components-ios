@@ -14,14 +14,12 @@
 
 // swiftlint:disable function_body_length
 
-import MaterialComponents.MaterialTextFields_ColorThemer
-import MaterialComponents.MaterialTextFields_TypographyThemer
+import MaterialComponents.MaterialTextFields_Theming
 
 final class TextFieldFilledSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -121,11 +119,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
   }
 
   func style(textInputController:MDCTextInputControllerFilled) {
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
-    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
-    if let textInput = textInputController.textInput {
-      MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInput)
-    }
+    textInputController.applyTheme(withScheme: containerScheme)
   }
 
   func setupTextFields() {

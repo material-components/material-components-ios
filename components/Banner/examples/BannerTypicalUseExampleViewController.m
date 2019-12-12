@@ -114,7 +114,7 @@ static NSString *const exampleSuperLongText =
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -123,9 +123,10 @@ static NSString *const exampleSuperLongText =
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    _colorScheme = _containerScheme.colorScheme;
-    _typographyScheme = _containerScheme.typographyScheme;
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme = containerScheme;
+    _colorScheme = containerScheme.colorScheme;
+    _typographyScheme = containerScheme.typographyScheme;
   }
   return self;
 }

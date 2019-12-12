@@ -63,14 +63,6 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":FeatureHighlight",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":FeatureHighlight",
@@ -100,7 +92,6 @@ mdc_examples_objc_library(
         ":ColorThemer",
         ":FeatureHighlight",
         ":FeatureHighlightAccessibilityMutator",
-        ":TypographyThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
         "//components/Buttons:Theming",
@@ -119,7 +110,6 @@ mdc_examples_swift_library(
     deps = [
         ":ColorThemer",
         ":FeatureHighlight",
-        ":TypographyThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
         "//components/schemes/Color",
@@ -133,7 +123,6 @@ mdc_unit_test_objc_library(
         ":ColorThemer",
         ":FeatureHighlight",
         ":FeatureHighlightAccessibilityMutator",
-        ":FontThemer",
         ":TypographyThemer",
         ":private",
     ],

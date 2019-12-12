@@ -21,7 +21,6 @@
 
 @interface TabBarIconExample ()
 @property(nonatomic, strong) UIBarButtonItem *addStarButtonItem;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @implementation TabBarIconExample

@@ -29,8 +29,8 @@
 
 @implementation TabBarInterfaceBuilderExample
 
-- (id)init {
-  self = [super init];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
   if (self) {
     _containerScheme = [[MDCContainerScheme alloc] init];
   }

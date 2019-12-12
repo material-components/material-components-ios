@@ -602,8 +602,15 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     CGPoint buttonCenter;
     buttonCenter.x = self.actionsScrollView.contentSize.width * (CGFloat)0.5;
     buttonCenter.y = self.actionsScrollView.contentSize.height - MDCDialogActionsInsets.bottom;
+    CGFloat maxButtonWidth = self.actionsScrollView.contentSize.width -
+                             (MDCDialogActionsInsets.left + MDCDialogActionsInsets.right);
     for (UIButton *button in buttons) {
-      CGRect buttonRect = button.frame;
+      CGRect buttonRect = button.bounds;
+
+      if (CGRectGetWidth(buttonRect) > maxButtonWidth) {
+        buttonRect.size.width = maxButtonWidth;
+        button.bounds = buttonRect;
+      }
 
       buttonCenter.y -= buttonRect.size.height * (CGFloat)0.5;
 

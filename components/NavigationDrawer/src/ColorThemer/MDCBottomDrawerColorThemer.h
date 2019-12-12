@@ -24,10 +24,10 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCBottomDrawerColorThemer : NSObject
-@end
-
-@interface MDCBottomDrawerColorThemer (ToBeDeprecated)
+__deprecated_msg("No replacement exists. Please comment on"
+                 " https://github.com/material-components/material-components-ios/issues/7172"
+                 " in order to indicate interest in a replacement API.")
+    @interface MDCBottomDrawerColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCBottomDrawerViewController
@@ -40,6 +40,9 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                  toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer;
+                  toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer
+    __deprecated_msg("No replacement exists. Please comment on"
+                     " https://github.com/material-components/material-components-ios/issues/7172"
+                     " in order to indicate interest in a replacement API.");
 
 @end
