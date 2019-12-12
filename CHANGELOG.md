@@ -1,12 +1,86 @@
-# #develop#
+# 97.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we deleted and deprecated numerous APIs in 
+
+
+BottomAppBar, Snackbar,
+TextField, ActionSheet, BottomNavigation, ButtonBar, Cards, Feature highlight, Ink, Page control,
+and Tabs. We also enables ripple by default on Action Sheet. It was using a legacy ink animation.
+
+Fix Chip padding for Material theming. 
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+### ActionSheet
+
+Delete inkColor and enableRippleBehavior properties.
+
+### BottomNavigation
+
+Delete MDCBottomNavigationBarColorThemer
+
+### ButtonBar
+
+Delete MDCButtonBarColorThemer
+
+### FeatureHighlight
+
+Delete MDCFeatureHighlightFontThemer
+
+### Ink
+
+Delete MDCInkColorThemer
+
+### List
+
+Delete MDCListThemer
+
+### PageControl
+
+Delete MDCPageControlColorThemer
+
+### ProgressView
+
+Delete MDCProgressViewColorThemer
+
+### Snackbar
+
+Delete MDCSnackbarColorThemer
+
+### Tabs
+
+Delete MDCTabBarFontThemer
+Delete MDCTabBarColorThemer
+
+### TextFields
+
+Delete MDCTextFieldFontThemer
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+### Buttons
+
+Deprecate MDCButtonColorThemer
+Deprecate MDCFloatingActionButtonThemer
+Deprecate MDCTextButtonThemer
+Deprecating MDCButtonScheme
+Deprecating MDCButtonShapeThemer
+Deprecating MDCButtonTypographyThemer
+Deprecating MDCContainedButtonThemer
+Deprecating MDCOutlinedButtonThemer
+
+### FeatureHighlight
+
+Deprecate MDCFeatureHighlightTypographyThemer
+
+### NavigationDrawer
+
+Deprecate MDCBottomDrawerColorTHemer
+
+### TextFields
+Deprecate MDCTextFieldTypographyThemer
+Deprecate MDCOutlinedTextFieldColorThemer
+
 ## New features
 
 Replace this text with example code for each new feature.
