@@ -1,13 +1,8 @@
 # 97.0.0
 
-In this major release we deleted and deprecated numerous APIs in 
-
-
-BottomAppBar, Snackbar,
-TextField, ActionSheet, BottomNavigation, ButtonBar, Cards, Feature highlight, Ink, Page control,
-and Tabs. We also enables ripple by default on Action Sheet. It was using a legacy ink animation.
-
-Fix Chip padding for Material theming. 
+In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
+ButtonBar, Cards, Feature highlight, Ink, Page control, Snackbar, TextField, and Tabs. We also
+fixed Chip padding for Material theming. 
 
 ## Breaking changes
 
@@ -22,6 +17,11 @@ Delete MDCBottomNavigationBarColorThemer
 ### ButtonBar
 
 Delete MDCButtonBarColorThemer
+
+### Cards
+
+Delete MDCCardsColorThemer
+Delete MDCCardsShapeThemer
 
 ### FeatureHighlight
 
@@ -85,10 +85,112 @@ Deprecate MDCBottomDrawerColorTHemer
 Deprecate MDCTextFieldTypographyThemer
 Deprecate MDCOutlinedTextFieldColorThemer
 
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
+
+### ActionSheet
+
+*removed* property: `inkColor` in `MDCActionSheetController`. Use rippleColor instead.
+
+*removed* property: `enableRippleBehavior` in `MDCActionSheetController`. Use ripple.
+
+#### Navigation Bar
+
+*removed* class: MDCBottomNavigationBarColorThemer. Use MaterialBottomNavigation+Theming instead.
+
+#### ButtonBar
+
+*removed* class: `MDCButtonBarColorThemer`. ButtonBar is not intended to be themed as a standalone component. Please theme it via the AppBar component's Theming extension instead.
+
+#### Buttons
+
+__deprecated_msg("Please use MDCContainerScheming") @protocol MDCButtonScheming
+
+__deprecated_msg("Please use MDCContainerScheme") @interface MDCButtonScheme
+    : NSObject<MDCButtonScheming>
+__deprecated_msg("Please use MDCButton:applyContainedThemeWithScheme: instead.")
+    @interface MDCContainedButtonThemer : NSObject
+	__deprecated_msg("Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead.")
+	    @interface MDCFloatingActionButtonThemer : NSObject
+		__deprecated_msg("Please use MDCButton:applyOutlinedThemeWithScheme: instead.")
+		    @interface MDCOutlinedButtonThemer : NSObject
+			__deprecated_msg("Please use MDCButton:applyTextThemeWithScheme: instead.")
+			    @interface MDCTextButtonThemer : NSObject
+				__deprecated_msg("Please use the MDCButton+MaterialTheming API instead.")
+    @interface MDCButtonColorThemer : NSObject
+	__deprecated_msg("Please use MDCButton+MaterialTheming instead. (Note: "
+	                 "Shape theming is no longer available as an independent API.)")
+	    @interface MDCButtonShapeThemer : NSObject
+		__deprecated_msg("Please use MDCButton+MaterialTheming instead. (Note: Typography theming"
+		                 "is no longer available as an independent API.)")
+		    @interface MDCButtonTypographyThemer : NSObject
+			
+#### Cards
+
+*removed* protocol: `MDCCardScheming`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
+
+*removed* class: `MDCCardScheme`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
+
+*removed* class: `MDCCardThemer`. Please use MaterialCards+Theming instead.
+
+*removed* class: `MDCCardsColorThemer`. Please use MaterialCards+Theming instead.
+*removed* class: `MDCCardsShapeThemer`. Please use MaterialCards+Theming instead.
+
+#### FeatureHighlight
+
+*removed* class: `MDCFeatureHighlightFontThemer`. No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+*deprecated* class: `MDCFeatureHighlightTypographyThemer`. No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+### Ink
+
+*removed* class: `MDCInkColorThemer`. Please use Ripple instead.
+
+### List
+
+*removed* class: `MDCListScheming`. Please use MDCContainerScheme APIs.
+*removed* class: `MDCListScheme`. Please use MDCContainerScheme APIs.
+*removed* class: `MDCListThemer`. Please use MDCContainerScheme APIs.
+
+### BottomDrawer
+
+__deprecated_msg("No replacement exists. Please comment on"
+                 " https://github.com/material-components/material-components-ios/issues/7172"
+                 " in order to indicate interest in a replacement API.")
+    @interface MDCBottomDrawerColorThemer : NSObject
+
+#### Page Control
+
+*removed* class: `MDCPageControlColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+#### ProgressView
+
+*removed* class: `MDCProgressViewColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+
+#### Snackbar
+
+*removed* class: `MDCSnackbarColorThemer`.  Please use the Theming extension instead.
+
+#### Tab Bar
+
+*removed* class: MDCTabBarFontThemer. Please use the theming extension instead.
+
+#### TextField
+
+__deprecated_msg("Please use the Theming extension on MDCTextInputControllerOutlined instead.")
+    @interface MDCOutlinedTextFieldColorThemer : NSObject
+
+*removed* class: `MDCTextFieldFontThemer`. Please use the Theming extension, or MDCTextControls and their theming extensions instead.
+
+__deprecated_msg("Please use MDCTextInputControllerFilled+MaterialTheming.h or "
+                 "MDCTextInputControllerOutlined+MaterialTheming.h instead.")
+    @interface MDCTextFieldTypographyThemer : NSObject
+
+
+#### Thumb Track
+
+*removed* property: `thumbMaxRippleRadius` in `MDCThumbTrack`. Opt-in to Ripple by setting
+enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at
+https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
 
 ## Component changes
 
