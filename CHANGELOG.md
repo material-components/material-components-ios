@@ -103,26 +103,23 @@ Deprecate MDCOutlinedTextFieldColorThemer
 
 #### Buttons
 
-__deprecated_msg("Please use MDCContainerScheming") @protocol MDCButtonScheming
+*deprecated* protocol: `MDCButtonScheming`. Please use MDCContainerScheming.
 
-__deprecated_msg("Please use MDCContainerScheme") @interface MDCButtonScheme
-    : NSObject<MDCButtonScheming>
-__deprecated_msg("Please use MDCButton:applyContainedThemeWithScheme: instead.")
-    @interface MDCContainedButtonThemer : NSObject
-	__deprecated_msg("Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead.")
-	    @interface MDCFloatingActionButtonThemer : NSObject
-		__deprecated_msg("Please use MDCButton:applyOutlinedThemeWithScheme: instead.")
-		    @interface MDCOutlinedButtonThemer : NSObject
-			__deprecated_msg("Please use MDCButton:applyTextThemeWithScheme: instead.")
-			    @interface MDCTextButtonThemer : NSObject
-				__deprecated_msg("Please use the MDCButton+MaterialTheming API instead.")
-    @interface MDCButtonColorThemer : NSObject
-	__deprecated_msg("Please use MDCButton+MaterialTheming instead. (Note: "
-	                 "Shape theming is no longer available as an independent API.)")
-	    @interface MDCButtonShapeThemer : NSObject
-		__deprecated_msg("Please use MDCButton+MaterialTheming instead. (Note: Typography theming"
-		                 "is no longer available as an independent API.)")
-		    @interface MDCButtonTypographyThemer : NSObject
+*deprecated* class: `MDCButtonScheme`. Please use MDCContainerScheming.
+
+*deprecated* class: `MDCContainedButtonThemer`. Please use MDCButton:applyContainedThemeWithScheme: instead.
+
+*deprecated* class: `MDCFloatingActionButtonThemer`. Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead.
+
+*deprecated* class: `MDCOutlinedButtonThemer`. Please use MDCButton:applyOutlinedThemeWithScheme: instead.
+
+*deprecated* class: `MDCTextButtonThemer`. Please use MDCButton:applyTextThemeWithScheme: instead.
+
+*deprecated* class: `MDCButtonColorThemer`. Please use the MDCButton+MaterialTheming API instead.
+
+*deprecated* class: `MDCButtonShapeThemer`. Please use MDCButton+MaterialTheming instead. (Note: Shape theming is no longer available as an independent API.).
+
+*deprecated* class: `MDCButtonTypographyThemer`. Please use MDCButton+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.).
 			
 #### Cards
 
@@ -152,10 +149,7 @@ __deprecated_msg("Please use MDCButton:applyContainedThemeWithScheme: instead.")
 
 ### BottomDrawer
 
-__deprecated_msg("No replacement exists. Please comment on"
-                 " https://github.com/material-components/material-components-ios/issues/7172"
-                 " in order to indicate interest in a replacement API.")
-    @interface MDCBottomDrawerColorThemer : NSObject
+*deprecated* class: `MDCBottomDrawerColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
 
 #### Page Control
 
@@ -176,21 +170,15 @@ __deprecated_msg("No replacement exists. Please comment on"
 
 #### TextField
 
-__deprecated_msg("Please use the Theming extension on MDCTextInputControllerOutlined instead.")
-    @interface MDCOutlinedTextFieldColorThemer : NSObject
+*deprecated* class: `MDCOutlinedTextFieldColorThemer`. Please use the Theming extension on MDCTextInputControllerOutlined instead.
 
 *removed* class: `MDCTextFieldFontThemer`. Please use the Theming extension, or MDCTextControls and their theming extensions instead.
 
-__deprecated_msg("Please use MDCTextInputControllerFilled+MaterialTheming.h or "
-                 "MDCTextInputControllerOutlined+MaterialTheming.h instead.")
-    @interface MDCTextFieldTypographyThemer : NSObject
-
+*deprecated* class: `MDCTextFieldTypographyThemer`. Please use MDCTextInputControllerFilled+MaterialTheming.h or MDCTextInputControllerOutlined+MaterialTheming.h instead.
 
 #### Thumb Track
 
-*removed* property: `thumbMaxRippleRadius` in `MDCThumbTrack`. Opt-in to Ripple by setting
-enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at
-https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+*removed* property: `thumbMaxRippleRadius` in `MDCThumbTrack`. Opt-in to Ripple by setting enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
 
 ## Component changes
 
