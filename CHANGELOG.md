@@ -14,10 +14,6 @@ Delete inkColor and enableRippleBehavior properties.
 
 Delete MDCBottomNavigationBarColorThemer
 
-### ButtonBar
-
-Delete MDCButtonBarColorThemer
-
 ### Cards
 
 Delete MDCCardsColorThemer
@@ -96,10 +92,6 @@ Deprecate MDCOutlinedTextFieldColorThemer
 #### Navigation Bar
 
 *removed* class: MDCBottomNavigationBarColorThemer. Use MaterialBottomNavigation+Theming instead.
-
-#### ButtonBar
-
-*removed* class: `MDCButtonBarColorThemer`. ButtonBar is not intended to be themed as a standalone component. Please theme it via the AppBar component's Theming extension instead.
 
 #### Buttons
 
@@ -196,10 +188,6 @@ Deprecate MDCOutlinedTextFieldColorThemer
 ### BottomNavigation
 
 * [Delete MDCBottomNavigationBarColorThemer (#9198)](https://github.com/material-components/material-components-ios/commit/1ae1e4cbbb437199d260f85d4dd0929b4dfe6ca5) (Bryan Oltman)
-
-### ButtonBar
-
-* [Delete MDCButtonBarColorThemer (#9235)](https://github.com/material-components/material-components-ios/commit/d0c581e993a7de09c95a2b6c067733fed0239c0b) (Andrew Overton)
 
 ### Buttons
 
