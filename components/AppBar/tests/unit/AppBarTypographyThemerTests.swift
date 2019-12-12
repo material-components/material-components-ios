@@ -20,8 +20,8 @@ import MaterialComponents.MaterialTypography
 class AppBarTypographyThemerTests: XCTestCase {
 
   func traitsForFont(_ font: UIFont) -> [String: NSNumber] {
-    guard let fontTraits =
-          font.fontDescriptor.object(forKey: UIFontDescriptorTraitsAttribute) as? [String: NSNumber]
+    guard let fontTraits = font.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.traits)
+      as? [String: NSNumber]
       else {
         return [:]
     }

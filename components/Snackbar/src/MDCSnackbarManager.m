@@ -126,7 +126,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _manager = manager;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
-    _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   }
   return self;
 }
@@ -228,10 +227,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   snackbarView = [[viewClass alloc] initWithMessage:message
                                      dismissHandler:dismissHandler
                                     snackbarManager:self.manager];
-  [self.delegate willPresentSnackbarWithMessageView:snackbarView];
-  self.currentSnackbar = snackbarView;
-  self.overlayView.accessibilityViewIsModal =
+  snackbarView.accessibilityViewIsModal =
       self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
+  [self.delegate willPresentSnackbarWithMessageView:snackbarView];
+  if (message.snackbarMessageWillPresentBlock) {
+    message.snackbarMessageWillPresentBlock(message, snackbarView);
+  }
+  self.currentSnackbar = snackbarView;
+  self.overlayView.accessibilityViewIsModal = snackbarView.accessibilityViewIsModal;
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -241,14 +244,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if ([self isSnackbarTransient:snackbarView]) {
+              if (snackbarView.accessibilityViewIsModal || message.focusOnShow ||
+                  ![self isSnackbarTransient:snackbarView]) {
+                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                                snackbarView);
+              } else {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
-
-              } else {
-                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                                snackbarView);
               }
 
               if ([self isSnackbarTransient:snackbarView]) {
@@ -268,6 +271,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
             }];
 }
 
+- (MDCSnackbarOverlayView *)overlayView {
+  if (!_overlayView) {
+    // Only initialize on the main thread.
+    NSAssert([NSThread isMainThread], @"Method is not called on main thread.");
+
+    _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  }
+  return _overlayView;
+}
+
 - (void)hideSnackbarViewReally:(MDCSnackbarMessageView *)snackbarView
                     withAction:(MDCSnackbarMessageAction *)action
                   userPrompted:(BOOL)userPrompted {
@@ -280,22 +293,23 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   MDCSnackbarMessage *message = snackbarView.message;
 
   // Fire off the button action, if necessary. Always call the message's completion handler.
-  [message
-      executeActionHandler:action
-                completion:^{
-                  [message executeCompletionHandlerWithUserInteraction:userPrompted completion:nil];
-                }];
+  [message executeActionHandler:action
+                     completion:^{
+                       [message executeCompletionHandlerWithUserInteraction:userPrompted
+                                                                 completion:nil];
+                     }];
 
   [self.overlayView dismissSnackbarViewAnimated:YES
                                      completion:^{
                                        self.overlayView.hidden = YES;
                                        [self deactivateOverlay:self.overlayView];
 
-                                       // If VoiceOver had been enabled and the snackbarView was
-                                       // transient, the Snackbar was just announced (layout was not
-                                       // reported as changed) so there is no need to post a layout
-                                       // change here.
-                                       if (![self isSnackbarTransient:snackbarView]) {
+                                       // If the snackbarView was transient and
+                                       // accessibilityViewIsModal is NO, the Snackbar was just
+                                       // announced (layout was not reported as changed) so there is
+                                       // no need to post a layout change here.
+                                       if (self.overlayView.accessibilityViewIsModal ||
+                                           ![self isSnackbarTransient:snackbarView]) {
                                          UIAccessibilityPostNotification(
                                              UIAccessibilityLayoutChangedNotification, nil);
                                        }
@@ -432,18 +446,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // through pending messages and fire off their completion blocks as we remove them from the
   // queue.
   NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
-  [self.pendingMessages
-      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
-                                   NSUInteger idx,
-                                   __unused BOOL *stop) {
-        if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
-          // Mark the message for removal from the pending messages list.
-          [indexesToRemove addIndex:idx];
+  [self.pendingMessages enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
+                                                     NSUInteger idx, __unused BOOL *stop) {
+    if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
+      // Mark the message for removal from the pending messages list.
+      [indexesToRemove addIndex:idx];
 
-          // Notify the outside world that this Snackbar has been completed.
-          [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
-        }
-      }];
+      // Notify the outside world that this Snackbar has been completed.
+      [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
+    }
+  }];
 
   // Make sure the queued up messages aren't shown.
   if ([indexesToRemove count]) {
@@ -515,14 +527,19 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @implementation MDCSnackbarManager {
   UIColor *_snackbarMessageViewBackgroundColor;
   UIColor *_snackbarMessageViewShadowColor;
+  MDCShadowElevation _messageElevation;
   UIColor *_messageTextColor;
   UIFont *_messageFont;
   UIFont *_buttonFont;
+  BOOL _uppercaseButtonTitle;
+  CGFloat _disabledButtonAlpha;
+  UIColor *_buttonInkColor;
   NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
   BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 
 + (instancetype)defaultManager {
   static MDCSnackbarManager *defaultManager;
@@ -537,6 +554,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   self = [super init];
   if (self) {
     _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
+    _uppercaseButtonTitle = YES;
+    _disabledButtonAlpha = (CGFloat)0.12;
+    _messageElevation = MDCShadowElevationSnackbar;
+    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    _mdc_overrideBaseElevation = -1;
   }
   return self;
 }
@@ -686,6 +708,19 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   }
 }
 
+- (MDCShadowElevation)messageElevation {
+  return _messageElevation;
+}
+
+- (void)setMessageElevation:(MDCShadowElevation)messageElevation {
+  if (_messageElevation != messageElevation) {
+    _messageElevation = messageElevation;
+    [self runSnackbarUpdatesOnMainThread:^{
+      self.internalManager.currentSnackbar.elevation = messageElevation;
+    }];
+  }
+}
+
 - (UIColor *)messageTextColor {
   return _messageTextColor;
 }
@@ -714,6 +749,47 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (UIFont *)buttonFont {
   return _buttonFont;
+}
+
+- (void)setUppercaseButtonTitle:(BOOL)uppercaseButtonTitle {
+  _uppercaseButtonTitle = uppercaseButtonTitle;
+  [self runSnackbarUpdatesOnMainThread:^{
+    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
+      button.uppercaseTitle = uppercaseButtonTitle;
+    }
+  }];
+}
+
+- (BOOL)uppercaseButtonTitle {
+  return _uppercaseButtonTitle;
+}
+
+- (void)setDisabledButtonAlpha:(CGFloat)disabledButtonAlpha {
+  _disabledButtonAlpha = disabledButtonAlpha;
+
+  [self runSnackbarUpdatesOnMainThread:^{
+    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
+      button.disabledAlpha = disabledButtonAlpha;
+    }
+  }];
+}
+
+- (CGFloat)disabledButtonAlpha {
+  return _disabledButtonAlpha;
+}
+
+- (void)setButtonInkColor:(UIColor *)buttonInkColor {
+  _buttonInkColor = buttonInkColor;
+
+  [self runSnackbarUpdatesOnMainThread:^{
+    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
+      button.inkColor = buttonInkColor;
+    }
+  }];
+}
+
+- (UIColor *)buttonInkColor {
+  return _buttonInkColor;
 }
 
 - (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
@@ -753,6 +829,30 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
   return _shouldApplyStyleChangesToVisibleSnackbars;
+}
+
+#pragma mark - Elevation
+
+- (void)setMdc_overrideBaseElevation:(CGFloat)mdc_overrideBaseElevation {
+  if (_mdc_overrideBaseElevation != mdc_overrideBaseElevation) {
+    _mdc_overrideBaseElevation = mdc_overrideBaseElevation;
+    self.internalManager.currentSnackbar.mdc_overrideBaseElevation = mdc_overrideBaseElevation;
+  }
+}
+
+- (void)setTraitCollectionDidChangeBlockForMessageView:
+    (void (^)(MDCSnackbarMessageView *,
+              UITraitCollection *))traitCollectionDidChangeBlockForMessageView {
+  _traitCollectionDidChangeBlockForMessageView = traitCollectionDidChangeBlockForMessageView;
+  self.internalManager.currentSnackbar.traitCollectionDidChangeBlock =
+      traitCollectionDidChangeBlockForMessageView;
+}
+
+- (void)setMdc_elevationDidChangeBlockForMessageView:
+    (void (^)(id<MDCElevatable> _Nonnull, CGFloat))mdc_elevationDidChangeBlockForMessageView {
+  _mdc_elevationDidChangeBlockForMessageView = mdc_elevationDidChangeBlockForMessageView;
+  self.internalManager.currentSnackbar.mdc_elevationDidChangeBlock =
+      mdc_elevationDidChangeBlockForMessageView;
 }
 
 @end
@@ -808,16 +908,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   [MDCSnackbarManager.defaultManager setBottomOffset:offset];
 }
 
-+ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages {
++ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages {
   return MDCSnackbarManager.defaultManager.suspendAllMessages;
 }
 
-+ (nullable id <MDCSnackbarSuspensionToken>)
-    suspendMessagesWithCategory:(nullable NSString *)category {
++ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:
+    (nullable NSString *)category {
   return [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:category];
 }
 
-+ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token {
++ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token {
   [MDCSnackbarManager.defaultManager resumeMessagesWithToken:token];
 }
 
@@ -866,8 +966,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   return MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars;
 }
 
-+ (void)setShouldApplyStyleChangesToVisibleSnackbars:(BOOL)shouldApplyStyleChangesToVisibleSnackbars
-    {
++ (void)setShouldApplyStyleChangesToVisibleSnackbars:
+    (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
   MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars =
       shouldApplyStyleChangesToVisibleSnackbars;
 }

@@ -29,8 +29,9 @@
   // Then
   XCTAssertNotNil(tabBar.selectionIndicatorTemplate);
   XCTAssertEqualObjects(tabBar.selectedItemTintColor, UIColor.whiteColor);
-  XCTAssertEqualObjects(tabBar.unselectedItemTintColor, [UIColor colorWithWhite:1 alpha:0.7f]);
-  XCTAssertEqualObjects(tabBar.inkColor, [UIColor colorWithWhite:1 alpha:0.7f]);
+  XCTAssertEqualObjects(tabBar.unselectedItemTintColor, [UIColor colorWithWhite:1
+                                                                          alpha:(CGFloat)0.7]);
+  XCTAssertEqualObjects(tabBar.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
   XCTAssertNil(tabBar.barTintColor);
   XCTAssertTrue(tabBar.clipsToBounds);
   XCTAssertEqual(tabBar.barPosition, UIBarPositionAny);
@@ -44,6 +45,44 @@
   XCTAssertNil(tabBar.selectedItem);
   XCTAssertNil(tabBar.delegate);
   XCTAssertTrue(tabBar.displaysUppercaseTitles);
+  XCTAssertEqualWithAccuracy(tabBar.mdc_currentElevation, 0, 0.001);
+  XCTAssertLessThan(tabBar.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCTabBar *testTabBar = [[MDCTabBar alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCTabBar *passedTabBar = nil;
+  testTabBar.traitCollectionDidChangeBlock =
+      ^(MDCTabBar *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedTabBar = tabBar;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [testTabBar traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTabBar, testTabBar);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  MDCTabBar *tabBar = [[MDCTabBar alloc] init];
+  CGFloat fakeElevation = 99;
+
+  // When
+  tabBar.mdc_overrideBaseElevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(tabBar.mdc_overrideBaseElevation, fakeElevation, 0.001);
 }
 
 @end

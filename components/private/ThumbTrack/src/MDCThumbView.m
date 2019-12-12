@@ -35,6 +35,7 @@
     // TODO: Remove once MDCShadowLayer is rasterized by default.
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    _shadowColor = UIColor.blackColor;
   }
   return self;
 }
@@ -48,11 +49,6 @@
   _cornerRadius = cornerRadius;
   self.layer.cornerRadius = cornerRadius;
   [self setNeedsLayout];
-}
-
-- (void)setHasShadow:(BOOL)hasShadow {
-  _hasShadow = hasShadow;
-  self.elevation = hasShadow ? MDCShadowElevationCardResting : MDCShadowElevationNone;
 }
 
 - (MDCShadowElevation)elevation {
@@ -71,6 +67,7 @@
   [super layoutSubviews];
   self.layer.shadowPath =
       [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:_cornerRadius].CGPath;
+  self.layer.shadowColor = self.shadowColor.CGColor;
 }
 
 - (void)setIcon:(nullable UIImage *)icon {
@@ -89,6 +86,11 @@
     CGFloat topLeft = _cornerRadius - (sideLength / 2);
     _iconView.frame = CGRectMake(topLeft, topLeft, sideLength, sideLength);
   }
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+  _shadowColor = shadowColor;
+  self.layer.shadowColor = shadowColor.CGColor;
 }
 
 @end

@@ -14,12 +14,13 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
   @IBOutlet weak var scrollView: UIScrollView!
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -45,13 +46,13 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
     appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
@@ -59,11 +60,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     appBarViewController.headerView.trackingScrollView = scrollView
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -75,7 +72,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 // MARK: Catalog by convention
 extension AppBarInterfaceBuilderSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Interface Builder (Swift)"],
       "primaryDemo": false,
@@ -84,7 +81,7 @@ extension AppBarInterfaceBuilderSwiftExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

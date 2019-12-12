@@ -14,24 +14,24 @@
 
 #import "MDCAppBarButtonBarBuilder.h"
 
-#import <objc/runtime.h>
 #import <MDFInternationalization/MDFInternationalization.h>
+#import <objc/runtime.h>
 
-#import "MaterialButtons.h"
-#import "MDCButtonBarButton.h"
 #import "MDCButtonBar+Private.h"
+#import "MDCButtonBarButton.h"
+#import "MaterialButtons.h"
 
 // Additional insets for the left-most or right-most items.
-static const CGFloat kEdgeButtonAdditionalMarginPhone = 4.f;
-static const CGFloat kEdgeButtonAdditionalMarginPad = 12.f;
+static const CGFloat kEdgeButtonAdditionalMarginPhone = 4;
+static const CGFloat kEdgeButtonAdditionalMarginPad = 12;
 
-// The default MDCButton's alpha for display state is 0.1f which in the context of bar buttons
-// makes it practically invisible. Setting button to a higher opacity is closer to what the
-// button should look like when it is disabled.
-static const CGFloat kDisabledButtonAlpha = 0.38f;
+// The default MDCButton's alpha for display state is 0.1 which in the context of bar buttons makes
+// it practically invisible. Setting button to a higher opacity is closer to what the button should
+// look like when it is disabled.
+static const CGFloat kDisabledButtonAlpha = (CGFloat)0.38;
 
 // Default content inset for buttons.
-static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
+static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
 
 // Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
 // and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
@@ -119,6 +119,7 @@ static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
   MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
+  button.enableRippleBehavior = buttonBar.enableRippleBehavior;
   if (buttonBar.inkColor) {
     button.inkColor = buttonBar.inkColor;
   }
@@ -156,8 +157,8 @@ static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
               layoutPosition:buttonBar.layoutPosition
                  layoutHints:layoutHints
              layoutDirection:[buttonBar mdf_effectiveUserInterfaceLayoutDirection]
-                                userInterfaceIdiom:[self usePadInsetsForButtonBar:buttonBar] ?
-                                UIUserInterfaceIdiomPad : UIUserInterfaceIdiomPhone];
+          userInterfaceIdiom:[self usePadInsetsForButtonBar:buttonBar] ? UIUserInterfaceIdiomPad
+                                                                       : UIUserInterfaceIdiomPhone];
 
   button.contentEdgeInsets = contentInsets;
   button.enabled = buttonItem.enabled;
@@ -192,9 +193,9 @@ static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
     CGFloat additionalInset =
         (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
     BOOL isFirstButton = (layoutHints & MDCBarButtonItemLayoutHintsIsFirstButton) ==
-                             MDCBarButtonItemLayoutHintsIsFirstButton;
+                         MDCBarButtonItemLayoutHintsIsFirstButton;
     BOOL isLastButton = (layoutHints & MDCBarButtonItemLayoutHintsIsLastButton) ==
-                            MDCBarButtonItemLayoutHintsIsLastButton;
+                        MDCBarButtonItemLayoutHintsIsLastButton;
     if (isFirstButton && layoutPosition == MDCButtonBarLayoutPositionLeading) {
       // Left-most button in LTR, and right-most button in RTL.
       if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
@@ -275,15 +276,15 @@ static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
 
     // UIBarButtonItem's appearance proxy values don't appear to come "for free" like they do with
     // typical UIView instances, so we're attempting to recreate the behavior here.
-    NSArray *appearanceProxies = @[ [item.class appearance] ];
+    NSArray *appearanceProxies = @ [[item.class appearance]];
     for (UIBarButtonItem *appearance in appearanceProxies) {
       [attributes addEntriesFromDictionary:[appearance titleTextAttributesForState:state]];
     }
     [attributes addEntriesFromDictionary:[item titleTextAttributesForState:state]];
     if ([attributes count] > 0) {
-      [button
-          setAttributedTitle:[[NSAttributedString alloc] initWithString:title attributes:attributes]
-                    forState:state];
+      [button setAttributedTitle:[[NSAttributedString alloc] initWithString:title
+                                                                 attributes:attributes]
+                        forState:state];
     }
   } else {
     [button setTitle:title forState:state];

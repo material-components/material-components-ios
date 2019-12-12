@@ -22,18 +22,18 @@
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTabs.h"
 #import "MaterialTypographyScheme.h"
 
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 
-@property(nonatomic, nullable) MDCTabBar * tabBar;
-@property(nonatomic, nullable) MDCButton * alignmentButton;
-@property(nonatomic, nullable) MDCAppBarViewController * appBarViewController;
-@property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, nullable) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, nullable) UIScrollView * scrollView;
-@property(nonatomic, nullable) UIView * starPage;
+@property(nonatomic, nullable) MDCTabBar *tabBar;
+@property(nonatomic, nullable) MDCButton *alignmentButton;
+@property(nonatomic, nullable) MDCAppBarViewController *appBarViewController;
+@property(nonatomic, nullable) MDCContainerScheme *containerScheme;
+@property(nonatomic, nullable) UIScrollView *scrollView;
+@property(nonatomic, nullable) UIView *starPage;
 @end
 
 @interface TabBarIconExample (Supplemental)

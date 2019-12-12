@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCItemBarCell.h"
-#import "MDCItemBarCell+Private.h"
-#import "MDCItemBarStyle.h"
+#import "../../src/private/MDCItemBarCell+Private.h"
+#import "../../src/private/MDCItemBarCell.h"
+#import "../../src/private/MDCItemBarStyle.h"
 
 @interface MDCItemBarCellTests : XCTestCase
 
@@ -82,4 +82,23 @@
   XCTAssertEqualObjects(cell.titleLabel.text, @"A TITLE");
 }
 
+/// Tests that a cell's badge label doesn't increase in size as the badge value gets to be more than
+/// four characters
+- (void)testBadgeLabelTextTruncation {
+  MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];
+  style.shouldDisplayImage = YES;
+  style.shouldDisplayBadge = YES;
+  style.shouldDisplayTitle = YES;
+
+  MDCItemBarCell *cell = [[MDCItemBarCell alloc] initWithFrame:CGRectZero];
+  [cell applyStyle:style];
+  cell.image = [UIImage imageNamed:@"TabBarDemo_ic_info"];
+  cell.title = @"A title";
+  cell.badgeValue = @"xxxx";
+  CGRect frameWithFourDigitBadgeValue = cell.badgeLabel.frame;
+  cell.badgeValue = @"xxxxx";
+  CGRect frameWithFiveDigitBadgeValue = cell.badgeLabel.frame;
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(frameWithFiveDigitBadgeValue),
+                             CGRectGetWidth(frameWithFourDigitBadgeValue), 0.001);
+}
 @end

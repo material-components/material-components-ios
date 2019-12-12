@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialFeatureHighlight.h"
 #import "MaterialFeatureHighlight+TypographyThemer.h"
+#import "MaterialFeatureHighlight.h"
 
 #import <XCTest/XCTest.h>
 
 @interface FeatureHighlightTypographyThemerTests : XCTestCase
-@property (nonatomic, strong) UIView *highlightedView;
-@property (nonatomic, strong) UIView *showView;
+@property(nonatomic, strong) UIView *highlightedView;
+@property(nonatomic, strong) UIView *showView;
 
 @end
 
@@ -47,7 +47,6 @@
                             toFeatureHighlightViewController:featureHighlightViewController];
   XCTAssertEqualObjects(featureHighlightViewController.titleFont, typographyScheme.headline6);
   XCTAssertEqualObjects(featureHighlightViewController.bodyFont, typographyScheme.body2);
- }
-
+}
 
 @end

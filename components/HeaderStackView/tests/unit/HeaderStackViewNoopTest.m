@@ -22,9 +22,29 @@
 
 @implementation HeaderStackViewNoopTest
 
-- (void)testExample {
-  MDCHeaderStackView *view = [[MDCHeaderStackView alloc] init];
-  XCTAssertNotNil(view);
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCHeaderStackView *testHeaderStackView = [[MDCHeaderStackView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCHeaderStackView *passedHeaderStackView = nil;
+  testHeaderStackView.traitCollectionDidChangeBlock =
+      ^(MDCHeaderStackView *_Nonnull headerStackView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedHeaderStackView = headerStackView;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [testHeaderStackView traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedHeaderStackView, testHeaderStackView);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end

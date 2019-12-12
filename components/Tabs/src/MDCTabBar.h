@@ -17,6 +17,7 @@
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarTextTransform.h"
+#import "MaterialElevation.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
@@ -40,7 +41,7 @@ typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
  @see https://material.io/go/design-tabs
  */
 IB_DESIGNABLE
-@interface MDCTabBar : UIView <UIBarPositioning>
+@interface MDCTabBar : UIView <UIBarPositioning, MDCElevatable, MDCElevationOverriding>
 
 /** The default height for the tab bar with a given position and item appearance. */
 + (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position
@@ -90,8 +91,20 @@ IB_DESIGNABLE
  */
 @property(nonatomic, nonnull) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 
-/** Ink color for taps on tab bar items. Default: Semi-transparent white. */
-@property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/** Ripple color for taps on tab bar items. Default: Semi-transparent white. */
+@property(nonatomic, nonnull) UIColor *rippleColor;
 
 /** Color for the bottom divider. Default: Clear. */
 @property(nonatomic, nonnull) UIColor *bottomDividerColor;
@@ -176,7 +189,7 @@ IB_DESIGNABLE
 
 /**
  Sets the color of the title for the specified state.
- 
+
  If the @c MDCTabBarItemState value is not set, then defaults to a default value. Therefore,
  at a minimum, you should set the value for MDCTabBarItemStateNormal.
  */
@@ -195,6 +208,13 @@ IB_DESIGNABLE
 
 /** Returns the image tint color associated with the specified state. */
 - (nullable UIColor *)imageTintColorForState:(MDCTabBarItemState)state;
+
+/**
+ A block that is invoked when the @c MDCTabBar receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCTabBar *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 
@@ -242,5 +262,18 @@ IB_DESIGNABLE
  changes to the tab bar's selected item.
  */
 - (void)tabBar:(nonnull MDCTabBar *)tabBar didSelectItem:(nonnull UITabBarItem *)item;
+
+@end
+
+@interface MDCTabBar (ToBeDeprecated)
+
+/**
+ Ink color for taps on tab bar items. Default: Semi-transparent white.
+
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+ */
+@property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 @end

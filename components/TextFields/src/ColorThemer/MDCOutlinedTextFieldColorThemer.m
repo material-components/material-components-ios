@@ -15,12 +15,15 @@
 #import "MDCOutlinedTextFieldColorThemer.h"
 #import "MDCTextInputControllerBase.h"
 
-static CGFloat const kOutlinedTextFieldActiveAlpha = 0.87f;
-static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = 0.6f;
-static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
-static CGFloat const kOutlinedTextFieldIconAlpha = 0.54f;
+static CGFloat const kOutlinedTextFieldActiveAlpha = (CGFloat)0.87;
+static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = (CGFloat)0.6;
+static CGFloat const kOutlinedTextFieldDisabledAlpha = (CGFloat)0.38;
+static CGFloat const kOutlinedTextFieldIconAlpha = (CGFloat)0.54;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCOutlinedTextFieldColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
            toTextInputController:(id<MDCTextInputController>)textInputController {
@@ -38,18 +41,17 @@ static CGFloat const kOutlinedTextFieldIconAlpha = 0.54f;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldDisabledAlpha];
 
   if ([textInputController isKindOfClass:[MDCTextInputControllerBase class]]) {
-    MDCTextInputControllerBase *baseController =
-        (MDCTextInputControllerBase *)textInputController;
+    MDCTextInputControllerBase *baseController = (MDCTextInputControllerBase *)textInputController;
     baseController.textInputClearButtonTintColor =
         [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldIconAlpha];
   }
 
   if ([textInputController
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
-    (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
+        (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
     if ([textInputControllerFloatingPlaceholder
-         respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
+            respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
       textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurfaceOpacity;
       textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor =
           [colorScheme.primaryColor colorWithAlphaComponent:kOutlinedTextFieldActiveAlpha];

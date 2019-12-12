@@ -18,26 +18,28 @@
 
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
+#import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorView.h"
 #import "MDCTabBarPrivateIndicatorContext.h"
+#import "MDCTabBarSizeClassDelegate.h"
 #import "MaterialAnimationTiming.h"
 
 /// Cell reuse identifier for item bar cells.
 static NSString *const kItemReuseID = @"MDCItem";
 
 /// Default duration in seconds for selection change animations.
-static const NSTimeInterval kDefaultAnimationDuration = 0.3f;
+static const NSTimeInterval kDefaultAnimationDuration = 0.3;
 
 /// Placeholder width for cells, which get per-item sizing.
-static const CGFloat kPlaceholderCellWidth = 10.0f;
+static const CGFloat kPlaceholderCellWidth = 10;
 
 /// Horizontal insets in regular size class layouts.
-static const CGFloat kRegularInset = 56.0f;
+static const CGFloat kRegularInset = 56;
 
 /// Horizontal insets in compact size class layouts.
-static const CGFloat kCompactInset = 8.0f;
+static const CGFloat kCompactInset = 8;
 
 /// KVO context pointer identifying changes in MDCItemBarItem properties.
 static void *kItemPropertyContext = &kItemPropertyContext;
@@ -58,11 +60,15 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark -
 
 @interface MDCItemBar () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+// Current style properties.
+@property(nonatomic, strong, nullable) MDCItemBarStyle *style;
+// Collection view for items.
+@property(nonatomic, strong, nullable) UICollectionView *collectionView;
+
 @end
 
 @implementation MDCItemBar {
-  // Collection view and layout for items.
-  UICollectionView *_collectionView;
+  // Collection layout for items.
   UICollectionViewFlowLayout *_flowLayout;
 
   /// Indicator layered under the active item.
@@ -74,8 +80,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   /// Width of the collection view accounting for SafeAreaInsets at last layout.
   CGFloat _lastAdjustedCollectionViewWidth;
 
-  /// Current style properties.
-  MDCItemBarStyle *_style;
+  /// The current alignment to use for item bar. This may vary from `_alignment` in cases where
+  /// the actual alignment is determined on-the-fly.
+  MDCItemBarAlignment _currentAlignment;
 }
 
 + (CGFloat)defaultHeightForStyle:(nonnull MDCItemBarStyle *)style {
@@ -105,8 +112,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Configure the collection view.
   _flowLayout = [self generatedFlowLayout];
-  UICollectionView *collectionView =
-      [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_flowLayout];
+  UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
+                                                        collectionViewLayout:_flowLayout];
   collectionView.backgroundColor = [UIColor clearColor];
   collectionView.clipsToBounds = NO;
   collectionView.scrollsToTop = NO;
@@ -222,6 +229,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 #pragma mark - Accessibility
 
+- (UIAccessibilityTraits)accessibilityTraits {
+  if (@available(iOS 10.0, *)) {
+    return [super accessibilityTraits] | UIAccessibilityTraitTabBar;
+  }
+  return [super accessibilityTraits];
+}
+
 - (id)accessibilityElementForItem:(UITabBarItem *)item {
   NSUInteger index = [_items indexOfObject:item];
   if (index != NSNotFound) {
@@ -278,7 +292,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // Update collection metrics if the size has changed.
   if (!CGSizeEqualToSize(bounds.size, _lastSize) ||
       [self adjustedCollectionViewWidth] != _lastAdjustedCollectionViewWidth) {
-    [self updateFlowLayoutMetrics];
+    [self updateAlignmentAnimated:NO];
 
     // Ensure selected item is aligned properly on resize, forcing the new layout to take effect.
     [_collectionView layoutIfNeeded];
@@ -312,14 +326,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [super didMoveToWindow];
 
   // New window: Update for potentially updated size class.
-  [self updateFlowLayoutMetrics];
+  [self updateAlignmentAnimated:NO];
 }
 
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
-  // Update metrics for potentially updated size class.
-  [self updateFlowLayoutMetrics];
+  // Update alignment and layout metrics for potentially updated size class.
+  [self updateAlignmentAnimated:NO];
 }
 
 - (void)tintColorDidChange {
@@ -327,6 +341,21 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   [self updateColors];
 }
+
+// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+// symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  if (semanticContentAttribute == self.mdf_semanticContentAttribute) {
+    return;
+  }
+  [super mdf_setSemanticContentAttribute:semanticContentAttribute];
+  _collectionView.mdf_semanticContentAttribute = semanticContentAttribute;
+  [_collectionView.collectionViewLayout invalidateLayout];
+}
+#pragma clang diagnostic pop
 
 #pragma mark - UICollectionViewDelegate
 
@@ -337,7 +366,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     id<MDCItemBarDelegate> delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(itemBar:shouldSelectItem:)]) {
       UITabBarItem *item = [self itemAtIndexPath:indexPath];
-      return [delegate itemBar:self shouldSelectItem:item];
+      if (item) {
+        return [delegate itemBar:self shouldSelectItem:item];
+      }
     }
   }
   return YES;
@@ -348,6 +379,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   if (_collectionView == collectionView) {
     // Update selected item.
     UITabBarItem *item = [self itemAtIndexPath:indexPath];
+    if (!item) {
+      return;
+    }
     _selectedItem = item;
 
     // Notify delegate of new selection.
@@ -378,14 +412,34 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSParameterAssert(_collectionView == collectionView);
 
-  MDCItemBarCell *itemCell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID forIndexPath:indexPath];
-  UITabBarItem *item = [self itemAtIndexPath:indexPath];
-
+  MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID
+                                                                       forIndexPath:indexPath];
   [self configureCell:itemCell];
-  [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+  }
 
   return itemCell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar willDisplayItem:item];
+  }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    didEndDisplayingCell:(UICollectionViewCell *)cell
+      forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar didEndDisplayingItem:item];
+  }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -396,18 +450,18 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   NSParameterAssert(_collectionView == collectionView);
 
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (!item) {
+    return CGSizeZero;
+  }
 
   const CGFloat itemHeight = CGRectGetHeight(self.bounds);
   CGSize size = CGSizeMake(CGFLOAT_MAX, itemHeight);
 
   // Size cell to fit content.
-  size = [MDCItemBarCell sizeThatFits:size
-                  horizontalSizeClass:[self horizontalSizeClass]
-                                 item:item
-                                style:_style];
+  size = [MDCItemBarCell sizeThatFits:size item:item style:_style];
 
   // Divide justified items evenly across the view.
-  if (_alignment == MDCItemBarAlignmentJustified) {
+  if (_currentAlignment == MDCItemBarAlignmentJustified) {
     NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
     size.width = [self adjustedCollectionViewWidth] / MAX(count, 1);
   }
@@ -429,8 +483,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 - (CGFloat)adjustedCollectionViewWidth {
   if (@available(iOS 11.0, *)) {
-    return CGRectGetWidth(UIEdgeInsetsInsetRect(_collectionView.bounds,
-                                                _collectionView.adjustedContentInset));
+    return CGRectGetWidth(
+        UIEdgeInsetsInsetRect(_collectionView.bounds, _collectionView.adjustedContentInset));
   }
   return CGRectGetWidth(_collectionView.bounds);
 }
@@ -444,6 +498,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       NSStringFromSelector(@selector(title)),
       NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(badgeValue)),
+      NSStringFromSelector(@selector(badgeColor)),
       NSStringFromSelector(@selector(accessibilityIdentifier))
     ];
   });
@@ -472,6 +527,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
+  NSObject<MDCTabBarSizeClassDelegate> *tabBarSizeClassDelegate = self.tabBar.sizeClassDelegate;
+  if ([tabBarSizeClassDelegate respondsToSelector:@selector(horizontalSizeClassForObject:)]) {
+    return [tabBarSizeClassDelegate horizontalSizeClassForObject:self];
+  }
   return self.traitCollection.horizontalSizeClass;
 }
 
@@ -491,7 +550,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UITabBarItem *)itemAtIndexPath:(NSIndexPath *)indexPath {
-  return _items[indexPath.item];
+  if (indexPath && indexPath.section == 0 && indexPath.item >= 0 &&
+      (NSInteger)_items.count > indexPath.item) {
+    return _items[indexPath.item];
+  }
+  return nil;
 }
 
 - (NSInteger)indexForItem:(nullable UITabBarItem *)item {
@@ -507,7 +570,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 - (void)reload {
   [_collectionView reloadData];
-  [self updateFlowLayoutMetrics];
+  [self updateAlignmentAnimated:NO];
 }
 
 - (UICollectionViewFlowLayout *)generatedFlowLayout {
@@ -516,8 +579,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   flowLayout.itemSize = CGSizeMake(kPlaceholderCellWidth, itemHeight);
   flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
   flowLayout.sectionInset = UIEdgeInsetsZero;
-  flowLayout.minimumInteritemSpacing = 0.0f;
-  flowLayout.minimumLineSpacing = 0.0f;
+  flowLayout.minimumInteritemSpacing = 0;
+  flowLayout.minimumLineSpacing = 0;
   return flowLayout;
 }
 
@@ -549,8 +612,31 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateAlignmentAnimated:(BOOL)animated {
+  [self updateCurrentAlignment];
   [self updateScrollProperties];
   [self updateFlowLayoutMetricsAnimated:animated];
+}
+
+- (void)updateCurrentAlignment {
+  if (_alignment != MDCItemBarAlignmentBestEffortJustified) {
+    _currentAlignment = _alignment;
+    return;
+  }
+
+  // Calculate the "best" alignment for MDCItemBarAlignmentBestEffortJustified. Begin with
+  // Justified alignment, but calculate to see if Leading alignment would be a better fit.
+  _currentAlignment = MDCItemBarAlignmentJustified;
+  const CGFloat widthPerJustifiedItem = [self adjustedCollectionViewWidth] / MAX(_items.count, 1ul);
+  CGSize size = CGSizeMake(CGFLOAT_MAX, self.bounds.size.height);
+  for (UITabBarItem *item in _items) {
+    const CGSize itemSize = [MDCItemBarCell sizeThatFits:size item:item style:_style];
+    const CGFloat itemWidth = itemSize.width;
+    // If any item cannot fit nicely in its portion of the width, fallback to Leading alignment.
+    if (itemWidth >= widthPerJustifiedItem) {
+      _currentAlignment = MDCItemBarAlignmentLeading;
+      break;
+    }
+  }
 }
 
 /// Sets _selectionIndicator's bounds and center to display under the item at the given index with
@@ -583,6 +669,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Construct a context object describing the selected tab.
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (!item) {
+    return;
+  }
   MDCTabBarPrivateIndicatorContext *context =
       [[MDCTabBarPrivateIndicatorContext alloc] initWithItem:item
                                                       bounds:selectionIndicatorBounds
@@ -608,7 +697,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     [CATransaction setAnimationTimingFunction:easeInOut];
     [UIView animateWithDuration:kDefaultAnimationDuration
-                          delay:0.0f
+                          delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:animationBlock
                      completion:nil];
@@ -619,15 +708,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateScrollProperties {
-  _collectionView.alwaysBounceHorizontal = (_alignment != MDCItemBarAlignmentJustified);
+  _collectionView.alwaysBounceHorizontal = (_currentAlignment != MDCItemBarAlignmentJustified);
 }
 
 - (void)updateFlowLayoutMetrics {
-
   UIUserInterfaceSizeClass horizontalSizeClass = [self horizontalSizeClass];
 
   UIEdgeInsets newSectionInset = UIEdgeInsetsZero;
-  switch (_alignment) {
+  switch (_currentAlignment) {
     case MDCItemBarAlignmentLeading:
       newSectionInset = [self leadingAlignedInsetsForHorizontalSizeClass:horizontalSizeClass];
       break;
@@ -639,6 +727,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       break;
     case MDCItemBarAlignmentCenterSelected:
       newSectionInset = [self centerSelectedInsets];
+      break;
+    case MDCItemBarAlignmentBestEffortJustified:
+      // This case should never be possible, since the _currentAlignment will never be set to
+      // this value.
       break;
   }
 
@@ -671,13 +763,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       inset = 0;
     }
   }
-  return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
+  return UIEdgeInsetsMake(0, inset, 0, inset);
 }
 
 - (UIEdgeInsets)justifiedInsets {
   // Center items, which will be at most the width of the view.
   CGFloat itemWidths = [self totalWidthOfAllItems];
-  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2.0f);
+  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2);
   return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
 }
 
@@ -686,7 +778,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   CGFloat viewWidth = [self adjustedCollectionViewWidth];
   UIEdgeInsets insets = [self leadingAlignedInsetsForHorizontalSizeClass:sizeClass];
   if (itemWidths <= (viewWidth - insets.left - insets.right)) {
-    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2.0f;
+    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2;
     return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
   }
   return insets;
@@ -697,7 +789,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
   if (count > 0) {
-    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2.0f;
+    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2;
 
     CGSize firstSize = [self collectionView:_collectionView
                                      layout:_flowLayout
@@ -707,11 +799,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                     sizeForItemAtIndexPath:[self indexPathForItemAtIndex:count - 1]];
 
     // Left inset is equal to the space to the left of the first item when centered.
-    CGFloat halfFirstWidth = firstSize.width / 2.0f;
+    CGFloat halfFirstWidth = firstSize.width / 2;
     sectionInset.left = halfBoundsWidth - halfFirstWidth;
 
     // Right inset is equal to the space to the right of the last item when centered.
-    CGFloat halfLastWidth = lastSize.width / 2.0f;
+    CGFloat halfLastWidth = lastSize.width / 2;
     sectionInset.right = halfBoundsWidth - halfLastWidth;
   }
   return sectionInset;
@@ -735,10 +827,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)configureVisibleCells {
-  for (UICollectionViewCell *cell in _collectionView.visibleCells) {
+  NSArray<NSIndexPath *> *indexPaths = [self.collectionView indexPathsForVisibleItems];
+  for (NSIndexPath *indexPath in indexPaths) {
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if ([cell isKindOfClass:[MDCItemBarCell class]]) {
       MDCItemBarCell *itemCell = (MDCItemBarCell *)cell;
       [self configureCell:itemCell];
+      UITabBarItem *item = [self itemAtIndexPath:indexPath];
+      if (item) {
+        [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+      }
     }
   }
 }
@@ -819,7 +917,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (nullable UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:
-        (NSIndexPath *)indexPath {
+    (NSIndexPath *)indexPath {
   if (_correctedAttributesForIndexPath) {
     return _correctedAttributesForIndexPath[indexPath];
   }
@@ -861,7 +959,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 /// Computes RTL-flipped attributes given superclass-calculated attributes.
 - (UICollectionViewLayoutAttributes *)flippedAttributesFromAttributes:
-        (UICollectionViewLayoutAttributes *)attributes {
+    (UICollectionViewLayoutAttributes *)attributes {
   UICollectionViewLayoutAttributes *newAttributes = [attributes copy];
 
   CGRect itemFrame = attributes.frame;
@@ -879,7 +977,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UIUserInterfaceLayoutDirection rtl = UIUserInterfaceLayoutDirectionRightToLeft;
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version] &&
-    self.collectionView.mdf_effectiveUserInterfaceLayoutDirection == rtl;
+         self.collectionView.mdf_effectiveUserInterfaceLayoutDirection == rtl;
 }
 
 /// Indicates if the superclass' layout appears to have been layed out in a left-to-right order. If
@@ -950,7 +1048,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UICollectionViewLayoutAttributes *)paddedAttributesFromAttributes:
-        (UICollectionViewLayoutAttributes *)attributes {
+    (UICollectionViewLayoutAttributes *)attributes {
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
   CGRect scrollBounds = [self adjustedCollectionViewBounds];

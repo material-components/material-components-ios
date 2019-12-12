@@ -22,12 +22,11 @@
 /**
  A color themer for instances of MDCHeaderStackView.
 
- @warning This class will soon be deprecated. There will be no replacement API. Consider theming
- your flexible header view or app bar instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCHeaderStackViewColorThemer : NSObject
-
 @end
 
 @interface MDCHeaderStackViewColorThemer (ToBeDeprecated)
@@ -36,8 +35,8 @@
  Applies a color scheme's properties to an MDCHeaderStackView.
 
  @warning This class will soon be deprecated. There will be no replacement API. Consider theming
- your flexible header view or app bar instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+ your flexible header view or app bar instead.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
 
  @param colorScheme The color scheme to apply to the component instance.
  @param headerStackView A component instance to which the color scheme should be applied.

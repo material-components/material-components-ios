@@ -89,7 +89,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /** The cell style. Not animated. @c setCellStyle:animated: for animated layout type changes. */
 @property(nonatomic, assign) MDCCollectionViewCellStyle cellStyle;
 
-/** The border radius of a card cell. Defaults to 1.5f */
+/** The border radius of a card cell. Defaults to 1.5 */
 @property(nonatomic) CGFloat cardBorderRadius;
 
 /**
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  @return Edge outsets as detemined by cell style at this index.
  */
 - (UIEdgeInsets)backgroundImageViewOutsetsForCellWithAttribute:
-        (nonnull MDCCollectionViewLayoutAttributes *)attr;
+    (nonnull MDCCollectionViewLayoutAttributes *)attr;
 
 /**
  Returns an image for use with the given cell style and ordinal position within section.
@@ -127,7 +127,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  @return Image as determined by cell style and section ordinal position.
  */
 - (nullable UIImage *)backgroundImageForCellLayoutAttributes:
-        (nonnull MDCCollectionViewLayoutAttributes *)attr;
+    (nonnull MDCCollectionViewLayoutAttributes *)attr;
 
 #pragma mark - Cell Separator
 
@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /** Separator inset. Defaults to UIEdgeInsetsZero. */
 @property(nonatomic) UIEdgeInsets separatorInset;
 
-/** Separator line height. Defaults to 1.0f */
+/** Separator line height. Defaults to 1 */
 @property(nonatomic) CGFloat separatorLineHeight;
 
 /* Whether to hide the cell separators. Defaults to NO. */
@@ -153,7 +153,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  @return Whether the separtor should be hidden.
  */
 - (BOOL)shouldHideSeparatorForCellLayoutAttributes:
-        (nonnull MDCCollectionViewLayoutAttributes *)attr;
+    (nonnull MDCCollectionViewLayoutAttributes *)attr;
 
 #pragma mark - Item Inlaying
 

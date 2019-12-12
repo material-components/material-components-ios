@@ -27,6 +27,8 @@ or discrete set of values.
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-sliders">Material Design guidelines: Slider</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/sliders/api-docs/Classes/MDCSlider.html">MDCSlider</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/sliders/api-docs/Protocols/MDCSliderDelegate.html">MDCSliderDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/sliders/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/sliders/api-docs/Enums/MDCSliderTrackTickVisibility.html">MDCSliderTrackTickVisibility</a></li>
 </ul>
 
 ## Table of contents
@@ -159,26 +161,49 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 
 ### Differences from UISlider
 
-Does not have api to:
+#### UISlider APIs not present in MDCSlider
 
-- set right and left icons
-- set the thumb image
-- set the right and left track images (for a custom track)
-- set the right (background track) color
+`MDCSlider` does not support the following `UISlider` APIs:
 
-Same features:
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">  Setting the left/right icons via `minimumValueImage` and `maximumValueImage`.</li>
+  <li class="icon-list-item icon-list-item">  Setting the thumb image via `setThumbImage:forState:`.</li>
+  <li class="icon-list-item icon-list-item">  Setting the right/left track images (for a custom track) via `setMinimumTrackImage:forState:` and `setMaximumTrackImage:forState:`.</li>
+</ul>
 
-- set color for thumb via @c thumbColor
-- set color of track via @c trackColor
+#### UISlider APIs with different names in MDCSlider
 
-New features:
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">  The UISlider API `minimumTrackTintColor` has an equivalent API `setTrackFillColor:forState:` in </li>
+    MDCSlider.  This API must first be enabled by setting `statefulAPIEnabled = YES`. 
+  <li class="icon-list-item icon-list-item">  The UISlider API `maximumTrackTintColor` has an equivalent API `setTrackBackgroundColor:forState:`</li>
+    in MDCSlider.  This API must first be enabled by setting `statefulAPIEnabled = YES`.
+  <li class="icon-list-item icon-list-item">  The UISlider API `thumbTintColor` has an equivalent API `setThumbColor:forState:` in MDCSlider.  This</li>
+    API must first be enabled by setting `statefulAPIEnabled = YES`.     
 
-- making the slider a snap to discrete values via property numberOfDiscreteValues
+#### MDCSlider enhancements not in MDCSlider
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link">  MDCSlider can behave as a <a href="https://material.io/components/sliders/#discrete-slider">Material Discrete Slider</a></li> by
+    setting `discrete = YES` and `numberOfDiscreteValues` to a value greater than or equal to 2. Discrete 
+    Sliders only allow their calculated discrete values to be selected as the Slider's value.  If 
+    `numberOfDiscreteValues` is less than 2, then the Slider will behave as a 
+    [Material Continuous Slider](https://material.io/components/sliders/#continuous-slider).
+  <li class="icon-list-item icon-list-item">  For Discrete Sliders, the track tick color is configured with the `setFilledTrackTickColor:forState:` and</li>
+    `setBackgroundTrackTickColor:forState:` APIs.  The filled track ticks are those overlapping the 
+    filled/active part of the Slider.  The background track ticks are found in any other portions of the track.  These 
+    APIs must first be enabled by setting `statefulAPIEnabled = YES`.
+  <li class="icon-list-item icon-list-item">  Track tick marks can be made shown always, never, or only when dragging via the `trackTickVisibility` </li>
+    API.  If `numberOfDiscreteValues` is less than 2, then tick marks will never be shown.
+  <li class="icon-list-item icon-list-item">  An anchor point can be set via `filledTrackAnchorValue` to control the starting position of the filled track.</li>
+  <li class="icon-list-item icon-list-item">  The track can be made taller (or shorter) by setting the value of `trackHeight`. </li>
+</ul>
 
 #### `-accessibilityActivate`
 
-Our implementation closely resembles what UISlider does but it's not an exact match. On an
-`accessibilityActivate` we move one sixth of the amount between the current value and the midpoint value.
+MDCSlider's behavior is very similar to that of UISlider, but it's not exactly the same. On an
+`accessibilityActivate` event, the value moves one sixth of the amount between the current value and the 
+midpoint value.
 
 
 ## Extensions
@@ -215,7 +240,7 @@ MDCSliderColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialSlider+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCSliderColorThemer applySemanticColorScheme:colorScheme

@@ -56,9 +56,9 @@ IB_DESIGNABLE
 @property(nonatomic, assign, getter=isAnimating) BOOL animating;
 
 /**
- Spinner radius width. Defaults to 12dp (24x24dp circle), constrained to range [5dp, 72dp]. The
- spinner is centered in the view's bounds. If the bounds are smaller than the diameter of the
- spinner, the spinner may be clipped when clipToBounds is true.
+ Spinner radius width. Defaults to 12dp (24x24dp circle), with a minimum of 5dp. The spinner is
+ centered in the view's bounds. If the bounds are smaller than the diameter of the spinner, the
+ spinner may be clipped when clipToBounds is true.
  */
 @property(nonatomic, assign) CGFloat radius UI_APPEARANCE_SELECTOR;
 
@@ -102,9 +102,9 @@ IB_DESIGNABLE
 
 /**
  The array of colors that are cycled through when animating the spinner. Populated with a set of
- default colors. 
- 
- @note If an empty array is provided to this property's setter, then the provided array will be 
+ default colors.
+
+ @note If an empty array is provided to this property's setter, then the provided array will be
  discarded and an array consisting of the default color values will be assigned instead.
  */
 @property(nonatomic, copy, nonnull) NSArray<UIColor *> *cycleColors UI_APPEARANCE_SELECTOR;
@@ -137,6 +137,14 @@ IB_DESIGNABLE
  MDCActivityIndicatorModeIndeterminate before calling.
  */
 - (void)stopAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)stopTransition;
+
+/**
+ A block that is invoked when the @c MDCActivityIndicator receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCActivityIndicator *_Nonnull activityIndicator,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 
@@ -195,7 +203,7 @@ typedef void (^MDCActivityIndicatorAnimation)(CGFloat strokeStart, CGFloat strok
 
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
-- (nonnull instancetype)initWithAnimation:
-    (_Nonnull MDCActivityIndicatorAnimation)animation NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAnimation:(_Nonnull MDCActivityIndicatorAnimation)animation
+    NS_DESIGNATED_INITIALIZER;
 
 @end

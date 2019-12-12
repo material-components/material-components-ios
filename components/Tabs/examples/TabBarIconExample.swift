@@ -19,7 +19,7 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTabs_ColorThemer
+import MaterialComponents.MaterialTabs_Theming
 import MaterialComponents.MaterialTypographyScheme
 
 class TabBarIconSwiftExample: UIViewController {
@@ -38,8 +38,7 @@ class TabBarIconSwiftExample: UIViewController {
   lazy var appBarViewController: MDCAppBarViewController = self.setupAppBar()
   lazy var scrollView: UIScrollView = self.setupScrollView()
   lazy var starPage: UIView = self.setupStarPage()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -54,7 +53,7 @@ class TabBarIconSwiftExample: UIViewController {
                     UITabBarItem(title: "Stars", image: star, tag:0)]
     tabBar.items[1].badgeValue = "1"
 
-    MDCTabBarColorThemer.applySemanticColorScheme(self.colorScheme, toTabs: tabBar);
+    tabBar.applyPrimaryTheme(withScheme: containerScheme)
 
     let blue = MDCPalette.blue.tint500
     tabBar.inkColor = blue

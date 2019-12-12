@@ -36,12 +36,13 @@ navigation icon takes you directly to the associated view or refreshes the curre
 
 - [Overview](#overview)
   - [Guidance](#guidance)
+- [Deprecations](#deprecations)
+  - [`sizeThatFitsIncludesSafeArea`](#`sizethatfitsincludessafearea`)
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
 - [Accessibility](#accessibility)
   - [Minimum touch size](#minimum-touch-size)
 
@@ -64,6 +65,79 @@ In landscape orientation, items can be configured to be justified or compactly c
 Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 
 
 Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
+
+## Deprecations
+
+<!-- Extracted from docs/deprecations.md -->
+
+### `sizeThatFitsIncludesSafeArea`
+
+The current implementation of `-[MDCBottomNavigationBar sizeThatFits:]` incorrectly uses
+`safeAreaInsets` to increase the desired size. Instead, the superview or view controller should be
+extending the height of the `MDCBottomNavigationBar` so that it extends out of the safe area and to
+the bottom edge of the screen.
+
+Code that currently relies on this behavior must migrate to correct view management. To stop
+`MDCBottomNavigationBar` from including `safeAreaInsets` in its calculations, set
+`sizeThatFitsIncludesSafeArea = NO`.  At that point, you will likely need to update your layout
+code.  If you are using constraints-based layout, `intrinsicContentSize` will not have this error.
+However, manually-computing frames and positioning views will likely require an update.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let bottomNavBar = MDCBottomNavigationBar()
+
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  // Disable inclusion of safe area in size calculations.
+  bottomNavBar.sizeThatFitsIncludesSafeArea = false
+}
+
+func layoutBottomNavBar() {
+  let size = bottomNavBar.sizeThatFits(view.bounds.size)
+  var bottomNavBarFrame = CGRect(x: 0,
+                                 y: view.bounds.height - size.height,
+                                 width: size.width,
+                                 height: size.height)
+  // Extend the Bottom Navigation to the bottom of the screen.
+  if #available(iOS 11.0, *) {
+    bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+    bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
+  }
+  bottomNavBar.frame = bottomNavBarFrame
+}
+```
+
+#### Objective-C
+
+```objc
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.bottomNavBar = [[MDCBottomNavigationBar alloc] init];
+  
+  // Disable inclusion of safe area in size calculations.
+  self.bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
+}
+
+- (void)layoutBottomNavBar {
+  CGRect viewBounds = CGRectStandardize(self.view.bounds);
+  CGSize size = [self.bottomNavBar sizeThatFits:viewBounds.size];
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+  // Extend the Bottom Navigation to the bottom of the screen.
+  if (@available(iOS 11.0, *)){
+    safeAreaInsets = self.view.safeAreaInsets;
+  }
+  CGRect bottomNavBarFrame = 
+      CGRectMake(0, viewBounds.size.height - size.height - safeAreaInsets.bottom, size.width, 
+                 size.height + safeAreaInsets.bottom);
+  self.bottomNavBar.frame = bottomNavBarFrame;
+}
+```
+<!--</div>-->
+
 
 ## Installation
 
@@ -104,84 +178,53 @@ import MaterialComponents.MaterialBottomNavigation
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Color Theming
+### Theming
 
-You can theme a bottom navigation with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/BottomNavigation+ColorThemer'
-```
+`MDCBottomNavigation` supports Material Theming using a Container Scheme.
+There are two variants for Material Theming of a BottomNavigation.  The Surface Variant colors the App Bar
+background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
+`primaryColor`.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 #### Swift
+
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+// Import the BottomNavigation Theming Extensions module
+import MaterialComponents.MaterialBottomNavigation_Theming
 
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
+...
 
-// Step 3: Apply the color scheme to your component
-MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+// Apply your app's Container Scheme to the App Bar controller
+let containerScheme = MDCContainerScheme()
+
+// Either Primary Theme
+bottomNavigation.applyPrimaryTheme(withScheme: containerScheme)
+
+// Or Surface Theme
+bottomNavigation.applySurfaceTheme(withScheme: containerScheme)
 ```
 
 #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialBottomNavigation+ColorThemer.h"
+// Import the BottomNavigation Theming Extensions header
+#import "MaterialBottomNavigation+Theming.h"
 
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+...
 
-// Step 3: Apply the color scheme to your component
-[MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
-     toBottomNavigation:component];
-```
-<!--</div>-->
+// Apply your app's Container Scheme to the App Bar controller
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
-<!-- Extracted from docs/typography-theming.md -->
+// Either Primary Theme
+[self.bottomNavigation applyPrimaryThemeWithScheme:containerScheme];
 
-### Typography Theming
-
-You can theme a bottom navigation with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/BottomNavigation+TypographyThemer'
+// Or Surface Theme
+[self.bottomNavigation applySurfaceThemeWithScheme:containerScheme];
 ```
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialBottomNavigation_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialBottomNavigation+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCBottomNavigationBarTypographyThemer applyTypographyScheme:colorScheme
-     toBottomNavigationBar:component];
-```
 <!--</div>-->
 
 

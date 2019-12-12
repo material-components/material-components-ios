@@ -14,14 +14,12 @@
 
 // swiftlint:disable function_body_length
 
-import MaterialComponents.MaterialTextFields_ColorThemer
-import MaterialComponents.MaterialTextFields_TypographyThemer
+import MaterialComponents.MaterialTextFields_Theming
 
 final class TextFieldFilledSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -77,13 +75,13 @@ final class TextFieldFilledSwiftExample: UIViewController {
   let leadingImage: UIImage = {
     return UIImage.init(named: "ic_search",
                         in: Bundle(for: TextFieldFilledSwiftExample.self),
-                        compatibleWith: nil)!
+                        compatibleWith: nil) ?? UIImage()
   }()
 
   let trailingImage: UIImage = {
     return UIImage.init(named: "ic_done",
                         in: Bundle(for: TextFieldFilledSwiftExample.self),
-                        compatibleWith: nil)!
+                        compatibleWith: nil) ?? UIImage()
   }()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -121,11 +119,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
   }
 
   func style(textInputController:MDCTextInputControllerFilled) {
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
-    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
-    if let textInput = textInputController.textInput as? MDCTextInput {
-      MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInput)
-    }
+    textInputController.applyTheme(withScheme: containerScheme)
   }
 
   func setupTextFields() {
@@ -178,15 +172,11 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerFilled(textInput: message)
     message.textView?.delegate = self
-    #if swift(>=3.2)
-      message.text = """
-      This is where you could put a multi-line message like an email.
+    message.text = """
+    This is where you could put a multi-line message like an email.
 
-      It can even handle new lines.
-      """
-    #else
-      message.text = "This is where you could put a multi-line message like an email.\n\nIt can even handle new lines."
-    #endif
+    It can even handle new lines.
+    """
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
@@ -228,39 +218,22 @@ final class TextFieldFilledSwiftExample: UIViewController {
                                                   options: [],
                                                   metrics: nil,
                                                   views: views)
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        constraints += [NSLayoutConstraint(item: name,
-                                           attribute: .top,
-                                           relatedBy: .equal,
-                                           toItem: scrollView.contentLayoutGuide,
-                                           attribute: .top,
-                                           multiplier: 1,
-                                           constant: 20),
-                        NSLayoutConstraint(item: message,
-                                           attribute: .bottom,
-                                           relatedBy: .equal,
-                                           toItem: scrollView.contentLayoutGuide,
-                                           attribute: .bottomMargin,
-                                           multiplier: 1,
-                                           constant: -20)]
-      } else {
-        constraints += [NSLayoutConstraint(item: name,
-                                           attribute: .top,
-                                           relatedBy: .equal,
-                                           toItem: scrollView,
-                                           attribute: .top,
-                                           multiplier: 1,
-                                           constant: 20),
-                        NSLayoutConstraint(item: message,
-                                           attribute: .bottom,
-                                           relatedBy: .equal,
-                                           toItem: scrollView,
-                                           attribute: .bottomMargin,
-                                           multiplier: 1,
-                                           constant: -20)]
-      }
-    #else
+    if #available(iOS 11.0, *) {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+    } else {
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
                                          relatedBy: .equal,
@@ -275,7 +248,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
                                          attribute: .bottomMargin,
                                          multiplier: 1,
                                          constant: -20)]
-      #endif
+    }
 
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
@@ -361,14 +334,15 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
 
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characterCount > 0 {
+        String(fullString[range]).characterCount > 0 {
         stateController.setErrorText("Error: State can only contain letters",
                                      errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
-    } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characterCount > 0 {
+    } else if textField == zip {
+      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
+        String(fullString[range]).characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {
@@ -379,7 +353,7 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characterCount > 0 {
+        String(fullString[range]).characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
@@ -416,22 +390,22 @@ extension TextFieldFilledSwiftExample {
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillShow,
+      name: UIResponder.keyboardWillShowNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillChangeFrame,
+      name: UIResponder.keyboardWillChangeFrameNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillHide(notif:)),
-      name: .UIKeyboardWillHide,
+      name: UIResponder.keyboardWillHideNotification,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
@@ -455,7 +429,7 @@ extension TextFieldFilledSwiftExample {
 
 extension TextFieldFilledSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Text Field", "Filled Text Fields"],
       "primaryDemo": false,

@@ -18,16 +18,16 @@
 
 @interface MDCTonalColorScheme ()
 
-@property (nonatomic, strong, nonnull) MDCTonalPalette *primaryTonalPalette;
-@property (nonatomic, strong, nonnull) MDCTonalPalette *secondaryTonalPalette;
+@property(nonatomic, strong, nonnull) MDCTonalPalette *primaryTonalPalette;
+@property(nonatomic, strong, nonnull) MDCTonalPalette *secondaryTonalPalette;
 
 @end
 
 @implementation MDCTonalColorScheme
 
 - (nonnull instancetype)initWithPrimaryTonalPalette:(nonnull MDCTonalPalette *)primaryTonalPalette
-                              secondaryTonalPalette:(nonnull MDCTonalPalette *)secondaryTonalPalette
-    {
+                              secondaryTonalPalette:
+                                  (nonnull MDCTonalPalette *)secondaryTonalPalette {
   self = [super init];
   if (self) {
     _primaryTonalPalette = primaryTonalPalette;

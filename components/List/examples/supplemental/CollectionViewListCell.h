@@ -28,7 +28,7 @@
 @property(nonatomic, readonly, strong, nullable) UILabel *detailsTextLabel;
 
 /**
- An image view on the leading side of cell. Default leading padding is 16.0f.
+ An image view on the leading side of cell. Default leading padding is 16.
  */
 @property(nonatomic, readonly, strong, nullable) UIImageView *imageView;
 
@@ -52,7 +52,7 @@
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
  Sets the cell width for the self-sizing cell.

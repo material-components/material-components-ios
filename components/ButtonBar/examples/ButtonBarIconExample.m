@@ -17,6 +17,7 @@
 #import "MaterialButtonBar.h"
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialIcons+ic_info.h"
+#import "MaterialPalettes.h"
 
 @interface ButtonBarIconExample : UIViewController
 @end
@@ -27,7 +28,7 @@
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
-  buttonBar.tintColor = UIColor.whiteColor;
+  buttonBar.tintColor = MDCPalette.indigoPalette.tint500;
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
@@ -67,7 +68,7 @@
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 #pragma mark - User actions
@@ -82,9 +83,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Button Bar", @"Button Bar (Icons)" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Button Bar", @"Button Bar (Icons)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

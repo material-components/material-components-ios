@@ -25,12 +25,14 @@ import MaterialComponents.MaterialIcons_ic_more_horiz
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationControllerDelegate {
 
+  private static let performPostLaunchSelector = "performPostLaunchSelector"
+
   var window: UIWindow?
 
   let navigationController = MDCAppBarNavigationController()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
-                   launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+                   launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
 
     // The navigation tree will only take examples that implement
@@ -57,15 +59,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
       name: AppTheme.didChangeGlobalThemeNotificationName,
       object: nil)
 
+    if self.responds(to: Selector((AppDelegate.performPostLaunchSelector))) {
+      self.perform(Selector((AppDelegate.performPostLaunchSelector)))
+    }
+
     return true
   }
 
-  func themeDidChange(notification: NSNotification) {
-    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-      as? MDCColorScheming else {
-        return
-    }
-    for viewController in navigationController.childViewControllers {
+  @objc func themeDidChange(notification: NSNotification) {
+    let colorScheme = AppTheme.containerScheme.colorScheme
+    for viewController in navigationController.children {
       guard let appBar = navigationController.appBar(for: viewController) else {
         continue
       }
@@ -79,9 +82,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
                                   willAdd appBarViewController: MDCAppBarViewController,
                                   asChildOf viewController: UIViewController) {
-    MDCAppBarColorThemer.applyColorScheme(AppTheme.globalTheme.colorScheme,
+    MDCAppBarColorThemer.applyColorScheme(AppTheme.containerScheme.colorScheme,
                                                         to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.globalTheme.typographyScheme,
+    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.containerScheme.typographyScheme,
                                                     to: appBarViewController)
 
     if let injectee = viewController as? CatalogAppBarInjectee {
@@ -101,7 +104,7 @@ protocol CatalogAppBarInjectee {
 }
 
 extension UINavigationController {
-  func presentMenu() {
+  @objc func presentMenu() {
     let menuViewController = MDCMenuViewController(style: .plain)
     let bottomSheet = MDCBottomSheetController(contentViewController: menuViewController)
     self.present(bottomSheet, animated: true, completion: nil)

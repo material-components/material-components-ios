@@ -20,9 +20,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Cell Editing Example (1000+)" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Cell Editing Example (1000+)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -39,9 +39,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionsEditingManyCellsCellIdentifierItem
-                                            forIndexPath:indexPath];
+  MDCCollectionViewTextCell *cell = [collectionView
+      dequeueReusableCellWithReuseIdentifier:kCollectionsEditingManyCellsCellIdentifierItem
+                                forIndexPath:indexPath];
   cell.textLabel.text = self.content[indexPath.section][indexPath.item];
   return cell;
 }
@@ -51,16 +51,16 @@
                                  atIndexPath:(NSIndexPath *)indexPath {
   // If you have defined your own supplementary views, deque them here
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-    MDCCollectionViewTextCell *sectionHeader =
-    [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                       withReuseIdentifier:kCollectionsEditingManyCellsHeaderReuseIdentifier
-                                              forIndexPath:indexPath];
+    MDCCollectionViewTextCell *sectionHeader = [collectionView
+        dequeueReusableSupplementaryViewOfKind:kind
+                           withReuseIdentifier:kCollectionsEditingManyCellsHeaderReuseIdentifier
+                                  forIndexPath:indexPath];
 
     NSAssert(sectionHeader != nil, @"Unable to dequeue SupplementaryView");
 
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
       sectionHeader.textLabel.text =
-      [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
+          [NSString stringWithFormat:@"Section %lu Header", (long)indexPath.section];
     }
 
     return sectionHeader;
@@ -68,8 +68,8 @@
 
   // Otherwise, pass the kind to super to let MDCCollectionViewController handle the request
   return [super collectionView:collectionView
-viewForSupplementaryElementOfKind:kind
-                   atIndexPath:indexPath];
+      viewForSupplementaryElementOfKind:kind
+                            atIndexPath:indexPath];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
@@ -87,7 +87,7 @@ viewForSupplementaryElementOfKind:kind
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
-willDeleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    willDeleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
   // First sort reverse order then remove. This is done because when we delete an index path the
   // higher rows shift down, altering the index paths of those that we would like to delete in the
   // next iteration of this loop.
@@ -98,8 +98,8 @@ willDeleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
-willMoveItemAtIndexPath:(NSIndexPath *)indexPath
-           toIndexPath:(NSIndexPath *)newIndexPath {
+    willMoveItemAtIndexPath:(NSIndexPath *)indexPath
+                toIndexPath:(NSIndexPath *)newIndexPath {
   if (indexPath.section == newIndexPath.section) {
     // Exchange data within same section.
     [self.content[indexPath.section] exchangeObjectAtIndex:indexPath.item
@@ -116,8 +116,8 @@ willMoveItemAtIndexPath:(NSIndexPath *)indexPath
 #pragma mark UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-referenceSizeForHeaderInSection:(NSInteger)section {
+                             layout:(UICollectionViewLayout *)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section {
   return CGSizeMake(collectionView.bounds.size.width, MDCCellDefaultOneLineHeight);
 }
 

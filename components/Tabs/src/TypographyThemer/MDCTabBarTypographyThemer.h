@@ -17,14 +17,25 @@
 
 /**
  The Material Design typography system's themer for instances of MDCTabBar.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCTabBarTypographyThemer : NSObject
+@end
+
+@interface MDCTabBarTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to an MDCTabBar.
 
  @param typographyScheme The typography scheme to apply to the component instance.
  @param tabBar A component instance to which the typography scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is any `MDCTabBar` theming
+ extension.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                      toTabBar:(nonnull MDCTabBar *)tabBar;

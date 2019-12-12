@@ -14,8 +14,9 @@
 
 #import "FeatureHighlightExampleSupplemental.h"
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
@@ -95,11 +96,11 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Feature Highlight" ],
-    @"description": @"The Feature Highlight component is used to introduce users to new features "
-    @"and functionality at contextually relevant moments.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Feature Highlight" ],
+    @"description" : @"The Feature Highlight component is used to introduce users to new features "
+                     @"and functionality at contextually relevant moments.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 
@@ -113,18 +114,27 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:reuseIdentifier];
 
-  self.colors = @[
-    MDCPalette.redPalette.tint500,        MDCPalette.pinkPalette.tint500,
-    MDCPalette.purplePalette.tint500,     MDCPalette.deepPurplePalette.tint500,
-    MDCPalette.indigoPalette.tint500,     MDCPalette.bluePalette.tint500,
-    MDCPalette.lightBluePalette.tint500,  MDCPalette.cyanPalette.tint500,
-    MDCPalette.tealPalette.tint500,       MDCPalette.greenPalette.tint500,
-    MDCPalette.lightGreenPalette.tint500, MDCPalette.limePalette.tint500,
-    MDCPalette.yellowPalette.tint500,     MDCPalette.amberPalette.tint500,
-    MDCPalette.orangePalette.tint500,     MDCPalette.deepOrangePalette.tint500,
-    MDCPalette.brownPalette.tint500,      MDCPalette.greyPalette.tint500,
-    MDCPalette.blueGreyPalette.tint500,
-  ];
+  self.colorNameToColorMap = @{
+    @"Red" : MDCPalette.redPalette.tint500,
+    @"Pink" : MDCPalette.pinkPalette.tint500,
+    @"Purple" : MDCPalette.purplePalette.tint500,
+    @"Deep Purple" : MDCPalette.deepPurplePalette.tint500,
+    @"Indigo" : MDCPalette.indigoPalette.tint500,
+    @"Blue" : MDCPalette.bluePalette.tint500,
+    @"Light Blue" : MDCPalette.lightBluePalette.tint500,
+    @"Cyan" : MDCPalette.cyanPalette.tint500,
+    @"Teal" : MDCPalette.tealPalette.tint500,
+    @"Green" : MDCPalette.greenPalette.tint500,
+    @"Light Green" : MDCPalette.lightGreenPalette.tint500,
+    @"Lime" : MDCPalette.limePalette.tint500,
+    @"Yellow" : MDCPalette.yellowPalette.tint500,
+    @"Amber" : MDCPalette.amberPalette.tint500,
+    @"Orange" : MDCPalette.orangePalette.tint500,
+    @"Deep Orange" : MDCPalette.deepOrangePalette.tint500,
+    @"Brown" : MDCPalette.brownPalette.tint500,
+    @"Grey" : MDCPalette.greyPalette.tint500,
+    @"Blue Grey" : MDCPalette.blueGreyPalette.tint500,
+  };
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -133,7 +143,7 @@ static NSString *const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return self.colors.count;
+  return self.colorNameToColorMap.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -143,7 +153,11 @@ static NSString *const reuseIdentifier = @"Cell";
                                                 forIndexPath:indexPath];
 
   UIView *accessory = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-  accessory.backgroundColor = self.colors[indexPath.row];
+  NSString *colorName = self.colorNameToColorMap.allKeys[indexPath.row];
+  accessory.backgroundColor = self.colorNameToColorMap[colorName];
+  cell.accessibilityLabel = colorName;
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
   cell.accessoryView = accessory;
 
   return cell;
@@ -153,14 +167,13 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Colors" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Colors" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
 @end
-
 
 @implementation FeatureHighlightCustomFontsExample (CatalogByConvention)
 
@@ -174,19 +187,19 @@ static NSString *const reuseIdentifier = @"Cell";
   self.button.frame = frame;
 
   CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
-  self.infoLabel.frame =
-  MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
-                                 labelSize.width, labelSize.height),
-                      [UIScreen mainScreen].scale);
+  self.infoLabel.frame = MDCRectAlignToScale(
+      CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2,
+                 frame.origin.y - labelSize.height - 20, labelSize.width, labelSize.height),
+      [UIScreen mainScreen].scale);
 }
 
 #pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Custom Fonts" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Custom Fonts" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -209,8 +222,7 @@ static NSString *const reuseIdentifier = @"Cell";
   self.button = fab;
   [self.view addSubview:self.button];
 
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
-
+  [fab applySecondaryThemeWithScheme:self.containerScheme];
 
   MDCButton *actionButton = [[MDCButton alloc] init];
   self.actionButton = actionButton;
@@ -244,9 +256,9 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Shown Views" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Shown Views" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 

@@ -49,7 +49,7 @@
   // Given
   const CGFloat deviceTopSafeAreaInset = 123;
   _delegate.deviceTopSafeAreaInset = deviceTopSafeAreaInset;
-  _topSafeArea.delegate = _delegate;
+  _topSafeArea.topSafeAreaDelegate = _delegate;
 
   // Then
   XCTAssertNil(_topSafeArea.topSafeAreaSourceViewController);
@@ -64,7 +64,7 @@
       [[FlexibleHeaderTopSafeAreaTestsFakeViewController alloc] init];
   viewController.topSafeAreaInset = 44;
   _delegate.deviceTopSafeAreaInset = deviceTopSafeAreaInset;
-  _topSafeArea.delegate = _delegate;
+  _topSafeArea.topSafeAreaDelegate = _delegate;
 
   // When
   _topSafeArea.topSafeAreaSourceViewController = viewController;
@@ -77,7 +77,7 @@
 
 - (void)testDidChangeInvokesDelegate {
   // Given
-  _topSafeArea.delegate = _delegate;
+  _topSafeArea.topSafeAreaDelegate = _delegate;
 
   // When
   [_topSafeArea safeAreaInsetsDidChange];
@@ -88,7 +88,7 @@
 
 - (void)testSettingViewControllerDoesNotInvokeDelegate {
   // Given
-  _topSafeArea.delegate = _delegate;
+  _topSafeArea.topSafeAreaDelegate = _delegate;
   FlexibleHeaderTopSafeAreaTestsFakeViewController *viewController =
       [[FlexibleHeaderTopSafeAreaTestsFakeViewController alloc] init];
 
@@ -158,7 +158,7 @@
 - (void)testTopSafeAreaInsetDoesNotChangeWhileStatusBarIsShiftedWithNonNotchSafeAreaSize {
   // Given
   _topSafeArea.inferTopSafeAreaInsetFromViewController = YES;
-  _topSafeArea.delegate = _delegate;
+  _topSafeArea.topSafeAreaDelegate = _delegate;
   FlexibleHeaderTopSafeAreaTestsFakeViewController *viewController =
       [[FlexibleHeaderTopSafeAreaTestsFakeViewController alloc] init];
   viewController.topSafeAreaInset = 20;
@@ -176,7 +176,7 @@
 - (void)testTopSafeAreaInsetDoesChangeWhileStatusBarIsShiftedWithAnyOtherSize {
   // Given
   _topSafeArea.inferTopSafeAreaInsetFromViewController = YES;
-  _topSafeArea.delegate = _delegate;
+  _topSafeArea.topSafeAreaDelegate = _delegate;
   FlexibleHeaderTopSafeAreaTestsFakeViewController *viewController =
       [[FlexibleHeaderTopSafeAreaTestsFakeViewController alloc] init];
   viewController.topSafeAreaInset = 44;

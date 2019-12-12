@@ -15,11 +15,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
-#import "MaterialColorScheme.h"
-#import "MaterialButtonBar+ColorThemer.h"
+#import "MaterialContainerScheme.h"
 
 @interface ButtonBarTypicalUseExample : UIViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation ButtonBarTypicalUseExample
@@ -27,16 +27,29 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
     self.title = @"Button Bar";
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
+  buttonBar.backgroundColor = self.colorScheme.primaryColor;
+  buttonBar.tintColor = self.colorScheme.onPrimaryColor;
+  [buttonBar setButtonsTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
@@ -54,8 +67,6 @@
 
   buttonBar.items = @[ actionItem, secondActionItem ];
 
-  [MDCButtonBarColorThemer applySemanticColorScheme:self.colorScheme toButtonBar:buttonBar];
-
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
   CGFloat x = (self.view.bounds.size.width - size.width) / 2;
@@ -67,7 +78,7 @@
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 #pragma mark - User actions
@@ -82,11 +93,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Button Bar", @"Button Bar" ],
-    @"description": @"The Button Bar is a view that represents a list of UIBarButtonItems as "
-    @"horizontally-aligned buttons.",
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Button Bar", @"Button Bar" ],
+    @"description" : @"The Button Bar is a view that represents a list of UIBarButtonItems as "
+                     @"horizontally-aligned buttons.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

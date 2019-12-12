@@ -14,43 +14,57 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_objc_library",
-     "mdc_public_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_extension_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Typography",
-)
-
-package_group(
-    name = "test_targets",
-    packages = [
-        "//components/schemes/Typography/...",
+    deps = [
+        ":BasicFontScheme",
+        ":Scheming",
+        "//components/Typography",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
+    name = "Scheming",
+)
+
+mdc_extension_objc_library(
+    name = "BasicFontScheme",
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Typography",
+        "//components/Typography",
+        "//components/schemes/Color",
+    ],
+)
+
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
-    includes = ["src"],
     sdk_frameworks = [
         "CoreGraphics",
-        "UIKit",
-        "XCTest",
     ],
     deps = [
-        ":Typography"
+        ":Typography",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
+        "//components/Typography",
     ],
 )

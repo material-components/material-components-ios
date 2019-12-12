@@ -3,3 +3,4 @@ module: Snackbar
 umbrella_header: src/MaterialSnackbar.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

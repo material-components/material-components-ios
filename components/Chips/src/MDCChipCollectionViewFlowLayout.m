@@ -17,17 +17,12 @@
 
 /* Left aligns one rect to another with a given padding */
 static inline CGRect CGRectLeftAlignToRect(CGRect rect, CGRect staticRect, CGFloat padding) {
-  return CGRectMake(CGRectGetMaxX(staticRect) + padding,
-                    CGRectGetMinY(rect),
-                    CGRectGetWidth(rect),
+  return CGRectMake(CGRectGetMaxX(staticRect) + padding, CGRectGetMinY(rect), CGRectGetWidth(rect),
                     CGRectGetHeight(rect));
 }
 
 static inline CGRect CGRectLeftAlign(CGRect rect) {
-  return CGRectMake(0,
-                    CGRectGetMinY(rect),
-                    CGRectGetWidth(rect),
-                    CGRectGetHeight(rect));
+  return CGRectMake(0, CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect));
 }
 
 @implementation MDCChipCollectionViewFlowLayout

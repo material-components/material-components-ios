@@ -14,14 +14,16 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialContainerScheme.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController
 @property(weak, nonatomic) IBOutlet MDCButton *textButton;
 @property(weak, nonatomic) IBOutlet MDCButton *containedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
 @property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 @end
 
 @implementation ButtonsContentEdgeInsetsExample
@@ -30,27 +32,47 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Buttons", @"Buttons (Content Edge Insets)" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"ButtonsContentEdgeInsets",
+    @"breadcrumbs" : @[ @"Buttons", @"Buttons (Content Edge Insets)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"ButtonsContentEdgeInsets",
   };
 }
 
 #pragma mark - UIViewController
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+  self = [super initWithCoder:coder];
+  if (self) {
+    [self commonButtonContentEdgeInsetsExampleInitializer];
+  }
+  return self;
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    [self commonButtonContentEdgeInsetsExampleInitializer];
+  }
+  return self;
+}
+
+- (void)commonButtonContentEdgeInsetsExampleInitializer {
+  _containerScheme = [[MDCContainerScheme alloc] init];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:self.textButton];
+  [self.textButton applyTextThemeWithScheme:self.containerScheme];
+  [self.containedButton applyContainedThemeWithScheme:[self containerScheme]];
 
   self.textButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
   self.containedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
   [self.floatingActionButton setContentEdgeInsets:UIEdgeInsetsMake(40, 40, 0, 0)
                                          forShape:MDCFloatingButtonShapeDefault
                                            inMode:MDCFloatingButtonModeNormal];
+  self.floatingActionButton.accessibilityLabel = @"Floating button";
 
   [self updateInkStyle:self.inkBoundingSwitch.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
 }

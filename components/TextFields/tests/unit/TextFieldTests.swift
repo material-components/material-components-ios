@@ -33,7 +33,9 @@ class TextFieldTests: XCTestCase {
     let textField = MDCTextField()
 
     for constraint in textField.constraints {
-      XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
+      XCTAssertLessThanOrEqual(constraint.priority.rawValue,
+                               UILayoutPriority.defaultLow.rawValue + 10,
+                               String(describing: constraint))
     }
   }
 
@@ -47,7 +49,9 @@ class TextFieldTests: XCTestCase {
 
     textField.textInsetsMode = .never
     textField.borderView?.borderFillColor = .purple
-    textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderStrokeColor = .orange
+    textField.borderView?.borderPath =
+      UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
     textField.borderView?.borderStrokeColor = .yellow
     textField.clearButton.tintColor = .red
     textField.clearButtonMode = .always
@@ -67,9 +71,14 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.textInsetsMode, textFieldCopy.textInsetsMode)
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
-      XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
-      XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral, textFieldCopy.borderView?.borderPath?.bounds.integral)
-      XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
+      XCTAssertEqual(textField.borderView?.borderFillColor,
+                     textFieldCopy.borderView?.borderFillColor)
+      XCTAssertEqual(textField.borderView?.borderStrokeColor,
+                    textFieldCopy.borderView?.borderStrokeColor)
+      XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral,
+                     textFieldCopy.borderView?.borderPath?.bounds.integral)
+      XCTAssertEqual(textField.borderView?.borderStrokeColor,
+                     textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)
@@ -135,20 +144,18 @@ class TextFieldTests: XCTestCase {
     XCTAssertTrue(textField.subviews.contains(leftView))
     XCTAssertTrue(textField.subviews.contains(rightView))
 
-    if #available(iOS 9.0, *) {
-      if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
-        XCTAssertEqual(textField.leadingView, leftView)
-        XCTAssertEqual(textField.leadingView, textField.leftView)
+    if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
+      XCTAssertEqual(textField.leadingView, leftView)
+      XCTAssertEqual(textField.leadingView, textField.leftView)
 
-        XCTAssertEqual(textField.trailingView, rightView)
-        XCTAssertEqual(textField.trailingView, textField.rightView)
-      } else {
-        XCTAssertEqual(textField.leadingView, rightView)
-        XCTAssertEqual(textField.leadingView, textField.rightView)
+      XCTAssertEqual(textField.trailingView, rightView)
+      XCTAssertEqual(textField.trailingView, textField.rightView)
+    } else {
+      XCTAssertEqual(textField.leadingView, rightView)
+      XCTAssertEqual(textField.leadingView, textField.rightView)
 
-        XCTAssertEqual(textField.trailingView, leftView)
-        XCTAssertEqual(textField.trailingView, textField.leftView)
-      }
+      XCTAssertEqual(textField.trailingView, leftView)
+      XCTAssertEqual(textField.trailingView, textField.leftView)
     }
   }
 
@@ -189,5 +196,46 @@ class TextFieldTests: XCTestCase {
     } else {
       XCTFail("No underline or underline is wrong class")
     }
+  }
+
+  func testTraitCollectionDidChangeBlockCalledWithExpectedParameters() {
+    // Given
+    let testTextField = MDCTextField()
+    let expectation = XCTestExpectation(description: "traitCollection")
+    var passedTraitCollection: UITraitCollection? = nil
+    var passedTextField: MDCTextField? = nil
+    testTextField.traitCollectionDidChangeBlock = { (textField, traitCollection) in
+      passedTraitCollection = traitCollection
+      passedTextField = textField
+      expectation.fulfill()
+    }
+    let fakeTraitCollection = UITraitCollection(displayScale: 7)
+
+    // When
+    testTextField.traitCollectionDidChange(fakeTraitCollection)
+
+    // Then
+    self.wait(for: [expectation], timeout: 1)
+    XCTAssertEqual(passedTraitCollection, fakeTraitCollection)
+    XCTAssertEqual(passedTextField, testTextField)
+  }
+
+  // MARK - Material Elevation
+
+  func testDefaultBaseElevationOverrideIsNegative() {
+    // Then
+    XCTAssertLessThan(MDCTextField().mdc_overrideBaseElevation, 0);
+  }
+
+  func testSettingOverrideBaseElevationReturnsSetValue() {
+    // Given
+    let expectedBaseElevation: CGFloat = 99
+    let textField = MDCTextField()
+
+    // When
+    textField.mdc_overrideBaseElevation = expectedBaseElevation
+
+    // Then
+    XCTAssertEqual(textField.mdc_overrideBaseElevation, expectedBaseElevation, accuracy: 0.001)
   }
 }

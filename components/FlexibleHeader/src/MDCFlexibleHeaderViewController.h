@@ -16,6 +16,7 @@
 
 @class MDCFlexibleHeaderView;
 @protocol MDCFlexibleHeaderViewLayoutDelegate;
+@protocol MDCFlexibleHeaderSafeAreaDelegate;
 
 /**
  The MDCFlexibleHeaderViewController controller is a simple UIViewController-oriented interface
@@ -39,8 +40,19 @@
 /** The flexible header view instance that this controller manages. */
 @property(nonatomic, strong, nonnull, readonly) MDCFlexibleHeaderView *headerView;
 
+/**
+ A block that is invoked when the @c MDCFlexibleHeaderViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 /** The layout delegate will be notified of any changes to the flexible header view's frame. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewLayoutDelegate> layoutDelegate;
+
+/** The safe area delegate can be queried for the correct way to calculate safe areas. */
+@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderSafeAreaDelegate> safeAreaDelegate;
 
 #pragma mark - Enabling top layout guide adjustment behavior
 
@@ -142,6 +154,13 @@
 
 /**
  The status bar style that should be used for this view controller.
+
+ If the header view controller has been added as a child view controller then you will need to
+ assign the header view controller to the parent's childViewControllerForStatusBarStyle property
+ in order for preferredStatusBarStyle to have any effect.
+
+ See inferPreferredStatusBarStyle for more details about how this property's setter and getter
+ should be interpreted.
  */
 @property(nonatomic) UIStatusBarStyle preferredStatusBarStyle;
 
@@ -161,6 +180,15 @@
  */
 @property(nonatomic) BOOL inferPreferredStatusBarStyle;
 
+@end
+
+/**
+ This delegate makes it possible to customize which ancestor view controller is used when
+ inferTopSafeAreaInsetFromViewController is enabled on MDCFlexibleHeaderViewController.
+ */
+@protocol MDCFlexibleHeaderSafeAreaDelegate
+- (UIViewController *_Nullable)flexibleHeaderViewControllerTopSafeAreaInsetViewController:
+    (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController;
 @end
 
 /**

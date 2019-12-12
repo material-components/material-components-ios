@@ -14,79 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-/**
- A simple typography scheme that provides semantic fonts. There are no optional
- properties, all fonts must be provided, supporting more reliable typography theming.
- */
-@protocol MDCTypographyScheming
-
-
-/**
- The headline 1 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *headline1;
-
-/**
- The headline 2 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *headline2;
-
-/**
- The headline 3 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *headline3;
-
-/**
- The headline 4 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *headline4;
-
-/**
- The headline 5 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *headline5;
-
-/**
- The headline 6 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *headline6;
-
-/**
- The subtitle 1 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *subtitle1;
-
-/**
- The subtitle 2 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *subtitle2;
-
-/**
- The body 1 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *body1;
-
-/**
- Return the body 2 font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *body2;
-
-/**
- Return the caption font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *caption;
-
-/**
- Return the button font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *button;
-
-/**
- Return the overline font.
- */
-@property(nonatomic, nonnull, readonly) UIFont *overline;
-
-@end
+#import "MaterialTypographyScheme+Scheming.h"
 
 /**
  An enum of default typography schemes that are supported.
@@ -95,29 +23,54 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
    */
-  MDCTypographySchemeDefaultsMaterial201804
+  MDCTypographySchemeDefaultsMaterial201804,
+
+  /**
+   The Material defaults, circa February 2019.
+
+   This scheme implements fonts with the similar metrics as
+   MDCTypographySchemeDefaultsMaterial201804 with the addition that vended fonts will have
+   appropriate scalingCurves attached.
+   */
+  MDCTypographySchemeDefaultsMaterial201902,
 };
 
 /**
  A simple implementation of @c MDCTypographyScheming that provides Material default fonts
  from which basic customizations can be made.
  */
-@interface MDCTypographyScheme : NSObject <MDCTypographyScheming>
+@interface MDCTypographyScheme : NSObject <MDCTypographyScheming, NSCopying>
 
 // Redeclare protocol properties as readwrite
-@property(nonatomic, nonnull, readwrite) UIFont *headline1;
-@property(nonatomic, nonnull, readwrite) UIFont *headline2;
-@property(nonatomic, nonnull, readwrite) UIFont *headline3;
-@property(nonatomic, nonnull, readwrite) UIFont *headline4;
-@property(nonatomic, nonnull, readwrite) UIFont *headline5;
-@property(nonatomic, nonnull, readwrite) UIFont *headline6;
-@property(nonatomic, nonnull, readwrite) UIFont *subtitle1;
-@property(nonatomic, nonnull, readwrite) UIFont *subtitle2;
-@property(nonatomic, nonnull, readwrite) UIFont *body1;
-@property(nonatomic, nonnull, readwrite) UIFont *body2;
-@property(nonatomic, nonnull, readwrite) UIFont *caption;
-@property(nonatomic, nonnull, readwrite) UIFont *button;
-@property(nonatomic, nonnull, readwrite) UIFont *overline;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *headline1;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *headline2;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *headline3;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *headline4;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *headline5;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *headline6;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *subtitle1;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *subtitle2;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *body1;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *body2;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *caption;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *button;
+@property(nonatomic, nonnull, readwrite, copy) UIFont *overline;
+
+/**
+ A hint for how fonts in this scheme should be applied to components in relation to Dynamic Type.
+
+ @note Enabling this flag only has an effect if the fonts stored on this scheme are scalable. See
+ MDCTypographySchemeDefaults for default versions that are scalable. Alternatively, you can specify
+ custom scalable fonts using the MDCFontScaler API.
+
+ When fonts are applied to components:
+
+ - If this flag is disabled, make no changes to the font.
+ - If this flag is enabled, adjust the font with respect to the current content size category.
+
+ Default value is NO.
+ */
+@property(nonatomic, assign, readwrite) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 /**
  Initializes the typography scheme with the latest material defaults.

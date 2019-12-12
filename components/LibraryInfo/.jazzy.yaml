@@ -3,3 +3,4 @@ module: LibraryInfo
 umbrella_header: src/MaterialLibraryInfo.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

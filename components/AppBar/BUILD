@@ -13,11 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_swift_library",
+    "mdc_unit_test_suite",
+)
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -55,36 +64,30 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":AppBar",
-        "//components/Themes",
         "//components/FlexibleHeader:ColorThemer",
         "//components/NavigationBar:ColorThemer",
+        "//components/Themes",
     ],
-    visibility = ["//visibility:public"],
 )
 
-mdc_objc_library(
-    name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    sdk_frameworks = [
-        "UIKit",
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":AppBar",
+        "//components/schemes/Container",
     ],
+)
+
+mdc_extension_objc_library(
+    name = "TypographyThemer",
     deps = [
         ":AppBar",
         "//components/NavigationBar:TypographyThemer",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -94,21 +97,76 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-swift_library(
-    name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
+mdc_examples_objc_library(
+    name = "ObjcExamples",
     deps = [
         ":AppBar",
         ":ColorThemer",
-        ":private",
+        ":Theming",
         ":TypographyThemer",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
     ],
-    visibility = ["//visibility:private"],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":AppBar",
+        ":Theming",
+        "//components/FlexibleHeader:CanAlwaysExpandToMaximumHeight",
+        "//components/Tabs",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    extra_srcs = glob([
+        "tests/unit/Theming/*.m",
+    ]),
+    deps = [
+        ":AppBar",
+        ":Theming",
+    ],
+)
+
+mdc_unit_test_swift_library(
+    name = "unit_test_swift_sources",
+    deps = [
+        ":AppBar",
+        ":ColorThemer",
+        ":TypographyThemer",
+        ":private",
+    ],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_swift_sources",
+        ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
 
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    extra_srcs = native.glob(["tests/snapshot/Theming/*.m"]),
+    deps = [
+        ":AppBar",
+        ":Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
+    ],
+)

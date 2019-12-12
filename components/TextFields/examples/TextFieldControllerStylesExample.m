@@ -35,7 +35,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.97 alpha:1];
   self.title = @"Material Text Fields";
 
   [self setupExampleViews];
@@ -76,8 +76,7 @@
   // Second the controller is created to manage the text field
   self.textFieldControllerOutlined =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldOutlined];
-  self.textFieldControllerOutlined.placeholderText =
-      @"MDCTextInputControllerOutlined";
+  self.textFieldControllerOutlined.placeholderText = @"MDCTextInputControllerOutlined";
   self.textFieldControllerOutlined.characterCountMax = characterCountMax;
 
   [self.textFieldControllerOutlined mdc_setAdjustsFontForContentSizeCategory:YES];
@@ -101,13 +100,15 @@
 
   [self.textFieldControllerFilled mdc_setAdjustsFontForContentSizeCategory:YES];
 
+  id<UILayoutSupport> topGuide = self.topLayoutGuide;
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:[charMax]-[floating]"
+                              constraintsWithVisualFormat:@"V:[topGuide]-[charMax]-[floating]"
                                                   options:NSLayoutFormatAlignAllLeading |
                                                           NSLayoutFormatAlignAllTrailing
                                                   metrics:nil
                                                     views:@{
+                                                      @"topGuide" : topGuide,
                                                       @"charMax" : textFieldOutlined,
                                                       @"floating" : textFieldFilled
                                                     }]];
@@ -197,7 +198,7 @@
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1
                                   constant:-20]
-    .active = YES;
+        .active = YES;
   } else {
     [NSLayoutConstraint constraintWithItem:textFieldOutlined
                                  attribute:NSLayoutAttributeTop
@@ -214,7 +215,7 @@
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1
                                   constant:-20]
-    .active = YES;
+        .active = YES;
   }
 }
 
@@ -258,6 +259,5 @@
 - (void)keyboardWillHide:(NSNotification *)notification {
   self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
-
 
 @end

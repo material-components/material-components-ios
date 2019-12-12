@@ -21,14 +21,25 @@
 
 /**
  The Material Design shape system's themer for instances of MDCBottomSheetController.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCBottomSheetControllerShapeThemer : NSObject
+@end
+
+@interface MDCBottomSheetControllerShapeThemer (ToBeDeprecated)
 
 /**
  Applies a shape scheme's properties to an MDCBottomSheetController.
 
  @param shapeScheme The shape scheme to apply to the component instance.
  @param bottomSheetController A component instance to which the shape scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
     toBottomSheetController:(nonnull MDCBottomSheetController *)bottomSheetController;

@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #import "MDCBottomSheetPresentationController.h"
+
+#import <WebKit/WebKit.h>
+
 #import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"
 
@@ -31,8 +34,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   if ([viewController.view isKindOfClass:[UIScrollView class]]) {
     scrollView = (UIScrollView *)viewController.view;
-  } else if ([viewController.view isKindOfClass:[UIWebView class]]) {
-    scrollView = ((UIWebView *)viewController.view).scrollView;
+  } else if ([viewController.view isKindOfClass:[WKWebView class]]) {
+    scrollView = ((WKWebView *)viewController.view).scrollView;
   } else if ([viewController isKindOfClass:[UICollectionViewController class]]) {
     scrollView = ((UICollectionViewController *)viewController).collectionView;
   }
@@ -48,10 +51,16 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 @implementation MDCBottomSheetPresentationController {
   UIView *_dimmingView;
-  @private BOOL _scrimIsAccessibilityElement;
-  @private NSString *_scrimAccessibilityLabel;
-  @private NSString *_scrimAccessibilityHint;
-  @private UIAccessibilityTraits _scrimAccessibilityTraits;
+ @private
+  UIColor *_scrimColor;
+ @private
+  BOOL _scrimIsAccessibilityElement;
+ @private
+  NSString *_scrimAccessibilityLabel;
+ @private
+  NSString *_scrimAccessibilityHint;
+ @private
+  UIAccessibilityTraits _scrimAccessibilityTraits;
 }
 
 @synthesize delegate;
@@ -84,7 +93,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   UIView *containerView = [self containerView];
 
   _dimmingView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-  _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4f];
+  _dimmingView.backgroundColor =
+      _scrimColor ? _scrimColor : [UIColor colorWithWhite:0 alpha:(CGFloat)0.4];
   _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
   _dimmingView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -93,6 +103,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.accessibilityTraits = _scrimAccessibilityTraits;
   _dimmingView.accessibilityLabel = _scrimAccessibilityLabel;
   _dimmingView.accessibilityHint = _scrimAccessibilityHint;
+
+  _dismissOnDraggingDownSheet = YES;
 
   UIScrollView *scrollView = self.trackingScrollView;
   if (scrollView == nil) {
@@ -104,6 +116,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                                                      scrollView:scrollView];
   self.sheetView.delegate = self;
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+  self.sheetView.dismissOnDraggingDownSheet = self.dismissOnDraggingDownSheet;
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
@@ -111,22 +124,24 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self updatePreferredSheetHeight];
 
   // Add tap handler to dismiss the sheet.
-  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                               action:
-      @selector(dismissPresentedControllerIfNecessary:)];
+  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]
+      initWithTarget:self
+              action:@selector(dismissPresentedControllerIfNecessary:)];
   tapGesture.cancelsTouchesInView = NO;
   containerView.userInteractionEnabled = YES;
   [containerView addGestureRecognizer:tapGesture];
 
-  id <UIViewControllerTransitionCoordinator> transitionCoordinator =
+  id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
 
   // Fade in the dimming view during the transition.
   _dimmingView.alpha = 0.0;
-  [transitionCoordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+  [transitionCoordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self->_dimmingView.alpha = 1.0;
-      }                                  completion:nil];
+      }
+                      completion:nil];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -136,13 +151,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)dismissalTransitionWillBegin {
-  id <UIViewControllerTransitionCoordinator> transitionCoordinator =
-    [[self presentingViewController] transitionCoordinator];
+  id<UIViewControllerTransitionCoordinator> transitionCoordinator =
+      [[self presentingViewController] transitionCoordinator];
 
-  [transitionCoordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+  [transitionCoordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self->_dimmingView.alpha = 0.0;
-      }                                  completion:nil];
+      }
+                      completion:nil];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -159,7 +176,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
   [coordinator
@@ -180,7 +197,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 - (void)updatePreferredSheetHeight {
   // If |preferredSheetHeight| has not been specified, use half of the current height.
   CGFloat preferredSheetHeight;
-  if (self.preferredSheetHeight > 0.f) {
+  if (self.preferredSheetHeight > 0) {
     preferredSheetHeight = self.preferredSheetHeight;
   } else {
     preferredSheetHeight = self.presentedViewController.preferredContentSize.height;
@@ -205,13 +222,22 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
-  if ([strongDelegate respondsToSelector:
-       @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
+  if ([strongDelegate
+          respondsToSelector:@selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
     [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
   }
 }
 
 #pragma mark - Properties
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+  _dimmingView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _scrimColor;
+}
 
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
   _scrimIsAccessibilityElement = isScrimAccessibilityElement;
@@ -254,14 +280,29 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self updatePreferredSheetHeight];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
+- (void)setDismissOnDraggingDownSheet:(BOOL)dismissOnDraggingDownSheet {
+  _dismissOnDraggingDownSheet = dismissOnDraggingDownSheet;
+  if (self.sheetView) {
+    self.sheetView.dismissOnDraggingDownSheet = dismissOnDraggingDownSheet;
+  }
+}
+
 #pragma mark - MDCSheetContainerViewDelegate
 
 - (void)sheetContainerViewDidHide:(nonnull __unused MDCSheetContainerView *)containerView {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
-  if ([strongDelegate respondsToSelector:
-       @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
+  if ([strongDelegate
+          respondsToSelector:@selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
     [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
   }
 }
@@ -269,9 +310,16 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 - (void)sheetContainerViewWillChangeState:(nonnull MDCSheetContainerView *)containerView
                                sheetState:(MDCSheetState)sheetState {
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
-  if ([strongDelegate respondsToSelector:
-       @selector(bottomSheetWillChangeState:sheetState:)]) {
+  if ([strongDelegate respondsToSelector:@selector(bottomSheetWillChangeState:sheetState:)]) {
     [strongDelegate bottomSheetWillChangeState:self sheetState:sheetState];
+  }
+}
+
+- (void)sheetContainerViewDidChangeYOffset:(nonnull MDCSheetContainerView *)containerView
+                                   yOffset:(CGFloat)yOffset {
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomSheetDidChangeYOffset:yOffset:)]) {
+    [strongDelegate bottomSheetDidChangeYOffset:self yOffset:yOffset];
   }
 }
 

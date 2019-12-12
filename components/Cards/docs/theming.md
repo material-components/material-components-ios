@@ -1,38 +1,37 @@
 ### Theming
 
-You can theme a card with your app's schemes using the CardThemer extension.
+ `MDCCard` supports Material Theming using a Container Scheme.
+There are two variants for Material Theming of a MDCCard and MDCCardCollectionCell, which are the default theme
+and the outlined theme.
 
-MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances as either a default or outlined variant. An outlined variant behaves identically to a default styled card, but differs in its coloring and in that it has a stroked border. Use 'applyScheme:toCard:' to style an instance with default values and 'applyOutlinedVariantWithScheme:toCard:' to style an instance with the outlined values.
+ <!--<div class="material-code-render" markdown="1">-->
 
-You must first add the Card Themer extension to your project:
+ #### Swift
 
-```bash
-pod 'MaterialComponents/Cards+CardThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
 ```swift
-// Step 1: Import the CardThemer extension
-import MaterialComponents.MaterialCards_CardThemer
-
-// Step 2: Create or get a card scheme
-let cardScheme = MDCCardScheme()
-
-// Step 3: Apply the card scheme to your component
-MDCCardThemer.applyScheme(cardScheme, to: component)
+// Import the Cards Theming Extensions module
+import MaterialComponents.MaterialCards_MaterialTheming
+ ...
+ // Create or use your app's Container Scheme
+let containerScheme = MDCContainerScheme()
+ // Theme the card with either default theme
+card.applyTheme(withScheme: containerScheme)
+ // Or outlined theme
+card.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
-#### Objective-C
+ #### Objective-C
 
 ```objc
-// Step 1: Import the CardThemer extension
-#import "MaterialCards+CardThemer.h"
-
-// Step 2: Create or get a card scheme
-MDCCardScheme *colorScheme = [[MDCCardScheme alloc] init];
-
-// Step 3: Apply the card scheme to your component
-[MDCCardThemer applyScheme:cardScheme toCard:component];
+// Import the Cards Theming Extensions header
+#import <MaterialComponents/MaterialCards+MaterialTheming.h>
+ ...
+ // Create or use your app's Container Scheme
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+ // Theme the card with either default theme
+[self.card applyThemeWithScheme:containerScheme];
+ // Or outlined theme
+[self.card applyOutlinedThemeWithScheme:containerScheme];
 ```
+
 <!--</div>-->

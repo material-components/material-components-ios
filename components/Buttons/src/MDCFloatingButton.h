@@ -69,7 +69,6 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 @interface MDCFloatingButton : MDCButton
 
-
 /**
  The mode of the floating button can either be .normal (a circle) or .expanded (a pill-shaped
  rounded rectangle). In the @c .normal mode, the button should have either an image or a title,
@@ -145,8 +144,6 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 - (nonnull instancetype)init;
 
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
-
 - (void)setMinimumSize:(CGSize)size NS_UNAVAILABLE;
 
 /**
@@ -206,10 +203,5 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 - (void)setHitAreaInsets:(UIEdgeInsets)hitAreaInsets
                 forShape:(MDCFloatingButtonShape)shape
                   inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
-
-#pragma mark - Deprecations
-
-+ (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape
-    __deprecated_msg("Use floatingButtonWithShape: instead.");
 
 @end

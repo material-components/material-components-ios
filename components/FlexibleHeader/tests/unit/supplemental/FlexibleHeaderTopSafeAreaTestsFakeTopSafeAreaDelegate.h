@@ -17,8 +17,9 @@
 #import "../../../src/private/MDCFlexibleHeaderTopSafeArea.h"
 
 @interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
-    : NSObject <MDCFlexibleHeaderSafeAreaDelegate>
+    : NSObject <MDCFlexibleHeaderTopSafeAreaDelegate>
 @property(nonatomic) BOOL isStatusBarShifted;
 @property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
 @property(nonatomic) CGFloat deviceTopSafeAreaInset;
+@property(nonatomic, weak) id<MDCFlexibleHeaderTopSafeAreaDelegate> forwardingDelegate;
 @end

@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialFeatureHighlight.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
-#import "MaterialFeatureHighlight+TypographyThemer.h"
+#import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightShownViewExample
@@ -25,23 +24,27 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
 
-- (void)didTapButton:(id)sender {
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
+}
 
+- (void)didTapButton:(id)sender {
   MDCFloatingButton *fab = [[MDCFloatingButton alloc] init];
   [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [fab sizeToFit];
   fab.center = _button.center;
 
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
+  [fab applySecondaryThemeWithScheme:self.containerScheme];
 
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
@@ -54,8 +57,8 @@
   [MDCFeatureHighlightAccessibilityMutator mutate:vc];
   [MDCFeatureHighlightColorThemer applySemanticColorScheme:self.colorScheme
                           toFeatureHighlightViewController:vc];
-  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:self.typographyScheme
-                            toFeatureHighlightViewController:vc];
+  vc.titleFont = self.typographyScheme.headline6;
+  vc.bodyFont = self.typographyScheme.body2;
   vc.titleText = @"Shown views can be interactive";
   vc.bodyText = @"The shown button has custom tap animations.";
   [self presentViewController:vc animated:YES completion:nil];

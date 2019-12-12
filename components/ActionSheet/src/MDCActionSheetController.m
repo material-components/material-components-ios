@@ -15,13 +15,15 @@
 #import "MDCActionSheetController.h"
 
 #import "MaterialMath.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
 #import "private/MDCActionSheetHeaderView.h"
 #import "private/MDCActionSheetItemTableViewCell.h"
 
 static NSString *const kReuseIdentifier = @"BaseCell";
-static const CGFloat kActionImageAlpha = 0.6f;
-static const CGFloat kActionTextAlpha = 0.87f;
+static const CGFloat kActionImageAlpha = (CGFloat)0.6;
+static const CGFloat kActionTextAlpha = (CGFloat)0.87;
+static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 @interface MDCActionSheetAction ()
 
@@ -34,9 +36,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
 + (instancetype)actionWithTitle:(NSString *)title
                           image:(UIImage *)image
                         handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
-    return [[MDCActionSheetAction alloc] initWithTitle:title
-                                                 image:image
-                                               handler:handler];
+  return [[MDCActionSheetAction alloc] initWithTitle:title image:image handler:handler];
 }
 
 - (instancetype)initWithTitle:(NSString *)title
@@ -56,21 +56,38 @@ static const CGFloat kActionTextAlpha = 0.87f;
                                                          image:self.image
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
+  action.accessibilityLabel = self.accessibilityLabel;
+  action.titleColor = self.titleColor;
+  action.tintColor = self.tintColor;
   return action;
 }
 
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
-    UITableViewDelegate, UITableViewDataSource>
+                                        UITableViewDelegate,
+                                        UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
+
+/** The view that divides the header from the table. */
+@property(nonatomic, strong, nonnull) UIView *headerDividerView;
+
+/**
+ Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL addLeadingPaddingToCell;
 @end
 
 @implementation MDCActionSheetController {
   NSMutableArray<MDCActionSheetAction *> *_actions;
+  UIColor *_inkColor;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
@@ -99,11 +116,11 @@ static const CGFloat kActionTextAlpha = 0.87f;
     super.modalPresentationStyle = UIModalPresentationCustom;
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _transitionController.trackingScrollView = _tableView;
-    _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                   | UIViewAutoresizingFlexibleHeight);
+    _tableView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.estimatedRowHeight = 56.f;
+    _tableView.estimatedRowHeight = 56;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
@@ -118,6 +135,11 @@ static const CGFloat kActionTextAlpha = 0.87f;
     _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
     _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
+    _headerDividerView = [[UIView alloc] init];
+    _headerDividerView.backgroundColor =
+        [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultAlpha];
+    _mdc_overrideBaseElevation = -1;
+    _elevation = MDCShadowElevationModalBottomSheet;
   }
 
   return self;
@@ -129,6 +151,9 @@ static const CGFloat kActionTextAlpha = 0.87f;
 
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:action];
+  if (self.alwaysAlignTitleLeadingEdges && action.image) {
+    self.addLeadingPaddingToCell = YES;
+  }
   [self updateTable];
 }
 
@@ -141,12 +166,19 @@ static const CGFloat kActionTextAlpha = 0.87f;
 
   self.view.backgroundColor = self.backgroundColor;
   self.tableView.frame = self.view.bounds;
+  self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+  self.view.preservesSuperviewLayoutMargins = YES;
+  if (@available(iOS 11.0, *)) {
+    self.view.insetsLayoutMarginsFromSafeArea = NO;
+    self.tableView.insetsLayoutMarginsFromSafeArea = NO;
+  }
   [self.view addSubview:self.tableView];
   [self.view addSubview:self.header];
+  [self.view addSubview:self.headerDividerView];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
 
   if (self.tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
@@ -155,9 +187,12 @@ static const CGFloat kActionTextAlpha = 0.87f;
   }
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
-  UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
+  CGFloat dividerHeight = self.showsHeaderDivider ? 1 : 0;
+  self.headerDividerView.frame =
+      CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), dividerHeight);
+  UIEdgeInsets insets = UIEdgeInsetsMake(size.height + dividerHeight, 0, 0, 0);
   if (@available(iOS 11.0, *)) {
-    insets.bottom = self.view.safeAreaInsets.bottom;
+    insets.bottom = self.tableView.adjustedContentInset.bottom;
   }
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
@@ -173,16 +208,23 @@ static const CGFloat kActionTextAlpha = 0.87f;
   CGFloat maxTableHeight = maxHeight - headerHeight;
   NSInteger amountOfCellsToShow = (NSInteger)(maxTableHeight / cellHeight);
   // There is already a partially shown cell that is showing and more than half is visable
-  if (fmod(maxTableHeight, cellHeight) > (cellHeight * 0.5f)) {
+  if (fmod(maxTableHeight, cellHeight) > (cellHeight * (CGFloat)0.5)) {
     amountOfCellsToShow += 1;
   }
-  CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
+  CGFloat preferredHeight =
+      (((CGFloat)amountOfCellsToShow - (CGFloat)0.5) * cellHeight) + headerHeight;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
   if (@available(iOS 11.0, *)) {
-    preferredHeight = preferredHeight - self.view.safeAreaInsets.bottom;
+    preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
   }
   return MDCCeil(preferredHeight);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  [self.transitionController.trackingScrollView flashScrollIndicators];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -209,8 +251,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
 
-  [self.presentationController
-      preferredContentSizeDidChangeForChildContentContainer:self];
+  [self.presentationController preferredContentSizeDidChangeForChildContentContainer:self];
 }
 
 - (UIScrollView *)trackingScrollView {
@@ -230,9 +271,13 @@ static const CGFloat kActionTextAlpha = 0.87f;
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return self.presentingViewController.supportedInterfaceOrientations;
+}
+
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-(__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCActionSheetController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -253,11 +298,12 @@ static const CGFloat kActionTextAlpha = 0.87f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetAction *action = self.actions[indexPath.row];
 
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
-    if (action.completionHandler) {
-      action.completionHandler(action);
-    }
-  }];
+  [self.presentingViewController dismissViewControllerAnimated:YES
+                                                    completion:^(void) {
+                                                      if (action.completionHandler) {
+                                                        action.completionHandler(action);
+                                                      }
+                                                    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -278,11 +324,21 @@ static const CGFloat kActionTextAlpha = 0.87f;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
-  cell.inkColor = self.inkColor;
-  cell.tintColor = self.actionTintColor;
+  cell.rippleColor = self.rippleColor;
+  cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
-  cell.actionTextColor = self.actionTextColor;
+  cell.addLeadingPadding = self.addLeadingPaddingToCell;
+  cell.actionTextColor = action.titleColor ?: self.actionTextColor;
+  cell.contentEdgeInsets = self.contentEdgeInsets;
   return cell;
+}
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, contentEdgeInsets)) {
+    return;
+  }
+  _contentEdgeInsets = contentEdgeInsets;
+  [self.tableView reloadData];
 }
 
 - (void)setTitle:(NSString *)title {
@@ -301,6 +357,23 @@ static const CGFloat kActionTextAlpha = 0.87f;
 
 - (NSString *)message {
   return self.header.message;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([self.traitCollection
+            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      [self.tableView reloadData];
+    }
+  }
+#endif
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -342,6 +415,19 @@ static const CGFloat kActionTextAlpha = 0.87f;
   return self.header.messageTextColor;
 }
 
+- (void)setHeaderDividerColor:(UIColor *)headerDividerColor {
+  self.headerDividerView.backgroundColor = headerDividerColor;
+}
+
+- (UIColor *)headerDividerColor {
+  return self.headerDividerView.backgroundColor;
+}
+
+- (void)setShowsHeaderDivider:(BOOL)showsHeaderDivider {
+  _showsHeaderDivider = showsHeaderDivider;
+  self.headerDividerView.hidden = !showsHeaderDivider;
+}
+
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
@@ -362,12 +448,12 @@ static const CGFloat kActionTextAlpha = 0.87f;
 }
 
 - (void)updateTableFonts {
-  UIFont *finalActionsFont = _actionFont ?:
-      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  UIFont *finalActionsFont =
+      _actionFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    finalActionsFont =
-        [finalActionsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    finalActionsFont = [finalActionsFont
+        mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                     scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   }
   _actionFont = finalActionsFont;
   [self updateTable];
@@ -400,9 +486,42 @@ static const CGFloat kActionTextAlpha = 0.87f;
   [self.tableView reloadData];
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
-  _inkColor = inkColor;
+- (void)setAlwaysAlignTitleLeadingEdges:(BOOL)alignTitles {
+  _alwaysAlignTitleLeadingEdges = alignTitles;
+  if (alignTitles) {
+    // Check to make sure at least one action has an image. If not then all actions will align
+    // already and we don't need to add padding.
+    self.addLeadingPaddingToCell = [self anyActionHasAnImage];
+  } else {
+    self.addLeadingPaddingToCell = NO;
+  }
   [self.tableView reloadData];
+}
+
+- (BOOL)anyActionHasAnImage {
+  for (MDCActionSheetAction *action in self.actions) {
+    if (action.image) {
+      return YES;
+    }
+  }
+  return NO;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor;
+  [self.tableView reloadData];
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
+    return;
+  }
+  _elevation = elevation;
+  [self.view mdc_elevationDidChange];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end

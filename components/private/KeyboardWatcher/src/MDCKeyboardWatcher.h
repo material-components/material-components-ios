@@ -40,7 +40,7 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
 
 /** Extract the animation curve option from the keyboard notification */
 + (UIViewAnimationOptions)animationCurveOptionFromKeyboardNotification:
-        (NSNotification *)notification;
+    (NSNotification *)notification;
 
 /**
  The height of the visible keyboard view.
@@ -56,7 +56,7 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
 
  Zero if the keyboard is not currently showing or is not docked.
  */
-@property(nonatomic, readonly) CGFloat keyboardOffset __deprecated_msg("Use visibleKeyboardHeight instead of keyboardOffset")
-;
+@property(nonatomic, readonly)
+    CGFloat keyboardOffset __deprecated_msg("Use visibleKeyboardHeight instead of keyboardOffset");
 
 @end

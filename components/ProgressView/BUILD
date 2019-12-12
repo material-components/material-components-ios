@@ -13,10 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -24,7 +31,6 @@ mdc_public_objc_library(
     name = "ProgressView",
     sdk_frameworks = [
         "CoreGraphics",
-        "UIKit",
     ],
     deps = [
         "//components/Palettes",
@@ -35,49 +41,59 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
-    name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
+mdc_extension_objc_library(
+    name = "Theming",
     deps = [
         ":ProgressView",
-        "//components/Themes",
+        "//components/schemes/Container",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
+    extra_srcs = native.glob([
+        "tests/unit/Theming/*.m",
     ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
     deps = [
         ":ProgressView",
-        ":ColorThemer",
+        ":Theming",
         ":private",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ProgressView",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":ProgressView",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
     ],
 )

@@ -19,14 +19,24 @@
 
 /**
  The Material Design color system's text button themer for instances of MDCButton.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCButton`'s `-applyTextThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCTextButtonColorThemer : NSObject
+__deprecated_msg("Please use [MDCButton applyTextThemeWithScheme:] instead. (Note: Color theming "
+                 "is no longer available as an independent API.)")
+    @interface MDCTextButtonColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCButton using the text button style.
 
  @param colorScheme The color scheme to apply to the component instance.
  @param button A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCButton`'s `-applyTextThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button;

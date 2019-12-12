@@ -13,48 +13,85 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MaterialTypography.h"
 
 #import "../../src/private/MDCDialogShadowedView.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
+
+static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
+  static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    scalingCurve = @{
+      UIContentSizeCategoryExtraSmall : @99,
+      UIContentSizeCategorySmall : @98,
+      UIContentSizeCategoryMedium : @97,
+      UIContentSizeCategoryLarge : @96,
+      UIContentSizeCategoryExtraLarge : @95,
+      UIContentSizeCategoryExtraExtraLarge : @94,
+      UIContentSizeCategoryExtraExtraExtraLarge : @93,
+      UIContentSizeCategoryAccessibilityMedium : @92,
+      UIContentSizeCategoryAccessibilityLarge : @91,
+      UIContentSizeCategoryAccessibilityExtraLarge : @90,
+      UIContentSizeCategoryAccessibilityExtraExtraLarge : @89,
+      UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @88
+    };
+  });
+  return scalingCurve;
+}
 
 #pragma mark - Subclasses for testing
 
-static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertControllerSubclassValueKey";
+/** A test fake for setting the @c traitCollection on the alert's view. */
+@interface MDCAlertControllerTestsFakeWindow : UIWindow
 
+/** Set to override the @c traitCollection property of the receiver. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCAlertControllerTestsFakeWindow
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
+/** A test fake to override the @c traitCollection of an @c MDCAlertController. */
+@interface MDCAlertControllerTestsControllerFake : MDCAlertController
+
+/** Set to override the value of @c traitCollection of the receiver. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCAlertControllerTestsControllerFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
+/** Expose private properties for testing. */
 @interface MDCAlertController (Testing)
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @end
 
-@interface MDCAlertControllerSubclass : MDCAlertController
-@property(nonatomic, assign) NSInteger value;
-@end
-
+/** Expose private properties for testing. */
 @interface MDCDialogPresentationController (Testing)
 @property(nonatomic) MDCDialogShadowedView *trackingView;
 @end
 
-@implementation MDCAlertControllerSubclass
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    _value = [aDecoder decodeIntegerForKey:MDCAlertControllerSubclassValueKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeInteger:self.value forKey:MDCAlertControllerSubclassValueKey];
-}
-
-@end
-
 #pragma mark - Tests
 
+/** Unit tests for @c MDCAlertController. */
 @interface MDCAlertControllerTests : XCTestCase
+
+/** The @c MDCAlertController being tested. */
 @property(nonatomic, nullable) MDCAlertController *alert;
 @end
 
@@ -77,6 +114,8 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertNotNil(self.alert.actions);
   XCTAssertNotNil(self.alert.title);
   XCTAssertNotNil(self.alert.message);
+  XCTAssertTrue(self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertEqualObjects(self.alert.shadowColor, UIColor.blackColor);
 }
 
 - (void)testAlertControllerWithTitleMessage {
@@ -84,26 +123,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertNotNil(self.alert.actions);
   XCTAssertEqualObjects(self.alert.title, @"title");
   XCTAssertEqualObjects(self.alert.message, @"message");
-}
-
-- (void)testSubclassEncodingFails {
-  // Given
-  MDCAlertControllerSubclass *subclass = [[MDCAlertControllerSubclass alloc] init];
-  subclass.value = 7;
-  subclass.title = @"title";
-  subclass.message = @"message";
-  subclass.modalInPopover = YES;
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:subclass];
-  MDCAlertControllerSubclass *unarchivedSubclass =
-      [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-
-  // Then
-  XCTAssertEqual(unarchivedSubclass.value, subclass.value);
-  XCTAssertNil(unarchivedSubclass.title);
-  XCTAssertNil(unarchivedSubclass.message);
-  XCTAssertEqual(unarchivedSubclass.isModalInPopover, NO);
 }
 
 - (void)testAlertControllerTyphography {
@@ -117,10 +136,10 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  XCTAssertEqual(view.titleLabel.font, testFont);
-  XCTAssertEqual(view.messageLabel.font, testFont);
+  XCTAssertEqualObjects(view.titleLabel.font, testFont);
+  XCTAssertEqualObjects(view.messageLabel.font, testFont);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
-    XCTAssertEqual(button.titleLabel.font, testFont);
+    XCTAssertEqualObjects(button.titleLabel.font, testFont);
   }
 }
 
@@ -238,6 +257,114 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertEqual(view.messageLabel.text, message);
 }
 
+- (void)testAlertControllerSetMessageAccessibilityLabelWhenMessageIsSetWhenViewIsNotLoaded {
+  // Given
+  NSString *message = @"Foo";
+  NSString *messageAccessibilityLabel = @"Bar";
+
+  // When
+  self.alert.message = message;
+  self.alert.messageAccessibilityLabel = messageAccessibilityLabel;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+
+  // Then
+  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, messageAccessibilityLabel);
+}
+
+- (void)testAlertControllerSetMessageAccessibilityLabelWhenMessageIsSetAndViewIsLoaded {
+  // Given
+  NSString *message = @"Foo";
+  NSString *messageAccessibilityLabel = @"Bar";
+
+  // When
+  self.alert.message = message;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  self.alert.messageAccessibilityLabel = messageAccessibilityLabel;
+
+  // Then
+  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, messageAccessibilityLabel);
+}
+
+- (void)testAlertControllerMessageAccessibilityLabelWhenOnlyMessageIsSet {
+  // Given
+  NSString *message = @"Foo";
+
+  // When
+  self.alert.message = message;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  self.alert.messageAccessibilityLabel = nil;
+
+  // Then
+  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, message);
+}
+
+- (void)testAlertControllerMessageAccessibilityLabelWhenOnlyMessageIsSetWhenViewIsNotLoaded {
+  // Given
+  NSString *message = @"Foo";
+
+  // When
+  self.alert.message = message;
+  self.alert.messageAccessibilityLabel = nil;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+
+  // Then
+  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, message);
+}
+
+- (void)testAlertControllerSetTitleAccessibilityLabelWhenTitleIsSetWhenViewIsNotLoaded {
+  // Given
+  NSString *title = @"Foo";
+  NSString *titleAccessibilityLabel = @"Bar";
+
+  // When
+  self.alert.title = title;
+  self.alert.titleAccessibilityLabel = titleAccessibilityLabel;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+
+  // Then
+  XCTAssertEqualObjects(view.titleLabel.accessibilityLabel, titleAccessibilityLabel);
+}
+
+- (void)testAlertControllerSetTitleAccessibilityLabelWhenTitleIsSetAndViewIsLoaded {
+  // Given
+  NSString *title = @"Foo";
+  NSString *titleAccessibilityLabel = @"Bar";
+
+  // When
+  self.alert.title = title;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  self.alert.titleAccessibilityLabel = titleAccessibilityLabel;
+
+  // Then
+  XCTAssertEqualObjects(view.titleLabel.accessibilityLabel, titleAccessibilityLabel);
+}
+
+- (void)testAlertControllerTitleAccessibilityLabelWhenOnlyTitleIsSet {
+  // Given
+  NSString *title = @"Foo";
+
+  // When
+  self.alert.title = title;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  self.alert.titleAccessibilityLabel = nil;
+
+  // Then
+  XCTAssertEqualObjects(view.titleLabel.accessibilityLabel, title);
+}
+
+- (void)testAlertControllerTitleAccessibilityLabelWhenOnlyTitleIsSetWhenViewIsNotLoaded {
+  // Given
+  NSString *title = @"Foo";
+
+  // When
+  self.alert.title = title;
+  self.alert.titleAccessibilityLabel = nil;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+
+  // Then
+  XCTAssertEqualObjects(view.titleLabel.accessibilityLabel, title);
+}
+
 - (void)testTheViewIsNotLoadedWhenPropertiesAreSet {
   UIColor *testColor = [UIColor redColor];
   self.alert.titleColor = testColor;
@@ -265,11 +392,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   [self.alert addAction:action2];
 
   // Force the view to load
-  if (@available(iOS 9.0, *)) {
-    [self.alert loadViewIfNeeded];
-  } else {
-    (void)self.alert.view;
-  }
+  [self.alert loadViewIfNeeded];
 
   // Then
   NSArray<UIButton *> *buttons = self.alert.alertView.actionManager.buttonsInActionOrder;
@@ -338,6 +461,449 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   // Then
   MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
   XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testCustomShadowColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+
+  // When
+  self.alert.shadowColor = fakeColor;
+
+  // Then
+  XCTAssertEqualObjects(self.alert.mdc_dialogPresentationController.trackingView.shadowColor,
+                        fakeColor);
+}
+
+- (void)testCustomShadowColorOnPresenationController {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+  MDCDialogPresentationController *presentationController = [[MDCDialogPresentationController alloc]
+      initWithPresentedViewController:[[UIViewController alloc] init]
+             presentingViewController:nil];
+
+  // When
+  presentationController.dialogShadowColor = fakeColor;
+
+  // Then
+  XCTAssertEqualObjects(presentationController.trackingView.shadowColor, fakeColor);
+}
+
+- (void)testDialogBackgroundColorIsNotClearWhenNoThemingIsApllied {
+  // Then
+  XCTAssertNotNil(self.alert.view.backgroundColor);
+}
+
+- (void)testDialogCustomBackgroundColorAfterPresentation {
+  // Given
+  UIColor *testColor = UIColor.redColor;
+
+  // When
+  [self.alert setBackgroundColor:testColor];
+
+  // Then
+  XCTAssertEqualObjects(self.alert.view.backgroundColor, testColor);
+}
+
+/**
+ Test the setting @c adjustFontForContentSizeCategoryWhenScaledFontsIsUnavailable also sets the
+ property on the @c alertView.
+ */
+- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailableSetsTheAlertViewProperty {
+  // When
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // Then
+  XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
+- (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
+  self.alert.messageFont = fakeMessageFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
+                                                       handler:^(MDCAlertAction *action){
+                                                       }];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // When
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
+                view.titleLabel.font, fakeTitleFont);
+  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
+                @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  XCTAssertTrue([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+                @"%@ is not equal to %@", [button titleFontForState:UIControlStateNormal],
+                fakeButtonFont);
+}
+
+- (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
+  self.alert.messageFont = fakeMessageFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
+                                                       handler:^(MDCAlertAction *action){
+                                                       }];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
+                 view.titleLabel.font, fakeTitleFont);
+  XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
+                 view.messageLabel.font, fakeMessageFont);
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+                 @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
+                 fakeButtonFont);
+}
+
+/**
+ Verifies that assigning non-MDCFontScaler fonts results in their being replaced for Material
+ scaling.
+ */
+// TODO(https://github.com/material-components/material-components-ios/issues/8673): Re-enable
+- (void)testMDCAdjustsFontForContentSizeCategoryScalesCustomNonFontScalerFont {
+  // Given
+  UIFont *baseFont = [UIFont fontWithName:@"Zapfino" size:1];
+
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  [self.alert addAction:action];
+
+  self.alert.titleFont = baseFont;
+  self.alert.messageFont = baseFont;
+  MDCButton *actionButton = [self.alert buttonForAction:action];
+  if (actionButton.enableTitleFontForState) {
+    [actionButton setTitleFont:baseFont forState:UIControlStateNormal];
+  } else {
+    actionButton.titleLabel.font = baseFont;
+  }
+
+  // When
+  [self.alert loadViewIfNeeded];
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  XCTAssertEqualObjects(self.alert.alertView.messageLabel.font.fontName, baseFont.fontName);
+  XCTAssertGreaterThan(self.alert.alertView.messageLabel.font.pointSize, baseFont.pointSize);
+  XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, baseFont.fontName);
+  XCTAssertGreaterThan(self.alert.alertView.titleLabel.font.pointSize, baseFont.pointSize);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+  // these are equal
+  if (actionButton.enableTitleFontForState) {
+    XCTAssertNotEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
+                             baseFont.fontName);
+    XCTAssertGreaterThan([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                         baseFont.pointSize);
+  } else {
+    XCTAssertNotEqualObjects(actionButton.titleLabel.font.fontName, baseFont.fontName);
+    XCTAssertGreaterThan(actionButton.titleLabel.font.pointSize, baseFont.pointSize);
+  }
+}
+
+/** Verifies that assigning MDCFontScaler fonts results in their being used for Material scaling. */
+// TODO(https://github.com/material-components/material-components-ios/issues/8673): Re-enable
+- (void)testMDCAdjustsFontForContentSizeCategoryUsesFontScalerFonts {
+  // Given
+  UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+  scaledFont.mdc_scalingCurve = CustomScalingCurve();
+
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  [self.alert addAction:action];
+
+  self.alert.titleFont = scaledFont;
+  self.alert.messageFont = scaledFont;
+  MDCButton *actionButton = [self.alert buttonForAction:action];
+  if (actionButton.enableTitleFontForState) {
+    [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+  } else {
+    actionButton.titleLabel.font = scaledFont;
+  }
+
+  // When
+  [self.alert loadViewIfNeeded];
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  XCTAssertEqualObjects(self.alert.alertView.messageLabel.font.fontName, scaledFont.fontName);
+  XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, scaledFont.fontName);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+  // these are equal
+  if (actionButton.enableTitleFontForState) {
+    XCTAssertNotEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
+                             scaledFont.fontName);
+  } else {
+    XCTAssertNotEqualObjects(actionButton.titleLabel.font.fontName, scaledFont.fontName);
+  }
+}
+
+/**
+ Verifies that MDCFontScaler fonts get scaled to greater point sizes for size categories greater
+ than @c UIContentSizeCategoryLarge.
+ */
+- (void)testMDCAdjustsFontForContentSizeCategoryUpscalesFontScalerFontsWithLocalTraitCollection {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCAlertControllerTestsControllerFake *alert =
+        [[MDCAlertControllerTestsControllerFake alloc] init];
+    alert.title = @"Title";
+    alert.message = @"A message.";
+    alert.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+
+    UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+    scaledFont.mdc_scalingCurve = CustomScalingCurve();
+    scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
+
+    MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+    [alert addAction:action];
+
+    alert.titleFont = scaledFont;
+    alert.messageFont = scaledFont;
+    MDCButton *actionButton = [alert buttonForAction:action];
+    if (actionButton.enableTitleFontForState) {
+      [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+    } else {
+      actionButton.titleLabel.font = scaledFont;
+    }
+
+    // When
+    [alert loadViewIfNeeded];
+    alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    CGFloat expectedPointSize =
+        (CGFloat)CustomScalingCurve()[UIContentSizeCategoryAccessibilityExtraExtraExtraLarge]
+            .doubleValue;
+    // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
+    // these are equal.
+    XCTAssertNotEqualWithAccuracy(alert.alertView.messageLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
+    // these are equal
+    XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+    // these are equal
+    if (actionButton.enableTitleFontForState) {
+      XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                                    expectedPointSize, 0.001);
+    } else {
+      XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, scaledFont.pointSize,
+                                    0.001);
+    }
+  }
+}
+
+/**
+Verifies that MDCFontScaler fonts get scaled to lesser point sizes for size categories greater
+than @c UIContentSizeCategoryLarge.
+*/
+- (void)testMDCAdjustsFontForContentSizeCategoryDownscalesFontScalerFontsWithLocalTraitCollection {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCAlertControllerTestsControllerFake *alert =
+        [[MDCAlertControllerTestsControllerFake alloc] init];
+    alert.title = @"Title";
+    alert.message = @"A message.";
+    alert.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+
+    UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+    scaledFont.mdc_scalingCurve = CustomScalingCurve();
+    scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
+
+    MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+    [alert addAction:action];
+
+    alert.titleFont = scaledFont;
+    alert.messageFont = scaledFont;
+    MDCButton *actionButton = [alert buttonForAction:action];
+    if (actionButton.enableTitleFontForState) {
+      [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+    } else {
+      actionButton.titleLabel.font = scaledFont;
+    }
+
+    // When
+    [alert loadViewIfNeeded];
+    alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    CGFloat expectedPointSize =
+        (CGFloat)CustomScalingCurve()[UIContentSizeCategoryExtraSmall].doubleValue;
+    // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
+    // these are equal.
+    XCTAssertNotEqualWithAccuracy(alert.alertView.messageLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
+    // these are equal
+    XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
+                                  0.001);
+    // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+    // these are equal
+    if (actionButton.enableTitleFontForState) {
+      XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                                    expectedPointSize, 0.001);
+    } else {
+      XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, expectedPointSize,
+                                    0.001);
+    }
+  }
+}
+
+/**
+ Tests that setting a UIFontMetrics-based font will be updated based on changes to the
+ @c prefrredContentSizeCategory of the view's @c traitCollection.
+ */
+- (void)testAdjustsFontForContentSizeCategoryUpdatesFontWhenTraitCollectionChanges {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    MDCAlertControllerTestsControllerFake *alert =
+        [[MDCAlertControllerTestsControllerFake alloc] init];
+    alert.title = @"Title";
+    alert.message = @"Message";
+    [alert addAction:[MDCAlertAction actionWithTitle:@"Action 1" handler:nil]];
+
+    // Prepare the Dynamic Type environment
+    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+    UITraitCollection *extraSmallTraits = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+    UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+    originalFont = [bodyMetrics scaledFontForFont:originalFont
+                    compatibleWithTraitCollection:extraSmallTraits];
+    alert.adjustsFontForContentSizeCategory = YES;
+    alert.titleFont = originalFont;
+    [alert loadViewIfNeeded];
+    MDCAlertControllerTestsFakeWindow *window = [[MDCAlertControllerTestsFakeWindow alloc] init];
+    window.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+    [window addSubview:alert.view];
+
+    // When
+    // Triggers UIFontMetrics-based fonts to resize within UILabel.
+    [alert.view layoutIfNeeded];
+
+    // Then
+    XCTAssertEqualObjects(alert.alertView.titleLabel.font.fontName, originalFont.fontName);
+    XCTAssertGreaterThan(alert.alertView.titleLabel.font.pointSize, originalFont.pointSize);
+  }
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCAlertController *passedAlertController;
+  alertController.traitCollectionDidChangeBlock =
+      ^(MDCAlertController *_Nonnull blockAlertController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedAlertController = blockAlertController;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [alertController traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedAlertController, alertController);
+}
+
+#pragma mark - MaterialElevation
+
+- (void)testDefaultBaseElevationOverrideIsNegative {
+  // Given
+  MDCAlertController *controller = [[MDCAlertController alloc] init];
+  (void)controller;
+
+  // Then
+  XCTAssertLessThan(controller.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+
+  // When
+  alertController.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alertController.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 77;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alertController.mdc_currentElevation, alertController.elevation,
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 5;
+  __block BOOL blockCalled = NO;
+  alertController.mdc_elevationDidChangeBlock =
+      ^(MDCAlertController *controller, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  alertController.elevation = alertController.elevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 5;
+  __block BOOL blockCalled = NO;
+  alertController.mdc_elevationDidChangeBlock =
+      ^(MDCAlertController *controller, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  alertController.elevation = alertController.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
 }
 
 @end

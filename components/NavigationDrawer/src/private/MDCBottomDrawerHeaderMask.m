@@ -34,7 +34,7 @@
   CGFloat safeCornerRadius = MIN(cornerRadius, MIN(halfViewWidth, halfViewHeight));
   CGFloat newCornerRadius = [self calcuateCornerRadiusFromMaximumCornerRadius:safeCornerRadius
                                                         toMinimumCornerRadius:0
-                                                               withPercentage:1.f];
+                                                               withPercentage:1];
   UIBezierPath *path = [self createPathWithCornerRadius:newCornerRadius
                                                   width:safeBounds.size.width
                                                  height:safeBounds.size.height];
@@ -47,7 +47,7 @@
                                         withPercentage:(CGFloat)percentage {
   if (percentage < 0) {
     return maximumCornerRadius;
-  } else if (percentage > 1.f) {
+  } else if (percentage > 1) {
     return minimumCornerRadius;
   }
   return ((maximumCornerRadius - minimumCornerRadius) * percentage) + minimumCornerRadius;

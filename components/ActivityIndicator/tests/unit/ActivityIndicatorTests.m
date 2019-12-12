@@ -16,7 +16,7 @@
 #import "MaterialActivityIndicator.h"
 
 static CGFloat randomNumber() {
-  return arc4random_uniform(64) + 8;
+  return arc4random_uniform(128) + 8;
 }
 
 @interface MDCActivityIndicator (Private)
@@ -36,23 +36,10 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
 
   // When
-  indicator.radius = 2.0f;
+  indicator.radius = 2;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 5.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
-}
-
-- (void)testSetRadiusMax {
-  // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-
-  // When
-  indicator.radius = 80.0f;
-
-  // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 5);
 }
 
 - (void)testSetRadius {
@@ -64,8 +51,7 @@ static CGFloat randomNumber() {
   indicator.radius = random;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 8);
   XCTAssertEqual(indicator.radius, random);
 }
 
@@ -94,7 +80,7 @@ static CGFloat randomNumber() {
 - (void)testSetCycleColorNonEmpty {
   // Given
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-  NSArray <UIColor *> *cycleColors = @[[UIColor redColor], [UIColor whiteColor]];
+  NSArray<UIColor *> *cycleColors = @[ [UIColor redColor], [UIColor whiteColor] ];
 
   // When
   indicator.cycleColors = cycleColors;
@@ -102,7 +88,7 @@ static CGFloat randomNumber() {
   // Then
   XCTAssertEqualObjects(indicator.cycleColors, cycleColors,
                         @"With a non-empty array, the |cycleColors| property should override the"
-                        " default value.");
+                         " default value.");
 }
 
 - (void)testSetProgressValue {
@@ -127,9 +113,9 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
   indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
 
-  [indicator setProgress:0.33f animated:NO];
+  [indicator setProgress:(float)0.33 animated:NO];
   XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, 0.33f);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.33);
 }
 
 - (void)testSetProgressStrokeAnimated {
@@ -138,9 +124,9 @@ static CGFloat randomNumber() {
   indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [indicator startAnimating];
 
-  [indicator setProgress:0.55f animated:YES];
+  [indicator setProgress:(float)0.55 animated:YES];
   XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, 0.55f);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.55);
 }
 
 - (void)testSetAccessibiltyLabelProperty {
@@ -155,17 +141,54 @@ static CGFloat randomNumber() {
   XCTAssertEqualObjects(indicator.accessibilityLabel, testString);
 }
 
+- (void)testStopsAnimatingWhenHidden {
+  // Given
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  [indicator startAnimating];
+
+  // When
+  indicator.hidden = YES;
+
+  // Then
+  XCTAssertFalse(indicator.animating);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCActivityIndicator *passedActivityIndicator;
+  activityIndicator.traitCollectionDidChangeBlock =
+      ^(MDCActivityIndicator *_Nonnull indicator,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedActivityIndicator = indicator;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [activityIndicator traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedActivityIndicator, activityIndicator);
+}
+
 #pragma mark - Helpers
 
 - (void)verifySettingProgressOnIndicator:(MDCActivityIndicator *)indicator animated:(BOOL)animated {
-  [indicator setProgress:-5.0f animated:animated];
-  XCTAssertEqual(indicator.progress, 0.0f);
+  [indicator setProgress:-5 animated:animated];
+  XCTAssertEqual(indicator.progress, 0);
 
-  [indicator setProgress:0.77f animated:animated];
-  XCTAssertEqual(indicator.progress, 0.77f);
+  [indicator setProgress:(float)0.77 animated:animated];
+  XCTAssertEqual(indicator.progress, (float)0.77);
 
-  [indicator setProgress:5.0f animated:animated];
-  XCTAssertEqual(indicator.progress, 1.0f);
+  [indicator setProgress:5 animated:animated];
+  XCTAssertEqual(indicator.progress, 1);
 }
 
 @end

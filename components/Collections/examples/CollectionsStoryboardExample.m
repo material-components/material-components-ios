@@ -23,7 +23,7 @@ static NSString *const kReusableIdentifierItem = @"customCell";
 @end
 
 @implementation CollectionsStoryboardExample {
-  NSMutableArray <NSMutableArray *>*_content;
+  NSMutableArray<NSMutableArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -70,10 +70,10 @@ static NSString *const kReusableIdentifierItem = @"customCell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Storyboard Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"CollectionsStoryboardExample"
+    @"breadcrumbs" : @[ @"Collections", @"Storyboard Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"CollectionsStoryboardExample"
   };
 }
 

@@ -14,12 +14,11 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
 class BottomDrawerNoHeaderExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
   
   let contentViewController = DrawerContentViewController()
@@ -37,8 +36,15 @@ class BottomDrawerNoHeaderExample: UIViewController {
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
     bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
-    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                                   to: bottomAppBar)
+
+    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+
     view.addSubview(bottomAppBar)
   }
 
@@ -74,7 +80,7 @@ class BottomDrawerNoHeaderExample: UIViewController {
 
 extension BottomDrawerNoHeaderExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer No Header"],
       "primaryDemo": false,

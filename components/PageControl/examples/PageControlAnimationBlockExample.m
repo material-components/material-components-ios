@@ -34,11 +34,11 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-    [UIColor colorWithWhite:0.2f alpha:1.0f],
-    [UIColor colorWithWhite:0.3f alpha:1.0f],
-    [UIColor colorWithWhite:0.4f alpha:1.0f],
-    [UIColor colorWithWhite:0.5f alpha:1.0f],
-    [UIColor colorWithWhite:0.6f alpha:1.0f],
+    [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.3 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.4 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.5 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.6 alpha:1],
   ];
 
   // Scroll view configuration
@@ -58,7 +58,7 @@
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)(i + 1)];
     page.font = [UIFont systemFontOfSize:24];
-    page.textColor = [UIColor colorWithWhite:1 alpha:0.8f];
+    page.textColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =
@@ -71,6 +71,8 @@
   // Page control configuration.
   _pageControl = [[MDCPageControl alloc] init];
   _pageControl.numberOfPages = pageColors.count;
+  _pageControl.currentPageIndicatorTintColor = UIColor.whiteColor;
+  _pageControl.pageIndicatorTintColor = UIColor.lightGrayColor;
 
   // We want the page control to span the bottom of the screen.
   CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
@@ -92,6 +94,7 @@
   [_incrementButton addTarget:self
                        action:@selector(didTapButton:)
              forControlEvents:UIControlEventTouchUpInside];
+  [_incrementButton setTitleColor:UIColor.lightGrayColor forState:UIControlStateDisabled];
   [self.view addSubview:_incrementButton];
 
   _decrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -101,6 +104,7 @@
   [_decrementButton addTarget:self
                        action:@selector(didTapButton:)
              forControlEvents:UIControlEventTouchUpInside];
+  [_decrementButton setTitleColor:UIColor.lightGrayColor forState:UIControlStateDisabled];
   [self.view addSubview:_decrementButton];
 }
 
@@ -144,6 +148,21 @@
   [_decrementButton sizeToFit];
   buttonCenterX = CGRectGetWidth(_decrementButton.frame) / 2 + 16 + edgeInsets.left;
   _decrementButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
+
+  [self updateButtonStates];
+}
+
+- (void)updateButtonStates {
+  if (_pageControl.currentPage == _pageControl.numberOfPages - 1) {
+    _incrementButton.enabled = NO;
+    _decrementButton.enabled = YES;
+  } else if (_pageControl.currentPage == 0) {
+    _decrementButton.enabled = NO;
+    _incrementButton.enabled = YES;
+  } else {
+    _incrementButton.enabled = YES;
+    _decrementButton.enabled = YES;
+  }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -154,6 +173,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   [_pageControl scrollViewDidEndDecelerating:scrollView];
+  [self updateButtonStates];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -180,21 +200,25 @@
   CGPoint offset = _scrollView.contentOffset;
   offset.x = nextPage * CGRectGetWidth(_scrollView.frame);
   [UIView animateWithDuration:0.2
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^{
-                     self->_scrollView.contentOffset = offset;
-                   }
-                   completion:nil];
+      delay:0
+      options:UIViewAnimationOptionCurveEaseOut
+      animations:^{
+        self->_scrollView.contentOffset = offset;
+      }
+      completion:^(BOOL completed) {
+        if (completed) {
+          [self updateButtonStates];
+        }
+      }];
 }
 
 #pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Page Control", @"Page Control with animation block" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Page Control", @"Page Control with animation block" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

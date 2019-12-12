@@ -13,17 +13,14 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
-import MaterialComponents.MaterialBottomNavigation_TypographyThemer
+import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialTypographyScheme
+import MaterialComponents.MaterialContainerScheme
 
 /// Example to showcase a reorder of the tabs from an user action
 class BottomNavigationResetExample: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   let bottomNavBar = MDCBottomNavigationBar()
 
@@ -47,31 +44,42 @@ class BottomNavigationResetExample: UIViewController {
     super.init(coder: aDecoder)
   }
 
+  func layoutButtons() {
+    buttonOne.center = CGPoint(x: view.center.x,
+                                     y: view.center.y - buttonOne.bounds.height / 2 - 16)
+    buttonTwo.center = CGPoint(x: view.center.x,
+                                     y: view.center.y + buttonTwo.bounds.height / 2 + 16)
+
+  }
+
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    let bottomNavBarFrame = CGRect(x: 0,
+    var bottomNavBarFrame = CGRect(x: 0,
                                    y: view.bounds.height - size.height,
                                    width: size.width,
                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
+    }
     bottomNavBar.frame = bottomNavBarFrame
   }
 
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
+    layoutButtons()
     layoutBottomNavBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomNavBar()
   }
-  #endif
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
     bottomNavBar.alignment = .centered
@@ -85,22 +93,15 @@ class BottomNavigationResetExample: UIViewController {
     // Layout buttons
     buttonOne.setTitle("Reorder One", for: .normal)
     buttonOne.sizeToFit()
-    buttonOne.frame.origin = CGPoint(x: view.center.x - (buttonOne.frame.width / 2),
-                                     y: view.center.y - (buttonOne.frame.height + 16))
     buttonOne.addTarget(self, action: #selector(reorderItems), for: .touchUpInside)
     view.addSubview(buttonOne)
 
     buttonTwo.setTitle("Reorder Two", for: .normal)
     buttonTwo.sizeToFit()
-    buttonTwo.frame.origin = CGPoint(x: view.center.x - (buttonTwo.frame.width / 2),
-                                      y: view.center.y + 16)
     buttonTwo.addTarget(self, action: #selector(reorderItemsAndSetSelected), for: .touchUpInside)
     view.addSubview(buttonTwo)
 
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar)
-    MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme,
-                                                                 to: bottomNavBar)
+    bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
   }
 
   @objc func reorderItems(_ button: UIButton) {
@@ -116,7 +117,7 @@ class BottomNavigationResetExample: UIViewController {
 // MARK: Catalog by convention
 extension BottomNavigationResetExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Reorder (Swift)"],
       "primaryDemo": false,
@@ -124,7 +125,7 @@ extension BottomNavigationResetExample {
     ]
   }
 
-  class func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

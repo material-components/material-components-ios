@@ -16,7 +16,10 @@
 
 import CatalogByConvention
 
+import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialFlexibleHeader
+import MaterialComponents.MaterialIcons_ic_chevron_right
+import MaterialComponents.MaterialKeyboardWatcher
 import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
@@ -89,7 +92,7 @@ class MDCDragonsController: UIViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
     title = "Material Dragons"
-    addChildViewController(headerViewController)
+    addChild(headerViewController)
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
     headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
@@ -99,35 +102,31 @@ class MDCDragonsController: UIViewController,
     tableView.backgroundColor = Constants.bgColor
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 44
     view.addSubview(tableView)
     view.backgroundColor = Constants.bgColor
 
-    #if swift(>=3.2)
-      if #available(iOS 11, *) {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+    if #available(iOS 11, *) {
+      tableView.translatesAutoresizingMaskIntoConstraints = false
 
-        let guide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-                                    tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-                                    tableView.topAnchor.constraint(equalTo: view.topAnchor),
-                                    tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
-      } else {
-        preiOS11Constraints()
-      }
-    #else
+      let guide = view.safeAreaLayoutGuide
+      NSLayoutConstraint.activate([tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+                                   tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+                                   tableView.topAnchor.constraint(equalTo: view.topAnchor),
+                                   tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+    } else {
       preiOS11Constraints()
-    #endif
+    }
 
     setupHeaderView()
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tapgesture.delegate = self
     view.addGestureRecognizer(tapgesture)
 
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        tableView.contentInsetAdjustmentBehavior = .always
-      }
-    #endif
+    if #available(iOS 11.0, *) {
+      tableView.contentInsetAdjustmentBehavior = .always
+    }
   }
 
   func preiOS11Constraints() {
@@ -145,7 +144,7 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.backgroundColor = Constants.headerColor
     headerViewController.headerView.trackingScrollView = tableView
     view.addSubview(headerViewController.view)
-    headerViewController.didMove(toParentViewController: self)
+    headerViewController.didMove(toParent: self)
   }
 
   func adjustLogoForScrollView(_ scrollView: UIScrollView) {
@@ -162,11 +161,11 @@ class MDCDragonsController: UIViewController,
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return headerViewController
   }
 
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return headerViewController
   }
 
@@ -197,10 +196,10 @@ class MDCDragonsController: UIViewController,
     let node = nodeData.node
     if !node.isExample() && !isSearchActive {
       if nodeData.expanded {
-        cell.accessoryView = cell.expandedButton
+        cell.accessoryView = cell.expandedAccessoryView
         cell.textLabel?.textColor = Constants.headerColor
       } else {
-        cell.accessoryView = cell.defaultButton
+        cell.accessoryView = cell.collapsedAccessoryView
         cell.textLabel?.textColor = Constants.titleColor
       }
     } else {
@@ -229,11 +228,11 @@ class MDCDragonsController: UIViewController,
       self.tableView.beginUpdates()
       if nodeData.expanded {
         collapseCells(at: indexPath)
-        cell.accessoryView = cell.defaultButton
+        cell.accessoryView = cell.collapsedAccessoryView
         cell.textLabel?.textColor = Constants.titleColor
       } else {
         expandCells(at: indexPath)
-        cell.accessoryView = cell.expandedButton
+        cell.accessoryView = cell.expandedAccessoryView
         cell.textLabel?.textColor = Constants.headerColor
       }
       self.tableView.endUpdates()
@@ -248,8 +247,8 @@ class MDCDragonsController: UIViewController,
       container.appBar.headerViewController.headerView.backgroundColor = headerViewController.headerView.backgroundColor
       container.appBar.navigationBar.tintColor = .white
       container.appBar.navigationBar.titleTextAttributes =
-        [ NSForegroundColorAttributeName: UIColor.white,
-          NSFontAttributeName: UIFont.systemFont(ofSize: 16) ]
+        [ .foregroundColor: UIColor.white,
+          .font: UIFont.systemFont(ofSize: 16) ]
       container.isTopLayoutGuideAdjustmentEnabled = true
       vc.title = nodeData.node.title
 
@@ -378,17 +377,17 @@ extension MDCDragonsController {
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(notification:)), name: .MDCKeyboardWatcherKeyboardWillChangeFrame, object: nil)
   }
 
-  func keyboardWillShow(notification: NSNotification) {
+  @objc func keyboardWillShow(notification: NSNotification) {
     guard let userInfo = notification.userInfo else { return }
     updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
   }
 
-  func keyboardWillHide(notification: NSNotification) {
+  @objc func keyboardWillHide(notification: NSNotification) {
     guard let userInfo = notification.userInfo else { return }
     updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
   }
 
-  func keyboardWillChangeFrame(notification: NSNotification) {
+  @objc func keyboardWillChangeFrame(notification: NSNotification) {
     guard let userInfo = notification.userInfo else { return }
     updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
   }

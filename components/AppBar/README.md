@@ -60,12 +60,14 @@ The Material Design top app bar displays information and actions relating to the
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 - [Migration guides](#migration-guides)
   - [Migration guide: MDCAppBar to MDCAppBarViewController](#migration-guide-mdcappbar-to-mdcappbarviewcontroller)
+- [Unsupported](#unsupported)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
@@ -305,6 +307,14 @@ self.headerViewController.headerView.trackingScrollView = scrollView;
 <!--</div>-->
 
 `scrollView` might be a table view, collection view, or a plain UIScrollView.
+
+#### iOS 13 Collection Considerations
+
+iOS 13 changed the behavior of the `contentInset` of a collection view by triggering a layout.
+This may affect your app if you have not yet registered cells for reuse yet. Our recomendation is
+to use view controller composition by making your collection view controller a child view
+controller. If this is not possible then ensure the correct order of operations by registering cell
+reuse identifiers before setting the Flexible Header's `trackingScrollView`.
 
 Step 2: **Forward UIScrollViewDelegate events to the Header View**.
 
@@ -636,84 +646,53 @@ See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage g
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Color Theming
+### Theming
 
-You can theme an app bar with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/AppBar+ColorThemer'
-```
+`MDCAppBarViewController` supports Material Theming using a Container Scheme.
+There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar
+background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
+`primaryColor`.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 #### Swift
+
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialAppBar_ColorThemer
+// Import the AppBar Theming Extensions module
+import MaterialComponents.MaterialAppBar_Theming
 
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
+...
 
-// Step 3: Apply the color scheme to your component
-MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+// Apply your app's Container Scheme to the App Bar controller
+let containerScheme = MDCContainerScheme()
+
+// Either Primary Theme
+appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
+
+// Or Surface Theme
+appBarViewController.applySurfaceTheme(withScheme: containerScheme)
 ```
 
 #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialAppBar+ColorThemer.h"
+// Import the AppBar Theming Extensions header
+#import "MaterialAppBar+Theming.h"
 
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+...
 
-// Step 3: Apply the color scheme to your component
-[MDCAppBarColorThemer applySemanticColorScheme:colorScheme
-     toAppBar:component];
-```
-<!--</div>-->
+// Apply your app's Container Scheme to the App Bar controller
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
-<!-- Extracted from docs/typography-theming.md -->
+// Either Primary Theme
+[self.appBarController applyPrimaryThemeWithScheme:containerScheme];
 
-### Typography Theming
-
-You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/AppBar+TypographyThemer'
+// Or Surface Theme
+[self.appBarController applySurfaceThemeWithScheme:containerScheme];
 ```
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialAppBar_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialAppBar+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
-     toAppBar:component];
-```
 <!--</div>-->
 
 
@@ -813,4 +792,87 @@ any references of `appBar.headerViewController` with `appBarViewController`.
 #### Example migrations
 
 - [MDCCatalog examples](https://github.com/material-components/material-components-ios/commit/50e1fd091d8d08426f390c124bf6310c54174d8c)
+
+
+## Unsupported
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme an app bar with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/AppBar+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialAppBar_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialAppBar+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
+// Step 3: Apply the color scheme to your component
+[MDCAppBarColorThemer applySemanticColorScheme:colorScheme
+                                      toAppBar:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/AppBar+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialAppBar_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialAppBar+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
+                                        toAppBar:component];
+```
+<!--</div>-->
 

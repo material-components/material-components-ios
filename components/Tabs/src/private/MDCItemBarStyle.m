@@ -21,6 +21,7 @@
   if (self) {
     _titleColor = [UIColor whiteColor];
     _imageTintColor = [UIColor whiteColor];
+    _badgeColor = [UIColor redColor];
     _displaysUppercaseTitles = YES;
     _shouldDisplayTitle = YES;
     _shouldDisplaySelectionIndicator = YES;
@@ -47,8 +48,12 @@
   newStyle.selectedImageTintColor = _selectedImageTintColor;
   newStyle.selectedTitleFont = _selectedTitleFont;
   newStyle.unselectedTitleFont = _unselectedTitleFont;
+  newStyle.badgeColor = _badgeColor;
   newStyle.inkStyle = _inkStyle;
   newStyle.inkColor = _inkColor;
+  newStyle.rippleStyle = _rippleStyle;
+  newStyle.rippleColor = _rippleColor;
+  newStyle.enableRippleBehavior = _enableRippleBehavior;
   newStyle.titleImagePadding = _titleImagePadding;
   newStyle.displaysUppercaseTitles = _displaysUppercaseTitles;
   newStyle.textOnlyNumberOfLines = _textOnlyNumberOfLines;

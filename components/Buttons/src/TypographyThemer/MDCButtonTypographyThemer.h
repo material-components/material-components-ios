@@ -19,14 +19,24 @@
 
 /**
  The Material Design typography system's themer for instances of MDCButton.
+
+ @warning This API will eventually be deprecated. The replacement API is any of
+ `MDCFloatingButton`'s Theming extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCButtonTypographyThemer : NSObject
+__deprecated_msg("Please use MDCButton+MaterialTheming instead. (Note: Typography theming"
+                 "is no longer available as an independent API.)")
+    @interface MDCButtonTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCButton.
 
  @param typographyScheme The typography scheme to apply to the component instance.
  @param button A component instance to which the typography scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is any of
+ `MDCFloatingButton`'s Theming extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                      toButton:(nonnull MDCButton *)button;

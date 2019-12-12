@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,14 +17,12 @@
 
 #import "MaterialIcons+ic_help_outline.h"
 
-#import "MaterialIcons.h"
-
 static NSString *const kBundleName = @"MaterialIcons_ic_help_outline";
 static NSString *const kIconName = @"ic_help_outline";
 
 // Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
-__attribute__((visibility("default")))
-    char MDCIconsExportToSuppressLibToolWarning_ic_help_outline = 0;
+__attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarning_ic_help_outline =
+    0;
 
 @implementation MDCIcons (ic_help_outline)
 
@@ -34,9 +32,7 @@ __attribute__((visibility("default")))
 
 + (nullable UIImage *)imageFor_ic_help_outline {
   NSBundle *bundle = [self bundleNamed:kBundleName];
-  return [UIImage imageNamed:kIconName
-                    inBundle:bundle
-      compatibleWithTraitCollection:nil];
+  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end

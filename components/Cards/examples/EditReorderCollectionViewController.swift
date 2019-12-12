@@ -14,8 +14,8 @@
 
 import UIKit
 
-import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 
 class EditReorderCollectionViewController: UIViewController,
@@ -31,10 +31,16 @@ class EditReorderCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCShapeScheme()
-  var typographyScheme = MDCTypographyScheme()
-  let cardScheme = MDCCardScheme()
+  @objc var containerScheme: MDCContainerScheming
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheme = MDCContainerScheme()
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   let images = [
     (image: "amsterdam-kadoelen",     title: "Kadoelen"),
@@ -48,29 +54,25 @@ class EditReorderCollectionViewController: UIViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    cardScheme.colorScheme = colorScheme
-    cardScheme.shapeScheme = shapeScheme
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.backgroundColor = colorScheme.backgroundColor
+    collectionView.backgroundColor = containerScheme.colorScheme.backgroundColor
     collectionView.alwaysBounceVertical = true
     collectionView.register(CardEditReorderCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
 
-    if #available(iOS 9.0, *) {
-      navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reorder",
-                                                          style: .plain,
-                                                          target: self,
-                                                          action: #selector(toggleModes))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reorder",
+                                                        style: .plain,
+                                                        target: self,
+                                                        action: #selector(toggleModes))
 
-      let longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                          action: #selector(reorderCards(gesture:)))
-      longPressGesture.cancelsTouchesInView = false
-      collectionView.addGestureRecognizer(longPressGesture)
-    }
+    let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                        action: #selector(reorderCards(gesture:)))
+    longPressGesture.cancelsTouchesInView = false
+    collectionView.addGestureRecognizer(longPressGesture)
 
     // randomly select images to display 30 items
     let count = UInt32(images.count)
@@ -79,21 +81,17 @@ class EditReorderCollectionViewController: UIViewController,
       dataSource.append((image: images[ind].image, title: images[ind].title, selected: false))
     }
 
-    #if swift(>=3.2)
-      if #available(iOS 11, *) {
-        let guide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-          collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-          collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-          collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
-        collectionView.contentInsetAdjustmentBehavior = .always
-      } else {
-        preiOS11Constraints()
-      }
-    #else
+    if #available(iOS 11, *) {
+      let guide = view.safeAreaLayoutGuide
+      NSLayoutConstraint.activate([
+        collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+        collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+      collectionView.contentInsetAdjustmentBehavior = .always
+    } else {
       preiOS11Constraints()
-    #endif
+    }
 
     self.updateTitle()
   }
@@ -120,7 +118,7 @@ class EditReorderCollectionViewController: UIViewController,
     }
   }
 
-  func toggleModes() {
+  @objc func toggleModes() {
     switch toggle {
     case .edit:
       toggle = .reorder
@@ -137,7 +135,8 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
-    cardCell.apply(cardScheme: cardScheme, typographyScheme: typographyScheme)
+    cardCell.apply(containerScheme: containerScheme,
+                   typographyScheme: containerScheme.typographyScheme)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image
@@ -245,7 +244,7 @@ class EditReorderCollectionViewController: UIViewController,
 
 extension EditReorderCollectionViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Edit/Reorder"],
       "primaryDemo": false,

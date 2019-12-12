@@ -3,3 +3,4 @@ module: BottomAppBar
 umbrella_header: src/MaterialBottomAppBar.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

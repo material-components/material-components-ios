@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCFeatureHighlightView : UIView
+@interface MDCFeatureHighlightView : UIView <UIContentSizeCategoryAdjusting>
 
 @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;
@@ -36,5 +36,19 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
+/**
+ Enable legacy font scaling curves for Dynamic Type
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
+
+/**
+ A block that is invoked when the @c MDCFeatureHighlightView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFeatureHighlightView *_Nonnull featureHighlight,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end

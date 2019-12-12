@@ -14,12 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCTabBarDisplayDelegate.h"
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
-#import "MaterialTabs+ColorThemer.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 
 @implementation TabBarTextOnlyExample
@@ -27,8 +28,8 @@
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
   }
   return self;
 }
@@ -55,8 +56,7 @@
   const CGRect bounds = self.view.bounds;
 
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
-  self.tabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
+  self.tabBar = [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20, 0)];
   self.tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],
@@ -67,11 +67,13 @@
                                     tag:0],
   ];
 
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];
+
+  self.tabBar.displayDelegate = self;
 }
 
 - (void)changeAlignment:(id)sender {
@@ -110,8 +112,8 @@
 
 #pragma mark - Options in Collection View
 
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
@@ -130,6 +132,16 @@
       // Unsupported
       break;
   }
+}
+
+#pragma mark - MDCTabBarDisplayDelegate
+
+- (void)tabBar:(MDCTabBar *)tabBar willDisplayItem:(UITabBarItem *)item {
+  NSLog(@"Will display item: %@", item.title);
+}
+
+- (void)tabBar:(MDCTabBar *)tabBar didEndDisplayingItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Did end displaying item: %@", item.title);
 }
 
 @end

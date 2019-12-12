@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import MaterialComponents.MaterialFeatureHighlight_ColorThemer
-import MaterialComponents.MaterialFeatureHighlight_TypographyThemer
 import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialFeatureHighlight
+import MaterialComponents.MaterialFeatureHighlight_ColorThemer
+import MaterialComponents.MaterialTypographyScheme
 
 /// Example to show how to use a feature highlight
 class FeatureHighlightSwiftViewController: UIViewController {
 
   let showButton = MDCButton()
   let featureButton = MDCButton()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
   let buttonScheme = MDCButtonScheme()
 
   override func viewDidLoad() {
@@ -52,11 +55,12 @@ class FeatureHighlightSwiftViewController: UIViewController {
     featureButton.frame.origin.y = view.bounds.height / 2 - featureButton.frame.height / 2
   }
 
-  func showFeatureHighlight() {
+  @objc func showFeatureHighlight() {
     let vc = MDCFeatureHighlightViewController(highlightedView: featureButton,
                                                completion: nil)
     MDCFeatureHighlightColorThemer.applySemanticColorScheme(colorScheme, to: vc)
-    MDCFeatureHighlightTypographyThemer.applyTypographyScheme(typographyScheme, to: vc)
+    vc.titleFont = typographyScheme.headline6
+    vc.bodyFont = typographyScheme.body2
     vc.mdc_adjustsFontForContentSizeCategory = true
     vc.titleText = "Hey this is a title for the Feature Highlight"
     vc.bodyText = "This is the description of the feature highlight view controller"
@@ -66,7 +70,7 @@ class FeatureHighlightSwiftViewController: UIViewController {
 
 extension FeatureHighlightSwiftViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Feature Highlight", "Feature Highlight (Swift)"],
       "primaryDemo": false,

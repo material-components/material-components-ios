@@ -18,6 +18,9 @@
 
 - (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
   self.presentedView = messageView;
+  if (self.shouldSetSnackbarViewAccessibilityViewIsModal) {
+    messageView.accessibilityViewIsModal = YES;
+  }
 }
 
 @end

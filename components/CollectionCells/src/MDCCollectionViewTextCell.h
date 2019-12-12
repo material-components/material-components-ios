@@ -14,16 +14,16 @@
 
 #import "MDCCollectionViewCell.h"
 
-/** Default cell height for single line of text. Defaults to 48.0f. */
+/** Default cell height for single line of text. Defaults to 48. */
 extern const CGFloat MDCCellDefaultOneLineHeight;
 
-/** Default cell height for single line of text with avatar. Defaults to 56.0f. */
+/** Default cell height for single line of text with avatar. Defaults to 56. */
 extern const CGFloat MDCCellDefaultOneLineWithAvatarHeight;
 
-/** Default cell height for two lines of text. Defaults to 72.0f. */
+/** Default cell height for two lines of text. Defaults to 72. */
 extern const CGFloat MDCCellDefaultTwoLineHeight;
 
-/** Default cell height for three lines of text. Defaults to 88.0f. */
+/** Default cell height for three lines of text. Defaults to 88. */
 extern const CGFloat MDCCellDefaultThreeLineHeight;
 
 /**
@@ -66,7 +66,7 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
 @property(nonatomic, readonly, strong, nullable) UILabel *detailTextLabel;
 
 /**
- An image view on the leading side of cell. Default leading padding is 16.0f.
+ An image view on the leading side of cell. Default leading padding is 16.
  */
 @property(nonatomic, readonly, strong, nullable) UIImageView *imageView;
 

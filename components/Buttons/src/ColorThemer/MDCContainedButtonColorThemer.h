@@ -19,14 +19,24 @@
 
 /**
  The Material Design color system's contained button themer for instances of MDCButton.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCButton`'s `-applyContainedThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCContainedButtonColorThemer : NSObject
+__deprecated_msg("Please use [MDCButton applyContainedThemeWithScheme:] instead. (Note: Color "
+                 "theming is no longer available as an independent API.)")
+    @interface MDCContainedButtonColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCButton using the contained button style.
 
  @param colorScheme The color scheme to apply to the component instance.
  @param button A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCButton`'s `-applyContainedThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button;

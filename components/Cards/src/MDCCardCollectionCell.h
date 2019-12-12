@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
@@ -32,9 +34,15 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 
   /** The visual state when the cell is in its highlighted state. */
   MDCCardCellStateHighlighted,
-  
+
   /** The visual state when the cell has been selected. */
-  MDCCardCellStateSelected
+  MDCCardCellStateSelected,
+
+  /**
+   The visual state when the cell is being dragged.
+   Currently only used with the Ripple Beta component.
+  */
+  MDCCardCellStateDragged
 };
 
 /**
@@ -49,8 +57,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellHorizontalImageAlignment) {
 
   /** The alignment of the image is to the left of the card. */
   MDCCardCellHorizontalImageAlignmentLeft,
- 
- // TODO: Add AlignmentLeading and AlignmentTrailing. See Github issue #3045
+
+  // TODO: Add AlignmentLeading and AlignmentTrailing. See Github issue #3045
 };
 
 /**
@@ -67,7 +75,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
   MDCCardCellVerticalImageAlignmentBottom,
 };
 
-@interface MDCCardCollectionCell : UICollectionViewCell
+@interface MDCCardCollectionCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
 
 /**
  When selectable is set to YES, a tap on a cell will trigger a visual change between selected
@@ -76,6 +84,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  Default is set to NO.
  */
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
+
+/**
+ A Boolean value indicating whether the card is in the dragged state.
+ */
+@property(nonatomic, getter=isDragged) BOOL dragged;
 
 /**
  The corner radius for the card
@@ -89,6 +102,12 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
 /**
+ The rippleView for the card that is initiated on tap. The ripple view is the successor of ink
+ view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;
+
+/**
  This property defines if a card as a whole should be interactable or not.
  What this means is that when isInteractable is set to NO, there will be no ink ripple and
  no change in shadow elevation when tapped or selected. Also the card container itself will not be
@@ -100,7 +119,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  Therefore, this property should be set to NO *only if* there are other interactable items within
  the card's content, such as buttons or other tappable controls.
  */
-@property (nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
+@property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
 
 /*
  The shape generator used to define the card cell's shape.
@@ -116,13 +135,22 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
+ By setting this property to YES, you will enable and use inkView's successor rippleView as the
+ main view to provide visual feedback for taps. It is recommended to set this property right after
+ initializing the card.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
  Sets the shadow elevation for an MDCCardViewState state
 
  @param shadowElevation The shadow elevation
  @param state MDCCardCellState the card state
  */
-- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardCellState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setShadowElevation:(MDCShadowElevation)shadowElevation
+                  forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the shadow elevation for an MDCCardViewState state
@@ -143,8 +171,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  @param borderWidth The border width
  @param state MDCCardCellState the card state
  */
-- (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the border width for an MDCCardCellState state
@@ -163,8 +190,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  @param borderColor The border color
  @param state MDCCardCellState the card state
  */
-- (void)setBorderColor:(nullable UIColor *)borderColor forState:(MDCCardCellState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBorderColor:(nullable UIColor *)borderColor
+              forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the border color for an MDCCardCellStateNormal state
@@ -183,8 +210,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  @param shadowColor The shadow color
  @param state MDCCardCellState the card state
  */
-- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(MDCCardCellState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setShadowColor:(nullable UIColor *)shadowColor
+              forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the shadow color for an MDCCardCellStateNormal state
@@ -217,8 +244,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  @param image The image
  @param state MDCCardCellState the card state
  */
-- (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state
-UI_APPEARANCE_SELECTOR;
+- (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Returns the horizontal image alignment for an MDCCardCellStateNormal state
@@ -285,13 +311,21 @@ UI_APPEARANCE_SELECTOR;
  @param imageTintColor The image tint color
  @param state MDCCardCellState the card state
  */
-- (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(MDCCardCellState)state
-UI_APPEARANCE_SELECTOR;
+- (void)setImageTintColor:(nullable UIColor *)imageTintColor
+                 forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
 
 /**
  The state of the card cell.
  Default is MDCCardCellStateNormal.
  */
 @property(nonatomic, readonly) MDCCardCellState state;
+
+/**
+ A block that is invoked when the @c MDCCardCollectionCell receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCCardCollectionCell *_Nonnull collectionCell,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end

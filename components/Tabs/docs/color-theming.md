@@ -10,6 +10,7 @@ pod 'MaterialComponents/Tabs+ColorThemer'
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 // Step 1: Import the ColorThemer extension
 import MaterialComponents.MaterialTabs_ColorThemer
@@ -31,7 +32,7 @@ MDCTabBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, toTabs: c
 #import "MaterialTabs+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 // Primary variant

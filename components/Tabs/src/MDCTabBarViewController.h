@@ -57,6 +57,14 @@ IB_DESIGNABLE
 /** Use this to show and hide the tab bar. If animated, hides by panning the tab bar down. */
 - (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animated;
 
+/**
+ A block that is invoked when the @c MDCTabBarViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCTabBarViewController *_Nonnull tabBarViewController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /** The delegate protocol for MDCTabBarViewController */
@@ -68,7 +76,7 @@ IB_DESIGNABLE
 
  If you provide this method, you can control whether tapping on a tab bar item actually
  switches to that viewController. If not provided, MDCTabBarViewController will always switch.
- 
+
  @note The tab bar controller will call this method even when the tapped tab bar
  item is the currently-selected tab bar item.
 
@@ -86,6 +94,6 @@ IB_DESIGNABLE
  item is the currently-selected tab bar item.
  */
 - (void)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
- didSelectViewController:(nonnull UIViewController *)viewController;
+    didSelectViewController:(nonnull UIViewController *)viewController;
 
 @end

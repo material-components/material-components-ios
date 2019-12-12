@@ -46,7 +46,7 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(navBar)
 
     // Then
-    let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    let fontColor = navBar.titleTextAttributes![NSAttributedString.Key.foregroundColor] as! UIColor
     let tintColor = navBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.black,
                                                          targetTextAlpha: 1.0,
@@ -64,7 +64,7 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
     mutator.mutate(navBar)
 
     // Then
-    let fontColor = navBar.titleTextAttributes![NSForegroundColorAttributeName] as! UIColor
+    let fontColor = navBar.titleTextAttributes![NSAttributedString.Key.foregroundColor] as! UIColor
     let tintColor = navBar.tintColor
     let accessibleColor = MDFTextAccessibility.textColor(onBackgroundColor: UIColor.white,
                                                          targetTextAlpha: 1.0,
@@ -75,14 +75,16 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
 
   func testNoBackgroundColor() {
     // Given no background color set
-    let fontColorBefore = navBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
+    let fontColorBefore = navBar.titleTextAttributes?[NSAttributedString.Key.foregroundColor]
+      as? UIColor
     let tintColorBefore = navBar.tintColor
 
     // When
     mutator.mutate(navBar)
 
     // Then
-    let fontColorAfter = navBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
+    let fontColorAfter = navBar.titleTextAttributes?[NSAttributedString.Key.foregroundColor]
+      as? UIColor
     let tintColorAfter = navBar.tintColor
     XCTAssertEqual(fontColorBefore, fontColorAfter)
     XCTAssertEqual(tintColorBefore, tintColorAfter)

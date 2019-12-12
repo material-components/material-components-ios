@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 #import "MDCChipView.h"
 #import "MaterialTextFields.h"
@@ -161,6 +161,13 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 @protocol MDCChipFieldDelegate <NSObject>
 
 @optional
+
+/**
+ Asks the delegate if editing should begin in the specified chip field.
+
+ @param chipField The @c MDCChipField where is about to begin.
+ */
+- (BOOL)chipFieldShouldBeginEditing:(nonnull MDCChipField *)chipField;
 
 /**
  Tells the delegate that editing began in the specified chip field.

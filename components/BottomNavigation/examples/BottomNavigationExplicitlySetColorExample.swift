@@ -13,16 +13,15 @@
 // limitations under the License.
 
 import Foundation
+import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialPalettes
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
-
+  @objc let containerScheme = MDCContainerScheme()
   let bottomNavBar = MDCBottomNavigationBar()
-
   let redButton = MDCButton()
   let blueButton = MDCButton()
 
@@ -35,27 +34,37 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     super.init(coder: aDecoder)
   }
 
+  func layoutButtons() {
+    redButton.frame.origin = CGPoint(x: view.center.x - (redButton.frame.width / 2),
+                                     y: view.center.y - (redButton.frame.height + 16))
+    blueButton.frame.origin = CGPoint(x: view.center.x - (blueButton.frame.width / 2),
+                                      y: view.center.y + 16)
+  }
+
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    let bottomNavBarFrame = CGRect(x: 0,
+    var bottomNavBarFrame = CGRect(x: 0,
                                    y: view.bounds.height - size.height,
                                    width: size.width,
                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
+    }
     bottomNavBar.frame = bottomNavBarFrame
   }
 
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
+    layoutButtons()
     layoutBottomNavBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomNavBar()
   }
-  #endif
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -79,22 +88,17 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     // Layout buttons
     redButton.setTitle("Red theme", for: .normal)
     redButton.sizeToFit()
-    redButton.frame.origin = CGPoint(x: view.center.x - (redButton.frame.width / 2),
-                                     y: view.center.y - (redButton.frame.height + 16))
     redButton.backgroundColor = MDCPalette.red.tint300
     redButton.addTarget(self, action: #selector(redTheme), for: .touchUpInside)
     view.addSubview(redButton)
 
     blueButton.setTitle("Blue theme", for: .normal)
     blueButton.sizeToFit()
-    blueButton.frame.origin = CGPoint(x: view.center.x - (blueButton.frame.width / 2),
-                                      y: view.center.y + 16)
     blueButton.backgroundColor = MDCPalette.blue.tint300
     blueButton.addTarget(self, action: #selector(blueTheme), for: .touchUpInside)
     view.addSubview(blueButton)
 
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar)
+    bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
     bottomNavBar.backgroundColor = MDCPalette.grey.tint700
   }
 
@@ -117,7 +121,7 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
 // MARK: Catalog by convention
 extension BottomNavigationExplicitlySetColorExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Set Color (Swift)"],
       "primaryDemo": false,

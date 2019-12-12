@@ -27,7 +27,7 @@ import MaterialComponents.MaterialTypography
 
 import UIKit
 
-class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
+class MDCCatalogComponentsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MDCInkTouchControllerDelegate {
 
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 30
@@ -94,7 +94,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     title = "Material Components for iOS"
 
-    addChildViewController(headerViewController)
+    addChild(headerViewController)
 
     headerViewController.isTopLayoutGuideAdjustmentEnabled = true
     headerViewController.inferTopSafeAreaInsetFromViewController = true
@@ -104,7 +104,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+    collectionView?.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
@@ -115,11 +115,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       object: nil)
   }
 
-  func themeDidChange(notification: NSNotification) {
-    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-          as? MDCColorScheming else {
-      return
-    }
+  @objc func themeDidChange(notification: NSNotification) {
+    let colorScheme = AppTheme.containerScheme.colorScheme
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
     setNeedsStatusBarAppearanceUpdate()
@@ -147,9 +144,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     titleLabel.text = title!
-    titleLabel.textColor = AppTheme.globalTheme.colorScheme.onPrimaryColor
+    titleLabel.textColor = AppTheme.containerScheme.colorScheme.onPrimaryColor
     titleLabel.textAlignment = .center
-    titleLabel.font = AppTheme.globalTheme.typographyScheme.headline1
+    titleLabel.font = AppTheme.containerScheme.typographyScheme.headline6
     titleLabel.sizeToFit()
 
     let titleInsets = UIEdgeInsets(top: 0,
@@ -165,7 +162,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     containerView.addSubview(logo)
 
-    let colorScheme = AppTheme.globalTheme.colorScheme
+    let colorScheme = AppTheme.containerScheme.colorScheme
 
     let image = MDCDrawImage(CGRect(x:0,
                                     y:0,
@@ -201,18 +198,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     }
 
     view.addSubview(headerViewController.view)
-    #if swift(>=4.2)
     headerViewController.didMove(toParent: self)
-    #else
-    headerViewController.didMove(toParentViewController: self)
-    #endif
 
     collectionView?.accessibilityIdentifier = "collectionView"
-#if swift(>=3.2)
     if #available(iOS 11.0, *) {
       collectionView?.contentInsetAdjustmentBehavior = .always
     }
-#endif
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -226,15 +217,14 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     collectionView?.collectionViewLayout.invalidateLayout()
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return headerViewController
   }
 
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return headerViewController
   }
 
-#if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
@@ -242,7 +232,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     menuButtonRightPaddingConstraint?.constant = -1 * (Constants.inset + view.safeAreaInsets.right)
     menuTopPaddingConstraint?.constant = Constants.inset + view.safeAreaInsets.top
   }
-#endif
 
   func setupFlexibleHeaderContentConstraints() {
 
@@ -352,7 +341,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let cell =
         collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
                                            for: indexPath)
-    cell.backgroundColor = UIColor.white
+    cell.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     let componentName = node.children[indexPath.row].title
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {
@@ -367,14 +356,12 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
     let dividerWidth: CGFloat = 1
     var safeInsets: CGFloat = 0
-#if swift(>=3.2)
     if #available(iOS 11, *) {
       safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
     }
-#endif
     var cellWidthHeight: CGFloat
 
     // iPhones have 2 columns in portrait and 3 in landscape

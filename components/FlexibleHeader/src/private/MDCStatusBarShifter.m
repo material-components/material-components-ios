@@ -184,8 +184,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       UIView *clippingView = [[UIView alloc] init];
       CGFloat statusBarHeight =
           [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-      clippingView.frame =
-          CGRectMake(0, 0, snapshotView.frame.size.width, statusBarHeight);
+      clippingView.frame = CGRectMake(0, 0, snapshotView.frame.size.width, statusBarHeight);
       clippingView.autoresizingMask =
           (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
       clippingView.clipsToBounds = YES;
@@ -197,8 +196,8 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       _replicaViewTimestamp = [NSDate timeIntervalSinceReferenceDate];
 
       NSCalendar *calendar = [NSCalendar currentCalendar];
-      NSDateComponents *components =
-          [calendar components:NSCalendarUnitSecond fromDate:[NSDate date]];
+      NSDateComponents *components = [calendar components:NSCalendarUnitSecond
+                                                 fromDate:[NSDate date]];
       _secondsRemainingInMinute =
           MAX(kMinimumNumberOfSecondsToWaitFor, (NSTimeInterval)(60 - components.second));
 

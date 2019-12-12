@@ -1,6 +1,6 @@
 # Versions and releases
 
-MDC's version numbers strictly follow [semantic versioning](http://semver.org/):
+MDC's version numbers strictly follow [semantic versioning v2.0.0](https://semver.org/spec/v2.0.0.html):
 `MAJOR.minor.patch`. In short, if the current version is `1.1.1`, then:
 
 * A major release has a version number of `2.0.0`.
@@ -13,23 +13,17 @@ MDC's version numbers strictly follow [semantic versioning](http://semver.org/):
 
 Major releases can contain breaking changes to clients, while minor and patch releases cannot.
 
-## What are breaking changes?
+## How do we determine which numbers need to change?
 
-- API deletions or modifications.
-- Visible changes to user interface components.
+We follow the guidelines defined by the [semver v2.0.0](https://semver.org/spec/v2.0.0.html#semantic-versioning-specification-semver) specification.
 
-## What are non-breaking changes?
+Our public API includes the following:
 
-- API additions.
-- Behavioral changes.
+- APIs that are present in non-private headers. A private header is one that is contained within a sub-directory named `private/` within a `src/` directory.
 
-## How can a release be a patch release?
+We define "backwards incompatible changes" to include the following:
 
-Either:
-
-- There are *no changes to component sources* (changes to documentation—README.md or
-header docs—do not count), or
-- Component changes *only include bug fixes with no apparent behavioral changes*.
+- Any change that will result in a build breakage from the previous release.
 
 ## What is the source of truth for MDC's version number?
 

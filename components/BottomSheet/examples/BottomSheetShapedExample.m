@@ -14,14 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 #import "MaterialBottomSheet.h"
-#import "MaterialShapes.h"
 #import "MaterialShapeLibrary.h"
-#import "supplemental/BottomSheetDummyStaticViewController.h"
+#import "MaterialShapes.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
+#import "supplemental/BottomSheetDummyStaticViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
 
 @implementation BottomSheetShapedExample
@@ -34,8 +34,7 @@
   MDCAppBarContainerViewController *container =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
   container.preferredContentSize = CGSizeMake(500, 200);
-  container.appBarViewController.headerView.trackingScrollView =
-      viewController.collectionView;
+  container.appBarViewController.headerView.trackingScrollView = viewController.collectionView;
   container.topLayoutGuideAdjustmentEnabled = YES;
 
   [MDCAppBarColorThemer applyColorScheme:self.colorScheme
@@ -47,7 +46,7 @@
       [[MDCBottomSheetController alloc] initWithContentViewController:container];
   bottomSheet.trackingScrollView = viewController.collectionView;
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:16.f];
+  MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:16];
   shapeGenerator.topLeftCorner = cornerTreatment;
   shapeGenerator.topRightCorner = cornerTreatment;
   [bottomSheet setShapeGenerator:shapeGenerator forState:MDCSheetStatePreferred];

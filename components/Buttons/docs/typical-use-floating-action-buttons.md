@@ -2,7 +2,7 @@
 
 MDCFloatingButton is a subclass of MDCButton that implements the Material Design floating action
 button style and behavior. Floating action buttons should be provided with a templated image for
-their normal state.
+their normal state and then themed accordingly.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -12,7 +12,6 @@ their normal state.
 let plusImage = UIImage(named: "plus").withRenderingMode(.alwaysTemplate)
 let button = MDCFloatingButton()
 button.setImage(plusImage, forState: .normal)
-MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
@@ -23,6 +22,5 @@ UIImage *plusImage =
     [[UIImage imageNamed:@"plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 [button setImage:plusImage forState:UIControlStateNormal];
-[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->

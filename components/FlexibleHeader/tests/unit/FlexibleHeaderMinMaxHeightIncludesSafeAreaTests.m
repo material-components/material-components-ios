@@ -34,7 +34,7 @@
 
   _topSafeArea = [[MDCFlexibleHeaderTopSafeArea alloc] init];
   _delegate = [[FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate alloc] init];
-  _topSafeArea.delegate = _delegate;
+  _topSafeArea.topSafeAreaDelegate = _delegate;
 }
 
 - (void)tearDown {

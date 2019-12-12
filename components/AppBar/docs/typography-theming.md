@@ -32,6 +32,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
-     toAppBar:component];
+                                        toAppBar:component];
 ```
 <!--</div>-->

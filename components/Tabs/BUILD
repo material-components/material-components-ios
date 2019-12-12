@@ -13,25 +13,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Tabs",
     bundles = [":Bundle"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         "//components/AnimationTiming",
+        "//components/Elevation",
         "//components/Ink",
-        "//components/Typography",
+        "//components/Palettes",
+        "//components/Ripple",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
+        "//components/Typography",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
@@ -48,81 +56,136 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_objc_library(
-    name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    deps = [
-        ":Tabs",
-        "//components/schemes/Color",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-mdc_objc_library(
-    name = "FontThemer",
-    srcs = native.glob(["src/FontThemer/*.m"]),
-    hdrs = native.glob(["src/FontThemer/*.h"]),
-    includes = ["src/FontThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    deps = [
-        ":Tabs",
-        "//components/Themes",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":Tabs",
         "//components/schemes/Typography",
     ],
-    visibility = ["//visibility:public"],
+)
+
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":Tabs",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "TabBarView",
+    deps = [
+        "//components/AnimationTiming",
+        "//components/Ripple",
+        "//components/private/Math",
+        "@material_internationalization_ios//:MDFInternationalization",
+    ],
+)
+
+filegroup(
+    name = "TabsExamplesAssets",
+    srcs = glob(["examples/resources/TabBarDemoAssets.xcassets/**"]),
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    data = [":TabsExamplesAssets"],
+    deps = [
+        ":TabBarView",
+        ":Tabs",
+        ":Theming",
+        ":TypographyThemer",
+        "//components/ActionSheet",
+        "//components/ActionSheet:Theming",
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/Collections",
+        "//components/Palettes",
+        "//components/Slider",
+        "//components/private/Icons/icons/ic_settings",
+        "//components/private/Math",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":TabBarView",
+        ":Tabs",
+        ":Theming",
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/Palettes",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
 )
 
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
-    name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    deps = [
-        ":Tabs",
-        ":ColorThemer",
-        ":FontThemer",
-        ":TypographyThemer",
-        ":private",
-    ],
+    name = "privateTabBarView",
+    hdrs = native.glob(["src/TabBarView/private/*.h"]),
     visibility = ["//visibility:private"],
 )
 
-mdc_unit_test_suite(
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    extra_srcs = glob([
+        "tests/unit/Theming/*.m",
+        "tests/unit/TabBarView/*.m",
+    ]),
     deps = [
-      ":unit_test_sources",
+        ":TabBarView",
+        ":Tabs",
+        ":Theming",
+        ":TypographyThemer",
+        ":private",
+        ":privateTabBarView",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
+)
+
+mdc_unit_test_suite(
+    name = "unit_tests",
+    deps = [
+        ":unit_test_sources",
+    ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    extra_srcs = native.glob(["tests/snapshot/*/*.m"]),
+    deps = [
+        ":TabBarView",
+        ":Tabs",
+        ":Theming",
+        ":privateTabBarView",
+        "//components/AppBar",
+        "//components/HeaderStackView",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )

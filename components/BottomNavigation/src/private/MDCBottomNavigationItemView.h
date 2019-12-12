@@ -16,31 +16,44 @@
 
 #import "MDCBottomNavigationBar.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 
 @interface MDCBottomNavigationItemView : UIView
 
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
-@property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, strong, nonnull) MDCInkView *inkView;
+@property(nonatomic, strong, nonnull) MDCRippleTouchController *rippleTouchController;
+@property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
-@property(nonatomic, copy) NSString *badgeValue;
-@property(nonatomic, copy) NSString *title;
-@property(nonatomic, strong) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, copy, nullable) NSString *badgeValue;
+@property(nonatomic, copy, nullable) NSString *title;
+@property(nonatomic, strong, nullable) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
-@property(nonatomic, strong) UIButton *button;
-@property(nonatomic, strong) UIImage *image;
-@property(nonatomic, strong) UIImage *selectedImage;
+/**
+ The number of lines available for rendering the title of this item.  Defaults to 1.
 
-@property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
-@property(nonatomic, strong) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
-@property(nonatomic, strong) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
-@property(nonatomic, strong) UIColor *selectedItemTitleColor;
+ @note This property is only used when @c titleBelowIcon is @c true.
+ */
+@property(nonatomic, assign) NSInteger titleNumberOfLines;
+// Default = YES
+@property(nonatomic, assign) BOOL truncatesTitle;
 
-@property(nonatomic, assign) UIEdgeInsets contentInsets;
+@property(nonatomic, strong, nonnull) UIButton *button;
+@property(nonatomic, strong, nullable) UIImage *image;
+@property(nonatomic, strong, nullable) UIImage *selectedImage;
+
+@property(nonatomic, strong, nullable) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, copy, nullable) UIColor *badgeTextColor;
+@property(nonatomic, strong, nullable) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *selectedItemTitleColor;
 
 @property(nonatomic, assign) CGFloat contentVerticalMargin;
 @property(nonatomic, assign) CGFloat contentHorizontalMargin;
+/** The @c accessibilityIdentifier of the accessibility element for this view. */
+@property(nonatomic, copy, nullable) NSString *accessibilityElementIdentifier;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 

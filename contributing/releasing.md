@@ -2,6 +2,8 @@
 
 These instructions describe how to cut a new release.
 
+**You should always start from this doc when initiating a release.**
+
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
 `master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
@@ -13,8 +15,9 @@ Each release is driven by a single **release engineer**, who is also a Googler. 
 is expected to do the following, in order of priority:
 
 - Do not break Google.
-- Cut a release by first thing Wednesday morning, NYC time, without exception.
-- Land a release at least once a week.
+- Cut a release early in the working calendar week.
+- Land a release at least once every calendar week.
+- (Optional) Share something new with the team while you're waiting for tests to pass.
 
 If something is stopping the release engineer from achieving any of the above goals, the culprit
 code should be removed immediately from the release.
@@ -27,9 +30,39 @@ typical weekly release.
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
 office.
 
+Please post regular updates about the status of the release to the team's chat room. This helps inform the
+team of the status of the release, and also encourages team problem solving in the event that something is
+stuck. At minimum, the following inflection points should be noted:
+
+- The release is being initiated.
+- Internal testing of the release has begun.
+- Internal testing of the release has ended.
+- The release has been submitted internally.
+- The release has been published to CocoaPods.
+
 For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engineering) for additional details.
 
 ## Before you start
+
+### First time setup
+
+Install [brew](https://brew.sh/), [sourcekitten](https://github.com/jpsim/SourceKitten), and [git-lfs](https://git-lfs.github.com/):
+
+    brew install sourcekitten
+    brew install git-lfs
+
+Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs) if you have already cloned the repository.
+
+Verify that xcode-select is pointing to an Xcode installation directory:
+
+    xcode-select -p
+    
+    # Example output:
+    # /Applications/Xcode.app/Contents/Developer
+
+If not, select the Xcode you have installed. For example:
+
+    sudo xcode-select --switch /Applications/Xcode.app
 
 ### Create a clean clone
 
@@ -40,12 +73,21 @@ will be working day-to-day with a fork, consider creating a separate clone just 
     git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
     cd mdc-ios-release
 
+### Configure the merge strategy for `.gitattributes`
+
+We have two different versions of `.gitattributes` in the `develop` and
+`stable` branches. To avoid conflicts (or accidental merges) between the two
+branches, we define a custom merge strategy just for that file.  After cloning
+the repository, be sure to run this command:
+
+    git config merge.gitattributes.driver true
+
 ## Cutting and testing the release
 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
 Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
-### Cut a release branch and create a pull request
+### Cut a release branch
 
 Run the following command to cut a release:
 
@@ -55,17 +97,6 @@ Note: if for some reason `cut` fails, first ensure that nobody else is in the mi
 
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
-
-At this point you should also create the initial Release Candidate pull request using the URL
-that the `cut` script generated.
-
-Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
-
-Add "@Release-blocking clients" to the pull request's reviewers. This is the mechanism by which
-release-blocking clients are notified of a new release.
-
-**Do not use GitHub's big green button to merge the approved pull request.** Release are an
-exception to our normal squash-and-merge procedure.
 
 #### Hotfixing
 
@@ -82,9 +113,39 @@ After that PR is merged, you should cherry-pick the revert commit into the `rele
 
 Other than the steps above regarding hotfixing, the entire release process stays the same.
 
+#### Create a Pull Request for the Release Branch
+
+If you have not clicked [the release candidate pull request comparison
+link](https://github.com/material-components/material-components-ios/compare/stable...release-candidate)
+provided in the script do so now.
+
+At this point you should also create the initial Release Candidate pull request using the URL
+that the `cut` script generated.
+
+Name the Pull Request title "{WIP} Release Candidate." until you are able to provide the version as the title.
+
+Add the group `material-components/release-blocking-clients` to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
+
+**Do not use GitHub's big green button to merge the approved pull request.** Release are an
+exception to our normal squash-and-merge procedure.
+
+#### Verify CocoaPods podspec and trunk access
+
+Send our local podspec through the CocoaPods linter:
+
+    pod lib lint MaterialComponents.podspec --skip-tests --allow-warnings
+
+CocoaPods publishes a directory of publicly available pods through its **trunk** service.
+Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
+
+    pod trunk me
+
+If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
+
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#requirements).
 
 ### Resolve any failures
 
@@ -155,7 +216,7 @@ We do not presently have an automated way to identify visual changes between rel
 issue #290](https://github.com/material-components/material-components-ios/issues/290) for a
 discussion on the topic.
 
-### Sanity check: inspect the changes
+### [Optional] Sanity check: inspect the changes
 
 #### Diff just the components
 
@@ -193,19 +254,19 @@ Commit the results to your branch:
 
     git commit -am "Bumped version number to $(scripts/print_version)."
     git push origin release-candidate
+    
+Update the PR title to the release version. The format is typically "vX.Y.Z" (*e.g.*, v72.0.1). 
+Once this is done, send the PR out for review. Add "material-components/core-ios-team" to the 
+list of Reviewers. Also add anyone else you think might need to review specific changes in the 
+release candidate.
 
-#### Verify CocoaPods podspec and trunk access
+## Consider running `scripts/release notes` again
 
-Send our local podspec through the CocoaPods linter:
+Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after `## Changes` if
+you
 
-    pod lib lint MaterialComponents.podspec --skip-tests
-
-CocoaPods publishes a directory of publicly available pods through its **trunk** service.
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
-
-    pod trunk me
-
-If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
+* cherry picked a change to add it to the release or
+* reverted any commit to rollback any PR.
 
 ## Testing with release-blocking clients
 
@@ -237,7 +298,7 @@ go-ahead from the following clients:
 
 ## Merge the release candidate branch
 
-Once the release-candidate has passed all tests by clients, you may merge the release into the
+Once the release-candidate has **passed all "Required" GitHub presubmit tests** and **all internal presubmit tests**, you may merge the release into the
 `develop` and `stable` branches using the `release` script.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
@@ -279,7 +340,7 @@ You can now publish the release to GitHub:
 ## Publish to Cocoapods
 
     git checkout stable
-    pod trunk push MaterialComponents.podspec --skip-tests
+    pod trunk push MaterialComponents.podspec --skip-tests --allow-warnings
 
 ## Coordinate with release-blocking clients to finish work
 

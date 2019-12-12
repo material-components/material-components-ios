@@ -23,7 +23,7 @@ import MaterialComponents.MaterialNavigationBar
 extension NavigationBarTypicalUseSwiftExample {
 
   // (CatalogByConvention)
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Bar", "Navigation Bar (Swift)"],
       "primaryDemo": false,
@@ -31,7 +31,7 @@ extension NavigationBarTypicalUseSwiftExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

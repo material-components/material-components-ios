@@ -47,6 +47,16 @@ IB_DESIGNABLE
 @property(nonatomic, strong, null_resettable) UIColor *trackTintColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The corner radius for both the portion of the progress view that is filled and the track.
+
+ This is not equivalent to configuring self.layer.cornerRadius; it instead configures the progress
+ and track views directly.
+
+ The default is 0.
+ */
+@property(nonatomic) CGFloat cornerRadius;
+
+/**
  The current progress.
 
  The current progress is represented by a floating-point value between 0.0 and 1.0, inclusive, where
@@ -85,5 +95,12 @@ IB_DESIGNABLE
 - (void)setHidden:(BOOL)hidden
          animated:(BOOL)animated
        completion:(void (^__nullable)(BOOL finished))completion;
+
+/**
+ A block that is invoked when the @c MDCProgressView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCProgressView *_Nonnull progressView, UITraitCollection *_Nullable previousTraitCollection);
 
 @end

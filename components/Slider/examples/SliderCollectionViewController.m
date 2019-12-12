@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/SliderCollectionSupplemental.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
-#import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
+#import "MaterialSlider.h"
 #import "MaterialTypographyScheme.h"
+#import "supplemental/SliderCollectionSupplemental.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
-static CGFloat const kSliderHorizontalMargin = 16.f;
-static CGFloat const kSliderVerticalMargin = 12.f;
+static CGFloat const kSliderHorizontalMargin = 16;
+static CGFloat const kSliderVerticalMargin = 12;
 
 @interface MDCSliderModel : NSObject
 
@@ -39,6 +39,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @property(nonatomic, assign) BOOL discreteValueLabel;
 @property(nonatomic, assign) BOOL hollowCircle;
 @property(nonatomic, assign) BOOL enabled;
+@property(nonatomic, assign) BOOL hapticsEnabled;
+@property(nonatomic, assign) BOOL shouldEnableHapticsForAllDiscreteValues;
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider;
 
@@ -60,6 +62,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     _discreteValueLabel = YES;
     _hollowCircle = YES;
     _enabled = YES;
+    _hapticsEnabled = YES;
+    _shouldEnableHapticsForAllDiscreteValues = NO;
   }
 
   return self;
@@ -73,7 +77,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @end
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
-@property (nonatomic, strong, nullable) UIFont *labelFont;
+@property(nonatomic, strong, nullable) UIFont *labelFont;
 - (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
 @end
 
@@ -106,7 +110,9 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
-  
+  _slider.hapticsEnabled = model.hapticsEnabled;
+  _slider.shouldEnableHapticsForAllDiscreteValues = model.shouldEnableHapticsForAllDiscreteValues;
+
   // Don't apply a `nil` color, use the default
   if (model.sliderColor) {
     [_slider setTrackFillColor:model.sliderColor forState:UIControlStateNormal];
@@ -117,7 +123,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   if (model.trackBackgroundColor) {
     [_slider setTrackBackgroundColor:model.trackBackgroundColor forState:UIControlStateNormal];
   }
-  
+
   if (model.filledTickColor) {
     [_slider setFilledTrackTickColor:model.filledTickColor forState:UIControlStateNormal];
   }
@@ -149,8 +155,9 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     safeArea = self.safeAreaInsets;
     safeArea.top = 0;
   }
-  CGRect labelFrame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
-                                 self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
+  CGRect labelFrame =
+      CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
+                 self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
 
   _label.frame = UIEdgeInsetsInsetRect(labelFrame, safeArea);
 
@@ -187,7 +194,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 - (void)invalidateLayout {
   [super invalidateLayout];
-  
+
   [self.collectionView setNeedsLayout];
 }
 
@@ -224,52 +231,67 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Default slider";
-    model.value = 0.66f;
+    model.value = (CGFloat)0.66;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Green slider without hollow circle at 0";
     model.sliderColor = MDCPalette.greenPalette.tint800;
     model.hollowCircle = NO;
-    model.value = 0.f;
+    model.value = 0;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Discrete slider with numeric value label";
     model.numDiscreteValues = 5;
-    model.value = 0.2f;
+    model.value = (CGFloat)0.2;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Discrete slider without numeric value label";
     model.numDiscreteValues = 7;
-    model.value = 1.f;
+    model.value = 1;
     model.discreteValueLabel = NO;
+    [_sliders addObject:model];
+
+    model = [[MDCSliderModel alloc] init];
+    model.labelString = @"Discrete slider with full haptics";
+    model.numDiscreteValues = 5;
+    model.value = 1;
+    model.discreteValueLabel = NO;
+    model.shouldEnableHapticsForAllDiscreteValues = YES;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Dark themed slider";
     model.labelColor = [UIColor whiteColor];
-    model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3f];
+    model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:(CGFloat)0.3];
     model.sliderColor = MDCPalette.bluePalette.tint500;
     model.bgColor = [UIColor darkGrayColor];
-    model.value = 0.2f;
+    model.value = (CGFloat)0.2;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Anchored slider";
-    model.anchorValue = 0.5f;
-    model.value = 0.7f;
+    model.anchorValue = (CGFloat)0.5;
+    model.value = (CGFloat)0.7;
+    [_sliders addObject:model];
+
+    model = [[MDCSliderModel alloc] init];
+    model.labelString = @"Haptics Disabled Slider";
+    model.value = (CGFloat)0.66;
+    model.hapticsEnabled = NO;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Disabled slider";
-    model.value = 0.5f;
-    model.anchorValue = 0.1f;
+    model.value = (CGFloat)0.5;
+    model.anchorValue = (CGFloat)0.1;
     model.enabled = NO;
     [_sliders addObject:model];
 
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   return self;

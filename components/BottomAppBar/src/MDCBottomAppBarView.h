@@ -31,11 +31,11 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 
 /**
  A bottom app bar view with an embedded floating button.
- 
+
  The bottom app bar is a bar docked at the bottom of the screen. A floating action button is
  provided for a primary action.
  */
-@interface MDCBottomAppBarView : UIView
+@interface MDCBottomAppBarView : UIView <MDCElevatable, MDCElevationOverriding>
 
 /**
  Is the floating button on the bottom bar hidden.
@@ -106,7 +106,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 
 /**
  Sets the visibility of the floating action button.
- 
+
  @param animated Enable or disable animation.
  */
 - (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated;
@@ -123,10 +123,23 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 /**
  Sets the position of the floating action button. Note, if the set position is the same as the
  current position there is no change in the position nor animation.
- 
+
  @param animated Enable or disable animation.
  */
 - (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
                          animated:(BOOL)animated;
+
+/**
+ A block that is invoked when the @c MDCBottomAppBarView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomAppBarView *_Nonnull bottomAppBar,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ The elevation of the bottom app bar. Defaults to @c MDCShadowElevationBottomAppBar.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 @end

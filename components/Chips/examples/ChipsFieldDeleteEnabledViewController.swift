@@ -15,31 +15,31 @@
 import UIKit
 
 import MaterialComponents.MaterialChips
-import MaterialComponents.MaterialChips_ChipThemer
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialChips_Theming
 
 class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDelegate {
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  var containerScheming: MDCContainerScheming
   var chipField = MDCChipField()
 
   init() {
+    containerScheming = MDCContainerScheme()
     super.init(nibName: nil, bundle: nil)
   }
 
-  @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
+    fatalError("init(coder:) is not implemented")
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheming.colorScheme.backgroundColor
     chipField.frame = .zero
     chipField.delegate = self
     chipField.textField.placeholderLabel.text = "This is a chip field."
-    chipField.backgroundColor = colorScheme.surfaceColor
+    chipField.backgroundColor = containerScheming.colorScheme.surfaceColor
     chipField.showChipsDeleteButton = true
     view.addSubview(chipField)
   }
@@ -49,7 +49,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
 
     var frame = view.bounds
     if #available(iOS 11.0, *) {
-      frame = UIEdgeInsetsInsetRect(frame, view.safeAreaInsets)
+      frame = frame.inset(by: view.safeAreaInsets)
     }
     frame.size = chipField.sizeThatFits(frame.size)
     chipField.frame = frame
@@ -60,18 +60,15 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   }
 
   func chipField(_ chipField: MDCChipField, didAddChip chip: MDCChipView) {
-    let scheme = MDCChipViewScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    MDCChipViewThemer.applyScheme(scheme, to: chip)
+    chip.applyTheme(withScheme: containerScheming)
     chip.sizeToFit()
     let chipVerticalInset = min(0, chip.bounds.height - 48 / 2)
-    chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0)
+    chip.hitAreaInsets = UIEdgeInsets(top: chipVerticalInset, left: 0, bottom: chipVerticalInset, right: 0)
   }
 }
 // MARK - Catalog by Convention
 extension ChipsFieldDeleteEnabledViewController {
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs" : ["Chips", "Chips Input Delete Enabled (Swift)"],
       "primaryDemo" : false,

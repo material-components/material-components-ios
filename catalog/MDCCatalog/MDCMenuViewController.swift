@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MDCIcons
+import MaterialComponents.MaterialIcons
 import MaterialComponents.MaterialIcons_ic_settings
 import MaterialComponents.MaterialIcons_ic_color_lens
 import MaterialComponents.MaterialIcons_ic_help_outline
@@ -53,7 +53,7 @@ class MDCMenuViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView,
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let iconColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
+    let iconColor = AppTheme.containerScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     let cellData = tableData[indexPath.item]
     cell.textLabel?.text = cellData.title

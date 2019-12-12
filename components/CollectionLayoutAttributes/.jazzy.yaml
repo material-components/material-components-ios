@@ -3,3 +3,4 @@ module: CollectionLayoutAttributes
 umbrella_header: src/MaterialCollectionLayoutAttributes.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

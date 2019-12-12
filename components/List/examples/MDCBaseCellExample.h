@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-static CGFloat const kArbitraryCellHeight = 75.f;
+#import "MaterialContainerScheme.h"
+
+static CGFloat const kArbitraryCellHeight = 75;
 static NSString *const kBaseCellIdentifier = @"kBaseCellIdentifier";
 
-@interface MDCBaseCellExample : UIViewController
-@end
-
-@interface MDCBaseCellExample () <UICollectionViewDelegate,
-                                  UICollectionViewDataSource>
-
-@property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
-@property (nonatomic, assign) NSInteger numberOfCells;
-
+@interface MDCBaseCellExample
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(strong, nonatomic) UICollectionView *collectionView;
+@property(strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
+@property(nonatomic, assign) NSInteger numberOfCells;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end

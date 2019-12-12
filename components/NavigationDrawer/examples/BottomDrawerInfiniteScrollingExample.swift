@@ -14,12 +14,11 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -37,8 +36,15 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
     bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
-    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                                   to: bottomAppBar)
+
+    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+
     view.addSubview(bottomAppBar)
   }
 
@@ -63,17 +69,23 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 
   @objc private func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.maximumInitialDrawerHeight = 400;
     bottomDrawerViewController.contentViewController = contentViewController
+    contentViewController.drawerVC = bottomDrawerViewController
+    bottomDrawerViewController.setTopCornersRadius(12, for: .collapsed)
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
-    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
-                                                        toBottomDrawer: bottomDrawerViewController)
+    bottomDrawerViewController.isTopHandleHidden = false
+    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
 
 class DrawerContentTableViewController: UITableViewController {
-  var colorScheme: MDCSemanticColorScheme!
+  @objc var colorScheme: MDCSemanticColorScheme!
+  weak var drawerVC: MDCBottomDrawerViewController!
 
   override var preferredContentSize: CGSize {
     get {
@@ -83,6 +95,10 @@ class DrawerContentTableViewController: UITableViewController {
       super.preferredContentSize = newValue
     }
   }
+
+  var supportScrollToTop = true
+
+  var numberOfRows = 10
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -106,17 +122,36 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if (supportScrollToTop == false) {
+      return numberOfRows
+    }
     return 100
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
+
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    if (supportScrollToTop == false) {
+      toggleNumberOfRows()
+      tableView.reloadData()
+      self.preferredContentSize = tableView.contentSize
+    } else {
+      drawerVC.setContentOffsetY(0, animated: false)
+    }
+  }
+
+  private func toggleNumberOfRows() {
+    numberOfRows = (numberOfRows == 10) ? 14 : 10
+  }
+
 }
 
 extension BottomDrawerInfiniteScrollingExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Infinite Scrolling"],
       "description": "Navigation Drawer",

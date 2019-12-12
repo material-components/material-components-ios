@@ -14,12 +14,12 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
-class BottomDrawerWithHeaderExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewControllerDelegate {
+
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -36,8 +36,15 @@ class BottomDrawerWithHeaderExample: UIViewController {
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
     bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
-    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                                   to: bottomAppBar)
+
+    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+
     view.addSubview(bottomAppBar)
   }
 
@@ -65,17 +72,27 @@ class BottomDrawerWithHeaderExample: UIViewController {
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false
+    bottomDrawerViewController.topHandleColor = UIColor.lightGray
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
-    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
-                                                        toBottomDrawer: bottomDrawerViewController)
+    bottomDrawerViewController.delegate = self
+    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
     present(bottomDrawerViewController, animated: true, completion: nil)
+  }
+
+  func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController,
+                                               topInset: CGFloat) {
+    headerViewController.titleLabel.center =
+      CGPoint(x: headerViewController.view.frame.size.width / 2,
+              y: (headerViewController.view.frame.size.height + topInset) / 2)
   }
 }
 
 extension BottomDrawerWithHeaderExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
       "primaryDemo": false,

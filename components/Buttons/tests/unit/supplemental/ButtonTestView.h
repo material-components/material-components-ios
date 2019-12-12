@@ -17,6 +17,6 @@
 #import "MaterialButtons.h"
 
 @interface ButtonTestView : UIView
-@property (unsafe_unretained, nonatomic) IBOutlet MDCButton *button;
+@property(unsafe_unretained, nonatomic) IBOutlet MDCButton *button;
 - (instancetype)initFromNib;
 @end

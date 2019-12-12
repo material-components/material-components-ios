@@ -16,4 +16,5 @@
 
 @interface MDCItemBarCell ()
 @property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong, readonly) UILabel *badgeLabel;
 @end

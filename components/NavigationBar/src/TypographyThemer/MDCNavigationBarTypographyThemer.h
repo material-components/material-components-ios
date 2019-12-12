@@ -19,14 +19,25 @@
 
 /**
  The Material Design typography system's themer for instances of MDCNavigationBar.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCNavigationBarTypographyThemer : NSObject
+@end
+
+@interface MDCNavigationBarTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to an MDCNavigationBar.
 
  @param typographyScheme The typography scheme to apply to the component instance.
  @param navigationBar A component instance to which the typography scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
               toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;

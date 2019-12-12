@@ -15,7 +15,8 @@
 import UIKit
 
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 
 // This example shows a bug when using an MDCFlexibleHeaderView in a UITableViewController.
 // When you scroll downwards until the header is down to its minimum size, try selecting
@@ -26,7 +27,7 @@ class AppBarWithUITableViewController: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
   var numberOfRows = 50
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -43,7 +44,7 @@ class AppBarWithUITableViewController: UITableViewController {
     commonInit()
   }
 
-  override init(style: UITableViewStyle) {
+  override init(style: UITableView.Style) {
     super.init(style: style)
     commonInit()
   }
@@ -54,7 +55,7 @@ class AppBarWithUITableViewController: UITableViewController {
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   override func viewDidLoad() {
@@ -64,13 +65,9 @@ class AppBarWithUITableViewController: UITableViewController {
     appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
     
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     let headerView = appBarViewController.headerView
@@ -110,7 +107,7 @@ class AppBarWithUITableViewController: UITableViewController {
 
 extension AppBarWithUITableViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "AppBar+UITableViewController"],
       "primaryDemo": false,
@@ -118,7 +115,7 @@ extension AppBarWithUITableViewController {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

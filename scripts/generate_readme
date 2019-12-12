@@ -139,7 +139,18 @@ cat "$TMP_EXPANDED_README_PATH" | while read -r line; do
 
     pushd "$COMPONENT_PATH" >> /dev/null
     echo "Generating jazzy docs for API links..."
-    jazzy . --output apidocs
+
+    # Note: Setting `--framework-root=.` makes it so that jazzy can't resolve any symbols outside
+    # of the given component. This is intentional; we only want the symbols for this particular
+    # component to appear in the generated README. The unfortunate side effect of this is that
+    # jazzy generates erroneous "fatal error" statements for imports that live outside of the
+    # component.
+    echo
+    echo "Note: \"fatal error: 'SomeHeader.h' file not found\" errors are ok so long as they are"
+    echo "headers that are not within this component directory."
+    echo
+
+    jazzy . --output apidocs --framework-root=.
     extract_apis_of_type "Classes" "Class" >> "$TMP_README_PATH"
     extract_apis_of_type "Protocols" "Protocol" >> "$TMP_README_PATH"
     extract_apis_of_type "Enums" "Enumeration" >> "$TMP_README_PATH"
@@ -193,7 +204,7 @@ echo "Rewriting paths..."
 # Rewrite relative paths
 perl -pi -e "s|\(\.\./|(|g" "$TMP_README_PATH"
 perl -pi -e "s|href=\"\.\./|href=\"|g" "$TMP_README_PATH"
-perl -pi -e "s|\[(.+)\]\((.+)\.md\)|[\1](docs/\2.md)|g" "$TMP_README_PATH"
+perl -pi -e "s|\[(.+)\]\((\w+)\.md\)|[\1](docs/\2.md)|g" "$TMP_README_PATH"
 
 # Rewrite asset paths
 perl -pi -e "s|src=\"assets|src=\"docs/assets|g" "$TMP_README_PATH"

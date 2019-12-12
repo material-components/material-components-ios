@@ -26,7 +26,7 @@
 /**
  * Delegate for handling drag events.
  */
-@property(nonatomic, weak, nullable) id <MDCDraggableViewDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCDraggableViewDelegate> delegate;
 
 /**
  * Initializes a MDCDraggableView.
@@ -78,5 +78,7 @@
  *   component.
  */
 - (void)draggableView:(nonnull MDCDraggableView *)view draggingEndedWithVelocity:(CGPoint)velocity;
+
+- (void)draggableView:(nonnull MDCDraggableView *)view didPanToOffset:(CGFloat)offset;
 
 @end

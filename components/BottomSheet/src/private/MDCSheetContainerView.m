@@ -14,9 +14,9 @@
 
 #import "MDCSheetContainerView.h"
 
-#import "MaterialKeyboardWatcher.h"
 #import "MDCDraggableView.h"
 #import "MDCSheetBehavior.h"
+#import "MaterialKeyboardWatcher.h"
 
 // KVO key for monitoring the content size for the content view if it is a scrollview.
 static NSString *kContentSizeKey = nil;
@@ -24,7 +24,7 @@ static void *kContentSizeContext = &kContentSizeContext;
 
 // We add an extra padding to the sheet height, so that if the user swipes upwards, fast, the
 // bounce does not reveal a gap between the sheet and the bottom of the screen.
-static const CGFloat kSheetBounceBuffer = 150.0f;
+static const CGFloat kSheetBounceBuffer = 150;
 
 @interface MDCSheetContainerView () <MDCDraggableViewDelegate>
 
@@ -54,7 +54,11 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
                    scrollView:(UIScrollView *)scrollView {
   self = [super initWithFrame:frame];
   if (self) {
-    _sheetState = MDCSheetStatePreferred;
+    if (UIAccessibilityIsVoiceOverRunning()) {
+      _sheetState = MDCSheetStateExtended;
+    } else {
+      _sheetState = MDCSheetStatePreferred;
+    }
 
     // Don't set the frame yet because we're going to change the anchor point.
     _sheet = [[MDCDraggableView alloc] initWithFrame:CGRectZero scrollView:scrollView];
@@ -64,7 +68,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
     // Adjust the anchor point so all positions relate to the top edge rather than the actual
     // center.
-    _sheet.layer.anchorPoint = CGPointMake(0.5f, 0.f);
+    _sheet.layer.anchorPoint = CGPointMake((CGFloat)0.5, 0);
     _sheet.frame = self.bounds;
 
     _contentView = contentView;
@@ -94,10 +98,10 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
     for (NSString *name in notificationNames) {
       [[NSNotificationCenter defaultCenter]
-       addObserver:self
-       selector:@selector(keyboardStateChangedWithNotification:)
-       name:name
-       object:nil];
+          addObserver:self
+             selector:@selector(keyboardStateChangedWithNotification:)
+                 name:name
+               object:nil];
     }
 
     // Since we handle the SafeAreaInsets ourselves through the contentInset property, we disable
@@ -105,6 +109,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     if (@available(iOS 11.0, *)) {
       scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
+    scrollView.preservesSuperviewLayoutMargins = YES;
   }
   return self;
 }
@@ -119,6 +124,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     // Adjust the sheet height as necessary for VO.
     [self animatePaneWithInitialVelocity:CGPointZero];
   }
+  [self updateSheetState];
 }
 
 #pragma mark UIView
@@ -235,19 +241,20 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 }
 
 - (void)updateSheetState {
-  CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
-  self.sheetState = (currentSheetHeight >= [self maximumSheetHeight] ?
-                     MDCSheetStateExtended : MDCSheetStatePreferred);
+  if (UIAccessibilityIsVoiceOverRunning()) {
+    // Always return the full height when VO is running, so that the entire content is on-screen
+    // and accessibile.
+    self.sheetState = MDCSheetStateExtended;
+  } else {
+    CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
+    self.sheetState = (currentSheetHeight >= [self maximumSheetHeight] ? MDCSheetStateExtended
+                                                                       : MDCSheetStatePreferred);
+  }
 }
 
 // Returns |preferredSheetHeight|, truncated as necessary, so that it never exceeds the height of
 // the view.
 - (CGFloat)truncatedPreferredSheetHeight {
-  // Always return the full height when VO is running, so that the entire content is on-screen
-  // and accessibile.
-  if (UIAccessibilityIsVoiceOverRunning()) {
-    return [self maximumSheetHeight];
-  }
   return MIN(self.preferredSheetHeight, [self maximumSheetHeight]);
 }
 
@@ -258,7 +265,8 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     boundsHeight -= self.safeAreaInsets.top;
   }
   CGFloat scrollViewContentHeight = self.sheet.scrollView.contentInset.top +
-      self.sheet.scrollView.contentSize.height + self.sheet.scrollView.contentInset.bottom;
+                                    self.sheet.scrollView.contentSize.height +
+                                    self.sheet.scrollView.contentInset.bottom;
 
   // If we have a scrollview, the sheet should never get taller than its content height.
   if (scrollViewContentHeight > 0) {
@@ -288,14 +296,20 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   CGFloat midX = CGRectGetMidX(bounds);
   CGFloat bottomY = CGRectGetMaxY(bounds) - keyboardOffset;
 
-  switch(self.sheetState) {
+  CGPoint targetPoint;
+  switch (self.sheetState) {
     case MDCSheetStatePreferred:
-      return CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
+      targetPoint = CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
+      break;
     case MDCSheetStateExtended:
-      return CGPointMake(midX, bottomY - [self maximumSheetHeight]);
+      targetPoint = CGPointMake(midX, bottomY - [self maximumSheetHeight]);
+      break;
     case MDCSheetStateClosed:
-      return CGPointMake(midX, bottomY);
+      targetPoint = CGPointMake(midX, bottomY);
+      break;
   }
+  [self.delegate sheetContainerViewDidChangeYOffset:self yOffset:targetPoint.y];
+  return targetPoint;
 }
 
 - (void)sheetBehaviorDidUpdate {
@@ -329,7 +343,11 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     shouldBeginDraggingWithVelocity:(CGPoint)velocity {
   [self updateSheetState];
 
-  switch(self.sheetState) {
+  if (!self.dismissOnDraggingDownSheet) {
+    return NO;
+  }
+
+  switch (self.sheetState) {
     case MDCSheetStatePreferred:
       return YES;
     case MDCSheetStateExtended: {
@@ -342,7 +360,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
         } else {
           // Allow dragging in any direction if the content is not scrollable.
           CGFloat contentHeight = scrollView.contentInset.top + scrollView.contentSize.height +
-              scrollView.contentInset.bottom;
+                                  scrollView.contentInset.bottom;
           return (CGRectGetHeight(scrollView.bounds) >= contentHeight);
         }
       }
@@ -375,6 +393,10 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 - (void)draggableViewBeganDragging:(__unused MDCDraggableView *)view {
   [self.animator removeAllBehaviors];
   self.isDragging = YES;
+}
+
+- (void)draggableView:(nonnull MDCDraggableView *)view didPanToOffset:(CGFloat)offset {
+  [self.delegate sheetContainerViewDidChangeYOffset:self yOffset:offset];
 }
 
 - (void)setSheetState:(MDCSheetState)sheetState {

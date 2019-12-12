@@ -40,8 +40,8 @@ func collectionView(_ collectionView: UICollectionView,
   [cell setSelectable:YES];
   
   [cell setSelectedImageTintColor:[UIColor blueColor]];
-  [cell setCornerRadius:8.f];
-  [cell setShadowElevation:6.f forState:MDCCardCellStateSelected];
+  [cell setCornerRadius:8];
+  [cell setShadowElevation:6 forState:MDCCardCellStateSelected];
   [cell setShadowColor:[UIColor blackColor] forState:MDCCardCellStateHighlighted];
 }
 ```

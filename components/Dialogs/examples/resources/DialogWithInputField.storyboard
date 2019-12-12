@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--DialogWithInputFieldViewController-->
         <scene sceneID="5p6-Tx-aSb">
             <objects>
-                <viewController storyboardIdentifier="DialogID" title="DialogWithPreferredContentSize" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qQc-Ib-5lF" userLabel="DialogWithInputFieldViewController" customClass="DialogWithInputFieldViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DialogID" title="DialogWithPreferredContentSize" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qQc-Ib-5lF" userLabel="DialogWithInputFieldViewController" customClass="DialogWithInputFieldExampleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Lz9-zD-HnT"/>
                         <viewControllerLayoutGuide type="bottom" id="nZN-FO-BR8"/>
@@ -23,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input Field" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90p-55-soM">
-                                <rect key="frame" x="16" y="28" width="208" height="41"/>
+                                <rect key="frame" x="16" y="8" width="208" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="WYg-Oo-3ho"/>
                                 </constraints>
@@ -43,7 +42,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="buttonPushed:" destination="qQc-Ib-5lF" eventType="touchUpInside" id="A7U-Zd-q5z"/>
+                                    <action selector="buttonPushed:" destination="qQc-Ib-5lF" eventType="touchUpInside" id="TqI-Kw-iFd"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Sj-Ry-Dh5">

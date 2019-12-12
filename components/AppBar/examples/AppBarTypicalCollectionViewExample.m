@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 
 @interface AppBarTypicalCollectionViewExample : UICollectionViewController
 
@@ -36,7 +36,7 @@
 
 - (id)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-  layout.minimumInteritemSpacing = 10.0f;
+  layout.minimumInteritemSpacing = 10;
 
   self = [super initWithCollectionViewLayout:layout];
 
@@ -53,7 +53,8 @@
     [self addChildViewController:_appBarViewController];
     _appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -79,9 +80,9 @@
   [self.appBarViewController didMoveToParentViewController:self];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
                             toAppBarViewController:_appBarViewController];
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
 }
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -90,17 +91,17 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  UICollectionViewCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  switch (indexPath.row%3) {
+  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell"
+                                                                         forIndexPath:indexPath];
+  switch (indexPath.row % 3) {
     case 0:
-      cell.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:1];
       break;
     case 1:
-      cell.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:1];
       break;
     case 2:
-      cell.backgroundColor = [UIColor colorWithWhite:0.7f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:1];
       break;
     default:
       break;
@@ -110,10 +111,10 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
-  return CGSizeMake(collectionViewFrame.size.width/2.f - 14.f, 40.f);
+  return CGSizeMake(collectionViewFrame.size.width / 2 - 14, 40);
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -126,12 +127,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"Collection View with App bar" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"App Bar", @"Collection View with App bar" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
 @end
-
-

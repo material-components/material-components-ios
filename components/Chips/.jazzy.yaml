@@ -3,3 +3,4 @@ module: Chips
 umbrella_header: src/MaterialChips.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

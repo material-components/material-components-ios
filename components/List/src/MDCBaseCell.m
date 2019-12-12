@@ -15,20 +15,21 @@
 #import "MDCBaseCell.h"
 
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
-
-static NSString *const MDCListBaseCellInkViewKey = @"MDCListBaseCellInkViewKey";
-static NSString *const MDCListBaseCellCurrentInkColorKey = @"MDCListBaseCellCurrentInkColorKey";
-static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCurrentElevationKey";
 
 @interface MDCBaseCell ()
 
-@property (nonatomic, assign) CGPoint lastTouch;
-@property (strong, nonatomic, nonnull) MDCInkView *inkView;
+@property(nonatomic, assign) CGPoint lastTouch;
+@property(strong, nonatomic, nonnull) MDCInkView *inkView;
+@property(strong, nonatomic, nonnull) MDCRippleView *rippleView;
 
 @end
 
 @implementation MDCBaseCell
+
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 #pragma mark Object Lifecycle
 
@@ -43,32 +44,9 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    MDCInkView *decodedInkView = [aDecoder decodeObjectOfClass:[MDCInkView class]
-                                                        forKey:MDCListBaseCellInkViewKey];
-    if (decodedInkView) {
-      self.inkView = decodedInkView;
-    }
-    UIColor *decodedColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                   forKey:MDCListBaseCellCurrentInkColorKey];
-    if (decodedColor) {
-      self.inkView.inkColor = decodedColor;
-    }
-    NSNumber *decodedElevation = [aDecoder decodeObjectOfClass:[NSNumber class]
-                                                        forKey:MDCListBaseCellCurrentElevationKey];
-    if (decodedElevation) {
-      self.elevation = (CGFloat)[decodedElevation doubleValue];
-    }
     [self commonMDCBaseCellInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:_inkView forKey:MDCListBaseCellInkViewKey];
-  [coder encodeObject:_inkView.inkColor forKey:MDCListBaseCellCurrentInkColorKey];
-  [coder encodeObject:[NSNumber numberWithDouble:(double)_elevation]
-               forKey:MDCListBaseCellCurrentInkColorKey];
 }
 
 #pragma mark Setup
@@ -79,20 +57,20 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
   }
   _inkView.usesLegacyInkRipple = NO;
   [self addSubview:_inkView];
+  if (!self.rippleView) {
+    self.rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
+  }
+  _mdc_overrideBaseElevation = -1;
 }
 
 #pragma mark Ink
 
 - (void)startInk {
-  [self.inkView startTouchBeganAtPoint:_lastTouch
-                              animated:YES
-                        withCompletion:nil];
+  [self.inkView startTouchBeganAtPoint:_lastTouch animated:YES withCompletion:nil];
 }
 
 - (void)endInk {
-  [self.inkView startTouchEndAtPoint:_lastTouch
-                            animated:YES
-                      withCompletion:nil];
+  [self.inkView startTouchEndAtPoint:_lastTouch animated:YES withCompletion:nil];
 }
 
 #pragma mark Shadow
@@ -128,14 +106,24 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
   self.inkView.frame = self.bounds;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark UICollectionViewCell Overrides
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
   if (highlighted) {
     [self startInk];
+    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
   } else {
     [self endInk];
+    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
   }
 }
 
@@ -143,6 +131,7 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
   [super prepareForReuse];
   self.elevation = 0;
   [self.inkView cancelAllAnimationsAnimated:NO];
+  [self.rippleView cancelAllRipplesAnimated:NO completion:nil];
 }
 
 #pragma mark Accessors
@@ -153,6 +142,11 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
   }
   _elevation = elevation;
   [self updateShadowElevation];
+  [self mdc_elevationDidChange];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
@@ -166,11 +160,38 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
   return self.inkView.inkColor;
 }
 
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if ([self.rippleColor isEqual:rippleColor]) {
+    return;
+  }
+  self.rippleView.rippleColor = rippleColor;
+}
+
+- (UIColor *)rippleColor {
+  return self.rippleView.rippleColor;
+}
+
 - (MDCShadowLayer *)shadowLayer {
   if ([self.layer isMemberOfClass:[MDCShadowLayer class]]) {
     return (MDCShadowLayer *)self.layer;
   }
   return nil;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (enableRippleBehavior) {
+    [self.inkView removeFromSuperview];
+    self.rippleView.frame = self.bounds;
+    [self addSubview:self.rippleView];
+  } else {
+    [self.rippleView removeFromSuperview];
+    [self addSubview:self.inkView];
+  }
 }
 
 @end

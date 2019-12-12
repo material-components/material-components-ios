@@ -12,10 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl", "mdc_public_objc_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Math",
+)
+
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
+    sdk_frameworks = [
+        "CoreGraphics",
+    ],
+    deps = [
+        ":Math",
+    ],
+)
+
+mdc_unit_test_suite(
+    name = "unit_tests",
+    deps = [
+        ":unit_test_sources",
+    ],
 )

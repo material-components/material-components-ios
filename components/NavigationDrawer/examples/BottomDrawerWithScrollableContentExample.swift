@@ -14,12 +14,11 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
 class BottomDrawerWithScrollableContentExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -37,8 +36,15 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
     bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
-    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                                   to: bottomAppBar)
+
+    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+
     view.addSubview(bottomAppBar)
   }
 
@@ -63,30 +69,23 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
 
   @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.maximumInitialDrawerHeight = 400;
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
-    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
-                                                        toBottomDrawer: bottomDrawerViewController)
+    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
 
 class DrawerContentWithScrollViewController: UIViewController,
     UICollectionViewDelegate, UICollectionViewDataSource {
-  var colorScheme: MDCSemanticColorScheme!
+  @objc var colorScheme: MDCSemanticColorScheme!
 
   let collectionView: UICollectionView
   let layout = UICollectionViewFlowLayout()
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width,
-                    height: layout.collectionViewContentSize.height)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
 
   init() {
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -115,6 +114,8 @@ class DrawerContentWithScrollViewController: UIViewController,
     super.viewWillLayoutSubviews()
     let s = self.view.frame.size.width / 3
     layout.itemSize = CGSize(width: s, height: s)
+    self.preferredContentSize = CGSize(width: view.bounds.width,
+                                       height: layout.collectionViewContentSize.height)
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -124,7 +125,6 @@ class DrawerContentWithScrollViewController: UIViewController,
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     let colorPick = indexPath.row % 2 == 0
-    print(indexPath.item)
     cell.backgroundColor = colorPick ? colorScheme.surfaceColor : colorScheme.primaryColorVariant
     return cell
   }
@@ -136,7 +136,7 @@ class DrawerContentWithScrollViewController: UIViewController,
 
 extension BottomDrawerWithScrollableContentExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Scrollable Content"],
       "primaryDemo": false,

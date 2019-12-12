@@ -73,6 +73,16 @@
   return _headerViewController.preferredStatusBarStyle;
 }
 
+#pragma mark TraitCollection
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark - Public
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
@@ -110,8 +120,8 @@
   if (self.topLayoutGuideAdjustmentEnabled) {
     if ([self isViewLoaded]) {
       self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
-      self.contentViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                                          | UIViewAutoresizingFlexibleHeight);
+      self.contentViewController.view.autoresizingMask =
+          (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
       self.contentViewController.view.frame = self.view.bounds;
     }
 

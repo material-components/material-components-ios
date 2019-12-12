@@ -24,12 +24,13 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialTypography
 import MaterialComponents.MaterialFlexibleHeader_ColorThemer
+import MaterialComponents.MaterialButtons_Theming
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
   let label = UILabel()
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     textLabel!.font = MDCTypography.subheadFont()
     imageView!.image = UIImage(named: "Demo")
@@ -94,7 +95,7 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 
   let containedButton = MDCButton()
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupContainedButton()
   }
@@ -210,16 +211,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     mainSectionHeader = MainSectionHeader()
     additionalExamplesSectionHeader = createAdditionalExamplesSectionHeader()
-    self.tableView.backgroundColor = UIColor.white
+    self.tableView.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
     self.tableView.separatorStyle = .none
-    self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+    self.tableView.sectionHeaderHeight = UITableView.automaticDimension
 
     var charactersCount = 0
-    #if swift(>=3.2)
-      charactersCount = node.title.count
-    #else
-      charactersCount = node.title.characters.count
-    #endif
+    charactersCount = node.title.count
     if charactersCount > 0 {
       self.tableView.accessibilityIdentifier = "Table" + node.title
     } else {
@@ -238,7 +235,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  func themeDidChange(notification: NSNotification) {
+  @objc func themeDidChange(notification: NSNotification) {
     setNeedsStatusBarAppearanceUpdate()
     self.tableView.reloadData()
   }
@@ -287,7 +284,7 @@ extension MDCNodeListViewController {
 
   func createAdditionalExamplesSectionHeader() -> UIView {
     let sectionView = UIView()
-    sectionView.backgroundColor = UIColor.white
+    sectionView.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
     let lineDivider = UIView()
     lineDivider.backgroundColor = UIColor(white: 0.85, alpha: 1)
     lineDivider.translatesAutoresizingMaskIntoConstraints = false
@@ -297,7 +294,7 @@ extension MDCNodeListViewController {
     sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     sectionTitleLabel.text = sectionNames[1]
     sectionTitleLabel.numberOfLines = 0
-    sectionTitleLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    sectionTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
     sectionView.addSubview(lineDivider)
     sectionView.addSubview(sectionTitleLabel)
@@ -367,7 +364,6 @@ extension MDCNodeListViewController {
         constant: self.padding).isActive = true
     }
     // Title Label to Section View
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
@@ -379,9 +375,6 @@ extension MDCNodeListViewController {
     } else {
       preiOS11Behavior()
     }
-    #else
-    preiOS11Behavior()
-    #endif
 
      NSLayoutConstraint(
       item: sectionView,
@@ -397,14 +390,14 @@ extension MDCNodeListViewController {
 
   func MainSectionHeader() -> UIView {
     let sectionView = UIView()
-    sectionView.backgroundColor = UIColor.white
+    sectionView.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     let sectionTitleLabel = UILabel()
     sectionTitleLabel.font = MDCTypography.body2Font()
     sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     sectionTitleLabel.text = sectionNames[0]
     sectionTitleLabel.numberOfLines = 0
-    sectionTitleLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    sectionTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
     mainSectionHeaderTitleLabel = sectionTitleLabel
 
     let descriptionLabel = UILabel()
@@ -412,14 +405,14 @@ extension MDCNodeListViewController {
 
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = descriptionLineHeight - descriptionLabel.font.lineHeight
-    let attrs = [NSParagraphStyleAttributeName: paragraphStyle]
+    let attrs = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
 
     descriptionLabel.attributedText =
         NSAttributedString(string:componentDescription, attributes:attrs)
     descriptionLabel.alpha = MDCTypography.body1FontOpacity()
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     descriptionLabel.numberOfLines = 0
-    descriptionLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    descriptionLabel.setContentCompressionResistancePriority(.required, for: .vertical)
     mainSectionHeaderDescriptionLabel = descriptionLabel
 
     sectionView.addSubview(sectionTitleLabel)
@@ -444,7 +437,6 @@ extension MDCNodeListViewController {
         multiplier: 1.0,
         constant: self.padding).isActive = true
     }
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
@@ -456,9 +448,6 @@ extension MDCNodeListViewController {
     } else {
       preiOS11Behavior()
     }
-    #else
-    preiOS11Behavior()
-    #endif
 
     NSLayoutConstraint(
       item: sectionTitleLabel,
@@ -524,8 +513,7 @@ extension MDCNodeListViewController {
       cell?.selectionStyle = .none
       let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
       let button = primaryDemoCell.containedButton
-      let buttonScheme = AppTheme.globalTheme.buttonScheme
-      MDCContainedButtonThemer.applyScheme(buttonScheme, to:button)
+      button.applyContainedTheme(withScheme: AppTheme.containerScheme)
       button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
     } else {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
@@ -546,7 +534,7 @@ extension MDCNodeListViewController {
       cell!.accessibilityIdentifier = "Cell" + cell!.textLabel!.text!
       cell!.accessoryType = .disclosureIndicator
     }
-
+    cell?.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
     return cell!
   }
 
@@ -555,7 +543,7 @@ extension MDCNodeListViewController {
     return true
   }
 
-  func primaryDemoButtonClicked () {
+  @objc func primaryDemoButtonClicked () {
     let indexPath = IndexPath(row: 0, section: Section.description.rawValue)
     self.tableView(self.tableView, didSelectRowAt: indexPath)
   }
@@ -589,11 +577,15 @@ extension MDCNodeListViewController {
   func themeExample(vc: UIViewController) {
     let colorSel = NSSelectorFromString("setColorScheme:");
     if vc.responds(to: colorSel) {
-      vc.perform(colorSel, with: AppTheme.globalTheme.colorScheme)
+      vc.perform(colorSel, with: AppTheme.containerScheme.colorScheme)
     }
     let typoSel = NSSelectorFromString("setTypographyScheme:");
     if vc.responds(to: typoSel) {
-      vc.perform(typoSel, with: AppTheme.globalTheme.typographyScheme)
+      vc.perform(typoSel, with: AppTheme.containerScheme.typographyScheme)
+    }
+    let containerSel = NSSelectorFromString("setContainerScheme:")
+    if vc.responds(to: containerSel) {
+      vc.perform(containerSel, with: AppTheme.containerScheme)
     }
   }
 }

@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialFeatureHighlight.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
-#import "MaterialFeatureHighlight+TypographyThemer.h"
+#import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightTypicalUseViewController
@@ -22,7 +21,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -33,9 +33,8 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
   [MDCFeatureHighlightColorThemer applySemanticColorScheme:self.colorScheme
                           toFeatureHighlightViewController:vc];
-  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:self.typographyScheme
-                            toFeatureHighlightViewController:vc];
-
+  vc.titleFont = self.typographyScheme.headline6;
+  vc.bodyFont = self.typographyScheme.body2;
   vc.mdc_adjustsFontForContentSizeCategory = YES;
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";

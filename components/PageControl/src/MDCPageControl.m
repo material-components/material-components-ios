@@ -14,6 +14,8 @@
 
 #import "MDCPageControl.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "private/MDCPageControlIndicator.h"
 #import "private/MDCPageControlTrackLayer.h"
 #import "private/MaterialPageControlStrings.h"
@@ -28,25 +30,25 @@ static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle
 static NSString *const kMaterialPageControlScrollViewContentOffset = @"bounds.origin";
 
 // Matches native UIPageControl minimum height.
-static const CGFloat kPageControlMinimumHeight = 48.0f;
+static const CGFloat kPageControlMinimumHeight = 48;
 
 // Matches native UIPageControl indicator radius.
-static const CGFloat kPageControlIndicatorRadius = 3.5f;
+static const CGFloat kPageControlIndicatorRadius = (CGFloat)3.5;
 
 // Matches native UIPageControl indicator spacing margin.
 static const CGFloat kPageControlIndicatorMargin = kPageControlIndicatorRadius * 2.5;
 
 // Delay for revealing indicators staggered towards current page indicator.
-static const NSTimeInterval kPageControlIndicatorShowDelay = 0.04f;
+static const NSTimeInterval kPageControlIndicatorShowDelay = 0.04;
 
 // Default indicator opacity.
-static const CGFloat kPageControlIndicatorDefaultOpacity = 0.5f;
+static const CGFloat kPageControlIndicatorDefaultOpacity = (CGFloat)0.5;
 
 // Default white level for current page indicator color.
-static const CGFloat kPageControlCurrentPageIndicatorWhiteColor = 0.38f;
+static const CGFloat kPageControlCurrentPageIndicatorWhiteColor = (CGFloat)0.38;
 
 // Default white level for page indicator color.
-static const CGFloat kPageControlPageIndicatorWhiteColor = 0.62f;
+static const CGFloat kPageControlPageIndicatorWhiteColor = (CGFloat)0.62;
 
 // Normalize to [0,1] range.
 static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat maxRange) {
@@ -111,22 +113,24 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     return;
   }
   self.hidden = NO;
-  for (MDCPageControlIndicator *indicator in _indicators) {
-    NSInteger indicatorIndex = [_indicators indexOfObject:indicator];
-    if (indicatorIndex == _currentPage) {
+
+  for (NSUInteger pageNumber = 0; pageNumber < _indicators.count; pageNumber++) {
+    MDCPageControlIndicator *indicator = _indicators[pageNumber];
+    if (pageNumber == (NSUInteger)_currentPage) {
       indicator.hidden = YES;
     }
     indicator.color = _pageIndicatorTintColor;
   }
   _animatedIndicator.color = _currentPageIndicatorTintColor;
   _trackLayer.trackColor = _pageIndicatorTintColor;
+}
 
-  // TODO(cjcox): Add back in RTL once we get the view category ready.
-  // This view must be mirrored by flipping instead of relayout, because we want to mirror
-  // the view itself, not its subviews.
-  //  if ([self class] == [MDCPageControl class]) {
-  //    [self mdc_flipViewForRTL];
-  //  }
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)setNumberOfPages:(NSInteger)numberOfPages {
@@ -142,6 +146,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (void)setCurrentPage:(NSInteger)currentPage animated:(BOOL)animated {
   [self setCurrentPage:currentPage animated:animated duration:0];
 }
+
 - (void)setCurrentPage:(NSInteger)currentPage
               animated:(BOOL)animated
               duration:(NSTimeInterval)duration {
@@ -171,13 +176,14 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
       // destination.
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)),
                      dispatch_get_main_queue(), ^{
-                       [self->_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
-                                                 completion:^{
-                                                   // Once track is removed, reveal indicators once
-                                                   // more to ensure
-                                                   // no hidden indicators remain.
-                                                   [self revealIndicatorsReversed:shouldReverse];
-                                                 }];
+                       [self->_trackLayer
+                           removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
+                                        completion:^{
+                                          // Once track is removed, reveal indicators once
+                                          // more to ensure
+                                          // no hidden indicators remain.
+                                          [self revealIndicatorsReversed:shouldReverse];
+                                        }];
                        [self revealIndicatorsReversed:shouldReverse];
                      });
     };
@@ -187,8 +193,9 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                        completion:completionBlock];
   } else {
     // If not animated, simply move indicator to new position and reset track.
+    [self positionAnimatedIndicatorAtCurrentPage];
+
     CGPoint point = [_indicatorPositions[currentPage] CGPointValue];
-    [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
     [_trackLayer resetAtPoint:point];
 
     [CATransaction begin];
@@ -210,16 +217,20 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 #pragma mark - UIView(UIViewGeometry)
 
+- (CGSize)intrinsicContentSize {
+  return [MDCPageControl sizeForNumberOfPages:_numberOfPages];
+}
+
 - (CGSize)sizeThatFits:(__unused CGSize)size {
   return [MDCPageControl sizeForNumberOfPages:_numberOfPages];
 }
 
 + (CGSize)sizeForNumberOfPages:(NSInteger)pageCount {
-   CGFloat radius = kPageControlIndicatorRadius;
-   CGFloat margin = kPageControlIndicatorMargin;
-   CGFloat width = pageCount * ((radius * 2) + margin) - margin;
-   CGFloat height = MAX(kPageControlMinimumHeight, radius * 2);
-   return CGSizeMake(width, height);
+  CGFloat radius = kPageControlIndicatorRadius;
+  CGFloat margin = kPageControlIndicatorMargin;
+  CGFloat width = pageCount * ((radius * 2) + margin) - margin;
+  CGFloat height = MAX(kPageControlMinimumHeight, radius * 2);
+  return CGSizeMake(width, height);
 }
 
 #pragma mark - Colors
@@ -237,9 +248,13 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 #pragma mark - Scrolling
 
 - (NSInteger)scrolledPageNumber:(UIScrollView *)scrollView {
-  // Returns paged index of scrollView.
-  NSInteger unboundedPageNumber = lround(scrollView.contentOffset.x / scrollView.frame.size.width);
-  return MAX(0, MIN(_numberOfPages - 1, unboundedPageNumber));
+  NSInteger unboundedPageNumberLTR =
+      lround(scrollView.contentOffset.x / scrollView.frame.size.width);
+  NSInteger scrolledPageNumberLTR = MAX(0, MIN(_numberOfPages - 1, unboundedPageNumberLTR));
+  if ([self isRTL]) {
+    return self.numberOfPages - 1 - scrolledPageNumberLTR;
+  }
+  return scrolledPageNumberLTR;
 }
 
 - (CGFloat)scrolledPercentage:(UIScrollView *)scrollView {
@@ -287,9 +302,17 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     CGPoint endPoint = startPoint;
     CGFloat radius = kPageControlIndicatorRadius;
     if (transformX > startPoint.x - radius) {
-      endPoint = [_indicatorPositions[scrolledPageNumber + 1] CGPointValue];
+      if ([self isRTL]) {
+        endPoint = [_indicatorPositions[scrolledPageNumber - 1] CGPointValue];
+      } else {
+        endPoint = [_indicatorPositions[scrolledPageNumber + 1] CGPointValue];
+      }
     } else if (transformX < startPoint.x - radius) {
-      startPoint = [_indicatorPositions[scrolledPageNumber - 1] CGPointValue];
+      if ([self isRTL]) {
+        startPoint = [_indicatorPositions[scrolledPageNumber + 1] CGPointValue];
+      } else {
+        startPoint = [_indicatorPositions[scrolledPageNumber - 1] CGPointValue];
+      }
     }
 
     if (scrollView.isDragging) {
@@ -332,6 +355,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   if (sendAction) {
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
+
+  [self positionAnimatedIndicatorAtCurrentPage];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -340,33 +365,34 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   BOOL shouldReverse = (_currentPage > scrolledPageNumber);
   _currentPage = scrolledPageNumber;
   [self revealIndicatorsReversed:shouldReverse];
+  [self positionAnimatedIndicatorAtCurrentPage];
 }
 
 #pragma mark - Indicators
 
 - (void)revealIndicatorsReversed:(BOOL)reversed {
   // Animate hidden indicators staggered with delay.
-  NSArray<MDCPageControlIndicator *> *indicators =
-      reversed ? [[_indicators reverseObjectEnumerator] allObjects] : _indicators;
-  NSInteger count = 0;
-  for (MDCPageControlIndicator *indicator in indicators) {
-    // Determine if this is the current page indicator.
-    NSInteger indicatorIndex = [indicators indexOfObject:indicator];
-    if (reversed) {
-      indicatorIndex = [indicators count] - 1 - indicatorIndex;
-    }
-    BOOL isCurrentPageIndicator = indicatorIndex == _currentPage;
+  NSEnumerationOptions options = (reversed) ? NSEnumerationReverse : 0;
 
-    // Reveal indicators if hidden and not current page indicator.
-    if (indicator.isHidden && !isCurrentPageIndicator) {
-      dispatch_time_t popTime = dispatch_time(
-          DISPATCH_TIME_NOW, (int64_t)(kPageControlIndicatorShowDelay * count * NSEC_PER_SEC));
-      dispatch_after(popTime, dispatch_get_main_queue(), ^{
-        [indicator revealIndicator];
-      });
-      count++;
-    }
-  }
+  __block NSInteger count = 0;
+  void (^block)(MDCPageControlIndicator *, NSUInteger, BOOL *) =
+      ^(MDCPageControlIndicator *indicator, NSUInteger index, BOOL *stop) {
+        BOOL isCurrentPageIndicator = (NSInteger)index == self.currentPage;
+
+        // Reveal indicators if hidden and not current page indicator.
+        if (indicator.isHidden && !isCurrentPageIndicator) {
+          dispatch_time_t popTime = dispatch_time(
+              DISPATCH_TIME_NOW, (int64_t)(kPageControlIndicatorShowDelay * count * NSEC_PER_SEC));
+
+          dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [indicator revealIndicator];
+          });
+
+          count++;
+        }
+      };
+
+  [_indicators enumerateObjectsWithOptions:options usingBlock:block];
 }
 
 #pragma mark - UIGestureRecognizer
@@ -416,8 +442,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 }
 
 - (NSString *)accessibilityLabel {
-  return
-      [[self class] pageControlAccessibilityLabelWithPage:_currentPage + 1 ofPages:_numberOfPages];
+  return [[self class] pageControlAccessibilityLabelWithPage:_currentPage + 1
+                                                     ofPages:_numberOfPages];
 }
 
 - (UIAccessibilityTraits)accessibilityTraits {
@@ -446,9 +472,24 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   }
 }
 
+#pragma mark - Internationalization
+
+- (BOOL)isRTL {
+  return self.respectsUserInterfaceLayoutDirection &&
+         (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionRightToLeft);
+}
+
+- (void)setRespectsUserInterfaceLayoutDirection:(BOOL)respectsUserInterfaceLayoutDirection {
+  _respectsUserInterfaceLayoutDirection = respectsUserInterfaceLayoutDirection;
+  [self resetControl];
+}
+
 #pragma mark - Private
 
 - (void)resetControl {
+  [self invalidateIntrinsicContentSize];
+
   // Clear indicators.
   for (CALayer *layer in [_containerView.layer.sublayers copy]) {
     if (layer != _trackLayer) {
@@ -470,12 +511,19 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     CGFloat offsetX = i * (margin + (radius * 2));
     CGFloat offsetY = radius;
     CGPoint center = CGPointMake(offsetX + radius, offsetY);
-    MDCPageControlIndicator *indicator =
-        [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
+    MDCPageControlIndicator *indicator = [[MDCPageControlIndicator alloc] initWithCenter:center
+                                                                                  radius:radius];
     indicator.opacity = kPageControlIndicatorDefaultOpacity;
     [_containerView.layer addSublayer:indicator];
-    [_indicators addObject:indicator];
-    [_indicatorPositions addObject:[NSValue valueWithCGPoint:indicator.position]];
+    NSInteger pageNumber = i;
+    if ([self isRTL]) {
+      pageNumber = _numberOfPages - 1 - i;
+      [_indicators insertObject:indicator atIndex:0];
+      [_indicatorPositions insertObject:[NSValue valueWithCGPoint:indicator.position] atIndex:0];
+    } else {
+      [_indicators addObject:indicator];
+      [_indicatorPositions addObject:[NSValue valueWithCGPoint:indicator.position]];
+    }
   }
 
   // Resize container view to keep indicators centered.
@@ -487,12 +535,16 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // Add animated indicator that will travel freely across the container. Its transform will be
   // updated by calling its -updateIndicatorTransformX method.
   CGPoint center = CGPointMake(radius, radius);
-  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
   _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
-  [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
+  [self positionAnimatedIndicatorAtCurrentPage];
   [_containerView.layer addSublayer:_animatedIndicator];
 
   [self setNeedsLayout];
+}
+
+- (void)positionAnimatedIndicatorAtCurrentPage {
+  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
+  [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
 }
 
 #pragma mark - Strings
@@ -522,7 +574,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
   // and use that as the search location.
   NSBundle *bundle = [NSBundle bundleForClass:[MDCPageControl class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 

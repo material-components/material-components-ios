@@ -54,10 +54,7 @@ class MDCCatalogTileView: UIView {
     super.init(coder: aDecoder)
   }
 
-  func themeDidChange(notification: NSNotification) {
-    guard notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey] != nil else {
-        return
-    }
+  @objc func themeDidChange(notification: NSNotification) {
     imageCache.removeAllObjects()
   }
 
@@ -68,6 +65,11 @@ class MDCCatalogTileView: UIView {
     }
     imageView.image = getImage(componentNameString)
     imageView.frame = bounds
+  }
+
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    imageCache.removeAllObjects()
   }
 
   func getImage(_ key: String) -> UIImage {
@@ -91,7 +93,7 @@ class MDCCatalogTileView: UIView {
   func createImage() -> UIImage {
     var newImage: UIImage?
 
-    let colorScheme = AppTheme.globalTheme.colorScheme
+    let colorScheme = AppTheme.containerScheme.colorScheme
 
     switch componentNameString {
     case "Activity Indicator":

@@ -42,8 +42,25 @@
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
+/**
+ Called when the state of the bottom sheet changes.
+
+ Note: See what states the sheet can transition to by looking at MDCSheetState.
+
+ @param bottomSheet The MDCBottomSheetPresentationController that its state changed.
+ @param sheetState The state the sheet changed to.
+ */
 - (void)bottomSheetWillChangeState:(nonnull MDCBottomSheetPresentationController *)bottomSheet
                         sheetState:(MDCSheetState)sheetState;
+
+/**
+ Called when the Y offset of the sheet's changes in relation to the top of the screen.
+
+ @param bottomSheet The MDCBottomSheetPresentationController that its Y offset changed.
+ @param yOffset The Y offset the bottom sheet changed to.
+ */
+- (void)bottomSheetDidChangeYOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+                            yOffset:(CGFloat)yOffset;
 @end
 
 /**
@@ -65,6 +82,13 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ When set to false, the bottom sheet controller can't be dismissed by dragging the sheet down.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;
+
+/**
  This is used to set a custom height on the sheet view.
 
  @note If a positive value is passed then the sheet view will be that height even if
@@ -75,6 +99,13 @@
  the content height.
  */
 @property(nonatomic, assign) CGFloat preferredSheetHeight;
+
+/**
+ Customize the color of the background scrim.
+
+ Defaults to a semi-transparent Black.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /**
  If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
@@ -109,5 +140,13 @@
  Delegate to tell the presenter when to dismiss.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;
+
+/**
+ A block that is invoked when the @c MDCBottomSheetPresentationController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomSheetPresentationController *_Nonnull bottomSheetPresentationController,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end

@@ -14,11 +14,11 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_Theming
 
 class AppBarImagerySwiftExample: UITableViewController {
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -46,7 +46,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Make sure navigation bar background color is clear so the image view is visible.
     appBarViewController.navigationBar.backgroundColor = UIColor.clear
@@ -60,11 +60,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     headerView.trackingScrollView = self.tableView
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -83,7 +79,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -100,7 +96,7 @@ class AppBarImagerySwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Imagery (Swift)"],
       "primaryDemo": false,
@@ -108,7 +104,7 @@ extension AppBarImagerySwiftExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }
@@ -125,11 +121,10 @@ extension AppBarImagerySwiftExample {
   override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
-      if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-      }
-      cell!.selectionStyle = .none
-      return cell!
+    
+    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
+        UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cell.selectionStyle = .none
+    return cell
   }
 }

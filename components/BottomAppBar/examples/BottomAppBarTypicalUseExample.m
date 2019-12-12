@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialContainerScheme.h"
 
 #import "supplemental/BottomAppBarTypicalUseSupplemental.h"
 
@@ -26,10 +26,18 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom App Bar";
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)commonBottomBarSetup {
@@ -72,13 +80,19 @@
   [super viewDidLoad];
   [self commonBottomBarSetup];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme
-                                    toButton:self.bottomBarView.floatingButton];
-  [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:self.colorScheme
-                                                      toBottomAppBarView:self.bottomBarView];
+  [self.bottomBarView.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
+
+  self.bottomBarView.barTintColor = self.colorScheme.surfaceColor;
+  UIColor *barItemTintColor =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6];
+  self.bottomBarView.leadingBarItemsTintColor = barItemTintColor;
+  self.bottomBarView.trailingBarItemsTintColor = barItemTintColor;
+  [self.bottomBarView.floatingButton setBackgroundColor:self.colorScheme.primaryColor
+                                               forState:UIControlStateNormal];
+  [self.bottomBarView.floatingButton setTitleColor:self.colorScheme.onPrimaryColor
+                                          forState:UIControlStateNormal];
+  [self.bottomBarView.floatingButton setImageTintColor:self.colorScheme.onPrimaryColor
+                                              forState:UIControlStateNormal];
 }
 
 - (void)didTapFloatingButton:(id)sender {

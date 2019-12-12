@@ -23,7 +23,7 @@
 // This table is to be indexed using the generated enum.
 
 static NSString *const kMaterialAppBarStringTable[] = {
-  @"MaterialAppBarBackButtonAccessibilityLabel",   // Back
+    @"MaterialAppBarBackButtonAccessibilityLabel",  // Back
 };
 #define kNumMaterialAppBarStrings 1
 #define kMaterialAppBarStringsOffset 0

@@ -3,3 +3,4 @@ module: schemes
 umbrella_header: src/Materialschemes.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -13,10 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -25,7 +30,6 @@ mdc_public_objc_library(
     bundles = [":Bundle"],
     sdk_frameworks = [
         "CoreGraphics",
-        "UIKit",
     ],
     deps = [
         "//components/CollectionCells",
@@ -34,6 +38,22 @@ mdc_public_objc_library(
         "//components/Palettes",
         "//components/ShadowLayer",
         "//components/Typography",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Collections",
+        "//components/Palettes",
+        "//components/Typography",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Collections",
     ],
 )
 
@@ -51,31 +71,23 @@ objc_bundle(
 
 mdc_objc_library(
     name = "private",
+    testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
     deps = [
         ":Collections",
         ":private",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )

@@ -1,5 +1,8 @@
 ### Typography Theming
 
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](theming.md) instead.
+
 You can theme buttons with your app's typography scheme using the TypographyThemer extension.
 
 You must first add the Typography Themer extension to your project:

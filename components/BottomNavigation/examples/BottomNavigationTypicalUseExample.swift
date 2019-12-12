@@ -13,28 +13,20 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialColorScheme
 
 class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
 
-  init() {
-    super.init(nibName: nil, bundle: nil)
-    commonBottomNavigationTypicalUseSwiftExampleInit()
-  }
+  override func viewDidLoad() {
+    super.viewDidLoad()
 
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-
-  func commonBottomNavigationTypicalUseSwiftExampleInit() {
-    view.backgroundColor = .lightGray
+    view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
     // Always show bottom navigation bar item titles.
@@ -72,17 +64,12 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     super.viewWillLayoutSubviews()
     layoutBottomNavBar()
   }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
 }
 
 // MARK: Catalog by convention
 extension BottomNavigationTypicalUseSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation (Swift)"],
       "primaryDemo": false,

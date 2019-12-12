@@ -14,8 +14,8 @@
 
 #import "MDCListColorThemer.h"
 
-static const CGFloat kHighAlpha = 0.87f;
-static const CGFloat kInkAlpha = 0.16f;
+static const CGFloat kHighAlpha = (CGFloat)0.87;
+static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @implementation MDCListColorThemer
 
@@ -26,11 +26,15 @@ static const CGFloat kInkAlpha = 0.16f;
   cell.leadingImageView.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   cell.trailingImageView.tintColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
-  cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  cell.inkColor = rippleColor;
+  cell.rippleColor = rippleColor;
 }
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell {
-  cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  cell.inkColor = rippleColor;
+  cell.rippleColor = rippleColor;
 }
 
 @end

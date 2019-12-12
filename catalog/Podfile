@@ -1,59 +1,89 @@
 workspace 'MDCCatalog.xcworkspace'
 project 'MDCCatalog.xcodeproj'
 
+# TODO: Uncomment line below and switch from legacy build system when Cocoapods 1.6 goes out of beta
+# install! 'cocoapods', :disable_input_output_paths => true
+
 target "MDCCatalog" do
-  platform :ios, '8.0'
+  platform :ios, '9.0'
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../', :testspecs => [
-    'ActivityIndicator/tests/unit',
-    'AnimationTiming/tests/unit',
-    'AppBar/tests/unit',
-    'BottomAppBar/tests/unit',
-    'BottomNavigation/tests/unit',
-    'BottomSheet/tests/unit',
-    'Buttons/tests/unit',
-    'Cards/tests/unit',
-    'Chips/tests/unit',
-    'CollectionCells/tests/unit',
-    'CollectionLayoutAttributes/tests/unit',
-    'Collections/tests/unit',
-    'Dialogs/tests/unit',
-    'FeatureHighlight/tests/unit',
-    'FlexibleHeader/tests/unit',
-    'HeaderStackView/tests/unit',
-    'Ink/tests/unit',
-    'LibraryInfo/tests/unit',
-    'List/tests/unit',
-    'MaskedTransition/tests/unit',
-    'NavigationBar/tests/unit',
-    'NavigationDrawer/tests/unit',
-    'OverlayWindow/tests/unit',
-    'PageControl/tests/unit',
-    'Palettes/tests/unit',
-    'private/Application/tests/unit',
-    'private/KeyboardWatcher/tests/unit',
-    'private/Math/tests/unit',
-    'private/Overlay/tests/unit',
-    'private/ShapeLibrary/tests/unit',
-    'private/Shapes/tests/unit',
-    'private/ThumbTrack/tests/unit',
-    'private/UIMetrics/tests/unit',
-    'ProgressView/tests/unit',
-    'schemes/Color/tests/unit',
-    'schemes/Shape/tests/unit',
-    'schemes/Typography/tests/unit',
-    'ShadowElevations/tests/unit',
-    'ShadowLayer/tests/unit',
-    'Slider/tests/unit',
-    'Snackbar/tests/unit',
-    'Tabs/tests/unit',
-    'TextFields/tests/unit',
-    'Themes/tests/unit',
-    'Typography/tests/unit',
+    'ActionSheet/UnitTests',
+    'ActionSheet+Theming/UnitTests',
+    'ActivityIndicator/UnitTests',
+    'AnimationTiming/UnitTests',
+    'AppBar/UnitTests',
+    'AppBar+Theming/UnitTests',
+    'Banner/UnitTests',
+    'Banner+Theming/UnitTests',
+    'BottomAppBar/UnitTests',
+    'BottomNavigation/UnitTests',
+    'BottomNavigation+Theming/UnitTests',
+    'BottomSheet/UnitTests',
+    'ButtonBar/UnitTests',
+    'Buttons/UnitTests',
+    'Buttons+Theming/UnitTests',
+    'Cards/UnitTests',
+    'Cards+Theming/UnitTests',
+    'Chips/UnitTests',
+    'Chips+Theming/UnitTests',
+    'CollectionCells/UnitTests',
+    'CollectionLayoutAttributes/UnitTests',
+    'Collections/UnitTests',
+    'Dialogs/UnitTests',
+    'Dialogs+Theming/UnitTests',
+    'Elevation/UnitTests',
+    'FeatureHighlight/UnitTests',
+    'FlexibleHeader/UnitTests',
+    'HeaderStackView/UnitTests',
+    'Ink/UnitTests',
+    'LibraryInfo/UnitTests',
+    'List/UnitTests',
+    'List+Theming/UnitTests',
+    'NavigationBar/UnitTests',
+    'NavigationDrawer/UnitTests',
+    'OverlayWindow/UnitTests',
+    'PageControl/UnitTests',
+    'Palettes/UnitTests',
+    'private/Application/UnitTests',
+    'private/Color/UnitTests',
+    'private/Icons/UnitTests',
+    'private/KeyboardWatcher/UnitTests',
+    'private/Math/UnitTests',
+    'private/Overlay/UnitTests',
+    'private/ThumbTrack/UnitTests',
+    'private/UIMetrics/UnitTests',
+    'ProgressView/UnitTests',
+    'ProgressView+Theming/UnitTests',
+    'Ripple/UnitTests',
+    'schemes/Color/UnitTests',
+    'schemes/Container/UnitTests',
+    'schemes/Shape/UnitTests',
+    'schemes/Typography/UnitTests',
+    'ShadowElevations/UnitTests',
+    'ShadowLayer/UnitTests',
+    'ShapeLibrary/UnitTests',
+    'Shapes/UnitTests',
+    'Slider/UnitTests',
+    'Snackbar/UnitTests',
+    'Tabs/UnitTests',
+    'Tabs+Theming/UnitTests',
+    'TextFields/UnitTests',
+    'TextControls/UnitTests',
+    'TextControls+Theming/UnitTests',
+    'TextFields+Theming/UnitTests',
+    'Themes/UnitTests',
+    'Typography/UnitTests',
   ]
-  pod 'MaterialComponentsAlpha', :path => '../', :testspecs => [
-    'ActionSheet/tests/unit',
+  pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
+    'ActionSheet+ActionSheetThemer/UnitTests',
+    'ActionSheet+ColorThemer/UnitTests',
+    'BottomNavigation/UnitTests',
+    'Tabs+TabBarView/UnitTests',
+  ]
+  pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
+    'SnapshotTests'
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -62,11 +92,11 @@ target "MDCCatalog" do
 end
 
 target "MDCActionExtension" do
-  platform :ios, '8.0'
+  platform :ios, '9.0'
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'MaterialComponentsAlpha', :path => '../'
+  pod 'MaterialComponentsBeta', :path => '../'
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
 
@@ -74,28 +104,29 @@ target "MDCActionExtension" do
 end
 
 target "MDCDragons" do
-  platform :ios, '8.0'
+  platform :ios, '9.0'
   project 'MDCDragons.xcodeproj'
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialComponents', :path => '../'
-  pod 'MaterialComponentsAlpha', :path => '../'
+  pod 'MaterialComponentsBeta', :path => '../'
   pod 'MaterialComponentsExamples', :path => '../'
   use_frameworks!
 end
 
 post_install do |installer|
-  pod_dir = File.dirname(installer.pods_project.path)
 
-  # Inject our specific warning flags into the .xcconfig files.
-  mdc_xcconfigs = [
-    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.unit.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsAlpha/MaterialComponentsAlpha.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsAlpha/MaterialComponentsAlpha.unit.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsExamples/MaterialComponentsExamples.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig",
-  ]
+  mdc_xcconfigs = []
+  target_support_files_path = File.dirname(installer.pods_project.path) + "/" + "Target Support Files"
+  subdirectories = ["MaterialComponents", "MaterialComponentsBeta", "MaterialComponentsExamples", "Pods-MDCCatalog"]
+  subdirectories.each do |subdirectory|
+  subdirectory_path = target_support_files_path + "/" + subdirectory
+    Dir.foreach(subdirectory_path) do |file|
+      if file.include? "xcconfig"
+        file_path = subdirectory_path + "/" + file
+        mdc_xcconfigs.push file_path
+      end
+    end
+  end
 
   # Note the path is relative to the xcconfig file being modified.
   # https://pewpewthespells.com/blog/xcconfig_guide.html

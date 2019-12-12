@@ -13,11 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_swift_library",
+    "mdc_unit_test_suite",
+)
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -26,102 +35,133 @@ mdc_public_objc_library(
     sdk_frameworks = ["UIKit"],
     deps = [
         "//components/BottomSheet",
+        "//components/Elevation",
         "//components/Ink",
+        "//components/Ripple",
+        "//components/ShadowElevations",
         "//components/Typography",
+        "//components/private/Math",
     ],
 )
 
-mdc_objc_library(
-    name = "ActionSheetThemer",
-    srcs = native.glob(["src/ActionSheetThemer/*.m"]),
-    hdrs = native.glob(["src/ActionSheetThemer/*.h"]),
-    includes = ["src/ActionSheetThemer"],
-    sdk_frameworks = ["UIKit"],
+mdc_extension_objc_library(
+    name = "Theming",
     deps = [
         ":ActionSheet",
-        ":TypographyThemer",
-        ":ColorThemer",
+        "//components/Elevation",
+        "//components/private/Color",
+        "//components/schemes/Container",
+        "//components/ShadowElevations",
     ],
-    visibility = ["//visibility:public"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
+    name = "ActionSheetThemer",
+    deps = [
+        ":ActionSheet",
+        ":ColorThemer",
+        ":TypographyThemer",
+    ],
+)
+
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    sdk_frameworks = ["UIKit"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Typography",
     ],
-    visibility = ["//visibility:public"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = ["UIKit"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
     name = "privateHeaders",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    visibility = ["//visibility:private"],
     deps = [":ActionSheet"],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
 )
 
-swift_library(
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+        "//components/AppBar",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
+    extra_srcs = glob(["tests/unit/ColorThemer/*.swift"]),
     deps = [
         ":ActionSheet",
         ":ColorThemer",
-        ":private",
+        ":privateHeaders",
     ],
-    visibility = ["//visibility:private"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
+    hdrs = glob(["tests/unit/*.h"]),
+    extra_srcs = glob([
+        "tests/unit/ActionSheetThemer/*.m",
+        "tests/unit/Theming/*.m",
     ]),
     sdk_frameworks = [
-        "UIKit",
         "CoreImage",
-        "XCTest",
     ],
     deps = [
-         ":ActionSheet",
-         ":ActionSheetThemer",
-         ":ColorThemer",
-         ":TypographyThemer",
-         ":privateHeaders"
+        ":ActionSheet",
+        ":ActionSheetThemer",
+        ":ColorThemer",
+        ":Theming",
+        ":TypographyThemer",
+        ":privateHeaders",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
-        ":unit_test_swift_sources"
-    ]
+        ":unit_test_swift_sources",
+    ],
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":ActionSheet",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
+    ],
 )

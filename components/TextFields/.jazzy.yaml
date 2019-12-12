@@ -3,3 +3,4 @@ module: TextFields
 umbrella_header: src/MaterialTextFields.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

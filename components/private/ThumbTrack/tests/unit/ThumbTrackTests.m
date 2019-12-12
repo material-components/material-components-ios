@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MDCThumbTrack+Private.h"
+#import "../../src/private/MDCThumbTrack+Private.h"
 #import "MaterialThumbTrack.h"
+#import "MaterialTypography.h"
 
 @interface ThumbTrackTests : XCTestCase
 
@@ -43,7 +44,7 @@
   XCTAssertEqualObjects(thumbTrack.trackOnColor, thumbTrack.primaryColor);
   XCTAssertEqualObjects(thumbTrack.thumbEnabledColor, thumbTrack.primaryColor);
   XCTAssertEqualObjects(thumbTrack.inkColor,
-                        [thumbTrack.primaryColor colorWithAlphaComponent:0.5f]);
+                        [thumbTrack.primaryColor colorWithAlphaComponent:(CGFloat)0.5]);
   XCTAssertEqualObjects(thumbTrack.valueLabelBackgroundColor, thumbTrack.primaryColor);
 }
 
@@ -172,7 +173,7 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
   thumbTrack.trackOnTickColor = UIColor.cyanColor;
 
   // Then
@@ -185,9 +186,9 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = NO;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
   thumbTrack.trackOnTickColor = UIColor.cyanColor;
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
 
   // Then
   XCTAssertEqualObjects(thumbTrack.trackOnTickColor, UIColor.cyanColor);
@@ -209,7 +210,7 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
   thumbTrack.trackOffTickColor = UIColor.cyanColor;
 
   // Then
@@ -222,9 +223,9 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // When
-  thumbTrack.shouldDisplayDiscreteDots = NO;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
   thumbTrack.trackOffTickColor = UIColor.cyanColor;
-  thumbTrack.shouldDisplayDiscreteDots = YES;
+  thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
 
   // Then
   XCTAssertEqualObjects(thumbTrack.trackOffTickColor, UIColor.cyanColor);
@@ -238,7 +239,8 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // Then
-  XCTAssertEqualObjects(thumbTrack.inkColor, [UIColor.blueColor colorWithAlphaComponent:0.5f]);
+  XCTAssertEqualObjects(thumbTrack.inkColor,
+                        [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.5]);
 }
 
 - (void)testSetInkColor {
@@ -358,6 +360,28 @@
 
   // Then
   XCTAssertEqualObjects(thumbTrack.numericValueLabel.backgroundColor, UIColor.cyanColor);
+}
+
+- (void)testDiscreteValueLabelFontDefaultValue {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.discreteValueLabelFont,
+                        [[MDCTypography fontLoader] regularFontOfSize:12]);
+}
+
+- (void)testDiscreteValueLabelFontSettingToNilValue {
+  // Given
+  MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
+  thumbTrack.discreteValueLabelFont = [UIFont systemFontOfSize:20];
+
+  // When
+  thumbTrack.discreteValueLabelFont = nil;
+
+  // Then
+  XCTAssertEqualObjects(thumbTrack.discreteValueLabelFont,
+                        [[MDCTypography fontLoader] regularFontOfSize:12]);
 }
 
 @end

@@ -14,13 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCButton+Subclassing.h"
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
-#import "MDCButton+Subclassing.h"
 
 static const UIEdgeInsets ButtonTestContentEdgeInsets = {1, 2, 3, 4};
-static const CGFloat ButtonTestCornerRadius = 1.234f;
+static const CGFloat ButtonTestCornerRadius = (CGFloat)1.234;
 
 @interface ButtonSubclass : MDCButton
 @end
@@ -29,10 +29,6 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
   return ButtonTestContentEdgeInsets;
-}
-
-- (CGFloat)cornerRadius {
-  return ButtonTestCornerRadius;
 }
 
 @end
@@ -47,8 +43,8 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
   MDCButton *button = [[ButtonSubclass alloc] init];
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(ButtonTestContentEdgeInsets,
-                                              button.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(ButtonTestContentEdgeInsets, button.contentEdgeInsets));
 }
 
 - (void)testAssignedContentEdgeInsets {
@@ -57,18 +53,8 @@ static const CGFloat ButtonTestCornerRadius = 1.234f;
   button.contentEdgeInsets = ButtonTestContentEdgeInsets;
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(ButtonTestContentEdgeInsets,
-                                              button.contentEdgeInsets));
-}
-
-- (void)testSubclassCornerRadius {
-  // Given
-  MDCButton *button = [[ButtonSubclass alloc] initWithFrame:CGRectZero];
-  [button sizeToFit];
-  [button layoutIfNeeded];
-
-  // Then
-  XCTAssertEqualWithAccuracy(ButtonTestCornerRadius, button.layer.cornerRadius, 0.0001);
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(ButtonTestContentEdgeInsets, button.contentEdgeInsets));
 }
 
 - (void)testAssignedCornerRadius {

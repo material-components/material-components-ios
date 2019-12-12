@@ -16,28 +16,6 @@
 
 #import "MaterialInk.h"
 
-#pragma mark - Fake classes
-
-@interface FakeMDCInkViewAnimationDelegate : NSObject <MDCInkViewDelegate, NSCoding>
-@property(nonatomic, strong) MDCInkView *inkView;
-@end
-
-@implementation FakeMDCInkViewAnimationDelegate
-
-- (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
-  [aCoder encodeObject:self.inkView forKey:@"inkView"];
-}
-
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
-  self = [super init];
-  if (self) {
-    _inkView = [aDecoder decodeObjectForKey:@"inkView"];
-  }
-  return self;
-}
-
-@end
-
 #pragma mark - Tests
 
 @interface MDCInkViewTests : XCTestCase
@@ -53,10 +31,8 @@
   // Then
   XCTAssertTrue(inkView.usesLegacyInkRipple);
   XCTAssertFalse(inkView.usesCustomInkCenter);
-  XCTAssertTrue(CGPointEqualToPoint(inkView.customInkCenter, CGPointZero),
-                @"%@ is not equal to %@",
-                NSStringFromCGPoint(inkView.customInkCenter),
-                NSStringFromCGPoint(CGPointZero));
+  XCTAssertTrue(CGPointEqualToPoint(inkView.customInkCenter, CGPointZero), @"%@ is not equal to %@",
+                NSStringFromCGPoint(inkView.customInkCenter), NSStringFromCGPoint(CGPointZero));
   XCTAssertNil(inkView.animationDelegate);
   XCTAssertEqualObjects(inkView.inkColor, inkView.defaultInkColor);
   XCTAssertEqual(inkView.inkStyle, MDCInkStyleBounded);
@@ -76,7 +52,6 @@
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleUnbounded;
 
-
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
   XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 12, 0.0001);
@@ -94,7 +69,6 @@
   inkViewStyleThenRadius.maxRippleRadius = 12;
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleUnbounded;
-
 
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
@@ -114,7 +88,6 @@
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleBounded;
 
-
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 0, 0.0001);
   XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 0, 0.0001);
@@ -133,10 +106,33 @@
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleBounded;
 
-
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
   XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 12, 0.0001);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCInkView *testInkView = [[MDCInkView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCInkView *passedInkView = nil;
+  testInkView.traitCollectionDidChangeBlock =
+      ^(MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedInkView = ink;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [testInkView traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedInkView, testInkView);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end

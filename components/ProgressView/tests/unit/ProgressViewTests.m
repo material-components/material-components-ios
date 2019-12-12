@@ -36,30 +36,67 @@
 
 #pragma mark - Tests
 
+- (void)testCornerRadius {
+  XCTAssertEqual(_progressView.cornerRadius, 0);
+}
+
 - (void)testInitialProgress {
   XCTAssertEqual(_progressView.progress, 0);
 }
 
 - (void)testSetProgress {
-  _progressView.progress = 0.1234f;
-  XCTAssertEqual(_progressView.progress, 0.1234f);
+  _progressView.progress = (float)0.1234;
+  XCTAssertEqual(_progressView.progress, (float)0.1234);
 }
 
 - (void)testSetProgressAnimated {
-  [_progressView setProgress:0.777f animated:YES completion:nil];
-  XCTAssertEqual(_progressView.progress, 0.777f);
+  [_progressView setProgress:(float)0.777 animated:YES completion:nil];
+  XCTAssertEqual(_progressView.progress, (float)0.777);
 
   [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 }
 
 - (void)testProgressClampedAt0 {
-  _progressView.progress = -1.f;
-  XCTAssertEqual(_progressView.progress, 0.f);
+  _progressView.progress = -1;
+  XCTAssertEqual(_progressView.progress, 0);
 }
 
 - (void)testProgressClampedAt1 {
-  _progressView.progress = 2.f;
-  XCTAssertEqual(_progressView.progress, 1.f);
+  _progressView.progress = 2;
+  XCTAssertEqual(_progressView.progress, 1);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCProgressView *passedProgressView = nil;
+  _progressView.traitCollectionDidChangeBlock =
+      ^(MDCProgressView *_Nonnull progressView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedProgressView = progressView;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [_progressView traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedProgressView, _progressView);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+- (void)testAccessibilityLabelMatchesUIProgressView {
+  // Given
+  UIProgressView *uiProgressView = [[UIProgressView alloc] init];
+  MDCProgressView *mdcProgressView = [[MDCProgressView alloc] init];
+
+  // Then
+  XCTAssertEqual(uiProgressView.accessibilityLabel, mdcProgressView.accessibilityLabel);
 }
 
 @end

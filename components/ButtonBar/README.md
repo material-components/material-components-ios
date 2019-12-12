@@ -32,8 +32,7 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
   - [Typical use](#typical-use)
   - [Supported UIBarButtonItem properties](#supported-uibarbuttonitem-properties)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
 
 - - -
 
@@ -175,83 +174,10 @@ buttonBar.items = items;
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Color Theming
+### Theming
 
-You can theme a button bar with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/ButtonBar+ColorThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialButtonBar_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to:buttonBar)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialButtonBar+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-
-// Step 3: Apply the color scheme to your component
-[MDCButtonBarColorThemer applySemanticColorScheme:colorScheme
-     toButtonBar:buttonBar];
-```
-<!--</div>-->
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-You can theme a button bar with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/ButtonBar+TypographyThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialButtonBar_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCButtonBarTypographyThemer.applyTypographyScheme(typographyScheme, to: buttonBar)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialButtonBar+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCButtonBarTypographyThemer applyTypographyScheme:colorScheme
-     toButtonBar:buttonBar];
-```
-<!--</div>-->
+MDCButtonBar is intended to be themed through the AppBar component's theming extension. More
+information can be found at https://github.com/material-components/material-components-ios/tree/develop/components/AppBar#theming.
 

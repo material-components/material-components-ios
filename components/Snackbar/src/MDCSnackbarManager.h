@@ -13,18 +13,19 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
 #import "MDCSnackbarAlignment.h"
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
 
 @class MDCSnackbarMessage;
 @class MDCSnackbarMessageView;
 @protocol MDCSnackbarSuspensionToken;
 
-
 /**
  Delegate protocol for the MDCSnackbarManager.
  */
 @protocol MDCSnackbarManagerDelegate <NSObject>
-
 
 /**
  This method is called after the MDCSnackbarMessageView instance is initialized and right before
@@ -47,7 +48,7 @@
  Snackbars prefer an application's main window is a subclass of @c MDCOverlayWindow. When a standard
  UIWindow is used an attempt is made to find the top-most view controller in the view hierarchy.
  */
-@interface MDCSnackbarManager : NSObject
+@interface MDCSnackbarManager : NSObject <MDCElevationOverriding>
 
 /**
  An instance of MDCSnackbarManager.
@@ -59,8 +60,8 @@
 
  If called within an animation block, the change will be animated.
 
- @note This setting is only used when both the horizontal and vertical size classes of the presenting
- window are @c UIUserInterfaceSizeClassRegular. Otherwise @c MDCSnackbarAlignmentCenter
+ @note This setting is only used when both the horizontal and vertical size classes of the
+ presenting window are @c UIUserInterfaceSizeClassRegular. Otherwise @c MDCSnackbarAlignmentCenter
  will be used.
 
  @note The setter must be called from the main thread.
@@ -130,7 +131,7 @@
  @return A token suitable for use in {@c +[MDCSnackbarManager resumeWithToken:]}. Letting this
  object deallocate is equivalent to calling {@c +[MDCSnackbarManager resumeMessagesWithToken:]}.
  */
-- (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages;
+- (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages;
 
 /**
  Suspends the display of all messages in a given category.
@@ -143,8 +144,8 @@
  Letting this object dealloc is equivalent to calling
  {@c +[MDCSnackbarManager resumeMessagesWithToken:]}.
  */
-- (nullable id <MDCSnackbarSuspensionToken>)
-    suspendMessagesWithCategory:(nullable NSString *)category;
+- (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:
+    (nullable NSString *)category;
 
 /**
  Resumes the display of messages once there are no outstanding suspension tokens.
@@ -153,7 +154,7 @@
 
  @param token The suspension token to invalidate.
  */
-- (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token;
+- (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token;
 
 #pragma mark Styling
 
@@ -166,6 +167,9 @@
  The color for the shadow color for the Snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
+
+/** The elevation for the Snackbar message view. */
+@property(nonatomic, assign) MDCShadowElevation messageElevation;
 
 /**
  The color for the message text in the Snackbar message view.
@@ -181,6 +185,21 @@
  The font for the button text in the Snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIFont *buttonFont;
+
+/**
+ If true, converts button titles to uppercase. Defaults to MDCButton's default (YES).
+ */
+@property(nonatomic, assign) BOOL uppercaseButtonTitle;
+
+/**
+ Alpha of disabled buttons. Defaults to the MDCButton's default (0.12).
+ */
+@property(nonatomic) CGFloat disabledButtonAlpha;
+
+/**
+ The color for the ink view in the Snackbar message view's buttons.
+ */
+@property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
 /**
  If enabled, modifications of class styling properties will be applied immediately
@@ -222,7 +241,25 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views.
+ Affects the fallback behavior for when a scaled font is not provided.
+
+ If enabled, the font size will adjust even if a scaled font has not been provided for
+ a given UIFont property on this component.
+
+ If disabled, the font size will only be adjusted if a scaled font has been provided.
+ This behavior most closely matches UIKit's.
+
+ Default value is YES.
+ */
+@property(nonatomic, assign)
+    BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable __deprecated_msg(
+        "Use UIFontMetrics and UIContentSizeCategoryAdjusting on iOS 11+ or MDCFontScaler on "
+        "earlier versions");
+/**
+ If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views by
+ default. If accessibilityViewIsModal needs to be set for specific snackbar views,
+ -willPresentSnackbarWithMessageView: in MDCSnackbarManagerDelegate can be used to access
+ snackbar view and set the accessibilityViewIsModal value.
 
  Default is set to NO.
  */
@@ -233,6 +270,20 @@
  */
 @property(nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 
+/**
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView receives a
+ call to @c traitCollectionDidChange:.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlockForMessageView)
+    (MDCSnackbarMessageView *_Nonnull messageView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView elevation
+ changes, and its mdc_elevationDidChangeBlock is called.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlockForMessageView)
+    (id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation);
 @end
 
 /**
@@ -282,18 +333,18 @@
 /**
  Calls @c -suspendAllMessages on the @c defaultManager instance.
  */
-+ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages;
++ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages;
 
 /**
  Calls @c -suspendMessagesWithCategory: on the @c defaultManager instance.
  */
-+ (nullable id <MDCSnackbarSuspensionToken>)
-    suspendMessagesWithCategory:(nullable NSString *)category;
++ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:
+    (nullable NSString *)category;
 
 /**
  Calls @c -resumeMessagesWithToken: on the @c defaultManager instance.
  */
-+ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token;
++ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token;
 
 /**
  Bound to @c snackbarMessageViewBackgroundColor on the @c defaultManager instance.

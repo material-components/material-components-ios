@@ -15,6 +15,10 @@
 #import <UIKit/UIKit.h>
 #import "MaterialCards.h"
 
+#import "MaterialContainerScheme.h"
+
 @interface CardsCollectionExample : UICollectionViewController
+
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 
 @end

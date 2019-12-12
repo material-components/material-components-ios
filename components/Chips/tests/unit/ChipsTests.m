@@ -17,10 +17,27 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/MDCChipField.h"
+#import "MaterialTypography.h"
 
 // Expose internal methods for testing
 @interface MDCChipField (Testing)
 - (void)createNewChipFromInput;
+@end
+
+/** Fake MDCChipView for unit testing. */
+@interface MDCChipsTestsFakeChipView : MDCChipView
+
+/** Used to set the value of @c traitCollection. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation MDCChipsTestsFakeChipView
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -80,6 +97,9 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertFalse(chip.mdc_adjustsFontForContentSizeCategory);
   XCTAssertNotNil(chip.selectedImageView);
   XCTAssertNotNil(chip.titleLabel);
+  XCTAssertEqual(chip.accessibilityTraits, UIAccessibilityTraitButton);
+  XCTAssertEqualWithAccuracy(chip.mdc_baseElevation, 0, 0.001);
+  XCTAssertNil(chip.mdc_elevationDidChangeBlock);
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(chip.contentPadding, expectedContentPadding),
                 @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(chip.contentPadding),
                 NSStringFromUIEdgeInsets(expectedContentPadding));
@@ -96,17 +116,17 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertNil(chip.shapeGenerator);
   // Background color
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateDisabled],
-                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), 0.38f));
+                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.38));
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateSelected],
-                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), 0.16f));
+                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.16));
 
   // Elevation
   XCTAssertEqualWithAccuracy([chip elevationForState:UIControlStateHighlighted], 8, 0.001);
 
   // Title color
-  UIColor *normalTitleColor = [UIColor colorWithWhite:0.13f alpha:1.0f];
+  UIColor *normalTitleColor = [UIColor colorWithWhite:(CGFloat)0.13 alpha:1];
   XCTAssertEqualObjects([chip titleColorForState:UIControlStateDisabled],
-                        MDCColorLighten(normalTitleColor, 0.38f));
+                        MDCColorLighten(normalTitleColor, (CGFloat)0.38));
 
   UIControlState maximumState =
       UIControlStateDisabled | UIControlStateSelected | UIControlStateHighlighted;
@@ -114,8 +134,7 @@ static inline UIImage *TestImage(CGSize size) {
     XCTAssertNil([chip borderColorForState:state]);
     XCTAssertNil([chip inkColorForState:state]);
     XCTAssertEqualWithAccuracy([chip borderWidthForState:state], 0, 0.001);
-    XCTAssertEqualObjects([chip shadowColorForState:state],
-                          [UIColor colorWithWhite:0 alpha:1]);
+    XCTAssertEqualObjects([chip shadowColorForState:state], [UIColor colorWithWhite:0 alpha:1]);
     if (state != UIControlStateDisabled) {
       XCTAssertEqualObjects([chip titleColorForState:state], normalTitleColor);
     }
@@ -162,8 +181,8 @@ static inline UIImage *TestImage(CGSize size) {
                              0.001);
   XCTAssertEqualWithAccuracy(CGRectGetWidth(chipWithMinimumHeightAndWidth.bounds), minimumDimension,
                              0.001);
-  XCTAssertEqualWithAccuracy(CGRectGetHeight(chipWithMinimumHeightAndWidth.bounds), minimumDimension,
-                             0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(chipWithMinimumHeightAndWidth.bounds),
+                             minimumDimension, 0.001);
 }
 
 - (void)testMinimumSizeWithIntrinsicContentSize {
@@ -260,38 +279,36 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
                                               CGRectGetMinY(chipBounds) + hitAreaInsets.top)
                         withEvent:nil]);
-  XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left -
-                                                  delta,
-                                               CGRectGetMinY(chipBounds) + hitAreaInsets.top -
-                                                  delta)
-                        withEvent:nil]);
+  XCTAssertFalse([chip
+      pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left - delta,
+                              CGRectGetMinY(chipBounds) + hitAreaInsets.top - delta)
+        withEvent:nil]);
   // Top-right corner
-  XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right -
-                                                  delta,
-                                              CGRectGetMinY(chipBounds) + hitAreaInsets.top)
-                        withEvent:nil]);
-  XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
-                                               CGRectGetMinY(chipBounds) + hitAreaInsets.top -
-                                                  delta)
-                        withEvent:nil]);
+  XCTAssertTrue([chip
+      pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right - delta,
+                              CGRectGetMinY(chipBounds) + hitAreaInsets.top)
+        withEvent:nil]);
+  XCTAssertFalse([chip
+      pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
+                              CGRectGetMinY(chipBounds) + hitAreaInsets.top - delta)
+        withEvent:nil]);
   // Bottom-left corner
-  XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
-                                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom -
-                                                  delta)
-                        withEvent:nil]);
-  XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left -
-                                                  delta,
-                                               CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
-                        withEvent:nil]);
+  XCTAssertTrue([chip
+      pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
+                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom - delta)
+        withEvent:nil]);
+  XCTAssertFalse([chip
+      pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left - delta,
+                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
+        withEvent:nil]);
   // Bottom-right corner
-  XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right -
-                                                  delta,
-                                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom -
-                                                  delta)
-                        withEvent:nil]);
+  XCTAssertTrue([chip
+      pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right - delta,
+                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom - delta)
+        withEvent:nil]);
   XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
                                                CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
-                        withEvent:nil]);
+                         withEvent:nil]);
 }
 
 - (void)testRemoveChipsManually {
@@ -395,6 +412,67 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertEqual(controlViewCount, (NSUInteger)1);
+}
+
+- (void)testChipViewDynamicTypeBehavior {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
+    chipView.mdc_adjustsFontForContentSizeCategory = YES;
+    chipView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+    UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
+    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+    titleFont = [fontScaler scaledFontWithFont:titleFont];
+    titleFont = [titleFont mdc_scaledFontAtDefaultSize];
+    chipView.titleFont = titleFont;
+    chipView.titleLabel.text = @"Chip";
+    CGFloat originalFontSize = chipView.titleLabel.font.pointSize;
+
+    // When
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    chipView.traitCollectionOverride = traitCollection;
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
+
+    // Then
+    CGFloat actualFontSize = chipView.titleLabel.font.pointSize;
+    XCTAssertGreaterThan(actualFontSize, originalFontSize);
+  }
+}
+
+- (void)testChipViewAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+
+  // Then
+  XCTAssertTrue(chipView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCChipView *passedChipView;
+  chipView.traitCollectionDidChangeBlock =
+      ^(MDCChipView *_Nonnull blockChipView, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedChipView = blockChipView;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [chipView traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedChipView, chipView);
 }
 
 @end

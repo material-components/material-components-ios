@@ -16,14 +16,14 @@
 
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderFABSupplemental.h"
 
-static const CGFloat kFlexibleHeaderMinHeight = 200.f;
+static const CGFloat kFlexibleHeaderMinHeight = 200;
 
-@interface FlexibleHeaderFABExample () <UIScrollViewDelegate>
+@interface FlexibleHeaderFABExample : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
-@property(nonatomic) MDCFloatingButton *floatingButton;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) MDCFloatingButton *floatingButton;
 
 @end
 
@@ -81,7 +81,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,9 +92,9 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0f
-                                                          green:232/255.0f
-                                                           blue:94/255.0f
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / (CGFloat)255
+                                                          green:232 / (CGFloat)255
+                                                           blue:94 / (CGFloat)255
                                                           alpha:1]
                                  forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
@@ -131,8 +131,36 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   if (scrollView == self.fhvc.headerView.trackingScrollView) {
     [self.fhvc scrollViewDidScroll:scrollView];
   }
-  self.floatingButton.center = CGPointMake(self.floatingButton.center.x,
-                                           CGRectGetMaxY(self.fhvc.headerView.frame));
+  self.floatingButton.center =
+      CGPointMake(self.floatingButton.center.x, CGRectGetMaxY(self.fhvc.headerView.frame));
+}
+
+#pragma mark - Supplemental
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  self.scrollView.contentSize = self.view.bounds.size;
+}
+
+@end
+
+@implementation FlexibleHeaderFABExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Floating Action Button" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

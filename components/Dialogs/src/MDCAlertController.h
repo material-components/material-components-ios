@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import "MaterialButtons.h"
-
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
+
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 @class MDCAlertAction;
 
@@ -27,7 +29,8 @@
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.
  */
-@interface MDCAlertController : UIViewController
+@interface MDCAlertController
+    : UIViewController <MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
 
 /**
  Convenience constructor to create and return a view controller for displaying an alert to the user.
@@ -71,9 +74,13 @@
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
-// b/117717380: Will be deprecated
-/** The font applied to the button of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIFont *buttonFont;
+/**
+ The font applied to the button of Alert Controller.
+
+ @note This property is deprecated and will be removed in an upcoming release.
+ */
+@property(nonatomic, strong, nullable)
+    UIFont *buttonFont __deprecated_msg("Please use buttonForAction: to set button properties.");
 
 // b/117717380: Will be deprecated
 /** The color applied to the button title text of Alert Controller.*/
@@ -83,14 +90,23 @@
 /** The color applied to the button ink effect of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
-/** The color applied to the Alert's background when presented by MDCDialogPresentationController.*/
+/** The semi-transparent color which is applied to the overlay covering the content
+     behind the Alert (the scrim) when presented by MDCDialogPresentationController.*/
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/** The Alert's background color.*/
+@property(nonatomic, strong, nullable) UIColor *backgroundColor;
 
 /** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
 
 /** The elevation that will be applied to the Alert Controller view. Default to 24. */
 @property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
+ The color of the shadow that will be applied to the @c MDCAlertController view. Defaults to black.
+ */
+@property(nonatomic, copy, nonnull) UIColor *shadowColor;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
@@ -103,8 +119,43 @@
  */
 @property(nonatomic, nullable, copy) NSString *title;
 
+/**
+ A custom accessibility label for the title.
+
+ When @c nil the title accessibilityLabel will be set to the value of the @c title.
+ */
+@property(nonatomic, nullable, copy) NSString *titleAccessibilityLabel;
+
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
+
+/**
+ A custom accessibility label for the message.
+
+ When @c nil the message accessibilityLabel will be set to the value of the @c message.
+ */
+@property(nonatomic, nullable, copy) NSString *messageAccessibilityLabel;
+
+/**
+ Accessory view that contains custom UI.
+
+ The size of the accessory view is determined through Auto Layout. If your view uses manual layout,
+ you can either add a height constraint (e.g. `[view.heightAnchor constraintEqualToConstant:100]`),
+ or you can override
+ `-systemLayoutSizeFittingSize:withHorizontalFittingPriority:verticalFittingPriority:`.
+
+ If the content of the view changes and the height needs to be recalculated, call
+ `[alert setAccessoryViewNeedsLayout]`. Note that MDCAccessorizedAlertController will automatically
+ recalculate the accessory view's size if the alert's width changes.
+ */
+@property(nonatomic, strong, nullable) UIView *accessoryView;
+
+/**
+ Notifies the alert controller that the size of the accessory view needs to be recalculated due to
+ content changes. Note that MDCAccessorizedAlertController will automatically recalculate the
+ accessory view's size if the alert's width changes.
+ */
+- (void)setAccessoryViewNeedsLayout;
 
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
@@ -118,12 +169,37 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
-/** MDCAlertController handles its own transitioning delegate. */
-- (void)setTransitioningDelegate:
-    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
 
-/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
-- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ A block that is invoked when the MDCAlertController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCAlertController *_Nullable alertController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ Affects the fallback behavior for when a scaled font is not provided.
+
+ If @c YES, the font size will adjust even if a scaled font has not been provided for
+ a given @c UIFont property on this component.
+
+ If @c NO, the font size will only be adjusted if a scaled font has been provided.
+
+ Default value is @c YES.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
  The actions that the user can take in response to the alert.
@@ -144,6 +220,13 @@
  @param action Will be added to the end of MDCAlertController.actions.
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
+
+/** MDCAlertController handles its own transitioning delegate. */
+- (void)setTransitioningDelegate:
+    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+
+/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
+- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
 @end
 

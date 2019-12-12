@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponentsAlpha.MaterialActionSheet
-import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponents.MaterialActionSheet
 
 class ActionSheetTest: XCTestCase {
 
@@ -68,7 +67,7 @@ class ActionSheetTest: XCTestCase {
     actionSheet.addAction(action)
 
     // Then
-    let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
+    let tableView = actionSheet.view.subviews.compactMap { $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
       if let dataSource = table.dataSource {
@@ -91,10 +90,12 @@ class ActionSheetTest: XCTestCase {
     // Then
     XCTAssertEqual(actionSheet.backgroundColor, .white)
     XCTAssertEqual(actionSheet.view.backgroundColor, .white)
-    let subviewsArray = actionSheet.view.subviews
-    for view in subviewsArray {
-      XCTAssertEqual(view.backgroundColor, .white)
-    }
+
+    //  TODO(https://github.com/material-components/material-components-ios/issues/8238): Re-enable this test.
+    //  let subviewsArray = actionSheet.view.subviews
+    //  for view in subviewsArray {
+    //    XCTAssertEqual(view.backgroundColor, .white)
+    //  }
   }
 
   func testBackgroundColorMatchesViewBackgroundColor() {
@@ -110,18 +111,38 @@ class ActionSheetTest: XCTestCase {
     XCTAssertEqual(actionSheet.view.backgroundColor, newBackgroundColor)
   }
 
-  func testApplyThemerToBackgroundColor() {
+  func testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges() {
     // Given
-    let surfaceColor: UIColor = .blue
-    let colorScheme = MDCSemanticColorScheme()
-    colorScheme.surfaceColor = surfaceColor
+    let expectation = XCTestExpectation(description: "traitCollectionDidChange")
+    actionSheet.traitCollectionDidChangeBlock = { (_, _) in
+      expectation.fulfill()
+    }
 
     // When
-    MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
-    let _ = actionSheet.view
+    actionSheet.traitCollectionDidChange(nil)
 
     // Then
-    XCTAssertEqual(actionSheet.view.backgroundColor, surfaceColor)
-    XCTAssertEqual(actionSheet.backgroundColor, surfaceColor)
+    self.wait(for: [expectation], timeout: 1)
+  }
+
+  func testTraitCollectionDidChangeBlockCalledWithExpectedParameters() {
+    // Given
+    let expectation = XCTestExpectation(description: "traitCollectionDidChange")
+    var passedTraitCollection: UITraitCollection? = nil
+    var passedActionSheet: MDCActionSheetController? = nil
+    actionSheet.traitCollectionDidChangeBlock = { (action, traitCollection) in
+      passedTraitCollection = traitCollection
+      passedActionSheet = action
+      expectation.fulfill()
+    }
+    let fakeTraitCollection = UITraitCollection(displayScale: 77)
+
+    // When
+    actionSheet.traitCollectionDidChange(fakeTraitCollection)
+
+    // Then
+    self.wait(for: [expectation], timeout: 1)
+    XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+    XCTAssertEqual(passedActionSheet, actionSheet);
   }
 }

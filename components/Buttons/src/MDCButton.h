@@ -15,6 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
@@ -33,7 +34,7 @@
 
  @see https://material.io/go/design-buttons
  */
-@interface MDCButton : UIButton
+@interface MDCButton : UIButton <MDCElevatable, MDCElevationOverriding>
 
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle UI_APPEARANCE_SELECTOR;
@@ -46,6 +47,16 @@
  self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
+
+/**
+ This property determines if an @c MDCButton should use the @c MDCInkView behavior or not.
+
+ By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  The alpha value that will be applied when the button is disabled. Most clients can leave this as
@@ -88,7 +99,6 @@
  */
 @property(nonatomic, assign) CGSize maximumSize UI_APPEARANCE_SELECTOR;
 
-
 /**
  The apparent background color as seen by the user, i.e. the color of the view behind the button.
 
@@ -110,7 +120,7 @@
  UIContentSizeCategory is changed.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  If set to YES, this button will base its text font on MDCFontTextStyleButton.
 
@@ -118,6 +128,18 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
+/**
+ Affects the fallback behavior for when a scaled font is not provided.
+
+ If @c YES, the font size will adjust even if a scaled font has not been provided for
+ a given @c UIFont property on this component.
+
+ If @c NO, the font size will only be adjusted if a scaled font has been provided.
+
+ Default value is @c YES.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
  The shape generator used to define the button's shape.
@@ -131,6 +153,23 @@
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+/**
+ If @c true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+ If @c false, @c accessibilityTraits will inherit its behavior from @c UIButton.
+
+ @note Defaults to true.
+ @note This API is intended as a migration flag to restore @c UIButton behavior to @c MDCButton. In
+       a future version, this API will eventually be deprecated and then deleted.
+ */
+@property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
+
+/**
+ A block that is invoked when the MDCButton receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCButton *_Nonnull button, UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  A color used as the button's @c backgroundColor for @c state.
@@ -148,30 +187,11 @@
  @param backgroundColor The background color.
  @param state The state.
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
+                  forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
-
-/**
- The font used by the button's @c title for @c state.
-
- @param state The state.
- @return The font.
- */
-- (nullable UIFont *)titleFontForState:(UIControlState)state;
-
-/**
- The font used by the button's @c title.
-
- If left unset or reset to nil for a given state, then a default font is used.
-
- @param font The font.
- @param state The state.
- */
-- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
 
 /** Sets the enabled state with optional animation. */
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
@@ -209,8 +229,8 @@
  @param borderColor The border color to set.
  @param state The state to set.
  */
-- (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBorderColor:(nullable UIColor *)borderColor
+              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
  A color used as the button's imageView tint color @c imageTintColor for @c state.
@@ -232,7 +252,6 @@
  @param state The state to set.
  */
 - (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(UIControlState)state;
-
 
 /**
  The value set for the button's @c borderWidth for @c state.
@@ -297,21 +316,38 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - Deprecated
+#pragma mark - To Be Deprecated
 
 /**
- This property sets/gets the title color for UIControlStateNormal.
+ Enables the state-based font behavior of the receiver.
+
+ If @c NO, then @c titleFont:forState: and @c setTitleFont:forState: have no effect.  Defaults to
+ @c YES.
+
+ @note This API will eventually be deprecated and removed.
  */
-@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR
-    __deprecated_msg("Use setTitleColor:forState: instead");
+@property(nonatomic, assign) BOOL enableTitleFontForState;
 
-@property(nonatomic)
-    BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
-        ;
+/**
+ The font used by the button's @c title.
 
-@property(nonatomic) BOOL shouldCapitalizeTitle __deprecated_msg("Use uppercaseTitle instead.");
+ If left unset or reset to nil for a given state, then a default font is used.
 
-@property(nonatomic, strong, nullable)
-    UIColor *underlyingColor __deprecated_msg("Use underlyingColorHint instead.");
+ @param font The font.
+ @param state The state.
+
+ @note This API will eventually be deprecated and removed.
+ */
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ The font used by the button's @c title for @c state.
+
+ @param state The state.
+ @return The font.
+
+ @note This API will eventually be deprecated and removed.
+ */
+- (nullable UIFont *)titleFontForState:(UIControlState)state;
 
 @end

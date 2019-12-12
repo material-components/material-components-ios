@@ -14,11 +14,14 @@
 
 #import "MDCAlertColorThemer.h"
 
-#import "../../../Buttons/src/ColorThemer/MaterialButtons+ColorThemer.h"
-#import "../MDCAlertController+ButtonForAction.h"
+#import "MDCAlertController+ButtonForAction.h"
+#import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCAlertColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toAlertController:(nonnull MDCAlertController *)alertController {
@@ -26,6 +29,7 @@
   alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   alertController.titleIconTintColor = colorScheme.primaryColor;
   alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
+  alertController.backgroundColor = colorScheme.surfaceColor;
 
   // Apply theming to buttons based on the action emphasis
   for (MDCAlertAction *action in alertController.actions) {
@@ -46,13 +50,15 @@
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
-  #if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
-  [[MDCButton appearanceWhenContainedInInstancesOfClasses:@[[MDCAlertController class]]]
-      setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  #else
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+  [[MDCButton appearanceWhenContainedInInstancesOfClasses:@ [[MDCAlertController class]]]
+      setTitleColor:colorScheme.primaryColor
+           forState:UIControlStateNormal];
+#else
   [[MDCButton appearanceWhenContainedIn:[MDCAlertController class], nil]
-      setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  #endif
+      setTitleColor:colorScheme.primaryColor
+           forState:UIControlStateNormal];
+#endif
 }
 
 @end

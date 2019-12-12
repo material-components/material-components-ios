@@ -20,8 +20,7 @@
 
 @implementation MDCContainedButtonThemer
 
-+ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button {
++ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme toButton:(nonnull MDCButton *)button {
   [MDCContainedButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
   [MDCButtonShapeThemer applyShapeScheme:scheme.shapeScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
@@ -33,4 +32,3 @@
 }
 
 @end
-

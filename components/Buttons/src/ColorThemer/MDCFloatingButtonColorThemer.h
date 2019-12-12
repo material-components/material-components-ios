@@ -19,14 +19,24 @@
 
 /**
  The Material Design color system's floating button themer for instances of MDCFloatingButton.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCFloatingButton`'s `-applySecondaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCFloatingButtonColorThemer : NSObject
+__deprecated_msg("Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead. (Note: "
+                 "Color theming is no longer available as an independent API.)")
+    @interface MDCFloatingButtonColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCFloatingButton using the floating button style.
 
  @param colorScheme The color scheme to apply to the component instance.
  @param button A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCFloatingButton`'s `-applySecondaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCFloatingButton *)button;

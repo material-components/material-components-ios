@@ -40,15 +40,16 @@
 
   [self setupAlignmentButton];
 
-  [MDCTabBarTypographyThemer applyTypographyScheme:self.typographyScheme toTabBar:self.tabBar];
+  [MDCTabBarTypographyThemer applyTypographyScheme:self.containerScheme.typographyScheme
+                                          toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {
   self.alignmentButton = [[MDCButton alloc] init];
 
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
+  buttonScheme.colorScheme = self.containerScheme.colorScheme;
+  buttonScheme.typographyScheme = self.containerScheme.typographyScheme;
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.alignmentButton];
 
   [self.view addSubview:self.alignmentButton];
@@ -87,24 +88,12 @@
   self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarViewController.headerView.minimumHeight = 56 + 72;
 
-  UIFont *font;
-  if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
-    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-  } else {
-    font = [UIFont systemFontOfSize:14];
-    UIFontDescriptor *descriptor =
-        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-    if (descriptor) {
-      font = [UIFont fontWithDescriptor:descriptor size:0.0];
-    }
-  }
-
   [self.view addSubview:self.appBarViewController.view];
   [self.appBarViewController didMoveToParentViewController:self];
 
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+  [MDCAppBarColorThemer applyColorScheme:self.containerScheme.colorScheme
                   toAppBarViewController:self.appBarViewController];
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.containerScheme.typographyScheme
                             toAppBarViewController:self.appBarViewController];
 }
 
@@ -142,7 +131,7 @@
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f];
+  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:(CGFloat)0.87];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";
@@ -234,8 +223,8 @@
   [self.starPage addSubview:starView];
   [starView sizeToFit];
 
-  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1.0f) / 100.0f;  // 0 < x <=2
-  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1.0f) / 100.0f;  // 0 < y <=2
+  CGFloat x = centered ? 1 : (CGFloat)((arc4random_uniform(199) + 1) / 100.0);  // 0 < x <=2
+  CGFloat y = centered ? 1 : (CGFloat)((arc4random_uniform(199) + 1) / 100.0);  // 0 < y <=2
 
   [NSLayoutConstraint constraintWithItem:starView
                                attribute:NSLayoutAttributeCenterX
@@ -266,11 +255,13 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [coordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-    // Update the scrollView position so that the selected view is entirely visible
-    [self tabBar:self.tabBar didSelectItem:self.tabBar.selectedItem];
-  } completion:nil];
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        // Update the scrollView position so that the selected view is entirely visible
+        [self tabBar:self.tabBar didSelectItem:self.tabBar.selectedItem];
+      }
+                      completion:nil];
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
@@ -280,11 +271,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Tab Bar", @"Tabs with Icons" ],
-    @"description": @"Tabs organize content across different screens, data sets, and "
-    @"other interactions.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Tab Bar", @"Tabs with Icons" ],
+    @"description" : @"Tabs organize content across different screens, data sets, and "
+                     @"other interactions.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

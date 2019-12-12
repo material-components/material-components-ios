@@ -3,3 +3,4 @@ module: OverlayWindow
 umbrella_header: src/MaterialOverlayWindow.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

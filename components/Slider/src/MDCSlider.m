@@ -14,23 +14,28 @@
 
 #import "MDCSlider.h"
 
-#import "private/MDCSlider+Private.h"
-#import "private/MDCSlider_Subclassable.h"
+#import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
+#import "private/MDCSlider+Private.h"
+#import "private/MDCSlider_Subclassable.h"
 
-static const CGFloat kSliderDefaultWidth = 100.0f;
-static const CGFloat kSliderFrameHeight = 27.0f;
-static const CGFloat kSliderMinTouchSize = 48.0f;
-static const CGFloat kSliderDefaultThumbRadius = 6.0f;
-static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
-static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
+static const CGFloat kSliderDefaultWidth = 100;
+static const CGFloat kSliderFrameHeight = 27;
+static const CGFloat kSliderMinTouchSize = 48;
+static const CGFloat kSliderDefaultThumbRadius = 6;
+// Matches UISlider's percent increment.
+static const CGFloat kSliderAccessibilityIncrement = (CGFloat)0.1;
+static const CGFloat kSliderLightThemeTrackAlpha = (CGFloat)0.26;
 
 static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return MDCPalette.bluePalette.tint500;
 }
 
 @interface MDCSlider () <MDCThumbTrackDelegate>
+@property(nonnull, nonatomic, strong)
+    UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
+@property(nonatomic) CGFloat previousValue;
 @end
 
 @implementation MDCSlider {
@@ -40,6 +45,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   NSMutableDictionary *_filledTickColorsForState;
   NSMutableDictionary *_backgroundTickColorsForState;
 }
+
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize trackTickVisibility = _trackTickVisibility;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -58,8 +67,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)commonMDCSliderInit {
-  _thumbTrack =
-      [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:MDCThumbTrackDefaultColor()];
+  _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:self.bounds
+                                         onTintColor:MDCThumbTrackDefaultColor()];
   _thumbTrack.delegate = self;
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
@@ -68,7 +77,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.thumbIsHollowAtStart = YES;
   _thumbTrack.thumbGrowsWhenDragging = YES;
   _thumbTrack.shouldDisplayInk = NO;
-  _thumbTrack.shouldDisplayDiscreteDots = YES;
+  _thumbTrack.shouldDisplayRipple = YES;
+  _thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
+  _trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  _thumbTrack.discrete = YES;
   _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
@@ -101,8 +113,20 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _filledTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
   _backgroundTickColorsForState = [@{} mutableCopy];
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
-
   [self addSubview:_thumbTrack];
+
+  _mdc_overrideBaseElevation = -1;
+
+  if (@available(iOS 10.0, *)) {
+    _hapticsEnabled = YES;
+    self.feedbackGenerator =
+        [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+  } else {
+    _hapticsEnabled = NO;
+  }
+  _shouldEnableHapticsForAllDiscreteValues = NO;
+
+  _previousValue = -CGFLOAT_MAX;
 }
 
 #pragma mark - Color customization methods
@@ -132,7 +156,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
   return color;
 }
-
 
 - (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor forState:(UIControlState)state {
   _trackBackgroundColorsForState[@(state)] = trackBackgroundColor;
@@ -223,6 +246,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   // trackOnColor is null_resettable, so explicitly set to `.clear` for the correct effect
   _thumbTrack.trackOnColor = [self trackFillColorForState:self.state] ?: UIColor.clearColor;
   _thumbTrack.inkColor = self.inkColor;
+  _thumbTrack.rippleColor = self.rippleColor;
   _thumbTrack.trackOnTickColor = [self filledTrackTickColorForState:self.state];
   _thumbTrack.trackOffTickColor = [self backgroundTrackTickColorForState:self.state];
 }
@@ -238,15 +262,58 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)setThumbElevation:(MDCShadowElevation)thumbElevation {
+  if (MDCCGFloatEqual(_thumbTrack.thumbElevation, thumbElevation)) {
+    return;
+  }
   _thumbTrack.thumbElevation = thumbElevation;
+  [self mdc_elevationDidChange];
 }
 
 - (MDCShadowElevation)thumbElevation {
   return _thumbTrack.thumbElevation;
 }
 
+- (CGFloat)mdc_currentElevation {
+  return self.thumbElevation;
+}
+
 - (NSUInteger)numberOfDiscreteValues {
   return _thumbTrack.numDiscreteValues;
+}
+
+- (BOOL)isDiscrete {
+  return _thumbTrack.discrete;
+}
+
+- (void)setDiscrete:(BOOL)discrete {
+  _thumbTrack.discrete = discrete;
+}
+
+- (void)setTrackTickVisibility:(MDCSliderTrackTickVisibility)trackTickVisibility {
+  _trackTickVisibility = trackTickVisibility;
+  switch (trackTickVisibility) {
+    case MDCSliderTrackTickVisibilityNever:
+      self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
+      break;
+    case MDCSliderTrackTickVisibilityWhenDragging:
+      self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
+      break;
+    case MDCSliderTrackTickVisibilityAlways:
+      self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityAlways;
+      break;
+  }
+}
+
+- (MDCSliderTrackTickVisibility)trackTickVisibility {
+  return _trackTickVisibility;
+}
+
+- (UIColor *)thumbShadowColor {
+  return _thumbTrack.thumbShadowColor;
+}
+
+- (void)setThumbShadowColor:(UIColor *)thumbShadowColor {
+  _thumbTrack.thumbShadowColor = thumbShadowColor;
 }
 
 - (void)setNumberOfDiscreteValues:(NSUInteger)numberOfDiscreteValues {
@@ -267,10 +334,12 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setValue:(CGFloat)value {
   _thumbTrack.value = value;
+  _previousValue = -CGFLOAT_MAX;
 }
 
 - (void)setValue:(CGFloat)value animated:(BOOL)animated {
   [_thumbTrack setValue:value animated:animated];
+  _previousValue = -CGFLOAT_MAX;
 }
 
 - (CGFloat)minimumValue {
@@ -313,12 +382,44 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.thumbIsHollowAtStart = thumbHollowAtStart;
 }
 
+- (void)setHapticsEnabled:(BOOL)hapticsEnabled {
+  if (@available(iOS 10.0, *)) {
+    _hapticsEnabled = hapticsEnabled;
+  } else {
+    _hapticsEnabled = NO;
+  }
+}
+
+- (void)setShouldEnableHapticsForAllDiscreteValues:(BOOL)shouldEnableHapticsForAllDiscreteValues {
+  if (@available(iOS 10.0, *)) {
+    if (_thumbTrack.numDiscreteValues >= 2) {
+      _shouldEnableHapticsForAllDiscreteValues = shouldEnableHapticsForAllDiscreteValues;
+    }
+  }
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   _thumbTrack.inkColor = inkColor;
 }
 
 - (UIColor *)inkColor {
   return _thumbTrack.inkColor;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _thumbTrack.enableRippleBehavior = enableRippleBehavior;
+}
+
+- (BOOL)enableRippleBehavior {
+  return _thumbTrack.enableRippleBehavior;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _thumbTrack.rippleColor = rippleColor;
+}
+
+- (UIColor *)rippleColor {
+  return _thumbTrack.rippleColor;
 }
 
 - (void)setValueLabelTextColor:(UIColor *)valueLabelTextColor {
@@ -335,6 +436,30 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (UIColor *)valueLabelBackgroundColor {
   return _thumbTrack.valueLabelBackgroundColor;
+}
+
+- (void)setDiscreteValueLabelFont:(UIFont *)discreteValueLabelFont {
+  _thumbTrack.discreteValueLabelFont = discreteValueLabelFont;
+}
+
+- (UIFont *)discreteValueLabelFont {
+  return _thumbTrack.discreteValueLabelFont;
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _thumbTrack.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+}
+
+- (BOOL)adjustsFontForContentSizeCategory {
+  return _thumbTrack.adjustsFontForContentSizeCategory;
+}
+
+- (CGFloat)trackHeight {
+  return _thumbTrack.trackHeight;
+}
+
+- (void)setTrackHeight:(CGFloat)trackHeight {
+  _thumbTrack.trackHeight = trackHeight;
 }
 
 #pragma mark - MDCThumbTrackDelegate methods
@@ -406,6 +531,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.frame = self.bounds;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (CGSize)sizeThatFits:(__unused CGSize)size {
   CGSize result = self.bounds.size;
   result.height = kSliderFrameHeight;
@@ -445,13 +578,33 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return traits;
 }
 
+/**
+ Returns the absolute change in value for the @c accessibilityIncrement and
+ @c accessibilityDecrement methods.
+
+ The value is decided using the following rules. If @c numberOfDiscreteValues is less than 2, then
+ the adjustment value is 10% of the slider's value range. If @c numberOfDiscreteValues is greater
+ than or equal to 2 and @c discrete is @c YES, the slider returns the "size" of the discrete step.
+ If @c numberOfDiscreteValues is greater than or equal to 2 and @c discrete is @c NO, the slider
+ returns the minimum of 10% of the range and the discrete value step size.
+ */
+- (CGFloat)accessibilityAdjustmentAmount {
+  CGFloat range = self.maximumValue - self.minimumValue;
+  CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
+  if (self.numberOfDiscreteValues > 1) {
+    CGFloat discreteAdjustmentAmount = range / (self.numberOfDiscreteValues - 1);
+    if (self.discrete) {
+      adjustmentAmount = discreteAdjustmentAmount;
+    } else {
+      adjustmentAmount = MIN(adjustmentAmount, discreteAdjustmentAmount);
+    }
+  }
+  return adjustmentAmount;
+}
+
 - (void)accessibilityIncrement {
   if (self.enabled) {
-    CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (self.numberOfDiscreteValues > 1) {
-      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
-    }
+    CGFloat adjustmentAmount = [self accessibilityAdjustmentAmount];
     CGFloat newValue = self.value + adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO
@@ -465,11 +618,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)accessibilityDecrement {
   if (self.enabled) {
-    CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (self.numberOfDiscreteValues > 1) {
-      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
-    }
+    CGFloat adjustmentAmount = [self accessibilityAdjustmentAmount];
     CGFloat newValue = self.value - adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO
@@ -482,11 +631,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (BOOL)accessibilityActivate {
-  CGFloat midPoint = (self.maximumValue - self.minimumValue) / 2.0f;
+  CGFloat midPoint = (self.maximumValue - self.minimumValue) / 2;
   CGFloat newValue;
-  CGFloat adjustmentAmount = (self.value - midPoint) / 3.0f;
+  CGFloat adjustmentAmount = (self.value - midPoint) / 3;
   adjustmentAmount = (adjustmentAmount > 0) ? adjustmentAmount : -adjustmentAmount;
-  CGFloat minimumAdjustment = (self.maximumValue - self.minimumValue) * 0.015f;
+  CGFloat minimumAdjustment = (self.maximumValue - self.minimumValue) * (CGFloat)0.015;
   if (adjustmentAmount > minimumAdjustment) {
     if (self.value > midPoint) {
       newValue = self.value - adjustmentAmount;
@@ -494,18 +643,12 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
       newValue = self.value + adjustmentAmount;
     }
     [_thumbTrack setValue:newValue
-                 animated:NO
-    animateThumbAfterMove:NO
-            userGenerated:YES
-               completion:NULL];
+                     animated:NO
+        animateThumbAfterMove:NO
+                userGenerated:YES
+                   completion:NULL];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
-  return YES;
-}
-
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
   return YES;
 }
 
@@ -514,9 +657,28 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)thumbTrackValueChanged:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
+  if (@available(iOS 10.0, *)) {
+    if (self.hapticsEnabled && _previousValue != _thumbTrack.value) {
+      BOOL valueCrossesAboveAnchor = (_previousValue < _thumbTrack.filledTrackAnchorValue &&
+                                      _thumbTrack.filledTrackAnchorValue <= _thumbTrack.value);
+      BOOL valueCrossesBelowAnchor = (_thumbTrack.value <= _thumbTrack.filledTrackAnchorValue &&
+                                      _thumbTrack.filledTrackAnchorValue < _previousValue);
+      BOOL crossesAnchor =
+          _previousValue != -CGFLOAT_MAX && (valueCrossesAboveAnchor || valueCrossesBelowAnchor);
+      if (self.shouldEnableHapticsForAllDiscreteValues ||
+          _thumbTrack.value == _thumbTrack.minimumValue ||
+          _thumbTrack.value == _thumbTrack.maximumValue || crossesAnchor) {
+        [self.feedbackGenerator impactOccurred];
+      }
+    }
+  }
+  self.previousValue = _thumbTrack.value;
 }
 
 - (void)thumbTrackTouchDown:(__unused MDCThumbTrack *)thumbTrack {
+  if (@available(iOS 10.0, *)) {
+    [self.feedbackGenerator prepare];
+  }
   [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
@@ -544,7 +706,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
   _thumbTrack.trackOffColor =
-  trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
+      trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
 }
 
 - (UIColor *)trackBackgroundColor {

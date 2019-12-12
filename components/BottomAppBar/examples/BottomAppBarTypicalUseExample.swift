@@ -17,26 +17,29 @@ import UIKit
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialBottomAppBar_ColorThemer
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialTypographyScheme
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
   let appBarViewController = MDCAppBarViewController()
   let bottomBarView = MDCBottomAppBarView()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Bottom App Bar (Swift)"
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
 
     let color = UIColor(white: 0.2, alpha:1)
     appBarViewController.headerView.backgroundColor = color
     appBarViewController.navigationBar.tintColor = .white
-    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBarViewController.navigationBar.titleTextAttributes =
+      [NSAttributedString.Key.foregroundColor : UIColor.white]
     commonInitBottomAppBarTypicalUseSwiftExample()
   }
 
@@ -49,11 +52,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     super.viewDidLoad()
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
@@ -68,17 +67,14 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     // Set the image on the floating button.
     let addImage = UIImage(named:"Add")?.withRenderingMode(.alwaysTemplate)
     bottomBarView.floatingButton.setImage(addImage, for: .normal)
+    bottomBarView.floatingButton.setTitle("Add new item", for: .normal)
+    bottomBarView.floatingButton.mode = .expanded
 
     // Set the position of the floating button.
     bottomBarView.floatingButtonPosition = .center
 
     // Theme the floating button.
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
-    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: bottomBarView.floatingButton)
-    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                                   to: bottomBarView)
+    bottomBarView.floatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     // Configure the navigation buttons to be shown on the bottom app bar.
     let barButtonLeadingItem = UIBarButtonItem()
@@ -98,8 +94,12 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     // Example of how to animate position of the floating button.
     if (bottomBarView.floatingButtonPosition == .center) {
       bottomBarView.setFloatingButtonPosition(.trailing, animated: true)
+      bottomBarView.floatingButton.setTitle("", for: .normal)
+      bottomBarView.floatingButton.mode = .normal
     } else {
       bottomBarView.setFloatingButtonPosition(.center, animated: true)
+      bottomBarView.floatingButton.setTitle("Add new item", for: .normal)
+      bottomBarView.floatingButton.mode = .expanded
     }
   }
 
@@ -124,20 +124,17 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     layoutBottomAppBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomAppBar()
   }
-  #endif
-
 }
 
 // MARK: Catalog by convention
 extension BottomAppBarTypicalUseSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom App Bar", "Bottom App Bar (Swift)"],
       "primaryDemo": false,
@@ -145,7 +142,7 @@ extension BottomAppBarTypicalUseSwiftExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

@@ -21,7 +21,7 @@
 
  @param animated YES if the size change should be animated.
  @param completion a completion block to call after the size change is complete.
- 
+
  @note This method will modify the transform property of the button. Apple's documentation about
        UIView frames and transforms states that whenever the transform is not the identity
        transform, the frame is undefined and should be ignored.

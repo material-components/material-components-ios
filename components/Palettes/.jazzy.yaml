@@ -3,3 +3,4 @@ module: Palettes
 umbrella_header: src/MaterialPalettes.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

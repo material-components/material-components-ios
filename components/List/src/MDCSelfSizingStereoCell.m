@@ -24,8 +24,8 @@
 
 #import "private/MDCSelfSizingStereoCellLayout.h"
 
-static const CGFloat kTitleColorOpacity = 0.87f;
-static const CGFloat kDetailColorOpacity = 0.6f;
+static const CGFloat kTitleColorOpacity = (CGFloat)0.87;
+static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
 
 @interface MDCSelfSizingStereoCell ()
 
@@ -73,6 +73,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 - (void)commonMDCSelfSizingStereoCellInit {
   self.cachedLayouts = [[NSMutableDictionary alloc] init];
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   [self createSubviews];
 }
 
@@ -141,6 +142,14 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   [super setNeedsLayout];
 }
 
+- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:
+    (UICollectionViewLayoutAttributes *)layoutAttributes {
+  UICollectionViewLayoutAttributes *attributes =
+      [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+  attributes.size = [self systemLayoutSizeFittingSize:layoutAttributes.size];
+  return attributes;
+}
+
 - (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
   MDCSelfSizingStereoCellLayout *layout = [self layoutForCellWidth:targetSize.width];
   return CGSizeMake(targetSize.width, layout.calculatedHeight);
@@ -207,24 +216,40 @@ static const CGFloat kDetailColorOpacity = 0.6f;
                                                   object:nil];
   }
 
-  [self adjustFontsForContentSizeCategory];
+  [self adjustFontsForDynamicType];
+}
+
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
+    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+  [self adjustFontsForDynamicType];
 }
 
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self adjustFontsForContentSizeCategory];
+  [self adjustFontsForDynamicType];
 }
 
-- (void)adjustFontsForContentSizeCategory {
+- (void)adjustFontsForDynamicType {
   UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
   UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    titleFont =
-        [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    detailFont =
-        [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    if (titleFont.mdc_scalingCurve) {
+      titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
+    } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+      titleFont =
+          [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    }
+
+    if (detailFont.mdc_scalingCurve) {
+      detailFont = [detailFont mdc_scaledFontForTraitEnvironment:self];
+    } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+      detailFont =
+          [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    }
   }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;

@@ -3,3 +3,4 @@ module: Checkboxes
 umbrella_header: src/MaterialCheckboxes.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

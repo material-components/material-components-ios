@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
    faster than the standard curve since it doesn't follow an exact path to the off-screen point.
    */
   MDCAnimationTimingFunctionSharp,
-  
+
   /**
    Aliases for depreciated names
    */

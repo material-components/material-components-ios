@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTypography.h"
 #import "supplemental/CollectionCellsTextExample.h"
+#import "MaterialTypography.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
@@ -107,12 +107,13 @@ static NSString *const kExampleDetailText =
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collection Cells", @"Cell Text Example" ],
-    @"description": @"Material Collection Cells enables a native collection view cell to have "
-    @"Material design layout and styling. It also provides editing and extensive customization "
-    @"capabilities.",
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collection Cells", @"Cell Text Example" ],
+    @"description" :
+        @"Material Collection Cells enables a native collection view cell to have "
+        @"Material design layout and styling. It also provides editing and extensive customization "
+        @"capabilities.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

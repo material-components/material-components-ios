@@ -16,6 +16,7 @@
 
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
 
 @interface FeatureHighlightTypicalUseViewController : UIViewController
@@ -30,7 +31,7 @@
 @end
 
 @interface FeatureHighlightColorExample : MDCCollectionViewController
-@property(nonatomic) NSArray *colors;
+@property(nonatomic) NSDictionary<NSString *, UIColor *> *colorNameToColorMap;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
@@ -47,6 +48,7 @@
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, readonly, strong) id<MDCContainerScheming> containerScheme;
 
 - (void)didTapButton:(id)sender;
 @end

@@ -14,13 +14,10 @@
 
 import UIKit
 import CoreGraphics
-
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 
 // An example that demonstrates the behavior of an App Bar with Tabs and manually swapped tab view
@@ -31,12 +28,11 @@ import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 class AppBarManualTabsExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
-  fileprivate let firstTab = SimpleTableViewController()
-  fileprivate let secondTab = SimpleTableViewController()
-  private var currentTab: SimpleTableViewController? = nil
+  fileprivate let firstTab = SimpleInheritedTableViewController()
+  fileprivate let secondTab = SimpleInheritedTableViewController()
+  private var currentTab: SimpleInheritedTableViewController? = nil
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -53,7 +49,7 @@ class AppBarManualTabsExample: UIViewController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    self.title = "Tab Bar Example"
+    self.title = "Manual Tabs"
     self.firstTab.title = "First"
     self.secondTab.title = "Second"
   }
@@ -65,31 +61,26 @@ class AppBarManualTabsExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Need to update the status bar style after applying the theme.
     setNeedsStatusBarAppearanceUpdate()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     switchToTab(firstTab)
   }
 
-  fileprivate func switchToTab(_ tab: SimpleTableViewController) {
+  fileprivate func switchToTab(_ tab: SimpleInheritedTableViewController) {
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 
     if let currentTab = currentTab {
       currentTab.headerView = nil
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
       currentTab.view.removeFromSuperview()
-      currentTab.removeFromParentViewController()
+      currentTab.removeFromParent()
     }
 
     if let tabView = tab.view {
@@ -98,13 +89,9 @@ class AppBarManualTabsExample: UIViewController {
     }
 
     view.addSubview(tab.tableView)
-    view.sendSubview(toBack: tab.tableView)
+    view.sendSubviewToBack(tab.tableView)
 
-    #if swift(>=4.2)
     tab.didMove(toParent: self)
-    #else
-    tab.didMove(toParentViewController: self)
-    #endif
 
     tab.headerView = appBarViewController.headerView
 
@@ -127,7 +114,7 @@ class AppBarManualTabsExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -143,7 +130,7 @@ class AppBarManualTabsExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }
@@ -160,7 +147,7 @@ extension AppBarManualTabsExample: MDCTabBarDelegate {
 
 extension AppBarManualTabsExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Manual tabs"],
       "primaryDemo": false,
@@ -168,50 +155,7 @@ extension AppBarManualTabsExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
-  }
-}
-
-private class SimpleTableViewController: UITableViewController {
-
-  var headerView: MDCFlexibleHeaderView?
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    tableView.delegate = self
-    tableView.dataSource = self
-  }
-
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
-  }
-
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel!.text = "\(title!): Row \(indexPath.item)"
-    return cell
-  }
-
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidScroll()
-  }
-
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidEndDecelerating()
-  }
-
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    headerView?.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-  }
-
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    headerView?.trackingScrollDidEndDraggingWillDecelerate(decelerate)
   }
 }

@@ -15,10 +15,10 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtonBar.h"
-#import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+TypographyThemer.h"
+#import "MaterialNavigationBar.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 @interface MDCNavigationBar (Testing)
 @property(nonatomic) UILabel *titleLabel;
@@ -40,6 +40,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)tearDown {
   self.navBar = nil;
   [super tearDown];
+}
+
+- (void)setUpNavBarWithTitleViewLayoutBehavior:
+    (MDCNavigationBarTitleViewLayoutBehavior)layoutBahavior {
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = layoutBahavior;
 }
 
 - (void)testSettingTextAlignmentToCenterMustCenterTheTitleLabel {
@@ -96,9 +103,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTitleViewIsCenteredWithNoButtonsAndFillBehavior {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -110,9 +115,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTitleViewShiftedRightWithLeadingButtonsAndFillBehavior {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
   self.navBar.leadingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
@@ -128,9 +131,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTitleViewShiftedLeftWithTrailingButtonsAndFillBehavior {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
   self.navBar.trailingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
@@ -146,9 +147,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTitleViewCenteredWithLeadingButtonsAndCenterBehavior {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
   self.navBar.leadingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
@@ -165,9 +164,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTitleViewCenteredWithTrailingButtonsAndCenterBehavior {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
   self.navBar.trailingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
@@ -180,6 +177,118 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // Then
   XCTAssertEqualWithAccuracy(self.navBar.titleView.center.x, CGRectGetMidX(self.navBar.bounds),
                              kEpsilonAccuracy);
+}
+
+- (void)testTitleViewDefaultInsets {
+  // Given
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
+
+  // When
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
+}
+
+- (void)testTitleViewWithCustomInsets {
+  // Given
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
+
+  // When
+  self.navBar.titleInsets = UIEdgeInsetsZero;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
+}
+
+- (void)testTitleViewWithDefaultInsetsAndFillBehavior {
+  // Given
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
+
+  // When
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
+}
+
+- (void)testTitleViewWithCustomInsetsAndFillBehavior {
+  // Given
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
+
+  // When
+  self.navBar.titleInsets = UIEdgeInsetsZero;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithDefaultInsets {
+  // Given
+  self.navBar.title = @"Foo";
+
+  // When
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithCustomInsets {
+  // Given
+  self.navBar.title = @"Foo";
+
+  // When
+  self.navBar.titleInsets = UIEdgeInsetsZero;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithDefaultInsetsAndLeadingAlignment {
+  // Given
+  self.navBar.title = @"Foo";
+
+  // When
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentLeading;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithCustomInsetsAndLeadingAlignment {
+  // Given
+  self.navBar.title = @"Foo";
+
+  // When
+  self.navBar.titleInsets = UIEdgeInsetsZero;
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentLeading;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)helperTestView:(UIView *)view withExpectedRect:(CGRect)expectedRect {
+  CGRect viewRect = CGRectStandardize(view.frame);
+  XCTAssertEqualWithAccuracy(viewRect.origin.x, expectedRect.origin.x, 0.001);
+  XCTAssertEqualWithAccuracy(viewRect.origin.y, expectedRect.origin.y, 0.001);
+  if (![view isKindOfClass:[UILabel class]]) {
+    XCTAssertEqualWithAccuracy(viewRect.size.width, expectedRect.size.width, 0.001);
+    XCTAssertEqualWithAccuracy(viewRect.size.height, expectedRect.size.height, 0.001);
+  }
 }
 
 - (void)testTitleFontProperty {
@@ -200,9 +309,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
 
   // When
-  NSDictionary <NSString *, NSNumber *> *fontTraits =
+  NSDictionary<NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
-  NSDictionary <NSString *, NSNumber *> *resultTraits =
+  NSDictionary<NSString *, NSNumber *> *resultTraits =
       [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
 
   // Then
@@ -228,9 +337,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualWithAccuracy(resultFont.pointSize, 24, 0.01);
 
   // When
-  NSDictionary <NSString *, NSNumber *> *fontTraits =
+  NSDictionary<NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
-  NSDictionary <NSString *, NSNumber *> *resultTraits =
+  NSDictionary<NSString *, NSNumber *> *resultTraits =
       [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
 
   // Then
@@ -246,7 +355,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testAccessibilityItemsCountWithNoTitle {
   // Then
-  const NSInteger elementsCount = 3; // Leading bar, titleLabel, trailing bar
+  const NSInteger elementsCount = 3;  // Leading bar, titleLabel, trailing bar
   XCTAssertEqual(elementsCount, self.navBar.accessibilityElementCount);
 }
 
@@ -255,7 +364,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.titleView = [[UIView alloc] init];
 
   // Then
-  const NSInteger elementsCount = 3; // Leading bar, titleView, trailing bar
+  const NSInteger elementsCount = 3;  // Leading bar, titleView, trailing bar
   XCTAssertEqual(elementsCount, self.navBar.accessibilityElementCount);
 }
 
@@ -380,7 +489,6 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   }
 
   return weight;
-
 }
 
 #pragma mark - Color
@@ -435,6 +543,63 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // then
   XCTAssertEqualObjects([self.navBar trailingButtonBar].tintColor, UIColor.cyanColor);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  navigationBar.traitCollectionDidChangeBlock =
+      ^(MDCNavigationBar *_Nonnull navBar, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
+
+  // When
+  [navigationBar traitCollectionDidChange:nil];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCNavigationBar *passedNavigationBar;
+  navigationBar.traitCollectionDidChangeBlock =
+      ^(MDCNavigationBar *_Nonnull navBar, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedNavigationBar = navBar;
+        [expectation fulfill];
+      };
+
+  // When
+  UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  [navigationBar traitCollectionDidChange:testCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedNavigationBar, navigationBar);
+}
+
+- (void)testDefaultElevations {
+  XCTAssertEqualWithAccuracy(self.navBar.mdc_currentElevation, 0, 0.001);
+  XCTAssertLessThan(self.navBar.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat fakeElevation = 99;
+
+  // When
+  self.navBar.mdc_overrideBaseElevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.navBar.mdc_overrideBaseElevation, fakeElevation, 0.001);
 }
 
 @end

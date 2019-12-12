@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
@@ -34,7 +35,7 @@
  be left-aligned, and the accessory view will be right aligned. In the centered mode, all three will
  appear together in the center of the chip.
  */
-@interface MDCChipView : UIControl
+@interface MDCChipView : UIControl <MDCElevatable, MDCElevationOverriding>
 
 /*
  A UIImageView that leads the title label.
@@ -111,10 +112,24 @@
 @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 
 /*
- The color of the ink ripple.
+ This property determines if an @c MDCChipView should use the @c MDCRippleView behavior or not.
+ By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+ @note Defaults to @c NO.
  */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR
-    __deprecated_msg("Use setInkColor:forState:");
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ Enabling the selection of the Chip on tap (when RippleBehavior is enabled).
+ When rippleAllowsSelection is enabled, tapping a chip automatically toggles the chip's selected
+ state (after a short ripple animation). When disabled, tapping a chip creates a momentary ripple
+ animation while the chip remains unselected.
+
+ @note: This property is ignored when RippleBehavior is disabled.
+
+ Defaults to: Yes.
+ */
+@property(nonatomic) BOOL rippleAllowsSelection;
 
 /*
  The shape generator used to define the chip's shape.
@@ -136,6 +151,20 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
+ Affects the fallback behavior for when a scaled font is not provided.
+
+ If enabled, the font size will adjust even if a scaled font has not been provided for
+ a given UIFont property on this component.
+
+ If disabled, the font size will only be adjusted if a scaled font has been provided.
+ This behavior most closely matches UIKit's.
+
+ Default value is YES, but this flag will eventually default to NO and then be deprecated
+ and deleted.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+
+/**
  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent
  to no minimum for that dimension.
 
@@ -148,6 +177,13 @@
  area for the Chip.
  */
 @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
+
+/**
+ A block that is invoked when the MDCChipView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
 
 /*
  A color used as the chip's @c backgroundColor for @c state.
@@ -168,8 +204,8 @@
  @param backgroundColor The background color.
  @param state The control state.
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
+                  forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the border color for a particular control state.
@@ -188,8 +224,8 @@
  @param borderColor The border color.
  @param state The control state.
  */
-- (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBorderColor:(nullable UIColor *)borderColor
+              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the border width for a particular control state.
@@ -227,8 +263,8 @@
  @param elevation The elevation.
  @param state The control state.
  */
-- (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setElevation:(MDCShadowElevation)elevation
+            forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the ink color for a particular control state.
@@ -247,8 +283,8 @@
  @param inkColor The ink color.
  @param state The control state.
  */
-- (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setInkColor:(nullable UIColor *)inkColor
+           forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the shadow color for a particular control state.
@@ -267,8 +303,8 @@
  @param elevation The shadow color.
  @param state The control state.
  */
-- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setShadowColor:(nullable UIColor *)shadowColor
+              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the title color for a particular control state.
@@ -287,7 +323,7 @@
  @param titleColor The title color.
  @param state The control state.
  */
-- (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setTitleColor:(nullable UIColor *)titleColor
+             forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 @end

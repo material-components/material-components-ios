@@ -14,8 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
+
 typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
-typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *_Nonnull shadowLayer,
+typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(__kindof CALayer *_Nonnull shadowLayer,
                                                             CGFloat intensity);
 
 /** Mutually exclusive phases that the flexible header view can be in. */
@@ -43,6 +46,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
   MDCFlexibleHeaderScrollPhaseOverExtending,
 };
 
+@protocol MDCFlexibleHeaderViewAnimationDelegate;
 @protocol MDCFlexibleHeaderViewDelegate;
 
 /**
@@ -55,19 +59,22 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  events are listed in the UIScrollViewDelegate events section.
  */
 IB_DESIGNABLE
-@interface MDCFlexibleHeaderView : UIView
+@interface MDCFlexibleHeaderView : UIView <MDCElevatable, MDCElevationOverriding>
 
 #pragma mark Custom shadow
 
 /**
  Custom shadow shown under flexible header content.
  */
-@property(nonatomic, strong, nullable) CALayer *shadowLayer;
+@property(nonatomic, strong, nullable) __kindof CALayer *shadowLayer;
+
+/** The shadow color of the @c shadowLayer. Defaults to black. */
+@property(nonatomic, copy, nonnull) UIColor *shadowColor;
 
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
  */
-- (void)setShadowLayer:(nonnull CALayer *)shadowLayer
+- (void)setShadowLayer:(nonnull __kindof CALayer *)shadowLayer
     intensityDidChangeBlock:(nonnull MDCFlexibleHeaderShadowIntensityChangeBlock)block;
 
 #pragma mark UIScrollViewDelegate events
@@ -81,6 +88,17 @@ IB_DESIGNABLE
  @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
  */
 - (void)trackingScrollViewDidScroll;
+
+/**
+ Informs the receiver that the tracking scroll view's adjustedContentInset has changed.
+
+ Must be called from the trackingScrollView delegate's
+ UIScrollViewDelegate::scrollViewDidChangeAdjustedContentInset: implementor.
+
+ @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
+ */
+- (void)trackingScrollViewDidChangeAdjustedContentInset:(nullable UIScrollView *)trackingScrollView
+    API_AVAILABLE(ios(11.0), tvos(11.0));
 
 #pragma mark Changing the tracking scroll view
 
@@ -151,6 +169,24 @@ IB_DESIGNABLE
  to the new content insets.
  */
 - (void)changeContentInsets:(nonnull MDCFlexibleHeaderChangeContentInsetsBlock)block;
+
+#pragma mark - Animating changes to the header
+
+/**
+ Animates any changes resulting from executing the @c animations block.
+
+ Use this method to animate changes alongside animations to the flexible header.
+
+ The following occurs when this method is invoked:
+
+ 1. The provided @c animations block is invoked within a @code [UIView animate...:] @endcode block.
+ 2. Within that same animation block and after invoking @c animations, the flexible header updates
+    any relevant aspects of its layout including its height, offset, and shadow layer frames.
+ 3. Upon completion of the resulting animation, the provided completion block is invoked if one was
+    provided.
+ */
+- (void)animateWithAnimations:(void (^_Nonnull)(void))animations
+                   completion:(void (^_Nullable)(BOOL))completion;
 
 #pragma mark Forwarding Touch Events
 
@@ -350,6 +386,18 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL sharedWithManyScrollViews;
 
 /**
+ Whether to allow shadow frame animations when animating changes to the tracking scroll view.
+
+ Enabling this property allows layoutSubviews to animate the shadow frames as part of the animation
+ that occurs when changing tracking scroll views.
+
+ This property will eventually be enabled by default and then deleted.
+
+ Default is NO.
+ */
+@property(nonatomic, assign) BOOL allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView;
+
+/**
  If enabled, the trackingScrollView doesn't adjust the content inset when its
  contentInsetAdjustmentBehavior is set to be UIScrollViewContentInsetAdjustmentNever.
 
@@ -359,10 +407,26 @@ IB_DESIGNABLE
     BOOL disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever API_AVAILABLE(
         ios(11.0), tvos(11.0));
 
-#pragma mark Header View Delegate
+#pragma mark Delegation
 
 /** The delegate for this header view. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewDelegate> delegate;
+
+/** The animation delegate will be notified of any animations to the flexible header view. */
+@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewAnimationDelegate> animationDelegate;
+
+/**
+ A block that is invoked when the FlexibleHeaderView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFlexibleHeaderView *_Nonnull flexibleHeaderView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ The elevation of the header.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 @end
 
@@ -379,7 +443,7 @@ IB_DESIGNABLE
  Informs the receiver that the flexible header view's preferred status bar visibility has changed.
  */
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:
-        (nonnull MDCFlexibleHeaderView *)headerView;
+    (nonnull MDCFlexibleHeaderView *)headerView;
 
 /**
  Informs the receiver that the flexible header view's frame has changed.
@@ -389,6 +453,34 @@ IB_DESIGNABLE
  is in.
  */
 - (void)flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)headerView;
+
+@end
+
+/**
+ An object may conform to this protocol in order to receive animation events caused by a
+ MDCFlexibleHeaderView.
+ */
+@protocol MDCFlexibleHeaderViewAnimationDelegate <NSObject>
+@optional
+
+/**
+ Informs the receiver that the flexible header view's tracking scroll view has changed.
+
+ @param animated If YES, then this method is being invoked from within an animation block. Changes
+ made to the flexible header as a result of this invocation will be animated alongside the header's
+ animation.
+ */
+- (void)flexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView
+    didChangeTrackingScrollViewAnimated:(BOOL)animated;
+
+/**
+ Informs the receiver that the flexible header view's animation changing to a new tracking scroll
+ view has completed.
+
+ Only invoked if an animation occurred when the tracking scroll view was changed.
+ */
+- (void)flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:
+    (nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end
 

@@ -29,10 +29,8 @@
 
 - (void)layoutBottomAppBar {
   CGSize size = [_bottomBarView sizeThatFits:self.view.bounds.size];
-  CGRect bottomBarViewFrame = CGRectMake(0,
-                                         CGRectGetHeight(self.view.bounds) - size.height,
-                                         size.width,
-                                         size.height);
+  CGRect bottomBarViewFrame =
+      CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
   _bottomBarView.frame = bottomBarViewFrame;
 }
 
@@ -40,7 +38,6 @@
   [super viewDidLoad];
   [self commonMDCBottomAppBarViewControllerSetup];
 }
-
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];

@@ -19,7 +19,7 @@ static const NSInteger kSectionItemCount = 5;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsSwipeToDismissSectionExample {
-  NSMutableArray <NSArray *>*_content;
+  NSMutableArray<NSArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -94,9 +94,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Swipe-To-Dismiss-Section Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Swipe-To-Dismiss-Section Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

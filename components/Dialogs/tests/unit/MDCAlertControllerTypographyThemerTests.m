@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs.h"
 #import "MaterialDialogs+TypographyThemer.h"
+#import "MaterialDialogs.h"
 
 #import "MDCAlertControllerView+Private.h"
 
@@ -29,13 +29,16 @@
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme toAlertController:alert];
+#pragma clang diagnostic pop
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
-  XCTAssertEqual(view.titleLabel.font, typographyScheme.headline6);
-  XCTAssertEqual(view.messageLabel.font, typographyScheme.body1);
+  XCTAssertEqualObjects(view.titleLabel.font, typographyScheme.headline6);
+  XCTAssertEqualObjects(view.messageLabel.font, typographyScheme.body1);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
-    XCTAssertEqual(button.titleLabel.font, typographyScheme.button);
+    XCTAssertEqualObjects(button.titleLabel.font, typographyScheme.button);
   }
 }
 

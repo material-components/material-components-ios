@@ -15,13 +15,13 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderWrappedSupplemental.h"
 
-@interface FlexibleHeaderWrappedExample () <UIScrollViewDelegate>
+@interface FlexibleHeaderWrappedExample : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
-@property(nonatomic) UILabel *label;
-@property(nonatomic) UIViewController *wrappedViewController;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
+@property(nonatomic, strong) UILabel *label;
+@property(nonatomic, strong) UIViewController *wrappedViewController;
 
 @end
 
@@ -53,7 +53,7 @@
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  
+
   // Behavioral flags.
   _fhvc.topLayoutGuideAdjustmentEnabled = YES;
   _fhvc.inferTopSafeAreaInsetFromViewController = YES;
@@ -84,7 +84,7 @@
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 
   [self.scrollView setScrollEnabled:YES];
   [self.scrollView addSubview:self.wrappedViewController.view];
@@ -95,7 +95,7 @@
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
-  self.label.center = CGPointMake(self.wrappedViewController.view.frame.size.width / 2.f, 120.f);
+  self.label.center = CGPointMake(self.wrappedViewController.view.frame.size.width / 2, 120);
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's
@@ -107,7 +107,7 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  self.label.center = CGPointMake(size.width / 2.f, 120.f);
+  self.label.center = CGPointMake(size.width / 2, 120);
 }
 
 - (void)viewDidLayoutSubviews {
@@ -120,6 +120,28 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self.fhvc scrollViewDidScroll:scrollView];
+}
+
+#pragma mark - Supplemental
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
+@end
+
+@implementation FlexibleHeaderWrappedExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Wrapped View Controller" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

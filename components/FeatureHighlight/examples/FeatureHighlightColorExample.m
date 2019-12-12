@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialFeatureHighlight.h"
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
+#import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightColorExample
@@ -27,6 +27,8 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:cell.accessoryView
                                                               completion:nil];
   highlightController.titleText = @"So pretty!";
+  // Remove "double-tap to dismiss"
+  highlightController.accessibilityHint = nil;
   highlightController.bodyText = @"What a nice color you've chosen.";
   highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
   [MDCFeatureHighlightAccessibilityMutator mutate:highlightController];

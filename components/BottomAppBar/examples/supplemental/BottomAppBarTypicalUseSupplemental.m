@@ -14,9 +14,9 @@
 
 #import "BottomAppBarTypicalUseSupplemental.h"
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 
 static NSString *const kCellIdentifier = @"cell";
 
@@ -31,11 +31,11 @@ static NSString *const kCellIdentifier = @"cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom App Bar", @"Bottom App Bar" ],
-    @"description": @"A bottom app bar displays navigation and key actions at the "
-    @"bottom of the screen.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Bottom App Bar", @"Bottom App Bar" ],
+    @"description" : @"A bottom app bar displays navigation and key actions at the "
+                     @"bottom of the screen.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 
@@ -72,16 +72,14 @@ static NSString *const kCellIdentifier = @"cell";
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    NSArray<NSString *> *listItems = @[ @"Leading Floating Button",
-                                        @"Center Floating Button",
-                                        @"Trailing Floating Button",
-                                        @"Primary Elevation Floating Button",
-                                        @"Secondary Elevation Floating Button",
-                                        @"Visible FAB" ];
+    NSArray<NSString *> *listItems = @[
+      @"Leading Floating Button", @"Center Floating Button", @"Trailing Floating Button",
+      @"Primary Elevation Floating Button", @"Secondary Elevation Floating Button", @"Visible FAB"
+    ];
     _listItems = listItems;
-    
+
     self.title = @"Bottom App Bar";
-    
+
     _appBarViewController = [[MDCAppBarViewController alloc] init];
     [self addChildViewController:_appBarViewController];
   }
@@ -91,14 +89,16 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBarViewController:_appBarViewController];
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
-  
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:_appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+
   self.appBarViewController.headerView.trackingScrollView = self.tableView;
-  
+
   [self.view addSubview:self.appBarViewController.view];
   [self.appBarViewController didMoveToParentViewController:self];
-  
+
   self.fabVisibilitySwitch = [[UISwitch alloc] init];
   self.fabVisibilitySwitch.on = !self.bottomBarView.floatingButtonHidden;
   [self.fabVisibilitySwitch addTarget:self
@@ -199,7 +199,7 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
   if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
     [self.appBarViewController.headerView
-     trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+        trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
   }
 }
 

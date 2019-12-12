@@ -17,7 +17,7 @@
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellColorExample {
-  NSMutableArray <NSArray *>*_content;
+  NSMutableArray<NSArray *> *_content;
   NSArray *_cellBackgroundColors;
 }
 
@@ -30,7 +30,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
   // Array of cell background colors.
   _cellBackgroundColors = @[
-    [UIColor colorWithWhite:0 alpha:0.2f],
+    [UIColor colorWithWhite:0 alpha:(CGFloat)0.2],
     [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
                     green:(CGFloat)0xA4 / (CGFloat)255
                      blue:(CGFloat)0xDD / (CGFloat)255
@@ -41,7 +41,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   // Populate content.
   _content = [NSMutableArray array];
   [_content addObject:@[
-    @"[UIColor colorWithWhite:0 alpha:0.2f]", @"Custom Blue Color", @"Default White Color"
+    @"[UIColor colorWithWhite:0 alpha:(CGFloat)0.2]", @"Custom Blue Color", @"Default White Color"
   ]];
 
   // Customize collection view settings.
@@ -79,9 +79,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Cell Color Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Cell Color Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

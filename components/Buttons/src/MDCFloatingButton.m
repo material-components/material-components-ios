@@ -24,33 +24,23 @@ static const CGFloat MDCFloatingButtonMiniDimension = 40;
 static const CGFloat MDCFloatingButtonDefaultImageTitleSpace = 8;
 static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
 
-static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
-static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
-static NSString *const MDCFloatingButtonImageLocationKey = @"MDCFloatingButtonImageLocationKey";
-static NSString *const MDCFloatingButtonImageTitleSpaceKey =
-    @"MDCFloatingButtonImageTitleSpaceKey";
-static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey =
-    @"MDCFloatingButtonMinimumSizeDictionaryKey";
-static NSString *const MDCFloatingButtonMaximumSizeDictionaryKey =
-    @"MDCFloatingButtonMaximumSizeDictionaryKey";
-static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey =
-    @"MDCFloatingButtonContentEdgeInsetsDictionaryKey";
-static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
-    @"MDCFloatingButtonHitAreaInsetsDictionaryKey";
-
 @interface MDCFloatingButton ()
 
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
-    NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToMinimumSize;
+@property(nonatomic, readonly)
+    NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *>
+        *shapeToModeToMinimumSize;
 
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
-    NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToMaximumSize;
+@property(nonatomic, readonly)
+    NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *>
+        *shapeToModeToMaximumSize;
 
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
-    NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToContentEdgeInsets;
+@property(nonatomic, readonly)
+    NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *>
+        *shapeToModeToContentEdgeInsets;
 
-@property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
-    NSMutableDictionary<NSNumber *, NSValue *> *> *shapeToModeToHitAreaInsets;
+@property(nonatomic, readonly)
+    NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *>
+        *shapeToModeToHitAreaInsets;
 
 @end
 
@@ -97,12 +87,13 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   return self;
 }
 
-#pragma mark - NSCoding
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+// https://stackoverflow.com/questions/24458608/convenience-initializer-missing-a-self-call-to-another-initializer
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
+#pragma clang diagnostic pop
   if (self) {
-    _shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
     // Required to migrate any previously-archived FloatingButtons from .largeIcon shape value
     if (@(_shape).integerValue >= 2) {
       _shape = MDCFloatingButtonShapeDefault;
@@ -110,113 +101,63 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
     // Shape must be set first before the common initialization
     [self commonMDCFloatingButtonInit];
 
-    if ([aDecoder containsValueForKey:MDCFloatingButtonModeKey]) {
-      _mode = [aDecoder decodeIntegerForKey:MDCFloatingButtonModeKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonImageLocationKey]) {
-      _imageLocation = [aDecoder decodeIntegerForKey:MDCFloatingButtonImageLocationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonImageTitleSpaceKey]) {
-      _imageTitleSpace =
-          (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpaceKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonMinimumSizeDictionaryKey]) {
-      _shapeToModeToMinimumSize =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonMaximumSizeDictionaryKey]) {
-      _shapeToModeToMaximumSize =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey]) {
-      _shapeToModeToContentEdgeInsets =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey]) {
-      _shapeToModeToHitAreaInsets =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
-    }
-
     [self updateShapeAndAllowResize:NO];
   }
   return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeInteger:_shape forKey:MDCFloatingButtonShapeKey];
-  [aCoder encodeInteger:self.mode forKey:MDCFloatingButtonModeKey];
-  [aCoder encodeInteger:self.imageLocation forKey:MDCFloatingButtonImageLocationKey];
-  [aCoder encodeDouble:self.imageTitleSpace forKey:MDCFloatingButtonImageTitleSpaceKey];
-  [aCoder encodeObject:self.shapeToModeToMinimumSize
-                forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
-  [aCoder encodeObject:self.shapeToModeToMaximumSize
-                forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
-  [aCoder encodeObject:self.shapeToModeToContentEdgeInsets
-                forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
-  [aCoder encodeObject:self.shapeToModeToHitAreaInsets
-                forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
-}
-
 - (void)commonMDCFloatingButtonInit {
   _imageTitleSpace = MDCFloatingButtonDefaultImageTitleSpace;
 
-  const CGSize miniNormalSize = CGSizeMake(MDCFloatingButtonMiniDimension,
-                                           MDCFloatingButtonMiniDimension);
-  const CGSize defaultNormalSize = CGSizeMake(MDCFloatingButtonDefaultDimension,
-                                              MDCFloatingButtonDefaultDimension);
+  const CGSize miniNormalSize =
+      CGSizeMake(MDCFloatingButtonMiniDimension, MDCFloatingButtonMiniDimension);
+  const CGSize defaultNormalSize =
+      CGSizeMake(MDCFloatingButtonDefaultDimension, MDCFloatingButtonDefaultDimension);
   const CGSize defaultExpandedMinimumSize = CGSizeMake(0, 48);
   const CGSize defaultExpandedMaximumSize = CGSizeMake(328, 0);
 
   // Minimum size values for different shape + mode combinations
   NSMutableDictionary *miniShapeMinimumSizeDictionary =
-      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniNormalSize]
-          } mutableCopy];
-  NSMutableDictionary *defaultShapeMinimumSizeDictionary =
-      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultNormalSize],
-          @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:defaultExpandedMinimumSize],
-          } mutableCopy];
-  _shapeToModeToMinimumSize =
-      [@{ @(MDCFloatingButtonShapeMini) : miniShapeMinimumSizeDictionary,
-          @(MDCFloatingButtonShapeDefault) : defaultShapeMinimumSizeDictionary,
-          } mutableCopy];
+      [@{@(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniNormalSize]} mutableCopy];
+  NSMutableDictionary *defaultShapeMinimumSizeDictionary = [@{
+    @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultNormalSize],
+    @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:defaultExpandedMinimumSize],
+  } mutableCopy];
+  _shapeToModeToMinimumSize = [@{
+    @(MDCFloatingButtonShapeMini) : miniShapeMinimumSizeDictionary,
+    @(MDCFloatingButtonShapeDefault) : defaultShapeMinimumSizeDictionary,
+  } mutableCopy];
 
   // Maximum size values for different shape + mode combinations
   NSMutableDictionary *miniShapeMaximumSizeDictionary =
-      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniNormalSize]
-          } mutableCopy];
-  NSMutableDictionary *defaultShapeMaximumSizeDictionary =
-      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultNormalSize],
-          @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:defaultExpandedMaximumSize],
-          } mutableCopy];
-  _shapeToModeToMaximumSize =
-      [@{ @(MDCFloatingButtonShapeMini) : miniShapeMaximumSizeDictionary,
-          @(MDCFloatingButtonShapeDefault) : defaultShapeMaximumSizeDictionary,
-          } mutableCopy];
+      [@{@(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:miniNormalSize]} mutableCopy];
+  NSMutableDictionary *defaultShapeMaximumSizeDictionary = [@{
+    @(MDCFloatingButtonModeNormal) : [NSValue valueWithCGSize:defaultNormalSize],
+    @(MDCFloatingButtonModeExpanded) : [NSValue valueWithCGSize:defaultExpandedMaximumSize],
+  } mutableCopy];
+  _shapeToModeToMaximumSize = [@{
+    @(MDCFloatingButtonShapeMini) : miniShapeMaximumSizeDictionary,
+    @(MDCFloatingButtonShapeDefault) : defaultShapeMaximumSizeDictionary,
+  } mutableCopy];
 
   // Content edge insets values for different shape + mode combinations
   // .mini shape, .normal mode
   const UIEdgeInsets miniNormalContentInsets = UIEdgeInsetsMake(8, 8, 8, 8);
   NSMutableDictionary *miniShapeContentEdgeInsetsDictionary =
-      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:miniNormalContentInsets]
-          } mutableCopy];
+      [@{@(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:miniNormalContentInsets]}
+          mutableCopy];
   _shapeToModeToContentEdgeInsets =
-      [@{ @(MDCFloatingButtonShapeMini) : miniShapeContentEdgeInsetsDictionary
-          } mutableCopy];
+      [@{@(MDCFloatingButtonShapeMini) : miniShapeContentEdgeInsetsDictionary} mutableCopy];
 
   // Hit area insets values for different shape + mode combinations
   // .mini shape, .normal mode
   const UIEdgeInsets miniNormalHitAreaInset = UIEdgeInsetsMake(-4, -4, -4, -4);
-  NSMutableDictionary *miniShapeHitAreaInsetsDictionary =
-      [@{ @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:miniNormalHitAreaInset],
-          } mutableCopy];
-  _shapeToModeToHitAreaInsets =
-      [@{ @(MDCFloatingButtonShapeMini) : miniShapeHitAreaInsetsDictionary,
-          } mutableCopy];
+  NSMutableDictionary *miniShapeHitAreaInsetsDictionary = [@{
+    @(MDCFloatingButtonModeNormal) : [NSValue valueWithUIEdgeInsets:miniNormalHitAreaInset],
+  } mutableCopy];
+  _shapeToModeToHitAreaInsets = [@{
+    @(MDCFloatingButtonShapeMini) : miniShapeHitAreaInsetsDictionary,
+  } mutableCopy];
 }
 
 #pragma mark - UIView
@@ -240,11 +181,12 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   const CGSize intrinsicImageSize =
       [self.imageView sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat intrinsicWidth = intrinsicTitleSize.width + intrinsicImageSize.width +
-      self.imageTitleSpace + internalLayoutInsets.left + internalLayoutInsets.right +
-      self.contentEdgeInsets.left + self.contentEdgeInsets.right;
+                           self.imageTitleSpace + internalLayoutInsets.left +
+                           internalLayoutInsets.right + self.contentEdgeInsets.left +
+                           self.contentEdgeInsets.right;
   CGFloat intrinsicHeight = MAX(intrinsicTitleSize.height, intrinsicImageSize.height) +
-      self.contentEdgeInsets.top + self.contentEdgeInsets.bottom + internalLayoutInsets.top +
-      internalLayoutInsets.bottom;
+                            self.contentEdgeInsets.top + self.contentEdgeInsets.bottom +
+                            internalLayoutInsets.top + internalLayoutInsets.bottom;
   return CGSizeMake(intrinsicWidth, intrinsicHeight);
 }
 
@@ -289,7 +231,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   self.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
   [super layoutSubviews];
 
-   if (self.mode == MDCFloatingButtonModeNormal) {
+  if (self.mode == MDCFloatingButtonModeNormal) {
     return;
   }
 
@@ -312,12 +254,10 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
 
   BOOL isLeadingIcon = self.imageLocation == MDCFloatingButtonImageLocationLeading;
   UIEdgeInsets adjustedLayoutInsets =
-      isLeadingIcon ? internalLayoutInsets
-                    : MDFInsetsFlippedHorizontally(internalLayoutInsets);
+      isLeadingIcon ? internalLayoutInsets : MDFInsetsFlippedHorizontally(internalLayoutInsets);
 
-  const CGRect insetBounds = UIEdgeInsetsInsetRect(UIEdgeInsetsInsetRect(self.bounds,
-                                                                         adjustedLayoutInsets),
-                                                   self.contentEdgeInsets);
+  const CGRect insetBounds = UIEdgeInsetsInsetRect(
+      UIEdgeInsetsInsetRect(self.bounds, adjustedLayoutInsets), self.contentEdgeInsets);
 
   const CGFloat imageViewWidth = CGRectGetWidth(self.imageView.bounds);
   const CGFloat boundsCenterY = CGRectGetMidY(insetBounds);
@@ -341,8 +281,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   // If we are RTL with a trailing image, the image goes on the left.
   if ((isLTR && isLeadingIcon) || (!isLTR && !isLeadingIcon)) {
     const CGFloat imageCenterX = CGRectGetMinX(insetBounds) + (imageViewWidth / 2);
-    const CGFloat titleCenterX = CGRectGetMaxX(insetBounds) - titleWidthAvailable +
-        (titleSize.width / 2);
+    const CGFloat titleCenterX =
+        CGRectGetMaxX(insetBounds) - titleWidthAvailable + (titleSize.width / 2);
     titleCenter = CGPointMake(titleCenterX, boundsCenterY);
     imageCenter = CGPointMake(imageCenterX, boundsCenterY);
   }
@@ -350,8 +290,8 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
   // If we are RTL with a leading image, the image goes on the right.
   else {
     const CGFloat imageCenterX = CGRectGetMaxX(insetBounds) - (imageViewWidth / 2);
-    const CGFloat titleCenterX = CGRectGetMinX(insetBounds) + titleWidthAvailable -
-        (titleSize.width / 2);
+    const CGFloat titleCenterX =
+        CGRectGetMinX(insetBounds) + titleWidthAvailable - (titleSize.width / 2);
     imageCenter = CGPointMake(imageCenterX, boundsCenterY);
     titleCenter = CGPointMake(titleCenterX, boundsCenterY);
   }
@@ -390,7 +330,7 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
 
 - (CGSize)minimumSizeForMode:(MDCFloatingButtonMode)mode {
   NSMutableDictionary *modeToMinimumSize = self.shapeToModeToMinimumSize[@(_shape)];
-  if(!modeToMinimumSize) {
+  if (!modeToMinimumSize) {
     return CGSizeZero;
   }
 
@@ -522,12 +462,6 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
   }
-}
-
-#pragma mark - Deprecations
-
-+ (instancetype)buttonWithShape:(MDCFloatingButtonShape)shape {
-  return [[self class] floatingButtonWithShape:shape];
 }
 
 @end

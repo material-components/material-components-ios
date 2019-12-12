@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 #import "MDCCollectionViewEditingDelegate.h"
 #import "MDCCollectionViewStylingDelegate.h"
@@ -49,20 +49,11 @@
  as well as ink during the highlight/unhighlight states.
  */
 
-- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
-    shouldHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
-
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
 
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
-
-- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
-    shouldSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
-
-- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
-    shouldDeselectItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
 
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;

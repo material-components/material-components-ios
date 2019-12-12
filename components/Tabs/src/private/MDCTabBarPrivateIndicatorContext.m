@@ -36,11 +36,8 @@
 #pragma mark - NSObject
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"%@ item:%@ bounds:%@ frame:%@",
-              [super description],
-              _item,
-              NSStringFromCGRect(_bounds),
-              NSStringFromCGRect(_contentFrame)];
+  return [NSString stringWithFormat:@"%@ item:%@ bounds:%@ frame:%@", [super description], _item,
+                                    NSStringFromCGRect(_bounds), NSStringFromCGRect(_contentFrame)];
 }
 
 - (BOOL)isEqual:(id)object {

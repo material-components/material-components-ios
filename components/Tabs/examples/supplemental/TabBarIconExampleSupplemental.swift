@@ -30,8 +30,8 @@ extension TabBarIconSwiftExample {
     let alignmentButton = MDCButton()
 
     let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
+    buttonScheme.colorScheme = containerScheme.colorScheme
+    buttonScheme.typographyScheme = containerScheme.typographyScheme
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: alignmentButton)
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
@@ -61,12 +61,12 @@ extension TabBarIconSwiftExample {
   func setupAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
     appBarViewController.headerView.minimumHeight = 56 + 72
     appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    MDCAppBarColorThemer.applyColorScheme(containerScheme.colorScheme, to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(containerScheme.typographyScheme, to: appBarViewController)
 
     appBarViewController.headerStackView.bottomBar = self.tabBar
     appBarViewController.headerStackView.setNeedsLayout()
@@ -77,7 +77,7 @@ extension TabBarIconSwiftExample {
     view.backgroundColor = UIColor.white
 
     view.addSubview(appBarViewController.view)
-    appBarViewController.didMove(toParentViewController: self)
+    appBarViewController.didMove(toParent: self)
 
     let badgeIncrementItem = UIBarButtonItem(title: "Add",
                                              style: .plain,
@@ -233,7 +233,7 @@ extension TabBarIconSwiftExample {
 }
 
 extension TabBarIconSwiftExample {
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 
@@ -250,7 +250,7 @@ extension TabBarIconSwiftExample {
 // MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Tab Bar", "Tabs with Icons (Swift)"],
       "primaryDemo": false,
@@ -258,7 +258,7 @@ extension TabBarIconSwiftExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

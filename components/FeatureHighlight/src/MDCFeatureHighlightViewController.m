@@ -24,8 +24,8 @@
 // The Bundle for string resources.
 static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
 
-static const CGFloat kMDCFeatureHighlightLineSpacing = 1.0f;
-static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
+static const CGFloat kMDCFeatureHighlightLineSpacing = 1;
+static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
 @property(nonatomic, nullable, weak) MDCFeatureHighlightView *featureHighlightView;
@@ -39,6 +39,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   UIView *_displayedView;
   UIView *_highlightedView;
 }
+
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 - (nonnull instancetype)initWithHighlightedView:(nonnull UIView *)highlightedView
                                     andShowView:(nonnull UIView *)displayedView
@@ -55,8 +57,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
     _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
 
-    _viewAccessiblityHint = [[self class] dismissAccessibilityHint];
-
     super.transitioningDelegate = self;
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
@@ -71,6 +71,11 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
+  if (@available(iOS 10.0, *)) {
+    self.featureHighlightView.adjustsFontForContentSizeCategory =
+        _adjustsFontForContentSizeCategory;
+  }
+  self.featureHighlightView.mdc_legacyFontScaling = _mdc_legacyFontScaling;
 
   __weak MDCFeatureHighlightViewController *weakSelf = self;
   self.featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -93,7 +98,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-      (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -130,9 +135,21 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)viewWillLayoutSubviews {
   self.featureHighlightView.titleLabel.attributedText =
-      [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
+      [self attributedStringForString:self.titleText
+                          lineSpacing:kMDCFeatureHighlightLineSpacing
+                                 font:_titleFont];
   self.featureHighlightView.bodyLabel.attributedText =
-      [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing];
+      [self attributedStringForString:self.bodyText
+                          lineSpacing:kMDCFeatureHighlightLineSpacing
+                                 font:_bodyFont];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)dealloc {
@@ -166,14 +183,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  [coordinator animateAlongsideTransition:
-   ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-     [self resetHighlightPoint];
-   }
-                               completion:
-   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-     [self resetHighlightPoint];
-   }];
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self resetHighlightPoint];
+      }
+      completion:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self resetHighlightPoint];
+      }];
 }
 
 - (void)resetHighlightPoint {
@@ -226,6 +243,13 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   }
 }
 
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  if (self.isViewLoaded) {
+    self.featureHighlightView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  }
+}
+
 - (void)acceptFeature {
   [self dismiss:YES];
 }
@@ -267,6 +291,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   }
 }
 
+- (void)mdc_setLegacyFontScaling:(BOOL)legacyScaling {
+  _mdc_legacyFontScaling = legacyScaling;
+
+  if (self.isViewLoaded) {
+    self.featureHighlightView.mdc_legacyFontScaling = legacyScaling;
+  }
+}
+
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
@@ -298,7 +330,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
-        (UIViewController *)dismissed {
+    (UIViewController *)dismissed {
   if (dismissed == self) {
     return _animationController;
   }
@@ -318,25 +350,23 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   return _viewAccessiblityHint;
 }
 
-+ (NSString *)dismissAccessibilityHint {
-  NSString *key =
-      kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
-  NSString *localizedString = NSLocalizedStringFromTableInBundle(
-      key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
-  return localizedString;
-}
-
 #pragma mark - Private
 
 - (NSAttributedString *)attributedStringForString:(NSString *)string
-                                      lineSpacing:(CGFloat)lineSpacing {
+                                      lineSpacing:(CGFloat)lineSpacing
+                                             font:(UIFont *)font {
   if (!string) {
     return nil;
   }
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.lineSpacing = lineSpacing;
 
-  NSDictionary *attrs = @{NSParagraphStyleAttributeName : paragraphStyle};
+  NSMutableDictionary *attrs = [[NSMutableDictionary alloc]
+      initWithDictionary:@{NSParagraphStyleAttributeName : paragraphStyle}];
+
+  if (font) {
+    [attrs setObject:font forKey:NSFontAttributeName];
+  }
 
   return [[NSAttributedString alloc] initWithString:string attributes:attrs];
 }
@@ -361,6 +391,5 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
-
 
 @end

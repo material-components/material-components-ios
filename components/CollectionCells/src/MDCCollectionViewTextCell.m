@@ -21,10 +21,10 @@
 #include <tgmath.h>
 
 // Default cell heights.
-const CGFloat MDCCellDefaultOneLineHeight = 48.0f;
-const CGFloat MDCCellDefaultOneLineWithAvatarHeight = 56.0f;
-const CGFloat MDCCellDefaultTwoLineHeight = 72.0f;
-const CGFloat MDCCellDefaultThreeLineHeight = 88.0f;
+const CGFloat MDCCellDefaultOneLineHeight = 48;
+const CGFloat MDCCellDefaultOneLineWithAvatarHeight = 56;
+const CGFloat MDCCellDefaultTwoLineHeight = 72;
+const CGFloat MDCCellDefaultThreeLineHeight = 88;
 
 // Default cell fonts.
 static inline UIFont *CellDefaultTextFont(void) {
@@ -56,8 +56,8 @@ static const CGFloat kCellThreeLinePaddingBottom = 20;
 // Cell padding leading/trailing.
 static const CGFloat kCellTextNoImagePaddingLeading = 16;
 static const CGFloat kCellTextNoImagePaddingTrailing = 16;
-static const CGFloat kCellTextWithImagePaddingLeading = kCellImagePaddingLeading + kImageSize +
-  kCellTextNoImagePaddingLeading;
+static const CGFloat kCellTextWithImagePaddingLeading =
+    kCellImagePaddingLeading + kImageSize + kCellTextNoImagePaddingLeading;
 
 // Returns the closest pixel-aligned value higher than |value|, taking the scale factor into
 // account. At a scale of 1, equivalent to Ceil().
@@ -122,9 +122,8 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 - (void)commonMDCCollectionViewTextCellInit {
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
   _contentWrapper.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth |
-      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-          self.mdf_effectiveUserInterfaceLayoutDirection);
+      UIViewAutoresizingFlexibleWidth | MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+                                            self.mdf_effectiveUserInterfaceLayoutDirection);
   _contentWrapper.clipsToBounds = YES;
   [self.contentView addSubview:_contentWrapper];
 
@@ -254,9 +253,9 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
 
 - (CGSize)frameSizeForLabel:(UILabel *)label {
   CGFloat width = CGRectGetWidth(_contentWrapper.bounds);
-  CGFloat height =
-      [label textRectForBounds:_contentWrapper.bounds limitedToNumberOfLines:label.numberOfLines]
-          .size.height;
+  CGFloat height = [label textRectForBounds:_contentWrapper.bounds
+                       limitedToNumberOfLines:label.numberOfLines]
+                       .size.height;
   return CGSizeMake(width, height);
 }
 

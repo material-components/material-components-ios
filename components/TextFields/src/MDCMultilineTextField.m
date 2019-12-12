@@ -58,6 +58,8 @@
 @synthesize minimumLines = _minimumLines;
 @synthesize trailingView = _trailingView;
 @synthesize trailingViewMode = _trailingViewMode;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -138,6 +140,7 @@
 
   [self setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 1
                                         forAxis:UILayoutConstraintAxisVertical];
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)subscribeForNotifications {
@@ -254,10 +257,19 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  self.sizeThatFitsWidthHint = size.width;
   CGSize sizeThatFits = [self intrinsicContentSize];
-  sizeThatFits.width = size.width;
-
+  sizeThatFits.width = self.sizeThatFitsWidthHint;
+  self.sizeThatFitsWidthHint = 0;
   return sizeThatFits;
+}
+
+- (void)setSizeThatFitsWidthHint:(CGFloat)sizeThatFitsWidthHint {
+  self.fundament.sizeThatFitsWidthHint = sizeThatFitsWidthHint;
+}
+
+- (CGFloat)sizeThatFitsWidthHint {
+  return self.fundament.sizeThatFitsWidthHint;
 }
 
 - (void)layoutSubviews {
@@ -281,6 +293,18 @@
   }
 
   [self updateIntrinsicSizeFromTextView];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return 0;
 }
 
 - (void)updateConstraints {
@@ -443,7 +467,7 @@
                                     multiplier:1
                                       constant:self.textViewTrailing.constant];
   }
-  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
+  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0);
 }
 
 - (void)updateTrailingViewAlpha {
@@ -456,16 +480,16 @@
   CGFloat trailingViewAlpha;
   switch (self.trailingViewMode) {
     case UITextFieldViewModeAlways:
-      trailingViewAlpha = 1.f;
+      trailingViewAlpha = 1;
       break;
     case UITextFieldViewModeWhileEditing:
-      trailingViewAlpha = self.isEditing ? 1.f : 0.f;
+      trailingViewAlpha = self.isEditing ? 1 : 0;
       break;
     case UITextFieldViewModeUnlessEditing:
-      trailingViewAlpha = self.isEditing ? 0.f : 1.f;
+      trailingViewAlpha = self.isEditing ? 0 : 1;
       break;
     case UITextFieldViewModeNever:
-      trailingViewAlpha = 0.f;
+      trailingViewAlpha = 0;
       break;
     default:
       NSAssert(NO, @"Invalid enumeration value %li.", (long)self.trailingViewMode);
@@ -591,8 +615,9 @@
 
 - (void)setFont:(UIFont *)font {
   if (self.textView.font != font) {
+    UIFont *previousFont = self.textView.font;
     [self.textView setFont:font];
-    [_fundament didSetFont];
+    [_fundament didSetFont:previousFont];
   }
 }
 
@@ -711,6 +736,14 @@
   return self.fundament.underline;
 }
 
+- (BOOL)hasTextContent {
+  return self.text.length > 0;
+}
+
+- (void)clearText {
+  self.text = nil;
+}
+
 #pragma mark - UITextView Notification Observation
 
 - (void)textViewDidBeginEditing:(__unused NSNotification *)note {
@@ -747,6 +780,23 @@
   }
 
   return value;
+}
+
+- (NSString *)accessibilityLabel {
+  NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
+  if ([super accessibilityLabel].length > 0) {
+    [accessibilityStrings addObject:[super accessibilityLabel]];
+  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+  }
+  if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+  }
+  if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
+  }
+  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
+                                        : nil;
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {

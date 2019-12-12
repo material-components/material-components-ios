@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialMath.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
@@ -25,9 +26,9 @@
 static NSString *kMDCBottomAppBarViewAnimKeyString = @"AnimKey";
 static NSString *kMDCBottomAppBarViewPathString = @"path";
 static NSString *kMDCBottomAppBarViewPositionString = @"position";
-static const CGFloat kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset = 0.f;
-static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationPrimary = 6.f;
-static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4.f;
+static const CGFloat kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset = 0;
+static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationPrimary = 6;
+static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4;
 static const int kMDCButtonAnimationDuration = 200;
 
 @interface MDCBottomAppBarCutView : UIView
@@ -39,7 +40,7 @@ static const int kMDCButtonAnimationDuration = 200;
 // Allows touch events to pass through so MDCBottomAppBarController can handle touch events.
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *view = [super hitTest:point withEvent:event];
-  return view == self ? nil : view;
+  return (view == self) ? nil : view;
 }
 
 @end
@@ -50,11 +51,13 @@ static const int kMDCButtonAnimationDuration = 200;
 @property(nonatomic, strong) MDCBottomAppBarCutView *cutView;
 @property(nonatomic, strong) MDCBottomAppBarLayer *bottomBarLayer;
 @property(nonatomic, strong) MDCNavigationBar *navBar;
-@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @end
 
 @implementation MDCBottomAppBarView
+
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -78,14 +81,17 @@ static const int kMDCButtonAnimationDuration = 200;
       kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset;
   [self addSubview:self.cutView];
 
-  self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                           UIViewAutoresizingFlexibleLeftMargin |
+  self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 
   [self addFloatingButton];
   [self addBottomBarLayer];
   [self addNavBar];
+
+  self.barTintColor = UIColor.whiteColor;
+  self.shadowColor = UIColor.blackColor;
+  _elevation = MDCShadowElevationBottomAppBar;
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)addFloatingButton {
@@ -127,11 +133,11 @@ static const int kMDCButtonAnimationDuration = 200;
   CGFloat navigationBarTopEdgeYOffset = CGRectGetMinY(self.navBar.frame);
   CGFloat midX = appBarWidth / 2;
 
-  floatingButtonPoint.y =
-      MAX(0.0f, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
+  floatingButtonPoint.y = MAX(0, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
-      if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
       } else {
         floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
@@ -143,7 +149,8 @@ static const int kMDCButtonAnimationDuration = 200;
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionTrailing: {
-      if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
       } else {
         floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
@@ -179,7 +186,7 @@ static const int kMDCButtonAnimationDuration = 200;
   }
 }
 
-- (void)healBottomAppBarViewAnimated:(BOOL)animated  {
+- (void)healBottomAppBarViewAnimated:(BOOL)animated {
   CGPathRef pathWithoutCut = [self.bottomBarLayer pathFromRect:self.bounds
                                                 floatingButton:self.floatingButton
                                             navigationBarFrame:self.navBar.frame
@@ -220,7 +227,8 @@ static const int kMDCButtonAnimationDuration = 200;
   self.floatingButton.center = endPoint;
 }
 
-- (void)showBarButtonItemsWithFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
+- (void)showBarButtonItemsWithFloatingButtonPosition:
+    (MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
   switch (floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionCenter:
       [self.navBar setLeadingBarButtonItems:_leadingBarButtonItems];
@@ -252,12 +260,14 @@ static const int kMDCButtonAnimationDuration = 200;
   self.floatingButton.center =
       [self getFloatingButtonCenterPositionForAppBarWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+
+  self.bottomBarLayer.fillColor = self.barTintColor.CGColor;
+  self.bottomBarLayer.shadowColor = self.shadowColor.CGColor;
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
   if (@available(iOS 11.0, *)) {
-
     // Accommodate insets for iPhone X.
     insets = self.safeAreaInsets;
   }
@@ -272,14 +282,14 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-
   // Make sure the floating button can always be tapped.
   BOOL contains = CGRectContainsPoint(self.floatingButton.frame, point);
   if (contains) {
     return self.floatingButton;
   }
   UIView *view = [super hitTest:point withEvent:event];
-  return view;
+  // Only subviews can receive events.
+  return (view == self) ? nil : view;
 }
 
 #pragma mark - CAAnimationDelegate
@@ -297,6 +307,14 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 #pragma mark - Setters
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
+    return;
+  }
+  _elevation = elevation;
+  [self mdc_elevationDidChange];
+}
 
 - (void)setFloatingButton:(MDCFloatingButton *)floatingButton {
   if (_floatingButton == floatingButton) {
@@ -364,9 +382,10 @@ static const int kMDCButtonAnimationDuration = 200;
   _floatingButtonHidden = floatingButtonHidden;
   if (floatingButtonHidden) {
     [self healBottomAppBarViewAnimated:animated];
-    [_floatingButton collapse:animated completion:^{
-      self.floatingButton.hidden = YES;
-    }];
+    [_floatingButton collapse:animated
+                   completion:^{
+                     self.floatingButton.hidden = YES;
+                   }];
   } else {
     _floatingButton.hidden = NO;
     [self cutBottomAppBarViewAnimated:animated];
@@ -385,11 +404,8 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)setBarTintColor:(UIColor *)barTintColor {
+  _barTintColor = barTintColor;
   _bottomBarLayer.fillColor = barTintColor.CGColor;
-}
-
-- (UIColor *)barTintColor {
-  return [UIColor colorWithCGColor:_bottomBarLayer.fillColor];
 }
 
 - (void)setLeadingBarItemsTintColor:(UIColor *)leadingBarItemsTintColor {
@@ -417,11 +433,24 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
+  _shadowColor = shadowColor;
   _bottomBarLayer.shadowColor = shadowColor.CGColor;
 }
 
-- (UIColor *)shadowColor {
-  return [UIColor colorWithCGColor:_bottomBarLayer.shadowColor];
+#pragma mark TraitCollection
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
+#pragma mark - MDCElevation
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end

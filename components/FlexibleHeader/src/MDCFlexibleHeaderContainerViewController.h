@@ -26,7 +26,7 @@
 @interface MDCFlexibleHeaderContainerViewController : UIViewController
 
 - (nonnull instancetype)initWithContentViewController:
-        (nullable UIViewController *)contentViewController NS_DESIGNATED_INITIALIZER;
+    (nullable UIViewController *)contentViewController NS_DESIGNATED_INITIALIZER;
 
 /**
  The header view controller that lives alongside the content view controller.
@@ -69,5 +69,13 @@
      frame.origin.y = self.topLayoutGuide.length + 32
  */
 @property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
+
+/**
+ A block that is invoked when the @c MDCFlexibleHeaderContainerViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFlexibleHeaderContainerViewController *_Nonnull flexibleHeaderContainer,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end

@@ -13,22 +13,25 @@
 // limitations under the License.
 
 import MDFTextAccessibility
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialIcons_ic_check
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
 import UIKit
 
-private func createSchemeWithPalette(_ palette: MDCPalette) -> MDCSemanticColorScheme {
+private func schemeWithPalette(_ palette: MDCPalette) -> MDCContainerScheming {
+  let containerScheme = DefaultContainerScheme()
+
   let scheme = MDCSemanticColorScheme()
   scheme.primaryColor = palette.tint500
   scheme.primaryColorVariant = palette.tint900
   scheme.secondaryColor = scheme.primaryColor
   if let onPrimaryColor = MDFTextAccessibility.textColor(fromChoices: [MDCPalette.grey.tint100,
-                                                                      MDCPalette.grey.tint900,
-                                                                      UIColor.black,
-                                                                      UIColor.white],
-                                                        onBackgroundColor: scheme.primaryColor,
-                                                        options: .preferLighter) {
+                                                                       MDCPalette.grey.tint900,
+                                                                       UIColor.black,
+                                                                       UIColor.white],
+                                                         onBackgroundColor: scheme.primaryColor,
+                                                         options: .preferLighter) {
     scheme.onPrimaryColor = onPrimaryColor
   }
   if let onSecondaryColor = MDFTextAccessibility.textColor(fromChoices: [MDCPalette.grey.tint100,
@@ -39,18 +42,20 @@ private func createSchemeWithPalette(_ palette: MDCPalette) -> MDCSemanticColorS
                                                            options: .preferLighter) {
     scheme.onSecondaryColor = onSecondaryColor
   }
-  return scheme
+  containerScheme.colorScheme = scheme
+
+  return containerScheme
 }
 
 private struct MDCColorThemeCellConfiguration {
   let name: String
   let mainColor: UIColor
-  let colorScheme: () -> MDCColorScheming
+  let scheme: MDCContainerScheming
 
-  init(name: String, mainColor: UIColor, colorScheme: @escaping () -> MDCColorScheming) {
+  init(name: String, mainColor: UIColor, scheme: MDCContainerScheming) {
     self.name = name
     self.mainColor = mainColor
-    self.colorScheme = colorScheme
+    self.scheme = scheme
   }
 }
 
@@ -64,43 +69,31 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     return palettesCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
   }
 
-  let titleColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.5)
-  let titleFont = AppTheme.globalTheme.typographyScheme.button
+  let titleColor = AppTheme.containerScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.5)
+  let titleFont = AppTheme.containerScheme.typographyScheme.button
   private let cellReuseIdentifier = "cell"
   private let colorSchemeConfigurations = [
     MDCColorThemeCellConfiguration(name: "Default",
-                                   mainColor: AppTheme.defaultTheme.colorScheme.primaryColor,
-                                   colorScheme: { return AppTheme.defaultTheme.colorScheme }),
+                                   mainColor: AppTheme.containerScheme.colorScheme.primaryColor,
+                                   scheme: DefaultContainerScheme()),
     MDCColorThemeCellConfiguration(name: "Blue",
                                    mainColor: MDCPalette.blue.tint500,
-                                   colorScheme: {
-                                    return createSchemeWithPalette(MDCPalette.blue)
-    }),
+                                   scheme: schemeWithPalette(MDCPalette.blue)),
     MDCColorThemeCellConfiguration(name: "Red",
                                    mainColor: MDCPalette.red.tint500,
-                                   colorScheme: {
-                                    return createSchemeWithPalette(MDCPalette.red)
-    }),
+                                   scheme: schemeWithPalette(MDCPalette.red)),
     MDCColorThemeCellConfiguration(name: "Green",
                                    mainColor: MDCPalette.green.tint500,
-                                   colorScheme: {
-                                    return createSchemeWithPalette(MDCPalette.green)
-    }),
+                                   scheme: schemeWithPalette(MDCPalette.green)),
     MDCColorThemeCellConfiguration(name: "Amber",
                                    mainColor: MDCPalette.amber.tint500,
-                                   colorScheme: {
-                                    return createSchemeWithPalette(MDCPalette.amber)
-    }),
+                                   scheme: schemeWithPalette(MDCPalette.amber)),
     MDCColorThemeCellConfiguration(name: "Pink",
                                    mainColor: MDCPalette.pink.tint500,
-                                   colorScheme: {
-                                    return createSchemeWithPalette(MDCPalette.pink)
-    }),
+                                   scheme: schemeWithPalette(MDCPalette.pink)),
     MDCColorThemeCellConfiguration(name: "Orange",
                                    mainColor: MDCPalette.orange.tint500,
-                                   colorScheme: {
-                                    return createSchemeWithPalette(MDCPalette.orange)
-    })
+                                   scheme: schemeWithPalette(MDCPalette.orange)),
   ]
   private let cellSize : CGFloat = 48.0 // minimum touch target
   private let cellSpacing : CGFloat = 8.0
@@ -160,8 +153,8 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     cell.contentView.layer.cornerRadius = cellSize / 2
     cell.contentView.layer.borderWidth = 1
     cell.contentView.layer.borderColor =
-      AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.05).cgColor
-    if AppTheme.globalTheme.colorScheme.primaryColor
+      AppTheme.containerScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.05).cgColor
+    if AppTheme.containerScheme.colorScheme.primaryColor
       == colorSchemeConfigurations[indexPath.item].mainColor {
       cell.imageView.isHidden = false
       cell.isSelected = true
@@ -212,10 +205,9 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let colorScheme = colorSchemeConfigurations[indexPath.item].colorScheme()
     navigationController?.popViewController(animated: true)
-    AppTheme.globalTheme = AppTheme(colorScheme: colorScheme,
-                                    typographyScheme: AppTheme.globalTheme.typographyScheme)
+    let scheme = colorSchemeConfigurations[indexPath.item].scheme
+    AppTheme.containerScheme = scheme
   }
 
 }

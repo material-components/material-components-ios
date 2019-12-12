@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCSnackbarMessageAction;
+@class MDCSnackbarMessageView;
 
 /**
  Called when a message is finished displaying, regardless of whether or not buttons were tapped.
@@ -40,7 +41,7 @@ extern const NSTimeInterval MDCSnackbarMessageDurationMax;
  This attribute can be set over any range of @c attributedText and that text will have the proper
  font applied.
  */
-extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
+extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 
 /**
  Represents a message to unobtrusively show to the user.
@@ -70,7 +71,7 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 + (nonnull instancetype)messageWithAttributedText:(nonnull NSAttributedString *)attributedText;
 
 /**
- Use the older legacy version of Snackbar. Default is YES.
+ Use the older legacy version of Snackbar. Default is NO.
  */
 @property(class, nonatomic, assign) BOOL usesLegacySnackbar;
 
@@ -100,11 +101,11 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 /**
   The color used for button text on the Snackbar in normal state.
 
-  Default is nil, but MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f) will be set as the default color
+  Default is nil, but MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6) will be set as the default color
   and is taken from MDCSnackbarMessageView's buttonTitleColorForState:
   */
-@property(nonatomic, strong, nullable) UIColor *buttonTextColor
-    __deprecated_msg("Use MDCSnackbarMessageView's buttonTitleColorForState: instead.");
+@property(nonatomic, strong, nullable) UIColor *buttonTextColor __deprecated_msg(
+    "Use MDCSnackbarMessageView's buttonTitleColorForState: instead.");
 
 /**
  How long the message should be displayed.
@@ -145,6 +146,46 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
  Text that should be read when the message appears on screen and VoiceOver is enabled.
  */
 @property(nonatomic, readonly, nullable) NSString *voiceNotificationText;
+
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ Whether to focus on the Snackbar message when VoiceOver is enabled.
+ The message is announced but not focused when set to NO.
+
+ Note: Setting this to YES will ensure the entire snackbar message is read during VoiceOver, and
+ that the message persists until an action is made on the message.
+
+ Defaults to NO.
+ */
+@property(nonatomic) BOOL focusOnShow;
+
+/**
+ Element to focus on snackbar message dismiss. Focuses the first element on screen
+ after dismiss by default. The focus will change to the element only if the focus is on the snackbar
+ message.
+
+ Defaults to nil.
+ */
+@property(nonatomic, weak, nullable) UIView *elementToFocusOnDismiss;
+
+/**
+ A block that is invoked when the corresponding @c MDCSnackbarMessageView of the @c
+ MDCSnackbarMessage instance will be presented. Use this to customize @c MDCSnackbarMessageView
+ before presentation.
+ */
+@property(nonatomic, copy, nullable) void (^snackbarMessageWillPresentBlock)
+    (MDCSnackbarMessage *_Nonnull message, MDCSnackbarMessageView *_Nonnull messageView);
 
 @end
 

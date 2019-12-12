@@ -14,29 +14,19 @@
 
 #import "MDCTabBar.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
+#import "MDCTabBarDisplayDelegate.h"
+#import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarSizeClassDelegate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialTypography.h"
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
 #import "private/MDCItemBarStyle.h"
-
-static NSString *const MDCTabBarItemsKey = @"MDCTabBarItemsKey";
-static NSString *const MDCTabBarSelectedItemKey = @"MDCTabBarSelectedItemKey";
-static NSString *const MDCTabBarDelegateKey = @"MDCTabBarDelegateKey";
-static NSString *const MDCTabBarTintColorKey = @"MDCTabBarTintColorKey";
-static NSString *const MDCTabBarSelectedItemTintColorKey = @"MDCTabBarSelectedItemTintColorKey";
-static NSString *const MDCTabBarUnselectedItemTintColorKey = @"MDCTabBarUnselectedItemTintColorKey";
-static NSString *const MDCTabBarInkColorKey = @"MDCTabBarInkColorKey";
-static NSString *const MDCTabBarSelectedItemTitleFontKey = @"MDCTabBarSelectedItemTitleFontKey";
-static NSString *const MDCTabBarUnselectedItemTitleFontKey = @"MDCTabBarUnselectedItemTitleFontKey";
-static NSString *const MDCTabBarBarTintColorKey = @"MDCTabBarBarTintColorKey";
-static NSString *const MDCTabBarAlignmentKey = @"MDCTabBarAlignmentKey";
-static NSString *const MDCTabBarItemApperanceKey = @"MDCTabBarItemApperanceKey";
-static NSString *const MDCTabBarDisplaysUppercaseTitlesKey = @"MDCTabBarDisplaysUppercaseTitlesKey";
-static NSString *const MDCTabBarTitleTextTransformKey = @"MDCTabBarTitleTextTransformKey";
-static NSString *const MDCTabBarSelectionIndicatorTemplateKey = @"MDCTabBarSelectionIndicatorTemplateKey";
 
 /// Padding between image and title in points, according to the spec.
 static const CGFloat kImageTitleSpecPadding = 10;
@@ -67,24 +57,40 @@ static const CGFloat kBottomNavigationTitleImagePadding = 3;
 /// Height for the bottom divider.
 static const CGFloat kBottomNavigationBarDividerHeight = 1;
 
-static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignment alignment) {
+static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
+    MDCTabBarExtendedAlignment alignment) {
   switch (alignment) {
-    case MDCTabBarAlignmentCenter:
+    case MDCTabBarExtendedAlignmentCenter:
       return MDCItemBarAlignmentCenter;
 
-    case MDCTabBarAlignmentLeading:
+    case MDCTabBarExtendedAlignmentLeading:
       return MDCItemBarAlignmentLeading;
 
-    case MDCTabBarAlignmentJustified:
+    case MDCTabBarExtendedAlignmentJustified:
       return MDCItemBarAlignmentJustified;
 
-    case MDCTabBarAlignmentCenterSelected:
+    case MDCTabBarExtendedAlignmentBestEffortJustified:
+      return MDCItemBarAlignmentBestEffortJustified;
+
+    case MDCTabBarExtendedAlignmentCenterSelected:
       return MDCItemBarAlignmentCenterSelected;
   }
 
   NSCAssert(0, @"Invalid alignment value %ld", (long)alignment);
   return MDCItemBarAlignmentLeading;
 }
+
+static inline UIColor *RippleColor() {
+  return [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+}
+
+@interface MDCTabBar ()
+@property(nonatomic, weak, nullable) id<MDCTabBarSizeClassDelegate> sizeClassDelegate;
+@end
+
+@interface MDCTabBar ()
+@property(nonatomic, weak, nullable) id<MDCTabBarDisplayDelegate> displayDelegate;
+@end
 
 @interface MDCTabBar () <MDCItemBarDelegate>
 @end
@@ -105,12 +111,15 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   UIColor *_selectedTitleColor;
   UIColor *_unselectedTitleColor;
+  UIColor *_inkColor;
 }
 // Inherit UIView's tintColor logic.
 @dynamic tintColor;
 @synthesize alignment = _alignment;
 @synthesize barPosition = _barPosition;
 @synthesize itemAppearance = _itemAppearance;
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 #pragma mark - Initialization
 
@@ -118,63 +127,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCTabBarInit];
-
-    // Use self. when setter needs to be called
-    if ([aDecoder containsValueForKey:MDCTabBarItemsKey]) {
-      self.items = [aDecoder decodeObjectOfClass:[NSArray class] forKey:MDCTabBarItemsKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarSelectedItemKey]) {
-      self.selectedItem = [aDecoder decodeObjectOfClass:[UIBarButtonItem class]
-                                                 forKey:MDCTabBarSelectedItemKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarDelegateKey]) {
-      self.delegate = [aDecoder decodeObjectForKey:MDCTabBarDelegateKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarTintColorKey]) {
-      self.tintColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                              forKey:MDCTabBarTintColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarSelectedItemTintColorKey]) {
-      _selectedItemTintColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                      forKey:MDCTabBarSelectedItemTintColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarUnselectedItemTintColorKey]) {
-      _unselectedItemTintColor =
-          [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTabBarUnselectedItemTintColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarInkColorKey]) {
-      _inkColor = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTabBarInkColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarSelectedItemTitleFontKey]) {
-      _selectedItemTitleFont = [aDecoder decodeObjectOfClass:[UIFont class]
-                                                      forKey:MDCTabBarSelectedItemTitleFontKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarUnselectedItemTitleFontKey]) {
-      _unselectedItemTitleFont =
-          [aDecoder decodeObjectOfClass:[UIFont class] forKey:MDCTabBarUnselectedItemTitleFontKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCTabBarBarTintColorKey]) {
-      self.barTintColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                 forKey:MDCTabBarBarTintColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarAlignmentKey]) {
-      self.alignment = [aDecoder decodeIntegerForKey:MDCTabBarAlignmentKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarItemApperanceKey]) {
-      self.itemAppearance = [aDecoder decodeIntegerForKey:MDCTabBarItemApperanceKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarDisplaysUppercaseTitlesKey]) {
-      self.displaysUppercaseTitles = [aDecoder decodeBoolForKey:MDCTabBarDisplaysUppercaseTitlesKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarTitleTextTransformKey]) {
-      _titleTextTransform = [aDecoder decodeIntegerForKey:MDCTabBarTitleTextTransformKey];
-    }
-    if ([aDecoder containsValueForKey:MDCTabBarSelectionIndicatorTemplateKey]) {
-      _selectionIndicatorTemplate =
-          [aDecoder decodeObjectOfClass:[NSObject class]
-                                 forKey:MDCTabBarSelectionIndicatorTemplateKey];
-    }
     [self updateItemBarStyle];
   }
   return self;
@@ -191,10 +143,11 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)commonMDCTabBarInit {
   _bottomDividerColor = [UIColor clearColor];
   _selectedItemTintColor = [UIColor whiteColor];
-  _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _unselectedItemTintColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
   _selectedTitleColor = _selectedItemTintColor;
   _unselectedTitleColor = _unselectedItemTintColor;
-  _inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _inkColor = RippleColor();
+  _rippleColor = RippleColor();
 
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
@@ -211,23 +164,23 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
+  _itemBar.tabBar = self;
   _itemBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _itemBar.delegate = self;
-  _itemBar.alignment = MDCItemBarAlignmentForTabBarAlignment(_alignment);
+  _itemBar.alignment =
+      MDCItemBarAlignmentForTabBarAlignment((MDCTabBarExtendedAlignment)_alignment);
   [self addSubview:_itemBar];
 
   CGFloat dividerTop = CGRectGetMaxY(self.bounds) - kBottomNavigationBarDividerHeight;
-  _dividerBar =
-      [[UIView alloc] initWithFrame:CGRectMake(0,
-                                               dividerTop,
-                                               CGRectGetWidth(self.bounds),
-                                               kBottomNavigationBarDividerHeight)];
+  _dividerBar = [[UIView alloc] initWithFrame:CGRectMake(0, dividerTop, CGRectGetWidth(self.bounds),
+                                                         kBottomNavigationBarDividerHeight)];
   _dividerBar.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   _dividerBar.backgroundColor = _bottomDividerColor;
   [self addSubview:_dividerBar];
 
   [self updateItemBarStyle];
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)layoutSubviews {
@@ -237,26 +190,16 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _itemBar.frame = CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height);
 }
 
--(void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.items forKey:MDCTabBarItemsKey];
-  [aCoder encodeObject:self.selectedItem forKey:MDCTabBarSelectedItemKey];
-  [aCoder encodeConditionalObject:self.delegate forKey:MDCTabBarDelegateKey];
-  [aCoder encodeObject:self.tintColor forKey:MDCTabBarTintColorKey];
-  [aCoder encodeObject:_selectedItemTintColor forKey:MDCTabBarSelectedItemTintColorKey];
-  [aCoder encodeObject:_unselectedItemTintColor forKey:MDCTabBarUnselectedItemTintColorKey];
-  [aCoder encodeObject:_inkColor forKey:MDCTabBarInkColorKey];
-  [aCoder encodeObject:_selectedItemTitleFont forKey:MDCTabBarSelectedItemTitleFontKey];
-  [aCoder encodeObject:_unselectedItemTitleFont forKey:MDCTabBarUnselectedItemTitleFontKey];
-  [aCoder encodeObject:_barTintColor forKey:MDCTabBarBarTintColorKey];
-  [aCoder encodeInteger:_alignment forKey:MDCTabBarAlignmentKey];
-  [aCoder encodeInteger:_itemAppearance forKey:MDCTabBarItemApperanceKey];
-  [aCoder encodeBool:self.displaysUppercaseTitles forKey:MDCTabBarDisplaysUppercaseTitlesKey];
-  [aCoder encodeInteger:_titleTextTransform forKey:MDCTabBarTitleTextTransformKey];
-  if ([_selectionIndicatorTemplate conformsToProtocol:@protocol(NSCoding)]) {
-    [aCoder encodeObject:_selectionIndicatorTemplate
-                  forKey:MDCTabBarSelectionIndicatorTemplateKey];
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return 0;
 }
 
 #pragma mark - Public
@@ -376,6 +319,19 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
+- (UIColor *)inkColor {
+  return _inkColor;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+    return;
+  }
+  _rippleColor = rippleColor;
+
+  [self updateItemBarStyle];
+}
+
 - (void)setUnselectedItemTitleFont:(UIFont *)unselectedItemTitleFont {
   if ((unselectedItemTitleFont != _unselectedItemTitleFont) &&
       ![unselectedItemTitleFont isEqual:_unselectedItemTitleFont]) {
@@ -469,6 +425,20 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
+// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+// symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  if (semanticContentAttribute == self.mdf_semanticContentAttribute) {
+    return;
+  }
+  [super mdf_setSemanticContentAttribute:semanticContentAttribute];
+  _itemBar.mdf_semanticContentAttribute = semanticContentAttribute;
+}
+#pragma clang diagnostic pop
+
 #pragma mark - MDCAccessibility
 
 - (id)accessibilityElementForItem:(UITabBarItem *)item {
@@ -531,6 +501,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.shouldDisplaySelectionIndicator = YES;
     style.shouldGrowOnSelection = NO;
     style.inkStyle = MDCInkStyleBounded;
+    style.rippleStyle = MDCRippleStyleBounded;
     style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
     style.textOnlyNumberOfLines = 2;
   } else {
@@ -539,6 +510,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.shouldGrowOnSelection = YES;
     style.maximumItemWidth = kBottomNavigationMaximumItemWidth;
     style.inkStyle = MDCInkStyleUnbounded;
+    style.rippleStyle = MDCRippleStyleUnbounded;
     style.titleImagePadding = kBottomNavigationTitleImagePadding;
     style.textOnlyNumberOfLines = 1;
   }
@@ -665,7 +637,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)internalSetAlignment:(MDCTabBarAlignment)alignment animated:(BOOL)animated {
   if (_alignment != alignment) {
     _alignment = alignment;
-    [_itemBar setAlignment:MDCItemBarAlignmentForTabBarAlignment(_alignment) animated:animated];
+    [_itemBar
+        setAlignment:MDCItemBarAlignmentForTabBarAlignment((MDCTabBarExtendedAlignment)_alignment)
+            animated:animated];
   }
 }
 
@@ -714,6 +688,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
+  style.rippleColor = _rippleColor;
+  style.enableRippleBehavior = _enableRippleBehavior;
   style.displaysUppercaseTitles = self.displaysUppercaseTitles;
 
   style.selectedTitleColor = _selectedTitleColor ?: self.tintColor;
@@ -725,6 +701,15 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   // Layout depends on -[MDCItemBar sizeThatFits], which depends on the style.
   [self setNeedsLayout];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  [self updateItemBarStyle];
 }
 
 @end

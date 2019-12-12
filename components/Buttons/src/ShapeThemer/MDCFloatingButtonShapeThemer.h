@@ -20,16 +20,27 @@
 
 /**
  The Material Design shape system's themer for instances of MDCFloatingButton.
+
+ @warning This API will eventually be deprecated. The replacement API is any of
+ `MDCFloatingButton`'s Theming extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCFloatingButtonShapeThemer : NSObject
+__deprecated_msg("Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead. (Note: "
+                 "Shape theming is no longer available as an independent API.)")
+    @interface MDCFloatingButtonShapeThemer : NSObject
 
 /**
- Applies a shape scheme's properties to an MDCFloatingButton.
+ Applies a rounded rectangular shape to an MDCFloatingButton instance. Each corner has a radius of
+ 50% the FAB's height.
 
- @param shapeScheme The shape scheme to apply to the component instance.
+ @param shapeScheme This parameter is ignored.
  @param button A component instance to which the shape scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is any of
+ `MDCFloatingButton`'s Theming extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-+ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming> __unused)shapeScheme
                 toButton:(nonnull MDCFloatingButton *)button;
 
 @end

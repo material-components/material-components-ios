@@ -14,7 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import <MaterialComponents/MaterialBottomSheet.h>
+#import "MaterialBottomSheet.h"
+#import "MaterialElevation.h"
 
 @class MDCActionSheetAction;
 
@@ -24,19 +25,22 @@
 
  A Material Action Sheet consists of a title, message and a list of actions.
 
- Learn more about [Material bottom
- sheet](https://material.io/design/components/sheets-bottom.html)
- [Material spec list](https://material.io/design/components/lists.html)
+ The [Material Guidelines article for Bottom
+ Sheets](https://material.io/design/components/sheets-bottom.html) and the
+ [Material Guidelines article for Lists](https://material.io/design/components/lists.html) have more
+ detailed guidance about how to style and use Action Sheets.
 
  To learn more about
  [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
- or [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
+ or
+ [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
 
- MDCActionSheetController does not support UIPopoverController, instead it will always be presented in a sheet from the bottom.
+ MDCActionSheetController does not support UIPopoverController, instead it will always be presented
+ in a sheet from the bottom.
 
  */
-__attribute__((objc_subclassing_restricted))
-@interface MDCActionSheetController : UIViewController
+__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
+    : UIViewController<MDCElevatable, MDCElevationOverriding>
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.
@@ -92,7 +96,7 @@ __attribute__((objc_subclassing_restricted))
  The order of the actions in the array matches the order in which they were added
  to the action sheet.
  */
-@property (nonatomic, nonnull, readonly, copy) NSArray<MDCActionSheetAction *> *actions;
+@property(nonatomic, nonnull, readonly, copy) NSArray<MDCActionSheetAction *> *actions;
 
 /**
  The title of the action sheet controller.
@@ -100,14 +104,22 @@ __attribute__((objc_subclassing_restricted))
  If this is updated after presentation the view will be updated to match the
  new value.
  */
-@property (nonatomic, nullable, copy) NSString *title;
+@property(nonatomic, nullable, copy) NSString *title;
 
 /**
  The message of the action sheet controller.
 
  If this is updated after presentation the view will be updated to match the new value.
  */
-@property (nonatomic, nullable, copy) NSString *message;
+@property(nonatomic, nullable, copy) NSString *message;
+
+/**
+ A block that is invoked when the @c MDCActionSheetController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCActionSheetController *_Nonnull actionSheet,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  Indicates whether the button should automatically update its font when the device’s
@@ -170,14 +182,52 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, strong, nullable) UIColor *actionTintColor;
 
 /**
- The ink color for the action items within an action sheet.
+ The ripple color for the action items within an action sheet.
  */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
 
 /**
  The image rendering mode for all actions within an action sheet.
  */
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
+
+/**
+ Determines if a divider should be shown between the header and actions. To customize the divider
+ color see @c headerDividerColor.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL showsHeaderDivider;
+
+/**
+ The color of the divider between the header and actions.
+
+ Defaults to a semi transparent black.
+ */
+@property(nonatomic, copy, nonnull) UIColor *headerDividerColor;
+
+/**
+ The elevation of the action sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
+ The inset or outset margins for the rectangle surrounding all of each action's content.
+
+ Defaults to @c UIEdgeInsetsZero.
+ */
+@property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
+
+/**
+ Determines the alignment behavior of all title leading edges.
+
+ When YES, all title leading edges will be aligned with one another.
+
+ When NO, each title will be positioned individually based on whether it has an image or not.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL alwaysAlignTitleLeadingEdges;
 
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;
@@ -200,7 +250,6 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  add an action to the action sheet.
  */
 @interface MDCActionSheetAction : NSObject <NSCopying, UIAccessibilityIdentification>
-
 
 /**
  Returns an action sheet action with the populated given values.
@@ -225,7 +274,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
  method.
  */
-@property (nonatomic, nonnull, readonly) NSString *title;
+@property(nonatomic, nonnull, readonly) NSString *title;
 
 /**
  Image of the list item shown on the action sheet.
@@ -233,11 +282,25 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
  method.
 */
-@property (nonatomic, nullable, readonly) UIImage *image;
+@property(nonatomic, nullable, readonly) UIImage *image;
 
 /**
  The @c accessibilityIdentifier for the view associated with this action.
  */
 @property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
+
+/**
+ The color of the action title.
+
+ @note If no @c titleColor is provided then the @c actionTextColor from the controller will be used.
+ */
+@property(nonatomic, copy, nullable) UIColor *titleColor;
+
+/**
+ The tint color of the action.
+
+ @note If no @c tintColor is provided then the @c actionTintColor from the controller will be used.
+ */
+@property(nonatomic, copy, nullable) UIColor *tintColor;
 
 @end

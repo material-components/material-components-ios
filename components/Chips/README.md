@@ -8,7 +8,7 @@ path: /catalog/chips/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Chips -->
+<!-- This file was auto-generated using ./scripts/generate_readme Chips -->
 
 # Chips
 
@@ -49,9 +49,7 @@ Chips are compact elements that represent an input, attribute, or action.
 - [Examples](#examples)
   - [Create a single Chip](#create-a-single-chip)
 - [Extensions](#extensions)
-  - [Chip Color Theming](#chip-color-theming)
-  - [Typography Theming](#typography-theming)
-  - [Shape Theming](#shape-theming)
+  - [Theming](#theming)
 
 - - -
 
@@ -353,123 +351,42 @@ chipView.titleLabel.text = @"Tap me";
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Chip Color Theming
+### Theming
 
-You can theme a chip with your app's color scheme using the ColorThemer extension.
+ `MDCChipView` supports Material Theming using a Container Scheme.
+There are two variants for Material Theming of an MDCChipVIew, which are the default theme
+and the outlined theme.
 
-You must first add the Color Themer extension to your project:
+ <!--<div class="material-code-render" markdown="1">-->
 
-```bash
-pod 'MaterialComponents/Chips+ColorThemer'
-```
+ #### Swift
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialChips_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-MDCChipViewColorThemer.applySemanticColorScheme(colorScheme, to: component)
+// Import the Chips Theming Extensions module
+import MaterialComponents.MaterialChips_MaterialTheming
+ ...
+ // Create or use your app's Container Scheme
+let containerScheme = MDCContainerScheme()
+ // Theme the chip with either default theme
+chip.applyTheme(withScheme: containerScheme)
+ // Or outlined theme
+chip.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
-#### Objective-C
+ #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialChips+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
-
-// Step 3: Apply the color scheme to your component
-[MDCChipViewColorThemer applySemanticColorScheme:colorScheme
-     toChipView:component];
+// Import the Tabs Theming Extensions header
+#import <MaterialComponents/MaterialChips+MaterialTheming.h>
+ ...
+ // Create or use your app's Container Scheme
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+ // Theme the chip with either default theme
+[self.chip applyThemeWithScheme:containerScheme];
+ // Or outlined theme
+[self.chip applyOutlinedThemeWithScheme:containerScheme];
 ```
+
 <!--</div>-->
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-You can theme a chip with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Chips+TypographyThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialChips_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCChipViewTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialChips+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCChipViewTypographyThemer applyTypographyScheme:colorScheme
-     toChipView:component];
-```
-<!--</div>-->
-
-<!-- Extracted from docs/shape-theming.md -->
-
-### Shape Theming
-
-You can theme a chip with your app's shape scheme using the ShapeThemer extension.
-
-You must first add the ShapeThemer extension to your project:
-
-```bash
-pod 'MaterialComponents/Chips+ShapeThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ShapeThemer extension
-import MaterialComponents.MaterialChips_ShapeThemer
-
-// Step 2: Create or get a shape scheme
-let shapeScheme = MDCShapeScheme()
-
-// Step 3: Apply the shape scheme to your component
-MDCChipViewShapeThemer.applyShapeScheme(shapeScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ShapeThemer extension
-#import "MaterialChips+ShapeThemer.h"
-
-// Step 2: Create or get a shape scheme
-id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
-
-// Step 3: Apply the shape scheme to your component
-[MDCChipViewShapeThemer applyShapeScheme:shapeScheme
-     toChipView:component];
-```
-<!--</div>-->
-

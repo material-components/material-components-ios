@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "CardsCollectionTintingExample.h"
+
+#import "MaterialCards+Theming.h"
 #import "MaterialInk.h"
 #import "supplemental/CardTintExampleCell.h"
 
@@ -30,7 +32,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.minimumInteritemSpacing = 0;
   defaultLayout.minimumLineSpacing = 1;
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  return [self initWithCollectionViewLayout:defaultLayout];
+  self = [super initWithCollectionViewLayout:defaultLayout];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -52,7 +58,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   // Register cell classes
   [self.collectionView registerClass:[CardTintExampleCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
-
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -71,6 +76,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   CardTintExampleCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
+  [cell applyThemeWithScheme:self.containerScheme];
   [cell setTintColor:[UIColor redColor]];
   [cell setNeedsDisplay];
   return cell;
@@ -79,8 +85,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat cardSize = (self.view.bounds.size.width / 3) - 12;
   return CGSizeMake(cardSize, cardSize);
 }
@@ -92,24 +98,24 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-  return 8.f;
+                                 layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+  return 8;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-  return 8.f;
+                                      layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+  return 8;
 }
 
 #pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Cards", @"Collection Card Tinting" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Cards", @"Collection Card Tinting" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

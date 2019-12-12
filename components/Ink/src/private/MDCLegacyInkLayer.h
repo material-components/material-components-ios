@@ -15,6 +15,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+@protocol MDCLegacyInkLayerDelegate;
+
 /**
  A Core Animation layer that draws and animates the ink effect.
 
@@ -26,6 +28,12 @@
  3. On touch up, the ink ripple will lose energy, opacity will start to decrease.
  */
 @interface MDCLegacyInkLayer : CALayer
+
+/**
+ Ink layer animation delegate. Clients set this delegate to receive updates when ink layer
+ animations start and end.
+ */
+@property(nonatomic, weak, nullable) id<MDCLegacyInkLayerDelegate> animationDelegate;
 
 /** Clips the ripple to the bounds of the layer. */
 @property(nonatomic, assign, getter=isBounded) BOOL bounded;
@@ -96,5 +104,29 @@
  @param completionBlock Block called after the completion of the evaporation.
  */
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^_Nullable)(void))completionBlock;
+
+@end
+
+/**
+ Delegate protocol for the MDCLegacyInkLayer. Clients may implement this protocol to receive updates
+ when ink layer animations start and end.
+ */
+@protocol MDCLegacyInkLayerDelegate <NSObject>
+
+@optional
+
+/**
+ Called when the ink ripple animation begins.
+
+ @param inkLayer The MDCLegacyInkLayer that starts animating.
+ */
+- (void)legacyInkLayerAnimationDidStart:(nonnull MDCLegacyInkLayer *)inkLayer;
+
+/**
+ Called when the ink ripple animation ends.
+
+ @param inkLayer The MDCLegacyInkLayer that ends animating.
+ */
+- (void)legacyInkLayerAnimationDidEnd:(nonnull MDCLegacyInkLayer *)inkLayer;
 
 @end

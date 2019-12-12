@@ -14,8 +14,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
+# Fail on any error
 set -e
+COCOAPODS_VERSION="1.6.0"
+
+# Fix permissions issue with Ruby Gems (b/128326105)
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  sudo chown -Rh $(whoami) /Library/Ruby/Gems
+fi
+
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  repo_dir='github/repo'
+else
+  repo_dir="$(dirname $0)"
+fi
+
+repo_dir="$(cd $repo_dir; pwd)"
+scripts_dir="${repo_dir}/scripts/lib"
+
+source "${scripts_dir}/github_comments.sh"
+source "${scripts_dir}/select_xcode.sh"
+source "${scripts_dir}/package_managers.sh"
+
+# To install homebrew formulas at specific versions we need to point directly
+# to the desired sha in the homebrew formula repository.
+# See https://danepowell.com/blog/homebrew-formula-versions for more details.
+# This currently points to version 0.21.3, the last version that supports Xcode 9
+SOURCEKITTEN_FORMULA="https://raw.githubusercontent.com/Homebrew/homebrew-core/c5a8a094f9e1dd8e41ed24785acef07ef7092d0d/Formula/sourcekitten.rb"
 
 fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
@@ -25,31 +50,79 @@ fix_bazel_imports() {
   }
   
   rewrite_tests() {
-    find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/tests -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+  }
+  rewrite_examples() {
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
   rewrite_source() {
     find "${stashed_dir}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+  }
+  rewrite_catalogs() {
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
+  rewrite_catalogs "s/import MaterialCatalog/import catalog_MaterialCatalog/"
+  rewrite_catalogs "s/import MaterialComponents.MaterialIcons_(.+)/import components_private_Icons_icons_\1_\1/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
+  rewrite_examples "s/import <MaterialComponentsBeta\/(.+)>/import\/\*Material beta framework import\*\/ \"\1\"/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)_Private/import components_\1_Private/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   private_components | while read private_component; do
     if [ -z "$private_component" ]; then
       continue
     fi
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+    rewrite_examples "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+    rewrite_catalogs "s/import MaterialComponents.Material$private_component\\b/import components_private_${private_component}_${private_component}/"
   done
-  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)_(.+)/import components_\1_\2 \/\/ Alpha/"
-  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)/import components_\1_\1 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_catalogs "s/import CatalogByConvention/import catalog_by_convention_CatalogByConvention/"
+  rewrite_catalogs "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
+  rewrite_catalogs "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
+  rewrite_catalogs "s/import <CatalogByConvention\/CatalogByConvention\.h>/import\/\*Material prefix framework import\*\/ \"CatalogByConvention.h\"/"
+  rewrite_examples "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_examples "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
+  rewrite_source "s/import <MaterialComponentsBeta\/(.+)>/import\/\*Material beta framework import\*\/ \"\1\"/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
-  rewrite_source "s/import <MDF(.+)\/MDF.+\.h>/import \"MDF\1.h\"/"
-  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
+  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/MDC(.+)\.h>/import\/\*MDC prefix framework import\*\/ \"MDC\1.h\"/"
+  rewrite_tests "s/import <MaterialComponentsBeta\/Material(.+)Beta\.h>/import\/\*Material beta prefix framework import\*\/ \"Material\1Beta.h\"/"
+  rewrite_tests "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_tests "s/import <MDFTesting\/MDFTesting\.h>/import \"MDFTesting.h\"/"
+  rewrite_tests "s/import MDFTesting/import material_testing_ios_MDFTesting/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -57,27 +130,49 @@ fix_bazel_imports() {
     echo "Undoing import rewrites for bazel..."
 
     # Undoes our source changes from above.
-    rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
+    rewrite_tests "s/import\/\*Material beta prefix framework import\*\/ \"Material(.+).h\"/import <MaterialComponentsBeta\/Material\1\.h>/"
+    rewrite_tests "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_\1Beta \/\/ BetaSplit/import MaterialComponentsBeta.Material\1Beta/"
+    rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_catalogs "s/import\/\*Material prefix framework import\*\/ \"CatalogByConvention\.h\"/import <CatalogByConvention\/CatalogByConvention\.h>/"
+    rewrite_catalogs "s/import catalog_MaterialCatalog/import MaterialCatalog/"
+    rewrite_catalogs "s/import components_private_Icons_icons_(.+)_\1/import MaterialComponents.MaterialIcons_\1/"
+    rewrite_catalogs "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_catalogs "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
+    rewrite_catalogs "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_catalogs "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_catalogs "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
+    rewrite_catalogs "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_catalogs "s/import catalog_by_convention_CatalogByConvention/import CatalogByConvention/"
+    rewrite_catalogs "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
+    rewrite_catalogs "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
+    rewrite_examples "s/import\/\*Material beta framework import\*\/ \"(.+)\"/import <MaterialComponentsBeta\/\1>/"
+    rewrite_examples "s/import components_(.+)_\1Beta \/\/ BetaSplit/import MaterialComponentsBeta.Material\1Beta/"
+    rewrite_examples "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
+    rewrite_examples "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_Private/import MaterialComponents.Material\1_Private/"
+    rewrite_examples "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
+    rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_examples "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
+    rewrite_examples "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*Material beta framework import\*\/ \"(.+)\"/import <MaterialComponentsBeta\/\1>/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
-    rewrite_source "s/import \"MDF(.+)\.h\"/import <MDF\1\/MDF\1.h>/"
-    rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"
+    rewrite_source "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*MDC prefix framework import\*\/ \"MDC(.+)\.h\"/import <MaterialComponents\/MDC\1\.h>/"
+    rewrite_tests "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_tests "s/import \"MDFTesting\.h\"/import <MDFTesting\/MDFTesting.h>/"
+    rewrite_tests "s/import material_testing_ios_MDFTesting/import MDFTesting/"
     rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }
   trap reset_imports EXIT
-}
-
-version_as_number() {
-  padded_version="${1%.}" # Strip any trailing dots
-  # Pad with .0 until we get a M.m.p version string.
-  while [ $(grep -o "\." <<< "$padded_version" | wc -l) -lt "2" ]; do
-    padded_version=${padded_version}.0
-  done
-  echo "${padded_version//.}"
 }
 
 move_derived_data_to_tmp() {
@@ -86,39 +181,6 @@ move_derived_data_to_tmp() {
     mv "$targetDir" /tmpfs/
     ln -sf /tmpfs/DerivedData "$targetDir"
   fi
-}
-
-# xcode-select's the provided xcode version.
-# Usage example:
-#     select_xcode 9.2.0
-select_xcode() {
-  desired_version="$1"
-  if [ -z "$desired_version" ]; then
-    return # No Xcode version to select.
-  fi
-
-  xcodes=$(ls /Applications/ | grep "Xcode")
-  for xcode_path in $xcodes; do
-    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
-      | grep "CFBundleShortVersionString" -A1 \
-      | grep string \
-      | cut -d'>' -f2 \
-      | cut -d'<' -f1)
-    xcode_version_as_number="$(version_as_number $xcode_version)"
-
-    if [ "$xcode_version_as_number" -ne "$(version_as_number $desired_version)" ]; then
-      continue
-    fi
-
-    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
-    xcodebuild -version
-
-    # Resolves the following crash when switching Xcode versions:
-    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
-    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
-
-    break
-  done
 }
 
 # Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
@@ -135,7 +197,7 @@ upload_bazel_test_artifacts() {
     done
   }
 
-  brew install rename
+  brew_install rename
 
   # rename all test.log to sponge_log.log and then copy them to the kokoro
   # artifacts directory.
@@ -148,6 +210,99 @@ upload_bazel_test_artifacts() {
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
 }
 
+# Upgrades kokoro's current bazel version to at least 0.20.0
+upgrade_kokoro_bazel_if_needed() {
+  bazel version
+
+  if [ -f "$KOKORO_GFILE_DIR/use_bazel.sh" ]; then
+    bash "$KOKORO_GFILE_DIR/use_bazel.sh" 0.20.0
+  else
+    use_bazel.sh 0.20.0
+  fi
+  bazel version
+}
+
+run_bazel_affected() {
+  echo "Checking affected targets..."
+  if [ -z "$COMMAND" ]; then
+    COMMAND="test"
+  fi
+  if [ -z "$TARGET" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      # Only return test targets.
+      bazel_kind="test"
+    else
+      # Return all affected targets.
+      bazel_kind="rule"
+    fi
+
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      pushd github/repo >> /dev/null
+    fi
+
+    # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
+    # none can be determined, defaults to `develop`.
+    if [ -n "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
+      target_branch="$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
+    else
+      target_branch=develop
+    fi
+
+    # `base_sha` is the merge base of `target_branch` and the current HEAD.
+    base_sha=$(git merge-base "$target_branch" HEAD)
+
+    # We must upgrade bazel prior to running bazel query because we rely on features in bazel
+    # 0.20.
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      upgrade_kokoro_bazel_if_needed
+    fi
+    
+    # Output the affected targets to the logs. This also gives the affected_targets script the
+    # opportunity to fail.
+    scripts/affected_targets "$bazel_kind" "$base_sha...HEAD"
+
+    # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
+    # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
+    #  commit.
+    TARGET="$(scripts/affected_targets $bazel_kind $base_sha...HEAD)"
+
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      popd >> /dev/null
+    fi
+  fi
+  
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+    exit 0
+  fi
+  
+  comment_identifier="affected-targets"
+
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+
+    if [ -n "$GITHUB_API_TOKEN" ]; then
+      delete_comment "$comment_identifier"
+    fi
+
+    exit 0
+  else
+    if [ -n "$GITHUB_API_TOKEN" ]; then
+      comment_tmp_path=$(mktemp -d)
+      comment_tmp_file="$comment_tmp_path/comment.tmp"
+      echo "bazel detected changes to the following targets:" > "$comment_tmp_file"
+      echo >> "$comment_tmp_file"
+      echo '```' >> "$comment_tmp_file"
+      echo "$TARGET" >> "$comment_tmp_file"
+      echo '```' >> "$comment_tmp_file"
+
+      post_comment "$comment_identifier" "$comment_tmp_file"
+    fi
+  fi
+
+  run_bazel
+}
+
 run_bazel() {
   echo "Running bazel builds..."
 
@@ -156,7 +311,7 @@ run_bazel() {
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    bazel version
+    upgrade_kokoro_bazel_if_needed
   fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
@@ -167,7 +322,7 @@ run_bazel() {
     COMMAND="test"
   fi
   if [ -z "$TARGET" ]; then
-    TARGET="//components/..."
+    TARGET="//..."
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -204,8 +359,37 @@ run_bazel() {
     # Especially in the event of failure, we want our test artifacts to be uploaded.
     trap upload_bazel_test_artifacts EXIT
   fi
-  bazel clean
-  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
+
+  snapshot_dir="${repo_dir}/snapshot_test_goldens/goldens"
+  tmp_img_dir="$(mktemp -d)"
+
+  # Install git lfs if we're performing tests on kokoro
+  if [ -n "$KOKORO_BUILD_NUMBER" ] || [ -n "$AUTOBOT_BUILD_NUMBER" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      brew_install git-lfs
+      git lfs install
+      git lfs pull
+
+      # Reset the simulators to prepare for hosted snapshot tests
+      sim_cleaner_tmp=$(mktemp -d)
+      git clone https://github.com/material-foundation/ios-simulator-utils.git "$sim_cleaner_tmp"
+      source "${sim_cleaner_tmp}/scripts/cleanup_simulators.sh"
+      perform_pre_test_cleanup "iPhone"
+    fi
+  fi
+
+  # Configure CI mode
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      ci_mode="kokoro"
+  elif [ -n "$AUTOBOT_BUILD_NUMBER" ]; then
+      ci_mode="autobot"
+  fi
+
+  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=9.0 \
+    --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
+    --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
+    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir" \
+    --define ci_mode=$ci_mode
 }
 
 run_cocoapods() {
@@ -221,8 +405,15 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    gem_install xcpretty 
+    # TODO(https://github.com/material-components/material-components-ios/issues/6356 ): Move to 1.6
+    gem install cocoapods -v "$COCOAPODS_VERSION"
     pod --version
+
+    # Install git-lfs
+    brew_install git-lfs
+    git lfs install
+    git lfs pull
   fi
 
   if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
@@ -234,7 +425,7 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-    pod lib lint MaterialComponents.podspec --verbose --skip-tests
+    pod lib lint MaterialComponents.podspec --skip-tests
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
@@ -278,9 +469,15 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem install bundler --no-rdoc --no-ri --no-document --quiet
-    brew update
-    brew install yarn --without-node
+    gem_install bundler
+    brew_install yarn --ignore-dependencies
+    
+    # The above installations update node to v10, but the docsite generator
+    # relies on v8.
+    brew unlink node
+    brew_install node@8
+    # Required because node@8 is keg-only, meaning it isn't linked automatically.
+    brew link --force --overwrite node@8
   fi
 
   cd docsite-generator
@@ -319,7 +516,9 @@ generate_apidiff() {
     cd github/repo
 
     # Install sourcekitten, a dependency of the apidiff tool
-    brew install sourcekitten
+    brew_install "$SOURCEKITTEN_FORMULA"
+
+    sourcekitten version
   fi
 
   usage() {
@@ -354,7 +553,11 @@ generate_apidiff() {
   changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
   error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
 
-  pushd scripts/github-comment >> /dev/null
+  if [ ! -f scripts/external/github-comment/.git ]; then
+    git submodule update --init --recursive scripts/external/github-comment
+  fi
+
+  pushd scripts/external/github-comment >> /dev/null
 
   if [ -f "$changelog_path" ]; then
     echo "## API diff detected the following changes" > "$changelog_path.tmp"
@@ -386,160 +589,6 @@ generate_apidiff() {
       echo "Potential build errors:"
       cat "$nested_error_path"
     fi
-  fi
-}
-
-# Will run git clang-format on the branch's changes, reporting a failure if the linter generated any
-# stylistic changes.
-#
-# For local runs, you must set the following environment variables:
-#
-#   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
-#                       Must have public_repo scope.
-#   KOKORO_GITHUB_PULL_REQUEST_NUMBER="###" -> The PR # you want to post the API diff results to.
-#   KOKORO_GITHUB_PULL_REQUEST_COMMIT="..." -> The PR commit you want to post to.
-#
-# And install the following tools:
-#
-# - clang-format
-# - git-clang-format
-lint_clang_format() {
-  usage() {
-    echo "Usage: $0 -d clang-format"
-    echo
-    echo "Will apply clang-format to changes made on the current branch from the merge-base of develop."
-    echo "The result will be posted to GitHub as a series of inline comments."
-    echo
-    echo "Must set the following environment variables to run locally:"
-    echo
-    echo "GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens."
-    echo "                    Must have public_repo scope."
-    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\" -> The PR # you want to post the API diff results to."
-  }
-
-  if [ -z "$GITHUB_API_TOKEN" ]; then
-    echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
-    usage
-    exit 1
-  fi
-
-  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
-    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER must be set to a github pull request number."
-    usage
-    exit 1
-  fi
-
-  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_COMMIT" ]; then
-    echo "KOKORO_GITHUB_PULL_REQUEST_COMMIT must be set to a commit."
-    usage
-    exit 1
-  fi
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    select_xcode "$XCODE_VERSION"
-
-    mkdir bin
-    pushd bin >> /dev/null
-
-    # Install clang-format
-    echo "Downloading clang-format..."
-    CLANG_FORMAT_SHA="9d2a3aeaee65f09ae5405dd33812d167fadd48aba712965cdb3238e5d8837255"
-    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r343360/clang-format" -o "clang-format"
-    if openssl sha -sha256 "clang-format" | grep -q "$CLANG_FORMAT_SHA"; then
-      echo "SHAs match. Proceeding."
-    else
-      echo "clang-format does not match sha. Aborting."
-      exit 1
-    fi
-    chmod +x "clang-format"
-
-    echo "Downloading git-clang-format..."
-    # Install git-clang-format
-    GIT_CLANG_FORMAT_SHA="1f6cfad79f90ea202dcf2d52a360186341a589cdbfdee05b0e7694f912aa9820"
-    curl -Ls https://raw.githubusercontent.com/llvm-mirror/clang/c510fac5695e904b43d5bf0feee31cc9550f110e/tools/clang-format/git-clang-format -o "git-clang-format"
-    if openssl sha -sha256 "git-clang-format" | grep -q "$GIT_CLANG_FORMAT_SHA"; then
-      echo "SHAs match. Proceeding."
-    else
-      echo "git-clang-format does not match sha. Aborting."
-      exit 1
-    fi
-    chmod +x "git-clang-format"
-
-    export PATH="$(pwd):$PATH"
-
-    popd >> /dev/null
-
-    # Move into our cloned repo
-    cd github/repo
-  fi
-
-  if ! git clang-format -h > /dev/null 2> /dev/null; then
-    echo
-    echo "git clang-format is not configured correctly."
-    echo "Please ensure that the git-clang-format command is in your PATH and that it is executable."
-    exit 1
-  fi
-
-  base_sha=$(git merge-base origin/develop HEAD)
-
-  echo "Running clang-format on changes from $base_sha to HEAD..."
-  git clang-format "$base_sha"
-  if ! git diff-index --quiet HEAD --; then
-    echo
-    echo "clang-format requires the following stylistic changes to be made:"
-    echo
-    git --no-pager diff
-
-    COMMENT_TMP_PATH=$(mktemp -d)
-    COMMENT_TMP_FILE="$COMMENT_TMP_PATH/comment"
-    DIFF_TMP_FILE="$COMMENT_TMP_PATH/diff"
-
-    echo "clang-format suggested the following change:" > "$COMMENT_TMP_FILE"
-    git --no-pager diff -U0 > "$DIFF_TMP_FILE"
-
-    echo "Posting results to GitHub..."
-
-    pushd scripts/github-comment >> /dev/null
-
-    swift run github-comment \
-      --repo=material-components/material-components-ios \
-      --github_token="$GITHUB_API_TOKEN" \
-      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-      --commit="$KOKORO_GITHUB_PULL_REQUEST_COMMIT" \
-      --identifier=clang-format \
-      --comment_body="$COMMENT_TMP_FILE" \
-      --diff="$DIFF_TMP_FILE"
-
-    cat > "$COMMENT_TMP_FILE" <<EOL
-clang-format recommended changes.
-
-Consider installing [git-clang-format](https://github.com/llvm-mirror/clang/blob/master/tools/clang-format/git-clang-format) and running the following command:
-
-\`\`\`bash
-git clang-format \$(git merge-base origin/develop HEAD)
-\`\`\`
-EOL
-
-    swift run github-comment \
-      --repo=material-components/material-components-ios \
-      --github_token="$GITHUB_API_TOKEN" \
-      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-      --identifier=clang-format \
-      --comment_body="$COMMENT_TMP_FILE"
-
-    popd >> /dev/null
-
-    exit 1
-  else
-    pushd scripts/github-comment >> /dev/null
-    # No recommended changes, so delete any existing comment
-    swift run github-comment \
-      --repo=material-components/material-components-ios \
-      --github_token="$GITHUB_API_TOKEN" \
-      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-      --identifier=clang-format \
-      --delete
-    popd >> /dev/null
   fi
 }
 
@@ -576,6 +625,17 @@ protect_stable_from_undesired_merges() {
   fi
 
   echo "Validated that this branch is a release-candidate being merged in to stable."
+}
+
+# The fall-through case for unknown jobs.
+unknown_job() {
+  if [ -n "$DEPENDENCY_SYSTEM" ]; then
+    echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  else
+    echo "You must provide a depenency system with '-d' or the environment "
+    echo "variable 'DEPENDENCY_SYSTEM'."
+  fi
+  exit 1
 }
 
 POSITIONAL=()
@@ -617,7 +677,7 @@ fi
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
-  "clang-format")  lint_clang_format ;;
+  "bazel-affected")      run_bazel_affected ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
   "website")    generate_website ;;
@@ -626,7 +686,7 @@ case "$DEPENDENCY_SYSTEM" in
   "fail")       fail_immediately ;;
   "protect-stable-from-undesired-merges") protect_stable_from_undesired_merges ;;
 
-  *)            run_bazel ;;
+  *)            unknown_job ;;
 esac
 
 echo "Success!"

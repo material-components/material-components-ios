@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar.h"
 
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>
 
@@ -57,14 +57,16 @@
   self.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
   self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [self addChildViewController:self.appBarViewController];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
 
   // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
   self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
@@ -86,10 +88,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"Interface Builder" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"AppBarInterfaceBuilderExampleController"
+    @"breadcrumbs" : @[ @"App Bar", @"Interface Builder" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"AppBarInterfaceBuilderExampleController"
   };
 }
 

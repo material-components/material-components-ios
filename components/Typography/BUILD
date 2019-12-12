@@ -12,10 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -23,40 +30,62 @@ mdc_public_objc_library(
     name = "Typography",
     sdk_frameworks = [
         "QuartzCore",
-        "UIKit",
     ],
     deps = [
         "//components/private/Application",
         "//components/private/Math",
-        "@material_internationalization_ios//:MDFInternationalization"
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
 
-mdc_objc_library(
-    name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Typography",
+        "//components/schemes/Typography",
     ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Typography",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_unit_test_objc_library(
+    name = "unit_test_sources",
     deps = [
         ":Typography",
         ":private",
+        "//components/private/Application",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
+    ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":Typography",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
     ],
 )

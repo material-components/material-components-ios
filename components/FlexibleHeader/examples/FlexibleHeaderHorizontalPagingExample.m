@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MaterialFlexibleHeader.h"
-#import "supplemental/FlexibleHeaderHorizontalPagingSupplemental.h"
 
 static UIColor *HexColor(uint32_t hex) {
   return [UIColor colorWithRed:(CGFloat)((uint8_t)(hex >> 16)) / (CGFloat)255
@@ -24,7 +23,8 @@ static UIColor *HexColor(uint32_t hex) {
 
 static const NSUInteger kNumberOfPages = 10;
 
-@interface FlexibleHeaderHorizontalPagingViewController () <UIScrollViewDelegate>
+@interface FlexibleHeaderHorizontalPagingViewController : UIViewController <UIScrollViewDelegate>
+@property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
 @end
 
 @implementation FlexibleHeaderHorizontalPagingViewController {
@@ -162,7 +162,7 @@ static const NSUInteger kNumberOfPages = 10;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -171,6 +171,22 @@ static const NSUInteger kNumberOfPages = 10;
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return self.fhvc;
+}
+
+@end
+
+@implementation FlexibleHeaderHorizontalPagingViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Flexible Header", @"Horizontal Paging" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
 }
 
 @end

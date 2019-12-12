@@ -3,3 +3,4 @@ module: Dialogs
 umbrella_header: src/MaterialDialogs.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

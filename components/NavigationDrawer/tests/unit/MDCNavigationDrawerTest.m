@@ -16,7 +16,16 @@
 
 #import "MaterialNavigationDrawer.h"
 
+#import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "MDCNavigationDrawerFakes.h"
+
+@interface MDCBottomDrawerContainerViewController (MDCBottomDrawerHeaderTesting)
+- (void)updateViewWithContentOffset:(CGPoint)contentOffset;
+@end
+
+@interface MDCBottomDrawerPresentationController (MDCBottomDrawerHeaderTesting)
+@property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
+@end
 
 @interface MDCNavigationDrawerTest : XCTestCase
 @property(nonatomic, strong) MDCBottomDrawerViewController *navigationDrawer;
@@ -60,6 +69,133 @@
     XCTFail(@"Navigation Drawer isn't using MDCBottomDrawerPresentationController as it's "
             @"presentationController");
   }
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCBottomDrawerViewController *passedBottomDrawer = nil;
+  self.navigationDrawer.traitCollectionDidChangeBlock =
+      ^(MDCBottomDrawerViewController *_Nonnull navigationDrawer,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedBottomDrawer = navigationDrawer;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.navigationDrawer traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedBottomDrawer, self.navigationDrawer);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Then
+  XCTAssertLessThan(self.navigationDrawer.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  self.navigationDrawer.elevation = 4;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.navigationDrawer.mdc_currentElevation,
+                             self.navigationDrawer.elevation, 0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.navigationDrawer.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.navigationDrawer.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  self.navigationDrawer.elevation = 5;
+  __block BOOL blockCalled = NO;
+  self.navigationDrawer.mdc_elevationDidChangeBlock =
+      ^(MDCBottomDrawerViewController *object, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.navigationDrawer.elevation = self.navigationDrawer.elevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  self.navigationDrawer.elevation = 5;
+  __block BOOL blockCalled = NO;
+  self.navigationDrawer.mdc_elevationDidChangeBlock =
+      ^(MDCBottomDrawerViewController *object, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.navigationDrawer.elevation = self.navigationDrawer.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testSettingShouldAlwaysExpandHeader {
+  // When
+  self.navigationDrawer.shouldAlwaysExpandHeader = YES;
+
+  // Then
+  XCTAssertTrue(self.navigationDrawer.shouldAlwaysExpandHeader);
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertTrue(presentationController.shouldAlwaysExpandHeader);
+  } else {
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
+  }
+}
+
+- (void)testHeaderHeightWhenShouldAlwaysExpandEnabledAndScrollOccured {
+  // Given
+  self.navigationDrawer.shouldAlwaysExpandHeader = YES;
+  self.navigationDrawer.headerViewController.preferredContentSize = CGSizeMake(100, 200);
+  self.navigationDrawer.contentViewController.preferredContentSize = CGSizeMake(100, 200);
+  [self.navigationDrawer.presentationController presentationTransitionWillBegin];
+  CGFloat originalHeaderHeight =
+      CGRectGetHeight(self.navigationDrawer.headerViewController.view.frame);
+
+  // When
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    [presentationController.bottomDrawerContainerViewController
+        updateViewWithContentOffset:CGPointMake(0, 400)];
+  } else {
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
+  }
+
+  // Then
+  CGFloat newHeaderHeight = CGRectGetHeight(self.navigationDrawer.headerViewController.view.frame);
+  XCTAssertGreaterThan(newHeaderHeight, originalHeaderHeight);
 }
 
 @end

@@ -3,3 +3,4 @@ module: BottomNavigation
 umbrella_header: src/MaterialBottomNavigation.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

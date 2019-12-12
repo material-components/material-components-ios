@@ -3,3 +3,4 @@ module: Switch
 umbrella_header: src/MaterialSwitch.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -3,3 +3,4 @@ module: ActivityIndicator
 umbrella_header: src/MaterialActivityIndicator.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

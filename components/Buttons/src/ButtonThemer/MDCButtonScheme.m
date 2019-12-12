@@ -19,7 +19,8 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _shapeScheme = [[MDCShapeScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
     _minimumHeight = 36;

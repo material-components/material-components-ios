@@ -13,21 +13,9 @@
 // limitations under the License.
 
 #import "MDCLegacyInkLayer.h"
-#import "MDCLegacyInkLayer+Testing.h"
+#import "MDCLegacyInkLayer+Private.h"
 
 #import <UIKit/UIKit.h>
-
-static NSString *const MDCLegacyInkLayerBoundedKey = @"MDCLegacyInkLayerBoundedKey";
-static NSString *const MDCLegacyInkLayerMaxRippleRadiusKey = @"MDCLegacyInkLayerMaxRippleRadiusKey";
-static NSString *const MDCLegacyInkLayerInkColorKey = @"MDCLegacyInkLayerInkColorKey";
-static NSString *const MDCLegacyInkLayerSpreadDurationKey = @"MDCLegacyInkLayerSpreadDurationKey";
-static NSString *const MDCLegacyInkLayerEvaporateDurationKey =
-    @"MDCLegacyInkLayerEvaporateDurationKey";
-static NSString *const MDCLegacyInkLayerUseCustomInkCenterKey =
-    @"MDCLegacyInkLayerUseCustomInkCenterKey";
-static NSString *const MDCLegacyInkLayerCustomInkCenterKey = @"MDCLegacyInkLayerCustomInkCenterKey";
-static NSString *const MDCLegacyInkLayerUseLinearExpansionKey =
-    @"MDCLegacyInkLayerUseLinearExpansionKey";
 
 static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start,
                                                         CGPoint end,
@@ -118,13 +106,15 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 - (void)setupRipple {
   self.fillColor = self.color.CGColor;
-  CGFloat dim = self.radius * 2.f;
+  CGFloat dim = self.radius * 2;
   self.frame = CGRectMake(0, 0, dim, dim);
   UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, dim, dim)];
   self.path = ripplePath.CGPath;
 }
 
 - (void)enter {
+  [self.animationDelegate animationDidStart:self];
+
   _rippleState = kInkRippleSpreading;
   [_inkLayer addSublayer:self];
   _animationCleared = NO;
@@ -172,7 +162,9 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 - (CAMediaTimingFunction *)logDecelerateEasing {
   // This bezier curve is an approximation of a log curve.
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:0.157f:0.72f:0.386f:0.987f];
+  return
+      [[CAMediaTimingFunction alloc] initWithControlPoints:(float)
+                                                     0.157:(float)0.72:(float)0.386:(float)0.987];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
@@ -183,14 +175,14 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 @end
 
-static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = 0.4f;
-static CGFloat const kInkLayerForegroundBoundedPositionExitDuration = 0.3f;
-static CGFloat const kInkLayerForegroundBoundedRadiusExitDuration = 0.8f;
-static CGFloat const kInkLayerForegroundRadiusGrowthMultiplier = 350.f;
-static CGFloat const kInkLayerForegroundUnboundedEnterDelay = 0.08f;
-static CGFloat const kInkLayerForegroundUnboundedOpacityEnterDuration = 0.12f;
-static CGFloat const kInkLayerForegroundWaveTouchDownAcceleration = 1024.f;
-static CGFloat const kInkLayerForegroundWaveTouchUpAcceleration = 3400.f;
+static CGFloat const kInkLayerForegroundBoundedOpacityExitDuration = (CGFloat)0.4;
+static CGFloat const kInkLayerForegroundBoundedPositionExitDuration = (CGFloat)0.3;
+static CGFloat const kInkLayerForegroundBoundedRadiusExitDuration = (CGFloat)0.8;
+static CGFloat const kInkLayerForegroundRadiusGrowthMultiplier = 350;
+static CGFloat const kInkLayerForegroundUnboundedEnterDelay = (CGFloat)0.08;
+static CGFloat const kInkLayerForegroundUnboundedOpacityEnterDuration = (CGFloat)0.12;
+static CGFloat const kInkLayerForegroundWaveTouchDownAcceleration = 1024;
+static CGFloat const kInkLayerForegroundWaveTouchUpAcceleration = 3400;
 static NSString *const kInkLayerForegroundOpacityAnim = @"foregroundOpacityAnim";
 static NSString *const kInkLayerForegroundPositionAnim = @"foregroundPositionAnim";
 static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
@@ -207,7 +199,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 - (void)setupRipple {
   CGFloat random = MDCLegacyInkLayerRandom();
-  self.radius = (CGFloat)(0.9f + random * 0.1f) * kInkLayerForegroundRadiusGrowthMultiplier;
+  self.radius =
+      (CGFloat)((CGFloat)0.9 + random * (CGFloat)0.1) * kInkLayerForegroundRadiusGrowthMultiplier;
   [super setupRipple];
 }
 
@@ -281,11 +274,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [CATransaction setCompletionBlock:^(void) {
       MDCLegacyInkLayerForegroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
-
-      if ([strongSelf.animationDelegate
-              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
-        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
-      }
+      [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
     }];
     [CATransaction commit];
     return;
@@ -307,7 +296,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
       endPoint = self.customInkCenter;
     }
     endPoint = CGPointMake(endPoint.x + xOffset, endPoint.y + yOffset);
-    CGPoint centerOffsetPoint = MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, 0.3f);
+    CGPoint centerOffsetPoint =
+        MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, (CGFloat)0.3);
     UIBezierPath *movePath = [UIBezierPath bezierPath];
     [movePath moveToPoint:startPoint];
     [movePath addLineToPoint:centerOffsetPoint];
@@ -326,7 +316,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     }
     CGFloat adjustedDuration = kInkLayerForegroundBoundedPositionExitDuration;
     CGFloat normOpacityVal = opacityVal.floatValue;
-    CGFloat opacityDuration = normOpacityVal / 3.f;
+    CGFloat opacityDuration = normOpacityVal / 3;
     _foregroundOpacityAnim.values = @[ opacityVal, @0 ];
     _foregroundOpacityAnim.duration = opacityDuration + adjustedDuration;
 
@@ -334,7 +324,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     if (scaleVal == nil) {
       scaleVal = [NSNumber numberWithFloat:0];
     }
-    CGFloat unboundedDuration = (CGFloat)sqrt(((1.f - scaleVal.floatValue) * self.radius) /
+    CGFloat unboundedDuration = (CGFloat)sqrt(((1 - scaleVal.floatValue) * self.radius) /
                                               (kInkLayerForegroundWaveTouchDownAcceleration +
                                                kInkLayerForegroundWaveTouchUpAcceleration));
     _foregroundPositionAnim.duration = unboundedDuration + adjustedDuration;
@@ -380,9 +370,9 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 @end
 
-static CGFloat const kInkLayerBackgroundOpacityEnterDuration = 0.6f;
-static CGFloat const kInkLayerBackgroundBaseOpacityExitDuration = 0.48f;
-static CGFloat const kInkLayerBackgroundFastEnterDuration = 0.12f;
+static CGFloat const kInkLayerBackgroundOpacityEnterDuration = (CGFloat)0.6;
+static CGFloat const kInkLayerBackgroundBaseOpacityExitDuration = (CGFloat)0.48;
+static CGFloat const kInkLayerBackgroundFastEnterDuration = (CGFloat)0.12;
 static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
 @interface MDCLegacyInkLayerBackgroundRipple ()
@@ -410,11 +400,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     [CATransaction setCompletionBlock:^(void) {
       MDCLegacyInkLayerBackgroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
-
-      if ([strongSelf.animationDelegate
-              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
-        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
-      }
+      [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
     }];
     [CATransaction commit];
     return;
@@ -480,20 +466,12 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 @implementation MDCLegacyInkLayer
 
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 - (instancetype)init {
   self = [super init];
   if (self) {
     self.masksToBounds = YES;
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
-    _bounded = YES;
-    _compositeRipple = [CAShapeLayer layer];
-    _foregroundRipples = [NSMutableArray array];
-    _backgroundRipples = [NSMutableArray array];
-    [self addSublayer:_compositeRipple];
+    [self commonMDCLegacyInkLayerInit];
+    _animating = NO;
   }
   return self;
 }
@@ -502,36 +480,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   self = [super initWithCoder:aDecoder];
 
   if (self) {
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerBoundedKey]) {
-      _bounded = [aDecoder decodeBoolForKey:MDCLegacyInkLayerBoundedKey];
-    } else {
-      _bounded = YES;
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerMaxRippleRadiusKey]) {
-      _maxRippleRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCLegacyInkLayerMaxRippleRadiusKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerInkColorKey]) {
-      _inkColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                         forKey:MDCLegacyInkLayerInkColorKey];
-    } else {
-      _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerSpreadDurationKey]) {
-      _spreadDuration = [aDecoder decodeDoubleForKey:MDCLegacyInkLayerSpreadDurationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerEvaporateDurationKey]) {
-      _evaporateDuration = [aDecoder decodeDoubleForKey:MDCLegacyInkLayerEvaporateDurationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerUseCustomInkCenterKey]) {
-      _useCustomInkCenter = [aDecoder decodeBoolForKey:MDCLegacyInkLayerUseCustomInkCenterKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerCustomInkCenterKey]) {
-      _customInkCenter = [aDecoder decodeCGPointForKey:MDCLegacyInkLayerCustomInkCenterKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerUseLinearExpansionKey]) {
-      _userLinearExpansion = [aDecoder decodeBoolForKey:MDCLegacyInkLayerUseLinearExpansionKey];
-    }
-
+    _animating = NO;
     // Discard any sublayers, which should be the composite ripple and any active ripples
     if (self.sublayers.count > 0) {
       NSArray<CALayer *> *sublayers = [self.sublayers copy];
@@ -539,41 +488,50 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
         [sublayer removeFromSuperlayer];
       }
     }
-    _compositeRipple = [CAShapeLayer layer];
-    _foregroundRipples = [NSMutableArray array];
-    _backgroundRipples = [NSMutableArray array];
-    [self addSublayer:_compositeRipple];
+    [self commonMDCLegacyInkLayerInit];
   }
 
   return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeBool:self.bounded forKey:MDCLegacyInkLayerBoundedKey];
-  [aCoder encodeDouble:self.maxRippleRadius forKey:MDCLegacyInkLayerMaxRippleRadiusKey];
-  [aCoder encodeObject:self.inkColor forKey:MDCLegacyInkLayerInkColorKey];
-  [aCoder encodeDouble:self.spreadDuration forKey:MDCLegacyInkLayerSpreadDurationKey];
-  [aCoder encodeDouble:self.evaporateDuration forKey:MDCLegacyInkLayerEvaporateDurationKey];
-  [aCoder encodeBool:self.useCustomInkCenter forKey:MDCLegacyInkLayerUseCustomInkCenterKey];
-  [aCoder encodeCGPoint:self.customInkCenter forKey:MDCLegacyInkLayerCustomInkCenterKey];
-  [aCoder encodeBool:self.userLinearExpansion forKey:MDCLegacyInkLayerUseLinearExpansionKey];
+- (void)commonMDCLegacyInkLayerInit {
+  static UIColor *defaultInkColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    defaultInkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+  });
+
+  _bounded = YES;
+  _inkColor = defaultInkColor;
+  _compositeRipple = [CAShapeLayer layer];
+  _foregroundRipples = [NSMutableArray array];
+  _backgroundRipples = [NSMutableArray array];
+  [self addSublayer:_compositeRipple];
 }
 
 - (void)layoutSublayers {
   [super layoutSublayers];
-  CGFloat radius = MDCLegacyInkLayerRadiusBounds(_maxRippleRadius,
-                                           MDCLegacyInkLayerRectHypotenuse(self.bounds) / 2.f, _bounded);
+  CGFloat radius = MDCLegacyInkLayerRadiusBounds(
+      _maxRippleRadius, MDCLegacyInkLayerRectHypotenuse(self.bounds) / 2, _bounded);
 
   CGRect rippleFrame =
-      CGRectMake(-(radius * 2.f - self.bounds.size.width) / 2.f,
-                 -(radius * 2.f - self.bounds.size.height) / 2.f, radius * 2.f, radius * 2.f);
+      CGRectMake(-(radius * 2 - self.bounds.size.width) / 2,
+                 -(radius * 2 - self.bounds.size.height) / 2, radius * 2, radius * 2);
   _compositeRipple.frame = rippleFrame;
-  CGRect rippleBounds = CGRectMake(0, 0, radius * 2.f, radius * 2.f);
+  CGRect rippleBounds = CGRectMake(0, 0, radius * 2, radius * 2);
   CAShapeLayer *rippleMaskLayer = [CAShapeLayer layer];
   UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:rippleBounds];
   rippleMaskLayer.path = ripplePath.CGPath;
   _compositeRipple.mask = rippleMaskLayer;
+}
+
+- (void)enterAllInks {
+  for (MDCLegacyInkLayerForegroundRipple *foregroundRipple in self.foregroundRipples) {
+    [foregroundRipple enterWithCompletion:nil];
+  }
+  for (MDCLegacyInkLayerBackgroundRipple *backgroundRipple in self.backgroundRipples) {
+    [backgroundRipple enter];
+  }
 }
 
 - (void)resetAllInk:(BOOL)animated {
@@ -624,9 +582,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     self.mask = nil;
   }
 
-  CGFloat radius = MDCLegacyInkLayerRadiusBounds(_maxRippleRadius,
-                                                 MDCLegacyInkLayerRectHypotenuse(self.bounds) / 2.f,
-                                                 _bounded);
+  CGFloat radius = MDCLegacyInkLayerRadiusBounds(
+      _maxRippleRadius, MDCLegacyInkLayerRectHypotenuse(self.bounds) / 2, _bounded);
 
   MDCLegacyInkLayerBackgroundRipple *backgroundRipple =
       [[MDCLegacyInkLayerBackgroundRipple alloc] init];
@@ -666,19 +623,37 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self resetBottomInk:YES toPoint:point completion:completionBlock];
 }
 
-#pragma mark - MDCLegacyInkLayerRippleDelegate
+#pragma mark - MDCLegacyRippleInkLayerDelegate
+
+- (void)animationDidStart:(MDCLegacyInkLayerRipple *)layerRipple {
+  if (!self.isAnimating) {
+    self.animating = YES;
+
+    if ([self.animationDelegate respondsToSelector:@selector(legacyInkLayerAnimationDidStart:)]) {
+      [self.animationDelegate legacyInkLayerAnimationDidStart:self];
+    }
+  }
+}
 
 - (void)animationDidStop:(__unused CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
+              shapeLayer:(MDCLegacyInkLayerRipple *)layerRipple
                 finished:(__unused BOOL)finished {
   // Even when the ripple is "exited" without animation, we need to remove it from compositeRipple
-  [shapeLayer removeFromSuperlayer];
-  [shapeLayer removeAllAnimations];
+  [layerRipple removeFromSuperlayer];
+  [layerRipple removeAllAnimations];
 
-  if ([shapeLayer isMemberOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
-    [self.foregroundRipples removeObject:(MDCLegacyInkLayerForegroundRipple *)shapeLayer];
-  } else if ([shapeLayer isMemberOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
-    [self.backgroundRipples removeObject:(MDCLegacyInkLayerBackgroundRipple *)shapeLayer];
+  if ([layerRipple isKindOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
+    [self.foregroundRipples removeObject:(MDCLegacyInkLayerForegroundRipple *)layerRipple];
+  } else if ([layerRipple isKindOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
+    [self.backgroundRipples removeObject:(MDCLegacyInkLayerBackgroundRipple *)layerRipple];
+  }
+
+  // Check if all ink layer animations did finish and call animation end callback
+  if (self.isAnimating && self.foregroundRipples.count == 0 && self.backgroundRipples.count == 0) {
+    self.animating = NO;
+    if ([self.animationDelegate respondsToSelector:@selector(legacyInkLayerAnimationDidEnd:)]) {
+      [self.animationDelegate legacyInkLayerAnimationDidEnd:self];
+    }
   }
 }
 

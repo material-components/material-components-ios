@@ -3,3 +3,4 @@ module: Menus
 umbrella_header: src/MaterialMenus.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

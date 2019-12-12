@@ -17,11 +17,13 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCItemBarBadge.h"
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
+#import "MaterialRipple.h"
 #import "MaterialTypography.h"
 
 /// Size of image in points.
@@ -33,8 +35,8 @@ static const CGFloat kBadgeFontSize = 12;
 /// Padding between top of the cell and the badge.
 static const CGFloat kBadgeTopPadding = 6;
 
-/// Maximum width of a badge. This allows for 3 characters before truncation.
-static const CGFloat kBadgeMaxWidth = 22;
+/// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
+static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .left = 16};
 
 /// File name of the bundle (without the '.bundle' extension) containing resources.
 static NSString *const kResourceBundleName = @"MaterialTabs";
@@ -49,18 +51,23 @@ const CGFloat kSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
 const CGFloat kSelectedNavigationImageYOffset = -2;
 
 /// Duration of selection animations in applicable content styles.
-static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
+static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
-@implementation MDCItemBarCell {
-  UIImageView *_imageView;
-  UILabel *_badgeLabel;
-  MDCInkTouchController *_inkTouchController;
+@interface MDCItemBarCell ()
 
-  MDCItemBarStyle *_style;
+@property(nonatomic, strong) UIImageView *imageView;
+@property(nonatomic, strong) MDCItemBarBadge *badge;
+@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 
-  NSInteger _itemIndex;
-  NSInteger _itemCount;
-}
+@property(nonatomic, strong) MDCItemBarStyle *style;
+
+@property(nonatomic) NSInteger itemIndex;
+@property(nonatomic) NSInteger itemCount;
+
+@end
+
+@implementation MDCItemBarCell
 
 #pragma mark - Init
 
@@ -78,9 +85,12 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
     // Set up ink controller to splash ink on taps.
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];   // Ink should always be on top of other views
+    [_inkTouchController addInkView];  // Ink should always be on top of other views
+
+    _rippleTouchController = [[MDCRippleTouchController alloc] init];
 
     [self updateInk];
+    [self updateRipple];
     [self updateColors];
     [self updateTransformsAnimated:NO];
   }
@@ -89,17 +99,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 #pragma mark - Public
 
-+ (UIEdgeInsets)edgeInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
-  // Padding from spec: https://material.io/go/design-tabs
-  CGFloat outerPadding = (sizeClass == UIUserInterfaceSizeClassRegular) ? 24.0f : 12.0f;
-  return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
-}
-
-+ (CGSize)sizeThatFits:(CGSize)size
-    horizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass
-                   item:(UITabBarItem *)item
-                  style:(MDCItemBarStyle *)style {
-  UIEdgeInsets insets = [self edgeInsetsForHorizontalSizeClass:sizeClass];
++ (CGSize)sizeThatFits:(CGSize)size item:(UITabBarItem *)item style:(MDCItemBarStyle *)style {
   NSString *title = [self displayedTitleForTitle:item.title style:style];
 
   CGRect textBounds = CGRectZero;
@@ -153,6 +153,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   bounds.size.width = MIN(bounds.size.width, size.width);
 
   // Add insets.
+  UIEdgeInsets insets = kEdgeInsets;
   bounds.size.width += insets.left + insets.right;
   bounds.size.height += insets.top + insets.bottom;
 
@@ -173,7 +174,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 - (void)setBadgeValue:(nullable NSString *)badgeValue {
   _badgeValue = [badgeValue copy];
-  _badgeLabel.text = badgeValue;
+  _badge.badgeValue = _badgeValue;
+  _badge.hidden = !_badgeValue;
   [self setNeedsLayout];
 }
 
@@ -198,10 +200,9 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
 
+    [self updateEnableRippleBehavior];
     [self updateDisplayedTitle];
-    [self updateTitleTextColor];
-    [self updateImageTintColor];
-    [self updateInk];
+    [self updateColors];
     [self updateSubviews];
     [self updateTitleLines];
     [self updateTitleFont];
@@ -223,6 +224,12 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   self.title = item.title;
   self.image = item.image;
   self.badgeValue = item.badgeValue;
+  if (@available(iOS 10.0, *)) {
+    if (item.badgeColor) {
+      self.style.badgeColor = item.badgeColor;
+      self.badge.badgeColor = item.badgeColor;
+    }
+  }
   self.accessibilityIdentifier = item.accessibilityIdentifier;
 
   _itemIndex = itemIndex;
@@ -255,11 +262,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   titleCenter.x = CGRectGetMidX(contentBounds);
   titleBounds.size = titleSize;
 
-  // Horizontally align the badge.
-  CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];
-  badgeSize.width = MIN(kBadgeMaxWidth, badgeSize.width);
+  // Size badge.
+  CGSize badgeSize = [_badge sizeThatFits:contentBounds.size];
   badgeBounds.size = badgeSize;
 
+  // Determine badge center
   if (_style.shouldDisplayBadge) {
     CGFloat badgeOffset = (imageBounds.size.width / 2) + (badgeSize.width / 2);
     if (self.mdf_effectiveUserInterfaceLayoutDirection ==
@@ -299,13 +306,12 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   _imageView.bounds = imageBounds;
   _imageView.center = MDCRoundCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
 
-  _badgeLabel.bounds = MDCRectAlignToScale(badgeBounds, scale);
-  _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
+  _badge.bounds = MDCRectAlignToScale(badgeBounds, scale);
+  _badge.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badge.bounds, scale);
 
   self.titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
-  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter,
-                                                            self.titleLabel.bounds,
-                                                            scale);
+  self.titleLabel.center =
+      MDCRoundCenterWithBoundsAndScale(titleCenter, self.titleLabel.bounds, scale);
 }
 
 - (void)tintColorDidChange {
@@ -331,6 +337,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self updateImageTintColor];
   [self updateAccessibilityTraits];
   [_inkTouchController cancelInkTouchProcessing];
+  [_rippleTouchController.rippleView cancelAllRipplesAnimated:YES completion:nil];
 }
 
 #pragma mark - UICollectionViewCell
@@ -364,25 +371,33 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     [labelComponents addObject:titleComponent];
   }
 
-  if (_badgeValue.length > 0 && !_badgeLabel.hidden) {
+  if (_badgeValue.length > 0 && !_badge.hidden) {
     [labelComponents addObject:_badgeValue];
   }
 
-  // Describe as "tab, X of Y"
-  NSString *tabLabel =
-      [[self class] localizedStringWithKey:kMDCItemBarStringKeyAccessibilityTabElementLabel];
-  if (tabLabel) {
-    [labelComponents addObject:tabLabel];
-  }
+  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
+  NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+  BOOL isBelowiOS10 = ![processInfo isOperatingSystemAtLeastVersion:iOS10Version];
 
-  NSString *positionFormat =
-      [[self class] localizedStringWithKey:kMDCItemBarStringKeyAccessibilityTabPositionFormat];
-  if (positionFormat) {
-    if (_itemIndex != NSNotFound && _itemCount > 0) {
-      int position = (int)(_itemIndex + 1);
-      NSString *localizedPosition =
-          [NSString localizedStringWithFormat:positionFormat, position, (int)_itemCount];
-      [labelComponents addObject:localizedPosition];
+  // On iOS 10+, MDCTabBar will receive the UIAccessibilityTraitTabBar, so this logic is
+  // unnecessary.
+  if (isBelowiOS10) {
+    // Describe as "tab, X of Y"
+    NSString *tabLabel =
+        [[self class] localizedStringWithKey:kMDCItemBarStringKeyAccessibilityTabElementLabel];
+    if (tabLabel) {
+      [labelComponents addObject:tabLabel];
+    }
+
+    NSString *positionFormat =
+        [[self class] localizedStringWithKey:kMDCItemBarStringKeyAccessibilityTabPositionFormat];
+    if (positionFormat) {
+      if (_itemIndex != NSNotFound && _itemCount > 0) {
+        int position = (int)(_itemIndex + 1);
+        NSString *localizedPosition =
+            [NSString localizedStringWithFormat:positionFormat, position, (int)_itemCount];
+        [labelComponents addObject:localizedPosition];
+      }
     }
   }
 
@@ -393,14 +408,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 #pragma mark - Private
 
 + (UIEdgeInsets)minimumEdgeInsets {
-  const CGFloat outerPadding = 2.0f;
+  const CGFloat outerPadding = 2;
   return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
 }
 
 + (NSString *)localizedStringWithKey:(NSString *)key {
   NSBundle *containingBundle = [NSBundle bundleForClass:self];
-  NSURL *resourceBundleURL =
-      [containingBundle URLForResource:kResourceBundleName withExtension:@"bundle"];
+  NSURL *resourceBundleURL = [containingBundle URLForResource:kResourceBundleName
+                                                withExtension:@"bundle"];
   NSBundle *resourceBundle = [NSBundle bundleWithURL:resourceBundleURL];
   return [resourceBundle localizedStringForKey:key value:nil table:kStringTableName];
 }
@@ -411,10 +426,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     displayedTitle = [displayedTitle uppercaseStringWithLocale:nil];
   }
   return displayedTitle;
-}
-
-- (UIUserInterfaceSizeClass)horizontalSizeClass {
-  return self.traitCollection.horizontalSizeClass;
 }
 
 /// Ensures that subviews exist and have the correct visibility for the current content style.
@@ -463,23 +474,24 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   }
 
   if (_style.shouldDisplayBadge) {
-    if (!_badgeLabel) {
-      _badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-      _badgeLabel.numberOfLines = 1;
-      _badgeLabel.font = [[MDCTypography fontLoader] regularFontOfSize:kBadgeFontSize];
-      [self.contentView addSubview:_badgeLabel];
-      _badgeLabel.text = _badgeValue;
+    if (!_badge) {
+      _badge = [[MDCItemBarBadge alloc] initWithFrame:CGRectZero];
+      _badge.isAccessibilityElement = NO;
+      [self.contentView addSubview:_badge];
+      _badge.badgeValue = _badgeValue;
     }
-    _badgeLabel.hidden = NO;
+    _badge.hidden = !_badgeValue;
   } else {
-    _badgeLabel.hidden = YES;
+    _badge.hidden = YES;
   }
 }
 
 - (void)updateColors {
   [self updateTitleTextColor];
   [self updateImageTintColor];
+  [self updateBadgeColor];
   [self updateInk];
+  [self updateRipple];
 }
 
 - (void)updateTitleTextColor {
@@ -488,7 +500,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     textColor = _style.selectedTitleColor;
   }
   _titleLabel.textColor = textColor;
-  _badgeLabel.textColor = textColor;
 }
 
 - (void)updateImageTintColor {
@@ -497,6 +508,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     imageTintColor = _style.selectedImageTintColor;
   }
   _imageView.tintColor = imageTintColor;
+}
+
+- (void)updateBadgeColor {
+  _badge.badgeColor = _style.badgeColor;
 }
 
 - (void)updateTransformsAnimated:(BOOL)animated {
@@ -537,7 +552,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
     // Set the transforms.
     self.titleLabel.transform = titleTransform;
-    self->_badgeLabel.transform = imageTransform;
+    self->_badge.transform = imageTransform;
     self->_imageView.transform = imageTransform;
   };
   void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
@@ -575,6 +590,23 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   inkView.inkStyle = _style.inkStyle;
   inkView.usesLegacyInkRipple = NO;
   inkView.clipsToBounds = (inkView.inkStyle == MDCInkStyleBounded) ? YES : NO;
+}
+
+- (void)updateRipple {
+  MDCRippleView *rippleView = self.rippleTouchController.rippleView;
+  rippleView.rippleColor = _style.rippleColor;
+  rippleView.rippleStyle = _style.rippleStyle;
+  rippleView.clipsToBounds = (rippleView.rippleStyle == MDCRippleStyleBounded) ? YES : NO;
+}
+
+- (void)updateEnableRippleBehavior {
+  if (_style.enableRippleBehavior) {
+    [self.inkTouchController.defaultInkView removeFromSuperview];
+    [self.rippleTouchController addRippleToView:self];
+  } else {
+    [self.rippleTouchController.rippleView removeFromSuperview];
+    [self.inkTouchController addInkView];
+  }
 }
 
 - (void)updateAccessibilityTraits {

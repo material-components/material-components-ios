@@ -14,25 +14,25 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialPalettes.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
-#import "MaterialTabs+ColorThemer.h"
 
 @interface TabBarInterfaceBuilderExample : UIViewController <MDCTabBarDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTabBar *tabBar;
 @property(nonatomic) NSArray<UIColor *> *colors;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
 @implementation TabBarInterfaceBuilderExample
 
-- (id)init {
-  self = [super init];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -48,12 +48,12 @@
   ];
 
   self.colors = @[
-    MDCPalette.bluePalette.tint500, MDCPalette.pinkPalette.tint500,
-    MDCPalette.redPalette.tint500, MDCPalette.greenPalette.tint500
+    MDCPalette.bluePalette.tint500, MDCPalette.pinkPalette.tint500, MDCPalette.redPalette.tint500,
+    MDCPalette.greenPalette.tint500
   ];
 
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
-  
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
+
   self.view.backgroundColor = self.colors[0];
 }
 
@@ -111,10 +111,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Tab Bar", @"Interface Builder" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"TabBarInterfaceBuilderExample"
+    @"breadcrumbs" : @[ @"Tab Bar", @"Interface Builder" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"TabBarInterfaceBuilderExample"
   };
 }
 

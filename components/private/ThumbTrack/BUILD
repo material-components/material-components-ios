@@ -13,10 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -24,10 +27,10 @@ mdc_public_objc_library(
     name = "ThumbTrack",
     sdk_frameworks = [
         "CoreGraphics",
-        "UIKit",
     ],
     deps = [
         "//components/Ink",
+        "//components/Ripple",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
@@ -40,31 +43,21 @@ mdc_objc_library(
     name = "private_headers",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    deps = [":ThumbTrack"],
     visibility = ["//visibility:private"],
+    deps = [":ThumbTrack"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
     deps = [
         ":ThumbTrack",
         ":private_headers",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )

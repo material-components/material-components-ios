@@ -70,6 +70,15 @@ Read the button bar section on
 [UIBarButtonItem properties](../ButtonBar/#uibarbuttonitem-properties) to learn more about
 supported UIBarButtonItem properties.
 
+Note: The UIBarButtonItem instances set on MDCNavigationBar cannot be used to specify the popover's
+anchor point on UIPopoverPresentationController. The sourceView and sourceRect on
+UIPopoverPresentationController should be used instead.
+```objc
+// Set a view controller to be popped over at the center of a target view.
+aViewContoller.popoverPresentationController.sourceView = targetView;
+aViewContoller.popoverPresentationController.sourceRect = CGRectMake(CGRectGetMidX(targetView.bounds)),CGRectGetMidY(targetView.bounds), 0, 0);
+```
+
 ## Installation
 
 <!-- Extracted from docs/../../../docs/component-installation.md -->
@@ -198,7 +207,7 @@ MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialNavigationBar+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme

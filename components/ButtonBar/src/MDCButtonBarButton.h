@@ -27,7 +27,6 @@
  @param font The font.
  @param state The state.
  */
-- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 @end

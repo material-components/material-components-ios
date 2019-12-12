@@ -18,8 +18,8 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_ButtonThemer
 
 class BottomSheetTableViewExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -109,7 +109,7 @@ private class BottomSheetTableViewMenu: UITableViewController {
 // MARK: Catalog by convention
 extension BottomSheetTableViewExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Sheet", "Table View Menu"],
       "primaryDemo": false,

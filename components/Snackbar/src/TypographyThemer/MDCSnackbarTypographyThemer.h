@@ -17,13 +17,24 @@
 
 /**
  The Material Design typography system's themer for all snackbar messages.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCSnackbarTypographyThemer : NSObject
+@end
+
+@interface MDCSnackbarTypographyThemer (Deprecated)
 
 /**
  Applies a typography scheme's properties to all snackbar messages.
 
  @param typographyScheme The typography scheme to apply to all snackbar messages.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme;
 

@@ -22,7 +22,6 @@
 
 @implementation FeatureHighlightViewControllerTests
 
-
 - (void)testFeatureHighlightViewIsNotLoadedWhenSettingProperties {
   UIView *view = [[UIView alloc] init];
   UIView *view2 = [[UIView alloc] init];
@@ -40,6 +39,34 @@
   controller.bodyText = @"testBody";
 
   XCTAssertFalse(controller.isViewLoaded);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCFeatureHighlightViewController *controller =
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
+                                                             andShowView:[[UIView alloc] init]
+                                                              completion:nil];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCFeatureHighlightViewController *passedFeatureHighlight = nil;
+  controller.traitCollectionDidChangeBlock =
+      ^(MDCFeatureHighlightViewController *_Nonnull featureHighlight,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedFeatureHighlight = featureHighlight;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [controller traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedFeatureHighlight, controller);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end

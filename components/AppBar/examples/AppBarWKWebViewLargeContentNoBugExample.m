@@ -15,9 +15,9 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 
 // This demonstrates that a WKWebView with large content as the tracking scroll view is able to
 // scroll as expected, even without the useAdditionalSafeAreaInsetsForWebKitScrollViews flag
@@ -53,9 +53,10 @@
 
     [self addChildViewController:_appBar.headerViewController];
 
-    _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
+    _appBar.navigationBar.inkColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:(CGFloat)0.1];
 
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -75,7 +76,7 @@
   webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   [self.view addSubview:webView];
 
-  NSMutableArray *content = [@[@"<html>\n<head></head><body>"] mutableCopy];
+  NSMutableArray *content = [@[ @"<html>\n<head></head><body>" ] mutableCopy];
   for (NSInteger ix = 0; ix < 500; ++ix) {
     [content addObject:@"<p>Hello</p>"];
   }
@@ -106,9 +107,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"WKWebView large content no bug" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"App Bar", @"WKWebView large content no bug" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

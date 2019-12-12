@@ -44,8 +44,6 @@ Progress view is a linear progress indicator that implements Material Design ani
 - [Usage](#usage)
   - [Typical use](#typical-use)
 - [Differences From UIProgressView](#differences-from-uiprogressview)
-- [Extensions](#extensions)
-  - [Color Theming](#color-theming)
 - [Accessibility](#accessibility)
   - [MDCProgressView](#mdcprogressview)
 
@@ -177,18 +175,6 @@ func completeAndHideProgressView() {
 This progress view provides an animation effect when showing and hidding it: it grows up (resp.
 shrinks down). Additionally, all animated changes APIs take an optional completion block, to
 synchronize multistep animations.
-
-
-## Extensions
-
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-Progress View does not yet have a Material Design color system themer. The following tasks are
-tracking its development:
-
-- Task: [Implement a color themer](https://www.pivotaltracker.com/story/show/157095443)
 
 
 ## Accessibility

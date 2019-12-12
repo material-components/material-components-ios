@@ -58,6 +58,14 @@
 @property(nonatomic, assign) BOOL cancelsOnDragOut;
 
 /**
+ If enabled, the ink gesture will require failure of UIScrollView gesture recognizers in order to
+ activate.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL requiresFailureOfScrollViewGestures;
+
+/**
  Bounds inside of which the recognizer will recognize ink gestures, relative to self.view.frame.
 
  If set to CGRectNull (the default), then the recognizer will use self.view.bounds as the target

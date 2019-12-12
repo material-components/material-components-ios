@@ -46,6 +46,11 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ When set to false, the bottom sheet controller can't be dismissed by dragging the sheet down.
+ */
+@property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;
+
+/**
  This is used to set a custom height on the sheet view. This is can be used to set the initial
  height when the ViewController is presented.
 
@@ -61,6 +66,13 @@
 @end
 
 @interface MDCBottomSheetTransitionController (ScrimAccessibility)
+
+/**
+ Customize the color of the background scrim.
+
+ Defaults to a semi-transparent Black.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /**
  If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the

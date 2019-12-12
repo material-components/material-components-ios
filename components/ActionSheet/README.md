@@ -36,14 +36,18 @@ the screen and displays actions a user can take.
 - [Usage](#usage)
   - [Typical use](#typical-use)
 - [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
+- [Customization](#customization)
+  - [Positioning Action Sheet Actions](#positioning-action-sheet-actions)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
 - [Accessibility](#accessibility)
   - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
   - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
   - [Set `-scrimAccessibilityHint`](#set-`-scrimaccessibilityhint`)
   - [Set `-scrimAccessibilityTraits`](#set-`-scrimaccessibilitytraits`)
+- [Unsupported](#unsupported)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
@@ -51,7 +55,7 @@ the screen and displays actions a user can take.
 
 `MDCActionSheetController` is a material design implementation of UIAlertControllerStyleActionSheet.
 
-Action Sheet is currently an [alpha component](../../contributing/alpha_components.md). Therefore, clients that
+Action Sheet is currently a [beta component](../../contributing/beta_components.md). Therefore, clients that
 wish to use Action Sheet in their app will need to manually clone the repo and add the code to their project. 
 
 
@@ -163,91 +167,85 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 4. MDCActionSheetController does not have a preferredAction.
 
+<!-- Extracted from docs/customization.md -->
+
+## Customization
+
+### Positioning Action Sheet Actions
+
+The layout of the Action Sheet list items can be adjusted with the
+`contentEdgeInsets` API. Positive values will inset the content and negative
+values will outset the conent. The insets apply to all action items.
+
+<img src="docs/assets/actionsheet-default appearance.png" alt="Action Sheet showing three items with default edge content insets." width="375">
+<!--{: .article__asset.article__asset--screenshot }-->
+Action Sheet showing three items with default content insets.
+
+For example, setting top and bottom insets (positive values) will reduce the
+height of the Action list items. 
+
+<img src="docs/assets/actionsheet-top and bottom insets.png" alt="Action Sheet showing three items with top and bottom content edge insets." width="375">
+<!--{: .article__asset.article__asset--screenshot }-->
+Action Sheet showing three items with top and bottom content edge insets.
+
+Setting a left outset (negative value) and right inset (positive value) will
+shift the Action's content to the trailing edge.
+
+<img src="docs/assets/actionsheet-left outset right inset.png" alt="Action Sheet showing three items with a left content edge outset and right inset shifting content to the right." width="375">
+<!--{: .article__asset.article__asset--screenshot }-->
+Action Sheet showing three items with a left content edge outset and right inset shifting content to the right.
+
+
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Color Theming
+### Theming
 
-You can theme an Action Sheet with your app's color scheme using the ColorThemer extension.
+You can theme an MDCActionSheet to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](../../docs/theming.md).
 
-You must first add the Color Themer extension to your project:
-
-```bash
-pod `MaterialComponentsAlpha/ActionSheet+ColorThemer`
-```
+First, create an action sheet and import the theming extension header for Action Sheets.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponents.MaterialActionSheet
+import MaterialComponents.MaterialActionSheet_Theming
 
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
 let actionSheet = MDCActionSheetController()
-MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
 ```
 
 #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialActionSheet+ColorThemer.h"
+#import <MaterialComponents/MaterialActionSheet.h>
+#import <MaterialComponents/MaterialActionSheet+Theming.h>
 
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSematnicColorScheme alloc] init];
-
-// Step 3: Apply the color scheme to your component
 MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
-[MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
-                            toActionSheetController:actionSheet];
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/typography-theming.md -->
+You can then provide a container scheme instance to any of the MDCActionSheet theming extensions.
 
-### Typography Theming
-
-You can theme an Action Sheet with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod `MaterialComponentsAlpha/ActionSheet+TypographyThemer`
-```
+Then, you can theme your action sheet.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponentsAlpha.MaterialActionSheet_TypographyThemer
-
-// Step 2: Create or get a color scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the color scheme to your component
-let actionSheet = MDCActionSheetController()
-MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
+actionSheet.applyTheme(withScheme: containerScheme)
 ```
 
 #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialActionSheet+TypographyThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the color scheme to your component
-MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
-[MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
-                              toActionSheetController:actionSheet];
+[self.actionSheet applyThemeWithScheme:self.containerScheme];
 ```
 <!--</div>-->
+
+
+
+
+
 
 
 <!-- Extracted from docs/accessibility.md -->
@@ -327,6 +325,93 @@ actionSheet.transitionController.scrimAccessibilityTraits = UIAccessibilityTrait
 ```objc
 MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
 actionSheet.scrimAccessibilityTraits = UIAccessibilityTraitButton;
+```
+<!--</div>-->
+
+
+## Unsupported
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme an Action Sheet with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod `MaterialComponentsBeta/ActionSheet+ColorThemer`
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponentsBeta.MaterialActionSheet_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+let actionSheet = MDCActionSheetController()
+MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialActionSheet+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSematnicColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
+[MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                            toActionSheetController:actionSheet];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme an Action Sheet with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod `MaterialComponentsBeta/ActionSheet+TypographyThemer`
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponentsBeta.MaterialActionSheet_TypographyThemer
+
+// Step 2: Create or get a color scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the color scheme to your component
+let actionSheet = MDCActionSheetController()
+MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialActionSheet+TypographyThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
+[MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
+                              toActionSheetController:actionSheet];
 ```
 <!--</div>-->
 

@@ -25,15 +25,15 @@
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
                           arcRadius:(CGFloat)arcRadius
-                         startAngle:(CGFloat)startAngle
-                           endAngle:(CGFloat)endAngle;
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2;
 - (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2
                           arcRadius:(CGFloat)arcRadius;
 @end
 
@@ -88,13 +88,13 @@
 #pragma mark - Floating Button
 
 - (void)testCustomizedFloatingButtonVerticalHeight {
-  CGFloat veriticalOffset = 5.0f;
+  CGFloat veriticalOffset = 5;
   self.bottomAppBar.floatingButtonVerticalOffset = veriticalOffset;
   [self.bottomAppBar layoutSubviews];
   CGPoint floatingButtonPosition = self.bottomAppBar.floatingButton.center;
   CGPoint navigationBarPosition = self.bottomAppBar.navBar.frame.origin;
   XCTAssertEqualWithAccuracy(floatingButtonPosition.y + veriticalOffset, navigationBarPosition.y,
-                             0.001f);
+                             (CGFloat)0.001);
 }
 
 #pragma mark - Path test
@@ -115,15 +115,15 @@
                                          yOffset:fakeYOffset
                                            width:fakeWidth
                                           height:fakeHeight
-                                       arcCenter:fakeCenter
                                        arcRadius:fakeArcRadius
-                                      startAngle:(CGFloat)M_PI
-                                        endAngle:(CGFloat)M_PI_2];
+                                      arcCenter1:fakeCenter
+                                      arcCenter2:fakeCenter];
   fakeFromPath = [bottomAppLayer drawWithPlainPath:fakeFromPath
                                            yOffset:fakeYOffset
                                              width:fakeWidth
                                             height:fakeHeight
-                                         arcCenter:fakeCenter
+                                        arcCenter1:fakeCenter
+                                        arcCenter2:fakeCenter
                                          arcRadius:fakeArcRadius];
 
   // Then
@@ -157,6 +157,92 @@
   } else {
     return numberOfPoints;
   }
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  bottomAppBar.traitCollectionDidChangeBlock =
+      ^(MDCBottomAppBarView *_Nonnull bottomAppBarView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
+
+  // When
+  [bottomAppBar traitCollectionDidChange:nil];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCBottomAppBarView *passedBottomAppBar;
+  bottomAppBar.traitCollectionDidChangeBlock =
+      ^(MDCBottomAppBarView *_Nonnull bottomAppBarView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedBottomAppBar = bottomAppBarView;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [bottomAppBar traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedBottomAppBar, bottomAppBar);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+  const CGFloat finalElevation = 6;
+  bottomAppBar.elevation = finalElevation - 1;
+  __block CGFloat newElevation = -1;
+  bottomAppBar.mdc_elevationDidChangeBlock =
+      ^(MDCBottomAppBarView *blockAppBar, CGFloat elevation) {
+        newElevation = elevation;
+      };
+
+  // When
+  bottomAppBar.elevation = bottomAppBar.elevation + 1;
+
+  // Then
+  XCTAssertEqualWithAccuracy(newElevation, finalElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+  bottomAppBar.elevation = 5;
+  __block BOOL blockCalled = NO;
+  bottomAppBar.mdc_elevationDidChangeBlock =
+      ^(MDCBottomAppBarView *blockAppBar, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  bottomAppBar.elevation = bottomAppBar.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+
+  // Then
+  XCTAssertLessThan(bottomAppBar.mdc_overrideBaseElevation, 0);
 }
 
 @end

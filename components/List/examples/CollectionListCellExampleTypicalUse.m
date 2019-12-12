@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "supplemental/CollectionListCellExampleTypicalUse.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialTypographyScheme.h"
-#import "supplemental/CollectionListCellExampleTypicalUse.h"
 #import "supplemental/CollectionViewListCell.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
-static const CGFloat kSmallestCellHeight = 40.f;
-static const CGFloat kSmallArbitraryCellWidth = 100.f;
+static const CGFloat kSmallestCellHeight = 40;
+static const CGFloat kSmallArbitraryCellWidth = 100;
 
 @implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;
@@ -35,7 +35,11 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
   flowLayout.minimumInteritemSpacing = 0;
   flowLayout.minimumLineSpacing = 1;
   flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
+  if (@available(iOS 10.0, *)) {
+    flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize;
+  } else {
+    flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
+  }
   return [self initWithCollectionViewLayout:flowLayout];
 }
 
@@ -69,40 +73,33 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
     @"Left" : @(NSTextAlignmentLeft),
     @"Right" : @(NSTextAlignmentRight),
     @"Center" : @(NSTextAlignmentCenter),
-    @"Just." : @(NSTextAlignmentJustified),
+    @"Justified" : @(NSTextAlignmentJustified),
     @"Natural" : @(NSTextAlignmentNatural)
   };
 
   for (NSString *alignmentKey in alignmentValues) {
     [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Single line text", alignmentKey],
-      alignmentValues[alignmentKey],
-      @"",
+      [NSString stringWithFormat:@"Single line text with %@ alignment", alignmentKey],
+      alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey]
+    ]];
+    [_content addObject:@[
+      @"", alignmentValues[alignmentKey],
+      [NSString stringWithFormat:@"Single line detail text with %@ alignment", alignmentKey],
       alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      @"",
+      [NSString stringWithFormat:@"Two line text with %@ alignment", alignmentKey],
       alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) Single line detail text", alignmentKey],
+      [NSString stringWithFormat:@"Here is the detail text with %@ alignment", alignmentKey],
       alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Two line text", alignmentKey],
-      alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) Here is the detail text", alignmentKey],
-      alignmentValues[alignmentKey]
+      [NSString stringWithFormat:@"Two line text with %@ alignment and truncation", alignmentKey],
+      alignmentValues[alignmentKey], kExampleDetailText, alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Two line text (truncated)", alignmentKey],
-      alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-      alignmentValues[alignmentKey]
-    ]];
-    [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Three line text (wrapped)", alignmentKey],
-      alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-      alignmentValues[alignmentKey]
+      [NSString stringWithFormat:@"Three line text with %@ alignment and wrapping", alignmentKey],
+      alignmentValues[alignmentKey], kExampleDetailText, alignmentValues[alignmentKey]
     ]];
   }
 
@@ -159,20 +156,21 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
   [self.collectionView.collectionViewLayout invalidateLayout];
 
-  [coordinator animateAlongsideTransition:nil completion:^(__unused id context) {
-    [self.collectionView.collectionViewLayout invalidateLayout];
-  }];
+  [coordinator animateAlongsideTransition:nil
+                               completion:^(__unused id context) {
+                                 [self.collectionView.collectionViewLayout invalidateLayout];
+                               }];
 }
 
 #pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Lists", @"List Cell Example" ],
-    @"description": @"Material Collection Lists are continuous, vertical indexes of text "
-    @"or images.",
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Lists", @"List Cell Example" ],
+    @"description" : @"Material Collection Lists are continuous, vertical indexes of text "
+                     @"or images.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 

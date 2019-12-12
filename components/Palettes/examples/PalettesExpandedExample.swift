@@ -44,7 +44,7 @@ class PalettesGeneratedExampleViewController: PalettesExampleViewController {
 // MARK: - Catalog by convention
 extension PalettesGeneratedExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Palettes", "Generated Palettes"],
       "primaryDemo": false,

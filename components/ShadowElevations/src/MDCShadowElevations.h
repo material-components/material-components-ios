@@ -15,9 +15,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
-#ifdef NS_TYPED_EXTENSIBLE_ENUM // This macro is introduced in Xcode 9.
+#ifdef NS_TYPED_EXTENSIBLE_ENUM  // This macro is introduced in Xcode 9.
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM NS_TYPED_EXTENSIBLE_ENUM
-#elif __has_attribute(swift_wrapper) // Backwards compatibility for Xcode 8.
+#elif __has_attribute(swift_wrapper)  // Backwards compatibility for Xcode 8.
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM __attribute__((swift_wrapper(struct)))
 #else
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM
@@ -32,6 +32,9 @@ typedef CGFloat MDCShadowElevation MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM;
 
 /** The shadow elevation of the app bar. */
 static const MDCShadowElevation MDCShadowElevationAppBar = (CGFloat)4.0;
+
+/** The shadow elevation of the Bottom App Bar. */
+static const MDCShadowElevation MDCShadowElevationBottomAppBar = (CGFloat)8.0;
 
 /** The shadow elevation of the Bottom App Bar. */
 static const MDCShadowElevation MDCShadowElevationBottomNavigationBar = (CGFloat)8.0;
@@ -53,6 +56,9 @@ static const MDCShadowElevation MDCShadowElevationFABResting = (CGFloat)6.0;
 
 /** The shadow elevation of a menu. */
 static const MDCShadowElevation MDCShadowElevationMenu = (CGFloat)8.0;
+
+/** The shadow elevation of a modal bottom sheet. */
+static const MDCShadowElevation MDCShadowElevationModalActionSheet = (CGFloat)8.0;
 
 /** The shadow elevation of a modal bottom sheet. */
 static const MDCShadowElevation MDCShadowElevationModalBottomSheet = (CGFloat)16.0;

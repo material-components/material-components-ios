@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_swift_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -24,28 +27,22 @@ mdc_public_objc_library(
     name = "Palettes",
 )
 
-swift_library(
-    name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
-    deps = [":Palettes"],
-    visibility = ["//visibility:private"],
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Palettes",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
+    ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
     deps = [":Palettes"],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
-      ":unit_test_swift_sources",
+        ":unit_test_sources",
     ],
 )

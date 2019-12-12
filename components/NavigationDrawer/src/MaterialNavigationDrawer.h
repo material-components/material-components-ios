@@ -13,6 +13,6 @@
 // limitations under the License.
 
 #import "MDCBottomDrawerHeader.h"
-#import "MDCBottomDrawerViewController.h"
-#import "MDCBottomDrawerTransitionController.h"
 #import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerTransitionController.h"
+#import "MDCBottomDrawerViewController.h"

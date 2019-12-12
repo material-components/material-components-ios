@@ -60,7 +60,7 @@ class PalettesExampleViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tableView.separatorStyle = .none
-    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 50
   }
 
@@ -75,18 +75,18 @@ class PalettesExampleViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView,
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-    if cell == nil {
-      cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-    }
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ??
+        UITableViewCell(style: .default, reuseIdentifier: "cell")
     let paletteInfo = palettes[indexPath.section]
     let tones = ExampleTonesForPalette(paletteInfo.palette)
-    cell!.textLabel!.text = tones[indexPath.row].name
-    cell!.backgroundColor = tones[indexPath.row].tone
-    cell!.textLabel!.textColor = TextColorFor(backgroundColor: cell!.backgroundColor!)
-    cell!.selectionStyle = .none
+    cell.textLabel?.text = tones[indexPath.row].name
+    cell.backgroundColor = tones[indexPath.row].tone
+    if let cellBackgroundColor = cell.backgroundColor {
+      cell.textLabel?.textColor = TextColorFor(backgroundColor: cellBackgroundColor)
+    }
+    cell.selectionStyle = .none
 
-    return cell!
+    return cell
   }
   override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView,
                           forSection section: Int) {
@@ -109,7 +109,7 @@ class PalettesExampleViewController: UITableViewController {
     self.init(style: .grouped)
   }
 
-  override init(style: UITableViewStyle) {
+  override init(style: UITableView.Style) {
     super.init(style: style)
   }
 

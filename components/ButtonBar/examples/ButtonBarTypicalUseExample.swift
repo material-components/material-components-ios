@@ -13,17 +13,30 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialButtonBar_ColorThemer
+import MaterialComponents.MaterialButtonBar
+import MaterialComponents.MaterialContainerScheme
 
 class ButtonBarTypicalUseSwiftExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+  @objc var typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
+
+  lazy var buttonBar = MDCButtonBar()
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let buttonBar = MDCButtonBar()
+    buttonBar.backgroundColor = colorScheme.primaryColor
+    buttonBar.tintColor = colorScheme.onPrimaryColor
+    buttonBar.setButtonsTitleFont(typographyScheme.button, for: .normal)
+
     // MDCButtonBar ignores the style of UIBarButtonItem.
-    let ignored: UIBarButtonItemStyle = .done
+    let ignored: UIBarButtonItem.Style = .done
 
     let actionItem = UIBarButtonItem(
       title: "Action",
@@ -41,8 +54,6 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
     buttonBar.items = [actionItem, secondActionItem]
 
-    MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to: buttonBar)
-
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
     let x = (self.view.bounds.size.width - size.width) / 2
@@ -56,8 +67,10 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     view.backgroundColor = .white
   }
 
-  @objc func didTapActionButton(_ sender: Any) {
-    print("Did tap action item: \(sender)")
+  @objc func didTapActionButton(_ item: UIBarButtonItem) {
+    let rect = buttonBar.rect(for: item, in: view)
+    print("\(rect)")
+    print("Did tap action item: \(item)")
   }
 
   // MARK: Typical application code (not Material-specific)
@@ -75,7 +88,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 // MARK: Catalog by convention
 extension ButtonBarTypicalUseSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Button Bar", "Button Bar (Swift)"],
       "primaryDemo": false,

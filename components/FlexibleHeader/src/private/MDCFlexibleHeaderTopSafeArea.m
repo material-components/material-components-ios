@@ -70,13 +70,13 @@ static const CGFloat kNonXStatusBarHeight = 20;
     BOOL topSafeAreaInsetLikelyAffectedByStatusBarVisibility =
         self.lastNonZeroTopSafeAreaInset == kNonXStatusBarHeight;
     if (topSafeAreaInsetLikelyAffectedByStatusBarVisibility &&
-        [self.delegate flexibleHeaderSafeAreaIsStatusBarShifted:self]) {
+        [self.topSafeAreaDelegate flexibleHeaderSafeAreaIsStatusBarShifted:self]) {
       return self.lastNonZeroTopSafeAreaInset;
     } else {
       return self.extractedTopSafeAreaInset;
     }
   } else {
-    return [self.delegate flexibleHeaderSafeAreaDeviceTopSafeAreaInset:self];
+    return [self.topSafeAreaDelegate flexibleHeaderSafeAreaDeviceTopSafeAreaInset:self];
   }
 }
 
@@ -85,7 +85,7 @@ static const CGFloat kNonXStatusBarHeight = 20;
     [self extractTopSafeAreaInset];
   } else {
     // The device safe area insets may have changed, so we always fall back to calling the delegate.
-    [self.delegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:self];
+    [self.topSafeAreaDelegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:self];
   }
 }
 
@@ -98,7 +98,7 @@ static const CGFloat kNonXStatusBarHeight = 20;
   if (_inferTopSafeAreaInsetFromViewController) {
     [self extractTopSafeAreaInset];
   } else {
-    [self.delegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:self];
+    [self.topSafeAreaDelegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:self];
   }
 }
 
@@ -113,7 +113,7 @@ static const CGFloat kNonXStatusBarHeight = 20;
 
   // No need to inform the delegate if this behavior is diabled.
   if (self.inferTopSafeAreaInsetFromViewController) {
-    [self.delegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:self];
+    [self.topSafeAreaDelegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:self];
   }
 }
 

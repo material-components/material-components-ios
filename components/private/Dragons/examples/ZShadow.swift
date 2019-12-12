@@ -63,28 +63,25 @@ class ZShadowViewController: UIViewController {
                                                        options: [],
                                                        metrics: nil,
                                                        views: ["view": contentView]));
-    if #available(iOS 9.0, *) {
-      greenBannerLeadingConstraintCollapsed = contentView.greenBanner.trailingAnchor.constraint(equalTo: contentView.greenTappable.trailingAnchor)
-    } else {
-      greenBannerLeadingConstraintCollapsed = NSLayoutConstraint(item: contentView.greenBanner, attribute: .right, relatedBy: .equal, toItem: contentView.greenTappable, attribute: .right, multiplier: 1, constant: 0)
-    }
+    greenBannerLeadingConstraintCollapsed = contentView.greenBanner.trailingAnchor.constraint(equalTo: contentView.greenTappable.trailingAnchor)
     greenBannerLeadingConstraintCollapsed.isActive = false
     
-    if #available(iOS 9.0, *) {
-      blueBannerLeadingConstraintCollapsed = contentView.blueBanner.trailingAnchor.constraint(equalTo: contentView.blueTappable.trailingAnchor)
-    } else {
-      blueBannerLeadingConstraintCollapsed = NSLayoutConstraint(item: contentView.blueBanner, attribute: .right, relatedBy: .equal, toItem: contentView.blueTappable, attribute: .right, multiplier: 1, constant: 0)
-    }
+    blueBannerLeadingConstraintCollapsed = contentView.blueBanner.trailingAnchor.constraint(equalTo: contentView.blueTappable.trailingAnchor)
     blueBannerLeadingConstraintCollapsed.isActive = false
     
     let tap = UITapGestureRecognizer(target: self, action: #selector(squaresTapped))
     contentView.greenTappable.addGestureRecognizer(tap)
+    contentView.greenTappable.isAccessibilityElement = true
+    contentView.greenTappable.accessibilityTraits = .button
+    contentView.greenTappable.accessibilityLabel = "Toggle Material Shadow"
     let tap2 = UITapGestureRecognizer(target: self, action: #selector(squaresTapped))
     contentView.blueTappable.addGestureRecognizer(tap2)
-    
+    contentView.blueTappable.isAccessibilityElement = true
+    contentView.blueTappable.accessibilityTraits = .button
+    contentView.blueTappable.accessibilityLabel = "Toggle UIKit Shadow"
   }
   
-  func squaresTapped() {
+  @objc func squaresTapped() {
     greenBannerLeadingConstraintCollapsed.isActive = !greenBannerLeadingConstraintCollapsed.isActive
     blueBannerLeadingConstraintCollapsed.isActive = !blueBannerLeadingConstraintCollapsed.isActive
     
@@ -98,7 +95,7 @@ extension ZShadowViewController {
   
   // MARK: Catalog by convention
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["ZShadow"],
       "primaryDemo": false,

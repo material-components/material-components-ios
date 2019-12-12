@@ -18,9 +18,6 @@
 
 @interface MDCThumbView : UIView
 
-/** A boolean value indicating whether the thumb view has a shadow. */
-@property(nonatomic, assign) BOOL hasShadow __deprecated_msg("Use `elevation` instead.");
-
 /**
  The elevation of the thumb view.
 
@@ -36,5 +33,8 @@
 
 /** Set the @c icon shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;
+
+/** The color of the shadow of the thumb view. Defaults to black. */
+@property(nonnull, nonatomic, strong) UIColor *shadowColor;
 
 @end

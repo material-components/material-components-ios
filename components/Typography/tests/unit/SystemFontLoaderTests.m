@@ -27,27 +27,14 @@
   MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
 
   // Then
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-    XCTAssertEqual([fontLoader lightFontOfSize:size],
-                   [UIFont systemFontOfSize:size weight:UIFontWeightLight]);
-    XCTAssertEqual([fontLoader regularFontOfSize:size],
-                   [UIFont systemFontOfSize:size weight:UIFontWeightRegular]);
-    XCTAssertEqual([fontLoader mediumFontOfSize:size],
-                   [UIFont systemFontOfSize:size weight:UIFontWeightMedium]);
-    XCTAssertEqual([fontLoader boldFontOfSize:size],
-                   [UIFont systemFontOfSize:size weight:UIFontWeightSemibold]);
-#pragma clang diagnostic pop
-  } else {
-    // Fallback on earlier versions
-    XCTAssertEqual([fontLoader lightFontOfSize:size],
-                   [UIFont fontWithName:@"HelveticaNeue-Light" size:size]);
-    XCTAssertEqual([fontLoader regularFontOfSize:size], [UIFont systemFontOfSize:size]);
-    XCTAssertEqual([fontLoader mediumFontOfSize:size],
-                   [UIFont fontWithName:@"HelveticaNeue-Medium" size:size]);
-    XCTAssertEqual([fontLoader boldFontOfSize:size], [UIFont boldSystemFontOfSize:size]);
-  }
+  XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont systemFontOfSize:size
+                                                                      weight:UIFontWeightLight]);
+  XCTAssertEqual([fontLoader regularFontOfSize:size],
+                 [UIFont systemFontOfSize:size weight:UIFontWeightRegular]);
+  XCTAssertEqual([fontLoader mediumFontOfSize:size], [UIFont systemFontOfSize:size
+                                                                       weight:UIFontWeightMedium]);
+  XCTAssertEqual([fontLoader boldFontOfSize:size], [UIFont systemFontOfSize:size
+                                                                     weight:UIFontWeightSemibold]);
   UIFontDescriptor *fontDescriptorWithBoldItalic = [[UIFont systemFontOfSize:size].fontDescriptor
       fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
   XCTAssertEqual([fontLoader boldItalicFontOfSize:size],
@@ -57,9 +44,9 @@
 
 - (void)testIsLargeForContrastRatio {
   // Given
-  CGFloat smallSize = 10.0f;
-  CGFloat largeIfBoldSize = 15.0f;
-  CGFloat largeSize = 18.0f;
+  CGFloat smallSize = 10;
+  CGFloat largeIfBoldSize = 15;
+  CGFloat largeSize = 18;
   MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
 
   // Then

@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCBottomDrawerState.h"
+#import "MaterialShadowElevations.h"
 
 @class MDCBottomDrawerContainerViewController;
 @protocol MDCBottomDrawerHeader;
@@ -23,6 +24,20 @@
  Delegate for MDCBottomDrawerContainerViewController.
  */
 @protocol MDCBottomDrawerContainerViewControllerDelegate <NSObject>
+
+/**
+This method is called when the MDCBottomDrawerContainerViewControllerDelegate needs to update the
+appearance of the scrim.
+
+@param containerViewController the container view controller of the bottom drawer.
+@param scrimShouldAdoptTrackingScrollViewBackgroundColor whether or not the scrim view should adopt
+the backgroundColor of the trackingScrollView.
+*/
+- (void)bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                    scrimShouldAdoptTrackingScrollViewBackgroundColor:
+                        (BOOL)scrimShouldAdoptTrackingScrollViewBackgroundColor;
+
 /**
  This method is called when the bottom drawer will change its presented state to one of the
  MDCBottomDrawerState states.
@@ -34,6 +49,15 @@
             (nonnull MDCBottomDrawerContainerViewController *)containerViewController
                                                drawerState:(MDCBottomDrawerState)drawerState;
 
+/**
+ This method is called when the bottom drawer will change the y-offset of its contents.
+
+ @param containerViewController the container view controller of the bottom drawer.
+ @param yOffset current yOffset of the bottom drawer contents
+ */
+- (void)bottomDrawerContainerViewControllerDidChangeYOffset:
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                                                    yOffset:(CGFloat)yOffset;
 /**
  This method is called when the drawer is scrolled/dragged and provides a transition ratio value
  between 0-100% (0-1) that indicates the percentage in which the drawer is close to reaching the end
@@ -63,8 +87,10 @@
  @param originalPresentingViewController The original presenting view controller.
  */
 - (nonnull instancetype)initWithOriginalPresentingViewController:
-    (nonnull UIViewController *)originalPresentingViewController
-    trackingScrollView:(nullable UIScrollView *)trackingScrollView NS_DESIGNATED_INITIALIZER;
+                            (nonnull UIViewController *)originalPresentingViewController
+                                              trackingScrollView:
+                                                  (nullable UIScrollView *)trackingScrollView
+    NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
@@ -83,6 +109,21 @@
  */
 @property(nonatomic, nullable) UIViewController<MDCBottomDrawerHeader> *headerViewController;
 
+/**
+ The header's shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nullable) UIColor *headerShadowColor;
+
+/**
+ The drawer's top shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nullable) UIColor *drawerShadowColor;
+
+/**
+ The drawer's elevation. Defaults to MDCShadowElevationNavDrawer.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
 // The original presenting view controller.
 @property(nonatomic, readonly, nonnull) UIViewController *originalPresentingViewController;
 
@@ -97,6 +138,8 @@
 // Whether the drawer is currently animating its presentation.
 @property(nonatomic) BOOL animatingPresentation;
 
+// Whether the drawer is currently animating its dismissal.
+@property(nonatomic) BOOL animatingDismissal;
 /**
  Delegate to tell the presentation controller when the drawer will change state.
  */
@@ -106,5 +149,68 @@
  The current state of the bottom drawer.
  */
 @property(nonatomic, readonly) MDCBottomDrawerState drawerState;
+
+/**
+ A boolean value that indicates whether the drawer is currently the full height of the window.
+ */
+@property(nonatomic, readonly) BOOL contentReachesFullscreen;
+
+/**
+ The height added to the bottom of the navigation drawer to hide the scrim.
+ Defaults to 0.
+ */
+@property(nonatomic, assign) CGFloat addedHeight;
+
+/**
+ The height of the drawer at initial layout. This is an absolute point-based value.
+
+ Defaults to 50% of the screens height.
+
+ @note In VoiceOver, SwitchControl, and UIUserInterfaceSizeClassCompact (mobile landscape) the
+ value will equal to 100% of the screens height.
+ */
+@property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
+
+/**
+ A flag allowing clients to opt-in to the drawer adding additional height to the content to include
+ the bottom safe area inset. This will remove the need for clients to calculate their content size
+ with the bottom safe area when setting the preferredContentSize of the contentViewController.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
+
+/**
+ Determines if the header should always expand as it approaches the top of the screen.
+ If the content height is smaller than the screen height then the header will not expand unless this
+ flag is enabled.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldAlwaysExpandHeader;
+
+/**
+ Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
+ drawer will scroll to the start of its content.
+
+ @param contentOffsetY the content offset Y of the scroll view.
+ @param animated a bool if to animate the scrolling.
+ */
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
+
+/**
+ Expands the drawer to fullscreen with animation.
+
+ note: If the drawer has less content than the full screen,
+ this method will still expand the drawer to fullscreen.
+
+ @param duration The total duration of the animations, measured in seconds. If you specify a
+ negative value or 0, the changes are made without animating them.
+
+ @param completion A block object to be executed when the animation sequence ends. This block has
+ no return value and takes a single Boolean argument that indicates whether or not the animations
+ actually finished before the completion handler was called. If the duration of the animation is 0,
+ this block is performed at the beginning of the next run loop cycle. This parameter may be NULL.
+ */
+- (void)expandToFullscreenWithDuration:(CGFloat)duration
+                            completion:(void (^__nullable)(BOOL finished))completion;
 
 @end

@@ -14,10 +14,9 @@
 
 #import "MDCShapeSchemeExampleViewController.h"
 
-#import "../../../BottomSheet/examples/supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
-#import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
+#import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -26,14 +25,14 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialCards+CardThemer.h"
-#import "MaterialCards+ShapeThemer.h"
+#import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
-#import "MaterialChips+ChipThemer.h"
-#import "MaterialChips+ShapeThemer.h"
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
@@ -42,6 +41,7 @@
 @property(strong, nonatomic) MDCSemanticColorScheme *colorScheme;
 @property(strong, nonatomic) MDCShapeScheme *shapeScheme;
 @property(strong, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 
 @property(weak, nonatomic) IBOutlet MDCShapedView *smallComponentShape;
 @property(weak, nonatomic) IBOutlet MDCShapedView *mediumComponentShape;
@@ -83,9 +83,16 @@
 }
 
 - (void)commonShapeSchemeExampleInit {
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
-  _shapeScheme = [[MDCShapeScheme alloc] init];
-  _typographyScheme = [[MDCTypographyScheme alloc] init];
+  _colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  _shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  _typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme = _colorScheme;
+  containerScheme.shapeScheme = _shapeScheme;
+  containerScheme.typographyScheme = _typographyScheme;
+  _containerScheme = containerScheme;
 }
 
 - (void)viewDidLoad {
@@ -100,14 +107,9 @@
 }
 
 - (void)initializeComponentry {
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.shapeScheme = self.shapeScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
   self.containedButton = [[MDCButton alloc] init];
   [self.containedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
+  [self.containedButton applyContainedThemeWithScheme:self.containerScheme];
   self.containedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.containedButton];
 
@@ -115,15 +117,16 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
+  [self.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
   [self.floatingButton sizeToFit];
   self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.floatingButton];
 
-  MDCChipViewScheme *chipViewScheme = [[MDCChipViewScheme alloc] init];
-  chipViewScheme.colorScheme = self.colorScheme;
-  chipViewScheme.shapeScheme = self.shapeScheme;
-  chipViewScheme.typographyScheme = self.typographyScheme;
+  self.card = [[MDCCard alloc] init];
+  self.card.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.card applyThemeWithScheme:self.containerScheme];
+  self.card.backgroundColor = _colorScheme.primaryColor;
+  [self.componentContentView addSubview:self.card];
 
   self.chipView = [[MDCChipView alloc] init];
   self.chipView.titleLabel.text = @"Material";
@@ -131,18 +134,8 @@
   self.chipView.accessoryView = [self deleteButton];
   self.chipView.minimumSize = CGSizeMake(140, 33);
   self.chipView.translatesAutoresizingMaskIntoConstraints = NO;
-  [MDCChipViewThemer applyScheme:chipViewScheme toChipView:self.chipView];
+  [self.chipView applyThemeWithScheme:self.containerScheme];
   [self.componentContentView addSubview:self.chipView];
-
-  MDCCardScheme *cardScheme = [[MDCCardScheme alloc] init];
-  cardScheme.colorScheme = self.colorScheme;
-  cardScheme.shapeScheme = self.shapeScheme;
-
-  self.card = [[MDCCard alloc] init];
-  self.card.translatesAutoresizingMaskIntoConstraints = NO;
-  [MDCCardThemer applyScheme:cardScheme toCard:self.card];
-  self.card.backgroundColor = _colorScheme.primaryColor;
-  [self.componentContentView addSubview:self.card];
 
   NSArray<NSLayoutConstraint *> *cardConstraints =
       [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[card]-|"
@@ -153,7 +146,7 @@
 
   self.presentBottomSheetButton = [[MDCButton alloc] init];
   [self.presentBottomSheetButton setTitle:@"Present Bottom Sheet" forState:UIControlStateNormal];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.presentBottomSheetButton];
+  [self.presentBottomSheetButton applyOutlinedThemeWithScheme:self.containerScheme];
   self.presentBottomSheetButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.presentBottomSheetButton];
   [self.presentBottomSheetButton addTarget:self
@@ -183,8 +176,8 @@
 }
 
 - (void)presentBottomSheet {
-  BottomSheetDummyCollectionViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
+  MDCShapeExamplesDummyCollectionViewController *viewController =
+      [[MDCShapeExamplesDummyCollectionViewController alloc] initWithNumItems:102];
   viewController.title = @"Shaped bottom sheet example";
 
   MDCAppBarContainerViewController *container =
@@ -222,7 +215,7 @@
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
-  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7f];
+  button.tintColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.7];
   [button setImage:image forState:UIControlStateNormal];
 
   return button;
@@ -270,10 +263,11 @@
 - (void)updateComponentShapes {
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.containedButton];
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.outlinedButton];
-  [MDCCardsShapeThemer applyShapeScheme:_shapeScheme toCard:self.card];
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.presentBottomSheetButton];
   [self updateComponentShapesWithBaselineOverrides:self.includeBaselineOverridesToggle
                                                        .selectedSegmentIndex == 0];
+
+  [self.card applyThemeWithScheme:self.containerScheme];
 }
 
 - (MDCShapeCategory *)changedCategoryFromType:(UISegmentedControl *)sender
@@ -339,16 +333,28 @@
     // We don't want baseline overrides.
     [MDCBottomSheetControllerShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
                                                 toBottomSheetController:self.bottomSheetController];
-    [MDCChipViewShapeThemerDefaultMapping applyShapeScheme:_shapeScheme toChipView:self.chipView];
+    [MDCShapeSchemeExampleViewController applyShapeScheme:_shapeScheme toChipView:self.chipView];
     [MDCFloatingButtonShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
                                                         toButton:self.floatingButton];
   } else {
     // We do want baseline overrides.
     [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
                                   toBottomSheetController:self.bottomSheetController];
-    [MDCChipViewShapeThemer applyShapeScheme:_shapeScheme toChipView:self.chipView];
+    [self.chipView applyThemeWithScheme:self.containerScheme];
     [MDCFloatingButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.floatingButton];
   }
+}
+
+#pragma mark - Support
+
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+              toChipView:(nonnull MDCChipView *)chipView {
+  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
+  rectangleShape.topLeftCorner = shapeScheme.smallComponentShape.topLeftCorner;
+  rectangleShape.topRightCorner = shapeScheme.smallComponentShape.topRightCorner;
+  rectangleShape.bottomLeftCorner = shapeScheme.smallComponentShape.bottomLeftCorner;
+  rectangleShape.bottomRightCorner = shapeScheme.smallComponentShape.bottomRightCorner;
+  chipView.shapeGenerator = rectangleShape;
 }
 
 @end

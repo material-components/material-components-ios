@@ -19,7 +19,7 @@
 #import "MaterialProgressView.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat MDCProgressViewAnimationDuration = 1.f;
+static const CGFloat MDCProgressViewAnimationDuration = 1;
 
 @interface ProgressViewExample : UIViewController
 
@@ -75,7 +75,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   _backwardProgressResetView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.container addSubview:_backwardProgressResetView];
   // Have a non-zero progress at setup time.
-  _backwardProgressResetView.progress = 0.33f;
+  _backwardProgressResetView.progress = (float)0.33;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -83,7 +83,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
       MDCProgressViewBackwardAnimationModeAnimate;
   [self.container addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
-  _backwardProgressAnimateView.progress = 0.33f;
+  _backwardProgressAnimateView.progress = (float)0.33;
 }
 
 @end
@@ -98,7 +98,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [super viewDidLoad];
 
   if (!self.colorScheme) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   if (!self.typographyScheme) {
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -120,12 +121,12 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"animate_button";
 }
 
--(void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   [self positionContainer];
 }
 
--(void)setupContainer {
+- (void)setupContainer {
   self.container = [[UIView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:self.container];
 }
@@ -133,10 +134,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 - (void)positionContainer {
   CGFloat originX = CGRectGetMinX(self.view.bounds) + self.view.layoutMargins.left;
   CGFloat originY = CGRectGetMinY(self.view.bounds) + self.view.layoutMargins.top;
-  CGFloat width = self.view.bounds.size.width
-      - (self.view.layoutMargins.left + self.view.layoutMargins.right);
-  CGFloat height = self.view.bounds.size.height
-      - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
+  CGFloat width =
+      self.view.bounds.size.width - (self.view.layoutMargins.left + self.view.layoutMargins.right);
+  CGFloat height =
+      self.view.bounds.size.height - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
   CGRect frame = CGRectMake(originX, originY, width, height);
   self.container.frame = frame;
 }
@@ -240,10 +241,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [self animateStep1:_tintedProgressView];
   [self animateStep1:_fullyColoredProgressView];
   [self animateBackwardProgressResetViewWithCountdown:4];
-  [self animateBackwardProgressAnimateViewWithCountdown:4 completion:^(BOOL ignored) {
-    sender.enabled = YES;
-  }];
-
+  [self animateBackwardProgressAnimateViewWithCountdown:4
+                                             completion:^(BOOL ignored) {
+                                               sender.enabled = YES;
+                                             }];
 }
 
 - (void)animateStep1:(MDCProgressView *)progressView {
@@ -273,9 +274,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 }
 
 - (void)animateStep4:(MDCProgressView *)progressView {
-  [progressView setHidden:YES
-                 animated:YES
-               completion:nil];
+  [progressView setHidden:YES animated:YES completion:nil];
 }
 
 - (void)animateBackwardProgressResetViewWithCountdown:(NSInteger)remainingCounts {
@@ -289,8 +288,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                  (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
-      [weakSelf animateBackwardProgressResetViewWithCountdown:remainingCounts];
-    });
+                     [weakSelf animateBackwardProgressResetViewWithCountdown:remainingCounts];
+                   });
   }
 }
 
@@ -306,9 +305,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                  (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
-      [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
-                                                     completion:completion];
-    });
+                     [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
+                                                                    completion:completion];
+                   });
   }
 }
 
@@ -316,11 +315,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Progress View", @"Progress View" ],
-    @"description": @"Progress indicators display the length of a process or express an "
-    @"unspecified wait time.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Progress View", @"Progress View" ],
+    @"description" : @"Progress indicators display the length of a process or express an "
+                     @"unspecified wait time.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

@@ -14,13 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialSlider.h"
 #import "ShadowRadiusLabel.h"
 
-static const CGFloat kShadowElevationsDefault = 8.f;
-static const CGFloat kShadowElevationsMax = 24.f;
-static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
+static const CGFloat kShadowElevationsDefault = 8;
+static const CGFloat kShadowElevationsMax = 24;
+static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 
 @interface ShadowCornerRadiusView : UIView <MDCSliderDelegate>
 
@@ -39,23 +40,24 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     _elevationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, frame.size.width, 100)];
     _elevationLabel.textAlignment = NSTextAlignmentCenter;
     _elevationLabel.text = @"8 pt";
+    _elevationLabel.textColor = UIColor.blackColor;
     [self addSubview:_elevationLabel];
 
-    CGFloat paperDim = 200.f;
-    CGRect paperFrame =
-        CGRectMake((CGRectGetWidth(frame) - paperDim) / 2, 200.f, paperDim, paperDim);
+    CGFloat paperDim = 200;
+    CGRect paperFrame = CGRectMake((CGRectGetWidth(frame) - paperDim) / 2, 200, paperDim, paperDim);
     _paper = [[ShadowRadiusLabel alloc] initWithFrame:paperFrame];
     _paper.cornerRadius = 8.0;
     _paper.elevation = 12.0;
     _paper.backgroundColor = UIColor.grayColor;
     [self addSubview:_paper];
 
-    CGFloat margin = 20.f;
-    CGRect sliderRect = CGRectMake(margin, 140.f, frame.size.width - margin * 2,
-                                   kShadowElevationsSliderFrameHeight);
+    CGFloat margin = 20;
+    CGRect sliderRect =
+        CGRectMake(margin, 140, frame.size.width - margin * 2, kShadowElevationsSliderFrameHeight);
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
-    sliderControl.numberOfDiscreteValues = (NSUInteger) kShadowElevationsMax + 1;
+    sliderControl.numberOfDiscreteValues = (NSUInteger)kShadowElevationsMax + 1;
     sliderControl.maximumValue = kShadowElevationsMax;
+    sliderControl.minimumValue = 0;
     sliderControl.value = kShadowElevationsDefault;
     sliderControl.delegate = self;
     sliderControl.autoresizingMask =
@@ -64,21 +66,29 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     [sliderControl addTarget:self
                       action:@selector(sliderValueChanged:)
             forControlEvents:UIControlEventValueChanged];
+    sliderControl.accessibilityLabel = @"Change corner radius";
+    sliderControl.accessibilityHint = @"Updates the corner radius of the example view";
+    sliderControl.accessibilityValue = [NSString stringWithFormat:@"%f", sliderControl.value];
     [self addSubview:sliderControl];
   }
   return self;
 }
 
 - (NSString *)slider:(MDCSlider *)slider displayedStringForValue:(CGFloat)value {
-  NSInteger points = (NSInteger)round(value);
+  NSInteger points = (NSInteger)MDCRound(value);
   return [NSString stringWithFormat:@"%ld pt", (long)points];
 }
 
 // TODO: (#4848) [ShadowLayer] cornerRadius changes don't render
 - (void)sliderValueChanged:(MDCSlider *)slider {
-  NSInteger points = (NSInteger)round(slider.value);
+  NSInteger points = (NSInteger)MDCRound(slider.value);
   _paper.cornerRadius = (CGFloat)points;
   _elevationLabel.text = [NSString stringWithFormat:@"%ld pt", (long)points];
+}
+
+- (NSString *)slider:(MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value {
+  NSInteger points = (NSInteger)MDCRound(slider.value);
+  return [NSString stringWithFormat:@"%ld points", (long)points];
 }
 
 @end
@@ -117,9 +127,9 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Shadow", @"Shadow Corner Radius" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Shadow", @"Shadow Corner Radius" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

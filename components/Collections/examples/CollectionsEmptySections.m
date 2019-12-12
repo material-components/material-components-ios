@@ -23,7 +23,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 @end
 
 @implementation CollectionsEmptySectionsController {
-  NSMutableArray <NSMutableArray *>*_content;
+  NSMutableArray<NSMutableArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -134,9 +134,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Empty Section Demo" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Empty Section Demo" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

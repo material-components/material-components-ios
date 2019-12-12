@@ -28,6 +28,8 @@ UIScrollViewDelegate events.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderSafeAreaDelegate.html">MDCFlexibleHeaderSafeAreaDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewAnimationDelegate.html">MDCFlexibleHeaderViewAnimationDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums.html">Enumerations</a></li>
@@ -260,6 +262,14 @@ self.headerViewController.headerView.trackingScrollView = scrollView;
 
 `scrollView` might be a table view, collection view, or a plain UIScrollView.
 
+#### iOS 13 Collection Considerations
+
+iOS 13 changed the behavior of the `contentInset` of a collection view by triggering a layout.
+This may affect your app if you have not yet registered cells for reuse yet. Our recomendation is
+to use view controller composition by making your collection view controller a child view
+controller. If this is not possible then ensure the correct order of operations by registering cell
+reuse identifiers before setting the Flexible Header's `trackingScrollView`.
+
 Step 2: **Forward UIScrollViewDelegate events to the Header View**.
 
 There are two ways to forward scroll events.
@@ -361,16 +371,29 @@ forward UIScrollViewDelegate events to the flexible header by enabling
 scroll view allows the flexible header to over-extend, if enabled, and allows the header's shadow to
 show and hide itself as the content is scrolled.
 
+**Note:** if you support pre-iOS 11 then you will also need to explicitly clear your tracking scroll
+view in your deinit/dealloc method.
+
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
+deinit {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  appBarViewController.headerView.trackingScrollView = nil
+}
 ```
 
 #### Objective-C
 
 ```objc
 flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 ```
 <!--</div>-->
 
@@ -419,6 +442,40 @@ override func childViewControllerForStatusBarHidden() -> UIViewController? {
 #### Objective-C
 ```objc
 headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _headerViewController;
+}
+```
+<!--</div>-->
+
+If you would like to be able to show and hide your flexible header similar to how UINavigationBar
+allows the navigation bar to be shown and hidden, you can use the `hideable` shift behavior. This
+behavior will allow you to toggle visibility of the header using the `shiftHeaderOffScreenAnimated:`
+and `shiftHeaderOnScreenAnimated:` APIs only; the user will not be able to drag the header either on
+or off-screen.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+headerViewController.headerView.shiftBehavior = .hideable
+
+// You can now toggle visibility of the header view using the following invocations:
+headerViewController.headerView.shiftHeaderOffScreen(animated: true)
+headerViewController.headerView.shiftHeaderOnScreen(animated: true)
+
+override func childViewControllerForStatusBarHidden() -> UIViewController? {
+  return headerViewController
+}
+```
+
+#### Objective-C
+```objc
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHideable;
+
+// You can now toggle visibility of the header view using the following invocations:
+[headerViewController.headerView shiftHeaderOffScreenAnimated:YES];
+[headerViewController.headerView shiftHeaderOnScreenAnimated:YES];
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return _headerViewController;
@@ -1090,7 +1147,7 @@ MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: component
 #import "MaterialFlexibleHeader+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme

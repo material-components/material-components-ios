@@ -14,10 +14,13 @@
 
 #import "MDCFeatureHighlightTypographyThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCFeatureHighlightTypographyThemer
+#pragma clang diagnostic pop
 
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-       toFeatureHighlightViewController:
+    toFeatureHighlightViewController:
         (nonnull MDCFeatureHighlightViewController *)featureHighlightViewController {
   featureHighlightViewController.titleFont = typographyScheme.headline6;
   featureHighlightViewController.bodyFont = typographyScheme.body2;

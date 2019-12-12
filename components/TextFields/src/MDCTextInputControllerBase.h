@@ -54,6 +54,10 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
  Underline Height Normal - 0p
 
  Underline View Mode - While editing
+
+ Note: The [Design guidance](https://material.io/components/text-fields/#anatomy) changed and treats
+ placeholder as distinct from `label text`. The placeholder-related properties of this class most
+ closely align with the "label text" as described in the guidance.
 */
 @interface MDCTextInputControllerBase : NSObject <MDCTextInputControllerFloatingPlaceholder>
 
@@ -70,6 +74,13 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
  Default is clear.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *borderFillColorDefault;
+
+/**
+ The color the input field's border in the resting state. A nil value yields a clear border.
+
+ Default is nil.
+ */
+@property(nonatomic, nullable, strong) UIColor *borderStrokeColor;
 
 /**
  Should the controller's .textInput grow vertically as new lines are added.

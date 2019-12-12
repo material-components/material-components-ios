@@ -50,14 +50,7 @@ did_any_fail=false
 
 xcodebuid_test \
   -workspace "$ROOT_DIR/catalog/MDCCatalog.xcworkspace" \
-  -scheme "MaterialComponents-Unit-Tests"
-if [ $? -ne 0 ]; then
-  did_any_fail=true
-fi
-
-xcodebuid_test \
-  -workspace "$ROOT_DIR/catalog/MDCCatalog.xcworkspace" \
-  -scheme "MaterialComponentsAlpha-Unit-Tests"
+  -scheme "MDCCatalog"
 if [ $? -ne 0 ]; then
   did_any_fail=true
 fi

@@ -26,20 +26,6 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 @property(nonatomic, assign) CGPoint previousLocation;
 @end
 
-@protocol MDCInkTouchControllerLegacyDelegate <NSObject>
-@optional
-
-/**
- This protocol is private and declares an old method signature that will be removed once legacy code
- has been migrated to the new delegate protocol.
- */
-- (BOOL)shouldInkTouchControllerProcessInkTouches:
-        (nonnull MDCInkTouchController *)inkTouchController
-    __deprecated_msg("shouldInkTouchControllerProcessInkTouches has been replaced with "
-                     "inkTouchController:shouldProcessInkTouchesAtTouchLocation.");
-
-@end
-
 @implementation MDCInkTouchController
 
 - (CGFloat)dragCancelDistance {
@@ -69,6 +55,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 - (instancetype)initWithView:(UIView *)view {
   self = [super init];
   if (self) {
+    _requiresFailureOfScrollViewGestures = NO;
+
     _gestureRecognizer =
         [[MDCInkGestureRecognizer alloc] initWithTarget:self action:@selector(handleInkGesture:)];
     _gestureRecognizer.delegate = self;
@@ -186,8 +174,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 - (void)touchBeganAtPoint:(CGPoint)point touchLocation:(CGPoint)touchLocation {
   if (_shouldRespondToTouch) {
     [_addedInkView startTouchBeganAnimationAtPoint:point completion:nil];
-    if ([_delegate
-            respondsToSelector:@selector(inkTouchController:didProcessInkView:atTouchLocation:)]) {
+    if ([_delegate respondsToSelector:@selector(inkTouchController:
+                                                 didProcessInkView:atTouchLocation:)]) {
       [_delegate inkTouchController:self
                   didProcessInkView:_addedInkView
                     atTouchLocation:touchLocation];
@@ -209,17 +197,19 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
                                         shouldProcessInkTouchesAtTouchLocation:)]) {
     CGPoint touchLocation = [gestureRecognizer locationInView:_view];
     return [_delegate inkTouchController:self shouldProcessInkTouchesAtTouchLocation:touchLocation];
-  } else if ([_delegate respondsToSelector:@selector(shouldInkTouchControllerProcessInkTouches:)]) {
-    // Please use inkTouchController:shouldProcessInkTouchesAtTouchLocation. The delegate call below
-    // is deprecated and only provided for legacy support.
-    id<MDCInkTouchControllerLegacyDelegate> legacyDelegate =
-        (id<MDCInkTouchControllerLegacyDelegate>)_delegate;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    return [legacyDelegate shouldInkTouchControllerProcessInkTouches:self];
-#pragma clang diagnostic pop
   }
   return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+    shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  if (self.requiresFailureOfScrollViewGestures &&
+      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+    return YES;
+  }
+  return NO;
 }
 
 #pragma mark - Deprecations

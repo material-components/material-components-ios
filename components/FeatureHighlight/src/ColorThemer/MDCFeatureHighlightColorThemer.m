@@ -25,8 +25,8 @@
 }
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-          toFeatureHighlightViewController:
-              (MDCFeatureHighlightViewController *)featureHighlightViewController {
+    toFeatureHighlightViewController:
+        (MDCFeatureHighlightViewController *)featureHighlightViewController {
   featureHighlightViewController.innerHighlightColor = colorScheme.surfaceColor;
   featureHighlightViewController.outerHighlightColor = colorScheme.primaryColor;
   featureHighlightViewController.titleColor = colorScheme.onPrimaryColor;

@@ -18,11 +18,10 @@
 // This table is to be indexed using the generated enum.
 
 static NSString *const kMaterialBottomNavigationStringTable[] = {
-  @"MaterialBottomNavigationItemCountAccessibilityHint",
-  @"MaterialBottomNavigationTabElementAccessibilityLabel",
+    @"MaterialBottomNavigationItemCountAccessibilityHint",
+    @"MaterialBottomNavigationTabElementAccessibilityLabel",
 };
 #define kNumMaterialBottomNavigationStrings 1
 #define kMaterialBottomNavigationStringsOffset 0
 #define kMaterialBottomNavigationStringsEnd 10000
 static NSString *const kMaterialBottomNavigationStringsTableName = @"MaterialBottomNavigation";
-

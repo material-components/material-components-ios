@@ -14,15 +14,14 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 
 class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Step 1: Create and initialize an App Bar.
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -39,7 +38,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
     // Step 2: Add the headerViewController as a child.
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -49,8 +48,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
     appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
@@ -60,11 +58,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 2: Register the App Bar views.
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
@@ -72,13 +66,13 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return appBarViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 
@@ -92,7 +86,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "App Bar (Swift)"],
       "primaryDemo": false,
@@ -100,7 +94,7 @@ extension AppBarTypicalUseSwiftExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }
@@ -117,13 +111,13 @@ extension AppBarTypicalUseSwiftExample {
   override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
-      if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-      }
-      cell!.layoutMargins = UIEdgeInsets.zero
-      cell!.selectionStyle = .none
-      return cell!
+    
+    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
+        UITableViewCell(style: .default, reuseIdentifier: "cell")
+      cell.layoutMargins = .zero
+      cell.textLabel?.text = "\(indexPath.row)"
+      cell.selectionStyle = .none
+      return cell
   }
 
 }

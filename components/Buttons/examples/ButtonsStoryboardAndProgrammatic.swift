@@ -15,16 +15,20 @@
 import Foundation
 import UIKit
 
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsSwiftAndStoryboardController: UIViewController {
 
   let containedButton = MDCButton()
-  let flatButton = MDCFlatButton()
+  let flatButton = MDCButton()
   let floatingButton = MDCFloatingButton()
 
+  var containerScheme = MDCContainerScheme()
+
   @IBOutlet weak var storyboardContained: MDCButton!
-  @IBOutlet weak var storyboardFlat: MDCFlatButton!
+  @IBOutlet weak var storyboardFlat: MDCButton!
   @IBOutlet weak var storyboardFloating: MDCFloatingButton!
 
   private lazy var containerView: UIView = {
@@ -79,22 +83,27 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
     let floatingPlusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(floatingPlusShapeLayer)
+    floatingButton.applySecondaryTheme(withScheme: containerScheme)
+    floatingButton.accessibilityLabel = "Programmatic floating action button"
     innerContainerView.addSubview(floatingButton)
 
     let storyboardPlusShapeLayer =
       ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
+    storyboardFloating.applySecondaryTheme(withScheme: containerScheme)
+    storyboardFloating.accessibilityLabel = "Storyboard floating action button"
     storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
+
+    storyboardContained.applyContainedTheme(withScheme: containerScheme)
+    storyboardFlat.applyTextTheme(withScheme: containerScheme)
 
     addButtonConstraints()
   }
 
   private func layoutContainer() {
     let viewLayoutGuide: Any = {
-      #if swift(>=3.2)
-        if #available(iOS 11.0, *) {
-          return view.safeAreaLayoutGuide
-        }
-      #endif
+      if #available(iOS 11.0, *) {
+        return view.safeAreaLayoutGuide
+      }
       return view
     }()
     NSLayoutConstraint.activate([
@@ -132,16 +141,14 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   private func buttonSetup() {
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
-    let buttonScheme = MDCButtonScheme()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: storyboardContained)
-
+    containedButton.applyContainedTheme(withScheme: containerScheme)
     containedButton.setTitle("Programmatic", for: .normal)
     containedButton.sizeToFit()
     containedButton.translatesAutoresizingMaskIntoConstraints = false
     containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(containedButton)
 
+    flatButton.applyTextTheme(withScheme: containerScheme)
     flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
     flatButton.sizeToFit()
@@ -204,7 +211,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
 extension ButtonsSwiftAndStoryboardController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (Swift and Storyboard)"],
       "primaryDemo": false,

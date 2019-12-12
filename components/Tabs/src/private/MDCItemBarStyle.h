@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 
 @protocol MDCTabBarIndicatorTemplate;
 
@@ -68,11 +69,20 @@
 /** Font used for unselected item titles. */
 @property(nonatomic, strong, nonnull) UIFont *unselectedTitleFont;
 
+/** Color of the item bar badge. */
+@property(nonatomic, copy, nonnull) UIColor *badgeColor;
+
 /** Style of ink animations on item interaction. */
 @property(nonatomic) MDCInkStyle inkStyle;
 
 /** Color of ink splashes. Default is 25% white. */
 @property(nonatomic, strong, nonnull) UIColor *inkColor;
+
+/** Style of ink animations on item interaction. */
+@property(nonatomic) MDCRippleStyle rippleStyle;
+
+/** Color of ink splashes. Default is 25% white. */
+@property(nonatomic, strong, nonnull) UIColor *rippleColor;
 
 /** Padding in points between the title and image components, according to the MD spec. */
 @property(nonatomic) CGFloat titleImagePadding;
@@ -92,5 +102,13 @@
  Default is YES and is recommended whenever possible.
  */
 @property(nonatomic) BOOL displaysUppercaseTitles;
+
+/*
+ Determines if an @c MDCItemBarStyle should use the @c MDCRippleView behavior or not.
+ By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 @end
