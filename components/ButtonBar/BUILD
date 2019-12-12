@@ -43,6 +43,14 @@ mdc_public_objc_library(
     ],
 )
 
+mdc_extension_objc_library(
+    name = "ColorThemer",
+    deps = [
+        ":ButtonBar",
+        "//components/Themes",
+    ],
+)
+
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
@@ -72,6 +80,7 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":ButtonBar",
+        ":ColorThemer",
         ":private",
     ],
 )

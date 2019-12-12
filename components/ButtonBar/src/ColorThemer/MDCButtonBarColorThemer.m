@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCLibraryInfo.h"
+#import "MDCButtonBarColorThemer.h"
 
-// The current version of the MDC-iOS library. DO NOT EDIT MANUALLY.
-//
-// This string is updated automatically as a part of the release process and should not be edited
-// manually. Do not rename this constant or change the formatting without updating the release
-// scripts.
-static NSString const *MDCLibraryInfoVersionString = @"97.0.0";
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+@implementation MDCButtonBarColorThemer
 
-@implementation MDCLibraryInfo
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                     toButtonBar:(nonnull MDCButtonBar *)buttonBar {
+  buttonBar.backgroundColor = colorScheme.primaryColor;
+  buttonBar.tintColor = colorScheme.onPrimaryColor;
+}
 
-+ (NSString *)versionString {
-  return [MDCLibraryInfoVersionString copy];  // Copy because caller isn't expecting `const`.
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme toButtonBar:(MDCButtonBar *)buttonBar {
+  buttonBar.backgroundColor = colorScheme.primaryColor;
 }
 
 @end
+#pragma clang diagnostic pop
