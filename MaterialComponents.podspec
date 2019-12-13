@@ -578,8 +578,6 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/#{component.base_name}+ColorThemer"
-      unit_tests.dependency "MaterialComponents/#{component.base_name}+ShapeThemer"
     end
   end
 
