@@ -1,3 +1,9 @@
+# 97.0.1
+
+This hotfix patch release fixes the podspec. The previous release forgot to remove deleted references to card themers.
+
+---
+
 # 97.0.0
 
 In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
