@@ -94,6 +94,12 @@
 }
 
 - (void)changeToRTLAndArabic {
+  static UIFont *urduFont;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    urduFont = [UIFont fontWithName:@"NotoNastaliqUrdu" size:12];
+  });
+  self.navigationBar.itemTitleFont = urduFont;
   self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   for (UITabBarItem *item in self.navigationBar.items) {
     item.title = @"ما تنفّس.";
