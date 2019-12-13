@@ -113,12 +113,6 @@
 
   [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
-  static UIFont *urduFont;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    urduFont = [UIFont fontWithName:@"NotoNastaliqUrdu" size:16];
-  });
-  self.bottomNavBar.itemTitleFont = urduFont;
 }
 
 - (void)viewDidLayoutSubviews {
