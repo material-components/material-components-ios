@@ -1,15 +1,28 @@
-# #develop#
+# 98.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
+Cards, List.
+Chips padding were adjusted to fit the latest guidance. Fix issue with unbounded ink.
+NavigationDrawer now allows its trackingScrollView to be resettable.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+### ActionSheet
+
+Delete inkColor and enableRippleBehavior from MDCActionSheetItemTableViewCell
+
+### BottomNavigation
+
+Delete MDCBottomNavigationBarTypographyThemer
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
-## New features
 
-Replace this text with example code for each new feature.
+### List
+
+Deprecate MDCListColorThemer
+Deprecate MDCListTypographyThemer
+
 ## API changes
 
 ## Component changes
