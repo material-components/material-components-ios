@@ -57,6 +57,8 @@
   self.chipView.titleLabel.layer.borderWidth = 1;
   self.chipView.imageView.layer.borderColor = UIColor.orangeColor.CGColor;
   self.chipView.imageView.layer.borderWidth = 1;
+  self.chipView.selectedImageView.layer.borderColor = UIColor.brownColor.CGColor;
+  self.chipView.selectedImageView.layer.borderWidth = 1;
   self.chipView.accessoryView.layer.borderColor = UIColor.greenColor.CGColor;
   self.chipView.accessoryView.layer.borderWidth = 1;
 
@@ -193,7 +195,7 @@
 
 #pragma mark - ImagePadding
 
-- (void)testChipImagePaddingAllPositiveValuesLTR {
+- (void)testUnselectedChipImagePaddingAllPositiveValuesLTR {
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
 
@@ -201,7 +203,63 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingAllPositiveValuesRTL {
+- (void)testUnselectedChipImagePaddingAllPositiveValuesForOnlySelectedImageLTR {
+  // Given
+  self.chipView.imageView.image = nil;
+  self.chipView.selectedImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+
+  // When
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
+- (void)testSelectedChipImagePaddingAllPositiveValuesForOnlySelectedImageLTR {
+  // Given
+  self.chipView.imageView.image = nil;
+  self.chipView.selectedImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+  self.chipView.selected = YES;
+
+  // When
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
+- (void)testUnselectedChipImagePaddingAllPositiveValuesForLargeSelectedImageLTR {
+  // Given
+  self.chipView.selectedImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(32, 32)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+
+  // When
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
+- (void)testSelectedChipImagePaddingAllPositiveValuesForLargeSelectedImageLTR {
+  // Given
+  self.chipView.selectedImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(32, 32)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+  self.chipView.selected = YES;
+
+  // When
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
+- (void)testUnselectedChipImagePaddingAllPositiveValuesRTL {
   // Given
   [self changeToRTL:self.chipView];
 
@@ -212,7 +270,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingAllNegativeValuesLTR {
+- (void)testUnselectedChipImagePaddingAllNegativeValuesLTR {
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(-2, -4, -6, -8);
 
@@ -220,7 +278,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingAllNegativeValuesRTL {
+- (void)testUnselectedChipImagePaddingAllNegativeValuesRTL {
   // Given
   [self changeToRTL:self.chipView];
 
@@ -231,7 +289,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingShiftToLeadingEdgeLTR {
+- (void)testUnselectedChipImagePaddingShiftToLeadingEdgeLTR {
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(0, -20, 0, 20);
 
@@ -239,7 +297,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingShiftToLeadingEdgeRTL {
+- (void)testUnselectedChipImagePaddingShiftToLeadingEdgeRTL {
   // Given
   [self changeToRTL:self.chipView];
 
@@ -250,7 +308,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingShiftToTrailingEdgeLTR {
+- (void)testUnselectedChipImagePaddingShiftToTrailingEdgeLTR {
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(0, 20, 0, -20);
 
@@ -258,7 +316,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingShiftToTrailingEdgeRTL {
+- (void)testUnselectedChipImagePaddingShiftToTrailingEdgeRTL {
   // Given
   [self changeToRTL:self.chipView];
 
@@ -269,7 +327,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingShiftDown {
+- (void)testUnselectedChipImagePaddingShiftDown {
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(20, 0, -20, 0);
 
@@ -277,7 +335,7 @@
   [self generateSnapshotAndVerifyForView:self.chipView];
 }
 
-- (void)testChipImagePaddingShiftUp {
+- (void)testUnselectedChipImagePaddingShiftUp {
   // Given
   [self changeToRTL:self.chipView];
 
