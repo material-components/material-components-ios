@@ -744,10 +744,15 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)titleLabelFrame {
-  // Default to the unselected image, but use the selected image if that's active.
+  // Default to the unselected image, but account for the selected image if it's shown.
   CGRect imageFrame = _imageView.frame;
   if (self.showSelectedImageView) {
-    imageFrame = _selectedImageView.frame;
+    // Both images are present, take the union of their frames.
+    if (self.showImageView) {
+      imageFrame = CGRectUnion(_imageView.frame, _selectedImageView.frame);
+    } else {
+      imageFrame = _selectedImageView.frame;
+    }
   }
   CGRect contentRect = self.contentRect;
   CGFloat maximumTitleWidth = CGRectGetWidth(contentRect) - CGRectGetWidth(imageFrame) -

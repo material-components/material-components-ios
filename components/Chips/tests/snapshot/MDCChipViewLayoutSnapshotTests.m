@@ -43,7 +43,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.chipView = [[MDCChipViewLayoutCustomTraitCollectionFake alloc] init];
   self.chipView.titleLabel.text = @"Chip";
@@ -272,8 +272,8 @@
 - (void)testUnselectedChipImagePaddingAllPositiveValuesForSmallSelectedImageLTR {
   // Given
   self.chipView.selectedImageView.image =
-  [UIImage mdc_testImageOfSize:CGSizeMake(8, 8)
-                     withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+      [UIImage mdc_testImageOfSize:CGSizeMake(8, 8)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
 
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
@@ -285,8 +285,8 @@
 - (void)testSelectedChipImagePaddingAllPositiveValuesForSmallSelectedImageLTR {
   // Given
   self.chipView.selectedImageView.image =
-  [UIImage mdc_testImageOfSize:CGSizeMake(8, 8)
-                     withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+      [UIImage mdc_testImageOfSize:CGSizeMake(8, 8)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
   self.chipView.selected = YES;
 
   // When
