@@ -161,7 +161,6 @@ mdc_unit_test_objc_library(
     ]),
     deps = [
         ":ColorThemer",
-        ":FontThemer",
         ":TabBarView",
         ":Tabs",
         ":Theming",
