@@ -64,7 +64,6 @@ mdc_extension_objc_library(
     deps = [
         ":ColorThemer",
         ":TextFields",
-        ":TypographyThemer",
         "//components/schemes/Container",
     ],
 )
@@ -74,14 +73,6 @@ mdc_extension_objc_library(
     deps = [
         ":TextFields",
         "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":TextFields",
-        "//components/schemes/Typography",
     ],
 )
 
@@ -111,7 +102,6 @@ mdc_unit_test_objc_library(
     deps = [
         ":ColorThemer",
         ":TextFields",
-        ":TypographyThemer",
         ":private",
     ],
 )
