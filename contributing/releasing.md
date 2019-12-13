@@ -262,8 +262,8 @@ release candidate.
 
 ## Consider running `scripts/release notes` again
 
-Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after `## Changes` if
-you
+Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after
+`## Component changes` if you
 
 * cherry picked a change to add it to the release or
 * reverted any commit to rollback any PR.
