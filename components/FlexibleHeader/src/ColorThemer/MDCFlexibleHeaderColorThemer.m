@@ -14,7 +14,10 @@
 
 #import "MDCFlexibleHeaderColorThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCFlexibleHeaderColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
             toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView {
