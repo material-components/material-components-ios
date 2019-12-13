@@ -191,4 +191,24 @@
 #endif
 }
 
+- (void)testIntrinsicHeight {
+  // Given
+  self.appBar.translatesAutoresizingMaskIntoConstraints = NO;
+  UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+  containerView.backgroundColor = [UIColor whiteColor];
+  [containerView addSubview:self.appBar];
+
+  [NSLayoutConstraint activateConstraints:@[
+    [self.appBar.leadingAnchor constraintEqualToAnchor:containerView.leadingAnchor],
+    [self.appBar.trailingAnchor constraintEqualToAnchor:containerView.trailingAnchor],
+    [self.appBar.bottomAnchor constraintEqualToAnchor:containerView.bottomAnchor],
+  ]];
+
+  // When
+  [containerView layoutIfNeeded];
+
+  // Then
+  [self snapshotVerifyView:containerView];
+}
+
 @end
