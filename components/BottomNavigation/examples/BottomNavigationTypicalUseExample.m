@@ -45,10 +45,10 @@
   self.bottomNavBar.delegate = self;
   [self.view addSubview:self.bottomNavBar];
 
-  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"ما تنفّس."
+  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
                                                             image:[UIImage imageNamed:@"Home"]
                                                               tag:0];
-  UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"أورا"
+  UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
                                                             image:[UIImage imageNamed:@"Email"]
                                                               tag:0];
   tabBarItem2.badgeValue = @"8";
