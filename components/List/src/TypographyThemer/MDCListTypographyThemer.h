@@ -24,10 +24,9 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCListTypographyThemer : NSObject
-@end
-
-@interface MDCListTypographyThemer (ToBeDeprecated)
+__deprecated_msg("Please use MDCSelfSizingStereoCell+MaterialTheming instead. (Note: Typography "
+                 "theming is no longer available as an independent API.)")
+    @interface MDCListTypographyThemer : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCSelfSizingStereoCell.
