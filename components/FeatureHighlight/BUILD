@@ -63,14 +63,6 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":FeatureHighlight",
-        "//components/schemes/Typography",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "FeatureHighlightAccessibilityMutator",
     deps = [
         ":FeatureHighlight",
@@ -123,7 +115,6 @@ mdc_unit_test_objc_library(
         ":ColorThemer",
         ":FeatureHighlight",
         ":FeatureHighlightAccessibilityMutator",
-        ":TypographyThemer",
         ":private",
     ],
 )
