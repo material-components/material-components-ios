@@ -14,7 +14,7 @@
 
 #import "MDCSelfSizingStereoCell+MaterialTheming.h"
 
-#import "MaterialList+TypographyThemer.h"
+#import "MaterialTypography.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kInkAlpha = (CGFloat)0.16;
@@ -49,7 +49,16 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:self];
+  UIFont *titleFont = typographyScheme.subtitle1;
+  UIFont *detailFont = typographyScheme.body2;
+
+  if (typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
+    titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
+    detailFont = [detailFont mdc_scaledFontForTraitEnvironment:self];
+  }
+
+  self.titleLabel.font = titleFont;
+  self.detailLabel.font = detailFont;
 }
 
 @end

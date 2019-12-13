@@ -1,3 +1,271 @@
+# 97.0.0
+
+In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
+ButtonBar, Cards, Feature highlight, Ink, Page control, Snackbar, TextField, and Tabs. We also
+fixed Chip padding for Material theming. 
+
+## Breaking changes
+
+### ActionSheet
+
+Delete inkColor and enableRippleBehavior properties.
+
+### BottomNavigation
+
+Delete MDCBottomNavigationBarColorThemer
+
+### Cards
+
+Delete MDCCardsColorThemer
+Delete MDCCardsShapeThemer
+
+### FeatureHighlight
+
+Delete MDCFeatureHighlightFontThemer
+
+### Ink
+
+Delete MDCInkColorThemer
+
+### List
+
+Delete MDCListThemer
+
+### PageControl
+
+Delete MDCPageControlColorThemer
+
+### ProgressView
+
+Delete MDCProgressViewColorThemer
+
+### Snackbar
+
+Delete MDCSnackbarColorThemer
+
+### Tabs
+
+Delete MDCTabBarFontThemer
+
+### TextFields
+
+Delete MDCTextFieldFontThemer
+
+## New deprecations
+
+### Buttons
+
+Deprecate MDCButtonColorThemer
+Deprecate MDCFloatingActionButtonThemer
+Deprecate MDCTextButtonThemer
+Deprecating MDCButtonScheme
+Deprecating MDCButtonShapeThemer
+Deprecating MDCButtonTypographyThemer
+Deprecating MDCContainedButtonThemer
+Deprecating MDCOutlinedButtonThemer
+
+### Cards
+
+Delete Themer classes
+
+### FeatureHighlight
+
+Deprecate MDCFeatureHighlightTypographyThemer
+
+### NavigationDrawer
+
+Deprecate MDCBottomDrawerColorTHemer
+
+### TextFields
+
+Deprecate MDCTextFieldTypographyThemer
+Deprecate MDCOutlinedTextFieldColorThemer
+
+## API changes
+
+### ActionSheet
+
+*removed* property: `inkColor` in `MDCActionSheetController`. Use rippleColor instead.
+
+*removed* property: `enableRippleBehavior` in `MDCActionSheetController`. Use ripple.
+
+#### Navigation Bar
+
+*removed* class: MDCBottomNavigationBarColorThemer. Use MaterialBottomNavigation+Theming instead.
+
+#### Buttons
+
+*deprecated* protocol: `MDCButtonScheming`. Please use MDCContainerScheming.
+
+*deprecated* class: `MDCButtonScheme`. Please use MDCContainerScheming.
+
+*deprecated* class: `MDCContainedButtonThemer`. Please use MDCButton:applyContainedThemeWithScheme: instead.
+
+*deprecated* class: `MDCFloatingActionButtonThemer`. Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead.
+
+*deprecated* class: `MDCOutlinedButtonThemer`. Please use MDCButton:applyOutlinedThemeWithScheme: instead.
+
+*deprecated* class: `MDCTextButtonThemer`. Please use MDCButton:applyTextThemeWithScheme: instead.
+
+*deprecated* class: `MDCButtonColorThemer`. Please use the MDCButton+MaterialTheming API instead.
+
+*deprecated* class: `MDCButtonShapeThemer`. Please use MDCButton+MaterialTheming instead. (Note: Shape theming is no longer available as an independent API.).
+
+*deprecated* class: `MDCButtonTypographyThemer`. Please use MDCButton+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.).
+			
+#### Cards
+
+*removed* protocol: `MDCCardScheming`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
+
+*removed* class: `MDCCardScheme`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
+
+*removed* class: `MDCCardThemer`. Please use MaterialCards+Theming instead.
+
+*removed* class: `MDCCardsColorThemer`. Please use MaterialCards+Theming instead.
+*removed* class: `MDCCardsShapeThemer`. Please use MaterialCards+Theming instead.
+
+#### FeatureHighlight
+
+*removed* class: `MDCFeatureHighlightFontThemer`. No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+*deprecated* class: `MDCFeatureHighlightTypographyThemer`. No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+### Ink
+
+*removed* class: `MDCInkColorThemer`. Please use Ripple instead.
+
+### List
+
+*removed* class: `MDCListScheming`. Please use MDCContainerScheme APIs.
+*removed* class: `MDCListScheme`. Please use MDCContainerScheme APIs.
+*removed* class: `MDCListThemer`. Please use MDCContainerScheme APIs.
+
+### BottomDrawer
+
+*deprecated* class: `MDCBottomDrawerColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+#### Page Control
+
+*removed* class: `MDCPageControlColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+#### ProgressView
+
+*removed* class: `MDCProgressViewColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
+
+
+#### Snackbar
+
+*removed* class: `MDCSnackbarColorThemer`.  Please use the Theming extension instead.
+
+#### Tab Bar
+
+*removed* class: MDCTabBarFontThemer. Please use the theming extension instead.
+
+#### TextField
+
+*deprecated* class: `MDCOutlinedTextFieldColorThemer`. Please use the Theming extension on MDCTextInputControllerOutlined instead.
+
+*removed* class: `MDCTextFieldFontThemer`. Please use the Theming extension, or MDCTextControls and their theming extensions instead.
+
+*deprecated* class: `MDCTextFieldTypographyThemer`. Please use MDCTextInputControllerFilled+MaterialTheming.h or MDCTextInputControllerOutlined+MaterialTheming.h instead.
+
+#### Thumb Track
+
+*removed* property: `thumbMaxRippleRadius` in `MDCThumbTrack`. Opt-in to Ripple by setting enableRippleBehavior to YES, and then use thumbRippleMaximumRadius instead. Learn more at https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Delete inkColor and enableRippleBehavior properties (#9238)](https://github.com/material-components/material-components-ios/commit/4d945c06b144c0406520d218e76588a59cadb782) (Bryan Oltman)
+* [Remove equality check when setting rippleColor to prevent crashes stemming from CIColor (#9237)](https://github.com/material-components/material-components-ios/commit/30df338682e1abd7d3e547ca59844d9ea4ff1b19) (Bryan Oltman)
+
+### Banner
+
+* [Fix height when no action button shows. (#9218)](https://github.com/material-components/material-components-ios/commit/95c9b0bb8c62826a83a973be4404282bc1a53931) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Delete MDCBottomNavigationBarColorThemer (#9198)](https://github.com/material-components/material-components-ios/commit/1ae1e4cbbb437199d260f85d4dd0929b4dfe6ca5) (Bryan Oltman)
+
+### Buttons
+
+* [Deprecate MDCButtonColorThemer (#9179)](https://github.com/material-components/material-components-ios/commit/615eafc7dedb4de6d651277ef162f2cfa1f4c3b7) (Galia Kaufman)
+* [Deprecate MDCFloatingActionButtonThemer (#9183)](https://github.com/material-components/material-components-ios/commit/8ac2b48023f29ee9c13d5a8c81651b76151bd168) (Galia Kaufman)
+* [Deprecate MDCTextButtonThemer (#9182)](https://github.com/material-components/material-components-ios/commit/9c52d3f51958ff6c191a0a05fb02dc335a0a524c) (Galia Kaufman)
+* [Deprecating MDCButtonScheme (#9186)](https://github.com/material-components/material-components-ios/commit/770509b00ea117bad845d4872c43c784e524ac5d) (Galia Kaufman)
+* [Deprecating MDCButtonShapeThemer (#9184)](https://github.com/material-components/material-components-ios/commit/f3c2e944564dfc2924f297b9e0d09f8f09a84c63) (Galia Kaufman)
+* [Deprecating MDCButtonTypographyThemer (#9185)](https://github.com/material-components/material-components-ios/commit/8ca168b8eb231bd5f1ed4db752a2afe45df2732d) (Galia Kaufman)
+* [Deprecating MDCContainedButtonThemer (#9180)](https://github.com/material-components/material-components-ios/commit/26f40643b4179ba09775cff5e7fa3371c4dd639f) (Galia Kaufman)
+* [Deprecating MDCOutlinedButtonThemer (#9181)](https://github.com/material-components/material-components-ios/commit/435d573df41f084a71486e55d668a2797fcf1840) (Galia Kaufman)
+
+### Chips
+
+* [Fix padding for Material theming. (#9193)](https://github.com/material-components/material-components-ios/commit/06a4713d557dd55abd49525fba00f86d768ea53a) (Robert Moore)
+
+### Dialogs
+
+* [Limit Action Button width (#9143)](https://github.com/material-components/material-components-ios/commit/87d9b7ad7523f31353366cb1159e9c35e64d6135) (Bambara@)
+
+### FeatureHighlight
+
+* [Delete MDCFeatureHighlightFontThemer (#9230)](https://github.com/material-components/material-components-ios/commit/ad9631c0f771bcb5ccb3b153054abf1848d944b6) (Andrew Overton)
+* [Deprecate MDCFeatureHighlightTypographyThemer (#9225)](https://github.com/material-components/material-components-ios/commit/1920dd687859b517a3d22d0f1ef473f5f8fa5187) (Andrew Overton)
+* [Don't use MDCFeatureHighlightTypographyThemer in examples (#9224)](https://github.com/material-components/material-components-ios/commit/0f9e889b7d15348f14079a2b0ed2ca673e6f1ffc) (Andrew Overton)
+
+### Ink
+
+* [Remove MDCInkColorThemer (#9228)](https://github.com/material-components/material-components-ios/commit/388fea7ebe0813b907a4b4cf74772318047e837b) (Andrew Overton)
+
+### List
+
+* [Removing MDCListThemer (#9187)](https://github.com/material-components/material-components-ios/commit/36f6a30fa6530a141c25d5e4522b2428d4e473b2) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Deprecate MDCBottomDrawerColorTHemer (#9205)](https://github.com/material-components/material-components-ios/commit/e3603e4bfaa431710449f35040f778ca2ba7be08) (Andrew Overton)
+* [Don't use MDCBottomDrawerColorThemer (#9204)](https://github.com/material-components/material-components-ios/commit/ab8c10bfdf57b6ae226ffe6aa6a7bbe825871ddc) (Andrew Overton)
+
+### PageControl
+
+* [Delete MDCPageControlColorThemer (#9202)](https://github.com/material-components/material-components-ios/commit/f30baf3330ba5d4aac79811b3906da64a3af6989) (Andrew Overton)
+
+### ProgressView
+
+* [Delete MDCProgressViewColorThemer (#9231)](https://github.com/material-components/material-components-ios/commit/b47266325e6ed1fdffd3094bc7133bb6fe4024a6) (Andrew Overton)
+* [Deprecate MDCProgressViewColorThemer (#9203)](https://github.com/material-components/material-components-ios/commit/c0fc20cce933f9a208407367bb215c7f5df8af33) (Andrew Overton)
+
+### Snackbar
+
+* [Delete MDCSnackbarColorThemer (#9227)](https://github.com/material-components/material-components-ios/commit/04de6086a913577ce3dd780ef3f9a2295e121740) (Andrew Overton)
+
+### Tabs
+
+* [Delete MDCTabBarFontThemer (#9201)](https://github.com/material-components/material-components-ios/commit/da280903ddbec822d497f8a97cd9a8093f50029c) (Andrew Overton)
+* [Fix examples. (#9233)](https://github.com/material-components/material-components-ios/commit/1606c38d208e295610c32d22dd334a8d7369c21e) (Robert Moore)
+
+### TextFields
+
+* [Delete MDCTextFieldFontThemer (#9226)](https://github.com/material-components/material-components-ios/commit/df1ac34ea1bc1859a31cd81a65106a85f2d46e45) (Andrew Overton)
+* [Deprecate MDCTypographyThemer (#9175)](https://github.com/material-components/material-components-ios/commit/4b450aecc3241c70580b8e2a10b5759c75d7a84c) (Andrew Overton)
+* [Don't use MDCTextFieldTypographyThemer (#9170)](https://github.com/material-components/material-components-ios/commit/4c75e862d4d4bdc5f0132e21a8ce2b847ce02b56) (Andrew Overton)
+* [Remove MDCTextFieldTypographyThemer from snapshot tests (#9196)](https://github.com/material-components/material-components-ios/commit/40afee6e0d4398bd27ca6b070e07dfdbe294cee7) (Andrew Overton)
+* [Remove usage of MDCOutlinedTextFieldColorThemer (#9214)](https://github.com/material-components/material-components-ios/commit/cd7172a36a6b140373f58c48d393907b2556aefd) (Andrew Overton)
+* [Update MDCTextInputControllerOutlined theming extension to not use color themer (#9223)](https://github.com/material-components/material-components-ios/commit/63a7c6f3f6a4a8b23994b3ea148b4bcc4d974a5f) (Andrew Overton)
+* [deprecate-MDCOutlinedTextFieldColorThemer (#9215)](https://github.com/material-components/material-components-ios/commit/747844b4bbc31b97d4ca0b1072013c9bd10e7ad8) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [delete-thumbMaxRippleRadius (#9232)](https://github.com/material-components/material-components-ios/commit/97ec4c4348adc0957ed6f86554958c5841b9a0d5) (Andrew Overton)
+
+## Multi-component changes
+
+* [Delete Themer classes (#9197)](https://github.com/material-components/material-components-ios/commit/f44e5d679d78c01957677ee04c0471c57f0cad4b) (Bryan Oltman)
+* [Fix container scheme properties. (#9192)](https://github.com/material-components/material-components-ios/commit/8eb7296dab22080c399e9476af4c047db9b37d01) (Robert Moore)
+
+---
+
 # 96.0.0
 
 In this major release we deleted and deprecated a bunch of APIs in BottomAppBar, Snackbar,
