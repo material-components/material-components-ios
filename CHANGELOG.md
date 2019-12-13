@@ -17,14 +17,24 @@ Delete MDCBottomNavigationBarTypographyThemer
 
 ## New deprecations
 
-
 ### List
 
 Deprecate MDCListColorThemer
+
 Deprecate MDCListTypographyThemer
 
 ## API changes
 
+### BottomNavigation
+
+*removed* class: `MDCBottomNavigationBarTypographyThemer`. Please use the Theming extension instead.
+
+### List
+
+*deprecated* class: `MDCListColorThemer`. Please use MaterialList+Theming instead.
+
+*deprecated* class: `MDCListTypographyThemer`. Please use MDCSelfSizingStereoCell+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.
+	
 ## Component changes
 
 ### ActionSheet
