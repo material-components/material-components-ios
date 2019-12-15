@@ -65,7 +65,7 @@ static NSString *const kOfAnnouncement = @"of";
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
 
 /**
- * The last large content viewer item displayed by the content viewer  while the interaction is
+ * The last large content viewer item displayed by the content viewer while the interaction is
  * running. When the interaction ends this property is nil.
  */
 @property(nonatomic, nullable) id<UILargeContentViewerItem> lastLargeContentViewerItem
@@ -419,7 +419,6 @@ static NSString *const kOfAnnouncement = @"of";
     }
 
     MDCBottomNavigationItemView *itemView = _itemViews[itemIndex];
-    //    UITabBarItem *item = self.items[itemIndex];
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(badgeColor))]) {
       itemView.badgeColor = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityValue))]) {
@@ -490,7 +489,7 @@ static NSString *const kOfAnnouncement = @"of";
   return nil;
 }
 
-/** Returns the item view at the given point. */
+/** Returns the item view at the given point. Nil if there is no view at the given point. */
 - (MDCBottomNavigationItemView *_Nullable)itemViewForPoint:(CGPoint)point {
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
