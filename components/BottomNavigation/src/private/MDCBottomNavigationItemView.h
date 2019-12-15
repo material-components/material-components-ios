@@ -57,4 +57,17 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 
+#pragma mark - UILargeContentViewerItem
+
+/**
+ * The title to display in the large content viewer. If set to nil, this property will return @c
+ * title .  In addition if the receiver has a non-nil badge value, the return string will contain
+ * the badge value.
+ */
+@property(nonatomic, copy, nullable) NSString *largeContentTitle NS_AVAILABLE_IOS(13_0);
+
+/** The image to display in the large content viwer.  If set to nil, the property will return @c
+ * image . */
+@property(nonatomic, nullable) UIImage *largeContentImage NS_AVAILABLE_IOS(13_0);
+
 @end

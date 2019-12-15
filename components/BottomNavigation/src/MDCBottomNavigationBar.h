@@ -58,7 +58,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  can be selected at at time. The selected item's title text is displayed. Title text for unselected
  items are hidden.
  */
-@interface MDCBottomNavigationBar : UIView <MDCElevatable, MDCElevationOverriding>
+@interface MDCBottomNavigationBar
+    : UIView <MDCElevatable, MDCElevationOverriding, UILargeContentViewerInteractionDelegate>
 
 /** The bottom navigation bar delegate. */
 @property(nonatomic, weak, nullable) id<MDCBottomNavigationBarDelegate> delegate;

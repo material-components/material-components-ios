@@ -11,3 +11,8 @@
  @see https://material.io/go/design-bottom-navigation
  */
 "MaterialBottomNavigationTabElementAccessibilityLabel" = "tab";
+
+/*
+ The format of the text displayed within the large content viewer if the tab item has a badge value.
+ */
+"MaterialBottomNavigationLargeContentTitleFormatWithBadge" = "%1$@ (%2$@)";

@@ -641,4 +641,34 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
+#pragma mark - UILargeContentViewerItem
+
+- (BOOL)showsLargeContentViewer {
+  return YES;
+}
+
+- (NSString *)largeContentTitle {
+  if (_largeContentTitle) {
+    return _largeContentTitle;
+  }
+
+  if (self.badgeValue.length > 0) {
+    NSString *key = kMaterialBottomNavigationStringTable
+        [kStr_MaterialBottomNavigationLargeContentTitleFormatWithBadge];
+    NSString *titleFormat = NSLocalizedStringFromTableInBundle(
+        key, kMaterialBottomNavigationStringsTableName, [[self class] bundle], nil);
+    return [NSString stringWithFormat:titleFormat, self.title, self.badgeValue];
+  }
+
+  return self.title;
+}
+
+- (UIImage *)largeContentImage {
+  if (_largeContentImage) {
+    return _largeContentImage;
+  }
+
+  return self.image;
+}
+
 @end
