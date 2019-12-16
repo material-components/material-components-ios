@@ -36,10 +36,9 @@ Below is an example:
 
 - [Typical use](typical-use.md)
 
-## Extensions
+## Theming
 
-- [Color Theming](color-theming.md)
-- [Typography Theming](typography-theming.md)
+- [Theming](theming.md)
 
 - [Accessibility](accessibility.md)
 

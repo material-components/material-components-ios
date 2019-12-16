@@ -50,9 +50,8 @@ Below is an example:
   - [Importing](#importing)
 - [Usage](#usage)
   - [Typical use](#typical-use)
-- [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+- [Theming](#theming)
+  - [List Item Theming](#list-item-theming)
 - [Accessibility](#accessibility)
   - [Setting `-isAccessibilityElement`](#setting-`-isaccessibilityelement`)
 - [How to implement your own List Cell](#how-to-implement-your-own-list-cell)
@@ -137,86 +136,47 @@ MDCBaseCell *cell =
 <!--</div>-->
 
 
-## Extensions
+## Theming
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Color Theming
+### List Item Theming
 
-You can theme a List Item with your app's color scheme using the ColorThemer extension.
+You can theme a List Item with your app's shared scheme using the MaterialKist Theming extension.
 
-You must first add the Color Themer extension to your project:
+You must first add the Theming extension to your project:
 
 ```bash
-pod `MaterialComponents/List+ColorThemer`
+pod `MaterialComponents/List+Theming`
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialList_ColorThemer
+// Step 1: Import the theming extension
+import MaterialComponents.MaterialList_Theming
 
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
+// Step 2: Create a shared container scheme. A shared scheme should be created once in your app so
+//         it can be shared with all components.
+let containerScheme = MDCContainerScheme()
 
-// Step 3: Apply the color scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-MDCListColorThemer.applySemanticColorScheme(colorScheme, to: cell)
+// Step 3: Apply the scheme to each cell - from within `collectionView(_:cellForItemAt:)`
+cell.applyTheme(withScheme:containerScheme)
 ```
 
 #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialList+ColorThemer.h"
+// Step 1: Import the theming extension
+#import "MaterialList+Theming.h"
 
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSematnicColorScheme alloc] init];
+// Step 2: Create a shared container scheme. A shared scheme should be created once in your app so
+//         it can be shared with all components.
+id<MDCContainerScheming> containerScheme = [[MDCContainerScheme alloc] init];
 
-// Step 3: Apply the color scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-[MDCListColorThemer applySemanticColorScheme:colorScheme
-                                  toBaseCell:cell];
-```
-<!--</div>-->
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-You can theme a List Item cell with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod `MaterialComponents/List+TypographyThemer`
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialList_TypographyThemer
-
-// Step 2: Create or get a color scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-MDCListTypographyThemer.applyTypographyScheme(typographyScheme, to: cell)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the Typography extension
-#import "MaterialList+TypographyThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-[MDCListTypographyThemer applyTypographyScheme:self.typographyScheme
-                                    toBaseCell:cell];
+// Step 3: Apply the scheme to each cell - from within `-collectionView:cellForItemAtIndexPath:`
+[cell applyThemeWithScheme:containerScheme];
 ```
 <!--</div>-->
 
