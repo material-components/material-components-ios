@@ -47,15 +47,6 @@ mdc_public_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":List",
-        "//components/Typography",
-        "//components/schemes/Typography",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":List",
@@ -69,7 +60,6 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":List",
-        ":TypographyThemer",
         "//components/Typography",
         "//components/schemes/Typography",
     ],
@@ -82,7 +72,6 @@ mdc_unit_test_swift_library(
     ]),
     deps = [
         ":List",
-        ":TypographyThemer",
         ":Theming",
     ],
 )
