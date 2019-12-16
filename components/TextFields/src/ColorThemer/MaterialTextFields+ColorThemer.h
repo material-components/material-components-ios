@@ -13,4 +13,3 @@
 // limitations under the License.
 
 #import "MDCFilledTextFieldColorThemer.h"
-#import "MDCOutlinedTextFieldColorThemer.h"
