@@ -223,7 +223,7 @@ and the outlined theme.
 
  <!--<div class="material-code-render" markdown="1">-->
 
- #### Swift
+#### Swift
 
 ```swift
 // Import the Cards Theming Extensions module
@@ -237,7 +237,7 @@ card.applyTheme(withScheme: containerScheme)
 card.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
- #### Objective-C
+#### Objective-C
 
 ```objc
 // Import the Cards Theming Extensions header
