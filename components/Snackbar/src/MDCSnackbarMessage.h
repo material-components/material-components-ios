@@ -112,6 +112,7 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 
  Defaults to 4 seconds and can be set up to the maximum duration defined by
  @c MDCSnackbarMessageDurationMax. Any value set above this limit will use the maximum duration.
+ @note If duration is set to 0 or less, the Snackbar will remain on screen and not dismiss automatically.
  */
 @property(nonatomic, assign) NSTimeInterval duration;
 
