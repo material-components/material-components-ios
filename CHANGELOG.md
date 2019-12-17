@@ -33,8 +33,8 @@ Deprecate MDCListTypographyThemer
 
 *deprecated* class: `MDCListColorThemer`. Please use MaterialList+Theming instead.
 
-*deprecated* class: `MDCListTypographyThemer`. Please use MDCSelfSizingStereoCell+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.
-	
+*deprecated* class: `MDCListTypographyThemer`. Please use MDCSelfSizingStereoCell+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.)
+
 ## Component changes
 
 ### ActionSheet
