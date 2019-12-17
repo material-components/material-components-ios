@@ -518,10 +518,9 @@
 
 - (void)testMessageStaysWhenDurationIsZero {
   // Given
-  self.message.duration = 0.1;
+  self.message.duration = 0;
 
   // When
-  self.message.duration = 0;
   [self.manager showMessage:self.message];
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
   dispatch_time_t popTime =
@@ -532,7 +531,7 @@
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
+  XCTAssertNotNil(self.manager.internalManager.currentSnackbar);
 }
 
 @end
