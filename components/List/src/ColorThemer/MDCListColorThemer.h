@@ -24,10 +24,8 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCListColorThemer : NSObject
-@end
-
-@interface MDCListColorThemer (ToBeDeprecated)
+__deprecated_msg("Please use MaterialList+Theming instead.") @interface MDCListColorThemer
+    : NSObject
 
 /**
  Applies a color scheme's properties to an MDCSelfSizingStereoCell
@@ -40,7 +38,8 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-          toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell;
+          toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell
+    __deprecated_msg("Please use the MDCSelfSizingStereoCell:applyThemeWithScheme: API instead.");
 
 /**
  Applies a color scheme's properties to an MDCBaseCell
@@ -52,6 +51,8 @@
  Track progress here: https://github.com/material-components/material-components-ios/issues/7172
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell;
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+                      toBaseCell:(MDCBaseCell *)cell
+    __deprecated_msg("Please use the MDCBaseCell:applyThemeWithScheme: API instead.");
 
 @end

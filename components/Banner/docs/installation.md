@@ -15,13 +15,13 @@ pod install
 
 ### Importing
 
-To use the `MDCBannerView` in your code, import the MaterialBanner umbrella header (Objective-C) or MaterialComponentsBeta module (Swift).
+To use the `MDCBannerView` in your code, import the MaterialBanner umbrella header (Objective-C) or MaterialComponents module (Swift).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-import MaterialComponentsBeta.MaterialBanner
+import MaterialComponents.MaterialBanner
 ```
 
 #### Objective-C

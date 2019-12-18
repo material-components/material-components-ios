@@ -324,7 +324,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
-  cell.enableRippleBehavior = YES;
   cell.rippleColor = self.rippleColor;
   cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;

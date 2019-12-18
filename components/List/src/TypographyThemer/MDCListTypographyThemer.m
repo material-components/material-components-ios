@@ -15,7 +15,10 @@
 #import "MDCListTypographyThemer.h"
 #import "MaterialTypography.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCListTypographyThemer
+#pragma clang diagnostic pop
 
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
        toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell {

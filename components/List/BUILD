@@ -67,8 +67,8 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":List",
-        ":ColorThemer",
-        ":TypographyThemer",
+        "//components/Typography",
+        "//components/schemes/Color",
         "//components/schemes/Container",
     ],
 )

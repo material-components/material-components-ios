@@ -1054,4 +1054,18 @@
                                     UIColor.redColor.CGColor));
 }
 
+- (void)testSettingTrackingScrollViewAfterInit {
+  // Given
+  [self.presentationController presentationTransitionWillBegin];
+  UIScrollView *newTrackingScrollView = [[UIScrollView alloc] init];
+
+  // When
+  self.presentationController.trackingScrollView = newTrackingScrollView;
+
+  // Then
+  MDCBottomDrawerContainerViewController *drawerContainer =
+      self.presentationController.bottomDrawerContainerViewController;
+  XCTAssertEqualObjects(drawerContainer.trackingScrollView, newTrackingScrollView);
+}
+
 @end

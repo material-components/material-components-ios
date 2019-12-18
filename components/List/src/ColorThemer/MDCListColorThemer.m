@@ -17,7 +17,10 @@
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kInkAlpha = (CGFloat)0.16;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCListColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
           toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell {

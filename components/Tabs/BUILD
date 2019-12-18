@@ -126,6 +126,7 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
+        ":TabBarView",
         ":Tabs",
         ":Theming",
         "//components/AppBar",
@@ -135,6 +136,7 @@ mdc_examples_swift_library(
         "//components/Buttons:ButtonThemer",
         "//components/Palettes",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
@@ -159,7 +161,6 @@ mdc_unit_test_objc_library(
     ]),
     deps = [
         ":ColorThemer",
-        ":FontThemer",
         ":TabBarView",
         ":Tabs",
         ":Theming",

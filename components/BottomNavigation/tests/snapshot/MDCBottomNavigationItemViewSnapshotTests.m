@@ -75,6 +75,12 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
 }
 
 - (void)changeToRTLAndArabicWithBadgeValue:(NSString *)badgeValue {
+  static UIFont *urduFont;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    urduFont = [UIFont fontWithName:@"NotoNastaliqUrdu" size:12];
+  });
+  self.itemView.itemTitleFont = urduFont;
   self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   self.itemView.title = MDCBottomNavigationTestLongTitleArabic;
   self.itemView.badgeValue = badgeValue;
