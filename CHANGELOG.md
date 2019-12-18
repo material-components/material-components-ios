@@ -2,8 +2,7 @@
 
 In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
 Cards, List.
-Chips padding were adjusted to fit the latest guidance. Fix issue with unbounded ink.
-NavigationDrawer now allows its trackingScrollView to be resettable.
+Fix issue with unbounded ink. NavigationDrawer now allows its trackingScrollView to be resettable.
 
 ## Breaking changes
 
@@ -53,13 +52,6 @@ Deprecate MDCListTypographyThemer
 ### Cards
 
 * [Remove references to Themer from README (#9261)](https://github.com/material-components/material-components-ios/commit/08a2b20d70079342f0556dc55bdd52b4aa6b8dcc) (Bryan Oltman)
-
-### Chips
-
-* [Add snapshot tests for selectedImage layout. (#9266)](https://github.com/material-components/material-components-ios/commit/c9cc0f1a6bf7dc9e92b758e7783e48606ee9b1b7) (Robert Moore)
-* [Fix `contentPadding` API. (#9264)](https://github.com/material-components/material-components-ios/commit/0f603de7010ec2c444c265ac54c2cc465cbeeb10) (Robert Moore)
-* [Fix `imagePadding` behavior. (#9267)](https://github.com/material-components/material-components-ios/commit/7a5cc0f17a114a3dfa1301048d6410ce89d0a317) (Robert Moore)
-* [Tests to evaluate `padding` APIs. (#9252)](https://github.com/material-components/material-components-ios/commit/2bd1b89c88d505fadbe45f7a0c21534802e8c2d0) (Robert Moore)
 
 ### Ink
 
