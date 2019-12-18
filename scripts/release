@@ -130,18 +130,18 @@ cut_release() {
     echo "    Your local develop branch is ahead of origin/develop."
     echo "    Refusing to continue until you've landed your local changes into origin/develop."
     echo
-    exit 1 # TODO: Revert this line so we bail out.
+    exit 1
   fi
 
   if $isHotFix; then
-    branch=origin/stable
-    branch_message="This is a hotfix... branching off $branch"
+    echo "This is a hotfix... branching off origin/stable and awaiting cherry-picks."
+    git checkout -b release-candidate origin/stable
   else
-    branch=origin/develop
-    branch_message="This is a normal release... branching off $branch"
+    echo "This is a normal release... branching off origin/stable and merging origin/develop"
+    git checkout -b release-candidate origin/stable
+    git merge --no-ff origin/develop --no-edit
   fi
-  echo $branch_message
-  git checkout -b release-candidate $branch
+
   git checkout origin/stable -- .gitattributes
 
   touch "$rootdir/CHANGELOG.md"
