@@ -1,4 +1,4 @@
-### List Item Theming
+## Theming
 
 You can theme a List Item with your app's shared scheme using the MaterialKist Theming extension.
 

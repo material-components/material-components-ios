@@ -36,8 +36,6 @@ Below is an example:
 
 - [Typical use](typical-use.md)
 
-## Theming
-
 - [Theming](theming.md)
 
 - [Accessibility](accessibility.md)

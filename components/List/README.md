@@ -51,7 +51,6 @@ Below is an example:
 - [Usage](#usage)
   - [Typical use](#typical-use)
 - [Theming](#theming)
-  - [List Item Theming](#list-item-theming)
 - [Accessibility](#accessibility)
   - [Setting `-isAccessibilityElement`](#setting-`-isaccessibilityelement`)
 - [How to implement your own List Cell](#how-to-implement-your-own-list-cell)
@@ -136,11 +135,9 @@ MDCBaseCell *cell =
 <!--</div>-->
 
 
-## Theming
-
 <!-- Extracted from docs/theming.md -->
 
-### List Item Theming
+## Theming
 
 You can theme a List Item with your app's shared scheme using the MaterialKist Theming extension.
 
@@ -157,8 +154,8 @@ pod `MaterialComponents/List+Theming`
 // Step 1: Import the theming extension
 import MaterialComponents.MaterialList_Theming
 
-// Step 2: Create a shared container scheme. A shared scheme should be created once in your app so
-//         it can be shared with all components.
+// Step 2: Create a shared container scheme. A shared scheme should be created once in your app and
+// shared with all components.
 let containerScheme = MDCContainerScheme()
 
 // Step 3: Apply the scheme to each cell - from within `collectionView(_:cellForItemAt:)`
@@ -171,8 +168,8 @@ cell.applyTheme(withScheme:containerScheme)
 // Step 1: Import the theming extension
 #import "MaterialList+Theming.h"
 
-// Step 2: Create a shared container scheme. A shared scheme should be created once in your app so
-//         it can be shared with all components.
+// Step 2: Create a shared container scheme. A shared scheme should be created once in your app and
+// shared with all components.
 id<MDCContainerScheming> containerScheme = [[MDCContainerScheme alloc] init];
 
 // Step 3: Apply the scheme to each cell - from within `-collectionView:cellForItemAtIndexPath:`
