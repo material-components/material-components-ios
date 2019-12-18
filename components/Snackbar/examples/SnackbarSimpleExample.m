@@ -37,7 +37,7 @@
   [self setupExampleViews:@[
     @"Simple Snackbar", @"Snackbar with Action Button", @"Snackbar with Long Text",
     @"Attributed Text Example", @"Color Themed Snackbar", @"Customize Font Example",
-    @"De-Customize Example", @"Customized Message Using Block"
+    @"De-Customize Example", @"Customized Message Using Block", @"Non Transient Snackbar",
   ]];
   self.title = @"Snackbar";
   _legacyMode = YES;
@@ -190,6 +190,14 @@
   [MDCSnackbarManager showMessage:message];
 }
 
+- (void)showNonTransientSnackbar:(id)sender {
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Snackbar Message";
+  message.automaticallyDismisses = NO;
+  message.enableRippleBehavior = YES;
+  [MDCSnackbarManager showMessage:message];
+}
+
 #pragma mark - UICollectionView
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -219,6 +227,8 @@
       break;
     case 7:
       [self showCustomizedSnackbarWithActionUsingBlock:nil];
+    case 8:
+      [self showNonTransientSnackbar:nil];
     default:
       break;
   }

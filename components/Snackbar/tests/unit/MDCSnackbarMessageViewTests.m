@@ -518,7 +518,8 @@
 
 - (void)testMessageStaysWhenDurationIsZero {
   // Given
-  self.message.duration = 0;
+  self.message.duration = 0.1;
+  self.message.automaticallyDismisses = NO;
 
   // When
   [self.manager showMessage:self.message];
