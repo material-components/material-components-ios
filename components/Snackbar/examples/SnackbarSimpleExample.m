@@ -233,8 +233,10 @@
       break;
     case 7:
       [self showCustomizedSnackbarWithActionUsingBlock:nil];
+      break;
     case 8:
       [self showNonTransientSnackbar:nil];
+      break;
     default:
       break;
   }
