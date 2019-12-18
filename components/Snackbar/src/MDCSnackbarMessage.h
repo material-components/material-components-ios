@@ -112,7 +112,8 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 
  Defaults to 4 seconds and can be set up to the maximum duration defined by
  @c MDCSnackbarMessageDurationMax. Any value set above this limit will use the maximum duration.
- @note If duration is set to 0 or less, the Snackbar will remain on screen and not dismiss automatically.
+ @note If duration is set to 0 or less, the Snackbar will remain on screen and not dismiss
+ automatically.
  */
 @property(nonatomic, assign) NSTimeInterval duration;
 
@@ -189,10 +190,11 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
     (MDCSnackbarMessage *_Nonnull message, MDCSnackbarMessageView *_Nonnull messageView);
 
 /**
- Whether the Snackbar message is transient and automatically dismisses after the provided @c duration time or is not transient
- and will not dismiss automatically.
+ Whether the Snackbar message is transient and automatically dismisses after the provided @c
+ duration time or is not transient and will not dismiss automatically.
 
- @note: If VoiceOver is turned on, a snackbar will not automatically dismiss if the snackbar has an action, regardless of this property.
+ @note: If VoiceOver is turned on, a snackbar will not automatically dismiss if the snackbar has an
+ action, regardless of this property.
 
  Defaults to YES.
  */

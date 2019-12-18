@@ -35,9 +35,15 @@
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self setupExampleViews:@[
-    @"Simple Snackbar", @"Snackbar with Action Button", @"Snackbar with Long Text",
-    @"Attributed Text Example", @"Color Themed Snackbar", @"Customize Font Example",
-    @"De-Customize Example", @"Customized Message Using Block", @"Non Transient Snackbar",
+    @"Simple Snackbar",
+    @"Snackbar with Action Button",
+    @"Snackbar with Long Text",
+    @"Attributed Text Example",
+    @"Color Themed Snackbar",
+    @"Customize Font Example",
+    @"De-Customize Example",
+    @"Customized Message Using Block",
+    @"Non Transient Snackbar",
   ]];
   self.title = @"Snackbar";
   _legacyMode = YES;
