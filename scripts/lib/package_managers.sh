@@ -16,15 +16,12 @@
 
 gem_update() {
   gem update --system --no-document --quiet
-  rvm @global
-  gem uninstall rubygems-bundler
 }
 
 gem_install() {
   gem_update
   gem install "$@" --no-document --quiet
-  rvm @global
-  gem uninstall rubygems-bundler
+  gem uninstall -i /Users/kbuilder/.rvm/rubies/ruby-2.5.1/lib/ruby/gems/2.5.0 rubygems-bundler
 }
 
 brew_update() {
