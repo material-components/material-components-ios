@@ -744,22 +744,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)titleLabelFrame {
-  // Default to the unselected image, but account for the selected image if it's shown.
-  CGRect imageFrame = _imageView.frame;
-  if (self.showSelectedImageView) {
-    // Both images are present, take the union of their frames.
-    if (self.showImageView) {
-      imageFrame = CGRectUnion(_imageView.frame, _selectedImageView.frame);
-    } else {
-      imageFrame = _selectedImageView.frame;
-    }
-  }
+  CGRect imageFrame = CGRectUnion(_imageView.frame, _selectedImageView.frame);
   CGRect contentRect = self.contentRect;
   CGFloat maximumTitleWidth = CGRectGetWidth(contentRect) - CGRectGetWidth(imageFrame) -
-                              UIEdgeInsetsHorizontal(_titlePadding);
-  if (self.showImageView || self.showSelectedImageView) {
-    maximumTitleWidth -= UIEdgeInsetsHorizontal(_imagePadding);
-  }
+                              UIEdgeInsetsHorizontal(_titlePadding) +
+                              UIEdgeInsetsHorizontal(_imagePadding);
   if (self.showAccessoryView) {
     maximumTitleWidth -=
         CGRectGetWidth(_accessoryView.frame) + UIEdgeInsetsHorizontal(_accessoryPadding);
@@ -769,10 +758,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   CGSize titleSize = [_titleLabel sizeThatFits:maximumSize];
   titleSize.width = MAX(0, maximumTitleWidth);
 
-  CGFloat imageRightEdge = CGRectGetMinX(contentRect);
-  if (self.showImageView || self.showSelectedImageView) {
-    imageRightEdge = CGRectGetMaxX(imageFrame) + _imagePadding.right;
-  }
+  CGFloat imageRightEdge = CGRectGetMaxX(imageFrame) + _imagePadding.right;
   CGPoint frameOrigin = CGPointMake(imageRightEdge, CGRectGetMinY(contentRect));
   return MDCChipBuildFrame(_titlePadding, titleSize, frameOrigin, CGRectGetHeight(contentRect),
                            self.pixelScale);
