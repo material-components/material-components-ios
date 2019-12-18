@@ -21,7 +21,7 @@ gem_update() {
 gem_install() {
   gem_update
   gem install "$@" --no-document --quiet
-  gem uninstall -i /Users/kbuilder/.rvm/rubies/ruby-2.5.1/lib/ruby/gems/2.5.0 rubygems-bundler
+  gem uninstall rubygems-bundler
 }
 
 brew_update() {
