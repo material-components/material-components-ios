@@ -1,8 +1,8 @@
 ## Theming
 
-You can theme a List Item with your app's shared scheme using the MaterialKist Theming extension.
+You can theme a List Item with your app's shared scheme using the MaterialList Theming extension.
 
-You must first add the Theming extension to your project:
+You must first add the theming extension to your project:
 
 ```bash
 pod `MaterialComponents/List+Theming`
