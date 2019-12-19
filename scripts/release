@@ -133,12 +133,12 @@ cut_release() {
     exit 1
   fi
 
+  git checkout -b release-candidate origin/stable
+
   if $isHotFix; then
-    echo "This is a hotfix... branching off origin/stable and awaiting cherry-picks."
-    git checkout -b release-candidate origin/stable
+    echo "This is a hotfix... we've branched off origin/stable and are now awaiting cherry-picks."
   else
-    echo "This is a normal release... branching off origin/stable and merging origin/develop"
-    git checkout -b release-candidate origin/stable
+    echo "This is a normal release... we've branched off origin/stable and are now merging origin/develop..."
     git merge --no-ff origin/develop --no-edit
   fi
 
