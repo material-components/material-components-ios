@@ -31,24 +31,12 @@
 
 @property(nonatomic, strong, nullable) UIColor *actionTextColor;
 
-@property(nonatomic, strong, nullable) UIColor *inkColor;
-
-/**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
-
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
- Defaults to NO.
- */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
-
 /**
  The ripple color for the action items within an action sheet.
+
+ @note Defaults and resets to black with a 14% opacity.
  */
-@property(nonatomic, strong, nullable) UIColor *rippleColor;
+@property(nonatomic, strong, null_resettable) UIColor *rippleColor;
 
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 

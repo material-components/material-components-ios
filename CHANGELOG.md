@@ -1,3 +1,83 @@
+# 98.0.0
+
+In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
+Cards, List.
+Fix issue with unbounded ink. NavigationDrawer now allows its trackingScrollView to be resettable.
+
+## Breaking changes
+
+### ActionSheet
+
+Delete inkColor and enableRippleBehavior from MDCActionSheetItemTableViewCell
+
+### BottomNavigation
+
+Delete MDCBottomNavigationBarTypographyThemer
+
+## New deprecations
+
+### List
+
+Deprecate MDCListColorThemer
+
+Deprecate MDCListTypographyThemer
+
+## API changes
+
+### BottomNavigation
+
+*removed* class: `MDCBottomNavigationBarTypographyThemer`. Please use the Theming extension instead.
+
+### List
+
+*deprecated* class: `MDCListColorThemer`. Please use MaterialList+Theming instead.
+
+*deprecated* class: `MDCListTypographyThemer`. Please use MDCSelfSizingStereoCell+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.)
+
+## Component changes
+
+### ActionSheet
+
+* [Delete inkColor and enableRippleBehavior from MDCActionSheetItemTableViewCell (#9240)](https://github.com/material-components/material-components-ios/commit/eb46b2810eb98068146d8bbdf1b0e320bf3a8820) (Bryan Oltman)
+
+### Banner
+
+* [Update Readme to remove Beta related information. (#9248)](https://github.com/material-components/material-components-ios/commit/e47bedadb2fb6681522161d3fe86ff1fab5e072c) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Use NotoNastaliq for Arabic/RTL tests. (#9260)](https://github.com/material-components/material-components-ios/commit/19c810d61d38ca735b8256adac0ef734ade87141) (Robert Moore)
+* [delete-MDCBottomNavigationBarTypographyThemer (#9234)](https://github.com/material-components/material-components-ios/commit/d89eb249aacf6c9204e6544a3a3667fe6e3120e5) (Andrew Overton)
+
+### Cards
+
+* [Remove references to Themer from README (#9261)](https://github.com/material-components/material-components-ios/commit/08a2b20d70079342f0556dc55bdd52b4aa6b8dcc) (Bryan Oltman)
+
+### Ink
+
+* [Fix issue with unbounded ink (#9254)](https://github.com/material-components/material-components-ios/commit/fd63f37684fd28b8c8ecf2f0137a0d98084bc921) (Andrew Overton)
+
+### List
+
+* [Deprecaet MDCListColorThemer (#9265)](https://github.com/material-components/material-components-ios/commit/6e8fdfff36938475c4a8d253a55577cbed98db91) (Galia Kaufman)
+* [Deprecate MDCListTypographyThemer (#9269)](https://github.com/material-components/material-components-ios/commit/20c4cad5297889cf41b430b823b7bbb2cc4a15f0) (Galia Kaufman)
+* [Remove usage of MDCListTypographyThemer within our library (#9189)](https://github.com/material-components/material-components-ios/commit/6271396e6c027025310df8917604cca19bbb3441) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Resolve runtime warning from example in iOS… (#9251)](https://github.com/material-components/material-components-ios/commit/cf44736503819fe24c6eb37be6332b082f5eaebe) (Yarden Eitan)
+* [allow trackingScrollView to be resettable (#9206)](https://github.com/material-components/material-components-ios/commit/ead4785d5c4c7179a114964ab138f608bc58a3e5) (Yarden Eitan)
+
+### Tabs
+
+* [removed build file dep that was deleted but the colorThemer revert accidentally readd it (#9278)](https://github.com/material-components/material-components-ios/commit/98ad8eb4a431cb1c414e696ab4414388f87ea44e) (Randall Li)
+
+## Multi-component changes
+
+* [Add Swift example for MDCTabBarView (#9246)](https://github.com/material-components/material-components-ios/commit/687ca49597ba420ba552a70677df0f057fbdb20d) (Bryan Oltman)
+
+---
+
 # 97.0.1
 
 This hotfix patch release fixes the podspec. The previous release forgot to remove deleted references to card themers.

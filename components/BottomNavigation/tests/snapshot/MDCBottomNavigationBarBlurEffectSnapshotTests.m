@@ -17,7 +17,6 @@
 
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
-#import "MaterialBottomNavigation+TypographyThemer.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"

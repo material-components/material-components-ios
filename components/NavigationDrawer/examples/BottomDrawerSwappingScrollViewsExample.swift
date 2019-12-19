@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,13 +16,14 @@ import UIKit
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
-class BottomDrawerExpandFullscreenExample: UIViewController {
+class BottomDrawerSwappingScrollViewsExample: UIViewController {
   @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
-  let contentViewController = ExpandFullscreenContentViewController()
+  let contentViewController = SwappingScrollViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -70,72 +71,96 @@ class BottomDrawerExpandFullscreenExample: UIViewController {
   @objc private func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
-    contentViewController.drawerVC = bottomDrawerViewController
+    contentViewController.setDrawer(drawer: bottomDrawerViewController)
     bottomDrawerViewController.headerViewController = headerViewController
-    bottomDrawerViewController.trackingScrollView = contentViewController.tableView
-    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                        toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
 
-class ExpandFullscreenContentViewController: UITableViewController {
+class SwappingScrollViewController: UIViewController, UITableViewDataSource {
   @objc var colorScheme: MDCSemanticColorScheme!
   weak var drawerVC: MDCBottomDrawerViewController!
+  var tableView1: UITableView!
+  var tableView2: UITableView!
 
-  init() {
-    super.init(nibName: nil, bundle: nil)
+  override func loadView() {
+    super.loadView()
+
+    self.view.backgroundColor = .white
+
+    tableView1 = UITableView()
+    tableView1.dataSource = self
+    self.view.addSubview(tableView1)
+
+    tableView2 = UITableView()
+    tableView2.dataSource = self
+
+    tableView1.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    tableView2.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+
+    let switchButton = UIButton(type: .system)
+    switchButton.setTitle("Switch Scroll View", for: .normal)
+    switchButton.addTarget(self, action: #selector(switchScrollView(sender:)), for: .touchUpInside)
+    switchButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 48)
+
+    tableView1.tableHeaderView = switchButton
   }
 
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
+  func setDrawer(drawer: MDCBottomDrawerViewController) {
+    drawerVC = drawer
+
+    // Default to the first scroll view for initial presentation.
+    drawer.trackingScrollView = tableView1
   }
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+  @objc func switchScrollView(sender: AnyObject) {
+    tableView1.removeFromSuperview()
+
+    // Switch active scroll views
+    self.view.addSubview(tableView2)
+    drawerVC.trackingScrollView = tableView2
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    if self.preferredContentSize == .zero {
-      self.tableView.layoutIfNeeded()
-      self.preferredContentSize = CGSize(width: view.bounds.width,
-                                         height: tableView.contentSize.height)
-    }
+
+    tableView1.frame = self.view.bounds
+    tableView2.frame = self.view.bounds
+
+    self.preferredContentSize = CGSize(width: 0, height: tableView1.contentSize.height)
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel?.text = "cell #\(indexPath.item)"
-    cell.backgroundColor = colorScheme.surfaceColor
-    print(cell.textLabel?.text ?? "")
+  @available(iOS 11.0, *)
+  override func viewSafeAreaInsetsDidChange() {
+    super.viewSafeAreaInsetsDidChange()
+
+    self.preferredContentSize = CGSize(width: 0, height: tableView1.contentSize.height)
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 100
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+
+    if tableView == tableView1 {
+      cell.textLabel?.text = "Scroll View 1"
+    } else {
+      cell.textLabel?.text = "Scroll View 2"
+    }
+
     return cell
   }
-
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 4
-  }
-
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.expandToFullscreen(withDuration: 0.2, completion: { _ in
-      print("finished expanding");
-    })
-  }
-
 }
 
-extension BottomDrawerExpandFullscreenExample {
+extension BottomDrawerSwappingScrollViewsExample {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Navigation Drawer", "Expand to Fullscreen Example"],
+      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Swapping ScrollViews"],
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,

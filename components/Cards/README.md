@@ -48,8 +48,6 @@ purposes.
   - [Theming](#theming)
 - [Accessibility](#accessibility)
   - [Card Accessibility](#card-accessibility)
-- [Unsupported](#unsupported)
-  - [Shape Theming](#shape-theming)
 
 - - -
 
@@ -79,8 +77,6 @@ Customization to the card is exposed via its API either in `MDCCard` or `MDCCard
 An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through Interface Builder.
 
 An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through Interface Builder.
-
-MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances as either a default or outlined variant. An outlined variant behaves identically to a default styled card, but differs in its coloring and in that it has a stroked border. Use 'applyScheme:toCard:' to style an instance with default values and 'applyOutlinedVariantWithScheme:toCard:' to style an instance with the outlined values.
 
 ### Cards Classes
 
@@ -227,7 +223,7 @@ and the outlined theme.
 
  <!--<div class="material-code-render" markdown="1">-->
 
- #### Swift
+#### Swift
 
 ```swift
 // Import the Cards Theming Extensions module
@@ -241,7 +237,7 @@ card.applyTheme(withScheme: containerScheme)
 card.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
- #### Objective-C
+#### Objective-C
 
 ```objc
 // Import the Cards Theming Extensions header
@@ -350,50 +346,3 @@ elements together, you can make the card an accessibility container by adopting 
 protocol. Grouping and order is controlled by creating as many 
 [`UIAccessibilityElement`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) 
 elements as needed, and returning them in the desired order. 
-
-
-## Unsupported
-
-<!-- Extracted from docs/color-theming.md -->
-
-
-<!-- Extracted from docs/shape-theming.md -->
-
-### Shape Theming
-
-You can theme a card with your app's shape scheme using the ShapeThemer extension.
-
-You must first add the ShapeThemer extension to your project:
-
-```bash
-pod 'MaterialComponents/Cards+ShapeThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ShapeThemer extension
-import MaterialComponents.MaterialCards_ShapeThemer
-
-// Step 2: Create or get a shape scheme
-let shapeScheme = MDCShapeScheme()
-
-// Step 3: Apply the shape scheme to your component
-MDCCardsShapeThemer.applyShapeScheme(shapeScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ShapeThemer extension
-#import "MaterialCards+ShapeThemer.h"
-
-// Step 2: Create or get a shape scheme
-id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
-
-// Step 3: Apply the shape scheme to your component
-[MDCCardsShapeThemer applyShapeScheme:shapeScheme
-     toCard:component];
-```
-<!--</div>-->
-

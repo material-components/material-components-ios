@@ -26,7 +26,6 @@
 
 @interface MDCActionSheetItemTableViewCell (TestingRipple)
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @end
 
 /**
@@ -62,22 +61,11 @@
   // Then
   XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertTrue(cell.enableRippleBehavior);
     XCTAssertNotNil(cell.rippleTouchController);
-    XCTAssertNotNil(cell.inkTouchController);
-    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
     XCTAssertEqualObjects(cell.rippleTouchController.rippleView.rippleColor,
                           [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
-    XCTAssertEqual(cell.inkTouchController.defaultInkView.inkStyle, MDCInkStyleBounded);
     XCTAssertEqual(cell.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleBounded);
     XCTAssertNotNil(cell.rippleTouchController.rippleView.superview);
-    XCTAssertNil(cell.inkTouchController.defaultInkView.superview);
-
-    CGRect cellBounds = CGRectStandardize(cell.bounds);
-    CGRect inkBounds = CGRectStandardize(cell.inkTouchController.defaultInkView.bounds);
-    XCTAssertTrue(CGRectEqualToRect(cellBounds, inkBounds), @"%@ is not equal to %@",
-                  NSStringFromCGRect(cellBounds), NSStringFromCGRect(inkBounds));
   }
 }
 

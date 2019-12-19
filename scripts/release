@@ -133,15 +133,15 @@ cut_release() {
     exit 1 # TODO: Revert this line so we bail out.
   fi
 
+  git checkout -b release-candidate origin/stable
+
   if $isHotFix; then
-    branch=origin/stable
-    branch_message="This is a hotfix... branching off $branch"
+    echo "This is a hotfix... we've branched off origin/stable and are now awaiting cherry-picks."
   else
-    branch=origin/develop
-    branch_message="This is a normal release... branching off $branch"
+    echo "This is a normal release... we've branched off origin/stable and are now merging origin/develop..."
+    git merge --no-ff origin/develop --no-edit
   fi
-  echo $branch_message
-  git checkout -b release-candidate $branch
+
   git checkout origin/stable -- .gitattributes
 
   touch "$rootdir/CHANGELOG.md"
@@ -707,11 +707,6 @@ generate_release_notes() {
     if [[ $(changes_for_path "$folder" | filter_non_breaking_changes) ]]; then
       component=$(echo $folder | cut -d'/' -f2-)
 
-      if [ "$has_non_breaking_changes" = false ]; then
-        has_non_breaking_changes=true
-        echo
-        echo "## Changes"
-      fi
       echo
       echo "### $component"
       echo

@@ -6,8 +6,9 @@ These instructions describe how to cut a new release.
 
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
-`master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
-tested, and then merged into `stable`, which serves as the stable "vetted" branch.
+`master`) is reserved for releases. The `develop` branch is periodically merged into a release
+candidate that is cut from `stable`. The release candidate is then tested and release notes are
+added. Once validated, the release-candidate is merged into `stable`, which serves as the stable "vetted" branch, and into `develop`.
 
 ## A note on the role of the release engineer
 
@@ -262,8 +263,8 @@ release candidate.
 
 ## Consider running `scripts/release notes` again
 
-Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after `## Changes` if
-you
+Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after
+`## Component changes` if you
 
 * cherry picked a change to add it to the release or
 * reverted any commit to rollback any PR.

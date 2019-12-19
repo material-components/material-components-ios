@@ -121,14 +121,6 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":BottomNavigation",
-        "//components/schemes/Typography",
-    ],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     includes = ["examples/supplemental"],
@@ -175,7 +167,6 @@ mdc_objc_library(
     deps = [
         ":BottomNavigation",
         ":Theming",
-        ":TypographyThemer",
         ":privateHeaders",
         "//components/Typography",
     ],
@@ -216,7 +207,6 @@ mdc_snapshot_objc_library(
         ":BottomNavigation",
         ":BottomNavigationBeta",
         ":Theming",
-        ":TypographyThemer",
         ":privateHeaders",
     ],
 )
