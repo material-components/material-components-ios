@@ -21,8 +21,8 @@ version tag.
 
 When a stable release is ready to be cut, a `release-candidate` branch is `cut`
 from the latest `origin/stable` commit and `origin/develop` is merged into the
-`release-candidate`, unless the release is a hotfix in which case nothing is
-merged into the branch by default.
+`release-candidate` branch in preparation for cherry picks, unless the release
+is a hotfix in which case nothing is merged into the branch by default.
 
     release cut
 
