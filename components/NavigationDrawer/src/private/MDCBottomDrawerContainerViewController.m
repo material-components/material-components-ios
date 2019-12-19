@@ -360,7 +360,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   if ([self shouldPresentFullScreen]) {
     return self.presentingViewBounds.size.height;
   }
-  return _maximumInitialDrawerHeight;
+  return _maximumInitialDrawerHeight + [self bottomSafeAreaInsetsToAdjustInitialDrawerHeight];
 }
 
 - (void)addScrollViewObserver {
@@ -630,6 +630,15 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (CGFloat)bottomSafeAreaInsetsToAdjustContainerHeight {
   if (@available(iOS 11.0, *)) {
     if (self.shouldIncludeSafeAreaInContentHeight) {
+      return self.view.safeAreaInsets.bottom;
+    }
+  }
+  return 0;
+}
+
+- (CGFloat)bottomSafeAreaInsetsToAdjustInitialDrawerHeight {
+  if (@available(iOS 11.0, *)) {
+    if (self.shouldIncludeSafeAreaInInitialDrawerHeight) {
       return self.view.safeAreaInsets.bottom;
     }
   }

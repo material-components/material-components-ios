@@ -117,6 +117,14 @@
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
 
 /**
+ A flag allowing clients to opt-in to adding additional height to the initial presentation of the
+ drawer to include the bottom safe area inset. This will remove the need for clients to calculate
+ their desired maximum height with the bottom safe area when setting the maximumInitialDrawerHeight.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldIncludeSafeAreaInInitialDrawerHeight;
+
+/**
  The drawer's top shadow color. Defaults to black with 20% opacity.
  */
 @property(nonatomic, strong, nonnull) UIColor *drawerShadowColor;
