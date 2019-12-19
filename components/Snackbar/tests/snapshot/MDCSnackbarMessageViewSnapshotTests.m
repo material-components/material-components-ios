@@ -221,7 +221,9 @@ static NSString *const kItemTitleLong2Arabic =
 
   // When
   messageView.elevation = 24;
-  [self.testManager.internalManager.overlayView showSnackbarView:messageView animated:NO completion:nil];
+  [self.testManager.internalManager.overlayView showSnackbarView:messageView
+                                                        animated:NO
+                                                      completion:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.testManager.internalManager.overlayView];
