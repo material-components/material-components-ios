@@ -212,32 +212,33 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
+- (MDCDialogTransitionController *)dialogTransitionController {
+  return (MDCDialogTransitionController *)self.transitioningDelegate;
+}
+
 - (NSTimeInterval)presentationOpacityAnimationDuration {
-  return ((MDCDialogTransitionController *)self.transitioningDelegate).opacityAnimationDuration;
+  return [self dialogTransitionController].opacityAnimationDuration;
 }
 
 - (void)setPresentationOpacityAnimationDuration:
     (NSTimeInterval)presentationOpacityAnimationDuration {
-  ((MDCDialogTransitionController *)self.transitioningDelegate).opacityAnimationDuration =
-      presentationOpacityAnimationDuration;
+  [self dialogTransitionController].opacityAnimationDuration = presentationOpacityAnimationDuration;
 }
 
 - (NSTimeInterval)presentationScaleAnimationDuration {
-  return ((MDCDialogTransitionController *)self.transitioningDelegate).scaleAnimationDuration;
+  return [self dialogTransitionController].scaleAnimationDuration;
 }
 
 - (void)setPresentationScaleAnimationDuration:(NSTimeInterval)presentationScaleAnimationDuration {
-  ((MDCDialogTransitionController *)self.transitioningDelegate).scaleAnimationDuration =
-      presentationScaleAnimationDuration;
+  [self dialogTransitionController].scaleAnimationDuration = presentationScaleAnimationDuration;
 }
 
 - (CGFloat)presentationInitialScaleFactor {
-  return ((MDCDialogTransitionController *)self.transitioningDelegate).dialogInitialScaleFactor;
+  return [self dialogTransitionController].dialogInitialScaleFactor;
 }
 
 - (void)setPresentationInitialScaleFactor:(CGFloat)presentationInitialScaleFactor {
-  ((MDCDialogTransitionController *)self.transitioningDelegate).dialogInitialScaleFactor =
-      presentationInitialScaleFactor;
+  [self dialogTransitionController].dialogInitialScaleFactor = presentationInitialScaleFactor;
 }
 
 - (NSArray<MDCAlertAction *> *)actions {
