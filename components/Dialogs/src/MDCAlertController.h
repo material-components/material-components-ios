@@ -157,6 +157,28 @@
  */
 - (void)setAccessoryViewNeedsLayout;
 
+/**
+ Duration of the dialog fade-in or fade-out presentation animation.
+
+ Defaults to 0.27 seconds.
+ */
+@property(nonatomic, assign) NSTimeInterval presentationOpacityAnimationDuration;
+
+/**
+ Duration of dialog scale-up or scale-down presentation animation.
+
+ Defaults to 0 seconds (no animation is performed).
+ */
+@property(nonatomic, assign) NSTimeInterval presentationScaleAnimationDuration;
+
+/**
+ The starting scale factor of the dialog during the presentation animation, between 0 and 1. The
+ "animate in" transition scales the dialog from this value to 1.0.
+
+ Defaults to 1.0 (no scaling is performed).
+ */
+@property(nonatomic, assign) CGFloat presentationInitialScaleFactor;
+
 /*
  Indicates whether the alert contents should automatically update their font when the device’s
  UIContentSizeCategory changes.
