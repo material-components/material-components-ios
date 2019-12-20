@@ -17,7 +17,7 @@
 /**
  UIApplication extension for working with sharedApplication inside of app extensions.
  */
-@interface UIApplication (AppExtensions)
+@interface UIApplication (MDCAppExtensions)
 
 /**
  Returns sharedApplication if it is available otherwise returns nil.
