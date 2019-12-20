@@ -137,7 +137,7 @@
 
 - (void)setInkColor:(UIColor *)inkColor {
   if (inkColor == nil) {
-    return;
+    inkColor = self.defaultInkColor;
   }
   self.inkLayer.inkColor = inkColor;
 }
