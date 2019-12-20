@@ -138,13 +138,14 @@
 - (void)testNullResettableInkColor {
   // Given
   MDCInkView *testInkView = [[MDCInkView alloc] init];
+  UIColor *defaultInkColor = testInkView.defaultInkColor;
   testInkView.inkColor = UIColor.redColor;
 
   // When
   testInkView.inkColor = nil;
 
   // Then
-  XCTAssertEqual(testInkView.inkColor, testInkView.defaultInkColor);
+  XCTAssertEqual(testInkView.inkColor, defaultInkColor);
 }
 
 @end
