@@ -620,9 +620,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
     if (self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController) {
       // We can't use the provided ancestor because it's a child of the top layout guide view
       // controller. Doing so would result in the top layout guide being infinitely increased.
-      // Let's use the top layout guide view controller's ancestor instead.
-      ancestor = [self
-          fhv_rootAncestorOfViewController:self.topLayoutGuideViewController.parentViewController];
+      ancestor = nil;
     }
   }
 
@@ -630,9 +628,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   // extract a top safe area inset from. Should we throw an assert?
   NSAssert(ancestor != nil,
            @"inferTopSafeAreaInsetFromViewController is true but we were unable to infer a view "
-           @"controller"
-           @" from which we could extract a safe area. Consider placing your view controller inside"
-           @" a container view controller.");
+           @"controller from which we could extract a safe area. Consider placing your view "
+           @"controller inside a container view controller.");
 
   if (_headerView.topSafeAreaSourceViewController != ancestor) {
     _headerView.topSafeAreaSourceViewController = ancestor;
