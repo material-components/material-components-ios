@@ -23,6 +23,6 @@
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
  */
-- (void)mdc_applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+- (void)mdc_applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end

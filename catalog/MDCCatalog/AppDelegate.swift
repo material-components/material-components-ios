@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
-    navigationController.mdc_applyTheme(withScheme: AppTheme.containerScheme)
+    navigationController.mdc_applyPrimaryTheme(withScheme: AppTheme.containerScheme)
     self.navigationController = navigationController
 
     self.window?.rootViewController = navigationController

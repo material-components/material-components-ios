@@ -16,7 +16,7 @@
 
 @implementation UINavigationController (MaterialTheming)
 
-- (void)mdc_applyThemeWithScheme:(id<MDCContainerScheming>)scheme {
+- (void)mdc_applyPrimaryThemeWithScheme:(id<MDCContainerScheming>)scheme {
   self.navigationBar.translucent = NO;
 
   if (@available(iOS 11.0, *)) {
@@ -27,32 +27,38 @@
     };
   }
 
+  // Make content behind the navigation bar matche the background color of child view controllers.
   self.view.backgroundColor = scheme.colorScheme.backgroundColor;
 
+  // Icon color
+  self.navigationBar.tintColor = scheme.colorScheme.onPrimaryColor;
+
   if (@available(iOS 13.0, *)) {
-    UINavigationBarAppearance *appearance = self.navigationBar.standardAppearance;
+    UINavigationBarAppearance *appearance = [self.navigationBar.standardAppearance copy];
 
     // Bar background
     appearance.backgroundColor = scheme.colorScheme.primaryColor;
 
-    // Collapsed state
+    // Bar shadow
+    appearance.shadowColor = scheme.colorScheme.onPrimaryColor;
+
+    // Title when collapsed
     appearance.titleTextAttributes = @{
       NSForegroundColorAttributeName : scheme.colorScheme.onPrimaryColor,
       NSFontAttributeName : scheme.typographyScheme.headline6
     };
-    // Expanded state
+    // Title when expanded
     appearance.largeTitleTextAttributes = @{
       NSForegroundColorAttributeName : scheme.colorScheme.onPrimaryColor,
       NSFontAttributeName : scheme.typographyScheme.headline5
     };
-    // Icon color
-    self.navigationBar.tintColor = scheme.colorScheme.onPrimaryColor;
 
+    self.navigationBar.standardAppearance = appearance;
     self.navigationBar.scrollEdgeAppearance = appearance;
+
   } else {
     self.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationBar.barTintColor = scheme.colorScheme.primaryColor;
-    self.navigationBar.tintColor = scheme.colorScheme.onPrimaryColor;
   }
 }
 
