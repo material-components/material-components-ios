@@ -214,7 +214,7 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   }
 
   self.titleIconImageView.tintColor = self.titleIconTintColor;
-  [self.titleIconImageView sizeToFit];
+  [self setNeedsLayout];
 }
 
 - (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
@@ -575,7 +575,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     // match the titleIcon alignment to the title alignment
     CGFloat titleIconPosition = titleFrame.origin.x;
     if (self.titleAlignment == NSTextAlignmentCenter) {
-      titleIconPosition = (contentSize.width - titleIconSize.width) / 2;
+      titleIconPosition =
+          CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconSize.width) / 2;
     } else if (self.titleAlignment == NSTextAlignmentRight ||
                (self.titleAlignment == NSTextAlignmentNatural &&
                 [self mdf_effectiveUserInterfaceLayoutDirection] ==
