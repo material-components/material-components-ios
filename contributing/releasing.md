@@ -302,6 +302,8 @@ go-ahead from the following clients:
 Once the release-candidate has **passed all "Required" GitHub presubmit tests** and **all internal presubmit tests**, you may merge the release into the
 `develop` and `stable` branches using the `release` script.
 
+Please ignore the cocoapods/podspec CI runner, as currently it is failing. Follow the [GitHub bug](https://github.com/material-components/material-components-ios/issues/6678) for updates.
+
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure. 
 
