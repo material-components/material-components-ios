@@ -93,7 +93,6 @@ Using TextControl textfields is supposed to be as similar to using UITextField a
 
 ### Theming
 
-#### 
 You can theme a textfield to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](../../docs/theming.md).
 
 First, import the theming extension for TextControls and create a textfield.
