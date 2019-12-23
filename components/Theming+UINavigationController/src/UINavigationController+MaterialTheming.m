@@ -22,8 +22,8 @@
   if (@available(iOS 11.0, *)) {
     self.navigationBar.prefersLargeTitles = YES;
     self.navigationBar.largeTitleTextAttributes = @{
-      NSForegroundColorAttributeName: scheme.colorScheme.onPrimaryColor,
-      NSFontAttributeName: scheme.typographyScheme.headline5
+      NSForegroundColorAttributeName : scheme.colorScheme.onPrimaryColor,
+      NSFontAttributeName : scheme.typographyScheme.headline5
     };
   }
 
@@ -37,13 +37,13 @@
 
     // Collapsed state
     appearance.titleTextAttributes = @{
-      NSForegroundColorAttributeName: scheme.colorScheme.onPrimaryColor,
-      NSFontAttributeName: scheme.typographyScheme.headline6
+      NSForegroundColorAttributeName : scheme.colorScheme.onPrimaryColor,
+      NSFontAttributeName : scheme.typographyScheme.headline6
     };
     // Expanded state
     appearance.largeTitleTextAttributes = @{
-      NSForegroundColorAttributeName: scheme.colorScheme.onPrimaryColor,
-      NSFontAttributeName: scheme.typographyScheme.headline5
+      NSForegroundColorAttributeName : scheme.colorScheme.onPrimaryColor,
+      NSFontAttributeName : scheme.typographyScheme.headline5
     };
     // Icon color
     self.navigationBar.tintColor = scheme.colorScheme.onPrimaryColor;
@@ -57,4 +57,3 @@
 }
 
 @end
-
