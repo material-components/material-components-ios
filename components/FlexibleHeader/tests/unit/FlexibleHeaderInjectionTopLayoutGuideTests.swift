@@ -85,7 +85,9 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
-    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, fhvc.headerView.frame.maxY)
+    if #available(iOS 11.0, *) {
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, fhvc.headerView.frame.maxY)
+    }
   }
 
   // MARK: Untracked table view
