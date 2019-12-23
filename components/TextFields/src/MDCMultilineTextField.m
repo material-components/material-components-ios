@@ -755,9 +755,9 @@
   [self.fundament didChange];
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
-  if (currentSize.height != requiredSize.height && self.textView.delegate &&
-      [self.layoutDelegate respondsToSelector:@selector(multilineTextField:
-                                                      didChangeContentSize:)]) {
+  if (currentSize.height != requiredSize.height && self.layoutDelegate &&
+      [self.layoutDelegate
+          respondsToSelector:@selector(multilineTextField:didChangeContentSize:)]) {
     id<MDCMultilineTextInputLayoutDelegate> delegate =
         (id<MDCMultilineTextInputLayoutDelegate>)self.layoutDelegate;
     [delegate multilineTextField:self didChangeContentSize:requiredSize];
