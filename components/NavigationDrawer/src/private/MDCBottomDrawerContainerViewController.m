@@ -181,6 +181,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 @implementation MDCBottomDrawerContainerViewController {
   UIScrollView *_scrollView;
   CGFloat _contentHeaderTopInset;
+  CGFloat _contentHeaderTopInsetCached;
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
@@ -196,6 +197,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _originalPresentingViewController = originalPresentingViewController;
+    _contentHeaderTopInsetCached =  NSNotFound;
     _contentHeaderTopInset = NSNotFound;
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
@@ -206,6 +208,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _maximumInitialDrawerHeight =
         self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
+    _shouldAdjustOnContentSizeChange = NO;
     UIColor *shadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _headerShadowColor = shadowColor;
     _drawerShadowColor = shadowColor;
@@ -620,6 +623,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   [super preferredContentSizeDidChangeForChildContentContainer:container];
 
   _shouldPresentAtFullscreen = NO;
+  if (_contentVCPreferredContentSizeHeightCached > 0) {
+    _contentHeaderTopInsetCached = _contentHeaderTopInset;
+  }
+
   [self resetCachedState];
   [self setupLayout];
 }
@@ -944,6 +951,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     }
   } else {
     _contentHeaderTopInset = containerHeight - totalHeight;
+  }
+
+  if (!_shouldAdjustOnContentSizeChange && _contentHeaderTopInsetCached != NSNotFound) {
+    _contentHeaderTopInset = _contentHeaderTopInsetCached;
+    _contentHeaderTopInsetCached = NSNotFound;
   }
 
   CGFloat scrollingDistance = _contentHeaderTopInset + totalHeight;

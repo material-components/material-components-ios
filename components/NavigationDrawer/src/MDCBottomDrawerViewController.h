@@ -117,6 +117,14 @@
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
 
 /**
+ Determines the behavior of the drawer when the content size changes.
+ If enabled, the drawer will automatically adjust the visible height as needed, otherwise the
+ visible height will not be changed to reflect the updated content height.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldAdjustOnContentSizeChange;
+
+/**
  The drawer's top shadow color. Defaults to black with 20% opacity.
  */
 @property(nonatomic, strong, nonnull) UIColor *drawerShadowColor;

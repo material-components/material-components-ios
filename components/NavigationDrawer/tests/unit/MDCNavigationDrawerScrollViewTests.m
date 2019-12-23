@@ -883,6 +883,7 @@
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.maximumInitialDrawerHeight = 500;
+  self.fakeBottomDrawer.shouldAdjustOnContentSizeChange = YES;
 
   // When
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 100);
