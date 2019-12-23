@@ -516,4 +516,23 @@
   XCTAssertTrue(blockCalled);
 }
 
+- (void)testMessageStaysWhenDurationIsZero {
+  // Given
+  self.message.duration = 0.1;
+  self.message.automaticallyDismisses = NO;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_time_t popTime =
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)((CGFloat)0.2 * NSEC_PER_SEC));
+  dispatch_after(popTime, dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertNotNil(self.manager.internalManager.currentSnackbar);
+}
+
 @end

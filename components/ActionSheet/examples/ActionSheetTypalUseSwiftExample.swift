@@ -22,7 +22,7 @@ import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialActionSheet
 import MaterialComponents.MaterialActionSheet_Theming
 
-class ActionSheetSwiftExampleViewController: UIViewController {
+class ActionSheetTypicalUseSwiftExampleViewController: UIViewController {
 
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
   
@@ -64,19 +64,19 @@ class ActionSheetSwiftExampleViewController: UIViewController {
     let actionSheet: MDCActionSheetController
     switch type {
     case .typical:
-      actionSheet = ActionSheetSwiftExampleViewController.typical()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.typical()
     case .title:
-      actionSheet = ActionSheetSwiftExampleViewController.title()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.title()
     case .message:
-      actionSheet = ActionSheetSwiftExampleViewController.message()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.message()
     case .noIcons:
-      actionSheet = ActionSheetSwiftExampleViewController.noIcons()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.noIcons()
     case .titleAndMessage:
-      actionSheet = ActionSheetSwiftExampleViewController.titleAndMessage()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.titleAndMessage()
     case .dynamicType:
-      actionSheet = ActionSheetSwiftExampleViewController.dynamic()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.dynamic()
     case .delayed:
-      actionSheet = ActionSheetSwiftExampleViewController.titleAndMessage()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.titleAndMessage()
       let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "Home")) { _ in
         print("Second home action")
       }
@@ -90,7 +90,7 @@ class ActionSheetSwiftExampleViewController: UIViewController {
         actionSheet.contentEdgeInsets = UIEdgeInsets(top: -10, left: 0, bottom: -10, right: 0)
       }
     case .thirtyOptions:
-      actionSheet = ActionSheetSwiftExampleViewController.thirtyOptions()
+      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.thirtyOptions()
     }
     actionSheet.applyTheme(withScheme: containerScheme)
     present(actionSheet, animated: true, completion: nil)
@@ -98,7 +98,7 @@ class ActionSheetSwiftExampleViewController: UIViewController {
 }
 
 // MARK: Catalog by Convensions
-extension ActionSheetSwiftExampleViewController {
+extension ActionSheetTypicalUseSwiftExampleViewController {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
@@ -110,13 +110,13 @@ extension ActionSheetSwiftExampleViewController {
 
 }
 
-extension ActionSheetSwiftExampleViewController : UITableViewDelegate {
+extension ActionSheetTypicalUseSwiftExampleViewController : UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     showActionSheet(data[indexPath.row].type)
   }
 }
 
-extension ActionSheetSwiftExampleViewController : UITableViewDataSource {
+extension ActionSheetTypicalUseSwiftExampleViewController : UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     cell.textLabel?.text = data[indexPath.row].label
@@ -128,7 +128,7 @@ extension ActionSheetSwiftExampleViewController : UITableViewDataSource {
   }
 }
 
-extension ActionSheetSwiftExampleViewController {
+extension ActionSheetTypicalUseSwiftExampleViewController {
   static var actionOne: MDCActionSheetAction {
     let image = UIImage(named: "Home") ?? UIImage()
     return MDCActionSheetAction(title: "Home",

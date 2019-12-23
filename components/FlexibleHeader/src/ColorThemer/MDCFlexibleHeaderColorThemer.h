@@ -24,10 +24,10 @@
  details on replacement APIs.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCFlexibleHeaderColorThemer : NSObject
-@end
-
-@interface MDCFlexibleHeaderColorThemer (ToBeDeprecated)
+__deprecated_msg("No replacement exists. Please comment on"
+                 " https://github.com/material-components/material-components-ios/issues/7172"
+                 " in order to indicate interest in a replacement API.")
+    @interface MDCFlexibleHeaderColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCFlexibleHeaderView using the primary mapping.
@@ -42,7 +42,10 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-            toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
+            toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView
+    __deprecated_msg("No replacement exists. Please comment on"
+                     " https://github.com/material-components/material-components-ios/issues/7172"
+                     " in order to indicate interest in a replacement API.");
 
 /**
  Applies a color scheme's properties to an MDCFlexibleHeaderView using the surface mapping.
@@ -57,7 +60,10 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                      toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
+                      toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView
+    __deprecated_msg("No replacement exists. Please comment on"
+                     " https://github.com/material-components/material-components-ios/issues/7172"
+                     " in order to indicate interest in a replacement API.");
 
 /**
  Applies a color scheme to theme a MDCFlexibleHeaderView.
@@ -70,7 +76,10 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-    toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
+    toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView
+    __deprecated_msg("No replacement exists. Please comment on"
+                     " https://github.com/material-components/material-components-ios/issues/7172"
+                     " in order to indicate interest in a replacement API.");
 
 /**
  Applies a color scheme to theme a MDCFlexibleHeaderViewController.
@@ -84,6 +93,9 @@
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toMDCFlexibleHeaderController:
-        (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderController;
+        (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderController
+    __deprecated_msg("No replacement exists. Please comment on"
+                     " https://github.com/material-components/material-components-ios/issues/7172"
+                     " in order to indicate interest in a replacement API.");
 
 @end

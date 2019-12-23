@@ -359,10 +359,8 @@ chipView.titleLabel.text = @"Tap me";
 There are two variants for Material Theming of an MDCChipVIew, which are the default theme
 and the outlined theme.
 
- <!--<div class="material-code-render" markdown="1">-->
-
- #### Swift
-
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
 ```swift
 // Import the Chips Theming Extensions module
 import MaterialComponents.MaterialChips_MaterialTheming
@@ -375,7 +373,7 @@ chip.applyTheme(withScheme: containerScheme)
 chip.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
- #### Objective-C
+#### Objective-C
 
 ```objc
 // Import the Tabs Theming Extensions header

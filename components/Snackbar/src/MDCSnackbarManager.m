@@ -254,7 +254,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                                 message.voiceNotificationText);
               }
 
-              if ([self isSnackbarTransient:snackbarView]) {
+              if ([self isSnackbarTransient:snackbarView] && message.automaticallyDismisses) {
                 __weak MDCSnackbarMessageView *weakSnackbarView = snackbarView;
                 dispatch_time_t popTime =
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ActionSheetTypicalUseExampleViewController.h"
+#import <UIKit/UIKit.h>
 
 #import "MaterialActionSheet+Theming.h"
 #import "MaterialActionSheet.h"
@@ -22,7 +22,7 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
 
-@interface ActionSheetTypicalUseExampleViewController ()
+@interface ActionSheetTypicalUseExampleViewController : UIViewController
 
 @property(nonatomic, strong) MDCButton *showButton;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;

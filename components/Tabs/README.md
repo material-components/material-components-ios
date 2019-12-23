@@ -56,7 +56,6 @@ Tabs are bars of buttons used to navigate between groups of content.
 - [Examples](#examples)
   - [Creating a tab bar](#creating-a-tab-bar)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
   - [Theming Extensions](#theming-extensions)
 - [MDCTabBarView](#mdctabbarview)
@@ -213,48 +212,6 @@ tabBar.autoresizingMask =
 
 <!-- Extracted from docs/color-theming.md -->
 
-### Color Theming
-
-You can theme a tab bar with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Tabs+ColorThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialTabs_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-// Primary variant
-MDCTabBarColorThemer.applySemanticColorScheme(colorScheme, toTabs: component)
-// Or surface variant
-MDCTabBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, toTabs: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialTabs+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-
-// Step 3: Apply the color scheme to your component
-// Primary variant
-[MDCTabBarColorThemer applySemanticColorScheme:colorScheme toTabs:component];
-// Or surface variant
-[MDCTabBarColorThemer applySurfaceVariantWithColorScheme:colorScheme toTabs:component];
-```
-<!--</div>-->
 
 
 <!-- Extracted from docs/typography-theming.md -->
@@ -270,6 +227,7 @@ pod 'MaterialComponents/Tabs+TypographyThemer'
 ```
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 // Step 1: Import the TypographyThemer extension
 import MaterialComponents.MaterialTabs_TypographyThemer
@@ -362,6 +320,7 @@ to configure your project to use `MDCTabBarView`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 import MaterialComponentsBeta.MaterialTabs_TabBarView
 ```
@@ -377,6 +336,7 @@ import MaterialComponentsBeta.MaterialTabs_TabBarView
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
 let tabBarView = MDCTabBarView()
 addSubview(tabBarView)
@@ -464,6 +424,7 @@ subclass conforming to the `MDCTabBarItemCustomViewing` protocol is provided as
 <!--<div class="material-code-render" markdown="1">-->
 
 ##### Swift
+
 ```swift
 let customView = MyCustomTabView()
 let customItem = MDCTabBarItem()
