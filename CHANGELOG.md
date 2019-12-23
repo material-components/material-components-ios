@@ -1,3 +1,85 @@
+# 99.0.0
+
+In this major release we deleted and deprecated numerous APIs in ButtonBar, FeatureHighlight, List,
+Tabs, TextFields and Flexible Header. We fixed layout issues in Dialogs and BottomAppBar, and added
+support for non-transient Snackbars.
+
+## New features
+
+### Snackbar
+
+We added an opt-in flag to ignore the default timeout and allow Snackbars to persist until an action
+is made upon it:
+
+```swift
+let snackBarMessage = MDCSnackbarMessage(text: "Message text")
+snackBarMessage.automaticallyDismisses = false
+```
+
+```objc
+MDCSnackbarMessage *snackBarMessage = [MDCSnackbarMessage messageWithText:@"Message text"];
+snackBarMessage.automaticallyDismisses = NO;
+```
+
+## New deprecations
+
+### ButtonBar
+
+* [Revert "Revert "Delete MDCButtonBarColorThemer (#9235)"" (#9272)](https://github.com/material-components/material-components-ios/commit/8814a6f55c716ff86134818d0dc3ea43747290da) (Andrew Overton)
+
+### FeatureHighlight
+
+* [Delete MDCFeatureHighlightTypographyThemer (#9273)](https://github.com/material-components/material-components-ios/commit/0b2323ad42ccfd2fdafc56b596866e9d70472ee5) (Andrew Overton)
+
+### List
+
+* [Fix typo in doc (#9301)](https://github.com/material-components/material-components-ios/commit/71ee6bd77e70d8b5969891680a03305a1ed5f12b) (Galia Kaufman)
+* [Remove MDCListColorThemer (#9188)](https://github.com/material-components/material-components-ios/commit/7119b49862df7f0434de21d409cb6ed34a35799c) (Galia Kaufman)
+* [Remove MDCListTypographyThemer (#9190)](https://github.com/material-components/material-components-ios/commit/d5863ef1b5d82daf1f68f0eb612f90936dde6154) (Galia Kaufman)
+
+### Tabs
+
+* [Revert "revert of commit ca2f2ad64046b4a2583abbe7cb705e42ed5f0ae7" (#9271 - [Tabs] Delete MDCTabBarColorThemer)](https://github.com/material-components/material-components-ios/commit/6049a8c9704ecf60d9b4f79c62d406807caf14a8) (Andrew Overton)
+
+### TextFields
+
+* [Delete MDCOutlinedTextFieldColorThemer (#9274)](https://github.com/material-components/material-components-ios/commit/8a510746f681b2d69fdf16fb37e03dec30dfc174) (Andrew Overton)
+
+## Multi-component changes
+
+* [Deprecate MDCFlexibleHeaderColorThemer (#9281)](https://github.com/material-components/material-components-ios/commit/e729515e5c0660827c33369db177a063e52812b5) (Bryan Oltman)
+* [Remove uses of MDCFlexibleHeaderColorThemer (#9282)](https://github.com/material-components/material-components-ios/commit/8febe04908420dd3eb2362150ec54185375b2470) (Bryan Oltman)
+
+## Component changes
+
+### BottomAppBar
+
+* [Add intrinsicContentSize (#9290)](https://github.com/material-components/material-components-ios/commit/3596a5638bbf859e5c9faf7daa9b9ff816fe364c) (Bryan Oltman)
+* [Add snapshot test to verify autolayout bug (#9289)](https://github.com/material-components/material-components-ios/commit/2a17b6ef46bbc501bc15e40d34a1eba42abb162c) (Bryan Oltman)
+
+### Cards
+
+* [Remove leading space before Swift and ObjC example headers (#9295)](https://github.com/material-components/material-components-ios/commit/d658b7cceda2009c11b7032acc76d191d0bcd023) (Bryan Oltman)
+
+### Chips
+
+* [Fix documentation error for Theming section (#9294)](https://github.com/material-components/material-components-ios/commit/817055e50cf4aea6bc83934d32a16ebcdb1248c9) (Will Ernest)
+
+### Dialogs
+
+* [Fix for MDCAlertController icon centering. (#9219)](https://github.com/material-components/material-components-ios/commit/5236258337f91ffccf8a86906758cfaa114930d1) (Bambara@)
+
+### List
+
+* [Fix typo in doc (#9301)](https://github.com/material-components/material-components-ios/commit/71ee6bd77e70d8b5969891680a03305a1ed5f12b) (Galia Kaufman)
+* [Removing Themers from documentation (#9296)](https://github.com/material-components/material-components-ios/commit/ef9887f735ad42e7dc8ea3a45ff287a4e8d5b2b3) (Galia Kaufman)
+
+### Snackbar
+
+* [Allow Snackbars to be non-transient if needed. (#9299)](https://github.com/material-components/material-components-ios/commit/d0f05aef60e48a39118b7fde1f5bd3589a0b438a) (Yarden Eitan)
+
+---
+
 # 98.0.0
 
 In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
