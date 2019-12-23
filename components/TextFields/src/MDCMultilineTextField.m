@@ -728,6 +728,12 @@
     [_trailingView removeFromSuperview];
     [self addSubview:trailingView];
     _trailingView = trailingView;
+
+    // Remove constraints related to the previous trailingView.
+    self.trailingViewTrailing = nil;
+    self.trailingViewCenterY = nil;
+    self.textViewTrailingTrailingViewLeading = nil;
+
     [self setNeedsUpdateConstraints];
   }
 }
