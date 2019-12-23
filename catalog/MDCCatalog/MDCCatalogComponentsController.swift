@@ -71,10 +71,14 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     logoItem.isEnabled = false
     navigationItem.leftBarButtonItem = logoItem
 
-    navigationItem.rightBarButtonItem =
-      UIBarButtonItem(barButtonSystemItem: .action,
-                      target: self.navigationController,
-                      action: #selector(navigationController?.presentMenu))
+    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
+    let menuButton = UIBarButtonItem(image: dotsImage,
+                                     style: .plain,
+                                     target: self.navigationController,
+                                     action: #selector(navigationController?.presentMenu))
+    menuButton.accessibilityLabel = "Menu"
+    menuButton.accessibilityHint = "Opens catalog configuration options."
+    navigationItem.rightBarButtonItem = menuButton
 
     NotificationCenter.default.addObserver(
       self,
