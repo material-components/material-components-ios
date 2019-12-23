@@ -73,19 +73,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
 
   func testNoScrollViewInferSafeAreaTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
     // Given
-    let contentViewController = UIViewController()
-    contentViewController.addChild(fhvc)
-    contentViewController.view.addSubview(fhvc.view)
     if #available(iOS 11.0, *) {
-      fhvc.permitInferringTopSafeAreaFromTopLayoutGuideViewController = true
-    }
-    fhvc.inferTopSafeAreaInsetFromViewController = true
-    fhvc.topLayoutGuideViewController = contentViewController
-    fhvc.didMove(toParent: contentViewController)
+      let contentViewController = UIViewController()
+      contentViewController.addChild(fhvc)
+      contentViewController.view.addSubview(fhvc.view)
+        fhvc.permitInferringTopSafeAreaFromTopLayoutGuideViewController = true
+      }
+      fhvc.inferTopSafeAreaInsetFromViewController = true
+      fhvc.topLayoutGuideViewController = contentViewController
+      fhvc.didMove(toParent: contentViewController)
 
-    // Then
-    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
-    if #available(iOS 11.0, *) {
+      // Then
+      XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, fhvc.headerView.frame.maxY)
     }
   }
