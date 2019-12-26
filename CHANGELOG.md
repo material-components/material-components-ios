@@ -1,3 +1,8 @@
+# 99.0.1
+
+This patch release is an empty release intended solely to re-connect the `develop` and `stable`
+branch histories.
+
 # 99.0.0
 
 In this major release we deleted and deprecated numerous APIs in ButtonBar, FeatureHighlight, List,
