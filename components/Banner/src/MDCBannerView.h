@@ -16,6 +16,8 @@
 #import <MaterialComponents/MaterialElevation.h>
 #import <UIKit/UIKit.h>
 
+// Test change, please ignore.
+
 /**
  @c MDCBannerViewLayoutStyle specifies the layout style of an MDCBannerView.
  */
