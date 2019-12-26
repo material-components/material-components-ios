@@ -292,7 +292,7 @@ merge_release() {
 
   echo "Merging release-candidate into stable and develop..."
 
-  # Merge in to stable.
+  # Create the releasable merge commit in stable.
   git fetch
   if [ ! $(git rev-parse --verify stable 2> /dev/null) ]; then
     git checkout -b stable origin/stable
@@ -300,8 +300,6 @@ merge_release() {
     git checkout stable
   fi
   git rebase origin/stable
-
-  # Create the releasable merge commit.
   git merge --no-ff release-candidate --no-edit
 
   # Connect stable to develop's ancestry by merging stable back into the release-candidate...
