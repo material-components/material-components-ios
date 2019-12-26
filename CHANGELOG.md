@@ -1,3 +1,9 @@
+# 99.0.2
+
+This patch release is an empty release intended solely to connect `stable` to `develop`'s ancestry.
+
+---
+
 # 99.0.1
 
 This patch release is an empty release intended solely to re-connect the `develop` and `stable`
