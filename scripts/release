@@ -300,7 +300,16 @@ merge_release() {
     git checkout stable
   fi
   git rebase origin/stable
+
+  # Create the releasable merge commit.
   git merge --no-ff release-candidate --no-edit
+
+  # Connect stable to develop's ancestry by merging stable back into the release-candidate...
+  git checkout release-candidate
+  git merge --no-ff stable --no-edit
+  # ...and then prepare the release-candidate to be merged into develop.
+  git checkout origin/develop -- .gitattributes
+  git commit -m "Automatic reset of .gitattributes in preparation for merge to develop."
 
   if [ ! $(git rev-parse --verify develop 2> /dev/null) ]; then
     git checkout -b develop origin/develop
