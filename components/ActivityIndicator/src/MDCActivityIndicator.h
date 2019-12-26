@@ -17,6 +17,8 @@
 @class MDCActivityIndicatorTransition;
 @protocol MDCActivityIndicatorDelegate;
 
+// This is a test change.
+
 /**
  Different operating modes for the activity indicator.
 
