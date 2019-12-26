@@ -1316,9 +1316,9 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  # ShadowMetrics
+  # ShadowStandards
 
-  mdc.subspec "ShadowMetrics" do |component|
+  mdc.subspec "ShadowStandards" do |component|
     component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
