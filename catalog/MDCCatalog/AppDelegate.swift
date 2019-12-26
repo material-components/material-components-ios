@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   private static let performPostLaunchSelector = "performPostLaunchSelector"
 
   var window: UIWindow?
-  var navigationController: UINavigationController?
+  let navigationController = UINavigationController()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -36,10 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // and return YES to catalogIsPresentable.
     let tree = CBCCreatePresentableNavigationTree()
 
-    let rootNodeViewController = MDCCatalogComponentsController(node: tree)
-    let navigationController = UINavigationController(rootViewController: rootNodeViewController)
     navigationController.mdc_applyPrimaryTheme(withScheme: AppTheme.containerScheme)
-    self.navigationController = navigationController
+
+    let rootNodeViewController = MDCCatalogComponentsController(node: tree)
+    navigationController.pushViewController(rootNodeViewController, animated: false)
 
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
