@@ -302,7 +302,7 @@ merge_release() {
   #                           \ /
   #            stable o--------1
 
-  # Create the releasable merge commit in stable (commit #1).
+  # Commit #1: Create the releasable merge commit in stable.
   git fetch
   if [ ! $(git rev-parse --verify stable 2> /dev/null) ]; then
     git checkout -b stable origin/stable
@@ -312,11 +312,12 @@ merge_release() {
   git rebase origin/stable
   git merge --no-ff release-candidate --no-edit
 
-  # Connect stable to develop's ancestry by merging stable back into the release-candidate.
-  # (commit #2)
+  # Commit #2: Connect stable to develop's ancestry by merging stable back into the
+  # release-candidate.
   git checkout release-candidate
   git merge --no-ff stable --no-edit
 
+  # Commit #3: Merge the release-candidate into develop.
   if [ ! $(git rev-parse --verify develop 2> /dev/null) ]; then
     git checkout -b develop origin/develop
   else
@@ -324,7 +325,6 @@ merge_release() {
   fi
   git rebase origin/develop
   # The following lines will only create one commit thanks to the --no-commit argument here.
-  # (commit #3)
   git merge --no-ff --no-commit release-candidate --no-edit
   git reset HEAD .gitattributes
   git checkout -- .gitattributes
