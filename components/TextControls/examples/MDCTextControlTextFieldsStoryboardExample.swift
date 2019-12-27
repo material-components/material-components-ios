@@ -12,16 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
 import MaterialComponents.MaterialTextControls
 import MaterialComponents.MaterialTextControls_Theming
 
+import UIKit
+
+/// This example showcases how to use an MDCTextControl with a storyboard.
 final class MDCTextControlTextFieldsStoryboardExample: UIViewController {
+
+  //MARK: Properties
 
   @IBOutlet weak var filledTextField: MDCFilledTextField!
   @IBOutlet weak var outlinedTextField: MDCOutlinedTextField!
 
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
+
+  //MARK: Object Lifecycle
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -31,10 +37,14 @@ final class MDCTextControlTextFieldsStoryboardExample: UIViewController {
     NotificationCenter.default.removeObserver(self)
   }
 
+  //MARK: View Lifecycle
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setUpTextFields()
   }
+
+  //MARK: Setup
 
   func setUpTextFields() {
     filledTextField.label.text = "label text"
@@ -47,8 +57,7 @@ final class MDCTextControlTextFieldsStoryboardExample: UIViewController {
   }
 }
 
-// MARK: - CatalogByConvention
-
+/// This extension implements a CatalogByConvention method
 extension MDCTextControlTextFieldsStoryboardExample {
   @objc class func catalogMetadata() -> [String: Any] {
     return [
