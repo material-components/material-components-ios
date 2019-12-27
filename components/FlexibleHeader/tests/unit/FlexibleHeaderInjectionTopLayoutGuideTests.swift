@@ -77,8 +77,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
       let contentViewController = UIViewController()
       contentViewController.addChild(fhvc)
       contentViewController.view.addSubview(fhvc.view)
-        fhvc.permitInferringTopSafeAreaFromTopLayoutGuideViewController = true
-      }
+      fhvc.permitInferringTopSafeAreaFromTopLayoutGuideViewController = true
       fhvc.inferTopSafeAreaInsetFromViewController = true
       fhvc.topLayoutGuideViewController = contentViewController
       fhvc.didMove(toParent: contentViewController)
