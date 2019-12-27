@@ -16,6 +16,14 @@
 
 @implementation MDCShadowStandards
 
-
+- (instancetype)initWithElevation:(CGFloat)elevation {
+  self = [super init];
+  if (self) {
+    _shadowOpacity = (float)0.24;
+    _shadowRadius = elevation * (CGFloat)0.5;
+    _shadowOffset = CGSizeMake(0, (CGFloat)1.25 * elevation);
+  }
+  return self;
+}
 
 @end
