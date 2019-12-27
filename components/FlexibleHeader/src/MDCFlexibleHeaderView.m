@@ -486,6 +486,14 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return _topSafeArea.topSafeAreaSourceViewController;
 }
 
+- (void)setSubtractsAdditionalSafeAreaInsets:(BOOL)subtractsAdditionalSafeAreaInsets {
+  _topSafeArea.subtractsAdditionalSafeAreaInsets = subtractsAdditionalSafeAreaInsets;
+}
+
+- (BOOL)subtractsAdditionalSafeAreaInsets {
+  return _topSafeArea.subtractsAdditionalSafeAreaInsets;
+}
+
 - (void)topSafeAreaInsetDidChange {
   [_topSafeArea safeAreaInsetsDidChange];
 }
