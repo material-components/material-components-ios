@@ -41,7 +41,7 @@ A banner displays a prominent message and related optional actions.
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponentsBeta/Banner'
+pod 'MaterialComponents/Banner'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
