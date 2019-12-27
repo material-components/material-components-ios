@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialTextControls
+import MaterialComponents.MaterialTextControls_Theming
 
 final class MDCTextControlTextFieldsStoryboardExample: UIViewController {
 
