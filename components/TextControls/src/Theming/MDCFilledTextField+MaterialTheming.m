@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 
 static const CGFloat kDisabledOpacity = (CGFloat)0.60;
+static const CGFloat kFilledSublayerFillColorNormalOpacity = (CGFloat)0.12;
 
 @implementation MDCFilledTextField (MaterialTheming)
 
@@ -66,10 +67,10 @@ static const CGFloat kDisabledOpacity = (CGFloat)0.60;
   UIColor *underlineColorDisabled = [underlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
 
   UIColor *filledSublayerFillColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
   UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
-  UIColor *filledSublayerFillColorDisabled =
-      [filledSublayerFillColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
 
   self.tintColor = colorScheme.primaryColor;
 
@@ -129,10 +130,10 @@ static const CGFloat kDisabledOpacity = (CGFloat)0.60;
   UIColor *underlineColorDisabled = [underlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
 
   UIColor *filledSublayerFillColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
   UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
-  UIColor *filledSublayerFillColorDisabled =
-      [filledSublayerFillColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
 
   self.tintColor = colorScheme.errorColor;
 
