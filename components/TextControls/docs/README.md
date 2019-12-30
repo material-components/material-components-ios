@@ -16,11 +16,11 @@ TextControls are controls used for text input that make use of classes like UITe
 
 ## Overview
 
-At this time, the only text control we offer is the textfield. There are three textfield classes:
+At this time, the only text control we offer is the text field. There are three text field classes:
 
-* MDCFilledTextField: A textfield implementing the Material [filled style](https://material.io/components/text-fields/#filled-text-field)
-* MDCOutlinedTextField: A textfield implementing the Material [outlined style](https://material.io/components/text-fields/#outlined-text-field)
-* MDCBaseTextField: An unstyled textfield that the previous two inherit from
+* MDCFilledTextField: A text field implementing the Material [filled style](https://material.io/components/text-fields/#filled-text-field)
+* MDCOutlinedTextField: A text field implementing the Material [outlined style](https://material.io/components/text-fields/#outlined-text-field)
+* MDCBaseTextField: An unstyled text field that the previous two inherit from
 
 ## Installation
 

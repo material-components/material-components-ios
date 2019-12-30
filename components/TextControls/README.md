@@ -20,22 +20,22 @@ TextControls are controls used for text input that make use of classes like UITe
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [TextFields](#textfields)
+  - [Text fields](#text-fields)
 - [Theming](#theming)
   - [Theming](#theming)
 - [Examples](#examples)
-  - [Creating a textfield](#creating-a-textfield)
+  - [Creating a text field](#creating-a-text-field)
 
 - - -
 
 ## Overview
 
-At this time, the only text control we offer is the textfield. There are three textfield classes:
+At this time, the only text control we offer is the text field. There are three text field classes:
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link">MDCFilledTextField: A textfield implementing the Material <a href="https://material.io/components/text-fields/#filled-text-field">filled style</a></li>
-  <li class="icon-list-item icon-list-item--link">MDCOutlinedTextField: A textfield implementing the Material <a href="https://material.io/components/text-fields/#outlined-text-field">outlined style</a></li>
-  <li class="icon-list-item icon-list-item">MDCBaseTextField: An unstyled textfield that the previous two inherit from</li>
+  <li class="icon-list-item icon-list-item--link">MDCFilledTextField: A text field implementing the Material <a href="https://material.io/components/text-fields/#filled-text-field">filled style</a></li>
+  <li class="icon-list-item icon-list-item--link">MDCOutlinedTextField: A text field implementing the Material <a href="https://material.io/components/text-fields/#outlined-text-field">outlined style</a></li>
+  <li class="icon-list-item icon-list-item">MDCBaseTextField: An unstyled text field that the previous two inherit from</li>
 </ul>
 
 ## Installation
@@ -82,9 +82,9 @@ import MaterialComponents.MaterialTextControls
 
 <!-- Extracted from docs/typical-use.md -->
 
-### TextFields
+### Text fields
 
-The largest difference between MDCTextControl textfields and UITextFields from a usability standpoint relates to the sizing behavior of MDCTextControl textfields, and the implications of that sizing behavior for layout. Where UITextField can be whatever height a user wants it to be, MDCTextControl textfields have heights that they need to be in order to look correct. The process for ensuring that MDCTextControl textfields have their preferred heights depends on whether one is in an Auto Layout or Manual Layout environment. In an Auto Layout environment, the textfield's preferred height will be reflected in `intrinsicContentSize`, and the user will not have to do anything other than set a width constraint on the textfield to ensure that the preferred height is achieved. In a Manual Layout environment, standard methods like `sizeThatFits:` or `sizeToFit` must be used to inform the frames of the textfield. These methods assume that the textfield already has the preferred width.
+The largest difference between MDCTextControl text fields and UITextFields from a usability standpoint relates to the sizing behavior of MDCTextControl text fields. Where UITextField can be whatever height a user wants it to be, MDCTextControl text fields have heights that they need to be in order to look correct. The process for ensuring that MDCTextControl text fields have their preferred heights depends on whether one is in an Auto Layout or Manual Layout environment. In an Auto Layout environment, the text field's preferred height will be reflected in `intrinsicContentSize`, and the user will not have to do anything other than set a width constraint on the text field to ensure that the preferred height is achieved. In a Manual Layout environment, standard methods like `sizeThatFits:` or `sizeToFit` must be used to inform the frames of the text field. These methods assume that the text field already has the preferred width.
 
 
 ## Theming
@@ -93,9 +93,9 @@ The largest difference between MDCTextControl textfields and UITextFields from a
 
 ### Theming
 
-You can theme a textfield to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](../../docs/theming.md).
+You can theme a text field to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](../../docs/theming.md).
 
-First, import the theming extension for TextControls and create a textfield.
+First, import the theming extension for TextControls and create a text field.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -141,7 +141,7 @@ filledTextField.applyTheme(withScheme: containerScheme)
 
 <!-- Extracted from docs/examples.md -->
 
-### Creating a textfield
+### Creating a text field
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

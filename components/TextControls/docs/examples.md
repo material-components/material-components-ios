@@ -1,4 +1,4 @@
-### Creating a textfield
+### Creating a text field
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
