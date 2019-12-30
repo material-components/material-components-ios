@@ -206,7 +206,6 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/FlexibleHeader+ColorThemer"
     extension.dependency "MaterialComponents/NavigationBar+ColorThemer"
     extension.dependency "MaterialComponents/Themes"
   end
@@ -916,7 +915,6 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/FlexibleHeader+ColorThemer"
       unit_tests.dependency "MaterialComponents/ShadowLayer"
     end
   end
@@ -931,19 +929,6 @@ Pod::Spec.new do |mdc|
     ]
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-  end
-
-  mdc.subspec "FlexibleHeader+ColorThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/schemes/Color"
   end
 
   # HeaderStackView
