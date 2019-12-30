@@ -1,16 +1,64 @@
-# #develop#
+# 100.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we made improvements to Ink. As well as improvements in Dialogs,
+Flexible Header, Snackbar, and TextFields.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+The `inkColor` in `MDCInkView` is now null_resettable.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+
+### Dialogs
+
+We added the ability to customize MDCAlertController presentation animation.
+
+```swift
+let alertController = MDCAlertController()
+alertController.presentationOpacityAnimationDuration = 0.5
+alertController.presentationScaleAnimationDuration = 0.25
+alertController.presentationInitialScaleFactor = 0.7
+```
+
+```objc
+MDCAlertController *alertController = [[MDCAlertController alloc] init];
+alertController.presentationOpacityAnimationDuration = 0.5;
+alertController.presentationScaleAnimationDuration = 0.25;
+alertController.presentationInitialScaleFactor = 0.7;
+```
+
+### FlexibleHeader
+
+We added the ability to infer top safe are insets from a view controller.
+
+```swift
+let flexibleHeader = MDCFlexibleHeaderViewController()
+flexibleHeader.inferTopSafeAreaInsetFromViewController = true
+```
+
+```objc
+MDCFlexibleHeaderViewController *flexibleHeader = [[MDCFlexibleHeaderViewController alloc] init];
+flexibleHeader.inferTopSafeAreaInsetFromViewController = YES;
+```
+
 ## API changes
+
+### Dialogs
+
+*new* property: `presentationOpacityAnimationDuration` in `MDCAlertController`.
+
+*new* property: `presentationScaleAnimationDuration` in `MDCAlertController`.
+
+*new* property: `presentationInitialScaleFactor` in `MDCAlertController`.
+
+### FlexibleHeader
+
+*new* property: `inferTopSafeAreaInsetFromViewController` in `MDCFlexibleHeaderViewController`.
+
+### Ink
+
+*modified* property: `inkColor` in `MDCInkView` to be `null_resettable`.
 
 ## Component changes
 
@@ -243,7 +291,7 @@ This hotfix patch release fixes the podspec. The previous release forgot to remo
 
 In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
 ButtonBar, Cards, Feature highlight, Ink, Page control, Snackbar, TextField, and Tabs. We also
-fixed Chip padding for Material theming. 
+fixed Chip padding for Material theming.
 
 ## Breaking changes
 
@@ -353,7 +401,7 @@ Deprecate MDCOutlinedTextFieldColorThemer
 *deprecated* class: `MDCButtonShapeThemer`. Please use MDCButton+MaterialTheming instead. (Note: Shape theming is no longer available as an independent API.).
 
 *deprecated* class: `MDCButtonTypographyThemer`. Please use MDCButton+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.).
-			
+
 #### Cards
 
 *removed* protocol: `MDCCardScheming`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
@@ -521,7 +569,7 @@ Delete deprecated MDCBottomAppBarColorThemer
 
 ### Snackbar
 
-Delete snackbarMessageViewTextColor 
+Delete snackbarMessageViewTextColor
 
 ### TextField
 
@@ -563,7 +611,7 @@ Deprecate-MDCPageControlColorThemer-applyColorScheme-toPageContro
 
 ### Snackbar
 
-Deprecate MDCSnackbarColorThemer 
+Deprecate MDCSnackbarColorThemer
 
 ### Tabs
 
@@ -646,7 +694,7 @@ snackBarMessage.elementToFocusOnDismiss = view;
 *removed* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView`. Use messsageTextColor instead.
 
 *deprecated* class: `MDCSnackbarColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
-	
+
 *new* property: `elementToFocusOnDismiss` in `MDCSnackbarMessage`.  Element to focus on snackbar message dismiss. Focuses the first element on screen after dismiss by default. The focus will change to the element only if the focus is on the snackbar message.
 
 #### Tabs
@@ -796,7 +844,7 @@ We deprecated the color themer in preperation of deleting it. Use theming instea
 
 ### Thumb Track
 
-We deprecated the private thumbtrack component's `thumbMaxRippleRadius`. 
+We deprecated the private thumbtrack component's `thumbMaxRippleRadius`.
 
 ## API changes
 
@@ -953,7 +1001,7 @@ visibility of their app bar via the standard UINavigationController setNavigatio
 ###FlexibleHeader
 
 This new shift behavior mode enables the flexible header to mimic the behavior of
-UINavigationController's `setNavigationBarHidden:`. 
+UINavigationController's `setNavigationBarHidden:`.
 
 #### Swift
 
@@ -1346,7 +1394,7 @@ let appBar = MDCAppBarViewController()
 appBar.shouldAdjustHeightBasedOnHeaderStackView = true
 ```
 
-### Slider 
+### Slider
 
 `MDCSlider` allows having a continuous Slider that shows track tick marks.
 
@@ -1395,7 +1443,7 @@ slider.numberOfDiscreteValues = 5;
 ## Slider
 
 * [Fix event handling. (#8759)](https://github.com/material-components/material-components-ios/commit/f588ea9dbe560a9e89457d8b8b3015f7c3e1f394) (Robert Moore)
- 
+
 ---
 
 # 94.1.0
@@ -1423,7 +1471,7 @@ class MyAnimationDelegate: NSObject, MDCFlexibleHeaderViewAnimationDelegate {
 **Objective-C**
 
 ```objc
--(BOOL)flexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView 
+-(BOOL)flexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView
 	didChangeTrackingScrollViewAnimated:(BOOL)animated {
   if (animated) {
     // ...
@@ -1680,7 +1728,7 @@ In this minor release TextFields support multiline error/helper text, FeatureHig
 ### FeatureHighlight
 
 You can now set `adjustsFontForContentSizeCategory` on `MDCFeatureHighlightViewController` to automatically update your scalable font when content size category changes.
-Namely, when `adjustsFontForContentSizeCategory` is set to `YES` the title and body fonts will scale appropriately if given a scalable font. 
+Namely, when `adjustsFontForContentSizeCategory` is set to `YES` the title and body fonts will scale appropriately if given a scalable font.
 
 ### OverlayWindow
 
@@ -2093,7 +2141,7 @@ let alert = MDCAlertController(title: "This is a title", message: "This is a mes
 let textField = UITextField()
 textField.placeholder = "This is a text field"
 alert.accessoryView = textField
-``` 
+```
 
 ## Changes
 
