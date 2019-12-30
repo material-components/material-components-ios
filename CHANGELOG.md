@@ -1,6 +1,6 @@
 # 100.0.0
 
-In this major release we made improvements to Ink. As well as improvements including customization Dialogs presentation animation,
+In this major release we made a breaking change improvement to Ink’s `inkColor` API. As well as improvements including customization Dialogs presentation animation,
 Flexible Header behavior around safe area. Also, we addressed bugs in Snackbar and TextFields.
 
 ## Breaking changes
@@ -29,6 +29,8 @@ alertController.presentationInitialScaleFactor = 0.7;
 ```
 
 ### FlexibleHeader
+
+We added a new runtime flag `permitInferringTopSafeAreaFromTopLayoutGuideViewController` to address a crash that was occurring in certain configurations.
 
 When disabled, if both inferTopSafeAreaInsetFromViewController and topLayoutGuideAdjustmentEnabled are set to YES, and the view controller selected to extract the safe area inset from (either automatically or via the delegate) is the same as topLayoutGuideViewController, the app will crash.
 
