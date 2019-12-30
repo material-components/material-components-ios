@@ -5,7 +5,7 @@ Flexible Header, Snackbar, and TextFields.
 
 ## Breaking changes
 
-The `inkColor` in `MDCInkView` is now null_resettable.
+The `inkColor` in `MDCInkView` is now `null_resettable`.
 
 ## New features
 
