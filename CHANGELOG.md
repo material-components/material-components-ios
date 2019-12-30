@@ -1,3 +1,65 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Standardize the examples. (#9334)](https://github.com/material-components/material-components-ios/commit/315140a146b3b8f6a2ee7b1d2bd1d664e4ebc038) (featherless)
+
+### Banner
+
+* [Update README.md (#9292)](https://github.com/material-components/material-components-ios/commit/20b32f415f7d8a22c873a87fc22af37d93dca71f) (Radek)
+
+### Dialogs
+
+* [Add `const` keyword to CGFloat and UIEdgeInsets constants in MDCDialogPresentationController. (#9325)](https://github.com/material-components/material-components-ios/commit/72e1aa88a0b5fe65118996d3defccbad2c30639d) (Randall Li)
+* [Expose MDCAlertController presentation animation properties (#9314)](https://github.com/material-components/material-components-ios/commit/f08507474ceed7b48e1a1bb0f7fb1611bc99e9cf) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Add new flag to allow use of inferTopSafeAreaInsetFromViewController with topLayoutGuideAdjustmentEnabled (#9323)](https://github.com/material-components/material-components-ios/commit/194d08f305921dc087a4c3303324fa696e086295) (featherless)
+* [Clean up unsupported situation when inferring the top safe area inset (#9317)](https://github.com/material-components/material-components-ios/commit/36981ec75c4b146a46a12314c2872a4479d50700) (featherless)
+
+### Ink
+
+* [Update ink color to be null resettable. (#9253)](https://github.com/material-components/material-components-ios/commit/60e467f65408536e5f6f9bdd5f8c071b03de558e) (Yarden Eitan)
+
+### Snackbar
+
+* [Add snapshot test showing reported shadow bug (#9309)](https://github.com/material-components/material-components-ios/commit/d7a242e07fa2498a5fb9859dacd4c58a765421d3) (Yarden Eitan)
+* [Resolve truncation of shadow in Snackbars (#9315)](https://github.com/material-components/material-components-ios/commit/c5f7118b13db0331ec16a596b0763130af4eb74e) (Yarden Eitan)
+
+### Tabs
+
+* [Remove out of date color theming docs (#9330)](https://github.com/material-components/material-components-ios/commit/25ee86e3fc4c6c2a0c1e3c14517360c5a8e55961) (Andrew Overton)
+
+### TextControls
+
+* [Add swift storyboard example (#9328)](https://github.com/material-components/material-components-ios/commit/95889abf03927e75e7c6976d19c5101e1e8e3c9f) (Andrew Overton)
+
+### TextFields
+
+* [Ensures that constraints used for the trailing view are properly removed when a new trailing view is set (#9336)](https://github.com/material-components/material-components-ios/commit/f4ec87ac392175df9e2b6827cb5eccc1738519b2) (Andrew Overton)
+* [Removes requirement that the textView delegate be set when informing layout delegate of a size change (#9337)](https://github.com/material-components/material-components-ios/commit/f8d9897aac396090e15140aed1800b4431f04684) (Andrew Overton)
+
+## Multi-component changes
+
+* [Use prefix on category name for UIApplication+AppExtensions so that category names don't conflict in ObjC namespace. (#9277)](https://github.com/material-components/material-components-ios/commit/b86e38f249cb28211def17da69add34fb50badf6) (Randall Li)
+
+---
+
 # 99.0.2
 
 This patch release is an empty release intended solely to connect `stable` to `develop`'s ancestry.
