@@ -132,8 +132,8 @@
   [presentationController presentationTransitionWillBegin];
 
   // Then
-  XCTAssertTrue(
-      presentationController.bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight);
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInContentHeight);
 }
 
 - (void)testShouldIncludeSafeAreaInInitialDrawerHeight {
@@ -152,8 +152,8 @@
   [presentationController presentationTransitionWillBegin];
 
   // Then
-  XCTAssertTrue(
-      presentationController.bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight);
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInInitialDrawerHeight);
 }
 
 @end
