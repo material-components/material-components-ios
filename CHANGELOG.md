@@ -1,7 +1,7 @@
 # 100.0.0
 
-In this major release we made improvements to Ink. As well as improvements in Dialogs,
-Flexible Header, Snackbar, and TextFields.
+In this major release we made improvements to Ink. As well as improvements including customization Dialogs presentation animation,
+Flexible Header behavior around safe area. Also, we addressed bugs in Snackbar and TextFields.
 
 ## Breaking changes
 
@@ -30,16 +30,20 @@ alertController.presentationInitialScaleFactor = 0.7;
 
 ### FlexibleHeader
 
-We added the ability to infer top safe are insets from a view controller.
+When disabled, if both inferTopSafeAreaInsetFromViewController and topLayoutGuideAdjustmentEnabled are set to YES, and the view controller selected to extract the safe area inset from (either automatically or via the delegate) is the same as topLayoutGuideViewController, the app will crash.
+
+When enabled, the app will not crash in the situation described above. This is only supported on iOS 11+.
+
+Enable this property before setting inferTopSafeAreaInsetFromViewController or topLayoutGuideViewController.
 
 ```swift
 let flexibleHeader = MDCFlexibleHeaderViewController()
-flexibleHeader.inferTopSafeAreaInsetFromViewController = true
+flexibleHeader.permitInferringTopSafeAreaFromTopLayoutGuideViewController = true
 ```
 
 ```objc
 MDCFlexibleHeaderViewController *flexibleHeader = [[MDCFlexibleHeaderViewController alloc] init];
-flexibleHeader.inferTopSafeAreaInsetFromViewController = YES;
+flexibleHeader.permitInferringTopSafeAreaFromTopLayoutGuideViewController = YES;
 ```
 
 ## API changes
@@ -54,7 +58,7 @@ flexibleHeader.inferTopSafeAreaInsetFromViewController = YES;
 
 ### FlexibleHeader
 
-*new* property: `inferTopSafeAreaInsetFromViewController` in `MDCFlexibleHeaderViewController`.
+*new* property: `permitInferringTopSafeAreaFromTopLayoutGuideViewController` in `MDCFlexibleHeaderViewController`.
 
 ### Ink
 
