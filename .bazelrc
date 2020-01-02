@@ -13,12 +13,12 @@
 # limitations under the License.
 
 # Common flags for all builds
-build --verbose_failures
-build --test_output=errors
+build --verbose_failures  # Print the full command line for commands that failed.
+build --test_output=errors  # Prints log file output to the console on failure.
 
 # Platform-specific flags
-build --apple_platform_type=ios
+build --apple_platform_type=ios  # Build for iOS by default.
 
 # Swift-specific features: https://github.com/bazelbuild/rules_swift/blob/master/swift/internal/features.bzl
-build --features=swift.enable_batch_mode
-build --features=swift.use_global_module_cache
+build --features=swift.enable_batch_mode  # Intended to speed up non-incremental non-WMO builds.
+build --features=swift.use_global_module_cache  # Use the same global Clang module as ObjC targets.
