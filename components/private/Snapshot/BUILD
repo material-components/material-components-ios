@@ -58,9 +58,9 @@ mdc_public_objc_library(
     name = "Snapshot",
     testonly = 1,
     deps = [
-        ":SnapshotTestCase",
         ":SnapshotSourceDummies",
         ":SnapshotSwiftLib",
+        ":SnapshotTestCase",
         ":SnapshotUtilities",
     ],
 )
