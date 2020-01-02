@@ -20,7 +20,7 @@
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
-static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
+static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 
 @interface MDCTextControlStyleOutlined ()
 
