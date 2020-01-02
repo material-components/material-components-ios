@@ -45,9 +45,9 @@ mdc_examples_objc_library(
         "//components/AnimationTiming",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
-        "//components/private/Math",
         "//components/ShadowElevations",
         "//components/Slider",
+        "//components/private/Math",
     ],
 )
 
