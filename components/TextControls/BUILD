@@ -68,6 +68,7 @@ mdc_examples_objc_library(
         ":TextControls",
         ":Theming",
         "//components/Buttons",
+        "//components/Buttons:Theming",
         "//components/schemes/Container",
     ],
 )
