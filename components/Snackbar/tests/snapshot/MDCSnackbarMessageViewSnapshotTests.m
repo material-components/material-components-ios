@@ -218,7 +218,6 @@ static NSString *const kItemTitleLong2Arabic =
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleShort2Latin];
   messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
-//  self.testManager.internalManager.overlayView.frame = CGRectMake(0, 0, 375, 667);
 
   // When
   messageView.elevation = 24;
