@@ -225,6 +225,12 @@ static NSString *const kItemTitleLong2Arabic =
                                                         animated:NO
                                                       completion:nil];
 
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.testManager.internalManager.overlayView];
 }
