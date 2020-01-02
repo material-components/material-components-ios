@@ -64,6 +64,11 @@ This button allows the user to signal that they want the view controller to togg
 */
 @property(nonatomic, strong) MDCButton *toggleDarkModeButton;
 
+/**
+This button allows the user to signal that they want to toggle the layout direction.
+*/
+@property(nonatomic, strong) MDCButton *toggleLayoutDirectionButton;
+
 @end
 
 @implementation MDCTextControlContentViewController
@@ -127,6 +132,7 @@ This button allows the user to signal that they want the view controller to togg
   self.toggleErrorButton = [self createToggleErrorButton];
   self.resignFirstResponderButton = [self createResignFirstResponderButton];
   self.toggleDarkModeButton = [self createToggleDarkModeButton];
+  self.toggleLayoutDirectionButton = [self createToggleLayoutDirectionButton];
 }
 
 - (MDCButton *)createDecreaseContentSizeButton {
@@ -196,6 +202,17 @@ This button allows the user to signal that they want the view controller to togg
   return button;
 }
 
+- (MDCButton *)createToggleLayoutDirectionButton {
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitle:@"Toggle layout direction" forState:UIControlStateNormal];
+  [button addTarget:self
+                action:@selector(toggleLayoutDirectionButtonTapped:)
+      forControlEvents:UIControlEventTouchUpInside];
+  [button applyContainedThemeWithScheme:self.containerScheme];
+  [button sizeToFit];
+  return button;
+}
+
 - (UILabel *)createLabelWithText:(NSString *)text {
   UILabel *label = [[UILabel alloc] init];
   label.textColor = self.containerScheme.colorScheme.primaryColor;
@@ -209,6 +226,7 @@ This button allows the user to signal that they want the view controller to togg
     self.toggleErrorButton,
     self.toggleDarkModeButton,
     self.toggleDisabledButton,
+    self.toggleLayoutDirectionButton,
     self.decreaseContentSizeButton,
     self.increaseContentSizeButton,
     self.resignFirstResponderButton,
@@ -382,6 +400,10 @@ This button allows the user to signal that they want the view controller to togg
   [self handleToggleDarkModeButtonTapped];
 }
 
+- (void)toggleLayoutDirectionButtonTapped:(id)sender {
+  [self handleToggleLayoutDirectionButtonTapped];
+}
+
 #pragma mark IBAction handling
 
 - (void)handleToggleDarkModeButtonTapped {
@@ -413,6 +435,27 @@ This button allows the user to signal that they want the view controller to togg
 }
 
 - (void)handleResignFirstResponderTapped {
+}
+
+- (void)handleToggleLayoutDirectionButtonTapped {
+  if (@available(iOS 12.0, *)) {
+    UITraitEnvironmentLayoutDirection currentTraitEnvironmentLayoutDirection =
+        self.traitCollection.layoutDirection;
+    UITraitEnvironmentLayoutDirection newTraitEnvironmentLayoutDirection =
+        UITraitEnvironmentLayoutDirectionUnspecified;
+    if (currentTraitEnvironmentLayoutDirection == UITraitEnvironmentLayoutDirectionRightToLeft) {
+      newTraitEnvironmentLayoutDirection = UITraitEnvironmentLayoutDirectionLeftToRight;
+    } else if (currentTraitEnvironmentLayoutDirection ==
+               UITraitEnvironmentLayoutDirectionLeftToRight) {
+      newTraitEnvironmentLayoutDirection = UITraitEnvironmentLayoutDirectionRightToLeft;
+    } else {
+      return;
+    }
+    [self.traitEnvironmentChangeDelegate
+        childViewControllerDidRequestLayoutDirection:self
+                                     layoutDirection:newTraitEnvironmentLayoutDirection];
+  }
+  [self.view setNeedsLayout];
 }
 
 @end

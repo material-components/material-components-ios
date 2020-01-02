@@ -167,6 +167,14 @@ All the content size categories that this view controller supports.
   }
 }
 
+- (void)setTraitCollection:(UITraitCollection *)traitCollection
+     onChildViewController:(UIViewController *)childViewController {
+  NSArray *traitCollections = @[ childViewController.traitCollection, traitCollection ];
+  UITraitCollection *newTraitCollection =
+      [UITraitCollection traitCollectionWithTraitsFromCollections:traitCollections];
+  [self setOverrideTraitCollection:newTraitCollection forChildViewController:childViewController];
+}
+
 #pragma mark - MDCTraitEnvironmentChangeDelegate
 
 - (void)
@@ -193,12 +201,18 @@ All the content size categories that this view controller supports.
     API_AVAILABLE(ios(12.0)) {
   UITraitCollection *userInterfaceStyleTraitCollection =
       [UITraitCollection traitCollectionWithUserInterfaceStyle:userInterfaceStyle];
-  UITraitCollection *currentTraitCollection = childViewController.traitCollection;
-  NSArray *traitCollections = @[ currentTraitCollection, userInterfaceStyleTraitCollection ];
-  UITraitCollection *traitCollection =
-      [UITraitCollection traitCollectionWithTraitsFromCollections:traitCollections];
-  [self setOverrideTraitCollection:traitCollection forChildViewController:childViewController];
-  [self.view setNeedsLayout];
+  [self setTraitCollection:userInterfaceStyleTraitCollection
+      onChildViewController:childViewController];
+}
+
+- (void)childViewControllerDidRequestLayoutDirection:(UIViewController *)childViewController
+                                     layoutDirection:
+                                         (UITraitEnvironmentLayoutDirection)layoutDirection
+    API_AVAILABLE(ios(10.0)) {
+  UITraitCollection *layoutDirectionTraitCollection =
+      [UITraitCollection traitCollectionWithLayoutDirection:layoutDirection];
+  [self setTraitCollection:layoutDirectionTraitCollection
+      onChildViewController:childViewController];
 }
 
 @end

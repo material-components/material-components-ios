@@ -36,4 +36,9 @@
                                      userInterfaceStyle:(UIUserInterfaceStyle)userInterfaceStyle
     API_AVAILABLE(ios(12.0));
 
+- (void)childViewControllerDidRequestLayoutDirection:(UIViewController *)childViewController
+                                     layoutDirection:
+                                         (UITraitEnvironmentLayoutDirection)layoutDirection
+    API_AVAILABLE(ios(10.0));
+
 @end
