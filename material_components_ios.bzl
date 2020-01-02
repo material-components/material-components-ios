@@ -29,6 +29,12 @@ def mdc_objc_library(
       copts = copts,
       **kwargs)
 
+def mdc_swift_library(name, **kwargs):
+  """Declare a Swift library that supports CocoaPods-style imports."""
+  _mdc_cocoapods_compatible_swift_library(
+      name = name,
+      **kwargs)
+
 def mdc_public_objc_library(
     name,
     deps = [],
@@ -155,7 +161,7 @@ def mdc_examples_swift_library(
     visibility: The visibility of the examples.
     **kwarrgs: Any arguments accepted by _mdc_objc_library().
   """
-  swift_library(
+  _mdc_cocoapods_compatible_swift_library(
       name = name,
       deps = deps,
       visibility = visibility,
@@ -198,7 +204,7 @@ def mdc_unit_test_swift_library(
     testonly = 1,
     **kwargs):
     """Declare a swift_library for unit test sources."""
-    swift_library(
+    _mdc_cocoapods_compatible_swift_library(
         name = name,
         srcs = native.glob(["tests/unit/*.swift"]) + extra_srcs,
         deps = deps,
@@ -241,7 +247,7 @@ def mdc_snapshot_swift_library(
     testonly = 1,
     **kwargs):
   """Declare a swift_library for snapshot test source."""
-  swift_library(
+  _mdc_cocoapods_compatible_swift_library(
       name = name,
       srcs = native.glob(["tests/snapshot/*.swift"]) + extra_srcs,
       deps = ["//components/private/Snapshot"] + deps,
@@ -331,3 +337,50 @@ def mdc_unit_test_suite(
         size = size,
         **kwargs
     )
+
+# The bazel target for the tool we use to rewrite import statements.
+BAZEL_IMPORT_REWRITER = "//scripts/bazel_import_rewriter"
+
+def _mdc_cocoapods_compatible_swift_library(
+    name,
+    srcs,
+    **kwargs):
+    """Internal Swift library rule for CocoaPods compatibility.
+
+    Rewrites the provided source files to use Bazel-style imports.
+
+    This rule is a drop-in replacement for swift_library.
+
+    Args:
+      name: The name of the target.
+      srcs: The source Swift files for this library.
+      **kwarrgs: Any arguments to be passed to swift_library.
+    """
+    cocoapods_compatible_srcs_target_name = name + "_cocoapods_compatible_srcs"
+
+    # First, map all of the srcs to their outs.
+    bazel_import_srcs = []
+    for src in srcs:
+        bazel_import_srcs.append(src.replace(".swift", ".bazel_imports.swift"))
+
+    # Then, create an intermediary rule that transforms all of the srcs files.
+    # Note that we provide the srcs and outs as a concatenated list of args.
+    # E.g. if srcs is ['src1.swift', 'src2.swift'],
+    # then outs is ['src1.bazel_imports.swift', 'src2.bazel_imports.swift']
+    # and the command invocation is:
+    #
+    #     $cmd src1.swift src2.swift src1.bazel_imports.swift src2.bazel_imports.swift
+    #
+    native.genrule(
+        name = cocoapods_compatible_srcs_target_name,
+        srcs = srcs,
+        outs = bazel_import_srcs,
+        cmd = "$(location %s) $(SRCS) $(OUTS)" % BAZEL_IMPORT_REWRITER,
+        tools = [BAZEL_IMPORT_REWRITER],
+    )
+
+    # And finally, define our swift_library with the `srcs` swapped for our generated srcs.
+    swift_library(
+        name = name,
+        srcs = [":" + cocoapods_compatible_srcs_target_name],
+        **kwargs)

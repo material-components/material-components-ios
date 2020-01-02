@@ -16,9 +16,9 @@ load(
     "//:material_components_ios.bzl",
     "mdc_extension_objc_library",
     "mdc_objc_library",
+    "mdc_swift_library",
     "mdc_public_objc_library",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -30,7 +30,7 @@ mdc_objc_library(
     ]),
 )
 
-swift_library(
+mdc_swift_library(
     name = "SnapshotSwiftLib",
     srcs = glob(["src/*.swift"]),
     copts = [

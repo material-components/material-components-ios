@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl", "mdc_objc_library")
+load("//:material_components_ios.bzl", "mdc_objc_library", "mdc_swift_library")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -61,7 +60,7 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-swift_library(
+mdc_swift_library(
     name = "MDCCatalogLib",
     srcs = native.glob(["MDCCatalog/*.swift"]),
     copts = [
@@ -110,12 +109,13 @@ mdc_objc_library(
     name = "MaterialCatalog",
     srcs = native.glob(["MaterialCatalog/*.m"]),
     hdrs = native.glob(["MaterialCatalog/*.h"]),
+    module_name = "MaterialCatalog",
     deps = [
         "//components/Themes",
     ],
 )
 
-swift_library(
+mdc_swift_library(
     name = "MDCDragonsLib",
     srcs = native.glob(["MDCDragons/*.swift"]),
     copts = [
