@@ -728,6 +728,12 @@
     [_trailingView removeFromSuperview];
     [self addSubview:trailingView];
     _trailingView = trailingView;
+
+    // Remove constraints related to the previous trailingView.
+    self.trailingViewTrailing = nil;
+    self.trailingViewCenterY = nil;
+    self.textViewTrailingTrailingViewLeading = nil;
+
     [self setNeedsUpdateConstraints];
   }
 }
@@ -755,7 +761,7 @@
   [self.fundament didChange];
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
-  if (currentSize.height != requiredSize.height && self.textView.delegate &&
+  if (currentSize.height != requiredSize.height && self.layoutDelegate &&
       [self.layoutDelegate respondsToSelector:@selector(multilineTextField:
                                                       didChangeContentSize:)]) {
     id<MDCMultilineTextInputLayoutDelegate> delegate =

@@ -109,8 +109,30 @@
  topLayoutGuideViewController's top layout guide, which would then be included in the
  next read of the ancestor's safe area inset, compounding the safe area inset and increasing the
  header height infinitely.
+
+ If your app only supports iOS 11+, you can instead set
+ permitInferringTopSafeAreaFromTopLayoutGuideViewController to YES.
  */
 @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
+
+/**
+ This runtime flag affects the way the top safe area is calculated.
+
+ When disabled, if both inferTopSafeAreaInsetFromViewController and topLayoutGuideAdjustmentEnabled
+ are set to YES, and the view controller selected to extract the safe area inset from (either
+ automatically or via the delegate) is the same as topLayoutGuideViewController, the app will
+ crash.
+
+ When enabled, the app will not crash in the situation described above. This is only supported on
+ iOS 11+.
+
+ Enable this property before setting inferTopSafeAreaInsetFromViewController or
+ topLayoutGuideViewController.
+
+ By default this is NO. In the future it will be enabled by default and eventually removed.
+ */
+@property(nonatomic)
+    BOOL permitInferringTopSafeAreaFromTopLayoutGuideViewController NS_AVAILABLE_IOS(11.0);
 
 /**
  When a WKWebView's scroll view is the tracking scroll view, this behavioral flag affects whether

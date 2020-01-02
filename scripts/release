@@ -291,8 +291,18 @@ merge_release() {
   fi
 
   echo "Merging release-candidate into stable and develop..."
+  
+  # Legend of commits.
+  # Each numbered commit corresponds to a set of commands below, with all `o` symbols having been
+  # committed by earlier steps in the release process.
+  #
+  #           develop o-o----------3
+  #                      \        /
+  # release-candidate     o--o---2
+  #                           \ /
+  #            stable o--------1
 
-  # Merge in to stable.
+  # Commit #1: Create the releasable merge commit in stable.
   git fetch
   if [ ! $(git rev-parse --verify stable 2> /dev/null) ]; then
     git checkout -b stable origin/stable
@@ -302,6 +312,12 @@ merge_release() {
   git rebase origin/stable
   git merge --no-ff release-candidate --no-edit
 
+  # Commit #2: Connect stable to develop's ancestry by merging stable back into the
+  # release-candidate.
+  git checkout release-candidate
+  git merge --no-ff stable --no-edit
+
+  # Commit #3: Merge the release-candidate into develop.
   if [ ! $(git rev-parse --verify develop 2> /dev/null) ]; then
     git checkout -b develop origin/develop
   else

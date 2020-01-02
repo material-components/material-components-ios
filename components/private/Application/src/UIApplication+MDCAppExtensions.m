@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "UIApplication+AppExtensions.h"
+#import "UIApplication+MDCAppExtensions.h"
 
-@implementation UIApplication (AppExtensions)
+@implementation UIApplication (MDCAppExtensions)
 
 + (UIApplication *)mdc_safeSharedApplication {
   static UIApplication *application;
