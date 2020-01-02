@@ -16,7 +16,6 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_extension_objc_library",
-    "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
