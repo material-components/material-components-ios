@@ -18,6 +18,15 @@
 
 static const CGFloat kDisabledOpacity = (CGFloat)0.60;
 
+static const CGFloat kFilledSublayerFillColorNormalOpacity = (CGFloat)0.12;
+static const CGFloat kTextColorNormalOpacity = (CGFloat)0.87;
+static const CGFloat kNormalLabelColorNormalOpacity = (CGFloat)0.60;
+
+static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
+static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
+static const CGFloat kPrimaryFloatingLabelColorNormalOpacity = (CGFloat)0.60;
+static const CGFloat kPrimaryFloatingLabelColorEditingOpacity = (CGFloat)0.87;
+
 @implementation MDCFilledTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
@@ -37,39 +46,42 @@ static const CGFloat kDisabledOpacity = (CGFloat)0.60;
 }
 
 - (void)applyDefaultColorScheme:(id<MDCColorScheming>)colorScheme {
-  UIColor *textColorNormal = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *textColorNormal =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextColorNormalOpacity];
   UIColor *textColorEditing = textColorNormal;
-  UIColor *textColorDisabled = [textColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *textColorDisabled =
+      [textColorNormal colorWithAlphaComponent:kTextColorNormalOpacity * kDisabledOpacity];
 
   UIColor *assistiveLabelColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kPrimaryAssistiveLabelColorNormalOpacity];
   UIColor *assistiveLabelColorEditing = assistiveLabelColorNormal;
-  UIColor *assistiveLabelColorDisabled =
-      [assistiveLabelColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *assistiveLabelColorDisabled = [assistiveLabelColorNormal
+      colorWithAlphaComponent:kPrimaryAssistiveLabelColorNormalOpacity * kDisabledOpacity];
 
   UIColor *floatingLabelColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kPrimaryFloatingLabelColorNormalOpacity];
   UIColor *floatingLabelColorEditing =
-      [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.87];
-  UIColor *floatingLabelColorDisabled =
-      [floatingLabelColorNormal colorWithAlphaComponent:kDisabledOpacity];
+      [colorScheme.primaryColor colorWithAlphaComponent:kPrimaryFloatingLabelColorEditingOpacity];
+  UIColor *floatingLabelColorDisabled = [floatingLabelColorNormal
+      colorWithAlphaComponent:kPrimaryFloatingLabelColorNormalOpacity * kDisabledOpacity];
 
   UIColor *normalLabelColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kNormalLabelColorNormalOpacity];
   UIColor *normalLabelColorEditing = normalLabelColorNormal;
-  UIColor *normalLabelColorDisabled =
-      [normalLabelColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *normalLabelColorDisabled = [normalLabelColorNormal
+      colorWithAlphaComponent:kNormalLabelColorNormalOpacity * kDisabledOpacity];
 
   UIColor *underlineColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.42];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kPrimaryUnderlineColorNormalOpacity];
   UIColor *underlineColorEditing = colorScheme.primaryColor;
-  UIColor *underlineColorDisabled = [underlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *underlineColorDisabled = [underlineColorNormal
+      colorWithAlphaComponent:kPrimaryUnderlineColorNormalOpacity * kDisabledOpacity];
 
   UIColor *filledSublayerFillColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
   UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
-  UIColor *filledSublayerFillColorDisabled =
-      [filledSublayerFillColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
 
   self.tintColor = colorScheme.primaryColor;
 
@@ -104,9 +116,11 @@ static const CGFloat kDisabledOpacity = (CGFloat)0.60;
 }
 
 - (void)applyErrorColorScheme:(id<MDCColorScheming>)colorScheme {
-  UIColor *textColorNormal = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *textColorNormal =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextColorNormalOpacity];
   UIColor *textColorEditing = textColorNormal;
-  UIColor *textColorDisabled = [textColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *textColorDisabled =
+      [textColorNormal colorWithAlphaComponent:kTextColorNormalOpacity * kDisabledOpacity];
 
   UIColor *assistiveLabelColorNormal = colorScheme.errorColor;
   UIColor *assistiveLabelColorEditing = assistiveLabelColorNormal;
@@ -119,20 +133,20 @@ static const CGFloat kDisabledOpacity = (CGFloat)0.60;
       [floatingLabelColorNormal colorWithAlphaComponent:kDisabledOpacity];
 
   UIColor *normalLabelColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kNormalLabelColorNormalOpacity];
   UIColor *normalLabelColorEditing = normalLabelColorNormal;
-  UIColor *normalLabelColorDisabled =
-      [normalLabelColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *normalLabelColorDisabled = [normalLabelColorNormal
+      colorWithAlphaComponent:kNormalLabelColorNormalOpacity * kDisabledOpacity];
 
   UIColor *underlineColorNormal = colorScheme.errorColor;
   UIColor *underlineColorEditing = underlineColorNormal;
   UIColor *underlineColorDisabled = [underlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
 
   UIColor *filledSublayerFillColorNormal =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
   UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
-  UIColor *filledSublayerFillColorDisabled =
-      [filledSublayerFillColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
 
   self.tintColor = colorScheme.errorColor;
 
