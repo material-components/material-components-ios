@@ -26,7 +26,6 @@ load(
     "mdc_unit_test_suite",
 )
 
-
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
