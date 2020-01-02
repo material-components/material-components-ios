@@ -15,7 +15,6 @@
 # limitations under the License.
 
 load("//:material_components_ios.bzl", "mdc_examples_swift_library")
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
