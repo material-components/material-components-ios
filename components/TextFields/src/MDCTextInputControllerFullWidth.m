@@ -1067,11 +1067,11 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   if (self.textInput.isEditing && self.characterCountMax > 0) {
     NSString *announcementString;
     if (!announcementString.length) {
-      announcementString = [NSString
-          stringWithFormat:@"%lu characters remaining",
-                           (unsigned long)(self.characterCountMax -
-                                           [self.characterCounter
-                                               characterCountForTextInput:self.textInput])];
+      announcementString =
+          [NSString stringWithFormat:@"%lu of %lu characters",
+                                     (unsigned long)[self.characterCounter
+                                         characterCountForTextInput:self.textInput],
+                                     (unsigned long)self.characterCountMax];
     }
 
     // Simply sending a layout change notification does not seem to

@@ -60,7 +60,6 @@ mdc_examples_swift_library(
         ":ColorThemer",
         ":NavigationDrawer",
         "//components/BottomAppBar",
-        "//components/BottomAppBar:ColorThemer",
         "//components/schemes/Color",
     ],
 )

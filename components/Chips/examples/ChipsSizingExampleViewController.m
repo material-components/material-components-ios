@@ -18,7 +18,7 @@
 
 #import "supplemental/ChipsExampleAssets.h"
 
-@interface ChipsSizingExampleViewController : UIViewController
+@interface ChipsSizingExampleViewController : UIViewController <MDCSliderDelegate>
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, strong) MDCChipView *chipView;
 @property(nonatomic, strong) MDCSlider *widthSlider;
@@ -54,6 +54,8 @@
   self.widthSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   self.widthSlider.maximumValue = 200;
   self.widthSlider.value = self.chipView.frame.size.width;
+  self.widthSlider.accessibilityLabel = @"Width of the chip";
+  self.widthSlider.delegate = self;
   [self.widthSlider addTarget:self
                        action:@selector(widthSliderChanged:)
              forControlEvents:UIControlEventValueChanged];
@@ -62,6 +64,8 @@
   self.heightSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   self.heightSlider.maximumValue = 100;
   self.heightSlider.value = self.chipView.frame.size.height;
+  self.heightSlider.accessibilityLabel = @"Height of the chip";
+  self.heightSlider.delegate = self;
   [self.heightSlider addTarget:self
                         action:@selector(heightSliderChanged:)
               forControlEvents:UIControlEventValueChanged];
@@ -79,12 +83,27 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  CGFloat topEdge;
+  if (@available(iOS 11, *)) {
+    topEdge = self.view.safeAreaInsets.top;
+  } else {
+    topEdge = self.topLayoutGuide.length;
+  }
+  CGRect frame = self.chipView.frame;
+  frame.origin.y = topEdge + 16;
+  self.chipView.frame = frame;
+
+  CGFloat contentBottomEdge = CGRectGetMaxY(self.chipView.frame);
+
   CGSize sliderSize = [self.widthSlider sizeThatFits:self.view.bounds.size];
-  self.widthSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
-  self.heightSlider.frame = CGRectMake(20, 140 + sliderSize.height + 20,
-                                       self.view.bounds.size.width - 40, sliderSize.height);
+  self.widthSlider.frame =
+      CGRectMake(20, contentBottomEdge + 16, self.view.bounds.size.width - 40, sliderSize.height);
+  contentBottomEdge = CGRectGetMaxY(self.widthSlider.frame);
+  self.heightSlider.frame =
+      CGRectMake(20, contentBottomEdge + 16, self.view.bounds.size.width - 40, sliderSize.height);
+  contentBottomEdge = CGRectGetMaxY(self.heightSlider.frame);
   self.horizontalAlignmentControl.frame =
-      CGRectMake(20, CGRectGetMaxY(self.heightSlider.frame) + 20, self.view.bounds.size.width - 40,
+      CGRectMake(20, contentBottomEdge + 16, self.view.bounds.size.width - 40,
                  self.horizontalAlignmentControl.frame.size.height);
 }
 
@@ -100,6 +119,9 @@
   frame.size.height = slider.value;
   self.chipView.frame = frame;
   [self.chipView layoutIfNeeded];
+
+  // The vertical layout changes when this slider is adjusted.
+  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
 - (void)horizontalAlignmentChanged:(UISegmentedControl *)segmentedControl {
@@ -108,6 +130,17 @@
                                                       : UIControlContentHorizontalAlignmentCenter;
   self.chipView.contentHorizontalAlignment = alignment;
   [self.chipView layoutIfNeeded];
+}
+
+#pragma mark - MDCSliderDelegate
+
+- (NSString *)slider:(MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value {
+  if (slider == self.widthSlider) {
+    return [NSString stringWithFormat:@"Width of %@", @((NSInteger)slider.value)];
+  } else if (slider == self.heightSlider) {
+    return [NSString stringWithFormat:@"Height of %@", @((NSInteger)slider.value)];
+  }
+  return nil;
 }
 
 @end

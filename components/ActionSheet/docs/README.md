@@ -53,6 +53,8 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 4. MDCActionSheetController does not have a preferredAction.
 
+- [Customization](customization.md)
+
 ## Extensions
 
 - [Theming](theming.md)

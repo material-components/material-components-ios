@@ -25,10 +25,8 @@
  `MDCFloatingButton`'s `-applySecondaryThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCFloatingActionButtonThemer : NSObject
-@end
-
-@interface MDCFloatingActionButtonThemer (ToBeDeprecated)
+__deprecated_msg("Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead.")
+    @interface MDCFloatingActionButtonThemer : NSObject
 
 /**
  Applies a button scheme's properties to an MDCRaisedButton using the floating button style.

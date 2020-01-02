@@ -15,10 +15,8 @@
 import XCTest
 
 import MaterialComponents.MaterialCards
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeLibrary
-import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialCards_Theming
 
 class CardsMaterialThemingTests: XCTestCase {

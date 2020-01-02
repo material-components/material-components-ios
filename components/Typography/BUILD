@@ -56,7 +56,6 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":Typography",
-        "//components/schemes/Typography",
     ],
 )
 
@@ -65,6 +64,7 @@ mdc_unit_test_objc_library(
     deps = [
         ":Typography",
         ":private",
+        "//components/private/Application",
     ],
 )
 

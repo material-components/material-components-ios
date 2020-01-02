@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields+ColorThemer.h"
-#import "MaterialTextFields+TypographyThemer.h"
+#import "MaterialTextFields+Theming.h"
 #import "MaterialTextFields.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 
@@ -42,11 +41,12 @@
   MDCTypographyScheme *typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
-  [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
-                              toTextInputControllerFilled:controller];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
-                                toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme = colorScheme;
+  containerScheme.typographyScheme = typographyScheme;
+  MDCTextInputControllerFilled *filledController =
+      (MDCTextInputControllerFilled *)self.textFieldController;
+  [filledController applyThemeWithScheme:containerScheme];
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

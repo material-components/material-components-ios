@@ -24,10 +24,9 @@
  `MDCButton`'s Theming extensions.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCButtonShapeThemer : NSObject
-@end
-
-@interface MDCButtonShapeThemer (ToBeDeprecated)
+__deprecated_msg("Please use MDCButton+MaterialTheming instead. (Note: "
+                 "Shape theming is no longer available as an independent API.)")
+    @interface MDCButtonShapeThemer : NSObject
 
 /**
  Applies a shape scheme's properties to an MDCButton.

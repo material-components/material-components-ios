@@ -102,6 +102,8 @@ class MDCDragonsController: UIViewController,
     tableView.backgroundColor = Constants.bgColor
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 44
     view.addSubview(tableView)
     view.backgroundColor = Constants.bgColor
 
@@ -194,10 +196,10 @@ class MDCDragonsController: UIViewController,
     let node = nodeData.node
     if !node.isExample() && !isSearchActive {
       if nodeData.expanded {
-        cell.accessoryView = cell.expandedButton
+        cell.accessoryView = cell.expandedAccessoryView
         cell.textLabel?.textColor = Constants.headerColor
       } else {
-        cell.accessoryView = cell.defaultButton
+        cell.accessoryView = cell.collapsedAccessoryView
         cell.textLabel?.textColor = Constants.titleColor
       }
     } else {
@@ -226,11 +228,11 @@ class MDCDragonsController: UIViewController,
       self.tableView.beginUpdates()
       if nodeData.expanded {
         collapseCells(at: indexPath)
-        cell.accessoryView = cell.defaultButton
+        cell.accessoryView = cell.collapsedAccessoryView
         cell.textLabel?.textColor = Constants.titleColor
       } else {
         expandCells(at: indexPath)
-        cell.accessoryView = cell.expandedButton
+        cell.accessoryView = cell.expandedAccessoryView
         cell.textLabel?.textColor = Constants.headerColor
       }
       self.tableView.endUpdates()

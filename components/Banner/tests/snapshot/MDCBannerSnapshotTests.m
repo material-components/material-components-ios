@@ -160,6 +160,18 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 
 #pragma mark - Tests
 
+- (void)testShortTextWithNoAction {
+  // When
+  self.bannerView.textView.text = kBannerShortText;
+  self.bannerView.textView.textAlignment = NSTextAlignmentCenter;
+  self.bannerView.leadingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
+  self.bannerView.trailingButton.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
 - (void)testShortTextWithSingleActionLTR {
   // When
   self.bannerView.textView.text = kBannerShortText;

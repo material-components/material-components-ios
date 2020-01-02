@@ -42,8 +42,7 @@ navigation icon takes you directly to the associated view or refreshes the curre
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
 - [Accessibility](#accessibility)
   - [Minimum touch size](#minimum-touch-size)
 
@@ -179,84 +178,53 @@ import MaterialComponents.MaterialBottomNavigation
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/theming.md -->
 
-### Color Theming
+### Theming
 
-You can theme a bottom navigation with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/BottomNavigation+ColorThemer'
-```
+`MDCBottomNavigation` supports Material Theming using a Container Scheme.
+There are two variants for Material Theming of a BottomNavigation.  The Surface Variant colors the App Bar
+background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
+`primaryColor`.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 #### Swift
+
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+// Import the BottomNavigation Theming Extensions module
+import MaterialComponents.MaterialBottomNavigation_Theming
 
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
+...
 
-// Step 3: Apply the color scheme to your component
-MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+// Apply your app's Container Scheme to the App Bar controller
+let containerScheme = MDCContainerScheme()
+
+// Either Primary Theme
+bottomNavigation.applyPrimaryTheme(withScheme: containerScheme)
+
+// Or Surface Theme
+bottomNavigation.applySurfaceTheme(withScheme: containerScheme)
 ```
 
 #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialBottomNavigation+ColorThemer.h"
+// Import the BottomNavigation Theming Extensions header
+#import "MaterialBottomNavigation+Theming.h"
 
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+...
 
-// Step 3: Apply the color scheme to your component
-[MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
-     toBottomNavigation:component];
-```
-<!--</div>-->
+// Apply your app's Container Scheme to the App Bar controller
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
-<!-- Extracted from docs/typography-theming.md -->
+// Either Primary Theme
+[self.bottomNavigation applyPrimaryThemeWithScheme:containerScheme];
 
-### Typography Theming
-
-You can theme a bottom navigation with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/BottomNavigation+TypographyThemer'
+// Or Surface Theme
+[self.bottomNavigation applySurfaceThemeWithScheme:containerScheme];
 ```
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialBottomNavigation_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialBottomNavigation+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCBottomNavigationBarTypographyThemer applyTypographyScheme:colorScheme
-     toBottomNavigationBar:component];
-```
 <!--</div>-->
 
 

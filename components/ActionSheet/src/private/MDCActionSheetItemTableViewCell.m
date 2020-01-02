@@ -18,11 +18,9 @@
 #import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
-static const CGFloat kImageLeadingPadding = 8;
 static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
-static const CGFloat kTitleLeadingPadding = 64;
-static const CGFloat kTitleTrailingPadding = 8;
+static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 static inline UIColor *RippleColor() {
@@ -32,14 +30,18 @@ static inline UIColor *RippleColor() {
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
+/** Container view holding all custom content so it can be inset. */
+@property(nonatomic, strong) UIView *contentContainerView;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   NSLayoutConstraint *_titleLeadingConstraint;
-  NSLayoutConstraint *_titleTrailingConstraint;
+  NSLayoutConstraint *_contentContainerTopConstraint;
+  NSLayoutConstraint *_contentContainerLeadingConstraint;
+  NSLayoutConstraint *_contentContainerBottomConstraint;
+  NSLayoutConstraint *_contentContainerTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -57,52 +59,63 @@ static inline UIColor *RippleColor() {
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
+  _contentContainerView = [[UIView alloc] initWithFrame:self.bounds];
+  _contentContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.contentView addSubview:_contentContainerView];
+  _contentContainerTopConstraint =
+      [self.contentView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor];
+  _contentContainerTopConstraint.active = YES;
+  _contentContainerLeadingConstraint = [self.contentView.layoutMarginsGuide.leadingAnchor
+      constraintEqualToAnchor:_contentContainerView.leadingAnchor];
+  _contentContainerLeadingConstraint.active = YES;
+  _contentContainerBottomConstraint =
+      [_contentContainerView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor];
+  _contentContainerBottomConstraint.active = YES;
+  _contentContainerTrailingConstraint = [_contentContainerView.trailingAnchor
+      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
+  _contentContainerTrailingConstraint.active = YES;
+
   _actionLabel = [[UILabel alloc] init];
-  [self.contentView addSubview:_actionLabel];
+  [_contentContainerView addSubview:_actionLabel];
   _actionLabel.numberOfLines = 0;
   _actionLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_actionLabel sizeToFit];
   _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
-  CGFloat leadingConstant;
+  CGFloat leadingConstant = 0;
   if (_itemAction.image || _addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
-  } else {
-    leadingConstant = kImageLeadingPadding;
   }
-  [_actionLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+  [_actionLabel.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
                                          constant:kActionItemTitleVerticalPadding]
       .active = YES;
-  [_actionLabel.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor
-                                            constant:-kActionItemTitleVerticalPadding]
-      .active = YES;
-  _titleLeadingConstraint = [_actionLabel.layoutMarginsGuide.leadingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor
-                     constant:leadingConstant];
+  NSLayoutConstraint *labelBottomConstraint =
+      [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
+                                                constant:-kActionItemTitleVerticalPadding];
+  labelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
+  labelBottomConstraint.active = YES;
+  _titleLeadingConstraint =
+      [_actionLabel.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor
+                                                 constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  _titleTrailingConstraint = [self.contentView.layoutMarginsGuide.trailingAnchor
-      constraintEqualToAnchor:_actionLabel.layoutMarginsGuide.trailingAnchor
-                     constant:kTitleTrailingPadding];
-  _titleTrailingConstraint.active = YES;
-  if (!_inkTouchController) {
-    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];
-  }
+  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.trailingAnchor]
+      .active = YES;
 
+  _rippleColor = RippleColor();
   if (!_rippleTouchController) {
     _rippleTouchController = [[MDCRippleTouchController alloc] init];
+    [_rippleTouchController addRippleToView:self];
+    _rippleTouchController.rippleView.rippleColor = _rippleColor;
   }
 
   _actionImageView = [[UIImageView alloc] init];
-  [self.contentView addSubview:_actionImageView];
+  [_contentContainerView addSubview:_actionImageView];
   _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [_actionImageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+  [_actionImageView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
                                              constant:kImageTopPadding]
       .active = YES;
-  [_actionImageView.layoutMarginsGuide.leadingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.leadingAnchor
-                     constant:kImageLeadingPadding]
+  [_actionImageView.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor]
       .active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
@@ -113,14 +126,11 @@ static inline UIColor *RippleColor() {
 
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
-  CGFloat leadingConstant;
+  CGFloat leadingConstant = 0;
   if (_itemAction.image || self.addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
-  } else {
-    leadingConstant = kImageLeadingPadding;
   }
   _titleLeadingConstraint.constant = leadingConstant;
-  _titleTrailingConstraint.constant = kTitleTrailingPadding;
 
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
@@ -131,6 +141,14 @@ static inline UIColor *RippleColor() {
   self.actionLabel.text = _itemAction.title;
   self.actionImageView.image = _itemAction.image;
   [self setNeedsLayout];
+}
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  _contentEdgeInsets = contentEdgeInsets;
+  _contentContainerTopConstraint.constant = contentEdgeInsets.top;
+  _contentContainerLeadingConstraint.constant = contentEdgeInsets.left;
+  _contentContainerBottomConstraint.constant = contentEdgeInsets.bottom;
+  _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
 }
 
 - (MDCActionSheetAction *)action {
@@ -166,35 +184,9 @@ static inline UIColor *RippleColor() {
       actionTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
-  _inkColor = inkColor;
-  // If no ink color then reset to the default ink color
-  self.inkTouchController.defaultInkView.inkColor = inkColor ?: RippleColor();
-}
-
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (rippleColor != nil && (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor])) {
-    return;
-  }
-  _rippleColor = rippleColor;
-
-  // If no ripple color then reset to the default ripple color.
-  self.rippleTouchController.rippleView.rippleColor = rippleColor ?: RippleColor();
-}
-
-- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
-  if (_enableRippleBehavior == enableRippleBehavior) {
-    return;
-  }
-  _enableRippleBehavior = enableRippleBehavior;
-
-  if (enableRippleBehavior) {
-    [self.inkTouchController.defaultInkView removeFromSuperview];
-    [self.rippleTouchController addRippleToView:self];
-  } else {
-    [self.rippleTouchController.rippleView removeFromSuperview];
-    [self.inkTouchController addInkView];
-  }
+  _rippleColor = rippleColor ?: RippleColor();
+  self.rippleTouchController.rippleView.rippleColor = _rippleColor;
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {

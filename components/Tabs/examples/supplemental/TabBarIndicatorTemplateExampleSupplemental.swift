@@ -22,8 +22,8 @@ extension TabBarIndicatorTemplateExample {
 
   private func themeButton(_ button: MDCButton) {
     let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
+    buttonScheme.colorScheme = containerScheme.colorScheme
+    buttonScheme.typographyScheme = containerScheme.typographyScheme
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
   }
 
@@ -129,7 +129,7 @@ extension TabBarIndicatorTemplateExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

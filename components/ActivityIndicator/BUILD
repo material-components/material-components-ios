@@ -22,8 +22,8 @@ load(
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_unit_test_objc_library",
-    "mdc_unit_test_swift_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 

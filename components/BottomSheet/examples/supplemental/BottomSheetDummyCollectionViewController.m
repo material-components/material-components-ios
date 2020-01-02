@@ -41,7 +41,7 @@
   [super viewDidLoad];
 
   self.collectionView.backgroundColor = [UIColor whiteColor];
-
+  self.collectionView.isAccessibilityElement = YES;
   [self.collectionView registerClass:[DummyCollectionViewCell class]
           forCellWithReuseIdentifier:NSStringFromClass([DummyCollectionViewCell class])];
 }

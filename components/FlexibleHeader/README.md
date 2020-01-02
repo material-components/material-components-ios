@@ -29,6 +29,7 @@ UIScrollViewDelegate events.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderSafeAreaDelegate.html">MDCFlexibleHeaderSafeAreaDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewAnimationDelegate.html">MDCFlexibleHeaderViewAnimationDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums.html">Enumerations</a></li>
@@ -448,6 +449,40 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 ```
 <!--</div>-->
 
+If you would like to be able to show and hide your flexible header similar to how UINavigationBar
+allows the navigation bar to be shown and hidden, you can use the `hideable` shift behavior. This
+behavior will allow you to toggle visibility of the header using the `shiftHeaderOffScreenAnimated:`
+and `shiftHeaderOnScreenAnimated:` APIs only; the user will not be able to drag the header either on
+or off-screen.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+headerViewController.headerView.shiftBehavior = .hideable
+
+// You can now toggle visibility of the header view using the following invocations:
+headerViewController.headerView.shiftHeaderOffScreen(animated: true)
+headerViewController.headerView.shiftHeaderOnScreen(animated: true)
+
+override func childViewControllerForStatusBarHidden() -> UIViewController? {
+  return headerViewController
+}
+```
+
+#### Objective-C
+```objc
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHideable;
+
+// You can now toggle visibility of the header view using the following invocations:
+[headerViewController.headerView shiftHeaderOffScreenAnimated:YES];
+[headerViewController.headerView shiftHeaderOnScreenAnimated:YES];
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _headerViewController;
+}
+```
+<!--</div>-->
+
 <!-- Extracted from docs/reacting-to-frame-changes.md -->
 
 ### Reacting to frame changes
@@ -735,7 +770,7 @@ override var childViewControllerForStatusBarStyle: UIViewController? {
 
 This example shows how to add a custom background image view to a flexible header.
 
-You can create and add a UIImageView subview to the flexible header view's content view:
+You can create and add a UIImageView subview to the flexible header view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -745,7 +780,7 @@ let headerView = headerViewController.headerView
 let imageView = ...
 imageView.frame = headerView.bounds
 imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-headerView.contentView.insertSubview(imageView, at: 0)
+headerView.insertSubview(imageView, at: 0)
 
 imageView.contentMode = .scaleAspectFill
 imageView.clipsToBounds = true
@@ -756,7 +791,7 @@ imageView.clipsToBounds = true
 UIImageView *imageView = ...;
 imageView.frame = self.headerViewController.headerView.bounds;
 imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-[self.headerViewController.headerView.contentView insertSubview:imageView atIndex:0];
+[self.headerViewController.headerView insertSubview:imageView atIndex:0];
 
 imageView.contentMode = UIViewContentModeScaleAspectFill;
 imageView.clipsToBounds = YES;
@@ -765,7 +800,6 @@ imageView.clipsToBounds = YES;
 
 Notes:
 
-- Add the image view to the header view's `contentView`, not the header view itself.
 - Set the `contentMode` to "ScaleAspectFill" to ensure that the image always fills the available
   header space, even if the image is too small. This is usually preferred, but consider changing
   the contentMode if you want a different behavior.
@@ -1076,49 +1110,6 @@ flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
 care that the `topLayoutGuideViewController` is not a direct ancestor of the flexible header or your
 app **will** enter an infinite loop. As a general rule, your `topLayoutGuideViewController` should
 be a sibling to the flexible header.
-
-
-## Extensions
-
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-You can theme a flexible header with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/FlexibleHeader+ColorThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialFlexibleHeader_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialFlexibleHeader+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-
-// Step 3: Apply the color scheme to your component
-[MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme
-     toFlexibleHeaderView:component];
-```
-<!--</div>-->
 
 
 ## Migration guides

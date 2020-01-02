@@ -17,6 +17,7 @@
 @protocol MDCTabBarViewDelegate;
 @protocol MDCTabBarViewIndicatorTemplate;
 
+/** The different layout options for the tabs within an @c MDCTabBarView. */
 typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
 
   /**

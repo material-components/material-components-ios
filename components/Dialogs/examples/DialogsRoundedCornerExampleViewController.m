@@ -15,6 +15,7 @@
 #import "DialogsRoundedCornerExampleViewController.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
 
@@ -25,7 +26,7 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 
 @property(nonatomic, strong) MDCButton *dismissButton;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -36,11 +37,6 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 
   if (self.containerScheme == nil) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
-  }
-
-  if (self.containerScheme.colorScheme == nil) {
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   self.dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
@@ -78,7 +74,7 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 @interface DialogsRoundedCornerExampleViewController () <MDCDialogPresentationControllerDelegate>
 
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -89,11 +85,6 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 
   if (self.containerScheme == nil) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
-  }
-
-  if (self.containerScheme.colorScheme == nil) {
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   // We must create and store a strong reference to the transitionController.

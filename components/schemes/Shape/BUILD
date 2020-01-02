@@ -47,7 +47,6 @@ mdc_examples_objc_library(
         "//components/Cards:ShapeThemer",
         "//components/Cards:Theming",
         "//components/Chips",
-        "//components/Chips:ShapeThemer",
         "//components/Chips:Theming",
         "//components/ShapeLibrary",
         "//components/schemes/Color",

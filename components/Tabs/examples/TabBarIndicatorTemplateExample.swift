@@ -18,10 +18,9 @@ import CoreGraphics
 import MaterialComponents.MaterialAppBar_ColorThemer
 import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialTypographyScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTabs_ColorThemer
+import MaterialComponents.MaterialTabs_Theming
 
 class TabBarIndicatorTemplateExample: UIViewController {
 
@@ -50,14 +49,13 @@ class TabBarIndicatorTemplateExample: UIViewController {
   lazy var alignmentButton: MDCButton = self.makeAlignmentButton()
   lazy var appearanceButton: MDCButton = self.makeAppearanceButton()
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
     tabBar.alignment = .justified
 
-    MDCTabBarColorThemer.applySemanticColorScheme(self.colorScheme, toTabs: tabBar);
+    tabBar.applyPrimaryTheme(withScheme: containerScheme)
 
     let bundle = Bundle(for: TabBarIndicatorTemplateExample.self)
     let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
@@ -97,8 +95,8 @@ class TabBarIndicatorTemplateExample: UIViewController {
       action: #selector(changeAppearance),
       for: .touchUpInside)
 
-    MDCAppBarColorThemer.applyColorScheme(self.colorScheme, to: self.appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(self.typographyScheme,
+    MDCAppBarColorThemer.applyColorScheme(containerScheme.colorScheme, to: self.appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(containerScheme.typographyScheme,
                                                     to: self.appBarViewController)
   }
 

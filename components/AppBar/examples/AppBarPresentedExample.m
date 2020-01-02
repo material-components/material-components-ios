@@ -14,16 +14,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar+Theming.h"
 #import "MaterialAppBar.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
 
 @interface PresentedDemoViewController : UICollectionViewController
 @property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
 @implementation PresentedDemoViewController
@@ -49,10 +48,6 @@
     _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
     [self addChildViewController:_appBarViewController];
-
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -62,11 +57,7 @@
 
   // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
   self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
-
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
-                  toAppBarViewController:_appBarViewController];
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                            toAppBarViewController:_appBarViewController];
+  [_appBarViewController applyPrimaryThemeWithScheme:self.containerScheme];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
@@ -136,8 +127,7 @@
 @interface AppBarPresentedExample : UIViewController
 
 @property(nonatomic, strong) PresentedDemoViewController *demoViewController;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -146,18 +136,17 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  if (!self.containerScheme) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.95 alpha:1];
 
   self.demoViewController = [[PresentedDemoViewController alloc] init];
-  self.demoViewController.colorScheme = self.colorScheme;
-  self.demoViewController.typographyScheme = self.typographyScheme;
+  self.demoViewController.containerScheme = self.containerScheme;
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
-
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
 
   CGFloat buttonMargin = 10;
   MDCButton *button = [[MDCButton alloc] init];
@@ -170,7 +159,7 @@
                 action:@selector(presentDemo)
       forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:button];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
+  [button applyContainedThemeWithScheme:self.containerScheme];
 
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
     MDCButton *popoverButton = [[MDCButton alloc] init];
@@ -185,7 +174,7 @@
             forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:popoverButton];
 
-    [MDCContainedButtonThemer applyScheme:buttonScheme toButton:popoverButton];
+    [popoverButton applyContainedThemeWithScheme:self.containerScheme];
   }
 }
 

@@ -71,6 +71,7 @@ target "MDCCatalog" do
     'Tabs+Theming/UnitTests',
     'TextFields/UnitTests',
     'TextControls/UnitTests',
+    'TextControls+Theming/UnitTests',
     'TextFields+Theming/UnitTests',
     'Themes/UnitTests',
     'Typography/UnitTests',
@@ -79,7 +80,6 @@ target "MDCCatalog" do
     'ActionSheet+ActionSheetThemer/UnitTests',
     'ActionSheet+ColorThemer/UnitTests',
     'BottomNavigation/UnitTests',
-    'ButtonBar+Theming/UnitTests',
     'Tabs+TabBarView/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [

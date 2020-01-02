@@ -14,7 +14,7 @@
 
 #import "MDCTypographyUtilities.h"
 
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 /**
  @return Device's current UIContentSizeCategory or UIContentSizeCategoryLarge

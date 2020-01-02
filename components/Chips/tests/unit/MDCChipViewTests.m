@@ -22,6 +22,74 @@
 
 @implementation MDCChipViewTests
 
+- (void)testPositiveAccessoryPaddingTopIncreasesChipHeight {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+  chipView.accessoryView = accessoryView;
+  CGSize originalSize = [chipView sizeThatFits:CGRectInfinite.size];
+
+  // When
+  chipView.accessoryPadding = UIEdgeInsetsMake(10, 0, 0, 0);
+  CGSize fitSize = [chipView sizeThatFits:CGRectInfinite.size];
+  CGSize expectedSize =
+      CGSizeMake(originalSize.width, originalSize.height + chipView.accessoryPadding.top);
+
+  // Then
+  XCTAssertEqualWithAccuracy(fitSize.height, expectedSize.height, 0.001);
+}
+
+- (void)testPositiveAccessoryPaddingLeftIncreasesChipWidth {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+  chipView.accessoryView = accessoryView;
+  CGSize originalSize = [chipView sizeThatFits:CGRectInfinite.size];
+
+  // When
+  chipView.accessoryPadding = UIEdgeInsetsMake(0, 10, 0, 0);
+  CGSize fitSize = [chipView sizeThatFits:CGRectInfinite.size];
+  CGSize expectedSize =
+      CGSizeMake(originalSize.width + chipView.accessoryPadding.left, originalSize.height);
+
+  // Then
+  XCTAssertEqualWithAccuracy(fitSize.width, expectedSize.width, 0.001);
+}
+
+- (void)testPositiveAccessoryPaddingBottomIncreasesChipHeight {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+  chipView.accessoryView = accessoryView;
+  CGSize originalSize = [chipView sizeThatFits:CGRectInfinite.size];
+
+  // When
+  chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 10, 0);
+  CGSize fitSize = [chipView sizeThatFits:CGRectInfinite.size];
+  CGSize expectedSize =
+      CGSizeMake(originalSize.width, originalSize.height + chipView.accessoryPadding.bottom);
+
+  // Then
+  XCTAssertEqualWithAccuracy(fitSize.height, expectedSize.height, 0.001);
+}
+
+- (void)testPositiveAccessoryPaddingRightIncreasesChipWidth {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+  chipView.accessoryView = accessoryView;
+  CGSize originalSize = [chipView sizeThatFits:CGRectInfinite.size];
+
+  // When
+  chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
+  CGSize fitSize = [chipView sizeThatFits:CGRectInfinite.size];
+  CGSize expectedSize =
+      CGSizeMake(originalSize.width + chipView.accessoryPadding.right, originalSize.height);
+
+  // Then
+  XCTAssertEqualWithAccuracy(fitSize.width, expectedSize.width, 0.001);
+}
+
 #pragma mark - MaterialElevation
 
 - (void)testDefaultValueForOverrideBaseElevationIsNegative {

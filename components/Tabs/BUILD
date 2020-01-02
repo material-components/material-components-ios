@@ -57,22 +57,6 @@ objc_bundle(
 )
 
 mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":Tabs",
-        "//components/schemes/Color",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":Tabs",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":Tabs",
@@ -109,9 +93,9 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     data = [":TabsExamplesAssets"],
     deps = [
-        ":ColorThemer",
         ":TabBarView",
         ":Tabs",
+        ":Theming",
         ":TypographyThemer",
         "//components/ActionSheet",
         "//components/ActionSheet:Theming",
@@ -134,8 +118,9 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":ColorThemer",
+        ":TabBarView",
         ":Tabs",
+        ":Theming",
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
@@ -143,6 +128,7 @@ mdc_examples_swift_library(
         "//components/Buttons:ButtonThemer",
         "//components/Palettes",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
@@ -166,8 +152,6 @@ mdc_unit_test_objc_library(
         "tests/unit/TabBarView/*.m",
     ]),
     deps = [
-        ":ColorThemer",
-        ":FontThemer",
         ":TabBarView",
         ":Tabs",
         ":Theming",

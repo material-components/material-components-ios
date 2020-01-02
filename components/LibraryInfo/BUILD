@@ -17,8 +17,8 @@ load(
     "//:material_components_ios.bzl",
     "mdc_objc_library",
     "mdc_public_objc_library",
-    "mdc_unit_test_suite",
     "mdc_unit_test_objc_library",
+    "mdc_unit_test_suite",
 )
 
 licenses(["notice"])  # Apache 2.0

@@ -17,8 +17,7 @@
 
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
-#import "MaterialBottomNavigation+ColorThemer.h"
-#import "MaterialBottomNavigation+TypographyThemer.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"
@@ -117,6 +116,12 @@ static const CGFloat kHeightShort = 48;
 }
 
 - (void)changeToRTLAndArabicWithTitle:(NSString *)title {
+  static UIFont *urduFont;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    urduFont = [UIFont fontWithName:@"NotoNastaliqUrdu" size:12];
+  });
+  self.navigationBar.itemTitleFont = urduFont;
   self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   for (UITabBarItem *item in self.navigationBar.items) {
     item.title = title;
@@ -270,16 +275,10 @@ static const CGFloat kHeightShort = 48;
 
 - (void)testMaterialBaselineTheme {
   // Given
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  MDCTypographyScheme *typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
   // When
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
-                                           toBottomNavigation:self.navigationBar];
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
-                                          toBottomNavigationBar:self.navigationBar];
+  [self.navigationBar applyPrimaryThemeWithScheme:containerScheme];
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -293,6 +292,7 @@ static const CGFloat kHeightShort = 48;
 
 - (void)testCustomColorScheme {
   // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = UIColor.orangeColor;
@@ -305,15 +305,13 @@ static const CGFloat kHeightShort = 48;
   colorScheme.onBackgroundColor = UIColor.brownColor;
   colorScheme.errorColor = UIColor.greenColor;
   colorScheme.primaryColorVariant = UIColor.whiteColor;
+  containerScheme.colorScheme = colorScheme;
 
-  MDCTypographyScheme *typographyScheme =
+  containerScheme.typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   // When
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
-                                           toBottomNavigation:self.navigationBar];
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
-                                          toBottomNavigationBar:self.navigationBar];
+  [self.navigationBar applyPrimaryThemeWithScheme:containerScheme];
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;

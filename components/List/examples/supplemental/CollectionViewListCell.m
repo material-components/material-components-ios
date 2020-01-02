@@ -119,22 +119,6 @@ static inline UIFont *defaultDetailsFont(void) {
                                                       attribute:NSLayoutAttributeNotAnAttribute
                                                      multiplier:1
                                                        constant:0];
-  [NSLayoutConstraint constraintWithItem:self.contentView
-                               attribute:NSLayoutAttributeCenterY
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeCenterY
-                              multiplier:1
-                                constant:1]
-      .active = YES;
-  [NSLayoutConstraint constraintWithItem:self.contentView
-                               attribute:NSLayoutAttributeCenterX
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeCenterX
-                              multiplier:1
-                                constant:1]
-      .active = YES;
 
   _contentWrapper.translatesAutoresizingMaskIntoConstraints = NO;
   _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -143,9 +127,11 @@ static inline UIFont *defaultDetailsFont(void) {
 
   NSDictionary *metrics = @{
     @"kTextVerticalPadding" : @(kTextVerticalPadding),
+    @"kImagePadding" : @(kImagePadding),
   };
 
   NSDictionary *views = @{
+    @"contentView" : self.contentView,
     @"contentWrapper" : _contentWrapper,
     @"titleLabel" : _titleLabel,
     @"detailsTextLabel" : _detailsTextLabel,
@@ -153,6 +139,17 @@ static inline UIFont *defaultDetailsFont(void) {
   };
 
   NSMutableArray *constraints = [[NSMutableArray alloc] init];
+
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
+                                                                  options:0
+                                                                  metrics:metrics
+                                                                    views:views]];
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+                                                                  options:0
+                                                                  metrics:metrics
+                                                                    views:views]];
 
   _imageLeftPaddingConstraint = [NSLayoutConstraint constraintWithItem:_imageView
                                                              attribute:NSLayoutAttributeLeft
@@ -181,19 +178,18 @@ static inline UIFont *defaultDetailsFont(void) {
                                                         constant:0];
   _imageWidthConstraint.active = YES;
 
-  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.contentView
-                                                      attribute:NSLayoutAttributeRight
-                                                      relatedBy:NSLayoutRelationEqual
-                                                         toItem:_contentWrapper
-                                                      attribute:NSLayoutAttributeRight
-                                                     multiplier:1
-                                                       constant:kImagePadding]];
-
   [constraints
       addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentWrapper]|"
                                                                   options:0
-                                                                  metrics:nil
+                                                                  metrics:metrics
                                                                     views:views]];
+
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:[contentWrapper]-(kImagePadding)-|"
+                                                  options:0
+                                                  metrics:metrics
+                                                    views:views]];
 
   [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[titleLabel]|"
                                                                            options:0

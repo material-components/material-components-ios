@@ -14,10 +14,8 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
-import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerExpandFullscreenExample: UIViewController {
   @objc var colorScheme = MDCSemanticColorScheme()
@@ -75,8 +73,9 @@ class BottomDrawerExpandFullscreenExample: UIViewController {
     contentViewController.drawerVC = bottomDrawerViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
-    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
-                                                        toBottomDrawer: bottomDrawerViewController)
+    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
@@ -98,10 +97,13 @@ class ExpandFullscreenContentViewController: UITableViewController {
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    self.tableView.layoutIfNeeded()
-    self.preferredContentSize = CGSize(width: view.bounds.width,
-                                       height: tableView.contentSize.height)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if self.preferredContentSize == .zero {
+      self.tableView.layoutIfNeeded()
+      self.preferredContentSize = CGSize(width: view.bounds.width,
+                                         height: tableView.contentSize.height)
+    }
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

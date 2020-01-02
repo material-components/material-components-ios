@@ -24,7 +24,7 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 static const CGFloat kFilledContainerStyleUnderlineWidthThin = (CGFloat)1.0;
 static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
 
-static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
+static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 
 @interface MDCTextControlStyleFilled () <CAAnimationDelegate>
 
@@ -68,6 +68,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 - (void)setUpUnderlineColors {
   self.underlineColors = [NSMutableDictionary new];
   UIColor *underlineColor = [UIColor blackColor];
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    underlineColor = [UIColor labelColor];
+  }
+#endif
   self.underlineColors[@(MDCTextControlStateNormal)] = underlineColor;
   self.underlineColors[@(MDCTextControlStateEditing)] = underlineColor;
   self.underlineColors[@(MDCTextControlStateDisabled)] = underlineColor;
@@ -75,7 +80,14 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)setUpFilledBackgroundColors {
   self.filledBackgroundColors = [NSMutableDictionary new];
-  UIColor *filledBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.05];
+  UIColor *filledBackgroundColor = [UIColor blackColor];
+  filledBackgroundColor = [filledBackgroundColor colorWithAlphaComponent:(CGFloat)0.05];
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    filledBackgroundColor = [UIColor secondarySystemBackgroundColor];
+  }
+#endif
+
   self.filledBackgroundColors[@(MDCTextControlStateNormal)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateEditing)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateDisabled)] = filledBackgroundColor;

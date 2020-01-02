@@ -226,6 +226,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       mdcItemView.image = item.image;
       mdcItemView.selectedImage = item.selectedImage;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
+      mdcItemView.rippleTouchController.shouldProcessRippleWithScrollViewGestures = NO;
       itemView = mdcItemView;
     }
     UITapGestureRecognizer *tapGesture =
@@ -438,6 +439,19 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return paddingValue.UIEdgeInsetsValue;
   }
   return UIEdgeInsetsZero;
+}
+
+#pragma mark - UIAccessibility
+
+- (BOOL)isAccessibilityElement {
+  return NO;
+}
+
+- (UIAccessibilityTraits)accessibilityTraits {
+  if (@available(iOS 10.0, *)) {
+    return [super accessibilityTraits] | UIAccessibilityTraitTabBar;
+  }
+  return [super accessibilityTraits];
 }
 
 #pragma mark - Custom APIs

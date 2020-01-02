@@ -15,9 +15,10 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
-    "mdc_extension_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_unit_test_objc_library",
@@ -50,6 +51,22 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Banner",
+        ":Theming",
+        "//components/AppBar",
+        "//components/AppBar:Theming",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Banner",
+        ":Theming",
         "//components/Buttons",
         "//components/Buttons:Theming",
         "//components/schemes/Color",
@@ -83,6 +100,8 @@ mdc_unit_test_objc_library(
         ":Theming",
         "//components/Buttons",
         "//components/Typography",
+        "//components/private/Color",
+        "//components/private/Math",
     ],
 )
 

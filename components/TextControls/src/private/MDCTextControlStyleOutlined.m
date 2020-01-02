@@ -20,7 +20,7 @@
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
-static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
+static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 
 @interface MDCTextControlStyleOutlined ()
 
@@ -52,10 +52,16 @@ static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
 
 - (void)setUpOutlineColors {
   self.outlineColors = [NSMutableDictionary new];
-  self.outlineColors[@(MDCTextControlStateNormal)] = [UIColor blackColor];
-  self.outlineColors[@(MDCTextControlStateEditing)] = [UIColor blackColor];
+  UIColor *outlineColor = [UIColor blackColor];
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    outlineColor = [UIColor labelColor];
+  }
+#endif
+  self.outlineColors[@(MDCTextControlStateNormal)] = outlineColor;
+  self.outlineColors[@(MDCTextControlStateEditing)] = outlineColor;
   self.outlineColors[@(MDCTextControlStateDisabled)] =
-      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
+      [outlineColor colorWithAlphaComponent:(CGFloat)0.60];
 }
 
 - (void)setUpOutlineLineWidths {

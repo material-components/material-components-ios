@@ -71,6 +71,8 @@
   // Page control configuration.
   _pageControl = [[MDCPageControl alloc] init];
   _pageControl.numberOfPages = pageColors.count;
+  _pageControl.currentPageIndicatorTintColor = UIColor.whiteColor;
+  _pageControl.pageIndicatorTintColor = UIColor.lightGrayColor;
 
   // We want the page control to span the bottom of the screen.
   CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
@@ -92,6 +94,7 @@
   [_incrementButton addTarget:self
                        action:@selector(didTapButton:)
              forControlEvents:UIControlEventTouchUpInside];
+  [_incrementButton setTitleColor:UIColor.lightGrayColor forState:UIControlStateDisabled];
   [self.view addSubview:_incrementButton];
 
   _decrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -101,6 +104,7 @@
   [_decrementButton addTarget:self
                        action:@selector(didTapButton:)
              forControlEvents:UIControlEventTouchUpInside];
+  [_decrementButton setTitleColor:UIColor.lightGrayColor forState:UIControlStateDisabled];
   [self.view addSubview:_decrementButton];
 }
 
@@ -144,6 +148,21 @@
   [_decrementButton sizeToFit];
   buttonCenterX = CGRectGetWidth(_decrementButton.frame) / 2 + 16 + edgeInsets.left;
   _decrementButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
+
+  [self updateButtonStates];
+}
+
+- (void)updateButtonStates {
+  if (_pageControl.currentPage == _pageControl.numberOfPages - 1) {
+    _incrementButton.enabled = NO;
+    _decrementButton.enabled = YES;
+  } else if (_pageControl.currentPage == 0) {
+    _decrementButton.enabled = NO;
+    _incrementButton.enabled = YES;
+  } else {
+    _incrementButton.enabled = YES;
+    _decrementButton.enabled = YES;
+  }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -154,6 +173,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   [_pageControl scrollViewDidEndDecelerating:scrollView];
+  [self updateButtonStates];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -180,12 +200,16 @@
   CGPoint offset = _scrollView.contentOffset;
   offset.x = nextPage * CGRectGetWidth(_scrollView.frame);
   [UIView animateWithDuration:0.2
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^{
-                     self->_scrollView.contentOffset = offset;
-                   }
-                   completion:nil];
+      delay:0
+      options:UIViewAnimationOptionCurveEaseOut
+      animations:^{
+        self->_scrollView.contentOffset = offset;
+      }
+      completion:^(BOOL completed) {
+        if (completed) {
+          [self updateButtonStates];
+        }
+      }];
 }
 
 #pragma mark - CatalogByConvention

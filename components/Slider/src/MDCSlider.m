@@ -44,7 +44,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   NSMutableDictionary *_trackBackgroundColorsForState;
   NSMutableDictionary *_filledTickColorsForState;
   NSMutableDictionary *_backgroundTickColorsForState;
-  BOOL _isTrackTickVisibilityAutomatic;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -80,6 +79,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.shouldDisplayRipple = YES;
   _thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityWhenDragging;
+  _trackTickVisibility = MDCSliderTrackTickVisibilityWhenDragging;
+  _thumbTrack.discrete = YES;
   _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
   _thumbTrack.thumbDisabledColor = [[self class] defaultDisabledColor];
@@ -126,7 +127,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _shouldEnableHapticsForAllDiscreteValues = NO;
 
   _previousValue = -CGFLOAT_MAX;
-  _isTrackTickVisibilityAutomatic = YES;
 }
 
 #pragma mark - Color customization methods
@@ -281,10 +281,16 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.numDiscreteValues;
 }
 
+- (BOOL)isDiscrete {
+  return _thumbTrack.discrete;
+}
+
+- (void)setDiscrete:(BOOL)discrete {
+  _thumbTrack.discrete = discrete;
+}
+
 - (void)setTrackTickVisibility:(MDCSliderTrackTickVisibility)trackTickVisibility {
   _trackTickVisibility = trackTickVisibility;
-  _isTrackTickVisibilityAutomatic = NO;
-  self.thumbTrack.requireExplicitDiscreteMode = YES;
   switch (trackTickVisibility) {
     case MDCSliderTrackTickVisibilityNever:
       self.thumbTrack.discreteDotVisibility = MDCThumbDiscreteDotVisibilityNever;
@@ -299,10 +305,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (MDCSliderTrackTickVisibility)trackTickVisibility {
-  if (_isTrackTickVisibilityAutomatic) {
-    return self.continuous ? MDCSliderTrackTickVisibilityNever
-                           : MDCSliderTrackTickVisibilityWhenDragging;
-  }
   return _trackTickVisibility;
 }
 
@@ -319,15 +321,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (BOOL)isContinuous {
-  return _thumbTrack.continuous;
+  return _thumbTrack.continuousUpdateEvents;
 }
 
 - (void)setContinuous:(BOOL)continuous {
   _thumbTrack.continuousUpdateEvents = continuous;
-  if (_isTrackTickVisibilityAutomatic) {
-    _thumbTrack.discreteDotVisibility =
-        continuous ? MDCThumbDiscreteDotVisibilityNever : MDCThumbDiscreteDotVisibilityWhenDragging;
-  }
 }
 
 - (CGFloat)value {
@@ -580,13 +578,33 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return traits;
 }
 
+/**
+ Returns the absolute change in value for the @c accessibilityIncrement and
+ @c accessibilityDecrement methods.
+
+ The value is decided using the following rules. If @c numberOfDiscreteValues is less than 2, then
+ the adjustment value is 10% of the slider's value range. If @c numberOfDiscreteValues is greater
+ than or equal to 2 and @c discrete is @c YES, the slider returns the "size" of the discrete step.
+ If @c numberOfDiscreteValues is greater than or equal to 2 and @c discrete is @c NO, the slider
+ returns the minimum of 10% of the range and the discrete value step size.
+ */
+- (CGFloat)accessibilityAdjustmentAmount {
+  CGFloat range = self.maximumValue - self.minimumValue;
+  CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
+  if (self.numberOfDiscreteValues > 1) {
+    CGFloat discreteAdjustmentAmount = range / (self.numberOfDiscreteValues - 1);
+    if (self.discrete) {
+      adjustmentAmount = discreteAdjustmentAmount;
+    } else {
+      adjustmentAmount = MIN(adjustmentAmount, discreteAdjustmentAmount);
+    }
+  }
+  return adjustmentAmount;
+}
+
 - (void)accessibilityIncrement {
   if (self.enabled) {
-    CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (!self.continuous && self.numberOfDiscreteValues > 1) {
-      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
-    }
+    CGFloat adjustmentAmount = [self accessibilityAdjustmentAmount];
     CGFloat newValue = self.value + adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO
@@ -600,11 +618,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)accessibilityDecrement {
   if (self.enabled) {
-    CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
-    if (!self.continuous && self.numberOfDiscreteValues > 1) {
-      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
-    }
+    CGFloat adjustmentAmount = [self accessibilityAdjustmentAmount];
     CGFloat newValue = self.value - adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO

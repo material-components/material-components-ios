@@ -71,6 +71,23 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     }
   }
 
+  func testNoScrollViewInferSafeAreaTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
+    // Given
+    if #available(iOS 11.0, *) {
+      let contentViewController = UIViewController()
+      contentViewController.addChild(fhvc)
+      contentViewController.view.addSubview(fhvc.view)
+      fhvc.permitInferringTopSafeAreaFromTopLayoutGuideViewController = true
+      fhvc.inferTopSafeAreaInsetFromViewController = true
+      fhvc.topLayoutGuideViewController = contentViewController
+      fhvc.didMove(toParent: contentViewController)
+
+      // Then
+      XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, fhvc.headerView.frame.maxY)
+    }
+  }
+
   // MARK: Untracked table view
 
   func testUntrackedTableViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {

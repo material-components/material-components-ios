@@ -35,7 +35,11 @@ static const CGFloat kSmallArbitraryCellWidth = 100;
   flowLayout.minimumInteritemSpacing = 0;
   flowLayout.minimumLineSpacing = 1;
   flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
+  if (@available(iOS 10.0, *)) {
+    flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize;
+  } else {
+    flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
+  }
   return [self initWithCollectionViewLayout:flowLayout];
 }
 
@@ -69,37 +73,33 @@ static const CGFloat kSmallArbitraryCellWidth = 100;
     @"Left" : @(NSTextAlignmentLeft),
     @"Right" : @(NSTextAlignmentRight),
     @"Center" : @(NSTextAlignmentCenter),
-    @"Just." : @(NSTextAlignmentJustified),
+    @"Justified" : @(NSTextAlignmentJustified),
     @"Natural" : @(NSTextAlignmentNatural)
   };
 
   for (NSString *alignmentKey in alignmentValues) {
     [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Single line text", alignmentKey],
+      [NSString stringWithFormat:@"Single line text with %@ alignment", alignmentKey],
       alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
       @"", alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) Single line detail text", alignmentKey],
+      [NSString stringWithFormat:@"Single line detail text with %@ alignment", alignmentKey],
       alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Two line text", alignmentKey],
+      [NSString stringWithFormat:@"Two line text with %@ alignment", alignmentKey],
       alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) Here is the detail text", alignmentKey],
+      [NSString stringWithFormat:@"Here is the detail text with %@ alignment", alignmentKey],
       alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Two line text (truncated)", alignmentKey],
-      alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-      alignmentValues[alignmentKey]
+      [NSString stringWithFormat:@"Two line text with %@ alignment and truncation", alignmentKey],
+      alignmentValues[alignmentKey], kExampleDetailText, alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      [NSString stringWithFormat:@"(%@) Three line text (wrapped)", alignmentKey],
-      alignmentValues[alignmentKey],
-      [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-      alignmentValues[alignmentKey]
+      [NSString stringWithFormat:@"Three line text with %@ alignment and wrapping", alignmentKey],
+      alignmentValues[alignmentKey], kExampleDetailText, alignmentValues[alignmentKey]
     ]];
   }
 

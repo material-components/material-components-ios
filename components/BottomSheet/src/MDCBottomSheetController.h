@@ -61,6 +61,13 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ When set to false, the bottom sheet controller can't be dismissed by dragging the sheet down.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;
+
+/**
  The color applied to the sheet's background when presented by MDCBottomSheetPresentationController.
 
  Defaults to a semi-transparent Black.

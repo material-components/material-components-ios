@@ -49,14 +49,6 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":ProgressView",
-        "//components/Themes",
-    ],
-)
-
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
@@ -69,7 +61,6 @@ mdc_unit_test_objc_library(
         "tests/unit/Theming/*.m",
     ]),
     deps = [
-        ":ColorThemer",
         ":ProgressView",
         ":Theming",
         ":private",

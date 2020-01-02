@@ -23,8 +23,8 @@ load(
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_unit_test_objc_library",
-    "mdc_unit_test_swift_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -49,9 +49,9 @@ mdc_extension_objc_library(
     deps = [
         ":ActionSheet",
         "//components/Elevation",
+        "//components/ShadowElevations",
         "//components/private/Color",
         "//components/schemes/Container",
-        "//components/ShadowElevations",
     ],
 )
 
@@ -105,6 +105,7 @@ mdc_examples_swift_library(
     deps = [
         ":ActionSheet",
         ":Theming",
+        "//components/AppBar",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
@@ -143,12 +144,12 @@ mdc_unit_test_objc_library(
 
 mdc_unit_test_suite(
     name = "unit_tests",
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
-    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
-    use_autobot_environment_runner = False,
 )
 
 mdc_snapshot_objc_library(

@@ -20,6 +20,7 @@
 #import "MaterialSnackbar.h"
 #import "../../src/private/MDCSnackbarManagerInternal.h"
 #import "../../src/private/MDCSnackbarMessageViewInternal.h"
+#import "../../src/private/MDCSnackbarManagerInternal.h"
 #import "../../src/private/MDCSnackbarOverlayView.h"
 // clang-format on
 
@@ -53,16 +54,12 @@ static NSString *const kItemTitleLong1Arabic =
 static NSString *const kItemTitleLong2Arabic =
     @"وتم عل والقرى إتفاقية, عن هذا وباءت الغالي وفرنسا.";
 
-@interface MDCSnackbarManagerInternal (MDCSnackbarMessageViewSnapshotTests)
-
+@interface MDCSnackbarManagerInternal (SnackbarManagerSnapshotTesting)
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
-
 @end
 
-@interface MDCSnackbarManager (MDCSnackbarMessageViewSnapshotTests)
-
+@interface MDCSnackbarManager (SnackbarManagerSnapshotTesting)
 @property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
-
 @end
 
 /** Snapshot tests for MDCSnackbarMessageView. */
@@ -331,6 +328,22 @@ static NSString *const kItemTitleLong2Arabic =
 
   // Then
   [self snapshotVerifyView:self.testManager.internalManager.overlayView];
+}
+
+- (void)testSnackbarOverlayViewWithHighElevation {
+  // Given
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
+                                                              actionTitle:kItemTitleShort2Latin];
+  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+
+  // When
+  messageView.elevation = 24;
+  [self.testManager.internalManager.overlayView showSnackbarView:messageView
+                                                        animated:NO
+                                                      completion:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.testManager.internalManager.overlayView];
 }
 
 @end

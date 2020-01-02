@@ -34,8 +34,8 @@ ios_application(
     launch_storyboard = "MDCCatalog/Base.lproj/LaunchScreen.storyboard",
     minimum_os_version = IOS_MINIMUM_OS,
     deps = [
-      ":MDCCatalogLib",
-      ":MDCCatalogObjcLib",
+        ":MDCCatalogLib",
+        ":MDCCatalogObjcLib",
     ],
 )
 

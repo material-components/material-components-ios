@@ -17,7 +17,6 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialFeatureHighlight
 import MaterialComponents.MaterialFeatureHighlight_ColorThemer
-import MaterialComponents.MaterialFeatureHighlight_TypographyThemer
 import MaterialComponents.MaterialTypographyScheme
 
 /// Example to show how to use a feature highlight
@@ -60,7 +59,8 @@ class FeatureHighlightSwiftViewController: UIViewController {
     let vc = MDCFeatureHighlightViewController(highlightedView: featureButton,
                                                completion: nil)
     MDCFeatureHighlightColorThemer.applySemanticColorScheme(colorScheme, to: vc)
-    MDCFeatureHighlightTypographyThemer.applyTypographyScheme(typographyScheme, to: vc)
+    vc.titleFont = typographyScheme.headline6
+    vc.bodyFont = typographyScheme.body2
     vc.mdc_adjustsFontForContentSizeCategory = true
     vc.titleText = "Hey this is a title for the Feature Highlight"
     vc.bodyText = "This is the description of the feature highlight view controller"

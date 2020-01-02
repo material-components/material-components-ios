@@ -14,12 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialTabs+ColorThemer.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
 
 @interface TabBarViewControllerInterfaceBuilderExample : MDCTabBarViewController
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
 @implementation TabBarViewControllerInterfaceBuilderExample
@@ -27,8 +27,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -40,22 +39,11 @@
     [self.storyboard instantiateViewControllerWithIdentifier:@"blue"],
     [self.storyboard instantiateViewControllerWithIdentifier:@"green"],
   ];
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
-}
-
-@end
-
-@implementation TabBarViewControllerInterfaceBuilderExample (Supplemental)
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  // Ensure that our status bar is white.
-  return UIStatusBarStyleLightContent;
-}
-
-// TabBarViewControllerInterfaceBuilderExample expect that appBars be inside the tabs,
-// so don't stick an appBarViewController on it.
-- (BOOL)catalogShouldHideNavigation {
-  return YES;
+  if (!self.containerScheme) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
+  self.selectedViewController = self.viewControllers.firstObject;
 }
 
 @end

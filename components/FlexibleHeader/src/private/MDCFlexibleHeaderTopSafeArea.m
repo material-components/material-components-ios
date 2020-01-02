@@ -41,6 +41,14 @@ static const CGFloat kNonXStatusBarHeight = 20;
   }
 }
 
+- (void)setSubtractsAdditionalSafeAreaInsets:(BOOL)subtractsAdditionalSafeAreaInsets {
+  _subtractsAdditionalSafeAreaInsets = subtractsAdditionalSafeAreaInsets;
+
+  if (self.inferTopSafeAreaInsetFromViewController) {
+    [self extractTopSafeAreaInset];
+  }
+}
+
 - (CGFloat)topSafeAreaInset {
   if (self.inferTopSafeAreaInsetFromViewController) {
     // Generally-speaking, we consider the top safe area inset to equate to the length of any
@@ -125,7 +133,11 @@ static const CGFloat kNonXStatusBarHeight = 20;
   }
 
   if (@available(iOS 11.0, *)) {
-    self.extractedTopSafeAreaInset = viewController.view.safeAreaInsets.top;
+    CGFloat safeAreaTop = viewController.view.safeAreaInsets.top;
+    if (self.subtractsAdditionalSafeAreaInsets) {
+      safeAreaTop -= viewController.additionalSafeAreaInsets.top;
+    }
+    self.extractedTopSafeAreaInset = safeAreaTop;
   } else {
     self.extractedTopSafeAreaInset = viewController.topLayoutGuide.length;
   }

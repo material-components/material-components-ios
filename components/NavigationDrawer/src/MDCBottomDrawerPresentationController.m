@@ -243,6 +243,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
           self.bottomDrawerContainerViewController.contentViewController.view.frame);
       newFrame.size.height -= self.bottomDrawerContainerViewController.addedHeight;
       self.bottomDrawerContainerViewController.contentViewController.view.frame = newFrame;
+      [self.bottomDrawerContainerViewController willMoveToParentViewController:nil];
+      [self.bottomDrawerContainerViewController.view removeFromSuperview];
       [self.bottomDrawerContainerViewController removeFromParentViewController];
     }
     [self.scrimView removeFromSuperview];
@@ -316,6 +318,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
   _drawerShadowColor = drawerShadowColor;
   self.bottomDrawerContainerViewController.drawerShadowColor = drawerShadowColor;
+}
+
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _trackingScrollView = trackingScrollView;
+  self.bottomDrawerContainerViewController.trackingScrollView = trackingScrollView;
 }
 
 - (BOOL)contentReachesFullscreen {

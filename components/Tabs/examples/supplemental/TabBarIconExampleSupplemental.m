@@ -40,15 +40,16 @@
 
   [self setupAlignmentButton];
 
-  [MDCTabBarTypographyThemer applyTypographyScheme:self.typographyScheme toTabBar:self.tabBar];
+  [MDCTabBarTypographyThemer applyTypographyScheme:self.containerScheme.typographyScheme
+                                          toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {
   self.alignmentButton = [[MDCButton alloc] init];
 
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
+  buttonScheme.colorScheme = self.containerScheme.colorScheme;
+  buttonScheme.typographyScheme = self.containerScheme.typographyScheme;
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.alignmentButton];
 
   [self.view addSubview:self.alignmentButton];
@@ -90,9 +91,9 @@
   [self.view addSubview:self.appBarViewController.view];
   [self.appBarViewController didMoveToParentViewController:self];
 
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+  [MDCAppBarColorThemer applyColorScheme:self.containerScheme.colorScheme
                   toAppBarViewController:self.appBarViewController];
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.containerScheme.typographyScheme
                             toAppBarViewController:self.appBarViewController];
 }
 

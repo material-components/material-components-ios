@@ -32,9 +32,6 @@ A banner displays a prominent message and related optional actions.
 
 `MDCBannerView` is a view that displays an important, succinct message, and provides actions for users to address (or dismiss the banner). It requires a user action to be dismissed.
 
-`MDCBannerView` is currently a [beta component](../../contributing/beta_components.md). Therefore, clients that
-wish to use MDCBannerView in their app will need to manually clone the repo and add the code to their project.
-
 ## Installation
 
 <!-- Extracted from docs/installation.md -->
@@ -44,7 +41,7 @@ wish to use MDCBannerView in their app will need to manually clone the repo and 
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponentsBeta/Banner'
+pod 'MaterialComponents/Banner'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -56,13 +53,13 @@ pod install
 
 ### Importing
 
-To use the `MDCBannerView` in your code, import the MaterialBanner umbrella header (Objective-C) or MaterialComponentsBeta module (Swift).
+To use the `MDCBannerView` in your code, import the MaterialBanner umbrella header (Objective-C) or MaterialComponents module (Swift).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-import MaterialComponentsBeta.MaterialBanner
+import MaterialComponents.MaterialBanner
 ```
 
 #### Objective-C
@@ -85,7 +82,9 @@ By default, `MDCBannerView` is configured to display an image view, a text label
 
 ### Styling
 
-By default, `MDCBannerView` is configured to display items with black text and a white background. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textView`, `imageView`, `leadingButton` and `trailingButton`.
+By default, `MDCBannerView` is configured to display items with black text and white background with a grey divider at the bottom of the view. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textView`, `imageView`, `leadingButton` and `trailingButton`. `showsDivider` and `dividerColor` can be used to control the divider's visibility and color.
+
+`MDCBannerView` can handle its layout style in both an automatic way and manual ways through `bannerViewLayoutStyle` property. By default, `MDCBannerViewLayoutStyleAutomatic` is set and layout is set automatically based on how elements are configured on the `MDCBannerView`. `MDCBannerViewLayoutStyleSingleRow`, `MDCBannerViewLayoutStyleMultiRowStackedButton` and `MDCBannerViewLayoutStyleMultiRowAlignedButton` are values that can be used as manual ways to handle layout style.
 
 ### LayoutMargins
 

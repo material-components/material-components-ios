@@ -170,12 +170,26 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return _alertTitle;
 }
 
+- (void)setTitleAccessibilityLabel:(NSString *)titleAccessibilityLabel {
+  _titleAccessibilityLabel = [titleAccessibilityLabel copy];
+  if (self.alertView && titleAccessibilityLabel) {
+    self.alertView.titleLabel.accessibilityLabel = titleAccessibilityLabel;
+  }
+}
+
 - (void)setMessage:(NSString *)message {
   _message = [message copy];
   if (self.alertView) {
     self.alertView.messageLabel.text = message;
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  }
+}
+
+- (void)setMessageAccessibilityLabel:(NSString *)messageAccessibilityLabel {
+  _messageAccessibilityLabel = [messageAccessibilityLabel copy];
+  if (self.alertView && messageAccessibilityLabel) {
+    self.alertView.messageLabel.accessibilityLabel = messageAccessibilityLabel;
   }
 }
 
@@ -196,6 +210,35 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self.alertView setNeedsLayout];
   self.preferredContentSize =
       [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+}
+
+- (MDCDialogTransitionController *)dialogTransitionController {
+  return (MDCDialogTransitionController *)self.transitioningDelegate;
+}
+
+- (NSTimeInterval)presentationOpacityAnimationDuration {
+  return [self dialogTransitionController].opacityAnimationDuration;
+}
+
+- (void)setPresentationOpacityAnimationDuration:
+    (NSTimeInterval)presentationOpacityAnimationDuration {
+  [self dialogTransitionController].opacityAnimationDuration = presentationOpacityAnimationDuration;
+}
+
+- (NSTimeInterval)presentationScaleAnimationDuration {
+  return [self dialogTransitionController].scaleAnimationDuration;
+}
+
+- (void)setPresentationScaleAnimationDuration:(NSTimeInterval)presentationScaleAnimationDuration {
+  [self dialogTransitionController].scaleAnimationDuration = presentationScaleAnimationDuration;
+}
+
+- (CGFloat)presentationInitialScaleFactor {
+  return [self dialogTransitionController].dialogInitialScaleFactor;
+}
+
+- (void)setPresentationInitialScaleFactor:(CGFloat)presentationInitialScaleFactor {
+  [self dialogTransitionController].dialogInitialScaleFactor = presentationInitialScaleFactor;
 }
 
 - (NSArray<MDCAlertAction *> *)actions {
@@ -442,6 +485,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
         self.adjustsFontForContentSizeCategory;
   }
   self.alertView.messageLabel.text = self.message;
+  self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
+  self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
   // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
   // adjustsFontForContentSizeCategory for messageLabel
   self.alertView.accessoryView = self.accessoryView;

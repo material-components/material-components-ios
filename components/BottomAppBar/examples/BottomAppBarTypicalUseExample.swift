@@ -17,7 +17,6 @@ import UIKit
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialColorScheme
@@ -76,9 +75,6 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
     // Theme the floating button.
     bottomBarView.floatingButton.applySecondaryTheme(withScheme: containerScheme)
-    MDCBottomAppBarColorThemer
-      .applySurfaceVariant(withSemanticColorScheme: containerScheme.colorScheme,
-                           to: bottomBarView)
 
     // Configure the navigation buttons to be shown on the bottom app bar.
     let barButtonLeadingItem = UIBarButtonItem()
@@ -146,7 +142,7 @@ extension BottomAppBarTypicalUseSwiftExample {
     ]
   }
 
-  func catalogShouldHideNavigation() -> Bool {
+  @objc func catalogShouldHideNavigation() -> Bool {
     return true
   }
 }

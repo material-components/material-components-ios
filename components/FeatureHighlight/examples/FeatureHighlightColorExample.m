@@ -27,6 +27,8 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:cell.accessoryView
                                                               completion:nil];
   highlightController.titleText = @"So pretty!";
+  // Remove "double-tap to dismiss"
+  highlightController.accessibilityHint = nil;
   highlightController.bodyText = @"What a nice color you've chosen.";
   highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
   [MDCFeatureHighlightAccessibilityMutator mutate:highlightController];

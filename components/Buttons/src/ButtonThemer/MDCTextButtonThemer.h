@@ -25,10 +25,8 @@
  `MDCButton`'s `-applyTextThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCTextButtonThemer : NSObject
-@end
-
-@interface MDCTextButtonThemer (ToBeDeprecated)
+__deprecated_msg("Please use MDCButton:applyTextThemeWithScheme: instead.")
+    @interface MDCTextButtonThemer : NSObject
 
 /**
  Applies a button scheme's properties to an MDCButton using the text button style.

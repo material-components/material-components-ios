@@ -121,31 +121,15 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":BottomNavigation",
-        "//components/schemes/Color",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":BottomNavigation",
-        "//components/schemes/Typography",
-    ],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     includes = ["examples/supplemental"],
     deps = [
         ":BottomNavigation",
-        ":ColorThemer",
-        ":TypographyThemer",
+        ":Theming",
         "//components/Palettes",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
@@ -155,12 +139,12 @@ mdc_examples_swift_library(
     deps = [
         ":BottomNavigation",
         ":BottomNavigationBeta",
-        ":ColorThemer",
         ":ObjcExamples",
-        ":TypographyThemer",
+        ":Theming",
         "//components/AppBar",
         "//components/Buttons",
         "//components/Palettes",
+        "//components/schemes/Container",
     ],
 )
 
@@ -182,9 +166,7 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":BottomNavigation",
-        ":ColorThemer",
         ":Theming",
-        ":TypographyThemer",
         ":privateHeaders",
         "//components/Typography",
     ],
@@ -224,9 +206,7 @@ mdc_snapshot_objc_library(
     deps = [
         ":BottomNavigation",
         ":BottomNavigationBeta",
-        ":ColorThemer",
         ":Theming",
-        ":TypographyThemer",
         ":privateHeaders",
     ],
 )
