@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTextControlTypicalUseExample.h"
+#import "MDCTextControlConfiguratorExample.h"
 
 /** This view controller manages a child view controller that contains the actual example content.
  * It overrides the child view controller's trait collection based off the user's behavior. */
-@interface MDCTextControlTextFieldTypicalUseExample : MDCTextControlTypicalUseExample
+@interface MDCTextControlTextFieldConfiguratorExample : MDCTextControlConfiguratorExample
 
 @end

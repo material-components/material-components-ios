@@ -19,10 +19,10 @@
 #import "MaterialTextControls+Theming.h"
 #import "MaterialTextControls.h"
 
-#import "MDCTextControlTypicalUseExample.h"
+#import "MDCTextControlConfiguratorExample.h"
 #import "MDCTraitEnvironmentChangeDelegate.h"
 
-@interface MDCTextControlTypicalUseExample ()
+@interface MDCTextControlConfiguratorExample ()
 
 /**
 All the content size categories that this view controller supports.
@@ -30,7 +30,7 @@ All the content size categories that this view controller supports.
 @property(nonatomic, strong) NSArray *contentSizeCategories;
 @end
 
-@implementation MDCTextControlTypicalUseExample
+@implementation MDCTextControlConfiguratorExample
 
 #pragma mark View Controller Lifecycle
 

@@ -22,7 +22,7 @@
  This view controller manages a child view controller that contains the actual example content. It
  overrides the child view controller's trait collection based off the user's behavior.
  */
-@interface MDCTextControlTypicalUseExample : UIViewController <MDCTraitEnvironmentChangeDelegate>
+@interface MDCTextControlConfiguratorExample : UIViewController <MDCTraitEnvironmentChangeDelegate>
 
 /**
 The MDCContainerScheming for the class.

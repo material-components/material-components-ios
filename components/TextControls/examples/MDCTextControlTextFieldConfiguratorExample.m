@@ -14,13 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTextControlTextFieldTypicalUseExample.h"
+#import "MDCTextControlTextFieldConfiguratorExample.h"
 
 #import "MDCTextControlTextFieldContentViewController.h"
 
 static NSString *const kExampleTitle = @"MDCTextControl TextFields";
 
-@implementation MDCTextControlTextFieldTypicalUseExample
+@implementation MDCTextControlTextFieldConfiguratorExample
 
 #pragma mark View Controller Lifecycle
 
@@ -40,7 +40,7 @@ static NSString *const kExampleTitle = @"MDCTextControl TextFields";
 
 #pragma mark - CatalogByConvention
 
-@implementation MDCTextControlTextFieldTypicalUseExample (CatalogByConvention)
+@implementation MDCTextControlTextFieldConfiguratorExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
