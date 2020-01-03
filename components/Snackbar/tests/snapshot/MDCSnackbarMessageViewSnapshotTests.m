@@ -213,6 +213,8 @@ static NSString *const kItemTitleLong2Arabic =
   [self generateSnapshotAndVerifyForView:messageView];
 }
 
+// TODO(https://github.com/material-components/material-components-ios/issues/9372): determine why
+// running this in Bazel produces a different-sized screenshot than what is produced by Xcode.
 - (void)testSnackbarOverlayViewWithHighElevation {
   // Given
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
