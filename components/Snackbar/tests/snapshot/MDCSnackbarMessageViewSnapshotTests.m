@@ -225,6 +225,7 @@ static NSString *const kItemTitleLong2Arabic =
                                                         animated:NO
                                                       completion:nil];
 
+  // This run loop drain is here to resolve Bazel flakiness.
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
