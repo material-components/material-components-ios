@@ -90,12 +90,6 @@ git_repository(
 )
 
 git_repository(
-    name = "motion_transitioning_objc",
-    remote = "https://github.com/material-motion/motion-transitioning-objc.git",
-    tag = "v6.0.0",
-)
-
-git_repository(
     name = "ios_snapshot_test_case",
     remote = "https://github.com/material-foundation/ios-snapshot-test-case",
     commit = "cd9db9129956037297ef023857e3d82c424b6880",
