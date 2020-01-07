@@ -770,7 +770,7 @@ override var childViewControllerForStatusBarStyle: UIViewController? {
 
 This example shows how to add a custom background image view to a flexible header.
 
-You can create and add a UIImageView subview to the flexible header view's content view:
+You can create and add a UIImageView subview to the flexible header view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -780,7 +780,7 @@ let headerView = headerViewController.headerView
 let imageView = ...
 imageView.frame = headerView.bounds
 imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-headerView.contentView.insertSubview(imageView, at: 0)
+headerView.insertSubview(imageView, at: 0)
 
 imageView.contentMode = .scaleAspectFill
 imageView.clipsToBounds = true
@@ -791,7 +791,7 @@ imageView.clipsToBounds = true
 UIImageView *imageView = ...;
 imageView.frame = self.headerViewController.headerView.bounds;
 imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-[self.headerViewController.headerView.contentView insertSubview:imageView atIndex:0];
+[self.headerViewController.headerView insertSubview:imageView atIndex:0];
 
 imageView.contentMode = UIViewContentModeScaleAspectFill;
 imageView.clipsToBounds = YES;
@@ -800,7 +800,6 @@ imageView.clipsToBounds = YES;
 
 Notes:
 
-- Add the image view to the header view's `contentView`, not the header view itself.
 - Set the `contentMode` to "ScaleAspectFill" to ensure that the image always fills the available
   header space, even if the image is too small. This is usually preferred, but consider changing
   the contentMode if you want a different behavior.
@@ -1111,49 +1110,6 @@ flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
 care that the `topLayoutGuideViewController` is not a direct ancestor of the flexible header or your
 app **will** enter an infinite loop. As a general rule, your `topLayoutGuideViewController` should
 be a sibling to the flexible header.
-
-
-## Extensions
-
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-You can theme a flexible header with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/FlexibleHeader+ColorThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialFlexibleHeader_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialFlexibleHeader+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-
-// Step 3: Apply the color scheme to your component
-[MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme
-     toFlexibleHeaderView:component];
-```
-<!--</div>-->
 
 
 ## Migration guides

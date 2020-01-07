@@ -94,6 +94,10 @@ static const int kMDCButtonAnimationDuration = 200;
   _mdc_overrideBaseElevation = -1;
 }
 
+- (CGSize)intrinsicContentSize {
+  return CGSizeMake(UIViewNoIntrinsicMetric, kMDCBottomAppBarHeight);
+}
+
 - (void)addFloatingButton {
   MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
   [self setFloatingButton:floatingButton];

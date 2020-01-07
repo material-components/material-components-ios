@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests+I18N.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
@@ -41,11 +40,7 @@
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
   self.textFieldController.characterCountMax = 50;
   self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                      toTextInputController:self.textFieldController];
   // TODO: Theme the MDCTextInputController with a theming extension (to be added in #9199)
   [self changeStringsToKorean];
 }

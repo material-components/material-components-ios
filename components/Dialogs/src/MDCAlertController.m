@@ -212,6 +212,35 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
+- (MDCDialogTransitionController *)dialogTransitionController {
+  return (MDCDialogTransitionController *)self.transitioningDelegate;
+}
+
+- (NSTimeInterval)presentationOpacityAnimationDuration {
+  return [self dialogTransitionController].opacityAnimationDuration;
+}
+
+- (void)setPresentationOpacityAnimationDuration:
+    (NSTimeInterval)presentationOpacityAnimationDuration {
+  [self dialogTransitionController].opacityAnimationDuration = presentationOpacityAnimationDuration;
+}
+
+- (NSTimeInterval)presentationScaleAnimationDuration {
+  return [self dialogTransitionController].scaleAnimationDuration;
+}
+
+- (void)setPresentationScaleAnimationDuration:(NSTimeInterval)presentationScaleAnimationDuration {
+  [self dialogTransitionController].scaleAnimationDuration = presentationScaleAnimationDuration;
+}
+
+- (CGFloat)presentationInitialScaleFactor {
+  return [self dialogTransitionController].dialogInitialScaleFactor;
+}
+
+- (void)setPresentationInitialScaleFactor:(CGFloat)presentationInitialScaleFactor {
+  [self dialogTransitionController].dialogInitialScaleFactor = presentationInitialScaleFactor;
+}
+
 - (NSArray<MDCAlertAction *> *)actions {
   return self.actionManager.actions;
 }

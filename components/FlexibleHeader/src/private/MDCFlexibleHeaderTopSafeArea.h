@@ -38,6 +38,13 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderTopSafe
  */
 @property(nonatomic, weak, nullable) UIViewController *topSafeAreaSourceViewController;
 
+/**
+ Whether to subtract additionalSafeAreaInsets from the extracted safeAreaInsets.
+
+ Ignored if topSafeAreaSourceViewController is nil.
+ */
+@property(nonatomic) BOOL subtractsAdditionalSafeAreaInsets;
+
 #pragma mark Querying the top safe area
 
 /**

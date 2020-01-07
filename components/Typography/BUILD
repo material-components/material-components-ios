@@ -56,7 +56,6 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":Typography",
-        "//components/schemes/Typography",
     ],
 )
 

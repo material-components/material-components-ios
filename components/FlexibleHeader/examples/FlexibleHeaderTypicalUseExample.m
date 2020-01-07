@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialFlexibleHeader+ColorThemer.h"
 #import "MaterialFlexibleHeader.h"
 
 @class FlexibleHeaderTypicalUseInstructionsView;

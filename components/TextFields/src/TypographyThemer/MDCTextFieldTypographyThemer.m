@@ -14,7 +14,10 @@
 
 #import "MDCTextFieldTypographyThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCTextFieldTypographyThemer
+#pragma clang diagnostic pop
 
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
         toTextInputController:(id<MDCTextInputController>)textInputController {

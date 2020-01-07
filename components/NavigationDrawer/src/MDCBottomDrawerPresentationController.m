@@ -98,6 +98,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
+  bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
+      self.shouldIncludeSafeAreaInInitialDrawerHeight;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
@@ -318,6 +320,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
   _drawerShadowColor = drawerShadowColor;
   self.bottomDrawerContainerViewController.drawerShadowColor = drawerShadowColor;
+}
+
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _trackingScrollView = trackingScrollView;
+  self.bottomDrawerContainerViewController.trackingScrollView = trackingScrollView;
 }
 
 - (BOOL)contentReachesFullscreen {
