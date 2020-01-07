@@ -22,7 +22,11 @@
 #import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialApplication.h"
+
+#ifndef TARGET_OS_TV
 #import "MaterialKeyboardWatcher.h"
+#endif
+
 #import "MaterialOverlay.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
@@ -74,10 +78,12 @@ static const CGFloat kMaximumHeight = 80;
  */
 @property(nonatomic) NSLayoutConstraint *snackbarViewCenterConstraint;
 
+#ifndef TARGET_OS_TV
 /**
  The object which will notify us of changes in the keyboard position.
  */
 @property(nonatomic) MDCKeyboardWatcher *watcher;
+#endif
 
 /**
  The layout constraint which determines the bottom of the containing view. Setting the constant
@@ -125,10 +131,7 @@ static const CGFloat kMaximumHeight = 80;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
 
-  MDCKeyboardWatcher *watcher = [MDCKeyboardWatcher sharedKeyboardWatcher];
-
   if (self) {
-    _watcher = watcher;
     _containingView = [[UIView alloc] initWithFrame:frame];
     _containingView.translatesAutoresizingMaskIntoConstraints = NO;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
@@ -136,6 +139,9 @@ static const CGFloat kMaximumHeight = 80;
     }
     [self addSubview:_containingView];
 
+#ifndef TARGET_OS_TV
+    MDCKeyboardWatcher *watcher = [MDCKeyboardWatcher sharedKeyboardWatcher];
+    _watcher = watcher;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
     [nc addObserver:self
@@ -162,7 +168,7 @@ static const CGFloat kMaximumHeight = 80;
            selector:@selector(didRotate:)
                name:UIApplicationDidChangeStatusBarOrientationNotification
              object:nil];
-
+#endif
     [self setupContainerConstraints];
   }
 
@@ -219,7 +225,10 @@ static const CGFloat kMaximumHeight = 80;
  change at any time during runtime.
  */
 - (CGFloat)dynamicBottomMargin {
-  CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
+  CGFloat keyboardHeight = 0.0;
+#ifndef TARGET_OS_TV
+  keyboardHeight = self.watcher.visibleKeyboardHeight;
+#endif
   CGFloat userHeight = self.bottomOffset;
   if (!MDCSnackbarMessage.usesLegacySnackbar) {
     if (@available(iOS 11.0, *)) {
@@ -589,6 +598,7 @@ static const CGFloat kMaximumHeight = 80;
               completion:completion];
 }
 
+#ifndef TARGET_OS_TV
 #pragma mark - Keyboard Notifications
 
 - (void)updatesnackbarPositionWithKeyboardUserInfo:(NSDictionary *)userInfo {
@@ -631,6 +641,7 @@ static const CGFloat kMaximumHeight = 80;
 - (void)keyboardWillChangeFrame:(NSNotification *)notification {
   [self updatesnackbarPositionWithKeyboardUserInfo:[notification userInfo]];
 }
+#endif
 
 #pragma mark - Bottom And Side Margins
 
@@ -715,6 +726,7 @@ static const CGFloat kMaximumHeight = 80;
   }
 }
 
+#ifndef TARGET_OS_TV
 - (void)willRotate:(NSNotification *)notification {
   UIApplication *application = [UIApplication mdc_safeSharedApplication];
   UIInterfaceOrientation currentOrientation = application.statusBarOrientation;
@@ -742,6 +754,7 @@ static const CGFloat kMaximumHeight = 80;
     self.rotationDuration = -1;
   });
 }
+#endif
 
 #pragma mark - Overlay Support
 
