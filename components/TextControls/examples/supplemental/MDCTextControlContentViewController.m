@@ -315,7 +315,8 @@ This button allows the user to signal that they want to toggle the layout direct
 - (void)applyThemesToButtons {
   [self.allButtons enumerateObjectsUsingBlock:^(MDCButton *button, NSUInteger idx, BOOL *stop) {
     if (self.isErrored) {
-      MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+      MDCSemanticColorScheme *colorScheme =
+          [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
       colorScheme.primaryColor = colorScheme.errorColor;
       MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
       containerScheme.colorScheme = colorScheme;

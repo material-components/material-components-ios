@@ -106,7 +106,9 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
 #pragma mark - Test helpers
 
 - (MDCSemanticColorScheme *)customColorScheme {
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  ;
 
   colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
   colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
