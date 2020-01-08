@@ -1,3 +1,15 @@
+# 100.0.1
+
+In this patch release we addressed a bug in `MDCSnackbar` where the Snackbar would not `clipToBounds` if the legacy behavior was enabled.
+
+## Component changes
+
+### Snackbar
+
+* [clipToBounds for legacy Snackbar (#9386)](https://github.com/material-components/material-components-ios/commit/e493ac64d70a2b030b8abfe1f5a60c8053f9788c) (Yarden Eitan)
+
+---
+
 # 100.0.0
 
 In this major release we made a breaking change improvement to Ink’s `inkColor` API. As well as improvements including customization Dialogs presentation animation,
