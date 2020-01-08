@@ -6,7 +6,7 @@ In this patch release we addressed a bug in `MDCSnackbar` where the Snackbar wou
 
 ### Snackbar
 
-* [clipToBounds for legacy Snackbar (#9386)](https://github.com/material-components/material-components-ios/pull/9388/commits/e493ac64d70a2b030b8abfe1f5a60c8053f9788c) (Yarden Eitan)
+* [clipToBounds for legacy Snackbar (#9386)](https://github.com/material-components/material-components-ios/commit/e493ac64d70a2b030b8abfe1f5a60c8053f9788c) (Yarden Eitan)
 
 ---
 
