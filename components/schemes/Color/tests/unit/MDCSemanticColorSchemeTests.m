@@ -330,7 +330,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorSchemeCopy {
   // Given
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+#pragma clang diagnostic pop
 
   // When
   MDCSemanticColorScheme *colorSchemeCopy = [colorScheme copy];
