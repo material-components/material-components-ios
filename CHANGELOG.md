@@ -4,6 +4,10 @@ In this patch release we addressed a bug in `MDCSnackbar` where the Snackbar wou
 
 ## Component changes
 
+### Snackbar
+
+* [Accessibility focus change to include the accessibil… (#9389)](https://github.com/material-components/material-components-ios/commit/bba4713a77537b43d154eb775323d1abd774ea49) (Yarden Eitan)
+
 ---
 
 # 100.0.1
