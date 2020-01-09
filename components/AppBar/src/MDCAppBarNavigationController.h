@@ -52,10 +52,9 @@
 /**
  Defines the events that an MDCAppBarNavigationController may send to a delegate.
  */
-@protocol MDCAppBarNavigationControllerDelegate <
-    UINavigationControllerDelegate,
-    MDCAppBarNavigationControllerToBeDeprecatedDelegate
->
+@protocol
+    MDCAppBarNavigationControllerDelegate <UINavigationControllerDelegate,
+                                           MDCAppBarNavigationControllerToBeDeprecatedDelegate>
 @optional
 
 /**
