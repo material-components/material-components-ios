@@ -101,9 +101,7 @@ static const CGFloat kSurfaceThemeUnselectedOpacity = (CGFloat)0.6;
 #pragma mark - Test helpers
 
 - (MDCSemanticColorScheme *)customColorScheme {
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  ;
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 
   colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
   colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
