@@ -122,10 +122,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   MDCSemanticColorScheme *copy = [[MDCSemanticColorScheme alloc] init];
-#pragma clang diagnostic pop
   copy.primaryColor = self.primaryColor;
   copy.primaryColorVariant = self.primaryColorVariant;
   copy.secondaryColor = self.secondaryColor;

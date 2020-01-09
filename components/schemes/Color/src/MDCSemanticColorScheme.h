@@ -127,10 +127,9 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 @property(readwrite, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 
 /**
- Initializes the color scheme with the MDCColorSchemeDefaultsMaterial201804 default scheme.
+ Initializes the color scheme with the latest material defaults.
  */
-- (nonnull instancetype)init __deprecated_msg("Use initWithDefaults: with a "
-                                              "specific scheme default.");
+- (nonnull instancetype)init;
 
 /**
  Initializes the color scheme with the colors associated with the given defaults.
