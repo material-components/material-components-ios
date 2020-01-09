@@ -17,8 +17,7 @@
 #import "MDCAppBarViewController.h"
 #import "MaterialFlexibleHeader.h"
 
-
-@interface MDCAppBarContainerViewController()
+@interface MDCAppBarContainerViewController ()
 
 // To be deprecated APIs; re-declared here in order to be auto-synthesized.
 @property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
