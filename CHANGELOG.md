@@ -1,6 +1,6 @@
 # 100.1.0
 
-In this patch release we addressed a bug in `MDCSnackbar` where the Snackbar would not read the `accessibilityHint`.
+In this minor release we addressed a bug in `MDCSnackbar` where the Snackbar would not read the `accessibilityHint`.
 
 ## Component changes
 
