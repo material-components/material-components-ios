@@ -1,3 +1,68 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Cards
+
+* [Properly use headings for 'Swift' and 'Objective C' above sample code (#9353)](https://github.com/material-components/material-components-ios/commit/900ace5c7b648acb003ef6f28cfd2a2731c3814c) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Delete deprecated contentView property (#9356)](https://github.com/material-components/material-components-ios/commit/e247e12dc3b728e288393f62897d3a449c933b64) (Bryan Oltman)
+
+### HeaderStackView
+
+* [Mark MDCHeaderStackViewColorThemer deprecated (#9354)](https://github.com/material-components/material-components-ios/commit/aff103cbf93823e377829f66feeb6847e6950267) (Bryan Oltman)
+
+### NavigationDrawer
+
+* [Added ability to account for bottom safe are… (#9321)](https://github.com/material-components/material-components-ios/commit/620d2e27ef3442b16b9edae757a59729fa48c4e1) (Jake Rockland)
+
+### Snackbar
+
+* [Accessibility focus change to include the accessibil… (#9389)](https://github.com/material-components/material-components-ios/commit/4d003e31cac8bbf275e25629be93abc5360f057a) (Yarden Eitan)
+* [Update reference image for testSnackbarOverlayViewWithHighElevation (#9373)](https://github.com/material-components/material-components-ios/commit/d0ff0e38a146fcb89dac7e2058bd4893c0384bc0) (Bryan Oltman)
+* [clipToBounds for legacy Snackbar (#9386)](https://github.com/material-components/material-components-ios/commit/ab64bd41f10389bcfb682f18858cf029d7566553) (Yarden Eitan)
+
+### TextControls
+
+* [Refactor text control examples (#9358)](https://github.com/material-components/material-components-ios/commit/dc10fe2d0db0cbefebd801eb08bf183df7588001) (Andrew Overton)
+* [Use CGFloat consts in theming extensions (#9360)](https://github.com/material-components/material-components-ios/commit/9e51717abf1de2d5e606402d74a38c01d324892d) (Andrew Overton)
+* [Write docs for MDCTextControls (#9327)](https://github.com/material-components/material-components-ios/commit/d99e87232035c6a369220a989ff3628f9b45d54f) (Andrew Overton)
+
+### TextFields
+
+* [Give MDCTextField clear button proper hit area insets (#8790)](https://github.com/material-components/material-components-ios/commit/703589b3eb68512d448e6a25e10a74fde19504cd) (Andrew Overton)
+
+### Typography
+
+* [Remove unused import in //components/Typography:SwiftExamples. (#9367)](https://github.com/material-components/material-components-ios/commit/3b96c0b37ec03b93f6faff362fff0758dc34f946) (featherless)
+
+## Multi-component changes
+
+* [Delete MDCFlexibleHeaderColorThemer (#9351)](https://github.com/material-components/material-components-ios/commit/a2eb1dcdbdf45616bcf712a0a04d99822a3edc5b) (Bryan Oltman)
+* [Implement Swift import rewriting as part of Bazel. (#9368)](https://github.com/material-components/material-components-ios/commit/26b5e48574a07f4e79ac463bededf7517495fe36) (featherless)
+* [Ran buildifier on all BUILD files. (#9366)](https://github.com/material-components/material-components-ios/commit/0a0bc4b47be3ca986e0442262656cc363edb3088) (featherless)
+* [Remove all unused mdc_objc_library loads. (#9376)](https://github.com/material-components/material-components-ios/commit/162a063bdaff001a0a4aeba10c7ede5f0c96f3e0) (featherless)
+* [Remove all unused swift_library load statements. (#9369)](https://github.com/material-components/material-components-ios/commit/b7cf0de9158345f35d25e8f41bd7d6e174fafb05) (featherless)
+* [Remove unused motion_transitioning_objc dependency. (#9379)](https://github.com/material-components/material-components-ios/commit/2b186d6e47846fb53acfdcc66af488ce8566f109) (featherless)
+* [Revert "[ColorScheme] deprecate init method and update documentation to reflect its purpose. (#9391)" (#9396)](https://github.com/material-components/material-components-ios/commit/ab901f76547f640aef80d6085c14aa113a01d5ec) (Wenyu Zhang)
+* [deprecate init method and update documentation to reflect its purpose. (#9391)](https://github.com/material-components/material-components-ios/commit/5fc6ec2f96e69f1e4c579ca69344557ad83329f2) (Wenyu Zhang)
+
+---
+
 # 100.1.0
 
 In this minor release we addressed a bug in `MDCSnackbar` where the Snackbar would not read the `accessibilityHint`.
