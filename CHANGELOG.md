@@ -1,16 +1,6 @@
-# #develop#
+# 100.0.2
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+In this patch release we addressed a bug in `MDCSnackbar` where the Snackbar would not read the `accessibilityHint`.
 
 ## Component changes
 
