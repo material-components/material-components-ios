@@ -77,4 +77,19 @@
   XCTAssertNotEqual(self.textInput.placeholderLabel.font, self.textInput.font);
 }
 
+- (void)testClearButtonTouchTarget {
+  // Given
+  MDCTextInputClearButton *clearButton =
+      [[MDCTextInputClearButton alloc] initWithFrame:CGRectMake(50, 50, 18, 18)];
+  [clearButton setNeedsLayout];
+  [clearButton layoutIfNeeded];
+
+  // Then
+  CGFloat negativeFifteen = (CGFloat)(-1 * 15);
+  UIEdgeInsets minimumTouchTargetInsets =
+      UIEdgeInsetsMake(negativeFifteen, negativeFifteen, negativeFifteen, negativeFifteen);
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(clearButton.minimumTouchTargetInsets,
+                                              minimumTouchTargetInsets));
+}
+
 @end

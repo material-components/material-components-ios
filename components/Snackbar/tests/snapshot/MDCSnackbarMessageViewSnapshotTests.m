@@ -213,6 +213,8 @@ static NSString *const kItemTitleLong2Arabic =
   [self generateSnapshotAndVerifyForView:messageView];
 }
 
+// TODO(https://github.com/material-components/material-components-ios/issues/9372): determine why
+// running this in Bazel produces a different-sized screenshot than what is produced by Xcode.
 - (void)testSnackbarOverlayViewWithHighElevation {
   // Given
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
@@ -224,6 +226,13 @@ static NSString *const kItemTitleLong2Arabic =
   [self.testManager.internalManager.overlayView showSnackbarView:messageView
                                                         animated:NO
                                                       completion:nil];
+
+  // This run loop drain is here to resolve Bazel flakiness.
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.testManager.internalManager.overlayView];

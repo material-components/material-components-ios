@@ -21,15 +21,11 @@
 
 /**
  A color themer for instances of MDCHeaderStackView.
-
- @warning This API will eventually be deprecated. See the individual method documentation for
- details on replacement APIs.
- Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCHeaderStackViewColorThemer : NSObject
-@end
-
-@interface MDCHeaderStackViewColorThemer (ToBeDeprecated)
+__deprecated_msg("No replacement exists. Please comment on"
+                 " https://github.com/material-components/material-components-ios/issues/7172"
+                 " in order to indicate interest in a replacement API.")
+    @interface MDCHeaderStackViewColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCHeaderStackView.
