@@ -1,16 +1,35 @@
-# #develop#
+# 101.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we deleted the class `MDCFlexibleHeaderColorThemer`. As well as allowing the NavigationDrawer to account for the bottom safe area in presentation, improvements to our BUILD files, touch targets on `TextFields` and our `TextControl` examples and documentation.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+The `MDCFlexibleHeaderColorThemer` no longer exist.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+We deprecated `MDCHeaderStackViewColorThemer`. No current replacement exist.
+
 ## New features
 
-Replace this text with example code for each new feature.
+In order to account for the bottom safe area in presentation of a `MDCBottomDrawerViewController` we added a behavioral flag `shouldIncludeSafeAreaInInitialDrawerHeight`.
+
+```objc
+  MDCBottomDrawerViewController *bottomDrawer =
+      [[MDCBottomDrawerViewController alloc] init];
+  bottomDrawer.shouldIncludeSafeAreaInInitialDrawerHeight = YES;
+```
+
 ## API changes
+
+### HeaderStackView
+
+*deprecated* class: `MDCHeaderStackViewColorThemer`, no replacement exist.
+
+### NavigationDrawer
+
+*new* property: `shouldIncludeSafeAreaInInitialDrawerHeight` in `MDCBottomDrawerPresentationController`.
+
+*new* property: `shouldIncludeSafeAreaInInitialDrawerHeight` in `MDCBottomDrawerViewController`.
 
 ## Component changes
 
@@ -20,7 +39,7 @@ Replace this text with example code for each new feature.
 
 ### FlexibleHeader
 
-* [Delete deprecated contentView property (#9356)](https://github.com/material-components/material-components-ios/commit/e247e12dc3b728e288393f62897d3a449c933b64) (Bryan Oltman)
+* [Delete MDCFlexibleHeaderColorThemer (#9351)](https://github.com/material-components/material-components-ios/commit/a2eb1dcdbdf45616bcf712a0a04d99822a3edc5b) (Bryan Oltman)
 
 ### HeaderStackView
 
@@ -32,9 +51,7 @@ Replace this text with example code for each new feature.
 
 ### Snackbar
 
-* [Accessibility focus change to include the accessibil… (#9389)](https://github.com/material-components/material-components-ios/commit/4d003e31cac8bbf275e25629be93abc5360f057a) (Yarden Eitan)
 * [Update reference image for testSnackbarOverlayViewWithHighElevation (#9373)](https://github.com/material-components/material-components-ios/commit/d0ff0e38a146fcb89dac7e2058bd4893c0384bc0) (Bryan Oltman)
-* [clipToBounds for legacy Snackbar (#9386)](https://github.com/material-components/material-components-ios/commit/ab64bd41f10389bcfb682f18858cf029d7566553) (Yarden Eitan)
 
 ### TextControls
 
@@ -52,14 +69,11 @@ Replace this text with example code for each new feature.
 
 ## Multi-component changes
 
-* [Delete MDCFlexibleHeaderColorThemer (#9351)](https://github.com/material-components/material-components-ios/commit/a2eb1dcdbdf45616bcf712a0a04d99822a3edc5b) (Bryan Oltman)
 * [Implement Swift import rewriting as part of Bazel. (#9368)](https://github.com/material-components/material-components-ios/commit/26b5e48574a07f4e79ac463bededf7517495fe36) (featherless)
 * [Ran buildifier on all BUILD files. (#9366)](https://github.com/material-components/material-components-ios/commit/0a0bc4b47be3ca986e0442262656cc363edb3088) (featherless)
 * [Remove all unused mdc_objc_library loads. (#9376)](https://github.com/material-components/material-components-ios/commit/162a063bdaff001a0a4aeba10c7ede5f0c96f3e0) (featherless)
 * [Remove all unused swift_library load statements. (#9369)](https://github.com/material-components/material-components-ios/commit/b7cf0de9158345f35d25e8f41bd7d6e174fafb05) (featherless)
 * [Remove unused motion_transitioning_objc dependency. (#9379)](https://github.com/material-components/material-components-ios/commit/2b186d6e47846fb53acfdcc66af488ce8566f109) (featherless)
-* [Revert "[ColorScheme] deprecate init method and update documentation to reflect its purpose. (#9391)" (#9396)](https://github.com/material-components/material-components-ios/commit/ab901f76547f640aef80d6085c14aa113a01d5ec) (Wenyu Zhang)
-* [deprecate init method and update documentation to reflect its purpose. (#9391)](https://github.com/material-components/material-components-ios/commit/5fc6ec2f96e69f1e4c579ca69344557ad83329f2) (Wenyu Zhang)
 
 ---
 
