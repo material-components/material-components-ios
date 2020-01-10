@@ -90,7 +90,7 @@
 - (void)changeToRTL:(MDCChipViewLayoutCustomTraitCollectionFake *)chip {
   if (@available(iOS 10.0, *)) {
     chip.traitCollectionOverride = [UITraitCollection
-                                    traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
+        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
   }
 }
 
