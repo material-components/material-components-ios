@@ -483,3 +483,15 @@ IB_DESIGNABLE
     (nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end
+
+// clang-format off
+@interface MDCFlexibleHeaderView ()
+
+#pragma mark Accessing the header's views
+
+/** Deprecated. Please register views directly to the flexible header. */
+@property(nonatomic, strong, nonnull) UIView *contentView
+__deprecated_msg("Please register views directly to the flexible header.");
+
+@end
+// clang-format on
