@@ -304,6 +304,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _topSafeAreaGuide.frame = CGRectMake(0, 0, 0, [_topSafeArea topSafeAreaInset]);
   [self addSubview:_topSafeAreaGuide];
 
+  _contentView = [[UIView alloc] initWithFrame:self.bounds];
+  _contentView.autoresizingMask =
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  [super addSubview:_contentView];
+
   if (![MDCFlexibleHeaderView appearance].backgroundColor) {
     self.backgroundColor = [UIColor lightGrayColor];
   }
@@ -418,7 +423,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   UIView *hitView = [super hitTest:point withEvent:event];
 
   // Forwards taps to the scroll view.
-  if (hitView == self || [_forwardingViews containsObject:hitView]) {
+  if (hitView == self || (_contentView != nil && hitView == _contentView) ||
+      [_forwardingViews containsObject:hitView]) {
     hitView = _trackingScrollView;
   }
 
