@@ -1,13 +1,13 @@
 # 101.0.0
 
-In this major release we deleted the class `MDCFlexibleHeaderColorThemer`. As well as allowing the NavigationDrawer to account for the bottom safe area in presentation, improvements to our BUILD files, touch targets on `TextFields` and our `TextControl` examples and documentation.
+In this major release we deleted the class `MDCFlexibleHeaderColorThemer` and deprecated the `MDCHeaderStackViewColorThemer`. As well as allowing the NavigationDrawer to account for the bottom safe area in presentation, improvements to our BUILD files, touch targets on `TextFields` and our `TextControl` examples and documentation.
 
 ## Breaking changes
 
-The `MDCFlexibleHeaderColorThemer` no longer exist.
+The `MDCFlexibleHeaderColorThemer` no longer exists.
 ## New deprecations
 
-We deprecated `MDCHeaderStackViewColorThemer`. No current replacement exist.
+We deprecated `MDCHeaderStackViewColorThemer`. No current replacement exists.
 
 ## New features
 
@@ -23,7 +23,7 @@ In order to account for the bottom safe area in presentation of a `MDCBottomDraw
 
 ### HeaderStackView
 
-*deprecated* class: `MDCHeaderStackViewColorThemer`, no replacement exist.
+*deprecated* class: `MDCHeaderStackViewColorThemer`, no replacement exists.
 
 ### NavigationDrawer
 
