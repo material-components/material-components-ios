@@ -1,18 +1,12 @@
-# #develop#
+# 101.0.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+In this patch release we reverted Snackar's display accessibility level from `UIAccessibilityScreenChangedNotification` to `UIAccessibilityLayoutChangedNotification`, as it caused in some cases an unwanted immediate focus shift for VoiceOver users.
 
 ## Component changes
+
+### Snackbar
+
+* [Revert "[Snackbar] Accessibility focus change to include the accessibil… (#9389)"](https://github.com/material-components/material-components-ios/commit/c1bd3640a4683345cc569150d1255dbabd5bd1eb) (Yarden Eitan)
 
 ---
 
