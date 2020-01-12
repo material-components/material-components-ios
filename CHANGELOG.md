@@ -1,3 +1,15 @@
+# 101.0.1
+
+In this patch release we reverted Snackar's display accessibility level from `UIAccessibilityScreenChangedNotification` to `UIAccessibilityLayoutChangedNotification`, as it caused in some cases an unwanted immediate focus shift for VoiceOver users.
+
+## Component changes
+
+### Snackbar
+
+* [Revert "[Snackbar] Accessibility focus change to include the accessibil… (#9389)"](https://github.com/material-components/material-components-ios/commit/c1bd3640a4683345cc569150d1255dbabd5bd1eb) (Yarden Eitan)
+
+---
+
 # 101.0.0
 
 In this major release we deleted the class `MDCFlexibleHeaderColorThemer` and deprecated the `MDCHeaderStackViewColorThemer`. As well as allowing the NavigationDrawer to account for the bottom safe area in presentation, improvements to our BUILD files, touch targets on `TextFields` and our `TextControl` examples and documentation.
