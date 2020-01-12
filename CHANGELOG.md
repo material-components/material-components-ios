@@ -1,3 +1,21 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+---
+
 # 101.0.0
 
 In this major release we deleted the class `MDCFlexibleHeaderColorThemer` and deprecated the `MDCHeaderStackViewColorThemer`. As well as allowing the NavigationDrawer to account for the bottom safe area in presentation, improvements to our BUILD files, touch targets on `TextFields` and our `TextControl` examples and documentation.
