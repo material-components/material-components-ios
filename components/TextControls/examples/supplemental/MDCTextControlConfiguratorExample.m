@@ -16,7 +16,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTextControls+Theming.h"
+#import "MaterialTextControls+TextFieldsTheming.h"
 #import "MaterialTextControls.h"
 
 #import "MDCTextControlConfiguratorExample.h"

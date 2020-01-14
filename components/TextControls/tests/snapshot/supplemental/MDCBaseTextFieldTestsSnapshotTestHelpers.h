@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialTextControls+TextFields.h"
 #import "MaterialTextControls.h"
 
 @interface MDCBaseTextFieldTestsSnapshotTestHelpers : NSObject

@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import <XCTest/XCTest.h>
 
-#import <UIKit/UIKit.h>
+#import "MaterialTextControls.h"
 
-#import "MaterialTextControlsPrivate.h"
+@interface MDCTextControlStateTests : XCTestCase
+@end
 
-@interface MDCTextControlSnapshotTestHelpers : NSObject
+@implementation MDCTextControlStateTests
 
-+ (void)setUpViewControllerHierarchy;
-+ (void)tearDownViewControllerHierarchy;
-+ (void)applyContentSizeCategory:(UIContentSizeCategory)contentSizeCategory;
-+ (void)removeTextControlFromViewHierarchy:(UIView<MDCTextControl> *)textControl;
-+ (void)addTextControlToViewHierarchy:(UIView<MDCTextControl> *)textControl;
-+ (void)validateTextControl:(UIView<MDCTextControl> *)textControl
-               withTestCase:(MDCSnapshotTestCase *)testCase;
+#pragma mark Tests
+
+- (void)testMDCTextControlStateTests {
+}
+
 @end

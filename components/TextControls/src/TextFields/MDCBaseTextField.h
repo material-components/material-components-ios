@@ -14,8 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTextControlLabelBehavior.h"
-#import "MDCTextControlState.h"
+#import "MaterialTextControls.h"
 
 /**
  A UITextField subclass that will potentially provide the foundation for Material TextFields in the

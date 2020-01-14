@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import MaterialComponents.MaterialTextControls
-import MaterialComponents.MaterialTextControls_Theming
+import MaterialComponents.MaterialTextControls_TextFieldsTheming
 
 import UIKit
 

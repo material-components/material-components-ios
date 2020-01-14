@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialTextControls+TextFields.h"
 #import "MaterialTextControls.h"
-
-#import "../../src/private/MDCTextControlLabelState.h"
+#import "MaterialTextControlsPrivate.h"
 
 @interface MDCBaseTextField (Private)
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;

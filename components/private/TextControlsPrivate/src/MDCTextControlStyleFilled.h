@@ -15,7 +15,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTextControl.h"
-#import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlStyleBase.h"
 
 // TODO: When the MDCBaseTextField subclass that makes use of this style (and the path drawing logic

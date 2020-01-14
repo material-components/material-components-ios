@@ -43,20 +43,20 @@ package_group(
 
 mdc_public_objc_library(
     name = "TextControls",
-    sdk_frameworks = [
-        "QuartzCore",
-    ],
+)
+
+mdc_extension_objc_library(
+    name = "TextFields",
     deps = [
-        "//components/AnimationTiming",
-        "//components/private/Math",
-        "@material_internationalization_ios//:MDFInternationalization",
+        ":TextControls",
+        "//components/private/TextControlsPrivate",
     ],
 )
 
 mdc_extension_objc_library(
-    name = "Theming",
+    name = "TextFieldsTheming",
     deps = [
-        ":TextControls",
+        ":TextFields",
         "//components/schemes/Container",
     ],
 )
@@ -64,8 +64,8 @@ mdc_extension_objc_library(
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
-        ":TextControls",
-        ":Theming",
+        ":TextFields",
+        ":TextFieldsTheming",
         "//components/Buttons",
         "//components/Buttons:Theming",
         "//components/schemes/Container",
@@ -75,20 +75,21 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":TextControls",
-        ":Theming",
+        ":TextFields",
+        ":TextFieldsTheming",
     ],
 )
 
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     extra_srcs = glob([
-        "tests/unit/Theming/*.m",
+        "tests/unit/TextFields/*.m",
+        "tests/unit/TextFieldsTheming/*.m",
     ]),
     deps = [
-        ":TextControls",
-        ":Theming",
-        ":private",
+        ":TextFields",
+        ":TextFieldsTheming",
+        "//components/private/TextControlsPrivate",
     ],
 )
 
@@ -99,8 +100,9 @@ mdc_snapshot_objc_library(
     ],
     deps = [
         ":TextControls",
-        ":Theming",
-        ":private",
+        ":TextFields",
+        ":TextFieldsTheming",
+        "//components/private/TextControlsPrivate",
     ],
 )
 

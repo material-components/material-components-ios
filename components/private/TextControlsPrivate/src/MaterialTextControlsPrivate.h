@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-#import "MDCBaseTextField.h"
+#import "MDCBaseTextFieldLayout.h"
 #import "MDCTextControl.h"
-
-/**
- This category is imported from MDCBaseTextField subclasses and categories, as well as categories of
- MDCBaseTextField subclasses, to make MDCTextControl conformance visible.
- */
-@interface MDCBaseTextField (Private) <MDCTextControl>
-@end
+#import "MDCTextControlAssistiveLabelView.h"
+#import "MDCTextControlColorViewModel.h"
+#import "MDCTextControlLabelAnimation.h"
+#import "MDCTextControlStyleBase.h"
+#import "MDCTextControlStyleFilled.h"
+#import "MDCTextControlStyleOutlined.h"
+#import "MDCTextControlVerticalPositioningReferenceBase.h"

@@ -12,8 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField.h"
-#import "MDCFilledTextField.h"
-#import "MDCOutlinedTextField.h"
 #import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlState.h"

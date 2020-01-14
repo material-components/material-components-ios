@@ -18,15 +18,8 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCTextControlState.h"
 #import "MaterialMath.h"
-#import "private/MDCBaseTextFieldLayout.h"
-#import "private/MDCTextControlAssistiveLabelView.h"
-#import "private/MDCTextControlColorViewModel.h"
-#import "private/MDCTextControlLabelAnimation.h"
-#import "private/MDCTextControlLabelState.h"
-#import "private/MDCTextControlStyleBase.h"
-#import "private/MDCTextControlVerticalPositioningReferenceBase.h"
+#import "MaterialTextControlsPrivate.h"
 
 @interface MDCBaseTextField () <MDCTextControl>
 
