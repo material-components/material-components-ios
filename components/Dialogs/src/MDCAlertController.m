@@ -548,6 +548,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (preferredContentSizeChanged || boundsSizeChanged) {
     _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
     [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
   }
 }
 
