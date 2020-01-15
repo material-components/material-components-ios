@@ -15,9 +15,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCTextControlAssistiveLabelDrawPriority.h"
-#import "MDCTextControlAssistiveLabelViewLayout.h"
-#import "MDCTextControlVerticalPositioningReference.h"
+#import "MaterialTextControlsPrivate+Shared.h"
+
+//#import "MDCTextControlAssistiveLabelDrawPriority.h"
+//#import "MDCTextControlAssistiveLabelViewLayout.h"
+//#import "MDCTextControlVerticalPositioningReference.h"
 
 @interface MDCBaseTextFieldLayout : NSObject
 

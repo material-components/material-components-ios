@@ -12,12 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextFieldLayout.h"
-#import "MDCTextControl.h"
-#import "MDCTextControlAssistiveLabelView.h"
-#import "MDCTextControlColorViewModel.h"
-#import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlStyleBase.h"
-#import "MDCTextControlStyleFilled.h"
 #import "MDCTextControlStyleOutlined.h"
-#import "MDCTextControlVerticalPositioningReferenceBase.h"
+#import "MDCTextControlVerticalPositioningReferenceOutlined.h"

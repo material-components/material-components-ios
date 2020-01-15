@@ -19,7 +19,9 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialMath.h"
-#import "MaterialTextControlsPrivate.h"
+#import "MaterialTextControlsPrivate+BaseStyle.h"
+#import "MaterialTextControlsPrivate+Shared.h"
+#import "private/MDCBaseTextFieldLayout.h"
 
 @interface MDCBaseTextField () <MDCTextControl>
 

@@ -16,8 +16,10 @@
 
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTextControls+TextFieldsTheming.h"
-#import "MaterialTextControls.h"
+#import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
+#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
+#import "MaterialTextControlsPrivate+Shared.h"
 
 #import "MDCTextControlConfiguratorExample.h"
 #import "MDCTraitEnvironmentChangeDelegate.h"
