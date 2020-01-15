@@ -197,7 +197,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _originalPresentingViewController = originalPresentingViewController;
-    _contentHeaderTopInsetCached =  NSNotFound;
+    _contentHeaderTopInsetCached = NSNotFound;
     _contentHeaderTopInset = NSNotFound;
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
