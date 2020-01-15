@@ -475,13 +475,17 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (CGFloat)minimumWidth {
-  return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? kMinimumViewWidth_iPad
-                                                              : kMinimumViewWidth_iPhone;
+  return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ||
+          UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV)
+             ? kMinimumViewWidth_iPad
+             : kMinimumViewWidth_iPhone;
 }
 
 - (CGFloat)maximumWidth {
-  return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? kMaximumViewWidth_iPad
-                                                              : kMaximumViewWidth_iPhone;
+  return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ||
+          UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV)
+             ? kMaximumViewWidth_iPad
+             : kMaximumViewWidth_iPhone;
 }
 
 #pragma mark - Styling the view

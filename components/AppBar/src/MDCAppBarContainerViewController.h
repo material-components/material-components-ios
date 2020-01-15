@@ -60,7 +60,11 @@
 /** The content view controller to be displayed behind the header. */
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
 
-#pragma mark - Enabling top layout guide adjustment behavior
+@end
+
+@interface MDCAppBarContainerViewController (ToBeDeprecated)
+
+#pragma mark - To be deprecated
 
 /**
  If enabled, the content view controller's top layout guide will be adjusted as the flexible
@@ -85,8 +89,6 @@
      frame.origin.y = self.topLayoutGuide.length + 32
  */
 @property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
-
-#pragma mark - To be deprecated
 
 /**
  The App Bar views that will be presented in front of the contentViewController's view.
