@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextControls+OutlinedTextFields.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTextControls+OutlinedTextFields.h"
 
 /**
  This category is used to style MDCOutlinedTextField instances with an MDCContainerScheme.

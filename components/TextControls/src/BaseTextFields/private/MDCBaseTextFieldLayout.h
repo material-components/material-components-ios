@@ -17,10 +17,6 @@
 
 #import "MaterialTextControlsPrivate+Shared.h"
 
-//#import "MDCTextControlAssistiveLabelDrawPriority.h"
-//#import "MDCTextControlAssistiveLabelViewLayout.h"
-//#import "MDCTextControlVerticalPositioningReference.h"
-
 @interface MDCBaseTextFieldLayout : NSObject
 
 @property(nonatomic, assign) BOOL leftViewHidden;

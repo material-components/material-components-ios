@@ -18,7 +18,6 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTextControls+FilledTextFieldsTheming.h"
 #import "MaterialTextControls+OutlinedTextFieldsTheming.h"
-#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 #import "MaterialTextControlsPrivate+Shared.h"
 
 #import "MDCTextControlConfiguratorExample.h"

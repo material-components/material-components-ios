@@ -14,7 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-//#import "MaterialTextControls+TextFields.h"
 #import "MaterialTextControls+BaseTextFields.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 
