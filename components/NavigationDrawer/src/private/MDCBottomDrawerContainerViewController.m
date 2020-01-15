@@ -371,6 +371,13 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   [self setupLayout];
 }
 
+- (CGFloat)maximumInitialDrawerHeight {
+  if ([self shouldPresentFullScreen]) {
+    return self.presentingViewBounds.size.height;
+  }
+  return _maximumInitialDrawerHeight + [self bottomSafeAreaInsetsToAdjustInitialDrawerHeight];
+}
+
 - (void)setContentViewController:(UIViewController *)contentViewController {
   _contentViewController = contentViewController;
 
@@ -389,7 +396,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   _addedContentHeight = NSNotFound;
 
   [self cacheLayoutCalculations];
-}
 
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
@@ -657,6 +663,15 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   return 0;
 }
 
+- (CGFloat)bottomSafeAreaInsetsToAdjustInitialDrawerHeight {
+  if (@available(iOS 11.0, *)) {
+    if (self.shouldIncludeSafeAreaInInitialDrawerHeight) {
+      return self.view.safeAreaInsets.bottom;
+    }
+  }
+  return 0;
+}
+
 #pragma mark Set ups (Private)
 
 - (void)setUpContentHeader {
@@ -870,6 +885,14 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
         [self resetCachedState];
       }
                       completion:nil];
+}
+
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _trackingScrollView = trackingScrollView;
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [self cacheLayoutCalculations];
 }
 
 #pragma mark UIScrollViewDelegate (Private)

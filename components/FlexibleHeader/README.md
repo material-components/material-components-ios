@@ -29,6 +29,7 @@ UIScrollViewDelegate events.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderSafeAreaDelegate.html">MDCFlexibleHeaderSafeAreaDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewAnimationDelegate.html">MDCFlexibleHeaderViewAnimationDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums.html">Enumerations</a></li>
@@ -441,6 +442,40 @@ override func childViewControllerForStatusBarHidden() -> UIViewController? {
 #### Objective-C
 ```objc
 headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _headerViewController;
+}
+```
+<!--</div>-->
+
+If you would like to be able to show and hide your flexible header similar to how UINavigationBar
+allows the navigation bar to be shown and hidden, you can use the `hideable` shift behavior. This
+behavior will allow you to toggle visibility of the header using the `shiftHeaderOffScreenAnimated:`
+and `shiftHeaderOnScreenAnimated:` APIs only; the user will not be able to drag the header either on
+or off-screen.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+headerViewController.headerView.shiftBehavior = .hideable
+
+// You can now toggle visibility of the header view using the following invocations:
+headerViewController.headerView.shiftHeaderOffScreen(animated: true)
+headerViewController.headerView.shiftHeaderOnScreen(animated: true)
+
+override func childViewControllerForStatusBarHidden() -> UIViewController? {
+  return headerViewController
+}
+```
+
+#### Objective-C
+```objc
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHideable;
+
+// You can now toggle visibility of the header view using the following invocations:
+[headerViewController.headerView shiftHeaderOffScreenAnimated:YES];
+[headerViewController.headerView shiftHeaderOnScreenAnimated:YES];
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return _headerViewController;
@@ -1076,49 +1111,6 @@ flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
 care that the `topLayoutGuideViewController` is not a direct ancestor of the flexible header or your
 app **will** enter an infinite loop. As a general rule, your `topLayoutGuideViewController` should
 be a sibling to the flexible header.
-
-
-## Extensions
-
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-You can theme a flexible header with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/FlexibleHeader+ColorThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialFlexibleHeader_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialFlexibleHeader+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-
-// Step 3: Apply the color scheme to your component
-[MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme
-     toFlexibleHeaderView:component];
-```
-<!--</div>-->
 
 
 ## Migration guides

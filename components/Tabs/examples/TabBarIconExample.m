@@ -15,8 +15,8 @@
 #import "supplemental/TabBarIconExampleSupplemental.h"
 
 #import "MaterialAppBar.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTabs+ColorThemer.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
 
 @interface TabBarIconExample ()
@@ -28,9 +28,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -92,7 +90,7 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:tabBar];
+  [tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:(CGFloat)0.1];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;

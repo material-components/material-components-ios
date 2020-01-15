@@ -311,6 +311,39 @@ static NSString *const kMessageLongArabic =
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
+- (void)testAlertWithLongButtonTitlesLTR {
+  // Given
+  MDCAlertController *controller = [MDCAlertController alertControllerWithTitle:kTitleShortLatin
+                                                                        message:kMessageShortLatin];
+
+  // When
+  MDCAlertAction *shortAction = [MDCAlertAction actionWithTitle:kTitleShortLatin handler:nil];
+  MDCAlertAction *longAction = [MDCAlertAction actionWithTitle:kMessageLongLatin handler:nil];
+  [controller addAction:shortAction];
+  [controller addAction:longAction];
+  controller.view.frame = CGRectMake(0, 0, 300, 300);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testAlertWithLongButtonTitlesRTL {
+  // Given
+  MDCAlertController *controller =
+      [MDCAlertController alertControllerWithTitle:kTitleShortArabic message:kMessageShortArabic];
+
+  // When
+  MDCAlertAction *shortAction = [MDCAlertAction actionWithTitle:kTitleShortArabic handler:nil];
+  MDCAlertAction *longAction = [MDCAlertAction actionWithTitle:kMessageLongArabic handler:nil];
+  [controller addAction:shortAction];
+  [controller addAction:longAction];
+  controller.view.frame = CGRectMake(0, 0, 300, 300);
+  [self changeToRTL:controller];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
 - (void)testDefaultPresentationStyleWithShortTitleShortMessageLatinOniOS13 {
   // When
   UIWindow *window = [[[UIApplication sharedApplication] delegate] window];

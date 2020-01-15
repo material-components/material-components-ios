@@ -17,9 +17,15 @@
 #import "MDCAppBarViewController.h"
 #import "MaterialFlexibleHeader.h"
 
-@implementation MDCAppBarContainerViewController {
-  MDCAppBar *_appBar;
-}
+@interface MDCAppBarContainerViewController ()
+
+// To be deprecated APIs; re-declared here in order to be auto-synthesized.
+@property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
+@property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
+
+@end
+
+@implementation MDCAppBarContainerViewController
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
   self = [super initWithNibName:nil bundle:nil];

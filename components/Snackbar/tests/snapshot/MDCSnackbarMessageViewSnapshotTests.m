@@ -19,6 +19,8 @@
 // clang-format off
 #import "MaterialSnackbar.h"
 #import "../../src/private/MDCSnackbarMessageViewInternal.h"
+#import "../../src/private/MDCSnackbarManagerInternal.h"
+#import "../../src/private/MDCSnackbarOverlayView.h"
 // clang-format on
 
 /** The width of the Snackbar for testing. */
@@ -41,6 +43,14 @@ static NSString *const kItemTitleLong1Arabic =
     @"عل أخذ استطاعوا الانجليزية. قد وحتّى بزمام التبرعات مكن.";
 static NSString *const kItemTitleLong2Arabic =
     @"وتم عل والقرى إتفاقية, عن هذا وباءت الغالي وفرنسا.";
+
+@interface MDCSnackbarManagerInternal (SnackbarManagerSnapshotTesting)
+@property(nonatomic) MDCSnackbarOverlayView *overlayView;
+@end
+
+@interface MDCSnackbarManager (SnackbarManagerSnapshotTesting)
+@property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
+@end
 
 /** Snapshot tests for MDCSnackbarMessageView. */
 @interface MDCSnackbarMessageViewSnapshotTests : MDCSnapshotTestCase
@@ -201,6 +211,31 @@ static NSString *const kItemTitleLong2Arabic =
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
+}
+
+// TODO(https://github.com/material-components/material-components-ios/issues/9372): determine why
+// running this in Bazel produces a different-sized screenshot than what is produced by Xcode.
+- (void)testSnackbarOverlayViewWithHighElevation {
+  // Given
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
+                                                              actionTitle:kItemTitleShort2Latin];
+  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+
+  // When
+  messageView.elevation = 24;
+  [self.testManager.internalManager.overlayView showSnackbarView:messageView
+                                                        animated:NO
+                                                      completion:nil];
+
+  // This run loop drain is here to resolve Bazel flakiness.
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.testManager.internalManager.overlayView];
 }
 
 @end

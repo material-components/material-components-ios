@@ -15,8 +15,8 @@
 
 load(
     "//:material_components_ios.bzl",
-    "mdc_examples_swift_library",
     "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -26,7 +26,6 @@ load(
     "mdc_unit_test_suite",
     "mdc_unit_test_swift_library",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -40,14 +39,6 @@ mdc_public_objc_library(
         "//components/Buttons",
         "//components/private/Application",
         "@material_internationalization_ios//:MDFInternationalization",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":ButtonBar",
-        "//components/Themes",
     ],
 )
 
@@ -80,7 +71,6 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":ButtonBar",
-        ":ColorThemer",
         ":private",
     ],
 )
@@ -116,16 +106,4 @@ mdc_snapshot_objc_library(
 mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
-)
-
-# Deprecated
-
-mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deprecation = "ButtonBar is not intended to be themed as a standalone component." +
-                  " Please theme it via the AppBar component's Theming extension instead.",
-    deps = [
-        ":ButtonBar",
-        "//components/schemes/Typography",
-    ],
 )

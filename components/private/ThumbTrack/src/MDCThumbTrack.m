@@ -584,13 +584,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                                 2 * thumbRadius, 2 * thumbRadius);
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (CGFloat)thumbMaxRippleRadius {
   return _touchController.defaultInkView.maxRippleRadius;
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (void)setThumbMaxRippleRadius:(CGFloat)thumbMaxRippleRadius {
   _touchController.defaultInkView.maxRippleRadius = thumbMaxRippleRadius;
 }
+#pragma clang diagnostic pop
 
 - (CGFloat)thumbRippleMaximumRadius {
   return _rippleView.maximumRadius;

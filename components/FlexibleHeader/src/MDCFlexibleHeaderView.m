@@ -486,6 +486,14 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return _topSafeArea.topSafeAreaSourceViewController;
 }
 
+- (void)setSubtractsAdditionalSafeAreaInsets:(BOOL)subtractsAdditionalSafeAreaInsets {
+  _topSafeArea.subtractsAdditionalSafeAreaInsets = subtractsAdditionalSafeAreaInsets;
+}
+
+- (BOOL)subtractsAdditionalSafeAreaInsets {
+  return _topSafeArea.subtractsAdditionalSafeAreaInsets;
+}
+
 - (void)topSafeAreaInsetDidChange {
   [_topSafeArea safeAreaInsetsDidChange];
 }
@@ -521,7 +529,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 - (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   return ([self fhv_canShiftOffscreen] &&
-          _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
+          (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
+           _shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
           _statusBarShifter.prefersStatusBarHidden);
 }
 
@@ -746,9 +755,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (BOOL)fhv_canShiftOffscreen {
-  return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
-           _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
-          !_trackingScrollView.pagingEnabled);
+  BOOL interactable = ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
+                        _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
+                       !_trackingScrollView.pagingEnabled);
+  BOOL hideable = _shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable;
+  return interactable || hideable;
 }
 
 - (BOOL)fhv_isPartiallyShifted {
@@ -1049,7 +1060,12 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     [self fhv_stopDisplayLink];
   }
 
-  if (_shiftAccumulatorLastContentOffsetIsValid) {
+  // When the shift behavior is MDCFlexibleHeaderShiftBehaviorHideable, we explicitly disable
+  // interactive shifting behaviors so that the header's visibility is controlled only via direct
+  // invocations to -shiftHeaderOnScreenAnimated: and shiftHeaderOffScreenAnimated:
+  BOOL allowsInteractiveShift = _shiftBehavior != MDCFlexibleHeaderShiftBehaviorHideable;
+
+  if (_shiftAccumulatorLastContentOffsetIsValid && allowsInteractiveShift) {
     // We track the last direction for our target offset behavior.
     CGFloat deltaY = [self fhv_boundedContentOffset].y - _shiftAccumulatorLastContentOffset.y;
 
@@ -1338,9 +1354,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (void)setObservesTrackingScrollViewScrollEvents:(BOOL)observesTrackingScrollViewScrollEvents {
-  NSAssert(self.shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled ||
-               !observesTrackingScrollViewScrollEvents,
-           @"Please set shiftBehavior to disabled prior to enabling this property.");
+  NSAssert(!observesTrackingScrollViewScrollEvents ||
+               (self.shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled ||
+                self.shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable),
+           @"Please set shiftBehavior to disabled or hideable prior to enabling this property.");
 
   if (_observesTrackingScrollViewScrollEvents == observesTrackingScrollViewScrollEvents) {
     return;
@@ -1674,7 +1691,8 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (BOOL)hidesStatusBarWhenCollapsed {
-  return (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
+  return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
+           _shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
           !_trackingScrollView.pagingEnabled);
 }
 
@@ -1691,7 +1709,8 @@ static BOOL isRunningiOS10_3OrAbove() {
 
 - (void)setShiftBehavior:(MDCFlexibleHeaderShiftBehavior)shiftBehavior {
   NSAssert((self.observesTrackingScrollViewScrollEvents &&
-            shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled) ||
+            (shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled ||
+             shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable)) ||
                !self.observesTrackingScrollViewScrollEvents,
            @"Flexible Header shift behavior must be disabled before content offset observation is"
            @" enabled.");

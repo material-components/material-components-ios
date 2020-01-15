@@ -25,7 +25,6 @@ load(
     "mdc_unit_test_suite",
     "mdc_unit_test_swift_library",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -78,14 +77,6 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "FontThemer",
-    deps = [
-        ":TextFields",
-        "//components/Themes",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":TextFields",
@@ -98,7 +89,7 @@ mdc_examples_objc_library(
     deps = [
         ":ColorThemer",
         ":TextFields",
-        ":TypographyThemer",
+        ":Theming",
         "//components/Buttons",
         "//components/schemes/Container",
     ],
@@ -109,7 +100,7 @@ mdc_examples_swift_library(
     deps = [
         ":ColorThemer",
         ":TextFields",
-        ":TypographyThemer",
+        ":Theming",
         "//components/AppBar",
     ],
 )
@@ -118,7 +109,6 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":ColorThemer",
-        ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
         ":private",
@@ -135,10 +125,8 @@ mdc_snapshot_objc_library(
         "CoreGraphics",
     ],
     deps = [
-        ":ColorThemer",
-        ":FontThemer",
         ":TextFields",
-        ":TypographyThemer",
+        ":Theming",
         "//components/Buttons",
         "//components/Ripple",
     ],
@@ -168,10 +156,10 @@ mdc_unit_test_swift_library(
 
 mdc_unit_test_suite(
     name = "unit_tests",
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
-    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
-    use_autobot_environment_runner = False,
 )

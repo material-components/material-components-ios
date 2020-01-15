@@ -14,14 +14,12 @@
 
 // swiftlint:disable function_body_length
 
-import MaterialComponents.MaterialTextFields_ColorThemer
-import MaterialComponents.MaterialTextFields_TypographyThemer
+import MaterialComponents.MaterialTextFields_Theming
 
 final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -285,8 +283,10 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
   }
 
   func style(textInputController : MDCTextInputController) {
-    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
-    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
+    guard let outlinedController =
+      textInputController as? MDCTextInputControllerOutlined
+      else { return }
+    outlinedController.applyTheme(withScheme: containerScheme)
   }
 
   func addGestureRecognizer() {

@@ -74,6 +74,25 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 @property(nonatomic, strong, nonnull) UIColor *activeRippleColor;
 
 /**
+ When rippleStyle is MDCRippleStyleBounded, this flag affects whether the layer's mask will use
+ the super view's layer.shadowPath as the mask path.
+
+ @note This behavior only takes effect if the ripple view's parent view has a non-nil shadowPath.
+
+ @note This behavioral flag will eventually become NO by default and then be deleted. The YES
+ behavior is undesired because it assumes that the frame of the ripple view always matches the
+ bounds of the superview. When this assumption is false, such as when the ripple's origin is
+ non-zero, the ripple's mask tends to be bigger than it should be resulting in an incorrectly
+ clipped ripple effect. Consider disabling this behavior and explicitly setting a layer mask
+ instead.
+
+ Changing this value to NO does not clear the mask if it was already set.
+
+ Default value is YES.
+ */
+@property(nonatomic, assign) BOOL usesSuperviewShadowLayerAsMask;
+
+/**
  A block that is invoked when the @c MDCRippleView receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */

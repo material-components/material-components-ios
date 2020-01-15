@@ -358,17 +358,22 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   switch (layoutStyle) {
     case MDCBannerViewLayoutStyleSingleRow: {
       frameHeight += kTopPaddingSmall + kBottomPadding;
-      [self.leadingButton sizeToFit];
-      CGFloat buttonWidth = CGRectGetWidth(self.leadingButton.frame);
       CGFloat widthLimit = contentSize.width;
-      widthLimit -= (buttonWidth + kHorizontalSpaceBetweenTextViewAndButton);
+      if (!self.leadingButton.hidden) {
+        [self.leadingButton sizeToFit];
+        CGFloat buttonWidth = CGRectGetWidth(self.leadingButton.frame);
+        widthLimit -= (buttonWidth + kHorizontalSpaceBetweenTextViewAndButton);
+      }
       if (!self.imageView.hidden) {
         widthLimit -= kImageViewSideLength;
         widthLimit -= kSpaceBetweenIconImageAndTextView;
       }
       CGSize textViewSize = [self.textView sizeThatFits:CGSizeMake(widthLimit, CGFLOAT_MAX)];
-      CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
-      CGFloat maximumHeight = MAX(textViewSize.height, leadingButtonSize.height);
+      CGFloat maximumHeight = textViewSize.height;
+      if (!self.leadingButton.hidden) {
+        CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
+        maximumHeight = MAX(leadingButtonSize.height, maximumHeight);
+      }
       if (!self.imageView.hidden) {
         maximumHeight = MAX(kImageViewSideLength, maximumHeight);
       }
@@ -634,6 +639,12 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       self.textView.attributedText = [mutableAttributedText copy];
     }
   }
+}
+
+#pragma mark - Accessibility
+
+- (NSArray *)accessibilityElements {
+  return @[ self.textView, self.leadingButton, self.trailingButton ];
 }
 
 @end

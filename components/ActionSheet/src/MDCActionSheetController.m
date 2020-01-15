@@ -24,8 +24,6 @@ static NSString *const kReuseIdentifier = @"BaseCell";
 static const CGFloat kActionImageAlpha = (CGFloat)0.6;
 static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
-/** Default edge insets for each action's image view. */
-static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
 
 @interface MDCActionSheetAction ()
 
@@ -116,7 +114,6 @@ static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
      */
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
-    _imageEdgeInsets = kDefaultImageEdgeInsets;
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _transitionController.trackingScrollView = _tableView;
     _tableView.autoresizingMask =
@@ -327,15 +324,12 @@ static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
-  cell.inkColor = self.inkColor;
   cell.rippleColor = self.rippleColor;
-  cell.enableRippleBehavior = self.enableRippleBehavior;
   cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   cell.contentEdgeInsets = self.contentEdgeInsets;
-  cell.imageEdgeInsets = self.imageEdgeInsets;
   return cell;
 }
 
@@ -344,14 +338,6 @@ static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
     return;
   }
   _contentEdgeInsets = contentEdgeInsets;
-  [self.tableView reloadData];
-}
-
-- (void)setImageEdgeInsets:(UIEdgeInsets)imageEdgeInsets {
-  if (UIEdgeInsetsEqualToEdgeInsets(_imageEdgeInsets, imageEdgeInsets)) {
-    return;
-  }
-  _imageEdgeInsets = imageEdgeInsets;
   [self.tableView reloadData];
 }
 
@@ -521,30 +507,8 @@ static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
   return NO;
 }
 
-- (UIColor *)inkColor {
-  return _inkColor;
-}
-
-- (void)setInkColor:(UIColor *)inkColor {
-  _inkColor = inkColor;
-  [self.tableView reloadData];
-}
-
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
-    return;
-  }
   _rippleColor = rippleColor;
-
-  [self.tableView reloadData];
-}
-
-- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
-  if (_enableRippleBehavior == enableRippleBehavior) {
-    return;
-  }
-  _enableRippleBehavior = enableRippleBehavior;
-
   [self.tableView reloadData];
 }
 

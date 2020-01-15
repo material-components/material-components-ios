@@ -171,6 +171,42 @@
   }
 }
 
+- (void)testShouldIncludeSafeAreaInContentHeight {
+  // When
+  self.navigationDrawer.shouldIncludeSafeAreaInContentHeight = YES;
+
+  // Then
+  XCTAssertTrue(self.navigationDrawer.shouldIncludeSafeAreaInContentHeight);
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertTrue(presentationController.shouldIncludeSafeAreaInContentHeight);
+  } else {
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
+  }
+}
+
+- (void)testShouldIncludeSafeAreaInInitialDrawerHeight {
+  // When
+  self.navigationDrawer.shouldIncludeSafeAreaInInitialDrawerHeight = YES;
+
+  // Then
+  XCTAssertTrue(self.navigationDrawer.shouldIncludeSafeAreaInInitialDrawerHeight);
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertTrue(presentationController.shouldIncludeSafeAreaInInitialDrawerHeight);
+  } else {
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
+  }
+}
+
 - (void)testHeaderHeightWhenShouldAlwaysExpandEnabledAndScrollOccured {
   // Given
   self.navigationDrawer.shouldAlwaysExpandHeader = YES;

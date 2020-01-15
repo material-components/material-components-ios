@@ -50,6 +50,7 @@ static BOOL _usesLegacySnackbar = NO;
   self = [super init];
   if (self) {
     _duration = kDefaultDuration;
+    _automaticallyDismisses = YES;
   }
   return self;
 }
@@ -71,6 +72,8 @@ static BOOL _usesLegacySnackbar = NO;
 #pragma clang diagnostic pop
   copy.enableRippleBehavior = self.enableRippleBehavior;
   copy.focusOnShow = self.focusOnShow;
+  copy.elementToFocusOnDismiss = self.elementToFocusOnDismiss;
+  copy.automaticallyDismisses = self.automaticallyDismisses;
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the

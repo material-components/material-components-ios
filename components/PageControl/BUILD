@@ -52,14 +52,6 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":PageControl",
-        "//components/Themes",
-    ],
-)
-
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
@@ -69,7 +61,6 @@ mdc_objc_library(
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
-        ":ColorThemer",
         ":PageControl",
     ],
 )

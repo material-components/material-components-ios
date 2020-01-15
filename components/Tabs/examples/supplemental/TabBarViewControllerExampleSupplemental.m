@@ -152,8 +152,8 @@
 - (nonnull NSArray *)constructExampleViewControllers {
   NSBundle *bundle = [NSBundle bundleForClass:[TabBarViewControllerExample class]];
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
+  buttonScheme.colorScheme = self.containerScheme.colorScheme;
+  buttonScheme.typographyScheme = self.containerScheme.typographyScheme;
 
   TBVCSampleViewController *child1 = [TBVCSampleViewController sampleWithTitle:@"One"
                                                                          color:UIColor.redColor];
@@ -169,7 +169,7 @@
                       TBVCSampleViewController *vc =
                           [TBVCSampleViewController sampleWithTitle:@"Push&Hide"
                                                               color:UIColor.grayColor];
-                      vc.colorScheme = strongSelf.colorScheme;
+                      vc.colorScheme = strongSelf.containerScheme.colorScheme;
                       vc.typographyScheme = strongSelf.typographyScheme;
                       [strongSelf.navigationController pushViewController:vc animated:YES];
                     }];
@@ -190,7 +190,7 @@
 
   NSArray *viewControllers = @[ child1, child2, child3 ];
   for (TBVCSampleViewController *vc in viewControllers) {
-    vc.colorScheme = self.colorScheme;
+    vc.colorScheme = self.containerScheme.colorScheme;
     vc.typographyScheme = self.typographyScheme;
   }
   return viewControllers;

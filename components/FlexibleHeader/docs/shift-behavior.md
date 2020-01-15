@@ -44,3 +44,37 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 }
 ```
 <!--</div>-->
+
+If you would like to be able to show and hide your flexible header similar to how UINavigationBar
+allows the navigation bar to be shown and hidden, you can use the `hideable` shift behavior. This
+behavior will allow you to toggle visibility of the header using the `shiftHeaderOffScreenAnimated:`
+and `shiftHeaderOnScreenAnimated:` APIs only; the user will not be able to drag the header either on
+or off-screen.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+headerViewController.headerView.shiftBehavior = .hideable
+
+// You can now toggle visibility of the header view using the following invocations:
+headerViewController.headerView.shiftHeaderOffScreen(animated: true)
+headerViewController.headerView.shiftHeaderOnScreen(animated: true)
+
+override func childViewControllerForStatusBarHidden() -> UIViewController? {
+  return headerViewController
+}
+```
+
+#### Objective-C
+```objc
+headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHideable;
+
+// You can now toggle visibility of the header view using the following invocations:
+[headerViewController.headerView shiftHeaderOffScreenAnimated:YES];
+[headerViewController.headerView shiftHeaderOnScreenAnimated:YES];
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  return _headerViewController;
+}
+```
+<!--</div>-->

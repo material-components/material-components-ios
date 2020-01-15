@@ -14,26 +14,25 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialPalettes.h"
-#import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
 
 @interface TabBarInterfaceBuilderExample : UIViewController <MDCTabBarDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTabBar *tabBar;
 @property(nonatomic) NSArray<UIColor *> *colors;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
 @implementation TabBarInterfaceBuilderExample
 
-- (id)init {
-  self = [super init];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -53,7 +52,7 @@
     MDCPalette.greenPalette.tint500
   ];
 
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   self.view.backgroundColor = self.colors[0];
 }

@@ -838,6 +838,23 @@ than @c UIContentSizeCategoryLarge.
   XCTAssertEqual(passedAlertController, alertController);
 }
 
+- (void)testForwardsAnimationPropertiesToTransitionDelegate {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  MDCDialogTransitionController *transitionController =
+      (MDCDialogTransitionController *)alertController.transitioningDelegate;
+
+  // When
+  alertController.presentationInitialScaleFactor = 7.0;
+  alertController.presentationScaleAnimationDuration = 8.0;
+  alertController.presentationOpacityAnimationDuration = 9.0;
+
+  // Then
+  XCTAssertEqualWithAccuracy(7.0, transitionController.dialogInitialScaleFactor, 0.0001);
+  XCTAssertEqualWithAccuracy(8.0, transitionController.scaleAnimationDuration, 0.0001);
+  XCTAssertEqualWithAccuracy(9.0, transitionController.opacityAnimationDuration, 0.0001);
+}
+
 #pragma mark - MaterialElevation
 
 - (void)testDefaultBaseElevationOverrideIsNegative {

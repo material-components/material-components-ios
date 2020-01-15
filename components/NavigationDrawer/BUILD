@@ -24,7 +24,6 @@ load(
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -60,7 +59,6 @@ mdc_examples_swift_library(
         ":ColorThemer",
         ":NavigationDrawer",
         "//components/BottomAppBar",
-        "//components/BottomAppBar:ColorThemer",
         "//components/schemes/Color",
     ],
 )

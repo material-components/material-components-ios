@@ -28,7 +28,6 @@
 		66CD19292072A54000DE6340 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CD19282072A54000DE6340 /* AppTheme.swift */; };
 		66D3389520730A3E00FFA1AB /* MDCThemePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
-		A77B0FE922BBDBB400C0CEB3 /* MDCTabBarViewTypicalExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A77B0FE822BBDBB400C0CEB3 /* MDCTabBarViewTypicalExampleViewController.m */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -123,7 +122,6 @@
 		88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCActionExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		93314CA227FB65FEC87098C3 /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = Pods/EarlGrey/EarlGrey/EarlGrey.framework; sourceTree = SOURCE_ROOT; };
-		A77B0FE822BBDBB400C0CEB3 /* MDCTabBarViewTypicalExampleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MDCTabBarViewTypicalExampleViewController.m; path = ../../components/Tabs/examples/MDCTabBarViewTypicalExampleViewController.m; sourceTree = "<group>"; };
 		BB375464F626CD555584A27F /* Pods_MDCSnapshotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCSnapshotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C250A4553B960CD6E1604CB7 /* Pods-MDCCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		D0ECF9608E1CF6AA39139933 /* Pods-MDCSnapshotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCSnapshotTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCSnapshotTests/Pods-MDCSnapshotTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 				66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */,
 				5CBA08362090E4DF009EA9D0 /* MDCMenuViewController.swift */,
 				665A34DE1C6BDAE700962055 /* Resources */,
-				A77B0FE822BBDBB400C0CEB3 /* MDCTabBarViewTypicalExampleViewController.m */,
 			);
 			path = MDCCatalog;
 			sourceTree = "<group>";
@@ -333,6 +330,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				ar,
@@ -499,7 +497,6 @@
 				66CD19292072A54000DE6340 /* AppTheme.swift in Sources */,
 				664524B91C6BA62A001ADBF8 /* MDCNodeListViewController.swift in Sources */,
 				64F6D8811F91522A00AA4B24 /* MDCCatalogDebugAlert.swift in Sources */,
-				A77B0FE922BBDBB400C0CEB3 /* MDCTabBarViewTypicalExampleViewController.m in Sources */,
 				5CBA08372090E4DF009EA9D0 /* MDCMenuViewController.swift in Sources */,
 				64F6D8831F915CA600AA4B24 /* MDCDebugSafeAreaInsetsView.swift in Sources */,
 				66D3389520730A3E00FFA1AB /* MDCThemePickerViewController.swift in Sources */,

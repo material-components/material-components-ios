@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialColorScheme.h"
-#import "MaterialTabs+ColorThemer.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @implementation BottomNavigationBarExample {
@@ -28,8 +28,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -40,7 +39,7 @@
   _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
   _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
-  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:_bottomNavigationBar];
+  [_bottomNavigationBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   _bottomNavigationBar.inkColor = [UIColor colorWithRed:0
                                                   green:(CGFloat)0.5

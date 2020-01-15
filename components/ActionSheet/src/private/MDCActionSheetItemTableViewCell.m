@@ -18,8 +18,7 @@
 #import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
-/** Default value for @c imageEdgeInsets. */
-static const UIEdgeInsets kDefaultImageEdgeInsets = {-16, 0, 0, -32};
+static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
 static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
@@ -31,12 +30,9 @@ static inline UIColor *RippleColor() {
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 /** Container view holding all custom content so it can be inset. */
 @property(nonatomic, strong) UIView *contentContainerView;
-/** Container view holding the image view so it can be inset. */
-@property(nonatomic, strong) UIView *imageContainerView;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
@@ -46,10 +42,6 @@ static inline UIColor *RippleColor() {
   NSLayoutConstraint *_contentContainerLeadingConstraint;
   NSLayoutConstraint *_contentContainerBottomConstraint;
   NSLayoutConstraint *_contentContainerTrailingConstraint;
-  NSLayoutConstraint *_imageContainerTopConstraint;
-  NSLayoutConstraint *_imageContainerLeadingConstraint;
-  NSLayoutConstraint *_imageContainerBottomConstraint;
-  NSLayoutConstraint *_imageContainerTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -67,8 +59,6 @@ static inline UIColor *RippleColor() {
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
-
-  _imageEdgeInsets = kDefaultImageEdgeInsets;
   _contentContainerView = [[UIView alloc] initWithFrame:self.bounds];
   _contentContainerView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_contentContainerView];
@@ -84,31 +74,6 @@ static inline UIColor *RippleColor() {
   _contentContainerTrailingConstraint = [_contentContainerView.trailingAnchor
       constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
   _contentContainerTrailingConstraint.active = YES;
-
-  // Image
-  _imageContainerView = [[UIView alloc] init];
-  _imageContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [_imageContainerView setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                                       forAxis:UILayoutConstraintAxisHorizontal];
-  [_imageContainerView setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                                       forAxis:UILayoutConstraintAxisVertical];
-  [_contentContainerView addSubview:_imageContainerView];
-  _imageContainerTopConstraint =
-      [_contentContainerView.topAnchor constraintEqualToAnchor:_imageContainerView.topAnchor
-                                                      constant:_imageEdgeInsets.top];
-  _imageContainerTopConstraint.active = YES;
-  _imageContainerLeadingConstraint =
-      [_contentContainerView.leadingAnchor constraintEqualToAnchor:_imageContainerView.leadingAnchor
-                                                          constant:_imageEdgeInsets.left];
-  _imageContainerLeadingConstraint.active = YES;
-  _imageContainerBottomConstraint =
-      [_imageContainerView.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
-                                                       constant:_imageEdgeInsets.bottom];
-  _imageContainerBottomConstraint.active = YES;
-  _imageContainerTrailingConstraint = [_imageContainerView.trailingAnchor
-      constraintEqualToAnchor:_contentContainerView.trailingAnchor
-                     constant:_imageEdgeInsets.right];
-  _imageContainerTrailingConstraint.active = YES;
 
   _actionLabel = [[UILabel alloc] init];
   [_contentContainerView addSubview:_actionLabel];
@@ -137,25 +102,20 @@ static inline UIColor *RippleColor() {
   [_contentContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.trailingAnchor]
       .active = YES;
 
-  if (!_inkTouchController) {
-    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];
-  }
-
+  _rippleColor = RippleColor();
   if (!_rippleTouchController) {
     _rippleTouchController = [[MDCRippleTouchController alloc] init];
+    [_rippleTouchController addRippleToView:self];
+    _rippleTouchController.rippleView.rippleColor = _rippleColor;
   }
 
   _actionImageView = [[UIImageView alloc] init];
-  [_imageContainerView addSubview:_actionImageView];
+  [_contentContainerView addSubview:_actionImageView];
   _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [_actionImageView.topAnchor constraintEqualToAnchor:_imageContainerView.topAnchor].active = YES;
-  [_actionImageView.leadingAnchor constraintEqualToAnchor:_imageContainerView.leadingAnchor]
+  [_actionImageView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
+                                             constant:kImageTopPadding]
       .active = YES;
-  [_actionImageView.bottomAnchor constraintLessThanOrEqualToAnchor:_imageContainerView.bottomAnchor]
-      .active = YES;
-  [_actionImageView.trailingAnchor
-      constraintLessThanOrEqualToAnchor:_imageContainerView.trailingAnchor]
+  [_actionImageView.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor]
       .active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
@@ -191,14 +151,6 @@ static inline UIColor *RippleColor() {
   _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
 }
 
-- (void)setImageEdgeInsets:(UIEdgeInsets)imageEdgeInsets {
-  _imageEdgeInsets = imageEdgeInsets;
-  _imageContainerTopConstraint.constant = imageEdgeInsets.top;
-  _imageContainerLeadingConstraint.constant = imageEdgeInsets.left;
-  _imageContainerBottomConstraint.constant = imageEdgeInsets.bottom;
-  _imageContainerTrailingConstraint.constant = imageEdgeInsets.right;
-}
-
 - (MDCActionSheetAction *)action {
   return _itemAction;
 }
@@ -232,35 +184,9 @@ static inline UIColor *RippleColor() {
       actionTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
 }
 
-- (void)setInkColor:(UIColor *)inkColor {
-  _inkColor = inkColor;
-  // If no ink color then reset to the default ink color
-  self.inkTouchController.defaultInkView.inkColor = inkColor ?: RippleColor();
-}
-
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (rippleColor != nil && (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor])) {
-    return;
-  }
-  _rippleColor = rippleColor;
-
-  // If no ripple color then reset to the default ripple color.
-  self.rippleTouchController.rippleView.rippleColor = rippleColor ?: RippleColor();
-}
-
-- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
-  if (_enableRippleBehavior == enableRippleBehavior) {
-    return;
-  }
-  _enableRippleBehavior = enableRippleBehavior;
-
-  if (enableRippleBehavior) {
-    [self.inkTouchController.defaultInkView removeFromSuperview];
-    [self.rippleTouchController addRippleToView:self];
-  } else {
-    [self.rippleTouchController.rippleView removeFromSuperview];
-    [self.inkTouchController addInkView];
-  }
+  _rippleColor = rippleColor ?: RippleColor();
+  self.rippleTouchController.rippleView.rippleColor = _rippleColor;
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {

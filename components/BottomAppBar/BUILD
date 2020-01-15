@@ -55,7 +55,6 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":BottomAppBar",
-        ":ColorThemer",
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
@@ -71,7 +70,6 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":BottomAppBar",
-        ":ColorThemer",
         "//components/AppBar",
         "//components/Buttons",
         "//components/Buttons:Theming",
@@ -85,7 +83,6 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":BottomAppBar",
-        ":ColorThemer",
         ":private",
         "//components/NavigationBar",
     ],
@@ -108,17 +105,4 @@ mdc_snapshot_objc_library(
 mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
-)
-
-# Deprecated
-
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deprecation = "Please indicate interest in a replacement API at" +
-                  " https://github.com/material-components/material-components-ios/issues/7172",
-    deps = [
-        ":BottomAppBar",
-        "//components/Themes",
-        "//components/schemes/Color",
-    ],
 )

@@ -16,8 +16,7 @@
 
 #import "BottomNavigationTypicalUseSupplemental.h"
 
-#import "MaterialBottomNavigation+ColorThemer.h"
-#import "MaterialBottomNavigation+TypographyThemer.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 
@@ -25,6 +24,7 @@
 
 @property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
+
 @end
 
 @implementation BottomNavigationTypicalUseExample
@@ -33,9 +33,7 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom Navigation";
-    _colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -113,11 +111,8 @@
 
   [self commonBottomNavigationTypicalUseExampleViewDidLoad];
 
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toBottomNavigationBar:self.bottomNavBar];
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-                                           toBottomNavigation:self.bottomNavBar];
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 }
 
 - (void)viewDidLayoutSubviews {

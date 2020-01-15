@@ -59,7 +59,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 @end
 
-@implementation MDCBottomDrawerPresentationController
+@implementation MDCBottomDrawerPresentationController {
+  UIColor *_scrimColor;
+}
 
 @synthesize delegate;
 
@@ -100,6 +102,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       self.shouldIncludeSafeAreaInContentHeight;
   bottomDrawerContainerViewController.shouldAdjustOnContentSizeChange =
       self.shouldAdjustOnContentSizeChange;
+  bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
+      self.shouldIncludeSafeAreaInInitialDrawerHeight;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
@@ -123,8 +127,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor =
-      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+  self.scrimView.backgroundColor = self.scrimColor;
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
@@ -297,6 +300,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.scrimView.backgroundColor = scrimColor;
 }
 
+- (UIColor *)scrimColor {
+  return _scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+}
+
 - (void)setTopHandleHidden:(BOOL)topHandleHidden {
   _topHandleHidden = topHandleHidden;
   self.topHandle.hidden = topHandleHidden;
@@ -333,6 +340,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
   self.bottomDrawerContainerViewController.maximumInitialDrawerHeight =
       self.maximumInitialDrawerHeight;
+}
+
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _trackingScrollView = trackingScrollView;
+  self.bottomDrawerContainerViewController.trackingScrollView = trackingScrollView;
 }
 
 - (BOOL)contentReachesFullscreen {

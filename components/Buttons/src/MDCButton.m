@@ -169,7 +169,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
+
+#ifndef TARGET_OS_TV
   self.showsTouchWhenHighlighted = NO;
+#endif
 
   self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
   if (!self.layer.shapeGenerator) {
@@ -195,8 +198,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                 action:@selector(touchDragExit:forEvent:)
       forControlEvents:UIControlEventTouchDragExit];
 
+#ifndef TARGET_OS_TV
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
+#endif
 
   _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
 
@@ -257,12 +262,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBorderColor];
   if (!self.layer.shapeGenerator) {
     self.layer.shadowPath = [self boundingPath].CGPath;
-  }
-  if ([self respondsToSelector:@selector(cornerRadius)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    self.layer.cornerRadius = [self cornerRadius];
-#pragma clang diagnostic pop
   }
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
@@ -853,15 +852,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIBezierPath *)boundingPath {
-  CGFloat cornerRadius = self.layer.cornerRadius;
-
-  if ([self respondsToSelector:@selector(cornerRadius)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    cornerRadius = [self cornerRadius];
-#pragma clang diagnostic pop
-  }
-  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius];
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {

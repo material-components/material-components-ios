@@ -27,6 +27,7 @@ typedef enum : NSUInteger {
   FlexibleHeaderConfiguratorFieldContentImportance,
   FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled,
   FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar,
+  FlexibleHeaderConfiguratorFieldShiftBehaviorHideable,
   FlexibleHeaderConfiguratorFieldShiftOffscreen,
   FlexibleHeaderConfiguratorFieldShiftOnscreen,
 
@@ -102,6 +103,8 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
                           animated:YES];
       } else {
         headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+        [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorHideable
+                            animated:YES];
       }
       break;
     }
@@ -114,6 +117,23 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
         headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
         [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled
                             animated:YES];
+        [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorHideable
+                            animated:YES];
+      }
+      break;
+    }
+
+    case FlexibleHeaderConfiguratorFieldShiftBehaviorHideable: {
+      BOOL isOn = [value boolValue];
+      if (!isOn) {
+        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
+      } else {
+        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorHideable;
+        [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled
+                            animated:YES];
+        [self
+            didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar
+                          animated:YES];
       }
       break;
     }
@@ -234,6 +254,12 @@ static const CGFloat kHeightScalar = 300;
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar: {
       MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;
       BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
+      return @(enabled);
+    }
+
+    case FlexibleHeaderConfiguratorFieldShiftBehaviorHideable: {
+      MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;
+      BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorHideable);
       return @(enabled);
     }
 
@@ -388,6 +414,7 @@ static const CGFloat kHeightScalar = 300;
     switchItem(@"Enabled", FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled),
     switchItem(@"Enabled with status bar",
                FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar),
+    switchItem(@"Hideable", FlexibleHeaderConfiguratorFieldShiftBehaviorHideable),
     switchItem(@"Header content is important", FlexibleHeaderConfiguratorFieldContentImportance),
     buttonItem(@"Shift header off-screen", FlexibleHeaderConfiguratorFieldShiftOffscreen),
     buttonItem(@"Shift header on-screen", FlexibleHeaderConfiguratorFieldShiftOnscreen)

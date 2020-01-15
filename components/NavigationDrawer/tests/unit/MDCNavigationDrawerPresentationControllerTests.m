@@ -115,4 +115,45 @@
   XCTAssertTrue(
       presentationController.bottomDrawerContainerViewController.shouldAlwaysExpandHeader);
 }
+
+- (void)testShouldIncludeSafeAreaInContentHeight {
+  // Given
+  UIViewController *fakeContentViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerViewController *fakeBottomDrawer = [[MDCBottomDrawerViewController alloc] init];
+  fakeBottomDrawer.contentViewController = fakeContentViewController;
+  UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerPresentationController *presentationController =
+      [[MDCBottomDrawerPresentationController alloc]
+          initWithPresentedViewController:fakeBottomDrawer
+                 presentingViewController:fakePresentingViewController];
+
+  // When
+  presentationController.shouldIncludeSafeAreaInContentHeight = YES;
+  [presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInContentHeight);
+}
+
+- (void)testShouldIncludeSafeAreaInInitialDrawerHeight {
+  // Given
+  UIViewController *fakeContentViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerViewController *fakeBottomDrawer = [[MDCBottomDrawerViewController alloc] init];
+  fakeBottomDrawer.contentViewController = fakeContentViewController;
+  UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerPresentationController *presentationController =
+      [[MDCBottomDrawerPresentationController alloc]
+          initWithPresentedViewController:fakeBottomDrawer
+                 presentingViewController:fakePresentingViewController];
+
+  // When
+  presentationController.shouldIncludeSafeAreaInInitialDrawerHeight = YES;
+  [presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInInitialDrawerHeight);
+}
+
 @end

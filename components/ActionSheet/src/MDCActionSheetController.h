@@ -182,18 +182,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic, strong, nullable) UIColor *actionTintColor;
 
 /**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
-
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
- Defaults to NO.
- */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
-
-/**
  The ripple color for the action items within an action sheet.
  */
 @property(nonatomic, strong, nullable) UIColor *rippleColor;
@@ -229,13 +217,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  Defaults to @c UIEdgeInsetsZero.
  */
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
-
-/**
- The inset or outset margins for the rectangle surrounding each action's image.
-
- Defaults to (-16, 0, 0, -32).
- */
-@property(nonatomic, assign) UIEdgeInsets imageEdgeInsets;
 
 /**
  Determines the alignment behavior of all title leading edges.
@@ -321,17 +302,5 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  @note If no @c tintColor is provided then the @c actionTintColor from the controller will be used.
  */
 @property(nonatomic, copy, nullable) UIColor *tintColor;
-
-@end
-
-@interface MDCActionSheetController (ToBeDeprecated)
-
-/**
- The ink color for the action items within an action sheet.
- @warning This method will eventually be deprecated. Opt-in to Ripple by setting
- enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
- */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 @end

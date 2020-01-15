@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- MDCDialogTransitionController is be used to setup a custom transition and animationed presentation
+ MDCDialogTransitionController is used to setup a custom transition and animationed presentation
  and dismissal for material-styled alerts, simple dialogs and confirmation dialogs.
 
  https://material.io/go/design-dialogs
@@ -33,5 +33,27 @@
  */
 @interface MDCDialogTransitionController
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+
+/**
+ Duration of the dialog fade-in or fade-out animation.
+
+ Defaults to 0.27 seconds.
+ */
+@property(nonatomic, assign) NSTimeInterval opacityAnimationDuration;
+
+/**
+ Duration of dialog scale-up or scale-down animation.
+
+ Defaults to 0 seconds (no animation is performed).
+ */
+@property(nonatomic, assign) NSTimeInterval scaleAnimationDuration;
+
+/**
+ The starting scale factor of the dialog, between 0 and 1. The "animate in" transition scales the
+ dialog from this value to 1.0.
+
+ Defaults to 1.0 (no scaling is performed).
+ */
+@property(nonatomic, assign) CGFloat dialogInitialScaleFactor;
 
 @end

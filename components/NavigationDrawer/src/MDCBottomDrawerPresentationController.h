@@ -205,6 +205,14 @@
 @property(nonatomic, assign) BOOL shouldAdjustOnContentSizeChange;
 
 /**
+ A flag allowing clients to opt-in to adding additional height to the initial presentation of the
+ drawer to include the bottom safe area inset. This will remove the need for clients to calculate
+ their desired maximum height with the bottom safe area when setting the maximumInitialDrawerHeight.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldIncludeSafeAreaInInitialDrawerHeight;
+
+/**
  A boolean value that indicates whether the drawer is currently the full height of the window.
  */
 @property(nonatomic, readonly) BOOL contentReachesFullscreen;

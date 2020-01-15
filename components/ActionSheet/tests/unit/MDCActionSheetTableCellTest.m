@@ -20,7 +20,6 @@
 @interface MDCActionSheetItemTableViewCell (Testing)
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
-@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @end
 
 @interface MDCActionSheetTableCellTest : XCTestCase
@@ -123,27 +122,16 @@
   }
 }
 
-- (void)testDefaultInkColor {
-  // When
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
-
-  // Then
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
-  }
-}
-
-- (void)testSetInkColor {
+- (void)testSetRippleColor {
   // When
   NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
 
   for (UIColor *color in colors) {
-    self.actionSheet.inkColor = color;
+    self.actionSheet.rippleColor = color;
     NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then
-      XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor, color);
+      XCTAssertEqualObjects(cell.rippleColor, color);
     }
   }
 }
@@ -314,17 +302,6 @@
   MDCActionSheetItemTableViewCell *cell =
       [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeColor);
-}
-
-- (void)testDefaultImageEdgeInsets {
-  // Given
-  MDCActionSheetItemTableViewCell *cell = [[MDCActionSheetItemTableViewCell alloc] init];
-
-  // Then
-  UIEdgeInsets expectedImageEdgeInsets = UIEdgeInsetsMake(-16, 0, 0, -32);
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(cell.imageEdgeInsets, expectedImageEdgeInsets),
-                @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(cell.imageEdgeInsets),
-                NSStringFromUIEdgeInsets(expectedImageEdgeInsets));
 }
 
 @end

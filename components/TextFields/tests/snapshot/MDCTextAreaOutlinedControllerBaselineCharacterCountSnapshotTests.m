@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields+ColorThemer.h"
-#import "MaterialTextFields+TypographyThemer.h"
 #import "MaterialTextFields.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 #import "supplemental/SnapshotFakeMDCMultilineTextField.h"
@@ -38,16 +36,8 @@
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
   self.textFieldController.characterCountMax = 50;
   self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  MDCTypographyScheme *typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                      toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
-                                toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
+  // TODO: Theme the MDCTextInputController with a theming extension (to be added in #9199)
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

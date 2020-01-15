@@ -16,7 +16,6 @@ import CatalogByConvention
 import MaterialCatalog
 
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MaterialFlexibleHeader_ColorThemer
 import MaterialComponents.MaterialIcons_ic_arrow_back
 import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialLibraryInfo
@@ -117,8 +116,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
 
   @objc func themeDidChange(notification: NSNotification) {
     let colorScheme = AppTheme.containerScheme.colorScheme
-    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
-                                                          to: headerViewController.headerView)
+    headerViewController.headerView.backgroundColor = colorScheme.primaryColor
     setNeedsStatusBarAppearanceUpdate()
 
     titleLabel.textColor = colorScheme.onPrimaryColor
@@ -184,8 +182,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
                    insets: titleInsets,
                    height: titleSize.height)
 
-    MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
-                                                          to: headerViewController.headerView)
+    headerViewController.headerView.backgroundColor = colorScheme.primaryColor
 
     headerViewController.headerView.trackingScrollView = collectionView
 
