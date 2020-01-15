@@ -294,6 +294,7 @@
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.shouldAdjustOnContentSizeChange =
         shouldAdjustOnContentSizeChange;
+  }
 }
 
 - (void)setShouldIncludeSafeAreaInInitialDrawerHeight:
