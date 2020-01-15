@@ -27,6 +27,58 @@ load(
 
 licenses(["notice"])
 
+mdc_extension_objc_library(
+    name = "Shared",
+)
+
+mdc_extension_objc_library(
+    name = "BaseTextFields",
+    deps = [
+        "//components/private/TextControlsPrivate:Shared",
+        "//components/private/TextControlsPrivate:BaseStyle",
+        "@material_internationalization_ios//:MDFInternationalization",
+    ],
+)
+
+mdc_objc_library(
+    name = "BaseTextFieldsPrivate",
+    hdrs = native.glob(["src/BaseTextFields/private/*.h"]),
+    includes = ["src/BaseTextFields/private"],
+    visibility = [":test_targets"],
+)
+
+mdc_extension_objc_library(
+    name = "FilledTextFields",
+    deps = [
+        ":BaseTextFields",
+        "//components/private/TextControlsPrivate:FilledStyle",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "FilledTextFieldsTheming",
+    deps = [
+        ":FilledTextFields",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "OutlinedTextFields",
+    deps = [
+        ":BaseTextFields",
+        "//components/private/TextControlsPrivate:OutlinedStyle",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "OutlinedTextFieldsTheming",
+    deps = [
+        ":OutlinedTextFields",
+        "//components/schemes/Container",
+    ],
+)
+
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
@@ -41,31 +93,14 @@ package_group(
     ],
 )
 
-mdc_public_objc_library(
-    name = "TextControls",
-)
-
-mdc_extension_objc_library(
-    name = "TextFields",
-    deps = [
-        ":TextControls",
-        "//components/private/TextControlsPrivate",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "TextFieldsTheming",
-    deps = [
-        ":TextFields",
-        "//components/schemes/Container",
-    ],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
-        ":TextFields",
-        ":TextFieldsTheming",
+        ":BaseTextFields",
+        ":FilledTextFields",
+        ":FilledTextFieldsTheming",
+        ":OutlinedTextFields",
+        ":OutlinedTextFieldsTheming",
         "//components/Buttons",
         "//components/Buttons:Theming",
         "//components/schemes/Container",
@@ -75,21 +110,26 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":TextFields",
-        ":TextFieldsTheming",
+        ":BaseTextFields",
+        ":FilledTextFields",
+        ":FilledTextFieldsTheming",
+        ":OutlinedTextFields",
+        ":OutlinedTextFieldsTheming",
     ],
 )
 
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     extra_srcs = glob([
-        "tests/unit/TextFields/*.m",
-        "tests/unit/TextFieldsTheming/*.m",
+        "tests/unit/*/*.m",
     ]),
     deps = [
-        ":TextFields",
-        ":TextFieldsTheming",
-        "//components/private/TextControlsPrivate",
+        ":BaseTextFields",
+        ":FilledTextFields",
+        ":FilledTextFieldsTheming",
+        ":OutlinedTextFields",
+        ":OutlinedTextFieldsTheming",
+        ":BaseTextFieldsPrivate",
     ],
 )
 
@@ -99,10 +139,15 @@ mdc_snapshot_objc_library(
         "CoreGraphics",
     ],
     deps = [
-        ":TextControls",
-        ":TextFields",
-        ":TextFieldsTheming",
-        "//components/private/TextControlsPrivate",
+        ":Shared",
+        ":BaseTextFields",
+        ":FilledTextFields",
+        ":FilledTextFieldsTheming",
+        ":OutlinedTextFields",
+        ":OutlinedTextFieldsTheming",
+        "//components/private/TextControlsPrivate:Shared",
+        "//components/private/TextControlsPrivate:OutlinedStyle",
+        "//components/private/TextControlsPrivate:FilledStyle",
     ],
 )
 

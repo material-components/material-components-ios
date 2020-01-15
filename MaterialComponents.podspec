@@ -1899,13 +1899,22 @@ Pod::Spec.new do |mdc|
       end
     end
 
+    private_spec.subspec "TextControlsPrivate+Shared" do |component|
+      component.ios.deployment_target = '9.0'
+      component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+      component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
+      ]
+      component.dependency "MaterialComponents/TextControls+Shared"
+      component.dependency "MaterialComponents/AnimationTiming"
+      component.dependency "MaterialComponents/private/Math"
+    end
+
     private_spec.subspec "TextControlsPrivate+BaseStyle" do |component|
       component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
       component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
-      component.dependency "MaterialComponents/TextControls+Shared"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
     end
@@ -1917,7 +1926,6 @@ Pod::Spec.new do |mdc|
       ]
 
       component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
-      component.dependency "MaterialComponents/TextControls+Shared"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
     end
@@ -1928,17 +1936,6 @@ Pod::Spec.new do |mdc|
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
       component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
-      component.dependency "MaterialComponents/TextControls+Shared"
-      component.dependency "MaterialComponents/AnimationTiming"
-      component.dependency "MaterialComponents/private/Math"
-    end
-
-    private_spec.subspec "TextControlsPrivate+Shared" do |component|
-      component.ios.deployment_target = '9.0'
-      component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
-      component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
-      ]
-      component.dependency "MaterialComponents/TextControls+Shared"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
     end

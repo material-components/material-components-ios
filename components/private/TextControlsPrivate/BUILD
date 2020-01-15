@@ -14,36 +14,56 @@
 
 load(
     "//:material_components_ios.bzl",
-    "mdc_public_objc_library",
-    "mdc_unit_test_objc_library",
-    "mdc_unit_test_suite",
+    "mdc_extension_objc_library",
 )
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
-    name = "TextControlsPrivate",
+mdc_extension_objc_library(
+        name = "Shared",
     sdk_frameworks = [
         "QuartzCore",
     ],
     deps = [
         "//components/AnimationTiming",
-        "//components/TextControls",
+        "//components/TextControls:Shared",
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
-mdc_unit_test_objc_library(
-    name = "unit_test_sources",
+mdc_extension_objc_library(
+        name = "BaseStyle",
+    sdk_frameworks = [
+        "QuartzCore",
+    ],
     deps = [
-        ":TextControlsPrivate",
+        ":Shared",
+        "//components/AnimationTiming",
+        "//components/private/Math",
     ],
 )
 
-mdc_unit_test_suite(
-    name = "unit_tests",
+mdc_extension_objc_library(
+        name = "FilledStyle",
+    sdk_frameworks = [
+        "QuartzCore",
+    ],
     deps = [
-        ":unit_test_sources",
+        ":Shared",
+        "//components/AnimationTiming",
+        "//components/private/Math",
+    ],
+)
+
+mdc_extension_objc_library(
+        name = "OutlinedStyle",
+    sdk_frameworks = [
+        "QuartzCore",
+    ],
+    deps = [
+        ":Shared",
+        "//components/AnimationTiming",
+        "//components/private/Math",
     ],
 )
