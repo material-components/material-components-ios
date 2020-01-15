@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCOutlinedTextField.h"
+#import "MaterialTextControls+OutlinedTextFields.h"
 #import "MaterialContainerScheme.h"
 
 /**

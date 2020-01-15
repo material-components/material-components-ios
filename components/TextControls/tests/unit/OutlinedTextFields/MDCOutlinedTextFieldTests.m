@@ -14,8 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTextControls+TextFields.h"
-#import "MaterialTextControls.h"
+#import "MaterialTextControls+OutlinedTextFields.h"
 
 @interface MDCOutlinedTextFieldTests : XCTestCase
 @end

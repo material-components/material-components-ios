@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBaseTextField.h"
+#import "MaterialTextControls+BaseTextFields.h"
 
 /**
  An implementation of a Material filled text field.

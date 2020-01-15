@@ -18,8 +18,8 @@
 
 #import "MaterialTextControls+FilledTextFieldsTheming.h"
 #import "MaterialTextControls+OutlinedTextFieldsTheming.h"
-#import "MaterialTextControls.h"
-#import "MaterialTextControlsPrivate.h"
+//#import "MaterialTextControls.h"
+//#import "MaterialTextControlsPrivate.h"
 #import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "supplemental/MDCTextControlSnapshotTestHelpers.h"
 

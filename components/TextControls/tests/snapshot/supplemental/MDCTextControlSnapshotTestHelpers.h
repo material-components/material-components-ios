@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextControlsPrivate.h"
+#import "MaterialTextControlsPrivate+Shared.h"
 
 @interface MDCTextControlSnapshotTestHelpers : NSObject
 
