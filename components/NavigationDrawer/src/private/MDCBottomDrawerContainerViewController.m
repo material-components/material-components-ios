@@ -188,6 +188,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGFloat _maximumInitialDrawerHeightCalculated;
   CGFloat _headerVCPerferredContentSizeHeightCached;
   CGFloat _scrollToContentOffsetY;
+  CGFloat _maximumInitialDrawerHeight;
   BOOL _shouldPresentAtFullscreen;
 }
 
@@ -396,6 +397,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   _addedContentHeight = NSNotFound;
 
   [self cacheLayoutCalculations];
+}
 
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
