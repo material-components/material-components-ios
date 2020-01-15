@@ -1,3 +1,42 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### AppBar
+
+* [Annotate MDCAppBarContainerViewController's appBar and topLayoutGuideAdjustmentEnabled as to be deprecated. (#9394)](https://github.com/material-components/material-components-ios/commit/d7c2865c3d754edf39e28db62ec7039b9ed469c2) (featherless)
+
+### Buttons
+
+* [Add tvOS support to MDCButton. (#9427)](https://github.com/material-components/material-components-ios/commit/71b5766eaa49a4245d8b0c8527773597ce5407d6) (Yarden Eitan)
+
+### Chips
+
+* [Add snapshot tests for selectedImage layout. (#9425)](https://github.com/material-components/material-components-ios/commit/aadb9a6bd099311ea97c189cb7ca2f60701dc201) (Robert Moore)
+* [Tests to evaluate `padding` APIs. (#9423)](https://github.com/material-components/material-components-ios/commit/9694cb2fb68b2717ff16412b3e1ea7c7085bb3b2) (Robert Moore)
+
+### NavigationDrawer
+
+* [Fix #9410 (#9411)](https://github.com/material-components/material-components-ios/commit/bcaf187e373cd3d20fb06b9ea0b5f4ae5546214f) (Jake Rockland)
+
+### Snackbar
+
+* [Add tvOS support to MDCSnackbar. (#9428)](https://github.com/material-components/material-components-ios/commit/7f5d3c76e1e00e461d799019a4fdb52d3c40f9d8) (Yarden Eitan)
+
+---
+
 # 101.0.1
 
 In this patch release we reverted Snackar's display accessibility level from `UIAccessibilityScreenChangedNotification` to `UIAccessibilityLayoutChangedNotification`, as it caused in some cases an unwanted immediate focus shift for VoiceOver users.
