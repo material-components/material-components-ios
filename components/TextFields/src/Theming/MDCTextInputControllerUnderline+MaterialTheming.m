@@ -27,7 +27,6 @@
 - (void)applyColorThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.87];
 
   self.activeColor = colorScheme.primaryColor;
   self.errorColor = colorScheme.errorColor;
@@ -47,21 +46,13 @@
           colorScheme.primaryColor;
     }
   }
-
-  if ([self
-          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
-    id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
-        (id<MDCTextInputControllerFloatingPlaceholder>)self;
-    textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurface60Opacity;
-    textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor = primary87Opacity;
-  }
 }
 
 - (void)applyTypographyThemeWithScheme:(id<MDCTypographyScheming>)typographyScheme {
   self.inlinePlaceholderFont = typographyScheme.subtitle1;
   self.leadingUnderlineLabelFont = typographyScheme.caption;
   self.trailingUnderlineLabelFont = typographyScheme.caption;
-  
+
   if ([self conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> floatingPlaceholderController =
         (id<MDCTextInputControllerFloatingPlaceholder>)self;
