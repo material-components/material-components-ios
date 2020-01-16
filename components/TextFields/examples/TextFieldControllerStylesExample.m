@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextFields.h"
 #import "MaterialTextFields+Theming.h"
+#import "MaterialTextFields.h"
 
 #import "supplemental/TextFieldControllerStylesExampleSupplemental.h"
 

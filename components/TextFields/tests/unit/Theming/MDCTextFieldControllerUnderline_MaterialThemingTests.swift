@@ -44,9 +44,9 @@ class MDCTextFieldControllerUnderline_MaterialThemingTests: XCTestCase {
     XCTAssertEqual(textFieldControllerUnderline.inlinePlaceholderColor, onSurface60Opacity)
     XCTAssertEqual(textFieldControllerUnderline.trailingUnderlineLabelTextColor, onSurface60Opacity)
     XCTAssertEqual(textFieldControllerUnderline.leadingUnderlineLabelTextColor, onSurface60Opacity)
-    XCTAssertEqual(
-      floatingPlaceholderController.floatingPlaceholderNormalColor,
-      scheme.colorScheme.primaryColor
+    XCTAssertEqual(floatingPlaceholderController.floatingPlaceholderNormalColor, onSurface60Opacity)
+    XCTAssertEqual(floatingPlaceholderController.floatingPlaceholderActiveColor,
+                   scheme.colorScheme.primaryColor.withAlphaComponent(0.87)
     )
     // Typography
     XCTAssertEqual(textFieldControllerUnderline.inlinePlaceholderFont, typographyScheme.subtitle1)
