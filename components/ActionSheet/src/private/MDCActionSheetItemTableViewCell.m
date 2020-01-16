@@ -81,9 +81,16 @@ static inline UIColor *RippleColor() {
   _divider.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentContainerView addSubview:_divider];
   [_contentContainerView.topAnchor constraintEqualToAnchor:_divider.topAnchor].active = YES;
-  [_divider addConstraint:[NSLayoutConstraint constraintWithItem:_divider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:1]];
+  [_divider addConstraint:[NSLayoutConstraint constraintWithItem:_divider
+                                                       attribute:NSLayoutAttributeHeight
+                                                       relatedBy:NSLayoutRelationEqual
+                                                          toItem:nil
+                                                       attribute:NSLayoutAttributeNotAnAttribute
+                                                      multiplier:1
+                                                        constant:1]];
   [_contentContainerView.leadingAnchor constraintEqualToAnchor:_divider.leadingAnchor].active = YES;
-  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_divider.trailingAnchor].active = YES;
+  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_divider.trailingAnchor].active =
+      YES;
 
   _actionLabel = [[UILabel alloc] init];
   [_contentContainerView addSubview:_actionLabel];
