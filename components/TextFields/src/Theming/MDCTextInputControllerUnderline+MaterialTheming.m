@@ -25,7 +25,36 @@
 }
 
 - (void)applyColorThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+  self.activeColor = colorScheme.primaryColor;
+  if ([textInputController
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+    id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
+        (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
 
+    if ([textInputControllerFloatingPlaceholder
+            respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
+      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor =
+          colorScheme.primaryColor;
+    }
+  }
+
+  if ([textInputController
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+    id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
+        (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
+    UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.87];
+    textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurface60Opacity;
+    textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor = primary87Opacity;
+  }
+
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  textInputController.activeColor = colorScheme.primaryColor;
+  textInputController.errorColor = colorScheme.errorColor;
+  textInputController.normalColor = onSurface87Opacity;
+  textInputController.inlinePlaceholderColor = onSurface60Opacity;
+  textInputController.trailingUnderlineLabelTextColor = onSurface60Opacity;
+  textInputController.leadingUnderlineLabelTextColor = onSurface60Opacity;
 }
 
 - (void)applyTypographyThemeWithScheme:(id<MDCTypographyScheming>)typographyScheme {
