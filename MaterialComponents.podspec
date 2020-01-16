@@ -1536,9 +1536,9 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  # TextControls+Shared
+  # TextControls+Enums
 
-  mdc.subspec "TextControls+Shared" do |component|
+  mdc.subspec "TextControls+Enums" do |component|
     component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
     component.source_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
@@ -1904,7 +1904,7 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
-      component.dependency "MaterialComponents/TextControls+Shared"
+      component.dependency "MaterialComponents/TextControls+Enums"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
     end

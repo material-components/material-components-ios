@@ -27,15 +27,26 @@ load(
 
 licenses(["notice"])
 
+package_group(
+    name = "TextControlsPackageGroup",
+    packages = [
+        "//components/TextControls/...",
+    ],
+)
+
 mdc_extension_objc_library(
-    name = "Shared",
+    name = "Enums",
+    visibility = [
+        ":TextControlsPackageGroup",
+        "//components/private/TextControlsPrivate:TextControlsPrivatePackageGroup",
+    ],
 )
 
 mdc_extension_objc_library(
     name = "BaseTextFields",
     deps = [
-        "//components/private/TextControlsPrivate:Shared",
         "//components/private/TextControlsPrivate:BaseStyle",
+        "//components/private/TextControlsPrivate:Shared",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
@@ -44,7 +55,9 @@ mdc_objc_library(
     name = "BaseTextFieldsPrivate",
     hdrs = native.glob(["src/BaseTextFields/private/*.h"]),
     includes = ["src/BaseTextFields/private"],
-    visibility = [":test_targets"],
+    visibility = [
+        ":TextControlsPackageGroup",
+    ],
 )
 
 mdc_extension_objc_library(
@@ -83,14 +96,7 @@ mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
-    visibility = [":test_targets"],
-)
-
-package_group(
-    name = "test_targets",
-    packages = [
-        "//components/TextControls/...",
-    ],
+    visibility = [":TextControlsPackageGroup"],
 )
 
 mdc_examples_objc_library(
@@ -125,11 +131,11 @@ mdc_unit_test_objc_library(
     ]),
     deps = [
         ":BaseTextFields",
+        ":BaseTextFieldsPrivate",
         ":FilledTextFields",
         ":FilledTextFieldsTheming",
         ":OutlinedTextFields",
         ":OutlinedTextFieldsTheming",
-        ":BaseTextFieldsPrivate",
     ],
 )
 
@@ -139,15 +145,15 @@ mdc_snapshot_objc_library(
         "CoreGraphics",
     ],
     deps = [
-        ":Shared",
         ":BaseTextFields",
+        ":Enums",
         ":FilledTextFields",
         ":FilledTextFieldsTheming",
         ":OutlinedTextFields",
         ":OutlinedTextFieldsTheming",
-        "//components/private/TextControlsPrivate:Shared",
-        "//components/private/TextControlsPrivate:OutlinedStyle",
         "//components/private/TextControlsPrivate:FilledStyle",
+        "//components/private/TextControlsPrivate:OutlinedStyle",
+        "//components/private/TextControlsPrivate:Shared",
     ],
 )
 

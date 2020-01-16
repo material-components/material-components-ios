@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextControls+Shared.h"
+#import "MaterialTextControls+Enums.h"
 
 /**
  A UITextField subclass that will potentially provide the foundation for Material TextFields in the

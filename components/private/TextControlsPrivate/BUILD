@@ -19,23 +19,36 @@ load(
 
 licenses(["notice"])  # Apache 2.0
 
+package_group(
+    name = "TextControlsPrivatePackageGroup",
+    packages = [
+        "//components/private/TextControlsPrivate/...",
+    ],
+)
+
 mdc_extension_objc_library(
-        name = "Shared",
+    name = "Shared",
     sdk_frameworks = [
         "QuartzCore",
     ],
+    visibility = [
+        "//components/TextControls:TextControlsPackageGroup",
+    ],
     deps = [
         "//components/AnimationTiming",
-        "//components/TextControls:Shared",
+        "//components/TextControls:Enums",
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
 mdc_extension_objc_library(
-        name = "BaseStyle",
+    name = "BaseStyle",
     sdk_frameworks = [
         "QuartzCore",
+    ],
+    visibility = [
+        "//components/TextControls:TextControlsPackageGroup",
     ],
     deps = [
         ":Shared",
@@ -45,9 +58,12 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-        name = "FilledStyle",
+    name = "FilledStyle",
     sdk_frameworks = [
         "QuartzCore",
+    ],
+    visibility = [
+        "//components/TextControls:TextControlsPackageGroup",
     ],
     deps = [
         ":Shared",
@@ -57,9 +73,12 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
-        name = "OutlinedStyle",
+    name = "OutlinedStyle",
     sdk_frameworks = [
         "QuartzCore",
+    ],
+    visibility = [
+        "//components/TextControls:TextControlsPackageGroup",
     ],
     deps = [
         ":Shared",
