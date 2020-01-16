@@ -17,6 +17,7 @@
 #import "MDCBottomDrawerTransitionController.h"
 #import "MaterialMath.h"
 #import "MaterialUIMetrics.h"
+#import "private/MDCBottomDrawerEmptyHeader.h"
 #import "private/MDCBottomDrawerHeaderMask.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
@@ -120,6 +121,7 @@
 
   if (drawerState == MDCBottomDrawerStateCollapsed) {
     _maskLayer.maximumCornerRadius = radius;
+    [self updateEmptyHeaderHeightIfApplicable:radius];
   } else {
     _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
   }
@@ -137,6 +139,25 @@
     return (CGFloat)[topCornersRadius doubleValue];
   }
   return 0;
+}
+
+- (void)setEmptyHeaderWithBackgroundColor:(nullable UIColor *)backgroundColor {
+  MDCBottomDrawerEmptyHeader *emptyHeader = [[MDCBottomDrawerEmptyHeader alloc] init];
+  emptyHeader.backgroundColor = backgroundColor;
+  // The height of the empty header should track the collapsed state corner radius.
+  NSNumber* collapsedCornerRadius = _topCornersRadius[@(MDCBottomDrawerStateCollapsed)];
+  if (collapsedCornerRadius) {
+    emptyHeader.headerHeight = [collapsedCornerRadius doubleValue];
+  }
+  [self setHeaderViewController:emptyHeader];
+}
+
+- (void)updateEmptyHeaderHeightIfApplicable:(CGFloat)headerHeight {
+  if ([self.headerViewController isKindOfClass:[MDCBottomDrawerEmptyHeader class]]) {
+    MDCBottomDrawerEmptyHeader *emptyHeader =
+        (MDCBottomDrawerEmptyHeader *)self.headerViewController;
+    emptyHeader.headerHeight = headerHeight;
+  }
 }
 
 - (void)setHeaderViewController:(UIViewController<MDCBottomDrawerHeader> *)headerViewController {

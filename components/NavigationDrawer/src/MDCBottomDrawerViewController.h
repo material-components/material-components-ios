@@ -156,6 +156,15 @@
 - (void)setTopCornersRadius:(CGFloat)radius forDrawerState:(MDCBottomDrawerState)drawerState;
 
 /**
+ Called to instruct the bottom drawer to generate a default empty header. This can be used to
+ prevent bottom drawer content from conflicting with status bar when a header has not been provided
+ by the client (see Github issue #6434).
+
+ @param backgroundColor The desired backgroundColor of the header.
+ */
+- (void)setEmptyHeaderWithBackgroundColor:(nullable UIColor *)backgroundColor;
+
+/**
  Returns the top corners radius for an MDCBottomDrawerState drawerState.
 
  If no radius has been set for a state, the value 0 is returned.
