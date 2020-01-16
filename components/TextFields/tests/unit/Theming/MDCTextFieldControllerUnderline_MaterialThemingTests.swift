@@ -23,7 +23,7 @@ class MDCTextFieldControllerUnderline_MaterialThemingTests: XCTestCase {
   func testWithDefaultContainerSchemeStylesAppropriatly() {
     // Given
     let textFieldFilled = MDCTextField()
-    let textFieldControllerFilled = MDCTextInputControllerUnderline(textInput: textFieldFilled)
+    let textFieldControllerUnderline = MDCTextInputControllerUnderline(textInput: textFieldFilled)
     let scheme: MDCContainerScheme = MDCContainerScheme()
 
     // When
@@ -31,6 +31,7 @@ class MDCTextFieldControllerUnderline_MaterialThemingTests: XCTestCase {
 
     // Then
     // Color
+    XCTAssertEqual(textFieldControllerUnderline, scheme.colorScheme.primaryColor)
     
 
     // Typography
