@@ -20,7 +20,7 @@ import MaterialComponents.MaterialTextFields_Theming
 import XCTest
 
 class MDCTextFieldControllerUnderline_MaterialThemingTests: XCTestCase {
-  func testWithDefaultContainerSchemeStylesAppropriatly() {
+  func testWithDefaultContainerSchemeStylesAppropriately() {
     // Given
     let textFieldFilled = MDCTextField()
     let textFieldControllerUnderline = MDCTextInputControllerUnderline(textInput: textFieldFilled)

@@ -27,6 +27,7 @@
 - (void)applyColorThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.87];
 
   self.activeColor = colorScheme.primaryColor;
   self.errorColor = colorScheme.errorColor;
@@ -41,8 +42,8 @@
 
     if ([textInputControllerFloatingPlaceholder
             respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
-      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor =
-          colorScheme.primaryColor;
+      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurface60Opacity;
+      textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor = primary87Opacity;
     }
   }
 }
