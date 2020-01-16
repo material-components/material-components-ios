@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,6 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextInputControllerFilled+MaterialTheming.h"
-#import "MDCTextInputControllerOutlined+MaterialTheming.h"
 #import "MDCTextInputControllerUnderline+MaterialTheming.h"
+
+@implementation MDCTextInputControllerUnderline (MaterialTheming)
+
+- (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme {
+  // Color
+  [self applyColorThemeWithColorScheme:scheme.colorScheme];
+
+  // Typography
+  [self applyTypographyThemeWithScheme:scheme.typographyScheme];
+}
+
+- (void)applyColorThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+
+}
+
+- (void)applyTypographyThemeWithScheme:(id<MDCTypographyScheming>)typographyScheme {
+  
+}
+
+@end
