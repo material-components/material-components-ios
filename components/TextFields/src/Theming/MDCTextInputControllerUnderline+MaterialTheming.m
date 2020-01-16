@@ -61,6 +61,7 @@
   self.inlinePlaceholderFont = typographyScheme.subtitle1;
   self.leadingUnderlineLabelFont = typographyScheme.caption;
   self.trailingUnderlineLabelFont = typographyScheme.caption;
+  
   if ([self conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> floatingPlaceholderController =
         (id<MDCTextInputControllerFloatingPlaceholder>)self;
