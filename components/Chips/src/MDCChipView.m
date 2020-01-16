@@ -76,7 +76,7 @@ static CGRect CGRectVerticallyCentered(CGRect rect,
 }
 
 static inline CGRect MDCChipBuildFrame(
-    UIEdgeInsets insets, CGSize size, CGFloat xOffset, CGFloat chipHeight, CGFloat pixelScale) {
+    UIEdgeInsets insets, CGSize size, CGPoint originPoint, CGFloat chipHeight, CGFloat pixelScale) {
   CGRect frame =
       CGRectMake(originPoint.x + insets.left, originPoint.y + insets.top, size.width, size.height);
   return CGRectVerticallyCentered(frame, insets, chipHeight, pixelScale);
