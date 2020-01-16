@@ -1,16 +1,9 @@
-# #develop#
+# 101.1.2
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This release fixes layout bugs in Chips and marks
+`-[MDCAppBarNavigationControllerDelegate
+appBarNavigationController:willAddAppBar:asChildOfViewController:]` as planned
+for deprecation.
 
 ## Component changes
 
