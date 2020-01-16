@@ -77,7 +77,8 @@ static CGRect CGRectVerticallyCentered(CGRect rect,
 
 static inline CGRect MDCChipBuildFrame(
     UIEdgeInsets insets, CGSize size, CGFloat xOffset, CGFloat chipHeight, CGFloat pixelScale) {
-  CGRect frame = CGRectMake(xOffset + insets.left, insets.top, size.width, size.height);
+  CGRect frame =
+      CGRectMake(originPoint.x + insets.left, originPoint.y + insets.top, size.width, size.height);
   return CGRectVerticallyCentered(frame, insets, chipHeight, pixelScale);
 }
 
@@ -708,11 +709,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)frameForImageView:(UIImageView *)imageView visible:(BOOL)visible {
-  CGRect frame = CGRectMake(CGRectGetMinX(self.contentRect), CGRectGetMidY(self.contentRect), 0, 0);
+  CGRect contentRect = self.contentRect;
+  CGRect frame = CGRectMake(CGRectGetMinX(contentRect), CGRectGetMidY(contentRect), 0, 0);
   if (visible) {
-    CGSize selectedSize = [self sizeForImageView:imageView maxSize:self.contentRect.size];
-    frame = MDCChipBuildFrame(_imagePadding, selectedSize, CGRectGetMinX(self.contentRect),
-                              CGRectGetHeight(self.frame), self.pixelScale);
+    CGSize selectedSize = [self sizeForImageView:imageView maxSize:contentRect.size];
+    frame = MDCChipBuildFrame(_imagePadding, selectedSize,
+                              CGPointMake(CGRectGetMinX(contentRect), CGRectGetMinY(contentRect)),
+                              CGRectGetHeight(contentRect), self.pixelScale);
   }
   return frame;
 }
@@ -724,12 +727,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (CGRect)accessoryViewFrame {
   CGSize size = CGSizeZero;
+  CGRect contentRect = self.contentRect;
   if (self.showAccessoryView) {
-    size = [self sizeForAccessoryViewWithMaxSize:self.contentRect.size];
+    size = [self sizeForAccessoryViewWithMaxSize:contentRect.size];
   }
   CGFloat xOffset =
       CGRectGetMaxX(self.contentRect) - size.width - UIEdgeInsetsHorizontal(_accessoryPadding);
-  return MDCChipBuildFrame(_accessoryPadding, size, xOffset, CGRectGetHeight(self.frame),
+  CGPoint frameOrigin = CGPointMake(xOffset, CGRectGetMinY(contentRect));
+  return MDCChipBuildFrame(_accessoryPadding, size, frameOrigin, CGRectGetHeight(contentRect),
                            self.pixelScale);
 }
 
@@ -739,22 +744,23 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)titleLabelFrame {
+  CGRect contentRect = self.contentRect;
   CGRect imageFrame = CGRectUnion(_imageView.frame, _selectedImageView.frame);
-  CGFloat maximumTitleWidth = CGRectGetWidth(self.contentRect) - CGRectGetWidth(imageFrame) -
+  CGFloat maximumTitleWidth = CGRectGetWidth(contentRect) - CGRectGetWidth(imageFrame) -
                               UIEdgeInsetsHorizontal(_titlePadding) +
                               UIEdgeInsetsHorizontal(_imagePadding);
   if (self.showAccessoryView) {
     maximumTitleWidth -=
         CGRectGetWidth(_accessoryView.frame) + UIEdgeInsetsHorizontal(_accessoryPadding);
   }
-  CGFloat maximumTitleHeight =
-      CGRectGetHeight(self.contentRect) - UIEdgeInsetsVertical(_titlePadding);
+  CGFloat maximumTitleHeight = CGRectGetHeight(contentRect) - UIEdgeInsetsVertical(_titlePadding);
   CGSize maximumSize = CGSizeMake(maximumTitleWidth, maximumTitleHeight);
   CGSize titleSize = [_titleLabel sizeThatFits:maximumSize];
   titleSize.width = MAX(0, maximumTitleWidth);
 
   CGFloat imageRightEdge = CGRectGetMaxX(imageFrame) + _imagePadding.right;
-  return MDCChipBuildFrame(_titlePadding, titleSize, imageRightEdge, CGRectGetHeight(self.frame),
+  CGPoint frameOrigin = CGPointMake(imageRightEdge, CGRectGetMinY(contentRect));
+  return MDCChipBuildFrame(_titlePadding, titleSize, frameOrigin, CGRectGetHeight(contentRect),
                            self.pixelScale);
 }
 
