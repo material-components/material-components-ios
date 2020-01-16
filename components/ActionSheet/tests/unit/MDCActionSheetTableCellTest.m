@@ -304,4 +304,19 @@
   XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeColor);
 }
 
+- (void)testSetActionSheetItemDividerColorSetsTheColorOnTheCell {
+  // Given
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                 image:nil
+                                                               handler:nil];
+
+  // When
+  action.dividerColor = UIColor.blueColor;
+  [self.actionSheet addAction:action];
+  // Then
+  MDCActionSheetItemTableViewCell *cell =
+      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+  XCTAssertEqualObjects(cell.dividerColor, UIColor.blueColor);
+}
+
 @end

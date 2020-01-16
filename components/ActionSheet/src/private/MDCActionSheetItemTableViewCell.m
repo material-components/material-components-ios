@@ -33,6 +33,8 @@ static inline UIColor *RippleColor() {
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 /** Container view holding all custom content so it can be inset. */
 @property(nonatomic, strong) UIView *contentContainerView;
+/** A divider that is show at the top of the action. */
+@property(nonatomic, strong, nonnull) UIView *divider;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
@@ -74,6 +76,14 @@ static inline UIColor *RippleColor() {
   _contentContainerTrailingConstraint = [_contentContainerView.trailingAnchor
       constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
   _contentContainerTrailingConstraint.active = YES;
+
+  _divider = [[UIView alloc] init];
+  _divider.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.contentContainerView addSubview:_divider];
+  [_contentContainerView.topAnchor constraintEqualToAnchor:_divider.topAnchor];
+  [_divider addConstraint:[NSLayoutConstraint constraintWithItem:_divider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:1]];
+  [_contentContainerView.leadingAnchor constraintEqualToAnchor:_divider.leadingAnchor];
+  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_divider.trailingAnchor];
 
   _actionLabel = [[UILabel alloc] init];
   [_contentContainerView addSubview:_actionLabel];
@@ -149,6 +159,22 @@ static inline UIColor *RippleColor() {
   _contentContainerLeadingConstraint.constant = contentEdgeInsets.left;
   _contentContainerBottomConstraint.constant = contentEdgeInsets.bottom;
   _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
+}
+
+- (void)setDividerColor:(UIColor *)dividerColor {
+  self.divider.backgroundColor = dividerColor;
+}
+
+- (UIColor *)dividerColor {
+  return self.divider.backgroundColor;
+}
+
+- (void)setShowsDivider:(BOOL)showsDivider {
+  self.divider.hidden = !showsDivider;
+}
+
+- (BOOL)showsDivider {
+  return !self.divider.hidden;
 }
 
 - (MDCActionSheetAction *)action {
