@@ -31,6 +31,7 @@ class MDCTextFieldControllerUnderline_MaterialThemingTests: XCTestCase {
 
     // Then
     // Color
+    
 
     // Typography
   }
