@@ -29,6 +29,9 @@
 
 @end
 
+@interface MDCAppBarNavigationController () <UIGestureRecognizerDelegate>
+@end
+
 @implementation MDCAppBarNavigationControllerInfo
 
 - (void)dealloc {
@@ -44,6 +47,10 @@
 // We're overriding UINavigationController's delegate solely to change its type (we don't provide
 // a getter or setter implementation), thus the @dynamic.
 @dynamic delegate;
+
+- (void)dealloc {
+  self.interactivePopGestureRecognizer.delegate = nil;
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -67,6 +74,12 @@
   // We always want the UIKit navigation bar to be hidden; to do so we must invoke the super
   // implementation.
   [super setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.interactivePopGestureRecognizer.delegate = self;
 }
 
 #pragma mark - UINavigationController overrides
