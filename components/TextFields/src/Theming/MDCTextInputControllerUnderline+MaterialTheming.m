@@ -35,8 +35,7 @@
   self.trailingUnderlineLabelTextColor = onSurface60Opacity;
   self.leadingUnderlineLabelTextColor = onSurface60Opacity;
 
-  if ([self
-          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+  if ([self conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)self;
 
