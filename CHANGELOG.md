@@ -1,3 +1,31 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### AppBar
+
+* [Annotate MDCAppBarNavigationControllerDelegate's appBarNavigationController:willAddAppBar:asChildOfViewController: as to be deprecated. (#9395)](https://github.com/material-components/material-components-ios/commit/580d152be3d235b91dab3fb5c5f0d81613348f53) (featherless)
+
+### Chips
+
+* [Additional `imagePadding` tests. (#9441)](https://github.com/material-components/material-components-ios/commit/bc34beb9b4bd9e90f7d914ec85d59ae916024f90) (Robert Moore)
+* [Fix `contentPadding` API. (#9440)](https://github.com/material-components/material-components-ios/commit/13d20ebddf7c709c507973ed9f317939e650a94b) (Robert Moore)
+* [Fix `imagePadding` behavior. (#9442)](https://github.com/material-components/material-components-ios/commit/1621a25c6b829c006d52008f743f07112f40a3a6) (Robert Moore)
+
+---
+
 # 101.1.1
 
 This release includes a bug fix for Dialogs. In some cases a change in
