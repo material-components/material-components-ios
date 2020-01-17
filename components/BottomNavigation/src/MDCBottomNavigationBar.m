@@ -538,6 +538,8 @@ static NSString *const kOfAnnouncement = @"of";
   }
 
   if (@available(iOS 13, *)) {
+    // If clients report conflicting gesture recognizers please see proposed solution in the
+    // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
     [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
   }
 
@@ -622,7 +624,6 @@ static NSString *const kOfAnnouncement = @"of";
     if (@available(iOS 13, *)) {
       itemView.largeContentImageInsets = item.largeContentSizeImageInsets;
       itemView.largeContentImage = item.largeContentSizeImage;
-      itemView.scalesLargeContentImage = YES;
     }
 
     [itemView.button addTarget:self

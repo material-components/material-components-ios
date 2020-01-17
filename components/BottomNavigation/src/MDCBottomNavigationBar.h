@@ -57,6 +57,22 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  The bottom navigation bar is docked at the bottom of the screen with tappable items. Only one item
  can be selected at at time. The selected item's title text is displayed. Title text for unselected
  items are hidden.
+
+ Large Content Viewer:
+ This component support UIKit's Large Content Viewer on iOS 13+. It is recommended that images
+ associated with each tab bar item be backed with a PDF with "preserve vector data" enabled within
+ the assets entry in the catalog. This ensures that the image is scaled appropriately in the content
+ viewer.
+
+ Alternatively specify an image to use for the large content viewer using UITabBarItem's property
+ @c largeContentSizeImage . If an image is specified the given image is used as is for the large
+ content viewer and will not be scaled.
+
+ If the image is not backed by PDF and a @c largeContentSizeImage is not specified, the given
+ @c image will be scaled and may be blurry.
+
+ For more details on the Large Content Viewer see:
+ https://developer.apple.com/videos/play/wwdc2019/261/
  */
 @interface MDCBottomNavigationBar
     : UIView <MDCElevatable, MDCElevationOverriding, UILargeContentViewerInteractionDelegate>

@@ -15,5 +15,4 @@
 typedef enum {
   kStr_MaterialBottomNavigationItemCountAccessibilityHint = 0,
   kStr_MaterialBottomNavigationTabElementAccessibilityLabel = 1,
-  kStr_MaterialBottomNavigationLargeContentTitleFormatWithBadge = 2,
 } MaterialBottomNavigationStringId;

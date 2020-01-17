@@ -690,7 +690,7 @@
 #pragma mark - UILargeContentViewerItem
 
 /** Tests the large content  title when the title should not contain a badge. */
-- (void)testLargeContentTitleWithNoBadge NS_AVAILABLE_IOS(13_0) {
+- (void)testLargeContentTitle NS_AVAILABLE_IOS(13_0) {
   // Given.
   UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
   self.bottomNavBar.items = @[ item ];
@@ -700,25 +700,6 @@
 
   // Then.
   XCTAssertEqualObjects(largeContentTitle, item.title);
-}
-
-/** Tests the large content title when the title should contain the badge value. */
-- (void)testLargeContentTitleWithBadge NS_AVAILABLE_IOS(13_0) {
-  // Given.
-  NSString *title = @"Title";
-  NSString *badgeValue = @"1";
-  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:title image:nil tag:0];
-  item.badgeValue = badgeValue;
-  self.bottomNavBar.items = @[ item ];
-
-  // When.
-  NSString *largeContentTitle = self.bottomNavBar.itemViews.firstObject.largeContentTitle;
-
-  // Then.
-  XCTAssertTrue([largeContentTitle containsString:title], @"'%@' does not contain the title '%@'",
-                largeContentTitle, title);
-  XCTAssertTrue([largeContentTitle containsString:badgeValue],
-                @"'%@' does not contain the badge value '%@'", largeContentTitle, badgeValue);
 }
 
 /** Tests the large content image is the @c image property when no @c largeContentImage is

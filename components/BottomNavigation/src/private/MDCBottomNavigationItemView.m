@@ -652,14 +652,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     return _largeContentTitle;
   }
 
-  if (self.badgeValue.length > 0) {
-    NSString *key = kMaterialBottomNavigationStringTable
-        [kStr_MaterialBottomNavigationLargeContentTitleFormatWithBadge];
-    NSString *titleFormat = NSLocalizedStringFromTableInBundle(
-        key, kMaterialBottomNavigationStringsTableName, [[self class] bundle], nil);
-    return [NSString stringWithFormat:titleFormat, self.title, self.badgeValue];
-  }
-
   return self.title;
 }
 
@@ -669,6 +661,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 
   return self.image;
+}
+
+- (BOOL)scalesLargeContentImage {
+  return _largeContentImage == nil;
 }
 
 @end

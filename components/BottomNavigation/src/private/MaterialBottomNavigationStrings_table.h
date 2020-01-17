@@ -20,7 +20,6 @@
 static NSString *const kMaterialBottomNavigationStringTable[] = {
     @"MaterialBottomNavigationItemCountAccessibilityHint",
     @"MaterialBottomNavigationTabElementAccessibilityLabel",
-    @"MaterialBottomNavigationLargeContentTitleFormatWithBadge",
 };
 #define kNumMaterialBottomNavigationStrings 1
 #define kMaterialBottomNavigationStringsOffset 0
