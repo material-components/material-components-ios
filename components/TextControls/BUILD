@@ -92,13 +92,6 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = [":TextControlsPackageGroup"],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
