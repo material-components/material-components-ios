@@ -24,7 +24,7 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 static const CGFloat kFilledContainerStyleUnderlineWidthThin = (CGFloat)1.0;
 static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
 
-static const CGFloat kFilledFloatingLabelScaleFactor = 0.75;
+static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 
 @interface MDCTextControlStyleFilled () <CAAnimationDelegate>
 

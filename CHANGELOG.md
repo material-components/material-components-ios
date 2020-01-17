@@ -1,3 +1,454 @@
+# 101.1.1
+
+This release includes a bug fix for Dialogs. In some cases a change in
+`preferredContentSize` did not correctly trigger a layout of an Alert's
+subviews.
+
+## Component changes
+
+### Dialogs
+
+* [Layout fix for MDCAlertController (#9383)](https://github.com/material-components/material-components-ios/commit/04e6f18b1417d3ae44d2bd3a1a9796dfa03f5586) (Bambara@)
+
+---
+
+# 101.1.0
+
+This minor release improves tvOS support for Buttons and Snackbar, annotates some AppBar APIs as to-be-deprecated, and fixes a bug in the NavigationDrawer.
+
+## New features
+
+tvOS support is being added to some of our components.
+
+## Component changes
+
+### AppBar
+
+* [Annotate MDCAppBarContainerViewController's appBar and topLayoutGuideAdjustmentEnabled as to be deprecated. (#9394)](https://github.com/material-components/material-components-ios/commit/d7c2865c3d754edf39e28db62ec7039b9ed469c2) (featherless)
+
+### Buttons
+
+* [Add tvOS support to MDCButton. (#9427)](https://github.com/material-components/material-components-ios/commit/71b5766eaa49a4245d8b0c8527773597ce5407d6) (Yarden Eitan)
+
+### Chips
+
+* [Add snapshot tests for selectedImage layout. (#9425)](https://github.com/material-components/material-components-ios/commit/aadb9a6bd099311ea97c189cb7ca2f60701dc201) (Robert Moore)
+* [Tests to evaluate `padding` APIs. (#9423)](https://github.com/material-components/material-components-ios/commit/9694cb2fb68b2717ff16412b3e1ea7c7085bb3b2) (Robert Moore)
+
+### NavigationDrawer
+
+* [Fix #9410 (#9411)](https://github.com/material-components/material-components-ios/commit/bcaf187e373cd3d20fb06b9ea0b5f4ae5546214f) (Jake Rockland)
+
+### Snackbar
+
+* [Add tvOS support to MDCSnackbar. (#9428)](https://github.com/material-components/material-components-ios/commit/7f5d3c76e1e00e461d799019a4fdb52d3c40f9d8) (Yarden Eitan)
+
+---
+
+# 101.0.1
+
+In this patch release we reverted Snackar's display accessibility level from `UIAccessibilityScreenChangedNotification` to `UIAccessibilityLayoutChangedNotification`, as it caused in some cases an unwanted immediate focus shift for VoiceOver users.
+
+## Component changes
+
+### Snackbar
+
+* [Revert "[Snackbar] Accessibility focus change to include the accessibil… (#9389)"](https://github.com/material-components/material-components-ios/commit/c1bd3640a4683345cc569150d1255dbabd5bd1eb) (Yarden Eitan)
+
+---
+
+# 101.0.0
+
+In this major release we deleted the class `MDCFlexibleHeaderColorThemer` and deprecated the `MDCHeaderStackViewColorThemer`. As well as allowing the NavigationDrawer to account for the bottom safe area in presentation, improvements to our BUILD files, touch targets on `TextFields` and our `TextControl` examples and documentation.
+
+## Breaking changes
+
+The `MDCFlexibleHeaderColorThemer` no longer exists.
+## New deprecations
+
+We deprecated `MDCHeaderStackViewColorThemer`. No current replacement exists.
+
+## New features
+
+In order to account for the bottom safe area in presentation of a `MDCBottomDrawerViewController` we added a behavioral flag `shouldIncludeSafeAreaInInitialDrawerHeight`.
+
+```objc
+  MDCBottomDrawerViewController *bottomDrawer =
+      [[MDCBottomDrawerViewController alloc] init];
+  bottomDrawer.shouldIncludeSafeAreaInInitialDrawerHeight = YES;
+```
+
+## API changes
+
+### HeaderStackView
+
+*deprecated* class: `MDCHeaderStackViewColorThemer`, no replacement exists.
+
+### NavigationDrawer
+
+*new* property: `shouldIncludeSafeAreaInInitialDrawerHeight` in `MDCBottomDrawerPresentationController`.
+
+*new* property: `shouldIncludeSafeAreaInInitialDrawerHeight` in `MDCBottomDrawerViewController`.
+
+## Component changes
+
+### Cards
+
+* [Properly use headings for 'Swift' and 'Objective C' above sample code (#9353)](https://github.com/material-components/material-components-ios/commit/900ace5c7b648acb003ef6f28cfd2a2731c3814c) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Delete MDCFlexibleHeaderColorThemer (#9351)](https://github.com/material-components/material-components-ios/commit/a2eb1dcdbdf45616bcf712a0a04d99822a3edc5b) (Bryan Oltman)
+
+### HeaderStackView
+
+* [Mark MDCHeaderStackViewColorThemer deprecated (#9354)](https://github.com/material-components/material-components-ios/commit/aff103cbf93823e377829f66feeb6847e6950267) (Bryan Oltman)
+
+### NavigationDrawer
+
+* [Added ability to account for bottom safe are… (#9321)](https://github.com/material-components/material-components-ios/commit/620d2e27ef3442b16b9edae757a59729fa48c4e1) (Jake Rockland)
+
+### Snackbar
+
+* [Update reference image for testSnackbarOverlayViewWithHighElevation (#9373)](https://github.com/material-components/material-components-ios/commit/d0ff0e38a146fcb89dac7e2058bd4893c0384bc0) (Bryan Oltman)
+
+### TextControls
+
+* [Refactor text control examples (#9358)](https://github.com/material-components/material-components-ios/commit/dc10fe2d0db0cbefebd801eb08bf183df7588001) (Andrew Overton)
+* [Use CGFloat consts in theming extensions (#9360)](https://github.com/material-components/material-components-ios/commit/9e51717abf1de2d5e606402d74a38c01d324892d) (Andrew Overton)
+* [Write docs for MDCTextControls (#9327)](https://github.com/material-components/material-components-ios/commit/d99e87232035c6a369220a989ff3628f9b45d54f) (Andrew Overton)
+
+### TextFields
+
+* [Give MDCTextField clear button proper hit area insets (#8790)](https://github.com/material-components/material-components-ios/commit/703589b3eb68512d448e6a25e10a74fde19504cd) (Andrew Overton)
+
+### Typography
+
+* [Remove unused import in //components/Typography:SwiftExamples. (#9367)](https://github.com/material-components/material-components-ios/commit/3b96c0b37ec03b93f6faff362fff0758dc34f946) (featherless)
+
+## Multi-component changes
+
+* [Implement Swift import rewriting as part of Bazel. (#9368)](https://github.com/material-components/material-components-ios/commit/26b5e48574a07f4e79ac463bededf7517495fe36) (featherless)
+* [Ran buildifier on all BUILD files. (#9366)](https://github.com/material-components/material-components-ios/commit/0a0bc4b47be3ca986e0442262656cc363edb3088) (featherless)
+* [Remove all unused mdc_objc_library loads. (#9376)](https://github.com/material-components/material-components-ios/commit/162a063bdaff001a0a4aeba10c7ede5f0c96f3e0) (featherless)
+* [Remove all unused swift_library load statements. (#9369)](https://github.com/material-components/material-components-ios/commit/b7cf0de9158345f35d25e8f41bd7d6e174fafb05) (featherless)
+* [Remove unused motion_transitioning_objc dependency. (#9379)](https://github.com/material-components/material-components-ios/commit/2b186d6e47846fb53acfdcc66af488ce8566f109) (featherless)
+
+---
+
+# 100.1.0
+
+In this minor release we addressed a bug in `MDCSnackbar` where the Snackbar would not read the `accessibilityHint`.
+
+## Component changes
+
+### Snackbar
+
+* [Accessibility focus change to include the accessibil… (#9389)](https://github.com/material-components/material-components-ios/commit/bba4713a77537b43d154eb775323d1abd774ea49) (Yarden Eitan)
+
+---
+
+# 100.0.1
+
+In this patch release we addressed a bug in `MDCSnackbar` where the Snackbar would not `clipToBounds` if the legacy behavior was enabled.
+
+## Component changes
+
+### Snackbar
+
+* [clipToBounds for legacy Snackbar (#9386)](https://github.com/material-components/material-components-ios/commit/e493ac64d70a2b030b8abfe1f5a60c8053f9788c) (Yarden Eitan)
+
+---
+
+# 100.0.0
+
+In this major release we made a breaking change improvement to Ink’s `inkColor` API. As well as improvements including customization Dialogs presentation animation,
+Flexible Header behavior around safe area. Also, we addressed bugs in Snackbar and TextFields.
+
+## Breaking changes
+
+The `inkColor` in `MDCInkView` is now `null_resettable`.
+
+## New features
+
+
+### Dialogs
+
+We added the ability to customize MDCAlertController presentation animation.
+
+```swift
+let alertController = MDCAlertController()
+alertController.presentationOpacityAnimationDuration = 0.5
+alertController.presentationScaleAnimationDuration = 0.25
+alertController.presentationInitialScaleFactor = 0.7
+```
+
+```objc
+MDCAlertController *alertController = [[MDCAlertController alloc] init];
+alertController.presentationOpacityAnimationDuration = 0.5;
+alertController.presentationScaleAnimationDuration = 0.25;
+alertController.presentationInitialScaleFactor = 0.7;
+```
+
+### FlexibleHeader
+
+We added a new runtime flag `permitInferringTopSafeAreaFromTopLayoutGuideViewController` to address a crash that was occurring in certain configurations.
+
+When disabled, if both inferTopSafeAreaInsetFromViewController and topLayoutGuideAdjustmentEnabled are set to YES, and the view controller selected to extract the safe area inset from (either automatically or via the delegate) is the same as topLayoutGuideViewController, the app will crash.
+
+When enabled, the app will not crash in the situation described above. This is only supported on iOS 11+.
+
+Enable this property before setting inferTopSafeAreaInsetFromViewController or topLayoutGuideViewController.
+
+```swift
+let flexibleHeader = MDCFlexibleHeaderViewController()
+flexibleHeader.permitInferringTopSafeAreaFromTopLayoutGuideViewController = true
+```
+
+```objc
+MDCFlexibleHeaderViewController *flexibleHeader = [[MDCFlexibleHeaderViewController alloc] init];
+flexibleHeader.permitInferringTopSafeAreaFromTopLayoutGuideViewController = YES;
+```
+
+## API changes
+
+### Dialogs
+
+*new* property: `presentationOpacityAnimationDuration` in `MDCAlertController`.
+
+*new* property: `presentationScaleAnimationDuration` in `MDCAlertController`.
+
+*new* property: `presentationInitialScaleFactor` in `MDCAlertController`.
+
+### FlexibleHeader
+
+*new* property: `permitInferringTopSafeAreaFromTopLayoutGuideViewController` in `MDCFlexibleHeaderViewController`.
+
+### Ink
+
+*modified* property: `inkColor` in `MDCInkView` to be `null_resettable`.
+
+## Component changes
+
+### ActionSheet
+
+* [Standardize the examples. (#9334)](https://github.com/material-components/material-components-ios/commit/315140a146b3b8f6a2ee7b1d2bd1d664e4ebc038) (featherless)
+
+### Banner
+
+* [Update README.md (#9292)](https://github.com/material-components/material-components-ios/commit/20b32f415f7d8a22c873a87fc22af37d93dca71f) (Radek)
+
+### Dialogs
+
+* [Add `const` keyword to CGFloat and UIEdgeInsets constants in MDCDialogPresentationController. (#9325)](https://github.com/material-components/material-components-ios/commit/72e1aa88a0b5fe65118996d3defccbad2c30639d) (Randall Li)
+* [Expose MDCAlertController presentation animation properties (#9314)](https://github.com/material-components/material-components-ios/commit/f08507474ceed7b48e1a1bb0f7fb1611bc99e9cf) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Add new flag to allow use of inferTopSafeAreaInsetFromViewController with topLayoutGuideAdjustmentEnabled (#9323)](https://github.com/material-components/material-components-ios/commit/194d08f305921dc087a4c3303324fa696e086295) (featherless)
+* [Clean up unsupported situation when inferring the top safe area inset (#9317)](https://github.com/material-components/material-components-ios/commit/36981ec75c4b146a46a12314c2872a4479d50700) (featherless)
+
+### Ink
+
+* [Update ink color to be null resettable. (#9253)](https://github.com/material-components/material-components-ios/commit/60e467f65408536e5f6f9bdd5f8c071b03de558e) (Yarden Eitan)
+
+### Snackbar
+
+* [Add snapshot test showing reported shadow bug (#9309)](https://github.com/material-components/material-components-ios/commit/d7a242e07fa2498a5fb9859dacd4c58a765421d3) (Yarden Eitan)
+* [Resolve truncation of shadow in Snackbars (#9315)](https://github.com/material-components/material-components-ios/commit/c5f7118b13db0331ec16a596b0763130af4eb74e) (Yarden Eitan)
+
+### Tabs
+
+* [Remove out of date color theming docs (#9330)](https://github.com/material-components/material-components-ios/commit/25ee86e3fc4c6c2a0c1e3c14517360c5a8e55961) (Andrew Overton)
+
+### TextControls
+
+* [Add swift storyboard example (#9328)](https://github.com/material-components/material-components-ios/commit/95889abf03927e75e7c6976d19c5101e1e8e3c9f) (Andrew Overton)
+
+### TextFields
+
+* [Ensures that constraints used for the trailing view are properly removed when a new trailing view is set (#9336)](https://github.com/material-components/material-components-ios/commit/f4ec87ac392175df9e2b6827cb5eccc1738519b2) (Andrew Overton)
+* [Removes requirement that the textView delegate be set when informing layout delegate of a size change (#9337)](https://github.com/material-components/material-components-ios/commit/f8d9897aac396090e15140aed1800b4431f04684) (Andrew Overton)
+
+## Multi-component changes
+
+* [Use prefix on category name for UIApplication+AppExtensions so that category names don't conflict in ObjC namespace. (#9277)](https://github.com/material-components/material-components-ios/commit/b86e38f249cb28211def17da69add34fb50badf6) (Randall Li)
+
+---
+
+# 99.0.2
+
+This patch release is an empty release intended solely to connect `stable` to `develop`'s ancestry.
+
+---
+
+# 99.0.1
+
+This patch release is an empty release intended solely to re-connect the `develop` and `stable`
+branch histories.
+
+# 99.0.0
+
+In this major release we deleted and deprecated numerous APIs in ButtonBar, FeatureHighlight, List,
+Tabs, TextFields and Flexible Header. We fixed layout issues in Dialogs and BottomAppBar, and added
+support for non-transient Snackbars.
+
+## New features
+
+### Snackbar
+
+We added an opt-in flag to ignore the default timeout and allow Snackbars to persist until an action
+is made upon it:
+
+```swift
+let snackBarMessage = MDCSnackbarMessage(text: "Message text")
+snackBarMessage.automaticallyDismisses = false
+```
+
+```objc
+MDCSnackbarMessage *snackBarMessage = [MDCSnackbarMessage messageWithText:@"Message text"];
+snackBarMessage.automaticallyDismisses = NO;
+```
+
+## New deprecations
+
+### ButtonBar
+
+* [Revert "Revert "Delete MDCButtonBarColorThemer (#9235)"" (#9272)](https://github.com/material-components/material-components-ios/commit/8814a6f55c716ff86134818d0dc3ea43747290da) (Andrew Overton)
+
+### FeatureHighlight
+
+* [Delete MDCFeatureHighlightTypographyThemer (#9273)](https://github.com/material-components/material-components-ios/commit/0b2323ad42ccfd2fdafc56b596866e9d70472ee5) (Andrew Overton)
+
+### List
+
+* [Fix typo in doc (#9301)](https://github.com/material-components/material-components-ios/commit/71ee6bd77e70d8b5969891680a03305a1ed5f12b) (Galia Kaufman)
+* [Remove MDCListColorThemer (#9188)](https://github.com/material-components/material-components-ios/commit/7119b49862df7f0434de21d409cb6ed34a35799c) (Galia Kaufman)
+* [Remove MDCListTypographyThemer (#9190)](https://github.com/material-components/material-components-ios/commit/d5863ef1b5d82daf1f68f0eb612f90936dde6154) (Galia Kaufman)
+
+### Tabs
+
+* [Revert "revert of commit ca2f2ad64046b4a2583abbe7cb705e42ed5f0ae7" (#9271 - [Tabs] Delete MDCTabBarColorThemer)](https://github.com/material-components/material-components-ios/commit/6049a8c9704ecf60d9b4f79c62d406807caf14a8) (Andrew Overton)
+
+### TextFields
+
+* [Delete MDCOutlinedTextFieldColorThemer (#9274)](https://github.com/material-components/material-components-ios/commit/8a510746f681b2d69fdf16fb37e03dec30dfc174) (Andrew Overton)
+
+## Multi-component changes
+
+* [Deprecate MDCFlexibleHeaderColorThemer (#9281)](https://github.com/material-components/material-components-ios/commit/e729515e5c0660827c33369db177a063e52812b5) (Bryan Oltman)
+* [Remove uses of MDCFlexibleHeaderColorThemer (#9282)](https://github.com/material-components/material-components-ios/commit/8febe04908420dd3eb2362150ec54185375b2470) (Bryan Oltman)
+
+## Component changes
+
+### BottomAppBar
+
+* [Add intrinsicContentSize (#9290)](https://github.com/material-components/material-components-ios/commit/3596a5638bbf859e5c9faf7daa9b9ff816fe364c) (Bryan Oltman)
+* [Add snapshot test to verify autolayout bug (#9289)](https://github.com/material-components/material-components-ios/commit/2a17b6ef46bbc501bc15e40d34a1eba42abb162c) (Bryan Oltman)
+
+### Cards
+
+* [Remove leading space before Swift and ObjC example headers (#9295)](https://github.com/material-components/material-components-ios/commit/d658b7cceda2009c11b7032acc76d191d0bcd023) (Bryan Oltman)
+
+### Chips
+
+* [Fix documentation error for Theming section (#9294)](https://github.com/material-components/material-components-ios/commit/817055e50cf4aea6bc83934d32a16ebcdb1248c9) (Will Ernest)
+
+### Dialogs
+
+* [Fix for MDCAlertController icon centering. (#9219)](https://github.com/material-components/material-components-ios/commit/5236258337f91ffccf8a86906758cfaa114930d1) (Bambara@)
+
+### List
+
+* [Fix typo in doc (#9301)](https://github.com/material-components/material-components-ios/commit/71ee6bd77e70d8b5969891680a03305a1ed5f12b) (Galia Kaufman)
+* [Removing Themers from documentation (#9296)](https://github.com/material-components/material-components-ios/commit/ef9887f735ad42e7dc8ea3a45ff287a4e8d5b2b3) (Galia Kaufman)
+
+### Snackbar
+
+* [Allow Snackbars to be non-transient if needed. (#9299)](https://github.com/material-components/material-components-ios/commit/d0f05aef60e48a39118b7fde1f5bd3589a0b438a) (Yarden Eitan)
+
+---
+
+# 98.0.0
+
+In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
+Cards, List.
+Fix issue with unbounded ink. NavigationDrawer now allows its trackingScrollView to be resettable.
+
+## Breaking changes
+
+### ActionSheet
+
+Delete inkColor and enableRippleBehavior from MDCActionSheetItemTableViewCell
+
+### BottomNavigation
+
+Delete MDCBottomNavigationBarTypographyThemer
+
+## New deprecations
+
+### List
+
+Deprecate MDCListColorThemer
+
+Deprecate MDCListTypographyThemer
+
+## API changes
+
+### BottomNavigation
+
+*removed* class: `MDCBottomNavigationBarTypographyThemer`. Please use the Theming extension instead.
+
+### List
+
+*deprecated* class: `MDCListColorThemer`. Please use MaterialList+Theming instead.
+
+*deprecated* class: `MDCListTypographyThemer`. Please use MDCSelfSizingStereoCell+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.)
+
+## Component changes
+
+### ActionSheet
+
+* [Delete inkColor and enableRippleBehavior from MDCActionSheetItemTableViewCell (#9240)](https://github.com/material-components/material-components-ios/commit/eb46b2810eb98068146d8bbdf1b0e320bf3a8820) (Bryan Oltman)
+
+### Banner
+
+* [Update Readme to remove Beta related information. (#9248)](https://github.com/material-components/material-components-ios/commit/e47bedadb2fb6681522161d3fe86ff1fab5e072c) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Use NotoNastaliq for Arabic/RTL tests. (#9260)](https://github.com/material-components/material-components-ios/commit/19c810d61d38ca735b8256adac0ef734ade87141) (Robert Moore)
+* [delete-MDCBottomNavigationBarTypographyThemer (#9234)](https://github.com/material-components/material-components-ios/commit/d89eb249aacf6c9204e6544a3a3667fe6e3120e5) (Andrew Overton)
+
+### Cards
+
+* [Remove references to Themer from README (#9261)](https://github.com/material-components/material-components-ios/commit/08a2b20d70079342f0556dc55bdd52b4aa6b8dcc) (Bryan Oltman)
+
+### Ink
+
+* [Fix issue with unbounded ink (#9254)](https://github.com/material-components/material-components-ios/commit/fd63f37684fd28b8c8ecf2f0137a0d98084bc921) (Andrew Overton)
+
+### List
+
+* [Deprecaet MDCListColorThemer (#9265)](https://github.com/material-components/material-components-ios/commit/6e8fdfff36938475c4a8d253a55577cbed98db91) (Galia Kaufman)
+* [Deprecate MDCListTypographyThemer (#9269)](https://github.com/material-components/material-components-ios/commit/20c4cad5297889cf41b430b823b7bbb2cc4a15f0) (Galia Kaufman)
+* [Remove usage of MDCListTypographyThemer within our library (#9189)](https://github.com/material-components/material-components-ios/commit/6271396e6c027025310df8917604cca19bbb3441) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Resolve runtime warning from example in iOS… (#9251)](https://github.com/material-components/material-components-ios/commit/cf44736503819fe24c6eb37be6332b082f5eaebe) (Yarden Eitan)
+* [allow trackingScrollView to be resettable (#9206)](https://github.com/material-components/material-components-ios/commit/ead4785d5c4c7179a114964ab138f608bc58a3e5) (Yarden Eitan)
+
+### Tabs
+
+* [removed build file dep that was deleted but the colorThemer revert accidentally readd it (#9278)](https://github.com/material-components/material-components-ios/commit/98ad8eb4a431cb1c414e696ab4414388f87ea44e) (Randall Li)
+
+## Multi-component changes
+
+* [Add Swift example for MDCTabBarView (#9246)](https://github.com/material-components/material-components-ios/commit/687ca49597ba420ba552a70677df0f057fbdb20d) (Bryan Oltman)
+
+---
+
 # 97.0.1
 
 This hotfix patch release fixes the podspec. The previous release forgot to remove deleted references to card themers.
@@ -8,7 +459,7 @@ This hotfix patch release fixes the podspec. The previous release forgot to remo
 
 In this major release we deleted and deprecated numerous APIs in ActionSheet, BottomNavigation,
 ButtonBar, Cards, Feature highlight, Ink, Page control, Snackbar, TextField, and Tabs. We also
-fixed Chip padding for Material theming. 
+fixed Chip padding for Material theming.
 
 ## Breaking changes
 
@@ -118,7 +569,7 @@ Deprecate MDCOutlinedTextFieldColorThemer
 *deprecated* class: `MDCButtonShapeThemer`. Please use MDCButton+MaterialTheming instead. (Note: Shape theming is no longer available as an independent API.).
 
 *deprecated* class: `MDCButtonTypographyThemer`. Please use MDCButton+MaterialTheming instead. (Note: Typography theming is no longer available as an independent API.).
-			
+
 #### Cards
 
 *removed* protocol: `MDCCardScheming`. MDCCardScheming was made obsolete by theming with MDCContainerSchemes.
@@ -286,7 +737,7 @@ Delete deprecated MDCBottomAppBarColorThemer
 
 ### Snackbar
 
-Delete snackbarMessageViewTextColor 
+Delete snackbarMessageViewTextColor
 
 ### TextField
 
@@ -328,7 +779,7 @@ Deprecate-MDCPageControlColorThemer-applyColorScheme-toPageContro
 
 ### Snackbar
 
-Deprecate MDCSnackbarColorThemer 
+Deprecate MDCSnackbarColorThemer
 
 ### Tabs
 
@@ -411,7 +862,7 @@ snackBarMessage.elementToFocusOnDismiss = view;
 *removed* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView`. Use messsageTextColor instead.
 
 *deprecated* class: `MDCSnackbarColorThemer`.  No replacement exists. Please comment on https://github.com/material-components/material-components-ios/issues/7172 in order to indicate interest in a replacement API.
-	
+
 *new* property: `elementToFocusOnDismiss` in `MDCSnackbarMessage`.  Element to focus on snackbar message dismiss. Focuses the first element on screen after dismiss by default. The focus will change to the element only if the focus is on the snackbar message.
 
 #### Tabs
@@ -561,7 +1012,7 @@ We deprecated the color themer in preperation of deleting it. Use theming instea
 
 ### Thumb Track
 
-We deprecated the private thumbtrack component's `thumbMaxRippleRadius`. 
+We deprecated the private thumbtrack component's `thumbMaxRippleRadius`.
 
 ## API changes
 
@@ -718,7 +1169,7 @@ visibility of their app bar via the standard UINavigationController setNavigatio
 ###FlexibleHeader
 
 This new shift behavior mode enables the flexible header to mimic the behavior of
-UINavigationController's `setNavigationBarHidden:`. 
+UINavigationController's `setNavigationBarHidden:`.
 
 #### Swift
 
@@ -1111,7 +1562,7 @@ let appBar = MDCAppBarViewController()
 appBar.shouldAdjustHeightBasedOnHeaderStackView = true
 ```
 
-### Slider 
+### Slider
 
 `MDCSlider` allows having a continuous Slider that shows track tick marks.
 
@@ -1160,7 +1611,7 @@ slider.numberOfDiscreteValues = 5;
 ## Slider
 
 * [Fix event handling. (#8759)](https://github.com/material-components/material-components-ios/commit/f588ea9dbe560a9e89457d8b8b3015f7c3e1f394) (Robert Moore)
- 
+
 ---
 
 # 94.1.0
@@ -1188,7 +1639,7 @@ class MyAnimationDelegate: NSObject, MDCFlexibleHeaderViewAnimationDelegate {
 **Objective-C**
 
 ```objc
--(BOOL)flexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView 
+-(BOOL)flexibleHeaderView:(MDCFlexibleHeaderView *)flexibleHeaderView
 	didChangeTrackingScrollViewAnimated:(BOOL)animated {
   if (animated) {
     // ...
@@ -1445,7 +1896,7 @@ In this minor release TextFields support multiline error/helper text, FeatureHig
 ### FeatureHighlight
 
 You can now set `adjustsFontForContentSizeCategory` on `MDCFeatureHighlightViewController` to automatically update your scalable font when content size category changes.
-Namely, when `adjustsFontForContentSizeCategory` is set to `YES` the title and body fonts will scale appropriately if given a scalable font. 
+Namely, when `adjustsFontForContentSizeCategory` is set to `YES` the title and body fonts will scale appropriately if given a scalable font.
 
 ### OverlayWindow
 
@@ -1858,7 +2309,7 @@ let alert = MDCAlertController(title: "This is a title", message: "This is a mes
 let textField = UITextField()
 textField.placeholder = "This is a text field"
 alert.accessoryView = textField
-``` 
+```
 
 ## Changes
 

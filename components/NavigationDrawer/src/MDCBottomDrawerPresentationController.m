@@ -59,7 +59,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 @end
 
-@implementation MDCBottomDrawerPresentationController
+@implementation MDCBottomDrawerPresentationController {
+  UIColor *_scrimColor;
+}
 
 @synthesize delegate;
 
@@ -98,6 +100,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
+  bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
+      self.shouldIncludeSafeAreaInInitialDrawerHeight;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
@@ -121,8 +125,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor =
-      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+  self.scrimView.backgroundColor = self.scrimColor;
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
@@ -293,6 +296,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)setScrimColor:(UIColor *)scrimColor {
   _scrimColor = scrimColor;
   self.scrimView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
 }
 
 - (void)setTopHandleHidden:(BOOL)topHandleHidden {

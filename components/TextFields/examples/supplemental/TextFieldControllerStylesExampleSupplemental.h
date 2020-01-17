@@ -14,9 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialContainerScheme.h"
+
 @interface TextFieldControllerStylesExample : UIViewController <UITextFieldDelegate>
 
 @property(nonatomic, strong) UIScrollView *scrollView;
+
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 

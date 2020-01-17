@@ -169,7 +169,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
+
+#ifndef TARGET_OS_TV
   self.showsTouchWhenHighlighted = NO;
+#endif
 
   self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
   if (!self.layer.shapeGenerator) {
@@ -195,8 +198,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                 action:@selector(touchDragExit:forEvent:)
       forControlEvents:UIControlEventTouchDragExit];
 
+#ifndef TARGET_OS_TV
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
+#endif
 
   _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
 

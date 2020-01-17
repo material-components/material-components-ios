@@ -223,7 +223,7 @@ and the outlined theme.
 
  <!--<div class="material-code-render" markdown="1">-->
 
- #### Swift
+#### Swift
 
 ```swift
 // Import the Cards Theming Extensions module
@@ -237,7 +237,7 @@ card.applyTheme(withScheme: containerScheme)
 card.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
- #### Objective-C
+#### Objective-C
 
 ```objc
 // Import the Cards Theming Extensions header
@@ -275,14 +275,14 @@ for the card. Additionally, set the card's
 to true. Cards are a container element and setting isAccessibiltyElement for a container 
 turns off individually selecting its subelements.
 
-Swift
+##### Swift
 ```swift
   card.isAccessibilityElement = true
   card.accessibilityLabel = "Location \(userLocation.name) is popular with users " +
     "who enjoy \(userLocation.popularActivityMatchingUserProfile(userProfile))"
 ```
 
-Objective-C
+##### Objective-C
 ```objc
   card.isAccessibilityElement = YES;
   card.accessibilityLabel = [NSString 
@@ -303,13 +303,13 @@ For example, news article images can benefit from an
 [`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
 describing their content.
 
-Swift
+##### Swift
 ```swift
   articleImageView.isAccessibilityElement = true
   articleImageView.accessibilityLabel = "Event or scene description"
 ```
 
-Objective-C
+##### Objective-C
 ```objc
   articleImageView.isAccessibilityElement = YES;
   articleImageView.accessibilityLabel = @"Event or scene description";
@@ -322,7 +322,7 @@ describing its purpuse and an
 [`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
 describing the rating value.
 
-Swift
+##### Swift
 ```swift
   ratingView.isAccessibilityElement = true
   ratingView.accessibilityLabel = "Average customer rating, out of " + 
@@ -330,7 +330,7 @@ Swift
   ratingView.accessibilityValue = (String)product.averageRating
 ```
 
-Objective-C
+##### Objective-C
 ```objc
   ratingView.isAccessibilityElement = YES;
   ratingView.accessibilityLabel = [NSString stringWithFormat:@"Average customer" +

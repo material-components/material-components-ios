@@ -14,3 +14,4 @@
 
 #import "MDCTextInputControllerFilled+MaterialTheming.h"
 #import "MDCTextInputControllerOutlined+MaterialTheming.h"
+#import "MDCTextInputControllerUnderline+MaterialTheming.h"

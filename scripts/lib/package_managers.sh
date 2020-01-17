@@ -21,6 +21,10 @@ gem_update() {
 gem_install() {
   gem_update
   gem install "$@" --no-document --quiet
+  # We need to uninstall this due to the release of RubyGems 3.1.0
+  # See a way in future to not need to uninstall this every time.
+  # tracking bug: https://github.com/material-components/material-components-ios/issues/9305
+  gem uninstall -i /Users/kbuilder/.rvm/rubies/ruby-2.5.1/lib/ruby/gems/2.5.0 rubygems-bundler
 }
 
 brew_update() {

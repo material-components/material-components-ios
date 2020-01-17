@@ -17,7 +17,6 @@ load(
     "mdc_examples_objc_library",
     "mdc_examples_swift_library",
     "mdc_extension_objc_library",
-    "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
@@ -25,7 +24,6 @@ load(
     "mdc_unit_test_suite",
     "mdc_unit_test_swift_library",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -47,23 +45,6 @@ mdc_public_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "TypographyThemer",
-    deps = [
-        ":List",
-        "//components/Typography",
-        "//components/schemes/Typography",
-    ],
-)
-
-mdc_extension_objc_library(
-    name = "ColorThemer",
-    deps = [
-        ":List",
-        "//components/schemes/Color",
-    ],
-)
-
-mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":List",
@@ -76,9 +57,7 @@ mdc_extension_objc_library(
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
-        ":ColorThemer",
         ":List",
-        ":TypographyThemer",
         "//components/Typography",
         "//components/schemes/Typography",
     ],
@@ -91,8 +70,6 @@ mdc_unit_test_swift_library(
     ]),
     deps = [
         ":List",
-        ":ColorThemer",
-        ":TypographyThemer",
         ":Theming",
     ],
 )

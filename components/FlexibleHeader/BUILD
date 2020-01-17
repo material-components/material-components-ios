@@ -25,7 +25,6 @@ load(
     "mdc_unit_test_suite",
     "mdc_unit_test_swift_library",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -113,12 +112,12 @@ mdc_unit_test_objc_library(
 
 mdc_unit_test_suite(
     name = "unit_tests",
+    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
+    use_autobot_environment_runner = False,
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
-    # TODO (https://github.com/material-components/material-components-ios/issues/8249): Re-enable autobot environment.
-    use_autobot_environment_runner = False,
 )
 
 mdc_snapshot_objc_library(

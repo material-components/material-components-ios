@@ -174,9 +174,7 @@ mdc_objc_library(
 ### Adding Swift unit tests
 
 ```
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
-
-swift_library(
+mdc_swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
     deps = [":ComponentName"],
