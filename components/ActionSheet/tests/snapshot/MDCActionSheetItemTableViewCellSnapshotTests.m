@@ -35,7 +35,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.cell = [[MDCActionSheetItemTableViewCell alloc] initWithFrame:CGRectMake(0, 0, 500, 48)];
   self.action = [MDCActionSheetAction actionWithTitle:@"Action 1" image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)] handler:nil];
