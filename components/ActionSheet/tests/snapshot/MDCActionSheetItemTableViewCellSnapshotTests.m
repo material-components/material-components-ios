@@ -32,7 +32,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.cell = [[MDCActionSheetItemTableViewCell alloc] initWithFrame:CGRectMake(0, 0, 500, 48)];
 }
@@ -54,6 +54,19 @@
       [MDCActionSheetAction actionWithTitle:@"Action 1"
                                       image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
                                     handler:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.cell];
+}
+
+- (void)testCellWithTitleAndActionAndDivider {
+  // When
+  self.cell.action =
+      [MDCActionSheetAction actionWithTitle:@"Action 1"
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  self.cell.showsDivider = YES;
+  self.cell.dividerColor = UIColor.greenColor;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.cell];
