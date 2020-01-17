@@ -1,6 +1,6 @@
-# 101.1.2
+# 102.0.0
 
-This patch hotfix release reverts a change introduced in 101.1.0 that caused Snackbar not to appear in some situations.
+This major hotfix release reverts a change introduced in 101.1.0 that caused Snackbar not to appear in some situations.
 
 ## Component changes
 
