@@ -702,8 +702,10 @@
   XCTAssertEqualObjects(largeContentTitle, item.title);
 }
 
-/** Tests the large content image is the @c image property when no @c largeContentImage is
- * specified. */
+/**
+ Tests the large content image is the @c image property when no @c largeContentImage is
+ specified.
+ */
 - (void)testLargeContentImageWithDefaultImage NS_AVAILABLE_IOS(13_0) {
   // Given.
   UIImage *image = [[UIImage alloc] init];
@@ -751,8 +753,10 @@
   XCTAssertEqual(largeImageInsets.right, insets.right);
 }
 
-/** Tests the large content item's image is updated when the tab bar's @c largeContentSizeImage is
- * updated. */
+/**
+ Tests the large content item's image is updated when the tab bar's @c largeContentSizeImage is
+ updated.
+ */
 - (void)testLargeContentImageUpdatedWhenTabBarPropertyUpdates NS_AVAILABLE_IOS(13_0) {
   // Given.
   UIImage *image = [[UIImage alloc] init];
@@ -767,8 +771,10 @@
   XCTAssertEqualObjects(largeContentImage, image);
 }
 
-/** Tests the large content inets are update when the tab bar's @c largeContentSizeImageInsets are
- * updated. */
+/**
+ Tests the large content inets are update when the tab bar's @c largeContentSizeImageInsets are
+ updated.
+ */
 - (void)testLargeContentInsetUpdatedWhenTabBarPropertyUpdates NS_AVAILABLE_IOS(13_0) {
   // Given.
   UIEdgeInsets insets = UIEdgeInsetsMake(10, 10, 10, 10);
@@ -787,8 +793,8 @@
 }
 
 /**
- * Tests the last shown large content item is still returned when the interaction touch point is
- * still within the bounds of the navigation bar.
+ Tests the last shown large content item is still returned when the interaction touch point is
+ still within the bounds of the navigation bar.
  */
 - (void)
     testLargeContentViewerInteractionWhenItemIsSelectedThenDeselectedButStillInNavBarBounds NS_AVAILABLE_IOS(
@@ -815,7 +821,8 @@
   XCTAssertEqualObjects(largeContentItem.largeContentTitle, title1);
 }
 
-/** Tests the large content item is nil when the touch point is outside the navigation bar bounds.
+/**
+ Tests the large content item is nil when the touch point is outside the navigation bar bounds.
  */
 - (void)testLargeContentViewerInteractionWhenPointIsOutSideNavBarBounds NS_AVAILABLE_IOS(13_0) {
   // Given.

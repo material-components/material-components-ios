@@ -65,8 +65,8 @@ static NSString *const kOfAnnouncement = @"of";
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
 
 /**
- * The last large content viewer item displayed by the content viewer while the interaction is
- * running. When the interaction ends this property is nil.
+ The last large content viewer item displayed by the content viewer while the interaction is
+ running. When the interaction ends this property is nil.
  */
 @property(nonatomic, nullable) id<UILargeContentViewerItem> lastLargeContentViewerItem
     NS_AVAILABLE_IOS(13_0);
@@ -872,7 +872,7 @@ static NSString *const kOfAnnouncement = @"of";
 
   MDCBottomNavigationItemView *itemView = [self itemViewForPoint:point];
   if (!itemView) {
-    // The touch is still within the navigation bar. Return the last seen item viwer.
+    // The touch is still within the navigation bar. Return the last seen item view.
     return self.lastLargeContentViewerItem;
   }
 
