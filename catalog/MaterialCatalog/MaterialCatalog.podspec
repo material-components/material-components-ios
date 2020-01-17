@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialCatalog"
-  s.version      = "101.1.2"
+  s.version      = "102.0.0"
   s.summary      = "Helper Objective-C classes for the MDC catalog."
   s.description  = "This spec is made for use in the MDC Catalog."
   s.homepage     = "https://github.com/material-components/material-components-ios"
