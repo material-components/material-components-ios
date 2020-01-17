@@ -38,7 +38,10 @@
   //  self.recordMode = YES;
 
   self.cell = [[MDCActionSheetItemTableViewCell alloc] initWithFrame:CGRectMake(0, 0, 500, 48)];
-  self.action = [MDCActionSheetAction actionWithTitle:@"Action 1" image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)] handler:nil];
+  self.action =
+      [MDCActionSheetAction actionWithTitle:@"Action 1"
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
 }
 
 - (void)tearDown {

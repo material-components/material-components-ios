@@ -322,14 +322,17 @@
 
 - (void)testSetActionSheetItemDividerShownSetsTheDividerShownOnTheCell {
   // Given
-  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo" image:nil handler:nil];
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                 image:nil
+                                                               handler:nil];
 
   // When
   action.showsDivider = YES;
   [self.actionSheet addAction:action];
 
   // Then
-  MDCActionSheetItemTableViewCell *cell = [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+  MDCActionSheetItemTableViewCell *cell =
+      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertTrue(cell.showsDivider);
 }
 
