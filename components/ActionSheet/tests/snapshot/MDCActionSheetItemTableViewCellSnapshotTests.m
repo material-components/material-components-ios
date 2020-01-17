@@ -23,6 +23,9 @@
 /** The cell that we take a snapshot of. */
 @property(nonatomic, strong, nullable) MDCActionSheetItemTableViewCell *cell;
 
+/** A @c MDCActionSheetAction used to create the cell we will test. */
+@property(nonatomic, strong, nullable) MDCActionSheetAction *action;
+
 @end
 
 @implementation MDCActionSheetItemTableViewCellSnapshotTests
@@ -32,12 +35,14 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.cell = [[MDCActionSheetItemTableViewCell alloc] initWithFrame:CGRectMake(0, 0, 500, 48)];
+  self.action = [MDCActionSheetAction actionWithTitle:@"Action 1" image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)] handler:nil];
 }
 
 - (void)tearDown {
+  self.action = nil;
   self.cell = nil;
 
   [super tearDown];
@@ -50,10 +55,7 @@
 
 - (void)testCellWithTitleAndAction {
   // When
-  self.cell.action =
-      [MDCActionSheetAction actionWithTitle:@"Action 1"
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
+  self.cell.action = self.action;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.cell];
@@ -61,12 +63,20 @@
 
 - (void)testCellWithTitleAndActionAndDivider {
   // When
-  self.cell.action =
-      [MDCActionSheetAction actionWithTitle:@"Action 1"
-                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                                    handler:nil];
+  self.cell.action = self.action;
   self.cell.showsDivider = YES;
   self.cell.dividerColor = UIColor.greenColor;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.cell];
+}
+
+- (void)testCellWithTitleOnlyAndDividerAndCustomContentEdgeInsets {
+  // When
+  self.cell.action = self.action;
+  self.cell.showsDivider = YES;
+  self.cell.dividerColor = UIColor.greenColor;
+  self.cell.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.cell];
