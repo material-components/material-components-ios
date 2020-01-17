@@ -1,3 +1,15 @@
+# 101.1.2
+
+This patch hotfix release reverts a change introduced in 101.1.0 that caused Snackbar not to appear in some situations.
+
+## Component changes
+
+### Dialogs
+
+* [Revert "[Snackbar] Add tvOS support to MDCSnackbar. (#9428)"](https://github.com/material-components/material-components-ios/commit/5b75d64207b9c7a7a5f3bb85cb4b5b203b0748e7) (jverkoey@)
+
+---
+
 # 101.1.1
 
 This release includes a bug fix for Dialogs. In some cases a change in
