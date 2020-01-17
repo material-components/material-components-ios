@@ -313,10 +313,24 @@
   // When
   action.dividerColor = UIColor.blueColor;
   [self.actionSheet addAction:action];
+
   // Then
   MDCActionSheetItemTableViewCell *cell =
       [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertEqualObjects(cell.dividerColor, UIColor.blueColor);
+}
+
+- (void)testSetActionSheetItemDividerShownSetsTheDividerShownOnTheCell {
+  // Given
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo" image:nil handler:nil];
+
+  // When
+  action.showsDivider = YES;
+  [self.actionSheet addAction:action];
+
+  // Then
+  MDCActionSheetItemTableViewCell *cell = [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+  XCTAssertTrue(cell.showsDivider);
 }
 
 @end
