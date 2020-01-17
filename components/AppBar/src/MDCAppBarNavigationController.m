@@ -29,6 +29,8 @@
 
 @end
 
+// This is intentionally a private protocol conformance in order to avoid public reliance on our
+// conformance to this protocol.
 @interface MDCAppBarNavigationController () <UIGestureRecognizerDelegate>
 @end
 
