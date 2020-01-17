@@ -305,13 +305,15 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
  The color of the divider at the top of the action.
+
+ @note Defaults to clear.
  */
-@property(nonatomic, copy, nullable) UIColor *dividerColor;
+@property(nonatomic, copy, nonnull) UIColor *dividerColor;
 
 /**
- A Boolean value that controls whether a divider is shown at the top of the action.
+ Controls whether a divider is shown at the top of the action.
 
- @note The default value is @c NO.
+ @note Defaults to @c NO.
  */
 @property(nonatomic, assign) BOOL showsDivider;
 

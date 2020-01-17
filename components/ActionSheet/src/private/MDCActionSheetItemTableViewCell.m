@@ -79,6 +79,7 @@ static inline UIColor *RippleColor() {
 
   _divider = [[UIView alloc] init];
   _divider.translatesAutoresizingMaskIntoConstraints = NO;
+  _divider.backgroundColor = UIColor.clearColor;
   [self.contentContainerView addSubview:_divider];
   [_contentContainerView.topAnchor constraintEqualToAnchor:_divider.topAnchor].active = YES;
   [_divider addConstraint:[NSLayoutConstraint constraintWithItem:_divider

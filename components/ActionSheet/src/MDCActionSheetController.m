@@ -47,6 +47,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     _title = [title copy];
     _image = [image copy];
     _completionHandler = [handler copy];
+    _dividerColor = UIColor.clearColor;
   }
   return self;
 }
