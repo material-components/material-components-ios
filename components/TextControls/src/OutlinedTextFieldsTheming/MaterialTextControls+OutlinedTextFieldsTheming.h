@@ -12,19 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
-
-#import <UIKit/UIKit.h>
-
-#import "MaterialTextControlsPrivate+Shared.h"
-
-@interface MDCTextControlSnapshotTestHelpers : NSObject
-
-+ (void)setUpViewControllerHierarchy;
-+ (void)tearDownViewControllerHierarchy;
-+ (void)applyContentSizeCategory:(UIContentSizeCategory)contentSizeCategory;
-+ (void)removeTextControlFromViewHierarchy:(UIView<MDCTextControl> *)textControl;
-+ (void)addTextControlToViewHierarchy:(UIView<MDCTextControl> *)textControl;
-+ (void)validateTextControl:(UIView<MDCTextControl> *)textControl
-               withTestCase:(MDCSnapshotTestCase *)testCase;
-@end
+#import "MDCOutlinedTextField+MaterialTheming.h"

@@ -15,8 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialContainerScheme.h"
-#import "MaterialTextControls+Theming.h"
-#import "MaterialTextControls.h"
+#import "MaterialTextControls+FilledTextFieldsTheming.h"
 
 static const CGFloat kDisabledOpacity = (CGFloat)0.60;
 

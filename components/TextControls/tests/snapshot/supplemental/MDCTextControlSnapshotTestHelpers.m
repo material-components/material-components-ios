@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextControls.h"
-
 #import "MDCTextControlSnapshotTestHelpers.h"
 
 #import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
