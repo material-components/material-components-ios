@@ -68,4 +68,6 @@
  */
 @property(nonatomic, assign) BOOL showsDivider;
 
+@property(nonatomic, strong, nonnull) UILabel *actionLabel;
+
 @end

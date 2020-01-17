@@ -37,7 +37,7 @@
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.cell = [[MDCActionSheetItemTableViewCell alloc] initWithFrame:CGRectMake(0, 0, 500, 75)];
+  self.cell = [[MDCActionSheetItemTableViewCell alloc] init];
   self.action =
       [MDCActionSheetAction actionWithTitle:@"Action 1"
                                       image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
@@ -52,11 +52,16 @@
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  view.backgroundColor = UIColor.whiteColor;
-  [view setNeedsLayout];
-  [view layoutIfNeeded];
+  [self layoutCell];
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
+}
+
+- (void)layoutCell {
+  self.cell.backgroundColor = UIColor.whiteColor;
+  self.cell.frame = CGRectMake(0, 0, 500, 75);
+  [self.cell setNeedsLayout];
+  [self.cell layoutIfNeeded];
 }
 
 - (void)testCellWithTitleAndAction {

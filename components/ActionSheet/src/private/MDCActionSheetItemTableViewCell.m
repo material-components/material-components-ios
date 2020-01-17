@@ -28,7 +28,6 @@ static inline UIColor *RippleColor() {
 }
 
 @interface MDCActionSheetItemTableViewCell ()
-@property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 /** Container view holding all custom content so it can be inset. */
