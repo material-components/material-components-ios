@@ -82,12 +82,23 @@
   [self generateSnapshotAndVerifyForView:self.cell];
 }
 
-- (void)testCellWithTitleOnlyAndDividerAndCustomContentEdgeInsets {
+- (void)testCellWithTitleOnlyAndDividerAndPositiveContentEdgeInsets {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
   self.cell.dividerColor = UIColor.greenColor;
   self.cell.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.cell];
+}
+
+- (void)testCellWithTitleOnlyAndDividerAndNegativeContentEdgeInsets {
+  // When
+  self.cell.action = self.action;
+  self.cell.showsDivider = YES;
+  self.cell.dividerColor = UIColor.greenColor;
+  self.cell.contentEdgeInsets = UIEdgeInsetsMake(0, -16, 0, -16);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.cell];
