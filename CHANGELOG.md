@@ -1,3 +1,53 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### TextControls+BaseTextFields
+
+**New extension.**
+
+### TextControls+Enums
+
+**New extension.**
+
+### TextControls+FilledTextFields
+
+**New extension.**
+
+### TextControls+FilledTextFieldsTheming
+
+**New extension.**
+
+### TextControls+OutlinedTextFields
+
+**New extension.**
+
+### TextControls+OutlinedTextFieldsTheming
+
+**New extension.**
+
+## Component changes
+
+### TextFields
+
+* [Add theming extension for underline controller (#9437)](https://github.com/material-components/material-components-ios/commit/3b3d288ea42ddcc53b61127283770f145b9def38) (Cody Weaver)
+
+## Multi-component changes
+
+* [Restructure Cocoapods and Blaze targets (#9430)](https://github.com/material-components/material-components-ios/commit/083cf8c12f8efe1d9351ddb56f513a5fed5cd289) (Andrew Overton)
+
+---
+
 # 102.0.0
 
 This major hotfix release reverts a change introduced in 101.1.0 that caused Snackbar not to appear in some situations.
