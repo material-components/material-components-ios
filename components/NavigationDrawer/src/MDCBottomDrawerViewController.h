@@ -133,6 +133,14 @@
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInInitialDrawerHeight;
 
 /**
+ A flag allowing clients to opt-in to generating a "sticky" view that is presented behind the status
+ bar, to prevent bottom drawer content from conflicting with the status bar content when an explicit
+ header has not been provided by the client (see Github issue #6434, or internal issue b/123186711,
+ for more context).
+ */
+@property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
+
+/**
  The drawer's top shadow color. Defaults to black with 20% opacity.
  */
 @property(nonatomic, strong, nonnull) UIColor *drawerShadowColor;

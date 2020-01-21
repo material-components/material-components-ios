@@ -104,6 +104,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       self.shouldAdjustOnContentSizeChange;
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
       self.shouldIncludeSafeAreaInInitialDrawerHeight;
+  bottomDrawerContainerViewController.shouldUseStickyStatusBar = self.shouldUseStickyStatusBar;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
@@ -382,8 +383,16 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
                                                                   transitionRatio:)]) {
-    [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
-    self.topHandle.alpha = (CGFloat)1.0 - transitionRatio;
+    CGFloat adjustedTransitionRatio = transitionRatio;
+    // The transition ratio is adjusted if the sticky status bar view is being used in place of a
+    // headerViewController to prevent presentation issues with corner radius not being kept in sync
+    // with the animation of the sticky view's expansion.
+    if (!containerViewController.hasHeaderViewController &&
+        containerViewController.shouldUseStickyStatusBar) {
+      adjustedTransitionRatio = (adjustedTransitionRatio > 0) ? 1 : 0;
+    }
+    [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:adjustedTransitionRatio];
+    self.topHandle.alpha = (CGFloat)1.0 - adjustedTransitionRatio;
   }
 }
 
