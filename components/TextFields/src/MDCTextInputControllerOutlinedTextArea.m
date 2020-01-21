@@ -136,6 +136,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
       (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
                                                                            : borderColor;
   self.textInput.borderView.borderPath.lineWidth = self.textInput.isEditing ? 2 : 1;
+  [self.textInput.borderView setNeedsLayout];
 }
 
 - (void)updateLayout {
