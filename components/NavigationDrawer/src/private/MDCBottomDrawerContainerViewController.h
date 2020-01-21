@@ -188,6 +188,14 @@ the backgroundColor of the trackingScrollView.
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInInitialDrawerHeight;
 
 /**
+ A flag allowing clients to opt-in to generating a "sticky" view that is presented behind the status
+ bar, to prevent bottom drawer content from conflicting with the status bar content when an explicit
+ header has not been provided by the client (see Github issue #6434, or internal issue b/123186711,
+ for more context).
+ */
+@property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
+
+/**
  Determines if the header should always expand as it approaches the top of the screen.
  If the content height is smaller than the screen height then the header will not expand unless this
  flag is enabled.

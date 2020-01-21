@@ -266,11 +266,15 @@
 }
 
 - (void)testTopHeaderHeightWithNoHeader {
+  // Given
+  // MDCDeviceTopSafeAreaInset adds 20 if there is no safe area and you are not in an application
+  CGFloat mdcDeviceTopSafeArea = 20;
+  
   // When
   self.fakeBottomDrawer.headerViewController = nil;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, 0, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, mdcDeviceTopSafeArea, 0.001);
 }
 
 - (void)testTopHeaderHeightWithHeader {

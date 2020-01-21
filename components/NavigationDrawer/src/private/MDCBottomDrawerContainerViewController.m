@@ -180,6 +180,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 @implementation MDCBottomDrawerContainerViewController {
   UIScrollView *_scrollView;
+  UIView *_topSafeAreaView;
   CGFloat _contentHeaderTopInset;
   CGFloat _contentHeaderTopInsetCached;
   CGFloat _contentHeightSurplus;
@@ -432,6 +433,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   } else {
     self.drawerState = MDCBottomDrawerStateCollapsed;
   }
+}
+
+- (BOOL)hasHeaderViewController {
+  return self.headerViewController != nil;
 }
 
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
@@ -768,26 +773,26 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)updateContentHeaderWithTransitionToTop:(CGFloat)headerTransitionToTop
                         fullscreenHeaderHeight:(CGFloat)fullscreenHeaderHeight {
-  if (!self.headerViewController) {
+  BOOL contentReachesFullscreen = self.contentReachesFullscreen;
+
+  if (!self.shouldUseStickyStatusBar && !self.hasHeaderViewController) {
     return;
   }
 
-  UIView *contentHeaderView = self.headerViewController.view;
-  BOOL contentReachesFullscreen = self.contentReachesFullscreen;
-
-  if ([self.headerViewController
-          respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
-    if (self.shouldAlwaysExpandHeader) {
-      [self.headerViewController updateDrawerHeaderTransitionRatio:headerTransitionToTop];
-    } else {
-      [self.headerViewController
-          updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0];
+  if (self.hasHeaderViewController) {
+    if ([self.headerViewController
+            respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
+      if (self.shouldAlwaysExpandHeader) {
+        [self.headerViewController updateDrawerHeaderTransitionRatio:headerTransitionToTop];
+      } else {
+        [self.headerViewController
+            updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0];
+      }
     }
   }
-  CGFloat contentHeaderHeight = self.contentHeaderHeight;
-  CGFloat headersDiff = fullscreenHeaderHeight - contentHeaderHeight;
-  CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
 
+  UIView *contentHeaderView =
+      self.hasHeaderViewController ? self.headerViewController.view : self.topSafeAreaView;
   if (self.currentlyFullscreen && contentHeaderView.superview != self.view) {
     // The content header should be located statically at the top of the drawer when the drawer
     // is shown in fullscreen.
@@ -801,6 +806,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     [self.scrollView addSubview:contentHeaderView];
     [self.view setNeedsLayout];
   }
+
+  CGFloat contentHeaderHeight = self.contentHeaderHeight;
+  CGFloat headersDiff = fullscreenHeaderHeight - contentHeaderHeight;
+  CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
   CGFloat contentHeaderViewWidth = self.presentingViewBounds.size.width;
   CGFloat contentHeaderViewTop =
       self.currentlyFullscreen ? 0
@@ -855,6 +864,16 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _scrollView.delegate = self;
   }
   return _scrollView;
+}
+
+- (UIView *)topSafeAreaView {
+  if (!_topSafeAreaView) {
+    _topSafeAreaView = [UIView new];
+    _topSafeAreaView.backgroundColor = self.trackingScrollView
+                                           ? self.trackingScrollView.backgroundColor
+                                           : self.contentViewController.view.backgroundColor;
+  }
+  return _topSafeAreaView;
 }
 
 - (CGFloat)contentHeaderTopInset {
@@ -1053,7 +1072,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (CGFloat)topHeaderHeight {
   if (!self.headerViewController) {
-    return 0;
+    return MDCDeviceTopSafeAreaInset();
   }
   CGFloat headerHeight = self.headerViewController.preferredContentSize.height;
   return headerHeight + MDCDeviceTopSafeAreaInset();
