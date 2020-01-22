@@ -51,9 +51,9 @@
   [super tearDown];
 }
 
-- (void)generateSnapshotAndVerifyForView:(UIView *)view {
+- (void)generateSnapshotAndVerifyForCell {
   [self layoutCell];
-  UIView *snapshotView = [view mdc_addToBackgroundView];
+  UIView *snapshotView = [self.cell mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
 
@@ -69,7 +69,7 @@
   self.cell.action = self.action;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.cell];
+  [self generateSnapshotAndVerifyForCell];
 }
 
 - (void)testCellWithTitleAndActionAndDivider {
@@ -79,10 +79,10 @@
   self.cell.dividerColor = UIColor.greenColor;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.cell];
+  [self generateSnapshotAndVerifyForCell];
 }
 
-- (void)testCellWithTitleOnlyAndDividerAndPositiveContentEdgeInsets {
+- (void)testCellWithTitleActionAndDividerAndPositiveContentEdgeInsets {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
@@ -90,10 +90,10 @@
   self.cell.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, 16);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.cell];
+  [self generateSnapshotAndVerifyForCell];
 }
 
-- (void)testCellWithTitleOnlyAndDividerAndNegativeContentEdgeInsets {
+- (void)testCellWithTitleActionAndDividerAndNegativeContentEdgeInsets {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
@@ -101,7 +101,27 @@
   self.cell.contentEdgeInsets = UIEdgeInsetsMake(0, -16, 0, -16);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.cell];
+  [self generateSnapshotAndVerifyForCell];
+}
+
+- (void)testCellWithTitleActionAndDividerUnbalancedContentEdgeInsets {
+  // When
+  self.cell.action = self.action;
+  self.cell.showsDivider = YES;
+  self.cell.dividerColor = UIColor.greenColor;
+  self.cell.contentEdgeInsets = UIEdgeInsetsMake(-4, -8, -12, -16);
+
+  // Then
+  [self generateSnapshotAndVerifyForCell];
+}
+
+- (void)testCellWithTitleActionAndDividerClearColor {
+  // When
+  self.cell.action = self.action;
+  self.cell.showsDivider = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForCell];
 }
 
 @end
