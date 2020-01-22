@@ -496,12 +496,8 @@
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
-  static dispatch_once_t onceToken;
-  static UIFont *font;
-  dispatch_once(&onceToken, ^{
-    font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-  });
-  return font;
+  // This value comes from https://developer.apple.com/documentation/uikit/uitextfield/1619604-font
+  return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
 #pragma mark Dynamic Type
