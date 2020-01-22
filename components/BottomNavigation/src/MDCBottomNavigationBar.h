@@ -262,9 +262,9 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  For more details on the Large Content Viewer see:
  https://developer.apple.com/videos/play/wwdc2019/261/
  */
-NS_AVAILABLE_IOS(13_0)
-@interface MDCBottomNavigationBar (UILargeContentViewerInteractionDelegate) <
-    UILargeContentViewerInteractionDelegate>
+API_AVAILABLE(ios(13.0))
+@interface MDCBottomNavigationBar(
+    UILargeContentViewerInteractionDelegate)<UILargeContentViewerInteractionDelegate>
 @end
 
 #pragma mark - MDCBottomNavigationBarDelegate
