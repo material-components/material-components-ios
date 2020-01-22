@@ -730,10 +730,17 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                                         distance:self.headerAnimationDistance];
   CGFloat headerTransitionToTop =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1 : transitionPercentage;
+  CGFloat adjustedTransitionRatio = transitionPercentage;
+  // The transition ratio is adjusted if the sticky status bar view is being used in place of a
+  // headerViewController to prevent presentation issues with corner radius not being kept in sync
+  // with the animation of the sticky view's expansion.
+  if (!self.hasHeaderViewController && self.shouldUseStickyStatusBar) {
+    adjustedTransitionRatio = (adjustedTransitionRatio > 0) ? 1 : 0;
+  }
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
-                                                       transitionRatio:transitionPercentage];
+                                                       transitionRatio:adjustedTransitionRatio];
+  [self updateDrawerState:adjustedTransitionRatio];
 
-  [self updateDrawerState:transitionPercentage];
   self.currentlyFullscreen =
       self.contentReachesFullscreen && headerTransitionToTop >= 1 && contentOffset.y > 0;
   CGFloat fullscreenHeaderHeight =
@@ -871,7 +878,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (UIView *)topSafeAreaView {
   if (!_topSafeAreaView) {
-    _topSafeAreaView = [UIView new];
+    _topSafeAreaView = [[UIView alloc] init];
     _topSafeAreaView.backgroundColor = self.trackingScrollView
                                            ? self.trackingScrollView.backgroundColor
                                            : self.contentViewController.view.backgroundColor;

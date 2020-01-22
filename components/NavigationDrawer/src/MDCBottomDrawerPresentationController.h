@@ -213,11 +213,14 @@
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInInitialDrawerHeight;
 
 /**
- A flag allowing clients to opt-in to generating a "sticky" view that is presented behind the status
- bar, to prevent bottom drawer content from conflicting with the status bar content when an explicit
- header has not been provided by the client (see Github issue #6434, or internal issue b/123186711,
- for more context).
- */
+ This flag allows clients to have the drawer content scroll below the status bar when no header is
+ provided.
+
+ Defaults to NO.
+
+ @note This flag is only applicable when `headerViewController` is nil. If `headerViewController` is
+       non-nil, setting this flag to YES will have no effect.
+*/
 @property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
 
 /**
