@@ -247,6 +247,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
 @end
 
+#ifdef __IPHONE_13_0
 /**
  This component supports UIKit's Large Content Viewer. It is recommended that images associated with
  each tab bar item be backed with a PDF image with "preserve vector data" enabled within the assets
@@ -262,10 +263,10 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  For more details on the Large Content Viewer see:
  https://developer.apple.com/videos/play/wwdc2019/261/
  */
-API_AVAILABLE(ios(13.0))
-@interface MDCBottomNavigationBar(
-    UILargeContentViewerInteractionDelegate)<UILargeContentViewerInteractionDelegate>
+@interface MDCBottomNavigationBar (UILargeContentViewerInteractidionDelegate) <
+    UILargeContentViewerInteractionDelegate>
 @end
+#endif  // __IPHONE_13_0
 
 #pragma mark - MDCBottomNavigationBarDelegate
 
