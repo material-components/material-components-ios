@@ -64,7 +64,7 @@
   [self.cell layoutIfNeeded];
 }
 
-- (void)testCellWithTitleAndAction {
+- (void)testCellWithTitleAndImage {
   // When
   self.cell.action = self.action;
 
@@ -72,7 +72,7 @@
   [self generateSnapshotAndVerifyForCell];
 }
 
-- (void)testCellWithTitleAndActionAndDivider {
+- (void)testCellWithTitleAndImageAndDivider {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
@@ -82,7 +82,7 @@
   [self generateSnapshotAndVerifyForCell];
 }
 
-- (void)testCellWithTitleActionAndDividerAndPositiveContentEdgeInsets {
+- (void)testCellWithTitleImageAndDividerAndPositiveContentEdgeInsets {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
@@ -93,7 +93,7 @@
   [self generateSnapshotAndVerifyForCell];
 }
 
-- (void)testCellWithTitleActionAndDividerAndNegativeContentEdgeInsets {
+- (void)testCellWithTitleImageAndDividerAndNegativeContentEdgeInsets {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
@@ -104,7 +104,7 @@
   [self generateSnapshotAndVerifyForCell];
 }
 
-- (void)testCellWithTitleActionAndDividerUnbalancedContentEdgeInsets {
+- (void)testCellWithTitleImageAndDividerUnbalancedContentEdgeInsets {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
@@ -115,7 +115,7 @@
   [self generateSnapshotAndVerifyForCell];
 }
 
-- (void)testCellWithTitleActionAndDividerClearColor {
+- (void)testCellWithTitleImageAndDividerClearColor {
   // When
   self.cell.action = self.action;
   self.cell.showsDivider = YES;
