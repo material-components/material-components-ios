@@ -22,6 +22,8 @@ static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
 static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
+/** The height of the divider. */
+static const CGFloat kDividerHeight = 1;
 
 static inline UIColor *RippleColor() {
   return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
@@ -81,13 +83,14 @@ static inline UIColor *RippleColor() {
   _divider.backgroundColor = UIColor.clearColor;
   [self.contentContainerView addSubview:_divider];
   [_contentContainerView.topAnchor constraintEqualToAnchor:_divider.topAnchor].active = YES;
-  [_divider addConstraint:[NSLayoutConstraint constraintWithItem:_divider
-                                                       attribute:NSLayoutAttributeHeight
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1
-                                                        constant:1]];
+  [NSLayoutConstraint constraintWithItem:_divider
+                               attribute:NSLayoutAttributeHeight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:kDividerHeight]
+      .active = YES;
   [_contentContainerView.leadingAnchor constraintEqualToAnchor:_divider.leadingAnchor].active = YES;
   [_contentContainerView.trailingAnchor constraintEqualToAnchor:_divider.trailingAnchor].active =
       YES;

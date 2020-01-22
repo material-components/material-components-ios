@@ -68,6 +68,7 @@
  */
 @property(nonatomic, assign) BOOL showsDivider;
 
+/** The label used to represent the action's @c title. */
 @property(nonatomic, strong, nonnull) UILabel *actionLabel;
 
 @end
