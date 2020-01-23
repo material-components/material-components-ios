@@ -333,8 +333,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 }
 
 - (void)setTextColor:(UIColor *)textColor {
-  [super setTextColor:textColor];
-  _fundament.textColor = textColor;
+  if (textColor != self.textColor) {
+    [super setTextColor:textColor];
+    _fundament.textColor = textColor;
+  }
 }
 
 - (UIEdgeInsets)textInsets {
