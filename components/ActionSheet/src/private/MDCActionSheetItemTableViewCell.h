@@ -54,4 +54,21 @@
  */
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
+/**
+ The color of the divider at the top of the action.
+
+ @note Defaults to clear.
+ */
+@property(nonatomic, copy, nonnull) UIColor *dividerColor;
+
+/**
+ Controls whether a divider is shown at the top of the action.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL showsDivider;
+
+/** The label used to represent the action's @c title. */
+@property(nonatomic, strong, nonnull) UILabel *actionLabel;
+
 @end

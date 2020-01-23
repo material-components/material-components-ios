@@ -47,6 +47,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     _title = [title copy];
     _image = [image copy];
     _completionHandler = [handler copy];
+    _dividerColor = UIColor.clearColor;
   }
   return self;
 }
@@ -59,6 +60,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   action.accessibilityLabel = self.accessibilityLabel;
   action.titleColor = self.titleColor;
   action.tintColor = self.tintColor;
+  action.dividerColor = self.dividerColor;
+  action.showsDivider = self.showsDivider;
   return action;
 }
 
@@ -330,6 +333,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   cell.contentEdgeInsets = self.contentEdgeInsets;
+  cell.dividerColor = action.dividerColor;
+  cell.showsDivider = action.showsDivider;
   return cell;
 }
 
