@@ -1,5 +1,7 @@
 # Material Components for iOS
 
+DO NOT MERGE
+
 <img align="right" src="mdc_hero.png" width="300px">
 
 [![Code coverage](https://img.shields.io/codecov/c/github/material-components/material-components-ios/develop.svg)](https://codecov.io/gh/material-components/material-components-ios/branch/develop)
