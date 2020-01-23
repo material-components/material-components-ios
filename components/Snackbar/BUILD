@@ -100,6 +100,7 @@ mdc_examples_swift_library(
     deps = [
         ":Snackbar",
         "//components/Buttons",
+        "//components/schemes/Container",
     ],
 )
 
