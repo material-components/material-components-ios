@@ -989,8 +989,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
   // Figure out which of the elements is tallest, and use that for calculating our preferred height.
   // Images are forced to be no bigger than @c kMaximumImageSize.
-  height = MAX(height, [self.label sizeThatFits:CGSizeMake(CGRectGetWidth(self.frame),
-                                                           CGFLOAT_MAX)].height);
+  height = MAX(
+      height, [self.label sizeThatFits:CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX)].height);
 
   // Make sure that content margins are included in our calculation.
   height += self.safeContentMargin.top + self.safeContentMargin.bottom;

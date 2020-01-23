@@ -128,7 +128,6 @@ static const CGFloat kMaximumHeight = 80;
  */
 @property(nonatomic) NSLayoutConstraint *snackbarTrailingMarginConstraint;
 
-
 @end
 
 @implementation MDCSnackbarOverlayView
@@ -230,10 +229,8 @@ static const CGFloat kMaximumHeight = 80;
   CGFloat leftMargin = sideMargin;
   CGFloat rightMargin = sideMargin;
 
-  BOOL isRegularWidth =
-  self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
-  BOOL isRegularHeight =
-  self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
+  BOOL isRegularWidth = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+  BOOL isRegularHeight = self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
   if (!isRegularWidth || !isRegularHeight) {
     if (@available(iOS 11.0, *)) {
       if (self.mdf_effectiveUserInterfaceLayoutDirection ==
@@ -379,22 +376,24 @@ static const CGFloat kMaximumHeight = 80;
           }
         }
 
-        _snackbarLeadingMarginConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                              attribute:NSLayoutAttributeLeading
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:container
-                                                              attribute:NSLayoutAttributeLeading
-                                                             multiplier:1.0
-                                                               constant:leftMargin];
+        _snackbarLeadingMarginConstraint =
+            [NSLayoutConstraint constraintWithItem:snackbarView
+                                         attribute:NSLayoutAttributeLeading
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:container
+                                         attribute:NSLayoutAttributeLeading
+                                        multiplier:1.0
+                                          constant:leftMargin];
         [container addConstraint:_snackbarLeadingMarginConstraint];
 
-        _snackbarTrailingMarginConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                              attribute:NSLayoutAttributeTrailing
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:container
-                                                              attribute:NSLayoutAttributeTrailing
-                                                             multiplier:1.0
-                                                               constant:-1 * rightMargin];
+        _snackbarTrailingMarginConstraint =
+            [NSLayoutConstraint constraintWithItem:snackbarView
+                                         attribute:NSLayoutAttributeTrailing
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:container
+                                         attribute:NSLayoutAttributeTrailing
+                                        multiplier:1.0
+                                          constant:-1 * rightMargin];
         [container addConstraint:_snackbarTrailingMarginConstraint];
       }
 
