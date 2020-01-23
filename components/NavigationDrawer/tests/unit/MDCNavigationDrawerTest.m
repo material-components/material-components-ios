@@ -231,7 +231,7 @@
 
   // Then
   CGFloat newHeaderHeight = CGRectGetHeight(self.navigationDrawer.headerViewController.view.frame);
-  XCTAssertGreaterThan(newHeaderHeight, originalHeaderHeight);
+  XCTAssertEqualWithAccuracy(newHeaderHeight, originalHeaderHeight, 0.001);
 }
 
 @end

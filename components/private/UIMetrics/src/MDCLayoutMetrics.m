@@ -16,7 +16,7 @@
 
 #import "MaterialApplication.h"
 
-static const CGFloat kFixedStatusBarHeightOnPreiPhoneXDevices = 20;
+const CGFloat kFixedStatusBarHeightOnPreiPhoneXDevices = 20;
 
 static BOOL HasHardwareSafeAreas(void) {
   static BOOL hasHardwareSafeAreas = NO;

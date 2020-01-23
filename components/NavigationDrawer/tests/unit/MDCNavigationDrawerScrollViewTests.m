@@ -275,8 +275,6 @@
 
 - (void)testTopHeaderHeightWithHeader {
   // Given
-  // MDCDeviceTopSafeAreaInset adds 20 if there is no safe area and you are not in an application
-  CGFloat mdcDeviceTopSafeArea = 20;
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
 
   // When
@@ -284,7 +282,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
-                             mdcDeviceTopSafeArea + fakePreferredContentSize.height, 0.001);
+                             fakePreferredContentSize.height, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithHeaderAndContentViewController {
@@ -937,7 +935,7 @@
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.trackingScrollView.frame.origin.y, 0, 0.001);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fakeBottomDrawer.scrollView.frame), 0, 0.001);
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 20, 0.01);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 0, 0.01);
 }
 
 - (void)testNavigationDrawerCorrectShadowValue {
