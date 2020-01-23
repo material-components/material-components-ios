@@ -979,6 +979,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                       : kCornerRadius];
   self.layer.shadowPath = path.CGPath;
   self.layer.shadowColor = self.snackbarMessageViewShadowColor.CGColor;
+  [self invalidateIntrinsicContentSize];
 }
 
 #pragma mark - Sizing
