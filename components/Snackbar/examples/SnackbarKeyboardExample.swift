@@ -54,7 +54,7 @@ class SnackbarKeyboardExample: UIViewController {
     view.addSubview(contentStackView)
 
     contentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    if #available(iOSApplicationExtension 11.0, *) {
+    if #available(iOS 11.0, *) {
       contentStackView.topAnchor
         .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
     } else {
