@@ -47,6 +47,7 @@
 
 - (void)tearDown {
   self.actionSheet = nil;
+  self.actionSheetControllerDelegate = nil;
 
   [super tearDown];
 }
