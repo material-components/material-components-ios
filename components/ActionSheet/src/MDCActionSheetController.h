@@ -21,15 +21,14 @@
 @class MDCActionSheetController;
 
 /**
- MDCActionSheetControllerDelegate provides a method that allows a delegate of an
- MDCActionSheetController to respond to its dismissals.
+ Defines methods that allows the adopting delegate to respond to messages from an
+ @c MDCActionSheetController.
  */
 @protocol MDCActionSheetControllerDelegate <NSObject>
 @optional
 
 /**
- This method allows a delegate conforming to MDCActionSheetControllerDelegate to respond to
- MDCActionSheetController dismissals.
+ Tells the delegate that the action sheet was dismissed.
  */
 - (void)actionSheetControllerDidDismiss:(nonnull MDCActionSheetController *)actionSheetController;
 @end
@@ -106,10 +105,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 - (void)addAction:(nonnull MDCActionSheetAction *)action;
 
 /**
- An object conforming to MDCActionSheetControllerDelegate. When non-nil, the
- MDCActionSheetController will call the appropriate MDCActionSheetControllerDelegate methods on this
- object.
- */
+ The object that acts as the delegate of the @c MDCActionSheetController
+*/
 @property(nonatomic, weak, nullable) id<MDCActionSheetControllerDelegate> delegate;
 
 /**

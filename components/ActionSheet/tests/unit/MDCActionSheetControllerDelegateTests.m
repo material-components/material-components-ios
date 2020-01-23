@@ -14,7 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCActionSheetTestHelper.h"
+#import "MDCActionSheetController.h"
+#import "MDCBottomSheetPresentationController.h"
 
 @interface ActionSheetControllerDelegate : NSObject <MDCActionSheetControllerDelegate>
 @property(nonatomic, readonly) MDCActionSheetController *dismissedActionSheetController;

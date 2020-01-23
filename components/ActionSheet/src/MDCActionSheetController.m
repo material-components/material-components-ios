@@ -166,6 +166,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 - (void)loadView {
   [super loadView];
+
   self.mdc_bottomSheetPresentationController.delegate = self;
 }
 
@@ -535,6 +536,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 }
 
 #pragma mark - MDCBottomSheetPresentationControllerDelegate
+
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull MDCBottomSheetController *)controller {
   if ([self.delegate respondsToSelector:@selector(actionSheetControllerDidDismiss:)]) {
