@@ -94,6 +94,15 @@ mdc_examples_objc_library(
     ],
 )
 
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Snackbar",
+        "//components/Buttons",
+    ],
+)
+
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
