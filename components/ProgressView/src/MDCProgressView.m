@@ -293,7 +293,8 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 - (void)updateProgressView {
   // Update progressView with the current progress value.
   CGFloat scale = self.window.screen ? self.window.screen.scale : 1;
-  CGFloat progressWidth = MDCCeilScaled(self.progress * CGRectGetWidth(self.bounds), scale);
+  CGFloat width = self.progress * CGRectGetWidth(self.bounds);
+  CGFloat progressWidth = MDCRound(width * scale) / scale;
   CGRect progressFrame = CGRectMake(0, 0, progressWidth, CGRectGetHeight(self.bounds));
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     progressFrame = MDFRectFlippedHorizontally(progressFrame, CGRectGetWidth(self.bounds));
