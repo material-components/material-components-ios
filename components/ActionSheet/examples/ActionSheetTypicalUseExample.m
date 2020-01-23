@@ -22,7 +22,8 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
 
-@interface ActionSheetTypicalUseExampleViewController : UIViewController
+@interface ActionSheetTypicalUseExampleViewController
+    : UIViewController <MDCActionSheetControllerDelegate>
 
 @property(nonatomic, strong) MDCButton *showButton;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
@@ -88,7 +89,13 @@
   [actionSheet addAction:favoriteAction];
   [actionSheet addAction:emailAction];
   [actionSheet applyThemeWithScheme:self.containerScheme];
+  actionSheet.delegate = self;
   [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
+#pragma mark - MDCActionSheetControllerDelegate
+- (void)actionSheetControllerDidDismiss:(MDCActionSheetController *)actionSheetController {
+  NSLog(@"Did dismiss");
 }
 
 @end

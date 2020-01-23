@@ -18,6 +18,21 @@
 #import "MaterialElevation.h"
 
 @class MDCActionSheetAction;
+@class MDCActionSheetController;
+
+/**
+ MDCActionSheetControllerDelegate provides a method that allows a delegate of an
+ MDCActionSheetController to respond to its dismissals.
+ */
+@protocol MDCActionSheetControllerDelegate <NSObject>
+@optional
+
+/**
+ This method allows a delegate conforming to MDCActionSheetControllerDelegate to respond to
+ MDCActionSheetController dismissals.
+ */
+- (void)actionSheetControllerDidDismiss:(nonnull MDCActionSheetController *)actionSheetController;
+@end
 
 /**
  MDCActionSheetController displays an alert message to the user, similar to
@@ -89,6 +104,13 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  @param action Will be added to the end of MDCActionSheetController.actions.
  */
 - (void)addAction:(nonnull MDCActionSheetAction *)action;
+
+/**
+ An object conforming to MDCActionSheetControllerDelegate. When non-nil, the
+ MDCActionSheetController will call the appropriate MDCActionSheetControllerDelegate methods on this
+ object.
+ */
+@property(nonatomic, weak, nullable) id<MDCActionSheetControllerDelegate> delegate;
 
 /**
  The actions that the user can take in response to the action sheet.

@@ -164,6 +164,11 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   return [_actions copy];
 }
 
+- (void)loadView {
+  [super loadView];
+  self.mdc_bottomSheetPresentationController.delegate = self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -527,6 +532,14 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
+}
+
+#pragma mark - MDCBottomSheetPresentationControllerDelegate
+- (void)bottomSheetPresentationControllerDidDismissBottomSheet:
+    (nonnull MDCBottomSheetController *)controller {
+  if ([self.delegate respondsToSelector:@selector(actionSheetControllerDidDismiss:)]) {
+    [self.delegate actionSheetControllerDidDismiss:self];
+  }
 }
 
 @end
