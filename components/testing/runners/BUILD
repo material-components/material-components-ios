@@ -1,13 +1,6 @@
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 
 ios_test_runner(
-    name = "IPHONE_4S_IN_9_0",
-    device_type = "iPhone 4s",
-    os_version = "9.0",
-    visibility = ["//visibility:public"],
-)
-
-ios_test_runner(
     name = "IPHONE_5_IN_8_1",
     device_type = "iPhone 5",
     os_version = "8.1",

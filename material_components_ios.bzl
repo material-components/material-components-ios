@@ -10,7 +10,6 @@ SNAPSHOT_IOS_MINIMUM_OS = "10.0"
 SWIFT_VERSION = "4.2"
 
 DEFAULT_IOS_RUNNER_TARGETS = [
-    "//components/testing/runners:IPHONE_4S_IN_9_0",
     "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
     "//components/testing/runners:IPHONE_7_PLUS_IN_10_3",
 ]
