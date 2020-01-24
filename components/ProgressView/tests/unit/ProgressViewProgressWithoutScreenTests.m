@@ -22,7 +22,7 @@
 @end
 
 @interface ProgressViewProgressWithoutScreenTests : XCTestCase
-@property (nonatomic, strong) MDCProgressView *progressView;
+@property(nonatomic, strong) MDCProgressView *progressView;
 @end
 
 @implementation ProgressViewProgressWithoutScreenTests

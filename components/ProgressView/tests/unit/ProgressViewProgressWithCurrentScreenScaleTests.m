@@ -22,8 +22,8 @@
 @end
 
 @interface ProgressViewProgressWithCurrentScreenScaleTests : XCTestCase
-@property (nonatomic, strong) UIWindow *window;
-@property (nonatomic, strong) MDCProgressView *progressView;
+@property(nonatomic, strong) UIWindow *window;
+@property(nonatomic, strong) MDCProgressView *progressView;
 @end
 
 @implementation ProgressViewProgressWithCurrentScreenScaleTests
