@@ -16,11 +16,6 @@
 
 #import "MaterialBottomNavigationBeta.h"
 
-/** Category to expose private views for simulating taps. */
-@interface MDCBottomNavigationBar (DelegateTesting)
-- (UIView *)viewForItem:(UITabBarItem *)item;
-@end
-
 /** Delegate that implements no optional APIs. */
 @interface MDCBottomNavigationBarControllerDelegateWithNoOptionals
     : NSObject <MDCBottomNavigationBarControllerDelegate>
