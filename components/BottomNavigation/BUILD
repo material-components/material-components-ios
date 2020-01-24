@@ -67,6 +67,7 @@ mdc_objc_library(
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
+        "//components/private/Availability",
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
     ],

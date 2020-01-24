@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef __MDC_AVAILABILITY__
+#define __MDC_AVAILABILITY__
+
+#include "Availability.h"
+
 /*
     A header for to be used in conjunction with Availability.h to conditionally compile OS sensitive
     code. These macros are for Material Components internal use only.
@@ -25,3 +30,5 @@
  */
 
 #define MDC_AVAILABLE_IOS(_ios) _ios != 0 && (__IPHONE_OS_VERSION_MAX_ALLOWED >= _ios)
+
+#endif  // __MDC_AVAILABILITY__
