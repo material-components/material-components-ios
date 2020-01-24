@@ -313,6 +313,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Availability"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1767,6 +1768,12 @@ Pod::Spec.new do |mdc|
         ]
         unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
+    end
+
+    private_spec.subspec "Availability" do |component|
+      component.ios.deployment_target = '9.0'
+      component.ios.public_header_files = "components/private/{#component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
     end
 
     private_spec.subspec "Color" do |component|
