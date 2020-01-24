@@ -2,8 +2,14 @@ load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl
 
 ios_test_runner(
     name = "IPHONE_4S_IN_9_0",
-    device_type = "iPhone 4s",
-    os_version = "9.0",
+    device_type = select({
+        ":xcode_10_1": "iPhone 4s",
+        "//conditions:default": "iPhone 5",
+    }),
+    os_version = select({
+        ":xcode_10_1": "9.0",
+        "//conditions:default": "10.0",
+    }),
     visibility = ["//visibility:public"],
 )
 
@@ -55,4 +61,9 @@ ios_test_runner(
 native.config_setting(
     name = "xcode_9_0",
     values = {"xcode_version": "9.0"},
+)
+
+native.config_setting(
+    name = "xcode_10_1",
+    values = {"xcode_version": "10.1"},
 )
