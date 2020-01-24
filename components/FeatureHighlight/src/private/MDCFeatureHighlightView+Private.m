@@ -113,6 +113,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _accessibilityView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     _accessibilityView.autoresizingMask = UIViewAutoresizingNone;
     _accessibilityView.accessibilityLabel = @"Dismiss";
+    // Note: The following is not strictly required, but is expected in unit tests.
+    _accessibilityView.isAccessibilityElement = YES;
     [self addSubview:_accessibilityView];
     [self sendSubviewToBack:_accessibilityView];
 
