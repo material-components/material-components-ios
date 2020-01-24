@@ -75,7 +75,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   MDCFeatureHighlightLayer *_pulseLayer;
   MDCFeatureHighlightLayer *_innerLayer;
   MDCFeatureHighlightLayer *_displayMaskLayer;
-  UIView *_accessibilityView;
+  UIButton *_accessibilityView;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
@@ -109,11 +109,9 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer = [[MDCFeatureHighlightLayer alloc] init];
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
-    _accessibilityView = [[UIView alloc] initWithFrame:self.bounds];
-    _accessibilityView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _accessibilityView.isAccessibilityElement = YES;
-    _accessibilityView.accessibilityTraits = UIAccessibilityTraitButton;
+    // Tiny frame just inside the bounds so that non-accessibility interactions aren't affected.
+    _accessibilityView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    _accessibilityView.autoresizingMask = UIViewAutoresizingNone;
     _accessibilityView.accessibilityLabel = @"Dismiss";
     [self addSubview:_accessibilityView];
     [self sendSubviewToBack:_accessibilityView];
@@ -436,6 +434,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _pulseLayer.fillColor = _innerHighlightColor.CGColor;
   _innerLayer.fillColor = _innerHighlightColor.CGColor;
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
+
+  _accessibilityView.accessibilityFrame = self.bounds;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -660,6 +660,10 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   } else {
     [_outerLayer setRadius:scaledRadius animated:NO];
   }
+}
+
+- (UIButton *)accessibilityDismissView {
+  return _accessibilityView;
 }
 
 #pragma mark - Dynamic Type Support
