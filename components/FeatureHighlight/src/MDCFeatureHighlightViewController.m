@@ -86,10 +86,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   UIGestureRecognizer *tapGestureRecognizer =
       [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(acceptFeature)];
   [_displayedView addGestureRecognizer:tapGestureRecognizer];
-  //  UIGestureRecognizer *dismissTapGestureRecognizer =
-  //  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rejectFeature)];
-  //  [self.featureHighlightView.accessibilityDismissView
-  //   addGestureRecognizer:dismissTapGestureRecognizer];
   [self.featureHighlightView.accessibilityDismissView addTarget:self
                                                          action:@selector(rejectFeature)
                                                forControlEvents:UIControlEventTouchUpInside];
