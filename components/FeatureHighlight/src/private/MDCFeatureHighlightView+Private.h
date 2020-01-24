@@ -27,7 +27,7 @@ typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 @property(nonnull, nonatomic, strong) UILabel *titleLabel;
 @property(nonnull, nonatomic, strong) UILabel *bodyLabel;
 @property(nullable, nonatomic, copy) MDCFeatureHighlightInteractionBlock interactionBlock;
-/** A viewe used by UIAccessibility to reject the Feature Highlight. */
+/** A view used by UIAccessibility to reject the Feature Highlight. */
 @property(nonnull, readonly, nonatomic, strong) UIButton *accessibilityDismissView;
 
 @end
