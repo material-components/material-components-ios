@@ -333,8 +333,13 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 }
 
 - (void)setTextColor:(UIColor *)textColor {
-  [super setTextColor:textColor];
-  _fundament.textColor = textColor;
+  // This identity check was added in
+  // https://github.com/material-components/material-components-ios/pull/9480 in response to
+  // b/148159587
+  if (textColor != self.textColor) {
+    [super setTextColor:textColor];
+    _fundament.textColor = textColor;
+  }
 }
 
 - (UIEdgeInsets)textInsets {
