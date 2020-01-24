@@ -64,7 +64,8 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-        "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m"
+        "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m",
+        "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerDelegateTests.m"
       ]
     end
   end

@@ -156,7 +156,10 @@ mdc_objc_library(
             "tests/unit/*.h",
             "tests/unit/Theming/*.m",
         ],
-        exclude = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
+        exclude =  [
+            "tests/unit/MDCBottomNavigationBarControllerTests.m",
+            "tests/unit/MDCBottomNavigationBarControllerDelegateTests.m",
+        ],
     ),
     sdk_frameworks = [
         "CoreGraphics",
@@ -174,7 +177,10 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_beta_sources",
     testonly = 1,
-    srcs = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
+    srcs = [
+        "tests/unit/MDCBottomNavigationBarControllerTests.m",
+        "tests/unit/MDCBottomNavigationBarControllerDelegateTests.m",
+    ],
     sdk_frameworks = [
         "CoreGraphics",
         "XCTest",

@@ -321,7 +321,8 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.exclude_files = [
-        "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m"
+        "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m",
+        "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerDelegateTests.m"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end

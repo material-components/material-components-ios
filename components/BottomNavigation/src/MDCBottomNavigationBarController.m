@@ -266,7 +266,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
   // Pass the response to the delegate if they want to handle this request.
   if ([self.delegate respondsToSelector:@selector(bottomNavigationBarController:
-                                                        didSelectViewController:)]) {
+                                                     shouldSelectViewController:)]) {
     UIViewController *viewControllerToSelect = [self.viewControllers objectAtIndex:index];
     return [self.delegate bottomNavigationBarController:self
                              shouldSelectViewController:viewControllerToSelect];
