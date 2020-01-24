@@ -85,6 +85,8 @@
   XCTAssertEqualWithAccuracy(self.progressView.progressView.frame.origin.y, 0, 0.001);
   // Note the surprising value of 98 here; this is due to the use of MDCCeil to calculate
   // screen-aligned pixel values for the progress view's frame.
+  // TODO(https://github.com/material-components/material-components-ios/issues/9482): This should
+  // be 97.
   XCTAssertEqualWithAccuracy(self.progressView.progressView.frame.size.width, 98, 0.001);
   XCTAssertEqualWithAccuracy(self.progressView.progressView.frame.size.height, 10, 0.001);
 }
