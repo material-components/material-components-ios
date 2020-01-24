@@ -1,15 +1,8 @@
-# #develop#
+# 103.0.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This major release includes a refactoring of the TextControls libraries, a theming extension for TextFields' underline controller,
+a bugfix change to Chips imagePadding handling, and the annotation of an AppBar API as to be deprecated.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ### TextControls+BaseTextFields
@@ -37,6 +30,16 @@ Replace this text with example code for each new feature.
 **New extension.**
 
 ## Component changes
+
+### AppBar
+
+* [Annotate MDCAppBarNavigationControllerDelegate's appBarNavigationController:willAddAppBar:asChildOfViewController: as to be deprecated. (#9395)](https://github.com/material-components/material-components-ios/commit/8f80efe08d3af4643ef402f10d369f15f4eeef51) (featherless)
+
+### Chips
+
+* [Additional `imagePadding` tests. (#9441)](https://github.com/material-components/material-components-ios/commit/8377722bdb22163068e0775aea5cc39a89a35f6f) (Robert Moore)
+* [Fix `contentPadding` API. (#9440)](https://github.com/material-components/material-components-ios/commit/d1d494b0ef0fe716f9b1422830077b5552e48996) (Robert Moore)
+* [Fix `imagePadding` behavior. (#9442)](https://github.com/material-components/material-components-ios/commit/944ed3a1852e77dcf8a961e022fd18dd3645b6dc) (Robert Moore)
 
 ### TextFields
 
