@@ -1,3 +1,56 @@
+# 103.0.0
+
+This major release includes a refactoring of the TextControls libraries, a theming extension for TextFields' underline controller,
+a bugfix change to Chips imagePadding handling, and the annotation of an AppBar API as to be deprecated.
+
+## API changes
+
+### TextControls+BaseTextFields
+
+**New extension.**
+
+### TextControls+Enums
+
+**New extension.**
+
+### TextControls+FilledTextFields
+
+**New extension.**
+
+### TextControls+FilledTextFieldsTheming
+
+**New extension.**
+
+### TextControls+OutlinedTextFields
+
+**New extension.**
+
+### TextControls+OutlinedTextFieldsTheming
+
+**New extension.**
+
+## Component changes
+
+### AppBar
+
+* [Annotate MDCAppBarNavigationControllerDelegate's appBarNavigationController:willAddAppBar:asChildOfViewController: as to be deprecated. (#9395)](https://github.com/material-components/material-components-ios/commit/8f80efe08d3af4643ef402f10d369f15f4eeef51) (featherless)
+
+### Chips
+
+* [Additional `imagePadding` tests. (#9441)](https://github.com/material-components/material-components-ios/commit/8377722bdb22163068e0775aea5cc39a89a35f6f) (Robert Moore)
+* [Fix `contentPadding` API. (#9440)](https://github.com/material-components/material-components-ios/commit/d1d494b0ef0fe716f9b1422830077b5552e48996) (Robert Moore)
+* [Fix `imagePadding` behavior. (#9442)](https://github.com/material-components/material-components-ios/commit/944ed3a1852e77dcf8a961e022fd18dd3645b6dc) (Robert Moore)
+
+### TextFields
+
+* [Add theming extension for underline controller (#9437)](https://github.com/material-components/material-components-ios/commit/3b3d288ea42ddcc53b61127283770f145b9def38) (Cody Weaver)
+
+## Multi-component changes
+
+* [Restructure Cocoapods and Blaze targets (#9430)](https://github.com/material-components/material-components-ios/commit/083cf8c12f8efe1d9351ddb56f513a5fed5cd289) (Andrew Overton)
+
+---
+
 # 102.0.0
 
 This major hotfix release reverts a change introduced in 101.1.0 that caused Snackbar not to appear in some situations.

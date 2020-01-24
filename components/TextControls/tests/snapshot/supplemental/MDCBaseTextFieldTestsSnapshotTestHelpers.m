@@ -18,6 +18,8 @@
 
 #import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "MDCTextControlSnapshotTestHelpers.h"
+#import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 
 @interface MDCBaseTextField (AnimationDuration)
 @property(nonatomic, assign) NSTimeInterval animationDuration;

@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialTextFields+Theming.h"
 #import "MaterialTextFields.h"
 
 #import "supplemental/TextFieldControllerStylesExampleSupplemental.h"
@@ -35,7 +36,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.97 alpha:1];
+  if (self.containerScheme == nil) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   self.title = @"Material Text Fields";
 
   [self setupExampleViews];
@@ -156,6 +160,7 @@
   self.textFieldControllerUnderline.characterCountMax = characterCountMax;
 
   [self.textFieldControllerUnderline mdc_setAdjustsFontForContentSizeCategory:YES];
+  [self.textFieldControllerUnderline applyThemeWithScheme:self.containerScheme];
 
   [NSLayoutConstraint constraintWithItem:textFieldUnderline
                                attribute:NSLayoutAttributeTop
