@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCAvailability.h"
+#include "MDCAvailability.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 

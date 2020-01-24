@@ -18,7 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCAvailability.h"
+#include "MDCAvailability.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
