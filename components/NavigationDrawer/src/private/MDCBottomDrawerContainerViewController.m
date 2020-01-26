@@ -242,7 +242,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   if (@available(iOS 11.0, *)) {
     return self.view.safeAreaInsets.top;
   }
-  return kFixedStatusBarHeightOnPreiPhoneXDevices;
+  return MDCFixedStatusBarHeightOnPreiPhoneXDevices;
 }
 
 #pragma mark UIGestureRecognizerDelegate (Public)
