@@ -17,7 +17,7 @@
 
 /**
  This const returns the status bar height for pre iPhone X devices.
- 
+
  Note: For iOS 11+ devices this value should be fetched from the views safeAreaInsets API.
  */
 extern const CGFloat MDCFixedStatusBarHeightOnPreiPhoneXDevices;
