@@ -1007,10 +1007,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (CGFloat)transitionPercentageForContentOffset:(CGPoint)contentOffset
                                          offset:(CGFloat)offset
                                        distance:(CGFloat)distance {
-  // If the distance is zero or negative there is no distance for a transition to occur and therefore
-  // it is set to 1 (100%).
-  // Rather than comparing precisely against `0`, comparison is done against the almost-zero value 
-  // that is used throughout the calculations performed in this class.
+  // If the distance is zero or negative there is no distance for a transition to occur and
+  // therefore it is set to one (100%). Rather than comparing precisely against `0`, comparison is
+  // done against the almost-zero value that is used throughout the calculations performed in this
+  // class.
   if (distance <= kEpsilon) {
     return 1;
   }
