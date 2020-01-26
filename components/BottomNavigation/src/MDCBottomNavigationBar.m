@@ -63,6 +63,16 @@ static NSString *const kOfAnnouncement = @"of";
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+/**
+ The last large content viewer item displayed by the content viewer while the interaction is
+ running. When the interaction ends this property is nil.
+ */
+@property(nonatomic, nullable) id<UILargeContentViewerItem> lastLargeContentViewerItem
+    NS_AVAILABLE_IOS(13_0);
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+
 @end
 
 @implementation MDCBottomNavigationBar
@@ -349,15 +359,19 @@ static NSString *const kOfAnnouncement = @"of";
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     keyPaths = @[
-      NSStringFromSelector(@selector(badgeColor)), NSStringFromSelector(@selector(badgeValue)),
-      NSStringFromSelector(@selector(title)), NSStringFromSelector(@selector(image)),
+      NSStringFromSelector(@selector(badgeColor)),
+      NSStringFromSelector(@selector(badgeValue)),
+      NSStringFromSelector(@selector(title)),
+      NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(selectedImage)),
       NSStringFromSelector(@selector(accessibilityValue)),
       NSStringFromSelector(@selector(accessibilityLabel)),
       NSStringFromSelector(@selector(accessibilityHint)),
       NSStringFromSelector(@selector(accessibilityIdentifier)),
       NSStringFromSelector(@selector(isAccessibilityElement)),
-      NSStringFromSelector(@selector(titlePositionAdjustment))
+      NSStringFromSelector(@selector(titlePositionAdjustment)),
+      NSStringFromSelector(@selector(largeContentSizeImage)),
+      NSStringFromSelector(@selector(largeContentSizeImageInsets)),
     ];
   });
   return keyPaths;
@@ -430,7 +444,19 @@ static NSString *const kOfAnnouncement = @"of";
       itemView.isAccessibilityElement = [newValue boolValue];
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(titlePositionAdjustment))]) {
       itemView.titlePositionAdjustment = [newValue UIOffsetValue];
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(largeContentSizeImage))]) {
+      if (@available(iOS 13.0, *)) {
+        itemView.largeContentImage = newValue;
+      }
     }
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+    else if ([keyPath
+                 isEqualToString:NSStringFromSelector(@selector(largeContentSizeImageInsets))]) {
+      if (@available(iOS 13.0, *)) {
+        itemView.largeContentImageInsets = [newValue UIEdgeInsetsValue];
+      }
+    }
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
@@ -463,6 +489,18 @@ static NSString *const kOfAnnouncement = @"of";
     BOOL isPointInView = CGRectContainsPoint(itemView.frame, point);
     if (isPointInView) {
       return self.items[i];
+    }
+  }
+
+  return nil;
+}
+
+/** Returns the item view at the given point. Nil if there is no view at the given point. */
+- (MDCBottomNavigationItemView *_Nullable)itemViewForPoint:(CGPoint)point {
+  for (NSUInteger i = 0; i < self.itemViews.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    if (CGRectContainsPoint(itemView.frame, point)) {
+      return itemView;
     }
   }
 
@@ -504,6 +542,14 @@ static NSString *const kOfAnnouncement = @"of";
   if ([_items isEqual:items] || _items == items) {
     return;
   }
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13, *)) {
+    // If clients report conflicting gesture recognizers please see proposed solution in the
+    // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
+    [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
+  }
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
 
   // Remove existing item views from the bottom navigation so it can be repopulated with new items.
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
@@ -582,6 +628,14 @@ static NSString *const kOfAnnouncement = @"of";
 #pragma clang diagnostic pop
 #endif
     itemView.selected = NO;
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+    if (@available(iOS 13, *)) {
+      itemView.largeContentImageInsets = item.largeContentSizeImageInsets;
+      itemView.largeContentImage = item.largeContentSizeImage;
+    }
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+
     [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
@@ -814,4 +868,33 @@ static NSString *const kOfAnnouncement = @"of";
   return self.elevation;
 }
 
+#pragma mark - UILargeContentViewerInteractionDelegate
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+- (id<UILargeContentViewerItem>)largeContentViewerInteraction:
+                                    (UILargeContentViewerInteraction *)interaction
+                                                  itemAtPoint:(CGPoint)point
+    NS_AVAILABLE_IOS(13_0) {
+  if (!CGRectContainsPoint(self.bounds, point)) {
+    // The touch has wandered outside of the view. Do not display the content viewer.
+    self.lastLargeContentViewerItem = nil;
+    return nil;
+  }
+
+  MDCBottomNavigationItemView *itemView = [self itemViewForPoint:point];
+  if (!itemView) {
+    // The touch is still within the navigation bar. Return the last seen item view.
+    return self.lastLargeContentViewerItem;
+  }
+
+  self.lastLargeContentViewerItem = itemView;
+  return itemView;
+}
+
+- (void)largeContentViewerInteraction:(UILargeContentViewerInteraction *)interaction
+                         didEndOnItem:(id<UILargeContentViewerItem>)item
+                              atPoint:(CGPoint)point NS_AVAILABLE_IOS(13_0) {
+  self.lastLargeContentViewerItem = nil;
+}
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
 @end
