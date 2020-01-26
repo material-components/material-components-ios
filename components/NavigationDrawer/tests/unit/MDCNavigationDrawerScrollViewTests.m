@@ -275,14 +275,21 @@
 
 - (void)testTopHeaderHeightWithHeader {
   // Given
+  CGFloat topSafeArea;
+  if (@available(iOS 11.0, *)) {
+    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
+  } else {
+    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
+    topSafeArea = 20;
+  }
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
 
   // When
   [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, fakePreferredContentSize.height,
-                             0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
+                             topSafeArea + fakePreferredContentSize.height, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithHeaderAndContentViewController {
@@ -920,6 +927,13 @@
 
 - (void)testExpandToFullScreen {
   // Given
+  CGFloat topSafeArea;
+  if (@available(iOS 11.0, *)) {
+    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
+  } else {
+    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
+    topSafeArea = 20;
+  }
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   self.fakeBottomDrawer.headerViewController = fakeHeader;
@@ -935,7 +949,7 @@
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.trackingScrollView.frame.origin.y, 0, 0.001);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fakeBottomDrawer.scrollView.frame), 0, 0.001);
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 0, 0.01);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, topSafeArea, 0.01);
 }
 
 - (void)testNavigationDrawerCorrectShadowValue {
