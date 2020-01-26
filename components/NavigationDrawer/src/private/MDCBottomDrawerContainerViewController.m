@@ -1082,7 +1082,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (CGFloat)topHeaderHeight {
   if (!self.headerViewController) {
-    return MDCDeviceTopSafeAreaInset();
+    return self.topSafeAreaInset;
   }
   CGFloat headerHeight = self.headerViewController.preferredContentSize.height;
   return headerHeight + self.topSafeAreaInset;
