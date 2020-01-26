@@ -281,8 +281,8 @@
   [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
-                             fakePreferredContentSize.height, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, fakePreferredContentSize.height,
+                             0.001);
 }
 
 - (void)testContentHeaderTopInsetWithHeaderAndContentViewController {
