@@ -16,7 +16,6 @@
 
 #import "../../src/private/MDCBottomNavigationBar+Private.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
-#include "MDCAvailability.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
@@ -690,7 +689,7 @@
 
 #pragma mark - UILargeContentViewerItem
 
-#if MDC_AVAILABLE_IOS(__IPHONE_13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
 /** Tests the large content  title when the title should not contain a badge. */
 - (void)testLargeContentTitle {
   if (@available(iOS 13.0, *)) {
@@ -892,6 +891,6 @@
     XCTAssertNil(itemAfterReset);
   }
 }
-#endif  // MDC_AVAILABLE_IOS(__IPHONE_13_0)
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
 
 @end
