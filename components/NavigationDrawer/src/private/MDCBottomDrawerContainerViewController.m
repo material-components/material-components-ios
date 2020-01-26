@@ -741,8 +741,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     // by 0.
     if (contentOffset.y > self.contentHeightSurplus) {
       CGFloat additionalScrollPassedMaxHeight =
-          self.contentHeaderTopInset -
-          (self.contentHeightSurplus + self.topSafeAreaInset);
+          self.contentHeaderTopInset - (self.contentHeightSurplus + self.topSafeAreaInset);
       fullscreenHeaderHeight = self.topHeaderHeight;
       headerTransitionToTop =
           MIN(1, (contentOffset.y - self.contentHeightSurplus) / additionalScrollPassedMaxHeight);
