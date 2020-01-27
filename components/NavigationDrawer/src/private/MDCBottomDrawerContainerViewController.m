@@ -88,9 +88,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 // Updates and caches the layout calculations.
 - (void)cacheLayoutCalculations;
 
-// The content height plus any applicable adjustments.
-- (CGFloat)contentVCPreferredHeight;
-
 /**
  Returns the percentage of the transition animation for a given content offset.
  The transition animation, as defined here, occurs either when the content reaches fullscreen or
@@ -181,14 +178,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 @implementation MDCBottomDrawerContainerViewController {
   UIScrollView *_scrollView;
   CGFloat _contentHeaderTopInset;
-  CGFloat _contentHeaderTopInsetCached;
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
-  CGFloat _maximumInitialDrawerHeightCalculated;
   CGFloat _headerVCPerferredContentSizeHeightCached;
   CGFloat _scrollToContentOffsetY;
-  CGFloat _maximumInitialDrawerHeight;
   BOOL _shouldPresentAtFullscreen;
 }
 
@@ -198,18 +192,15 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _originalPresentingViewController = originalPresentingViewController;
-    _contentHeaderTopInsetCached = NSNotFound;
     _contentHeaderTopInset = NSNotFound;
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
-    _maximumInitialDrawerHeightCalculated = 0;
     _maximumInitialDrawerHeight =
         self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
-    _shouldAdjustOnContentSizeChange = NO;
     UIColor *shadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _headerShadowColor = shadowColor;
     _drawerShadowColor = shadowColor;
@@ -365,38 +356,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                                         : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
-- (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
-  _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
-
-  [self resetCachedState];
-  [self setupLayout];
-}
-
 - (CGFloat)maximumInitialDrawerHeight {
   if ([self shouldPresentFullScreen]) {
     return self.presentingViewBounds.size.height;
   }
   return _maximumInitialDrawerHeight + [self bottomSafeAreaInsetsToAdjustInitialDrawerHeight];
-}
-
-- (void)setContentViewController:(UIViewController *)contentViewController {
-  _contentViewController = contentViewController;
-
-  [self resetCachedState];
-}
-
-- (void)setHeaderViewController:(UIViewController<MDCBottomDrawerHeader> *)headerViewController {
-  _headerViewController = headerViewController;
-
-  [self resetCachedState];
-}
-
-- (void)resetCachedState {
-  _contentHeaderTopInset = NSNotFound;
-  _contentHeightSurplus = NSNotFound;
-  _addedContentHeight = NSNotFound;
-
-  [self cacheLayoutCalculations];
 }
 
 - (void)addScrollViewObserver {
@@ -501,8 +465,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)expandToFullscreenWithDuration:(CGFloat)duration
                             completion:(void (^__nullable)(BOOL finished))completion {
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
   _shouldPresentAtFullscreen = YES;
-  [self resetCachedState];
+  [self cacheLayoutCalculations];
   [UIView animateWithDuration:duration
                    animations:^{
                      [self setupLayout];
@@ -629,29 +596,33 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
-
-  _shouldPresentAtFullscreen = NO;
-  if (_contentVCPreferredContentSizeHeightCached > 0) {
-    _contentHeaderTopInsetCached = _contentHeaderTopInset;
+  if ([container isKindOfClass:[UIViewController class]]) {
+    UIViewController *containerViewController = (UIViewController *)container;
+    if (containerViewController == self.contentViewController) {
+      self.maximumInitialDrawerHeight = [self calculateMaximumInitialDrawerHeight];
+    }
   }
-
-  [self resetCachedState];
-  [self setupLayout];
+  _shouldPresentAtFullscreen = NO;
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [self.view setNeedsLayout];
 }
 
 - (CGFloat)calculateMaximumInitialDrawerHeight {
-  CGFloat preferredContentHeight = [self contentVCPreferredHeight];
-  if ([self shouldPresentFullScreen]) {
-    return self.presentingViewBounds.size.height;
+  if (MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
+    [self cacheLayoutCalculations];
   }
-  CGFloat totalHeight =
-      self.headerViewController.preferredContentSize.height + preferredContentHeight;
-  if (totalHeight > _maximumInitialDrawerHeight ||
-      MDCCGFloatEqual(preferredContentHeight, [self bottomSafeAreaInsetsToAdjustContainerHeight])) {
+  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
+                        _contentVCPreferredContentSizeHeightCached;
+  const CGFloat maximumInitialHeight = _maximumInitialDrawerHeight;
+  if (totalHeight > maximumInitialHeight ||
+      MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached,
+                      [self bottomSafeAreaInsetsToAdjustContainerHeight])) {
     // Have the drawer height stay its current size in cases where the content preferred content
     // size is still not updated, or when the content height and header height are bigger than the
     // initial height.
-    totalHeight = _maximumInitialDrawerHeight;
+    totalHeight = maximumInitialHeight;
   }
   return totalHeight;
 }
@@ -878,15 +849,12 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   return _addedContentHeight;
 }
 
-- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
-              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
-
-  [coordinator
-      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self resetCachedState];
-      }
-                      completion:nil];
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
@@ -944,7 +912,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
-  CGFloat contentHeight = [self contentVCPreferredHeight];
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height +
+                          [self bottomSafeAreaInsetsToAdjustContainerHeight];
   if ([self shouldPresentFullScreen]) {
     contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
   }
@@ -953,34 +922,31 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
   contentHeight += addedContentHeight;
   _addedContentHeight = addedContentHeight;
-  _maximumInitialDrawerHeightCalculated = [self calculateMaximumInitialDrawerHeight];
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
-  BOOL contentScrollsToReveal = totalHeight >= _maximumInitialDrawerHeightCalculated;
+  BOOL contentScrollsToReveal = totalHeight >= self.maximumInitialDrawerHeight;
 
-  if (contentScrollsToReveal || _shouldPresentAtFullscreen) {
-    _contentHeaderTopInset =
-        MIN(containerHeight, containerHeight - _maximumInitialDrawerHeightCalculated);
-    // In some cases, the contentHeaderTopInset calculation above which decides the
-    // drawer's initial offset will not align with the content offset UIKit provides
-    // for the scrollView, and there may be a slight delta between both numbers.
-    // This will cause unexpected behaviors in the
-    // `updateContentOffsetForPerformantScrolling` method because the contentDiff
-    // will not necessarily be 0 when there is no scrolling delta.
-    // Therefore by rounding we are able to align to a reasonable content offset.
-    _contentHeaderTopInset = MDCRound(_contentHeaderTopInset);
-    // The minimum inset value should be the size of the safe area inset, as
-    // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
-    if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
-      _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + kEpsilon;
+  if (_contentHeaderTopInset == NSNotFound) {
+    // The content header top inset is only set once.
+    if (contentScrollsToReveal || _shouldPresentAtFullscreen) {
+      _contentHeaderTopInset =
+          MIN(containerHeight, containerHeight - self.maximumInitialDrawerHeight);
+      // In some cases, the contentHeaderTopInset calculation above which decides the
+      // drawer's initial offset will not align with the content offset UIKit provides
+      // for the scrollView, and there may be a slight delta between both numbers.
+      // This will cause unexpected behaviors in the
+      // `updateContentOffsetForPerformantScrolling` method because the contentDiff
+      // will not necessarily be 0 when there is no scrolling delta.
+      // Therefore by rounding we are able to align to a reasonable content offset.
+      _contentHeaderTopInset = MDCRound(_contentHeaderTopInset);
+      // The minimum inset value should be the size of the safe area inset, as
+      // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
+      if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
+        _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + kEpsilon;
+      }
+    } else {
+      _contentHeaderTopInset = containerHeight - totalHeight;
     }
-  } else {
-    _contentHeaderTopInset = containerHeight - totalHeight;
-  }
-
-  if (!_shouldAdjustOnContentSizeChange && _contentHeaderTopInsetCached != NSNotFound) {
-    _contentHeaderTopInset = _contentHeaderTopInsetCached;
-    _contentHeaderTopInsetCached = NSNotFound;
   }
 
   CGFloat scrollingDistance = _contentHeaderTopInset + totalHeight;
@@ -997,11 +963,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
     [self cacheLayoutCalculationsWithAddedContentHeight:addedContentheight];
   }
-}
-
-- (CGFloat)contentVCPreferredHeight {
-  return self.contentViewController.preferredContentSize.height +
-         [self bottomSafeAreaInsetsToAdjustContainerHeight];
 }
 
 - (CGFloat)transitionPercentageForContentOffset:(CGPoint)contentOffset

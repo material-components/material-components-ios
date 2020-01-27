@@ -287,16 +287,6 @@
   }
 }
 
-- (void)setShouldAdjustOnContentSizeChange:(BOOL)shouldAdjustOnContentSizeChange {
-  _shouldAdjustOnContentSizeChange = shouldAdjustOnContentSizeChange;
-  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.presentationController;
-    bottomDrawerPresentationController.shouldAdjustOnContentSizeChange =
-        shouldAdjustOnContentSizeChange;
-  }
-}
-
 - (void)setShouldIncludeSafeAreaInInitialDrawerHeight:
     (BOOL)shouldIncludeSafeAreaInInitialDrawerHeight {
   _shouldIncludeSafeAreaInInitialDrawerHeight = shouldIncludeSafeAreaInInitialDrawerHeight;
