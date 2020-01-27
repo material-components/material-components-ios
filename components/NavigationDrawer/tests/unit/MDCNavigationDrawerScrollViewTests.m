@@ -169,18 +169,15 @@
 - (void)setUp {
   [super setUp];
 
-  UIViewController *fakeContentViewController = [[UIViewController alloc] init];
-  fakeContentViewController.view.frame = CGRectMake(0, 0, 200, 500);
-
-  UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
-  fakePresentingViewController.view.frame = CGRectMake(0, 0, 200, 500);
+  UIViewController *fakeViewController = [[UIViewController alloc] init];
+  fakeViewController.view.frame = CGRectMake(0, 0, 200, 500);
 
   _fakeScrollView = [[UIScrollView alloc] init];
   _fakeBottomDrawer = [[MDCBottomDrawerContainerViewController alloc]
-      initWithOriginalPresentingViewController:fakePresentingViewController
+      initWithOriginalPresentingViewController:fakeViewController
                             trackingScrollView:_fakeScrollView];
   _drawerViewController = [[MDCBottomDrawerViewController alloc] init];
-  _drawerViewController.contentViewController = fakeContentViewController;
+  _drawerViewController.contentViewController = fakeViewController;
   _presentationController = [[MDCBottomDrawerPresentationController alloc]
       initWithPresentedViewController:_drawerViewController
              presentingViewController:nil];
@@ -859,62 +856,12 @@
   XCTAssertEqualWithAccuracy(drawerHeight, 320, 0.001);
 }
 
-- (void)testUpdatingMaximumInitialDrawerHeightWithLargePreferredContentSize {
-  // Given
-  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
-  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
-
-  // When
-  self.fakeBottomDrawer.maximumInitialDrawerHeight = 100;
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400, 0.001);
-
-  // When
-  self.fakeBottomDrawer.maximumInitialDrawerHeight = 300;
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
-}
-
-- (void)testUpdatingPreferredContentSizeWithLargeMaximumInitialDrawerHeight {
-  // Given
-  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
-  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
-  self.fakeBottomDrawer.maximumInitialDrawerHeight = 500;
-  self.fakeBottomDrawer.shouldAdjustOnContentSizeChange = YES;
-
-  // When
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 100);
-  [self.fakeBottomDrawer cacheLayoutCalculations];
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400, 0.001);
-  [self.fakeBottomDrawer cacheLayoutCalculations];
-
-  // When
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 300);
-  [self.fakeBottomDrawer cacheLayoutCalculations];
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
-
-  // When
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 50);
-  [self.fakeBottomDrawer cacheLayoutCalculations];
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 450, 0.001);
-}
-
 - (void)testDrawerHeightReasonableRounding {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
   self.fakeBottomDrawer.maximumInitialDrawerHeight = (CGFloat)412.3;
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
-  [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 88, 0.001);
@@ -936,6 +883,11 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.trackingScrollView.frame.origin.y, 0, 0.001);
+  CGFloat expectedHeight = self.fakeBottomDrawer.presentingViewBounds.size.height -
+                           fakeHeader.preferredContentSize.height;
+  XCTAssertEqualWithAccuracy(
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame), expectedHeight,
+      0.001);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fakeBottomDrawer.scrollView.frame), 0, 0.001);
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 20, 0.01);
 }

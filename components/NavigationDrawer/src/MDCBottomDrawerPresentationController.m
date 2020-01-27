@@ -100,8 +100,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
-  bottomDrawerContainerViewController.shouldAdjustOnContentSizeChange =
-      self.shouldAdjustOnContentSizeChange;
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
       self.shouldIncludeSafeAreaInInitialDrawerHeight;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
@@ -324,22 +322,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
 }
 
-- (void)setShouldAdjustOnContentSizeChange:(BOOL)shouldAdjustOnContentSizeChange {
-  _shouldAdjustOnContentSizeChange = shouldAdjustOnContentSizeChange;
-  self.bottomDrawerContainerViewController.shouldAdjustOnContentSizeChange =
-      shouldAdjustOnContentSizeChange;
-}
-
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
   _drawerShadowColor = drawerShadowColor;
   self.bottomDrawerContainerViewController.drawerShadowColor = drawerShadowColor;
-}
-
-- (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
-  _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
-
-  self.bottomDrawerContainerViewController.maximumInitialDrawerHeight =
-      self.maximumInitialDrawerHeight;
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {

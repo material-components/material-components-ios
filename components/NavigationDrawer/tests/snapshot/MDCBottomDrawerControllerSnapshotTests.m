@@ -110,11 +110,11 @@
 
   // When
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
-  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
-  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
   self.bottomDrawerViewController.contentViewController.preferredContentSize =
       CGSizeMake(375, 1000);
   self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
@@ -142,11 +142,11 @@
 
   // When
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 667, 375);
-  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
-  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
   self.bottomDrawerViewController.contentViewController.preferredContentSize =
       CGSizeMake(667, 1000);
   self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(667, 80);
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
@@ -168,12 +168,12 @@
   // When
   self.containerViewController.drawerShadowColor = UIColor.blueColor;
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
-  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
-  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
-  [self.containerViewController didMoveToParentViewController:self.bottomDrawerViewController];
   self.bottomDrawerViewController.contentViewController.preferredContentSize =
       CGSizeMake(375, 1000);
   self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.containerViewController didMoveToParentViewController:self.bottomDrawerViewController];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
