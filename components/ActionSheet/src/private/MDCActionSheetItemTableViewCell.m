@@ -22,17 +22,20 @@ static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
 static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
 static const CGFloat kActionItemTitleVerticalPadding = 18;
+/** The height of the divider. */
+static const CGFloat kDividerHeight = 1;
 
 static inline UIColor *RippleColor() {
   return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
 }
 
 @interface MDCActionSheetItemTableViewCell ()
-@property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 /** Container view holding all custom content so it can be inset. */
 @property(nonatomic, strong) UIView *contentContainerView;
+/** A divider that is show at the top of the action. */
+@property(nonatomic, strong, nonnull) UIView *divider;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
@@ -74,6 +77,23 @@ static inline UIColor *RippleColor() {
   _contentContainerTrailingConstraint = [_contentContainerView.trailingAnchor
       constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
   _contentContainerTrailingConstraint.active = YES;
+
+  _divider = [[UIView alloc] init];
+  _divider.translatesAutoresizingMaskIntoConstraints = NO;
+  _divider.backgroundColor = UIColor.clearColor;
+  [self.contentContainerView addSubview:_divider];
+  [_contentContainerView.topAnchor constraintEqualToAnchor:_divider.topAnchor].active = YES;
+  [NSLayoutConstraint constraintWithItem:_divider
+                               attribute:NSLayoutAttributeHeight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:kDividerHeight]
+      .active = YES;
+  [_contentContainerView.leadingAnchor constraintEqualToAnchor:_divider.leadingAnchor].active = YES;
+  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_divider.trailingAnchor].active =
+      YES;
 
   _actionLabel = [[UILabel alloc] init];
   [_contentContainerView addSubview:_actionLabel];
@@ -149,6 +169,22 @@ static inline UIColor *RippleColor() {
   _contentContainerLeadingConstraint.constant = contentEdgeInsets.left;
   _contentContainerBottomConstraint.constant = contentEdgeInsets.bottom;
   _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
+}
+
+- (void)setDividerColor:(UIColor *)dividerColor {
+  self.divider.backgroundColor = dividerColor;
+}
+
+- (UIColor *)dividerColor {
+  return self.divider.backgroundColor;
+}
+
+- (void)setShowsDivider:(BOOL)showsDivider {
+  self.divider.hidden = !showsDivider;
+}
+
+- (BOOL)showsDivider {
+  return !self.divider.hidden;
 }
 
 - (MDCActionSheetAction *)action {

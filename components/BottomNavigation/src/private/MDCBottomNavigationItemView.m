@@ -641,4 +641,30 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
+#pragma mark - UILargeContentViewerItem
+
+- (BOOL)showsLargeContentViewer {
+  return YES;
+}
+
+- (NSString *)largeContentTitle {
+  if (_largeContentTitle) {
+    return _largeContentTitle;
+  }
+
+  return self.title;
+}
+
+- (UIImage *)largeContentImage {
+  if (_largeContentImage) {
+    return _largeContentImage;
+  }
+
+  return self.image;
+}
+
+- (BOOL)scalesLargeContentImage {
+  return _largeContentImage == nil;
+}
+
 @end

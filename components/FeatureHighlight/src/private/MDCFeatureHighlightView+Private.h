@@ -19,15 +19,16 @@
 typedef void (^MDCFeatureHighlightInteractionBlock)(BOOL accepted);
 
 @interface MDCFeatureHighlightView ()
-
 @property(nonatomic, readonly) CGPoint highlightCenter;
 @property(nonatomic, readonly) CGFloat highlightRadius;
 
 @property(nonatomic, assign) CGPoint highlightPoint;
-@property(nonatomic, strong) UIView *displayedView;
-@property(nonatomic, strong) UILabel *titleLabel;
-@property(nonatomic, strong) UILabel *bodyLabel;
-@property(nonatomic, copy) MDCFeatureHighlightInteractionBlock interactionBlock;
+@property(nullable, nonatomic, strong) UIView *displayedView;
+@property(nonnull, nonatomic, strong) UILabel *titleLabel;
+@property(nonnull, nonatomic, strong) UILabel *bodyLabel;
+@property(nullable, nonatomic, copy) MDCFeatureHighlightInteractionBlock interactionBlock;
+/** A view used by UIAccessibility to reject the Feature Highlight. */
+@property(nonnull, readonly, nonatomic, strong) UIButton *accessibilityDismissView;
 
 @end
 

@@ -1,3 +1,80 @@
+# 103.1.0
+
+This minor release introduces iOS 13 support for BottomNavigation, divider customization for ActionSheet actions, and several bug fixes.
+
+## New features
+
+### ActionSheet
+
+MDCActionSheetAction has two new APIs, `dividerColor` and `showsDivider`. These APIs can be used to show a divider above the action.
+
+```objc
+action.showsDivider = YES;
+action.dividerColor = UIColor.greenColor;
+```
+
+MDCActionSheetController now has a delegate, `MDCActionSheetControllerDelegate`, that can be used to react to action sheet dismissal.
+
+```objc
+actionSheet.delegate = self;
+
+- (void)actionSheetControllerDidDismiss:(MDCActionSheetController *)actionSheetController {
+  NSLog(@"Did dismiss");
+}
+```
+
+### BottomNavigation
+
+MDCBottomNavigationBar now supports iOS 13's large content viewer functionality.
+
+## Component changes
+
+### ActionSheet
+
+* [Action sheet divider (#9449)](https://github.com/material-components/material-components-ios/commit/0d632ff762d69049463817a80db7149a4c535a16) (Cody Weaver)
+* [Add delegate to support dismissal notification (#9475)](https://github.com/material-components/material-components-ios/commit/42b004fcd7108825bf9d8f436c557a0a11fd2a97) (Bryan Oltman)
+
+### AppBar
+
+* [Fix swipe to go back gesture for MDCAppBarNavigationController. (#9448)](https://github.com/material-components/material-components-ios/commit/53ab07d693a8a27f96d12dc17715b768d16059af) (featherless)
+
+### BottomNavigation
+
+* [Adds large content viewer support (#9451)](https://github.com/material-components/material-components-ios/commit/69d39caeb96c2c2dc4ff80e10269ba815c799159) (Eric Lee)
+* [Fix bug in delegate method call (#9489)](https://github.com/material-components/material-components-ios/commit/e51a83afeb149b2e051f9abb8b43ce134f0b23f4) (Robert Moore)
+
+### Dialogs
+
+* [Use dot notation for properties and copyedits. (#9458)](https://github.com/material-components/material-components-ios/commit/33e69ab97351299ad6c3daac93946422922d7b1c) (Randall Li)
+
+### FeatureHighlight
+
+* [Allow UIAccessibility to activate the "dismiss" affordance. (#9486)](https://github.com/material-components/material-components-ios/commit/076aaa29dc039ec393533f27094903d9eebbcb6b) (Robert Moore)
+
+### FlexibleHeader
+
+* [Annotate to-be-deprecated APIs accordingly. (#9492)](https://github.com/material-components/material-components-ios/commit/9efa83581e90da776d848a9ae12140b0a695cc00) (featherless)
+
+### NavigationDrawer
+
+* [Update `transitionPercentageForContentOffset:` to use `kEpsilon` (#9471)](https://github.com/material-components/material-components-ios/commit/5e316d7a1575bd7cfcd4b20d083cfdcd3ddefc68) (Jake Rockland)
+
+### Snackbar
+
+* [Add example to show snackbar with keyboard (#9479)](https://github.com/material-components/material-components-ios/commit/c95a4449972c43da4642e622a3247a4c16ab7687) (Bryan Oltman)
+* [Update dismiss animation duration (#9472)](https://github.com/material-components/material-components-ios/commit/a20a5f6aa6ee704a49b9ec3270a7d547003e457c) (Yarden Eitan)
+
+### TextControls
+
+* [Update README (#9466)](https://github.com/material-components/material-components-ios/commit/c70ad694273d71e33c9edd6b268692c21e9bd4fb) (Andrew Overton)
+
+### TextFields
+
+* [Add identity check in -setTextColor: in MDCTextField (#9480)](https://github.com/material-components/material-components-ios/commit/7a48d3997fafb2b7a9e8ed4b76cf39772389430d) (Andrew Overton)
+* [MDCTextInputControllerOutlinedTextArea border width fix (#9454)](https://github.com/material-components/material-components-ios/commit/b28e09d345e518a042609b9a176e9ca99d98b024) (Andrew Overton)
+
+---
+
 # 103.0.0
 
 This major release includes a refactoring of the TextControls libraries, a theming extension for TextFields' underline controller,

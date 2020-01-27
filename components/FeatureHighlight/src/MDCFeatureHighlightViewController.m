@@ -86,7 +86,9 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   UIGestureRecognizer *tapGestureRecognizer =
       [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(acceptFeature)];
   [_displayedView addGestureRecognizer:tapGestureRecognizer];
-
+  [self.featureHighlightView.accessibilityDismissView addTarget:self
+                                                         action:@selector(rejectFeature)
+                                               forControlEvents:UIControlEventTouchUpInside];
   self.featureHighlightView.outerHighlightColor = _outerHighlightColor;
   self.featureHighlightView.innerHighlightColor = _innerHighlightColor;
   self.featureHighlightView.titleColor = _titleColor;

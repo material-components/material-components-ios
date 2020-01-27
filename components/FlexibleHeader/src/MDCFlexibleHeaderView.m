@@ -94,6 +94,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 @property(nonatomic, strong) MDCFlexibleHeaderTopSafeArea *topSafeArea;
 @property(nonatomic, strong) MDCFlexibleHeaderMinMaxHeight *minMaxHeight;
 
+// To be deprecated APIs; re-declared here in order to be auto-synthesized.
+@property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
+@property(nonatomic) BOOL resetShadowAfterTrackingScrollViewIsReset;
+@property(nonatomic, assign) BOOL allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView;
+
 @end
 
 // All injections into the content and scroll indicator insets are tracked here. It's super
