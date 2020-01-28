@@ -110,6 +110,29 @@
   }
 }
 
+- (void)testItemBarItemSetAccessibilityLabel {
+  // Given
+  NSString *resumeLabel = @"Résumé";
+  UIFont *defaultFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+  MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];
+  style.unselectedTitleFont = defaultFont;
+  style.selectedTitleFont = defaultFont;
+  MDCItemBar *itemBar = [[MDCItemBar alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  [itemBar applyStyle:style];
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"Item 1" image:nil tag:0];
+  item1.accessibilityLabel = resumeLabel;
+
+  // When
+  itemBar.items = @[ item1 ];
+
+  // Then
+  UIView *view = [itemBar accessibilityElementForItem:item1];
+  XCTAssertTrue([view isKindOfClass:[UIView class]]);
+  NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
+  XCTAssertTrue([accessibilityLabel localizedCaseInsensitiveContainsString:resumeLabel],
+                @"Item bar items should update the tab bar view's accessibilityLabel.");
+}
+
 - (void)testItemBarViewDoesNotIncludesTabInAccessibilityLabelOniOS10Plus {
   if (@available(iOS 10.0, *)) {
     // When
