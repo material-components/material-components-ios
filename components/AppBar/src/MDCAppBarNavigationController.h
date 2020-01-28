@@ -19,6 +19,8 @@
 @class MDCAppBarNavigationController;
 @class MDCFlexibleHeaderViewController;
 
+// Test, please ignore.
+
 /**
  Defines delegate methods that will be deprecated.
  */
