@@ -75,7 +75,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @interface MDCAlertController ()
 
-@property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
 
@@ -453,8 +452,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)loadView {
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
   self.alertView = (MDCAlertControllerView *)self.view;
-  // sharing MDCActionManager with with the alert view
+  // Sharing MDCActionManager with with the alert view.
   self.alertView.actionManager = self.actionManager;
+}
+
+- (MDCAlertControllerView *)alertView {
+  // Making sure the alert view is instantiated if accessed before loadView is invoked.
+  return _alertView == nil ? (MDCAlertControllerView *)self.view : _alertView;
 }
 
 - (void)viewDidLoad {

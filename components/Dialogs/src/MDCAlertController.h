@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MaterialButtons.h"
+#import "MDCAlertControllerView.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
@@ -135,6 +136,11 @@
  When @c nil the message accessibilityLabel will be set to the value of the @c message.
  */
 @property(nonatomic, nullable, copy) NSString *messageAccessibilityLabel;
+
+/**
+  The main view of the alert controller, which may also be accessed through the `view` property.
+ */
+@property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 
 /**
  Accessory view that contains custom UI.
