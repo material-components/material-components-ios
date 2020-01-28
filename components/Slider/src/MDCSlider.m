@@ -406,6 +406,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.trackEndsAreRounded;
 }
 
+- (void)setTrackEndsAreInset:(BOOL)trackEndsAreInset {
+  _thumbTrack.trackEndsAreInset = trackEndsAreInset;
+}
+
+- (BOOL)trackEndsAreInset {
+  return _thumbTrack.trackEndsAreInset;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   _thumbTrack.inkColor = inkColor;
 }

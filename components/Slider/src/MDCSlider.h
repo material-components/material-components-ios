@@ -355,6 +355,9 @@ IB_DESIGNABLE
 /** Whether the ends of the thumb track should be rounded. The default is NO. */
 @property(nonatomic, assign) BOOL trackEndsAreRounded;
 
+/** Whether the ends of the track are inset by the radius of the thumb. The default is NO. */
+@property(nonatomic, assign) BOOL trackEndsAreInset;
+
 #pragma mark - To be deprecated
 
 /**
