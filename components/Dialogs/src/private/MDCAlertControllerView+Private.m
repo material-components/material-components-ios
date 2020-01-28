@@ -654,17 +654,12 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 
   CGRect actionsScrollViewRect = CGRectZero;
   actionsScrollViewRect.size = self.actionsScrollView.contentSize;
+  actionsScrollViewRect.origin.y = CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height;
 
   const CGFloat requestedHeight =
       self.contentScrollView.contentSize.height + self.actionsScrollView.contentSize.height;
-  if (requestedHeight <= CGRectGetHeight(self.bounds)) {
-    // Simple layout case : both content and actions fit on the screen at once.
-    self.contentScrollView.frame = contentScrollViewRect;
-
-    actionsScrollViewRect.origin.y =
-        CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height;
-    self.actionsScrollView.frame = actionsScrollViewRect;
-  } else {
+  // Check the layout: do both content and actions fit on the screen at once?
+  if (requestedHeight > CGRectGetHeight(self.bounds)) {
     // Complex layout case : Split the space between the two scrollviews.
     if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.bounds) * (CGFloat)0.5) {
       actionsScrollViewRect.size.height =
@@ -673,14 +668,12 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
       CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) * (CGFloat)0.5;
       actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
     }
-    actionsScrollViewRect.origin.y =
-        CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height;
-    self.actionsScrollView.frame = actionsScrollViewRect;
-
-    contentScrollViewRect.size.height =
-        CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height;
-    self.contentScrollView.frame = contentScrollViewRect;
+    contentScrollViewRect.size.height = CGRectGetHeight(self.bounds) -
+                                        actionsScrollViewRect.size.height -
+                                        contentScrollViewRect.origin.y;
   }
+  self.actionsScrollView.frame = actionsScrollViewRect;
+  self.contentScrollView.frame = contentScrollViewRect;
 }
 
 #pragma mark - Dynamic Type
