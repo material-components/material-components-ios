@@ -385,7 +385,11 @@
 }
 
 - (void)contentDrawerTopInset:(CGFloat)transitionToTop {
-  CGFloat topInset = MDCDeviceTopSafeAreaInset();
+  CGFloat topInset = MDCFixedStatusBarHeightOnPreiPhoneXDevices;
+  if (@available(iOS 11.0, *)) {
+    topInset = self.view.safeAreaInsets.top;
+  }
+
   if ([self contentReachesFullScreen]) {
     topInset -= ((CGFloat)1.0 - transitionToTop) * topInset;
   } else {

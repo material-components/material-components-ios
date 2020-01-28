@@ -16,7 +16,7 @@
 
 #import "MaterialApplication.h"
 
-static const CGFloat kFixedStatusBarHeightOnPreiPhoneXDevices = 20;
+const CGFloat MDCFixedStatusBarHeightOnPreiPhoneXDevices = 20;
 
 static BOOL HasHardwareSafeAreas(void) {
   static BOOL hasHardwareSafeAreas = NO;
@@ -26,7 +26,7 @@ static BOOL HasHardwareSafeAreas(void) {
     if (!hasCheckedForHardwareSafeAreas && [UIApplication mdc_safeSharedApplication].keyWindow) {
       dispatch_once(&onceToken, ^{
         UIEdgeInsets insets = [UIApplication mdc_safeSharedApplication].keyWindow.safeAreaInsets;
-        hasHardwareSafeAreas = (insets.top > kFixedStatusBarHeightOnPreiPhoneXDevices ||
+        hasHardwareSafeAreas = (insets.top > MDCFixedStatusBarHeightOnPreiPhoneXDevices ||
                                 insets.left > 0 || insets.bottom > 0 || insets.right > 0);
 
         hasCheckedForHardwareSafeAreas = YES;
@@ -37,7 +37,7 @@ static BOOL HasHardwareSafeAreas(void) {
 }
 
 CGFloat MDCDeviceTopSafeAreaInset(void) {
-  CGFloat topInset = kFixedStatusBarHeightOnPreiPhoneXDevices;
+  CGFloat topInset = MDCFixedStatusBarHeightOnPreiPhoneXDevices;
   if (@available(iOS 11.0, *)) {
     // Devices with hardware safe area insets have fixed insets that depend on the device
     // orientation. On such devices, we aren't interested in the status bar's height because the
