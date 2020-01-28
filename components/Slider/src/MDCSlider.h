@@ -352,6 +352,9 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign) CGFloat trackHeight;
 
+/** Whether the ends of the thumb track should be rounded. The default is NO. */
+@property(nonatomic, assign) BOOL trackEndsAreRounded;
+
 #pragma mark - To be deprecated
 
 /**

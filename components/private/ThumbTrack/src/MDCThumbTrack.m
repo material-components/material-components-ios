@@ -365,6 +365,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 
   _trackHeight = trackHeight;
+  [self updateTrackEnds];
   [self setNeedsLayout];
 }
 
@@ -502,7 +503,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
   _trackEndsAreRounded = trackEndsAreRounded;
+  [self updateTrackEnds];
+}
 
+- (void)updateTrackEnds {
   if (_trackEndsAreRounded) {
     _trackView.layer.cornerRadius = _trackHeight / 2;
   } else {

@@ -398,6 +398,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
 }
 
+- (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
+  _thumbTrack.trackEndsAreRounded = trackEndsAreRounded;
+}
+
+- (BOOL)trackEndsAreRounded {
+  return _thumbTrack.trackEndsAreRounded;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   _thumbTrack.inkColor = inkColor;
 }
