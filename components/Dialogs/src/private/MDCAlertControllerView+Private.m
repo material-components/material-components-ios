@@ -97,10 +97,6 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   return self;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (NSString *)title {
   return self.titleLabel.text;
 }

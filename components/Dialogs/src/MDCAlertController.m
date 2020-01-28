@@ -130,6 +130,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return self;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   if (self.traitCollectionDidChangeBlock) {
