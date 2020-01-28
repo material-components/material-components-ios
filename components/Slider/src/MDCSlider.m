@@ -398,6 +398,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
 }
 
+- (void)setAllowAnimatedValueChanges:(BOOL)allowAnimatedValueChanges {
+  _thumbTrack.allowAnimatedValueChanges = allowAnimatedValueChanges;
+}
+
+- (BOOL)allowAnimatedValueChanges {
+  return _thumbTrack.allowAnimatedValueChanges;
+}
+
 - (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
   _thumbTrack.trackEndsAreRounded = trackEndsAreRounded;
 }

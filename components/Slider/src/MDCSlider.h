@@ -250,6 +250,11 @@ IB_DESIGNABLE
 @property(nonatomic, assign) CGFloat value;
 
 /**
+ When @c NO, changes to the @c value property will never be animated. Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL allowAnimatedValueChanges;
+
+/**
  Set the value of the slider, allowing you to animate the change visually.
 
  If animated is YES, the thumb is animated into its new position. Setting the value does not
