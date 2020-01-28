@@ -231,6 +231,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     }
   }
   self.accessibilityIdentifier = item.accessibilityIdentifier;
+  self.accessibilityLabel = item.accessibilityLabel;
 
   _itemIndex = itemIndex;
   _itemCount = itemCount;
@@ -366,9 +367,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   NSMutableArray *labelComponents = [NSMutableArray array];
 
   // Use untransformed title as accessibility label to ensure accurate reading.
-  NSString *titleComponent = _title;
+  NSString *titleComponent = super.accessibilityLabel;
   if (titleComponent.length > 0) {
-    [labelComponents addObject:titleComponent];
+    [labelComponents addObject:_title];
+  } else if (_title.length > 0) {
+    [labelComponents addObject:_title];
   }
 
   if (_badgeValue.length > 0 && !_badge.hidden) {
