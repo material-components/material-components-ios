@@ -113,20 +113,21 @@
 - (void)testItemBarItemSetAccessibilityLabel {
   // Given
   NSString *resumeLabel = @"Résumé";
-  UIFont *defaultFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+  UIFont *font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];
-  style.unselectedTitleFont = defaultFont;
-  style.selectedTitleFont = defaultFont;
+  style.unselectedTitleFont = font;
+  style.selectedTitleFont = font;
+  // Cannot use CGRectZero, otherwise tab bar won't render the tab bar view.
   MDCItemBar *itemBar = [[MDCItemBar alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   [itemBar applyStyle:style];
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"Item 1" image:nil tag:0];
-  item1.accessibilityLabel = resumeLabel;
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Foo" image:nil tag:0];
+  item.accessibilityLabel = resumeLabel;
 
   // When
-  itemBar.items = @[ item1 ];
+  itemBar.items = @[ item ];
 
   // Then
-  UIView *view = [itemBar accessibilityElementForItem:item1];
+  UIView *view = [itemBar accessibilityElementForItem:item];
   XCTAssertTrue([view isKindOfClass:[UIView class]]);
   NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
   XCTAssertTrue([accessibilityLabel localizedCaseInsensitiveContainsString:resumeLabel],
