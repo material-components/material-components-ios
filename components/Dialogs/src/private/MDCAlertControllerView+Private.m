@@ -572,20 +572,35 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   self.accessoryView.frame = accessoryViewFrame;
 
   if (self.titleIconImageView != nil) {
-    // Match the titleIcon alignment to the title alignment.
-    CGFloat titleIconPosition = titleFrame.origin.x;
-    if (self.titleAlignment == NSTextAlignmentCenter) {
-      titleIconPosition =
-          CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconSize.width) / 2;
-    } else if (self.titleAlignment == NSTextAlignmentRight ||
-               (self.titleAlignment == NSTextAlignmentNatural &&
-                [self mdf_effectiveUserInterfaceLayoutDirection] ==
-                    UIUserInterfaceLayoutDirectionRightToLeft)) {
-      titleIconPosition = CGRectGetMaxX(titleFrame) - titleIconSize.width;
+    CGRect titleIconFrame = CGRectZero;
+    if (self.automaticallyAdjustsTitleIconAlignment) {
+      // Match the titleIcon alignment to the title alignment.
+      CGFloat titleIconPosition = titleFrame.origin.x;
+      if (self.titleAlignment == NSTextAlignmentCenter) {
+        titleIconPosition =
+            CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconSize.width) / 2;
+      } else if (self.titleAlignment == NSTextAlignmentRight ||
+                 (self.titleAlignment == NSTextAlignmentNatural &&
+                  [self mdf_effectiveUserInterfaceLayoutDirection] ==
+                      UIUserInterfaceLayoutDirectionRightToLeft)) {
+        titleIconPosition = CGRectGetMaxX(titleFrame) - titleIconSize.width;
+      }
+      titleIconFrame = CGRectMake(titleIconPosition, MDCDialogContentInsets.top,
+                                  titleIconSize.width, titleIconSize.height);
+      self.titleIconImageView.frame = titleIconFrame;
+    } else {
+      titleIconFrame =
+          CGRectMake(0, MDCDialogContentInsets.top, titleIconSize.width, titleIconSize.height);
+      if (self.titleIconAlignment == MDCAlertControllerTitleIconAlignmentCenter) {
+        titleIconFrame.origin.x = CGRectGetMidX(self.bounds) - (titleIconSize.width / 2);
+      } else if (self.titleIconAlignment == MDCAlertControllerTitleIconAlignmentLeading) {
+        titleIconFrame.origin.x = MDCDialogContentInsets.left;
+      } else {
+        titleIconFrame.origin.x =
+            CGRectGetWidth(self.bounds) - (titleIconSize.width + MDCDialogContentInsets.right);
+      }
+      self.titleIconImageView.frame = titleIconFrame;
     }
-    CGRect titleIconFrame = CGRectMake(titleIconPosition, MDCDialogContentInsets.top,
-                                       titleIconSize.width, titleIconSize.height);
-    self.titleIconImageView.frame = titleIconFrame;
   }
 
   // Actions

@@ -23,6 +23,20 @@
 @property(nonatomic, strong, nullable) UIImage *titleIcon;
 @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
 
+/**
+ The alignment applied to the @c titleIcon of the @c MDCAlertControllerView. Defaults to
+ MDCAlertControlelrTitleIconAlignmentCenter.
+ */
+@property(nonatomic, assign) MDCAlertControllerTitleIconAlignment titleIconAlignment;
+
+/**
+ Determines if @c titleIconAlignment should be respected or not. If @c YES the @c titleIcon is
+ aligned to match the @c titleAlignment, otherwise the @c titleIcon uses @c titleIconAlignment.
+
+ @note Defaults to YES.
+*/
+@property(nonatomic, assign) BOOL automaticallyAdjustsTitleIconAlignment;
+
 @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;
 

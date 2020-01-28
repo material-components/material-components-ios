@@ -100,6 +100,15 @@
   XCTAssertEqualObjects(self.alertView.titleIconImageView.tintColor, tintColor);
 }
 
+- (void)testTitleIconAlignmentUpdatesAlertView {
+  // When
+  self.alert.titleIconAlignment = MDCAlertControllerTitleIconAlignmentLeading;
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, MDCAlertControllerTitleIconAlignmentLeading);
+  XCTAssertEqual(self.alertView.titleIconAlignment, self.alert.titleIconAlignment);
+}
+
 - (void)testApplyingScrimColorToPresentationController {
   // Given
   UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:(CGFloat)0.5];

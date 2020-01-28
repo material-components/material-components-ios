@@ -22,6 +22,15 @@
 @class MDCAlertAction;
 
 /**
+ These constants determine the alignment of the @c titleIcon of a @c MDCAlertController.
+ */
+typedef NS_ENUM(NSInteger, MDCAlertControllerTitleIconAlignment) {
+  MDCAlertControllerTitleIconAlignmentLeading = 0,
+  MDCAlertControllerTitleIconAlignmentCenter = 1,
+  MDCAlertControllerTitleIconAlignmentTrailing = 2,
+};
+
+/**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
  https://material.io/go/design-dialogs
@@ -67,6 +76,20 @@
 
 /** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
 @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
+
+/**
+ The alignment applied to the @c titleIcon of the Alert Controller. Defaults to
+ MDCAlertControlelrTitleIconAlignmentCenter.
+ */
+@property(nonatomic, assign) MDCAlertControllerTitleIconAlignment titleIconAlignment;
+
+/**
+ Determines if @c titleIconAlignment should be respected or not. If @c YES the @c titleIcon is
+ aligned to match the @c titleAlignment, otherwise the @c titleIcon uses @c titleIconAlignment.
+
+ @note Defaults to YES.
+*/
+@property(nonatomic, assign) BOOL automaticallyAdjustsTitleIconAlignment;
 
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;

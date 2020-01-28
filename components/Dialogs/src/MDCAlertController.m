@@ -123,7 +123,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _shadowColor = UIColor.blackColor;
     _mdc_overrideBaseElevation = -1;
-
+    _titleIconAlignment = MDCAlertControllerTitleIconAlignmentCenter;
+    _automaticallyAdjustsTitleIconAlignment = YES;
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
@@ -336,6 +337,20 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setTitleIconAlignment:(MDCAlertControllerTitleIconAlignment)titleIconAlignment {
+  _titleIconAlignment = titleIconAlignment;
+  if (self.alertView) {
+    self.alertView.titleIconAlignment = titleIconAlignment;
+  }
+}
+
+- (void)setAutomaticallyAdjustsTitleIconAlignment:(BOOL)automaticallyAdjustsTitleIconAlignment {
+  _automaticallyAdjustsTitleIconAlignment = automaticallyAdjustsTitleIconAlignment;
+  if (self.alertView) {
+    self.alertView.automaticallyAdjustsTitleIconAlignment = automaticallyAdjustsTitleIconAlignment;
+  }
+}
+
 - (void)setScrimColor:(UIColor *)scrimColor {
   _scrimColor = scrimColor;
   self.mdc_dialogPresentationController.scrimColor = scrimColor;
@@ -512,6 +527,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.titleAlignment = self.titleAlignment;
   self.alertView.titleIcon = self.titleIcon;
   self.alertView.titleIconTintColor = self.titleIconTintColor;
+  self.alertView.titleIconAlignment = self.titleIconAlignment;
+  self.alertView.automaticallyAdjustsTitleIconAlignment =
+      self.automaticallyAdjustsTitleIconAlignment;
   self.alertView.cornerRadius = self.cornerRadius;
   self.alertView.enableRippleBehavior = self.enableRippleBehavior;
 
