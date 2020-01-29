@@ -126,6 +126,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 // The top header height when the drawer is displayed in fullscreen.
 @property(nonatomic, readonly) CGFloat topHeaderHeight;
 
+// The top safe area inset if there is a header, 0 otherwise.
+@property(nonatomic, readonly) CGFloat topAreaInsetForHeader;
+
 // The content header height when the drawer is first displayed.
 @property(nonatomic, readonly) CGFloat contentHeaderHeight;
 
@@ -285,7 +288,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (CGFloat)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
   CGFloat normalizedYContentOffset = contentYOffset;
-  CGFloat topAreaInsetForHeader = (self.headerViewController ? self.topSafeAreaInset : 0);
+  CGFloat topAreaInsetForHeader = self.topAreaInsetForHeader;
   // The top area inset for header should be a positive non zero value for the algorithm to
   // correctly work when the drawer is presented in full screen and there is no top inset.
   // The reason being is that otherwise there would be a conflict between if the drawer is currently
@@ -410,8 +413,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
   _scrollToContentOffsetY = contentOffsetY;
-  CGFloat topAreaInsetForHeader = (self.headerViewController ? self.topSafeAreaInset : 0);
-  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
+  CGFloat drawerOffset = self.contentHeaderTopInset - self.topAreaInsetForHeader;
   CGFloat calculatedYContentOffset =
       contentOffsetY - self.trackingScrollView.contentOffset.y + drawerOffset;
   [self.scrollView
@@ -464,8 +466,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-  CGFloat topAreaInsetForHeader = (self.headerViewController ? self.topSafeAreaInset : 0);
-  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
+  CGFloat drawerOffset = self.contentHeaderTopInset - self.topAreaInsetForHeader;
   CGFloat calculatedYContentOffset =
       _scrollToContentOffsetY - self.trackingScrollView.contentOffset.y + drawerOffset;
   self.scrollView.contentOffset =
@@ -556,13 +557,12 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGRect contentViewFrame = self.scrollView.bounds;
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
-    CGFloat topAreaInsetForHeader = (self.headerViewController ? self.topSafeAreaInset : 0);
     contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
     // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
     // scroll view is set, to normalize the algorithm after the removal of this value from the
     // topAreaInsetForHeader inside the updateContentOffsetForPerformantScrolling method.
-    if (self.contentHeaderTopInset > topAreaInsetForHeader + kEpsilon) {
-      contentViewFrame.size.height += topAreaInsetForHeader;
+    if (self.contentHeaderTopInset > self.topAreaInsetForHeader + kEpsilon) {
+      contentViewFrame.size.height += self.topAreaInsetForHeader;
     }
   } else {
     contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached;
@@ -1048,6 +1048,13 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     return headerHeight + self.topSafeAreaInset;
   }
   return self.topSafeAreaInset;
+}
+
+- (CGFloat)topAreaInsetForHeader {
+  if (self.hasHeaderViewController) {
+    return self.topSafeAreaInset;
+  }
+  return 0;
 }
 
 - (CGFloat)contentHeaderHeight {
