@@ -127,6 +127,10 @@
   // TODO: (#4331) This needs to be converted to the new text scheme.
   self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  NSString *accessibilityLabel = NSLocalizedStringWithDefaultValue(
+      @"CLEAR_TEXT", nil, [NSBundle bundleForClass:[MDCMultilineTextField class]], @"Clear text",
+      @"Clears the text in a text field. (20 chars)");
+  self.clearButton.accessibilityLabel = accessibilityLabel;
 
   _cursorColor = MDCTextInputCursorColor();
   [self applyCursorColor];
