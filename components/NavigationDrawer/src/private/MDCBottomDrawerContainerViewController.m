@@ -17,6 +17,7 @@
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
 #import "MDCBottomDrawerShadowedView.h"
+#import "MaterialApplication.h"
 #import "MaterialMath.h"
 #import "MaterialUIMetrics.h"
 
@@ -232,7 +233,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (CGFloat)topSafeAreaInset {
   if (@available(iOS 11.0, *)) {
-    return self.view.safeAreaInsets.top;
+    return [UIApplication mdc_safeSharedApplication].keyWindow.safeAreaInsets.top;
   }
   return MDCFixedStatusBarHeightOnPreiPhoneXDevices;
 }
