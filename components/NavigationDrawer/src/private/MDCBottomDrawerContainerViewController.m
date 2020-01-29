@@ -174,6 +174,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 @implementation MDCBottomDrawerContainerViewController {
   UIScrollView *_scrollView;
+  UIView *_topSafeAreaView;
   CGFloat _contentHeaderTopInset;
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
@@ -400,6 +401,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   } else {
     self.drawerState = MDCBottomDrawerStateCollapsed;
   }
+}
+
+- (BOOL)hasHeaderViewController {
+  return self.headerViewController != nil;
 }
 
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
@@ -696,10 +701,17 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                                         distance:self.headerAnimationDistance];
   CGFloat headerTransitionToTop =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1 : transitionPercentage;
+  CGFloat adjustedTransitionRatio = transitionPercentage;
+  // The transition ratio is adjusted if the sticky status bar view is being used in place of a
+  // headerViewController to prevent presentation issues with corner radius not being kept in sync
+  // with the animation of the sticky view's expansion.
+  if (!self.hasHeaderViewController && self.shouldUseStickyStatusBar) {
+    adjustedTransitionRatio = (adjustedTransitionRatio > 0) ? 1 : 0;
+  }
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
-                                                       transitionRatio:transitionPercentage];
+                                                       transitionRatio:adjustedTransitionRatio];
+  [self updateDrawerState:adjustedTransitionRatio];
 
-  [self updateDrawerState:transitionPercentage];
   self.currentlyFullscreen =
       self.contentReachesFullscreen && headerTransitionToTop >= 1 && contentOffset.y > 0;
   CGFloat fullscreenHeaderHeight =
@@ -742,26 +754,24 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)updateContentHeaderWithTransitionToTop:(CGFloat)headerTransitionToTop
                         fullscreenHeaderHeight:(CGFloat)fullscreenHeaderHeight {
-  if (!self.headerViewController) {
+  if (!self.shouldUseStickyStatusBar && !self.hasHeaderViewController) {
     return;
   }
 
-  UIView *contentHeaderView = self.headerViewController.view;
-  BOOL contentReachesFullscreen = self.contentReachesFullscreen;
-
-  if ([self.headerViewController
+  if (self.hasHeaderViewController &&
+      [self.headerViewController
           respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
     if (self.shouldAlwaysExpandHeader) {
       [self.headerViewController updateDrawerHeaderTransitionRatio:headerTransitionToTop];
     } else {
-      [self.headerViewController
-          updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0];
+      [self.headerViewController updateDrawerHeaderTransitionRatio:self.contentReachesFullscreen
+                                                                       ? headerTransitionToTop
+                                                                       : 0];
     }
   }
-  CGFloat contentHeaderHeight = self.contentHeaderHeight;
-  CGFloat headersDiff = fullscreenHeaderHeight - contentHeaderHeight;
-  CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
 
+  UIView *contentHeaderView =
+      self.hasHeaderViewController ? self.headerViewController.view : self.topSafeAreaView;
   if (self.currentlyFullscreen && contentHeaderView.superview != self.view) {
     // The content header should be located statically at the top of the drawer when the drawer
     // is shown in fullscreen.
@@ -775,6 +785,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     [self.scrollView addSubview:contentHeaderView];
     [self.view setNeedsLayout];
   }
+
+  CGFloat contentHeaderHeight = self.contentHeaderHeight;
+  CGFloat headersDiff = fullscreenHeaderHeight - contentHeaderHeight;
+  CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
   CGFloat contentHeaderViewWidth = self.presentingViewBounds.size.width;
   CGFloat contentHeaderViewTop =
       self.currentlyFullscreen ? 0
@@ -829,6 +843,16 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _scrollView.delegate = self;
   }
   return _scrollView;
+}
+
+- (UIView *)topSafeAreaView {
+  if (!_topSafeAreaView) {
+    _topSafeAreaView = [[UIView alloc] init];
+    _topSafeAreaView.backgroundColor = self.trackingScrollView
+                                           ? self.trackingScrollView.backgroundColor
+                                           : self.contentViewController.view.backgroundColor;
+  }
+  return _topSafeAreaView;
 }
 
 - (CGFloat)contentHeaderTopInset {
@@ -1019,7 +1043,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (CGFloat)topHeaderHeight {
   if (!self.headerViewController) {
-    return 0;
+    return self.topSafeAreaInset;
   }
   CGFloat headerHeight = self.headerViewController.preferredContentSize.height;
   return headerHeight + self.topSafeAreaInset;

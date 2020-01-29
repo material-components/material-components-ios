@@ -263,11 +263,20 @@
 }
 
 - (void)testTopHeaderHeightWithNoHeader {
+  // Given
+  CGFloat topSafeArea;
+  if (@available(iOS 11.0, *)) {
+    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
+  } else {
+    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
+    topSafeArea = 20;
+  }
+
   // When
   self.fakeBottomDrawer.headerViewController = nil;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, 0, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, topSafeArea, 0.001);
 }
 
 - (void)testTopHeaderHeightWithHeader {

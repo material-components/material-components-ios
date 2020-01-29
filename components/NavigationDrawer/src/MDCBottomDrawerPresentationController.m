@@ -102,6 +102,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       self.shouldIncludeSafeAreaInContentHeight;
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
       self.shouldIncludeSafeAreaInInitialDrawerHeight;
+  bottomDrawerContainerViewController.shouldUseStickyStatusBar = self.shouldUseStickyStatusBar;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
