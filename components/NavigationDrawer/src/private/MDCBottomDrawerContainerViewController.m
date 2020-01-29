@@ -1043,18 +1043,18 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (CGFloat)topHeaderHeight {
-  if (!self.headerViewController) {
-    return self.topSafeAreaInset;
+  if (self.hasHeaderViewController) {
+    CGFloat headerHeight = self.headerViewController.preferredContentSize.height;
+    return headerHeight + self.topSafeAreaInset;
   }
-  CGFloat headerHeight = self.headerViewController.preferredContentSize.height;
-  return headerHeight + self.topSafeAreaInset;
+  return self.topSafeAreaInset;
 }
 
 - (CGFloat)contentHeaderHeight {
-  if (!self.headerViewController) {
-    return 0;
+  if (self.hasHeaderViewController) {
+    return self.headerViewController.preferredContentSize.height;
   }
-  return self.headerViewController.preferredContentSize.height;
+  return 0;
 }
 
 - (CGFloat)transitionCompleteContentOffset {
