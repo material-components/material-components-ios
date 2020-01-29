@@ -264,26 +264,18 @@
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
-  NSLog(@"Setting leftViewMode is not recommended. Consider setting leadingViewMode and "
-        @"trailingViewMode instead.");
   [self mdc_setLeftViewMode:leftViewMode];
 }
 
 - (void)setRightViewMode:(UITextFieldViewMode)rightViewMode {
-  NSLog(@"Setting rightViewMode is not recommended. Consider setting leadingViewMode and "
-        @"trailingViewMode instead.");
   [self mdc_setRightViewMode:rightViewMode];
 }
 
 - (void)setLeftView:(UIView *)leftView {
-  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
-        @"trailingView instead.");
   [self mdc_setLeftView:leftView];
 }
 
 - (void)setRightView:(UIView *)rightView {
-  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
-        @"trailingView instead.");
   [self mdc_setRightView:rightView];
 }
 
