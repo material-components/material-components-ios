@@ -7,7 +7,10 @@
 let contentViewController = UITableViewController()
 let bottomDrawerViewController = MDCBottomDrawerViewController()
 bottomDrawerViewController.contentViewController = contentViewController
-bottomDrawerViewController.headerViewController = UIViewController() # this is optional
+// This is optional, however if a `headerViewController` is not provided, it is recommended to set
+// the `bottomDrawerViewController`'s `shouldUseStickyStatusBar` property to `YES` to prevent the
+// drawer content from potentially overlapping with the status bar content.
+bottomDrawerViewController.headerViewController = UIViewController()
 bottomDrawerViewController.trackingScrollView = contentViewController.view
 present(bottomDrawerViewController, animated: true, completion: nil)
 ```
@@ -18,6 +21,9 @@ present(bottomDrawerViewController, animated: true, completion: nil)
 UITableViewController *contentViewController = [UITableViewController new];
 MDCBottomDrawerViewController *bottomDrawerViewController = [[MDCBottomDrawerViewController alloc] init];
 bottomDrawerViewController.contentViewController = contentViewController;
+// This is optional, however if a `headerViewController` is not provided, it is recommended to set
+// the `bottomDrawerViewController`'s `shouldUseStickyStatusBar` property to `YES` to prevent the
+// drawer content from potentially overlapping with the status bar content.
 bottomDrawerViewController.headerViewController = [UIViewController new];
 bottomDrawerViewController.trackingScrollView = contentViewController.view;
 [self presentViewController:bottomDrawerViewController animated:YES completion:nil];

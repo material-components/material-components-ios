@@ -1,21 +1,25 @@
-### Typical use: presenting in a drawer without a header.
+### Typical use: using the `MDCBottomDrawerViewController` without a header.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-let contentViewController = UIViewController()
-contentViewController.transitioningDelegate = MDCBottomDrawerTransitionController()
-contentViewController.modalPresentationStyle = .custom
-present(contentViewController, animated: true, completion: nil)
+let bottomDrawerViewController = MDCBottomDrawerViewController()
+bottomDrawerViewController.contentViewController = UIViewController()
+// This is optional, but is recommended to prevent the drawer content from potentially overlapping with
+// the status bar content.
+bottomDrawerViewController.shouldUseStickyStatusBar = true
+present(bottomDrawerViewController, animated: true, completion: nil)
 ```
 
 #### Objective-C
 
 ```objc
-UIViewController *contentViewController = [UIViewController new];
-contentViewController.transitioningDelegate = [MDCBottomDrawerTransitionController new];
-contentViewController.modalPresentationStyle = UIModalPresentationCustom;
-[self presentViewController:contentViewController animated:YES completion:nil];
+MDCBottomDrawerViewController *bottomDrawerViewController = [[MDCBottomDrawerViewController alloc] init];
+bottomDrawerViewController.contentViewController = [UIViewController new];
+// This is optional, but is recommended to prevent the drawer content from potentially overlapping with
+// the status bar content.
+bottomDrawerViewController.shouldUseStickyStatusBar = YES;
+[self presentViewController:bottomDrawerViewController animated:YES completion:nil];
 ```
 <!--</div>-->
