@@ -460,6 +460,7 @@ static NSString *const kOfAnnouncement = @"of";
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
+  [self layoutIfNeeded];
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {

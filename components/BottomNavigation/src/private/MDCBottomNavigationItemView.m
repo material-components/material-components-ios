@@ -561,6 +561,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   _title = [title copy];
   self.label.text = _title;
   self.button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
+  [self setNeedsLayout];
 }
 
 - (void)setTitleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility {
