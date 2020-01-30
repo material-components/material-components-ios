@@ -341,6 +341,12 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.trackingScrollView = trackingScrollView;
 }
 
+- (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
+  _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
+  self.bottomDrawerContainerViewController.maximumInitialDrawerHeight =
+      self.maximumInitialDrawerHeight;
+}
+
 - (BOOL)contentReachesFullscreen {
   return self.bottomDrawerContainerViewController.contentReachesFullscreen;
 }

@@ -185,6 +185,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGFloat _contentVCPreferredContentSizeHeightCached;
   CGFloat _headerVCPerferredContentSizeHeightCached;
   CGFloat _scrollToContentOffsetY;
+  CGFloat _maximumInitialDrawerHeight;
   BOOL _shouldPresentAtFullscreen;
 }
 
@@ -371,6 +372,18 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     return self.presentingViewBounds.size.height;
   }
   return _maximumInitialDrawerHeight + [self bottomSafeAreaInsetsToAdjustInitialDrawerHeight];
+}
+
+- (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
+  _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
+
+  if (_contentHeaderTopInset != NSNotFound) {
+    _contentHeaderTopInset = NSNotFound;
+    _contentHeightSurplus = NSNotFound;
+    _addedContentHeight = NSNotFound;
+    [self cacheLayoutCalculations];
+    [self setupLayout];
+  }
 }
 
 - (void)addScrollViewObserver {
