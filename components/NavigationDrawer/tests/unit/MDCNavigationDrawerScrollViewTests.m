@@ -1089,4 +1089,39 @@
   XCTAssertEqualObjects(drawerContainer.trackingScrollView, newTrackingScrollView);
 }
 
+- (void)testUpdatingPreferredContentSizeWithLargeMaximumInitialDrawerHeight {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 500;
+  self.fakeBottomDrawer.shouldAdjustOnContentSizeChange = YES;
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 100);
+  [self.fakeBottomDrawer
+      preferredContentSizeDidChangeForChildContentContainer:self.fakeBottomDrawer
+                                                                .contentViewController];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400, 0.001);
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 300);
+  [self.fakeBottomDrawer
+      preferredContentSizeDidChangeForChildContentContainer:self.fakeBottomDrawer
+                                                                .contentViewController];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 50);
+  [self.fakeBottomDrawer
+      preferredContentSizeDidChangeForChildContentContainer:self.fakeBottomDrawer
+                                                                .contentViewController];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 450, 0.001);
+}
+
 @end

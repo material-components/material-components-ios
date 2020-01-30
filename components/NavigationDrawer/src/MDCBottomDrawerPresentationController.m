@@ -103,6 +103,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
       self.shouldIncludeSafeAreaInInitialDrawerHeight;
   bottomDrawerContainerViewController.shouldUseStickyStatusBar = self.shouldUseStickyStatusBar;
+  bottomDrawerContainerViewController.shouldAdjustOnContentSizeChange =
+      self.shouldAdjustOnContentSizeChange;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
@@ -321,6 +323,12 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)setShouldAlwaysExpandHeader:(BOOL)shouldAlwaysExpandHeader {
   _shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
   self.bottomDrawerContainerViewController.shouldAlwaysExpandHeader = shouldAlwaysExpandHeader;
+}
+
+- (void)setShouldAdjustOnContentSizeChange:(BOOL)shouldAdjustOnContentSizeChange {
+  _shouldAdjustOnContentSizeChange = shouldAdjustOnContentSizeChange;
+  self.bottomDrawerContainerViewController.shouldAdjustOnContentSizeChange =
+      shouldAdjustOnContentSizeChange;
 }
 
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {

@@ -208,6 +208,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _drawerShadowColor = shadowColor;
     _elevation = MDCShadowElevationNavDrawer;
     _shadowedView = [[MDCBottomDrawerShadowedView alloc] init];
+    _shouldAdjustOnContentSizeChange = NO;
   }
   return self;
 }
@@ -606,10 +607,13 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
-  if ([container isKindOfClass:[UIViewController class]]) {
-    UIViewController *containerViewController = (UIViewController *)container;
-    if (containerViewController == self.contentViewController) {
-      self.maximumInitialDrawerHeight = [self calculateMaximumInitialDrawerHeight];
+
+  if (!_shouldAdjustOnContentSizeChange) {
+    if ([container isKindOfClass:[UIViewController class]]) {
+      UIViewController *containerViewController = (UIViewController *)container;
+      if (containerViewController == self.contentViewController) {
+        self.maximumInitialDrawerHeight = [self calculateMaximumInitialDrawerHeight];
+      }
     }
   }
   _shouldPresentAtFullscreen = NO;
