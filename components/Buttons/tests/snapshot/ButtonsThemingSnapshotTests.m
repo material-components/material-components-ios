@@ -101,4 +101,20 @@
   [self generateSnapshotAndVerifyForView:floatingButton];
 }
 
+/** Test a themed @c MDCFloatingButton with a large icon set on it. */
+- (void)testFloatingButtonWithDefaultContainerSchemeAndLargeIcon {
+  // Given
+  MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [floatingButton setImage:buttonImage forState:UIControlStateNormal];
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+
+  // When
+  [floatingButton applySecondaryThemeWithScheme:self.containerScheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:floatingButton];
+}
+
 @end
