@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 /**
  The ripple's color.
  */
-@property(nonatomic, strong, nonnull) UIColor *rippleColor;
+@property(nonatomic, strong, null_resettable) UIColor *rippleColor;
 
 /**
  The maximum radius the ripple can expand to.

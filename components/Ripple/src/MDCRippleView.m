@@ -36,9 +36,19 @@
 static const CGFloat kRippleDefaultAlpha = (CGFloat)0.16;
 static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
+static inline UIColor *MDCRippleViewDefaultRippleColor() {
+  static UIColor *defaultRippleColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    defaultRippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
+  });
+  return defaultRippleColor;
+}
+
 @implementation MDCRippleView
 
 @synthesize activeRippleLayer = _activeRippleLayer;
+@synthesize rippleColor = _rippleColor;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -61,12 +71,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   self.userInteractionEnabled = NO;
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
-  static UIColor *defaultRippleColor;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    defaultRippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
-  });
-  _rippleColor = defaultRippleColor;
+  _rippleColor = MDCRippleViewDefaultRippleColor();
   _rippleStyle = MDCRippleStyleBounded;
 }
 
@@ -253,6 +258,21 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 - (void)setActiveRippleColor:(UIColor *)activeRippleColor {
   _activeRippleColor = activeRippleColor;
   self.activeRippleLayer.fillColor = activeRippleColor.CGColor;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (CGColorEqualToColor(_rippleColor.CGColor, rippleColor.CGColor)) {
+    return;
+  }
+  if (rippleColor) {
+    _rippleColor = rippleColor;
+  } else {
+    _rippleColor = MDCRippleViewDefaultRippleColor();
+  }
+}
+
+- (UIColor *)rippleColor {
+  return _rippleColor ?: MDCRippleViewDefaultRippleColor();
 }
 
 #pragma mark - MDCRippleLayerDelegate
