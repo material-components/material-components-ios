@@ -137,4 +137,24 @@
   XCTAssertTrue(editingLayout.rightViewHidden);
 }
 
+- (void)testLabelFrameWithLabelState {
+  // Given
+  MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc] init];
+
+  // When
+  layout.labelFrameNormal = CGRectMake(5, 5, 100, 20);
+  layout.labelFrameFloating = CGRectMake(5, 0, 100, 20);
+
+  // Then
+  CGRect labelFrameWithLabelStateFloating =
+      [layout labelFrameWithLabelState:MDCTextControlLabelStateFloating];
+  CGRect labelFrameWithLabelStateNormal =
+      [layout labelFrameWithLabelState:MDCTextControlLabelStateNormal];
+  CGRect labelFrameWithLabelStateNone =
+      [layout labelFrameWithLabelState:MDCTextControlLabelStateNone];
+  XCTAssertTrue(CGRectEqualToRect(labelFrameWithLabelStateFloating, layout.labelFrameFloating));
+  XCTAssertTrue(CGRectEqualToRect(labelFrameWithLabelStateNormal, layout.labelFrameNormal));
+  XCTAssertTrue(CGRectEqualToRect(labelFrameWithLabelStateNone, CGRectZero));
+}
+
 @end
