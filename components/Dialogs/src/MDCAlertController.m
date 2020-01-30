@@ -614,6 +614,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
+  [self.alertView.titleScrollView flashScrollIndicators];
   [self.alertView.contentScrollView flashScrollIndicators];
   [self.alertView.actionsScrollView flashScrollIndicators];
 }

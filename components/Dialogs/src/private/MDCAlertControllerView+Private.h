@@ -27,7 +27,10 @@
 
 @property(nonatomic, nullable, weak) MDCAlertActionManager *actionManager;
 
-/** The scroll view that holds both the @c titleLabel and @c messageLabel. */
+/** The scroll view that holds the @c titleLabel. */
+@property(nonatomic, nonnull, strong) UIScrollView *titleScrollView;
+
+/** The scroll view that holds the @c messageLabel. */
 @property(nonatomic, nonnull, strong) UIScrollView *contentScrollView;
 
 /** The scroll view that holds all of the buttons created for each action. */
