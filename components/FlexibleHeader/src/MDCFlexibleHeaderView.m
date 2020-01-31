@@ -540,6 +540,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+  if (@available(iOS 11.0, *)) {
+    return self.window.safeAreaInsets.top;
+  }
   return MDCDeviceTopSafeAreaInset();
 }
 
