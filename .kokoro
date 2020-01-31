@@ -18,6 +18,8 @@
 set -e
 COCOAPODS_VERSION="1.6.0"
 
+# Force update.
+
 # Fix permissions issue with Ruby Gems (b/128326105)
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   sudo chown -Rh $(whoami) /Library/Ruby/Gems
