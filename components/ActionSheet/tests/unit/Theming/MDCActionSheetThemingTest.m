@@ -17,6 +17,7 @@
 #import "../../../src/private/MDCActionSheetHeaderView.h"
 #import "../../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MaterialActionSheet+Theming.h"
+#include "MDCAvailability.h"
 #import "MaterialShadowElevations.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
@@ -145,7 +146,7 @@ static const CGFloat kMediumAlpha = (CGFloat)0.6;
 
 - (void)assertTraitCollectionBlockAndElevationBlockForActionSheet:
     (MDCActionSheetController *)actionSheet {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     XCTAssertNotNil(self.actionSheet.mdc_elevationDidChangeBlock);
     XCTAssertNotNil(self.actionSheet.traitCollectionDidChangeBlock);
@@ -156,7 +157,7 @@ static const CGFloat kMediumAlpha = (CGFloat)0.6;
 #else
   XCTAssertNil(self.actionSheet.mdc_elevationDidChangeBlock);
   XCTAssertNil(self.actionSheet.traitCollectionDidChangeBlock);
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 @end
