@@ -259,6 +259,28 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
   XCTAssertFalse(self.actionSheet.addLeadingPaddingToCell);
 }
 
+- (void)testDefaultImageEdgeInsets {
+  // When
+  MDCActionSheetController *controller = [[MDCActionSheetController alloc] init];
+
+  // Then
+  UIEdgeInsets expectedImageEdgeInsets = UIEdgeInsetsMake(-16, 0, 0, -32);
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(controller.imageEdgeInsets, expectedImageEdgeInsets),
+                @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(controller.imageEdgeInsets),
+                NSStringFromUIEdgeInsets(expectedImageEdgeInsets));
+}
+
+- (void)testDefaultTitleEdgeInsets {
+  // When
+  MDCActionSheetController *controller = [[MDCActionSheetController alloc] init];
+
+  // Then
+  UIEdgeInsets expectedTitleEdgeInsets = UIEdgeInsetsMake(-18, 0, -18, 0);
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(controller.titleEdgeInsets, expectedTitleEdgeInsets),
+                @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(controller.titleEdgeInsets),
+                NSStringFromUIEdgeInsets(expectedTitleEdgeInsets));
+}
+
 #pragma mark - Opening height
 
 - (CGRect)setUpActionSheetWithHeight:(CGFloat)height

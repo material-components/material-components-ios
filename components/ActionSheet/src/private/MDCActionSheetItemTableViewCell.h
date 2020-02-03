@@ -71,4 +71,11 @@
 /** The label used to represent the action's @c title. */
 @property(nonatomic, strong, nonnull) UILabel *actionLabel;
 
+/**
+ The inset or outset margins for the rectangle surrounding the cell's action label.
+
+ Defaults to {-18, 0, -18, 0}.
+ */
+@property(nonatomic, assign) UIEdgeInsets titleEdgeInsets;
+
 @end
