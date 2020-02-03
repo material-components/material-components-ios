@@ -110,6 +110,29 @@ static inline UIColor *RippleColor() {
   [_contentContainerView.trailingAnchor constraintEqualToAnchor:_divider.trailingAnchor].active =
       YES;
 
+  // Image
+  _imageContainerView = [[UIView alloc] init];
+  _imageContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [_imageContainerView setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                                       forAxis:UILayoutConstraintAxisHorizontal];
+  [_imageContainerView setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                                       forAxis:UILayoutConstraintAxisVertical];
+  [_imageContainerView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+  [_imageContainerView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+  [_contentContainerView addSubview:_imageContainerView];
+  _imageContainerTopConstriant =
+      [_contentContainerView.topAnchor constraintEqualToAnchor:_imageContainerView.topAnchor
+                                                      constant:_imageEdgeInsets.top];
+  _imageContainerTopConstriant.active = YES;
+  _imageContainerLeadingConstriant =
+      [_contentContainerView.leadingAnchor constraintEqualToAnchor:_imageContainerView.leadingAnchor
+                                                          constant:_imageEdgeInsets.left];
+  _imageContainerLeadingConstriant.active = YES;
+  _imageContainerBottomConstriant =
+      [_imageContainerView.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
+                                                       constant:_imageEdgeInsets.bottom];
+  _imageContainerBottomConstriant.active = YES;
+
   _actionLabel = [[UILabel alloc] init];
   [_contentContainerView addSubview:_actionLabel];
   _actionLabel.numberOfLines = 0;
@@ -157,6 +180,10 @@ static inline UIColor *RippleColor() {
       .active = YES;
   [_actionImageView.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor]
       .active = YES;
+  _imageContainerTrailingConstraint =
+      [_actionImageView.trailingAnchor constraintEqualToAnchor:_imageContainerView.trailingAnchor
+                                                      constant:_imageEdgeInsets.right];
+  _imageContainerTrailingConstraint.active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
 }
@@ -166,14 +193,36 @@ static inline UIColor *RippleColor() {
 
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
+  BOOL isActionImageCurrentlyNil = self.actionImageView.image == nil;
+  BOOL isLatestActionImageNil = _itemAction.image == nil;
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
+  if (isActionImageCurrentlyNil != isLatestActionImageNil) {
+    if (isLatestActionImageNil) {
+      _actionLabelLeadingEdgeToImageConstraint.active = NO;
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = YES;
+    } else {
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = NO;
+      _actionLabelLeadingEdgeToImageConstraint.active = YES;
+    }
+  }
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
+  BOOL isActionImageCurrentlyNil = self.actionImageView.image == nil;
+  BOOL isLatestActionImageNil = action.image == nil;
   self.actionImageView.image = _itemAction.image;
+  if (isActionImageCurrentlyNil != isLatestActionImageNil) {
+    if (isLatestActionImageNil) {
+      _actionLabelLeadingEdgeToImageConstraint.active = NO;
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = YES;
+    } else {
+      _actionLabelLeadingEdgeToContainerViewConstraint.active = NO;
+      _actionLabelLeadingEdgeToImageConstraint.active = YES;
+    }
+  }
   [self setNeedsLayout];
 }
 
@@ -255,7 +304,7 @@ static inline UIColor *RippleColor() {
 
 - (void)setAddLeadingPadding:(BOOL)addLeadingPadding {
   _addLeadingPadding = addLeadingPadding;
-  if (addLeadingPadding) {
+  if (addLeadingPadding || self.actionImageView.image) {
     _actionLabelLeadingEdgeToContainerViewConstraint.active = NO;
     _actionLabelLeadingEdgeToImageConstraint.active = YES;
   } else {
