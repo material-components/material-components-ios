@@ -28,8 +28,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 static const CGFloat MDCDialogMaximumWidth = 560.0f;
 
-static const UIEdgeInsets MDCDialogContentInsets = {24.0f, 24.0f, 24.0f, 24.0f};
-static const CGFloat MDCDialogContentVerticalPadding = 20.0f;
+static const UIEdgeInsets MDCDialogContentInsets = {24.0f, 24.0f, 28.0f, 24.0f};
+static const CGFloat MDCDialogContentVerticalPadding = 16.0f;
 static const CGFloat MDCDialogTitleIconVerticalPadding = 12.0f;
 
 static const UIEdgeInsets MDCDialogActionsInsets = {8.0f, 8.0f, 8.0f, 8.0f};
@@ -472,7 +472,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                     titleSize.height);
 }
 
-- (CGRect)messageFrameWithTitleSize:(CGSize)titleSize messageSize:(CGSize)messageSize {
+- (CGRect)messageFrameWithSize:(CGSize)messageSize {
   CGRect messageFrame =
       CGRectMake(MDCDialogContentInsets.left, 0, messageSize.width, messageSize.height);
   return messageFrame;
@@ -650,7 +650,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat contentAccessoryVerticalPadding =
       [self contentAccessoryVerticalPaddingWithFittingSize:boundsSize];
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
-  CGRect messageFrame = [self messageFrameWithTitleSize:titleSize messageSize:messageSize];
+  CGRect messageFrame = [self messageFrameWithSize:messageSize];
   CGRect accessoryViewFrame = CGRectMake(
       MDCDialogContentInsets.left, CGRectGetMaxY(messageFrame) + contentAccessoryVerticalPadding,
       accessoryViewSize.width, accessoryViewSize.height);
