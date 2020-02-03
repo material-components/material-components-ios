@@ -23,8 +23,6 @@
 @property(nonatomic, nonnull, strong) UILabel *messageLabel;
 @property(nonatomic, nullable, strong) UIView *accessoryView;
 
-@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
-
 @property(nonatomic, nullable, weak) MDCAlertActionManager *actionManager;
 
 /** The scroll view that holds the @c titleLabel. */
