@@ -472,7 +472,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                     titleSize.height);
 }
 
-- (CGRect)messageFrameWithTitleSize:(CGSize)titleSize messageSize:(CGSize)messageSize {
+- (CGRect)messageFrameWithSize:(CGSize)messageSize {
   CGRect messageFrame =
       CGRectMake(MDCDialogContentInsets.left, 0, messageSize.width, messageSize.height);
   return messageFrame;
@@ -650,7 +650,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat contentAccessoryVerticalPadding =
       [self contentAccessoryVerticalPaddingWithFittingSize:boundsSize];
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
-  CGRect messageFrame = [self messageFrameWithTitleSize:titleSize messageSize:messageSize];
+  CGRect messageFrame = [self messageFrameWithSize:messageSize];
   CGRect accessoryViewFrame = CGRectMake(
       MDCDialogContentInsets.left, CGRectGetMaxY(messageFrame) + contentAccessoryVerticalPadding,
       accessoryViewSize.width, accessoryViewSize.height);
