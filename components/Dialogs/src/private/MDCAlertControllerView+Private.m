@@ -492,8 +492,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                   UIUserInterfaceLayoutDirectionRightToLeft)) {
     titleIconLeftPadding = CGRectGetMaxX(titleFrame) - titleIconViewSize.width;
   }
-  CGRect titleIconFrame = CGRectMake(titleIconLeftPadding, MDCDialogContentInsets.top,
-                                     titleIconViewSize.width, titleIconViewSize.height);
+  CGFloat top = (self.titleIconImageView != nil) ? MDCDialogContentInsets.top : 0.0f;
+  CGRect titleIconFrame =
+      CGRectMake(titleIconLeftPadding, top, titleIconViewSize.width, titleIconViewSize.height);
   return titleIconFrame;
 }
 
