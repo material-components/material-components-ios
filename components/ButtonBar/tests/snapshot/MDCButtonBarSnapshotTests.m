@@ -368,4 +368,41 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   [self generateSnapshotAndVerifyForView:self.buttonBar];
 }
 
+- (void)testTintColorOnBarButtonItem {
+  // Given
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
+
+  // When
+  // TODO(b/148269570): This is not being reflected in the snapshot.
+  self.leadingTitleItem.tintColor = [UIColor redColor];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.buttonBar];
+}
+
+- (void)testTintColorOnButtonBar {
+  // Given
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
+
+  // When
+  self.buttonBar.tintColor = [UIColor redColor];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.buttonBar];
+}
+
+- (void)testTitleColorForState {
+  // Given
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
+
+  // When
+  [self.buttonBar setButtonsTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.buttonBar];
+}
+
 @end
