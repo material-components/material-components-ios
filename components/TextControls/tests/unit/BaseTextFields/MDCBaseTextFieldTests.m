@@ -457,4 +457,36 @@
   }
 }
 
+- (void)testIntrinsicContentInvalidationWhenWidthChanges {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 100, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  CGSize intrinsicContentSizeBeforeWidthChange = textField.intrinsicContentSize;
+
+  // When
+  textField.frame = CGRectMake(0, 0, 90, 100);
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
+
+  // Then
+  XCTAssertNotEqual(textField.intrinsicContentSize.width,
+                    intrinsicContentSizeBeforeWidthChange.width);
+}
+
+- (void)testIntrinsicContentInvalidationWhenCalculatedHeightChanges {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 100, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  CGSize intrinsicContentSizeBeforeCalculatedHeightChange = textField.intrinsicContentSize;
+
+  // When
+  textField.font = [UIFont systemFontOfSize:(CGFloat)30.0];
+  [textField setNeedsLayout];
+  [textField layoutIfNeeded];
+
+  // Then
+  XCTAssertNotEqual(textField.intrinsicContentSize.height,
+                    intrinsicContentSizeBeforeCalculatedHeightChange.height);
+}
+
 @end

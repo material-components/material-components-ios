@@ -33,6 +33,7 @@
 @property(nonatomic, assign) MDCTextControlLabelState labelState;
 @property(nonatomic, assign) CGRect labelFrame;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
+@property(nonatomic, assign) CGSize mostRecentlyComputedIntrinsicContentSize;
 
 /**
  This property maps MDCTextControlStates as NSNumbers to
@@ -130,7 +131,9 @@
 }
 
 - (CGSize)intrinsicContentSize {
-  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+  self.mostRecentlyComputedIntrinsicContentSize =
+      [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+  return self.mostRecentlyComputedIntrinsicContentSize;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -150,6 +153,9 @@
  -layoutSubviews in the layout cycle.
  */
 - (void)preLayoutSubviews {
+  if ([self widthHasChangedSinceIntrinsicContentSizeWasLastComputed]) {
+    [self invalidateIntrinsicContentSize];
+  }
   self.textControlState = [self determineCurrentTextControlState];
   self.labelState = [self determineCurrentLabelState];
   MDCTextControlColorViewModel *colorViewModel =
@@ -169,6 +175,9 @@
   self.rightView.hidden = self.layout.rightViewHidden;
   [self animateLabel];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
+  if ([self calculatedHeightHasChangedSinceIntrinsicContentSizeWasLastComputed]) {
+    [self invalidateIntrinsicContentSize];
+  }
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
@@ -255,6 +264,14 @@
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
   MDCBaseTextFieldLayout *layout = [self calculateLayoutWithTextFieldSize:fittingSize];
   return CGSizeMake(width, layout.calculatedHeight);
+}
+
+- (BOOL)widthHasChangedSinceIntrinsicContentSizeWasLastComputed {
+  return CGRectGetWidth(self.bounds) != self.mostRecentlyComputedIntrinsicContentSize.width;
+}
+
+- (BOOL)calculatedHeightHasChangedSinceIntrinsicContentSizeWasLastComputed {
+  return self.layout.calculatedHeight != self.mostRecentlyComputedIntrinsicContentSize.height;
 }
 
 #pragma mark UITextField Accessor Overrides
