@@ -576,7 +576,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   UIEdgeInsets insets = [self textInsets];
 
-  CGFloat trailingConstant = MDCTextInputClearButtonImageBuiltInPadding - insets.right;
+  CGFloat trailingConstant = 0;
+  if (self.clearButtonMode != UITextFieldViewModeNever) {
+    trailingConstant = MDCTextInputClearButtonImageBuiltInPadding - insets.right;
+  }
   if (self.clearButtonTrailing.constant != trailingConstant) {
     self.clearButtonTrailing.constant = trailingConstant;
     shouldInvalidateSize = YES;
@@ -716,6 +719,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setClearButtonMode:(UITextFieldViewMode)clearButtonMode {
   _clearButtonMode = clearButtonMode;
   [self updateClearButton];
+  [self updateClearButtonConstraints];
 }
 
 - (UIColor *)cursorColor {
