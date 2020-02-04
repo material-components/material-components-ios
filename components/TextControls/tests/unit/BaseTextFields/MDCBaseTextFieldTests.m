@@ -18,7 +18,7 @@
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 
 @interface MDCBaseTextField (Private)
-@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+- (BOOL)shouldLayoutForRTL;
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
@@ -44,7 +44,7 @@
 - (void)testLeadingViewEqualsLeftViewInLTR {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
 
   // When
   UIView *sideView = [self createSideView];
@@ -58,7 +58,7 @@
 - (void)testLeadingViewEqualsRightViewInRTL {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
 
   // When
   UIView *sideView = [self createSideView];
@@ -72,7 +72,7 @@
 - (void)testTrailingViewEqualsRightViewInLTR {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
 
   // When
   UIView *sideView = [self createSideView];
@@ -86,7 +86,7 @@
 - (void)testTrailingViewEqualsLeftViewInRTL {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
 
   // When
   UIView *sideView = [self createSideView];
@@ -102,7 +102,7 @@
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
 
   // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
   textField.leadingViewMode = UITextFieldViewModeAlways;
 
   // Then
@@ -115,7 +115,7 @@
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
 
   // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   textField.leadingViewMode = UITextFieldViewModeAlways;
 
   // Then
@@ -128,7 +128,7 @@
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
 
   // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
   textField.trailingViewMode = UITextFieldViewModeAlways;
 
   // Then
@@ -141,7 +141,7 @@
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
 
   // When
-  textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   textField.trailingViewMode = UITextFieldViewModeAlways;
 
   // Then
@@ -487,6 +487,30 @@
   // Then
   XCTAssertNotEqual(textField.intrinsicContentSize.height,
                     intrinsicContentSizeBeforeCalculatedHeightChange.height);
+}
+
+- (void)testShouldLayoutForRTLWhenForcingRTL {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 100, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+
+  // When
+  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+
+  // Then
+  XCTAssertTrue(textField.shouldLayoutForRTL);
+}
+
+- (void)testShouldLayoutForRTLWhenForcingLTR {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 100, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+
+  // When
+  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
+
+  // Then
+  XCTAssertFalse(textField.shouldLayoutForRTL);
 }
 
 @end
