@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#include "MDCAvailability.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
@@ -247,7 +248,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
 @end
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
 /**
  This component supports UIKit's Large Content Viewer. It is recommended that images associated with
  each tab bar item be backed with a PDF image with "preserve vector data" enabled within the assets
@@ -266,7 +267,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 @interface MDCBottomNavigationBar (UILargeContentViewerInteractionDelegate) <
     UILargeContentViewerInteractionDelegate>
 @end
-#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
 #pragma mark - MDCBottomNavigationBarDelegate
 

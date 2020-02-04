@@ -223,6 +223,14 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/NavigationBar+TypographyThemer"
   end
 
+  # Availability
+
+  mdc.subspec "Availability" do |extension| 
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = "components/#{extension.base_name}/src/*.h"
+    extension.source_files = "components/#{extension.base_name}/src/*.{h,m}"
+  end
+
   # Banner
 
   mdc.subspec "Banner" do |component|
@@ -306,6 +314,7 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"

@@ -16,8 +16,9 @@
 
 #import "BottomNavigationTypicalUseSupplemental.h"
 
-#import "MDCBottomNavigationBar+MaterialTheming.h"
+#include "MDCAvailability.h"
 #import "MaterialBottomNavigation.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialPalettes.h"
 
 @interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
@@ -70,14 +71,14 @@
                                                             image:[UIImage imageNamed:@"Cake"]
                                                               tag:0];
   tabBarItem5.badgeValue = @"888+";
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
   if ([tabBarItem5 respondsToSelector:@selector(badgeColor)]) {
     tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
   }
 #pragma clang diagnostic pop
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
   self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   self.bottomNavBar.selectedItem = tabBarItem2;
 
