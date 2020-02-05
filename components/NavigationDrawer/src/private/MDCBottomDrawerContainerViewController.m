@@ -22,7 +22,15 @@
 #import "MaterialUIMetrics.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10;
-static const CGFloat kVerticalDistanceThresholdForDismissal = 40;
+// This value is the vertical offset that the drawer must be scrolled downward to cause it to be
+// dismissed.
+static const CGFloat kVerticalDistanceDismissalThreshold = 40;
+// This multipier is used in circumstances where the contents of the drawer are sufficiently small
+// (those having a height of less than 4 times the dismissal threshold of 40pt, i.e. 160pt). This
+// multiplier was selected as it allows for the behavior to be more sensitive for drawers with
+// smaller contents contents, and due to empirical testing where the largest reasonable scroll
+// offset that could be achieved for a drawer with contents of height 100pt was roughly 28pt.
+static const CGFloat kVerticalDistanceDismissalThresholdMultiplier = 4;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset = 20;
 // This epsilon is defined in units of screen points, and is supposed to be as small as possible
 // yet meaningful for comparison calculations.
@@ -929,7 +937,21 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   }
 
   if (self.scrollView.contentOffset.y < 0) {
-    if (self.scrollView.contentOffset.y < -kVerticalDistanceThresholdForDismissal) {
+    // This adjustment ensures that for drawer contents that are quite small (ex. 100pt) the drawer
+    // contents to not become undismissable. Without this adjustment it is nearly impossible to
+    // achieve a scroll offset of (40pt), the current `kVerticalDistanceDismissalThreshold`, making
+    // the drawer effectively undismissable.
+    CGFloat drawerContentHeight = self.contentViewController.preferredContentSize.height +
+                                  self.headerViewController.preferredContentSize.height;
+    BOOL adjustDismissalThreshold =
+        drawerContentHeight <
+        (kVerticalDistanceDismissalThreshold * kVerticalDistanceDismissalThresholdMultiplier);
+    CGFloat verticalDistanceDismissalThreshold =
+        adjustDismissalThreshold
+            ? (drawerContentHeight / kVerticalDistanceDismissalThresholdMultiplier)
+            : kVerticalDistanceDismissalThreshold;
+
+    if (self.scrollView.contentOffset.y < -verticalDistanceDismissalThreshold) {
       [self hideDrawer];
     } else {
       targetContentOffset->y = 0;
