@@ -22,6 +22,7 @@ static const CGFloat kHorizontalMargin = 16.0;
 
 static const CGFloat kImageSideLengthMedium = 40.0;
 static const CGFloat kImageSideLengthMax = 56.0;
+static const CGFloat kInterLabelVerticalPadding = 6.0;
 
 @interface MDCSelfSizingStereoCellLayout ()
 
@@ -123,8 +124,7 @@ static const CGFloat kImageSideLengthMax = 56.0;
   const CGFloat detailLabelMinX = 0;
   CGFloat detailLabelMinY = CGRectGetMaxY(titleFrame);
   if (titleLabel.text.length > 0 && detailLabel.text.length > 0) {
-    detailLabelMinY += [self dynamicInterLabelVerticalPaddingWithTitleLabel:titleLabel
-                                                                detailLabel:detailLabel];
+    detailLabelMinY += kInterLabelVerticalPadding;
   }
   CGPoint detailOrigin = CGPointMake(detailLabelMinX, detailLabelMinY);
   CGRect detailFrame = CGRectZero;
@@ -208,15 +208,6 @@ static const CGFloat kImageSideLengthMax = 56.0;
   } else {
     return kVerticalMarginMin;
   }
-}
-
-- (CGFloat)dynamicInterLabelVerticalPaddingWithTitleLabel:(UILabel *)titleLabel
-                                              detailLabel:(UILabel *)detailLabel {
-  CGFloat titleLineHeight = titleLabel.font.lineHeight;
-  CGFloat detailLineHeight = detailLabel.font.lineHeight;
-  CGFloat lineHeightDifference = titleLineHeight - detailLineHeight;
-  CGFloat interLabelPadding = (CGFloat)round((double)(detailLineHeight - lineHeightDifference));
-  return interLabelPadding;
 }
 
 @end
