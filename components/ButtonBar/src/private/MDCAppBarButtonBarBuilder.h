@@ -69,4 +69,14 @@
  */
 - (UIColor *)titleColorForState:(UIControlState)state;
 
+/**
+ Updates a button's title color using the builder's title color state.
+
+ The title color is updated in the following order:
+
+ 1. @c self.buttonTitleColor, if non-nil, is assigned to UIControlStateNormal.
+ 2. All explicit @c setTitleColor:forState: values are assigned.
+ */
+- (void)updateTitleColorForButton:(UIButton *)button withItem:(UIBarButtonItem *)item;
+
 @end
