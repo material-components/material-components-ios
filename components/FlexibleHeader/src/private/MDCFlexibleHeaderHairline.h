@@ -55,6 +55,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderHairlin
 
 #pragma mark Unavailable methods
 
-- (instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end
