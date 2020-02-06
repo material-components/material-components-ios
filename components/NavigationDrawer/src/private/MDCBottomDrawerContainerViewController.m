@@ -530,6 +530,15 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     [self.scrollView addSubview:self.contentViewController.view];
     [self.contentViewController didMoveToParentViewController:self];
     [self.scrollView insertSubview:self.shadowedView atIndex:0];
+
+    // Set up accessibility support.
+    UIView *contentAccessibilityElement =
+        self.trackingScrollView ?: self.contentViewController.view;
+    self.scrollView.accessibilityElements =
+        self.hasHeaderViewController
+            ? @[ self.headerViewController.view, contentAccessibilityElement ]
+            : @[ contentAccessibilityElement ];
+    self.view.accessibilityElements = @[ self.scrollView ];
   }
 
   self.scrollView.accessibilityIdentifier = kMDCBottomDrawerScrollViewAccessibilityIdentifier;
