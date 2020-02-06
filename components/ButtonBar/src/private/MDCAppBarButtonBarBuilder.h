@@ -76,7 +76,6 @@
 
  1. @c self.buttonTitleColor, if non-nil, is assigned to UIControlStateNormal.
  2. All explicit @c setTitleColor:forState: values are assigned.
- 3. The UIBarButtonItem's @c tintColor is assigned to UIControlStateNormal.
  */
 - (void)updateTitleColorForButton:(UIButton *)button withItem:(UIBarButtonItem *)item;
 
