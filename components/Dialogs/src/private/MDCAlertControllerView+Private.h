@@ -61,8 +61,7 @@
  bottom space is the smallest between titleImageInsets.bottom and
  titleInsets.top.
 
- The default values conform to the Google Material spec (go/material), and are:
-    UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24)
+ Default value: UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24)
  */
 @property(nonatomic, assign) UIEdgeInsets titleIconInsets;
 
@@ -72,8 +71,7 @@
  If a message is presented, the minimum titleInsets.bottom and contentInsets.top is used.
  If there is no message, titleInsets.bottom is used.
 
- The default values conform to the Google Material spec (go/material), and are:
-    UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24)
+ Default value: UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24)
  */
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 
@@ -86,8 +84,7 @@
 
  Custom implementations of the accessory view will be given this frame to present their content in.
 
- The default values conform to the Google Material spec (go/material), and are:
-    UIEdgeInsets(top: 24, leading: 24, bottom: 28, trailing: 24)
+ Default value: UIEdgeInsets(top: 24, leading: 24, bottom: 28, trailing: 24)
  */
 @property(nonatomic, assign) UIEdgeInsets contentInsets;
 
@@ -97,22 +94,21 @@
  bottom of its top neigbor - either the title or the message. That is order to afford engou margin
  space in case the content scrolls.
 
- The default values conform to the Google Material spec (go/material), and are:
-    UIEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+ Default value: UIEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
  */
 @property(nonatomic, assign) UIEdgeInsets actionsInsets;
 
 /**
  The space between action buttons in horizontal layout, if more than one button is presented.
 
- The default values conform to the Google Material spec (go/material), and is: 8.
+ Default value: 8
  */
 @property(nonatomic, assign) CGFloat actionsHorizontalMargin;
 
 /**
  The space between the action buttons in vertical layout, if more than one button is presented.
 
- The default values conform to the Google Material spec (go/material), and is: 12.
+ Default value: 12
  */
 @property(nonatomic, assign) CGFloat actionsVerticalMargin;
 
