@@ -14,8 +14,9 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialTabs+Theming.h"
+#include "MaterialAvailability.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+Theming.h"
 
 /**
  An MDCTabBar subclass that allows the user to override the @c traitCollection property.
@@ -95,7 +96,7 @@
   self.containerScheme.colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     UIColor *dynamicOnPrimary =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
@@ -120,7 +121,7 @@
     self.item3.badgeColor = dynamicBadgeColor;
     self.item4.badgeColor = dynamicBadgeColor;
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)tearDown {
@@ -142,7 +143,7 @@
 }
 
 - (void)testColorSchemeDefaultsWithLightUserInterfaceStyle {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // When
     [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
@@ -155,11 +156,11 @@
     UIView *snapshotView = [self.tabBar mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testColorSchemeDefaultsWithDarkUserInterfaceStyle {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // When
     self.tabBar.traitCollectionOverride =
@@ -174,7 +175,7 @@
     UIView *snapshotView = [self.tabBar mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 @end
