@@ -16,6 +16,7 @@
 
 #import "private/MDCFlexibleHeaderHairline.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
+#include "MDCAvailability.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
@@ -40,11 +41,11 @@ static inline UIStatusBarStyle StatusBarStyleOnBackgroundColor(UIColor *color) {
     return UIStatusBarStyleLightContent;
   }
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     return UIStatusBarStyleDarkContent;
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   return UIStatusBarStyleDefault;
 }
