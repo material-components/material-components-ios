@@ -18,10 +18,11 @@
 #import "MDCFeatureHighlightDismissGestureRecognizer.h"
 #import "MDCFeatureHighlightLayer.h"
 
+#include "MDCAvailability.h"
 #import "MaterialFeatureHighlightStrings.h"
 #import "MaterialFeatureHighlightStrings_table.h"
-#import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
 
 static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
   return MDCHypot(a.x - b.x, a.y - b.y);
@@ -569,7 +570,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   NSArray *keyTimes = @[ @0, @0.5, @1 ];
   __block id pulseColorStart;
   __block id pulseColorEnd;
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     [self.traitCollection performAsCurrentTraitCollection:^{
       pulseColorStart =
@@ -591,7 +592,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
           [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
               .CGColor;
   pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   CGFloat radius = _innerRadius;
 

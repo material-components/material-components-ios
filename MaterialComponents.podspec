@@ -860,6 +860,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MDFTextAccessibility"
