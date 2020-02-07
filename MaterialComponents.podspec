@@ -1165,6 +1165,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Application"
 
     component.test_spec 'UnitTests' do |unit_tests|
