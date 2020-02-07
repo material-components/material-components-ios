@@ -1758,6 +1758,8 @@ Pod::Spec.new do |mdc|
       scheme.ios.deployment_target = '9.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+
+      scheme.dependency "MaterialComponents/Availability"
       scheme.dependency "MaterialComponents/private/Color"
 
       scheme.test_spec 'UnitTests' do |unit_tests|
