@@ -98,6 +98,11 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
     UIColor *color = _titleColors[state];
     [button setTitleColor:color forState:(UIControlState)state.intValue];
   }
+
+  // The item's explicit tintColor
+  if (item.tintColor) {
+    [button setTitleColor:item.tintColor forState:UIControlStateNormal];
+  }
 }
 
 #pragma mark - MDCBarButtonItemBuilding
