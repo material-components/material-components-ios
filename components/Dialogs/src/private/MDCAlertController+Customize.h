@@ -14,7 +14,7 @@
 
 #import "MaterialDialogs.h"
 
-@interface MDCAlertController (Custom)
+@interface MDCAlertController (Customize)
 
 /**
  An optional custom icon view above the title of the alert.
