@@ -1403,6 +1403,7 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Availability",
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/OverlayWindow"

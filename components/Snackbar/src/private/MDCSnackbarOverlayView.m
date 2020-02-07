@@ -19,8 +19,9 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "../MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
+#import "MaterialAvailability.h"
+#import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialApplication.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
@@ -49,10 +50,10 @@ static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24;
 // The maximum height of the Snackbar.
 static const CGFloat kMaximumHeight = 80;
 
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 @interface MDCSnackbarOverlayView () <CAAnimationDelegate>
 @end
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
 
 @interface MDCSnackbarOverlayView ()
 
