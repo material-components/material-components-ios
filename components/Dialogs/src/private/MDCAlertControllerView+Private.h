@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCAlertActionManager.h"
 #import "MaterialButtons.h"
+#import "MDCAlertActionManager.h"
 
 @interface MDCAlertControllerView ()
 
@@ -54,5 +54,66 @@
  Default value is @c YES.
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+
+/**
+ The margins around the title icon or the title icon view against the dialog
+ edges (top, leading, trailing) and the title (bottom). Note that the actual
+ bottom space is the smallest between titleImageInsets.bottom and
+ titleInsets.top.
+
+ The default values conform to the Google Material spec (go/material), and are:
+    UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24)
+ */
+@property(nonatomic, assign) UIEdgeInsets titleIconInsets;
+
+/**
+ The margins around the title against the dialog frame and its neighbor elements.
+ If a title icon is presented, the minimum titleInsets.top and titleIconInsets.bottom is used.
+ If a message is presented, the minimum titleInsets.bottom and contentInsets.top is used.
+ If there is no message, titleInsets.bottom is used.
+
+ The default values conform to the Google Material spec (go/material), and are:
+    UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24)
+ */
+@property(nonatomic, assign) UIEdgeInsets titleInsets;
+
+/**
+ The margins around the message, the content view or the accessory view against the dialog edges
+ and its neighbor elements, the title and the actions.
+ If a title is presented, the minimum of titleInsets.bottom and contentInsets.top is used.
+ The actual space between the content and the actions additive. It's is contentInsets.minimum PLUS
+ actionsInsets.top.
+
+ Custom implementations of the accessory view will be given this frame to present their content in.
+
+ The default values conform to the Google Material spec (go/material), and are:
+    UIEdgeInsets(top: 24, leading: 24, bottom: 28, trailing: 24)
+ */
+@property(nonatomic, assign) UIEdgeInsets contentInsets;
+
+/**
+ The margins around the actions against the dialog edges and its neighbot, the title or message.
+ Unlike other neigboring elements, icons top margin is additive, adding the actionsInsets.top to the
+ bottom of its top neigbor - either the title or the message. That is order to afford engou margin
+ space in case the content scrolls.
+
+ The default values conform to the Google Material spec (go/material), and are:
+    UIEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+ */
+@property(nonatomic, assign) UIEdgeInsets actionsInsets;
+
+/**
+ The space between action buttons in horizontal layout, if more than one button is presented.
+
+ The default values conform to the Google Material spec (go/material), and is: 8.
+ */
+@property(nonatomic, assign) CGFloat actionsHorizontalMargin;
+
+/**
+ The space between the action buttons in vertical layout, if more than one button is presented.
+
+ The default values conform to the Google Material spec (go/material), and is: 12.
+ */
+@property(nonatomic, assign) CGFloat actionsVerticalMargin;
 
 @end
