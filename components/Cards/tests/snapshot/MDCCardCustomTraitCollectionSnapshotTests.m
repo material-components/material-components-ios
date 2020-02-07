@@ -14,8 +14,9 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialCards+Theming.h"
+#import "MaterialAvailability.h"
 #import "MaterialCards.h"
+#import "MaterialCards+Theming.h"
 
 /**
  An MDCCard subclass that allows the user to override the @c traitCollection property.
@@ -71,7 +72,7 @@
 }
 
 - (void)testShadowColorRespondsToDynamicColor {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *dynamicColor =
@@ -94,7 +95,7 @@
     UIView *snapshotView = [self.card mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 @end
