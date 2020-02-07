@@ -15,6 +15,7 @@
 #import "MDCRippleView.h"
 #import "private/MDCRippleLayer.h"
 
+#include "MaterialAvailability.h"
 #import "MaterialMath.h"
 
 @interface MDCRippleView () <CALayerDelegate, MDCRippleLayerDelegate>
@@ -193,7 +194,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
   rippleLayer.rippleLayerDelegate = self;
   [self updateRippleStyle];
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     [self.traitCollection performAsCurrentTraitCollection:^{
       rippleLayer.fillColor = self.rippleColor.CGColor;
@@ -203,7 +204,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   }
 #else
   rippleLayer.fillColor = self.rippleColor.CGColor;
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   rippleLayer.frame = self.bounds;
   if (self.rippleStyle == MDCRippleStyleUnbounded) {
     rippleLayer.maximumRadius = self.maximumRadius;
