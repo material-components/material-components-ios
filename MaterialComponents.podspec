@@ -835,6 +835,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
