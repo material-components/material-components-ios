@@ -1589,6 +1589,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+FilledStyle"
 
@@ -1630,6 +1631,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+OutlinedStyle"
 

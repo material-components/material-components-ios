@@ -16,8 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCTextControl.h"
+#include "MaterialAvailability.h"
 #import "MDCTextControlVerticalPositioningReferenceFilled.h"
+#import "MDCTextControl.h"
 #import "UIBezierPath+MDCTextControlStyle.h"
 
 static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
@@ -68,11 +69,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 - (void)setUpUnderlineColors {
   self.underlineColors = [NSMutableDictionary new];
   UIColor *underlineColor = [UIColor blackColor];
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     underlineColor = [UIColor labelColor];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   self.underlineColors[@(MDCTextControlStateNormal)] = underlineColor;
   self.underlineColors[@(MDCTextControlStateEditing)] = underlineColor;
   self.underlineColors[@(MDCTextControlStateDisabled)] = underlineColor;
@@ -82,11 +83,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
   self.filledBackgroundColors = [NSMutableDictionary new];
   UIColor *filledBackgroundColor = [UIColor blackColor];
   filledBackgroundColor = [filledBackgroundColor colorWithAlphaComponent:(CGFloat)0.05];
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     filledBackgroundColor = [UIColor secondarySystemBackgroundColor];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   self.filledBackgroundColors[@(MDCTextControlStateNormal)] = filledBackgroundColor;
   self.filledBackgroundColors[@(MDCTextControlStateEditing)] = filledBackgroundColor;
