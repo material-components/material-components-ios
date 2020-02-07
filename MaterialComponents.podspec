@@ -1962,6 +1962,7 @@ Pod::Spec.new do |mdc|
         "components/private/#{component.base_name}/src/private/*.{h,m}"
       ]
 
+      component.dependency "MaterialComponents/Availability"
       component.dependency "MaterialComponents/Ink"
       component.dependency "MaterialComponents/Ripple"
       component.dependency "MaterialComponents/ShadowElevations"

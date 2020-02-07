@@ -17,12 +17,13 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCNumericValueLabel.h"
-#import "MDCThumbView.h"
+#include "MaterialAvailability.h"
 #import "MaterialInk.h"
-#import "MaterialMath.h"
 #import "MaterialRipple.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
+#import "MDCNumericValueLabel.h"
+#import "MDCThumbView.h"
 
 #pragma mark - ThumbTrack constants
 
@@ -167,10 +168,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return MDCHypot(point1.x - point2.x, point1.y - point2.y);
 }
 
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 @interface MDCThumbTrack () <CAAnimationDelegate>
 @end
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
 
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
 @property(nonatomic, strong, nullable) MDCRippleView *rippleView;
