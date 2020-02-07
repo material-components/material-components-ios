@@ -129,6 +129,11 @@
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
 
+/** Attributed text option for the message label. The current styled text that is displayed by the
+  label.
+ */
+@property(nonatomic, nullable, copy) NSAttributedString *messageAttributedText;
+
 /**
  A custom accessibility label for the message.
 

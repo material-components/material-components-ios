@@ -200,6 +200,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setMessageAttributedText:(NSAttributedString *)messageAttributedText {
+  _messageAttributedText = [messageAttributedText copy];
+  if (self.alertView && messageAttributedText) {
+    self.alertView.messageLabel.attributedText = messageAttributedText;
+  }
+}
+
 - (void)setAccessoryView:(UIView *)accessoryView {
   if (_accessoryView == accessoryView) {
     return;
