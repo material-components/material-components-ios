@@ -18,6 +18,7 @@
 
 #import "../../src/private/MDCSlider+Private.h"
 #import "../../src/private/MDCSlider_Subclassable.h"
+#include "MDCAvailability.h"
 #import "MaterialSlider.h"
 #import "MaterialThumbTrack.h"
 
@@ -548,7 +549,7 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
 }
 
 - (void)testDynamicColorSupport {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *sliderDynamicColor =
@@ -591,7 +592,7 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
     UIView *snapshotView = [self.slider mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testPreferredFontForAXXXLContentSizeCategory {
