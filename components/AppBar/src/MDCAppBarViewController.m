@@ -172,6 +172,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   _headerStackViewOffset = headerStackViewOffset;
   _verticalConstraint.constant = [self verticalContraintLength];
   _topSafeAreaConstraint.constant = [self topSafeAreaContraintLength];
+  self.shouldAdjustHeightBasedOnHeaderStackView = YES;
 }
 
 #pragma mark - Resource bundle
