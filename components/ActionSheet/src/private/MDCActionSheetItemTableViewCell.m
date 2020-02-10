@@ -14,16 +14,23 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
+#import <MaterialComponents/MaterialMath.h>
 #import <MaterialComponents/MaterialRipple.h>
 #import <MaterialComponents/MaterialTypography.h>
+#import <MDFInternationalization/MDFInternationalization.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
-static const CGFloat kImageTopPadding = 16;
+/** The size of the image in both dimensions. */
 static const CGFloat kImageHeightAndWidth = 24;
-static const CGFloat kTitleLeadingPadding = 56;  // 16 (layoutMargins) + 24 (image) + 16
-static const CGFloat kActionItemTitleVerticalPadding = 18;
+/** Used to account for a missing image when title alignment is desired. */
+static const CGFloat kTitleAlignmentAdjustment = 56;  // 24 (image) + 32 (spacing)
 /** The height of the divider. */
 static const CGFloat kDividerHeight = 1;
+/**
+ Internal constants used to ensure having @c contentEdgeInsets equal to @c UIEdgeInsetsZero still
+ results in actions that match Material.io's guidance for single-row List items' padding.
+ */
+static const UIEdgeInsets kInternalPadding = (UIEdgeInsets){16, 0, 16, 0};
 
 static inline UIColor *RippleColor() {
   return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
@@ -32,19 +39,12 @@ static inline UIColor *RippleColor() {
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
-/** Container view holding all custom content so it can be inset. */
-@property(nonatomic, strong) UIView *contentContainerView;
 /** A divider that is show at the top of the action. */
 @property(nonatomic, strong, nonnull) UIView *divider;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
-  NSLayoutConstraint *_titleLeadingConstraint;
-  NSLayoutConstraint *_contentContainerTopConstraint;
-  NSLayoutConstraint *_contentContainerLeadingConstraint;
-  NSLayoutConstraint *_contentContainerBottomConstraint;
-  NSLayoutConstraint *_contentContainerTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -62,65 +62,17 @@ static inline UIColor *RippleColor() {
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
-  _contentContainerView = [[UIView alloc] initWithFrame:self.bounds];
-  _contentContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.contentView addSubview:_contentContainerView];
-  _contentContainerTopConstraint =
-      [self.contentView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor];
-  _contentContainerTopConstraint.active = YES;
-  _contentContainerLeadingConstraint = [self.contentView.layoutMarginsGuide.leadingAnchor
-      constraintEqualToAnchor:_contentContainerView.leadingAnchor];
-  _contentContainerLeadingConstraint.active = YES;
-  _contentContainerBottomConstraint =
-      [_contentContainerView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor];
-  _contentContainerBottomConstraint.active = YES;
-  _contentContainerTrailingConstraint = [_contentContainerView.trailingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
-  _contentContainerTrailingConstraint.active = YES;
-
   _divider = [[UIView alloc] init];
-  _divider.translatesAutoresizingMaskIntoConstraints = NO;
   _divider.backgroundColor = UIColor.clearColor;
-  [self.contentContainerView addSubview:_divider];
-  [_contentContainerView.topAnchor constraintEqualToAnchor:_divider.topAnchor].active = YES;
-  [NSLayoutConstraint constraintWithItem:_divider
-                               attribute:NSLayoutAttributeHeight
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:nil
-                               attribute:NSLayoutAttributeNotAnAttribute
-                              multiplier:1
-                                constant:kDividerHeight]
-      .active = YES;
-  [_contentContainerView.leadingAnchor constraintEqualToAnchor:_divider.leadingAnchor].active = YES;
-  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_divider.trailingAnchor].active =
-      YES;
+  [self.contentView addSubview:_divider];
 
   _actionLabel = [[UILabel alloc] init];
-  [_contentContainerView addSubview:_actionLabel];
+  [self.contentView addSubview:_actionLabel];
   _actionLabel.numberOfLines = 0;
-  _actionLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_actionLabel sizeToFit];
   _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
-  CGFloat leadingConstant = 0;
-  if (_itemAction.image || _addLeadingPadding) {
-    leadingConstant = kTitleLeadingPadding;
-  }
-  [_actionLabel.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
-                                         constant:kActionItemTitleVerticalPadding]
-      .active = YES;
-  NSLayoutConstraint *labelBottomConstraint =
-      [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
-                                                constant:-kActionItemTitleVerticalPadding];
-  labelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
-  labelBottomConstraint.active = YES;
-  _titleLeadingConstraint =
-      [_actionLabel.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor
-                                                 constant:leadingConstant];
-  _titleLeadingConstraint.active = YES;
-  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.trailingAnchor]
-      .active = YES;
 
   _rippleColor = RippleColor();
   if (!_rippleTouchController) {
@@ -130,15 +82,44 @@ static inline UIColor *RippleColor() {
   }
 
   _actionImageView = [[UIImageView alloc] init];
-  [_contentContainerView addSubview:_actionImageView];
-  _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [_actionImageView.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
-                                             constant:kImageTopPadding]
-      .active = YES;
-  [_actionImageView.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor]
-      .active = YES;
-  [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
-  [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
+  [self.contentView addSubview:_actionImageView];
+}
+
+- (UIEdgeInsets)_contentPadding {
+  return UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                          self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
+                          kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                          self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  const UIEdgeInsets contentPadding = UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                                                       self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
+                                                       kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                                                       self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+  // Account for an absent image when title alignment is desired.
+  CGFloat labelWidthDiscount = (self.actionImageView.image != nil || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
+  // Account for horizontal content edge insets
+  labelWidthDiscount += contentPadding.left + contentPadding.right;
+  // Account for vertical content edge insets
+  CGFloat labelHeightDiscount = contentPadding.top + contentPadding.bottom;
+
+  // Label needs to fit within the space available.
+  CGSize labelFitSize = [self.actionLabel sizeThatFits:CGSizeMake(size.width - labelWidthDiscount, size.height - labelHeightDiscount)];
+  CGSize returnSize = CGSizeMake(labelWidthDiscount + labelFitSize.width, labelFitSize.height + labelHeightDiscount);
+  return returnSize;
+}
+
+- (CGSize)intrinsicContentSize {
+  const UIEdgeInsets contentPadding = UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                                                       kInternalPadding.left - self.contentEdgeInsets.left,
+                                                       kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                                                       kInternalPadding.right - self.contentEdgeInsets.right);
+  // Height is max of 24 points (for images) or the label's fitting size.
+  CGFloat intrinsicHeight = MAX(kImageHeightAndWidth, [self.actionLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].height);
+  // Add or remove the vertical content edge insets
+  intrinsicHeight = intrinsicHeight - contentPadding.top - contentPadding.bottom;
+  return CGSizeMake(UIViewNoIntrinsicMetric, intrinsicHeight);
 }
 
 - (void)layoutSubviews {
@@ -146,13 +127,48 @@ static inline UIColor *RippleColor() {
 
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
-  CGFloat leadingConstant = 0;
-  if (_itemAction.image || self.addLeadingPadding) {
-    leadingConstant = kTitleLeadingPadding;
-  }
-  _titleLeadingConstraint.constant = leadingConstant;
-
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
+
+  BOOL isRTL = self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  // Although layoutMargins flip for RTL, manual flipping is required for this class's APIs.
+  UIEdgeInsets contentPadding = isRTL ? UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                                                         self.layoutMargins.left + kInternalPadding.right - self.contentEdgeInsets.right,
+                                                         kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                                                         self.layoutMargins.right + kInternalPadding.left - self.contentEdgeInsets.left)
+  : UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                                                 self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
+                                                 kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                                                 self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+  CGRect contentRect = UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), contentPadding);
+  const CGFloat contentMidY = CGRectGetMidY(contentRect);
+
+
+  // Position the divider.
+  if (self.showsDivider) {
+    self.divider.frame = CGRectMake(CGRectGetMinX(contentRect), 0, contentRect.size.width, kDividerHeight);
+  }
+
+  // Position the action label
+  CGFloat labelAvailableHeight = CGRectGetHeight(contentRect);
+  CGFloat labelAvailableWidth = CGRectGetWidth(contentRect);
+  CGFloat titleLeadingXAdjustment = (self.actionImageView.image || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
+  labelAvailableWidth -= titleLeadingXAdjustment;
+
+  CGSize labelFittingSize = [self.actionLabel sizeThatFits:CGSizeMake(labelAvailableWidth, labelAvailableHeight)];
+  CGSize labelFinalSize = CGSizeMake(MIN(labelAvailableWidth, labelFittingSize.width), MIN(labelAvailableHeight, labelFittingSize.height));
+  CGFloat labelOriginX = isRTL ? CGRectGetMaxX(contentRect) - titleLeadingXAdjustment - labelFinalSize.width : CGRectGetMinX(contentRect) + titleLeadingXAdjustment;
+  CGFloat labelOriginY = contentMidY - labelFinalSize.height / 2;
+  CGPoint labelOrigin = MDCPointRoundWithScale(CGPointMake(labelOriginX, labelOriginY), self.window.screen.scale > 0 ? self.window.screen.scale : 1);
+  self.actionLabel.frame = CGRectMake(labelOrigin.x, labelOrigin.y, labelFinalSize.width, labelFinalSize.height);
+
+  // Position the action image
+  if (self.actionImageView.image) {
+    CGFloat imageViewMinX = isRTL ? CGRectGetMaxX(contentRect) - kImageHeightAndWidth : CGRectGetMinX(contentRect);
+    CGFloat imageViewMinY = CGRectGetMinY(self.actionLabel.frame);
+    CGPoint imageOrigin = MDCPointRoundWithScale(CGPointMake(imageViewMinX, imageViewMinY), self.window.screen.scale > 0 ? self.window.screen.scale : 1);
+    CGRect imageFrame = CGRectMake(imageOrigin.x, imageOrigin.y, kImageHeightAndWidth, kImageHeightAndWidth);
+    self.actionImageView.frame = imageFrame;
+  }
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
@@ -165,10 +181,8 @@ static inline UIColor *RippleColor() {
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
   _contentEdgeInsets = contentEdgeInsets;
-  _contentContainerTopConstraint.constant = contentEdgeInsets.top;
-  _contentContainerLeadingConstraint.constant = contentEdgeInsets.left;
-  _contentContainerBottomConstraint.constant = contentEdgeInsets.bottom;
-  _contentContainerTrailingConstraint.constant = contentEdgeInsets.right;
+  [self setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)setDividerColor:(UIColor *)dividerColor {

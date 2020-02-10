@@ -40,6 +40,7 @@ mdc_public_objc_library(
         "//components/ShadowElevations",
         "//components/Typography",
         "//components/private/Math",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 

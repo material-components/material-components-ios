@@ -69,6 +69,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
