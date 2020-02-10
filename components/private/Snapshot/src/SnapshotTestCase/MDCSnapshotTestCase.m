@@ -32,7 +32,6 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
 - (void)setUp {
   [super setUp];
   self.agnosticOptions = FBSnapshotTestCaseAgnosticOptionOS;
-      self.recordMode = YES; // DO NOT SUBMIT
 }
 
 - (void)snapshotVerifyView:(UIView *)view {
