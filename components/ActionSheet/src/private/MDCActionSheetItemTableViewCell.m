@@ -119,9 +119,9 @@ static inline UIColor *RippleColor() {
   // Account for an absent image when title alignment is desired.
   CGFloat labelWidthDiscount =
       (self.actionImageView.image != nil || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
-  // Account for horizontal content edge insets
+  // Account for horizontal padding
   labelWidthDiscount += contentPadding.left + contentPadding.right;
-  // Account for vertical content edge insets
+  // Account for vertical padding
   CGFloat labelHeightDiscount = contentPadding.top + contentPadding.bottom;
 
   // Label needs to fit within the space available.
@@ -132,14 +132,17 @@ static inline UIColor *RippleColor() {
   return returnSize;
 }
 
+// Only accounts for the computed height of a single-line element.
+// See -sizeThatFits: for a more accurate calculation of how this cell may fit within a bounded
+// size.
 - (CGSize)intrinsicContentSize {
   const UIEdgeInsets contentPadding = [self contentPaddingWithLayoutMargins:NO];
   // Height is max of 24 points (for images) or the label's fitting size.
   CGFloat intrinsicHeight =
       MAX(kImageHeightAndWidth,
           [self.actionLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].height);
-  // Add or remove the vertical content edge insets
-  intrinsicHeight = intrinsicHeight - contentPadding.top - contentPadding.bottom;
+  // Account for vertical padding in the height
+  intrinsicHeight = intrinsicHeight + contentPadding.top + contentPadding.bottom;
   return CGSizeMake(UIViewNoIntrinsicMetric, intrinsicHeight);
 }
 
