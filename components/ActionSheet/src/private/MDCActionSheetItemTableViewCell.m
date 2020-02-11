@@ -14,10 +14,10 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
 #import <MaterialComponents/MaterialMath.h>
 #import <MaterialComponents/MaterialRipple.h>
 #import <MaterialComponents/MaterialTypography.h>
-#import <MDFInternationalization/MDFInternationalization.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 /** The size of the image in both dimensions. */
@@ -86,37 +86,45 @@ static inline UIColor *RippleColor() {
 }
 
 - (UIEdgeInsets)_contentPadding {
-  return UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
-                          self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
-                          kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                          self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+  return UIEdgeInsetsMake(
+      kInternalPadding.top - self.contentEdgeInsets.top,
+      self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
+      kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+      self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  const UIEdgeInsets contentPadding = UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
-                                                       self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
-                                                       kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                                                       self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+  const UIEdgeInsets contentPadding = UIEdgeInsetsMake(
+      kInternalPadding.top - self.contentEdgeInsets.top,
+      self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
+      kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+      self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
   // Account for an absent image when title alignment is desired.
-  CGFloat labelWidthDiscount = (self.actionImageView.image != nil || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
+  CGFloat labelWidthDiscount =
+      (self.actionImageView.image != nil || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
   // Account for horizontal content edge insets
   labelWidthDiscount += contentPadding.left + contentPadding.right;
   // Account for vertical content edge insets
   CGFloat labelHeightDiscount = contentPadding.top + contentPadding.bottom;
 
   // Label needs to fit within the space available.
-  CGSize labelFitSize = [self.actionLabel sizeThatFits:CGSizeMake(size.width - labelWidthDiscount, size.height - labelHeightDiscount)];
-  CGSize returnSize = CGSizeMake(labelWidthDiscount + labelFitSize.width, labelFitSize.height + labelHeightDiscount);
+  CGSize labelFitSize = [self.actionLabel
+      sizeThatFits:CGSizeMake(size.width - labelWidthDiscount, size.height - labelHeightDiscount)];
+  CGSize returnSize = CGSizeMake(labelWidthDiscount + labelFitSize.width,
+                                 labelFitSize.height + labelHeightDiscount);
   return returnSize;
 }
 
 - (CGSize)intrinsicContentSize {
-  const UIEdgeInsets contentPadding = UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
-                                                       kInternalPadding.left - self.contentEdgeInsets.left,
-                                                       kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                                                       kInternalPadding.right - self.contentEdgeInsets.right);
+  const UIEdgeInsets contentPadding =
+      UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                       kInternalPadding.left - self.contentEdgeInsets.left,
+                       kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                       kInternalPadding.right - self.contentEdgeInsets.right);
   // Height is max of 24 points (for images) or the label's fitting size.
-  CGFloat intrinsicHeight = MAX(kImageHeightAndWidth, [self.actionLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].height);
+  CGFloat intrinsicHeight =
+      MAX(kImageHeightAndWidth,
+          [self.actionLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].height);
   // Add or remove the vertical content edge insets
   intrinsicHeight = intrinsicHeight - contentPadding.top - contentPadding.bottom;
   return CGSizeMake(UIViewNoIntrinsicMetric, intrinsicHeight);
@@ -129,44 +137,60 @@ static inline UIColor *RippleColor() {
   self.actionLabel.text = _itemAction.title;
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 
-  BOOL isRTL = self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  BOOL isRTL =
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   // Although layoutMargins flip for RTL, manual flipping is required for this class's APIs.
-  UIEdgeInsets contentPadding = isRTL ? UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
-                                                         self.layoutMargins.left + kInternalPadding.right - self.contentEdgeInsets.right,
-                                                         kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                                                         self.layoutMargins.right + kInternalPadding.left - self.contentEdgeInsets.left)
-  : UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
-                                                 self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
-                                                 kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                                                 self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+  UIEdgeInsets contentPadding =
+      isRTL ? UIEdgeInsetsMake(
+                  kInternalPadding.top - self.contentEdgeInsets.top,
+                  self.layoutMargins.left + kInternalPadding.right - self.contentEdgeInsets.right,
+                  kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                  self.layoutMargins.right + kInternalPadding.left - self.contentEdgeInsets.left)
+            : UIEdgeInsetsMake(
+                  kInternalPadding.top - self.contentEdgeInsets.top,
+                  self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
+                  kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                  self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
   CGRect contentRect = UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), contentPadding);
   const CGFloat contentMidY = CGRectGetMidY(contentRect);
 
-
   // Position the divider.
   if (self.showsDivider) {
-    self.divider.frame = CGRectMake(CGRectGetMinX(contentRect), 0, contentRect.size.width, kDividerHeight);
+    self.divider.frame =
+        CGRectMake(CGRectGetMinX(contentRect), 0, contentRect.size.width, kDividerHeight);
   }
 
   // Position the action label
   CGFloat labelAvailableHeight = CGRectGetHeight(contentRect);
   CGFloat labelAvailableWidth = CGRectGetWidth(contentRect);
-  CGFloat titleLeadingXAdjustment = (self.actionImageView.image || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
+  CGFloat titleLeadingXAdjustment =
+      (self.actionImageView.image || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
   labelAvailableWidth -= titleLeadingXAdjustment;
 
-  CGSize labelFittingSize = [self.actionLabel sizeThatFits:CGSizeMake(labelAvailableWidth, labelAvailableHeight)];
-  CGSize labelFinalSize = CGSizeMake(MIN(labelAvailableWidth, labelFittingSize.width), MIN(labelAvailableHeight, labelFittingSize.height));
-  CGFloat labelOriginX = isRTL ? CGRectGetMaxX(contentRect) - titleLeadingXAdjustment - labelFinalSize.width : CGRectGetMinX(contentRect) + titleLeadingXAdjustment;
+  CGSize labelFittingSize =
+      [self.actionLabel sizeThatFits:CGSizeMake(labelAvailableWidth, labelAvailableHeight)];
+  CGSize labelFinalSize = CGSizeMake(MIN(labelAvailableWidth, labelFittingSize.width),
+                                     MIN(labelAvailableHeight, labelFittingSize.height));
+  CGFloat labelOriginX =
+      isRTL ? CGRectGetMaxX(contentRect) - titleLeadingXAdjustment - labelFinalSize.width
+            : CGRectGetMinX(contentRect) + titleLeadingXAdjustment;
   CGFloat labelOriginY = contentMidY - labelFinalSize.height / 2;
-  CGPoint labelOrigin = MDCPointRoundWithScale(CGPointMake(labelOriginX, labelOriginY), self.window.screen.scale > 0 ? self.window.screen.scale : 1);
-  self.actionLabel.frame = CGRectMake(labelOrigin.x, labelOrigin.y, labelFinalSize.width, labelFinalSize.height);
+  CGPoint labelOrigin =
+      MDCPointRoundWithScale(CGPointMake(labelOriginX, labelOriginY),
+                             self.window.screen.scale > 0 ? self.window.screen.scale : 1);
+  self.actionLabel.frame =
+      CGRectMake(labelOrigin.x, labelOrigin.y, labelFinalSize.width, labelFinalSize.height);
 
   // Position the action image
   if (self.actionImageView.image) {
-    CGFloat imageViewMinX = isRTL ? CGRectGetMaxX(contentRect) - kImageHeightAndWidth : CGRectGetMinX(contentRect);
+    CGFloat imageViewMinX =
+        isRTL ? CGRectGetMaxX(contentRect) - kImageHeightAndWidth : CGRectGetMinX(contentRect);
     CGFloat imageViewMinY = CGRectGetMinY(self.actionLabel.frame);
-    CGPoint imageOrigin = MDCPointRoundWithScale(CGPointMake(imageViewMinX, imageViewMinY), self.window.screen.scale > 0 ? self.window.screen.scale : 1);
-    CGRect imageFrame = CGRectMake(imageOrigin.x, imageOrigin.y, kImageHeightAndWidth, kImageHeightAndWidth);
+    CGPoint imageOrigin =
+        MDCPointRoundWithScale(CGPointMake(imageViewMinX, imageViewMinY),
+                               self.window.screen.scale > 0 ? self.window.screen.scale : 1);
+    CGRect imageFrame =
+        CGRectMake(imageOrigin.x, imageOrigin.y, kImageHeightAndWidth, kImageHeightAndWidth);
     self.actionImageView.frame = imageFrame;
   }
 }
