@@ -11,6 +11,12 @@ Replace this text with links to deprecation guides.
 ## New features
 
 AppBar added an API for changing the stack view offset. 
+
+```
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+````
+
 Flexible header added an API for showing the hairline and its color.
 Availability macro for internal use.
 AlertControllers added an API for titleIconView.
