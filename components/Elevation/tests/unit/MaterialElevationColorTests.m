@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialAvailability.h"
 #import "MaterialElevation.h"
 #import "UIColor+MaterialDynamic.h"
 
@@ -182,7 +183,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 }
 
 - (void)testResolvedColorWithElevationForDynamicColorOniOS13AndAbove {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     CGFloat elevation = (CGFloat)10;
@@ -201,11 +202,11 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
     UIColor *expectedColor = [darkColor mdc_resolvedColorWithElevation:elevation];
     [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedColor secondColor:expectedColor];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testResolvedColorWithElevationForStaticColorOniOS13AndAbove {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     CGFloat elevation = (CGFloat)10;
@@ -221,7 +222,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
     UIColor *expectedColor = [staticColor mdc_resolvedColorWithElevation:elevation];
     [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedColor secondColor:expectedColor];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testResolvedColorWithElevationForStaticColorOnPreiOS13 {
@@ -320,7 +321,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 }
 
 - (void)testResolvingColorWithDifferenceCurrentTraitCollectionAndPreviousTraitCollection {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     CGFloat elevation = (CGFloat)10;
@@ -345,7 +346,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                                  elevation:elevation];
     XCTAssertEqual(resolvedColor, expectedColor);
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 @end

@@ -184,4 +184,17 @@
   XCTAssertFalse(blockCalled);
 }
 
+- (void)testRippleColorIsNullResettable {
+  // Given
+  self.baseCell.enableRippleBehavior = YES;
+  UIColor *initialRippleColor = self.baseCell.rippleColor;
+
+  // When
+  self.baseCell.rippleColor = [UIColor yellowColor];
+  self.baseCell.rippleColor = nil;
+
+  // Then
+  XCTAssertEqualObjects(initialRippleColor, self.baseCell.rippleColor);
+}
+
 @end

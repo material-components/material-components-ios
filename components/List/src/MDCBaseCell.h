@@ -39,7 +39,7 @@
 /**
  The color of the cell’s underlying Ripple.
  */
-@property(nonatomic, strong, nullable) UIColor *rippleColor;
+@property(nonatomic, strong, null_resettable) UIColor *rippleColor;
 
 /**
  A block that is invoked when the @c MDCBaseCell receives a call to @c
