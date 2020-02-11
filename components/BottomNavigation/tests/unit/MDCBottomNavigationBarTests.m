@@ -16,7 +16,7 @@
 
 #import "../../src/private/MDCBottomNavigationBar+Private.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
-#include "MDCAvailability.h"
+#import "MaterialAvailability.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"

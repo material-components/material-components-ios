@@ -22,7 +22,7 @@
 @protocol MDCBottomDrawerViewControllerDelegate;
 
 /**
- View controller for containing a Google Material bottom drawer.
+ View controller for containing a Material bottom drawer.
  */
 @interface MDCBottomDrawerViewController
     : UIViewController <MDCBottomDrawerPresentationControllerDelegate,
