@@ -20,10 +20,25 @@
  This protocol allows the MDCBaseTextAreaTextView to inform the text area of important responder events.
  */
 @protocol MDCBaseTextAreaTextViewDelegate <NSObject>
+
+/**
+This method is called when the text view is about to become the first responder.
+ */
 - (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView willBecomeFirstResponder:(BOOL)didBecome;
+
+/**
+This method is called when the text view is about to resign the first responder.
+ */
 - (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView willResignFirstResponder:(BOOL)didResign;
 @end
 
+/**
+This private UITextView subclass is used by the MDCBaseTextArea to handle multi-line text
+ */
 @interface MDCBaseTextAreaTextView : UITextView
+
+/**
+ A delegate conforming to MDCBaseTextAreaTextViewDelegate
+ */
 @property(nonatomic, weak, nullable) id<MDCBaseTextAreaTextViewDelegate> textAreaTextViewDelegate;
 @end
