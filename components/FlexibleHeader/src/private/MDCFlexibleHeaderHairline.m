@@ -93,7 +93,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderHairlin
   CGRect bounds = self.containerView.bounds;
   CGFloat containerScreenScale = self.containerView.window.screen.scale;
   BOOL hasValidScreenScale = containerScreenScale > 0;
-  CGFloat hairlineHeight = hasValidScreenScale ? (1.0 / containerScreenScale) : 1;
+  CGFloat hairlineHeight = hasValidScreenScale ? ((CGFloat)1.0 / containerScreenScale) : 1;
   return CGRectMake(0, CGRectGetHeight(bounds) - hairlineHeight, CGRectGetWidth(bounds),
                     hairlineHeight);
 }
