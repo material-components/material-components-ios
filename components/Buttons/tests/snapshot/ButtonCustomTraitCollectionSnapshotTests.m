@@ -19,8 +19,8 @@
 
 #import "MaterialAvailability.h"
 #import "MaterialButtons.h"
-#import "MaterialTypography.h"
 #import "MaterialColor.h"
+#import "MaterialTypography.h"
 
 /** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */
 @interface ButtonDynamicTypeSnapshotTestFakeButton : MDCButton
