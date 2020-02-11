@@ -75,7 +75,8 @@
  @param state The MDCTextControlState.
  */
 - (void)setFloatingLabelColor:(nonnull UIColor *)floatingLabelColor
-                     forState:(MDCTextControlState)state;
+                     forState:(MDCTextControlState)state
+    NS_SWIFT_NAME(setFloatingLabelColor(_:for:));
 
 /**
  Returns the floating label color for a given state.
@@ -92,7 +93,9 @@
  @param normalLabelColor The UIColor for the given state.
  @param state The MDCTextControlState.
  */
-- (void)setNormalLabelColor:(nonnull UIColor *)normalLabelColor forState:(MDCTextControlState)state;
+- (void)setNormalLabelColor:(nonnull UIColor *)normalLabelColor
+                   forState:(MDCTextControlState)state
+    NS_SWIFT_NAME(setNormalLabelColor(_:for:));
 
 /**
  Returns the normal label color for a given state.
@@ -122,7 +125,8 @@
  @param state The MDCTextControlState.
  */
 - (void)setLeadingAssistiveLabelColor:(nonnull UIColor *)leadingAssistiveLabelColor
-                             forState:(MDCTextControlState)state;
+                             forState:(MDCTextControlState)state
+    NS_SWIFT_NAME(setLeadingAssistiveLabelColor(_:for:));
 
 /**
  Returns the leading assistive label color for a given state.
@@ -136,7 +140,8 @@
  @param state The MDCTextControlState.
  */
 - (void)setTrailingAssistiveLabelColor:(nonnull UIColor *)trailingAssistiveLabelColor
-                              forState:(MDCTextControlState)state;
+                              forState:(MDCTextControlState)state
+    NS_SWIFT_NAME(setTrailingAssistiveLabelColor(_:for:));
 
 /**
  Returns the trailing assistive label color for a given state.

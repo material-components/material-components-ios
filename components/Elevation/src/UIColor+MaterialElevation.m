@@ -16,6 +16,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "MaterialAvailability.h"
 #import "MaterialMath.h"
 #import "UIColor+MaterialBlending.h"
 
@@ -24,20 +25,20 @@
 - (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
                           previousTraitCollection:(UITraitCollection *)previousTraitCollection
                                         elevation:(CGFloat)elevation {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     if ([traitCollection
             hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
       return [self mdc_resolvedColorWithTraitCollection:traitCollection elevation:elevation];
     }
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   return self;
 }
 
 - (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
                                         elevation:(CGFloat)elevation {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     UIColor *resolvedColor = [self resolvedColorWithTraitCollection:traitCollection];
     if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
@@ -46,7 +47,7 @@
       return resolvedColor;
     }
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   return self;
 }
 
