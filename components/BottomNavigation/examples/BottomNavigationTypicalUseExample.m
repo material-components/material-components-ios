@@ -16,9 +16,9 @@
 
 #import "BottomNavigationTypicalUseSupplemental.h"
 
-#include "MDCAvailability.h"
-#import "MaterialBottomNavigation.h"
 #import "MDCBottomNavigationBar+MaterialTheming.h"
+#import "MaterialAvailability.h"
+#import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 
 @interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>

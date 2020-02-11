@@ -299,7 +299,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tintColor))]) {
           button.tintColor = newValue;
-          [_defaultBuilder updateTitleColorForButton:button withItem:object];
+          [self->_defaultBuilder updateTitleColorForButton:button withItem:object];
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
           [button setTitle:newValue forState:UIControlStateNormal];

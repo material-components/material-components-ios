@@ -237,6 +237,8 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Typography"
@@ -836,6 +838,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
@@ -861,6 +864,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MDFTextAccessibility"
