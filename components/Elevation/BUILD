@@ -29,7 +29,7 @@ mdc_public_objc_library(
         "CoreGraphics",
     ],
     deps = [
-		"//components/Availability",
+        "//components/Availability",
         "//components/private/Color",
         "//components/private/Math",
     ],
@@ -45,7 +45,7 @@ mdc_unit_test_objc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Elevation",
-		"//components/Availability",
+        "//components/Availability",
         "//components/private/Color",
     ],
 )
