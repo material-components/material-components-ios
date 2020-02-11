@@ -14,13 +14,14 @@
 
 #import "MDCFlexibleHeaderViewController.h"
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
+#import "private/MDCFlexibleHeaderHairline.h"
+#import "private/MDCFlexibleHeaderView+Private.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MaterialApplication.h"
 #import "MaterialUIMetrics.h"
-#import "private/MDCFlexibleHeaderView+Private.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 @interface UIView ()
 - (UIEdgeInsets)safeAreaInsets;  // For pre-iOS 11 SDK targets.
@@ -89,6 +90,11 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
  */
 @property(nonatomic, strong) UIView *topSafeAreaView;
 
+/**
+ Supports the behavior of showing a narrow line at the bottom edge of the flexible header view.
+ */
+@property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
+
 @end
 
 @implementation MDCFlexibleHeaderViewController
@@ -130,6 +136,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (void)loadView {
   self.view = self.headerView;
+
+  self.hairline = [[MDCFlexibleHeaderHairline alloc] initWithContainerView:self.headerView];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -693,6 +701,24 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
+}
+
+#pragma mark - Hairline support
+
+- (void)setShowsHairline:(BOOL)showsHairline {
+  self.hairline.hidden = !showsHairline;
+}
+
+- (BOOL)showsHairline {
+  return !self.hairline.hidden;
+}
+
+- (void)setHairlineColor:(UIColor *)hairlineColor {
+  self.hairline.color = hairlineColor;
+}
+
+- (UIColor *)hairlineColor {
+  return self.hairline.color;
 }
 
 @end

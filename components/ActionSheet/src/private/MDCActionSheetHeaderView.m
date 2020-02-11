@@ -25,6 +25,8 @@ static const CGFloat kTopStandardPadding = 16;
 static const CGFloat kTrailingPadding = 0;
 static const CGFloat kTitleOnlyPadding = 18;
 static const CGFloat kMiddlePadding = 8;
+/** The minimum height a header can be. */
+static const CGFloat kMinimumHeaderHeight = 8;
 
 @interface MDCActionSheetHeaderView ()
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -93,7 +95,7 @@ static const CGFloat kMiddlePadding = 8;
   } else if (titleExist) {
     contentHeight = titleSize.height + (kTitleOnlyPadding * 2);
   } else {
-    contentHeight = 0;
+    contentHeight = kMinimumHeaderHeight;
   }
   CGSize contentSize;
   contentSize.width = MDCCeil(size.width);

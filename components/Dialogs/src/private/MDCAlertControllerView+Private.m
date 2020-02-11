@@ -44,6 +44,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
+@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
 @end
 
@@ -59,6 +60,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if (self) {
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
+
+    self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
+    self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
+    self.contentInsets = UIEdgeInsetsMake(24.f, 24.f, 28.f, 24.f);
+    self.actionsInsets = UIEdgeInsetsMake(8.f, 8.f, 8.f, 8.f);
+    self.actionsHorizontalMargin = 8.f;
+    self.actionsVerticalMargin = 12.f;
 
     self.titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.titleScrollView];
@@ -205,7 +213,16 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if (titleIcon == nil) {
     [self.titleIconImageView removeFromSuperview];
     self.titleIconImageView = nil;
-  } else if (self.titleIconImageView == nil) {
+    [self setNeedsLayout];
+    return;
+  }
+
+  if (self.titleIconView != nil) {
+    [self.titleIconView removeFromSuperview];
+    self.titleIconView = nil;
+  }
+
+  if (self.titleIconImageView == nil) {
     self.titleIconImageView = [[UIImageView alloc] initWithImage:titleIcon];
     self.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.titleScrollView addSubview:self.titleIconImageView];
@@ -220,6 +237,25 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
   _titleIconTintColor = titleIconTintColor;
   self.titleIconImageView.tintColor = titleIconTintColor;
+}
+
+- (void)setTitleIconView:(UIView *)titleIconView {
+  if (self.titleIconImageView != nil) {
+    NSLog(@"Warning: unintended use of the API. The following APIs are not expected to be used"
+           "together: 'setTitleIconView:' and `setTitleIcon:` API. Please set either, but not "
+           "both at the same time. If 'titleIcon' is set, 'titleIconView' is ignored.");
+    return;
+  }
+  if (_titleIconView == nil || ![_titleIconView isEqual:titleIconView]) {
+    if (_titleIconView != nil) {
+      [_titleIconView removeFromSuperview];
+    }
+    _titleIconView = titleIconView;
+    if (_titleIconView != nil) {
+      [self.titleScrollView addSubview:_titleIconView];
+    }
+    [self.titleScrollView setNeedsLayout];
+  }
 }
 
 - (NSString *)message {
@@ -423,13 +459,19 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
              : 0.0f;
 }
 
-- (CGSize)titleIconSize {
-  return (self.titleIconImageView != nil) ? self.titleIconImageView.image.size : CGSizeZero;
+- (CGSize)titleIconViewSize {
+  CGSize titleIconViewSize = CGSizeZero;
+  if (self.titleIconImageView != nil) {
+    titleIconViewSize = self.titleIconImageView.image.size;
+  } else if (self.titleIconView != nil) {
+    titleIconViewSize = self.titleIconView.frame.size;
+  }
+  return titleIconViewSize;
 }
 
 - (CGFloat)titleTop {
   return MDCDialogContentInsets.top + [self contentTitleIconVerticalPadding] +
-         [self titleIconSize].height;
+         [self titleIconViewSize].height;
 }
 
 - (CGRect)titleFrameWithTitleSize:(CGSize)titleSize {
@@ -437,28 +479,28 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                     titleSize.height);
 }
 
-- (CGRect)messageFrameWithTitleSize:(CGSize)titleSize messageSize:(CGSize)messageSize {
+- (CGRect)messageFrameWithSize:(CGSize)messageSize {
   CGRect messageFrame =
       CGRectMake(MDCDialogContentInsets.left, 0, messageSize.width, messageSize.height);
   return messageFrame;
 }
 
 - (CGRect)titleIconFrameWithTitleSize:(CGSize)titleSize {
-  CGSize titleIconSize = [self titleIconSize];
+  CGSize titleIconViewSize = [self titleIconViewSize];
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
   // match the titleIcon alignment to the title alignment
   CGFloat titleIconLeftPadding = MDCDialogContentInsets.left;
   if (self.titleAlignment == NSTextAlignmentCenter) {
     titleIconLeftPadding =
-        CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconSize.width) / 2.0f;
+        CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconViewSize.width) / 2.0f;
   } else if (self.titleAlignment == NSTextAlignmentRight ||
              (self.titleAlignment == NSTextAlignmentNatural &&
               [self mdf_effectiveUserInterfaceLayoutDirection] ==
                   UIUserInterfaceLayoutDirectionRightToLeft)) {
-    titleIconLeftPadding = CGRectGetMaxX(titleFrame) - titleIconSize.width;
+    titleIconLeftPadding = CGRectGetMaxX(titleFrame) - titleIconViewSize.width;
   }
   CGRect titleIconFrame = CGRectMake(titleIconLeftPadding, MDCDialogContentInsets.top,
-                                     titleIconSize.width, titleIconSize.height);
+                                     titleIconViewSize.width, titleIconViewSize.height);
   return titleIconFrame;
 }
 
@@ -515,7 +557,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat contentWidth = MAX(MAX(titleSize.width, messageSize.width), accessoryViewSize.width) +
                          MDCDialogContentInsets.left + MDCDialogContentInsets.right;
 
-  CGFloat contentHeight = MDCDialogContentInsets.top + [self titleIconSize].height +
+  CGFloat contentHeight = MDCDialogContentInsets.top + [self titleIconViewSize].height +
                           [self contentTitleIconVerticalPadding] + titleSize.height +
                           [self contentInternalVerticalPadding];
 
@@ -615,14 +657,17 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat contentAccessoryVerticalPadding =
       [self contentAccessoryVerticalPaddingWithFittingSize:boundsSize];
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
-  CGRect messageFrame = [self messageFrameWithTitleSize:titleSize messageSize:messageSize];
+  CGRect messageFrame = [self messageFrameWithSize:messageSize];
   CGRect accessoryViewFrame = CGRectMake(
       MDCDialogContentInsets.left, CGRectGetMaxY(messageFrame) + contentAccessoryVerticalPadding,
       accessoryViewSize.width, accessoryViewSize.height);
 
+  CGRect titleIconImageViewRect = [self titleIconFrameWithTitleSize:titleSize];
   if (self.titleIconImageView != nil) {
     // Match the title icon alignment to the title alignment.
-    self.titleIconImageView.frame = [self titleIconFrameWithTitleSize:titleSize];
+    self.titleIconImageView.frame = titleIconImageViewRect;
+  } else if (self.titleIconView != nil) {
+    self.titleIconView.frame = titleIconImageViewRect;
   }
 
   self.titleLabel.frame = titleFrame;

@@ -46,6 +46,11 @@
 */
 @property(nonatomic) BOOL shouldAdjustHeightBasedOnHeaderStackView;
 
+/**
+ Defines a downward shift distance for `headerStackView`.
+ */
+@property(nonatomic) CGFloat headerStackViewOffset;
+
 @end
 
 #pragma mark - To be deprecated

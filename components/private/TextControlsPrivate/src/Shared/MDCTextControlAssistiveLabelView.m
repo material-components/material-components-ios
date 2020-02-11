@@ -15,8 +15,8 @@
 #import "MDCTextControlAssistiveLabelView.h"
 
 @interface MDCTextControlAssistiveLabelView ()
-@property(nonatomic, strong) UILabel *leftAssistiveLabel;
-@property(nonatomic, strong) UILabel *rightAssistiveLabel;
+@property(nonatomic, strong) UILabel *leadingAssistiveLabel;
+@property(nonatomic, strong) UILabel *trailingAssistiveLabel;
 @end
 
 @implementation MDCTextControlAssistiveLabelView
@@ -38,20 +38,20 @@
 }
 
 - (void)commonMDCTextControlAssistiveLabelViewInit {
-  self.leftAssistiveLabel = [[UILabel alloc] init];
-  self.leftAssistiveLabel.numberOfLines = 0;
-  [self addSubview:self.leftAssistiveLabel];
-  self.rightAssistiveLabel = [[UILabel alloc] init];
-  self.rightAssistiveLabel.numberOfLines = 0;
-  [self addSubview:self.rightAssistiveLabel];
+  self.leadingAssistiveLabel = [[UILabel alloc] init];
+  self.leadingAssistiveLabel.numberOfLines = 0;
+  [self addSubview:self.leadingAssistiveLabel];
+  self.trailingAssistiveLabel = [[UILabel alloc] init];
+  self.trailingAssistiveLabel.numberOfLines = 0;
+  [self addSubview:self.trailingAssistiveLabel];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.leftAssistiveLabel.frame = self.layout.leftAssistiveLabelFrame;
-  self.leftAssistiveLabel.hidden = self.layout == nil;
-  self.rightAssistiveLabel.frame = self.layout.rightAssistiveLabelFrame;
-  self.rightAssistiveLabel.hidden = self.layout == nil;
+  self.leadingAssistiveLabel.frame = self.layout.leadingAssistiveLabelFrame;
+  self.leadingAssistiveLabel.hidden = self.layout == nil;
+  self.trailingAssistiveLabel.frame = self.layout.trailingAssistiveLabelFrame;
+  self.trailingAssistiveLabel.hidden = self.layout == nil;
 }
 
 @end

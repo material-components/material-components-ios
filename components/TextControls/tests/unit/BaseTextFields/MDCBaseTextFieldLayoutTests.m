@@ -57,8 +57,8 @@
                          rightViewMode:viewMode
                  clearButtonSideLength:19
                        clearButtonMode:viewMode
-                    leftAssistiveLabel:assistiveLabelView.leftAssistiveLabel
-                   rightAssistiveLabel:assistiveLabelView.rightAssistiveLabel
+                 leadingAssistiveLabel:assistiveLabelView.leadingAssistiveLabel
+                trailingAssistiveLabel:assistiveLabelView.trailingAssistiveLabel
             assistiveLabelDrawPriority:MDCTextControlAssistiveLabelDrawPriorityTrailing
       customAssistiveLabelDrawPriority:0
                                  isRTL:NO
