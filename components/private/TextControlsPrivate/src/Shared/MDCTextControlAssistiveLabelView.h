@@ -24,8 +24,8 @@
  */
 @interface MDCTextControlAssistiveLabelView : UIView
 
-@property(nonatomic, strong, readonly, nonnull) UILabel *leftAssistiveLabel;
-@property(nonatomic, strong, readonly, nonnull) UILabel *rightAssistiveLabel;
+@property(nonatomic, strong, readonly, nonnull) UILabel *leadingAssistiveLabel;
+@property(nonatomic, strong, readonly, nonnull) UILabel *trailingAssistiveLabel;
 @property(nonatomic, strong, nonnull) MDCTextControlAssistiveLabelViewLayout *layout;
 
 @end

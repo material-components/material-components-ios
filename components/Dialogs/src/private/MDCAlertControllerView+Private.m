@@ -61,6 +61,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
 
+    self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
+    self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
+    self.contentInsets = UIEdgeInsetsMake(24.f, 24.f, 28.f, 24.f);
+    self.actionsInsets = UIEdgeInsetsMake(8.f, 8.f, 8.f, 8.f);
+    self.actionsHorizontalMargin = 8.f;
+    self.actionsVerticalMargin = 12.f;
+
     self.titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.titleScrollView];
 
@@ -472,7 +479,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                     titleSize.height);
 }
 
-- (CGRect)messageFrameWithTitleSize:(CGSize)titleSize messageSize:(CGSize)messageSize {
+- (CGRect)messageFrameWithSize:(CGSize)messageSize {
   CGRect messageFrame =
       CGRectMake(MDCDialogContentInsets.left, 0, messageSize.width, messageSize.height);
   return messageFrame;
@@ -651,7 +658,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat contentAccessoryVerticalPadding =
       [self contentAccessoryVerticalPaddingWithFittingSize:boundsSize];
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
-  CGRect messageFrame = [self messageFrameWithTitleSize:titleSize messageSize:messageSize];
+  CGRect messageFrame = [self messageFrameWithSize:messageSize];
   CGRect accessoryViewFrame = CGRectMake(
       MDCDialogContentInsets.left, CGRectGetMaxY(messageFrame) + contentAccessoryVerticalPadding,
       accessoryViewSize.width, accessoryViewSize.height);
