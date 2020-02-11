@@ -14,12 +14,9 @@
 /components/AnimationTiming/      @yarneo
 /components/AppBar/               @jverkoey
 /components/BottomAppBar/         @wenyuzhang666
-/components/BottomNavigation/     @romoore
 /components/BottomSheet/          @yarneo
-/components/ButtonBar/            @romoore
 /components/Buttons/              @randallli
 /components/Cards/                @yarneo
-/components/Chips/                @romoore
 /components/CollectionCells/      @yarneo
 /components/CollectionLayoutAttributes/ @jverkoey
 /components/Collections/          @jverkoey
@@ -36,13 +33,11 @@
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
 /components/Palettes/             @jverkoey
-/components/ProgressView/         @romoore
 /components/Ripple                @yarneo
 /components/ShadowElevations/     @jverkoey
 /components/ShadowLayer/          @jverkoey
-/components/Slider/               @romoore
 /components/Snackbar/             @yarneo
-/components/Tabs/                 @romoore
 /components/TextFields/           @andrewoverton
 /components/Themes/               @jverkoey
-/components/Typography/           @romoore
+
+
