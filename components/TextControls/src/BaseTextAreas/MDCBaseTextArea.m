@@ -67,10 +67,6 @@
 
 #pragma mark Responding to text view changes
 
-- (void)handleResponderChange {
-  [self setNeedsLayout];
-}
-
 - (void)textViewChanged:(NSNotification *)notification {
   [self setNeedsLayout];
 }
@@ -84,11 +80,11 @@
 #pragma mark InputChipViewTextViewDelegate
 
 - (void)textAreaTextViewWillResignFirstResponder:(BOOL)didBecome {
-  [self handleResponderChange];
+  [self setNeedsLayout];
 }
 
 - (void)textAreaTextViewWillBecomeFirstResponder:(BOOL)didBecome {
-  [self handleResponderChange];
+  [self setNeedsLayout];
 }
 
 #pragma mark Notifications

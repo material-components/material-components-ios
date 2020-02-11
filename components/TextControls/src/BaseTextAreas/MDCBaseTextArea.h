@@ -20,7 +20,7 @@
 @interface MDCBaseTextArea : UIControl
 
 /**
-The UITextView contained within the text area.
+ The UITextView contained within the text area.
  */
 @property(strong, nonatomic, readonly, nonnull) UITextView *textView;
 
