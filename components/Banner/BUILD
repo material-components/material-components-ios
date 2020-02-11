@@ -97,6 +97,7 @@ mdc_unit_test_objc_library(
     deps = [
         ":Banner",
         ":Theming",
+		"//components/Availability",
         "//components/Buttons",
         "//components/Typography",
         "//components/private/Color",
