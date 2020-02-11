@@ -874,8 +874,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 - (void)fhv_startDisplayLink {
   [self fhv_stopDisplayLink];
 
-  // NOTE: This may cause a retain cycle.
-  // cl/129917749
+  // Because CADisplayLink retains its target, this may cause a retain cycle.
+  // See cl/129917749
   _shiftAccumulatorDisplayLink =
       [CADisplayLink displayLinkWithTarget:self
                                   selector:@selector(fhv_shiftAccumulatorDisplayLinkDidFire:)];

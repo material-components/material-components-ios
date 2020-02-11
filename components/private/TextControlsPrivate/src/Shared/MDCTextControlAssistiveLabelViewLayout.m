@@ -16,8 +16,8 @@
 
 @interface MDCTextControlAssistiveLabelViewLayout ()
 
-@property(nonatomic, assign) CGRect leftAssistiveLabelFrame;
-@property(nonatomic, assign) CGRect rightAssistiveLabelFrame;
+@property(nonatomic, assign) CGRect leadingAssistiveLabelFrame;
+@property(nonatomic, assign) CGRect trailingAssistiveLabelFrame;
 @property(nonatomic, assign) CGFloat calculatedHeight;
 
 @end
@@ -27,8 +27,8 @@
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithWidth:(CGFloat)superviewWidth
-                  leftAssistiveLabel:(UILabel *)leftAssistiveLabel
-                 rightAssistiveLabel:(UILabel *)rightAssistiveLabel
+               leadingAssistiveLabel:(UILabel *)leadingAssistiveLabel
+              trailingAssistiveLabel:(UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:
               (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
@@ -39,8 +39,8 @@
   self = [super init];
   if (self) {
     [self calculateLayoutWithSuperviewWidth:superviewWidth
-                         leftAssistiveLabel:leftAssistiveLabel
-                        rightAssistiveLabel:rightAssistiveLabel
+                      leadingAssistiveLabel:leadingAssistiveLabel
+                     trailingAssistiveLabel:trailingAssistiveLabel
                  assistiveLabelDrawPriority:assistiveLabelDrawPriority
            customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                           horizontalPadding:horizontalPadding
@@ -55,8 +55,8 @@
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithSuperviewWidth:(CGFloat)superviewWidth
-                       leftAssistiveLabel:(UILabel *)leftAssistiveLabel
-                      rightAssistiveLabel:(UILabel *)rightAssistiveLabel
+                    leadingAssistiveLabel:(UILabel *)leadingAssistiveLabel
+                   trailingAssistiveLabel:(UILabel *)trailingAssistiveLabel
                assistiveLabelDrawPriority:
                    (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
          customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
@@ -74,8 +74,6 @@
   CGFloat trailingAssistiveLabelWidth = 0;
   CGSize leadingAssistiveLabelSize = CGSizeZero;
   CGSize trailingAssistiveLabelSize = CGSizeZero;
-  UILabel *leadingAssistiveLabel = isRTL ? rightAssistiveLabel : leftAssistiveLabel;
-  UILabel *trailingAssistiveLabel = isRTL ? leftAssistiveLabel : rightAssistiveLabel;
   switch (assistiveLabelDrawPriority) {
     case MDCTextControlAssistiveLabelDrawPriorityCustom:
       leadingAssistiveLabelWidth = [self
@@ -121,8 +119,8 @@
   BOOL leadingAssistiveLabelIsVisible = !CGSizeEqualToSize(leadingAssistiveLabelSize, CGSizeZero);
   BOOL trailingAssistiveLabelIsVisible = !CGSizeEqualToSize(trailingAssistiveLabelSize, CGSizeZero);
   if (!leadingAssistiveLabelIsVisible && !trailingAssistiveLabelIsVisible) {
-    self.leftAssistiveLabelFrame = CGRectZero;
-    self.rightAssistiveLabelFrame = CGRectZero;
+    self.leadingAssistiveLabelFrame = CGRectZero;
+    self.trailingAssistiveLabelFrame = CGRectZero;
     self.calculatedHeight = 0;
     return;
   }
@@ -144,8 +142,8 @@
 
   CGFloat maxAssistiveLabelHeight =
       MAX(CGRectGetMaxY(leftAssistiveLabelFrame), CGRectGetMaxY(rightAssistiveLabelFrame));
-  self.leftAssistiveLabelFrame = leftAssistiveLabelFrame;
-  self.rightAssistiveLabelFrame = rightAssistiveLabelFrame;
+  self.leadingAssistiveLabelFrame = isRTL ? rightAssistiveLabelFrame : leftAssistiveLabelFrame;
+  self.trailingAssistiveLabelFrame = isRTL ? leftAssistiveLabelFrame : rightAssistiveLabelFrame;
   self.calculatedHeight = maxAssistiveLabelHeight + paddingBelowAssistiveLabels;
 }
 

@@ -202,6 +202,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
                                        underlineWidth:viewWidth];
 
   if (animationDuration <= 0 || styleIsNotAppliedToView || didChangeBounds) {
+    [self.thinUnderlineLayer removeAllAnimations];
+    [self.thickUnderlineLayer removeAllAnimations];
     self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
     self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
     return;
