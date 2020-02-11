@@ -36,6 +36,7 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/Availability",
         "//components/Typography",
         "//components/private/Math",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
