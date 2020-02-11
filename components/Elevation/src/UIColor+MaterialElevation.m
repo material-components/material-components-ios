@@ -16,9 +16,9 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#include "MDCAvailability.h"
-#import "UIColor+MaterialBlending.h"
+#import "MaterialAvailability.h"
 #import "MaterialMath.h"
+#import "UIColor+MaterialBlending.h"
 
 @implementation UIColor (MaterialElevation)
 
