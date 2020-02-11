@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,14 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTextControlLabelBehavior.h"
-#import "MDCTextControlState.h"
-#import "MaterialContainerScheme.h"
-
 /**
  A UIControl subclass that leverages UITextView to provide multi-line text input
 */
-@interface MDCBaseTextArea : UIControl <UIContentSizeCategoryAdjusting>
+@interface MDCBaseTextArea : UIControl
 
 /**
 The UITextView contained within the text area.

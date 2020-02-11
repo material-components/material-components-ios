@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,31 +14,11 @@
 
 #import "MDCBaseTextArea.h"
 
-#import <CoreGraphics/CoreGraphics.h>
-#import <MDFInternationalization/MDFInternationalization.h>
-#import <QuartzCore/QuartzCore.h>
-
-#import "MaterialMath.h"
-#import "MaterialTextControlsPrivate+BaseStyle.h"
-#import "MaterialTextControlsPrivate+Shared.h"
-#import "MaterialTypography.h"
-#import "private/MDCBaseTextAreaLayout.h"
 #import "private/MDCBaseTextAreaTextView.h"
 
-@interface MDCBaseTextArea () <MDCTextControl,
-                               MDCBaseTextAreaTextViewDelegate,
-                               UIGestureRecognizerDelegate>
+@interface MDCBaseTextArea ()
 
-#pragma mark MDCTextControl properties
 @property(strong, nonatomic) MDCBaseTextAreaTextView *textAreaTextView;
-@property(strong, nonatomic) UITouch *lastTouch;
-@property(nonatomic, assign) CGPoint lastTouchInitialContentOffset;
-@property(nonatomic, assign) CGPoint lastTouchInitialLocation;
-
-@property(nonatomic, strong) MDCTextControlGradientManager *gradientManager;
-
-@property(strong, nonatomic) UITapGestureRecognizer *tapGesture;
-
 @end
 
 @implementation MDCBaseTextArea
@@ -62,6 +42,7 @@
 }
 
 - (void)commonMDCBaseTextAreaInit {
+  [self setUpTextAreaSpecificSubviews];
   [self observeTextViewNotifications];
 }
 
@@ -72,79 +53,26 @@
 #pragma mark Setup
 
 - (void)setUpTextAreaSpecificSubviews {
-  self.maskedScrollViewContainerView = [[UIView alloc] init];
-  [self addSubview:self.maskedScrollViewContainerView];
-
-  self.scrollView = [[UIScrollView alloc] init];
-  self.scrollView.bounces = NO;
-  [self.maskedScrollViewContainerView addSubview:self.scrollView];
-
-  self.scrollViewContentViewTouchForwardingView = [[UIView alloc] init];
-  [self.scrollView addSubview:self.scrollViewContentViewTouchForwardingView];
-
   self.textAreaTextView = [[MDCBaseTextAreaTextView alloc] init];
   self.textAreaTextView.textAreaTextViewDelegate = self;
-  self.textAreaTextView.showsVerticalScrollIndicator = NO;
-  self.textAreaTextView.showsHorizontalScrollIndicator = NO;
-  [self.scrollView addSubview:self.textAreaTextView];
+  [self addSubview:self.textAreaTextView];
 }
 
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
-  [self preLayoutSubviews];
   [super layoutSubviews];
-  [self postLayoutSubviews];
+  self.textAreaTextView.frame = self.bounds;
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-  UIView *result = [super hitTest:point withEvent:event];
-  if (result == self.scrollViewContentViewTouchForwardingView) {
-    return self;
-  }
-  return result;
-}
-
-#pragma mark UIControl Overrides
-
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  BOOL result = [super beginTrackingWithTouch:touch withEvent:event];
-  self.lastTouchInitialContentOffset = self.scrollView.contentOffset;
-  self.lastTouchInitialLocation = [touch locationInView:self];
-  return result;
-}
-
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  BOOL result = [super continueTrackingWithTouch:touch withEvent:event];
-
-  CGPoint location = [touch locationInView:self];
-  CGPoint offsetFromStart = [self offsetOfPoint:location fromPoint:self.lastTouchInitialLocation];
-
-  CGPoint offset = self.lastTouchInitialContentOffset;
-  CGFloat height = CGRectGetHeight(self.frame);
-  offset.y -= offsetFromStart.y;
-  if (offset.y < 0) {
-    offset.y = 0;
-  }
-  if (offset.y + height > self.scrollView.contentSize.height) {
-    offset.y = self.scrollView.contentSize.height - height;
-  }
-  self.scrollView.contentOffset = offset;
-
-  return result;
-}
+#pragma mark Responding to text view changes
 
 - (void)handleResponderChange {
   [self setNeedsLayout];
 }
 
-#pragma mark Dynamic Type
-
-- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
-  if (@available(iOS 10.0, *)) {
-    _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-    self.textView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-  }
+- (void)textViewChanged:(NSNotification *)notification {
+  [self setNeedsLayout];
 }
 
 #pragma mark Custom Accessors
@@ -165,9 +93,6 @@
 
 #pragma mark Notifications
 
-- (void)textViewChanged:(NSNotification *)notification {
-  [self setNeedsLayout];
-}
 
 - (void)observeTextViewNotifications {
   [[NSNotificationCenter defaultCenter] addObserver:self
