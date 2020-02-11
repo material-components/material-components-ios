@@ -271,6 +271,12 @@ run_bazel() {
   selected_xcode_developer_path=$(xcode-select -p)
   selected_xcode_contents_path=$(dirname "$selected_xcode_developer_path")
 
+  # todo fix error about missing plist
+  # 
+  # Running bazel builds...
+  # cat: /Library/Developer/version.plist: No such file or directory
+  #
+  # fixed by choosing command line tool from xcode.
   xcode_version=$(cat "$selected_xcode_contents_path/version.plist" \
     | grep "CFBundleShortVersionString" -A1 \
     | grep string \
