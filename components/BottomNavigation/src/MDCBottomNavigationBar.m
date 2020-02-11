@@ -18,16 +18,16 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "private/MDCBottomNavigationBar+Private.h"
-#import "private/MDCBottomNavigationItemView.h"
-#import "private/MaterialBottomNavigationStrings.h"
-#import "private/MaterialBottomNavigationStrings_table.h"
-#include "MDCAvailability.h"
+#import "MaterialAvailability.h"
+#import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
-#import "MaterialMath.h"
+#import "private/MDCBottomNavigationBar+Private.h"
+#import "private/MDCBottomNavigationItemView.h"
+#import "private/MaterialBottomNavigationStrings.h"
+#import "private/MaterialBottomNavigationStrings_table.h"
 
 // The Bundle for string resources.
 static NSString *const kBundleName = @"MaterialBottomNavigation.bundle";
