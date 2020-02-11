@@ -85,20 +85,37 @@ static inline UIColor *RippleColor() {
   [self.contentView addSubview:_actionImageView];
 }
 
-- (UIEdgeInsets)_contentPadding {
-  return UIEdgeInsetsMake(
-      kInternalPadding.top - self.contentEdgeInsets.top,
-      self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
-      kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-      self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+/**
+ Determines the content "padding" value for this view, optionally including the layout margins. The
+ returned @c UIEdgeInsets value is the amount of additional space required around the actual cell
+ contents.
+
+ @param includesLayoutMargins If @c YES, then the @c .left and @c .right values of the view's
+                              @c layoutMargins are included in the returned value.
+ */
+- (UIEdgeInsets)contentPaddingWithLayoutMargins:(BOOL)includesLayoutMargins {
+  BOOL isRTL =
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
+  // Although layoutMargins flip for RTL, manual flipping is required for this class's APIs.
+  UIEdgeInsets contentPadding =
+      isRTL ? UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                               kInternalPadding.right - self.contentEdgeInsets.right,
+                               kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                               kInternalPadding.left - self.contentEdgeInsets.left)
+            : UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
+                               kInternalPadding.left - self.contentEdgeInsets.left,
+                               kInternalPadding.bottom - self.contentEdgeInsets.bottom,
+                               kInternalPadding.right - self.contentEdgeInsets.right);
+  if (includesLayoutMargins) {
+    contentPadding.left += self.layoutMargins.left;
+    contentPadding.right += self.layoutMargins.right;
+  }
+  return contentPadding;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  const UIEdgeInsets contentPadding = UIEdgeInsetsMake(
-      kInternalPadding.top - self.contentEdgeInsets.top,
-      self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
-      kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-      self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+  const UIEdgeInsets contentPadding = [self contentPaddingWithLayoutMargins:YES];
   // Account for an absent image when title alignment is desired.
   CGFloat labelWidthDiscount =
       (self.actionImageView.image != nil || self.addLeadingPadding) ? kTitleAlignmentAdjustment : 0;
@@ -116,11 +133,7 @@ static inline UIColor *RippleColor() {
 }
 
 - (CGSize)intrinsicContentSize {
-  const UIEdgeInsets contentPadding =
-      UIEdgeInsetsMake(kInternalPadding.top - self.contentEdgeInsets.top,
-                       kInternalPadding.left - self.contentEdgeInsets.left,
-                       kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                       kInternalPadding.right - self.contentEdgeInsets.right);
+  const UIEdgeInsets contentPadding = [self contentPaddingWithLayoutMargins:NO];
   // Height is max of 24 points (for images) or the label's fitting size.
   CGFloat intrinsicHeight =
       MAX(kImageHeightAndWidth,
@@ -139,18 +152,7 @@ static inline UIColor *RippleColor() {
 
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-  // Although layoutMargins flip for RTL, manual flipping is required for this class's APIs.
-  UIEdgeInsets contentPadding =
-      isRTL ? UIEdgeInsetsMake(
-                  kInternalPadding.top - self.contentEdgeInsets.top,
-                  self.layoutMargins.left + kInternalPadding.right - self.contentEdgeInsets.right,
-                  kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                  self.layoutMargins.right + kInternalPadding.left - self.contentEdgeInsets.left)
-            : UIEdgeInsetsMake(
-                  kInternalPadding.top - self.contentEdgeInsets.top,
-                  self.layoutMargins.left + kInternalPadding.left - self.contentEdgeInsets.left,
-                  kInternalPadding.bottom - self.contentEdgeInsets.bottom,
-                  self.layoutMargins.right + kInternalPadding.right - self.contentEdgeInsets.right);
+  const UIEdgeInsets contentPadding = [self contentPaddingWithLayoutMargins:YES];
   CGRect contentRect = UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), contentPadding);
   const CGFloat contentMidY = CGRectGetMidY(contentRect);
 
