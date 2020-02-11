@@ -50,6 +50,13 @@ static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 @property(nonatomic, assign, readonly) MDCTextControlLabelState labelState;
 
 /**
+ The value for the label frame that should be used for style application. While style application
+ takes place the value for @c label.frame is in flux, so @c labelFrame gives the style the final
+ value for the label's frame.
+ */
+@property(nonatomic, assign, readonly) CGRect labelFrame;
+
+/**
  Describes the behavior of the label when the view begins editing.
  */
 @property(nonatomic, assign, readonly) MDCTextControlLabelBehavior labelBehavior;

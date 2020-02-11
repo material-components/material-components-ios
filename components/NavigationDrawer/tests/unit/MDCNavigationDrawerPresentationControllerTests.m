@@ -156,4 +156,24 @@
                     .shouldIncludeSafeAreaInInitialDrawerHeight);
 }
 
+- (void)testShouldUseStickyStatusBar {
+  // Given
+  UIViewController *fakeContentViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerViewController *fakeBottomDrawer = [[MDCBottomDrawerViewController alloc] init];
+  fakeBottomDrawer.contentViewController = fakeContentViewController;
+  UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerPresentationController *presentationController =
+      [[MDCBottomDrawerPresentationController alloc]
+          initWithPresentedViewController:fakeBottomDrawer
+                 presentingViewController:fakePresentingViewController];
+
+  // When
+  presentationController.shouldUseStickyStatusBar = YES;
+  [presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertTrue(
+      presentationController.bottomDrawerContainerViewController.shouldUseStickyStatusBar);
+}
+
 @end

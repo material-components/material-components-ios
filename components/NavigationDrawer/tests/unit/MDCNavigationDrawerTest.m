@@ -207,6 +207,24 @@
   }
 }
 
+- (void)testShouldUseStickyStatusBar {
+  // When
+  self.navigationDrawer.shouldUseStickyStatusBar = YES;
+
+  // Then
+  XCTAssertTrue(self.navigationDrawer.shouldUseStickyStatusBar);
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertTrue(presentationController.shouldUseStickyStatusBar);
+  } else {
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
+  }
+}
+
 - (void)testHeaderHeightWhenShouldAlwaysExpandEnabledAndScrollOccured {
   // Given
   self.navigationDrawer.shouldAlwaysExpandHeader = YES;

@@ -19,6 +19,10 @@
 
 #import <XCTest/XCTest.h>
 
+@interface MDCAlertControllerView (Testing)
+@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+@end
+
 @interface MDCAlertControllerCustomizationTests : XCTestCase
 @property(nonatomic, nullable, strong) MDCAlertController *alert;
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;

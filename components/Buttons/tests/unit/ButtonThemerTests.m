@@ -132,27 +132,4 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
 }
 
-- (void)testFloatingButtonThemer {
-  // Given
-  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
-  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
-
-  // When
-  [MDCFloatingActionButtonThemer applyScheme:scheme toButton:button];
-
-  // Then
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  XCTAssertEqualObjects(button.backgroundColor, colorScheme.secondaryColor);
-  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal],
-                        colorScheme.onSecondaryColor);
-  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, button.frame.size.height / 2,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateNormal], 6, kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateHighlighted], 12,
-                             kEpsilonAccuracy);
-  XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
-}
-
 @end

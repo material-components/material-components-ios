@@ -157,7 +157,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
 - (void)testTitlesSizeTooWideLTR {
   // When
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -169,7 +169,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   [self changeItemsToImages];
 
   // When
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -179,7 +179,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 - (void)testTitlesSizeTooWideRTL {
   // When
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -192,7 +192,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
   // When
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -201,7 +201,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
 - (void)testTitlesSizeTooTallLTR {
   // When
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height * 2);
 
   // Then
@@ -213,7 +213,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   [self changeItemsToImages];
 
   // When
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height * 2);
 
   // Then
@@ -223,7 +223,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 - (void)testTitlesSizeTooTallRTL {
   // When
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height * 2);
 
   // Then
@@ -236,7 +236,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
   // When
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height * 2);
 
   // Then
@@ -275,7 +275,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 - (void)testLayoutPositionLeadingWithTitlesLTR {
   // When
   self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -288,7 +288,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
   // When
   self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -299,7 +299,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   // When
   self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -313,7 +313,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   // When
   self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -323,7 +323,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 - (void)testLayoutPositionTrailingWithTitlesLTR {
   // When
   self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -336,7 +336,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
   // When
   self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -347,7 +347,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   // When
   self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // Then
@@ -361,8 +361,44 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   // When
   self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
   [self changeToRTLAndArabic];
-  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeMake(0, 0)];
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.buttonBar];
+}
+
+- (void)testTintColorOnBarButtonItem {
+  // Given
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
+  self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
+
+  // When
+  self.leadingTitleItem.tintColor = [UIColor redColor];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.buttonBar];
+}
+
+- (void)testTintColorOnButtonBar {
+  // Given
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
+  self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
+
+  // When
+  self.buttonBar.tintColor = [UIColor redColor];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.buttonBar];
+}
+
+- (void)testTitleColorForState {
+  // Given
+  CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
+  self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
+
+  // When
+  [self.buttonBar setButtonsTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.buttonBar];

@@ -28,10 +28,11 @@
 @property(strong, nonatomic) UILabel *label;
 @property(nonatomic, strong) MDCTextControlAssistiveLabelView *assistiveLabelView;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
-@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property(nonatomic, assign) MDCTextControlState textControlState;
 @property(nonatomic, assign) MDCTextControlLabelState labelState;
+@property(nonatomic, assign) CGRect labelFrame;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
+@property(nonatomic, assign) CGSize mostRecentlyComputedIntrinsicContentSize;
 
 /**
  This property maps MDCTextControlStates as NSNumbers to
@@ -83,7 +84,6 @@
 - (void)initializeProperties {
   self.animationDuration = kMDCTextControlDefaultAnimationDuration;
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   self.labelState = [self determineCurrentLabelState];
   self.textControlState = [self determineCurrentTextControlState];
   self.containerStyle = [[MDCTextControlStyleBase alloc] init];
@@ -104,8 +104,8 @@
   self.assistiveLabelView = [[MDCTextControlAssistiveLabelView alloc] init];
   CGFloat assistiveFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
   UIFont *assistiveFont = [UIFont systemFontOfSize:assistiveFontSize];
-  self.assistiveLabelView.leftAssistiveLabel.font = assistiveFont;
-  self.assistiveLabelView.rightAssistiveLabel.font = assistiveFont;
+  self.assistiveLabelView.leadingAssistiveLabel.font = assistiveFont;
+  self.assistiveLabelView.trailingAssistiveLabel.font = assistiveFont;
   [self addSubview:self.assistiveLabelView];
 }
 
@@ -129,13 +129,19 @@
 }
 
 - (CGSize)intrinsicContentSize {
-  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+  self.mostRecentlyComputedIntrinsicContentSize =
+      [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+  return self.mostRecentlyComputedIntrinsicContentSize;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
+  [self setNeedsLayout];
+}
 
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+- (void)setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  [super setSemanticContentAttribute:semanticContentAttribute];
+  [self setNeedsLayout];
 }
 
 #pragma mark Layout
@@ -149,6 +155,9 @@
  -layoutSubviews in the layout cycle.
  */
 - (void)preLayoutSubviews {
+  if ([self widthHasChangedSinceIntrinsicContentSizeWasLastComputed]) {
+    [self invalidateIntrinsicContentSize];
+  }
   self.textControlState = [self determineCurrentTextControlState];
   self.labelState = [self determineCurrentLabelState];
   MDCTextControlColorViewModel *colorViewModel =
@@ -156,6 +165,7 @@
   [self applyColorViewModel:colorViewModel withLabelState:self.labelState];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
+  self.labelFrame = [self.layout labelFrameWithLabelState:self.labelState];
 }
 
 - (void)postLayoutSubviews {
@@ -167,6 +177,9 @@
   self.rightView.hidden = self.layout.rightViewHidden;
   [self animateLabel];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
+  if ([self calculatedHeightHasChangedSinceIntrinsicContentSizeWasLastComputed]) {
+    [self invalidateIntrinsicContentSize];
+  }
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
@@ -215,11 +228,11 @@
                          rightViewMode:self.rightViewMode
                  clearButtonSideLength:clearButtonSideLength
                        clearButtonMode:self.clearButtonMode
-                    leftAssistiveLabel:self.assistiveLabelView.leftAssistiveLabel
-                   rightAssistiveLabel:self.assistiveLabelView.rightAssistiveLabel
+                 leadingAssistiveLabel:self.assistiveLabelView.leadingAssistiveLabel
+                trailingAssistiveLabel:self.assistiveLabelView.trailingAssistiveLabel
             assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:clampedCustomAssistiveLabelDrawPriority
-                                 isRTL:self.isRTL
+                                 isRTL:self.shouldLayoutForRTL
                              isEditing:self.isEditing];
 }
 
@@ -255,6 +268,25 @@
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
+- (BOOL)widthHasChangedSinceIntrinsicContentSizeWasLastComputed {
+  return CGRectGetWidth(self.bounds) != self.mostRecentlyComputedIntrinsicContentSize.width;
+}
+
+- (BOOL)calculatedHeightHasChangedSinceIntrinsicContentSizeWasLastComputed {
+  return self.layout.calculatedHeight != self.mostRecentlyComputedIntrinsicContentSize.height;
+}
+
+- (BOOL)shouldLayoutForRTL {
+  if (self.semanticContentAttribute == UISemanticContentAttributeForceRightToLeft) {
+    return YES;
+  } else if (self.semanticContentAttribute == UISemanticContentAttributeForceLeftToRight) {
+    return NO;
+  } else {
+    return self.mdf_effectiveUserInterfaceLayoutDirection ==
+           UIUserInterfaceLayoutDirectionRightToLeft;
+  }
+}
+
 #pragma mark UITextField Accessor Overrides
 
 - (void)setEnabled:(BOOL)enabled {
@@ -264,49 +296,33 @@
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
-  NSLog(@"Setting leftViewMode is not recommended. Consider setting leadingViewMode and "
-        @"trailingViewMode instead.");
   [self mdc_setLeftViewMode:leftViewMode];
 }
 
 - (void)setRightViewMode:(UITextFieldViewMode)rightViewMode {
-  NSLog(@"Setting rightViewMode is not recommended. Consider setting leadingViewMode and "
-        @"trailingViewMode instead.");
   [self mdc_setRightViewMode:rightViewMode];
 }
 
 - (void)setLeftView:(UIView *)leftView {
-  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
-        @"trailingView instead.");
   [self mdc_setLeftView:leftView];
 }
 
 - (void)setRightView:(UIView *)rightView {
-  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
-        @"trailingView instead.");
   [self mdc_setRightView:rightView];
 }
 
 #pragma mark Custom Accessors
 
 - (UILabel *)leadingAssistiveLabel {
-  if ([self isRTL]) {
-    return self.assistiveLabelView.rightAssistiveLabel;
-  } else {
-    return self.assistiveLabelView.leftAssistiveLabel;
-  }
+  return self.assistiveLabelView.leadingAssistiveLabel;
 }
 
 - (UILabel *)trailingAssistiveLabel {
-  if ([self isRTL]) {
-    return self.assistiveLabelView.leftAssistiveLabel;
-  } else {
-    return self.assistiveLabelView.rightAssistiveLabel;
-  }
+  return self.assistiveLabelView.trailingAssistiveLabel;
 }
 
 - (void)setTrailingView:(UIView *)trailingView {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     [self mdc_setLeftView:trailingView];
   } else {
     [self mdc_setRightView:trailingView];
@@ -314,7 +330,7 @@
 }
 
 - (UIView *)trailingView {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     return self.leftView;
   } else {
     return self.rightView;
@@ -322,7 +338,7 @@
 }
 
 - (void)setLeadingView:(UIView *)leadingView {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     [self mdc_setRightView:leadingView];
   } else {
     [self mdc_setLeftView:leadingView];
@@ -330,7 +346,7 @@
 }
 
 - (UIView *)leadingView {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     return self.rightView;
   } else {
     return self.leftView;
@@ -346,7 +362,7 @@
 }
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     [self mdc_setLeftViewMode:trailingViewMode];
   } else {
     [self mdc_setRightViewMode:trailingViewMode];
@@ -354,7 +370,7 @@
 }
 
 - (UITextFieldViewMode)trailingViewMode {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     return self.leftViewMode;
   } else {
     return self.rightViewMode;
@@ -362,7 +378,7 @@
 }
 
 - (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     [self mdc_setRightViewMode:leadingViewMode];
   } else {
     [self mdc_setLeftViewMode:leadingViewMode];
@@ -370,7 +386,7 @@
 }
 
 - (UITextFieldViewMode)leadingViewMode {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     return self.rightViewMode;
   } else {
     return self.leftViewMode;
@@ -383,14 +399,6 @@
 
 - (void)mdc_setRightViewMode:(UITextFieldViewMode)rightViewMode {
   [super setRightViewMode:rightViewMode];
-}
-
-- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
-  if (_layoutDirection == layoutDirection) {
-    return;
-  }
-  _layoutDirection = layoutDirection;
-  [self setNeedsLayout];
 }
 
 #pragma mark MDCTextControl accessors
@@ -441,7 +449,7 @@
 // @c rightView, even though @c rightView is nil. The RTL-aware wrappers around these APIs that
 // MDCBaseTextField introduce handle this situation more accurately.
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     return self.layout.rightViewFrame;
   } else {
     return self.layout.leftViewFrame;
@@ -449,7 +457,7 @@
 }
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
-  if ([self isRTL]) {
+  if ([self shouldLayoutForRTL]) {
     return self.layout.leftViewFrame;
   } else {
     return self.layout.rightViewFrame;
@@ -496,12 +504,8 @@
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
-  static dispatch_once_t onceToken;
-  static UIFont *font;
-  dispatch_once(&onceToken, ^{
-    font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-  });
-  return font;
+  // This value comes from https://developer.apple.com/documentation/uikit/uitextfield/1619604-font
+  return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
 #pragma mark Dynamic Type
@@ -589,22 +593,9 @@
                                     if (finished) {
                                       // Ensure that the label position is correct in case of
                                       // competing animations.
-                                      [weakSelf positionLabel];
+                                      weakSelf.label.frame = weakSelf.labelFrame;
                                     }
                                   }];
-}
-
-- (void)positionLabel {
-  if (self.labelState == MDCTextControlLabelStateFloating) {
-    self.label.frame = self.layout.labelFrameFloating;
-    self.label.hidden = NO;
-  } else if (self.labelState == MDCTextControlLabelStateNormal) {
-    self.label.frame = self.layout.labelFrameNormal;
-    self.label.hidden = NO;
-  } else {
-    self.label.frame = CGRectZero;
-    self.label.hidden = YES;
-  }
 }
 
 - (BOOL)canLabelFloat {
@@ -645,12 +636,6 @@
   } else {
     return MDCTextControlLabelStateNone;
   }
-}
-
-#pragma mark Internationalization
-
-- (BOOL)isRTL {
-  return self.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
 #pragma mark Coloring

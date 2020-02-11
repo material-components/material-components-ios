@@ -1,0 +1,5 @@
+# go/mdc-contributing
+
+# Please see the main OWNERS file under the parent folder
+# material_components_ios/ to find the core owners of this component.
+approve-only: iberezan  # Rollbacks and fast follows

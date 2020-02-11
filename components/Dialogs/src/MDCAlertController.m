@@ -14,16 +14,17 @@
 
 #import "MDCAlertController.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
+#import "MaterialButtons.h"
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
-#import "MaterialButtons.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
 #import "UIViewController+MaterialDialogs.h"
+#import "MaterialTypography.h"
+#import "MaterialMath.h"
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "private/MDCAlertActionManager.h"
+#import "private/MDCAlertController+Customize.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
@@ -77,6 +78,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
+@property(nonatomic, nullable, strong) UIView *titleIconView;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
@@ -96,6 +98,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+@synthesize titleIconView = _titleIconView;
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
                                  message:(nullable NSString *)message {
@@ -127,6 +130,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -328,6 +335,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setTitleIconView:(UIView *)titleIconView {
+  _titleIconView = titleIconView;
+  if (self.alertView) {
+    self.alertView.titleIconView = titleIconView;
+  }
+}
+
 - (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
   _titleIconTintColor = titleIconTintColor;
   if (self.alertView) {
@@ -516,6 +530,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.titleAlignment = self.titleAlignment;
   self.alertView.titleIcon = self.titleIcon;
   self.alertView.titleIconTintColor = self.titleIconTintColor;
+  self.alertView.titleIconView = self.titleIconView;
   self.alertView.cornerRadius = self.cornerRadius;
   self.alertView.enableRippleBehavior = self.enableRippleBehavior;
 
@@ -614,6 +629,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
+  [self.alertView.titleScrollView flashScrollIndicators];
   [self.alertView.contentScrollView flashScrollIndicators];
   [self.alertView.actionsScrollView flashScrollIndicators];
 }

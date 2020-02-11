@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialAvailability.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
@@ -64,14 +65,14 @@ static NSString *const kOfAnnouncement = @"of";
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
 /**
  The last large content viewer item displayed by the content viewer while the interaction is
  running. When the interaction ends this property is nil.
  */
 @property(nonatomic, nullable) id<UILargeContentViewerItem> lastLargeContentViewerItem
     NS_AVAILABLE_IOS(13_0);
-#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
 @end
 
@@ -146,7 +147,7 @@ static NSString *const kOfAnnouncement = @"of";
   _itemsLayoutView.clipsToBounds = NO;
   [_barView addSubview:_itemsLayoutView];
 
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
@@ -158,7 +159,7 @@ static NSString *const kOfAnnouncement = @"of";
 #pragma clang diagnostic pop
 #else
   _shouldPretendToBeATabBar = YES;
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
   _elevation = MDCShadowElevationBottomNavigationBar;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
   UIColor *defaultShadowColor = UIColor.blackColor;
@@ -449,17 +450,18 @@ static NSString *const kOfAnnouncement = @"of";
         itemView.largeContentImage = newValue;
       }
     }
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
     else if ([keyPath
                  isEqualToString:NSStringFromSelector(@selector(largeContentSizeImageInsets))]) {
       if (@available(iOS 13.0, *)) {
         itemView.largeContentImageInsets = [newValue UIEdgeInsetsValue];
       }
     }
-#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
+  [self layoutIfNeeded];
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
@@ -543,13 +545,13 @@ static NSString *const kOfAnnouncement = @"of";
     return;
   }
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13, *)) {
     // If clients report conflicting gesture recognizers please see proposed solution in the
     // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
     [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
   }
-#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   // Remove existing item views from the bottom navigation so it can be repopulated with new items.
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
@@ -616,7 +618,7 @@ static NSString *const kOfAnnouncement = @"of";
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
     }
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
     NSOperatingSystemVersion iOS10Version = {10, 0, 0};
@@ -626,15 +628,15 @@ static NSString *const kOfAnnouncement = @"of";
       }
     }
 #pragma clang diagnostic pop
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
     itemView.selected = NO;
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
     if (@available(iOS 13, *)) {
       itemView.largeContentImageInsets = item.largeContentSizeImageInsets;
       itemView.largeContentImage = item.largeContentSizeImage;
     }
-#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
     [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
@@ -870,7 +872,7 @@ static NSString *const kOfAnnouncement = @"of";
 
 #pragma mark - UILargeContentViewerInteractionDelegate
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
 - (id<UILargeContentViewerItem>)largeContentViewerInteraction:
                                     (UILargeContentViewerInteraction *)interaction
                                                   itemAtPoint:(CGPoint)point
@@ -896,5 +898,5 @@ static NSString *const kOfAnnouncement = @"of";
                               atPoint:(CGPoint)point NS_AVAILABLE_IOS(13_0) {
   self.lastLargeContentViewerItem = nil;
 }
-#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 @end

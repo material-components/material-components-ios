@@ -298,6 +298,25 @@
   }
 }
 
+- (void)setShouldUseStickyStatusBar:(BOOL)shouldUseStickyStatusBar {
+  _shouldUseStickyStatusBar = shouldUseStickyStatusBar;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldUseStickyStatusBar = shouldUseStickyStatusBar;
+  }
+}
+
+- (void)setShouldAdjustOnContentSizeChange:(BOOL)shouldAdjustOnContentSizeChange {
+  _shouldAdjustOnContentSizeChange = shouldAdjustOnContentSizeChange;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldAdjustOnContentSizeChange =
+        shouldAdjustOnContentSizeChange;
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.

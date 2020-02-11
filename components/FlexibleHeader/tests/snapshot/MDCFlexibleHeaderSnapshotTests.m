@@ -101,4 +101,35 @@
   [self snapshotVerifyView:snapshotView];
 }
 
+- (void)testHairlineVisibility {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+  fhvc.view.frame = CGRectMake(0, 0, 500, 200);
+  fhvc.view.backgroundColor = UIColor.whiteColor;
+
+  // When
+  fhvc.showsHairline = YES;
+
+  // Then
+  UIView *snapshotView =
+      [fhvc.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+  [self snapshotVerifyView:snapshotView];
+}
+
+- (void)testHairlineColor {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+  fhvc.view.frame = CGRectMake(0, 0, 500, 200);
+  fhvc.view.backgroundColor = UIColor.whiteColor;
+  fhvc.showsHairline = YES;
+
+  // When
+  fhvc.hairlineColor = [UIColor redColor];
+
+  // Then
+  UIView *snapshotView =
+      [fhvc.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+  [self snapshotVerifyView:snapshotView];
+}
+
 @end

@@ -59,12 +59,14 @@
                                 rightViewMode:(UITextFieldViewMode)rightViewMode
                         clearButtonSideLength:(CGFloat)clearButtonSideLength
                               clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                           leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
-                          rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+                        leadingAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+                       trailingAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
                    assistiveLabelDrawPriority:
                        (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
              customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                                         isRTL:(BOOL)isRTL
                                     isEditing:(BOOL)isEditing;
+
+- (CGRect)labelFrameWithLabelState:(MDCTextControlLabelState)labelState;
 
 @end
