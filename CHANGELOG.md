@@ -1,6 +1,7 @@
-# #develop#
+# 103.2.0
 
 Replace this text with a summarized description of this release's contents.
+
 ## Breaking changes
 
 Replace this explanations for how to resolve the breaking changes.
@@ -9,7 +10,13 @@ Replace this explanations for how to resolve the breaking changes.
 Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+AppBar added an API for changing the stack view offset. 
+Flexible header added an API for showing the hairline and its color.
+Availability macro for internal use.
+AlertControllers added an API for titleIconView.
+Bottom drawer added an API for sticky status bars and adjustment when content size changes.
+Slider added an API for allowAnimatedValueChanges and trackEndsAreRounded or trackEndsAreInset.
+
 ## API changes
 
 ## Component changes
