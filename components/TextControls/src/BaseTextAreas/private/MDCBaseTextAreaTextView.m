@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 
 @implementation MDCBaseTextAreaTextView
 
-- (instancetype)init {
-  self = [super init];
+- (instancetype)initWithCoder:(NSCoder *)coder {
+  self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCBaseTextAreaTextViewInit];
   }
@@ -34,7 +34,7 @@
 }
 
 - (void)commonMDCBaseTextAreaTextViewInit {
-  self.backgroundColor = [UIColor clearColor];
+  self.backgroundColor = UIColor.clearColor;
   self.textContainerInset = UIEdgeInsetsZero;
   self.layoutMargins = UIEdgeInsetsZero;
   self.textContainer.lineFragmentPadding = 0;

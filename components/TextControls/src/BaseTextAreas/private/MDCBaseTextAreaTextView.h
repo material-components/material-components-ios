@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,11 +15,15 @@
 #import <UIKit/UIKit.h>
 
 @class MDCBaseTextAreaTextView;
+
+/**
+ This protocol allows the MDCBaseTextAreaTextView to inform the text area of important responder events.
+ */
 @protocol MDCBaseTextAreaTextViewDelegate <NSObject>
-- (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView willBecomeFirstResponder:(BOOL)didBecome;
-- (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView willResignFirstResponder:(BOOL)didResign;
+- (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView willBecomeFirstResponder:(BOOL)didBecome;
+- (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView willResignFirstResponder:(BOOL)didResign;
 @end
 
 @interface MDCBaseTextAreaTextView : UITextView
-@property(nonatomic, weak) id<MDCBaseTextAreaTextViewDelegate> textAreaTextViewDelegate;
+@property(nonatomic, weak, nullable) id<MDCBaseTextAreaTextViewDelegate> textAreaTextViewDelegate;
 @end
