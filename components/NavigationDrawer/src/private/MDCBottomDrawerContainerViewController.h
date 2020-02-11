@@ -77,7 +77,7 @@ the backgroundColor of the trackingScrollView.
 @end
 
 /**
- View controller for containing a Google Material bottom drawer. Used internally only.
+ View controller for containing a Material bottom drawer. Used internally only.
  */
 @interface MDCBottomDrawerContainerViewController : UIViewController <UIGestureRecognizerDelegate>
 

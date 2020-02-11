@@ -374,7 +374,6 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
   // When
-  // TODO(b/148269570): This is not being reflected in the snapshot.
   self.leadingTitleItem.tintColor = [UIColor redColor];
 
   // Then
