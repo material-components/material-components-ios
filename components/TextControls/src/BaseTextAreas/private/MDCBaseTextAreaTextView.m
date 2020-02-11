@@ -40,6 +40,8 @@
   self.textContainer.lineFragmentPadding = 0;
   self.font = MDCTextControlDefaultUITextFieldFont();
   self.clipsToBounds = NO;
+  self.showsVerticalScrollIndicator = NO;
+  self.showsHorizontalScrollIndicator = NO;
 }
 
 - (void)setFont:(UIFont *)font {
