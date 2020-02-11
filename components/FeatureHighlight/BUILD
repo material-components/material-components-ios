@@ -77,7 +77,7 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
-    deps [
+    deps = [
         "//components/Availability",
     ],
 )
