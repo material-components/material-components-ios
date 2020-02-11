@@ -16,7 +16,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#include "MDCAvailability.h"
+#import "MaterialAvailability.h"
 #import "UIColor+MaterialBlending.h"
 #import "MaterialMath.h"
 

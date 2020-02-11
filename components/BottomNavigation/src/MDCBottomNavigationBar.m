@@ -22,7 +22,7 @@
 #import "private/MDCBottomNavigationItemView.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
-#include "MDCAvailability.h"
+#import "MaterialAvailability.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"

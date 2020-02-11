@@ -18,7 +18,7 @@
 #import "MDCFeatureHighlightDismissGestureRecognizer.h"
 #import "MDCFeatureHighlightLayer.h"
 
-#include "MDCAvailability.h"
+#import "MaterialAvailability.h"
 #import "MaterialFeatureHighlightStrings.h"
 #import "MaterialFeatureHighlightStrings_table.h"
 #import "MaterialTypography.h"

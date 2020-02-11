@@ -17,7 +17,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#include "MDCAvailability.h"
+#import "MaterialAvailability.h"
 #import "MDCBottomNavigationItemBadge.h"
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"
