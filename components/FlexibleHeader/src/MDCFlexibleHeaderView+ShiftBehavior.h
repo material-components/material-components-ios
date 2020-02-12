@@ -127,7 +127,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
 /**
  The minimum amount of header height to remain when `shiftBehavior` is enabled.
  */
-@property(nonatomic) CGFloat minimumHeaderViewHeightAfterScrolling;
+@property(nonatomic) CGFloat minimumHeaderViewHeight;
 
 /**
  Hides the view by changing its alpha when the header shifts. Note that this only happens when the

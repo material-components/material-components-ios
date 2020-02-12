@@ -325,7 +325,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   self.layer.shadowRadius = 4;
   self.layer.shadowOpacity = 0;
 
-  self.minimumHeaderViewHeightAfterScrolling = 0.0;
+  self.minimumHeaderViewHeight = 0.0;
 
   NSString *voiceOverNotification;
   if (@available(iOS 11.0, *)) {
@@ -629,7 +629,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 //
 // Our desired top content inset is always at least:
 //
-//     _maximumHeight (with safe area insets removed) + [_safeAreas topSafeAreaInset]
+//     _maximumHeight (with safe area insets removed) + [_safeAreas topSafeAreaInset]
 //
 // This ensures that when our scroll view is scrolled to its top that our header is able to be fully
 // expanded.
@@ -1171,16 +1171,18 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     // Don't allow any shifting.
     upperBound = 0;
   } else if (headerHeight < 0) {
-    if (self.minimumHeaderViewHeightAfterScrolling != 0.0) {
-      upperBound = self.minMaxHeight.maximumHeightWithoutTopSafeArea -
-                   self.minimumHeaderViewHeightAfterScrolling;
+    if (self.minimumHeaderViewHeight != 0.0) {
+      // Set upperBound distance to be between
+      // |maximum height| and |remaining minimum height after shifting|.
+      upperBound = self.minMaxHeight.maximumHeightWithoutTopSafeArea - self.minimumHeaderViewHeight;
     } else {
       upperBound = [self fhv_accumulatorMax] + [self fhv_anchorLength];
     }
   } else if (headerHeight < self.minMaxHeight.minimumHeightWithTopSafeArea) {
-    if (self.minimumHeaderViewHeightAfterScrolling != 0.0) {
-      upperBound = self.minMaxHeight.maximumHeightWithoutTopSafeArea -
-                   self.minimumHeaderViewHeightAfterScrolling;
+    if (self.minimumHeaderViewHeight != 0.0) {
+      // Set upperBound distance to be between
+      // |maximum height| and |remaining minimum height after shifting|.
+      upperBound = self.minMaxHeight.maximumHeightWithoutTopSafeArea - self.minimumHeaderViewHeight;
     } else {
       upperBound = [self fhv_accumulatorMax];
     }
