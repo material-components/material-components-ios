@@ -1,10 +1,11 @@
-# 103.2.0
+# 104.0.0
 
 Replace this text with a summarized description of this release's contents.
 
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+Deleted the MDCFloatingActionButtonThemer class. Use the theming extension.
+
 ## New deprecations
 
 Replace this text with links to deprecation guides.
@@ -14,7 +15,16 @@ AppBar added an API for changing the stack view offset.
 Flexible header added an API for showing the hairline and its color.
 Availability macro for internal use.
 AlertControllers added an API for titleIconView.
+
 Bottom drawer added an API for sticky status bars and adjustment when content size changes.
+```swift
+let contentViewController = UIViewController()	let bottomDrawerViewController = MDCBottomDrawerViewController()
+...
+bottomDrawerVC.shouldIncludeSafeAreaInContentHeight = true
+bottomDrawerVC.shouldIncludeSafeAreaInInitialDrawerHeight = true
+present(bottomDrawerViewController, animated: true, completion: nil)
+```
+
 Slider added an API for allowAnimatedValueChanges and trackEndsAreRounded or trackEndsAreInset.
 
 ## API changes
