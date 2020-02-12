@@ -84,6 +84,7 @@ static const CGFloat kSheetBounceBuffer = 150;
                  forKeyPath:kContentSizeKey
                     options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                     context:kContentSizeContext];
+    [scrollView addObserver:self forKeyPath:@"contentInset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:kContentSizeContext];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(voiceOverStatusDidChange)
                                                  name:UIAccessibilityVoiceOverStatusChanged
@@ -116,6 +117,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 
 - (void)dealloc {
   [self.sheet.scrollView removeObserver:self forKeyPath:kContentSizeKey];
+  [self.sheet.scrollView removeObserver:self forKeyPath:@"contentInset"];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -178,7 +180,8 @@ static const CGFloat kSheetBounceBuffer = 150;
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-  if ([keyPath isEqualToString:kContentSizeKey] && context == kContentSizeContext) {
+  if (// [keyPath isEqualToString:kContentSizeKey] &&
+      context == kContentSizeContext) {
     NSValue *oldValue = change[NSKeyValueChangeOldKey];
     NSValue *newValue = change[NSKeyValueChangeNewKey];
     if (self.window && !self.isDragging && ![oldValue isEqual:newValue]) {
