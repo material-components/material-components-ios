@@ -297,7 +297,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
       NSLog(
-          @"Button touch target does not meet minimum size guidlines of (%0.f, %0.f). Button: %@, "
+          @"Button touch target does not meet minimum size guidelines of (%0.f, %0.f). Button: %@, "
           @"Touch Target: %@",
           MDCButtonMinimumTouchTargetWidth, MDCButtonMinimumTouchTargetHeight, [self description],
           NSStringFromCGSize(CGSizeMake(width, height)));
