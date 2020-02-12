@@ -87,6 +87,24 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
   _titleColors[@(state)] = color;
 }
 
+- (void)updateTitleColorForButton:(UIButton *)button withItem:(UIBarButtonItem *)item {
+  // Apply title colors to the button in order of descending priority (last one wins).
+
+  // General buttonTitleColor (proxy for contextual tint color)
+  [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
+
+  // Explicit -setTitleColor:forState:
+  for (NSNumber *state in _titleColors) {
+    UIColor *color = _titleColors[state];
+    [button setTitleColor:color forState:(UIControlState)state.intValue];
+  }
+
+  // The item's explicit tintColor
+  if (item.tintColor) {
+    [button setTitleColor:item.tintColor forState:UIControlStateNormal];
+  }
+}
+
 #pragma mark - MDCBarButtonItemBuilding
 
 - (UIView *)buttonBar:(MDCButtonBar *)buttonBar
@@ -129,16 +147,12 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
   [MDCAppBarButtonBarBuilder configureButton:button fromButtonItem:buttonItem];
 
   button.uppercaseTitle = buttonBar.uppercasesButtonTitles;
-  [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
   for (NSNumber *state in _fonts) {
     UIFont *font = _fonts[state];
     [button setTitleFont:font forState:(UIControlState)state.intValue];
   }
-  for (NSNumber *state in _titleColors) {
-    UIColor *color = _titleColors[state];
-    [button setTitleColor:color forState:(UIControlState)state.intValue];
-  }
+  [self updateTitleColorForButton:button withItem:buttonItem];
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];
 

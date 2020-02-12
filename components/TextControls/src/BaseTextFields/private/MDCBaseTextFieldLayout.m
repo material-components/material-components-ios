@@ -14,7 +14,6 @@
 
 #import "MDCBaseTextFieldLayout.h"
 
-#import "MDCTextControlLabelState.h"
 #import "MaterialMath.h"
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
@@ -39,8 +38,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                         rightViewMode:(UITextFieldViewMode)rightViewMode
                 clearButtonSideLength:(CGFloat)clearButtonSideLength
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                   leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
-                  rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+                leadingAssistiveLabel:(nonnull UILabel *)leadingAssistiveLabel
+               trailingAssistiveLabel:(nonnull UILabel *)trailingAssistiveLabel
            assistiveLabelDrawPriority:
                (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
      customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
@@ -60,8 +59,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                              rightViewMode:rightViewMode
                      clearButtonSideLength:clearButtonSideLength
                            clearButtonMode:clearButtonMode
-                        leftAssistiveLabel:leftAssistiveLabel
-                       rightAssistiveLabel:rightAssistiveLabel
+                     leadingAssistiveLabel:leadingAssistiveLabel
+                    trailingAssistiveLabel:trailingAssistiveLabel
                 assistiveLabelDrawPriority:assistiveLabelDrawPriority
           customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                                      isRTL:isRTL
@@ -86,8 +85,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                            rightViewMode:(UITextFieldViewMode)rightViewMode
                    clearButtonSideLength:(CGFloat)clearButtonSideLength
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                      leftAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
-                     rightAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+                   leadingAssistiveLabel:(nonnull UILabel *)leadingAssistiveLabel
+                  trailingAssistiveLabel:(nonnull UILabel *)trailingAssistiveLabel
               assistiveLabelDrawPriority:
                   (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
         customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
@@ -237,8 +236,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   self.assistiveLabelViewLayout = [[MDCTextControlAssistiveLabelViewLayout alloc]
                          initWithWidth:textFieldWidth
-                    leftAssistiveLabel:leftAssistiveLabel
-                   rightAssistiveLabel:rightAssistiveLabel
+                 leadingAssistiveLabel:leadingAssistiveLabel
+                trailingAssistiveLabel:trailingAssistiveLabel
             assistiveLabelDrawPriority:assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                      horizontalPadding:kHorizontalPadding
@@ -378,6 +377,16 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     maxY = assistiveLabelViewMaxY;
   }
   return MDCCeil(maxY);
+}
+
+- (CGRect)labelFrameWithLabelState:(MDCTextControlLabelState)labelState {
+  if (labelState == MDCTextControlLabelStateFloating) {
+    return self.labelFrameFloating;
+  } else if (labelState == MDCTextControlLabelStateNormal) {
+    return self.labelFrameNormal;
+  } else {
+    return CGRectZero;
+  }
 }
 
 @end

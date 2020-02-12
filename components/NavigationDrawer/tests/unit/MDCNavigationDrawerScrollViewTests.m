@@ -263,17 +263,31 @@
 }
 
 - (void)testTopHeaderHeightWithNoHeader {
+  // Given
+  CGFloat topSafeArea;
+  if (@available(iOS 11.0, *)) {
+    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
+  } else {
+    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
+    topSafeArea = 20;
+  }
+
   // When
   self.fakeBottomDrawer.headerViewController = nil;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, 0, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, topSafeArea, 0.001);
 }
 
 - (void)testTopHeaderHeightWithHeader {
   // Given
-  // MDCDeviceTopSafeAreaInset adds 20 if there is no safe area and you are not in an application
-  CGFloat mdcDeviceTopSafeArea = 20;
+  CGFloat topSafeArea;
+  if (@available(iOS 11.0, *)) {
+    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
+  } else {
+    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
+    topSafeArea = 20;
+  }
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
 
   // When
@@ -281,7 +295,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
-                             mdcDeviceTopSafeArea + fakePreferredContentSize.height, 0.001);
+                             topSafeArea + fakePreferredContentSize.height, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithHeaderAndContentViewController {
@@ -869,6 +883,13 @@
 
 - (void)testExpandToFullScreen {
   // Given
+  CGFloat topSafeArea;
+  if (@available(iOS 11.0, *)) {
+    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
+  } else {
+    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
+    topSafeArea = 20;
+  }
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   self.fakeBottomDrawer.headerViewController = fakeHeader;
@@ -889,7 +910,7 @@
       CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame), expectedHeight,
       0.001);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fakeBottomDrawer.scrollView.frame), 0, 0.001);
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 20, 0.01);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, topSafeArea, 0.01);
 }
 
 - (void)testNavigationDrawerCorrectShadowValue {
@@ -1066,6 +1087,60 @@
   MDCBottomDrawerContainerViewController *drawerContainer =
       self.presentationController.bottomDrawerContainerViewController;
   XCTAssertEqualObjects(drawerContainer.trackingScrollView, newTrackingScrollView);
+}
+
+- (void)testUpdatingMaximumInitialDrawerHeightWithLargePreferredContentSize {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
+
+  // When
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 100;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400, 0.001);
+
+  // When
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 300;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
+}
+
+- (void)testUpdatingPreferredContentSizeWithLargeMaximumInitialDrawerHeight {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 500;
+  self.fakeBottomDrawer.shouldAdjustOnContentSizeChange = YES;
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 100);
+  [self.fakeBottomDrawer
+      preferredContentSizeDidChangeForChildContentContainer:self.fakeBottomDrawer
+                                                                .contentViewController];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400, 0.001);
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 300);
+  [self.fakeBottomDrawer
+      preferredContentSizeDidChangeForChildContentContainer:self.fakeBottomDrawer
+                                                                .contentViewController];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 50);
+  [self.fakeBottomDrawer
+      preferredContentSizeDidChangeForChildContentContainer:self.fakeBottomDrawer
+                                                                .contentViewController];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 450, 0.001);
 }
 
 @end

@@ -213,6 +213,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (self) {
     self.userInteractionEnabled = YES;
     [super setMultipleTouchEnabled:NO];  // We only want one touch event at a time
+    _allowAnimatedValueChanges = YES;
     _continuousUpdateEvents = YES;
     _lastDispatchedValue = _value;
     _maximumValue = 1;
@@ -365,6 +366,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 
   _trackHeight = trackHeight;
+  [self updateTrackEnds];
   [self setNeedsLayout];
 }
 
@@ -502,7 +504,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
   _trackEndsAreRounded = trackEndsAreRounded;
+  [self updateTrackEnds];
+}
 
+- (void)updateTrackEnds {
   if (_trackEndsAreRounded) {
     _trackView.layer.cornerRadius = _trackHeight / 2;
   } else {
@@ -554,7 +559,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   if (_value != previousValue) {
     [self interruptAnimation];
-    [self updateThumbTrackAnimated:animated
+    [self updateThumbTrackAnimated:animated && self.allowAnimatedValueChanges
              animateThumbAfterMove:animateThumbAfterMove
                      previousValue:previousValue
                         completion:completion];

@@ -27,6 +27,10 @@ static const CGFloat kFloatingButtonBaselineShapePercentageValue = (CGFloat)0.5;
                                  valueType:MDCCornerTreatmentValueTypePercentage];
   [rectangleShape setCorners:cornerTreatment];
   button.shapeGenerator = rectangleShape;
+
+  [button setContentEdgeInsets:UIEdgeInsetsMake(16, 16, 16, 16)
+                      forShape:MDCFloatingButtonShapeDefault
+                        inMode:MDCFloatingButtonModeNormal];
 }
 
 @end

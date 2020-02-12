@@ -196,10 +196,16 @@ static NSString *const kEnabledSelector = @"enabled";
 #pragma mark - Private
 
 - (void)updateButtonTitleColors {
-  for (UIView *viewObj in _buttonViews) {
+  for (NSUInteger i = 0; i < [_buttonViews count]; ++i) {
+    UIView *viewObj = _buttonViews[i];
     if ([viewObj isKindOfClass:[MDCButton class]]) {
-      MDCButton *buttonView = (MDCButton *)viewObj;
-      [buttonView setTitleColor:self.tintColor forState:UIControlStateNormal];
+      MDCButton *button = (MDCButton *)viewObj;
+
+      if (i >= [_items count]) {
+        continue;
+      }
+      UIBarButtonItem *item = _items[i];
+      [_defaultBuilder updateTitleColorForButton:button withItem:item];
     }
   }
 }
@@ -293,6 +299,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tintColor))]) {
           button.tintColor = newValue;
+          [self->_defaultBuilder updateTitleColorForButton:button withItem:object];
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
           [button setTitle:newValue forState:UIControlStateNormal];

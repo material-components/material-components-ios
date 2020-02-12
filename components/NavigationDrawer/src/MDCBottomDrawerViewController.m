@@ -298,6 +298,25 @@
   }
 }
 
+- (void)setShouldUseStickyStatusBar:(BOOL)shouldUseStickyStatusBar {
+  _shouldUseStickyStatusBar = shouldUseStickyStatusBar;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldUseStickyStatusBar = shouldUseStickyStatusBar;
+  }
+}
+
+- (void)setShouldAdjustOnContentSizeChange:(BOOL)shouldAdjustOnContentSizeChange {
+  _shouldAdjustOnContentSizeChange = shouldAdjustOnContentSizeChange;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldAdjustOnContentSizeChange =
+        shouldAdjustOnContentSizeChange;
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.
@@ -385,7 +404,11 @@
 }
 
 - (void)contentDrawerTopInset:(CGFloat)transitionToTop {
-  CGFloat topInset = MDCDeviceTopSafeAreaInset();
+  CGFloat topInset = MDCFixedStatusBarHeightOnPreiPhoneXDevices;
+  if (@available(iOS 11.0, *)) {
+    topInset = self.view.safeAreaInsets.top;
+  }
+
   if ([self contentReachesFullScreen]) {
     topInset -= ((CGFloat)1.0 - transitionToTop) * topInset;
   } else {

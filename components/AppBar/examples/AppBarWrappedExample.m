@@ -57,7 +57,7 @@
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:demoVC];
 
-  // Behavioral flags.
+  // Common behavioral flags.
   MDCAppBarViewController *appBarViewController =
       self.appBarContainerViewController.appBarViewController;
   appBarViewController.inferTopSafeAreaInsetFromViewController = YES;

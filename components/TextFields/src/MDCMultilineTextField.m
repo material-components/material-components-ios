@@ -26,6 +26,11 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
+/** The key for localization of the @c clearButton accessibilityLabel. */
+static NSString *const kClearButtonKey = @"MaterialTextFieldClearButtonAccessibilityLabel";
+/** Table name within the bundle used for localizing accessibility values. */
+static NSString *const kAccessibilityLocalizationStringsTableName = @"MaterialTextField";
+
 @interface MDCMultilineTextField () {
   UIColor *_cursorColor;
 
@@ -127,6 +132,12 @@
   // TODO: (#4331) This needs to be converted to the new text scheme.
   self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCMultilineTextField class]];
+  NSString *accessibilityLabel =
+      [bundle localizedStringForKey:kClearButtonKey
+                              value:@"Clear text"
+                              table:kAccessibilityLocalizationStringsTableName];
+  self.clearButton.accessibilityLabel = accessibilityLabel;
 
   _cursorColor = MDCTextInputCursorColor();
   [self applyCursorColor];

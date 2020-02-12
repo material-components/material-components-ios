@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "103.1.0"
+  mdc.version      = "104.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -223,12 +223,22 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/NavigationBar+TypographyThemer"
   end
 
+  # Availability
+
+  mdc.subspec "Availability" do |extension| 
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = "components/#{extension.base_name}/src/*.h"
+    extension.source_files = "components/#{extension.base_name}/src/*.{h,m}"
+  end
+
   # Banner
 
   mdc.subspec "Banner" do |component|
     component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Typography"
@@ -306,6 +316,7 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
@@ -826,6 +837,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
@@ -851,6 +863,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MDFTextAccessibility"

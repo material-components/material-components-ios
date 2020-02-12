@@ -1,0 +1,45 @@
+# Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Trigger Kokoro runs on PRs coming from upstream changes.
+#
+# Copied from https://github.com/google/iree/blob/master/.github/workflows/kokoro_labeler.yml
+#
+# This is achieved by labeling them with "kokoro:run".
+#
+# For security, Kokoro does not run automatically on all PRs (since that
+# would grant RCE), but it does run automatically on PRs from collaborators
+# and Google organization members. Unfortunately, GitHub apps appear to be
+# impossible to register as either.
+#
+# The labeler action requires a GITHUB_TOKEN with write access to the
+# repository. PRs from forks run within the fork and only receive a token
+# with read access (for security reasons). Thus the label step would fail.
+# The entire job is conditioned on the PR author being the copybara app, so
+# it simply shouldn't run on these other PRs.
+
+name: Kokoro Labeler
+
+on: [pull_request]
+
+jobs:
+  label_pr:
+    if: github.actor == 'copybara-service[bot]'
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Adding label
+        uses: actions/labeler@v2
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: ".github/kokoro_label_all.yml"
