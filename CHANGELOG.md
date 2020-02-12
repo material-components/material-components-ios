@@ -1,14 +1,11 @@
 # 104.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we removed the deprecated MDCFloatingActionButtonThemer, added APIs to AppBar flexible header, alert controllers, bottom drawers and sliders to make the more configurable for clients. 
 
 ## Breaking changes
 
 Deleted the MDCFloatingActionButtonThemer class. Use the theming extension.
 
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
 AppBar added an API for changing the stack view offset. 
