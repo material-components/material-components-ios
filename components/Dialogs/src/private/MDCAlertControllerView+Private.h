@@ -112,4 +112,13 @@
  */
 @property(nonatomic, assign) CGFloat actionsVerticalMargin;
 
+/**
+ If YES, a new layout calculation that is customizable by the insets in this header file is used
+ to layout the dialog. If NO, we fall back to the legaccy layout calculation, ignoring all
+ customized inset values.
+
+ Default value is @c NO.
+ */
+@property(nonatomic, assign) BOOL enableAdjustableInsets;
+
 @end
