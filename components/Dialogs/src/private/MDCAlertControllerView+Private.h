@@ -71,7 +71,7 @@
  If a message is presented, the minimum titleInsets.bottom and contentInsets.top is used.
  If there is no message, titleInsets.bottom is used.
 
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 
