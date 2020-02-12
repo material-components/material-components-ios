@@ -125,6 +125,11 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
 @property(nonatomic) BOOL statusBarHintCanOverlapHeader;
 
 /**
+ The minimum amount of header height to remain when `shiftBehavior` is enabled.
+ */
+@property(nonatomic) CGFloat minimumHeaderViewHeight;
+
+/**
  Hides the view by changing its alpha when the header shifts. Note that this only happens when the
  header shifting behavior is set to MDCFlexibleHeaderShiftBehaviorEnabled.
  */
