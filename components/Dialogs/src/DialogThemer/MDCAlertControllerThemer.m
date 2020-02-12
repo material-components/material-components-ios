@@ -17,7 +17,9 @@
 #import "../MDCAlertController+ButtonForAction.h"
 #import "MDCAlertColorThemer.h"
 #import "MDCAlertTypographyThemer.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
+#import "MaterialButtons+TypographyThemer.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-implementations"
@@ -44,7 +46,7 @@
         [MDCContainedButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
         break;
       case MDCActionEmphasisMedium:
-        [MDCOutlinedButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
+        [self applyOutlinedScheme:alertScheme.buttonScheme toButton:button];
         break;
       case MDCActionEmphasisLow:  // fallthrough
       default:
@@ -53,4 +55,21 @@
     }
   }
 }
+
+#pragma mark - Helpers
++ (void)applyOutlinedScheme:(nonnull id<MDCButtonScheming>)scheme
+                   toButton:(nonnull MDCButton *)button {
+  [MDCOutlinedButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
+  [MDCButtonShapeThemer applyShapeScheme:scheme.shapeScheme toButton:button];
+  [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
+  button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
+  button.layer.cornerRadius = scheme.cornerRadius;
+
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [button setBorderWidth:1 forState:state];
+  }
+}
+
 @end
