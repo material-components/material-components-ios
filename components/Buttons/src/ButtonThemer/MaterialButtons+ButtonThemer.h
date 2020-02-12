@@ -14,5 +14,4 @@
 
 #import "MDCButtonScheme.h"
 #import "MDCContainedButtonThemer.h"
-#import "MDCOutlinedButtonThemer.h"
 #import "MDCTextButtonThemer.h"
