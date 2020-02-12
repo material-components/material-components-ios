@@ -122,13 +122,13 @@ static inline UIColor *RippleColor() {
   // Account for horizontal padding
   labelWidthDiscount += contentPadding.left + contentPadding.right;
   // Account for vertical padding
-  CGFloat labelHeightDiscount = contentPadding.top + contentPadding.bottom;
+  CGFloat cellHeightDiscount = contentPadding.top + contentPadding.bottom;
 
   // Label needs to fit within the space available.
   CGSize labelFitSize = [self.actionLabel
-      sizeThatFits:CGSizeMake(size.width - labelWidthDiscount, size.height - labelHeightDiscount)];
+      sizeThatFits:CGSizeMake(size.width - labelWidthDiscount, size.height - cellHeightDiscount)];
   CGSize returnSize = CGSizeMake(labelWidthDiscount + labelFitSize.width,
-                                 labelFitSize.height + labelHeightDiscount);
+                                 MAX(kImageHeightAndWidth, labelFitSize.height) + cellHeightDiscount);
   return returnSize;
 }
 
