@@ -1603,6 +1603,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+FilledStyle"
 
@@ -1644,6 +1645,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+OutlinedStyle"
 
@@ -1953,9 +1955,10 @@ Pod::Spec.new do |mdc|
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
 
-      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+      component.dependency "MaterialComponents/Availability"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     end
 
     private_spec.subspec "TextControlsPrivate+OutlinedStyle" do |component|
@@ -1963,9 +1966,10 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
-      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+      component.dependency "MaterialComponents/Availability"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     end
 
     private_spec.subspec "ThumbTrack" do |component|
