@@ -170,7 +170,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
 
-#ifndef TARGET_OS_TV
+#if (!defined(TARGET_OS_TV) || TARGET_OS_TV == 0)
   self.showsTouchWhenHighlighted = NO;
 #endif
 
@@ -198,7 +198,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
                 action:@selector(touchDragExit:forEvent:)
       forControlEvents:UIControlEventTouchDragExit];
 
-#ifndef TARGET_OS_TV
+#if (!defined(TARGET_OS_TV) || TARGET_OS_TV == 0)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 #endif
