@@ -14,9 +14,9 @@
 
 #import "MDCTextControlStyleOutlined.h"
 
-#include "MaterialAvailability.h"
-#import "MDCTextControlVerticalPositioningReferenceOutlined.h"
 #import "MDCTextControl.h"
+#import "MDCTextControlVerticalPositioningReferenceOutlined.h"
+#include "MaterialAvailability.h"
 #import "UIBezierPath+MDCTextControlStyle.h"
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;

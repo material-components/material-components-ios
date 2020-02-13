@@ -16,9 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-#include "MaterialAvailability.h"
-#import "MDCTextControlVerticalPositioningReferenceFilled.h"
 #import "MDCTextControl.h"
+#import "MDCTextControlVerticalPositioningReferenceFilled.h"
+#include "MaterialAvailability.h"
 #import "UIBezierPath+MDCTextControlStyle.h"
 
 static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
