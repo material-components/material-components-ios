@@ -79,16 +79,17 @@
 
 #pragma mark MDCBaseTextAreaTextViewDelegate
 
--(void)textAreaTextView:(MDCBaseTextAreaTextView *)textView willBecomeFirstResponder:(BOOL)willBecome {
+- (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView
+    willBecomeFirstResponder:(BOOL)willBecome {
   [self setNeedsLayout];
 }
 
--(void)textAreaTextView:(MDCBaseTextAreaTextView *)textView willResignFirstResponder:(BOOL)willResign {
+- (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView
+    willResignFirstResponder:(BOOL)willResign {
   [self setNeedsLayout];
 }
 
 #pragma mark Notifications
-
 
 - (void)observeTextViewNotifications {
   [[NSNotificationCenter defaultCenter] addObserver:self

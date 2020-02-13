@@ -56,8 +56,8 @@
   BOOL superclassDidResignFirstResponder = [super resignFirstResponder];
   SEL selector = @selector(textAreaTextView:willResignFirstResponder:);
   if ([self.textAreaTextViewDelegate respondsToSelector:selector]) {
-    [self.textAreaTextViewDelegate
-     textAreaTextView:self willResignFirstResponder:superclassDidResignFirstResponder];
+    [self.textAreaTextViewDelegate textAreaTextView:self
+                           willResignFirstResponder:superclassDidResignFirstResponder];
   }
   return superclassDidResignFirstResponder;
 }
@@ -66,8 +66,8 @@
   BOOL superclassDidBecomeFirstResponder = [super becomeFirstResponder];
   SEL selector = @selector(textAreaTextView:willBecomeFirstResponder:);
   if ([self.textAreaTextViewDelegate respondsToSelector:selector]) {
-    [self.textAreaTextViewDelegate
-     textAreaTextView:self willBecomeFirstResponder:superclassDidBecomeFirstResponder];
+    [self.textAreaTextViewDelegate textAreaTextView:self
+                           willBecomeFirstResponder:superclassDidBecomeFirstResponder];
   }
   return superclassDidBecomeFirstResponder;
 }

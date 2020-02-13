@@ -17,19 +17,22 @@
 @class MDCBaseTextAreaTextView;
 
 /**
- This protocol allows the MDCBaseTextAreaTextView to inform the text area of important responder events.
+ This protocol allows the MDCBaseTextAreaTextView to inform the text area of important responder
+ events.
  */
 @protocol MDCBaseTextAreaTextViewDelegate <NSObject>
 
 /**
 This method is called when the text view is about to become the first responder.
  */
-- (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView willBecomeFirstResponder:(BOOL)willBecome;
+- (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView
+    willBecomeFirstResponder:(BOOL)willBecome;
 
 /**
 This method is called when the text view is about to resign the first responder.
  */
-- (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView willResignFirstResponder:(BOOL)willResign;
+- (void)textAreaTextView:(nonnull MDCBaseTextAreaTextView *)textView
+    willResignFirstResponder:(BOOL)willResign;
 @end
 
 /**
