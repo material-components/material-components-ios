@@ -43,11 +43,29 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
+    name = "BaseTextAreas",
+    deps = [
+        ":BaseTextAreasPrivate",
+        "//components/private/TextControlsPrivate:BaseStyle",
+        "//components/private/TextControlsPrivate:Shared",
+    ],
+)
+
+mdc_extension_objc_library(
     name = "BaseTextFields",
     deps = [
         "//components/private/TextControlsPrivate:BaseStyle",
         "//components/private/TextControlsPrivate:Shared",
         "@material_internationalization_ios//:MDFInternationalization",
+    ],
+)
+
+mdc_objc_library(
+    name = "BaseTextAreasPrivate",
+    hdrs = native.glob(["src/BaseTextAreas/private/*.h"]),
+    includes = ["src/BaseTextAreas/private"],
+    visibility = [
+        ":TextControlsPackageGroup",
     ],
 )
 
