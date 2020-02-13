@@ -16,7 +16,7 @@
 
 #import "private/MDCBaseTextAreaTextView.h"
 
-@interface MDCBaseTextArea ()
+@interface MDCBaseTextArea () <MDCBaseTextAreaTextViewDelegate>
 
 @property(strong, nonatomic) MDCBaseTextAreaTextView *textAreaTextView;
 @end
@@ -77,13 +77,13 @@
   return self.textAreaTextView;
 }
 
-#pragma mark InputChipViewTextViewDelegate
+#pragma mark MDCBaseTextAreaTextViewDelegate
 
-- (void)textAreaTextViewWillResignFirstResponder:(BOOL)didBecome {
+-(void)textAreaTextView:(MDCBaseTextAreaTextView *)textView willBecomeFirstResponder:(BOOL)willBecome {
   [self setNeedsLayout];
 }
 
-- (void)textAreaTextViewWillBecomeFirstResponder:(BOOL)didBecome {
+-(void)textAreaTextView:(MDCBaseTextAreaTextView *)textView willResignFirstResponder:(BOOL)willResign {
   [self setNeedsLayout];
 }
 
