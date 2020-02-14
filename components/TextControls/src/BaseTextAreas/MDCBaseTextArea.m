@@ -309,12 +309,6 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   }
 }
 
-#pragma mark MDCTextControl accessors
-
-- (CGRect)containerFrame {
-  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
-}
-
 #pragma mark Label
 
 - (void)animateLabel {
@@ -404,6 +398,10 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [_containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
 }
 
+- (CGRect)containerFrame {
+  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
+}
+
 #pragma mark Fonts
 
 - (UIFont *)normalFont {
@@ -417,14 +415,14 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 #pragma mark MDCBaseTextAreaTextViewDelegate
 
 - (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView
-    willBecomeFirstResponder:(BOOL)didBecome {
+    willBecomeFirstResponder:(BOOL)willBecome {
   if (textView == self.baseTextAreaTextView) {
     [self setNeedsLayout];
   }
 }
 
 - (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView
-    willResignFirstResponder:(BOOL)didResign {
+    willResignFirstResponder:(BOOL)willResign {
   if (textView == self.baseTextAreaTextView) {
     [self setNeedsLayout];
   }
