@@ -19,20 +19,20 @@
 
 @interface MDCBaseTextAreaLayout : NSObject
 
-@property(nonatomic, assign) CGRect labelFrameFloating;
-@property(nonatomic, assign) CGRect labelFrameNormal;
+@property(nonatomic, assign, readonly) CGRect labelFrameFloating;
+@property(nonatomic, assign, readonly) CGRect labelFrameNormal;
 
-@property(nonatomic, assign) CGRect textViewFrame;
+@property(nonatomic, assign, readonly) CGRect textViewFrame;
 
-@property(nonatomic, assign) CGRect assistiveLabelViewFrame;
-@property(nonatomic, strong, nonnull)
+@property(nonatomic, assign, readonly) CGRect assistiveLabelViewFrame;
+@property(nonatomic, strong, nonnull, readonly)
     MDCTextControlAssistiveLabelViewLayout *assistiveLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, readonly) CGFloat containerHeight;
 
-@property(nonatomic, strong, nonnull) NSArray<NSNumber *> *verticalGradientLocations;
-@property(nonatomic, strong, nonnull) NSArray<NSNumber *> *horizontalGradientLocations;
+@property(nonatomic, strong, nonnull, readonly) NSArray<NSNumber *> *verticalGradientLocations;
+@property(nonatomic, strong, nonnull, readonly) NSArray<NSNumber *> *horizontalGradientLocations;
 
 - (nonnull instancetype)initWithSize:(CGSize)size
                 positioningReference:

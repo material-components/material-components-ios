@@ -18,13 +18,23 @@
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
-static const CGFloat kGradientBlurLength = 4;
+static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 
 @interface MDCBaseTextAreaLayout ()
 
-@property(nonatomic, assign) CGFloat calculatedHeight;
-@property(nonatomic, assign) CGFloat minimumHeight;
-@property(nonatomic, assign) CGFloat containerHeight;
+@property(nonatomic, assign) CGRect labelFrameFloating;
+@property(nonatomic, assign) CGRect labelFrameNormal;
+
+@property(nonatomic, assign) CGRect textViewFrame;
+
+@property(nonatomic, assign) CGRect assistiveLabelViewFrame;
+@property(nonatomic, strong, nonnull)
+    MDCTextControlAssistiveLabelViewLayout *assistiveLabelViewLayout;
+
+@property(nonatomic) CGFloat containerHeight;
+
+@property(nonatomic, strong, nonnull) NSArray<NSNumber *> *verticalGradientLocations;
+@property(nonatomic, strong, nonnull) NSArray<NSNumber *> *horizontalGradientLocations;
 
 @end
 
@@ -295,6 +305,7 @@ static const CGFloat kGradientBlurLength = 4;
     @(1),
   ];
 }
+
 - (CGRect)labelFrameWithLabelState:(MDCTextControlLabelState)labelState {
   if (labelState == MDCTextControlLabelStateFloating) {
     return self.labelFrameFloating;
