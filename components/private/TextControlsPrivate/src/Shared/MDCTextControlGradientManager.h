@@ -14,6 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+  MDCTextControl text areas and input chip views retain one of these from initialization to
+  deallocation. Instances of this class hold on to the gradient layers used by text areas and input
+  chip views and they create mask layers from those gradients. This class was created in an attempt
+  to reduce duplicate code between these two text controls.
+ */
 @interface MDCTextControlGradientManager : NSObject
 
 @property(strong, nonatomic) CAGradientLayer *horizontalGradient;

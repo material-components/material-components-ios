@@ -195,7 +195,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self.assistiveLabelView setNeedsLayout];
   [self animateLabel];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
-  [self layOutGradientLayers];
+  [self layoutGradientLayers];
   [self.textView scrollRangeToVisible:self.textView.selectedRange];
 }
 
@@ -247,7 +247,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
-- (void)layOutGradientLayers {
+- (void)layoutGradientLayers {
   CGRect gradientLayerFrame = self.containerFrame;
   self.gradientManager.horizontalGradient.frame = gradientLayerFrame;
   self.gradientManager.verticalGradient.frame = gradientLayerFrame;
