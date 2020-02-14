@@ -1876,6 +1876,8 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
+      component.dependency "MaterialComponents/Availability"
+
       component.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [
           "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}",
