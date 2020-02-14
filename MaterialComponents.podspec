@@ -1545,7 +1545,6 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/TextFields+ColorThemer"
-      unit_tests.dependency "MaterialComponents/TextFields+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
     end
   end
@@ -1699,7 +1698,6 @@ Pod::Spec.new do |mdc|
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
@@ -1709,19 +1707,6 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
     end
-  end
-
-  mdc.subspec "TextFields+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/schemes/Typography"
   end
 
   # Themes
