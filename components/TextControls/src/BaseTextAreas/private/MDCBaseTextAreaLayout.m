@@ -15,7 +15,6 @@
 #import "MDCBaseTextAreaLayout.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "MDCBaseInputChipView.h"
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 

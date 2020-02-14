@@ -21,7 +21,6 @@
 #import "MaterialMath.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
-#import "MaterialTypography.h"
 #import "private/MDCBaseTextAreaLayout.h"
 #import "private/MDCBaseTextAreaTextView.h"
 
@@ -140,8 +139,6 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
   self.baseTextAreaTextView = [[MDCBaseTextAreaTextView alloc] init];
   self.baseTextAreaTextView.textAreaTextViewDelegate = self;
-  self.baseTextAreaTextView.showsVerticalScrollIndicator = NO;
-  self.baseTextAreaTextView.showsHorizontalScrollIndicator = NO;
   [self.maskedTextViewContainerView addSubview:self.baseTextAreaTextView];
 }
 

@@ -241,7 +241,7 @@
       positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
                                 normalFontLineHeight:self.normalFont.lineHeight
                                        textRowHeight:self.normalFont.lineHeight
-                                    numberOfTextRows:self.numberOfVisibleTextRows
+                                    numberOfTextRows:self.numberOfLinesOfVisibleText
                                              density:0
                             preferredContainerHeight:self.preferredContainerHeight];
 }
@@ -424,7 +424,7 @@
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
 }
 
-- (CGFloat)numberOfVisibleTextRows {
+- (CGFloat)numberOfLinesOfVisibleText {
   return 1;
 }
 
