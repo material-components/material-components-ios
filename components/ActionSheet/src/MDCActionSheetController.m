@@ -15,8 +15,8 @@
 #import "MDCActionSheetController.h"
 
 #import "MaterialAvailability.h"
-#import "MaterialMath.h"	
-#import "MaterialShadowElevations.h"	
+#import "MaterialMath.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
 #import "private/MDCActionSheetHeaderView.h"
 #import "private/MDCActionSheetItemTableViewCell.h"
