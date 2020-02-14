@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCMath.h"
+#import "MaterialAvailability.h"
 #import "MaterialColorScheme.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
@@ -93,7 +94,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 }
 
 - (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsDarkForiOS13 {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     MDCSemanticColorScheme *colorScheme =
@@ -138,11 +139,11 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
         ColorFromRGB(0xFFFFFF));
     XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsLightForiOS13 {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     MDCSemanticColorScheme *colorScheme =
@@ -187,7 +188,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
         ColorFromRGB(0x000000));
     XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsLightForPreiOS13 {
