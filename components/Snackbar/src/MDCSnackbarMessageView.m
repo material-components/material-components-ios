@@ -18,15 +18,15 @@
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 
+#import "MaterialAnimationTiming.h"
+#import "MaterialAvailability.h"
+#import "MaterialMath.h"
+#import "MaterialShadowLayer.h"
+#import "MaterialTypography.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
 #import "private/MaterialSnackbarStrings.h"
 #import "private/MaterialSnackbarStrings_table.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialAvailability.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";

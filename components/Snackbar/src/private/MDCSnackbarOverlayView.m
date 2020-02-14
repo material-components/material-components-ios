@@ -19,10 +19,10 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "../MDCSnackbarMessage.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialAvailability.h"
 #import "MDCSnackbarMessageViewInternal.h"
+#import "MaterialAnimationTiming.h"
 #import "MaterialApplication.h"
+#import "MaterialAvailability.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
 
