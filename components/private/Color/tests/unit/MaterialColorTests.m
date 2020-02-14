@@ -15,9 +15,9 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialAvailability.h"
+#import "MaterialMath.h"
 #import "UIColor+MaterialBlending.h"
 #import "UIColor+MaterialDynamic.h"
-#import "MaterialMath.h"
 
 /** Returns a generated image of the given color and bounds. */
 static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
