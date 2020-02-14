@@ -38,7 +38,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/AnimationTiming",
-	"//components/Availability",
+        "//components/Availability",
         "//components/Buttons",
         "//components/Elevation",
         "//components/OverlayWindow",
