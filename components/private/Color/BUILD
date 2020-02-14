@@ -23,13 +23,15 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Color",
+    deps = [
+        "//components/Availability",
+    ],
 )
 
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":Color",
-        "//components/Availability",
         "//components/private/Math",
     ],
 )
