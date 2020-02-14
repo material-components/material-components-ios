@@ -432,7 +432,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (BOOL)hasTitleIcon {
-  return (0.0f < self.titleIconImageView.image.size.height);
+  return self.titleIconImageView.image.size.height > 0.f;
 }
 
 - (BOOL)hasTitle {
