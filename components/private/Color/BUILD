@@ -29,6 +29,7 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":Color",
+        "//components/Availability",
         "//components/private/Math",
     ],
 )
