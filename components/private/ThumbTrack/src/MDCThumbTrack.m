@@ -17,13 +17,13 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialAvailability.h"
-#import "MaterialInk.h"
-#import "MaterialRipple.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
+#import "MaterialAvailability.h"
+#import "MaterialInk.h"
+#import "MaterialMath.h"
+#import "MaterialRipple.h"
+#import "MaterialTypography.h"
 
 #pragma mark - ThumbTrack constants
 
