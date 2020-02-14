@@ -14,12 +14,12 @@
 
 #import "MDCActionSheetController.h"
 
+#import "MaterialAvailability.h"
+#import "MaterialMath.h"	
+#import "MaterialShadowElevations.h"	
+#import "MaterialTypography.h"
 #import "private/MDCActionSheetHeaderView.h"
 #import "private/MDCActionSheetItemTableViewCell.h"
-#import "MaterialAvailability.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
 
 static NSString *const kReuseIdentifier = @"BaseCell";
 static const CGFloat kActionImageAlpha = (CGFloat)0.6;
