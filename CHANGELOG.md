@@ -1,19 +1,12 @@
-# #develop#
+# 104.0.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+In this patch release we fixed the syntax of the TV_OS macro.
 
 ## Component changes
 
+### Buttons
+
+* [Fix tvOS target bug. (#9705)](https://github.com/material-components/material-components-ios/commit/ed3d6306e6bbe25e1a486fa5853391343eb0e39c) (Randall Li)
 ---
 
 # 104.0.0
