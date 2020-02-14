@@ -12,16 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-
-@class MDCBaseTextAreaTextView;
-@protocol MDCBaseTextAreaTextViewDelegate <NSObject>
-- (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView
-    willBecomeFirstResponder:(BOOL)didBecome;
-- (void)textAreaTextView:(MDCBaseTextAreaTextView *)textView
-    willResignFirstResponder:(BOOL)didResign;
-@end
-
-@interface MDCBaseTextAreaTextView : UITextView
-@property(nonatomic, weak) id<MDCBaseTextAreaTextViewDelegate> textAreaTextViewDelegate;
-@end
+#import "MDCBaseTextField.h"
