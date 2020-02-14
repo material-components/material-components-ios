@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialAvailability.h"
 #import "MDCMath.h"
+#import "MaterialAvailability.h"
 #import "MaterialColorScheme.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
