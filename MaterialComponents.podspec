@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "104.0.0"
+  mdc.version      = "104.0.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -1557,7 +1557,21 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
     component.source_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
   end
-  
+
+  # TextControls+BaseTextAreas
+
+  mdc.subspec "TextControls+BaseTextAreas" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+    component.source_files = [ "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}",
+    "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+    component.dependency "MaterialComponents/private/TextControlsPrivate+BaseStyle"
+    component.dependency "MDFInternationalization"
+  end
+
   # TextControls+BaseTextFields
 
   mdc.subspec "TextControls+BaseTextFields" do |component|
@@ -1589,6 +1603,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+FilledStyle"
 
@@ -1630,6 +1645,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+OutlinedStyle"
 
@@ -1939,9 +1955,10 @@ Pod::Spec.new do |mdc|
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
 
-      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+      component.dependency "MaterialComponents/Availability"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     end
 
     private_spec.subspec "TextControlsPrivate+OutlinedStyle" do |component|
@@ -1949,9 +1966,10 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
-      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+      component.dependency "MaterialComponents/Availability"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     end
 
     private_spec.subspec "ThumbTrack" do |component|

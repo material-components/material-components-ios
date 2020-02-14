@@ -1,3 +1,14 @@
+# 104.0.1
+
+In this patch release we fixed the syntax of the TV_OS macro.
+
+## Component changes
+
+### Buttons
+
+* [Fix tvOS target bug. (#9705)](https://github.com/material-components/material-components-ios/commit/ed3d6306e6bbe25e1a486fa5853391343eb0e39c) (Randall Li)
+---
+
 # 104.0.0
 
 In this major release we removed the deprecated MDCFloatingActionButtonThemer, added APIs to AppBar flexible header, alert controllers, bottom drawers and sliders to make the more configurable for clients. 
