@@ -14,15 +14,15 @@
 
 #import "MDCFlexibleHeaderViewController.h"
 
-#import "private/MDCFlexibleHeaderHairline.h"
-#import "private/MDCFlexibleHeaderView+Private.h"
-#import "MaterialAvailability.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MaterialApplication.h"
+#import "MaterialAvailability.h"
 #import "MaterialUIMetrics.h"
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
+#import "private/MDCFlexibleHeaderHairline.h"
+#import "private/MDCFlexibleHeaderView+Private.h"
 
 @interface UIView ()
 - (UIEdgeInsets)safeAreaInsets;  // For pre-iOS 11 SDK targets.
