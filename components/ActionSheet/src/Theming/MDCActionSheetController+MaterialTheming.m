@@ -15,8 +15,8 @@
 #import "MDCActionSheetController+MaterialTheming.h"
 
 #import "MaterialAvailability.h"
-#import "MaterialShadowElevations.h"
 #import "MaterialColor.h"
+#import "MaterialShadowElevations.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;
