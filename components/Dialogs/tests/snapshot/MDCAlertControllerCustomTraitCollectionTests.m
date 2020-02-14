@@ -19,9 +19,9 @@
 
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MaterialAvailability.h"
+#import "MaterialColor.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
-#import "MaterialColor.h"
 
 static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
