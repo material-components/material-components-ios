@@ -81,7 +81,7 @@
   no message, `titleInsets.bottom` is ignored.
 
 
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 
@@ -90,7 +90,7 @@
  accessory view) against the dialog edges or its neighbor elements, the title
  and the actions.
 
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 28, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets contentInsets;
 
