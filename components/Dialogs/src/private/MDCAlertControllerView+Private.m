@@ -566,9 +566,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 // @param boundingWidth should not include any internal margins or padding
 - (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
   CGFloat leftInset =
-      MAX(MAX(self.titleInsets.left, self.titleIconInsets.left), self.contentInsets.left);
+      self.enableAdjustableInsets
+          ? MAX(MAX(self.titleInsets.left, self.titleIconInsets.left), self.contentInsets.left)
+          : MDCDialogContentInsets.left;
   CGFloat rightInset =
-      MAX(MAX(self.titleInsets.right, self.titleIconInsets.right), self.contentInsets.right);
+      self.enableAdjustableInsets
+          ? MAX(MAX(self.titleInsets.right, self.titleIconInsets.right), self.contentInsets.right)
+          : MDCDialogContentInsets.right;
 
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = boundingWidth - leftInset - rightInset;
@@ -577,30 +581,18 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
   CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:boundsSize];
 
-  CGFloat contentTotalWidth =
-      MAX(MAX(titleSize.width, messageSize.width), accessoryViewSize.width) + leftInset +
-      rightInset;
+  CGFloat contentWidth = MAX(MAX(titleSize.width, messageSize.width), accessoryViewSize.width) +
+                         leftInset + rightInset;
   CGFloat totalElementsHeight = messageSize.height + accessoryViewSize.height;
 
-  // Adjustable insets layout
-  CGFloat contentTotalHeight =
-      totalElementsHeight + [self accessoryVerticalInset] + self.contentInsets.bottom;
-
-  CGSize contentSize;
-  contentSize.width = (CGFloat)ceil(contentTotalWidth);
-  contentSize.height = (CGFloat)ceil(contentTotalHeight);
-
-  // Fixed insets layout
-  CGFloat contentAccessoryVerticalPadding =
-      [self fixedInsetsContentAccessoryVerticalPaddingWithFittingSize:boundsSize];
-  CGFloat fixedInsetsHeight =
-      totalElementsHeight + contentAccessoryVerticalPadding + MDCDialogContentInsets.bottom;
-  CGFloat fixedInsetsWidth = MAX(MAX(titleSize.width, messageSize.width), accessoryViewSize.width) +
-                             MDCDialogContentInsets.left + MDCDialogContentInsets.right;
-  CGSize fixedInsetsContentSize =
-      CGSizeMake((CGFloat)ceil(fixedInsetsWidth), (CGFloat)ceil(fixedInsetsHeight));
-
-  return self.enableAdjustableInsets ? contentSize : fixedInsetsContentSize;
+  CGFloat contentHeight;
+  if (self.enableAdjustableInsets) {
+    contentHeight = totalElementsHeight + [self accessoryVerticalInset] + self.contentInsets.bottom;
+  } else {
+    contentHeight = totalElementsHeight + MDCDialogContentInsets.bottom +
+                    [self fixedInsetsContentAccessoryVerticalPaddingWithFittingSize:boundsSize];
+  }
+  return CGSizeMake((CGFloat)ceil(contentWidth), (CGFloat)ceil(contentHeight));
 }
 
 /**
