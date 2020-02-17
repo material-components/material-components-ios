@@ -1,16 +1,15 @@
-# #develop#
+# 105.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we removed the deprecated themers: MDCTextFieldTypographyThemer, MDCOutlinedButtonThemer, and added a new MDCBaseTextArea class under TextControls.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Deleted MDCTextFieldTypographyThemer and MDCOutlinedButtonThemer classes. Please use the theming extensions.
+Learn more at https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md#migration-guide-themers-to-theming-extensions
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+A new BaseTextArea component that leverages UITextView to provide multi-line text input have been created at components/TextControls/src/BaseTextAreas/.
 
 ## Component changes
 
@@ -30,6 +29,7 @@ Replace this text with example code for each new feature.
 
 * [Fix tvOS target bug. (#9705)](https://github.com/material-components/material-components-ios/commit/95518f48d4fe6c10e13cbdcfcc3a1c863697298d) (Randall Li)
 * [MDCButton. (#9667)](https://github.com/material-components/material-components-ios/commit/1d8d647f1f534de4366c8722992b67858d7ba444) (copybara-service[bot])
+* [Delete deprecated MDCOutlinedButtonThemer (#9688)](https://github.com/material-components/material-components-ios/commit/1118f14124858fe9a258b0971393e33b3966d2bf) (Bryan Oltman)
 
 ### Cards
 
@@ -91,15 +91,11 @@ Replace this text with example code for each new feature.
 
 * [Migrates Text Controls to MDCAvailability (#9720)](https://github.com/material-components/material-components-ios/commit/d89fa3fb11b97727265254afac91c2f9be6afb21) (Andrew Overton)
 * [Move static const assignment to MDCTextControl.m (#9701)](https://github.com/material-components/material-components-ios/commit/2d8d6a082fbf046df5b108b03e4566fb1fe91ea8) (Andrew Overton)
+* [Changes from text-area-feature-branch with additional podspec and BUILD file changes (#9711)](https://github.com/material-components/material-components-ios/commit/e6ef298bdff1f25005f013777f9e534cb4b6a6d4) (Andrew Overton)
 
 ### schemes/Color
 
 * [Migrates Schemes to MDCAvailability (#9736)](https://github.com/material-components/material-components-ios/commit/ae6d6d9a908c13f0466ad566ba7763925739dd49) (Andrew Overton)
-
-## Multi-component changes
-
-* [Changes from text-area-feature-branch with additional podspec and BUILD file changes (#9711)](https://github.com/material-components/material-components-ios/commit/e6ef298bdff1f25005f013777f9e534cb4b6a6d4) (Andrew Overton)
-* [Delete deprecated MDCOutlinedButtonThemer (#9688)](https://github.com/material-components/material-components-ios/commit/1118f14124858fe9a258b0971393e33b3966d2bf) (Bryan Oltman)
 
 ---
 
