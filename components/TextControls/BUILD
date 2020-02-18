@@ -141,6 +141,8 @@ mdc_unit_test_objc_library(
         "tests/unit/*/*.m",
     ]),
     deps = [
+        ":BaseTextAreas",
+        ":BaseTextAreasPrivate",
         ":BaseTextFields",
         ":BaseTextFieldsPrivate",
         ":FilledTextFields",
