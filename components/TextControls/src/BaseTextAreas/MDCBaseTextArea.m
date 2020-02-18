@@ -294,7 +294,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 - (MDCTextControlState)determineCurrentTextControlState {
   BOOL isEnabled = self.enabled && self.baseTextAreaTextView.isEditable;
   BOOL isEditing = self.textView.isFirstResponder;
-  return MDCTextControlStateDetermineState(isEnabled, isEditing);
+  return MDCTextControlStateWith(isEnabled, isEditing);
 }
 
 #pragma mark Label

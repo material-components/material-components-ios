@@ -531,7 +531,7 @@
 #pragma mark MDCTextControlState
 
 - (MDCTextControlState)determineCurrentTextControlState {
-  return MDCTextControlStateDetermineState(self.isEnabled, self.isEditing);
+  return MDCTextControlStateWith(self.isEnabled, self.isEditing);
 }
 
 #pragma mark Placeholder
