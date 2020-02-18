@@ -23,7 +23,7 @@
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame;
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
                                              text:(NSString *)text
-                                       labelState:(MDCTextControlLabelPosition)labelState;
+                                       labelPosition:(MDCTextControlLabelPosition)labelPosition;
 @end
 
 @interface MDCBaseTextFieldTests : XCTestCase
@@ -322,19 +322,19 @@
   XCTAssertFalse([textField
       shouldPlaceholderBeVisibleWithPlaceholder:nilPlaceholder
                                            text:text
-                                     labelState:MDCTextControlLabelPositionNormal]);
+                                     labelPosition:MDCTextControlLabelPositionNormal]);
   XCTAssertFalse([textField
       shouldPlaceholderBeVisibleWithPlaceholder:placeholder
                                            text:text
-                                     labelState:MDCTextControlLabelPositionNormal]);
+                                     labelPosition:MDCTextControlLabelPositionNormal]);
   XCTAssertFalse([textField
       shouldPlaceholderBeVisibleWithPlaceholder:placeholder
                                            text:nilText
-                                     labelState:MDCTextControlLabelPositionNormal]);
+                                     labelPosition:MDCTextControlLabelPositionNormal]);
   XCTAssertTrue([textField
       shouldPlaceholderBeVisibleWithPlaceholder:placeholder
                                            text:nilText
-                                     labelState:MDCTextControlLabelPositionFloating]);
+                                     labelPosition:MDCTextControlLabelPositionFloating]);
 }
 
 - (void)testDefaultAccessibilityLabelWithOnlyLabelText {

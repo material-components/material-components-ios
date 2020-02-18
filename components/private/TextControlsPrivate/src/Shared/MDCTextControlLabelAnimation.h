@@ -31,7 +31,7 @@
  no animation in progress.
  */
 + (void)animateLabel:(nonnull UILabel *)label
-                 state:(MDCTextControlLabelPosition)labelState
+                 state:(MDCTextControlLabelPosition)labelPosition
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont

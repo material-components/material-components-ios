@@ -137,7 +137,7 @@
   XCTAssertTrue(editingLayout.rightViewHidden);
 }
 
-- (void)testLabelFrameWithLabelState {
+- (void)testLabelFrameWithLabelPosition {
   // Given
   MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc] init];
 

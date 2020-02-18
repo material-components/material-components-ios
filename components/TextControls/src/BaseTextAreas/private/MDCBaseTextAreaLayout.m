@@ -306,10 +306,10 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
   ];
 }
 
-- (CGRect)labelFrameWithLabelPosition:(MDCTextControlLabelPosition)labelState {
-  if (labelState == MDCTextControlLabelPositionFloating) {
+- (CGRect)labelFrameWithLabelPosition:(MDCTextControlLabelPosition)labelPosition {
+  if (labelPosition == MDCTextControlLabelPositionFloating) {
     return self.labelFrameFloating;
-  } else if (labelState == MDCTextControlLabelPositionNormal) {
+  } else if (labelPosition == MDCTextControlLabelPositionNormal) {
     return self.labelFrameNormal;
   } else {
     return CGRectZero;
