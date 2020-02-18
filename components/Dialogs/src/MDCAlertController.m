@@ -14,14 +14,14 @@
 
 #import "MDCAlertController.h"
 
-#import "MaterialButtons.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
-#import "UIViewController+MaterialDialogs.h"
-#import "MaterialTypography.h"
+#import "MaterialButtons.h"
 #import "MaterialMath.h"
-#import <MDFInternationalization/MDFInternationalization.h>
+#import "MaterialTypography.h"
+#import "UIViewController+MaterialDialogs.h"
 
 #import "private/MDCAlertActionManager.h"
 #import "private/MDCAlertController+Customize.h"

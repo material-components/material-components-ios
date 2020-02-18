@@ -17,13 +17,14 @@
 
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
-#import "MDCBottomNavigationBar+MaterialTheming.h"
-#import "MaterialBottomNavigation.h"
-#import "MaterialInk.h"
-#import "MaterialSnapshot.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
+#import "MaterialAvailability.h"
+#import "MaterialBottomNavigation.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
+#import "MaterialInk.h"
+#import "MaterialSnapshot.h"
 
 static const CGFloat kWidthWide = 1600;
 static const CGFloat kWidthNarrow = 240;
@@ -414,7 +415,7 @@ static const CGFloat kHeightShort = 48;
 }
 
 - (void)testShadowColorRespondsToDynamicColor {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *dynamicColor =
@@ -440,7 +441,7 @@ static const CGFloat kHeightShort = 48;
         [self.navigationBar mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 #pragma mark - Badging

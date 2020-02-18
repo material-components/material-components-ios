@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialAvailability.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialShadowLayer.h"
 
@@ -46,7 +47,7 @@
 }
 
 - (void)testTraitCollectionDidChangeColorForShadow {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     MDCFlexibleHeaderTraitCollectionTestView *flexibleHeader =
@@ -77,7 +78,7 @@
         [flexibleHeader mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testShadowColor {
