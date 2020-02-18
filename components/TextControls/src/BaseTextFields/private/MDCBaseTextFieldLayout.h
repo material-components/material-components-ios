@@ -67,6 +67,6 @@
                                         isRTL:(BOOL)isRTL
                                     isEditing:(BOOL)isEditing;
 
-- (CGRect)labelFrameWithLabelState:(MDCTextControlLabelState)labelState;
+- (CGRect)labelFrameWithLabelPosition:(MDCTextControlLabelPosition)labelPosition;
 
 @end

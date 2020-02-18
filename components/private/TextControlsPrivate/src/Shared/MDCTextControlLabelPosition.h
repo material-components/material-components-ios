@@ -17,17 +17,22 @@
 /**
  This enum represents different states the floating label can be in.
  */
-typedef NS_ENUM(NSUInteger, MDCTextControlLabelState) {
+typedef NS_ENUM(NSUInteger, MDCTextControlLabelPosition) {
   /**
    The state where the floating label is not visible.
    */
-  MDCTextControlLabelStateNone,
+  MDCTextControlLabelPositionNone,
   /**
    The state where the floating label is floating.
    */
-  MDCTextControlLabelStateFloating,
+  MDCTextControlLabelPositionFloating,
   /**
    The state where the floating label is occupying the normal text area.
    */
-  MDCTextControlLabelStateNormal,
+  MDCTextControlLabelPositionNormal,
 };
+
+MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText,
+                                                            BOOL hasText,
+                                                            BOOL canLabelFloat,
+                                                            BOOL isEditing);
