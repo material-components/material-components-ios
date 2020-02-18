@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MDCTextControlLabelState.h"
+#import "MDCTextControlLabelPosition.h"
 
 /**
  The logic to animate labels is extracted into its own class so that any MDCTextControl can
@@ -31,7 +31,7 @@
  no animation in progress.
  */
 + (void)animateLabel:(nonnull UILabel *)label
-                 state:(MDCTextControlLabelState)labelState
+                 state:(MDCTextControlLabelPosition)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont

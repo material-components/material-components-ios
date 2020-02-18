@@ -29,7 +29,7 @@
 @property(nonatomic, strong) MDCTextControlAssistiveLabelView *assistiveLabelView;
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) MDCTextControlState textControlState;
-@property(nonatomic, assign) MDCTextControlLabelState labelState;
+@property(nonatomic, assign) MDCTextControlLabelPosition labelPosition;
 @property(nonatomic, assign) CGRect labelFrame;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
 @property(nonatomic, assign) CGSize mostRecentlyComputedIntrinsicContentSize;
@@ -84,7 +84,7 @@
 - (void)initializeProperties {
   self.animationDuration = kMDCTextControlDefaultAnimationDuration;
   self.labelBehavior = MDCTextControlLabelBehaviorFloats;
-  self.labelState = [self determineCurrentLabelState];
+  self.labelPosition = [self determineCurrentLabelPosition];
   self.textControlState = [self determineCurrentTextControlState];
   self.containerStyle = [[MDCTextControlStyleBase alloc] init];
   self.colorViewModels = [[NSMutableDictionary alloc] init];
@@ -159,17 +159,17 @@
     [self invalidateIntrinsicContentSize];
   }
   self.textControlState = [self determineCurrentTextControlState];
-  self.labelState = [self determineCurrentLabelState];
+  self.labelPosition = [self determineCurrentLabelPosition];
   MDCTextControlColorViewModel *colorViewModel =
       [self textControlColorViewModelForState:self.textControlState];
-  [self applyColorViewModel:colorViewModel withLabelState:self.labelState];
+  [self applyColorViewModel:colorViewModel withLabelState:self.labelPosition];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
-  self.labelFrame = [self.layout labelFrameWithLabelState:self.labelState];
+  self.labelFrame = [self.layout labelFrameWithLabelPosition:self.labelPosition];
 }
 
 - (void)postLayoutSubviews {
-  self.label.hidden = self.labelState == MDCTextControlLabelStateNone;
+  self.label.hidden = self.labelPosition == MDCTextControlLabelPositionNone;
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
@@ -183,9 +183,9 @@
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
-                  labelState:(MDCTextControlLabelState)labelState {
+                  labelState:(MDCTextControlLabelPosition)labelState {
   CGRect textRect = layout.textRectNormal;
-  if (labelState == MDCTextControlLabelStateFloating) {
+  if (labelState == MDCTextControlLabelPositionFloating) {
     textRect = layout.textRectFloating;
   }
   return textRect;
@@ -206,6 +206,8 @@
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
   CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
+  CGFloat offsetNeededToAlignNormalLabelAndText = (CGFloat)1.0;
+  minY += offsetNeededToAlignNormalLabelAndText;
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
@@ -431,13 +433,13 @@
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelPosition];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelPosition];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
 }
@@ -472,7 +474,7 @@
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  if (self.labelState == MDCTextControlLabelStateFloating) {
+  if (self.labelPosition == MDCTextControlLabelPositionFloating) {
     return self.layout.clearButtonFrameFloating;
   }
   return self.layout.clearButtonFrameNormal;
@@ -529,19 +531,7 @@
 #pragma mark MDCTextControlState
 
 - (MDCTextControlState)determineCurrentTextControlState {
-  return [self textControlStateWithIsEnabled:self.isEnabled isEditing:self.isEditing];
-}
-
-- (MDCTextControlState)textControlStateWithIsEnabled:(BOOL)isEnabled isEditing:(BOOL)isEditing {
-  if (isEnabled) {
-    if (isEditing) {
-      return MDCTextControlStateEditing;
-    } else {
-      return MDCTextControlStateNormal;
-    }
-  } else {
-    return MDCTextControlStateDisabled;
-  }
+  return MDCTextControlStateDetermineState(self.isEnabled, self.isEditing);
 }
 
 #pragma mark Placeholder
@@ -549,12 +539,12 @@
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
                                                     text:self.text
-                                              labelState:self.labelState];
+                                              labelState:self.labelPosition];
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
                                              text:(NSString *)text
-                                       labelState:(MDCTextControlLabelState)labelState {
+                                       labelState:(MDCTextControlLabelPosition)labelState {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
 
@@ -562,7 +552,7 @@
     if (hasText) {
       return NO;
     } else {
-      if (labelState == MDCTextControlLabelStateNormal) {
+      if (labelState == MDCTextControlLabelPositionNormal) {
         return NO;
       } else {
         return YES;
@@ -578,7 +568,7 @@
 - (void)animateLabel {
   __weak MDCBaseTextField *weakSelf = self;
   [MDCTextControlLabelAnimation animateLabel:self.label
-                                       state:self.labelState
+                                       state:self.labelPosition
                             normalLabelFrame:self.layout.labelFrameNormal
                           floatingLabelFrame:self.layout.labelFrameFloating
                                   normalFont:self.normalFont
@@ -597,50 +587,19 @@
   return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
 }
 
-- (MDCTextControlLabelState)determineCurrentLabelState {
-  return [self labelStateWithLabel:self.label
-                              text:self.text
-                     canLabelFloat:self.canLabelFloat
-                         isEditing:self.isEditing];
-}
-
-- (MDCTextControlLabelState)labelStateWithLabel:(UILabel *)label
-                                           text:(NSString *)text
-                                  canLabelFloat:(BOOL)canLabelFloat
-                                      isEditing:(BOOL)isEditing {
-  BOOL hasFloatingLabelText = label.text.length > 0;
-  BOOL hasText = text.length > 0;
-  if (hasFloatingLabelText) {
-    if (canLabelFloat) {
-      if (isEditing) {
-        return MDCTextControlLabelStateFloating;
-      } else {
-        if (hasText) {
-          return MDCTextControlLabelStateFloating;
-        } else {
-          return MDCTextControlLabelStateNormal;
-        }
-      }
-    } else {
-      if (hasText) {
-        return MDCTextControlLabelStateNone;
-      } else {
-        return MDCTextControlLabelStateNormal;
-      }
-    }
-  } else {
-    return MDCTextControlLabelStateNone;
-  }
+- (MDCTextControlLabelPosition)determineCurrentLabelPosition {
+  return MDCTextControlLabelPositionWith(self.label.text.length > 0, self.text.length > 0,
+                                         self.canLabelFloat, self.isEditing);
 }
 
 #pragma mark Coloring
 
 - (void)applyColorViewModel:(MDCTextControlColorViewModel *)colorViewModel
-             withLabelState:(MDCTextControlLabelState)labelState {
+             withLabelState:(MDCTextControlLabelPosition)labelState {
   UIColor *labelColor = [UIColor clearColor];
-  if (labelState == MDCTextControlLabelStateNormal) {
+  if (labelState == MDCTextControlLabelPositionNormal) {
     labelColor = colorViewModel.normalLabelColor;
-  } else if (labelState == MDCTextControlLabelStateFloating) {
+  } else if (labelState == MDCTextControlLabelPositionFloating) {
     labelColor = colorViewModel.floatingLabelColor;
   }
   self.textColor = colorViewModel.textColor;
