@@ -12,11 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControl.h"
-#import "MDCTextControlAssistiveLabelView.h"
-#import "MDCTextControlAssistiveLabelViewLayout.h"
-#import "MDCTextControlColorViewModel.h"
-#import "MDCTextControlGradientManager.h"
-#import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelState.h"
-#import "MDCTextControlVerticalPositioningReference.h"
+#import "MDCBaseTextArea.h"
