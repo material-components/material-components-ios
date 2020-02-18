@@ -35,7 +35,7 @@
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
 
 // Legacy ink ripple
-@property(nonatomic, readonly) MDCLegacyInkLayer *inkLayer;
+@property(nonatomic, readonly, weak) MDCLegacyInkLayer *inkLayer;
 
 @end
 
