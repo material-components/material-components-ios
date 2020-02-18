@@ -717,6 +717,7 @@ Pod::Spec.new do |mdc|
     ]
     component.framework = "CoreGraphics", "QuartzCore"
 
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/CollectionCells"
     component.dependency "MaterialComponents/CollectionLayoutAttributes"
     component.dependency "MaterialComponents/Ink"
