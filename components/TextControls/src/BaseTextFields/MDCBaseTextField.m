@@ -206,8 +206,6 @@
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
   CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
-  CGFloat offsetNeededToAlignNormalLabelAndText = (CGFloat)1.0;
-  minY += offsetNeededToAlignNormalLabelAndText;
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
