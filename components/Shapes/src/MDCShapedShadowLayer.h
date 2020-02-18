@@ -32,7 +32,7 @@
  @note If you set shapedBackgroundColor, you should not manually write to backgroundColor or
  fillColor.
  */
-@property(nonatomic, strong, nullable) UIColor *shapedBackgroundColor;
+@property(nonatomic, copy, nullable) UIColor *shapedBackgroundColor;
 
 /*
  Sets the shaped border color of the layer.
@@ -42,7 +42,7 @@
 
  @note If you set shapedBorderColor, you should not manually write to borderColor.
  */
-@property(nonatomic, strong, nullable) UIColor *shapedBorderColor;
+@property(nonatomic, copy, nullable) UIColor *shapedBorderColor;
 
 /*
  Sets the shaped border width of the layer.
