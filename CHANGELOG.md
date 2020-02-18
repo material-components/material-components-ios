@@ -41,16 +41,16 @@ A new BaseTextArea component that leverages UITextView to provide multi-line tex
 
 ### Dialogs
 
-* [Add snapshot tests for additional dialog configurations. (#9646)](https://github.com/material-components/material-components-ios/commit/e2bff768df18fc24f91857447ddb8992071e778f) (copybara-service[bot])
+* [Add snapshot tests for additional dialog configurations. (#9646)](https://github.com/material-components/material-components-ios/commit/e2bff768df18fc24f91857447ddb8992071e778f) (Galia Kaufman)
 * [Adding accessory view vertical inset to private header (#9692)](https://github.com/material-components/material-components-ios/commit/ecddca8d58d8e02fb350d31277693dbaff56f952) (Galia Kaufman)
-* [Adding an adjustable insets feature flag. Flag default is NO. Clients must enable flag if they want to customize the inset. This flag has no effect yet in this CL. Adjustable layout logic will be introduced in followup CLs. (#9648)](https://github.com/material-components/material-components-ios/commit/0c8647cfca40fc04aa9da1ff7dde30efbe6456dc) (copybara-service[bot])
+* [Adding an adjustable insets feature flag. Flag default is NO. Clients must enable flag if they want to customize the inset. This flag has no effect yet in this CL. Adjustable layout logic will be introduced in followup CLs. (#9648)](https://github.com/material-components/material-components-ios/commit/0c8647cfca40fc04aa9da1ff7dde30efbe6456dc) (Galia Kaufman)
 * [Delete Dialogs OWNERS file (#9697)](https://github.com/material-components/material-components-ios/commit/5884725f8746bfaecbc02ed509cb70eac42c5428) (Randall Li)
-* [Fix custom title icon view layout - top inset (#9721)](https://github.com/material-components/material-components-ios/commit/3b89aecee05c95d49f331ce77427cc5731fbea99) (Galia Kaufman)
+* [Fix custom title icon view layout - top inset (#9721)](https://github.com/material-components/material-components-ios/commit/3b89aecee05c95d49f331ce77427cc5731fbea99) (Iryna Berezan)
 * [Migrate dialogs to availability (#9743)](https://github.com/material-components/material-components-ios/commit/88b5767bdb200438108c46f9eae96a8695ef91f7) (Andrew Overton)
-* [Refactor action frame calculations to accommodate adjustable insets (5 seconds ago) (#9656)](https://github.com/material-components/material-components-ios/commit/a40a4eb171994b72de473b974131350bed870b1b) (copybara-service[bot])
+* [Refactor action frame calculations to accommodate adjustable insets (5 seconds ago) (#9656)](https://github.com/material-components/material-components-ios/commit/a40a4eb171994b72de473b974131350bed870b1b) (Galia Kaufman)
 * [Refactor content frame calculations to accommodate adjustable insets  (#9710)](https://github.com/material-components/material-components-ios/commit/05e38ef7387ff7bb455978031339ecda3ae19893) (Galia Kaufman)
 * [Refactor title frame calculations to accommodate adjustable insets (#9709)](https://github.com/material-components/material-components-ios/commit/6011e001f6cfc28ea28591d098a14b9cff4ca78f) (Galia Kaufman)
-* [Refactor title-icon, title-icon-view frames calculations to accommodate adjustable insets (#9657)](https://github.com/material-components/material-components-ios/commit/b3ba7e6d2c9deeb7c155f2242cad3c10c15f3e39) (copybara-service[bot])
+* [Refactor title-icon, title-icon-view frames calculations to accommodate adjustable insets (#9657)](https://github.com/material-components/material-components-ios/commit/b3ba7e6d2c9deeb7c155f2242cad3c10c15f3e39) (Galia Kaufman)
 * [Update adjustable insets comments (#9694)](https://github.com/material-components/material-components-ios/commit/60a531ca2ad9604c7559be0241aabec874cb87a4) (Galia Kaufman)
 * [Update adjustable insets values (#9695)](https://github.com/material-components/material-components-ios/commit/735d2d28183cf977eb9508ac913a234f8e4d5bc3) (Galia Kaufman)
 
