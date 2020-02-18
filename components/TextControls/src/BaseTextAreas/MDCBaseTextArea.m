@@ -397,7 +397,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 #pragma mark Coloring
 
 - (void)applyColorViewModel:(MDCTextControlColorViewModel *)colorViewModel
-             withLabelPosition:(MDCTextControlLabelPosition)labelPosition {
+          withLabelPosition:(MDCTextControlLabelPosition)labelPosition {
   UIColor *labelColor = [UIColor clearColor];
   if (labelPosition == MDCTextControlLabelPositionNormal) {
     labelColor = colorViewModel.normalLabelColor;

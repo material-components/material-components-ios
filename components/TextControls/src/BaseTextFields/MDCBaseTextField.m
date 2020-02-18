@@ -183,7 +183,7 @@
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
-                  labelPosition:(MDCTextControlLabelPosition)labelPosition {
+               labelPosition:(MDCTextControlLabelPosition)labelPosition {
   CGRect textRect = layout.textRectNormal;
   if (labelPosition == MDCTextControlLabelPositionFloating) {
     textRect = layout.textRectFloating;
@@ -537,12 +537,12 @@
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
                                                     text:self.text
-                                              labelPosition:self.labelPosition];
+                                           labelPosition:self.labelPosition];
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
                                              text:(NSString *)text
-                                       labelPosition:(MDCTextControlLabelPosition)labelPosition {
+                                    labelPosition:(MDCTextControlLabelPosition)labelPosition {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
 
@@ -593,7 +593,7 @@
 #pragma mark Coloring
 
 - (void)applyColorViewModel:(MDCTextControlColorViewModel *)colorViewModel
-             withLabelPosition:(MDCTextControlLabelPosition)labelPosition {
+          withLabelPosition:(MDCTextControlLabelPosition)labelPosition {
   UIColor *labelColor = [UIColor clearColor];
   if (labelPosition == MDCTextControlLabelPositionNormal) {
     labelColor = colorViewModel.normalLabelColor;
