@@ -19,7 +19,6 @@
 #import "MDCSnackbarMessageView.h"
 
 #import "MaterialAnimationTiming.h"
-#import "MaterialAvailability.h"
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -111,10 +110,10 @@ static const NSInteger kButtonTagStart = 20000;
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
-#if MDC_AVAILABLE_SDK_IOS(10_0)
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 @interface MDCSnackbarMessageView () <CAAnimationDelegate>
 @end
-#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
+#endif
 
 @interface MDCSnackbarMessageView ()
 
