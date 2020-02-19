@@ -15,6 +15,7 @@
 #import "MDCTextInputControllerFilled+MaterialTheming.h"
 
 #import <MaterialComponents/MaterialTextFields+ColorThemer.h>
+#import <MaterialComponents/MaterialTextFields+TypographyThemer.h>
 
 @implementation MDCTextInputControllerFilled (MaterialTheming)
 
