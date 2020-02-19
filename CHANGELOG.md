@@ -1,3 +1,108 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Migrates Action sheet to MDCAvailability. (#9733)](https://github.com/material-components/material-components-ios/commit/652077c779b06fc6b44e9bbae237f47e083c053c) (Bryan Oltman)
+
+### ActivityIndicator
+
+* [Migrates activity indicator to MDCAvailability. (#9735)](https://github.com/material-components/material-components-ios/commit/28a7fac63f7ee5f1787ab56190c8a579532810d6) (Bryan Oltman)
+
+### BottomNavigation
+
+* [Migrates Bottom Navigation to MDCAvailability. (#9717)](https://github.com/material-components/material-components-ios/commit/02efdd188990305ff298fbad25fa48634974b1b4) (Randall Li)
+
+### Buttons
+
+* [Fix tvOS target bug. (#9705)](https://github.com/material-components/material-components-ios/commit/95518f48d4fe6c10e13cbdcfcc3a1c863697298d) (Randall Li)
+* [MDCButton. (#9667)](https://github.com/material-components/material-components-ios/commit/1d8d647f1f534de4366c8722992b67858d7ba444) (copybara-service[bot])
+
+### Cards
+
+* [Migrates cards to MDCAvailability. (#9728)](https://github.com/material-components/material-components-ios/commit/b677a3629e180a89f1e6a15256b45790ca794af5) (Randall Li)
+
+### Chips
+
+* [Migrates Chips to MDCAvailability. (#9713)](https://github.com/material-components/material-components-ios/commit/33fbdfc3be62b4ff78951898b9abe6fc59041db4) (Randall Li)
+
+### Dialogs
+
+* [Add snapshot tests for additional dialog configurations. (#9646)](https://github.com/material-components/material-components-ios/commit/e2bff768df18fc24f91857447ddb8992071e778f) (copybara-service[bot])
+* [Adding accessory view vertical inset to private header (#9692)](https://github.com/material-components/material-components-ios/commit/ecddca8d58d8e02fb350d31277693dbaff56f952) (Galia Kaufman)
+* [Adding an adjustable insets feature flag. Flag default is NO. Clients must enable flag if they want to customize the inset. This flag has no effect yet in this CL. Adjustable layout logic will be introduced in followup CLs. (#9648)](https://github.com/material-components/material-components-ios/commit/0c8647cfca40fc04aa9da1ff7dde30efbe6456dc) (copybara-service[bot])
+* [Delete Dialogs OWNERS file (#9697)](https://github.com/material-components/material-components-ios/commit/5884725f8746bfaecbc02ed509cb70eac42c5428) (Randall Li)
+* [Fix custom title icon view layout - top inset (#9721)](https://github.com/material-components/material-components-ios/commit/3b89aecee05c95d49f331ce77427cc5731fbea99) (Galia Kaufman)
+* [Migrate dialogs to availability (#9743)](https://github.com/material-components/material-components-ios/commit/88b5767bdb200438108c46f9eae96a8695ef91f7) (Andrew Overton)
+* [Refactor action frame calculations to accommodate adjustable insets (5 seconds ago) (#9656)](https://github.com/material-components/material-components-ios/commit/a40a4eb171994b72de473b974131350bed870b1b) (copybara-service[bot])
+* [Refactor content frame calculations to accommodate adjustable insets  (#9710)](https://github.com/material-components/material-components-ios/commit/05e38ef7387ff7bb455978031339ecda3ae19893) (Galia Kaufman)
+* [Refactor title frame calculations to accommodate adjustable insets (#9709)](https://github.com/material-components/material-components-ios/commit/6011e001f6cfc28ea28591d098a14b9cff4ca78f) (Galia Kaufman)
+* [Refactor title-icon, title-icon-view frames calculations to accommodate adjustable insets (#9657)](https://github.com/material-components/material-components-ios/commit/b3ba7e6d2c9deeb7c155f2242cad3c10c15f3e39) (copybara-service[bot])
+* [Update adjustable insets comments (#9694)](https://github.com/material-components/material-components-ios/commit/60a531ca2ad9604c7559be0241aabec874cb87a4) (Galia Kaufman)
+* [Update adjustable insets values (#9695)](https://github.com/material-components/material-components-ios/commit/735d2d28183cf977eb9508ac913a234f8e4d5bc3) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Added property for minimumHeaderViewHeight (#9649)](https://github.com/material-components/material-components-ios/commit/8e782d43a2d0a8033f0c65809c9dd09624ff3dbd) (copybara-service[bot])
+* [Migrates Flexible Header to MDCAvailability. (#9744)](https://github.com/material-components/material-components-ios/commit/d962e50cf2564d07a6b823bf02170bdd7fb38f20) (Bryan Oltman)
+
+### Ink
+
+* [Migrates Ink to MDCAvailability. (#9741)](https://github.com/material-components/material-components-ios/commit/f168dd2806d5b9a069f08dd715cb8dc895db996e) (Bryan Oltman)
+
+### NavigationDrawer
+
+* [Delete NavigationDrawer OWNERS file (#9696)](https://github.com/material-components/material-components-ios/commit/43706fa2f9c919421867e442656b24c6dd762da1) (Randall Li)
+
+### Slider
+
+* [Migrates Slider to MDCAvailability. (#9704)](https://github.com/material-components/material-components-ios/commit/d03c34293fb3935e2d24f306e5add2f81741ea21) (Randall Li)
+
+### Snackbar
+
+* [Migrates Snackbar to MDCAvailability. (#9739)](https://github.com/material-components/material-components-ios/commit/1a221fe8b02aa2c1df77ad91a00f544c7eb1756a) (Bryan Oltman)
+
+### Tabs
+
+* [Migrates Tabs to MDCAvailability. (#9716)](https://github.com/material-components/material-components-ios/commit/549e52668e3525bc41e728ccf3e158574951bdd1) (Randall Li)
+
+### TextFields
+
+* [Delete deprecated MDCTextFieldTypographyThemer (#9689)](https://github.com/material-components/material-components-ios/commit/86b4fbcb2c2074b9e60dfb7987a3a1dc92c37937) (Bryan Oltman)
+
+### private/Color
+
+* [Make private/color use availability  (#9738)](https://github.com/material-components/material-components-ios/commit/1cc8bb781d6142452f40d8265664077ba7c85710) (Andrew Overton)
+
+### private/TextControlsPrivate
+
+* [Migrates Text Controls to MDCAvailability (#9720)](https://github.com/material-components/material-components-ios/commit/d89fa3fb11b97727265254afac91c2f9be6afb21) (Andrew Overton)
+* [Move static const assignment to MDCTextControl.m (#9701)](https://github.com/material-components/material-components-ios/commit/2d8d6a082fbf046df5b108b03e4566fb1fe91ea8) (Andrew Overton)
+
+### schemes/Color
+
+* [Migrates Schemes to MDCAvailability (#9736)](https://github.com/material-components/material-components-ios/commit/ae6d6d9a908c13f0466ad566ba7763925739dd49) (Andrew Overton)
+
+## Multi-component changes
+
+* [Changes from text-area-feature-branch with additional podspec and BUILD file changes (#9711)](https://github.com/material-components/material-components-ios/commit/e6ef298bdff1f25005f013777f9e534cb4b6a6d4) (Andrew Overton)
+* [Delete deprecated MDCOutlinedButtonThemer (#9688)](https://github.com/material-components/material-components-ios/commit/1118f14124858fe9a258b0971393e33b3966d2bf) (Bryan Oltman)
+
+---
+
 # 104.0.1
 
 In this patch release we fixed the syntax of the TV_OS macro.
