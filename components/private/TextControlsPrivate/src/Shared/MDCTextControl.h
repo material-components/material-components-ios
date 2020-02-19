@@ -27,7 +27,7 @@ static inline UIFont *_Nonnull MDCTextControlDefaultUITextFieldFont() {
   return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
-FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
+static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 
 @protocol MDCTextControlStyle;
 
