@@ -61,9 +61,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
 
+    self.enableAdjustableInsets = NO;
     self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
-    self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
-    self.contentInsets = UIEdgeInsetsMake(24.f, 24.f, 28.f, 24.f);
+    self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 24.f, 24.f);
+    self.contentInsets = UIEdgeInsetsMake(24.f, 24.f, 24.f, 24.f);
     self.actionsInsets = UIEdgeInsetsMake(8.f, 8.f, 8.f, 8.f);
     self.actionsHorizontalMargin = 8.f;
     self.actionsVerticalMargin = 12.f;
@@ -441,36 +442,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return self.message.length > 0;
 }
 
-- (BOOL)hasAccessoryView {
-  CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:CGRectInfinite.size];
-  return accessoryViewSize.height > 0.f;
-}
-
-- (CGFloat)titleIconInsetBottom {
-  return [self hasTitleIcon] && [self hasTitle] ? self.titleIconInsets.bottom : 0.0f;
-}
-
-- (CGFloat)titleInsetTop {
-  return [self hasTitleIcon] ? self.titleIconInsets.top : self.titleInsets.top;
-}
-
-- (CGFloat)titleInsetBottom {
-  if (![self hasMessage] && ![self hasAccessoryView]) {
-    return 0.0f;
-  } else if ([self hasTitle] || [self hasTitleIcon]) {
-    return self.titleInsets.bottom;
-  } else {
-    return 0.0f;
-  }
-}
-
 - (CGFloat)contentInternalVerticalPadding {
   return (([self hasTitle] || [self hasTitleIcon]) && [self hasMessage])
              ? MDCDialogContentVerticalPadding
              : 0.0f;
 }
 
-- (CGFloat)fixedInsetsContentTitleIconVerticalPadding {
+- (CGFloat)contentTitleIconVerticalPadding {
   return ([self hasTitle] && [self hasTitleIcon]) ? MDCDialogTitleIconVerticalPadding : 0.0f;
 }
 

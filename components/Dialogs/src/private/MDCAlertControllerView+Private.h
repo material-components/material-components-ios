@@ -56,10 +56,9 @@
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
- The margins around the title icon or the title icon view against the dialog
- edges (top, leading, trailing) and the title (bottom). Note that the actual
- bottom space is the smallest between titleImageInsets.bottom and
- titleInsets.top.
+ The edge insets around the title icon or title icon view against the dialog
+ edges (top, leading, trailing) and the title (bottom). Note that
+ `titleIconInsets.bottom` takes precedence over `titleInsets.top`.
 
  Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
  */
@@ -71,7 +70,7 @@
  If a message is presented, the minimum titleInsets.bottom and contentInsets.top is used.
  If there is no message, titleInsets.bottom is used.
 
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 
