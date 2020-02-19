@@ -113,7 +113,6 @@ mdc_snapshot_objc_library(
     deps = [
         ":Cards",
         ":Theming",
-        "//components/Availability",
     ],
 )
 
