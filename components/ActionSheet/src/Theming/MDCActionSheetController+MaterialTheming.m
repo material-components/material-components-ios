@@ -14,7 +14,6 @@
 
 #import "MDCActionSheetController+MaterialTheming.h"
 
-#import "MaterialAvailability.h"
 #import "MaterialColor.h"
 #import "MaterialShadowElevations.h"
 
@@ -59,7 +58,7 @@ static const CGFloat kRippleAlpha = (CGFloat)0.16;
   self.actionTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
   self.actionTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   self.rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kRippleAlpha];
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     self.traitCollectionDidChangeBlock = ^(MDCActionSheetController *_Nonnull actionSheet,
                                            UITraitCollection *_Nullable previousTraitCollection) {
@@ -76,7 +75,7 @@ static const CGFloat kRippleAlpha = (CGFloat)0.16;
           }
         };
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 - (void)applyBackgroundColorToActionSheet:(MDCActionSheetController *)actionSheet
