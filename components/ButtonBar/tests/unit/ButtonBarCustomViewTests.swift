@@ -15,7 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialButtonBar
 
-class ButtonBarTintColorTests: XCTestCase {
+class ButtonBarCustomViewTests: XCTestCase {
 
   var buttonBar: MDCButtonBar!
 
