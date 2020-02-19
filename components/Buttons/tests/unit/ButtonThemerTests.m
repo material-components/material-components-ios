@@ -57,6 +57,46 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
 }
 
+- (void)testOutlinedButtonThemer {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
+
+  // When
+  [MDCOutlinedButtonThemer applyScheme:scheme toButton:button];
+
+  // Then
+  // Color
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
+                        [UIColor clearColor]);
+  XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
+                        [button backgroundColorForState:UIControlStateNormal]);
+  XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
+                        scheme.colorScheme.primaryColor);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
+  XCTAssertEqualObjects(button.inkColor,
+                        [scheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16]);
+  XCTAssertEqualObjects([button borderColorForState:UIControlStateNormal],
+                        [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
+  XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled],
+                        [button borderColorForState:UIControlStateNormal]);
+
+  // Typography
+  XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal],
+                        scheme.typographyScheme.button);
+
+  // Other
+  XCTAssertEqualWithAccuracy(button.minimumSize.height, scheme.minimumHeight, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.layer.cornerRadius, scheme.cornerRadius, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateNormal], 0, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateHighlighted], 0,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateNormal], 1,
+                             kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateHighlighted], 1,
+                             kEpsilonAccuracy);
+}
+
 - (void)testContainedButtonThemer {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
