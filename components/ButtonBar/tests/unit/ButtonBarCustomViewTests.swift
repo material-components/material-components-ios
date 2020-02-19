@@ -44,5 +44,28 @@ class ButtonBarCustomViewTests: XCTestCase {
     XCTAssertEqual(customView.tintColor, item.tintColor)
   }
 
+  func testSettingImageToNilOnItemDoesNothing() {
+    // Given
+    let customView = UIView()
+    let item = UIBarButtonItem(customView: customView)
+    buttonBar.items = [item]
+
+    // When
+    item.image = nil
+
+    // Then, doesn't crash.
+  }
+
+  func testSettingTitleOnItemDoesNothing() {
+    // Given
+    let customView = UIView()
+    let item = UIBarButtonItem(customView: customView)
+    buttonBar.items = [item]
+
+    // When
+    item.title = "Hello"
+
+    // Then, doesn't crash.
+  }
 }
 

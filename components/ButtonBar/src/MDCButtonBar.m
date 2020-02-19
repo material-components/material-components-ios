@@ -291,8 +291,10 @@ static NSString *const kEnabledSelector = @"enabled";
           button.accessibilityValue = newValue;
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
-          [button setImage:newValue forState:UIControlStateNormal];
-          [self invalidateIntrinsicContentSize];
+          if ([button isKindOfClass:[MDCButton class]]) {
+            [button setImage:newValue forState:UIControlStateNormal];
+            [self invalidateIntrinsicContentSize];
+          }
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tag))]) {
           button.tag = [newValue integerValue];
@@ -304,8 +306,10 @@ static NSString *const kEnabledSelector = @"enabled";
           }
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
-          [button setTitle:newValue forState:UIControlStateNormal];
-          [self invalidateIntrinsicContentSize];
+          if ([button isKindOfClass:[MDCButton class]]) {
+            [button setTitle:newValue forState:UIControlStateNormal];
+            [self invalidateIntrinsicContentSize];
+          }
 
         } else {
           NSLog(@"Unknown key path notification received by %@ for %@.",
