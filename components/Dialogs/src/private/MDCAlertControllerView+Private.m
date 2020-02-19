@@ -430,7 +430,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (BOOL)hasTitleIcon {
-  return (0.0f < self.titleIconImageView.image.size.height);
+  return self.titleIconImageView.image.size.height > 0.f;
 }
 
 - (BOOL)hasTitle {
@@ -441,13 +441,48 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return self.message.length > 0;
 }
 
+- (BOOL)hasAccessoryView {
+  CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:CGRectInfinite.size];
+  return accessoryViewSize.height > 0.f;
+}
+
+- (CGFloat)titleIconInsetBottom {
+  return [self hasTitleIcon] && [self hasTitle] ? self.titleIconInsets.bottom : 0.0f;
+}
+
+- (CGFloat)titleInsetTop {
+  return [self hasTitleIcon] ? self.titleIconInsets.top : self.titleInsets.top;
+}
+
+- (CGFloat)titleInsetBottom {
+  if (![self hasMessage] && ![self hasAccessoryView]) {
+    return 0.0f;
+  } else if ([self hasTitle] || [self hasTitleIcon]) {
+    return self.titleInsets.bottom;
+  } else {
+    return 0.0f;
+  }
+}
+
+- (CGFloat)accessoryVerticalInset {
+  return [self hasMessage] && [self hasAccessoryView] ? self.accessoryViewVerticalInset : 0.f;
+}
+
 - (CGFloat)contentInternalVerticalPadding {
+  if (self.enableAdjustableInsets) {
+    return [self titleInsetBottom];
+  } else {
+    return [self fixedInsetsContentInternalVerticalPadding];
+  }
+}
+
+- (CGFloat)fixedInsetsContentInternalVerticalPadding {
   return (([self hasTitle] || [self hasTitleIcon]) && [self hasMessage])
              ? MDCDialogContentVerticalPadding
              : 0.0f;
 }
 
-- (CGFloat)contentTitleIconVerticalPadding {
+- (CGFloat)fixedInsetsContentTitleIconVerticalPadding {
   return ([self hasTitle] && [self hasTitleIcon]) ? MDCDialogTitleIconVerticalPadding : 0.0f;
 }
 
@@ -489,7 +524,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGSize titleIconViewSize = [self titleIconViewSize];
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
   // match the titleIcon alignment to the title alignment
-  CGFloat titleIconLeftPadding = MDCDialogContentInsets.left;
+  CGFloat titleIconLeftPadding =
+      self.enableAdjustableInsets ? self.titleInsets.left : MDCDialogContentInsets.left;
   if (self.titleAlignment == NSTextAlignmentCenter) {
     titleIconLeftPadding =
         CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconViewSize.width) / 2.0f;
@@ -499,9 +535,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                   UIUserInterfaceLayoutDirectionRightToLeft)) {
     titleIconLeftPadding = CGRectGetMaxX(titleFrame) - titleIconViewSize.width;
   }
-  CGRect titleIconFrame = CGRectMake(titleIconLeftPadding, MDCDialogContentInsets.top,
-                                     titleIconViewSize.width, titleIconViewSize.height);
-  return titleIconFrame;
+  CGFloat top = (self.titleIconImageView != nil) ? MDCDialogContentInsets.top : 0.0f;
+  return CGRectMake(titleIconLeftPadding, top, titleIconViewSize.width, titleIconViewSize.height);
 }
 
 // @param boundsSize should not include any internal margins or padding
