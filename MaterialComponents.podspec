@@ -1570,6 +1570,13 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     component.dependency "MaterialComponents/private/TextControlsPrivate+BaseStyle"
     component.dependency "MDFInternationalization"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      ]
+      unit_tests.dependency "MaterialComponents/schemes/Container"
+    end
   end
 
   # TextControls+BaseTextFields
