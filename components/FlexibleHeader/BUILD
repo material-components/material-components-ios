@@ -35,6 +35,7 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/Availability",
         "//components/Elevation",
         "//components/ShadowElevations",
         "//components/private/Application",
