@@ -23,10 +23,6 @@
 #import "MDCTextControlState.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
-static inline UIFont *_Nonnull MDCTextControlDefaultUITextFieldFont() {
-  return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-}
-
 static const CGFloat kMDCTextControlDefaultAnimationDuration = (CGFloat)0.15;
 
 @protocol MDCTextControlStyle;

@@ -496,11 +496,16 @@
 #pragma mark Fonts
 
 - (UIFont *)normalFont {
-  return self.font ?: MDCTextControlDefaultUITextFieldFont();
+  return self.font ?: [self uiTextFieldDefaultFont];
 }
 
 - (UIFont *)floatingFont {
   return [self.containerStyle floatingFontWithNormalFont:self.normalFont];
+}
+
+- (UIFont *)uiTextFieldDefaultFont {
+  // This value comes from https://developer.apple.com/documentation/uikit/uitextfield/1619604-font
+  return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
 #pragma mark Dynamic Type
