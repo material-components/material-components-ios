@@ -165,6 +165,11 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
 /**
+ The amount of horizontal padding on the leading/trailing edges of each bar item. Defaults to 12.
+ */
+@property(nonatomic, assign) CGFloat itemsHorizontalPadding;
+
+/**
  NSLayoutAnchor for the bottom of the bar items.
 
  @note It is recommended that this anchor be constrained to the bottom of the safe area layout guide
