@@ -14,9 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialAvailability.h"
-#import "MaterialChips.h"
 #import "MaterialChips+Theming.h"
+#import "MaterialChips.h"
 
 /**
  An MDCChipView subclass that allows the user to override the @c traitCollection property.
@@ -75,7 +74,7 @@
 }
 
 - (void)testDynamicColorSupport {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *dynamicShadowColor =
@@ -118,7 +117,7 @@
     UIView *snapshotView = [self.chip mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 - (void)testPreferredFontForAXXXLContentSizeCategory {

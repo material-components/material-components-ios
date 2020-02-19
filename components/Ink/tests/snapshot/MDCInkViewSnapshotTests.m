@@ -14,7 +14,6 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialAvailability.h"
 #import "MaterialColor.h"
 #import "MaterialInk.h"
 
@@ -107,7 +106,7 @@
 }
 
 - (void)testInkColorRespondsToDynamicColorBeforeInkBegan {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     self.inkView.inkColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
@@ -123,11 +122,11 @@
     // Then
     [self generateSnapshotForIOS13AndVerifyView];
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 - (void)testInkColorRespondsToDynamicColorAfterInkBegan {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     self.inkView.inkColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
@@ -144,7 +143,7 @@
     // Then
     [self generateSnapshotForIOS13AndVerifyView];
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 @end

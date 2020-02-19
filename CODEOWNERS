@@ -29,7 +29,7 @@
 /components/List                  @andrewoverton
 /components/MaskedTransition/     @jverkoey
 /components/NavigationBar/        @yarneo @jverkoey
-/components/NavigationDrawer/     @yarneo @jakerockland
+/components/NavigationDrawer/     @yarneo
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
 /components/Palettes/             @jverkoey

@@ -18,7 +18,6 @@
 #import <UIKit/UIKit.h>
 
 #import "../../src/private/MDCDialogShadowedView.h"
-#import "MaterialAvailability.h"
 #import "MaterialColor.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
@@ -389,7 +388,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 #pragma mark - Dynamic Color
 
 - (void)testDynamicColorSupport {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *titleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
@@ -411,11 +410,11 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
         mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 - (void)testDynamicColorSupportForTrackingView {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
@@ -436,7 +435,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
         [trackingView mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 @end

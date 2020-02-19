@@ -14,9 +14,9 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialContainerScheme.h"
-#import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
+#import "MaterialDialogs+Theming.h"
+#import "MaterialContainerScheme.h"
 
 static NSString *const kTitleShortLatin = @"Title";
 static NSString *const kMessageShortLatin = @"Message";

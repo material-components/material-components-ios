@@ -14,7 +14,6 @@
 
 #import "MDCActionSheetController.h"
 
-#import "MaterialAvailability.h"
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
@@ -374,14 +373,14 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     if ([self.traitCollection
             hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
       [self.tableView reloadData];
     }
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);

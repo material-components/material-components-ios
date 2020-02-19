@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "105.0.0"
+  mdc.version      = "104.0.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -62,7 +62,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
-    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/BottomSheet"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
@@ -83,7 +82,6 @@ Pod::Spec.new do |mdc|
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/Availability"
     extension.dependency "MaterialComponents/Elevation"
     extension.dependency "MaterialComponents/private/Color"
     extension.dependency "MaterialComponents/schemes/Container"
@@ -918,7 +916,6 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency 'MDFTextAccessibility'
-    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
@@ -987,7 +984,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
-    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
@@ -1407,7 +1403,6 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MaterialComponents/AnimationTiming"
-    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/OverlayWindow"
@@ -1550,6 +1545,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/TextFields+ColorThemer"
+      unit_tests.dependency "MaterialComponents/TextFields+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
     end
   end
@@ -1561,21 +1557,7 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
     component.source_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
   end
-
-  # TextControls+BaseTextAreas
-
-  mdc.subspec "TextControls+BaseTextAreas" do |component|
-    component.ios.deployment_target = '9.0'
-    component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
-    component.source_files = [ "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}",
-    "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
-    ]
-
-    component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
-    component.dependency "MaterialComponents/private/TextControlsPrivate+BaseStyle"
-    component.dependency "MDFInternationalization"
-  end
-
+  
   # TextControls+BaseTextFields
 
   mdc.subspec "TextControls+BaseTextFields" do |component|
@@ -1607,7 +1589,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
-    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+FilledStyle"
 
@@ -1649,7 +1630,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
     ]
 
-    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/TextControls+BaseTextFields"
     component.dependency "MaterialComponents/private/TextControlsPrivate+OutlinedStyle"
 
@@ -1703,6 +1683,7 @@ Pod::Spec.new do |mdc|
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
@@ -1712,6 +1693,19 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
     end
+  end
+
+  mdc.subspec "TextFields+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = [
+      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    ]
+    extension.source_files = [
+      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+    ]
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
   end
 
   # Themes
@@ -1764,8 +1758,6 @@ Pod::Spec.new do |mdc|
       scheme.ios.deployment_target = '9.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
-
-      scheme.dependency "MaterialComponents/Availability"
       scheme.dependency "MaterialComponents/private/Color"
 
       scheme.test_spec 'UnitTests' do |unit_tests|
@@ -1866,8 +1858,6 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
-      component.dependency "MaterialComponents/Availability"
-
       component.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [
           "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}",
@@ -1949,10 +1939,9 @@ Pod::Spec.new do |mdc|
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
 
-      component.dependency "MaterialComponents/Availability"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
-      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     end
 
     private_spec.subspec "TextControlsPrivate+OutlinedStyle" do |component|
@@ -1960,10 +1949,9 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
       ]
-      component.dependency "MaterialComponents/Availability"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
-      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     end
 
     private_spec.subspec "ThumbTrack" do |component|
