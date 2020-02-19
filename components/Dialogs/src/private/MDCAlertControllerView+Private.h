@@ -70,7 +70,7 @@
  edges (top, leading, trailing) and the title (bottom). Note that
  `titleIconInsets.bottom` takes precedence over `titleInsets.top`.
 
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 12, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleIconInsets;
 
@@ -81,7 +81,7 @@
   no message, `titleInsets.bottom` is ignored.
 
 
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 

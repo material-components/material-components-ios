@@ -62,8 +62,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.clipsToBounds = YES;
 
     self.enableAdjustableInsets = NO;
-    self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 12.f, 24.f);
-    self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
+    self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
+    self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 24.f, 24.f);
     self.contentInsets = UIEdgeInsetsMake(24.f, 24.f, 24.f, 24.f);
     self.actionsInsets = UIEdgeInsetsMake(8.f, 8.f, 8.f, 8.f);
     self.actionsHorizontalMargin = 8.f;
@@ -443,36 +443,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return self.message.length > 0;
 }
 
-- (BOOL)hasAccessoryView {
-  CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:CGRectInfinite.size];
-  return accessoryViewSize.height > 0.f;
-}
-
-- (CGFloat)titleIconInsetBottom {
-  return [self hasTitleIcon] && [self hasTitle] ? self.titleIconInsets.bottom : 0.0f;
-}
-
-- (CGFloat)titleInsetTop {
-  return [self hasTitleIcon] ? self.titleIconInsets.top : self.titleInsets.top;
-}
-
-- (CGFloat)titleInsetBottom {
-  if (![self hasMessage] && ![self hasAccessoryView]) {
-    return 0.0f;
-  } else if ([self hasTitle] || [self hasTitleIcon]) {
-    return self.titleInsets.bottom;
-  } else {
-    return 0.0f;
-  }
-}
-
 - (CGFloat)contentInternalVerticalPadding {
   return (([self hasTitle] || [self hasTitleIcon]) && [self hasMessage])
              ? MDCDialogContentVerticalPadding
              : 0.0f;
 }
 
-- (CGFloat)fixedInsetsContentTitleIconVerticalPadding {
+- (CGFloat)contentTitleIconVerticalPadding {
   return ([self hasTitle] && [self hasTitleIcon]) ? MDCDialogTitleIconVerticalPadding : 0.0f;
 }
 
@@ -494,18 +471,14 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return titleIconViewSize;
 }
 
+- (CGFloat)titleTop {
+  return MDCDialogContentInsets.top + [self contentTitleIconVerticalPadding] +
+         [self titleIconViewSize].height;
+}
+
 - (CGRect)titleFrameWithTitleSize:(CGSize)titleSize {
-  CGFloat titleTop = 0.0f;
-  CGFloat leftInset = 0.0f;
-  if (self.enableAdjustableInsets) {
-    leftInset = self.titleInsets.left;
-    titleTop = [self titleIconViewSize].height + [self titleInsetTop] + [self titleIconInsetBottom];
-  } else {
-    leftInset = MDCDialogContentInsets.left;
-    titleTop = MDCDialogContentInsets.top + [self fixedInsetsContentTitleIconVerticalPadding] +
-               [self titleIconViewSize].height;
-  }
-  return CGRectMake(leftInset, titleTop, titleSize.width, titleSize.height);
+  return CGRectMake(MDCDialogContentInsets.left, [self titleTop], titleSize.width,
+                    titleSize.height);
 }
 
 - (CGRect)messageFrameWithSize:(CGSize)messageSize {
@@ -574,42 +547,26 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return contentSize;
 }
 
-/**
- Calculate the size of the title frame, which includes an optional title, optional title icon and
- optional icon view.
-
- @param boundingWidth should not include any internal margins or padding
-*/
+// @param boundingWidth should not include any internal margins or padding
 - (CGSize)calculateTitleViewSizeThatFitsWidth:(CGFloat)boundingWidth {
-  CGFloat leftInset =
-      self.enableAdjustableInsets
-          ? MAX(MAX(self.titleInsets.left, self.titleIconInsets.left), self.contentInsets.left)
-          : MDCDialogContentInsets.left;
-  CGFloat rightInset =
-      self.enableAdjustableInsets
-          ? MAX(MAX(self.titleInsets.right, self.titleIconInsets.right), self.contentInsets.right)
-          : MDCDialogContentInsets.right;
-
   CGSize boundsSize = CGRectInfinite.size;
-  boundsSize.width = boundingWidth - leftInset - rightInset;
+  boundsSize.width = boundingWidth - MDCDialogContentInsets.left - MDCDialogContentInsets.right;
 
   CGSize titleSize = [self.titleLabel sizeThatFits:boundsSize];
   CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
   CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:boundsSize];
-  CGFloat titleWidth = MAX(MAX(titleSize.width, messageSize.width), accessoryViewSize.width) +
-                       leftInset + rightInset;
-  CGFloat totalElementsHeight = [self titleIconViewSize].height + titleSize.height;
+  CGFloat contentWidth = MAX(MAX(titleSize.width, messageSize.width), accessoryViewSize.width) +
+                         MDCDialogContentInsets.left + MDCDialogContentInsets.right;
 
-  CGFloat titleHeight = 0.f;
-  if (self.enableAdjustableInsets) {
-    titleHeight = totalElementsHeight + [self titleInsetTop] + [self titleIconInsetBottom] +
-                  [self titleInsetBottom];
-  } else {
-    titleHeight = totalElementsHeight + MDCDialogContentInsets.top +
-                  [self fixedInsetsContentTitleIconVerticalPadding] +
-                  [self contentInternalVerticalPadding];
-  }
-  return CGSizeMake((CGFloat)ceil(titleWidth), (CGFloat)ceil(titleHeight));
+  CGFloat contentHeight = MDCDialogContentInsets.top + [self titleIconViewSize].height +
+                          [self contentTitleIconVerticalPadding] + titleSize.height +
+                          [self contentInternalVerticalPadding];
+
+  CGSize contentSize;
+  contentSize.width = (CGFloat)ceil(contentWidth);
+  contentSize.height = (CGFloat)ceil(contentHeight);
+
+  return contentSize;
 }
 
 // @param boundingWidth should not include any internal margins or padding
