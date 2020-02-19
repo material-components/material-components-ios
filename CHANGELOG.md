@@ -1,15 +1,11 @@
 # 105.0.0
 
-In this major release we removed the deprecated themers: MDCTextFieldTypographyThemer, MDCOutlinedButtonThemer, and added a new MDCBaseTextArea class under TextControls.
+In this major release we removed the deprecated themers: MDCTextFieldTypographyThemer, MDCOutlinedButtonThemer.
 
 ## Breaking changes
 
 Deleted MDCTextFieldTypographyThemer and MDCOutlinedButtonThemer classes. Please use the theming extensions.
 Learn more at https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md#migration-guide-themers-to-theming-extensions
-
-## New features
-
-A new BaseTextArea component that leverages UITextView to provide multi-line text input have been created at components/TextControls/src/BaseTextAreas/.
 
 ## Component changes
 
