@@ -14,15 +14,14 @@
 
 #import "MDCFlexibleHeaderViewController.h"
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
+#import "private/MDCFlexibleHeaderHairline.h"
+#import "private/MDCFlexibleHeaderView+Private.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MaterialApplication.h"
-#import "MaterialAvailability.h"
 #import "MaterialUIMetrics.h"
-#import "private/MDCFlexibleHeaderHairline.h"
-#import "private/MDCFlexibleHeaderView+Private.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 @interface UIView ()
 - (UIEdgeInsets)safeAreaInsets;  // For pre-iOS 11 SDK targets.
@@ -41,11 +40,11 @@ static inline UIStatusBarStyle StatusBarStyleOnBackgroundColor(UIColor *color) {
     return UIStatusBarStyleLightContent;
   }
 
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return UIStatusBarStyleDarkContent;
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 
   return UIStatusBarStyleDefault;
 }
