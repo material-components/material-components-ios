@@ -14,13 +14,11 @@
 
 #import "UIColor+MaterialDynamic.h"
 
-#import "MaterialAvailability.h"
-
 @implementation UIColor (MaterialDynamic)
 
 + (UIColor *)colorWithUserInterfaceStyleDarkColor:(UIColor *)darkColor
                                      defaultColor:(UIColor *)defaultColor {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return [UIColor
         colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
@@ -35,11 +33,11 @@
   }
 #else
   return defaultColor;
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 - (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return [self resolvedColorWithTraitCollection:traitCollection];
   } else {
@@ -47,7 +45,7 @@
   }
 #else
   return self;
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 @end
