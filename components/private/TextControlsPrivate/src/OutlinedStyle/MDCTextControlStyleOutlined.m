@@ -16,7 +16,6 @@
 
 #import "MDCTextControl.h"
 #import "MDCTextControlVerticalPositioningReferenceOutlined.h"
-#include "MaterialAvailability.h"
 #import "UIBezierPath+MDCTextControlStyle.h"
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
@@ -54,11 +53,11 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 - (void)setUpOutlineColors {
   self.outlineColors = [NSMutableDictionary new];
   UIColor *outlineColor = [UIColor blackColor];
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     outlineColor = [UIColor labelColor];
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
   self.outlineColors[@(MDCTextControlStateNormal)] = outlineColor;
   self.outlineColors[@(MDCTextControlStateEditing)] = outlineColor;
   self.outlineColors[@(MDCTextControlStateDisabled)] =

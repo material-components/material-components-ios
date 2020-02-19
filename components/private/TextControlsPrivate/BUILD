@@ -68,7 +68,6 @@ mdc_extension_objc_library(
     deps = [
         ":Shared",
         "//components/AnimationTiming",
-        "//components/Availability",
         "//components/private/Math",
     ],
 )
@@ -84,7 +83,6 @@ mdc_extension_objc_library(
     deps = [
         ":Shared",
         "//components/AnimationTiming",
-        "//components/Availability",
         "//components/private/Math",
     ],
 )
