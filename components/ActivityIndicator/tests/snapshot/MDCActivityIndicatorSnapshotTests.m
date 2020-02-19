@@ -15,7 +15,6 @@
 #import "MaterialSnapshot.h"
 
 #import "MaterialActivityIndicator.h"
-#import "MaterialAvailability.h"
 
 @interface MDCActivityIndicatorSnapshotFake : MDCActivityIndicator
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
@@ -161,7 +160,7 @@
 }
 
 - (void)testProgressViewSupportsDynamicColor {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     MDCActivityIndicatorSnapshotFake *indicator =
@@ -188,7 +187,7 @@
     UIView *snapshotView = [indicator mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+#endif
 }
 
 @end
