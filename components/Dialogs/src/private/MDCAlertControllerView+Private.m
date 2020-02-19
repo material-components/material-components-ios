@@ -68,7 +68,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.actionsInsets = UIEdgeInsetsMake(8.f, 8.f, 8.f, 8.f);
     self.actionsHorizontalMargin = 8.f;
     self.actionsVerticalMargin = 12.f;
-    self.accessoryViewVerticalInset = 20.f;
 
     self.titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.titleScrollView];
