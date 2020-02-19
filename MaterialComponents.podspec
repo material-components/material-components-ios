@@ -916,7 +916,6 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency 'MDFTextAccessibility'
-    component/dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
