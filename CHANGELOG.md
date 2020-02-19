@@ -1,18 +1,12 @@
-# #develop#
+# 105.0.2
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This hotfix patch release fixes a crasher with ButtonBars when using custom item views and tint colors.
 
 ## Component changes
+
+### ButtonBar
+
+* [Fix crash when assigning tint color, title, or image to bar button item with custom view. (#9759)](https://github.com/material-components/material-components-ios/commit/332ee7c9aa7567f253e86d28adf2854609834d8b) (featherless)
 
 ---
 
