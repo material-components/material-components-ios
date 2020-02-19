@@ -262,7 +262,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (!button && [self.actionManager hasAction:action]) {
     button = [self.actionManager createButtonForAction:action
                                                 target:self
-                                              selector:@selector(actionButtonPressed:)];
+                                              selector:@selector(actionButtonPressed:forEvent:)];
     [MDCAlertControllerView styleAsTextButton:button];
   }
   return button;
@@ -448,7 +448,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
-- (void)actionButtonPressed:(id)button {
+- (void)actionButtonPressed:(id)button forEvent:(UIEvent *)event {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
 
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
@@ -457,6 +457,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self.presentingViewController dismissViewControllerAnimated:YES
                                                     completion:^(void) {
                                                       if (action.completionHandler) {
+                                                        if ([self.delegate
+                                                                respondsToSelector:@selector
+                                                                (alertController:
+                                                                    didTapAction:withEvent:)]) {
+                                                          [self.delegate alertController:self
+                                                                            didTapAction:action
+                                                                               withEvent:event];
+                                                        }
                                                         action.completionHandler(action);
                                                       }
                                                     }];
@@ -491,6 +499,119 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
                                                               [[self class] bundle], @"Alert");
   UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, announcement);
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:willAppear:)]) {
+    [self.delegate alertController:self willAppear:animated];
+  }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:didAppear:)]) {
+    [self.delegate alertController:self didAppear:animated];
+  }
+  [self.alertView.titleScrollView flashScrollIndicators];
+  [self.alertView.contentScrollView flashScrollIndicators];
+  [self.alertView.actionsScrollView flashScrollIndicators];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:willDisappear:)]) {
+    [self.delegate alertController:self willDisappear:animated];
+  }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:didDisappear:)]) {
+    [self.delegate alertController:self didDisappear:animated];
+  }
+}
+
+- (void)viewDidLayoutSubviews {
+  // Recalculate preferredContentSize and potentially the view frame.
+  BOOL boundsSizeChanged =
+      !CGSizeEqualToSize(CGRectStandardize(self.view.bounds).size, _previousLayoutSize);
+
+  // UIContentSizeCategoryAdjusting behavior only updates fonts after -viewWillLayoutSubviews and
+  // before -viewDidLayoutSubviews. Because `preferredContentSize` may have changed as a result,
+  // it is necessary to check if it changed here and possibly require a second layout pass.
+  CGSize currentPreferredContentSize = self.preferredContentSize;
+  CGSize calculatedPreferredContentSize = [self.alertView
+      calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
+  BOOL preferredContentSizeChanged =
+      !CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize);
+  if (preferredContentSizeChanged) {
+    // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
+    self.preferredContentSize = calculatedPreferredContentSize;
+  }
+
+  if (preferredContentSizeChanged || boundsSizeChanged) {
+    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+  }
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
+  if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
+      CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
+    CGSize currentPreferredContentSize = self.preferredContentSize;
+    CGSize contentSize = CGRectStandardize(self.alertView.bounds).size;
+    CGSize calculatedPreferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:contentSize];
+
+    if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
+      // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
+      self.preferredContentSize = calculatedPreferredContentSize;
+    }
+
+    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
+  }
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
+        self.preferredContentSize =
+            [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+      }
+                      completion:nil];
+}
+
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialDialogsBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCAlertController class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+#pragma mark - Setup Alert View
 
 - (void)setupAlertView {
   self.alertView.titleLabel.text = self.title;
@@ -540,94 +661,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
   }
-}
-
-- (void)viewDidLayoutSubviews {
-  // Recalculate preferredContentSize and potentially the view frame.
-  BOOL boundsSizeChanged =
-      !CGSizeEqualToSize(CGRectStandardize(self.view.bounds).size, _previousLayoutSize);
-
-  // UIContentSizeCategoryAdjusting behavior only updates fonts after -viewWillLayoutSubviews and
-  // before -viewDidLayoutSubviews. Because `preferredContentSize` may have changed as a result,
-  // it is necessary to check if it changed here and possibly require a second layout pass.
-  CGSize currentPreferredContentSize = self.preferredContentSize;
-  CGSize calculatedPreferredContentSize = [self.alertView
-      calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
-  BOOL preferredContentSizeChanged =
-      !CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize);
-  if (preferredContentSizeChanged) {
-    // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
-    self.preferredContentSize = calculatedPreferredContentSize;
-  }
-
-  if (preferredContentSizeChanged || boundsSizeChanged) {
-    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
-    [self.view setNeedsLayout];
-    [self.view layoutIfNeeded];
-  }
-}
-
-#pragma mark - Resource bundle
-
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialDialogsBundle]];
-  });
-
-  return bundle;
-}
-
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCAlertController class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  // Recalculate preferredSize, which is based on width available, if the viewSize has changed.
-  if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
-      CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
-    CGSize currentPreferredContentSize = self.preferredContentSize;
-    CGSize contentSize = CGRectStandardize(self.alertView.bounds).size;
-    CGSize calculatedPreferredContentSize =
-        [self.alertView calculatePreferredContentSizeForBounds:contentSize];
-
-    if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
-      // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
-      self.preferredContentSize = calculatedPreferredContentSize;
-    }
-
-    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
-  }
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-  [coordinator
-      animateAlongsideTransition:^(
-          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-        // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
-        self.preferredContentSize =
-            [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-      }
-                      completion:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-
-  [self.alertView.titleScrollView flashScrollIndicators];
-  [self.alertView.contentScrollView flashScrollIndicators];
-  [self.alertView.actionsScrollView flashScrollIndicators];
 }
 
 #pragma mark - UIAccessibilityAction
