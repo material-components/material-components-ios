@@ -291,8 +291,8 @@ static NSString *const kEnabledSelector = @"enabled";
           button.accessibilityValue = newValue;
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
-          if ([button isKindOfClass:[MDCButton class]]) {
-            [button setImage:newValue forState:UIControlStateNormal];
+          if ([button isKindOfClass:[UIButton class]]) {
+            [((UIButton *)button) setImage:newValue forState:UIControlStateNormal];
             [self invalidateIntrinsicContentSize];
           }
 
@@ -301,13 +301,13 @@ static NSString *const kEnabledSelector = @"enabled";
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tintColor))]) {
           button.tintColor = newValue;
-          if ([button isKindOfClass:[MDCButton class]]) {
-            [self->_defaultBuilder updateTitleColorForButton:button withItem:object];
+          if ([button isKindOfClass:[UIButton class]]) {
+            [self->_defaultBuilder updateTitleColorForButton:((UIButton *)button) withItem:object];
           }
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
-          if ([button isKindOfClass:[MDCButton class]]) {
-            [button setTitle:newValue forState:UIControlStateNormal];
+          if ([button isKindOfClass:[UIButton class]]) {
+            [((UIButton *)button) setTitle:newValue forState:UIControlStateNormal];
             [self invalidateIntrinsicContentSize];
           }
 
