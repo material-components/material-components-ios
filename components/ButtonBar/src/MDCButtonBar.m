@@ -302,7 +302,8 @@ static NSString *const kEnabledSelector = @"enabled";
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tintColor))]) {
           buttonView.tintColor = newValue;
           if ([buttonView isKindOfClass:[UIButton class]]) {
-            [self->_defaultBuilder updateTitleColorForButton:((UIButton *)buttonView) withItem:object];
+            [self->_defaultBuilder updateTitleColorForButton:((UIButton *)buttonView)
+                                                    withItem:object];
           }
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
