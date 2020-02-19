@@ -1,3 +1,10 @@
+# 105.0.1
+
+This patch release addresses merge issues with the v105.0.0 release. It is intended to be equivalent to
+v105.0.0.
+
+---
+
 # 105.0.0
 
 In this major release we removed the deprecated themers: MDCTextFieldTypographyThemer, MDCOutlinedButtonThemer.
