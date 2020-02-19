@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialAvailability.h"
 #import "MaterialMath.h"
 #import "UIColor+MaterialBlending.h"
 #import "UIColor+MaterialDynamic.h"
@@ -34,7 +35,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 @implementation MaterialColorTests
 
 - (void)testDynamicColorWhenUserInterfaceStyleIsDarkForiOS13 {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *darkColor = UIColor.blackColor;
@@ -50,11 +51,11 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
     XCTAssertEqualObjects([dynamicColor resolvedColorWithTraitCollection:traitCollection],
                           darkColor);
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testDynamicColorWhenUserInterfaceStyleIsLightForiOS13 {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *darkColor = UIColor.blackColor;
@@ -70,7 +71,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
     XCTAssertEqualObjects([dynamicColor resolvedColorWithTraitCollection:traitCollection],
                           lightColor);
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testDynamicColorWhenUserInterfaceStyleIsLightForPreiOS13 {
@@ -240,7 +241,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testResolvedColorForiOS13OrLaterReturnsCorrectColor {
   // Given
   UIColor *dynamicColor = UIColor.clearColor;
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     dynamicColor = [UIColor
         colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
@@ -250,19 +251,19 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
           return UIColor.blueColor;
         }];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   // When
   UIColor *platformColor = dynamicColor;
   UIColor *mdcColor = dynamicColor;
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     UITraitCollection *fakeTraitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     platformColor = [dynamicColor resolvedColorWithTraitCollection:fakeTraitCollection];
     mdcColor = [dynamicColor mdc_resolvedColorWithTraitCollection:fakeTraitCollection];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   // Then
   XCTAssertEqualObjects(platformColor, mdcColor);

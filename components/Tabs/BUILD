@@ -180,6 +180,7 @@ mdc_snapshot_objc_library(
         ":Tabs",
         ":Theming",
         ":privateTabBarView",
+        "//components/Availability",
         "//components/AppBar",
         "//components/HeaderStackView",
     ],
