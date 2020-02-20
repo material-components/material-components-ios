@@ -48,9 +48,9 @@
   // Given
   CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
   MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:textFieldFrame];
-  UIColor *outlineColorNormal = [UIColor blueColor];
-  UIColor *outlineColorEditing = [UIColor greenColor];
-  UIColor *outlineColorDisabled = [UIColor purpleColor];
+  UIColor *outlineColorNormal = UIColor.blueColor;
+  UIColor *outlineColorEditing = UIColor.greenColor;
+  UIColor *outlineColorDisabled = UIColor.purpleColor;
 
   // When
   [textField setOutlineColor:outlineColorNormal forState:MDCTextControlStateNormal];

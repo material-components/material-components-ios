@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,8 +26,7 @@
 
 - (void)testOutlineColorDefaults {
   // Given
-  CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
-  MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] initWithFrame:textAreaFrame];
+  MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] init];
   UIColor *defaultOutlineColor = UIColor.blackColor;
 #if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
@@ -46,8 +45,7 @@
 
 - (void)testOutlineColorAccessors {
   // Given
-  CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
-  MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] initWithFrame:textAreaFrame];
+  MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] init];
   UIColor *outlineColorNormal = [UIColor blueColor];
   UIColor *outlineColorEditing = [UIColor greenColor];
   UIColor *outlineColorDisabled = [UIColor purpleColor];

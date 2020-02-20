@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #import "MDCOutlinedTextArea.h"
-
-#import <Foundation/Foundation.h>
 
 #import "MaterialTextControlsPrivate+OutlinedStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
@@ -44,8 +42,7 @@
 }
 
 - (void)commonMDCOutlinedTextAreaInit {
-  MDCTextControlStyleOutlined *outlinedStyle = [[MDCTextControlStyleOutlined alloc] init];
-  self.containerStyle = outlinedStyle;
+  self.containerStyle = [[MDCTextControlStyleOutlined alloc] init];
 }
 
 #pragma mark Stateful Color APIs
