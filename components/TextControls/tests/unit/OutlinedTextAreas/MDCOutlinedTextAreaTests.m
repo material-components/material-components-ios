@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,19 +15,18 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialAvailability.h"
-#import "MaterialTextControls+OutlinedTextFields.h"
+#import "MaterialTextControls+OutlinedTextAreas.h"
 
-@interface MDCOutlinedTextFieldTests : XCTestCase
+@interface MDCOutlinedTextAreaTests : XCTestCase
 @end
 
-@implementation MDCOutlinedTextFieldTests
+@implementation MDCOutlinedTextAreaTests
 
 #pragma mark Tests
 
 - (void)testOutlineColorDefaults {
   // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
-  MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:textFieldFrame];
+  MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] init];
   UIColor *defaultOutlineColor = UIColor.blackColor;
 #if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
@@ -37,32 +36,31 @@
 
   // Then
   XCTAssertEqualObjects(defaultOutlineColor,
-                        [textField outlineColorForState:MDCTextControlStateNormal]);
+                        [textArea outlineColorForState:MDCTextControlStateNormal]);
   XCTAssertEqualObjects(defaultOutlineColor,
-                        [textField outlineColorForState:MDCTextControlStateEditing]);
+                        [textArea outlineColorForState:MDCTextControlStateEditing]);
   XCTAssertEqualObjects([defaultOutlineColor colorWithAlphaComponent:(CGFloat)0.60],
-                        [textField outlineColorForState:MDCTextControlStateDisabled]);
+                        [textArea outlineColorForState:MDCTextControlStateDisabled]);
 }
 
 - (void)testOutlineColorAccessors {
   // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 40);
-  MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:textFieldFrame];
+  MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] init];
   UIColor *outlineColorNormal = UIColor.blueColor;
   UIColor *outlineColorEditing = UIColor.greenColor;
   UIColor *outlineColorDisabled = UIColor.purpleColor;
 
   // When
-  [textField setOutlineColor:outlineColorNormal forState:MDCTextControlStateNormal];
-  [textField setOutlineColor:outlineColorEditing forState:MDCTextControlStateEditing];
-  [textField setOutlineColor:outlineColorDisabled forState:MDCTextControlStateDisabled];
+  [textArea setOutlineColor:outlineColorNormal forState:MDCTextControlStateNormal];
+  [textArea setOutlineColor:outlineColorEditing forState:MDCTextControlStateEditing];
+  [textArea setOutlineColor:outlineColorDisabled forState:MDCTextControlStateDisabled];
   // Then
   XCTAssertEqualObjects(outlineColorNormal,
-                        [textField outlineColorForState:MDCTextControlStateNormal]);
+                        [textArea outlineColorForState:MDCTextControlStateNormal]);
   XCTAssertEqualObjects(outlineColorEditing,
-                        [textField outlineColorForState:MDCTextControlStateEditing]);
+                        [textArea outlineColorForState:MDCTextControlStateEditing]);
   XCTAssertEqualObjects(outlineColorDisabled,
-                        [textField outlineColorForState:MDCTextControlStateDisabled]);
+                        [textArea outlineColorForState:MDCTextControlStateDisabled]);
 }
 
 @end

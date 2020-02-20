@@ -1648,6 +1648,49 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  # TextControls+OutlinedTextAreas
+
+  mdc.subspec "TextControls+OutlinedTextAreas" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+    component.source_files = [
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}",
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/Availability"
+    component.dependency "MaterialComponents/TextControls+BaseTextAreas"
+    component.dependency "MaterialComponents/private/TextControlsPrivate+OutlinedStyle"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      ]
+      unit_tests.dependency "MaterialComponents/schemes/Container"
+    end
+  end
+
+  # TextControls+OutlinedTextAreasTheming
+
+  mdc.subspec "TextControls+OutlinedTextAreasTheming" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+    component.source_files = [
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}",
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/TextControls+OutlinedTextAreas"
+    component.dependency "MaterialComponents/schemes/Container"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      ]
+      unit_tests.dependency "MaterialComponents/Availability"
+    end
+  end
+
   # TextControls+OutlinedTextFields
 
   mdc.subspec "TextControls+OutlinedTextFields" do |component|

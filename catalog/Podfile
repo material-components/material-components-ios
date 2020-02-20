@@ -75,6 +75,8 @@ target "MDCCatalog" do
     'TextControls+BaseTextFields/UnitTests',
     'TextControls+FilledTextFields/UnitTests',
     'TextControls+FilledTextFieldsTheming/UnitTests',
+    'TextControls+OutlinedTextAreas/UnitTests',
+    'TextControls+OutlinedTextAreasTheming/UnitTests',
     'TextControls+OutlinedTextFields/UnitTests',
     'TextControls+OutlinedTextFieldsTheming/UnitTests',
     'Themes/UnitTests',
