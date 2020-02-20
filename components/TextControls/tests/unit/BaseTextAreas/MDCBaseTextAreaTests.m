@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@
 
 @implementation MDCBaseTextAreaTests
 
-- (void)testFloatingLabelColorAccessors {
+- (void)testFloatingLabelColorAccessorsReturnCorrectValuesAfterBeingSet {
   // Given
   CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
   MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] initWithFrame:textAreaFrame];
-  UIColor *floatingLabelColorNormal = [UIColor blueColor];
-  UIColor *floatingLabelColorEditing = [UIColor greenColor];
-  UIColor *floatingLabelColorDisabled = [UIColor purpleColor];
+  UIColor *floatingLabelColorNormal = UIColor.blueColor;
+  UIColor *floatingLabelColorEditing = UIColor.greenColor;
+  UIColor *floatingLabelColorDisabled = UIColor.purpleColor;
 
   // When
   [textArea setFloatingLabelColor:floatingLabelColorNormal forState:MDCTextControlStateNormal];
@@ -48,13 +48,13 @@
                         [textArea floatingLabelColorForState:MDCTextControlStateDisabled]);
 }
 
-- (void)testNormalLabelColorAccessors {
+- (void)testNormalLabelColorAccessorsReturnCorrectValuesAfterBeingSet {
   // Given
   CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
   MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] initWithFrame:textAreaFrame];
-  UIColor *normalLabelColorNormal = [UIColor blueColor];
-  UIColor *normalLabelColorEditing = [UIColor greenColor];
-  UIColor *normalLabelColorDisabled = [UIColor purpleColor];
+  UIColor *normalLabelColorNormal = UIColor.blueColor;
+  UIColor *normalLabelColorEditing = UIColor.greenColor;
+  UIColor *normalLabelColorDisabled = UIColor.purpleColor;
 
   // When
   [textArea setNormalLabelColor:normalLabelColorNormal forState:MDCTextControlStateNormal];
@@ -70,13 +70,13 @@
                         [textArea normalLabelColorForState:MDCTextControlStateDisabled]);
 }
 
-- (void)testTextColorAccessors {
+- (void)testTextColorAccessorsReturnCorrectValuesAfterBeingSet {
   // Given
   CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
   MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] initWithFrame:textAreaFrame];
-  UIColor *textColorNormal = [UIColor blueColor];
-  UIColor *textColorEditing = [UIColor greenColor];
-  UIColor *textColorDisabled = [UIColor purpleColor];
+  UIColor *textColorNormal = UIColor.blueColor;
+  UIColor *textColorEditing = UIColor.greenColor;
+  UIColor *textColorDisabled = UIColor.purpleColor;
 
   // When
   [textArea setTextColor:textColorNormal forState:MDCTextControlStateNormal];
@@ -90,16 +90,16 @@
                         [textArea textColorForState:MDCTextControlStateDisabled]);
 }
 
-- (void)testAssistiveLabelColorAccessors {
+- (void)testAssistiveLabelColorAccessorsReturnCorrectValuesAfterBeingSet {
   // Given
   CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
   MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] initWithFrame:textAreaFrame];
-  UIColor *leadingAssistiveLabelColorNormal = [UIColor blueColor];
-  UIColor *leadingAssistiveLabelColorEditing = [UIColor greenColor];
-  UIColor *leadingAssistiveLabelColorDisabled = [UIColor purpleColor];
-  UIColor *trailingAssistiveLabelColorNormal = [UIColor brownColor];
-  UIColor *trailingAssistiveLabelColorEditing = [UIColor magentaColor];
-  UIColor *trailingAssistiveLabelColorDisabled = [UIColor yellowColor];
+  UIColor *leadingAssistiveLabelColorNormal = UIColor.blueColor;
+  UIColor *leadingAssistiveLabelColorEditing = UIColor.greenColor;
+  UIColor *leadingAssistiveLabelColorDisabled = UIColor.purpleColor;
+  UIColor *trailingAssistiveLabelColorNormal = UIColor.brownColor;
+  UIColor *trailingAssistiveLabelColorEditing = UIColor.magentaColor;
+  UIColor *trailingAssistiveLabelColorDisabled = UIColor.yellowColor;
 
   // When
   [textArea setLeadingAssistiveLabelColor:leadingAssistiveLabelColorNormal
