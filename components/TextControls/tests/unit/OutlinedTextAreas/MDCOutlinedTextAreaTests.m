@@ -46,9 +46,9 @@
 - (void)testOutlineColorAccessors {
   // Given
   MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] init];
-  UIColor *outlineColorNormal = [UIColor blueColor];
-  UIColor *outlineColorEditing = [UIColor greenColor];
-  UIColor *outlineColorDisabled = [UIColor purpleColor];
+  UIColor *outlineColorNormal = UIColor.blueColor;
+  UIColor *outlineColorEditing = UIColor.greenColor;
+  UIColor *outlineColorDisabled = UIColor.purpleColor;
 
   // When
   [textArea setOutlineColor:outlineColorNormal forState:MDCTextControlStateNormal];
