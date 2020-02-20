@@ -1,3 +1,15 @@
+# 105.0.2
+
+This hotfix patch release fixes a crasher with ButtonBars when using custom item views and tint colors.
+
+## Component changes
+
+### ButtonBar
+
+* [Fix crash when assigning tint color, title, or image to bar button item with custom view. (#9759)](https://github.com/material-components/material-components-ios/commit/332ee7c9aa7567f253e86d28adf2854609834d8b) (featherless)
+
+---
+
 # 105.0.1
 
 This patch release addresses merge issues with the v105.0.0 release. It is intended to be equivalent to
