@@ -79,6 +79,22 @@ mdc_objc_library(
 )
 
 mdc_extension_objc_library(
+    name = "FilledTextAreas",
+    deps = [
+        ":BaseTextAreas",
+        "//components/private/TextControlsPrivate:FilledStyle",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "FilledTextAreasTheming",
+    deps = [
+        ":FilledTextAreas",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
     name = "FilledTextFields",
     deps = [
         ":BaseTextFields",
@@ -161,6 +177,8 @@ mdc_unit_test_objc_library(
         ":BaseTextAreasPrivate",
         ":BaseTextFields",
         ":BaseTextFieldsPrivate",
+        ":FilledTextAreas",
+        ":FilledTextAreasTheming",
         ":FilledTextFields",
         ":FilledTextFieldsTheming",
         ":OutlinedTextAreas",
