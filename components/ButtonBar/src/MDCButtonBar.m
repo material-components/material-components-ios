@@ -291,19 +291,25 @@ static NSString *const kEnabledSelector = @"enabled";
           button.accessibilityValue = newValue;
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
-          [button setImage:newValue forState:UIControlStateNormal];
-          [self invalidateIntrinsicContentSize];
+          if ([button isKindOfClass:[UIButton class]]) {
+            [((UIButton *)button) setImage:newValue forState:UIControlStateNormal];
+            [self invalidateIntrinsicContentSize];
+          }
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tag))]) {
           button.tag = [newValue integerValue];
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tintColor))]) {
           button.tintColor = newValue;
-          [self->_defaultBuilder updateTitleColorForButton:button withItem:object];
+          if ([button isKindOfClass:[UIButton class]]) {
+            [self->_defaultBuilder updateTitleColorForButton:((UIButton *)button) withItem:object];
+          }
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
-          [button setTitle:newValue forState:UIControlStateNormal];
-          [self invalidateIntrinsicContentSize];
+          if ([button isKindOfClass:[UIButton class]]) {
+            [((UIButton *)button) setTitle:newValue forState:UIControlStateNormal];
+            [self invalidateIntrinsicContentSize];
+          }
 
         } else {
           NSLog(@"Unknown key path notification received by %@ for %@.",
