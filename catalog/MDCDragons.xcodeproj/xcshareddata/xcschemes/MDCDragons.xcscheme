@@ -954,6 +954,26 @@
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E67D7ECFD06F594B824049745696DBDD"
+               BuildableName = "MaterialComponents-Unit-TextControls+FilledTextAreas-UnitTests.xctest"
+               BlueprintName = "MaterialComponents-Unit-TextControls+FilledTextAreas-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0C31D9622E82595763A57F2CFA923FB2"
+               BuildableName = "MaterialComponents-Unit-TextControls+FilledTextAreasTheming-UnitTests.xctest"
+               BlueprintName = "MaterialComponents-Unit-TextControls+FilledTextAreasTheming-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

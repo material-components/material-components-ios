@@ -25,11 +25,10 @@
 
 - (void)testFilledBackgroundColorAccessors {
   // Given
-  CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
-  MDCFilledTextArea *textArea = [[MDCFilledTextArea alloc] initWithFrame:textAreaFrame];
-  UIColor *filledBackgroundColorNormal = [UIColor blueColor];
-  UIColor *filledBackgroundColorEditing = [UIColor greenColor];
-  UIColor *filledBackgroundColorDisabled = [UIColor purpleColor];
+  MDCFilledTextArea *textArea = [[MDCFilledTextArea alloc] init];
+  UIColor *filledBackgroundColorNormal = UIColor.blueColor;
+  UIColor *filledBackgroundColorEditing = UIColor.greenColor;
+  UIColor *filledBackgroundColorDisabled = UIColor.purpleColor;
 
   // When
   [textArea setFilledBackgroundColor:filledBackgroundColorNormal
@@ -50,11 +49,10 @@
 
 - (void)testUnderlineColorAccessors {
   // Given
-  CGRect textAreaFrame = CGRectMake(0, 0, 130, 40);
-  MDCFilledTextArea *textArea = [[MDCFilledTextArea alloc] initWithFrame:textAreaFrame];
-  UIColor *underlineColorNormal = [UIColor blueColor];
-  UIColor *underlineColorEditing = [UIColor greenColor];
-  UIColor *underlineColorDisabled = [UIColor purpleColor];
+  MDCFilledTextArea *textArea = [[MDCFilledTextArea alloc] init];
+  UIColor *underlineColorNormal = UIColor.blueColor;
+  UIColor *underlineColorEditing = UIColor.greenColor;
+  UIColor *underlineColorDisabled = UIColor.purpleColor;
 
   // When
   [textArea setUnderlineColor:underlineColorNormal forState:MDCTextControlStateNormal];

@@ -14,8 +14,6 @@
 
 #import "MDCFilledTextArea+MaterialTheming.h"
 
-#import <Foundation/Foundation.h>
-
 static const CGFloat kDisabledOpacity = (CGFloat)0.60;
 
 static const CGFloat kFilledSublayerFillColorNormalOpacity = (CGFloat)0.12;
