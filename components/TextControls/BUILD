@@ -146,8 +146,12 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":BaseTextFields",
+        ":FilledTextAreas",
+        ":FilledTextAreasTheming",
         ":FilledTextFields",
         ":FilledTextFieldsTheming",
+        ":OutlinedTextAreas",
+        ":OutlinedTextAreasTheming",
         ":OutlinedTextFields",
         ":OutlinedTextFieldsTheming",
         "//components/Buttons",
