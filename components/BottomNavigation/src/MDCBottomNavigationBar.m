@@ -38,8 +38,8 @@ static char *const kKVOContextMDCBottomNavigationBar = "kKVOContextMDCBottomNavi
 static const CGFloat kMinItemWidth = 80;
 static const CGFloat kPreferredItemWidth = 120;
 static const CGFloat kMaxItemWidth = 168;
-// The amount of internal padding on the leading/trailing edges of each bar item.
-static const CGFloat kItemHorizontalPadding = 12;
+// The default amount of internal padding on the leading/trailing edges of each bar item.
+static const CGFloat kDefaultItemHorizontalPadding = 12;
 static const CGFloat kBarHeightStackedTitle = 56;
 static const CGFloat kBarHeightAdjacentTitle = 40;
 static const CGFloat kItemsHorizontalMargin = 12;
@@ -114,7 +114,7 @@ static NSString *const kOfAnnouncement = @"of";
   _mdc_overrideBaseElevation = -1;
   _itemBadgeTextColor = UIColor.whiteColor;
   _itemBadgeBackgroundColor = MDCPalette.redPalette.tint700;
-  ;
+  _itemsHorizontalPadding = kDefaultItemHorizontalPadding;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -293,7 +293,7 @@ static NSString *const kOfAnnouncement = @"of";
   for (UIView *itemView in self.itemViews) {
     maxItemWidth =
         MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(availableWidth, barHeight)].width +
-                              kItemHorizontalPadding * 2);
+                              self.itemsHorizontalPadding * 2);
   }
   maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
   CGFloat totalWidth = maxItemWidth * self.items.count;
@@ -340,13 +340,13 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame =
-          CGRectMake(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + kItemHorizontalPadding,
-                     0, itemWidth - 2 * kItemHorizontalPadding, navBarHeight);
+      itemView.frame = CGRectMake(
+          CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + self.itemsHorizontalPadding, 0,
+          itemWidth - 2 * self.itemsHorizontalPadding, navBarHeight);
     } else {
       itemView.frame = CGRectMake(
-          CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth + kItemHorizontalPadding, 0,
-          itemWidth - 2 * kItemHorizontalPadding, navBarHeight);
+          CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth + self.itemsHorizontalPadding,
+          0, itemWidth - 2 * self.itemsHorizontalPadding, navBarHeight);
     }
   }
 }
@@ -692,6 +692,15 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.contentHorizontalMargin = itemsContentHorizontalMargin;
   }
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+}
+
+- (void)setItemsHorizontalPadding:(CGFloat)itemsHorizontalPadding {
+  if (MDCCGFloatEqual(_itemsHorizontalPadding, itemsHorizontalPadding)) {
+    return;
+  }
+  _itemsHorizontalPadding = itemsHorizontalPadding;
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
