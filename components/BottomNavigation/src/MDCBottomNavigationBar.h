@@ -166,6 +166,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 
 /**
  The amount of horizontal padding on the leading/trailing edges of each bar item. Defaults to 12.
+
+ @note: The amount of horizontal space between the bar items will be double this value.
  */
 @property(nonatomic, assign) CGFloat itemsHorizontalPadding;
 
