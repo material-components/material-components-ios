@@ -535,8 +535,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   UIEdgeInsets insets = self.enableAdjustableInsets ? self.titleIconInsets : MDCDialogContentInsets;
 
   // match the titleIcon alignment to the title alignment
-  CGFloat leftInset =
-      self.enableAdjustableInsets ? self.titleInsets.left : MDCDialogContentInsets.left;
+  CGFloat leftInset = insets.left;
   if (self.titleAlignment == NSTextAlignmentCenter) {
     leftInset =
         CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconViewSize.width) / 2.0f;
