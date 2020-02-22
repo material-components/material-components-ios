@@ -61,6 +61,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
 
+    self.orderVerticalActionsByEmphasis = NO;
     self.enableAdjustableInsets = NO;
     self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 12.f, 24.f);
     self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
@@ -766,7 +767,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if (self.isVerticalActionsLayout) {
     CGPoint buttonCenter;
     buttonCenter.x = self.actionsScrollView.contentSize.width / 2.0f;
-    buttonCenter.y = self.actionsScrollView.contentSize.height - actionsInsets.bottom;
+    buttonCenter.y = self.orderVerticalActionsByEmphasis
+                         ? actionsInsets.bottom
+                         : self.actionsScrollView.contentSize.height - actionsInsets.bottom;
+    CGFloat multiplier = self.orderVerticalActionsByEmphasis ? 1.f : -1.f;
     CGFloat maxButtonWidth =
         self.actionsScrollView.contentSize.width - (actionsInsets.left + actionsInsets.right);
     for (UIButton *button in buttons) {
@@ -777,13 +781,15 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
         button.bounds = buttonRect;
       }
 
-      buttonCenter.y -= buttonRect.size.height / 2.0f;
+      buttonCenter.y += multiplier * (buttonRect.size.height / 2.0f);
 
       button.center = buttonCenter;
 
       if (button != buttons.lastObject) {
-        buttonCenter.y -= buttonRect.size.height / 2.0f;
-        buttonCenter.y -= MDCDialogActionsVerticalPadding;
+        buttonCenter.y += multiplier * (buttonRect.size.height / 2.0f);
+        buttonCenter.y +=
+            multiplier * (self.enableAdjustableInsets ? self.actionsVerticalMargin
+                                                      : MDCDialogActionsVerticalPadding);
       }
     }
   } else {
