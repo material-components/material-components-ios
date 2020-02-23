@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAlertControllerView+Private.h"
 #import "MDCAlertControllerView.h"
+#import "MDCAlertControllerView+Private.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialButtons.h"
-#import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
 
 // https://material.io/go/design-dialogs#dialogs-specs
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
@@ -752,6 +752,40 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   self.accessoryView.frame = accessoryViewFrame;
 
   // Actions
+  [self layoutButtons:buttons inBoundsSize:boundsSize];
+
+  // Place scrollviews
+  CGRect contentScrollViewRect = CGRectZero;
+  contentScrollViewRect.size = self.contentScrollView.contentSize;
+  contentScrollViewRect.origin.y =
+      CGRectGetMaxY(titleFrame) + [self contentInternalVerticalPadding];
+
+  CGRect actionsScrollViewRect = CGRectZero;
+  actionsScrollViewRect.size = self.actionsScrollView.contentSize;
+  actionsScrollViewRect.origin.y = CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height;
+
+  const CGFloat requestedHeight = contentScrollViewRect.origin.y +
+                                  self.contentScrollView.contentSize.height +
+                                  self.actionsScrollView.contentSize.height;
+  // Check the layout: do both content and actions fit on the screen at once?
+  if (requestedHeight > CGRectGetHeight(self.bounds)) {
+    // Complex layout case : Split the space between the two scrollviews.
+    if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.bounds) / 2.0f) {
+      actionsScrollViewRect.size.height =
+          CGRectGetHeight(self.bounds) - contentScrollViewRect.size.height;
+    } else {
+      CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) / 2.0f;
+      actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
+    }
+    contentScrollViewRect.size.height = CGRectGetHeight(self.bounds) -
+                                        actionsScrollViewRect.size.height -
+                                        contentScrollViewRect.origin.y;
+  }
+  self.actionsScrollView.frame = actionsScrollViewRect;
+  self.contentScrollView.frame = contentScrollViewRect;
+}
+
+- (void)layoutButtons:(NSArray<MDCButton *> *)buttons inBoundsSize:(CGSize)boundsSize {
   CGSize actionSize = [self calculateActionsSizeThatFitsWidth:boundsSize.width];
 
   CGRect actionsFrame = CGRectZero;
@@ -812,36 +846,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       }
     }
   }
-
-  // Place scrollviews
-  CGRect contentScrollViewRect = CGRectZero;
-  contentScrollViewRect.size = self.contentScrollView.contentSize;
-  contentScrollViewRect.origin.y =
-      CGRectGetMaxY(titleFrame) + [self contentInternalVerticalPadding];
-
-  CGRect actionsScrollViewRect = CGRectZero;
-  actionsScrollViewRect.size = self.actionsScrollView.contentSize;
-  actionsScrollViewRect.origin.y = CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height;
-
-  const CGFloat requestedHeight = contentScrollViewRect.origin.y +
-                                  self.contentScrollView.contentSize.height +
-                                  self.actionsScrollView.contentSize.height;
-  // Check the layout: do both content and actions fit on the screen at once?
-  if (requestedHeight > CGRectGetHeight(self.bounds)) {
-    // Complex layout case : Split the space between the two scrollviews.
-    if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.bounds) / 2.0f) {
-      actionsScrollViewRect.size.height =
-          CGRectGetHeight(self.bounds) - contentScrollViewRect.size.height;
-    } else {
-      CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) / 2.0f;
-      actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
-    }
-    contentScrollViewRect.size.height = CGRectGetHeight(self.bounds) -
-                                        actionsScrollViewRect.size.height -
-                                        contentScrollViewRect.origin.y;
-  }
-  self.actionsScrollView.frame = actionsScrollViewRect;
-  self.contentScrollView.frame = contentScrollViewRect;
 }
 
 #pragma mark - Dynamic Type
