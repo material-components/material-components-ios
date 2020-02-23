@@ -404,7 +404,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       size.width += buttonSize.width;
       maxButtonHeight = MAX(maxButtonHeight, buttonSize.height);
       if (button != buttons.lastObject) {
-        size.width += MDCDialogActionsHorizontalPadding;
+        size.width += self.enableAdjustableInsets ? self.actionsHorizontalMargin
+                                                  : MDCDialogActionsHorizontalPadding;
       }
     }
     size.height = insets.top + maxButtonHeight + insets.bottom;
@@ -426,7 +427,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       size.height += buttonSize.height;
       size.width = MAX(size.width, buttonSize.width);
       if (button != buttons.lastObject) {
-        size.height += MDCDialogActionsVerticalPadding;
+        size.height += self.enableAdjustableInsets ? self.actionsVerticalMargin
+                                                   : MDCDialogActionsVerticalPadding;
       }
     }
   }
@@ -805,7 +807,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       button.frame = buttonRect;
 
       if (button != buttons.lastObject) {
-        buttonOrigin.x -= MDCDialogActionsHorizontalPadding;
+        buttonOrigin.x -= self.enableAdjustableInsets ? self.actionsHorizontalMargin
+                                                      : MDCDialogActionsHorizontalPadding;
       }
     }
     // Handle RTL
