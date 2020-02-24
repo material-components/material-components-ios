@@ -59,7 +59,7 @@ class BottomSheetFirstResponderExample: UIViewController {
   }
 
   @objc func didTapButton() {
-    let menu = BottomSheetDummyCollectionViewController(numItems: 6)!
+    let menu = BottomSheetUIControl()
     let bottomSheet = MDCBottomSheetController(contentViewController: menu)
     present(bottomSheet, animated: true)
   }
