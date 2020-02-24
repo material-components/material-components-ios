@@ -33,6 +33,7 @@ mdc_public_objc_library(
         "QuartzCore",
     ],
     deps = [
+        "//components/Availability",
         "//components/private/Math",
     ],
 )

@@ -94,7 +94,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 - (void)applyStyleToTextControl:(UIView<MDCTextControl> *)textControl
               animationDuration:(NSTimeInterval)animationDuration {
   CGRect labelFrame = textControl.labelFrame;
-  BOOL isLabelFloating = textControl.labelState == MDCTextControlLabelStateFloating;
+  BOOL isLabelFloating = textControl.labelPosition == MDCTextControlLabelPositionFloating;
   CGFloat containerHeight = CGRectGetMaxY(textControl.containerFrame);
   CGFloat lineWidth = (CGFloat)self.outlineLineWidths[@(textControl.textControlState)].doubleValue;
   [self applyStyleTo:textControl

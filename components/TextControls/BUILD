@@ -79,6 +79,22 @@ mdc_objc_library(
 )
 
 mdc_extension_objc_library(
+    name = "FilledTextAreas",
+    deps = [
+        ":BaseTextAreas",
+        "//components/private/TextControlsPrivate:FilledStyle",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "FilledTextAreasTheming",
+    deps = [
+        ":FilledTextAreas",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
     name = "FilledTextFields",
     deps = [
         ":BaseTextFields",
@@ -90,6 +106,22 @@ mdc_extension_objc_library(
     name = "FilledTextFieldsTheming",
     deps = [
         ":FilledTextFields",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "OutlinedTextAreas",
+    deps = [
+        ":BaseTextAreas",
+        "//components/private/TextControlsPrivate:OutlinedStyle",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "OutlinedTextAreasTheming",
+    deps = [
+        ":OutlinedTextAreas",
         "//components/schemes/Container",
     ],
 )
@@ -114,8 +146,12 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":BaseTextFields",
+        ":FilledTextAreas",
+        ":FilledTextAreasTheming",
         ":FilledTextFields",
         ":FilledTextFieldsTheming",
+        ":OutlinedTextAreas",
+        ":OutlinedTextAreasTheming",
         ":OutlinedTextFields",
         ":OutlinedTextFieldsTheming",
         "//components/Buttons",
@@ -141,12 +177,19 @@ mdc_unit_test_objc_library(
         "tests/unit/*/*.m",
     ]),
     deps = [
+        ":BaseTextAreas",
+        ":BaseTextAreasPrivate",
         ":BaseTextFields",
         ":BaseTextFieldsPrivate",
+        ":FilledTextAreas",
+        ":FilledTextAreasTheming",
         ":FilledTextFields",
         ":FilledTextFieldsTheming",
+        ":OutlinedTextAreas",
+        ":OutlinedTextAreasTheming",
         ":OutlinedTextFields",
         ":OutlinedTextFieldsTheming",
+        "//components/Availability",
     ],
 )
 

@@ -187,10 +187,10 @@ static const CGFloat kSheetBounceBuffer = 150;
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-  // As long as this class added the KVO observation, it doesn't matter which of the two propereties
+  // As long as this class added the KVO observation, it doesn't matter which of the two properties
   // has been updated. A change in either warrants repositioning the sheet.
   // If contentSize was updated, then there's likely more or less content to see so it's worth
-  // repositioning.  If contentInsete was updated, then the visible content has changed and the
+  // repositioning.  If contentInset was updated, then the visible content has changed and the
   // sheet should reposition to keep it visible.
   // Notably, ActionSheet changes contentInset when it calculates its header height. If contentInset
   // were not observed, then the sheet wouldn't be able to fully show the contentSize portion of

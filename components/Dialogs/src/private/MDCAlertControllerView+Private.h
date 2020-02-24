@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
 #import "MDCAlertActionManager.h"
+#import "MaterialButtons.h"
 
 @interface MDCAlertControllerView ()
 
@@ -56,66 +56,75 @@
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
- If YES, a new layout calculation that is customizable by the insets in this header file is used
- to layout the dialog. If NO, we fall back to the legaccy layout calculation, ignoring all
- customized inset values.
+ This enables ordering actions by emphasis when they are vertically aligned.
+ When set to @c YES, horizontally trailing actions, which typically have higher
+ emphasis, will be displayed on top when presented vertically (for instance, in
+ the portrait orientation on smaller devices). When set to @c NO, the higher
+ emphasis actions will be displayed on the bottom.
+
+ Default value is @c NO.
+*/
+@property(nonatomic, assign) BOOL orderVerticalActionsByEmphasis;
+
+/**
+ Whether adjustable insets mode is enabled for the dialog view. If set to @c
+ YES, a new layout calculation that is customizable by the insets in this header
+ file is used to layout the dialog. If set to @c NO, we fall back to the legacy
+ layout calculation, ignoring all customized inset values.
 
  Default value is @c NO.
  */
 @property(nonatomic, assign) BOOL enableAdjustableInsets;
 
 /**
- The margins around the title icon or the title icon view against the dialog
- edges (top, leading, trailing) and the title (bottom). Note that the actual
- bottom space is the smallest between titleImageInsets.bottom and
- titleInsets.top.
+ The edge insets around the title icon or title icon view against the dialog
+ edges (top, leading, trailing) and the title (bottom). Note that
+ `titleIconInsets.bottom` takes precedence over `titleInsets.top`.
 
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 12, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleIconInsets;
 
 /**
- The margins around the title against the dialog frame and its neighbor elements.
- If a title icon is presented, the minimum titleInsets.top and titleIconInsets.bottom is used.
- If a message is presented, the minimum titleInsets.bottom and contentInsets.top is used.
- If there is no message, titleInsets.bottom is used.
+ The edge insets around the title against the dialog edges or its neighbor
+ elements. If either the title icon or title icon view is present, then
+ `titleIconInsets.bottom` takes precedence over `titleInsets.top`. If there is
+  no message, `titleInsets.bottom` is ignored.
+
 
  Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 
 /**
- The margins around the message, the content view or the accessory view against the dialog edges
- and its neighbor elements, the title and the actions.
- If a title is presented, the minimum of titleInsets.bottom and contentInsets.top is used.
- The actual space between the content and the actions additive. It's is contentInsets.minimum PLUS
- actionsInsets.top.
+ The edge insets around the content view (which includes the message and/or the
+ accessory view) against the dialog edges or its neighbor elements, the title
+ and the actions.
 
- Custom implementations of the accessory view will be given this frame to present their content in.
-
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 28, trailing: 24).
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets contentInsets;
 
 /**
- The margins around the actions against the dialog edges and its neighbot, the title or message.
- Unlike other neigboring elements, icons top margin is additive, adding the actionsInsets.top to the
- bottom of its top neigbor - either the title or the message. That is order to afford engou margin
- space in case the content scrolls.
+ The edge insets around the actions against the dialog edges and its neighbor,
+ which could be any of the other elements: the message, accessory view, title,
+ title icon or title icon view.
 
  Default value is UIEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8).
  */
 @property(nonatomic, assign) UIEdgeInsets actionsInsets;
 
 /**
- The space between action buttons in horizontal layout, if more than one button is presented.
+ The horizontal space between the action buttons when the buttons are
+ horizontally aligned, and if more than one button is presented.
 
  Default value is 8.
  */
 @property(nonatomic, assign) CGFloat actionsHorizontalMargin;
 
 /**
- The space between the action buttons in vertical layout, if more than one button is presented.
+ The vertical space between the action buttons when the buttons are vertically
+ aligned, and if more than one button is presented.
 
  Default value is 12.
  */
