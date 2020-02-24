@@ -19,6 +19,25 @@ import MaterialComponents.MaterialContainerScheme
 
 class BottomSheetFirstResponderExample: UIViewController {
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
+
+  let contentStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .vertical
+    stackView.spacing = 8
+    return stackView
+  }()
+
+  let issueDescriptionLabel: UILabel = {
+    let label = UILabel()
+    label.numberOfLines = 0
+    label.text = """
+    With VoiceOver on, the focused text field steals focus back from the bottom sheet
+    if resignFirstResponder is not called.
+    """
+    label.textColor = .black
+    return label
+  }()
+
   let textField: UITextField = {
     let textField = UITextField()
     textField.backgroundColor = UIColor.blue.withAlphaComponent(0.3)
@@ -37,20 +56,19 @@ class BottomSheetFirstResponderExample: UIViewController {
                      for: .touchUpInside)
 
     button.applyContainedTheme(withScheme: containerScheme)
-
     button.sizeToFit()
-    button.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
-    button.autoresizingMask = [
-      .flexibleLeftMargin,
-      .flexibleTopMargin,
-      .flexibleRightMargin,
-      .flexibleBottomMargin
-    ]
 
-    textField.frame = CGRect(x: 100, y: 200, width: 200, height: 50)
+    contentStackView.addArrangedSubview(issueDescriptionLabel)
+    contentStackView.addArrangedSubview(textField)
+    contentStackView.addArrangedSubview(button)
 
-    view.addSubview(button)
-    view.addSubview(textField)
+    contentStackView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(contentStackView)
+    contentStackView.leadingAnchor
+        .constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+    contentStackView.trailingAnchor
+        .constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+    contentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
   }
 
   override func viewDidAppear(_ animated: Bool) {
