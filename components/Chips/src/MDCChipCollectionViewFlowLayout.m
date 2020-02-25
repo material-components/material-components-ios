@@ -32,23 +32,19 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
   NSMutableArray *customLayoutAttributes =
       [NSMutableArray arrayWithCapacity:layoutAttributes.count];
 
-  if (layoutAttributes.count > 0) {
-    UICollectionViewLayoutAttributes *attrs = [layoutAttributes[0] copy];
-    attrs.frame = CGRectLeftAlign(attrs.frame);
-    [customLayoutAttributes addObject:attrs];
-  }
+  UICollectionViewLayoutAttributes *prevAttrs;
+  for (UICollectionViewLayoutAttributes *attrs in layoutAttributes) {
+    UICollectionViewLayoutAttributes *newAttrs = [attrs copy];
+    if (newAttrs.representedElementCategory == UICollectionElementCategoryCell) {
+      if (!prevAttrs || (CGRectGetMinY(newAttrs.frame) != CGRectGetMinY(prevAttrs.frame))) {
+        newAttrs.frame = CGRectLeftAlign(newAttrs.frame);
+      } else {
+        newAttrs.frame = CGRectLeftAlignToRect(newAttrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
+      }
 
-  for (NSUInteger i = 1; i < layoutAttributes.count; i++) {
-    UICollectionViewLayoutAttributes *attrs = [layoutAttributes[i] copy];
-    UICollectionViewLayoutAttributes *prevAttrs = customLayoutAttributes[i - 1];
-
-    if (CGRectGetMinY(prevAttrs.frame) == CGRectGetMinY(attrs.frame)) {
-      attrs.frame =
-          CGRectLeftAlignToRect(attrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
-    } else {
-      attrs.frame = CGRectLeftAlign(attrs.frame);
+      prevAttrs = newAttrs;
     }
-    [customLayoutAttributes addObject:attrs];
+    [customLayoutAttributes addObject:newAttrs];
   }
 
   return [customLayoutAttributes copy];
