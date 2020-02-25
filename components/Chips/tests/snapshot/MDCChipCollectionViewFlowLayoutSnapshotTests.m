@@ -31,7 +31,6 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = [NSString stringWithFormat:@"Chip %@", @(indexPath.row)];
-  cell.chipView.backgroundColor = [UIColor redColor];
   return cell;
 }
 
