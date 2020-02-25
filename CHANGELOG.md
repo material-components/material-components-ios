@@ -1,15 +1,18 @@
-# #develop#
+# 106.0.0
 
-Replace this text with a summarized description of this release's contents.
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+In this major release we deleted the deprecated themer: `MDCFloatingButtonShapeThemer`.
 
-Replace this text with links to deprecation guides.
+## Breaking changes
+
+Deleted `MDCFloatingButtonShapeThemer` class, please use the theming extensions.
+Learn more at https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md#migration-guide-themers-to-theming-extensions
+
 ## New features
 
-Replace this text with example code for each new feature.
+In this release we added `MDCFilledTextArea` and `MDCOutlinedTextArea` components. As well as improvements to our Dialogs component and other bug fixes.
+
 ## API changes
 
 ## Component changes
@@ -21,6 +24,10 @@ Replace this text with example code for each new feature.
 ### BottomNavigation
 
 * [Add horizontal padding property to MDCBottomNavigationBar (#9765)](https://github.com/material-components/material-components-ios/commit/c068063cadd2fd43caef5c09a4dbc0779495325c) (Andrew Overton)
+
+### Buttons
+
+* [Deletes deprecated MDCFloatingButtonShapeThemer (#9746)](https://github.com/material-components/material-components-ios/commit/14c9d903cfca915fe5580ae0c34e7961213cbe16) (Bryan Oltman)
 
 ### ButtonBar
 
@@ -54,19 +61,16 @@ Replace this text with example code for each new feature.
 ### TextControls
 
 * [Add text area example (#9772)](https://github.com/material-components/material-components-ios/commit/3e5edeccecb8e4cc268d0e16820a8ee18b05e182) (Andrew Overton)
+* [Add first pass of unit tests for MDCBaseTextArea (#9754)](https://github.com/material-components/material-components-ios/commit/2c1669718c6437886c7f355ed93ad3210161953a) (Andrew Overton)
+* [Add outlined text areas (#9771)](https://github.com/material-components/material-components-ios/commit/79d0ba023115eb7a3818f497d1398355d51b48c2) (Andrew Overton)
+* [Add the rest of MDCBaseTextArea (#9731)](https://github.com/material-components/material-components-ios/commit/2f6b40a58811089e5bc8fcf69128e315faf7d96f) (Andrew Overton)
+* [MDCTextControlLabelState renamed to MDCTextControlLabelPosition and other changes (#9753)](https://github.com/material-components/material-components-ios/commit/a37edbf81a32645e4992cf599a8b990fc8ec491a) (Andrew Overton)
+* [add filled text areas (#9770)](https://github.com/material-components/material-components-ios/commit/beca30be4acfaca8fdfcbca86021204aa487a9e2) (Andrew Overton)
 
 ### private/ThumbTrack
 
 * [Migrates Thumb Track to MDCAvailability. (#9714)](https://github.com/material-components/material-components-ios/commit/d19b024d322f4b0bb7ce624d73090ca8ebfac0c7) (Randall Li)
 
-## Multi-component changes
-
-* [Add first pass of unit tests for MDCBaseTextArea (#9754)](https://github.com/material-components/material-components-ios/commit/2c1669718c6437886c7f355ed93ad3210161953a) (Andrew Overton)
-* [Add outlined text areas (#9771)](https://github.com/material-components/material-components-ios/commit/79d0ba023115eb7a3818f497d1398355d51b48c2) (Andrew Overton)
-* [Add the rest of MDCBaseTextArea (#9731)](https://github.com/material-components/material-components-ios/commit/2f6b40a58811089e5bc8fcf69128e315faf7d96f) (Andrew Overton)
-* [Deletes deprecated MDCFloatingButtonShapeThemer (#9746)](https://github.com/material-components/material-components-ios/commit/14c9d903cfca915fe5580ae0c34e7961213cbe16) (Bryan Oltman)
-* [MDCTextControlLabelState renamed to MDCTextControlLabelPosition and other changes (#9753)](https://github.com/material-components/material-components-ios/commit/a37edbf81a32645e4992cf599a8b990fc8ec491a) (Andrew Overton)
-* [add filled text areas (#9770)](https://github.com/material-components/material-components-ios/commit/beca30be4acfaca8fdfcbca86021204aa487a9e2) (Andrew Overton)
 
 ---
 
@@ -199,7 +203,7 @@ In this patch release we fixed the syntax of the TV_OS macro.
 
 # 104.0.0
 
-In this major release we removed the deprecated MDCFloatingActionButtonThemer, added APIs to AppBar flexible header, alert controllers, bottom drawers and sliders to make the more configurable for clients. 
+In this major release we removed the deprecated MDCFloatingActionButtonThemer, added APIs to AppBar flexible header, alert controllers, bottom drawers and sliders to make the more configurable for clients.
 
 ## Breaking changes
 
@@ -207,7 +211,7 @@ Deleted the MDCFloatingActionButtonThemer class. Use the theming extension.
 
 ## New features
 
-AppBar added an API for changing the stack view offset. 
+AppBar added an API for changing the stack view offset.
 Flexible header added an API for showing the hairline and its color.
 Availability macro for internal use.
 AlertControllers added an API for titleIconView.
