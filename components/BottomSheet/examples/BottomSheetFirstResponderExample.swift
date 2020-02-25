@@ -17,6 +17,7 @@ import MaterialComponents.MaterialBottomSheet
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialTextFields
 
 class BottomSheetFirstResponderExample: UIViewController {
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
@@ -39,8 +40,8 @@ class BottomSheetFirstResponderExample: UIViewController {
     return label
   }()
 
-  let textField: UITextField = {
-    let textField = UITextField()
+  let textField: MDCMultilineTextField = {
+    let textField = MDCMultilineTextField()
     textField.backgroundColor = UIColor.blue.withAlphaComponent(0.3)
     return textField
   }()
@@ -80,6 +81,7 @@ class BottomSheetFirstResponderExample: UIViewController {
   @objc func didTapButton() {
     let menu = BottomSheetUIControl()
     let bottomSheet = MDCBottomSheetController(contentViewController: menu)
+    textField.resignFirstResponder()
     present(bottomSheet, animated: true)
   }
 }

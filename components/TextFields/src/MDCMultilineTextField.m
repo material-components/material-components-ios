@@ -180,6 +180,10 @@ static NSString *const kAccessibilityLocalizationStringsTableName = @"MaterialTe
   return self.textView.isFirstResponder;
 }
 
+- (BOOL)resignFirstResponder {
+  return [self.textView resignFirstResponder];
+}
+
 #pragma mark - TextView Implementation
 
 - (void)setupTextView {
