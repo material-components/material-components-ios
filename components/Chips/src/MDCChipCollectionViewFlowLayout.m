@@ -39,7 +39,8 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
       if (!prevAttrs || (CGRectGetMinY(newAttrs.frame) != CGRectGetMinY(prevAttrs.frame))) {
         newAttrs.frame = CGRectLeftAlign(newAttrs.frame);
       } else {
-        newAttrs.frame = CGRectLeftAlignToRect(newAttrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
+        newAttrs.frame =
+            CGRectLeftAlignToRect(newAttrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
       }
 
       prevAttrs = newAttrs;
