@@ -18,10 +18,8 @@
 @implementation MDCChipCollectionViewFlowLayout
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
-  NSArray<UICollectionViewLayoutAttributes *> *layoutAttributes =
-      [super layoutAttributesForElementsInRect:rect];
-
-  NSMutableArray<UICollectionViewLayoutAttributes *> *customLayoutAttributes =
+  NSArray *layoutAttributes = [super layoutAttributesForElementsInRect:rect];
+  NSMutableArray *customLayoutAttributes =
       [NSMutableArray arrayWithCapacity:layoutAttributes.count];
 
   UICollectionViewLayoutAttributes *prevAttrs;
@@ -41,7 +39,7 @@
                        CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
       }
 
-      prevAttrs = attrs;
+      prevAttrs = newAttrs;
     }
 
     [customLayoutAttributes addObject:newAttrs];
