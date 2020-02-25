@@ -15,43 +15,44 @@
 
 #import "MDCChipCollectionViewFlowLayout.h"
 
-/* Left aligns one rect to another with a given padding */
-static inline CGRect CGRectLeftAlignToRect(CGRect rect, CGRect staticRect, CGFloat padding) {
-  return CGRectMake(CGRectGetMaxX(staticRect) + padding, CGRectGetMinY(rect), CGRectGetWidth(rect),
-                    CGRectGetHeight(rect));
-}
-
-static inline CGRect CGRectLeftAlign(CGRect rect) {
-  return CGRectMake(0, CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect));
-}
-
 @implementation MDCChipCollectionViewFlowLayout
+- (nullable NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:
+    (CGRect)rect {
+  NSArray<UICollectionViewLayoutAttributes *> *layoutAttributes =
+      [super layoutAttributesForElementsInRect:rect];
 
-- (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
-  NSArray *layoutAttributes = [super layoutAttributesForElementsInRect:rect];
-  NSMutableArray *customLayoutAttributes =
+  NSMutableArray<UICollectionViewLayoutAttributes *> *customLayoutAttributes =
       [NSMutableArray arrayWithCapacity:layoutAttributes.count];
 
-  if (layoutAttributes.count > 0) {
-    UICollectionViewLayoutAttributes *attrs = [layoutAttributes[0] copy];
-    attrs.frame = CGRectLeftAlign(attrs.frame);
-    [customLayoutAttributes addObject:attrs];
-  }
+  UICollectionViewLayoutAttributes *prevAttrs;
+  for (UICollectionViewLayoutAttributes *attrs in layoutAttributes) {
+    UICollectionViewLayoutAttributes *newAttrs = [attrs copy];
 
-  for (NSUInteger i = 1; i < layoutAttributes.count; i++) {
-    UICollectionViewLayoutAttributes *attrs = [layoutAttributes[i] copy];
-    UICollectionViewLayoutAttributes *prevAttrs = customLayoutAttributes[i - 1];
-
-    if (CGRectGetMinY(prevAttrs.frame) == CGRectGetMinY(attrs.frame)) {
-      attrs.frame =
-          CGRectLeftAlignToRect(attrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
-    } else {
-      attrs.frame = CGRectLeftAlign(attrs.frame);
+    if (newAttrs.representedElementCategory == UICollectionElementCategoryCell) {
+      prevAttrs = [self alignNewAttributes:newAttrs toPreviousAttributes:prevAttrs];
     }
-    [customLayoutAttributes addObject:attrs];
+
+    [customLayoutAttributes addObject:newAttrs];
   }
 
   return [customLayoutAttributes copy];
+}
+
+- (UICollectionViewLayoutAttributes *)alignNewAttributes:(UICollectionViewLayoutAttributes *)attrs
+                                    toPreviousAttributes:
+                                        (UICollectionViewLayoutAttributes *)prevAttrs {
+  CGRect frame = attrs.frame;
+
+  // If previous value is nil or the two arguments are on different lines, then left align
+  if (prevAttrs == nil || (CGRectGetMinY(attrs.frame) != CGRectGetMinY(prevAttrs.frame))) {
+    attrs.frame = CGRectMake(self.sectionInset.left, CGRectGetMinY(frame), CGRectGetWidth(frame),
+                             CGRectGetHeight(frame));
+  } else {
+    attrs.frame = CGRectMake(CGRectGetMaxX(prevAttrs.frame) + self.minimumInteritemSpacing,
+                             CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+  }
+
+  return attrs;
 }
 
 - (BOOL)flipsHorizontallyInOppositeLayoutDirection {
