@@ -16,8 +16,8 @@
 #import "MDCChipCollectionViewFlowLayout.h"
 
 @implementation MDCChipCollectionViewFlowLayout
-- (nullable NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:
-    (CGRect)rect {
+
+- (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
   NSArray<UICollectionViewLayoutAttributes *> *layoutAttributes =
       [super layoutAttributesForElementsInRect:rect];
 
@@ -29,30 +29,25 @@
     UICollectionViewLayoutAttributes *newAttrs = [attrs copy];
 
     if (newAttrs.representedElementCategory == UICollectionElementCategoryCell) {
-      prevAttrs = [self alignNewAttributes:newAttrs toPreviousAttributes:prevAttrs];
+      CGRect frame = newAttrs.frame;
+
+      // If previous value is nil or the two arguments are on different lines, then left align
+      if (prevAttrs == nil || (CGRectGetMinY(newAttrs.frame) != CGRectGetMinY(prevAttrs.frame))) {
+        newAttrs.frame = CGRectMake(self.sectionInset.left, CGRectGetMinY(frame),
+                                    CGRectGetWidth(frame), CGRectGetHeight(frame));
+      } else {
+        newAttrs.frame =
+            CGRectMake(CGRectGetMaxX(prevAttrs.frame) + self.minimumInteritemSpacing,
+                       CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+      }
+
+      prevAttrs = attrs;
     }
 
     [customLayoutAttributes addObject:newAttrs];
   }
 
   return [customLayoutAttributes copy];
-}
-
-- (UICollectionViewLayoutAttributes *)alignNewAttributes:(UICollectionViewLayoutAttributes *)attrs
-                                    toPreviousAttributes:
-                                        (UICollectionViewLayoutAttributes *)prevAttrs {
-  CGRect frame = attrs.frame;
-
-  // If previous value is nil or the two arguments are on different lines, then left align
-  if (prevAttrs == nil || (CGRectGetMinY(attrs.frame) != CGRectGetMinY(prevAttrs.frame))) {
-    attrs.frame = CGRectMake(self.sectionInset.left, CGRectGetMinY(frame), CGRectGetWidth(frame),
-                             CGRectGetHeight(frame));
-  } else {
-    attrs.frame = CGRectMake(CGRectGetMaxX(prevAttrs.frame) + self.minimumInteritemSpacing,
-                             CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
-  }
-
-  return attrs;
 }
 
 - (BOOL)flipsHorizontallyInOppositeLayoutDirection {
