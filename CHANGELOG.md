@@ -11,9 +11,51 @@ Learn more at https://github.com/material-components/material-components-ios/blo
 
 ## New features
 
-In this release we added `MDCFilledTextArea` and `MDCOutlinedTextArea` components. As well as improvements to our Dialogs component and other bug fixes.
+In this release we added `MDCFilledTextArea` and `MDCOutlinedTextArea` components. As well as improvements to our Dialogs component by adding  and other bug fixes.
 
 ## API changes
+
+### BottomNavigation
+
+*new* property: `itemsHorizontalPadding` in `MDCBottomNavigationBar`
+
+### TextControls
+
+*new* property: `label` in `MDCBaseTextArea`
+
+*new* property: `labelBehavior` in `MDCBaseTextArea`
+
+*new* property: `leadingAssistiveLabel` in `MDCBaseTextArea`
+
+*new* property: `trailingAssistiveLabel` in `MDCBaseTextArea`
+
+*new* property: `minimumNumberOfVisibleRows` in `MDCBaseTextArea`
+
+*new* property: `maximumNumberOfVisibleRows` in `MDCBaseTextArea`
+
+*new* method: `setFloatingLabelColor:forState:` in `MDCBaseTextArea`
+
+*new* method: `floatingLabelColorForState` in `MDCBaseTextArea`
+
+*new* method: `setNormalLabelColor:forState:` in `MDCBaseTextArea`
+
+*new* method: `normalLabelColorForState:` in `MDCBaseTextArea`
+
+*new* method: `setTextColor:forState:` in `MDCBaseTextArea`
+
+*new* method: `textColorForState:` in `MDCBaseTextArea`
+
+*new* method: `setLeadingAssistiveLabelColor:forState:` in `MDCBaseTextArea`
+
+*new* method: `leadingAssistiveLabelColorForState:` in `MDCBaseTextArea`
+
+*new* method: `setTrailingAssistiveLabelColor:forState:` in `MDCBaseTextArea`
+
+*new* method: `trailingAssistiveLabelColorForState:` in `MDCBaseTextArea`
+
+*new* class: `MDCFilledTextArea`
+
+*new* class: `MDCOutlinedTextArea`
 
 ## Component changes
 
