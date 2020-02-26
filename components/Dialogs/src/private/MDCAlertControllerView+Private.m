@@ -62,6 +62,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.clipsToBounds = YES;
 
     self.orderVerticalActionsByEmphasis = NO;
+    self.actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
+    self.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentCenter;
+
     self.enableAdjustableInsets = NO;
     self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 12.f, 24.f);
     self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
