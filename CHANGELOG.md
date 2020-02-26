@@ -9,7 +9,7 @@ Learn more at https://github.com/material-components/material-components-ios/blo
 
 ## New features
 
-In this release we added `MDCFilledTextArea` and `MDCOutlinedTextArea` component. As well as improvements to our Dialogs component and other bug fixes.
+In this release we added the `MDCFilledTextArea` and `MDCOutlinedTextArea` components, made improvements to our Dialogs component, and added other bug fixes.
 
 ## API changes
 
