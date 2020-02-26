@@ -395,7 +395,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 #pragma mark - Internal
 
-- (CGSize)actionButtonsSizeInHorizontalLayout {
+- (CGSize)actionFittingSizeInHorizontalLayout {
   CGSize size = CGSizeZero;
   UIEdgeInsets insets = self.enableAdjustableInsets ? self.actionsInsets : MDCDialogActionsInsets;
   NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
@@ -644,20 +644,27 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 // @param boundingWidth should not include any internal margins or padding
 - (CGSize)calculateActionsSizeThatFitsWidth:(CGFloat)boundingWidth {
+  UIEdgeInsets insets = self.enableAdjustableInsets ? self.actionsInsets : MDCDialogActionsInsets;
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = boundingWidth;
 
-  CGSize horizontalSize = [self actionButtonsSizeInHorizontalLayout];
+  CGSize horizontalSize = [self actionFittingSizeInHorizontalLayout];
   CGSize verticalSize = [self actionButtonsSizeInVerticalLayout];
 
   CGSize actionsSize;
   if (boundsSize.width < horizontalSize.width) {
     // Use VerticalLayout
+    if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
+      verticalSize.width = boundingWidth - (insets.left + insets.right);
+    }
     actionsSize.width = MIN(verticalSize.width, boundsSize.width);
     actionsSize.height = MIN(verticalSize.height, boundsSize.height);
     self.verticalActionsLayout = YES;
   } else {
     // Use HorizontalLayout
+    if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
+      horizontalSize.width = boundingWidth - (insets.left + insets.right);
+    }
     actionsSize.width = MIN(horizontalSize.width, boundsSize.width);
     actionsSize.height = MIN(horizontalSize.height, boundsSize.height);
     self.verticalActionsLayout = NO;
