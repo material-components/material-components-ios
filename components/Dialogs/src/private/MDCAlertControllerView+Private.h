@@ -56,6 +56,17 @@
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
+ This enables ordering actions by emphasis when they are vertically aligned.
+ When set to @c YES, horizontally trailing actions, which typically have higher
+ emphasis, will be displayed on top when presented vertically (for instance, in
+ the portrait orientation on smaller devices). When set to @c NO, the higher
+ emphasis actions will be displayed on the bottom.
+
+ Default value is @c NO.
+*/
+@property(nonatomic, assign) BOOL orderVerticalActionsByEmphasis;
+
+/**
  Whether adjustable insets mode is enabled for the dialog view. If set to @c
  YES, a new layout calculation that is customizable by the insets in this header
  file is used to layout the dialog. If set to @c NO, we fall back to the legacy

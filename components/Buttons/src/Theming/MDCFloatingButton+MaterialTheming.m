@@ -15,6 +15,7 @@
 #import "MDCFloatingButton+MaterialTheming.h"
 
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
+#import "MaterialShapeLibrary.h"
 
 static const CGFloat kFloatingButtonBaselineShapePercentageValue = (CGFloat)0.5;
 

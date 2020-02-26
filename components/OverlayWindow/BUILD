@@ -29,6 +29,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/private/Application",
+        "//components/Availability",
     ],
 )
 
@@ -36,6 +37,7 @@ mdc_unit_test_objc_library(
     name = "unit_test_sources",
     deps = [
         ":OverlayWindow",
+        "//components/Availability",
     ],
 )
 

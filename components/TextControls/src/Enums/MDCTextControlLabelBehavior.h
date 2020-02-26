@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-/** This type is used to configure the behavior of an MDCBaseTextField's label. */
+/** This type is used to configure the behavior of an TextControl label. */
 typedef NS_ENUM(NSInteger, MDCTextControlLabelBehavior) {
   /** Indicates that the text field label animates to a position above the text when editing begins.
    */

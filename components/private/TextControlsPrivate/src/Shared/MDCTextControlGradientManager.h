@@ -15,19 +15,16 @@
 #import <UIKit/UIKit.h>
 
 /**
- This enum represents different states the floating label can be in.
+  MDCTextControl text areas and input chip views retain one of these from initialization to
+  deallocation. Instances of this class hold on to the gradient layers used by text areas and input
+  chip views and they create mask layers from those gradients. This class was created in an attempt
+  to reduce duplicate code between these two text controls.
  */
-typedef NS_ENUM(NSUInteger, MDCTextControlLabelState) {
-  /**
-   The state where the floating label is not visible.
-   */
-  MDCTextControlLabelStateNone,
-  /**
-   The state where the floating label is floating.
-   */
-  MDCTextControlLabelStateFloating,
-  /**
-   The state where the floating label is occupying the normal text area.
-   */
-  MDCTextControlLabelStateNormal,
-};
+@interface MDCTextControlGradientManager : NSObject
+
+@property(strong, nonatomic) CAGradientLayer *horizontalGradient;
+@property(strong, nonatomic) CAGradientLayer *verticalGradient;
+
+- (CALayer *)combinedGradientMaskLayer;
+
+@end

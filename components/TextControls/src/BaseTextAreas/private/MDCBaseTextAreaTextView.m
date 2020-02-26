@@ -48,10 +48,6 @@
   [super setFont:font ?: MDCTextControlDefaultUITextFieldFont()];
 }
 
-- (UIFont *)font {
-  return [super font] ?: MDCTextControlDefaultUITextFieldFont();
-}
-
 - (BOOL)resignFirstResponder {
   BOOL superclassDidResignFirstResponder = [super resignFirstResponder];
   SEL selector = @selector(textAreaTextView:willResignFirstResponder:);

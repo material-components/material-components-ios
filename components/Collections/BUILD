@@ -32,6 +32,7 @@ mdc_public_objc_library(
         "CoreGraphics",
     ],
     deps = [
+        "//components/Availability",
         "//components/CollectionCells",
         "//components/CollectionLayoutAttributes",
         "//components/Ink",
