@@ -262,7 +262,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (!button && [self.actionManager hasAction:action]) {
     button = [self.actionManager createButtonForAction:action
                                                 target:self
-                                              selector:@selector(actionButtonPressed:)];
+                                              selector:@selector(actionButtonPressed:forEvent:)];
     [MDCAlertControllerView styleAsTextButton:button];
   }
   return button;
@@ -448,7 +448,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
-- (void)actionButtonPressed:(id)button {
+- (void)actionButtonPressed:(id)button forEvent:(UIEvent *)event {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
 
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
@@ -457,6 +457,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self.presentingViewController dismissViewControllerAnimated:YES
                                                     completion:^(void) {
                                                       if (action.completionHandler) {
+                                                        if ([self.delegate
+                                                                respondsToSelector:@selector
+                                                                (alertController:
+                                                                    didTapAction:withEvent:)]) {
+                                                          [self.delegate alertController:self
+                                                                            didTapAction:action
+                                                                               withEvent:event];
+                                                        }
                                                         action.completionHandler(action);
                                                       }
                                                     }];
@@ -492,12 +500,35 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, announcement);
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:willAppear:)]) {
+    [self.delegate alertController:self willAppear:animated];
+  }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-
+  if ([self.delegate respondsToSelector:@selector(alertController:didAppear:)]) {
+    [self.delegate alertController:self didAppear:animated];
+  }
   [self.alertView.titleScrollView flashScrollIndicators];
   [self.alertView.contentScrollView flashScrollIndicators];
   [self.alertView.actionsScrollView flashScrollIndicators];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:willDisappear:)]) {
+    [self.delegate alertController:self willDisappear:animated];
+  }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:didDisappear:)]) {
+    [self.delegate alertController:self didDisappear:animated];
+  }
 }
 
 - (void)viewDidLayoutSubviews {

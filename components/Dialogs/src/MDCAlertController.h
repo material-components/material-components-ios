@@ -20,6 +20,45 @@
 #import <UIKit/UIKit.h>
 
 @class MDCAlertAction;
+@class MDCAlertController;
+
+@protocol MDCAlertControllerDelegate <NSObject>
+
+@optional
+
+/**
+ Informs the receiver that the alert controller will appear on the screen or the application is
+ entering the foreground.
+ */
+- (void)alertController:(nonnull MDCAlertController *)alertController willAppear:(BOOL)animated;
+
+/**
+ Informs the receiver that the alert controller appeared on the screen or the application has
+ entered the foreground.
+ */
+- (void)alertController:(nonnull MDCAlertController *)alertController didAppear:(BOOL)animated;
+
+/**
+ Informs the receiver that the alert controller will disappear from the screen or the application is
+ entering the background.
+ */
+- (void)alertController:(nonnull MDCAlertController *)alertController willDisappear:(BOOL)animated;
+
+/**
+ Informs the receiver that the alert controller disappeared from the screen or the application has
+ entered the background.
+ */
+- (void)alertController:(nonnull MDCAlertController *)alertController didDisappear:(BOOL)animated;
+
+/**
+ Called on the delegate after the alert action is tapped by the user and while the alert is still on
+ the screen.
+ */
+- (void)alertController:(nonnull MDCAlertController *)alertController
+           didTapAction:(nonnull MDCAlertAction *)action
+              withEvent:(nonnull UIEvent *)event;
+
+@end
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
@@ -52,6 +91,12 @@
 
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+
+/**
+ An object conforming to @c MDCAlertControllerDelegate. When non-nil, the @c MDCAlertController will
+ call the appropriate @c MDCAlertControllerDelegate methods on this object.
+ */
+@property(nonatomic, weak, nullable) id<MDCAlertControllerDelegate> delegate;
 
 /** The font applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *titleFont;
