@@ -1,7 +1,5 @@
 # 106.0.0
 
-## Breaking changes
-
 In this major release we deleted the deprecated themer: `MDCFloatingButtonShapeThemer`.
 
 ## Breaking changes
