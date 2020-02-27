@@ -40,7 +40,8 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
       // If the attributes are for a cell that isn't on the same line as the previous cell, set the
       // x origin of the frame to 0. Otherwise, align the frame to the right end of the previous
       // frame (accounting for minimumInteritemSpacing).
-      if (!prevAttrs || (CGRectGetMinY(newAttrs.frame) != CGRectGetMinY(prevAttrs.frame))) {
+      BOOL isNewLine = CGRectGetMinY(newAttrs.frame) != CGRectGetMinY(prevAttrs.frame);
+      if (!prevAttrs || isNewLine) {
         newAttrs.frame = CGRectLeftAlign(newAttrs.frame);
       } else {
         newAttrs.frame =
