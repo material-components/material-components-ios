@@ -66,13 +66,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentCenter;
 
     self.enableAdjustableInsets = NO;
-    self.titleIconInsets = UIEdgeInsetsMake(24.f, 24.f, 12.f, 24.f);
-    self.titleInsets = UIEdgeInsetsMake(24.f, 24.f, 20.f, 24.f);
-    self.contentInsets = UIEdgeInsetsMake(24.f, 24.f, 24.f, 24.f);
-    self.actionsInsets = UIEdgeInsetsMake(8.f, 8.f, 8.f, 8.f);
-    self.actionsHorizontalMargin = 8.f;
-    self.actionsVerticalMargin = 12.f;
-    self.accessoryViewVerticalInset = 20.f;
+    self.titleIconInsets = UIEdgeInsetsMake(24.0f, 24.0f, 12.0f, 24.0f);
+    self.titleInsets = UIEdgeInsetsMake(24.0f, 24.0f, 20.0f, 24.0f);
+    self.contentInsets = UIEdgeInsetsMake(24.0f, 24.0f, 24.0f, 24.0f);
+    self.actionsInsets = UIEdgeInsetsMake(8.0f, 8.0f, 8.0f, 8.0f);
+    self.actionsHorizontalMargin = 8.0f;
+    self.actionsVerticalMargin = 12.0f;
+    self.accessoryViewVerticalInset = 20.0f;
 
     self.titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.titleScrollView];
@@ -440,11 +440,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (BOOL)hasTitleIconOrImage {
-  return self.titleIconImageView.image.size.height > 0.f || self.titleIconView != nil;
+  return self.titleIconImageView.image.size.height > 0.0f || self.titleIconView != nil;
 }
 
 - (BOOL)fixedLayoutHasTitleIcon {
-  return self.titleIconImageView.image.size.height > 0.f;
+  return self.titleIconImageView.image.size.height > 0.0f;
 }
 
 - (BOOL)hasTitle {
@@ -457,7 +457,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 - (BOOL)hasAccessoryView {
   CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:CGRectInfinite.size];
-  return accessoryViewSize.height > 0.f;
+  return accessoryViewSize.height > 0.0f;
 }
 
 - (CGFloat)titleIconInsetBottom {
@@ -479,7 +479,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGFloat)accessoryVerticalInset {
-  return ([self hasMessage] && [self hasAccessoryView]) ? self.accessoryViewVerticalInset : 0.f;
+  return ([self hasMessage] && [self hasAccessoryView]) ? self.accessoryViewVerticalInset : 0.0f;
 }
 
 - (CGFloat)contentInternalVerticalPadding {
@@ -500,7 +500,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (CGFloat)fixedInsetsContentAccessoryVerticalPaddingWithFittingSize:(CGSize)boundsSize {
   CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:boundsSize];
   return (([self hasTitle] || [self fixedLayoutHasTitleIcon] || [self hasMessage]) &&
-          (0.0 < accessoryViewSize.height))
+          (0.0f < accessoryViewSize.height))
              ? MDCDialogContentVerticalPadding
              : 0.0f;
 }
@@ -532,7 +532,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (CGRect)messageFrameWithSize:(CGSize)messageSize {
   CGFloat leftInset =
       self.enableAdjustableInsets ? self.contentInsets.left : MDCDialogContentInsets.left;
-  return CGRectMake(leftInset, 0, messageSize.width, messageSize.height);
+  return CGRectMake(leftInset, 0.0f, messageSize.width, messageSize.height);
 }
 
 - (CGRect)titleIconFrameWithTitleSize:(CGSize)titleSize {
