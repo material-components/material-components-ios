@@ -1,3 +1,45 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomSheet
+
+* [Add example to reproduce issue 9773 (#9789)](https://github.com/material-components/material-components-ios/commit/00a4f37a4aae8dd5e9e5e66f7a8315aefac57593) (Bryan Oltman)
+* [KVO `contentInset` property (#9726)](https://github.com/material-components/material-components-ios/commit/b027eeed70db247274aaaaa1ecfe9a85db5243c0) (Robert Moore)
+
+### Chips
+
+* [Add snapshot tests for MDCChipCollectionViewFlowLayout (#9796)](https://github.com/material-components/material-components-ios/commit/45952d95a7bfd9a9da99318e69f05c4065880375) (Bryan Oltman)
+* [Refactor MDCChipCollectionViewFlowLayout (#9799)](https://github.com/material-components/material-components-ios/commit/fbc35415a2f9342102a003cdefea28a4f955dfda) (Bryan Oltman)
+
+### Dialogs
+
+* [Adding actions alignment API in a private header. (#9795)](https://github.com/material-components/material-components-ios/commit/8a8077d20eaf511a3a8f8e78b63ec7ced4b857a8) (Galia Kaufman)
+* [Adding alignment snapshot tests (#9801)](https://github.com/material-components/material-components-ios/commit/64a79b29bf7ceba090f65520caf49f5bd56ec38a) (Galia Kaufman)
+* [Adding justified actions alignment calculations to actions size calculations (#9800)](https://github.com/material-components/material-components-ios/commit/3537e43ef82c549a7c449a7fb6bdfbea829092ce) (Galia Kaufman)
+* [Delete deprecated DialogThemer (#9776)](https://github.com/material-components/material-components-ios/commit/511da587d485fac0407ccc8a0519aaa941dceea5) (Bryan Oltman)
+* [Moving actions layout out to simplify layoutSubviews. (#9803)](https://github.com/material-components/material-components-ios/commit/fa919c8da817fa59ba6bdd6379454dd061846886) (Galia Kaufman)
+* [Support impressions logging in Material Design Dialogs. (#9794)](https://github.com/material-components/material-components-ios/commit/c2af4ae17f0feec12a1a6778dba3bb80505263c7) (Galia Kaufman)
+* [Use consistent syntax for float constants (#9750)](https://github.com/material-components/material-components-ios/commit/e96b7efd28d7284eb090dab1408e0083dc06353e) (Galia Kaufman)
+
+## Multi-component changes
+
+* [implement resignFirstResponder in MDCMultilineTextField (#9793)](https://github.com/material-components/material-components-ios/commit/d83af534c3121bc8f9f2c0cb459917bec33158fe) (Bryan Oltman)
+
+---
+
 # 106.0.0
 
 In this major release we deleted the deprecated themer: `MDCFloatingButtonShapeThemer`.
