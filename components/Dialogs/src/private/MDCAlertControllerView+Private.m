@@ -843,26 +843,65 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)layoutVerticalButtons:(NSArray<MDCButton *> *)buttons {
   UIEdgeInsets actionsInsets =
       self.enableAdjustableInsets ? self.actionsInsets : MDCDialogActionsInsets;
-  CGPoint buttonCenter;
-  buttonCenter.x = self.actionsScrollView.contentSize.width / 2.0f;
-  buttonCenter.y = self.actionsScrollView.contentSize.height - actionsInsets.bottom;
   CGFloat maxButtonWidth =
       self.actionsScrollView.contentSize.width - (actionsInsets.left + actionsInsets.right);
-  for (UIButton *button in buttons) {
-    CGRect buttonRect = button.bounds;
+  CGFloat multiplier = self.orderVerticalActionsByEmphasis ? 1.f : -1.f;
+  CGPoint buttonCenter;
+  CGPoint buttonOrigin;
+  buttonOrigin.y = self.orderVerticalActionsByEmphasis
+                       ? actionsInsets.bottom
+                       : self.actionsScrollView.contentSize.height - actionsInsets.bottom;
+  if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentCenter ||
+      self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
+    buttonCenter.x = self.actionsScrollView.contentSize.width / 2.0f;
+    buttonCenter.y = buttonOrigin.y;
+    for (UIButton *button in buttons) {
+      CGRect buttonRect = button.bounds;
 
-    if (CGRectGetWidth(buttonRect) > maxButtonWidth) {
-      buttonRect.size.width = maxButtonWidth;
-      button.bounds = buttonRect;
+      if (CGRectGetWidth(buttonRect) > maxButtonWidth ||
+          self.actionsHorizontalAlignmentInVerticalLayout ==
+              MDCContentHorizontalAlignmentJustified) {
+        buttonRect.size.width = maxButtonWidth;
+        button.bounds = buttonRect;
+      }
+
+      buttonCenter.y += multiplier * (buttonRect.size.height / 2.0f);
+
+      button.center = buttonCenter;
+
+      if (button != buttons.lastObject) {
+        buttonCenter.y += multiplier * (buttonRect.size.height / 2.0f);
+        buttonCenter.y +=
+            multiplier * (self.enableAdjustableInsets ? self.actionsVerticalMargin
+                                                      : MDCDialogActionsVerticalPadding);
+      }
     }
+  } else {
+    // Leading/Trailing alignment.
+    for (UIButton *button in buttons) {
+      CGRect buttonRect = button.bounds;
+      buttonOrigin.x =
+          self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentTrailing
+              ? self.actionsScrollView.contentSize.width - buttonRect.size.width -
+                    actionsInsets.right
+              : actionsInsets.left;
+      buttonOrigin.y += multiplier * buttonRect.size.height;
 
-    buttonCenter.y -= buttonRect.size.height / 2.0f;
-
-    button.center = buttonCenter;
-
-    if (button != buttons.lastObject) {
-      buttonCenter.y -= buttonRect.size.height / 2.0f;
-      buttonCenter.y -= MDCDialogActionsVerticalPadding;
+      buttonRect.origin = buttonOrigin;
+      button.frame = buttonRect;
+      if (button != buttons.lastObject) {
+        buttonOrigin.y +=
+            multiplier * (self.enableAdjustableInsets ? self.actionsVerticalMargin
+                                                      : MDCDialogActionsVerticalPadding);
+      }
+    }
+    // Handle RTL
+    if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+        UIUserInterfaceLayoutDirectionRightToLeft) {
+      for (UIButton *button in buttons) {
+        CGRect flippedRect = MDFRectFlippedHorizontally(button.frame, CGRectGetWidth(self.bounds));
+        button.frame = flippedRect;
+      }
     }
   }
 }
