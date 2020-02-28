@@ -15,16 +15,6 @@
 
 #import "MDCChipCollectionViewFlowLayout.h"
 
-/* Left aligns one rect to another with a given padding */
-static inline CGRect CGRectLeftAlignToRect(CGRect rect, CGRect staticRect, CGFloat padding) {
-  return CGRectMake(CGRectGetMaxX(staticRect) + padding, CGRectGetMinY(rect), CGRectGetWidth(rect),
-                    CGRectGetHeight(rect));
-}
-
-static inline CGRect CGRectLeftAlign(CGRect rect) {
-  return CGRectMake(0, CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect));
-}
-
 @implementation MDCChipCollectionViewFlowLayout
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -40,14 +30,14 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
       // If the attributes are for a cell that isn't on the same line as the previous cell, set the
       // x origin of the frame to 0. Otherwise, align the frame to the right end of the previous
       // frame (accounting for minimumInteritemSpacing).
+      CGRect frame = newAttrs.frame;
       BOOL isNewLine = CGRectGetMinY(newAttrs.frame) != CGRectGetMinY(prevAttrs.frame);
       if (!prevAttrs || isNewLine) {
-        newAttrs.frame = CGRectLeftAlign(newAttrs.frame);
+        frame.origin.x = self.sectionInset.left;
       } else {
-        newAttrs.frame =
-            CGRectLeftAlignToRect(newAttrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
+        frame.origin.x = CGRectGetMaxX(prevAttrs.frame) + self.minimumInteritemSpacing;
       }
-
+      newAttrs.frame = frame;
       prevAttrs = newAttrs;
     }
     [customLayoutAttributes addObject:newAttrs];
