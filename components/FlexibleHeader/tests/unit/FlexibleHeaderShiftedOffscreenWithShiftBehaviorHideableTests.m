@@ -61,6 +61,19 @@
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame), -self.fhvc.maximumHeight, 0.001);
 }
 
+- (void)testCanBeShiftedOffScreenWithMinimumHeaderViewHeight {
+  // Given
+  self.fhvc.minimumHeaderViewHeight = 32.0;
+
+  // When
+  [self.fhvc shiftHeaderOffScreenAnimated:NO];
+
+  // Then
+  XCTAssertTrue(self.fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame),
+                             -self.fhvc.maximumHeight + self.fhvc.minimumHeaderViewHeight, 0.001);
+}
+
 - (void)testStaysShiftedOffScreenWhenScrolledUpByHeaderHeight {
   // Given
   [self.fhvc shiftHeaderOffScreenAnimated:NO];
@@ -72,6 +85,21 @@
   // Then
   XCTAssertTrue(self.fhvc.isShiftedOffscreen);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame), -self.fhvc.maximumHeight, 0.001);
+}
+
+- (void)testStaysShiftedOffScreenWhenScrolledUpByHeaderHeightWithMinimumHeaderViewHeight {
+  // Given
+  self.fhvc.minimumHeaderViewHeight = 32.0;
+  [self.fhvc shiftHeaderOffScreenAnimated:NO];
+
+  // When
+  self.scrollView.contentOffset = CGPointMake(0, self.fhvc.maximumHeight);
+  [self.fhvc trackingScrollViewDidScroll];
+
+  // Then
+  XCTAssertTrue(self.fhvc.isShiftedOffscreen);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fhvc.frame),
+                             -self.fhvc.maximumHeight + self.fhvc.minimumHeaderViewHeight, 0.001);
 }
 
 - (void)testDoesNotShiftBackOnScreenWhenDragged {
