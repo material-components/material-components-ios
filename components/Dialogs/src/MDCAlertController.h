@@ -184,6 +184,9 @@
  */
 @property(nonatomic, nullable, copy) NSString *messageAccessibilityLabel;
 
+/** A custom accessibility label for the title icon view. */
+@property(nonatomic, nullable, copy) NSString *imageAccessibilityLabel;
+
 /**
  Accessory view that contains custom UI.
 
