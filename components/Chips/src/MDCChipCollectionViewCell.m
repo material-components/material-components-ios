@@ -100,7 +100,8 @@
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  CGRect hitAreaRect = UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), _chipView.hitAreaInsets);
+  CGRect hitAreaRect =
+      UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), _chipView.hitAreaInsets);
   return CGRectContainsPoint(hitAreaRect, point);
 }
 
