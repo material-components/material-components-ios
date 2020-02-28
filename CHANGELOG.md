@@ -4,12 +4,12 @@ In this major release we deleted the deprecated themer classes: `MDCAlertScheme`
 
 ## Breaking changes
 
-Deleted `MDCAlertScheme` and `MDCAlertControllerThemer` class, please use the theming extensions.
-Learn more at https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md#migration-guide-themers-to-theming-extensions
+Deleted `MDCAlertScheme` and `MDCAlertControllerThemer` class, please use `MDCAlertController (MaterialTheming)` extension instead.
 
 ## New features
 
-In this release we added the ability to be informed about presentation events of a `MDCAlertController` as well as various minor improvements to the `Dialogs` component and other bug fixes.
+The new delegate MDCAlertControllerDelegate protocol exposes dialogs life cycle events that are useful for impression logging."
+In this release we added a new `delegate` property to `MDCAlertController` which exposes dialogs lifecycle events that are useful for impression logging. As well as various minor improvements to the `Dialogs` component and other bug fixes.
 
 ## API changes
 
