@@ -99,6 +99,11 @@
   return view;
 }
 
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+  CGRect hitAreaRect = UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), _chipView.hitAreaInsets);
+  return CGRectContainsPoint(hitAreaRect, point);
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   if (self.chipView.enableRippleBehavior) {
     // This method needs to be invoked before the super.
