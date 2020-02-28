@@ -20,6 +20,7 @@
 
 @property(nonatomic, strong) MDCSnackbarMessageView *presentedView;
 @property(nonatomic, assign) BOOL shouldSetSnackbarViewAccessibilityViewIsModal;
+@property(nonatomic, assign) XCTestExpectation *disappearExpectation;
 
 - (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView;
 

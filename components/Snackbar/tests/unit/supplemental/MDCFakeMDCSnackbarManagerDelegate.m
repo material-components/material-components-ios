@@ -23,4 +23,8 @@
   }
 }
 
+- (void)snackbarDidDisappear {
+  [self.disappearExpectation fulfill];
+}
+
 @end
