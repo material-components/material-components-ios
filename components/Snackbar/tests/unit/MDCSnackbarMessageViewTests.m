@@ -537,7 +537,7 @@
 
 - (void)testSnackbarDidDisappearDelegateCalled {
   // Given
-  const CGFloat kSnackbarDuration = 0.1;
+  const CGFloat kSnackbarDuration = (CGFloat)0.1;
   self.message.duration = kSnackbarDuration;
   // When
   [self.manager showMessage:self.message];
