@@ -1,16 +1,23 @@
-# #develop#
+# 107.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we deleted the deprecated themer classes: `MDCAlertScheme` and `MDCAlertControllerThemer`.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Deleted `MDCAlertScheme` and `MDCAlertControllerThemer` class, please use the theming extensions.
+Learn more at https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md#migration-guide-themers-to-theming-extensions
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+In this release we added the ability to be informed about presentation events of a `MDCAlertController` as well as various minor improvements to the `Dialogs` component and other bug fixes.
+
 ## API changes
+
+### Dialogs
+
+*new* property: `delegate` in `MDCAlertController`
+
+*new* protocol: `MDCAlertControllerDelegate`
 
 ## Component changes
 
@@ -34,7 +41,7 @@ Replace this text with example code for each new feature.
 * [Support impressions logging in Material Design Dialogs. (#9794)](https://github.com/material-components/material-components-ios/commit/c2af4ae17f0feec12a1a6778dba3bb80505263c7) (Galia Kaufman)
 * [Use consistent syntax for float constants (#9750)](https://github.com/material-components/material-components-ios/commit/e96b7efd28d7284eb090dab1408e0083dc06353e) (Galia Kaufman)
 
-## Multi-component changes
+## TextField
 
 * [implement resignFirstResponder in MDCMultilineTextField (#9793)](https://github.com/material-components/material-components-ios/commit/d83af534c3121bc8f9f2c0cb459917bec33158fe) (Bryan Oltman)
 
