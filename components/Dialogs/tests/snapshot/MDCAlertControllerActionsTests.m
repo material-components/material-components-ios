@@ -14,6 +14,7 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MDCAlertControllerView+Private.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
@@ -24,10 +25,12 @@ static NSString *const kMessageLongLatin =
     @"Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
      "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
      "falli dicunt an. Praesent molestiae vim ut.";
-static NSString *const kFirstShortAction = @"טקסט ראשון";
-static NSString *const kSecondShortAction = @"טקסט שני";
-static NSString *const kFirstLongAction = @"כפתור ראשון עם שם ארוך";
-static NSString *const kSecondLongAction = @"כפתור שני עם שם ארוך";
+static NSString *const kFirstShortActionRTL = @"כפתור ראשון";
+static NSString *const kSecondShortActionRTL = @"כפתור שני";
+static NSString *const kFirstLongActionRTL = @"כפתור ראשון עם שם ארוך";
+static NSString *const kSecondLongActionRTL = @"כפתור שני עם שם ארוך";
+static NSString *const kFirstLongAction = @"First Long Long Action";
+static NSString *const kSecondLongAction = @"Second Long Long Action";
 
 @interface MDCAlertControllerActionsTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCAlertController *alertController;
@@ -74,7 +77,7 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
 
 #pragma mark - Tests
 
-// Horizontal Layout | Low Emphasis
+// Horizontal Layout | Low Emphasis | Default Alignment (trailing)
 - (void)testLowEmphasisActionsOrderInHorizontalLayout {
   // When
   [self.alertController addAction:[MDCAlertAction actionWithTitle:@"First Low"
@@ -89,7 +92,7 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-// Vertical Layout | Low Emphasis
+// Vertical Layout | Low Emphasis | Default Alignment (center)
 - (void)testAutomaticChangeToVerticalLayoutForLongLowEmphasisActions {
   // When
   [self.alertController addAction:[MDCAlertAction actionWithTitle:@"First Low Emphasis Long Text"
@@ -104,7 +107,7 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-// Horizontal Layout | High Emphasis
+// Horizontal Layout | High Emphasis | Default Alignment (trailing)
 - (void)testMediumEmphasisActionsOrderInHorizontalLayout {
   // When
   [self.alertController addAction:[MDCAlertAction actionWithTitle:@"First Med"
@@ -119,29 +122,28 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-// Vertical Layout | High Emphasis
+// Vertical Layout | High Emphasis | Default Alignment (center)
 - (void)testAutomaticChangeToVerticalLayoutForLongMediumEmphasisActions {
   // When
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:@"First Medium Emphasis Long Text"
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstLongAction
                                                          emphasis:MDCActionEmphasisMedium
                                                           handler:nil]];
-  [self.alertController
-      addAction:[MDCAlertAction actionWithTitle:@"Second Medium Emphasis Long Text"
-                                       emphasis:MDCActionEmphasisMedium
-                                        handler:nil]];
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondLongAction
+                                                         emphasis:MDCActionEmphasisMedium
+                                                          handler:nil]];
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-// Horizontal Layout | Low Emphasis | RTL
+// Horizontal Layout | Low Emphasis | RTL | Default Alignment (trailing)
 - (void)testLowEmphasisActionsOrderInHorizontalLayoutInRTL {
   // When
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstShortAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstShortActionRTL
                                                          emphasis:MDCActionEmphasisLow
                                                           handler:nil]];
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondShortAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondShortActionRTL
                                                          emphasis:MDCActionEmphasisLow
                                                           handler:nil]];
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
@@ -151,13 +153,13 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-// Vertical Layout | Low Emphasis | RTL
+// Vertical Layout | Low Emphasis | RTL | Default Alignment (center)
 - (void)testAutomaticChangeToVerticalLayoutForLongLowEmphasisActionsInRTL {
   // When
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstLongAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstLongActionRTL
                                                          emphasis:MDCActionEmphasisLow
                                                           handler:nil]];
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondLongAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondLongActionRTL
                                                          emphasis:MDCActionEmphasisLow
                                                           handler:nil]];
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
@@ -167,13 +169,13 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-// Horizontal Layout | High Emphasis | RTL
+// Horizontal Layout | High Emphasis | RTL | Default Alignment (trailing)
 - (void)testMediumEmphasisActionsOrderInHorizontalLayoutInRTL {
   // When
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstShortAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstShortActionRTL
                                                          emphasis:MDCActionEmphasisMedium
                                                           handler:nil]];
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondShortAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondShortActionRTL
                                                          emphasis:MDCActionEmphasisMedium
                                                           handler:nil]];
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
@@ -183,13 +185,13 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-// Vertical Layout | High Emphasis | RTL
+// Vertical Layout | High Emphasis | RTL | Default Alignment (center)
 - (void)testAutomaticChangeToVerticalLayoutForLongMediumEmphasisActionsInRTL {
   // When
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstLongAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstLongActionRTL
                                                          emphasis:MDCActionEmphasisMedium
                                                           handler:nil]];
-  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondLongAction
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kSecondLongActionRTL
                                                          emphasis:MDCActionEmphasisMedium
                                                           handler:nil]];
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
@@ -197,6 +199,203 @@ static NSString *const kSecondLongAction = @"כפתור שני עם שם ארו�
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+#pragma mark - Alignment Tests
+
+// Horizontal Layout | Low Emphasis | Center Alignment
+- (void)testLowEmphasisActionsAreCenteredInHorizontalLayout {
+  // Given
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:NO];
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignment = MDCContentHorizontalAlignmentCenter;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Horizontal Layout | Low Emphasis | Leading Alignment
+- (void)testLowEmphasisActionsAreLeadingInHorizontalLayout {
+  // Given
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:NO];
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignment = MDCContentHorizontalAlignmentLeading;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Horizontal Layout | Low Emphasis | Justified Alignment
+- (void)testLowEmphasisActionsAreJustifiedInHorizontalLayout {
+  // Given
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:NO];
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignment = MDCContentHorizontalAlignmentJustified;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Horizontal Layout | Medium Emphasis | Center Alignment
+- (void)testMediumEmphasisActionsAreCenteredInHorizontalLayout {
+  // Given
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:NO];
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignment = MDCContentHorizontalAlignmentCenter;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Horizontal Layout | Medium Emphasis | Leading Alignment
+- (void)testMediumEmphasisActionsAreLeadingInHorizontalLayout {
+  // Given
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:NO];
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignment = MDCContentHorizontalAlignmentLeading;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Horizontal Layout | Medium Emphasis | Justified Alignment
+- (void)testMediumEmphasisActionsAreJustifiedInHorizontalLayout {
+  // Given
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:NO];
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignment = MDCContentHorizontalAlignmentJustified;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Vertical Layout | Low Emphasis | Trailing Alignment
+- (void)testLowEmphasisActionsAreTrailingInVerticalLayout {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisLow];
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentTrailing;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Vertical Layout | Low Emphasis | Leading Alignment
+- (void)testLowEmphasisActionsAreLeadingInVerticalLayout {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisLow];
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentLeading;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Vertical Layout | Low Emphasis | Justified Alignment
+- (void)testLowEmphasisActionsAreJustifiedInVerticalLayout {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisLow];
+  [self addShortActionWithEmphasis:MDCActionEmphasisLow cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentJustified;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Vertical Layout | Medium Emphasis | Trailing Alignment
+- (void)testMediumEmphasisActionsAreTrailingInVerticalLayout {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisMedium];
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentTrailing;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Vertical Layout | Medium Emphasis | Leading Alignment
+- (void)testMediumEmphasisActionsAreLeadingInVerticalLayout {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisMedium];
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentLeading;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Vertical Layout | Medium Emphasis | Justified Alignment
+- (void)testMediumEmphasisActionsAreJustifiedInVerticalLayout {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisMedium];
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentJustified;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+#pragma mark - Helpers
+
+- (void)addFirstLongActionWithEmphasis:(MDCActionEmphasis)emphasis {
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:kFirstLongAction
+                                                         emphasis:emphasis
+                                                          handler:nil]];
+}
+
+- (void)addShortActionWithEmphasis:(MDCActionEmphasis)emphasis cancelAction:(BOOL)cancelAction {
+  NSString *title = cancelAction ? @"Cancel" : @"OK";
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:title
+                                                         emphasis:emphasis
+                                                          handler:nil]];
 }
 
 @end

@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "106.0.0"
+  mdc.version      = "107.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -763,7 +763,6 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/Dialogs+DialogThemer"
     end
   end
 
@@ -793,21 +792,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Typography"
     extension.dependency "MaterialComponents/Buttons+TypographyThemer"
-  end
-
-  mdc.subspec "Dialogs+DialogThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/Dialogs+ColorThemer"
-    extension.dependency "MaterialComponents/Dialogs+TypographyThemer"
-    extension.dependency "MaterialComponents/Buttons+ButtonThemer"
   end
 
   mdc.subspec "Dialogs+Theming" do |extension|
