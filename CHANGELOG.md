@@ -1,14 +1,13 @@
 # 107.0.0
 
-In this major release we deleted the deprecated themer classes: `MDCAlertScheme` and `MDCAlertControllerThemer`.
+In this major release we deleted the deprecated `MDCAlertScheme` and `MDCAlertControllerThemer` classes.
 
 ## Breaking changes
 
-Deleted `MDCAlertScheme` and `MDCAlertControllerThemer` class, please use `MDCAlertController (MaterialTheming)` extension instead.
+`MDCAlertScheme` and `MDCAlertControllerThemer` have been deleted. Please use the `MDCAlertController (MaterialTheming)` extension instead.
 
 ## New features
 
-The new delegate MDCAlertControllerDelegate protocol exposes dialogs life cycle events that are useful for impression logging."
 In this release we added a new `delegate` property to `MDCAlertController` which exposes dialogs lifecycle events that are useful for impression logging. As well as various minor improvements to the `Dialogs` component and other bug fixes.
 
 ## API changes
