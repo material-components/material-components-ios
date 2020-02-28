@@ -148,4 +148,19 @@
   XCTAssertEqual(testInkView.inkColor, defaultInkColor);
 }
 
+- (void)testInkViewLayerDoesntMaskToBoundsWithInkStyleUnbounded {
+  // Given
+  MDCInkView *testInkView = [[MDCInkView alloc] init];
+
+  // When
+  testInkView.inkStyle = MDCInkStyleUnbounded;
+  BOOL masksToBoundsWhenUnbounded = testInkView.layer.masksToBounds;
+  testInkView.inkStyle = MDCInkStyleBounded;
+  BOOL masksToBoundsWhenBounded = testInkView.layer.masksToBounds;
+
+  // Then
+  XCTAssertTrue(masksToBoundsWhenBounded);
+  XCTAssertFalse(masksToBoundsWhenUnbounded);
+}
+
 @end
