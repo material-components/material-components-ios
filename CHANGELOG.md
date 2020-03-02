@@ -1,3 +1,39 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Chips
+
+* [MDCChipCollectionViewCell to correctly support increased touch target (#9816)](https://github.com/material-components/material-components-ios/commit/9b21ec994ba2b34b8143f00081d7fc0238a65777) (Yarden Eitan)
+* [Update MDCChipCollectionViewFlowLayout to respect sectionInset (#9813)](https://github.com/material-components/material-components-ios/commit/8daed7f588366f64c172027c51697e7ee8e0eacb) (Bryan Oltman)
+
+### Dialogs
+
+* [Consider all actions alignments for horizontal layout (#9805)](https://github.com/material-components/material-components-ios/commit/594e477685268094783deab7522e479b463a8760) (Galia Kaufman)
+* [Consider all actions alignments for vertical layouts (#9804)](https://github.com/material-components/material-components-ios/commit/b32c232339dcac5f2d6585d5990da094d017d3c0) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Subtract minimumHeaderViewHeight from fhv_accumulatorMax.](https://github.com/material-components/material-components-ios/commit/9f57fd45347ca22ec37094b9a372eed976ed1323) (shingzhao)
+
+### Snackbar
+
+* [Add 'snackbarDidDisappear' to MDCSnackbarManagerDelegate. (#9815)](https://github.com/material-components/material-components-ios/commit/ecbb85397f685dd369399db8f2fd625ff8a856a6) (Yarden Eitan)
+
+---
+
 # 107.0.0
 
 In this major release we deleted the deprecated `MDCAlertScheme` and `MDCAlertControllerThemer` classes.
