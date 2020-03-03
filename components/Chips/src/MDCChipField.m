@@ -616,10 +616,6 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   [self deselectAllChips];
   [self createNewChipWithTextField:self.textField delimiter:MDCChipFieldDelimiterSpace];
   CGRect lastChipFrame = self.chips.lastObject.frame;
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    lastChipFrame = MDFRectFlippedHorizontally(lastChipFrame, CGRectGetWidth(self.bounds));
-  }
-
   if (!CGRectIsEmpty(lastChipFrame)) {
     BOOL isTextTooWide = [self textInputDesiredWidth] >= [self availableWidthForTextInput];
     BOOL isTextFieldOnSameLineAsChips =
