@@ -35,6 +35,13 @@
  */
 - (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView;
 
+@optional
+
+/**
+ This method is called after a Snackbar's dismissal animation is finished.
+ */
+- (void)snackbarDidDisappear;
+
 @end
 
 /**
