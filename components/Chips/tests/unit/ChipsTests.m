@@ -324,18 +324,18 @@ static inline UIImage *TestImage(CGSize size) {
   [field createNewChipFromInput];
   [field layoutIfNeeded];
   CGFloat placeholderWithChipOriginX =
-      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
+      CGRectStandardize(field.textField.frame).origin.x;
   MDCChipView *chip = field.chips[0];
   [field removeChip:chip];
   [field layoutIfNeeded];
 
   // Then
   CGFloat finalPlaceholderPositionOriginX =
-      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
+      CGRectStandardize(field.textField.frame).origin.x;
   XCTAssertGreaterThan(placeholderWithChipOriginX, finalPlaceholderPositionOriginX);
 }
 
-- (void)testAddChipsManuallyPlaceholderCorrectPosition {
+- (void)testAddChipsManuallyTextFieldCorrectPosition {
   // Given
   MDCChipView *fakeChip = [[MDCChipView alloc] init];
   fakeChip.titleLabel.text = @"Fake chip";
@@ -347,7 +347,7 @@ static inline UIImage *TestImage(CGSize size) {
   [fakeField setNeedsLayout];
   [fakeField layoutIfNeeded];
   CGFloat initialPlaceholderOriginX =
-      CGRectStandardize(fakeField.textField.placeholderLabel.frame).origin.x;
+      CGRectStandardize(fakeField.textField.frame).origin.x;
   [fakeField addChip:fakeChip];
   fakeField.textField.placeholder = fakeField.textField.placeholder;
   [fakeField setNeedsLayout];
@@ -355,7 +355,7 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   CGFloat finalPlaceholderOriginX =
-      CGRectStandardize(fakeField.textField.placeholderLabel.frame).origin.x;
+      CGRectStandardize(fakeField.textField.frame).origin.x;
   XCTAssertGreaterThan(finalPlaceholderOriginX, initialPlaceholderOriginX);
 }
 
