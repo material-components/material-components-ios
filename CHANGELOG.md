@@ -1,16 +1,18 @@
-# #develop#
+# 107.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release we added support to Snackbar to inform users when it has disappeared. As well as, improvements around touch targets for Chips, alignment improvements to Dialogs and various other bug improvements.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+In this release we added a new method to the `MDCSnackbarManagerDelegate` protocol to inform users when the snackbar disappeared.
+
+```swift
+extension MyCustomViewController: MDCSnackbarManagerDelegate {
+  func snackbarDidDisappear() {
+    print("The snackbar disappeared I should act accordingly")
+  }
+}
+```
 
 ## Component changes
 
