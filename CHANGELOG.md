@@ -1,10 +1,10 @@
 # 107.1.0
 
-This minor release we added support to Snackbar to inform users when it has disappeared. As well as, improvements around touch targets for Chips, alignment improvements to Dialogs and various other bug improvements.
+This minor release includes additions to the `MDCSnackbarManagerDelegate` protocol, touch target improvements to Chips, alignment improvements to Dialogs, and various other bug fixes.
 
 ## New features
 
-In this release we added a new method to the `MDCSnackbarManagerDelegate` protocol to inform users when the snackbar disappeared.
+In this release we added a new method to the `MDCSnackbarManagerDelegate` protocol that informs the user when a snackbar disappears.
 
 ```swift
 extension MyCustomViewController: MDCSnackbarManagerDelegate {
