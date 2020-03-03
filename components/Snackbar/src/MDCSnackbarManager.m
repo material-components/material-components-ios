@@ -299,28 +299,33 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                                                  completion:nil];
                      }];
 
-  [self.overlayView dismissSnackbarViewAnimated:YES
-                                     completion:^{
-                                       self.overlayView.hidden = YES;
-                                       [self deactivateOverlay:self.overlayView];
+  [self.overlayView
+      dismissSnackbarViewAnimated:YES
+                       completion:^{
+                         self.overlayView.hidden = YES;
+                         [self deactivateOverlay:self.overlayView];
 
-                                       // If the snackbarView was transient and
-                                       // accessibilityViewIsModal is NO, the Snackbar was just
-                                       // announced (layout was not reported as changed) so there is
-                                       // no need to post a layout change here.
-                                       if (self.overlayView.accessibilityViewIsModal ||
-                                           ![self isSnackbarTransient:snackbarView]) {
-                                         UIAccessibilityPostNotification(
-                                             UIAccessibilityLayoutChangedNotification, nil);
-                                       }
+                         // If the snackbarView was transient and
+                         // accessibilityViewIsModal is NO, the Snackbar was just
+                         // announced (layout was not reported as changed) so there is
+                         // no need to post a layout change here.
+                         if (self.overlayView.accessibilityViewIsModal ||
+                             ![self isSnackbarTransient:snackbarView]) {
+                           UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                                           nil);
+                         }
 
-                                       self.currentSnackbar = nil;
+                         self.currentSnackbar = nil;
 
-                                       // Now that the snackbarView is offscreen, we can allow more
-                                       // messages to be shown.
-                                       self.showingMessage = NO;
-                                       [self showNextMessageIfNecessaryMainThread];
-                                     }];
+                         if ([self.delegate respondsToSelector:@selector(snackbarDidDisappear)]) {
+                           [self.delegate snackbarDidDisappear];
+                         }
+
+                         // Now that the snackbarView is offscreen, we can allow more
+                         // messages to be shown.
+                         self.showingMessage = NO;
+                         [self showNextMessageIfNecessaryMainThread];
+                       }];
 }
 
 #pragma mark - Helper methods

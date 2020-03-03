@@ -748,7 +748,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
   return (shouldCollapseToStatusBar
               ? MAX(0, self.minMaxHeight.minimumHeightWithTopSafeArea - statusBarHeight)
-              : self.minMaxHeight.minimumHeightWithTopSafeArea);
+              : self.minMaxHeight.minimumHeightWithTopSafeArea) -
+         self.minimumHeaderViewHeight;
 }
 
 #pragma mark Logical short forms

@@ -475,4 +475,54 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertEqual(passedChipView, chipView);
 }
 
+- (void)testChipCellPointInsideWithCustomHitAreaInsets {
+  // Given
+  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
+  cell.chipView.titleLabel.text = @"Chip";
+  [cell sizeToFit];
+
+  // When
+  UIEdgeInsets hitAreaInsets = UIEdgeInsetsMake(-10, -8, -6, -4);
+
+  cell.chipView.hitAreaInsets = hitAreaInsets;
+
+  // Then
+  CGRect chipBounds = CGRectStandardize(cell.bounds);
+  const CGFloat delta = (CGFloat)0.001;
+  // Top-left corner
+  XCTAssertTrue([cell pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
+                                              CGRectGetMinY(chipBounds) + hitAreaInsets.top)
+                        withEvent:nil]);
+  XCTAssertFalse([cell
+      pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left - delta,
+                              CGRectGetMinY(chipBounds) + hitAreaInsets.top - delta)
+        withEvent:nil]);
+  // Top-right corner
+  XCTAssertTrue([cell
+      pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right - delta,
+                              CGRectGetMinY(chipBounds) + hitAreaInsets.top)
+        withEvent:nil]);
+  XCTAssertFalse([cell
+      pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
+                              CGRectGetMinY(chipBounds) + hitAreaInsets.top - delta)
+        withEvent:nil]);
+  // Bottom-left corner
+  XCTAssertTrue([cell
+      pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
+                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom - delta)
+        withEvent:nil]);
+  XCTAssertFalse([cell
+      pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left - delta,
+                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
+        withEvent:nil]);
+  // Bottom-right corner
+  XCTAssertTrue([cell
+      pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right - delta,
+                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom - delta)
+        withEvent:nil]);
+  XCTAssertFalse([cell pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
+                                               CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
+                         withEvent:nil]);
+}
+
 @end
