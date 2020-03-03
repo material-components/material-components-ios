@@ -615,6 +615,21 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 - (void)textFieldDidChange {
   [self deselectAllChips];
   [self createNewChipWithTextField:self.textField delimiter:MDCChipFieldDelimiterSpace];
+  CGRect lastChipFrame = self.chips.lastObject.frame;
+  if (!CGRectIsEmpty(lastChipFrame)) {
+    BOOL isTextTooWide = [self textInputDesiredWidth] >= [self availableWidthForTextInput];
+    BOOL isTextFieldOnSameLineAsChips =
+        CGRectGetMidY(self.textField.frame) == CGRectGetMidY(lastChipFrame);
+    if (isTextTooWide && isTextFieldOnSameLineAsChips) {
+      // The text is on the same line as the chips and doesn't fit
+      // Trigger layout to move the text field down to the next line
+      [self setNeedsLayout];
+    } else if (!isTextTooWide && !isTextFieldOnSameLineAsChips) {
+      // The text is on the line below the chips but can fit on the same line
+      // Trigger layout to move the text field up to the previous line
+      [self setNeedsLayout];
+    }
+  }
 
   if ([self.delegate respondsToSelector:@selector(chipField:didChangeInput:)]) {
     [self.delegate chipField:self didChangeInput:[self.textField.text copy]];
@@ -740,6 +755,8 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 }
 
 // The width of the text input + the clear button.
+// Used to determine whether the text field can fit on a line with chips or whether it gets its
+// own line.
 - (CGFloat)textInputDesiredWidth {
   UIFont *font = self.textField.placeholderLabel.font;
   CGRect placeholderDesiredRect = [self.textField.text
