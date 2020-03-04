@@ -67,7 +67,6 @@
   [self snapshotVerifyView:self.chipField];
 }
 
-
 - (void)testTextFieldIsOnLineBelowWideChips {
   // When
   [self.chipField addChip:[self chipViewWithTitle:@"chipper1234asdf@gmail.com"]];
