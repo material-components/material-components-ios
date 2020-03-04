@@ -383,6 +383,22 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
+#pragma mark - Vertical Order Tests
+
+- (void)testActionsAreOrderedByEmphasis {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisHigh];
+  [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alertController.view;
+  view.orderVerticalActionsByEmphasis = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
 #pragma mark - Helpers
 
 - (void)addFirstLongActionWithEmphasis:(MDCActionEmphasis)emphasis {
