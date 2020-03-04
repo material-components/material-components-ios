@@ -30,8 +30,9 @@
 
   CGRect chipFieldFrame = CGRectMake(0, 0, 300, 0);
   self.chipField = [[MDCChipField alloc] initWithFrame:chipFieldFrame];
-  self.chipField.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.2];
-  self.chipField.textField.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.2];
+  self.chipField.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:(CGFloat)0.2];
+  self.chipField.textField.backgroundColor =
+      [[UIColor blueColor] colorWithAlphaComponent:(CGFloat)0.2];
 }
 
 - (void)tearDown {
