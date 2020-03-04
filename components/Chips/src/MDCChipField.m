@@ -615,21 +615,6 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 - (void)textFieldDidChange {
   [self deselectAllChips];
   [self createNewChipWithTextField:self.textField delimiter:MDCChipFieldDelimiterSpace];
-  CGRect lastChipFrame = self.chips.lastObject.frame;
-  if (!CGRectIsEmpty(lastChipFrame)) {
-    BOOL isTextTooWide = [self textInputDesiredWidth] >= [self availableWidthForTextInput];
-    BOOL isTextFieldOnSameLineAsChips =
-        CGRectGetMidY(self.textField.frame) == CGRectGetMidY(lastChipFrame);
-    if (isTextTooWide && isTextFieldOnSameLineAsChips) {
-      // The text is on the same line as the chips and doesn't fit
-      // Trigger layout to move the text field down to the next line
-      [self setNeedsLayout];
-    } else if (!isTextTooWide && !isTextFieldOnSameLineAsChips) {
-      // The text is on the line below the chips but can fit on the same line
-      // Trigger layout to move the text field up to the previous line
-      [self setNeedsLayout];
-    }
-  }
 
   if ([self.delegate respondsToSelector:@selector(chipField:didChangeInput:)]) {
     [self.delegate chipField:self didChangeInput:[self.textField.text copy]];
@@ -713,62 +698,28 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 
 - (CGRect)frameForTextFieldForLastChipFrame:(CGRect)lastChipFrame
                               chipFieldSize:(CGSize)chipFieldSize {
-  CGFloat availableWidth = [self availableWidthForTextInput];
+  CGFloat textFieldWidth =
+      chipFieldSize.width - self.contentEdgeInsets.left - self.contentEdgeInsets.right;
   CGFloat textFieldHeight = [self.textField sizeThatFits:chipFieldSize].height;
   CGFloat originY = lastChipFrame.origin.y + (self.chipHeight - textFieldHeight) / 2;
 
-  // If no chip exists, make the text field the full width, adjusted for insets.
+  // If no chip exists, make the text field the full width minus padding.
   if (CGRectIsEmpty(lastChipFrame)) {
+    // Adjust for the top inset
     originY += self.contentEdgeInsets.top;
-    return CGRectMake(self.contentEdgeInsets.left, originY, availableWidth, textFieldHeight);
+    return CGRectMake(self.contentEdgeInsets.left, originY, textFieldWidth, textFieldHeight);
   }
 
-  CGFloat originX = 0;
-  CGFloat textFieldWidth = 0;
-  CGFloat desiredTextWidth = [self textInputDesiredWidth];
-  if (availableWidth < desiredTextWidth) {
+  CGFloat availableWidth = chipFieldSize.width - self.contentEdgeInsets.right -
+                           CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalMargin;
+  CGFloat placeholderDesiredWidth = [self placeholderDesiredWidth];
+  if (availableWidth < placeholderDesiredWidth) {
     // The text field doesn't fit on the line with the last chip.
     originY += self.chipHeight + MDCChipFieldVerticalMargin;
-    originX = self.contentEdgeInsets.left;
-    textFieldWidth =
-        chipFieldSize.width - self.contentEdgeInsets.left - self.contentEdgeInsets.right;
-  } else {
-    // The text field fits on the line with chips
-    originX += CGRectGetMaxX(lastChipFrame) + MDCChipFieldHorizontalMargin;
-    textFieldWidth = availableWidth;
+    return CGRectMake(self.contentEdgeInsets.left, originY, textFieldWidth, textFieldHeight);
   }
 
-  return CGRectMake(originX, originY, textFieldWidth, textFieldHeight);
-}
-
-- (CGFloat)availableWidthForTextInput {
-  NSArray *chipFrames = [self chipFramesForSize:self.bounds.size];
-  CGFloat boundsWidth = CGRectGetWidth(CGRectStandardize(self.bounds));
-  if (chipFrames.count == 0) {
-    return boundsWidth - (self.contentEdgeInsets.right + self.contentEdgeInsets.left);
-  }
-
-  CGRect lastChipFrame = [chipFrames.lastObject CGRectValue];
-  CGFloat availableWidth = boundsWidth - self.contentEdgeInsets.right -
-                           CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalMargin;
-  return availableWidth;
-}
-
-// The width of the text input + the clear button.
-// Used to determine whether the text field can fit on a line with chips or whether it gets its
-// own line.
-- (CGFloat)textInputDesiredWidth {
-  UIFont *font = self.textField.placeholderLabel.font;
-  CGRect placeholderDesiredRect = [self.textField.text
-      boundingRectWithSize:CGSizeMake(UIViewNoIntrinsicMetric, UIViewNoIntrinsicMetric)
-                   options:NSStringDrawingUsesLineFragmentOrigin
-                attributes:@{
-                  NSFontAttributeName : font,
-                }
-                   context:nil];
-  return MAX([self placeholderDesiredWidth],
-             CGRectGetWidth(placeholderDesiredRect) + MDCChipFieldHorizontalMargin +
-                 self.contentEdgeInsets.right + MDCChipFieldClearImageSquareWidthHeight);
+  return CGRectMake(self.contentEdgeInsets.left, originY, textFieldWidth, textFieldHeight);
 }
 
 - (CGFloat)placeholderDesiredWidth {
@@ -791,7 +742,21 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets
     withSizeThatFitsWidthHint:(CGFloat)widthHint {
-  defaultInsets.left = MDCChipFieldIndent;
+  CGRect lastChipFrame = self.chips.lastObject.frame;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    lastChipFrame = MDFRectFlippedHorizontally(lastChipFrame, CGRectGetWidth(self.bounds));
+  }
+
+  CGFloat availableWidth = CGRectGetWidth(self.bounds) - self.contentEdgeInsets.right -
+                           CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalMargin;
+
+  CGFloat leftInset = MDCChipFieldIndent;
+  if (!CGRectIsEmpty(lastChipFrame) && availableWidth >= [self placeholderDesiredWidth]) {
+    leftInset +=
+        CGRectGetMaxX(lastChipFrame) + MDCChipFieldHorizontalMargin - self.contentEdgeInsets.left;
+  }
+  defaultInsets.left = leftInset;
+
   return defaultInsets;
 }
 
