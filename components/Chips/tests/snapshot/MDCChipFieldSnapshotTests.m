@@ -28,7 +28,7 @@
   // test you wish to recreate the golden for).
   // self.recordMode = YES;
 
-  CGRect chipFieldFrame = CGRectMake(0, 0, 300, 300);
+  CGRect chipFieldFrame = CGRectMake(0, 0, 300, 0);
   self.chipField = [[MDCChipField alloc] initWithFrame:chipFieldFrame];
   self.chipField.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.2];
   self.chipField.textField.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.2];
@@ -41,6 +41,7 @@
 }
 
 - (void)testLayoutEmpty {
+  [self.chipField sizeToFit];
   [self snapshotVerifyView:self.chipField];
 }
 
@@ -51,6 +52,7 @@
   [self.chipField addChip:[self chipViewWithTitle:@"ef"]];
 
   // Then
+  [self.chipField sizeToFit];
   [self snapshotVerifyView:self.chipField];
 }
 
@@ -64,6 +66,7 @@
   [self.chipField addChip:[self chipViewWithTitle:@"ef"]];
 
   // Then
+  [self.chipField sizeToFit];
   [self snapshotVerifyView:self.chipField];
 }
 
@@ -74,6 +77,7 @@
   [self.chipField addChip:[self chipViewWithTitle:@"chipper8901zxcv@gmail.com"]];
 
   // Then
+  [self.chipField sizeToFit];
   [self snapshotVerifyView:self.chipField];
 }
 
@@ -87,19 +91,11 @@
   [self.chipField addChip:[self chipViewWithTitle:@"chipper8901zxcv@gmail.com"]];
 
   // Then
+  [self.chipField sizeToFit];
   [self snapshotVerifyView:self.chipField];
 }
 
 #pragma mark - Helpers
-
-- (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  CGSize aSize = [view sizeThatFits:CGSizeMake(300, INFINITY)];
-  view.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
-  [view layoutIfNeeded];
-
-  UIView *snapshotView = [view mdc_addToBackgroundView];
-  [self snapshotVerifyView:snapshotView];
-}
 
 - (MDCChipView *)chipViewWithTitle:(NSString *)title {
   MDCChipView *chipView = [[MDCChipView alloc] init];
