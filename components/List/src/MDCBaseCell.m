@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCBaseCell.h"
+#import "MDCSelfSizingLayoutAttributes.h"
 
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
@@ -135,6 +136,32 @@
   self.rippleColor = nil;
   [self.inkView cancelAllAnimationsAnimated:NO];
   [self.rippleView cancelAllRipplesAnimated:NO completion:nil];
+}
+
+- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:
+    (UICollectionViewLayoutAttributes *)layoutAttributes {
+  if (![layoutAttributes conformsToProtocol:@protocol(MDCSelfSizingLayoutAttributes)]) {
+    return [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+  }
+  UICollectionViewLayoutAttributes<MDCSelfSizingLayoutAttributes> *attr = (id)layoutAttributes;
+  BOOL isFixedWidth = [attr respondsToSelector:@selector(isFixedWidth)] ? attr.isFixedWidth : NO;
+  BOOL isFixedHeight = [attr respondsToSelector:@selector(isFixedHeight)] ? attr.isFixedHeight : NO;
+  NSLayoutConstraint *constraint;
+  if (isFixedWidth && isFixedHeight) {
+    return layoutAttributes;
+  } else if (isFixedWidth) {
+    constraint = [self.contentView.widthAnchor constraintEqualToConstant:attr.size.width];
+  } else if (isFixedHeight) {
+    constraint = [self.contentView.heightAnchor constraintEqualToConstant:attr.size.height];
+  } else {
+    return [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+  }
+  constraint.active = YES;
+  [self layoutIfNeeded];
+  UICollectionViewLayoutAttributes *preferredAttributes =
+      [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+  constraint.active = NO;
+  return preferredAttributes;
 }
 
 #pragma mark Accessors
