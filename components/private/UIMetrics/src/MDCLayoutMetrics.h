@@ -16,6 +16,13 @@
 #import <UIKit/UIKit.h>
 
 /**
+ This const returns the status bar height for pre iPhone X devices.
+
+ Note: For iOS 11+ devices this value should be fetched from the views safeAreaInsets API.
+ */
+extern const CGFloat MDCFixedStatusBarHeightOnPreiPhoneXDevices;
+
+/**
  On devices with hardware safe areas, returns the top safe area for the key window. On all other
  devices, returns the fixed status bar height regardless of status bar visibility.
 

@@ -26,13 +26,13 @@
  */
 @interface MDCTextControlAssistiveLabelViewLayout : NSObject
 
-@property(nonatomic, assign, readonly) CGRect leftAssistiveLabelFrame;
-@property(nonatomic, assign, readonly) CGRect rightAssistiveLabelFrame;
+@property(nonatomic, assign, readonly) CGRect leadingAssistiveLabelFrame;
+@property(nonatomic, assign, readonly) CGRect trailingAssistiveLabelFrame;
 @property(nonatomic, assign, readonly) CGFloat calculatedHeight;
 
 - (instancetype)initWithWidth:(CGFloat)superviewWidth
-                  leftAssistiveLabel:(UILabel *)leftAssistiveLabel
-                 rightAssistiveLabel:(UILabel *)rightAssistiveLabel
+               leadingAssistiveLabel:(UILabel *)leadingAssistiveLabel
+              trailingAssistiveLabel:(UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:
               (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority

@@ -35,7 +35,7 @@
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
 
 // Legacy ink ripple
-@property(nonatomic, readonly) MDCLegacyInkLayer *inkLayer;
+@property(nonatomic, readonly, weak) MDCLegacyInkLayer *inkLayer;
 
 @end
 
@@ -126,9 +126,11 @@
   } else {
     switch (inkStyle) {
       case MDCInkStyleBounded:
+        self.inkLayer.masksToBounds = YES;
         self.inkLayer.maxRippleRadius = 0;
         break;
       case MDCInkStyleUnbounded:
+        self.inkLayer.masksToBounds = NO;
         self.inkLayer.maxRippleRadius = _maxRippleRadius;
         break;
     }

@@ -22,6 +22,7 @@
 #import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialApplication.h"
+#import "MaterialAvailability.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
 
@@ -29,7 +30,7 @@ NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the Snackbar.
 NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
-NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075;
+NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.125;
 NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 
 // The scaling starting point for presenting the new Snackbar.
@@ -49,10 +50,10 @@ static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24;
 // The maximum height of the Snackbar.
 static const CGFloat kMaximumHeight = 80;
 
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 @interface MDCSnackbarOverlayView () <CAAnimationDelegate>
 @end
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
 
 @interface MDCSnackbarOverlayView ()
 

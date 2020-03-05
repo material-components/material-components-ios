@@ -15,7 +15,6 @@
 #import "MDCAlertController.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
@@ -23,7 +22,9 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 #import "UIViewController+MaterialDialogs.h"
+
 #import "private/MDCAlertActionManager.h"
+#import "private/MDCAlertController+Customize.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
@@ -78,6 +79,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
+@property(nonatomic, nullable, strong) UIView *titleIconView;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
@@ -97,6 +99,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+@synthesize titleIconView = _titleIconView;
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
                                  message:(nullable NSString *)message {
@@ -128,6 +131,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -255,7 +262,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (!button && [self.actionManager hasAction:action]) {
     button = [self.actionManager createButtonForAction:action
                                                 target:self
-                                              selector:@selector(actionButtonPressed:)];
+                                              selector:@selector(actionButtonPressed:forEvent:)];
     [MDCAlertControllerView styleAsTextButton:button];
   }
   return button;
@@ -326,6 +333,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _titleIcon = titleIcon;
   if (self.alertView) {
     self.alertView.titleIcon = titleIcon;
+  }
+}
+
+- (void)setTitleIconView:(UIView *)titleIconView {
+  _titleIconView = titleIconView;
+  if (self.alertView) {
+    self.alertView.titleIconView = titleIconView;
   }
 }
 
@@ -434,7 +448,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
-- (void)actionButtonPressed:(id)button {
+- (void)actionButtonPressed:(id)button forEvent:(UIEvent *)event {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
 
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
@@ -443,6 +457,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self.presentingViewController dismissViewControllerAnimated:YES
                                                     completion:^(void) {
                                                       if (action.completionHandler) {
+                                                        if ([self.delegate
+                                                                respondsToSelector:@selector
+                                                                (alertController:
+                                                                    didTapAction:withEvent:)]) {
+                                                          [self.delegate alertController:self
+                                                                            didTapAction:action
+                                                                               withEvent:event];
+                                                        }
                                                         action.completionHandler(action);
                                                       }
                                                     }];
@@ -478,52 +500,34 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, announcement);
 }
 
-- (void)setupAlertView {
-  self.alertView.titleLabel.text = self.title;
-  if (@available(iOS 10.0, *)) {
-    self.alertView.titleLabel.adjustsFontForContentSizeCategory =
-        self.adjustsFontForContentSizeCategory;
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:willAppear:)]) {
+    [self.delegate alertController:self willAppear:animated];
   }
-  self.alertView.messageLabel.text = self.message;
-  self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
-  self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
-  // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
-  // adjustsFontForContentSizeCategory for messageLabel
-  self.alertView.accessoryView = self.accessoryView;
-  self.alertView.titleFont = self.titleFont;
-  self.alertView.messageFont = self.messageFont;
-  self.alertView.titleColor = self.titleColor ?: UIColor.blackColor;
-  self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
-  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-      self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-  if (self.backgroundColor) {
-    // Avoid reset background color to transparent when self.backgroundColor is nil.
-    self.alertView.backgroundColor = self.backgroundColor;
-  }
-  if (self.buttonTitleColor) {
-    // Avoid reset title color to white when setting it to nil. only set it for an actual UIColor.
-    self.alertView.buttonColor = self.buttonTitleColor;  // b/117717380: Will be deprecated
-  }
-  self.alertView.buttonFont = self.buttonFont;  // b/117717380: Will be deprecated
-  if (self.buttonInkColor) {
-    // Avoid reset ink color to white when setting it to nil. only set it for an actual UIColor.
-    self.alertView.buttonInkColor = self.buttonInkColor;  // b/117717380: Will be deprecated
-  }
-  self.alertView.titleAlignment = self.titleAlignment;
-  self.alertView.titleIcon = self.titleIcon;
-  self.alertView.titleIconTintColor = self.titleIconTintColor;
-  self.alertView.cornerRadius = self.cornerRadius;
-  self.alertView.enableRippleBehavior = self.enableRippleBehavior;
+}
 
-  // Create buttons for the actions (if not already created) and apply default styling
-  for (MDCAlertAction *action in self.actions) {
-    [self addButtonToAlertViewForAction:action];
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:didAppear:)]) {
+    [self.delegate alertController:self didAppear:animated];
   }
-  // Explicitly overwrite the view default if true
-  // We set this last to make sure all other properties are set first and no overridden by setting
-  // this.
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
+  [self.alertView.titleScrollView flashScrollIndicators];
+  [self.alertView.contentScrollView flashScrollIndicators];
+  [self.alertView.actionsScrollView flashScrollIndicators];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:willDisappear:)]) {
+    [self.delegate alertController:self willDisappear:animated];
+  }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  if ([self.delegate respondsToSelector:@selector(alertController:didDisappear:)]) {
+    [self.delegate alertController:self didDisappear:animated];
   }
 }
 
@@ -550,27 +554,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
   }
-}
-
-#pragma mark - Resource bundle
-
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialDialogsBundle]];
-  });
-
-  return bundle;
-}
-
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCAlertController class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -607,11 +590,77 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
                       completion:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+#pragma mark - Resource bundle
 
-  [self.alertView.contentScrollView flashScrollIndicators];
-  [self.alertView.actionsScrollView flashScrollIndicators];
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialDialogsBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCAlertController class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+#pragma mark - Setup Alert View
+
+- (void)setupAlertView {
+  self.alertView.titleLabel.text = self.title;
+  if (@available(iOS 10.0, *)) {
+    self.alertView.titleLabel.adjustsFontForContentSizeCategory =
+        self.adjustsFontForContentSizeCategory;
+  }
+  self.alertView.messageLabel.text = self.message;
+  self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
+  self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
+  // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
+  // adjustsFontForContentSizeCategory for messageLabel
+  self.alertView.accessoryView = self.accessoryView;
+  self.alertView.titleFont = self.titleFont;
+  self.alertView.messageFont = self.messageFont;
+  self.alertView.titleColor = self.titleColor ?: UIColor.blackColor;
+  self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
+  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+  if (self.backgroundColor) {
+    // Avoid reset background color to transparent when self.backgroundColor is nil.
+    self.alertView.backgroundColor = self.backgroundColor;
+  }
+  if (self.buttonTitleColor) {
+    // Avoid reset title color to white when setting it to nil. only set it for an actual UIColor.
+    self.alertView.buttonColor = self.buttonTitleColor;  // b/117717380: Will be deprecated
+  }
+  self.alertView.buttonFont = self.buttonFont;  // b/117717380: Will be deprecated
+  if (self.buttonInkColor) {
+    // Avoid reset ink color to white when setting it to nil. only set it for an actual UIColor.
+    self.alertView.buttonInkColor = self.buttonInkColor;  // b/117717380: Will be deprecated
+  }
+  self.alertView.titleAlignment = self.titleAlignment;
+  self.alertView.titleIcon = self.titleIcon;
+  self.alertView.titleIconTintColor = self.titleIconTintColor;
+  self.alertView.titleIconView = self.titleIconView;
+  self.alertView.cornerRadius = self.cornerRadius;
+  self.alertView.enableRippleBehavior = self.enableRippleBehavior;
+
+  // Create buttons for the actions (if not already created) and apply default styling
+  for (MDCAlertAction *action in self.actions) {
+    [self addButtonToAlertViewForAction:action];
+  }
+  // Explicitly overwrite the view default if true
+  // We set this last to make sure all other properties are set first and no overridden by setting
+  // this.
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
+  }
 }
 
 #pragma mark - UIAccessibilityAction

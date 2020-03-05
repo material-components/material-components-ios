@@ -83,6 +83,9 @@ mdc_examples_swift_library(
         ":BottomSheet",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
+        "//components/schemes/Container",
+        "//components/TextFields",
     ],
 )
 

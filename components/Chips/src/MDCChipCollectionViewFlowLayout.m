@@ -15,16 +15,6 @@
 
 #import "MDCChipCollectionViewFlowLayout.h"
 
-/* Left aligns one rect to another with a given padding */
-static inline CGRect CGRectLeftAlignToRect(CGRect rect, CGRect staticRect, CGFloat padding) {
-  return CGRectMake(CGRectGetMaxX(staticRect) + padding, CGRectGetMinY(rect), CGRectGetWidth(rect),
-                    CGRectGetHeight(rect));
-}
-
-static inline CGRect CGRectLeftAlign(CGRect rect) {
-  return CGRectMake(0, CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect));
-}
-
 @implementation MDCChipCollectionViewFlowLayout
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -32,23 +22,25 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
   NSMutableArray *customLayoutAttributes =
       [NSMutableArray arrayWithCapacity:layoutAttributes.count];
 
-  if (layoutAttributes.count > 0) {
-    UICollectionViewLayoutAttributes *attrs = [layoutAttributes[0] copy];
-    attrs.frame = CGRectLeftAlign(attrs.frame);
-    [customLayoutAttributes addObject:attrs];
-  }
-
-  for (NSUInteger i = 1; i < layoutAttributes.count; i++) {
-    UICollectionViewLayoutAttributes *attrs = [layoutAttributes[i] copy];
-    UICollectionViewLayoutAttributes *prevAttrs = customLayoutAttributes[i - 1];
-
-    if (CGRectGetMinY(prevAttrs.frame) == CGRectGetMinY(attrs.frame)) {
-      attrs.frame =
-          CGRectLeftAlignToRect(attrs.frame, prevAttrs.frame, self.minimumInteritemSpacing);
-    } else {
-      attrs.frame = CGRectLeftAlign(attrs.frame);
+  // Left-align cells
+  UICollectionViewLayoutAttributes *prevAttrs;
+  for (UICollectionViewLayoutAttributes *attrs in layoutAttributes) {
+    UICollectionViewLayoutAttributes *newAttrs = [attrs copy];
+    if (newAttrs.representedElementCategory == UICollectionElementCategoryCell) {
+      // If the attributes are for a cell that isn't on the same line as the previous cell, set the
+      // x origin of the frame to 0. Otherwise, align the frame to the right end of the previous
+      // frame (accounting for minimumInteritemSpacing).
+      CGRect frame = newAttrs.frame;
+      BOOL isNewLine = CGRectGetMinY(newAttrs.frame) != CGRectGetMinY(prevAttrs.frame);
+      if (!prevAttrs || isNewLine) {
+        frame.origin.x = self.sectionInset.left;
+      } else {
+        frame.origin.x = CGRectGetMaxX(prevAttrs.frame) + self.minimumInteritemSpacing;
+      }
+      newAttrs.frame = frame;
+      prevAttrs = newAttrs;
     }
-    [customLayoutAttributes addObject:attrs];
+    [customLayoutAttributes addObject:newAttrs];
   }
 
   return [customLayoutAttributes copy];

@@ -19,7 +19,9 @@
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MaterialApplication.h"
+#import "MaterialAvailability.h"
 #import "MaterialUIMetrics.h"
+#import "private/MDCFlexibleHeaderHairline.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
 
 @interface UIView ()
@@ -39,11 +41,11 @@ static inline UIStatusBarStyle StatusBarStyleOnBackgroundColor(UIColor *color) {
     return UIStatusBarStyleLightContent;
   }
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     return UIStatusBarStyleDarkContent;
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   return UIStatusBarStyleDefault;
 }
@@ -89,6 +91,11 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
  */
 @property(nonatomic, strong) UIView *topSafeAreaView;
 
+/**
+ Supports the behavior of showing a narrow line at the bottom edge of the flexible header view.
+ */
+@property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
+
 @end
 
 @implementation MDCFlexibleHeaderViewController
@@ -130,6 +137,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (void)loadView {
   self.view = self.headerView;
+
+  self.hairline = [[MDCFlexibleHeaderHairline alloc] initWithContainerView:self.headerView];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -693,6 +702,24 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
+}
+
+#pragma mark - Hairline support
+
+- (void)setShowsHairline:(BOOL)showsHairline {
+  self.hairline.hidden = !showsHairline;
+}
+
+- (BOOL)showsHairline {
+  return !self.hairline.hidden;
+}
+
+- (void)setHairlineColor:(UIColor *)hairlineColor {
+  self.hairline.color = hairlineColor;
+}
+
+- (UIColor *)hairlineColor {
+  return self.hairline.color;
 }
 
 @end

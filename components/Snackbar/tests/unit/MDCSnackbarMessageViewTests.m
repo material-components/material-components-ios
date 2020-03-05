@@ -535,4 +535,16 @@
   XCTAssertNotNil(self.manager.internalManager.currentSnackbar);
 }
 
+- (void)testSnackbarDidDisappearDelegateCalled {
+  // Given
+  const CGFloat kSnackbarDuration = (CGFloat)0.1;
+  self.message.duration = kSnackbarDuration;
+  // When
+  [self.manager showMessage:self.message];
+  self.delegate.disappearExpectation = [self expectationWithDescription:@"disappeared"];
+  // Then
+  // Expect 'snackbarDidDisappear' delegate method to be called.
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+}
+
 @end

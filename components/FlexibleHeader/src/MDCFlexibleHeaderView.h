@@ -120,31 +120,6 @@ IB_DESIGNABLE
  */
 @property(nonatomic, readonly) BOOL prefersStatusBarHidden;
 
-// Pre-iOS 8 Interface Orientation APIs
-
-/**
- Informs the receiver that the interface orientation is about to change.
-
- Must be called from UIViewController::willRotateToInterfaceOrientation:duration:.
- */
-- (void)interfaceOrientationWillChange;
-
-/**
- Informs the receiver that the interface orientation is in the process of changing.
-
- Must be called from UIViewController::willAnimateRotationToInterfaceOrientation:duration:.
- */
-- (void)interfaceOrientationIsChanging;
-
-/**
- Informs the receiver that the interface orientation has changed.
-
- Must be called from UIViewController::didRotateFromInterfaceOrientation:.
- */
-- (void)interfaceOrientationDidChange;
-
-// iOS 8 Interface Orientation APIs
-
 /**
  Informs the receiver that the owning view controller's size will change.
 
@@ -265,28 +240,6 @@ IB_DESIGNABLE
 @property(nonatomic) CGFloat maximumHeight;
 
 /**
- When this is enabled, the flexible header will assume that minimumHeight and maximumHeight both
- include the Safe Area top inset. For example, a header whose maximum content height should be 200
- might set 220 (200 + 20) as the maximumHeight. Notice that if this is enabled and you're setting
- minimumHeight and or maximumHeight, the flexible header won't automatically adjust its size to
- account for changes to the Safe Area, as the values provided already include a hardcoded inset.
-
- When this is disabled, the flexible header will assume that the provided minimumHeight and
- maximumHeight do not include the Safe Area top inset. For example, a header whose maximum content
- height should be 200 would set 200 as the maximumHeight, and the flexible header will take care
- of adjusting itself to account for Safe Area changes internally.
-
- Clients are recommended to set this to NO, and set the min and max heights to values that don't
- include the status bar or Safe Area insets.
-
- @warning This API will soon be disabled by default and then deprecated. Learn more at
- https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/docs/migration-guide-minMaxHeightIncludesSafeArea.md
-
- Default is YES.
- */
-@property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
-
-/**
  A layout guide that equates to the top safe area inset of the flexible header view.
 
  Use this layout guide to position subviews in the flexible header in relation to the top safe area
@@ -307,18 +260,6 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL canOverExtend;
 
 @property(nonatomic) float visibleShadowOpacity;  ///< The visible shadow opacity. Default: 0.4
-
-/**
- * Whether or not shadow opacity (if using the default shadow layer) should be reset to 0 when
- * trackingScrollView is set to nil. If the flexible header view is created without ever setting
- * trackingScrollView, it always has 0 opacity for the default shadow layer regardless of the value
- * of this flag. If trackingScrollView is ever set, then this flag enables resetting the shadow
- * opacity back to 0 when trackingScrollView is set to nil.
- *
- * Default: NO, but we are planning to change it to YES very soon, so all clients should set this
- * property to YES.
- */
-@property(nonatomic) BOOL resetShadowAfterTrackingScrollViewIsReset;
 
 #pragma mark Scroll View Tracking
 
@@ -384,18 +325,6 @@ IB_DESIGNABLE
  Default: NO
  */
 @property(nonatomic) BOOL sharedWithManyScrollViews;
-
-/**
- Whether to allow shadow frame animations when animating changes to the tracking scroll view.
-
- Enabling this property allows layoutSubviews to animate the shadow frames as part of the animation
- that occurs when changing tracking scroll views.
-
- This property will eventually be enabled by default and then deleted.
-
- Default is NO.
- */
-@property(nonatomic, assign) BOOL allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView;
 
 /**
  If enabled, the trackingScrollView doesn't adjust the content inset when its
@@ -481,6 +410,79 @@ IB_DESIGNABLE
  */
 - (void)flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:
     (nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
+
+@end
+
+@interface MDCFlexibleHeaderView (ToBeDeprecated)
+
+// Pre-iOS 8 Interface Orientation APIs
+
+/**
+ Informs the receiver that the interface orientation is about to change.
+
+ Must be called from UIViewController::willRotateToInterfaceOrientation:duration:.
+ */
+- (void)interfaceOrientationWillChange;
+
+/**
+ Informs the receiver that the interface orientation is in the process of changing.
+
+ Must be called from UIViewController::willAnimateRotationToInterfaceOrientation:duration:.
+ */
+- (void)interfaceOrientationIsChanging;
+
+/**
+ Informs the receiver that the interface orientation has changed.
+
+ Must be called from UIViewController::didRotateFromInterfaceOrientation:.
+ */
+- (void)interfaceOrientationDidChange;
+
+/**
+ When this is enabled, the flexible header will assume that minimumHeight and maximumHeight both
+ include the Safe Area top inset. For example, a header whose maximum content height should be 200
+ might set 220 (200 + 20) as the maximumHeight. Notice that if this is enabled and you're setting
+ minimumHeight and or maximumHeight, the flexible header won't automatically adjust its size to
+ account for changes to the Safe Area, as the values provided already include a hardcoded inset.
+
+ When this is disabled, the flexible header will assume that the provided minimumHeight and
+ maximumHeight do not include the Safe Area top inset. For example, a header whose maximum content
+ height should be 200 would set 200 as the maximumHeight, and the flexible header will take care
+ of adjusting itself to account for Safe Area changes internally.
+
+ Clients are recommended to set this to NO, and set the min and max heights to values that don't
+ include the status bar or Safe Area insets.
+
+ @warning This API will soon be disabled by default and then deprecated. Learn more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/docs/migration-guide-minMaxHeightIncludesSafeArea.md
+
+ Default is YES.
+ */
+@property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
+
+/**
+ * Whether or not shadow opacity (if using the default shadow layer) should be reset to 0 when
+ * trackingScrollView is set to nil. If the flexible header view is created without ever setting
+ * trackingScrollView, it always has 0 opacity for the default shadow layer regardless of the value
+ * of this flag. If trackingScrollView is ever set, then this flag enables resetting the shadow
+ * opacity back to 0 when trackingScrollView is set to nil.
+ *
+ * Default: NO, but we are planning to change it to YES very soon, so all clients should set this
+ * property to YES.
+ */
+@property(nonatomic) BOOL resetShadowAfterTrackingScrollViewIsReset;
+
+/**
+ Whether to allow shadow frame animations when animating changes to the tracking scroll view.
+
+ Enabling this property allows layoutSubviews to animate the shadow frames as part of the animation
+ that occurs when changing tracking scroll views.
+
+ This property will eventually be enabled by default and then deleted.
+
+ Default is NO.
+ */
+@property(nonatomic, assign) BOOL allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView;
 
 @end
 

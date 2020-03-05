@@ -197,20 +197,31 @@
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
 
 /**
- Determines the behavior of the drawer when the content size changes.
- If enabled, the drawer will automatically adjust the visible height as needed, otherwise the
- visible height will not be changed to reflect the updated content height.
- Defaults to NO.
- */
-@property(nonatomic, assign) BOOL shouldAdjustOnContentSizeChange;
-
-/**
  A flag allowing clients to opt-in to adding additional height to the initial presentation of the
  drawer to include the bottom safe area inset. This will remove the need for clients to calculate
  their desired maximum height with the bottom safe area when setting the maximumInitialDrawerHeight.
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInInitialDrawerHeight;
+
+/**
+ This flag allows clients to have the drawer content scroll below the status bar when no header is
+ provided.
+
+ Note: This flag is only applicable when @c headerViewController is nil. If @c headerViewController
+ is non-nil, setting this flag to YES will have no effect.
+
+ Defaults to NO.
+*/
+@property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
+
+/**
+ Determines the behavior of the drawer when the content size changes.
+ If enabled, the drawer will automatically adjust the visible height as needed, otherwise the
+ visible height will not be changed to reflect the updated content height.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldAdjustOnContentSizeChange;
 
 /**
  A boolean value that indicates whether the drawer is currently the full height of the window.

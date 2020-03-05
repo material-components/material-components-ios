@@ -57,8 +57,8 @@
                          rightViewMode:viewMode
                  clearButtonSideLength:19
                        clearButtonMode:viewMode
-                    leftAssistiveLabel:assistiveLabelView.leftAssistiveLabel
-                   rightAssistiveLabel:assistiveLabelView.rightAssistiveLabel
+                 leadingAssistiveLabel:assistiveLabelView.leadingAssistiveLabel
+                trailingAssistiveLabel:assistiveLabelView.trailingAssistiveLabel
             assistiveLabelDrawPriority:MDCTextControlAssistiveLabelDrawPriorityTrailing
       customAssistiveLabelDrawPriority:0
                                  isRTL:NO
@@ -135,6 +135,26 @@
   XCTAssertTrue(nonEditingLayout.rightViewHidden);
   XCTAssertTrue(editingLayout.leftViewHidden);
   XCTAssertTrue(editingLayout.rightViewHidden);
+}
+
+- (void)testLabelFrameWithLabelPosition {
+  // Given
+  MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc] init];
+
+  // When
+  layout.labelFrameNormal = CGRectMake(5, 5, 100, 20);
+  layout.labelFrameFloating = CGRectMake(5, 0, 100, 20);
+
+  // Then
+  CGRect labelFrameWithLabelPositionFloating =
+      [layout labelFrameWithLabelPosition:MDCTextControlLabelPositionFloating];
+  CGRect labelFrameWithLabelPositionNormal =
+      [layout labelFrameWithLabelPosition:MDCTextControlLabelPositionNormal];
+  CGRect labelFrameWithLabelPositionNone =
+      [layout labelFrameWithLabelPosition:MDCTextControlLabelPositionNone];
+  XCTAssertTrue(CGRectEqualToRect(labelFrameWithLabelPositionFloating, layout.labelFrameFloating));
+  XCTAssertTrue(CGRectEqualToRect(labelFrameWithLabelPositionNormal, layout.labelFrameNormal));
+  XCTAssertTrue(CGRectEqualToRect(labelFrameWithLabelPositionNone, CGRectZero));
 }
 
 @end

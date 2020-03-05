@@ -16,6 +16,7 @@
 
 #import "../../src/private/MDCBottomNavigationBar+Private.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialAvailability.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
@@ -685,6 +686,245 @@
 
   // Then
   XCTAssertFalse(blockCalled);
+}
+
+#pragma mark - UILargeContentViewerItem
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+/** Tests the large content  title when the title should not contain a badge. */
+- (void)testLargeContentTitle {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
+    self.bottomNavBar.items = @[ item ];
+
+    // When.
+    NSString *largeContentTitle = self.bottomNavBar.itemViews.firstObject.largeContentTitle;
+
+    // Then.
+    XCTAssertEqualObjects(largeContentTitle, item.title);
+  }
+}
+
+/**
+ Tests the large content image is the @c image property when no @c largeContentImage is
+ specified.
+ */
+- (void)testLargeContentImageWithDefaultImage {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UIImage *image = [[UIImage alloc] init];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:image tag:0];
+    item.largeContentSizeImage = image;
+    self.bottomNavBar.items = @[ item ];
+
+    // When.
+    UIImage *largeContentImage = self.bottomNavBar.itemViews.firstObject.largeContentImage;
+
+    // Then.
+    XCTAssertEqualObjects(largeContentImage, image);
+  }
+}
+
+/** Tests the large content item's image is the @c largeContentSizeImage . */
+- (void)testLargeContentImageWithTabBarLargeContentImage {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UIImage *image = [[UIImage alloc] init];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    item.largeContentSizeImage = image;
+    self.bottomNavBar.items = @[ item ];
+
+    // When.
+    UIImage *largeContentImage = self.bottomNavBar.itemViews.firstObject.largeContentImage;
+
+    // Then.
+    XCTAssertEqualObjects(largeContentImage, image);
+  }
+}
+
+/** Tests the large content image insets are set. */
+- (void)testLargeContentImageInsets {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UIEdgeInsets insets = UIEdgeInsetsMake(10, 10, 10, 10);
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    item.largeContentSizeImageInsets = insets;
+    self.bottomNavBar.items = @[ item ];
+
+    // When.
+    UIEdgeInsets largeImageInsets = self.bottomNavBar.itemViews.firstObject.largeContentImageInsets;
+
+    // Then.
+    XCTAssertEqual(largeImageInsets.bottom, insets.bottom);
+    XCTAssertEqual(largeImageInsets.top, insets.top);
+    XCTAssertEqual(largeImageInsets.left, insets.left);
+    XCTAssertEqual(largeImageInsets.right, insets.right);
+  }
+}
+
+/**
+ Tests the large content item's image is updated when the tab bar's @c largeContentSizeImage is
+ updated.
+ */
+- (void)testLargeContentImageUpdatedWhenTabBarPropertyUpdates {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UIImage *image = [[UIImage alloc] init];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    self.bottomNavBar.items = @[ item ];
+
+    // When.
+    item.largeContentSizeImage = image;
+    UIImage *largeContentImage = self.bottomNavBar.itemViews.firstObject.largeContentImage;
+
+    // Then.
+    XCTAssertEqualObjects(largeContentImage, image);
+  }
+}
+
+/**
+ Tests the large content inets are update when the tab bar's @c largeContentSizeImageInsets are
+ updated.
+ */
+- (void)testLargeContentInsetUpdatedWhenTabBarPropertyUpdates {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UIEdgeInsets insets = UIEdgeInsetsMake(10, 10, 10, 10);
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    self.bottomNavBar.items = @[ item ];
+
+    // When.
+    item.largeContentSizeImageInsets = insets;
+    UIEdgeInsets largeContentInsets =
+        self.bottomNavBar.itemViews.firstObject.largeContentImageInsets;
+
+    // Then.
+    XCTAssertEqual(largeContentInsets.left, insets.left);
+    XCTAssertEqual(largeContentInsets.bottom, insets.bottom);
+    XCTAssertEqual(largeContentInsets.right, insets.right);
+    XCTAssertEqual(largeContentInsets.top, insets.top);
+  }
+}
+
+/**
+ Tests the last shown large content item is still returned when the interaction touch point is
+ still within the bounds of the navigation bar.
+ */
+- (void)testLargeContentViewerInteractionWhenItemIsSelectedThenDeselectedButStillInNavBarBounds {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    NSString *title1 = @"Title1";
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:title1 image:nil tag:0];
+    self.bottomNavBar.items = @[ item1 ];
+    self.bottomNavBar.frame = CGRectMake(0, 0, 350, 125);
+    [self.bottomNavBar layoutIfNeeded];
+    UILargeContentViewerInteraction *interaction = [[UILargeContentViewerInteraction alloc] init];
+    self.continueAfterFailure = NO;
+
+    // When/Then.
+    XCTAssertTrue([self.bottomNavBar respondsToSelector:@selector(largeContentViewerInteraction:
+                                                                                    itemAtPoint:)]);
+    CGPoint itemViewOrigin = self.bottomNavBar.itemViews.firstObject.frame.origin;
+    id<UILargeContentViewerItem> largeContentItem =
+        [self.bottomNavBar largeContentViewerInteraction:interaction itemAtPoint:itemViewOrigin];
+    XCTAssertEqualObjects(largeContentItem.largeContentTitle, title1);
+
+    largeContentItem = [self.bottomNavBar largeContentViewerInteraction:interaction
+                                                            itemAtPoint:CGPointZero];
+    XCTAssertEqualObjects(largeContentItem.largeContentTitle, title1);
+  }
+}
+
+/**
+ Tests the large content item is nil when the touch point is outside the navigation bar bounds.
+ */
+- (void)testLargeContentViewerInteractionWhenPointIsOutSideNavBarBounds {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title1" image:nil tag:0];
+    self.bottomNavBar.items = @[ item ];
+    self.bottomNavBar.frame = CGRectMake(0, 0, 350, 125);
+    [self.bottomNavBar layoutIfNeeded];
+    UILargeContentViewerInteraction *interaction = [[UILargeContentViewerInteraction alloc] init];
+    self.continueAfterFailure = NO;
+
+    // When/Then.
+    XCTAssertTrue([self.bottomNavBar respondsToSelector:@selector(largeContentViewerInteraction:
+                                                                                    itemAtPoint:)]);
+    CGPoint pointOutsideNavBar = CGPointMake(-1, -1);
+
+    id<UILargeContentViewerItem> largeContentItem =
+        [self.bottomNavBar largeContentViewerInteraction:interaction
+                                             itemAtPoint:pointOutsideNavBar];
+    XCTAssertNil(largeContentItem);
+  }
+}
+
+/** Tests the last shown large item is reset after an interaction ends. */
+- (void)testLargeContentViewerInteractionResetsAfterEnding {
+  if (@available(iOS 13.0, *)) {
+    // Given.
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title1" image:nil tag:0];
+    self.bottomNavBar.items = @[ item ];
+    self.bottomNavBar.frame = CGRectMake(0, 0, 350, 125);
+    [self.bottomNavBar layoutIfNeeded];
+    UILargeContentViewerInteraction *interaction = [[UILargeContentViewerInteraction alloc] init];
+    self.continueAfterFailure = NO;
+
+    // When/Then.
+    XCTAssertTrue([self.bottomNavBar respondsToSelector:@selector(largeContentViewerInteraction:
+                                                                                    itemAtPoint:)]);
+
+    CGPoint pointInsideFirstItem = self.bottomNavBar.itemViews.firstObject.frame.origin;
+    id<UILargeContentViewerItem> endItem =
+        [self.bottomNavBar largeContentViewerInteraction:interaction
+                                             itemAtPoint:pointInsideFirstItem];
+
+    XCTAssertTrue([self.bottomNavBar
+        respondsToSelector:@selector(largeContentViewerInteraction:didEndOnItem:atPoint:)]);
+    [self.bottomNavBar largeContentViewerInteraction:interaction
+                                        didEndOnItem:endItem
+                                             atPoint:CGPointZero];
+
+    id<UILargeContentViewerItem> itemAfterReset =
+        [self.bottomNavBar largeContentViewerInteraction:interaction itemAtPoint:CGPointZero];
+    XCTAssertNil(itemAfterReset);
+  }
+}
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+
+/**
+Tests the @c itemsHorizontalPadding property
+ */
+- (void)testItemsHorizontalPaddingProperty {
+  // Given
+  NSString *title = @"Title";
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:title image:nil tag:0];
+  self.bottomNavBar.items = @[ item ];
+  self.bottomNavBar.frame = CGRectMake(0, 0, 350, 125);
+  [self.bottomNavBar sizeToFit];
+
+  // When
+  [self.bottomNavBar setNeedsLayout];
+  [self.bottomNavBar layoutIfNeeded];
+
+  MDCBottomNavigationItemView *itemView = [self.bottomNavBar.itemViews firstObject];
+  CGRect expectedItemViewFrameWithDefaultItemsHorizontalPadding =
+      CGRectInset(self.bottomNavBar.frame, 12, 0);
+  CGRect actualItemViewFrameWithDefaultItemsHorizontalPadding = itemView.frame;
+
+  self.bottomNavBar.itemsHorizontalPadding = 0;
+  [self.bottomNavBar setNeedsLayout];
+  [self.bottomNavBar layoutIfNeeded];
+  CGRect expectedItemViewFrameWithZeroItemsHorizontalPadding = self.bottomNavBar.frame;
+  CGRect actualItemViewFrameWithZeroItemsHorizontalPadding = itemView.frame;
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedItemViewFrameWithDefaultItemsHorizontalPadding,
+                                  actualItemViewFrameWithDefaultItemsHorizontalPadding));
+  XCTAssertTrue(CGRectEqualToRect(expectedItemViewFrameWithZeroItemsHorizontalPadding,
+                                  actualItemViewFrameWithZeroItemsHorizontalPadding));
 }
 
 @end

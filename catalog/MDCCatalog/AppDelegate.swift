@@ -44,12 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
     navigationController.pushViewController(rootNodeViewController, animated: false)
 
-    // In the event that an example view controller hides the navigation bar we generally want to
-    // ensure that the edge-swipe pop gesture can still take effect. This may be overly-assumptive
-    // but we'll explore other alternatives when we have a concrete example of this approach causing
-    // problems.
-    navigationController.interactivePopGestureRecognizer?.delegate = navigationController
-
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 

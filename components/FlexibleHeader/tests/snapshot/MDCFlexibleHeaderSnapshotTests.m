@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialAvailability.h"
 #import "MaterialFlexibleHeader.h"
 #import "MaterialShadowLayer.h"
 
@@ -46,7 +47,7 @@
 }
 
 - (void)testTraitCollectionDidChangeColorForShadow {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     MDCFlexibleHeaderTraitCollectionTestView *flexibleHeader =
@@ -77,7 +78,7 @@
         [flexibleHeader mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)testShadowColor {
@@ -98,6 +99,37 @@
   [flexibleHeader sizeToFit];
   UIView *snapshotView =
       [flexibleHeader mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+  [self snapshotVerifyView:snapshotView];
+}
+
+- (void)testHairlineVisibility {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+  fhvc.view.frame = CGRectMake(0, 0, 500, 200);
+  fhvc.view.backgroundColor = UIColor.whiteColor;
+
+  // When
+  fhvc.showsHairline = YES;
+
+  // Then
+  UIView *snapshotView =
+      [fhvc.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+  [self snapshotVerifyView:snapshotView];
+}
+
+- (void)testHairlineColor {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+  fhvc.view.frame = CGRectMake(0, 0, 500, 200);
+  fhvc.view.backgroundColor = UIColor.whiteColor;
+  fhvc.showsHairline = YES;
+
+  // When
+  fhvc.hairlineColor = [UIColor redColor];
+
+  // Then
+  UIView *snapshotView =
+      [fhvc.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
   [self snapshotVerifyView:snapshotView];
 }
 

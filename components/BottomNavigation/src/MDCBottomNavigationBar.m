@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialAvailability.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
@@ -37,8 +38,8 @@ static char *const kKVOContextMDCBottomNavigationBar = "kKVOContextMDCBottomNavi
 static const CGFloat kMinItemWidth = 80;
 static const CGFloat kPreferredItemWidth = 120;
 static const CGFloat kMaxItemWidth = 168;
-// The amount of internal padding on the leading/trailing edges of each bar item.
-static const CGFloat kItemHorizontalPadding = 12;
+// The default amount of internal padding on the leading/trailing edges of each bar item.
+static const CGFloat kDefaultItemHorizontalPadding = 12;
 static const CGFloat kBarHeightStackedTitle = 56;
 static const CGFloat kBarHeightAdjacentTitle = 40;
 static const CGFloat kItemsHorizontalMargin = 12;
@@ -63,6 +64,16 @@ static NSString *const kOfAnnouncement = @"of";
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+/**
+ The last large content viewer item displayed by the content viewer while the interaction is
+ running. When the interaction ends this property is nil.
+ */
+@property(nonatomic, nullable) id<UILargeContentViewerItem> lastLargeContentViewerItem
+    NS_AVAILABLE_IOS(13_0);
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+
 @end
 
 @implementation MDCBottomNavigationBar
@@ -103,7 +114,7 @@ static NSString *const kOfAnnouncement = @"of";
   _mdc_overrideBaseElevation = -1;
   _itemBadgeTextColor = UIColor.whiteColor;
   _itemBadgeBackgroundColor = MDCPalette.redPalette.tint700;
-  ;
+  _itemsHorizontalPadding = kDefaultItemHorizontalPadding;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -136,7 +147,7 @@ static NSString *const kOfAnnouncement = @"of";
   _itemsLayoutView.clipsToBounds = NO;
   [_barView addSubview:_itemsLayoutView];
 
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
@@ -148,7 +159,7 @@ static NSString *const kOfAnnouncement = @"of";
 #pragma clang diagnostic pop
 #else
   _shouldPretendToBeATabBar = YES;
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
   _elevation = MDCShadowElevationBottomNavigationBar;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
   UIColor *defaultShadowColor = UIColor.blackColor;
@@ -282,7 +293,7 @@ static NSString *const kOfAnnouncement = @"of";
   for (UIView *itemView in self.itemViews) {
     maxItemWidth =
         MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(availableWidth, barHeight)].width +
-                              kItemHorizontalPadding * 2);
+                              self.itemsHorizontalPadding * 2);
   }
   maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
   CGFloat totalWidth = maxItemWidth * self.items.count;
@@ -329,13 +340,13 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame =
-          CGRectMake(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + kItemHorizontalPadding,
-                     0, itemWidth - 2 * kItemHorizontalPadding, navBarHeight);
+      itemView.frame = CGRectMake(
+          CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + self.itemsHorizontalPadding, 0,
+          itemWidth - 2 * self.itemsHorizontalPadding, navBarHeight);
     } else {
       itemView.frame = CGRectMake(
-          CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth + kItemHorizontalPadding, 0,
-          itemWidth - 2 * kItemHorizontalPadding, navBarHeight);
+          CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth + self.itemsHorizontalPadding,
+          0, itemWidth - 2 * self.itemsHorizontalPadding, navBarHeight);
     }
   }
 }
@@ -349,15 +360,19 @@ static NSString *const kOfAnnouncement = @"of";
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     keyPaths = @[
-      NSStringFromSelector(@selector(badgeColor)), NSStringFromSelector(@selector(badgeValue)),
-      NSStringFromSelector(@selector(title)), NSStringFromSelector(@selector(image)),
+      NSStringFromSelector(@selector(badgeColor)),
+      NSStringFromSelector(@selector(badgeValue)),
+      NSStringFromSelector(@selector(title)),
+      NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(selectedImage)),
       NSStringFromSelector(@selector(accessibilityValue)),
       NSStringFromSelector(@selector(accessibilityLabel)),
       NSStringFromSelector(@selector(accessibilityHint)),
       NSStringFromSelector(@selector(accessibilityIdentifier)),
       NSStringFromSelector(@selector(isAccessibilityElement)),
-      NSStringFromSelector(@selector(titlePositionAdjustment))
+      NSStringFromSelector(@selector(titlePositionAdjustment)),
+      NSStringFromSelector(@selector(largeContentSizeImage)),
+      NSStringFromSelector(@selector(largeContentSizeImageInsets)),
     ];
   });
   return keyPaths;
@@ -430,10 +445,23 @@ static NSString *const kOfAnnouncement = @"of";
       itemView.isAccessibilityElement = [newValue boolValue];
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(titlePositionAdjustment))]) {
       itemView.titlePositionAdjustment = [newValue UIOffsetValue];
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(largeContentSizeImage))]) {
+      if (@available(iOS 13.0, *)) {
+        itemView.largeContentImage = newValue;
+      }
     }
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+    else if ([keyPath
+                 isEqualToString:NSStringFromSelector(@selector(largeContentSizeImageInsets))]) {
+      if (@available(iOS 13.0, *)) {
+        itemView.largeContentImageInsets = [newValue UIEdgeInsetsValue];
+      }
+    }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
+  [self layoutIfNeeded];
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
@@ -463,6 +491,18 @@ static NSString *const kOfAnnouncement = @"of";
     BOOL isPointInView = CGRectContainsPoint(itemView.frame, point);
     if (isPointInView) {
       return self.items[i];
+    }
+  }
+
+  return nil;
+}
+
+/** Returns the item view at the given point. Nil if there is no view at the given point. */
+- (MDCBottomNavigationItemView *_Nullable)itemViewForPoint:(CGPoint)point {
+  for (NSUInteger i = 0; i < self.itemViews.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    if (CGRectContainsPoint(itemView.frame, point)) {
+      return itemView;
     }
   }
 
@@ -504,6 +544,14 @@ static NSString *const kOfAnnouncement = @"of";
   if ([_items isEqual:items] || _items == items) {
     return;
   }
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13, *)) {
+    // If clients report conflicting gesture recognizers please see proposed solution in the
+    // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
+    [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   // Remove existing item views from the bottom navigation so it can be repopulated with new items.
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
@@ -570,7 +618,7 @@ static NSString *const kOfAnnouncement = @"of";
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
     }
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#if MDC_AVAILABLE_SDK_IOS(10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
     NSOperatingSystemVersion iOS10Version = {10, 0, 0};
@@ -580,8 +628,16 @@ static NSString *const kOfAnnouncement = @"of";
       }
     }
 #pragma clang diagnostic pop
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
     itemView.selected = NO;
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+    if (@available(iOS 13, *)) {
+      itemView.largeContentImageInsets = item.largeContentSizeImageInsets;
+      itemView.largeContentImage = item.largeContentSizeImage;
+    }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+
     [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
@@ -636,6 +692,15 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.contentHorizontalMargin = itemsContentHorizontalMargin;
   }
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+}
+
+- (void)setItemsHorizontalPadding:(CGFloat)itemsHorizontalPadding {
+  if (MDCCGFloatEqual(_itemsHorizontalPadding, itemsHorizontalPadding)) {
+    return;
+  }
+  _itemsHorizontalPadding = itemsHorizontalPadding;
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
@@ -814,4 +879,33 @@ static NSString *const kOfAnnouncement = @"of";
   return self.elevation;
 }
 
+#pragma mark - UILargeContentViewerInteractionDelegate
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+- (id<UILargeContentViewerItem>)largeContentViewerInteraction:
+                                    (UILargeContentViewerInteraction *)interaction
+                                                  itemAtPoint:(CGPoint)point
+    NS_AVAILABLE_IOS(13_0) {
+  if (!CGRectContainsPoint(self.bounds, point)) {
+    // The touch has wandered outside of the view. Do not display the content viewer.
+    self.lastLargeContentViewerItem = nil;
+    return nil;
+  }
+
+  MDCBottomNavigationItemView *itemView = [self itemViewForPoint:point];
+  if (!itemView) {
+    // The touch is still within the navigation bar. Return the last seen item view.
+    return self.lastLargeContentViewerItem;
+  }
+
+  self.lastLargeContentViewerItem = itemView;
+  return itemView;
+}
+
+- (void)largeContentViewerInteraction:(UILargeContentViewerInteraction *)interaction
+                         didEndOnItem:(id<UILargeContentViewerItem>)item
+                              atPoint:(CGPoint)point NS_AVAILABLE_IOS(13_0) {
+  self.lastLargeContentViewerItem = nil;
+}
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 @end

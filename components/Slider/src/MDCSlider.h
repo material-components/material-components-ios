@@ -250,6 +250,11 @@ IB_DESIGNABLE
 @property(nonatomic, assign) CGFloat value;
 
 /**
+ When @c NO, changes to the @c value property will never be animated. Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL allowAnimatedValueChanges;
+
+/**
  Set the value of the slider, allowing you to animate the change visually.
 
  If animated is YES, the thumb is animated into its new position. Setting the value does not
@@ -351,6 +356,12 @@ IB_DESIGNABLE
  Default value is 2 points.
  */
 @property(nonatomic, assign) CGFloat trackHeight;
+
+/** Whether the ends of the thumb track should be rounded. The default is NO. */
+@property(nonatomic, assign) BOOL trackEndsAreRounded;
+
+/** Whether the ends of the track are inset by the radius of the thumb. The default is NO. */
+@property(nonatomic, assign) BOOL trackEndsAreInset;
 
 #pragma mark - To be deprecated
 

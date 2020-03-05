@@ -14,6 +14,7 @@
 
 #import "MDCActionSheetController.h"
 
+#import "MaterialAvailability.h"
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
@@ -47,6 +48,7 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
     _title = [title copy];
     _image = [image copy];
     _completionHandler = [handler copy];
+    _dividerColor = UIColor.clearColor;
   }
   return self;
 }
@@ -59,6 +61,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   action.accessibilityLabel = self.accessibilityLabel;
   action.titleColor = self.titleColor;
   action.tintColor = self.tintColor;
+  action.dividerColor = self.dividerColor;
+  action.showsDivider = self.showsDivider;
   return action;
 }
 
@@ -159,6 +163,12 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 - (NSArray<MDCActionSheetAction *> *)actions {
   return [_actions copy];
+}
+
+- (void)loadView {
+  [super loadView];
+
+  self.mdc_bottomSheetPresentationController.delegate = self;
 }
 
 - (void)viewDidLoad {
@@ -330,6 +340,8 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   cell.contentEdgeInsets = self.contentEdgeInsets;
+  cell.dividerColor = action.dividerColor;
+  cell.showsDivider = action.showsDivider;
   return cell;
 }
 
@@ -362,14 +374,14 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     if ([self.traitCollection
             hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
       [self.tableView reloadData];
     }
   }
-#endif
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
@@ -522,6 +534,15 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
+}
+
+#pragma mark - MDCBottomSheetPresentationControllerDelegate
+
+- (void)bottomSheetPresentationControllerDidDismissBottomSheet:
+    (nonnull MDCBottomSheetController *)controller {
+  if ([self.delegate respondsToSelector:@selector(actionSheetControllerDidDismiss:)]) {
+    [self.delegate actionSheetControllerDidDismiss:self];
+  }
 }
 
 @end

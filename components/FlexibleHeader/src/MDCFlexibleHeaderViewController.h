@@ -41,6 +41,24 @@
 @property(nonatomic, strong, nonnull, readonly) MDCFlexibleHeaderView *headerView;
 
 /**
+ A Boolean value that governs whether the hairline is shown.
+
+ The hairline is a narrow line shown at the bottom edge of the Flexible Header view.
+
+ Defaults to NO.
+ */
+@property(nonatomic) BOOL showsHairline;
+
+/**
+ The color of the hairline.
+
+ The hairline is a narrow line shown at the bottom edge of the Flexible Header view.
+
+ Defaults to black.
+ */
+@property(nonatomic, strong, nonnull) UIColor *hairlineColor;
+
+/**
  A block that is invoked when the @c MDCFlexibleHeaderViewController receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */

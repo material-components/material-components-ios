@@ -87,7 +87,12 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
     _content = [[UIView alloc] init];
     _selectedIndex = NSNotFound;
     _dismissingLargeItemView = NO;
-    _longPressPopUpViewEnabled = YES;
+
+    if (@available(iOS 13.0, *)) {
+      _longPressPopUpViewEnabled = NO;
+    } else {
+      _longPressPopUpViewEnabled = YES;
+    }
 
     [_navigationBar addObserver:self
                      forKeyPath:NSStringFromSelector(@selector(items))
@@ -266,7 +271,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
   // Pass the response to the delegate if they want to handle this request.
   if ([self.delegate respondsToSelector:@selector(bottomNavigationBarController:
-                                                        didSelectViewController:)]) {
+                                                     shouldSelectViewController:)]) {
     UIViewController *viewControllerToSelect = [self.viewControllers objectAtIndex:index];
     return [self.delegate bottomNavigationBarController:self
                              shouldSelectViewController:viewControllerToSelect];

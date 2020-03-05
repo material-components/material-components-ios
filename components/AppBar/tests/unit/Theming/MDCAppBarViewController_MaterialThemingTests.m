@@ -94,7 +94,7 @@
                         self.containerScheme.colorScheme.onPrimaryColor);
   if ([self.appBarController.headerView.shadowLayer isKindOfClass:[MDCShadowLayer class]]) {
     MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.appBarController.headerView.shadowLayer;
-    XCTAssertEqualWithAccuracy(shadowLayer.elevation, MDCShadowElevationAppBar, 0.001);
+    XCTAssertEqualWithAccuracy(shadowLayer.elevation, 0, 0.001);
   } else {
     XCTAssert(NO, @"AppBar's header view should hae a shadow layer.");
   }
@@ -117,7 +117,12 @@
   XCTAssertEqualObjects(
       self.appBarController.navigationBar.trailingBarItemsTintColor,
       [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54]);
-  XCTAssertNil(self.appBarController.headerView.shadowLayer);
+  if ([self.appBarController.headerView.shadowLayer isKindOfClass:[MDCShadowLayer class]]) {
+    MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.appBarController.headerView.shadowLayer;
+    XCTAssertEqualWithAccuracy(shadowLayer.elevation, 0, 0.001);
+  } else {
+    XCTAssert(NO, @"AppBar's header view should hae a shadow layer.");
+  }
 }
 
 @end

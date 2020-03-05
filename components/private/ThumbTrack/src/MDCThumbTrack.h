@@ -128,6 +128,11 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 @property(nonatomic, assign) CGFloat value;
 
 /**
+ When @c NO, changes to the @c value property will never be animated. Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL allowAnimatedValueChanges;
+
+/**
   The minimum value of the thumb along the track.
 
  If you change the value of this property, and the current value of the receiver is below the new

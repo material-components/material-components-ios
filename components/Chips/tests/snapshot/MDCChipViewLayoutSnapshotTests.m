@@ -195,6 +195,16 @@
 
 #pragma mark - ImagePadding
 
+- (void)testChipImagePaddingWithoutImagesLTR {
+  // When
+  self.chipView.imageView.image = nil;
+  self.chipView.selectedImageView.image = nil;
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
 - (void)testUnselectedChipImagePaddingAllPositiveValuesLTR {
   // When
   self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
@@ -249,6 +259,33 @@
   // Given
   self.chipView.selectedImageView.image =
       [UIImage mdc_testImageOfSize:CGSizeMake(32, 32)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+  self.chipView.selected = YES;
+
+  // When
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
+- (void)testUnselectedChipImagePaddingAllPositiveValuesForSmallSelectedImageLTR {
+  // Given
+  self.chipView.selectedImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(8, 8)
+                         withStyle:MDCSnapshotTestImageStyleDiagonalLines];
+
+  // When
+  self.chipView.imagePadding = UIEdgeInsetsMake(10, 20, 30, 40);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chipView];
+}
+
+- (void)testSelectedChipImagePaddingAllPositiveValuesForSmallSelectedImageLTR {
+  // Given
+  self.chipView.selectedImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(8, 8)
                          withStyle:MDCSnapshotTestImageStyleDiagonalLines];
   self.chipView.selected = YES;
 

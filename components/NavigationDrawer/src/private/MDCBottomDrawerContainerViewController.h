@@ -77,7 +77,7 @@ the backgroundColor of the trackingScrollView.
 @end
 
 /**
- View controller for containing a Google Material bottom drawer. Used internally only.
+ View controller for containing a Material bottom drawer. Used internally only.
  */
 @interface MDCBottomDrawerContainerViewController : UIViewController <UIGestureRecognizerDelegate>
 
@@ -186,6 +186,17 @@ the backgroundColor of the trackingScrollView.
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInInitialDrawerHeight;
+
+/**
+ This flag allows clients to have the drawer content scroll below the status bar when no header is
+ provided.
+
+ Note: This flag is only applicable when @c headerViewController` is nil. If @c headerViewController
+ is non-nil, setting this flag to YES will have no effect.
+       
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
 
 /**
  Determines if the header should always expand as it approaches the top of the screen.

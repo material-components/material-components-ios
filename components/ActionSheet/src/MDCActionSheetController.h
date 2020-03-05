@@ -18,6 +18,20 @@
 #import "MaterialElevation.h"
 
 @class MDCActionSheetAction;
+@class MDCActionSheetController;
+
+/**
+ Defines methods that allows the adopting delegate to respond to messages from an
+ @c MDCActionSheetController.
+ */
+@protocol MDCActionSheetControllerDelegate <NSObject>
+@optional
+
+/**
+ Tells the delegate that the action sheet was dismissed.
+ */
+- (void)actionSheetControllerDidDismiss:(nonnull MDCActionSheetController *)actionSheetController;
+@end
 
 /**
  MDCActionSheetController displays an alert message to the user, similar to
@@ -89,6 +103,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  @param action Will be added to the end of MDCActionSheetController.actions.
  */
 - (void)addAction:(nonnull MDCActionSheetAction *)action;
+
+/**
+ The object that acts as the delegate of the @c MDCActionSheetController
+*/
+@property(nonatomic, weak, nullable) id<MDCActionSheetControllerDelegate> delegate;
 
 /**
  The actions that the user can take in response to the action sheet.
@@ -302,5 +321,19 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  @note If no @c tintColor is provided then the @c actionTintColor from the controller will be used.
  */
 @property(nonatomic, copy, nullable) UIColor *tintColor;
+
+/**
+ The color of the divider at the top of the action.
+
+ @note Defaults to clear.
+ */
+@property(nonatomic, copy, nonnull) UIColor *dividerColor;
+
+/**
+ Controls whether a divider is shown at the top of the action.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL showsDivider;
 
 @end

@@ -398,6 +398,30 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
 }
 
+- (void)setAllowAnimatedValueChanges:(BOOL)allowAnimatedValueChanges {
+  _thumbTrack.allowAnimatedValueChanges = allowAnimatedValueChanges;
+}
+
+- (BOOL)allowAnimatedValueChanges {
+  return _thumbTrack.allowAnimatedValueChanges;
+}
+
+- (void)setTrackEndsAreRounded:(BOOL)trackEndsAreRounded {
+  _thumbTrack.trackEndsAreRounded = trackEndsAreRounded;
+}
+
+- (BOOL)trackEndsAreRounded {
+  return _thumbTrack.trackEndsAreRounded;
+}
+
+- (void)setTrackEndsAreInset:(BOOL)trackEndsAreInset {
+  _thumbTrack.trackEndsAreInset = trackEndsAreInset;
+}
+
+- (BOOL)trackEndsAreInset {
+  return _thumbTrack.trackEndsAreInset;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   _thumbTrack.inkColor = inkColor;
 }
