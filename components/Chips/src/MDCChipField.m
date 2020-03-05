@@ -31,7 +31,7 @@ static const CGFloat MDCChipFieldClearButtonSquareWidthHeight = 24;
 static const CGFloat MDCChipFieldClearImageSquareWidthHeight = 18;
 static const UIKeyboardType MDCChipFieldDefaultKeyboardType = UIKeyboardTypeEmailAddress;
 
-const CGFloat MDCChipFieldDefaultMinTextFieldWidth = 60;
+const CGFloat MDCChipFieldDefaultMinTextFieldWidth = 44;
 const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     MDCChipFieldVerticalInset, MDCChipFieldHorizontalInset, MDCChipFieldVerticalInset,
     MDCChipFieldHorizontalInset};
@@ -734,13 +734,18 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   }
 
   CGRect lastChipFrame = [chipFrames.lastObject CGRectValue];
-  CGFloat availableWidth = boundsWidth - self.contentEdgeInsets.right -
-                           CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalMargin;
-  return availableWidth;
+  return boundsWidth - CGRectGetMaxX(lastChipFrame);
+  //  CGFloat availableWidth = boundsWidth - self.contentEdgeInsets.right -
+  //                           CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalMargin;
+  //  return availableWidth;
 }
 
 // The width of the text input + the clear button.
 - (CGFloat)textInputDesiredWidth {
+  if (!self.textField.text || [self.textField.text isEqualToString:@""]) {
+    return 44;
+  }
+
   UIFont *font = self.textField.placeholderLabel.font;
   CGRect placeholderDesiredRect = [self.textField.text
       boundingRectWithSize:CGSizeMake(UIViewNoIntrinsicMetric, UIViewNoIntrinsicMetric)
