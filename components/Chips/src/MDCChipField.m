@@ -620,7 +620,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   if (!CGRectIsEmpty(lastChipFrame)) {
     BOOL isTextTooWide = [self textInputDesiredWidth] >= [self availableWidthForTextInput];
     BOOL isTextFieldOnSameLineAsChips =
-    CGRectGetMidY(self.textField.frame) == CGRectGetMidY(lastChipFrame);
+        CGRectGetMidY(self.textField.frame) == CGRectGetMidY(lastChipFrame);
     if (isTextTooWide && isTextFieldOnSameLineAsChips) {
       // The text is on the same line as the chips and doesn't fit
       // Trigger layout to move the text field down to the next line
