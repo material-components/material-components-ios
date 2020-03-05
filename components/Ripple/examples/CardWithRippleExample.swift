@@ -70,14 +70,6 @@ class CardWithRippleExample: UIViewController {
     card.accessibilityTraits = .button
     card.accessibilityLabel = "Card with button"
   }
-
-  override public var traitCollection: UITraitCollection {
-    if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {
-      return UITraitCollection(traitsFrom:[UITraitCollection(horizontalSizeClass: .compact),
-                                           UITraitCollection(verticalSizeClass: .regular)])
-    }
-    return super.traitCollection
-  }
 }
 
 extension CardWithRippleExample {
