@@ -744,7 +744,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   }
 
   UIFont *font = self.textField.placeholderLabel.font;
-  CGRect placeholderDesiredRect = [self.textField.text
+  CGRect desiredRect = [self.textField.text
       boundingRectWithSize:CGSizeMake(UIViewNoIntrinsicMetric, UIViewNoIntrinsicMetric)
                    options:NSStringDrawingUsesLineFragmentOrigin
                 attributes:@{
@@ -752,7 +752,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
                 }
                    context:nil];
   return MAX([self placeholderDesiredWidth],
-             CGRectGetWidth(placeholderDesiredRect) + MDCChipFieldHorizontalMargin +
+             CGRectGetWidth(desiredRect) + MDCChipFieldHorizontalMargin +
                  self.contentEdgeInsets.right + MDCChipFieldClearImageSquareWidthHeight);
 }
 
