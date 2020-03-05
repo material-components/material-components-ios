@@ -779,7 +779,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
     placeholder = nil;
   }
 
-  if (!placeholder || [placeholder isEqualToString:@""]) {
+  if (placeholder.length == 0) {
     return self.minTextFieldWidth;
   }
 
