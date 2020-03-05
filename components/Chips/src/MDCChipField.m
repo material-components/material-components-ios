@@ -770,7 +770,9 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
                                NSFontAttributeName : placeholderFont,
                              }
                                 context:nil];
-  return MAX(CGRectGetWidth(placeholderDesiredRect), self.minTextFieldWidth);
+  CGFloat placeholderDesiredWidth =
+      CGRectGetWidth(placeholderDesiredRect) + self.contentEdgeInsets.right;
+  return MAX(placeholderDesiredWidth, self.minTextFieldWidth);
 }
 
 #pragma mark - MDCTextInputPositioningDelegate
