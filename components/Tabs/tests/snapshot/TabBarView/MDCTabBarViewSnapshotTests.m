@@ -369,6 +369,26 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 #pragma mark - Selection
 
+- (void)testSelectionWithScrollableCenteredLayout {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:8];
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+  self.tabBarView.selectionIndicatorStrokeColor = UIColor.redColor;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollableCentered;
+
+  // When
+  [self.tabBarView setSelectedItem:item3 animated:NO];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 - (void)testChangingSelectedItemUsesSelectedImage {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
