@@ -739,8 +739,9 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 
 // The width of the text input + the clear button.
 - (CGFloat)textInputDesiredWidth {
+  CGFloat placeholderDesiredWidth = [self placeholderDesiredWidth];
   if (!self.textField.text || [self.textField.text isEqualToString:@""]) {
-    return 44;
+    return placeholderDesiredWidth;
   }
 
   UIFont *font = self.textField.placeholderLabel.font;
@@ -751,7 +752,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
                   NSFontAttributeName : font,
                 }
                    context:nil];
-  return MAX([self placeholderDesiredWidth],
+  return MAX(placeholderDesiredWidth,
              CGRectGetWidth(desiredRect) + MDCChipFieldHorizontalMargin +
                  self.contentEdgeInsets.right + MDCChipFieldClearImageSquareWidthHeight);
 }
