@@ -778,6 +778,11 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   if (!self.showPlaceholderWithChips && self.chips.count > 0) {
     placeholder = nil;
   }
+
+  if (placeholder.length == 0) {
+    return self.minTextFieldWidth;
+  }
+
   UIFont *placeholderFont = self.textField.placeholderLabel.font;
   CGRect placeholderDesiredRect =
       [placeholder boundingRectWithSize:CGRectStandardize(self.bounds).size
