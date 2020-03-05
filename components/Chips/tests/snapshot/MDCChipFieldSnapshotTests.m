@@ -57,6 +57,18 @@
   [self snapshotVerifyView:self.chipField];
 }
 
+- (void)testPlacholderIsNotTruncated {
+  // Given
+  self.chipField.textField.placeholder = @"This is a chip field.";
+
+  // When
+  [self.chipField addChip:[self chipViewWithTitle:@"aaaaaaaaaaaaaaa"]];
+
+  // Then
+  [self.chipField sizeToFit];
+  [self snapshotVerifyView:self.chipField];
+}
+
 - (void)testTextFieldIsOnTheLineBelowChipsWhenPlaceholderIsPreset {
   // Given
   self.chipField.textField.placeholder = @"Placeholder Placeholder";
