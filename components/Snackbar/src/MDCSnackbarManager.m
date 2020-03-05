@@ -397,6 +397,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     }
   }
 
+  // Check for the key window in the list of windows. This allows to find the correct window
+  // in apps with multi-window support.
+  for (UIWindow *window in [UIApplication mdc_safeSharedApplication].windows) {
+    if (window.isKeyWindow) {
+      return window;
+    }
+  }
+
   // Default to the key window, since we couldn't find anything better.
   return [[UIApplication mdc_safeSharedApplication] keyWindow];
 }
