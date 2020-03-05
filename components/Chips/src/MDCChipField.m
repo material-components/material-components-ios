@@ -734,7 +734,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   }
 
   CGRect lastChipFrame = [chipFrames.lastObject CGRectValue];
-  return boundsWidth - CGRectGetMaxX(lastChipFrame);
+  return boundsWidth - CGRectGetMaxX(lastChipFrame) - MDCChipFieldHorizontalInset;
 }
 
 // The width of the text input + the clear button.
