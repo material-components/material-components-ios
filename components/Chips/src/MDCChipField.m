@@ -752,9 +752,9 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
                   NSFontAttributeName : font,
                 }
                    context:nil];
-  return MAX(placeholderDesiredWidth,
-             CGRectGetWidth(desiredRect) + MDCChipFieldHorizontalMargin +
-                 self.contentEdgeInsets.right + MDCChipFieldClearImageSquareWidthHeight);
+  return MAX(placeholderDesiredWidth, CGRectGetWidth(desiredRect) + MDCChipFieldHorizontalMargin +
+                                          self.contentEdgeInsets.right +
+                                          MDCChipFieldClearImageSquareWidthHeight);
 }
 
 - (CGFloat)placeholderDesiredWidth {
