@@ -31,6 +31,15 @@
     _attachmentBehavior.frequency = (CGFloat)3.5;
     _attachmentBehavior.damping = (CGFloat)0.4;
     _attachmentBehavior.length = 0;
+
+    // Anchor movement along the y-axis.
+    __weak MDCSheetBehavior *weakSelf = self;
+    _attachmentBehavior.action = ^{
+      MDCSheetBehavior *strongSelf = weakSelf;
+      CGPoint center = item.center;
+      center.x = strongSelf->_targetPoint.x;
+      item.center = center;
+    };
     [self addChildBehavior:_attachmentBehavior];
 
     _itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[ self.item ]];
