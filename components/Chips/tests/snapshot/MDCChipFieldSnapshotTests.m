@@ -108,6 +108,21 @@
   [self snapshotVerifyView:self.chipField];
 }
 
+- (void)testEmptyPlaceholderSizeDoesNotAccountForContentInsets {
+  // Given
+  self.chipField.minTextFieldWidth = 0;
+  UIEdgeInsets insets = self.chipField.contentEdgeInsets;
+  insets.right = 50;
+  self.chipField.contentEdgeInsets = insets;
+
+  // When
+  [self.chipField addChip:[self chipViewWithTitle:@"chipper1234@gmail.com"]];
+
+  // Then
+  [self.chipField sizeToFit];
+  [self snapshotVerifyView:self.chipField];
+}
+
 #pragma mark - Helpers
 
 - (MDCChipView *)chipViewWithTitle:(NSString *)title {
