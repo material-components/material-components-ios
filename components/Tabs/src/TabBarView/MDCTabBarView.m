@@ -927,12 +927,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   if ([self effectiveLayoutStyle] == MDCTabBarViewLayoutStyleScrollableCentered) {
     CGPoint contentOffset = [self contentOffsetNeededToCenterItemView:self.itemViews[index]];
-    NSTimeInterval animationDuration = animated ? self.selectionChangeAnimationDuration : 0;
-    [UIView animateWithDuration:animationDuration
-                     animations:^{
-                       self.contentOffset = contentOffset;
-                     }
-                     completion:nil];
+    void (^animationBlock)(void) = ^{
+      self.contentOffset = contentOffset;
+    };
+    if (animated) {
+      [self performAnimationBlockInCATransaction:animationBlock];
+    } else {
+      animationBlock();
+    }
   } else {
     CGRect estimatedItemFrame = [self estimatedFrameForItemAtIndex:index];
     [self scrollRectToVisible:estimatedItemFrame animated:animated];
@@ -1035,6 +1037,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return [self availableBoundsForSubviewLayout].size;
 }
 
+- (void)performAnimationBlockInCATransaction:(void (^)(void))animationBlock {
+  CAMediaTimingFunction *easeInOutFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+  // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
+  [CATransaction begin];
+  [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];
+  [CATransaction setAnimationTimingFunction:easeInOutFunction];
+  [UIView animateWithDuration:self.selectionChangeAnimationDuration
+                        delay:0
+                      options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:animationBlock
+                   completion:nil];
+  [CATransaction commit];
+}
+
 #pragma mark - Actions
 
 - (void)didTapItemView:(UITapGestureRecognizer *)tap {
@@ -1116,19 +1133,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   };
 
   if (animate) {
-    CAMediaTimingFunction *easeInOutFunction =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];
-    [CATransaction setAnimationTimingFunction:easeInOutFunction];
-    [UIView animateWithDuration:self.selectionChangeAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:animationBlock
-                     completion:nil];
-    [CATransaction commit];
-
+    [self performAnimationBlockInCATransaction:animationBlock];
   } else {
     animationBlock();
   }
