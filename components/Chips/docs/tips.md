@@ -22,4 +22,41 @@ the others (`contentPadding`). This is useful so that you can set each of the pa
 ensure your chips look correct whether or not they have an image and/or accessory view. The chip
 uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
+### Adjusting chip sizes after changing the label
+If the label of a chip is changed, then you may notice that the chip's frame does not automatically
+update to accomodate the new size of the chip's label. To force your chip to update its layout when
+this happens you can invoke `invalidateIntrinsicContentSize` on the chip view. For example:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+chipView.invalidateIntrinsicContentSize()
+```
+
+#### Objective-C
+```objc
+[chipView invalidateIntrinsicContentSize];
+```
+<!--</div>-->
+
+### Adjusting chip sizes in a collection after changing the label
+Similar to the above, if your chip's label changes its size in a collection view you will need to
+inform the collection view that the chip cell's dimensions have changed. You can do so by reloading
+the cell whose label value may have changed (just be sure that your cell dequeue mechanism is
+fetching the updated data!). For example:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// After changing the label of a chip cell at `indexPath`:
+collectionView.reloadItems(at: [indexPath])
+```
+
+#### Objective-C
+```objc
+// After changing the label of a chip cell at `indexPath`:
+[collectionView reloadItemsAtIndexPaths:@[indexPath]];
+```
+<!--</div>-->
+
 - - -
