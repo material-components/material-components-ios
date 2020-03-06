@@ -29,8 +29,6 @@ class BannerAutoLayoutSwiftExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let collectionView = UICollectionView()
-    collectionView.reloadItems(at: [indexPath])
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
     showBannerButton.translatesAutoresizingMaskIntoConstraints = false
     showBannerButton.applyTextTheme(withScheme: containerScheme)
