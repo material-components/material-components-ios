@@ -116,7 +116,8 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic, assign) NSTimeInterval duration;
 
 /**
- How long to delay the accessibility post notification of focusing and/or speaking the Snackbar message.
+ How long to delay the accessibility post notification of focusing and/or speaking the Snackbar
+ message.
 
  Defaults to 0 seconds (post notification is called immediately after the message is shown).
  */
