@@ -244,8 +244,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if (snackbarView.accessibilityViewIsModal || message.focusOnShow ||
-                  ![self isSnackbarTransient:snackbarView]) {
+              dispatch_time_t accessibilityPostDelay =
+              dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.accessibilityPostDelay * NSEC_PER_SEC));
+    dispatch_after(accessibilityPostDelay, dispatch_get_main_queue(), ^(void) {
+                             if (snackbarView.accessibilityViewIsModal || message.focusOnShow ||
+                                 ![self isSnackbarTransient:snackbarView]) {
                 UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
                                                 snackbarView);
               } else {
@@ -253,6 +256,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
               }
+    });
 
               if ([self isSnackbarTransient:snackbarView] && message.automaticallyDismisses) {
                 __weak MDCSnackbarMessageView *weakSnackbarView = snackbarView;

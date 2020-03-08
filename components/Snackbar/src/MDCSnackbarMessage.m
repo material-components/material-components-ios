@@ -50,6 +50,7 @@ static BOOL _usesLegacySnackbar = NO;
   self = [super init];
   if (self) {
     _duration = kDefaultDuration;
+    _accessibilityPostDelay = 0;
     _automaticallyDismisses = YES;
   }
   return self;
@@ -63,6 +64,7 @@ static BOOL _usesLegacySnackbar = NO;
   MDCSnackbarMessage *copy = [[[self class] alloc] init];
   copy.attributedText = self.attributedText;
   copy.duration = self.duration;
+  copy.accessibilityPostDelay = self.accessibilityPostDelay;
   copy.category = self.category;
   copy.accessibilityLabel = self.accessibilityLabel;
   copy.accessibilityHint = self.accessibilityHint;
