@@ -547,7 +547,7 @@
   [self waitForExpectationsWithTimeout:3 handler:nil];
 }
 
-- (void)testSnackbarAccessibilityPostNotificationDelay {
+- (void)testSnackbarAccessibilityPostNotificationDelayDoesDelayPost {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   self.message.accessibilityPostDelay = 3.0;
