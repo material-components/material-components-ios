@@ -1,16 +1,44 @@
-# #develop#
+# 107.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release includes the introduction of a self-sizing mechanism to MDCBaseCell, a new layout style for MDCTabBarView, and numerous improvements and bug fixes for BottomSheet, Snackbar, Dialogs, Ink, and TextFields.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### List
+
+Having the `UICollectionViewLayoutAttributes` you use with `MDCBaseCell` conform to `MDCSelfSizingLayoutAttributes` allows you to specify whether the height or the width should be fixed.
+
+```objc
+-(BOOL)isFixedWidth {
+  return 100;
+}
+
+-(BOOL)isFixedHeight {
+  return 100;
+}
+```
+
+```swift
+var isFixedWidth: Bool {
+  return 100;
+}
+
+var isFixedHeight: Bool {
+  return 100;
+}
+```
+
+### Tabs
+
+Setting the `preferredLayoutStyle` property on `MDCTabBarView` to `MDCTabBarViewLayoutStyleScrollableCentered` allows you to have a scrolling tab bar that centers the selected tab.
+
+```objc
+tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollableCentered;
+```
+
+```swift
+tabBarView.preferredLayoutStyle = .scrollableCentered
+```
 
 ## Component changes
 
