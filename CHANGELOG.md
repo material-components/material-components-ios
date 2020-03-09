@@ -1,3 +1,75 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomSheet
+
+* [Anchor movement of the bottom sheet along the y axis. (#9835)](https://github.com/material-components/material-components-ios/commit/2ca4e3e229a01ca0f4ce6b71496d8c311f489b5d) (featherless)
+
+### Chips
+
+* [Account for MDCChipField contentInset in placeholder width calculation (#9843)](https://github.com/material-components/material-components-ios/commit/d7906ec47b26916aad464592d0686c621973e273) (Bryan Oltman)
+* [Add MDCChipField snapshot test for placeholder truncation (#9842)](https://github.com/material-components/material-components-ios/commit/0d00e58cd008ef139165d9e0a8097c45b16fcea0) (Bryan Oltman)
+* [Add MDCChipField snapshot tests verifying text field placement (#9831)](https://github.com/material-components/material-components-ios/commit/a42a84cca9e9254ac56da2d4aed0ac03474d335e) (Bryan Oltman)
+* [Add tips about "Adjusting chip sizes after changing the label". (#9852)](https://github.com/material-components/material-components-ios/commit/738e82aede3d3fc8cc16aefe7b6a3362141d3ef0) (featherless)
+* [Do not include contentEdgeInsets for MDCChipField placeholder if no placeholder is present (#9847)](https://github.com/material-components/material-components-ios/commit/992d235d9b39075962cc6be6f14e1ff9a442b1d2) (Bryan Oltman)
+* [Do not include insets in MDCChipField placeholder width if there is no placeholder (#9850)](https://github.com/material-components/material-components-ios/commit/975c7994fc8831e154f115e3879366492c2c7e84) (Bryan Oltman)
+* [In MDCChipField, account for horizontal padding when calculating available width for text field (#9841)](https://github.com/material-components/material-components-ios/commit/2ceeb0ac73c85e116f4406cfe6980e9a9d6c074f) (Bryan Oltman)
+* [Move MDCChipField text input to a new line if text is too wide (#9845)](https://github.com/material-components/material-components-ios/commit/4cc8c3ecbefc3f8fc13ef80122ca8e187586f4d4) (Bryan Oltman)
+* [Resize MDCChipField's textField frame instead of using left insets to align with chips (#9827)](https://github.com/material-components/material-components-ios/commit/04567ba1653cb61927117160c3e8fd37e186d4b9) (Bryan Oltman)
+* [Resize MDCChipField's textField frame instead of using left insets to align with chips (#9837)](https://github.com/material-components/material-components-ios/commit/e1aee8556d04a64cef5149d51897f44711a5b077) (Bryan Oltman)
+* [Revert "Resize MDCChipField's textField frame instead of using left insets to align with chips" (#9828)](https://github.com/material-components/material-components-ios/commit/f8d520b4f1845e06af3f2256080a7629a16e3d68) (Bryan Oltman)
+* [Update MDCChipField to move long text from a line with chips to a new line. (#9826)](https://github.com/material-components/material-components-ios/commit/8b7c2b696c1f1ea212817f38b75d47825f3deb39) (Bryan Oltman)
+
+### Dialogs
+
+* [Adding actions order tests (#9829)](https://github.com/material-components/material-components-ios/commit/42b2e1ec69642e37aee6a4efd2e9ad68b745b974) (Galia Kaufman)
+* [Removing enableAdjustableInsets and fixed-insets calculations. (#9832)](https://github.com/material-components/material-components-ios/commit/130676fb1be0dc479116e59245400568235543cc) (Galia Kaufman)
+* [Try to fix testActionsAreOrderedByEmphasis snapshot (#9862)](https://github.com/material-components/material-components-ios/commit/1f0f03526dab131db8d46a0eed78ab544edc54ed) (Andrew Overton)
+
+### Ink
+
+* [Conditionally maskToBounds on MDCInkView layer (a MDCLegacyInkLayer) when usesLegacyInkRipple is set to NO (#9818)](https://github.com/material-components/material-components-ios/commit/5862e5b7b6e4d8e38dbde59a2c9f1acf5c26c0f3) (Andrew Overton)
+
+### List
+
+* [Add MDCSelfSizingLayoutAttributes (#9823)](https://github.com/material-components/material-components-ios/commit/79c96ec26f66aea353e5c8ff39c1de808c44b45f) (Andrew Overton)
+
+### Snackbar
+
+* [Support orientation changes that respect safe area (#9838)](https://github.com/material-components/material-components-ios/commit/808bceac64b8cb90c5fe0bd6f474781f22c1aeb3) (Yarden Eitan)
+* [add multi-window guessing support (#9830)](https://github.com/material-components/material-components-ios/commit/5a64f3ff1ebf0876b3727891139df3cd2729685f) (Yarden Eitan)
+
+### Tabs
+
+* [Add MDCTabBarViewLayoutStyleScrollableCentered (#9849)](https://github.com/material-components/material-components-ios/commit/898277ced1e9150b7713fb41cd4c437812781147) (Andrew Overton)
+
+### TextControls
+
+* [Update MDCBaseTextField docs (#9861)](https://github.com/material-components/material-components-ios/commit/f01ede70ed059ef9494cd2b1493c0686f6bfc9c6) (Andrew Overton)
+
+### TextFields
+
+* [Lower the error VoiceOver announcement delay to near zero. (#9822)](https://github.com/material-components/material-components-ios/commit/057bfd0b957bacff0257554a27ef277b5c587cfd) (featherless)
+
+## Multi-component changes
+
+* [Remove traitCollection overrides from examples. (#9851)](https://github.com/material-components/material-components-ios/commit/395ad9b3950a9dfa10e40d537f04292e6f70fb21) (Bryan Oltman)
+
+---
+
 # 107.1.0
 
 This minor release includes additions to the `MDCSnackbarManagerDelegate` protocol, touch target improvements to Chips, alignment improvements to Dialogs, and various other bug fixes.
