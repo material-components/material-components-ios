@@ -385,7 +385,7 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
 
 #pragma mark - Vertical Order Tests
 
-- (void)testActionsAreOrderedByEmphasis {
+- (void)testOrderVerticalActionsByEmphasis {
   // Given
   [self addFirstLongActionWithEmphasis:MDCActionEmphasisHigh];
   [self addShortActionWithEmphasis:MDCActionEmphasisMedium cancelAction:YES];
