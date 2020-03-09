@@ -47,6 +47,11 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
    trailing edge of the bar.
    */
   MDCTabBarViewLayoutStyleFixedClusteredTrailing = 4,
+
+  /**
+   The same as MDCTabBarViewLayoutStyleScrollable, but the selected tab is centered within the bar
+   if its position in the scrollview's content area permits it.*/
+  MDCTabBarViewLayoutStyleScrollableCentered = 5,
 };
 
 /**
