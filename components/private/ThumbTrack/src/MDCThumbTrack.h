@@ -200,7 +200,7 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 /**
  Whether or not to display the thumb when dragging a discrete slider with a value label.
  This only applies when @c shouldDisplayDiscreteValueLabel is set to @c YES.
- 
+
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL shouldDisplayThumbWithDiscreteValueLabel;

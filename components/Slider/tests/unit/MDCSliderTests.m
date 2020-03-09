@@ -1547,7 +1547,6 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   XCTAssertTrue(self.slider.thumbTrack.shouldDisplayThumbWithDiscreteValueLabel = YES);
-  
 }
 
 #pragma mark Private test helpers
