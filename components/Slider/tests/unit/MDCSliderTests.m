@@ -1541,6 +1541,15 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                         [[MDCTypography fontLoader] regularFontOfSize:12]);
 }
 
+- (void)testDisplayingThumbWithValueLabelOnSliderSetsCorrectlyOnThumbtrack {
+  // When
+  self.slider.shouldDisplayThumbWithDiscreteValueLabel = YES;
+
+  // Then
+  XCTAssertTrue(self.slider.thumbTrack.shouldDisplayThumbWithDiscreteValueLabel = YES);
+  
+}
+
 #pragma mark Private test helpers
 
 - (CGFloat)randomNumber {

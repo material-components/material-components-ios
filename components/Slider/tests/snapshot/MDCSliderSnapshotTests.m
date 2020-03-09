@@ -113,7 +113,7 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+//    self.recordMode = YES;
 
   self.slider =
       [[MDCSliderWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
@@ -761,6 +761,28 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
 
   // Then
   [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderWithThumbAndValueLabel {
+  // When
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.shouldDisplayDiscreteValueLabel = YES;
+  self.slider.shouldDisplayThumbWithDiscreteValueLabel = YES;
+  // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+  // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+  // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+  // transform adjustment was made so it can let the logic know we are actually interacting with
+  // the thumb in the test.
+  UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+  valueLabel.transform = CGAffineTransformIdentity;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  UIView *snapshotView =
+      [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+  [self generateSnapshotAndVerifyForView:snapshotView];
 }
 
 @end
