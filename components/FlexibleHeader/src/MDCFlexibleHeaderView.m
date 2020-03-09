@@ -1295,6 +1295,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       [self.superview bringSubviewToFront:self];
     }
 
+    void (^updateTransform)(void) = ^{
+      self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+    };
+
     if (UIAccessibilityIsVoiceOverRunning()) {
       // Clamp the offset to at least -self.maximumHeight. Accessibility may attempt to scroll to
       // a lesser offset than this to pull the flexible header into the center of the scrollview on
@@ -1306,12 +1310,24 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       // incorrect scrolling as the scrollview attempts to resolve to a position that will place
       // the header in the center of the scroll. Punting to the next loop prevents this.
       dispatch_async(dispatch_get_main_queue(), ^{
-        self.transform =
-            CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+        updateTransform();
         [self fhv_updateLayout];
       });
     } else {
-      self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+      // Check if there is an in-flight bounds animation and piggy-back its duration in order to
+      // avoid a jumping effect resulting from the transform otherwise updating instantly.
+      // This can happen if one of the cells positioned above the app bar shrinks in height, which
+      // causes the scroll view to animate its bounds origin in order to keep the scroll view's
+      // content from moving.
+      CAAnimation *boundsAnimation =
+          [self.trackingScrollView.layer animationForKey:@"bounds.origin"];
+      if (boundsAnimation) {
+        [UIView animateWithDuration:boundsAnimation.duration animations:^{
+          updateTransform();
+        }];
+      } else {
+        updateTransform();
+      }
     }
   }
 
