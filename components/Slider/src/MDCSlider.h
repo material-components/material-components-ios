@@ -320,6 +320,14 @@ IB_DESIGNABLE
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
 
 /**
+ Whether or not to display the thumb when dragging a discrete slider with a value label.
+ This only applies when @c shouldDisplayDiscreteValueLabel is set to @c YES.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldDisplayThumbWithDiscreteValueLabel;
+
+/**
  The color of the discrete value label's text.
 
  Resets to the default color.

@@ -198,6 +198,14 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
 
 /**
+ Whether or not to display the thumb when dragging a discrete slider with a value label.
+ This only applies when @c shouldDisplayDiscreteValueLabel is set to @c YES.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldDisplayThumbWithDiscreteValueLabel;
+
+/**
  Whether or not to show the filled track on the left of the thumb. If NO, the left track will be
  displayed with the same tint color as the right track.
 
