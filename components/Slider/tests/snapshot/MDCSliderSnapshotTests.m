@@ -770,13 +770,6 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
       self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
   self.slider.shouldDisplayDiscreteValueLabel = YES;
   self.slider.shouldDisplayThumbWithDiscreteValueLabel = YES;
-  // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
-  // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
-  // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
-  // transform adjustment was made so it can let the logic know we are actually interacting with
-  // the thumb in the test.
-  UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
-  valueLabel.transform = CGAffineTransformIdentity;
   [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
 
   // Then
