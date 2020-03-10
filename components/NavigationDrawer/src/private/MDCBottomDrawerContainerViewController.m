@@ -561,19 +561,22 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (void)setupLayout {
-  // Layout the clipping view and the scroll view.
-  if (self.currentlyFullscreen) {
-    CGRect scrollViewFrame = self.presentingViewBounds;
-    self.scrollView.frame = scrollViewFrame;
-  } else {
-    CGRect scrollViewFrame = self.presentingViewBounds;
+  // Layout the scroll view.
+  CGRect scrollViewFrame = self.presentingViewBounds;
+  if (!self.currentlyFullscreen) {
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
           self.presentingViewBounds.size.height / 2;
       scrollViewFrame.size.height += heightSurplusForSpringAnimationOvershooting;
     }
-    self.scrollView.frame = scrollViewFrame;
+
+    // Adjust y-position of origin to account for non-fullscreen presentation styles.
+    CGFloat yOffset = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.presentingViewBounds);
+    if (yOffset > 0) {
+      scrollViewFrame.origin.y += yOffset;
+    }
   }
+  self.scrollView.frame = scrollViewFrame;
 
   // Layout the top header's bottom shadow.
   [self setUpHeaderBottomShadowIfNeeded];
