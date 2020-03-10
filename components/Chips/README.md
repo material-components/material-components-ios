@@ -44,6 +44,7 @@ Chips are compact elements that represent an input, attribute, or action.
   - [Stateful properties](#stateful-properties)
   - [Selected Image View](#selected-image-view)
   - [Padding](#padding)
+  - [Adjusting chip sizes after changing the label](#adjusting-chip-sizes-after-changing-the-label)
 - [Behavioral flags](#behavioral-flags)
   - [Accessibility](#accessibility)
 - [Examples](#examples)
@@ -287,6 +288,24 @@ the others (`contentPadding`). This is useful so that you can set each of the pa
 ensure your chips look correct whether or not they have an image and/or accessory view. The chip
 uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
+### Adjusting chip sizes after changing the label
+If the label of a chip in a collection view can be changed dynamically (e.g. in reaction to a user's
+tap), then you may notice that the chip's frame does not automatically update to accomodate the new
+size of the chip's label. To force your chip to update its layout when this happens you can invoke
+`invalidateIntrinsicContentSize` on the chip view. For example:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+chipView.invalidateIntrinsicContentSize()
+```
+
+#### Objective-C
+```objc
+[chipView invalidateIntrinsicContentSize];
+```
+<!--</div>-->
+
 - - -
 
 
@@ -359,8 +378,10 @@ chipView.titleLabel.text = @"Tap me";
 There are two variants for Material Theming of an MDCChipVIew, which are the default theme
 and the outlined theme.
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
+ <!--<div class="material-code-render" markdown="1">-->
+
+ #### Swift
+
 ```swift
 // Import the Chips Theming Extensions module
 import MaterialComponents.MaterialChips_MaterialTheming
@@ -373,7 +394,7 @@ chip.applyTheme(withScheme: containerScheme)
 chip.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
-#### Objective-C
+ #### Objective-C
 
 ```objc
 // Import the Tabs Theming Extensions header
@@ -388,3 +409,4 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 ```
 
 <!--</div>-->
+

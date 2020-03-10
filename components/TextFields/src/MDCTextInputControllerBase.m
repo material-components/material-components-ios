@@ -41,7 +41,7 @@ static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = (CGFloat)0.266666;
 static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = (CGFloat)0.3;
-static const NSTimeInterval kDefaultErrorAnnouncementDelay = (CGFloat)0.500;
+static const NSTimeInterval kDefaultErrorAnnouncementDelay = (CGFloat)0.050;
 
 static inline UIColor *MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerBaseDefaultHintTextOpacity];

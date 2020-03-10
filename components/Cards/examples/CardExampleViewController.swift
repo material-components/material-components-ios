@@ -54,14 +54,6 @@ class CardExampleViewController: UIViewController {
       imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
   }
-
-  override public var traitCollection: UITraitCollection {
-    if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {
-      return UITraitCollection(traitsFrom:[UITraitCollection(horizontalSizeClass: .compact),
-                                           UITraitCollection(verticalSizeClass: .regular)])
-    }
-    return super.traitCollection
-  }
 }
 
 extension CardExampleViewController {

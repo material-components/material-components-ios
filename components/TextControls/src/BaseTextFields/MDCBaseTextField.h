@@ -17,8 +17,8 @@
 #import "MaterialTextControls+Enums.h"
 
 /**
- A UITextField subclass that will potentially provide the foundation for Material TextFields in the
- future. This class is under active development and should be used with caution.
+ The superclass of MDCFilledTextField and MDCOutlinedTextField. While not forbidden by the compiler,
+ subclassing this class is not supported and is highly discouraged.
  */
 @interface MDCBaseTextField : UITextField
 

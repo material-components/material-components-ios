@@ -304,7 +304,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
-  [self scrollRectToVisible:self.itemViews[itemIndex].frame animated:animated];
+  [self scrollToItem:self.items[itemIndex] animated:animated];
   [self didSelectItemAtIndex:itemIndex animateTransition:animated];
 }
 
@@ -604,7 +604,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  switch ([self effectiveLayoutStyle]) {
+  MDCTabBarViewLayoutStyle layoutStyle = [self effectiveLayoutStyle];
+  switch (layoutStyle) {
     case MDCTabBarViewLayoutStyleFixed: {
       [self layoutSubviewsForJustifiedLayout];
       break;
@@ -612,9 +613,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixedClusteredCentered:
     case MDCTabBarViewLayoutStyleFixedClusteredTrailing:
     case MDCTabBarViewLayoutStyleFixedClusteredLeading: {
-      [self layoutSubviewsForFixedClusteredLayout:[self effectiveLayoutStyle]];
+      [self layoutSubviewsForFixedClusteredLayout:layoutStyle];
       break;
     }
+    case MDCTabBarViewLayoutStyleScrollableCentered:
     case MDCTabBarViewLayoutStyleScrollable: {
       [self layoutSubviewsForScrollableLayout];
       break;
@@ -634,7 +636,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
         self.contentOffset = CGPointMake(self.contentSize.width - viewWidth, self.contentOffset.y);
       }
     }
-    [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
+    [self scrollToItem:self.selectedItem animated:NO];
   }
   // It's possible that after scrolling the minX of bounds could have changed. Positioning it last
   // ensures that its frame matches the displayed content bounds.
@@ -666,6 +668,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   CGSize availableSize = [self availableSizeForSubviewLayout];
   switch (self.preferredLayoutStyle) {
+    case MDCTabBarViewLayoutStyleScrollableCentered: {
+      return MDCTabBarViewLayoutStyleScrollableCentered;
+    }
     case MDCTabBarViewLayoutStyleScrollable: {
       return MDCTabBarViewLayoutStyleScrollable;
     }
@@ -816,6 +821,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixed: {
       return [self intrinsicContentSizeForJustifiedLayout];
     }
+    case MDCTabBarViewLayoutStyleScrollableCentered:
     case MDCTabBarViewLayoutStyleScrollable: {
       return [self intrinsicContentSizeForScrollableLayout];
     }
@@ -850,6 +856,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixedClusteredLeading: {
       return [self availableSizeForSubviewLayout];
     }
+    case MDCTabBarViewLayoutStyleScrollableCentered:
     case MDCTabBarViewLayoutStyleScrollable: {
       return [self intrinsicContentSizeForScrollableLayout];
     }
@@ -909,8 +916,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 #pragma mark - Helpers
 
-- (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
-  NSUInteger index = [self.items indexOfObject:self.selectedItem];
+- (void)scrollToItem:(UITabBarItem *)item animated:(BOOL)animated {
+  NSUInteger index = [self.items indexOfObject:item];
   if (index == NSNotFound || index >= self.itemViews.count) {
     index = 0;
   }
@@ -918,8 +925,20 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  CGRect estimatedItemFrame = [self estimatedFrameForItemAtIndex:index];
-  [self scrollRectToVisible:estimatedItemFrame animated:NO];
+  if ([self effectiveLayoutStyle] == MDCTabBarViewLayoutStyleScrollableCentered) {
+    CGPoint contentOffset = [self contentOffsetNeededToCenterItemView:self.itemViews[index]];
+    void (^animationBlock)(void) = ^{
+      self.contentOffset = contentOffset;
+    };
+    if (animated) {
+      [self performAnimationBlockInCATransaction:animationBlock];
+    } else {
+      animationBlock();
+    }
+  } else {
+    CGRect estimatedItemFrame = [self estimatedFrameForItemAtIndex:index];
+    [self scrollRectToVisible:estimatedItemFrame animated:animated];
+  }
 }
 
 - (CGRect)estimatedFrameForItemAtIndex:(NSUInteger)index {
@@ -947,6 +966,15 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return CGRectMake(viewOriginX, 0, viewSize.width, viewSize.height);
 }
 
+- (CGPoint)contentOffsetNeededToCenterItemView:(UIView *)itemView {
+  CGFloat availableWidth = [self availableSizeForSubviewLayout].width;
+  CGFloat itemViewWidth = CGRectGetWidth(itemView.frame);
+  CGFloat contentOffsetX = CGRectGetMinX(itemView.frame) - ((availableWidth - itemViewWidth) / 2.f);
+  contentOffsetX = MAX(contentOffsetX, 0.f);
+  contentOffsetX = MIN(contentOffsetX, self.contentSize.width - availableWidth);
+  return CGPointMake(contentOffsetX, self.contentOffset.y);
+}
+
 - (CGSize)expectedSizeForView:(UIView *)view {
   if (self.itemViews.count == 0) {
     return CGSizeZero;
@@ -965,6 +993,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixedClusteredLeading: {
       return [self estimatedItemViewSizeForClusteredFixedLayout];
     }
+    case MDCTabBarViewLayoutStyleScrollableCentered:
     case MDCTabBarViewLayoutStyleScrollable: {
       return [self estimatedIntrinsicSizeForView:view];
     }
@@ -1006,6 +1035,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CGSize)availableSizeForSubviewLayout {
   return [self availableBoundsForSubviewLayout].size;
+}
+
+- (void)performAnimationBlockInCATransaction:(void (^)(void))animationBlock {
+  CAMediaTimingFunction *easeInOutFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+  // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
+  [CATransaction begin];
+  [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];
+  [CATransaction setAnimationTimingFunction:easeInOutFunction];
+  [UIView animateWithDuration:self.selectionChangeAnimationDuration
+                        delay:0
+                      options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:animationBlock
+                   completion:nil];
+  [CATransaction commit];
 }
 
 #pragma mark - Actions
@@ -1089,19 +1133,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   };
 
   if (animate) {
-    CAMediaTimingFunction *easeInOutFunction =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];
-    [CATransaction setAnimationTimingFunction:easeInOutFunction];
-    [UIView animateWithDuration:self.selectionChangeAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:animationBlock
-                     completion:nil];
-    [CATransaction commit];
-
+    [self performAnimationBlockInCATransaction:animationBlock];
   } else {
     animationBlock();
   }

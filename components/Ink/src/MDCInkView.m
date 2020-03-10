@@ -126,9 +126,11 @@
   } else {
     switch (inkStyle) {
       case MDCInkStyleBounded:
+        self.inkLayer.masksToBounds = YES;
         self.inkLayer.maxRippleRadius = 0;
         break;
       case MDCInkStyleUnbounded:
+        self.inkLayer.masksToBounds = NO;
         self.inkLayer.maxRippleRadius = _maxRippleRadius;
         break;
     }

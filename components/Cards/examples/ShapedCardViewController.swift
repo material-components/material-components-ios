@@ -162,14 +162,6 @@ class ShapedCardViewController: UIViewController {
     }
   }
 
-  override public var traitCollection: UITraitCollection {
-    if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {
-      return UITraitCollection(traitsFrom:[UITraitCollection(horizontalSizeClass: .compact),
-                                           UITraitCollection(verticalSizeClass: .regular)])
-    }
-    return super.traitCollection
-  }
-
   @objc func changeShape() {
     primarySlider.isHidden = true
     secondarySlider.isHidden = true
