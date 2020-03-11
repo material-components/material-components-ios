@@ -15,6 +15,9 @@
 import XCTest
 import MaterialComponents.MaterialAppBar
 
+// MDCAppBarViewController implements default behavior for accessibilityPerformEscape when it is
+// a descendant of a UINavigationController. These tests verify when this behavior does and does not
+// take effect.
 class AppBarNavigationControllerAccessibilityPerformEscapeTests: XCTestCase {
 
   var appBarViewController: MDCAppBarViewController!
