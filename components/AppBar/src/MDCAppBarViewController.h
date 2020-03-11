@@ -59,8 +59,7 @@
  If nil, then the default behavior will attempt to dismiss the MDCAppBarViewController's parent
  view controller and the @c accessibilityPerformEscape will return @c YES.
  */
-@property(nonatomic, weak, nullable)
-    id<MDCAppBarViewControllerAccessibilityPerformEscapeDelegate>
+@property(nonatomic, weak, nullable) id<MDCAppBarViewControllerAccessibilityPerformEscapeDelegate>
     accessibilityPerformEscapeDelegate;
 
 @end

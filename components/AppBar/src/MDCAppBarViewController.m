@@ -277,7 +277,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (BOOL)accessibilityPerformEscape {
   if (self.accessibilityPerformEscapeDelegate) {
-    return [self.accessibilityPerformEscapeDelegate appBarViewControllerAccessibilityPerformEscape:self];
+    return [self.accessibilityPerformEscapeDelegate
+        appBarViewControllerAccessibilityPerformEscape:self];
   }
 
   // Fall-back behavior.
