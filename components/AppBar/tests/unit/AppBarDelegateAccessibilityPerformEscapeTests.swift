@@ -42,14 +42,14 @@ class AppBarDelegateAccessibilityPerformEscapeTests: XCTestCase {
   }
 
   func testDefaults() {
-    XCTAssertNil(appBarViewController.delegate)
+    XCTAssertNil(appBarViewController.accessibilityPerformEscapeDelegate)
   }
 
   func testInvokesDelegateAndReturnsTrueValue() {
     // Given
     let delegate = FakeDelegate()
     delegate.accessibilityPerformEscapeResult = true
-    appBarViewController.delegate = delegate
+    appBarViewController.delegate = accessibilityPerformEscapeDelegate
 
     // When
     let result = appBarViewController.accessibilityPerformEscape()
@@ -63,7 +63,7 @@ class AppBarDelegateAccessibilityPerformEscapeTests: XCTestCase {
     // Given
     let delegate = FakeDelegate()
     delegate.accessibilityPerformEscapeResult = false
-    appBarViewController.delegate = delegate
+    appBarViewController.delegate = accessibilityPerformEscapeDelegate
 
     // When
     let result = appBarViewController.accessibilityPerformEscape()
