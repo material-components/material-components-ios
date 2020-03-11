@@ -104,7 +104,7 @@
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
-/** The alignment applied to the title of the Alert Controller.*/
+/** The alignment applied to the title of the Alert. Default to NSTextAlignmentNatural. */
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
 /** An optional icon appearing above the title of the Alert Controller.*/
@@ -118,6 +118,9 @@
 
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
+
+/** The alignment applied to the message of Alert Controller. Default to NSTextAlignmentNatural. */
+@property(nonatomic, assign) NSTextAlignment messageAlignment;
 
 /**
  The font applied to the button of Alert Controller.
