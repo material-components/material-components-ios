@@ -17,7 +17,7 @@
 #import "MaterialNavigationBar.h"
 
 @class MDCAppBarViewController;
-@protocol MDCAppBarViewControllerDelegate;
+@protocol MDCAppBarViewControllerAccessibilityPerformEscapeDelegate;
 
 /**
  MDCAppBarViewController is a flexible header view controller that manages a navigation bar and
@@ -52,8 +52,16 @@
  */
 @property(nonatomic) CGFloat headerStackViewOffset;
 
-/** The safe area delegate can be queried for the correct way to calculate safe areas. */
-@property(nonatomic, weak, nullable) id<MDCAppBarViewControllerDelegate> delegate;
+/**
+ A delegate that, if provided, allows for customization of the default behavior of
+ @c accessibilityPerformEscape.
+
+ If nil, then the default behavior will attempt to dismiss the MDCAppBarViewController's parent
+ view controller and the @c accessibilityPerformEscape will return @c YES.
+ */
+@property(nonatomic, weak, nullable)
+    id<MDCAppBarViewControllerAccessibilityPerformEscapeDelegate>
+    accessibilityPerformEscapeDelegate;
 
 @end
 
@@ -61,14 +69,11 @@
  A delegate that can be implemented in order to respond to events specific to
  MDCAppBarViewController.
  */
-@protocol MDCAppBarViewControllerDelegate <NSObject>
-@optional
+@protocol MDCAppBarViewControllerAccessibilityPerformEscapeDelegate <NSObject>
+@required
 
 /**
  Informs the receiver that the app bar view controller received an accessibilityPerformEscape event.
-
- If this method is not implemented, then the app bar view controller will attempt to dismiss itself
- automatically.
 
  The receiver should return @c YES if the modal view is successfully dismissed; otherwise,
  return @c NO. The value returned by this method is in turn returned to the
