@@ -133,12 +133,12 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   headerView.delegate = self;
   _headerView = headerView;
+
+  self.hairline = [[MDCFlexibleHeaderHairline alloc] initWithContainerView:_headerView];
 }
 
 - (void)loadView {
   self.view = self.headerView;
-
-  self.hairline = [[MDCFlexibleHeaderHairline alloc] initWithContainerView:self.headerView];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
