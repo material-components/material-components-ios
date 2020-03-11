@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialFlexibleHeader.h"
 #import "MDCFlexibleHeaderHairline.h"
+#import "MaterialFlexibleHeader.h"
 
 @interface MDCFlexibleHeaderViewController (UnitTesting)
 @property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
@@ -54,7 +54,8 @@
   MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
 
   // Then
-  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should be non-nil.
+  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should
+  // be non-nil.
   XCTAssertNil(fhvc.hairline);
 }
 
@@ -77,7 +78,8 @@
   fhvc.showsHairline = NO;
 
   // Then
-  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should be NO.
+  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should
+  // be NO.
   XCTAssertTrue(fhvc.showsHairline);
 }
 
@@ -90,7 +92,8 @@
   fhvc.hairlineColor = color;
 
   // Then
-  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should be equal to color.
+  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should
+  // be equal to color.
   XCTAssertNil(fhvc.hairlineColor);
 }
 
