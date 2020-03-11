@@ -54,9 +54,7 @@
   MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
 
   // Then
-  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should
-  // be non-nil.
-  XCTAssertNil(fhvc.hairline);
+  XCTAssertNotNil(fhvc.hairline);
 }
 
 - (void)testFlexibleHeaderViewControllerShowsHairlineTruePersists {
@@ -78,9 +76,7 @@
   fhvc.showsHairline = NO;
 
   // Then
-  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should
-  // be NO.
-  XCTAssertTrue(fhvc.showsHairline);
+  XCTAssertFalse(fhvc.showsHairline);
 }
 
 - (void)testFlexibleHeaderViewControllerColorPersists {
@@ -92,9 +88,7 @@
   fhvc.hairlineColor = color;
 
   // Then
-  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should
-  // be equal to color.
-  XCTAssertNil(fhvc.hairlineColor);
+  XCTAssertEqual(fhvc.hairlineColor, color);
 }
 
 #pragma mark - Visibility
