@@ -15,7 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialAppBar
 
-private class FakeDelegate: NSObject, MDCAppBarViewControllerDelegate {
+private class FakeDelegate: NSObject, MDCAppBarViewControllerAccessibilityPerformEscapeDelegate {
   var accessibilityPerformEscapeResult = false
   var didInvokeAppBarViewControllerAccessibilityPerformEscape = false
 
