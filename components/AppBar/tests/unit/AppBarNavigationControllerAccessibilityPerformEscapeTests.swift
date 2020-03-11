@@ -86,7 +86,7 @@ class AppBarNavigationControllerAccessibilityPerformEscapeTests: XCTestCase {
 
   // MARK: UINavigationController [ UIViewController [ MDCAppBarViewController ] ]
 
-  func testInitializedWithAppBarViewControllerChild() {
+  func testInitializedWithAppBarViewControllerAsChildOfViewController() {
     // Given
     let viewController = UIViewController()
     viewController.addChild(appBarViewController)
@@ -119,7 +119,7 @@ class AppBarNavigationControllerAccessibilityPerformEscapeTests: XCTestCase {
 
   // MARK: UINavigationController [ UIViewController, UIViewController [ MDCAppBarViewController ] ]
 
-  func testPushedWithAppBarViewControllerChild() {
+  func testPushedWithAppBarViewControllerAsChildOfViewController() {
     // Given
     let navigationController = UINavigationController(rootViewController: UIViewController())
 
