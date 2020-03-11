@@ -276,8 +276,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 #pragma mark - UIAccessibility
 
 - (BOOL)accessibilityPerformEscape {
-  if ([self.delegate respondsToSelector:
-          @selector(appBarViewControllerAccessibilityPerformEscape:)]) {
+  if ([self.delegate
+          respondsToSelector:@selector(appBarViewControllerAccessibilityPerformEscape:)]) {
     return [self.delegate appBarViewControllerAccessibilityPerformEscape:self];
   }
 
