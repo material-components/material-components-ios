@@ -14,7 +14,12 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialFlexibleHeader.h"
 #import "MDCFlexibleHeaderHairline.h"
+
+@interface MDCFlexibleHeaderViewController (UnitTesting)
+@property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
+@end
 
 @interface FlexibleHeaderHairlineTests : XCTestCase
 @property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
@@ -42,6 +47,15 @@
   XCTAssertEqualObjects(self.hairline.color, [UIColor blackColor]);
   XCTAssertEqual(self.hairline.containerView, self.containerView);
   XCTAssertEqual(self.hairline.containerView.subviews.count, 0);
+}
+
+- (void)testFlexibleHeaderViewControllerDefaults {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+
+  // Then
+  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should be non-nil.
+  XCTAssertNil(fhvc.hairline);
 }
 
 #pragma mark - Visibility
