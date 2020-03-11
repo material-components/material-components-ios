@@ -709,9 +709,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) / 2.0f;
       actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
     }
-    contentScrollViewRect.size.height = CGRectGetHeight(self.bounds) -
-                                        actionsScrollViewRect.size.height -
-                                        contentScrollViewRect.origin.y;
+    contentScrollViewRect.size.height =
+        actionsScrollViewRect.origin.y - contentScrollViewRect.origin.y;
 
     self.messageLabel.accessibilityFrame = UIAccessibilityConvertFrameToScreenCoordinates(
         CGRectMake(messageFrame.origin.x, contentScrollViewRect.origin.y, messageFrame.size.width,
