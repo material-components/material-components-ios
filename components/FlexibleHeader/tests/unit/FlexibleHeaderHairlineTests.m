@@ -58,6 +58,42 @@
   XCTAssertNil(fhvc.hairline);
 }
 
+- (void)testFlexibleHeaderViewControllerShowsHairlineTruePersists {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+
+  // When
+  fhvc.showsHairline = YES;
+
+  // Then
+  XCTAssertTrue(fhvc.showsHairline);
+}
+
+- (void)testFlexibleHeaderViewControllerShowsHairlineFalsePersists {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+
+  // When
+  fhvc.showsHairline = NO;
+
+  // Then
+  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should be NO.
+  XCTAssertTrue(fhvc.showsHairline);
+}
+
+- (void)testFlexibleHeaderViewControllerColorPersists {
+  // Given
+  MDCFlexibleHeaderViewController *fhvc = [[MDCFlexibleHeaderViewController alloc] init];
+  UIColor *color = [UIColor redColor];
+
+  // When
+  fhvc.hairlineColor = color;
+
+  // Then
+  // TODO(https://github.com/material-components/material-components-ios/issues/9863): This should be equal to color.
+  XCTAssertNil(fhvc.hairlineColor);
+}
+
 #pragma mark - Visibility
 
 - (void)testAddsHairlineViewToContainerViewWhenMadeVisible {
