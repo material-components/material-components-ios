@@ -1322,9 +1322,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       CAAnimation *boundsAnimation =
           [self.trackingScrollView.layer animationForKey:@"bounds.origin"];
       if (boundsAnimation) {
-        [UIView animateWithDuration:boundsAnimation.duration animations:^{
-          updateTransform();
-        }];
+        [UIView animateWithDuration:boundsAnimation.duration
+                         animations:^{
+                           updateTransform();
+                         }];
       } else {
         updateTransform();
       }
