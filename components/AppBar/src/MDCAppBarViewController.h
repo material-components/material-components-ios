@@ -17,6 +17,7 @@
 #import "MaterialNavigationBar.h"
 
 @class MDCAppBarViewController;
+@protocol MDCAppBarViewControllerDelegate;
 
 /**
  MDCAppBarViewController is a flexible header view controller that manages a navigation bar and
@@ -50,6 +51,31 @@
  Defines a downward shift distance for `headerStackView`.
  */
 @property(nonatomic) CGFloat headerStackViewOffset;
+
+/** The safe area delegate can be queried for the correct way to calculate safe areas. */
+@property(nonatomic, weak, nullable) id<MDCAppBarViewControllerDelegate> delegate;
+
+@end
+
+/**
+ A delegate that can be implemented in order to respond to events specific to
+ MDCAppBarViewController.
+ */
+@protocol MDCAppBarViewControllerDelegate <NSObject>
+@optional
+
+/**
+ Informs the receiver that the app bar view controller received an accessibilityPerformEscape event.
+
+ If this method is not implemented, then the app bar view controller will attempt to dismiss itself
+ automatically.
+
+ The receiver should return @c YES if the modal view is successfully dismissed; otherwise,
+ return @c NO. The value returned by this method is in turn returned to the
+ @c accessibilityPerformEscape event.
+ */
+- (BOOL)appBarViewControllerAccessibilityPerformEscape:
+    (nonnull MDCAppBarViewController *)appBarViewController;
 
 @end
 
