@@ -748,26 +748,24 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                            (self.actionsInsets.left + self.actionsInsets.right);
   CGPoint buttonOrigin = CGPointZero;
   CGFloat buttonWidth = 0.f;
-  CGFloat multiplier = 1.f;
-  if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentTrailing) {
-    buttonOrigin.x = self.actionsScrollView.contentSize.width - self.actionsInsets.right;
-    multiplier = -1.f;
+  CGFloat multiplier =
+      self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentLeading ? 1.f : -1.f;
+  if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentLeading) {
+    buttonOrigin.x = self.actionsInsets.left;
   } else if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentCenter) {
     CGFloat actionWidthNoInsets =
         actionSize.width - self.actionsInsets.left - self.actionsInsets.right;
-    buttonOrigin.x = (self.actionsScrollView.contentSize.width - actionWidthNoInsets) / 2.f;
-  } else {  // leading or fill
-    buttonOrigin.x = self.actionsInsets.left;
+    buttonOrigin.x = ((self.actionsScrollView.contentSize.width - actionWidthNoInsets) / 2.f) +
+                     actionWidthNoInsets;
+  } else {  // trailing or justified
+    buttonOrigin.x = self.actionsScrollView.contentSize.width - self.actionsInsets.right;
   }
   buttonOrigin.y = self.actionsInsets.top;
   for (UIButton *button in buttons) {
     CGRect buttonRect = button.frame;
 
     buttonWidth = buttonRect.size.width;
-
-    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentTrailing) {
-      buttonOrigin.x -= buttonRect.size.width;
-    } else if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
+    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
       if (buttons.count > 1) {
         CGFloat totalMargin = self.actionsHorizontalMargin * (buttons.count - 1);
         buttonWidth = (maxButtonWidth - totalMargin) / buttons.count;
@@ -775,16 +773,21 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
         buttonWidth = maxButtonWidth;
       }
     }
+
+    if (self.actionsHorizontalAlignment != MDCContentHorizontalAlignmentLeading) {
+      buttonOrigin.x += multiplier * buttonWidth;
+    }
+
     buttonRect.origin = buttonOrigin;
     buttonRect.size.width = buttonWidth;
 
     button.frame = buttonRect;
 
     if (button != buttons.lastObject) {
-      if (self.actionsHorizontalAlignment != MDCContentHorizontalAlignmentTrailing) {
-        buttonOrigin.x += buttonRect.size.width + self.actionsHorizontalMargin;
+      if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentLeading) {
+        buttonOrigin.x += multiplier * (buttonWidth + self.actionsHorizontalMargin);
       } else {
-        buttonOrigin.x -= self.actionsHorizontalMargin;
+        buttonOrigin.x += multiplier * self.actionsHorizontalMargin;
       }
     }
   }
