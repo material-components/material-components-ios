@@ -53,19 +53,18 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
  The alert actions alignment in horizontal layout.  This property controls both alignment and order
  of the actions in the horizontal layout.  Actions that are added first, are presented first based
  on the alignment: when alignment is trailing, the first action is presented on the trailing side
- (right in LTR). For all other alignments, the action added first is presented on the
- leading side (left in LTR).
+ (right in LTR). For all other alignments, the action added first is presented on the leading side
+ (left in LTR).
 
  Default value is @c MDCContentAlignmentTrailing.
  */
 @property(nonatomic, assign) MDCContentHorizontalAlignment actionsHorizontalAlignment;
 
 /**
- The horizontal alignment of the alert's actions when in vertical layout. When not enough
- horizontal space is available to present all actions, actions will layout vertically. That may
- happen in the portrait orientation on smaller devices. Actions may have centered, leading,
- trailing or filled alignment. In filled alignment, all actions
- will be as wide as the alert (minus insets).
+ The horizontal alignment of the alert's actions when in vertical layout. When not enough horizontal
+ space is available to present all actions, actions will layout vertically. That may happen in the
+ portrait orientation on smaller devices. Actions may have centered, leading, trailing or filled
+ alignment. In filled alignment, all actions will be as wide as the alert (minus insets).
 
  @note: Actions that are added first will be displayed on the bottom, unless overriden by
         orderVerticalActionsByEmphasis.
@@ -76,10 +75,10 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
     MDCContentHorizontalAlignment actionsHorizontalAlignmentInVerticalLayout;
 
 /**
- Enables ordering actions by emphasis when they are vertically aligned.
- When set to @c YES, horizontally trailing actions, which typically have higher emphasis, will be
- displayed on top when presented vertically (for instance, in the portrait orientation on smaller
- devices). When set to @c NO, the higher emphasis actions will be displayed on the bottom.
+ Enables ordering actions by emphasis when they are vertically aligned. When set to @c YES,
+ horizontally trailing actions, which typically have higher emphasis, will be displayed on top when
+ presented vertically (for instance, in the portrait orientation on smaller devices). When set to @c
+ NO, the higher emphasis actions will be displayed on the bottom.
 
  Default value is @c NO.
 */
@@ -107,19 +106,18 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
- The edge insets around the title icon or title icon view against the dialog
- edges (top, leading, trailing) and the title (bottom). Note that
- `titleIconInsets.bottom` takes precedence over `titleInsets.top`.
+ The edge insets around the title icon or title icon view against the dialog edges (top, leading,
+ trailing) and the title (bottom). Note that `titleIconInsets.bottom` takes precedence over
+ `titleInsets.top`.
 
  Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 12, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets titleIconInsets;
 
 /**
- The edge insets around the title against the dialog edges or its neighbor
- elements. If either the title icon or title icon view is present, then
- `titleIconInsets.bottom` takes precedence over `titleInsets.top`. If there is
-  no message, `titleInsets.bottom` is ignored.
+ The edge insets around the title against the dialog edges or its neighbor elements. If either the
+ title icon or title icon view is present, then `titleIconInsets.bottom` takes precedence over
+ `titleInsets.top`. If there is no message, `titleInsets.bottom` is ignored.
 
 
  Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
@@ -127,34 +125,32 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 
 /**
- The edge insets around the content view (which includes the message and/or the
- accessory view) against the dialog edges or its neighbor elements, the title
- and the actions.
+ The edge insets around the content view (which includes the message and/or the accessory view)
+ against the dialog edges or its neighbor elements, the title and the actions.
 
  Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
 @property(nonatomic, assign) UIEdgeInsets contentInsets;
 
 /**
- The edge insets around the actions against the dialog edges and its neighbor,
- which could be any of the other elements: the message, accessory view, title,
- title icon or title icon view.
+ The edge insets around the actions against the dialog edges and its neighbor, which could be any of
+ the other elements: the message, accessory view, title, title icon or title icon view.
 
  Default value is UIEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8).
  */
 @property(nonatomic, assign) UIEdgeInsets actionsInsets;
 
 /**
- The horizontal space between the action buttons when the buttons are
- horizontally aligned, and if more than one button is presented.
+ The horizontal space between the action buttons when the buttons are horizontally aligned, and if
+ more than one button is presented.
 
  Default value is 8.
  */
 @property(nonatomic, assign) CGFloat actionsHorizontalMargin;
 
 /**
- The vertical space between the action buttons when the buttons are vertically
- aligned, and if more than one button is presented.
+ The vertical space between the action buttons when the buttons are vertically aligned, and if more
+ than one button is presented.
 
  Default value is 12.
  */
