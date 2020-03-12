@@ -65,17 +65,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 @synthesize delegate;
 
-- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
-                       presentingViewController:(UIViewController *)presentingViewController {
-  self = [super initWithPresentedViewController:presentedViewController
-                       presentingViewController:presentingViewController];
-  if (self) {
-    _dismissOnDraggingDownSheet = YES;
-  }
-
-  return self;
-}
-
 - (UIView *)presentedView {
   return self.sheetView;
 }
@@ -114,6 +103,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.accessibilityTraits = _scrimAccessibilityTraits;
   _dimmingView.accessibilityLabel = _scrimAccessibilityLabel;
   _dimmingView.accessibilityHint = _scrimAccessibilityHint;
+
+  _dismissOnDraggingDownSheet = YES;
 
   UIScrollView *scrollView = self.trackingScrollView;
   if (scrollView == nil) {
