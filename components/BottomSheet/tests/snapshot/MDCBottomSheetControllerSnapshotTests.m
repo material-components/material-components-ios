@@ -105,4 +105,25 @@
   [self snapshotVerifyViewForIOS13:window];
 }
 
+- (void)testBottomSheetWithDismissOnDraggingDownSheetOff {
+  // Given
+  UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+  UIViewController *currentViewController = window.rootViewController;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"Bottom sheet is presented"];
+  self.bottomSheet.dismissOnDraggingDownSheet = NO;
+
+  // When
+  [currentViewController presentViewController:self.bottomSheet
+                                      animated:NO
+                                    completion:^{
+    XCTAssertFalse(self.bottomSheet.dismissOnDraggingDownSheet);
+    [expectation fulfill];
+
+                                    }];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:5];
+}
+
 @end
