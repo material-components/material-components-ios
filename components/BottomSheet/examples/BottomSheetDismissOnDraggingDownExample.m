@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@
   bottomSheet.scrimAccessibilityLabel = @"Close";
   bottomSheet.trackingScrollView = viewController.collectionView;
   bottomSheet.delegate = self;
+  // The line below is the purpose of this example and is the only delta between this example and the BottomSheetTypicalUseExample.m
   bottomSheet.dismissOnDraggingDownSheet = NO;
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
