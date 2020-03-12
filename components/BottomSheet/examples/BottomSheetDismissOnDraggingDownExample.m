@@ -60,7 +60,8 @@
   bottomSheet.scrimAccessibilityLabel = @"Close";
   bottomSheet.trackingScrollView = viewController.collectionView;
   bottomSheet.delegate = self;
-  // The line below is the purpose of this example and is the only delta between this example and the BottomSheetTypicalUseExample.m
+  // The line below is the purpose of this example and is the only delta between this example and
+  // the BottomSheetTypicalUseExample.m
   bottomSheet.dismissOnDraggingDownSheet = NO;
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }

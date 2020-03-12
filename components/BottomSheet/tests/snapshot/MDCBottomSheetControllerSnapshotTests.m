@@ -117,9 +117,8 @@
   [currentViewController presentViewController:self.bottomSheet
                                       animated:NO
                                     completion:^{
-    XCTAssertFalse(self.bottomSheet.dismissOnDraggingDownSheet);
-    [expectation fulfill];
-
+                                      XCTAssertFalse(self.bottomSheet.dismissOnDraggingDownSheet);
+                                      [expectation fulfill];
                                     }];
 
   // Then

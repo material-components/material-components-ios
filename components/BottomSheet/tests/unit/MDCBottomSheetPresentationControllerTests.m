@@ -352,7 +352,7 @@
   XCTAssertFalse(shouldBeginDragging);
 }
 
--(void)testPresentationControllerDefaults {
+- (void)testPresentationControllerDefaults {
   // Then
   XCTAssertTrue(self.presentationController.dismissOnDraggingDownSheet);
 }
