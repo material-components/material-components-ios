@@ -14,6 +14,7 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialDialogs+Theming.h"
@@ -198,6 +199,33 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   [self changeToRTL:self.alertController];
 
   // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Verify correct layout for issues reported in:
+//    https://github.com/material-components/material-components-ios/issues/8434.
+- (void)testActionsLayoutHorizontallyForCatpitalizedButtonCase {
+  // Given
+  self.alertController.title = @"Recurring actions";
+  self.alertController.message = nil;
+  [self addLowEmphasisAction:@"This event"];
+  [self addLowEmphasisAction:@"This and all following events"];
+  [self addLowEmphasisAction:@"All events"];
+  [self addLowEmphasisAction:@"Cancel"];
+
+  // When
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+  for (MDCAlertAction *action in self.alertController.actions) {
+    MDCButton *button = [self.alertController buttonForAction:action];
+    button.uppercaseTitle = NO;
+  }
+
+  // Then
+  // Ensure snapshot view size matches actual runtime size of alert
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:preferredContentSize];
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
@@ -416,6 +444,12 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
 - (void)addCancelActionWithEmphasis:(MDCActionEmphasis)emphasis {
   [self.alertController addAction:[MDCAlertAction actionWithTitle:@"Cancel"
                                                          emphasis:emphasis
+                                                          handler:nil]];
+}
+
+- (void)addLowEmphasisAction:(NSString *)action {
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:action
+                                                         emphasis:MDCActionEmphasisLow
                                                           handler:nil]];
 }
 
