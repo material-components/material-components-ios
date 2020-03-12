@@ -100,6 +100,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 @synthesize titleIconView = _titleIconView;
+@synthesize actionsHorizontalAlignment = _actionsHorizontalAlignment;
+@synthesize actionsHorizontalAlignmentInVerticalLayout =
+    _actionsHorizontalAlignmentInVerticalLayout;
+@synthesize orderVerticalActionsByEmphasis = _orderVerticalActionsByEmphasis;
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
                                  message:(nullable NSString *)message {
@@ -277,6 +281,30 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
     [self.alertView setNeedsLayout];
   }
+}
+
+- (void)setActionsHorizontalAlignment:(MDCContentHorizontalAlignment)actionsHorizontalAlignment {
+  if (_actionsHorizontalAlignment == actionsHorizontalAlignment) {
+    return;
+  }
+  _actionsHorizontalAlignment = actionsHorizontalAlignment;
+  self.alertView.actionsHorizontalAlignment = actionsHorizontalAlignment;
+}
+
+- (void)setActionsHorizontalAlignmentInVerticalLayout:(MDCContentHorizontalAlignment)alignment {
+  if (_actionsHorizontalAlignmentInVerticalLayout == alignment) {
+    return;
+  }
+  _actionsHorizontalAlignmentInVerticalLayout = alignment;
+  self.alertView.actionsHorizontalAlignmentInVerticalLayout = alignment;
+}
+
+- (void)setOrderVerticalActionsByEmphasis:(BOOL)orderVerticalActionsByEmphasis {
+  if (_orderVerticalActionsByEmphasis == orderVerticalActionsByEmphasis) {
+    return;
+  }
+  _orderVerticalActionsByEmphasis = orderVerticalActionsByEmphasis;
+  self.alertView.orderVerticalActionsByEmphasis = orderVerticalActionsByEmphasis;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -659,6 +687,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.titleIconView = self.titleIconView;
   self.alertView.cornerRadius = self.cornerRadius;
   self.alertView.enableRippleBehavior = self.enableRippleBehavior;
+  self.orderVerticalActionsByEmphasis = NO;
+  self.actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
+  self.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentCenter;
 
   // Create buttons for the actions (if not already created) and apply default styling
   for (MDCAlertAction *action in self.actions) {
