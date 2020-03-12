@@ -360,17 +360,14 @@ static const CGFloat kSheetBounceBuffer = 150;
     shouldBeginDraggingWithVelocity:(CGPoint)velocity {
   [self updateSheetState];
 
-  if (!self.dismissOnDraggingDownSheet) {
-    return NO;
-  }
+  BOOL draggingDown = (velocity.y >= 0);
 
   switch (self.sheetState) {
     case MDCSheetStatePreferred:
-      return YES;
+      return (!draggingDown || self.dismissOnDraggingDownSheet);
     case MDCSheetStateExtended: {
       UIScrollView *scrollView = self.sheet.scrollView;
       if (scrollView) {
-        BOOL draggingDown = (velocity.y >= 0);
         // Only allow dragging down if we are scrolled to the top.
         if (scrollView.contentOffset.y <= -scrollView.contentInset.top && draggingDown) {
           return YES;
@@ -391,15 +388,16 @@ static const CGFloat kSheetBounceBuffer = 150;
 - (void)draggableView:(__unused MDCDraggableView *)view
     draggingEndedWithVelocity:(CGPoint)velocity {
   MDCSheetState targetState;
+  MDCSheetState sheetStateClosable = self.dismissOnDraggingDownSheet ? MDCSheetStateClosed : MDCSheetStatePreferred;
   if (self.preferredSheetHeight == [self maximumSheetHeight]) {
     // Cannot be extended, only closed.
-    targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
+    targetState = (velocity.y >= 0 ? sheetStateClosable : MDCSheetStatePreferred);
   } else {
     CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
     if (currentSheetHeight >= self.preferredSheetHeight) {
       targetState = (velocity.y >= 0 ? MDCSheetStatePreferred : MDCSheetStateExtended);
     } else {
-      targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
+      targetState = (velocity.y >= 0 ? sheetStateClosable : MDCSheetStatePreferred);
     }
   }
   self.isDragging = NO;
