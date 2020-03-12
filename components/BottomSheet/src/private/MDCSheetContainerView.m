@@ -388,7 +388,8 @@ static const CGFloat kSheetBounceBuffer = 150;
 - (void)draggableView:(__unused MDCDraggableView *)view
     draggingEndedWithVelocity:(CGPoint)velocity {
   MDCSheetState targetState;
-  MDCSheetState sheetStateClosable = self.dismissOnDraggingDownSheet ? MDCSheetStateClosed : MDCSheetStatePreferred;
+  MDCSheetState sheetStateClosable =
+      self.dismissOnDraggingDownSheet ? MDCSheetStateClosed : MDCSheetStatePreferred;
   if (self.preferredSheetHeight == [self maximumSheetHeight]) {
     // Cannot be extended, only closed.
     targetState = (velocity.y >= 0 ? sheetStateClosable : MDCSheetStatePreferred);
