@@ -122,6 +122,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _alertTitle = [title copy];
     _message = [message copy];
     _titleAlignment = NSTextAlignmentNatural;
+    _messageAlignment = NSTextAlignmentNatural;
     _actionManager = [[MDCAlertActionManager alloc] init];
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _shadowColor = UIColor.blackColor;
@@ -326,6 +327,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _titleAlignment = titleAlignment;
   if (self.alertView) {
     self.alertView.titleAlignment = titleAlignment;
+  }
+}
+
+- (void)setMessageAlignment:(NSTextAlignment)messageAlignment {
+  _messageAlignment = messageAlignment;
+  if (self.alertView) {
+    self.alertView.messageAlignment = messageAlignment;
   }
 }
 
@@ -645,6 +653,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     self.alertView.buttonInkColor = self.buttonInkColor;  // b/117717380: Will be deprecated
   }
   self.alertView.titleAlignment = self.titleAlignment;
+  self.alertView.messageAlignment = self.messageAlignment;
   self.alertView.titleIcon = self.titleIcon;
   self.alertView.titleIconTintColor = self.titleIconTintColor;
   self.alertView.titleIconView = self.titleIconView;

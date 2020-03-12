@@ -45,9 +45,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-@dynamic titleAlignment;
-@dynamic titleIcon;
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -297,6 +294,14 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   _messageColor = messageColor;
 
   _messageLabel.textColor = messageColor;
+}
+
+- (NSTextAlignment)messageAlignment {
+  return self.messageLabel.textAlignment;
+}
+
+- (void)setMessageAlignment:(NSTextAlignment)messageAlignment {
+  self.messageLabel.textAlignment = messageAlignment;
 }
 
 - (void)setAccessoryView:(UIView *)accessoryView {
