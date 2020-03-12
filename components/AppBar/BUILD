@@ -114,6 +114,8 @@ mdc_examples_swift_library(
     deps = [
         ":AppBar",
         ":Theming",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
         "//components/FlexibleHeader:CanAlwaysExpandToMaximumHeight",
         "//components/Tabs",
         "//components/schemes/Color",
