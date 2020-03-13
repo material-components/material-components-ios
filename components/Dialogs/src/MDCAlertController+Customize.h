@@ -14,14 +14,19 @@
 
 #import "MaterialDialogs.h"
 
+/**
+ The Customize extensions privde APIs that extend the default Material Dialog. Make sure to adjust
+ your custom theming when using these APIs, if you are concerned with conforming to the Material
+ spec (material.io).
+*/
 @interface MDCAlertController (Customize)
 
 /**
- An optional custom icon view above the title of the alert.
+ An optional custom icon view that's displayed above the title of the alert, enabling custom
+ implementations of the view above the title.
 
- @note This property is intended to be used to provide a custom implementation of the title icon
- view. If the intention is to just display a `UIImage`, use `setTitleIcon:` API instead. If
- 'titleIcon' is set, 'titleIconView' is ignored.
+ @note Use `titleIcon` to display icons or images.  Use `titleIconView` for custom views
+ implementations. If both `titleIcon` are `titleIconView` are set, 'titleIconView' is ignored.
  */
 @property(nonatomic, strong, nullable) UIView *titleIconView;
 
