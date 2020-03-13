@@ -24,7 +24,6 @@
 #import "UIViewController+MaterialDialogs.h"
 
 #import "private/MDCAlertActionManager.h"
-#import "private/MDCAlertController+Customize.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
