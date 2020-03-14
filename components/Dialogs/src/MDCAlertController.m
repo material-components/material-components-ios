@@ -74,6 +74,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @end
 
+@interface MDCAlertControllerView (Accessibility)
+@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+@end
+
 @interface MDCAlertController ()
 
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
@@ -90,10 +94,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   // This is because title is overlapping with view controller title, However Apple alertController
   // redefines title as well.
   NSString *_alertTitle;
-
   CGSize _previousLayoutSize;
-
   BOOL _mdc_adjustsFontForContentSizeCategory;
+  NSString *_imageAccessibilityLabel;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -104,6 +107,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @synthesize actionsHorizontalAlignmentInVerticalLayout =
     _actionsHorizontalAlignmentInVerticalLayout;
 @synthesize orderVerticalActionsByEmphasis = _orderVerticalActionsByEmphasis;
+@synthesize imageAccessibilityLabel = _imageAccessibilityLabel;
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
                                  message:(nullable NSString *)message {
@@ -203,6 +207,30 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (self.alertView && messageAccessibilityLabel) {
     self.alertView.messageLabel.accessibilityLabel = messageAccessibilityLabel;
   }
+}
+
+- (void)setImageAccessibilityLabel:(NSString *)imageAccessibilityLabel {
+  if ([_imageAccessibilityLabel isEqual:imageAccessibilityLabel]) {
+    return;
+  }
+  _imageAccessibilityLabel = [imageAccessibilityLabel copy];
+
+  if (self.alertView) {
+    self.alertView.titleIconImageView.accessibilityLabel = _imageAccessibilityLabel;
+    self.alertView.titleIconView.accessibilityLabel = _imageAccessibilityLabel;
+  }
+}
+
+- (NSString *)imageAccessibilityLabel {
+  if (_imageAccessibilityLabel) {
+    return _imageAccessibilityLabel;
+  }
+  if (!self.alertView) {
+    return nil;
+  }
+  return (self.alertView.titleIconImageView != nil)
+             ? self.alertView.titleIconImageView.accessibilityLabel
+             : self.alertView.titleIconView.accessibilityLabel;
 }
 
 - (void)setAccessoryView:(UIView *)accessoryView {
@@ -658,6 +686,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageLabel.text = self.message;
   self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
   self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
+  self.alertView.titleIconImageView.accessibilityLabel = self.imageAccessibilityLabel;
+  self.alertView.titleIconView.accessibilityLabel = self.imageAccessibilityLabel;
+
   // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
   // adjustsFontForContentSizeCategory for messageLabel
   self.alertView.accessoryView = self.accessoryView;
