@@ -65,6 +65,14 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   [super tearDown];
 }
 
+- (void)sizeTofitContent {
+  // Ensure snapshot view size matches actual runtime size of alert
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:preferredContentSize];
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
+}
+
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   [view layoutIfNeeded];
 
@@ -221,11 +229,22 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   }
 
   // Then
-  // Ensure snapshot view size matches actual runtime size of alert
-  CGSize preferredContentSize = self.alertController.preferredContentSize;
-  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:preferredContentSize];
-  self.alertController.view.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
+  [self sizeTofitContent];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testActionsLayoutHorizontallyForExtraLongButtons {
+  // Given
+  self.alertController.title = @"Recurring actions";
+  self.alertController.message = nil;
+  [self addLowEmphasisAction:@"This and all following events"];
+  [self addLowEmphasisAction:@"This and all following events"];
+
+  // When
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  [self sizeTofitContent];
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
