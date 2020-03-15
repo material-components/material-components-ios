@@ -80,7 +80,7 @@ static NSString *const kActionLowUrdu = @"کم";
 - (void)testPreferredContentSizeWithNotoNastaliqUrdu {
   // When
   self.alertController.title = kTitleUrdu;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageUrdu;
   NSString *urduFontName = @"NotoNastaliqUrdu";
   UIFont *dialogBodyFont = [UIFont systemFontOfSize:20.0];

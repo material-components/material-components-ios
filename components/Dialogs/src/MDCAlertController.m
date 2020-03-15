@@ -75,7 +75,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @end
 
 @interface MDCAlertControllerView (Accessibility)
-@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+@property(nonatomic, nullable, strong) UIImageView *titleImageImageView;
 @end
 
 @interface MDCAlertController ()
@@ -83,7 +83,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
-@property(nonatomic, nullable, strong) UIView *titleIconView;
+@property(nonatomic, nullable, strong) UIView *titleImageView;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
@@ -102,7 +102,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
-@synthesize titleIconView = _titleIconView;
+@synthesize titleImageView = _titleImageView;
 @synthesize actionsHorizontalAlignment = _actionsHorizontalAlignment;
 @synthesize actionsHorizontalAlignmentInVerticalLayout =
     _actionsHorizontalAlignmentInVerticalLayout;
@@ -216,8 +216,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _imageAccessibilityLabel = [imageAccessibilityLabel copy];
 
   if (self.alertView) {
-    self.alertView.titleIconImageView.accessibilityLabel = _imageAccessibilityLabel;
-    self.alertView.titleIconView.accessibilityLabel = _imageAccessibilityLabel;
+    self.alertView.titleImageImageView.accessibilityLabel = _imageAccessibilityLabel;
+    self.alertView.titleImageView.accessibilityLabel = _imageAccessibilityLabel;
   }
 }
 
@@ -228,9 +228,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (!self.alertView) {
     return nil;
   }
-  return (self.alertView.titleIconImageView != nil)
-             ? self.alertView.titleIconImageView.accessibilityLabel
-             : self.alertView.titleIconView.accessibilityLabel;
+  return (self.alertView.titleImageImageView != nil)
+             ? self.alertView.titleImageImageView.accessibilityLabel
+             : self.alertView.titleImageView.accessibilityLabel;
 }
 
 - (void)setAccessoryView:(UIView *)accessoryView {
@@ -393,24 +393,24 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setTitleIcon:(UIImage *)titleIcon {
-  _titleIcon = titleIcon;
+- (void)setTitleImage:(UIImage *)titleImage {
+  _titleImage = titleImage;
   if (self.alertView) {
-    self.alertView.titleIcon = titleIcon;
+    self.alertView.titleImage = titleImage;
   }
 }
 
-- (void)setTitleIconView:(UIView *)titleIconView {
-  _titleIconView = titleIconView;
+- (void)setTitleImageView:(UIView *)titleImageView {
+  _titleImageView = titleImageView;
   if (self.alertView) {
-    self.alertView.titleIconView = titleIconView;
+    self.alertView.titleImageView = titleImageView;
   }
 }
 
-- (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
-  _titleIconTintColor = titleIconTintColor;
+- (void)setTitleImageTintColor:(UIColor *)titleImageTintColor {
+  _titleImageTintColor = titleImageTintColor;
   if (self.alertView) {
-    self.alertView.titleIconTintColor = titleIconTintColor;
+    self.alertView.titleImageTintColor = titleImageTintColor;
   }
 }
 
@@ -686,8 +686,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageLabel.text = self.message;
   self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
   self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
-  self.alertView.titleIconImageView.accessibilityLabel = self.imageAccessibilityLabel;
-  self.alertView.titleIconView.accessibilityLabel = self.imageAccessibilityLabel;
+  self.alertView.titleImageImageView.accessibilityLabel = self.imageAccessibilityLabel;
+  self.alertView.titleImageView.accessibilityLabel = self.imageAccessibilityLabel;
 
   // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
   // adjustsFontForContentSizeCategory for messageLabel
@@ -713,9 +713,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
   self.alertView.titleAlignment = self.titleAlignment;
   self.alertView.messageAlignment = self.messageAlignment;
-  self.alertView.titleIcon = self.titleIcon;
-  self.alertView.titleIconTintColor = self.titleIconTintColor;
-  self.alertView.titleIconView = self.titleIconView;
+  self.alertView.titleImage = self.titleImage;
+  self.alertView.titleImageTintColor = self.titleImageTintColor;
+  self.alertView.titleImageView = self.titleImageView;
   self.alertView.cornerRadius = self.cornerRadius;
   self.alertView.enableRippleBehavior = self.enableRippleBehavior;
   self.orderVerticalActionsByEmphasis = NO;

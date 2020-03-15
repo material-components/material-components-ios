@@ -27,7 +27,7 @@
                toAlertController:(nonnull MDCAlertController *)alertController {
   alertController.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  alertController.titleIconTintColor = colorScheme.primaryColor;
+  alertController.titleImageTintColor = colorScheme.primaryColor;
   alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
   alertController.backgroundColor = colorScheme.surfaceColor;
 

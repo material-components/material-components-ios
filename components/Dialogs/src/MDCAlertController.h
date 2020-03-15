@@ -107,11 +107,15 @@
 /** The alignment applied to the title of the Alert. Default to NSTextAlignmentNatural. */
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
-/** An optional icon appearing above the title of the Alert Controller.*/
-@property(nonatomic, strong, nullable) UIImage *titleIcon;
+/** An optional image or icon appearing above the title of the Alert Controller.*/
+@property(nonatomic, strong, nullable) UIImage *titleImage;
+//@property(nonatomic, strong, nullable) UIImage *titleIcon __deprecated_msg("Please use
+//`titleImage` instead.");
 
-/** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
-@property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
+/** The tint color applied to the titleImage. Leave empty to preserve original image color(s).*/
+@property(nonatomic, strong, nullable) UIColor *titleImageTintColor;
+//@property(nonatomic, strong, nullable) UIColor *titleIconTintColor __deprecated_msg("Please use
+//`titleImageTintColor` instead.");
 
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;

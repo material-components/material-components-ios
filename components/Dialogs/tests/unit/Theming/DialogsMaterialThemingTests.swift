@@ -47,7 +47,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     // Color
     XCTAssertEqual(alert.titleColor, colorScheme.onSurfaceColor.withAlphaComponent(0.87))
     XCTAssertEqual(alert.messageColor, colorScheme.onSurfaceColor.withAlphaComponent(0.60))
-    XCTAssertEqual(alert.titleIconTintColor, colorScheme.primaryColor)
+    XCTAssertEqual(alert.titleImageTintColor, colorScheme.primaryColor)
     XCTAssertEqual(alert.scrimColor, colorScheme.onSurfaceColor.withAlphaComponent(0.32))
     XCTAssertEqual(alert.backgroundColor, colorScheme.surfaceColor);
 
@@ -164,7 +164,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(presentationController.scrimColor,
                    colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
-    XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
+    XCTAssertEqual(alertView.titleImageTintColor, colorScheme.primaryColor)
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
 
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)

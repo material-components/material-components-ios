@@ -226,7 +226,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testDefaultThemeWithLargeIconLongMessageLatin {
   // Given
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
 
   // When
@@ -238,7 +238,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testDefaultThemeWithLargeIconLongMessageArabic {
   // Given
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
 
@@ -251,7 +251,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testCustomThemeWithLargeIconLongMessageLatin {
   // Given
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
 
   // When
@@ -263,7 +263,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testCustomThemeWithLargeIconLongMessageArabic {
   // Given
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
 
@@ -277,7 +277,7 @@ static NSString *const kMessageLongArabic =
 - (void)testDefaultThemeWithLargeIconLongTitleLongMessageLatin {
   // Given
   self.alertController.title = kTitleLongLatin;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
 
   // When
@@ -290,7 +290,7 @@ static NSString *const kMessageLongArabic =
 - (void)testDefaultThemeWithLargeIconLongTitleLongMessageArabic {
   // Given
   self.alertController.title = kTitleLongArabic;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
 
@@ -304,7 +304,7 @@ static NSString *const kMessageLongArabic =
 - (void)testCustomThemeWithLargeIconLongTitleLongMessageLatin {
   // Given
   self.alertController.title = kTitleLongLatin;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
 
   // When
@@ -317,7 +317,7 @@ static NSString *const kMessageLongArabic =
 - (void)testCustomThemeWithLargeIconLongTitleLongMessageArabic {
   // Given
   self.alertController.title = kTitleLongArabic;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
 

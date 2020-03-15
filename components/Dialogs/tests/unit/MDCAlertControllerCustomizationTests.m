@@ -20,7 +20,7 @@
 #import <XCTest/XCTest.h>
 
 @interface MDCAlertControllerView (Testing)
-@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+@property(nonatomic, nullable, strong) UIImageView *titleImageImageView;
 @end
 
 @interface MDCAlertControllerCustomizationTests : XCTestCase
@@ -64,12 +64,12 @@
   UIImage *icon = TestImage(CGSizeMake(24, 24));
 
   // When
-  self.alert.titleIcon = icon;
+  self.alert.titleImage = icon;
 
   // Then
-  XCTAssertNotNil(self.alert.titleIcon);
-  XCTAssertEqual(self.alertView.titleIcon, icon);
-  XCTAssertEqual(self.alertView.titleIconImageView.image, icon);
+  XCTAssertNotNil(self.alert.titleImage);
+  XCTAssertEqual(self.alertView.titleImage, icon);
+  XCTAssertEqual(self.alertView.titleImageImageView.image, icon);
 }
 
 - (void)testApplyingTintToTitleIcon {
@@ -78,14 +78,14 @@
   UIColor *tintColor = UIColor.orangeColor;
 
   // When
-  self.alert.titleIcon = icon;
-  self.alert.titleIconTintColor = tintColor;
+  self.alert.titleImage = icon;
+  self.alert.titleImageTintColor = tintColor;
 
   // Then
-  XCTAssertNotNil(self.alert.titleIcon);
-  XCTAssertEqualObjects(self.alertView.titleIcon, icon);
-  XCTAssertEqualObjects(self.alertView.titleIconTintColor, tintColor);
-  XCTAssertEqualObjects(self.alertView.titleIconImageView.tintColor, tintColor);
+  XCTAssertNotNil(self.alert.titleImage);
+  XCTAssertEqualObjects(self.alertView.titleImage, icon);
+  XCTAssertEqualObjects(self.alertView.titleImageTintColor, tintColor);
+  XCTAssertEqualObjects(self.alertView.titleImageImageView.tintColor, tintColor);
 }
 
 - (void)testApplyingTintToTitleIconInAnyOrder {
@@ -94,14 +94,14 @@
   UIColor *tintColor = UIColor.orangeColor;
 
   // When
-  self.alert.titleIconTintColor = tintColor;
-  self.alert.titleIcon = icon;
+  self.alert.titleImageTintColor = tintColor;
+  self.alert.titleImage = icon;
 
   // Then
-  XCTAssertNotNil(self.alert.titleIcon);
-  XCTAssertEqualObjects(self.alertView.titleIcon, icon);
-  XCTAssertEqualObjects(self.alertView.titleIconTintColor, tintColor);
-  XCTAssertEqualObjects(self.alertView.titleIconImageView.tintColor, tintColor);
+  XCTAssertNotNil(self.alert.titleImage);
+  XCTAssertEqualObjects(self.alertView.titleImage, icon);
+  XCTAssertEqualObjects(self.alertView.titleImageTintColor, tintColor);
+  XCTAssertEqualObjects(self.alertView.titleImageImageView.tintColor, tintColor);
 }
 
 - (void)testApplyingScrimColorToPresentationController {

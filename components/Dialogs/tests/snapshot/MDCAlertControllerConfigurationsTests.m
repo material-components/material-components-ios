@@ -120,7 +120,7 @@ static NSString *const kMessageLongLatin =
 // title-icon + actions
 - (void)testAlertHasTitleIcon {
   // Given
-  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.titleImage = self.titleIcon;
 
   // When
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
@@ -133,7 +133,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleImage {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
-  self.alertController.titleIcon = self.titleImage;
+  self.alertController.titleImage = self.titleImage;
 
   // When
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
@@ -171,7 +171,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleIconAndMessage {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
-  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.titleImage = self.titleIcon;
   self.alertController.message = kMessageShortLatin;
 
   // When
@@ -185,7 +185,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleImageAndMessage {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
-  self.alertController.titleIcon = self.titleImage;
+  self.alertController.titleImage = self.titleImage;
   self.alertController.message = kMessageLongLatin;
 
   // When
@@ -198,7 +198,7 @@ static NSString *const kMessageLongLatin =
 // title-icon + accessory-view + actions
 - (void)testAlertHasTitleIconAndAccessoryView {
   // Given
-  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.titleImage = self.titleIcon;
   self.alertController.accessoryView = self.accessoryView;
 
   // When
@@ -212,7 +212,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleImageAndAccessoryView {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
-  self.alertController.titleIcon = self.titleImage;
+  self.alertController.titleImage = self.titleImage;
   self.alertController.accessoryView = self.accessoryView;
 
   // When
@@ -252,7 +252,7 @@ static NSString *const kMessageLongLatin =
 // title + title-icon + accessory-view + actions
 - (void)testAlertHasTitleAndTitleIconAndAccessoryView {
   // Given
-  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.titleImage = self.titleIcon;
   self.alertController.title = kTitleShortLatin;
   self.alertController.accessoryView = self.accessoryView;
 
@@ -267,7 +267,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleAndTitleImageAndAccessoryView {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
-  self.alertController.titleIcon = self.titleImage;
+  self.alertController.titleImage = self.titleImage;
   self.alertController.title = kTitleShortLatin;
   self.alertController.message = kMessageShortLatin;
   self.alertController.accessoryView = self.accessoryView;
@@ -283,7 +283,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleAndTitleIconAndMessageAndAccessoryView {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
-  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.titleImage = self.titleIcon;
   self.alertController.title = kTitleShortLatin;
   self.alertController.message = kMessageLongLatin;
   self.alertController.accessoryView = self.accessoryView;
@@ -298,7 +298,7 @@ static NSString *const kMessageLongLatin =
 // title + title-image + message + accessory-view + actions
 - (void)testAlertHasTitleAndTitleImageAndMessageAndAccessoryView {
   // Given
-  self.alertController.titleIcon = self.titleImage;
+  self.alertController.titleImage = self.titleImage;
   self.alertController.title = kTitleShortLatin;
   self.alertController.message = kMessageLongLatin;
   self.alertController.accessoryView = self.accessoryView;
@@ -314,7 +314,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleImageAndVerticalButtons {
   // Given
   [self addOutlinedActionWithTitle:@"Verticallly Aligned Buttons"];
-  self.alertController.titleIcon = self.titleImage;
+  self.alertController.titleImage = self.titleImage;
 
   // When
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
@@ -330,7 +330,7 @@ static NSString *const kMessageLongLatin =
   [self addOutlinedActionWithTitle:@"Buttons?"];
   [self addOutlinedActionWithTitle:@"Vertical"];
   [self addOutlinedActionWithTitle:@"Four"];
-  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.titleImage = self.titleIcon;
   self.alertController.message = kMessageShortLatin;
   self.alertController.accessoryView = self.accessoryView;
 
@@ -362,7 +362,7 @@ static NSString *const kMessageLongLatin =
 - (void)testAlertHasTitleAndTitleIconAndMessageAndAccessoryViewInRTL {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
-  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.titleImage = self.titleIcon;
   self.alertController.title = kTitleShortLatin;
   self.alertController.message = kMessageLongLatin;
   self.alertController.accessoryView = self.accessoryView;

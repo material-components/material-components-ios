@@ -157,7 +157,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testDefaultAppearanceWithSmallIconShortMessageLatin {
   // When
-  self.alertController.titleIcon = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+  self.alertController.titleImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.alertController.message = kMessageShortLatin;
 
@@ -167,7 +167,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testDefaultAppearanceWithSmallIconShortMessageArabic {
   // When
-  self.alertController.titleIcon = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+  self.alertController.titleImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.alertController.message = kMessageShortArabic;
   [self changeToRTL:self.alertController];
@@ -178,7 +178,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testDefaultAppearanceWithLargeIconLongMessageLatin {
   // When
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
 
   // Then
@@ -187,7 +187,7 @@ static NSString *const kMessageLongArabic =
 
 - (void)testDefaultAppearanceWithLargeIconLongMessageArabic {
   // When
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
 
@@ -198,7 +198,7 @@ static NSString *const kMessageLongArabic =
 - (void)testDefaultAppearanceWithLargeIconLongTitleLongMessageLatin {
   // When
   self.alertController.title = kTitleLongLatin;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
 
   // Then
@@ -208,7 +208,7 @@ static NSString *const kMessageLongArabic =
 - (void)testDefaultAppearanceWithLargeIconLongTitleLongMessageArabic {
   // When
   self.alertController.title = kTitleLongArabic;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
 
@@ -227,7 +227,7 @@ static NSString *const kMessageLongArabic =
 - (void)testPreferredContentSizeWithLargeIconLongTitleLongMessageLatin {
   // When
   self.alertController.title = kTitleLongLatin;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
   CGSize preferredContentSize = self.alertController.preferredContentSize;
   self.alertController.view.bounds =
@@ -240,7 +240,7 @@ static NSString *const kMessageLongArabic =
 - (void)testPreferredContentSizeWithLargeIconLongTitleLongMessageArabic {
   // When
   self.alertController.title = kTitleLongArabic;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
   CGSize preferredContentSize = self.alertController.preferredContentSize;
@@ -265,7 +265,7 @@ static NSString *const kMessageLongArabic =
 - (void)testPreferredContentSizeWithLargeIconLongTitleLongMessageArabicAccessoryView {
   // When
   self.alertController.title = kTitleLongArabic;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
   [self.alertController setAccessoryView:self.accessoryView];
@@ -280,7 +280,7 @@ static NSString *const kMessageLongArabic =
 - (void)testSizeToFitWithLargeIconLongTitleLongMessageLatin {
   // When
   self.alertController.title = kTitleLongLatin;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongLatin;
   [self.alertController.view sizeToFit];
 
@@ -291,7 +291,7 @@ static NSString *const kMessageLongArabic =
 - (void)testSizeToFitWithLargeIconLongTitleLongMessageArabic {
   // When
   self.alertController.title = kTitleLongArabic;
-  self.alertController.titleIcon = self.iconImage;
+  self.alertController.titleImage = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
   [self.alertController.view sizeToFit];

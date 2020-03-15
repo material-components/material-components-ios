@@ -80,7 +80,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     case 3:
       return performRightTitleWithResizedIcon()
     case 4:
-      return performTintedTitleIconNoTitle()
+      return performTintedTitleImageNoTitle()
     case 5:
       return performScrimColor()
     case 6:
@@ -119,7 +119,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
 
   func performCenteredTitleWithIcon() -> MDCAlertController {
     let alert = createMDCAlertController(title: "Center Aligned Title")
-    alert.titleIcon = sampleIcon()
+    alert.titleImage = sampleIcon()
     alert.titleAlignment = .center
     alert.applyTheme(withScheme: containerScheme)
     return alert
@@ -127,26 +127,26 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
 
   func performNaturalTitleWithIcon() -> MDCAlertController {
     let alert = createMDCAlertController(title: "Default (Natural) Title Alignment")
-    alert.titleIcon = sampleIcon()
+    alert.titleImage = sampleIcon()
     alert.applyTheme(withScheme: containerScheme)
     return alert
   }
 
   func performRightTitleWithResizedIcon() -> MDCAlertController {
     let alert = createMDCAlertController(title: "Right Aligned Title")
-    alert.titleIcon = sampleIcon(isStandardSize: false)
+    alert.titleImage = sampleIcon(isStandardSize: false)
     alert.titleAlignment = .right
     alert.applyTheme(withScheme: containerScheme)
     return alert
   }
 
-  func performTintedTitleIconNoTitle() -> MDCAlertController {
+  func performTintedTitleImageNoTitle() -> MDCAlertController {
     let alert = createMDCAlertController(title: nil)
-    alert.titleIcon = sampleIcon()
+    alert.titleImage = sampleIcon()
     alert.applyTheme(withScheme: containerScheme)
 
-    // Theming override: set the titleIconTintColor after the color scheme has been applied
-    alert.titleIconTintColor = .red
+    // Theming override: set the titleImageTintColor after the color scheme has been applied
+    alert.titleImageTintColor = .red
 
     return alert
   }
@@ -207,7 +207,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
   func performCustomButtonTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Custom Button Theming",
                                    message: "Custom styling of High, Medium & Low Emphasis")
-    alert.titleIcon = sampleIcon()
+    alert.titleImage = sampleIcon()
 
     // Use .low emphasis for styling buttons as text buttons
     alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
@@ -227,7 +227,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
   func performDarkTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Dark Theme",
                                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing")
-    alert.titleIcon = sampleIcon()
+    alert.titleImage = sampleIcon()
 
     alert.addAction(MDCAlertAction(title:"All Right", emphasis: .high, handler: handler))
     alert.addAction(MDCAlertAction(title:"Not Now", emphasis: .medium, handler: handler))
