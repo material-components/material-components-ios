@@ -455,7 +455,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGFloat)titleInsetTop {
-  return [self hasTitleIconOrImage] ? self.titleIconInsets.top : ([self hasTitle] ? self.titleInsets.top : 0.f);
+  return [self hasTitleIconOrImage] ? self.titleIconInsets.top
+                                    : ([self hasTitle] ? self.titleInsets.top : 0.f);
 }
 
 /// @returns the title bottom space, or, if both title and content exist, the smallest netween the
@@ -470,13 +471,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGFloat)titleViewInsetLeft {
-  return [self hasTitleIconOrImage] ?
-      MIN(self.titleInsets.left, self.titleIconInsets.left) : self.titleInsets.left;
+  return [self hasTitleIconOrImage] ? MIN(self.titleInsets.left, self.titleIconInsets.left)
+                                    : self.titleInsets.left;
 }
 
 - (CGFloat)titleViewInsetRight {
-  return [self hasTitleIconOrImage] ?
-      MIN(self.titleInsets.right, self.titleIconInsets.right) : self.titleInsets.right;
+  return [self hasTitleIconOrImage] ? MIN(self.titleInsets.right, self.titleIconInsets.right)
+                                    : self.titleInsets.right;
 }
 
 - (CGFloat)accessoryVerticalInset {
@@ -559,8 +560,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   CGFloat totalElementsHeight = messageSize.height + accessoryViewSize.height;
   CGFloat contentTop = MAX(0.f, self.contentInsets.top - [self titleInsetBottom]);
-  CGFloat contentHeight = maxWidth <= 0 ? 0.f:
-      totalElementsHeight + [self accessoryVerticalInset] + self.contentInsets.bottom + contentTop;
+  CGFloat contentHeight = maxWidth <= 0 ? 0.f
+                                        : totalElementsHeight + [self accessoryVerticalInset] +
+                                              self.contentInsets.bottom + contentTop;
 
   return CGSizeMake((CGFloat)ceil(contentWidth), (CGFloat)ceil(contentHeight));
 }
@@ -582,7 +584,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   boundsSize.width = boundingWidth - titleInsets;
   CGSize titleSize = [self.titleLabel sizeThatFits:boundsSize];
-  CGFloat titleViewWidth =  MAX(titleSize.width + titleInsets, contentWidth + contentInsets);
+  CGFloat titleViewWidth = MAX(titleSize.width + titleInsets, contentWidth + contentInsets);
 
   CGFloat totalElementsHeight = [self titleIconViewSize].height + titleSize.height;
   CGFloat titleHeight = totalElementsHeight + [self titleInsetTop] + [self titleIconInsetBottom] +
