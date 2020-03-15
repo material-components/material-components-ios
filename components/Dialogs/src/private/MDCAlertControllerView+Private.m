@@ -480,6 +480,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                                     : self.titleInsets.right;
 }
 
+- (CGFloat)contentInsetTop {
+  return [self hasTitle] || [self hasTitleIconOrImage] ? 0.f : self.contentInsets.top;
+}
+
 - (CGFloat)accessoryVerticalInset {
   return ([self hasMessage] && [self hasAccessoryView]) ? self.accessoryViewVerticalInset : 0.0f;
 }
@@ -501,7 +505,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGRect)messageFrameWithSize:(CGSize)messageSize {
-  CGFloat contentTop = MAX(0.f, self.contentInsets.top - [self titleInsetBottom]);
+  CGFloat contentTop = [self contentInsetTop];
   return CGRectMake(self.contentInsets.left, contentTop, messageSize.width, messageSize.height);
 }
 
@@ -559,10 +563,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat contentWidth = MAX(titleSize.width + titleInsets, maxWidth + contentInsets);
 
   CGFloat totalElementsHeight = messageSize.height + accessoryViewSize.height;
-  CGFloat contentTop = MAX(0.f, self.contentInsets.top - [self titleInsetBottom]);
   CGFloat contentHeight = maxWidth <= 0 ? 0.f
                                         : totalElementsHeight + [self accessoryVerticalInset] +
-                                              self.contentInsets.bottom + contentTop;
+                                              self.contentInsets.bottom + [self contentInsetTop];
 
   return CGSizeMake((CGFloat)ceil(contentWidth), (CGFloat)ceil(contentHeight));
 }
