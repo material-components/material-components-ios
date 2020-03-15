@@ -500,7 +500,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGRect)messageFrameWithSize:(CGSize)messageSize {
-  return CGRectMake(self.contentInsets.left, 0.0f, messageSize.width, messageSize.height);
+  CGFloat contentTop = MAX(0.f, self.contentInsets.top - [self titleInsetBottom]);
+  return CGRectMake(self.contentInsets.left, contentTop, messageSize.width, messageSize.height);
 }
 
 - (CGRect)titleIconFrameWithTitleSize:(CGSize)titleSize {
@@ -542,24 +543,25 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 // @param boundingWidth should not include any internal margins or padding
 - (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
-  CGFloat leftInset =
-      MAX(MAX(self.titleInsets.left, self.titleIconInsets.left), self.contentInsets.left);
-  CGFloat rightInset =
-      MAX(MAX(self.titleInsets.right, self.titleIconInsets.right), self.contentInsets.right);
-
+  CGFloat contentInsets = self.contentInsets.left + self.contentInsets.right;
+  CGFloat titleInsets = [self titleViewInsetLeft] + [self titleViewInsetRight];
   CGSize boundsSize = CGRectInfinite.size;
-  boundsSize.width = boundingWidth - leftInset - rightInset;
 
+  boundsSize.width = boundingWidth - titleInsets;
   CGSize titleSize = [self.titleLabel sizeThatFits:boundsSize];
+
+  boundsSize.width = boundingWidth - contentInsets;
   CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
   CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:boundsSize];
 
-  CGFloat contentWidth = MAX(MAX(titleSize.width, messageSize.width), accessoryViewSize.width) +
-                         leftInset + rightInset;
-  CGFloat totalElementsHeight = messageSize.height + accessoryViewSize.height;
+  CGFloat maxWidth = MAX(messageSize.width, accessoryViewSize.width);
+  CGFloat contentWidth = MAX(titleSize.width + titleInsets, maxWidth + contentInsets);
 
-  CGFloat contentHeight =
-      totalElementsHeight + [self accessoryVerticalInset] + self.contentInsets.bottom;
+  CGFloat totalElementsHeight = messageSize.height + accessoryViewSize.height;
+  CGFloat contentTop = MAX(0.f, self.contentInsets.top - [self titleInsetBottom]);
+  CGFloat contentHeight = maxWidth <= 0 ? 0.f:
+      totalElementsHeight + [self accessoryVerticalInset] + self.contentInsets.bottom + contentTop;
+
   return CGSizeMake((CGFloat)ceil(contentWidth), (CGFloat)ceil(contentHeight));
 }
 
