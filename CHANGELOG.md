@@ -1,16 +1,44 @@
-# #develop#
+# 107.3.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release includes several new APIs and improvements to Dialogs, AppBar, and Slider.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+MDCAppBarViewController now provides an `accessibilityPerformEscapeDelegate`, which can be used to
+customize the `accessibilityPerformEscape` behavior of the AppBar without subclassing.
+
+```swift
+class SomeDelegate: NSObject, MDCAppBarViewControllerAccessibilityPerformEscapeDelegate {
+  func appBarViewControllerAccessibilityPerformEscape(_ appBarViewController: MDCAppBarViewController) -> Bool {
+		// Perform custom escape handling
+    return true
+  }
+}
+
+appBarViewController.accessibilityPerformEscapeDelegate = delegate
+```
+
+MDCAlertController has a new `messageAlignment` API which can be used to adjust the alignment of the
+message text:
+
+```swift
+alertController.messageAlignment = .right
+```
+
+MDCAlertController also now allow the order and alignment of actions to be customized with three new
+APIs:
+
+- `actionsHorizontalAlignment`
+- `actionsHorizontalAlignmentInVerticalLayout`
+- `orderVerticalActionsByEmphasis`
+
+MDCSlider now allows you to customize the appearance of the thumb track with the new
+`shouldDisplayThumbWithDiscreteValueLabel` API. Turning this API on will keep the thumb track
+visible while the user is interacting with the slider.
+
+```swift
+slider.shouldDisplayThumbWithDiscreteValueLabel = true
+```
 
 ## Component changes
 
@@ -47,7 +75,7 @@ Replace this text with example code for each new feature.
 
 * [Refactor MDCInkView logic grappling with interplay between legacy ink layer and max ripple radius, ink style, etc (#9855)](https://github.com/material-components/material-components-ios/commit/830f6dfdc0f00ccc3aac8b01b1de7af2b78fd7ce) (Andrew Overton)
 
-## Multi-component changes
+### Slider
 
 * [Allow thumb to stay filled with discrete value label (#9866)](https://github.com/material-components/material-components-ios/commit/6326cd055aef43882257c9cd4264376b7be4523a) (Yarden Eitan)
 
