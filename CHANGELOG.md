@@ -1,3 +1,58 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### AppBar
+
+* [Add AppBarCustomButtonThemeExample. (#9883)](https://github.com/material-components/material-components-ios/commit/027f240063350c642c5396aa1179f4e4ace97ed5) (featherless)
+* [Add AppBarWithExpandableCells example. (#9873)](https://github.com/material-components/material-components-ios/commit/e6989ce5e3c1808e51702c48cec35114680f0a02) (featherless)
+* [Add a delegate for customizing accessibilityPerformEscape behavior. (#9879)](https://github.com/material-components/material-components-ios/commit/9ea7f0d21a0f4f2131f08b0ea94f3ee1e3b56d9c) (featherless)
+* [Test the UINavigationController accessibilityPerformEscape behavior. (#9876)](https://github.com/material-components/material-components-ios/commit/c58d4d8abdf3263508618d6c17e7785e209ac664) (featherless)
+
+### Dialogs
+
+* [Accessibility frame is larger than displayed text. (#9865)](https://github.com/material-components/material-components-ios/commit/a10704de7bc90a6abaf51ce8c98b2799c1b321e8) (Galia Kaufman)
+* [Add a snapshot test for extea long buttons (#9897)](https://github.com/material-components/material-components-ios/commit/6ec85ffb6d881ee1fe394ada75e0f46fc82751b1) (Galia Kaufman)
+* [Add missed accessibility labels for the UI elements of the dialog. (#9895)](https://github.com/material-components/material-components-ios/commit/4dc4da3a7afc72ce79d9029491399a16c16dc313) (Galia Kaufman)
+* [Add snapshots tests for adjustable insets (#9899)](https://github.com/material-components/material-components-ios/commit/c66e0c307c44f2f14ddadc149e48432e5ef12424) (Galia Kaufman)
+* [Adding a snapshot test to verify correct layout of actions in edge cases found in issue: #8434. (#9875)](https://github.com/material-components/material-components-ios/commit/4c601a50045fd609bbc6f4fcf41065a233e6a79e) (Galia Kaufman)
+* [Allow setting text alignment for alert message text (#9839)](https://github.com/material-components/material-components-ios/commit/42584f3f1efe99cb1c8ce59c5dd1b0b668f1e546) (Galia Kaufman)
+* [Fix actions order for center and justified actions alignment. (#9889)](https://github.com/material-components/material-components-ios/commit/ba0614003e1c1040c28f737e53d5e4796beb422e) (Galia Kaufman)
+* [Fix comment line length (#9887)](https://github.com/material-components/material-components-ios/commit/1e9d259b9efae9966e07af129f1f37c10118bc13) (Galia Kaufman)
+* [Fix incorrect content height for non-standard dialogs (#9864)](https://github.com/material-components/material-components-ios/commit/ba30b6ffe870cf993ae19b0cb7efa43ee21130c3) (Galia Kaufman)
+* [Fix incorrect vertical layout for uppercase buttons (#9877)](https://github.com/material-components/material-components-ios/commit/acdfee53fd8d74a3e22c2690c73d3ed255e510c0) (Galia Kaufman)
+* [Fix vertical calculations for wide actions view (#9878)](https://github.com/material-components/material-components-ios/commit/a265dad769aad1ebf9a4bdfef82cf6894676a893) (Galia Kaufman)
+* [Publishing actions API (#9888)](https://github.com/material-components/material-components-ios/commit/88ecf017301f66452f7cfb456a07fd4b7fb9fafe) (Galia Kaufman)
+* [Refactoring alert actions test (#9886)](https://github.com/material-components/material-components-ios/commit/9febb9de3013e251bed4ffcc798e5f24a77fc6fe) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Add unit test to reproduce https://github.com/material-components/material-components-ios/issues/9863. (#9880)](https://github.com/material-components/material-components-ios/commit/1116209825249a36e64c9f150b4dfca89c26b60f) (featherless)
+* [Fix bug where hairline configuration would not persist. (#9881)](https://github.com/material-components/material-components-ios/commit/3ca65ab2a8a28966a693ff08b5dd1af2eb912920) (featherless)
+* [Fix jumping effect in a table view with dynamic cell heights. (#9872)](https://github.com/material-components/material-components-ios/commit/b15e6d8ace969d84af3104a5912cfb4a53e34269) (featherless)
+
+### Ink
+
+* [Refactor MDCInkView logic grappling with interplay between legacy ink layer and max ripple radius, ink style, etc (#9855)](https://github.com/material-components/material-components-ios/commit/830f6dfdc0f00ccc3aac8b01b1de7af2b78fd7ce) (Andrew Overton)
+
+## Multi-component changes
+
+* [Allow thumb to stay filled with discrete value label (#9866)](https://github.com/material-components/material-components-ios/commit/6326cd055aef43882257c9cd4264376b7be4523a) (Yarden Eitan)
+
+---
+
 # 107.2.0
 
 This minor release includes the introduction of a self-sizing mechanism to MDCBaseCell, a new layout style for MDCTabBarView, and numerous improvements and bug fixes for BottomSheet, Snackbar, Dialogs, Ink, and TextFields.
