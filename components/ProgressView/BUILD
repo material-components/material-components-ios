@@ -49,12 +49,6 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    visibility = ["//visibility:private"],
-)
-
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
     extra_srcs = native.glob([
@@ -63,7 +57,6 @@ mdc_unit_test_objc_library(
     deps = [
         ":ProgressView",
         ":Theming",
-        ":private",
     ],
 )
 
