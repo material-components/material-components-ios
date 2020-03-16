@@ -48,10 +48,6 @@ static NSString *const kMessageLongLatin =
 
   self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 300.f);
 
-  //  Uncomment to test with the adjustableInsets flag enabled:
-  //    MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  //    alertView.enableAdjustableInsets = YES;
-
   self.titleIcon = [[UIImage mdc_testImageOfSize:CGSizeMake(24.f, 24.f)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.titleImage = [[UIImage mdc_testImageOfSize:CGSizeMake(180.f, 120.f)]
@@ -75,9 +71,11 @@ static NSString *const kMessageLongLatin =
 }
 
 - (void)sizeAlertToFitContent {
-  CGSize preferredContentSize = self.alertController.preferredContentSize;
-  self.alertController.view.bounds =
-      CGRectMake(0.f, 0.f, preferredContentSize.width, preferredContentSize.height);
+  // Ensure snapshot view size matches actual runtime size of the alert.
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGRect bounds = alertView.bounds;
+  bounds.size = [alertView calculatePreferredContentSizeForBounds:bounds.size];
+  alertView.bounds = CGRectMake(0.f, 0.f, bounds.size.width, bounds.size.height);
 }
 
 - (void)addOutlinedActionWithTitle:(NSString *)actionTitle {
