@@ -48,10 +48,6 @@ static NSString *const kMessageLongLatin =
 
   self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 300.f);
 
-  //  Uncomment to test with the adjustableInsets flag enabled:
-  //    MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  //    alertView.enableAdjustableInsets = YES;
-
   self.titleIcon = [[UIImage mdc_testImageOfSize:CGSizeMake(24.f, 24.f)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.titleImage = [[UIImage mdc_testImageOfSize:CGSizeMake(180.f, 120.f)]

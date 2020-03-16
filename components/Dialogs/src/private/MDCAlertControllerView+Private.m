@@ -449,7 +449,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return accessoryViewSize.height > 0.0f;
 }
 
-/// @returns the space between the title and the title icon, or 0 if any of them is missing.
+// @returns the space between the title and the title icon, or 0 if any of them is missing.
 - (CGFloat)titleIconInsetBottom {
   return [self hasTitleIconOrImage] && [self hasTitle] ? self.titleIconInsets.bottom : 0.0f;
 }
@@ -459,15 +459,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                                     : ([self hasTitle] ? self.titleInsets.top : 0.f);
 }
 
-/// @returns the title bottom space, or, if both title and content exist, the smallest netween the
-///          content top and title bottom spaces.
 - (CGFloat)titleInsetBottom {
-  if ([self hasTitle]) {
-    return self.titleInsets.bottom;
-  } else if ([self hasTitleIconOrImage]) {
-    return self.titleIconInsets.bottom;
-  }
-  return 0.f;
+  return [self hasTitleIconOrImage] || [self hasTitle] ? self.titleInsets.bottom : 0.0f;
 }
 
 - (CGFloat)titleViewInsetLeft {
@@ -553,7 +546,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGSize boundsSize = CGRectInfinite.size;
 
   boundsSize.width = boundingWidth - titleInsets;
-  CGFloat titleWidth = MAX([self.titleLabel sizeThatFits:boundsSize].width, [self titleIconViewSize].width);
+  CGFloat titleWidth =
+      MAX([self.titleLabel sizeThatFits:boundsSize].width, [self titleIconViewSize].width);
 
   boundsSize.width = boundingWidth - contentInsets;
   CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
@@ -694,7 +688,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   // Actions
   CGSize actionBoundsSize = boundsSize;
-  actionBoundsSize.width = boundsSize.width - (self.actionsInsets.left + self.actionsInsets.right);
   NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
   CGSize actionSize = [self calculateActionsSizeThatFitsWidth:actionBoundsSize.width];
 
