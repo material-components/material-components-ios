@@ -16,8 +16,9 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialMath.h"
+#import "MDCChipFieldDelegate.h"
 #import "MaterialTextFields.h"
+#import "MaterialMath.h"
 
 NSString *const MDCEmptyTextString = @"";
 NSString *const MDCChipDelimiterSpace = @" ";
