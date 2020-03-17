@@ -32,6 +32,12 @@ APIs:
 - `actionsHorizontalAlignmentInVerticalLayout`
 - `orderVerticalActionsByEmphasis`
 
+```swift
+alert.actionsHorizontalAlignment = .justified
+alert.actionsHorizontalAlignmentInVerticalLayout = .justified
+alert.orderVerticalActionsByEmphasis = true
+```
+
 MDCSlider now allows you to customize the appearance of the thumb track with the new
 `shouldDisplayThumbWithDiscreteValueLabel` API. Turning this API on will keep the thumb track
 visible while the user is interacting with the slider.
