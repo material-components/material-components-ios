@@ -213,7 +213,7 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
 
 // Verify correct layout for issues reported in:
 //    https://github.com/material-components/material-components-ios/issues/8434.
-- (void)testActionsLayoutHorizontallyForCatpitalizedButtonCase {
+- (void)testActionsLayoutHorizontallyForCapitalizedButtonCase {
   // Given
   self.alertController.title = @"Recurring actions";
   self.alertController.message = nil;
