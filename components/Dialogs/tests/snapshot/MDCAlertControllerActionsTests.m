@@ -65,12 +65,11 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   [super tearDown];
 }
 
-- (void)sizeTofitContent {
-  // Ensure snapshot view size matches actual runtime size of alert
+- (void)sizeAlertToFitContent {
+  // Ensure snapshot view size matches actual runtime size of the alert.
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  CGSize preferredContentSize = CGRectInfinite.size;
-  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:preferredContentSize];
-  self.alertController.view.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
+  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:alertView.bounds.size];
+  alertView.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -212,7 +211,7 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
 
 // Verify correct layout for issues reported in:
 //    https://github.com/material-components/material-components-ios/issues/8434.
-- (void)testActionsLayoutHorizontallyForCatpitalizedButtonCase {
+- (void)testActionsLayoutHorizontallyForCapitalizedButtonCase {
   // Given
   self.alertController.title = @"Recurring actions";
   self.alertController.message = nil;
@@ -229,7 +228,10 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   }
 
   // Then
-  [self sizeTofitContent];
+  // An extra wide view is required for this test case.
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  alertView.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
@@ -244,7 +246,6 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self sizeTofitContent];
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 

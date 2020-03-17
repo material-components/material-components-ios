@@ -71,9 +71,11 @@ static NSString *const kMessageLongLatin =
 }
 
 - (void)sizeAlertToFitContent {
-  CGSize preferredContentSize = self.alertController.preferredContentSize;
-  self.alertController.view.bounds =
-      CGRectMake(0.f, 0.f, preferredContentSize.width, preferredContentSize.height);
+  // Ensure snapshot view size matches actual runtime size of the alert.
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGRect bounds = alertView.bounds;
+  bounds.size = [alertView calculatePreferredContentSizeForBounds:bounds.size];
+  alertView.bounds = CGRectMake(0.f, 0.f, bounds.size.width, bounds.size.height);
 }
 
 - (void)addOutlinedActionWithTitle:(NSString *)actionTitle {
