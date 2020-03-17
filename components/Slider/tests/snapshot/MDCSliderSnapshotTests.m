@@ -763,4 +763,19 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
+- (void)testDiscreteSliderWithThumbAndValueLabel {
+  // When
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.shouldDisplayDiscreteValueLabel = YES;
+  self.slider.shouldDisplayThumbWithDiscreteValueLabel = YES;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+
+  // Then
+  UIView *snapshotView =
+      [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+  [self generateSnapshotAndVerifyForView:snapshotView];
+}
+
 @end

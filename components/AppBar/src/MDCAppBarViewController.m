@@ -276,6 +276,12 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 #pragma mark - UIAccessibility
 
 - (BOOL)accessibilityPerformEscape {
+  if (self.accessibilityPerformEscapeDelegate) {
+    return [self.accessibilityPerformEscapeDelegate
+        appBarViewControllerAccessibilityPerformEscape:self];
+  }
+
+  // Fall-back behavior.
   [self dismissSelf];
   return YES;
 }

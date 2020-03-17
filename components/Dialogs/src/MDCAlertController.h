@@ -104,7 +104,7 @@
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
-/** The alignment applied to the title of the Alert Controller.*/
+/** The alignment applied to the title of the Alert. Default to NSTextAlignmentNatural. */
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
 /** An optional icon appearing above the title of the Alert Controller.*/
@@ -118,6 +118,9 @@
 
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
+
+/** The alignment applied to the message of Alert Controller. Default to NSTextAlignmentNatural. */
+@property(nonatomic, assign) NSTextAlignment messageAlignment;
 
 /**
  The font applied to the button of Alert Controller.
@@ -180,6 +183,9 @@
  When @c nil the message accessibilityLabel will be set to the value of the @c message.
  */
 @property(nonatomic, nullable, copy) NSString *messageAccessibilityLabel;
+
+/** A custom accessibility label for the title icon view. */
+@property(nonatomic, nullable, copy) NSString *imageAccessibilityLabel;
 
 /**
  Accessory view that contains custom UI.
@@ -268,6 +274,15 @@
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
+/** MDCAlertController handles its own transitioning delegate. */
+- (void)setTransitioningDelegate:
+    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+
+/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
+- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
+
+#pragma mark - Alert Actions
+
 /**
  The actions that the user can take in response to the alert.
 
@@ -288,14 +303,61 @@
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
 
-/** MDCAlertController handles its own transitioning delegate. */
-- (void)setTransitioningDelegate:
-    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+// TODO(https://github.com/material-components/material-components-ios/issues/9891): Replace
+// MDCActionEmphasis with UIControlContentHorizontalAlignment after dropping support for iOS 10.
+/** Content alignment for Alert actions. */
+typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
+  /** Actions are centered. */
+  MDCContentHorizontalAlignmentCenter = 0,
+  /** Actions are left aligned in LTR and right aligned in RTL.  */
+  MDCContentHorizontalAlignmentLeading = 1,
+  /** Actions are right aligned in LTR and left aligned in RTL.  */
+  MDCContentHorizontalAlignmentTrailing = 2,
+  /**
+   Actions fill the entire width of the alert (minus the insets). If more than one action is
+   presented, equal width is applied to all actions so they fill the space evenly.
+   */
+  MDCContentHorizontalAlignmentJustified = 3
+};
 
-/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
-- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
+/**
+ The alert actions alignment in horizontal layout.  This property controls both alignment and order
+ of the actions in the horizontal layout.  Actions that are added first, are presented first based
+ on the alignment: when alignment is trailing, the first action is presented on the trailing side
+ (right in LTR). For all other alignments, the action added first is presented on the leading side
+ (left in LTR).
+
+ Default value is @c MDCContentHorizontalAlignmentTrailing.
+ */
+@property(nonatomic, assign) MDCContentHorizontalAlignment actionsHorizontalAlignment;
+
+/**
+ The horizontal alignment of the alert's actions when in vertical layout. When not enough horizontal
+ space is available to present all actions, actions will layout vertically. That may happen in the
+ portrait orientation on smaller devices. Actions may have centered, leading, trailing or filled
+ alignment. In filled alignment, all actions will be as wide as the alert (minus insets).
+
+ @note: Actions that are added first will be displayed on the bottom, unless overriden by
+        orderVerticalActionsByEmphasis.
+
+ Default value is @c MDCContentHorizontalAlignmentCenter.
+ */
+@property(nonatomic, assign)
+    MDCContentHorizontalAlignment actionsHorizontalAlignmentInVerticalLayout;
+
+/**
+ Enables ordering actions by emphasis when they are vertically aligned. When set to @c YES,
+ horizontally trailing actions, which typically have higher emphasis, will be displayed on top when
+ presented vertically (for instance, in the portrait orientation on smaller devices). When set to @c
+ NO, the higher emphasis actions will be displayed on the bottom.
+
+ Default value is @c NO.
+*/
+@property(nonatomic, assign) BOOL orderVerticalActionsByEmphasis;
 
 @end
+
+#pragma mark - MDCAlertAction
 
 typedef NS_ENUM(NSInteger, MDCActionEmphasis) {
   /* Low emphasis attribute produces low emphasis appearance when attached to actions or buttons */

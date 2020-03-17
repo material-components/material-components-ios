@@ -375,4 +375,139 @@ static NSString *const kMessageLongLatin =
   [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
 }
 
+// message alignment: default alignment is natural
+- (void)testMessageDefaultAlignmentIsNatural {
+  // Given
+  self.alertController.message = kMessageLongLatin;
+  // Then
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: center
+- (void)testMessageAlignmentIsCentered {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: natural
+- (void)testMessageAlignmentIsNatural {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentNatural;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: natural in RTL
+- (void)testMessageAlignmentIsNaturalInRTL {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentNatural;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: right
+- (void)testMessageAlignmentIsRight {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentRight;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: right in RTL
+- (void)testMessageRightAlignmentIsRightInRTL {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentRight;
+  [self changeToRTL:self.alertController];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: left
+- (void)testMessageAlignmentIsLeft {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentLeft;
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: left in RTL
+- (void)testMessageLeftAlignmentIsLeftInRTL {
+  // Given
+  self.alertController.title = @"A title that is longer than the message";
+  self.alertController.message = kMessageShortLatin;
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentLeft;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 200.f);
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: left in RTL. long message.
+- (void)testLongMessageLeftAlignmentIsLeftInRTL {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentLeft;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// message alignment: justified
+- (void)testMessageAlignmentIsJustified {
+  // Given
+  self.alertController.title = kTitleShortLatin;
+  self.alertController.message = kMessageLongLatin;
+
+  // When
+  self.alertController.messageAlignment = NSTextAlignmentJustified;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
 @end

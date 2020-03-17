@@ -45,9 +45,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-@dynamic titleAlignment;
-@dynamic titleIcon;
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -299,6 +296,14 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   _messageLabel.textColor = messageColor;
 }
 
+- (NSTextAlignment)messageAlignment {
+  return self.messageLabel.textAlignment;
+}
+
+- (void)setMessageAlignment:(NSTextAlignment)messageAlignment {
+  self.messageLabel.textAlignment = messageAlignment;
+}
+
 - (void)setAccessoryView:(UIView *)accessoryView {
   if (_accessoryView == accessoryView) {
     return;
@@ -412,12 +417,12 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
   if (0 < buttons.count) {
     size.height = self.actionsInsets.top + self.actionsInsets.bottom;
-    size.width = self.actionsInsets.left + self.actionsInsets.right;
+    CGFloat widthInset = self.actionsInsets.left + self.actionsInsets.right;
     for (UIButton *button in buttons) {
       CGSize buttonSize = [button sizeThatFits:size];
       buttonSize.height = MAX(buttonSize.height, MDCDialogActionButtonMinimumHeight);
       size.height += buttonSize.height;
-      size.width = MAX(size.width, buttonSize.width);
+      size.width = MAX(size.width, buttonSize.width + widthInset);
       if (button != buttons.lastObject) {
         size.height += self.actionsVerticalMargin;
       }
@@ -709,9 +714,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) / 2.0f;
       actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
     }
-    contentScrollViewRect.size.height = CGRectGetHeight(self.bounds) -
-                                        actionsScrollViewRect.size.height -
-                                        contentScrollViewRect.origin.y;
+    contentScrollViewRect.size.height =
+        actionsScrollViewRect.origin.y - contentScrollViewRect.origin.y;
+
+    self.messageLabel.accessibilityFrame = UIAccessibilityConvertFrameToScreenCoordinates(
+        CGRectMake(messageFrame.origin.x, contentScrollViewRect.origin.y, messageFrame.size.width,
+                   MIN(contentScrollViewRect.size.height, messageFrame.size.height)),
+        self);
   }
   self.actionsScrollView.frame = actionsScrollViewRect;
   self.contentScrollView.frame = contentScrollViewRect;
@@ -739,26 +748,24 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                            (self.actionsInsets.left + self.actionsInsets.right);
   CGPoint buttonOrigin = CGPointZero;
   CGFloat buttonWidth = 0.f;
-  CGFloat multiplier = 1.f;
-  if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentTrailing) {
-    buttonOrigin.x = self.actionsScrollView.contentSize.width - self.actionsInsets.right;
-    multiplier = -1.f;
+  CGFloat multiplier =
+      self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentLeading ? 1.f : -1.f;
+  if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentLeading) {
+    buttonOrigin.x = self.actionsInsets.left;
   } else if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentCenter) {
     CGFloat actionWidthNoInsets =
         actionSize.width - self.actionsInsets.left - self.actionsInsets.right;
-    buttonOrigin.x = (self.actionsScrollView.contentSize.width - actionWidthNoInsets) / 2.f;
-  } else {  // leading or fill
-    buttonOrigin.x = self.actionsInsets.left;
+    buttonOrigin.x = ((self.actionsScrollView.contentSize.width - actionWidthNoInsets) / 2.f) +
+                     actionWidthNoInsets;
+  } else {  // trailing or justified
+    buttonOrigin.x = self.actionsScrollView.contentSize.width - self.actionsInsets.right;
   }
   buttonOrigin.y = self.actionsInsets.top;
   for (UIButton *button in buttons) {
     CGRect buttonRect = button.frame;
 
     buttonWidth = buttonRect.size.width;
-
-    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentTrailing) {
-      buttonOrigin.x -= buttonRect.size.width;
-    } else if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
+    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
       if (buttons.count > 1) {
         CGFloat totalMargin = self.actionsHorizontalMargin * (buttons.count - 1);
         buttonWidth = (maxButtonWidth - totalMargin) / buttons.count;
@@ -766,16 +773,21 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
         buttonWidth = maxButtonWidth;
       }
     }
+
+    if (self.actionsHorizontalAlignment != MDCContentHorizontalAlignmentLeading) {
+      buttonOrigin.x += multiplier * buttonWidth;
+    }
+
     buttonRect.origin = buttonOrigin;
     buttonRect.size.width = buttonWidth;
 
     button.frame = buttonRect;
 
     if (button != buttons.lastObject) {
-      if (self.actionsHorizontalAlignment != MDCContentHorizontalAlignmentTrailing) {
-        buttonOrigin.x += buttonRect.size.width + self.actionsHorizontalMargin;
+      if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentLeading) {
+        buttonOrigin.x += multiplier * (buttonWidth + self.actionsHorizontalMargin);
       } else {
-        buttonOrigin.x -= self.actionsHorizontalMargin;
+        buttonOrigin.x += multiplier * self.actionsHorizontalMargin;
       }
     }
   }
