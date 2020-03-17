@@ -15,8 +15,8 @@
 #import <UIKit/UIKit.h>
 
 /**
- MDCDialogTransitionController is used to setup a custom transition and animationed presentation
- and dismissal for material-styled alerts, simple dialogs and confirmation dialogs.
+ MDCDialogTransitionController setup a custom transition and animationed presentation and dismissal
+ for material-styled alerts, simple dialogs and confirmation dialogs.
 
  https://material.io/go/design-dialogs
 
