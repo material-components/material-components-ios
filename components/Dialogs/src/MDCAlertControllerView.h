@@ -27,9 +27,11 @@
 /**
  An optional custom icon view above the title of the alert.
 
- @note This property is intended to be used to provide a custom implementation of the title icon
- view. If the intention is to just display a `UIImage`, use `setTitleIcon:` API instead. If
- 'titleIcon' is set, 'titleIconView' is ignored.
+ @discussion This property is intended to be used to provide a custom implementation of the title
+ icon view. If the intention is to just display a `UIImage`, use `setTitleIcon:` API instead. If
+ this property value is nil, the title icon is displayed above the title view. If you set this
+ property to a custom view, it is displayed instead of the title icon. Custom title views are
+ aligned with the title and may be resized to fit.
  */
 @property(nonatomic, strong, nullable) UIView *titleIconView;
 
