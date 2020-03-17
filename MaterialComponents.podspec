@@ -1215,13 +1215,11 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
-      "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MotionAnimator", "~> 2.1"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
