@@ -43,7 +43,8 @@
 /**
  A Boolean value that governs whether the hairline is shown.
 
- The hairline is a narrow line shown at the bottom edge of the Flexible Header view.
+ The hairline is a narrow line (i.e. a divider / dividing line) shown at the bottom edge of the
+ Flexible Header view.
 
  Defaults to NO.
  */
@@ -52,7 +53,8 @@
 /**
  The color of the hairline.
 
- The hairline is a narrow line shown at the bottom edge of the Flexible Header view.
+ The hairline is a narrow line (i.e. a divider / dividing line) shown at the bottom edge of the
+ Flexible Header view.
 
  Defaults to black.
  */
