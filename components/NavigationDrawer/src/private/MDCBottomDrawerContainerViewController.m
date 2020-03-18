@@ -311,9 +311,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
+  CGFloat bottomSafeAreaInset = [self bottomSafeAreaInsetsToAdjustContainerHeight];
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
-                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset -
-                            kScrollViewBufferForPerformance;
+                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset +
+                            bottomSafeAreaInset - kScrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
 
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
