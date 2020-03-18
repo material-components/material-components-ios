@@ -14,3 +14,4 @@
 
 #import "MDCButtonBar.h"
 #import "MDCButtonBarButton.h"
+#import "MDCButtonBarDelegate.h"
