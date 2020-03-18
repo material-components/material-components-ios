@@ -231,38 +231,3 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
   /** Whether or not this bar button item is the last button in the list. */
   MDCBarButtonItemLayoutHintsIsLastButton = 1 << 1,
 };
-
-/**
- The MDCButtonBarDelegate protocol defines the means by which MDCButtonBar can request that a
- view be created for a bar button item.
-
- An object that conforms to this protocol must forward UIControlEventTouchUpInside events to the
- button bar's didTapButton:event: method signature in order to pass the correct UIBarButtonItem
- argument to the item's target/action invocation. This method signature is made available by
- importing the MDCAppBarButtonBarBuilder.h header. The MDCAppBarButtonBarBuilder.h header should
- *only* be
- imported in files that implement objects conforming to MDCButtonBarDelegate.
-
- @seealso MDCBarButtonItemLayoutHints
- */
-@protocol MDCButtonBarDelegate <NSObject>
-@optional
-
-/**
- Informs the receiver that the button bar requires a layout pass.
-
- The receiver is expected to call propagate this setNeedsLayout call to the view responsible for
- setting the frame of the button bar so that the button bar can expand or contract as necessary.
-
- This method is typically called as a result of a UIBarButtonItem property changing or as a result
- of the items property being changed.
- */
-- (void)buttonBarDidInvalidateIntrinsicContentSize:(nonnull MDCButtonBar *)buttonBar;
-
-/** Asks the receiver to return a view that represents the given bar button item. */
-- (nonnull UIView *)buttonBar:(nonnull MDCButtonBar *)buttonBar
-                  viewForItem:(nonnull UIBarButtonItem *)barButtonItem
-                  layoutHints:(MDCBarButtonItemLayoutHints)layoutHints
-    __deprecated_msg("There will be no replacement for this API.");
-
-@end
