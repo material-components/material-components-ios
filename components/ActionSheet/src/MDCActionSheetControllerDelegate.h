@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,5 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCActionSheetController.h"
-#import "MDCActionSheetControllerDelegate.h".h
+#import <UIKit/UIKit.h>
+
+@class MDCActionSheetController;
+
+/**
+ Defines methods that allows the adopting delegate to respond to messages from an
+ @c MDCActionSheetController.
+ */
+@protocol MDCActionSheetControllerDelegate <NSObject>
+@optional
+
+/**
+ Tells the delegate that the action sheet was dismissed.
+ */
+- (void)actionSheetControllerDidDismiss:(nonnull MDCActionSheetController *)actionSheetController;
+@end

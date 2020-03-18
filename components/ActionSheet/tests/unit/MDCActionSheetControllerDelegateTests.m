@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCActionSheetController.h"
+#import "MDCActionSheetControllerDelegate.h"
 #import "MDCBottomSheetPresentationController.h"
 
 @interface ActionSheetControllerDelegate : NSObject <MDCActionSheetControllerDelegate>
