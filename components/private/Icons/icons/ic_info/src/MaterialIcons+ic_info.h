@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_info)
 
 /*
- Returns the path for the ic_info image contained in
- MaterialIcons_ic_info.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_info;
-
-/*
  Returns the image for the ic_info image contained in
  MaterialIcons_ic_info.bundle.
  */

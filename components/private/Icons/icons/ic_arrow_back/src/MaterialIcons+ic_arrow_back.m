@@ -29,10 +29,6 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
 
 @implementation MDCIcons (ic_arrow_back)
 
-+ (nonnull NSString *)pathFor_ic_arrow_back {
-  return [self pathForIconName:__icArrowBackIconName withBundleName:kBundleName];
-}
-
 // TODO(samnm): Remove this method and __icArrowBackIconName after transitioning all clients to the
 // new icon style.
 + (void)ic_arrow_backUseNewStyle:(BOOL)useNewStyle {

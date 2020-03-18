@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_settings)
 
 /*
- Returns the path for the ic_settings image contained in
- MaterialIcons_ic_settings.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_settings;
-
-/*
  Returns the image for the ic_settings image contained in
  MaterialIcons_ic_settings.bundle.
  */

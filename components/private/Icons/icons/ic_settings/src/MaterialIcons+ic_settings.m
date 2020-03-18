@@ -25,10 +25,6 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
 
 @implementation MDCIcons (ic_settings)
 
-+ (nonnull NSString *)pathFor_ic_settings {
-  return [self pathForIconName:kIconName withBundleName:kBundleName];
-}
-
 + (nullable UIImage *)imageFor_ic_settings {
   NSBundle *bundle = [self bundleNamed:kBundleName];
   return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
