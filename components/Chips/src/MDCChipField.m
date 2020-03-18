@@ -625,10 +625,12 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
     if (isTextTooWide && isTextFieldOnSameLineAsChips) {
       // The text is on the same line as the chips and doesn't fit
       // Trigger layout to move the text field down to the next line
+      [self invalidateIntrinsicContentSize];
       [self setNeedsLayout];
     } else if (!isTextTooWide && !isTextFieldOnSameLineAsChips) {
       // The text is on the line below the chips but can fit on the same line
       // Trigger layout to move the text field up to the previous line
+      [self invalidateIntrinsicContentSize];
       [self setNeedsLayout];
     }
   }
