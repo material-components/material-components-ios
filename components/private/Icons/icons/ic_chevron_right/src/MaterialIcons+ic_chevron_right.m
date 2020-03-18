@@ -26,10 +26,6 @@ __attribute__((
 
 @implementation MDCIcons (ic_chevron_right)
 
-+ (nonnull NSString *)pathFor_ic_chevron_right {
-  return [self pathForIconName:kIconName withBundleName:kBundleName];
-}
-
 + (nullable UIImage *)imageFor_ic_chevron_right {
   NSBundle *bundle = [self bundleNamed:kBundleName];
   return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];

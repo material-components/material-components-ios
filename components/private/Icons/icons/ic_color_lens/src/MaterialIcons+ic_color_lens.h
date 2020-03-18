@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_color_lens)
 
 /*
- Returns the path for the ic_color_lens image contained in
- MaterialIcons_ic_color_lens.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_color_lens;
-
-/*
  Returns the image for the ic_color_lens image contained in
  MaterialIcons_ic_color_lens.bundle.
  */

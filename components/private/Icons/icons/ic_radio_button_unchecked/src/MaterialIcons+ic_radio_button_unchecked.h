@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_radio_button_unchecked)
 
 /*
- Returns the path for the ic_radio_button_unchecked image contained in
- MaterialIcons_ic_radio_button_unchecked.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_radio_button_unchecked;
-
-/*
  Returns the image for the ic_radio_button_unchecked image contained in
  MaterialIcons_ic_radio_button_unchecked.bundle.
  */

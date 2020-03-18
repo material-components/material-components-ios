@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_more_horiz)
 
 /*
- Returns the path for the ic_more_horiz image contained in
- MaterialIcons_ic_more_horiz.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_more_horiz;
-
-/*
  Returns the image for the ic_more_horiz image contained in
  MaterialIcons_ic_more_horiz.bundle.
  */

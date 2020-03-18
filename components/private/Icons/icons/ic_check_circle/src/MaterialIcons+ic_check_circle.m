@@ -26,10 +26,6 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
 
 @implementation MDCIcons (ic_check_circle)
 
-+ (nonnull NSString *)pathFor_ic_check_circle {
-  return [self pathForIconName:kIconName withBundleName:kBundleName];
-}
-
 + (nullable UIImage *)imageFor_ic_check_circle {
   NSBundle *bundle = [self bundleNamed:kBundleName];
   return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];

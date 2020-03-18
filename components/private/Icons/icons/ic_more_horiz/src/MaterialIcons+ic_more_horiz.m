@@ -26,10 +26,6 @@ __attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarni
 
 @implementation MDCIcons (ic_more_horiz)
 
-+ (nonnull NSString *)pathFor_ic_more_horiz {
-  return [self pathForIconName:kIconName withBundleName:kBundleName];
-}
-
 + (nullable UIImage *)imageFor_ic_more_horiz {
   NSBundle *bundle = [self bundleNamed:kBundleName];
   return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
