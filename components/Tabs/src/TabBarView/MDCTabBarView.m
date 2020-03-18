@@ -968,10 +968,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CGPoint)contentOffsetNeededToCenterItemView:(UIView *)itemView {
   CGFloat availableWidth = [self availableSizeForSubviewLayout].width;
-  CGFloat itemViewWidth = CGRectGetWidth(itemView.frame);
-  CGFloat contentOffsetX = CGRectGetMinX(itemView.frame) - ((availableWidth - itemViewWidth) / 2.f);
+  CGRect itemFrame = itemView.frame;
+  if (CGSizeEqualToSize(itemView.frame.size, CGSizeZero)) {
+    NSUInteger index = [self.itemViews indexOfObject:itemView];
+    itemFrame = [self estimatedFrameForItemAtIndex:index];
+  }
+  CGFloat itemViewWidth = CGRectGetWidth(itemFrame);
+  CGFloat contentOffsetX = CGRectGetMinX(itemFrame) - ((availableWidth - itemViewWidth) / 2.f);
   contentOffsetX = MAX(contentOffsetX, 0.f);
-  contentOffsetX = MIN(contentOffsetX, self.contentSize.width - availableWidth);
+  CGSize contentSize = [self calculatedContentSize];
+  contentOffsetX = MIN(contentOffsetX, MAX(contentSize.width - availableWidth, 0.f));
   return CGPointMake(contentOffsetX, self.contentOffset.y);
 }
 
