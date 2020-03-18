@@ -177,6 +177,9 @@
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
 
+/** Descriptive attributed text that summarizes a decision in a sentence of two. */
+@property(nonatomic, nullable, copy) NSAttributedString *attributedMessage;
+
 /**
  A custom accessibility label for the message.
 

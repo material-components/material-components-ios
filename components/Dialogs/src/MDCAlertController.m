@@ -117,6 +117,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return alertController;
 }
 
++ (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
+                                 attributedMessage:(nullable NSString *)attributedMessage {
+  MDCAlertController *alertController = [[MDCAlertController alloc] initWithTitle:alertTitle
+                                                                          attributedMessage:attributedMessage];
+
+  return alertController;
+}
+
 - (instancetype)init {
   return [self initWithTitle:nil message:nil];
 }
@@ -129,6 +137,27 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
     _alertTitle = [title copy];
     _message = [message copy];
+    _titleAlignment = NSTextAlignmentNatural;
+    _messageAlignment = NSTextAlignmentNatural;
+    _actionManager = [[MDCAlertActionManager alloc] init];
+    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    _shadowColor = UIColor.blackColor;
+    _mdc_overrideBaseElevation = -1;
+
+    super.transitioningDelegate = _transitionController;
+    super.modalPresentationStyle = UIModalPresentationCustom;
+  }
+  return self;
+}
+
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title
+                              attributedMessage:(nullable NSString *)attributedMessage {
+  self = [super initWithNibName:nil bundle:nil];
+  if (self) {
+    _transitionController = [[MDCDialogTransitionController alloc] init];
+
+    _alertTitle = [title copy];
+    _attributedMessage = [attributedMessage copy];
     _titleAlignment = NSTextAlignmentNatural;
     _messageAlignment = NSTextAlignmentNatural;
     _actionManager = [[MDCAlertActionManager alloc] init];
@@ -197,6 +226,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _message = [message copy];
   if (self.alertView) {
     self.alertView.messageLabel.text = message;
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  }
+}
+
+- (void)setMessage:(NSAttributedString *)attributedMessage {
+  _attributedMessage = [attributedMessage copy];
+  if (self.alertView) {
+    self.alertView.messageLabel.attributedText = attributedMessage;
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   }
@@ -687,7 +725,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     self.alertView.titleLabel.adjustsFontForContentSizeCategory =
         self.adjustsFontForContentSizeCategory;
   }
-  self.alertView.messageLabel.text = self.message;
+  if (self.attributedMessage.count > 0) {
+    self.alertView.messageLabel.attributedText = self.attributedMessage;
+  } else {
+    self.alertView.messageLabel.text = self.message;
+  }
   self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
   self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
   self.alertView.titleIconImageView.accessibilityLabel = self.imageAccessibilityLabel;
