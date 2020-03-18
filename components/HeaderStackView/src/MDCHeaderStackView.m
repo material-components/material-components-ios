@@ -18,11 +18,11 @@
 @implementation MDCHeaderStackView
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  CGFloat height = [_topBar sizeThatFits:size].height;
   if (_bottomBar) {
-    size.height = [_bottomBar sizeThatFits:size].height;
-  } else {
-    size.height = [_topBar sizeThatFits:size].height;
+    height += [_bottomBar sizeThatFits:size].height;
   }
+  size.height = height;
   return size;
 }
 
