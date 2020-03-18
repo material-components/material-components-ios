@@ -657,10 +657,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return [self effectiveLayoutStyle] == MDCTabBarViewLayoutStyleScrollable;
 }
 
-/**
- The current layout style of the Tab Bar. Although the user sets a preferred layout style, not all
- combinations of items, bounds, and style can be rendered correctly.
- */
 - (MDCTabBarViewLayoutStyle)effectiveLayoutStyle {
   if (self.items.count == 0) {
     return MDCTabBarViewLayoutStyleFixed;
