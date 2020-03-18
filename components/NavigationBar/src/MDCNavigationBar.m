@@ -157,6 +157,11 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   [self addSubview:_trailingButtonBar];
 
   _mdc_overrideBaseElevation = -1;
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(accessibilityBoldTextStatusDidChange)
+             name:UIAccessibilityBoldTextStatusDidChangeNotification
+           object:nil];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -547,6 +552,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   }
   [buttonItems addObjectsFromArray:self.leadingBarButtonItems];
   return buttonItems;
+}
+
+- (void)accessibilityBoldTextStatusDidChange {
+  [self setNeedsLayout];
 }
 
 #pragma mark Colors
