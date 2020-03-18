@@ -397,6 +397,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _titleIcon = titleIcon;
   if (self.alertView) {
     self.alertView.titleIcon = titleIcon;
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   }
 }
 
@@ -404,6 +406,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _titleIconView = titleIconView;
   if (self.alertView) {
     self.alertView.titleIconView = titleIconView;
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   }
 }
 
