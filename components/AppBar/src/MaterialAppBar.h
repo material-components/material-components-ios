@@ -14,7 +14,9 @@
 
 #import "MDCAppBarContainerViewController.h"
 #import "MDCAppBarNavigationController.h"
+#import "MDCAppBarNavigationControllerToBeDeprecatedDelegate.h"
 #import "MDCAppBarViewController.h"
+#import "MDCAppBarViewControllerAccessibilityPerformEscapeDelegate.h"
 
 #pragma mark - To be deprecated
 
