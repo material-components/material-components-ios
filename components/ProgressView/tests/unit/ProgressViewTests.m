@@ -16,13 +16,8 @@
 
 #import "MaterialProgressView.h"
 
-@interface MDCProgressView (ProgressViewTests)
-
-- (NSString *)defaultAccessibilityLabel;
-
-@end
-
 @interface ProgressViewTests : XCTestCase
+
 @end
 
 @implementation ProgressViewTests {
@@ -95,15 +90,13 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
-- (void)testAccessibilityLabelHasCorrectValueSet {
+- (void)testAccessibilityLabelMatchesUIProgressView {
   // Given
   UIProgressView *uiProgressView = [[UIProgressView alloc] init];
   MDCProgressView *mdcProgressView = [[MDCProgressView alloc] init];
-  NSString *expectedAccessibilityLabel =
-      uiProgressView.accessibilityLabel ?: [mdcProgressView defaultAccessibilityLabel];
 
   // Then
-  XCTAssertEqual(mdcProgressView.accessibilityLabel, expectedAccessibilityLabel);
+  XCTAssertEqual(uiProgressView.accessibilityLabel, mdcProgressView.accessibilityLabel);
 }
 
 @end

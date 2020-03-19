@@ -16,11 +16,9 @@
 
 #include <tgmath.h>
 
-#import "MaterialPalettes.h"
-#import "MaterialProgressViewStrings.h"
-#import "MaterialProgressViewStrings_table.h"
-#import "MaterialMath.h"
 #import <MDFInternationalization/MDFInternationalization.h>
+#import "MaterialMath.h"
+#import "MaterialPalettes.h"
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
   return MDCPalette.bluePalette.tint500;
@@ -30,9 +28,6 @@ static inline UIColor *MDCProgressViewDefaultTintColor(void) {
 static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 
 static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
-
-// The Bundle for string resources.
-static NSString *const kBundle = @"MaterialProgressView.bundle";
 
 @interface MDCProgressView ()
 @property(nonatomic, strong) UIView *progressView;
@@ -271,35 +266,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 }
 
 - (NSString *)accessibilityLabel {
-  return self.accessibilityProgressView.accessibilityLabel ?: [self defaultAccessibilityLabel];
-}
-
-- (NSString *)defaultAccessibilityLabel {
-  MaterialProgressViewStringId keyIndex = kStr_MaterialProgressViewAccessibilityLabel;
-  NSString *key = kMaterialProgressViewStringTable[keyIndex];
-  return NSLocalizedStringFromTableInBundle(key, kMaterialProgressViewStringsTableName,
-                                            [[self class] bundle], @"Progress View");
-}
-
-#pragma mark - Resource Bundle
-
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundle]];
-  });
-
-  return bundle;
-}
-
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCProgressView class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
+  return self.accessibilityProgressView.accessibilityLabel;
 }
 
 #pragma mark Private
