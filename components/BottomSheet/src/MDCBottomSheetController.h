@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+// TODO(b/151929968): Delete import of MDCBottomSheetControllerDelegate.h when client code has been
+// migrated to no longer import MDCBottomSheetControllerDelegate as a transitive dependency.
+#import "MDCBottomSheetControllerDelegate.h"
 #import "MDCSheetState.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
@@ -163,40 +166,4 @@
     (MDCBottomSheetController *_Nonnull bottomSheetController,
      UITraitCollection *_Nullable previousTraitCollection);
 
-@end
-
-/**
- Delegate for MDCBottomSheetController.
- */
-@protocol MDCBottomSheetControllerDelegate <NSObject>
-@optional
-/**
- Called when the user taps the dimmed background or swipes the bottom sheet off to dismiss the
- bottom sheet. Also called with accessibility escape "two finger Z" gestures.
-
- This method is not called if the bottom sheet is dismissed programatically.
-
- @param controller The MDCBottomSheetController that was dismissed.
- */
-- (void)bottomSheetControllerDidDismissBottomSheet:(nonnull MDCBottomSheetController *)controller;
-
-/**
- Called when the state of the bottom sheet changes.
-
- Note: See what states the sheet can transition to by looking at MDCSheetState.
-
- @param controller The MDCBottomSheetController that its state changed.
- @param state The state the sheet changed to.
- */
-- (void)bottomSheetControllerStateChanged:(nonnull MDCBottomSheetController *)controller
-                                    state:(MDCSheetState)state;
-
-/**
- Called when the Y offset of the sheet's changes in relation to the top of the screen.
-
- @param controller The MDCBottomSheetController that its Y offset changed.
- @param yOffset The Y offset the bottom sheet changed to.
- */
-- (void)bottomSheetControllerDidChangeYOffset:(nonnull MDCBottomSheetController *)controller
-                                      yOffset:(CGFloat)yOffset;
 @end
