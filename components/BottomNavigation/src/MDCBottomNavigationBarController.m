@@ -16,9 +16,10 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "MaterialApplication.h"
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationLargeItemDialogView.h"
+#import "MDCBottomNavigationBarControllerDelegate.h"
+#import "MaterialApplication.h"
 
 // A context for Key Value Observing
 static void *const kObservationContext = (void *)&kObservationContext;

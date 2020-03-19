@@ -15,6 +15,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAvailability.h"
+// TODO(b/151929968): Delete import of MDCBottomNavigationBarDelegate.h when client code has been
+// migrated to no longer import MDCBottomNavigationBarDelegate as a transitive dependency.
+#import "MDCBottomNavigationBarDelegate.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
@@ -275,28 +278,3 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
     UILargeContentViewerInteractionDelegate>
 @end
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
-
-#pragma mark - MDCBottomNavigationBarDelegate
-
-/**
- Delegate protocol for MDCBottomNavigationBar. Clients may implement this protocol to receive
- notifications of selection changes by user action in the bottom navigation bar.
- */
-@protocol MDCBottomNavigationBarDelegate <UINavigationBarDelegate>
-
-@optional
-
-/**
- Called before the selected item changes by user action. Return YES to allow the selection. If not
- implemented all items changes are allowed.
- */
-- (BOOL)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
-           shouldSelectItem:(nonnull UITabBarItem *)item;
-
-/**
- Called when the selected item changes by user action.
- */
-- (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
-              didSelectItem:(nonnull UITabBarItem *)item;
-
-@end
