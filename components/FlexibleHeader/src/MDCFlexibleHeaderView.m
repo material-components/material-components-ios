@@ -14,15 +14,17 @@
 
 #import "MDCFlexibleHeaderView.h"
 
-#import "MDCFlexibleHeaderView+ShiftBehavior.h"
-#import "MaterialApplication.h"
-#import "MaterialMath.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialUIMetrics.h"
 #import "private/MDCFlexibleHeaderMinMaxHeight.h"
 #import "private/MDCFlexibleHeaderTopSafeArea.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
 #import "private/MDCStatusBarShifter.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
+#import "MDCFlexibleHeaderViewAnimationDelegate.h"
+#import "MDCFlexibleHeaderViewDelegate.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialApplication.h"
+#import "MaterialMath.h"
+#import "MaterialUIMetrics.h"
 
 #if TARGET_IPHONE_SIMULATOR
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed

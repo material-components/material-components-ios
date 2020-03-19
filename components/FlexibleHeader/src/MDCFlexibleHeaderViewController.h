@@ -14,6 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCFlexibleHeaderSafeAreaDelegate.h"
+#import "MDCFlexibleHeaderViewLayoutDelegate.h"
+
 @class MDCFlexibleHeaderView;
 @protocol MDCFlexibleHeaderViewLayoutDelegate;
 @protocol MDCFlexibleHeaderSafeAreaDelegate;
@@ -221,34 +226,6 @@
  Default is YES.
  */
 @property(nonatomic) BOOL inferPreferredStatusBarStyle;
-
-@end
-
-/**
- This delegate makes it possible to customize which ancestor view controller is used when
- inferTopSafeAreaInsetFromViewController is enabled on MDCFlexibleHeaderViewController.
- */
-@protocol MDCFlexibleHeaderSafeAreaDelegate
-- (UIViewController *_Nullable)flexibleHeaderViewControllerTopSafeAreaInsetViewController:
-    (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController;
-@end
-
-/**
- An object may conform to this protocol in order to receive layout change events caused by a
- MDCFlexibleHeaderView.
- */
-@protocol MDCFlexibleHeaderViewLayoutDelegate <NSObject>
-@required
-
-/**
- Informs the receiver that the flexible header view's frame has changed.
-
- The receiver should use the MDCFlexibleHeader scrollPhase APIs in order to react to the frame
- changes.
- */
-- (void)flexibleHeaderViewController:
-            (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
-    flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end
 

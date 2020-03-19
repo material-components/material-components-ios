@@ -14,6 +14,7 @@
 
 #import "MDCFlexibleHeaderMinMaxHeight.h"
 
+#import "MDCFlexibleHeaderMinMaxHeightDelegate.h"
 #import "MDCFlexibleHeaderTopSafeArea.h"
 
 // The default maximum height for the header. Does not include the status bar height.

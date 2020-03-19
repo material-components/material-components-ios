@@ -17,6 +17,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
+
 @protocol MDCFlexibleHeaderTopSafeAreaDelegate;
 
 /**
@@ -80,31 +84,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderTopSafe
  The delegate may react to changes in the top safe area inset.
  */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderTopSafeAreaDelegate> topSafeAreaDelegate;
-
-@end
-
-/**
- The delegate protocol through which MDCFlexibleHeaderTopSafeArea communicates changes in the top
- safe area inset.
- */
-@protocol MDCFlexibleHeaderTopSafeAreaDelegate
-@required
-
-/**
- Informs the receiver that the topSafeAreaInset value has changed.
- */
-- (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:
-    (nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
-
-/**
- Asks the receiver whether the status bar is likely shifted off-screen by the owner.
- */
-- (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
-
-/**
- Asks the receiver to return the device's top safe area inset.
- */
-- (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:
-    (nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
 
 @end

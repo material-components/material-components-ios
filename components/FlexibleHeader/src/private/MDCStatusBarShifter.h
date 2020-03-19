@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCStatusBarShifterDelegate.h"
+
 @protocol MDCStatusBarShifterDelegate;
 
 /**
@@ -85,26 +89,5 @@
 
 /** Must be called when the owning UIViewController's view moves to a window. */
 - (void)didMoveToWindow;
-
-@end
-
-/**
- The MDCStatusBarShifterDelegate protocol allows a delegate to react to changes in the status bar
- shifter's state.
- */
-@protocol MDCStatusBarShifterDelegate <NSObject>
-@required
-
-/** Informs the receiver that the preferred status bar visibility has changed. */
-- (void)statusBarShifterNeedsStatusBarAppearanceUpdate:(MDCStatusBarShifter *)statusBarShifter;
-
-/**
- Informs the receiver that a snapshot view would like to be added to a view hierarchy.
-
- The receiver is expected to add `view` as a subview. The superview should be shifting off-screen,
- which will cause the snapshot view to shift off-screen as well.
- */
-- (void)statusBarShifter:(MDCStatusBarShifter *)statusBarShifter
-    wantsSnapshotViewAdded:(UIView *)view;
 
 @end

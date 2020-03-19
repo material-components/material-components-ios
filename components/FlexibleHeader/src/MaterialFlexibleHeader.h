@@ -13,6 +13,13 @@
 // limitations under the License.
 
 #import "MDCFlexibleHeaderContainerViewController.h"
+#import "MDCFlexibleHeaderSafeAreaDelegate.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
+#import "MDCFlexibleHeaderViewAnimationDelegate.h"
 #import "MDCFlexibleHeaderViewController.h"
+#import "MDCFlexibleHeaderViewDelegate.h"
+#import "MDCFlexibleHeaderViewLayoutDelegate.h"
+#import "MDCFlexibleHeaderMinMaxHeightDelegate.h"
+#import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
+#import "MDCStatusBarShifterDelegate.h"

@@ -15,6 +15,10 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialElevation.h"
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCFlexibleHeaderViewAnimationDelegate.h"
+#import "MDCFlexibleHeaderViewDelegate.h"
 #import "MaterialShadowElevations.h"
 
 typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
@@ -356,60 +360,6 @@ IB_DESIGNABLE
  The elevation of the header.
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
-
-@end
-
-/**
- The MDCFlexibleHeaderViewDelegate protocol allows a delegate to respond to changes in the header
- view's state.
-
- The delegate is typically the UIViewController that owns this flexible header view.
- */
-@protocol MDCFlexibleHeaderViewDelegate <NSObject>
-@required
-
-/**
- Informs the receiver that the flexible header view's preferred status bar visibility has changed.
- */
-- (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:
-    (nonnull MDCFlexibleHeaderView *)headerView;
-
-/**
- Informs the receiver that the flexible header view's frame has changed.
-
- The frame may change in response to scroll events of the tracking scroll view. The receiver
- should use the MDCFlexibleHeaderView scrollPhase APIs to determine which phase the header's frame
- is in.
- */
-- (void)flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)headerView;
-
-@end
-
-/**
- An object may conform to this protocol in order to receive animation events caused by a
- MDCFlexibleHeaderView.
- */
-@protocol MDCFlexibleHeaderViewAnimationDelegate <NSObject>
-@optional
-
-/**
- Informs the receiver that the flexible header view's tracking scroll view has changed.
-
- @param animated If YES, then this method is being invoked from within an animation block. Changes
- made to the flexible header as a result of this invocation will be animated alongside the header's
- animation.
- */
-- (void)flexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView
-    didChangeTrackingScrollViewAnimated:(BOOL)animated;
-
-/**
- Informs the receiver that the flexible header view's animation changing to a new tracking scroll
- view has completed.
-
- Only invoked if an animation occurred when the tracking scroll view was changed.
- */
-- (void)flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete:
-    (nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 @end
 
