@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCInkTouchControllerDelegate.h"
+
 @class MDCInkGestureRecognizer;
 @class MDCInkTouchController;
 @class MDCInkView;
@@ -120,72 +124,5 @@
  @return The ink view at the touch location, or nil.
 */
 - (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location;
-
-@end
-
-/** Delegate methods for MDCInkTouchController. */
-@protocol MDCInkTouchControllerDelegate <NSObject>
-@optional
-
-/**
- Inserts the ink view into the given view.
-
- If this method is not implemented, the ink view is added as a subview of the view when the
- controller's addInkView method is called. Delegates can choose to insert the ink view below the
- contents as a background view. When inkTouchController:inkViewAtTouchLocation is implemented
- this method will not be invoked.
-
- @param inkTouchController The ink touch controller.
- @param inkView The ink view.
- @param view The view to add the ink view to.
- */
-- (void)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-             insertInkView:(nonnull UIView *)inkView
-                  intoView:(nonnull UIView *)view;
-
-/**
- Returns the ink view to use for a touch located at location in inkTouchController.view.
-
- If the delegate implements this method, the controller will not create an ink view of its own and
- inkTouchController:insertInkView:intoView: will not be called. This method allows the delegate
- to control the creation and reuse of ink views.
-
- @param inkTouchController The ink touch controller.
- @param location The touch location in the coords of @c inkTouchController.view.
- @return An ink view to use at the touch location.
- */
-- (nullable MDCInkView *)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-                     inkViewAtTouchLocation:(CGPoint)location;
-
-/**
- Controls whether the ink touch controller should be processing touches.
-
- The touch controller will query this method to determine if it should start or continue to
- process touches controlling the ink. Returning NO at the start of a gesture will prevent any ink
- from being displayed, and returning NO in the middle of a gesture will cancel that gesture and
- evaporate the ink.
-
- If not implemented then YES is assumed.
-
- @param inkTouchController The ink touch controller.
- @param location The touch location relative to the inkTouchController view.
- @return YES if the controller should process touches at @c location.
-
- @see cancelInkTouchProcessing
- */
-- (BOOL)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location;
-
-/**
- Notifies the receiver that the ink touch controller did process an ink view at the
- touch location.
-
- @param inkTouchController The ink touch controller.
- @param inkView The ink view.
- @param location The touch location relative to the inkTouchController superView.
- */
-- (void)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-         didProcessInkView:(nonnull MDCInkView *)inkView
-           atTouchLocation:(CGPoint)location;
 
 @end
