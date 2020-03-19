@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import "MDCAlertController.h"
+#import "MDCAlertControllerDelegate.h"
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
+#import "MDCDialogPresentationControllerDelegate.h"
 #import "MDCDialogTransitionController.h"
 #import "UIViewController+MaterialDialogs.h"

@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #import "MaterialButtons.h"
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCAlertControllerDelegate.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
@@ -21,44 +24,7 @@
 
 @class MDCAlertAction;
 @class MDCAlertController;
-
-@protocol MDCAlertControllerDelegate <NSObject>
-
-@optional
-
-/**
- Informs the receiver that the alert controller will appear on the screen or the application is
- entering the foreground.
- */
-- (void)alertController:(nonnull MDCAlertController *)alertController willAppear:(BOOL)animated;
-
-/**
- Informs the receiver that the alert controller appeared on the screen or the application has
- entered the foreground.
- */
-- (void)alertController:(nonnull MDCAlertController *)alertController didAppear:(BOOL)animated;
-
-/**
- Informs the receiver that the alert controller will disappear from the screen or the application is
- entering the background.
- */
-- (void)alertController:(nonnull MDCAlertController *)alertController willDisappear:(BOOL)animated;
-
-/**
- Informs the receiver that the alert controller disappeared from the screen or the application has
- entered the background.
- */
-- (void)alertController:(nonnull MDCAlertController *)alertController didDisappear:(BOOL)animated;
-
-/**
- Called on the delegate after the alert action is tapped by the user and while the alert is still on
- the screen.
- */
-- (void)alertController:(nonnull MDCAlertController *)alertController
-           didTapAction:(nonnull MDCAlertAction *)action
-              withEvent:(nonnull UIEvent *)event;
-
-@end
+@protocol MDCAlertControllerDelegate;
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
