@@ -19,4 +19,3 @@
 #import "MDCCollectionViewFlowLayout.h"
 #import "MDCCollectionViewStyling.h"
 #import "MDCCollectionViewStylingDelegate.h"
-#import "MDCCollectionInfoBarViewDelegate.h"
