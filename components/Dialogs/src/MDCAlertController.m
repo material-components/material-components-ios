@@ -118,7 +118,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
-                                 attributedMessage:(nullable NSString *)attributedMessage {
+                       attributedMessage:(nullable NSString *)attributedMessage {
   MDCAlertController *alertController = [[MDCAlertController alloc] initWithTitle:alertTitle
                                                                           attributedMessage:attributedMessage];
 
@@ -131,33 +131,28 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message {
-  self = [super initWithNibName:nil bundle:nil];
+  self = [self initWithTitle:title];
   if (self) {
-    _transitionController = [[MDCDialogTransitionController alloc] init];
-
-    _alertTitle = [title copy];
     _message = [message copy];
-    _titleAlignment = NSTextAlignmentNatural;
-    _messageAlignment = NSTextAlignmentNatural;
-    _actionManager = [[MDCAlertActionManager alloc] init];
-    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-    _shadowColor = UIColor.blackColor;
-    _mdc_overrideBaseElevation = -1;
-
-    super.transitioningDelegate = _transitionController;
-    super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
 }
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
-                              attributedMessage:(nullable NSString *)attributedMessage {
+                    attributedMessage:(nullable NSString *)attributedMessage {
+  self = [self initWithTitle:title];
+  if (self) {
+    _attributedMessage = [attributedMessage copy];
+  }
+  return self;
+}
+
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _transitionController = [[MDCDialogTransitionController alloc] init];
 
     _alertTitle = [title copy];
-    _attributedMessage = [attributedMessage copy];
     _titleAlignment = NSTextAlignmentNatural;
     _messageAlignment = NSTextAlignmentNatural;
     _actionManager = [[MDCAlertActionManager alloc] init];
