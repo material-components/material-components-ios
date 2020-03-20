@@ -468,13 +468,12 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGSize)titleIconViewSize {
-  CGSize titleIconViewSize = CGSizeZero;
   if (self.titleIconView != nil) {
-    titleIconViewSize = self.titleIconView.frame.size;
+    return self.titleIconView.frame.size;
   } else if (self.titleIconImageView != nil) {
-    titleIconViewSize = self.titleIconImageView.image.size;
+    return self.titleIconImageView.frame.size;
   }
-  return titleIconViewSize;
+  return CGSizeZero;
 }
 
 - (CGRect)titleFrameWithTitleSize:(CGSize)titleSize {
