@@ -115,21 +115,17 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   [super tearDown];
 }
 
-- (void)testCommonInitializationsFor:(MDCAlertController *)alert {
-  // Then
-  XCTAssertNotNil(alert.actions);
-  XCTAssertNotNil(alert.title);
-  XCTAssertTrue(alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
-  XCTAssertEqualObjects(alert.shadowColor, UIColor.blackColor);
-}
-
 /**
  Verifies that the message init does call initialize other variables correctly and configures, as per
  the common init, and the message property
  */
 - (void)testMessageInit {
   // Then
-  [self testCommonInitializationsFor:self.alert];
+  XCTAssertNotNil(self.alert.actions);
+  XCTAssertNotNil(self.alert.title);
+  XCTAssertTrue(self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertEqualObjects(self.alert.shadowColor, UIColor.blackColor);
+
   XCTAssertNotNil(alert.message);
   XCTAssertNil(alert.attributedMessage);
 }
@@ -140,9 +136,13 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
  */
 - (void)testAttributedMessageInit {
   // Then
-  [self testCommonInitializationsFor:self.attributedAlert];
-  XCTAssertNotNil(alert.attributedMessage);
-  XCTAssertNil(alert.message);
+  XCTAssertNotNil(self.attributedAlert.actions);
+  XCTAssertNotNil(self.attributedAlert.title);
+  XCTAssertTrue(self.attributedAlert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertEqualObjects(self.attributedAlert.shadowColor, UIColor.blackColor);
+
+  XCTAssertNotNil(self.attributedAlert.attributedMessage);
+  XCTAssertNil(self.attributedAlert.message);
 }
 
 - (void)testAlertControllerWithTitleMessage {
