@@ -85,6 +85,23 @@
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
                                          message:(nullable NSString *)message;
 
+/**
+ Convenience constructor to create and return a view controller for displaying an alert to the user.
+
+ After creating the alert controller, add actions to the controller by calling -addAction.
+
+ @note Most alerts don't need titles. Use only for high-risk situations.
+ 
+ @note This method receives an @c NSAttributedString for the display message. Use
+       @c alertControllerWithTitle:message: for regular @c NSString support.
+
+ @param title The title of the alert.
+ @param attributedMessage Descriptive text that summarizes a decision in a sentence of two.
+ @return An initialized MDCAlertController object.
+ */
++ (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
+                       attributedMessage:(nullable NSString *)attributedMessage;
+
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
