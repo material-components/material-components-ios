@@ -720,7 +720,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     self.alertView.titleLabel.adjustsFontForContentSizeCategory =
         self.adjustsFontForContentSizeCategory;
   }
-  if (self.attributedMessage.count > 0) {
+  if (self.attributedMessage.length > 0) {
     self.alertView.messageLabel.attributedText = self.attributedMessage;
   } else {
     self.alertView.messageLabel.text = self.message;
