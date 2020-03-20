@@ -14,7 +14,6 @@
 
 #import "MDCCollectionInfoBarView.h"
 
-#import "MDCCollectionInfoBarViewDelegate.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"

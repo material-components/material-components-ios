@@ -14,14 +14,13 @@
 
 #import "MDCCollectionViewController.h"
 
+#import "MDCCollectionViewFlowLayout.h"
+#import "MaterialCollectionCells.h"
+#import "MaterialInk.h"
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionStringResources.h"
 #import "private/MDCCollectionViewEditor.h"
 #import "private/MDCCollectionViewStyler.h"
-#import "MaterialCollectionCells.h"
-#import "MDCCollectionViewFlowLayout.h"
-#import "MDCCollectionInfoBarViewDelegate.h"
-#import "MaterialInk.h"
 
 #include <tgmath.h>
 
