@@ -103,9 +103,9 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   self.alert = [MDCAlertController alertControllerWithTitle:@"title" message:@"message"];
 
-  NSAttributedString *attributedStr = [[NSAttributedString alloc] initWithString:"attributed message" 
-                                                                      attributes:@{}];
-  self.attributedAlert = [MDCAlertController alertControllerWithTitle:@"title" 
+  NSAttributedString *attributedStr =
+      [[NSAttributedString alloc] initWithString:"attributed message" attributes:@{}];
+  self.attributedAlert = [MDCAlertController alertControllerWithTitle:@"title"
                                                     attributedMessage:attributedStr];
 }
 
