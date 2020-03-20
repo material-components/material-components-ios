@@ -220,19 +220,25 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)setMessage:(NSString *)message {
   _message = [message copy];
   if (self.alertView) {
-    self.alertView.messageLabel.text = message;
-    self.preferredContentSize =
-        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+    [self messageDidChange];
   }
 }
 
 - (void)setAttributedMessage:(NSAttributedString *)attributedMessage {
   _attributedMessage = [attributedMessage copy];
   if (self.alertView) {
-    self.alertView.messageLabel.attributedText = attributedMessage;
-    self.preferredContentSize =
-        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+    [self messageDidChange];
   }
+}
+
+- (void)messageDidChange {
+  if (self.attributedMessage.length > 0) {
+    self.alertView.messageLabel.attributedText = self.attributedMessage;
+  } else {
+    self.alertView.messageLabel.text = self.message;
+  }
+  self.preferredContentSize =
+      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
 - (void)setMessageAccessibilityLabel:(NSString *)messageAccessibilityLabel {
