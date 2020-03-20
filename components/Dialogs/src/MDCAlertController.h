@@ -194,8 +194,8 @@
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
 
-/** 
- Descriptive attributed text that summarizes a decision in a sentence of two. 
+/**
+ Descriptive attributed text that summarizes a decision in a sentence of two.
 
  If provided and non-empty, will be used instead of @c message property.
  */
