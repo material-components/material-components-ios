@@ -16,6 +16,18 @@
 
 #import "MDCChipView.h"
 
+static inline UIImage *TestImage(CGSize size) {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  UIGraphicsBeginImageContextWithOptions(size, false, scale);
+  [UIColor.redColor setFill];
+  CGRect fillRect = CGRectZero;
+  fillRect.size = size;
+  UIRectFill(fillRect);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MDCChipViewTests : XCTestCase
 
 @end
@@ -169,6 +181,95 @@
 
   // Then
   XCTAssertFalse(blockCalled);
+}
+
+- (void)testChipUpdatesSizeWhenTitleChanges {
+  // Given
+  UIView *view = [[UIView alloc] init];
+  view.bounds = CGRectMake(0, 0, 500, 500);
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  chip.titleLabel.text = @"Chip";
+  [view addSubview:chip];
+  chip.translatesAutoresizingMaskIntoConstraints = NO;
+  chip.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self centerChip:chip inView:view];
+  [view layoutIfNeeded];
+  CGFloat chipWidth = CGRectGetWidth(chip.bounds);
+
+  // When
+  chip.titleLabel.text = @"Material Chips";
+  [self forceAutoLayoutUpdateForView:view];
+
+  // Then
+  XCTAssertGreaterThan(CGRectGetWidth(chip.bounds), chipWidth);
+}
+
+- (void)testChipUpdatesSizeWhenTitleFontChanges {
+  // Given
+  UIView *view = [[UIView alloc] init];
+  view.bounds = CGRectMake(0, 0, 500, 500);
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  chip.titleLabel.text = @"Chip";
+  chip.titleLabel.font = [UIFont systemFontOfSize:12];
+  [view addSubview:chip];
+  chip.translatesAutoresizingMaskIntoConstraints = NO;
+  chip.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self centerChip:chip inView:view];
+  [view layoutIfNeeded];
+  CGSize chipSize = CGRectStandardize(chip.bounds).size;
+
+  // When
+  chip.titleLabel.font = [UIFont systemFontOfSize:20];
+  [self forceAutoLayoutUpdateForView:view];
+
+  // Then
+  XCTAssertGreaterThan(CGRectGetWidth(chip.bounds), chipSize.width);
+  XCTAssertGreaterThan(CGRectGetHeight(chip.bounds), chipSize.height);
+}
+
+- (void)testChipUpdatesSizeWhenImageChanges {
+  // Given
+  UIView *view = [[UIView alloc] init];
+  view.bounds = CGRectMake(0, 0, 500, 500);
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  chip.titleLabel.text = @"Chip";
+  [view addSubview:chip];
+  chip.translatesAutoresizingMaskIntoConstraints = NO;
+  chip.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self centerChip:chip inView:view];
+  [view layoutIfNeeded];
+  CGSize chipSize = CGRectStandardize(chip.bounds).size;
+
+  // When
+  chip.imageView.image = TestImage(CGSizeMake(24, 24));
+  [self forceAutoLayoutUpdateForView:view];
+
+  // Then
+  XCTAssertGreaterThan(CGRectGetWidth(chip.bounds), chipSize.width);
+}
+
+- (void)forceAutoLayoutUpdateForView:(UIView *)view {
+  [view setNeedsLayout];
+  [view layoutIfNeeded];
+}
+
+- (void)centerChip:(MDCChipView *)chip inView:(UIView *)view {
+  [NSLayoutConstraint constraintWithItem:chip
+                               attribute:NSLayoutAttributeCenterY
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:view
+                               attribute:NSLayoutAttributeCenterY
+                              multiplier:1
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:chip
+                               attribute:NSLayoutAttributeCenterX
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:view
+                               attribute:NSLayoutAttributeCenterX
+                              multiplier:1
+                                constant:0]
+      .active = YES;
 }
 
 @end
