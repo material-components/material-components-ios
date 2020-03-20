@@ -200,7 +200,7 @@
  Descriptive attributed text that summarizes a decision in a sentence of two.
 
  If provided and non-empty, will be used instead of @c message property.
- 
+
  @note Currently, support for tappable embedded links within @c attributedMessage
        is not supported.
  */
