@@ -14,5 +14,7 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerPresentationControllerDelegate.h"
 #import "MDCBottomDrawerTransitionController.h"
 #import "MDCBottomDrawerViewController.h"
+#import "MDCBottomDrawerViewControllerDelegate.h"
