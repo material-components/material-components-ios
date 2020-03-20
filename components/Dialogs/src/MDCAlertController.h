@@ -94,7 +94,7 @@
 
  @note This method receives an @c NSAttributedString for the display message. Use
        @c alertControllerWithTitle:message: for regular @c NSString support.
- 
+
  @note Currently, support for tappable embedded links within attributed strings is not supported.
 
  @param alertTitle The title of the alert.
