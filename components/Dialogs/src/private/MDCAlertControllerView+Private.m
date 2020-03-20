@@ -37,7 +37,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
-@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
 @end
 

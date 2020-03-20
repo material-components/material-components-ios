@@ -75,10 +75,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @end
 
-@interface MDCAlertControllerView (Accessibility)
-@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
-@end
-
 @interface MDCAlertController ()
 
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
@@ -417,6 +413,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (self.alertView) {
     self.alertView.titleIconTintColor = titleIconTintColor;
   }
+}
+
+- (UIImageView *)titleIconImageView {
+  return self.alertView.titleIconImageView;
 }
 
 - (void)setScrimColor:(UIColor *)scrimColor {

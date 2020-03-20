@@ -16,6 +16,7 @@
 
 #import "MaterialDialogs.h"
 #import "MaterialDialogs+Theming.h"
+#import "MDCAlertController+Customize.h"
 #import "MDCAlertControllerView+Private.h"
 #import "MaterialContainerScheme.h"
 
@@ -87,6 +88,18 @@ static NSString *const kMessageLongLatin =
                                                           handler:nil]];
 }
 
+- (void)generateHighlightedSnapshotAndVerifyForView:(UIView *)view {
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.2];
+  alertView.titleIconImageView.backgroundColor =
+      [[UIColor purpleColor] colorWithAlphaComponent:0.2];
+  alertView.titleIconView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.3];
+  alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.1];
+  alertView.messageLabel.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.2];
+  alertView.actionsScrollView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.2];
+  [self generateSizedSnapshotAndVerifyForView:view];
+}
+
 - (void)generateSizedSnapshotAndVerifyForView:(UIView *)view {
   [self sizeAlertToFitContent];
   [self generateSnapshotAndVerifyForView:view];
@@ -101,6 +114,14 @@ static NSString *const kMessageLongLatin =
 
 - (void)changeToRTL:(MDCAlertController *)alertController {
   [self changeViewToRTL:alertController.view];
+}
+
+- (void)configAlertWithTitleIcon {
+  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.title = @"Reset Settings?";
+  self.alertController.message = @"This will reset your device to its default factory settings.";
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
 }
 
 #pragma mark - Tests
@@ -376,6 +397,8 @@ static NSString *const kMessageLongLatin =
   [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
 }
 
+#pragma mark - Message Alignment Tests
+
 // message alignment: default alignment is natural
 - (void)testMessageDefaultAlignmentIsNatural {
   // Given
@@ -509,6 +532,21 @@ static NSString *const kMessageLongLatin =
 
   // Then
   [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
+#pragma mark - Title Icon Tests
+
+// title icon content mode: scale to fill
+- (void)testTitleIconAlignmentIsJustifiedContentModeAspectFill {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleIconImageView.contentMode = UIViewContentModeScaleToFill;
+  self.alertController.titleIconImageView.clipsToBounds = YES;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForView:self.alertController.view];
 }
 
 @end
