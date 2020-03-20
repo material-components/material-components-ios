@@ -117,8 +117,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return alertController;
 }
 
-+ (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
-                       attributedMessage:(nullable NSString *)attributedMessage {
++ (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
+                       attributedMessage:(nullable NSAttributedString *)attributedMessage {
   MDCAlertController *alertController =
       [[MDCAlertController alloc] initWithTitle:alertTitle attributedMessage:attributedMessage];
 
@@ -139,7 +139,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
-                    attributedMessage:(nullable NSString *)attributedMessage {
+                    attributedMessage:(nullable NSAttributedString *)attributedMessage {
   self = [self initWithTitle:title];
   if (self) {
     _attributedMessage = [attributedMessage copy];
