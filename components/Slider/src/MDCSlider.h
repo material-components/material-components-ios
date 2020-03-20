@@ -17,6 +17,9 @@
 
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCSliderDelegate.h"
 
 /** The visibility of the track tick marks. */
 typedef NS_ENUM(NSUInteger, MDCSliderTrackTickVisibility) {
@@ -449,42 +452,3 @@ IB_DESIGNABLE
 @end
 
 /** MDCSlider delegate which allows setting custom behavior. */
-@protocol MDCSliderDelegate <NSObject>
-@optional
-
-/**
- Called when the user taps on the MDCSlider.
-
- If not implemented, the MDCSlider will always be allowed to jump to any value.
- */
-- (BOOL)slider:(nonnull MDCSlider *)slider shouldJumpToValue:(CGFloat)value;
-
-/**
- For discrete sliders, called when the slider is determining the string label to display for a given
- discrete value.
-
- If not implemented, or if no slider delegate is specified, the slider defaults to displaying the
- value rounded to the closest relevant digit. For instance, 0.50000 would become "0.5"
-
- Override this to provide custom behavior, for instance if your slider deals in percentages, the
- above example could become "50%"
-
- @param slider The MDCSlider sender.
- @param value The value whose label needs to be calculated.
- */
-- (nonnull NSString *)slider:(nonnull MDCSlider *)slider displayedStringForValue:(CGFloat)value;
-
-/**
- Used to determine what string value should be used as the accessibility string for a given value.
-
- If not implemented, or if no slider delegate is specified, the slider defaults to how filled the
- slider is, as a percentage. Override this method to provide custom behavior, and when implementing,
- you may want to also implement @c -slider:displayedStringForValue: to ensure consistency between
- the displayed value and the accessibility label.
-
- @param slider The MDCSlider sender.
- @param value The value whose accessibility label needs to be calculated.
- */
-- (nonnull NSString *)slider:(nonnull MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value;
-
-@end
