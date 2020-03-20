@@ -15,6 +15,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTabBar.h"
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCTabBarControllerDelegate.h"
 
 @protocol MDCTabBarControllerDelegate;
 
@@ -68,32 +71,3 @@ IB_DESIGNABLE
 @end
 
 /** The delegate protocol for MDCTabBarViewController */
-@protocol MDCTabBarControllerDelegate <NSObject>
-@optional
-
-/**
- Called when the user taps on a tab bar item. Not called for programmatic selection.
-
- If you provide this method, you can control whether tapping on a tab bar item actually
- switches to that viewController. If not provided, MDCTabBarViewController will always switch.
-
- @note The tab bar controller will call this method even when the tapped tab bar
- item is the currently-selected tab bar item.
-
- You can also use this method as a willSelectViewController.
- */
-- (BOOL)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
-    shouldSelectViewController:(nonnull UIViewController *)viewController;
-
-/**
- Called when the user taps on a tab bar item. Not called for programmatic selection.
- MDCTabBarViewController will call your delegate once it has responded to the user's tap
- by changing the selected view controller.
-
- @note The tab bar controller will call this method even when the tapped tab bar
- item is the currently-selected tab bar item.
- */
-- (void)tabBarController:(nonnull MDCTabBarViewController *)tabBarController
-    didSelectViewController:(nonnull UIViewController *)viewController;
-
-@end

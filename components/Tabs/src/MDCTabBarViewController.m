@@ -16,6 +16,7 @@
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
+#import "MDCTabBarControllerDelegate.h"
 
 const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
 

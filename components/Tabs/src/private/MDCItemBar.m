@@ -16,15 +16,16 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCItemBarCell.h"
-#import "MDCItemBarStyle.h"
+#import "MaterialAnimationTiming.h"
 #import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarSizeClassDelegate.h"
+#import "MDCItemBarCell.h"
+#import "MDCItemBarDelegate.h"
+#import "MDCItemBarStyle.h"
 #import "MDCTabBarIndicatorView.h"
 #import "MDCTabBarPrivateIndicatorContext.h"
-#import "MDCTabBarSizeClassDelegate.h"
-#import "MaterialAnimationTiming.h"
 
 /// Cell reuse identifier for item bar cells.
 static NSString *const kItemReuseID = @"MDCItem";
