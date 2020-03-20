@@ -20,6 +20,3 @@
 #import "MDCFlexibleHeaderViewController.h"
 #import "MDCFlexibleHeaderViewDelegate.h"
 #import "MDCFlexibleHeaderViewLayoutDelegate.h"
-#import "MDCFlexibleHeaderMinMaxHeightDelegate.h"
-#import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
-#import "MDCStatusBarShifterDelegate.h"
