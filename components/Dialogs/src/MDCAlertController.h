@@ -94,6 +94,8 @@
 
  @note This method receives an @c NSAttributedString for the display message. Use
        @c alertControllerWithTitle:message: for regular @c NSString support.
+ 
+ @note Currently, support for tappable embedded links within attributed strings is not supported.
 
  @param alertTitle The title of the alert.
  @param attributedMessage Descriptive text that summarizes a decision in a sentence of two.
@@ -198,6 +200,9 @@
  Descriptive attributed text that summarizes a decision in a sentence of two.
 
  If provided and non-empty, will be used instead of @c message property.
+ 
+ @note Currently, support for tappable embedded links within @c attributedMessage
+       is not supported.
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedMessage;
 
