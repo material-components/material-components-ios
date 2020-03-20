@@ -116,8 +116,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 }
 
 /**
- Verifies that the message init does call initialize other variables correctly and configures, as per
- the common init, and the message property
+ Verifies that the message init does call initialize other variables correctly and configures, as
+ per the common init, and the message property
  */
 - (void)testMessageInit {
   // Then
@@ -131,8 +131,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 }
 
 /**
- Verifies that the attributedMessage init does call initialize other variables correctly and configures, 
- as per the common init, and the attributedMessage property
+ Verifies that the attributedMessage init does call initialize other variables correctly and
+ configures, as per the common init, and the attributedMessage property
  */
 - (void)testAttributedMessageInit {
   // Then
