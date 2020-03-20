@@ -21,19 +21,15 @@
 
 @property(nonatomic, strong, nullable) UIImage *titleIcon;
 @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
-@property(nonatomic, assign) NSTextAlignment titleAlignment;
-@property(nonatomic, assign) NSTextAlignment messageAlignment;
 
-/**
- An optional custom icon view above the title of the alert.
+@property(nonatomic, assign) NSTextAlignment titleAlignment __deprecated_msg(
+    "Please use MDCAlertcontroller titleAlignment instead.");
+@property(nonatomic, assign) NSTextAlignment messageAlignment __deprecated_msg(
+    "Please use MDCAlertcontroller messageAlignment instead.");
 
- @discussion This property is intended to be used to provide a custom implementation of the title
- icon view. If the intention is to just display a `UIImage`, use `setTitleIcon:` API instead. If
- this property value is nil, the title icon is displayed above the title view. If you set this
- property to a custom view, it is displayed instead of the title icon. Custom title views are
- aligned with the title and may be resized to fit.
- */
-@property(nonatomic, strong, nullable) UIView *titleIconView;
+/** An optional custom icon view above the title of the alert. */
+@property(nonatomic, strong, nullable) UIView *titleIconView __deprecated_msg(
+    "Please use MDCAlertcontroller+Customize titleIconView instead.");
 
 @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;
