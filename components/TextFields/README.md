@@ -331,14 +331,6 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 <!--</div>-->
 
 
-<!-- Extracted from docs/color-theming.md -->
-
-
-
-<!-- Extracted from docs/typography-theming.md -->
-
-
-
 ## Accessibility
 
 <!-- Extracted from docs/accessibility.md -->
