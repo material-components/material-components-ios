@@ -226,7 +226,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setMessage:(NSAttributedString *)attributedMessage {
+- (void)setAttributedMessage:(NSAttributedString *)attributedMessage {
   _attributedMessage = [attributedMessage copy];
   if (self.alertView) {
     self.alertView.messageLabel.attributedText = attributedMessage;
