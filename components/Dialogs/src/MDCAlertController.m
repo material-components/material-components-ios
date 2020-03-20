@@ -118,7 +118,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
-                       attributedMessage:(nullable NSAttributedString *)attributedMessage {
+                               attributedMessage:(nullable NSAttributedString *)attributedMessage {
   MDCAlertController *alertController =
       [[MDCAlertController alloc] initWithTitle:alertTitle attributedMessage:attributedMessage];
 

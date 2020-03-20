@@ -102,7 +102,7 @@
  @return An initialized MDCAlertController object.
  */
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
-                       attributedMessage:(nullable NSAttributedString *)attributedMessage;
+                               attributedMessage:(nullable NSAttributedString *)attributedMessage;
 
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
