@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import "MDCRippleLayer.h"
+
 #import "MaterialAnimationTiming.h"
+#import "MDCRippleLayerDelegate.h"
 #import "MaterialMath.h"
 
 static const CGFloat kExpandRippleBeyondSurface = 10;

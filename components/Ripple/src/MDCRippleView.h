@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCRippleViewDelegate.h"
+
 @protocol MDCRippleViewDelegate;
 
 /**
@@ -147,43 +151,5 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  */
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion;
-
-@end
-
-/**
- The ripple view delegate protocol. Clients may implement this protocol to receive updates on
- the ripple's animation lifecycle.
- */
-@protocol MDCRippleViewDelegate <NSObject>
-
-@optional
-
-/**
- Called when the ripple view began its touch down animation.
-
- @param rippleView The MDCRippleView.
- */
-- (void)rippleTouchDownAnimationDidBegin:(nonnull MDCRippleView *)rippleView;
-
-/**
- Called when the ripple view ended its touch down animation.
-
- @param rippleView The MDCRippleView.
- */
-- (void)rippleTouchDownAnimationDidEnd:(nonnull MDCRippleView *)rippleView;
-
-/**
- Called when the ripple view began its touch up animation.
-
- @param rippleView The MDCRippleView.
- */
-- (void)rippleTouchUpAnimationDidBegin:(nonnull MDCRippleView *)rippleView;
-
-/**
- Called when the ripple view ended its touch up animation.
-
- @param rippleView The MDCRippleView.
- */
-- (void)rippleTouchUpAnimationDidEnd:(nonnull MDCRippleView *)rippleView;
 
 @end

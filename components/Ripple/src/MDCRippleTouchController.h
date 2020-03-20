@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCRippleTouchControllerDelegate.h"
 #import "MDCRippleView.h"
 
 @protocol MDCRippleTouchControllerDelegate;
@@ -106,59 +109,5 @@
  is added to it as a subview.
  */
 - (void)addRippleToView:(nonnull UIView *)view;
-
-@end
-
-/**
- Delegate methods for MDCRippleTouchController.
- */
-@protocol MDCRippleTouchControllerDelegate <NSObject>
-@optional
-
-/**
- Controls whether the ripple touch controller should process touches.
-
- The touch controller will query this method to determine if it should start or continue to
- process touches controlling the ripple. Returning NO at the start of a gesture will prevent any
- ripple from being displayed, and returning NO in the middle of a gesture will cancel that gesture
- and evaporate the ripple.
-
- If not implemented then YES is assumed.
-
- @param rippleTouchController The ripple touch controller.
- @param location The touch location relative to the rippleTouchController view.
- @return YES if the controller should process touches at @c location.
-
- @see cancelRippleTouchProcessing
- */
-- (BOOL)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
-    shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location;
-
-/**
- Notifies the receiver that the ripple touch controller did process an ripple view at the
- touch location.
-
- @param rippleTouchController The ripple touch controller.
- @param rippleView The ripple view.
- @param location The touch location relative to the rippleTouchController superView.
- */
-- (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
-         didProcessRippleView:(nonnull MDCRippleView *)rippleView
-              atTouchLocation:(CGPoint)location;
-
-/**
- Provides an opportunity to add the rippleView anywhere in the given view's hierarchy.
-
- If this method is not implemented, the ripple view is added as a subview of the given view provided
- in the controller's `addRippleToView:` method or convenience initializer `initWithView:`.
- Delegates can choose to insert the ripple view anywhere in the view hierarchy.
-
- @param rippleTouchController The ripple touch controller.
- @param rippleView The ripple view.
- @param view The requested superview of the ripple view.
- */
-- (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
-             insertRippleView:(nonnull MDCRippleView *)rippleView
-                     intoView:(nonnull UIView *)view;
 
 @end
