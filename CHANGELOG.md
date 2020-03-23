@@ -7,7 +7,7 @@ This minor release includes improvements to Chips, Dialogs, HeaderStackView, Pro
 ### Dialogs
 
 ### MDCAlertControllerView
-- `titleAlignment`, `messageAlignment`, and `titleIconView` properties have been deprecated. 
+- `titleAlignment`, `messageAlignment`, and `titleIconView` properties have been deprecated.
 
 ## API changes
 
