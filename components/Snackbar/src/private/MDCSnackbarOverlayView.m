@@ -513,7 +513,7 @@ static const CGFloat kMaximumHeight = 80;
   self.snackbarView = snackbarView;  // Install the Snackbar.
   self.bottomConstraint.constant = -self.dynamicBottomMargin;
 
-  if (animated && self.snackbarView) {
+  if (animated && snackbarView) {
     [self slideInMessageView:snackbarView completion:completion];
   } else {
     if (completion) {
