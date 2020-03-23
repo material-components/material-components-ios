@@ -580,12 +580,18 @@ static const CGFloat kMaximumHeight = 80;
                                    duration:duration
                              timingFunction:timingFunction];
   } else {
-    NSMutableArray *animations =
-        [NSMutableArray arrayWithObject:[snackbarView animateSnackbarOpacityFrom:fromContentOpacity
-                                                                              to:toContentOpacity]];
+    NSMutableArray *animations = [[NSMutableArray alloc] init];
+    CABasicAnimation *opacityAnimation = [snackbarView animateSnackbarOpacityFrom:fromContentOpacity
+                                                                               to:toContentOpacity];
+    if (opacityAnimation) {
+      [animations addObject:opacityAnimation];
+    }
     if (onscreen) {
-      [animations addObject:[snackbarView animateSnackbarScaleFrom:MDCSnackbarEnterStartingScale
-                                                           toScale:1]];
+      CABasicAnimation *scaleAnimation =
+          [snackbarView animateSnackbarScaleFrom:MDCSnackbarEnterStartingScale toScale:1];
+      if (scaleAnimation) {
+        [animations addObject:scaleAnimation];
+      }
     }
     animationsGroup.animations = animations;
     [snackbarView.layer addAnimation:animationsGroup forKey:@"snackbarAnimation"];
