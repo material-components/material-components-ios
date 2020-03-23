@@ -513,7 +513,7 @@ static const CGFloat kMaximumHeight = 80;
   self.snackbarView = snackbarView;  // Install the Snackbar.
   self.bottomConstraint.constant = -self.dynamicBottomMargin;
 
-  if (animated) {
+  if (animated && self.snackbarView) {
     [self slideInMessageView:snackbarView completion:completion];
   } else {
     if (completion) {
@@ -523,7 +523,7 @@ static const CGFloat kMaximumHeight = 80;
 }
 
 - (void)dismissSnackbarViewAnimated:(BOOL)animated completion:(void (^)(void))completion {
-  if (animated) {
+  if (animated && self.snackbarView) {
     [self slideOutMessageView:self.snackbarView
                    completion:^{
                      self.snackbarView = nil;  // Uninstall the Snackbar
