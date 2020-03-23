@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCInkViewDelegate.h"
+
 @protocol MDCInkViewDelegate;
 
 /** Completion block signature for all ink animations. */
@@ -172,29 +176,5 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  -inkTouchController:inkViewAtTouchLocation; implementation.
  */
 + (nonnull MDCInkView *)injectedInkViewForView:(nonnull UIView *)view;
-
-@end
-
-/**
- Delegate protocol for MDCInkView. Clients may implement this protocol to receive updates when ink
- layer start and end.
- */
-@protocol MDCInkViewDelegate <NSObject>
-
-@optional
-
-/**
- Called when the ink ripple animation begins.
-
- @param inkView The MDCInkView that starts animating.
- */
-- (void)inkAnimationDidStart:(nonnull MDCInkView *)inkView;
-
-/**
- Called when the ink ripple animation ends.
-
- @param inkView The MDCInkView that ends animating.
- */
-- (void)inkAnimationDidEnd:(nonnull MDCInkView *)inkView;
 
 @end

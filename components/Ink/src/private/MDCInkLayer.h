@@ -15,6 +15,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCInkLayerDelegate.h"
+
 @protocol MDCInkLayerDelegate;
 
 /**
@@ -100,29 +104,5 @@
  @param animated if to animate the ripple or not
  */
 - (void)endInkAtPoint:(CGPoint)point animated:(BOOL)animated;
-
-@end
-
-/**
- Delegate protocol for the MDCInkLayer. Clients may implement this protocol to receive updates when
- ink layer animations start and end.
- */
-@protocol MDCInkLayerDelegate <CALayerDelegate>
-
-@optional
-
-/**
- Called when the ink ripple animation begins.
-
- @param inkLayer The MDCInkLayer that starts animating.
- */
-- (void)inkLayerAnimationDidStart:(nonnull MDCInkLayer *)inkLayer;
-
-/**
- Called when the ink ripple animation ends.
-
- @param inkLayer The MDCInkLayer that ends animating.
- */
-- (void)inkLayerAnimationDidEnd:(nonnull MDCInkLayer *)inkLayer;
 
 @end

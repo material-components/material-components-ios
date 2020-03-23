@@ -14,9 +14,10 @@
 
 #import "MDCBottomDrawerPresentationController.h"
 
+#import "private/MDCBottomDrawerContainerViewController.h"
+#import "MDCBottomDrawerPresentationControllerDelegate.h"
 #import "MDCBottomDrawerViewController.h"
 #import "MaterialPalettes.h"
-#import "private/MDCBottomDrawerContainerViewController.h"
 
 static CGFloat kTopHandleHeight = (CGFloat)2.0;
 static CGFloat kTopHandleWidth = (CGFloat)24.0;

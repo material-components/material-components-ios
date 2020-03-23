@@ -15,6 +15,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCItemBarAlignment.h"
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCItemBarDelegate.h"
 
 @class MDCItemBarStyle;
 @class MDCTabBar;
@@ -81,25 +84,6 @@
 
 /** Updates the bar to use the given style properties. */
 - (void)applyStyle:(nonnull MDCItemBarStyle *)itemStyle;
-
-@end
-
-/**
- Delegate protocol for MDCItemBar. Clients may implement this protocol to receive notifications of
- selection changes.
- */
-@protocol MDCItemBarDelegate <NSObject>
-/**
- Called before the selected item changes by user action. This method is not called for programmatic
- changes to the bar's selected item. Return YES to allow the selection.
- */
-- (BOOL)itemBar:(nonnull MDCItemBar *)itemBar shouldSelectItem:(nonnull UITabBarItem *)item;
-
-/**
- Called when the selected item changes by user action. This method is not called for programmatic
- changes to the bar's selected item.
- */
-- (void)itemBar:(nonnull MDCItemBar *)itemBar didSelectItem:(nonnull UITabBarItem *)item;
 
 @end
 

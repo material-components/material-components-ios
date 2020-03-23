@@ -19,7 +19,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_arrow_back/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_arrow_back" => [
-          "components/private/Icons/icons/ic_arrow_back/src/MaterialIcons_ic_arrow_back.bundle/*.png",
+          "components/private/Icons/icons/ic_arrow_back/src/MaterialIcons_ic_arrow_back.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -30,7 +30,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_check/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_check" => [
-          "components/private/Icons/icons/ic_check/src/MaterialIcons_ic_check.bundle/*.png",
+          "components/private/Icons/icons/ic_check/src/MaterialIcons_ic_check.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -41,7 +41,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_check_circle/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_check_circle" => [
-          "components/private/Icons/icons/ic_check_circle/src/MaterialIcons_ic_check_circle.bundle/*.png",
+          "components/private/Icons/icons/ic_check_circle/src/MaterialIcons_ic_check_circle.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -52,7 +52,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_chevron_right/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_chevron_right" => [
-          "components/private/Icons/icons/ic_chevron_right/src/MaterialIcons_ic_chevron_right.bundle/*.png",
+          "components/private/Icons/icons/ic_chevron_right/src/MaterialIcons_ic_chevron_right.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -63,7 +63,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_color_lens/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_color_lens" => [
-          "components/private/Icons/icons/ic_color_lens/src/MaterialIcons_ic_color_lens.bundle/*.png",
+          "components/private/Icons/icons/ic_color_lens/src/MaterialIcons_ic_color_lens.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -74,7 +74,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_help_outline/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_help_outline" => [
-          "components/private/Icons/icons/ic_help_outline/src/MaterialIcons_ic_help_outline.bundle/*.png",
+          "components/private/Icons/icons/ic_help_outline/src/MaterialIcons_ic_help_outline.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -85,7 +85,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_info/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_info" => [
-          "components/private/Icons/icons/ic_info/src/MaterialIcons_ic_info.bundle/*.png",
+          "components/private/Icons/icons/ic_info/src/MaterialIcons_ic_info.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -96,7 +96,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_more_horiz/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_more_horiz" => [
-          "components/private/Icons/icons/ic_more_horiz/src/MaterialIcons_ic_more_horiz.bundle/*.png",
+          "components/private/Icons/icons/ic_more_horiz/src/MaterialIcons_ic_more_horiz.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -107,7 +107,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_radio_button_unchecked/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_radio_button_unchecked" => [
-          "components/private/Icons/icons/ic_radio_button_unchecked/src/MaterialIcons_ic_radio_button_unchecked.bundle/*.png",
+          "components/private/Icons/icons/ic_radio_button_unchecked/src/MaterialIcons_ic_radio_button_unchecked.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -118,7 +118,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_reorder/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_reorder" => [
-          "components/private/Icons/icons/ic_reorder/src/MaterialIcons_ic_reorder.bundle/*.png",
+          "components/private/Icons/icons/ic_reorder/src/MaterialIcons_ic_reorder.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -129,7 +129,7 @@ def registerIcons(s)
       ss.source_files = "components/private/Icons/icons/ic_settings/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_settings" => [
-          "components/private/Icons/icons/ic_settings/src/MaterialIcons_ic_settings.bundle/*.png",
+          "components/private/Icons/icons/ic_settings/src/MaterialIcons_ic_settings.xcassets",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"

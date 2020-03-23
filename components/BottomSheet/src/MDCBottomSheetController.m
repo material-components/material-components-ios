@@ -14,10 +14,12 @@
 
 #import "MDCBottomSheetController.h"
 
+#import "MDCBottomSheetControllerDelegate.h"
 #import "MDCBottomSheetPresentationController.h"
+#import "MDCBottomSheetPresentationControllerDelegate.h"
 #import "MDCBottomSheetTransitionController.h"
-#import "MaterialMath.h"
 #import "UIViewController+MaterialBottomSheet.h"
+#import "MaterialMath.h"
 
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
 @property(nonatomic, readonly, strong) MDCShapedView *view;

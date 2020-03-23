@@ -18,12 +18,13 @@
 #import <MotionAnimator/MotionAnimator.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "MaterialApplication.h"
-#import "MaterialPalettes.h"
 #import "private/MDCActivityIndicator+Private.h"
 #import "private/MDCActivityIndicatorMotionSpec.h"
 #import "private/MaterialActivityIndicatorStrings.h"
 #import "private/MaterialActivityIndicatorStrings_table.h"
+#import "MDCActivityIndicatorDelegate.h"
+#import "MaterialPalettes.h"
+#import "MaterialApplication.h"
 
 static const NSInteger kTotalDetentCount = 5;
 static const NSTimeInterval kAnimateOutDuration = 0.1;

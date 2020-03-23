@@ -657,10 +657,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return [self effectiveLayoutStyle] == MDCTabBarViewLayoutStyleScrollable;
 }
 
-/**
- The current layout style of the Tab Bar. Although the user sets a preferred layout style, not all
- combinations of items, bounds, and style can be rendered correctly.
- */
 - (MDCTabBarViewLayoutStyle)effectiveLayoutStyle {
   if (self.items.count == 0) {
     return MDCTabBarViewLayoutStyleFixed;
@@ -968,10 +964,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CGPoint)contentOffsetNeededToCenterItemView:(UIView *)itemView {
   CGFloat availableWidth = [self availableSizeForSubviewLayout].width;
-  CGFloat itemViewWidth = CGRectGetWidth(itemView.frame);
-  CGFloat contentOffsetX = CGRectGetMinX(itemView.frame) - ((availableWidth - itemViewWidth) / 2.f);
+  CGRect itemFrame = itemView.frame;
+  if (CGSizeEqualToSize(itemView.frame.size, CGSizeZero)) {
+    NSUInteger index = [self.itemViews indexOfObject:itemView];
+    itemFrame = [self estimatedFrameForItemAtIndex:index];
+  }
+  CGFloat itemViewWidth = CGRectGetWidth(itemFrame);
+  CGFloat contentOffsetX = CGRectGetMinX(itemFrame) - ((availableWidth - itemViewWidth) / 2.f);
   contentOffsetX = MAX(contentOffsetX, 0.f);
-  contentOffsetX = MIN(contentOffsetX, self.contentSize.width - availableWidth);
+  CGSize contentSize = [self calculatedContentSize];
+  contentOffsetX = MIN(contentOffsetX, MAX(contentSize.width - availableWidth, 0.f));
   return CGPointMake(contentOffsetX, self.contentOffset.y);
 }
 

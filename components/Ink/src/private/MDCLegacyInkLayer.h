@@ -15,6 +15,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCLegacyInkLayerDelegate.h"
+
 @protocol MDCLegacyInkLayerDelegate;
 
 /**
@@ -104,29 +108,5 @@
  @param completionBlock Block called after the completion of the evaporation.
  */
 - (void)evaporateToPoint:(CGPoint)point completion:(void (^_Nullable)(void))completionBlock;
-
-@end
-
-/**
- Delegate protocol for the MDCLegacyInkLayer. Clients may implement this protocol to receive updates
- when ink layer animations start and end.
- */
-@protocol MDCLegacyInkLayerDelegate <NSObject>
-
-@optional
-
-/**
- Called when the ink ripple animation begins.
-
- @param inkLayer The MDCLegacyInkLayer that starts animating.
- */
-- (void)legacyInkLayerAnimationDidStart:(nonnull MDCLegacyInkLayer *)inkLayer;
-
-/**
- Called when the ink ripple animation ends.
-
- @param inkLayer The MDCLegacyInkLayer that ends animating.
- */
-- (void)legacyInkLayerAnimationDidEnd:(nonnull MDCLegacyInkLayer *)inkLayer;
 
 @end

@@ -19,10 +19,26 @@
 /**
  An optional custom icon view above the title of the alert.
 
- @note This property is intended to be used to provide a custom implementation of the title icon
- view. If the intention is to just display a `UIImage`, use `setTitleIcon:` API instead. If
- 'titleIcon' is set, 'titleIconView' is ignored.
+ @discussion Use `titleIcon` to display icons or images.  Use `titleIconView` for custom views
+             implementations. If both `titleIcon` are `titleIconView` are set, 'titleIcon' is
+             ignored.
+
+ @discussion Custom title views are aligned with the title and may be resized to fit.
  */
 @property(nonatomic, strong, nullable) UIView *titleIconView;
+
+/**
+ The backing image view of `titleIcon`. Use `titleIcon` to set the icon or image. Use
+ 'titleIconImageView' to fine tune the appearance of `titleIcon` when necessary, for instance, to
+ set up its `contentMode`.
+
+ @discussion The `titleIcon` (and `titleIconImageView`) are aligned with the title and may be
+             resized to fit.
+
+ @discussion Use `titleIcon` to display icons or images.  Use `titleIconView` for custom views
+             implementations. If both `titleIcon` are `titleIconView` are set, 'titleIcon' (and
+             `titleIconImageView`) are ignored.
+ */
+@property(nonatomic, nullable, strong, readonly) UIImageView *titleIconImageView;
 
 @end

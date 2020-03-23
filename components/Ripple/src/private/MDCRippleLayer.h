@@ -15,6 +15,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCRippleLayerDelegate.h"
+
 /**
  Convenience naming for the completion blocks the ripple animation provides.
  */
@@ -89,40 +93,4 @@ typedef void (^MDCRippleCompletionBlock)(void);
  */
 - (void)fadeOutRippleAnimated:(BOOL)animated
                    completion:(nullable MDCRippleCompletionBlock)completion;
-@end
-
-/**
- The ripple layer delegate protocol to let MDCRippleView know of the layer's
- ripple animation timeline.
- */
-@protocol MDCRippleLayerDelegate <CALayerDelegate>
-
-/**
- Called when the ripple layer began its touch down animation.
-
- @param rippleLayer The MDCRippleLayer.
- */
-- (void)rippleLayerTouchDownAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
-
-/**
- Called when the ripple layer ended its touch down animation.
-
- @param rippleLayer The MDCRippleLayer.
- */
-- (void)rippleLayerTouchDownAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
-
-/**
- Called when the ripple layer began its touch up animation.
-
- @param rippleLayer The MDCRippleLayer.
- */
-- (void)rippleLayerTouchUpAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
-
-/**
- Called when the ripple layer ended its touch up animation.
-
- @param rippleLayer The MDCRippleLayer.
- */
-- (void)rippleLayerTouchUpAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
-
 @end

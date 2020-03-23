@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCSlider.h"
+#import "MDCSliderDelegate.h"

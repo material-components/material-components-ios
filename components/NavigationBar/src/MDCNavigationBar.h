@@ -128,7 +128,13 @@ IB_DESIGNABLE
  right-to-left the titleInset.left will be used for the right side and the titleInset.right will be
  used for the left side.
 
- Defaults to UIEdgeInsets(0, 16, 0, 16).
+ If titleAlignment is center, defaults to UIEdgeInsets(0, 16, 0, 16).
+ If titleAlignment is leading and there are no items, defaults to UIEdgeInsets(0, 16, 0, 16).
+ If titleAlignment is leading and there are leading & trailing items, defaults to UIEdgeInsetsZero.
+ If titleAlignment is leading and there are only trailing items, defaults to
+ UIEdgeInsets(0, 16, 0, 0).
+ If titleAlignment is leading and there are only leading items, defaults to
+ UIEdgeInsets(0, 0, 0, 16).
  */
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 

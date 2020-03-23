@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_help_outline)
 
 /*
- Returns the path for the ic_help_outline image contained in
- MaterialIcons_ic_help_outline.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_help_outline;
-
-/*
  Returns the image for the ic_help_outline image contained in
  MaterialIcons_ic_help_outline.bundle.
  */

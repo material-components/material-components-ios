@@ -14,9 +14,10 @@
 
 #import "MDCDialogPresentationController.h"
 
-#import "MaterialKeyboardWatcher.h"
-#import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
+#import "MDCDialogPresentationControllerDelegate.h"
+#import "MaterialShadowLayer.h"
+#import "MaterialKeyboardWatcher.h"
 
 static const CGFloat MDCDialogMinimumWidth = 280;
 // TODO: Spec indicates 40 side margins and 280 minimum width.

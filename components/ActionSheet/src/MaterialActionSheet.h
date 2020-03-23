@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCActionSheetController.h"
+#import "MDCActionSheetControllerDelegate.h"

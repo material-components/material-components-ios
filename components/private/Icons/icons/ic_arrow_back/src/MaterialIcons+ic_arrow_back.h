@@ -22,14 +22,6 @@
 @interface MDCIcons (ic_arrow_back)
 
 /*
- Returns the path for the ic_arrow_back image contained in
- MaterialIcons_ic_arrow_back.bundle.
-
- Defaults to the old style.
- */
-+ (nonnull NSString *)pathFor_ic_arrow_back;
-
-/*
  Change the style returned by `pathFor_ic_arrow_back`.
 
  @param useNewStyle Use the new iOS style OR Material style for ic_arrow_back.

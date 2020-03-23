@@ -47,4 +47,43 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testAddingViewsIncreaseExpectedSizeToFit {
+  // Given
+  MDCHeaderStackView *testHeaderStackView =
+      [[MDCHeaderStackView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
+  UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
+
+  // When
+  testHeaderStackView.topBar = topView;
+  testHeaderStackView.bottomBar = bottomView;
+  [testHeaderStackView sizeToFit];
+
+  // Then
+  CGFloat expectedHeight = 400;
+  XCTAssertEqual(testHeaderStackView.bounds.size.height, expectedHeight);
+}
+
+- (void)testRemovingBottomView {
+  // Given
+  MDCHeaderStackView *testHeaderStackView =
+      [[MDCHeaderStackView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+  UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+  testHeaderStackView.topBar = topView;
+  testHeaderStackView.bottomBar = bottomView;
+  [testHeaderStackView sizeToFit];
+
+  CGFloat expectedHeight = 100;
+  XCTAssertEqual(testHeaderStackView.bounds.size.height, expectedHeight);
+
+  // When
+  testHeaderStackView.bottomBar = nil;
+  [testHeaderStackView sizeToFit];
+
+  // Then
+  expectedHeight = 50;
+  XCTAssertEqual(testHeaderStackView.bounds.size.height, expectedHeight);
+}
+
 @end

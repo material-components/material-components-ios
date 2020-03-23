@@ -14,23 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCDialogPresentationControllerDelegate.h"
 #import "MaterialShadowElevations.h"
 
 @class MDCDialogPresentationController;
-
-/**
- MDCDialogPresentationControllerDelegate provides a method that allows a delegate of an
- MDCDialogPresentationController to respond to its dismissals.
- */
-@protocol MDCDialogPresentationControllerDelegate <NSObject>
-@optional
-/**
- This method allows a delegate conforming to MDCDialogPresentationControllerDelegate to respond to
- MDCDialogPresentationController dismissals.
- */
-- (void)dialogPresentationControllerDidDismiss:
-    (nonnull MDCDialogPresentationController *)dialogPresentationController;
-@end
+@protocol MDCDialogPresentationControllerDelegate;
 
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the

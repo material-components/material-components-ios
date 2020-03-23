@@ -101,6 +101,12 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nonatomic, assign) MDCTabBarViewLayoutStyle preferredLayoutStyle;
 
 /**
+ The current layout style of the Tab Bar. Although the user sets a preferred layout style, not all
+ combinations of items, bounds, and style can be rendered correctly.
+ */
+@property(nonatomic, readonly) MDCTabBarViewLayoutStyle effectiveLayoutStyle;
+
+/**
  A block that is invoked when the @c MDCTabBarView receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */

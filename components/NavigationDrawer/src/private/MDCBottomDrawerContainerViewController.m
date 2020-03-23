@@ -15,6 +15,7 @@
 #import "MDCBottomDrawerContainerViewController.h"
 
 #import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerContainerViewControllerDelegate.h"
 #import "MDCBottomDrawerHeaderMask.h"
 #import "MDCBottomDrawerShadowedView.h"
 #import "MaterialApplication.h"
@@ -311,9 +312,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
+  CGFloat bottomSafeAreaInset = [self bottomSafeAreaInsetsToAdjustContainerHeight];
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
-                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset -
-                            kScrollViewBufferForPerformance;
+                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset +
+                            bottomSafeAreaInset - kScrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
 
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
@@ -561,19 +563,22 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (void)setupLayout {
-  // Layout the clipping view and the scroll view.
-  if (self.currentlyFullscreen) {
-    CGRect scrollViewFrame = self.presentingViewBounds;
-    self.scrollView.frame = scrollViewFrame;
-  } else {
-    CGRect scrollViewFrame = self.presentingViewBounds;
+  // Layout the scroll view.
+  CGRect scrollViewFrame = self.presentingViewBounds;
+  if (!self.currentlyFullscreen) {
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
           self.presentingViewBounds.size.height / 2;
       scrollViewFrame.size.height += heightSurplusForSpringAnimationOvershooting;
     }
-    self.scrollView.frame = scrollViewFrame;
+
+    // Adjust y-position of origin to account for non-fullscreen presentation styles.
+    CGFloat yOffset = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.presentingViewBounds);
+    if (yOffset > 0 && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
+      scrollViewFrame.origin.y += yOffset;
+    }
   }
+  self.scrollView.frame = scrollViewFrame;
 
   // Layout the top header's bottom shadow.
   [self setUpHeaderBottomShadowIfNeeded];

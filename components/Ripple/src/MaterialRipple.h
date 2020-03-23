@@ -13,5 +13,7 @@
 // limitations under the License.
 
 #import "MDCRippleTouchController.h"
+#import "MDCRippleTouchControllerDelegate.h"
 #import "MDCRippleView.h"
+#import "MDCRippleViewDelegate.h"
 #import "MDCStatefulRippleView.h"

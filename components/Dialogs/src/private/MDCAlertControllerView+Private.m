@@ -37,7 +37,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
-@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
 @end
 
@@ -212,11 +211,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     return;
   }
 
-  if (self.titleIconView != nil) {
-    [self.titleIconView removeFromSuperview];
-    self.titleIconView = nil;
-  }
-
   if (self.titleIconImageView == nil) {
     self.titleIconImageView = [[UIImageView alloc] initWithImage:titleIcon];
     self.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -235,11 +229,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (void)setTitleIconView:(UIView *)titleIconView {
-  if (self.titleIconImageView != nil) {
+  if (titleIconView != nil && self.titleIconImageView != nil) {
     NSLog(@"Warning: unintended use of the API. The following APIs are not expected to be used"
            "together: 'setTitleIconView:' and `setTitleIcon:` API. Please set either, but not "
-           "both at the same time. If 'titleIcon' is set, 'titleIconView' is ignored.");
-    return;
+           "both at the same time. If 'titleIconView' is set, 'titleIcon' is ignored.");
+    [self.titleIconImageView removeFromSuperview];
+    self.titleIconImageView = nil;
+    [self setNeedsLayout];
   }
   if (_titleIconView == nil || ![_titleIconView isEqual:titleIconView]) {
     if (_titleIconView != nil) {
@@ -249,7 +245,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     if (_titleIconView != nil) {
       [self.titleScrollView addSubview:_titleIconView];
     }
-    [self.titleScrollView setNeedsLayout];
+    [self setNeedsLayout];
   }
 }
 
@@ -472,13 +468,12 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGSize)titleIconViewSize {
-  CGSize titleIconViewSize = CGSizeZero;
-  if (self.titleIconImageView != nil) {
-    titleIconViewSize = self.titleIconImageView.image.size;
-  } else if (self.titleIconView != nil) {
-    titleIconViewSize = self.titleIconView.frame.size;
+  if (self.titleIconView != nil) {
+    return self.titleIconView.frame.size;
+  } else if (self.titleIconImageView != nil) {
+    return self.titleIconImageView.frame.size;
   }
-  return titleIconViewSize;
+  return CGSizeZero;
 }
 
 - (CGRect)titleFrameWithTitleSize:(CGSize)titleSize {
@@ -662,11 +657,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       accessoryViewSize.width, accessoryViewSize.height);
 
   CGRect titleIconImageViewRect = [self titleIconFrameWithTitleSize:titleSize];
-  if (self.titleIconImageView != nil) {
+  if (self.titleIconView != nil) {
+    self.titleIconView.frame = titleIconImageViewRect;
+  } else if (self.titleIconImageView != nil) {
     // Match the title icon alignment to the title alignment.
     self.titleIconImageView.frame = titleIconImageViewRect;
-  } else if (self.titleIconView != nil) {
-    self.titleIconView.frame = titleIconImageViewRect;
   }
 
   self.titleLabel.frame = titleFrame;

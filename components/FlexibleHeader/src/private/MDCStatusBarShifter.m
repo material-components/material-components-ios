@@ -14,6 +14,7 @@
 
 #import "MDCStatusBarShifter.h"
 
+#import "MDCStatusBarShifterDelegate.h"
 #import "MaterialApplication.h"
 
 static NSTimeInterval kStatusBarBecomesInvalidAnimationDuration = 0.2;

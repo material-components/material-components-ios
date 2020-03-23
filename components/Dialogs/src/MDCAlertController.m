@@ -14,14 +14,15 @@
 
 #import "MDCAlertController.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
+#import "MaterialButtons.h"
+#import "MDCAlertControllerDelegate.h"
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
-#import "MaterialButtons.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
 #import "UIViewController+MaterialDialogs.h"
+#import "MaterialTypography.h"
+#import "MaterialMath.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCAlertActionManager.h"
 #import "private/MDCAlertController+Customize.h"
@@ -72,10 +73,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return action;
 }
 
-@end
-
-@interface MDCAlertControllerView (Accessibility)
-@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 @end
 
 @interface MDCAlertController ()
@@ -397,6 +394,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _titleIcon = titleIcon;
   if (self.alertView) {
     self.alertView.titleIcon = titleIcon;
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   }
 }
 
@@ -404,6 +403,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   _titleIconView = titleIconView;
   if (self.alertView) {
     self.alertView.titleIconView = titleIconView;
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   }
 }
 
@@ -412,6 +413,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (self.alertView) {
     self.alertView.titleIconTintColor = titleIconTintColor;
   }
+}
+
+- (UIImageView *)titleIconImageView {
+  return self.alertView.titleIconImageView;
 }
 
 - (void)setScrimColor:(UIColor *)scrimColor {

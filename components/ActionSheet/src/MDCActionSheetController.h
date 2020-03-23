@@ -19,19 +19,7 @@
 
 @class MDCActionSheetAction;
 @class MDCActionSheetController;
-
-/**
- Defines methods that allows the adopting delegate to respond to messages from an
- @c MDCActionSheetController.
- */
-@protocol MDCActionSheetControllerDelegate <NSObject>
-@optional
-
-/**
- Tells the delegate that the action sheet was dismissed.
- */
-- (void)actionSheetControllerDidDismiss:(nonnull MDCActionSheetController *)actionSheetController;
-@end
+@protocol MDCActionSheetControllerDelegate;
 
 /**
  MDCActionSheetController displays an alert message to the user, similar to

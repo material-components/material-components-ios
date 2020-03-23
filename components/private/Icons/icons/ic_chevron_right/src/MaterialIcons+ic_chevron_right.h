@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_chevron_right)
 
 /*
- Returns the path for the ic_chevron_right image contained in
- MaterialIcons_ic_chevron_right.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_chevron_right;
-
-/*
  Returns the image for the ic_chevron_right image contained in
  MaterialIcons_ic_chevron_right.bundle.
  */

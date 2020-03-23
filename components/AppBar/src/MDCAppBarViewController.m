@@ -16,17 +16,18 @@
 
 #import "MDCAppBarContainerViewController.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "MaterialApplication.h"
+#import "private/MaterialAppBarStrings.h"
+#import "private/MaterialAppBarStrings_table.h"
+#import "MDCAppBarViewControllerAccessibilityPerformEscapeDelegate.h"
 #import "MaterialFlexibleHeader.h"
-#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "MaterialApplication.h"
+#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialUIMetrics.h"
-#import "private/MaterialAppBarStrings.h"
-#import "private/MaterialAppBarStrings_table.h"
+#import <MDFInternationalization/MDFInternationalization.h>
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 static NSString *const kBarStackKey = @"barStack";
 

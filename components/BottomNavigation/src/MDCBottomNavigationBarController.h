@@ -17,6 +17,7 @@
 #import <MaterialComponents/MaterialBottomNavigation.h>
 
 @protocol MDCBottomNavigationBarControllerDelegate;
+@protocol MDCBottomNavigationBarDelegate;
 
 /**
  MDCBottomNavigationBarController is a class that manages the navigation bar that allows movement
@@ -82,32 +83,5 @@
 
 - (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
               didSelectItem:(nonnull UITabBarItem *)item NS_REQUIRES_SUPER;
-
-@end
-
-/**
- The protocol for clients of the MDCBottomNavigationBarController to conform to for updates on the
- bottom navigation bar, manage selection, and other possible actions.
- */
-@protocol MDCBottomNavigationBarControllerDelegate <NSObject>
-@optional
-/**
- Called when the user makes a selection in the bottom navigation bar.
- @warning This method is not called when the selection is set programmatically.
- */
-- (void)bottomNavigationBarController:
-            (nonnull MDCBottomNavigationBarController *)bottomNavigationBarController
-              didSelectViewController:(nonnull UIViewController *)viewController;
-
-/**
- Delegates may implement this method if they wish to determine if the bottom navigation controller
- should select an item.  If true is returned, the selection will continue as normal. If false,
- selection will not proceed.
- @warning This method is called in response to user action, not programmatically setting the
- selection.
- */
-- (BOOL)bottomNavigationBarController:
-            (nonnull MDCBottomNavigationBarController *)bottomNavigationBarController
-           shouldSelectViewController:(nonnull UIViewController *)viewController;
 
 @end

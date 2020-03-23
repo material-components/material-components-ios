@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "107.3.0"
+  mdc.version      = "107.4.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -1215,13 +1215,11 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
-      "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MotionAnimator", "~> 2.1"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -1259,6 +1257,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 

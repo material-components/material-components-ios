@@ -16,17 +16,18 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "private/MDCItemBar.h"
+#import "private/MDCItemBarAlignment.h"
+#import "private/MDCItemBarStyle.h"
+#import "MaterialInk.h"
+#import "MaterialRipple.h"
+#import "MDCTabBarDelegate.h"
 #import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarSizeClassDelegate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
-#import "MaterialInk.h"
-#import "MaterialRipple.h"
 #import "MaterialTypography.h"
-#import "private/MDCItemBar.h"
-#import "private/MDCItemBarAlignment.h"
-#import "private/MDCItemBarStyle.h"
 
 /// Padding between image and title in points, according to the spec.
 static const CGFloat kImageTitleSpecPadding = 10;

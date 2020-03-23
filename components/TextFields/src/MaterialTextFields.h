@@ -15,6 +15,7 @@
 #import "MDCIntrinsicHeightTextView.h"
 #import "MDCMultilineTextField.h"
 #import "MDCMultilineTextInputDelegate.h"
+#import "MDCMultilineTextInputLayoutDelegate.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInput.h"

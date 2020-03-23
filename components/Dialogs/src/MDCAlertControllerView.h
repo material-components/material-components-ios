@@ -21,17 +21,15 @@
 
 @property(nonatomic, strong, nullable) UIImage *titleIcon;
 @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
-@property(nonatomic, assign) NSTextAlignment titleAlignment;
-@property(nonatomic, assign) NSTextAlignment messageAlignment;
 
-/**
- An optional custom icon view above the title of the alert.
+@property(nonatomic, assign) NSTextAlignment titleAlignment __deprecated_msg(
+    "Please use MDCAlertController titleAlignment instead.");
+@property(nonatomic, assign) NSTextAlignment messageAlignment __deprecated_msg(
+    "Please use MDCAlertController messageAlignment instead.");
 
- @note This property is intended to be used to provide a custom implementation of the title icon
- view. If the intention is to just display a `UIImage`, use `setTitleIcon:` API instead. If
- 'titleIcon' is set, 'titleIconView' is ignored.
- */
-@property(nonatomic, strong, nullable) UIView *titleIconView;
+/** An optional custom icon view above the title of the alert. */
+@property(nonatomic, strong, nullable) UIView *titleIconView __deprecated_msg(
+    "Please use MDCAlertController+Customize titleIconView instead.");
 
 @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;
@@ -45,25 +43,25 @@
 
 /*
  Indicates whether the view's contents should automatically update their font when the device’s
- UIContentSizeCategory changes.
+ @c UIContentSizeCategory changes.
 
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.
+ This property is modeled after @c adjustsFontForContentSizeCategory property in
+ @c UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.
 
- Default value is NO.
+ Defaults to @c NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
+ By setting this property to @c YES, the Ripple component will be used instead of Ink to display
+ visual feedback to the user.
 
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part of
+ our migration to Ripple. Learn more at
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
 
- Defaults to NO.
+ Defaults to @c NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 

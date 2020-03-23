@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_reorder)
 
 /*
- Returns the path for the ic_reorder image contained in
- MaterialIcons_ic_reorder.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_reorder;
-
-/*
  Returns the image for the ic_reorder image contained in
  MaterialIcons_ic_reorder.bundle.
  */

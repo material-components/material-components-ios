@@ -132,7 +132,7 @@ class ShrineDetailViewController: UIViewController {
                                      style:.done,
                                      target:self,
                                      action:#selector(dismissDetails))
-    let backImage = UIImage(named:MDCIcons.pathFor_ic_arrow_back())
+    let backImage = MDCIcons.imageFor_ic_arrow_back()
     backButton.image = backImage
     appBar.navigationBar.leftBarButtonItem = backButton
 

@@ -14,6 +14,8 @@
 
 #import "MDCDraggableView.h"
 
+#import "MDCDraggableViewDelegate.h"
+
 static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
   if (gesture.enabled) {
     // Setting enabled to NO while a gesture recognizer is currently recognizing a gesture will

@@ -14,10 +14,11 @@
 
 #import "MDCSnackbarManager.h"
 
+#import "MaterialOverlayWindow.h"
+#import "MDCSnackbarManagerDelegate.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 #import "MaterialApplication.h"
-#import "MaterialOverlayWindow.h"
 
 #import "private/MDCSnackbarManagerInternal.h"
 #import "private/MDCSnackbarMessageInternal.h"

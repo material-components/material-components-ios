@@ -14,6 +14,7 @@
 
 #import "MDCAppBarNavigationController.h"
 
+#import "MDCAppBarNavigationControllerToBeDeprecatedDelegate.h"
 #import "MDCAppBarViewController.h"
 
 #import <objc/runtime.h>

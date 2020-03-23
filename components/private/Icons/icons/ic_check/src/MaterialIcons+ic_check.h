@@ -22,12 +22,6 @@
 @interface MDCIcons (ic_check)
 
 /*
- Returns the path for the ic_check image contained in
- MaterialIcons_ic_check.bundle.
- */
-+ (nonnull NSString *)pathFor_ic_check;
-
-/*
  Returns the image for the ic_check image contained in
  MaterialIcons_ic_check.bundle.
  */

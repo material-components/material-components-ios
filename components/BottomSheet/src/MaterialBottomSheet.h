@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "MDCBottomSheetController.h"
+#import "MDCBottomSheetControllerDelegate.h"
 #import "MDCBottomSheetPresentationController.h"
+#import "MDCBottomSheetPresentationControllerDelegate.h"
 #import "MDCBottomSheetTransitionController.h"
 #import "UIViewController+MaterialBottomSheet.h"

@@ -14,8 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTextInput.h"
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
 #import "MaterialElevation.h"
+#import "MDCMultilineTextInputLayoutDelegate.h"
+#import "MDCTextInput.h"
 
 @class MDCIntrinsicHeightTextView;
 
@@ -81,24 +84,5 @@
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)(
     MDCMultilineTextField *_Nonnull textField, UITraitCollection *_Nullable previousTraitCollection)
     ;
-
-@end
-
-/** Delegate for MDCTextInput size changes. */
-@protocol MDCMultilineTextInputLayoutDelegate <NSObject>
-
-@optional
-/**
- Notifies the delegate that the text field's content size changed, requiring the size provided for
- best display.
-
- If using auto layout, this method is unnecessary; this is a way for views not implementing auto
- layout to know when to grow and shrink height to accomodate changes in content.
-
- @param multilineTextField  The text field for which the content size changed.
- @param size                The size required by the text view to fit all of its content.
- */
-- (void)multilineTextField:(id<MDCMultilineTextInput> _Nonnull)multilineTextField
-      didChangeContentSize:(CGSize)size;
 
 @end

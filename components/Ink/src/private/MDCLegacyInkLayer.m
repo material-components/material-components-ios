@@ -18,6 +18,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAvailability.h"
+#import "MDCLegacyInkLayerDelegate.h"
 
 static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start,
                                                         CGPoint end,
