@@ -71,6 +71,8 @@ static NSString *const kMessageLongLatin =
   [super tearDown];
 }
 
+#pragma mark - Helpers
+
 - (void)sizeAlertToFitContent {
   // Ensure snapshot view size resembles actual runtime size of the alert. This is the closest
   // simulation to how an actual dialog will be sized on a screen. The dialog layouts itself with
@@ -88,16 +90,16 @@ static NSString *const kMessageLongLatin =
                                                           handler:nil]];
 }
 
-- (void)generateHighlightedSnapshotAndVerifyForView:(UIView *)view {
-  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.2];
-  alertView.titleIconImageView.backgroundColor =
-      [[UIColor purpleColor] colorWithAlphaComponent:0.2];
-  alertView.titleIconView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.3];
-  alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.1];
-  alertView.messageLabel.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.2];
-  alertView.actionsScrollView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.2];
-  [self generateSizedSnapshotAndVerifyForView:view];
+- (void)generateHighlightedSnapshotAndVerifyForAlert:(MDCAlertController *)alert {
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
+  alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
+  alert.titleIconImageView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
+  alert.titleIconView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.3f];
+  alertView.titleLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
+  alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.1f];
+  alertView.messageLabel.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.2f];
+  alertView.actionsScrollView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:.2f];
+  [self generateSizedSnapshotAndVerifyForView:alertView];
 }
 
 - (void)generateSizedSnapshotAndVerifyForView:(UIView *)view {
@@ -118,6 +120,30 @@ static NSString *const kMessageLongLatin =
 
 - (void)configAlertWithTitleIcon {
   self.alertController.titleIcon = self.titleIcon;
+  [self configAlertWithResetSettings];
+}
+
+- (void)configAlertWithImageNamed:(NSString *)imageName {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCAlertControllerConfigurationsTests class]];
+  self.alertController.titleIcon = [UIImage imageNamed:imageName
+                                              inBundle:bundle
+                         compatibleWithTraitCollection:nil];
+  [self configAlertWithResetSettings];
+}
+
+- (void)configAlertWithWideImage {
+  [self configAlertWithImageNamed:@"wide-image"];
+}
+
+- (void)configAlertWithSquareImage {
+  [self configAlertWithImageNamed:@"square-image"];
+}
+
+- (void)configAlertWithLongImage {
+  [self configAlertWithImageNamed:@"long-image"];
+}
+
+- (void)configAlertWithResetSettings {
   self.alertController.title = @"Reset Settings?";
   self.alertController.message = @"This will reset your device to its default factory settings.";
   [self addOutlinedActionWithTitle:@"Cancel"];
@@ -343,7 +369,7 @@ static NSString *const kMessageLongLatin =
 
   // Then
   // Avoid sizing of snapshot view - to allow butttons to auto-align vertically.
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-icon + message + accessory-view + vertical actions
@@ -431,7 +457,7 @@ static NSString *const kMessageLongLatin =
   self.alertController.messageAlignment = NSTextAlignmentNatural;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: natural in RTL
@@ -473,7 +499,7 @@ static NSString *const kMessageLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: left
@@ -487,7 +513,7 @@ static NSString *const kMessageLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: left in RTL
@@ -518,7 +544,7 @@ static NSString *const kMessageLongLatin =
   [self changeToRTL:self.alertController];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: justified
@@ -534,19 +560,330 @@ static NSString *const kMessageLongLatin =
   [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
 }
 
-#pragma mark - Title Icon Tests
+#pragma mark - Title Icon View Tests
 
-// title icon content mode: scale to fill
-- (void)testTitleIconAlignmentIsJustifiedContentModeAspectFill {
+// title icon view: default alignment
+- (void)testAlertHasTitleIconViewWithDefaultNaturalAlignment {
+  // Given
+  [self configAlertWithTitleIcon];
+  self.alertController.titleIcon = nil;
+  self.alertController.titleIconView =
+      [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon view: natural alignment
+- (void)testAlertHasTitleIconViewWithCenterAlignment {
+  // Given
+  [self configAlertWithTitleIcon];
+  self.alertController.titleIcon = nil;
+  self.alertController.titleIconView =
+      [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon view: justified alignment
+- (void)testAlertHasTitleIconViewWithJustifiedAlignment {
+  // Given
+  [self configAlertWithTitleIcon];
+  self.alertController.titleIcon = nil;
+  self.alertController.titleIconView =
+      [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentJustified;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+#pragma mark - Title Icon - Default Alignment Tests
+
+// title icon alignment: default to title alignment: center, image: wide
+- (void)testTitleIconAlignmentDefaultIsCenteredForWideImage {
+  // Given
+  [self configAlertWithWideImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: center, image: square
+- (void)testTitleIconAlignmentDefaultIsCenteredForSquareImage {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: center, image: long
+- (void)testTitleIconAlignmentDefaultIsCenteredForLongImage {
+  // Given
+  [self configAlertWithLongImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: center, image: long, insets: custom
+- (void)testTitleIconAlignmentDefaultIsCenteredForLongImageWithCustomInsets {
+  // Given
+  [self configAlertWithLongImage];
+
+  // When
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  alertView.titleInsets = UIEdgeInsetsMake(0.f, 0.f, 10.f, 0.f);
+  self.alertController.titleAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: center
+- (void)testTitleIconAlignmentDefaultIsCenteredWithCenteredTitle {
   // Given
   [self configAlertWithTitleIcon];
 
   // When
+  self.alertController.titleAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: natural
+- (void)testTitleIconAlignmentDefaultIsNaturalWithNaturalTitle {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentNatural;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: justified
+- (void)testTitleIconAlignmentDefaultIsJustifiedWithJustifiedTitle {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentJustified;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: left
+- (void)testTitleIconAlignmentDefaultIsLeftWithLeftTitle {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentLeft;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: right
+- (void)testTitleIconAlignmentDefaultIsRightWithRightTitle {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentRight;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: natural in RTL
+- (void)testTitleIconAlignmentDefaultIsNaturalWithNaturalTitleInRTL {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentNatural;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: left in RTL
+- (void)testTitleIconAlignmentDefaultIsLeftWithLeftTitleInRTL {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentLeft;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: default to title alignment: right - in RTL
+- (void)testTitleIconAlignmentDefaultIsRightWithRightTitleInRTL {
+  // Given
+  [self configAlertWithTitleIcon];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentRight;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+#pragma mark - Title Icon - Custom Alignment Tests
+
+// title icon alignment: Center
+- (void)testTitleIconAlignmentIsCentered {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentCenter;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Natural
+- (void)testTitleIconAlignmentIsNatural {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentNatural;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Left
+- (void)testTitleIconAlignmentIsLeft {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentLeft;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Natural in RTL
+- (void)testTitleIconAlignmentIsNaturalInRTL {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentNatural;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Left in RTL
+- (void)testTitleIconAlignmentIsLeftInRTL {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentLeft;
+  [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. Content mode: scale to fill
+- (void)testTitleIconAlignmentIsJustifiedContentModeAspectFill {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentJustified;
   self.alertController.titleIconImageView.contentMode = UIViewContentModeScaleToFill;
   self.alertController.titleIconImageView.clipsToBounds = YES;
 
   // Then
-  [self generateHighlightedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. Content mode: scale aspect fill
+- (void)testTitleIconAlignmentIsJustifiedContentModeScaleAspectFill {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconImageView.contentMode = UIViewContentModeScaleAspectFill;
+  self.alertController.titleIconImageView.clipsToBounds = YES;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. Content mode: scale aspect fit
+- (void)testTitleIconAlignmentIsJustifiedContentModeScaleAspectFit {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. Content mode: left
+- (void)testTitleIconAlignmentIsJustifiedContentModeLeft {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconImageView.contentMode = UIViewContentModeLeft;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. Content mode: right
+- (void)testTitleIconAlignmentIsJustifiedContentModeRight {
+  // Given
+  [self configAlertWithSquareImage];
+
+  // When
+  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconImageView.contentMode = UIViewContentModeRight;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 @end
