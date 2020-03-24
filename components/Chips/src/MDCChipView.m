@@ -667,6 +667,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
 
+  if (self.enableRippleBehavior && !enabled) {
+    [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
+  }
+
   [self updateState];
 }
 
@@ -993,9 +997,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point {
-  if (!self.enabled) {
-    return;
-  }
   [_inkView startTouchEndedAnimationAtPoint:point completion:nil];
 }
 
