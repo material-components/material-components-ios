@@ -22,7 +22,7 @@ import UIKit
 private func schemeWithPalette(_ palette: MDCPalette) -> MDCContainerScheming {
   let containerScheme = DefaultContainerScheme()
 
-  let scheme = MDCSemanticColorScheme()
+  let scheme = MDCSemanticColorScheme(defaults: .material201804)
   scheme.primaryColor = palette.tint500
   scheme.primaryColorVariant = palette.tint900
   scheme.secondaryColor = scheme.primaryColor
