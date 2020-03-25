@@ -302,7 +302,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.attributedAlert.view;
   XCTAssertEqual(view.titleLabel.text, title);
-  XCTAssertEqual(view.messageLabel.text, message);
+  XCTAssertEqualObjects(view.messageLabel.text, message);
 }
 
 - (void)testAlertControllerSetMessageAccessibilityLabelWhenMessageIsSetWhenViewIsNotLoaded {
