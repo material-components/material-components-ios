@@ -423,6 +423,25 @@ static NSString *const kMessageLongLatin =
   [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
 }
 
+#pragma mark - Use Cases Tests
+
+// TODO(b/148572399): This test's snapshot is incorrectly placing the titleView too low.
+- (void)testAlertHasAccessoryViewAndCustomInsets {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.accessoryView = self.accessoryView;
+
+  // When
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  alertView.contentInsets = UIEdgeInsetsMake(0.f, 20.f, 0.f, 20.f);
+  alertView.actionsInsets = UIEdgeInsetsMake(12.f, 20.f, 16.f, 20.f);
+
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
 #pragma mark - Message Alignment Tests
 
 // message alignment: default alignment is natural
