@@ -19,7 +19,7 @@ import MaterialComponents.MaterialNavigationDrawer
 
 class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewControllerDelegate {
 
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()

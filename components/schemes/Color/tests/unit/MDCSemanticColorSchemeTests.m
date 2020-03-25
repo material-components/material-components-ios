@@ -331,7 +331,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorSchemeCopy {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   MDCSemanticColorScheme *colorSchemeCopy = [colorScheme copy];

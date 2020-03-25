@@ -215,7 +215,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
 
     let containerScheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     colorScheme.primaryColor = .blue
     containerScheme.colorScheme = colorScheme
     alert.applyTheme(withScheme: containerScheme)
@@ -236,7 +236,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     let darkScheme: MDCContainerScheme = {
       // creating an ad-hoc dark theme based off of the default schemes
       let scheme = MDCContainerScheme()
-      let colorScheme = MDCSemanticColorScheme()
+      let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
       colorScheme.surfaceColor = .black
       colorScheme.onSurfaceColor = .white
       colorScheme.primaryColor = MDCPalette.deepPurple.tint300

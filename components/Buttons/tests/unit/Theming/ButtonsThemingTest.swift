@@ -376,7 +376,7 @@ class ButtonsThemingTest: XCTestCase {
     let button = MDCFloatingButton()
     let defaultButton = MDCFloatingButton()
     let scheme = MDCContainerScheme()
-    let customColorScheme = MDCSemanticColorScheme()
+    let customColorScheme = MDCSemanticColorScheme(defaults: .material201804)
     customColorScheme.secondaryColor = .purple
     customColorScheme.onSecondaryColor = .purple
     scheme.colorScheme = customColorScheme

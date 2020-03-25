@@ -106,7 +106,8 @@ static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
 #pragma mark - Test helpers
 
 - (MDCSemanticColorScheme *)customColorScheme {
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
   colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];

@@ -171,7 +171,8 @@ static UIImage *fakeImage(void) {
 }
 
 - (MDCSemanticColorScheme *)customColorScheme {
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = UIColor.blueColor;
   colorScheme.primaryColorVariant = UIColor.greenColor;
   colorScheme.secondaryColor = UIColor.redColor;

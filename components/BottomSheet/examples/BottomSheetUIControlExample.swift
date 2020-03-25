@@ -19,7 +19,7 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 
 class BottomSheetUIControlExample: UIViewController {
 
-    @objc var colorScheme = MDCSemanticColorScheme()
+    @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     @objc var typographyScheme = MDCTypographyScheme()
 
     init() {

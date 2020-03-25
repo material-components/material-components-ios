@@ -19,7 +19,7 @@ import MaterialComponents.MaterialPalettes
 open class NavigationBarTypicalUseSwiftExample: UIViewController {
 
   var navBar = MDCNavigationBar()
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
   var exampleView = ExampleInstructionsViewNavigationBarTypicalUseSwift()
 
   override open func viewDidLoad() {
