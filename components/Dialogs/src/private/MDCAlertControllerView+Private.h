@@ -78,10 +78,8 @@
 @property(nonatomic, assign) UIEdgeInsets titleIconInsets;
 
 /**
- The edge insets around the title against the dialog edges or its neighbor elements. If either the
- title icon or title icon view is present, then `titleIconInsets.bottom` takes precedence over
- `titleInsets.top`. If there is no message, `titleInsets.bottom` is ignored.
-
+ The edge insets around the title against the dialog edges or its neighbor elements. Note that
+ `titleInsets.bottom` takes precedence over `contentInsets.top`.
 
  Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
  */

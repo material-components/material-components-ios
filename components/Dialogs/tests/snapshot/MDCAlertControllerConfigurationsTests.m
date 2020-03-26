@@ -425,7 +425,6 @@ static NSString *const kMessageLongLatin =
 
 #pragma mark - Use Cases Tests
 
-// TODO(b/148572399): This test's snapshot is incorrectly placing the titleView too low.
 - (void)testAlertHasAccessoryViewAndCustomInsets {
   // Given
   [self addOutlinedActionWithTitle:@"Cancel"];
