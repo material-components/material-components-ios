@@ -18,7 +18,7 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialButtons_Theming
 
-class FloatingButtonExampleSwiftViewController: UIViewController {
+class ButtonsFloatingButtonExampleSwiftViewController: UIViewController {
 
   let miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
   let defaultFloatingButton = MDCFloatingButton()
@@ -114,7 +114,7 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
   }
 }
 
-extension FloatingButtonExampleSwiftViewController {
+extension ButtonsFloatingButtonExampleSwiftViewController {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
@@ -125,7 +125,7 @@ extension FloatingButtonExampleSwiftViewController {
   }
 }
 
-extension FloatingButtonExampleSwiftViewController {
+extension ButtonsFloatingButtonExampleSwiftViewController {
   func updateFloatingButtons(to mode: MDCFloatingButtonMode) {
     if (miniFloatingButton.mode != mode) {
       miniFloatingButton.mode = mode
