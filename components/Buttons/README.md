@@ -242,7 +242,7 @@ let button = MDCButton()
 
 ```objc
 #import <MaterialComponents/MaterialButtons.h>
-#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+#import "MaterialButtons+Theming.h" // BetaSubtargetImport
 
 MDCButton *button = [[MDCButton alloc] init];
 ```
@@ -321,7 +321,7 @@ let floatingButton = MDCFloatingButton()
 
 ```objc
 #import <MaterialComponents/MaterialButtons.h>
-#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+#import "MaterialButtons+Theming.h" // BetaSubtargetImport
 
 MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
 ```
