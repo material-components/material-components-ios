@@ -97,7 +97,7 @@ button.accessibilityLabel = "Create"
 Make sure that your buttons have a minimum touch area. The Material spec
 for buttons calls for buttons that have a [visual height of
 36](https://material.io/design/components/buttons.html#specs)
-and that [touch areas should be at least 44 points high and 44
+and that [touch areas should be at least 48 points high and 48
 wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
 
 #### Set the touch size
