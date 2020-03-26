@@ -129,7 +129,7 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 /**
  Initializes the color scheme with the latest material defaults.
  */
-- (nonnull instancetype)init;
+- (nonnull instancetype)init __deprecated_msg("Please use initWithDefaults: instead.");
 
 /**
  Initializes the color scheme with the colors associated with the given defaults.
