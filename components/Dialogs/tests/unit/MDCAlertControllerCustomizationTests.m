@@ -123,7 +123,7 @@ static inline UIImage *TestImage(CGSize size) {
   // When
   self.presentationController.scrimColor = scrimColor;
 
-  // Then
+  // Them
   XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
 }
 

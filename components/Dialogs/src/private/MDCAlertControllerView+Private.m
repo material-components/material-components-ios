@@ -456,14 +456,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (CGFloat)titleInsetBottom {
-  if ([self hasTitle] || [self hasTitleIconOrImage]) {
-    if ([self hasMessage] || [self hasAccessoryView]) {
-      return self.titleInsets.bottom;
-    } else {
-      return self.contentInsets.top;
-    }
-  }
-  return 0.0f;
+  return ([self hasTitle] || [self hasTitleIconOrImage]) ? self.titleInsets.bottom : 0.0f;
 }
 
 - (CGFloat)titleViewInsetLeft {
