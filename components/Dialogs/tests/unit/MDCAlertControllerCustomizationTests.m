@@ -19,6 +19,18 @@
 
 #import <XCTest/XCTest.h>
 
+static inline UIImage *TestImage(CGSize size) {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  UIGraphicsBeginImageContextWithOptions(size, false, scale);
+  [UIColor.redColor setFill];
+  CGRect fillRect = CGRectZero;
+  fillRect.size = size;
+  UIRectFill(fillRect);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MDCAlertControllerView (Testing)
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 @end
@@ -124,20 +136,6 @@
 
   // Then
   XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
-}
-
-#pragma mark - helpers
-
-static inline UIImage *TestImage(CGSize size) {
-  CGFloat scale = [UIScreen mainScreen].scale;
-  UIGraphicsBeginImageContextWithOptions(size, false, scale);
-  [UIColor.redColor setFill];
-  CGRect fillRect = CGRectZero;
-  fillRect.size = size;
-  UIRectFill(fillRect);
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return image;
 }
 
 @end

@@ -19,6 +19,18 @@
 
 #import <XCTest/XCTest.h>
 
+static inline UIImage *TestImage(CGSize size) {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  UIGraphicsBeginImageContextWithOptions(size, false, scale);
+  [UIColor.redColor setFill];
+  CGRect fillRect = CGRectZero;
+  fillRect.size = size;
+  UIRectFill(fillRect);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 static NSString *const kTitle = @"Title";
 static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul docendi indoctum id "
                                        @"quo, ad unum suavitate incorrupte sea.";
@@ -46,20 +58,6 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
   [super tearDown];
   self.alert = nil;
   self.alertView = nil;
-}
-
-#pragma mark - Helpers
-
-static inline UIImage *TestImage(CGSize size) {
-  CGFloat scale = [UIScreen mainScreen].scale;
-  UIGraphicsBeginImageContextWithOptions(size, false, scale);
-  [UIColor.redColor setFill];
-  CGRect fillRect = CGRectZero;
-  fillRect.size = size;
-  UIRectFill(fillRect);
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return image;
 }
 
 #pragma mark - Tests
