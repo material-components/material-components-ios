@@ -14,9 +14,9 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MDCAlertController+Customize.h"
 #import "MaterialDialogs.h"
 #import "MaterialDialogs+Theming.h"
-#import "MDCAlertController+Customize.h"
 #import "MDCAlertControllerView+Private.h"
 #import "MaterialContainerScheme.h"
 

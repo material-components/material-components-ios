@@ -15,6 +15,7 @@
 #import "MDCAlertController.h"
 
 #import "MaterialButtons.h"
+#import "MDCAlertController+Customize.h"
 #import "MDCAlertControllerDelegate.h"
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
@@ -25,7 +26,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCAlertActionManager.h"
-#import "private/MDCAlertController+Customize.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
