@@ -154,9 +154,7 @@ buttonVerticalInset, buttonHorizontalInset);
 
 ## Regular FABs
 
-<!-- This image has not been created yet. See b/152415254
 ![Regular FAB example](assets/regular-fab.png)
- -->
 
 Regular FABs are FABs that are not expanded and are a regular size.
 
@@ -181,8 +179,9 @@ let fab = MDCFloatingButton(shape: `default`)
 
 ### Anatomy and key properties
 
+<!-- This image has not been created yet. See b/152415254
 ![Regular FAB anatomy diagram](assets/regular-fab-anatomy.png)
-
+ -->
 A regular FAB has a container and an icon.
 
 1. Container
@@ -206,9 +205,7 @@ A regular FAB has a container and an icon.
 
 ## Mini FABs
 
-<!-- This image has not been created yet. See b/152415254
 ![Mini FAB example](assets/mini-fab.png)
- -->
 
 A mini FAB should be used on smaller screens.
 
@@ -235,7 +232,9 @@ let fab = MDCFloatingButton(shape: mini)
 
 ### Anatomy and key properties
 
+<!-- This image has not been created yet. See b/152415254
 ![Mini FAB anatomy diagram](assets/mini-fab-anatomy.png)
+ -->
 
 A mini FAB has a container and an icon.
 
@@ -260,9 +259,7 @@ A mini FAB has a container and an icon.
 
 ## Extended FABs
 
-<!-- This image has not been created yet. See b/152415254
 ![Extended FAB example](assets/extended-fab.png)
- -->
 
 The extended FAB is wider, and it includes a text label.
 
@@ -288,7 +285,9 @@ let fab = MDCFloatingButton(shape: mini)
 
 ### Anatomy and key properties
 
+<!-- This image has not been created yet. See b/152415254
 ![Extended FAB anatomy diagram](assets/extended-fab-anatomy.png)
+ -->
 
 An extended FAB has a text label, a transparent container and an optional icon.
 
