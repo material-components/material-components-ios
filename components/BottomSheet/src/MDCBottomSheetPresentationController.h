@@ -48,6 +48,15 @@
 @property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;
 
 /**
+ When this property is set to @c YES the MDCBottomSheetController's @c safeAreaInsets are set as @c
+ additionalSafeAreaInsets on the presented view controller. This property only works on iOS 11 and
+ above.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL shouldPropagateSafeAreaInsetsToPresentedViewController;
+
+/**
  This is used to set a custom height on the sheet view.
 
  @note If a positive value is passed then the sheet view will be that height even if

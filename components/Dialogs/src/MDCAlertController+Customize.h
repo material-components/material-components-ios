@@ -14,6 +14,11 @@
 
 #import "MaterialDialogs.h"
 
+/**
+ The MDCAlertController Customize extension exposes advanced APIs that extend the default Material
+ Dialog behavior.  To build Material spec compliant extensions, please consult the guideslines at
+ https://material.io/components/dialogs/.
+ */
 @interface MDCAlertController (Customize)
 
 /**
@@ -30,10 +35,7 @@
 /**
  The backing image view of `titleIcon`. Use `titleIcon` to set the icon or image. Use
  'titleIconImageView' to fine tune the appearance of `titleIcon` when necessary, for instance, to
- set up its `contentMode`.
-
- @discussion The `titleIcon` (and `titleIconImageView`) are aligned with the title and may be
-             resized to fit.
+ set its `contentMode`.
 
  @discussion Use `titleIcon` to display icons or images.  Use `titleIconView` for custom views
              implementations. If both `titleIcon` are `titleIconView` are set, 'titleIcon' (and

@@ -32,7 +32,7 @@ class DialogsMaterialThemingTests: XCTestCase {
   func testAlertThemingWithContainerScheme() {
     let alert: MDCAlertController = MDCAlertController(title: "Title", message: "Message")
     let scheme: MDCContainerScheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let typographyScheme = MDCTypographyScheme()
 
     let action1: MDCAlertAction = MDCAlertAction(title: "", emphasis: .low)
@@ -146,7 +146,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     let presentationController = alert.mdc_dialogPresentationController!
 
     let scheme: MDCContainerScheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     colorScheme.surfaceColor = .black
     colorScheme.onSurfaceColor = .orange
     colorScheme.primaryColor = .green
@@ -181,7 +181,7 @@ class DialogsMaterialThemingTests: XCTestCase {
       return
     }
     let scheme: MDCContainerScheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
 
     // When
     presentationController.applyTheme(withScheme: scheme)
@@ -212,7 +212,7 @@ class DialogsMaterialThemingTests: XCTestCase {
       return
     }
     let scheme: MDCContainerScheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
 
     // When
     presentationController.applyTheme(withScheme: scheme)

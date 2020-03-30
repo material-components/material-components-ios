@@ -14,9 +14,9 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MDCAlertController+Customize.h"
 #import "MaterialDialogs.h"
 #import "MaterialDialogs+Theming.h"
-#import "MDCAlertController+Customize.h"
 #import "MDCAlertControllerView+Private.h"
 #import "MaterialContainerScheme.h"
 
@@ -423,6 +423,24 @@ static NSString *const kMessageLongLatin =
   [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
 }
 
+#pragma mark - Use Cases Tests
+
+- (void)testAlertHasAccessoryViewAndCustomInsets {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.accessoryView = self.accessoryView;
+
+  // When
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  alertView.contentInsets = UIEdgeInsetsMake(0.f, 20.f, 0.f, 20.f);
+  alertView.actionsInsets = UIEdgeInsetsMake(12.f, 20.f, 16.f, 20.f);
+
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
 #pragma mark - Message Alignment Tests
 
 // message alignment: default alignment is natural
@@ -583,7 +601,7 @@ static NSString *const kMessageLongLatin =
       [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentCenter;
+  self.alertController.titleIconAlignment = NSTextAlignmentCenter;
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
@@ -598,7 +616,7 @@ static NSString *const kMessageLongLatin =
       [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 100.f)];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
@@ -763,7 +781,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentCenter;
+  self.alertController.titleIconAlignment = NSTextAlignmentCenter;
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
@@ -775,7 +793,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentNatural;
+  self.alertController.titleIconAlignment = NSTextAlignmentNatural;
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
@@ -787,7 +805,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentLeft;
+  self.alertController.titleIconAlignment = NSTextAlignmentLeft;
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
@@ -799,7 +817,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentNatural;
+  self.alertController.titleIconAlignment = NSTextAlignmentNatural;
   [self changeToRTL:self.alertController];
 
   // Then
@@ -812,7 +830,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentLeft;
+  self.alertController.titleIconAlignment = NSTextAlignmentLeft;
   [self changeToRTL:self.alertController];
 
   // Then
@@ -825,7 +843,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   self.alertController.titleIconImageView.contentMode = UIViewContentModeScaleToFill;
   self.alertController.titleIconImageView.clipsToBounds = YES;
 
@@ -839,7 +857,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   self.alertController.titleIconImageView.contentMode = UIViewContentModeScaleAspectFill;
   self.alertController.titleIconImageView.clipsToBounds = YES;
 
@@ -853,7 +871,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   self.alertController.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
 
   // Then
@@ -866,7 +884,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   self.alertController.titleIconImageView.contentMode = UIViewContentModeLeft;
 
   // Then
@@ -879,7 +897,7 @@ static NSString *const kMessageLongLatin =
   [self configAlertWithSquareImage];
 
   // When
-  self.alertController.titleAlignment = NSTextAlignmentJustified;
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   self.alertController.titleIconImageView.contentMode = UIViewContentModeRight;
 
   // Then

@@ -20,7 +20,7 @@ class NavigationBarColorThemerTests: XCTestCase {
 
   func testColorThemerChangesTheCorrectParameters() {
     // Given
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let navigationBar = MDCNavigationBar()
     colorScheme.primaryColor = .red
     colorScheme.onPrimaryColor = .blue
@@ -39,7 +39,7 @@ class NavigationBarColorThemerTests: XCTestCase {
 
   func testSurfaceVariantColorThemerChangesTheCorrectParameters() {
     // Given
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let navigationBar = MDCNavigationBar()
     colorScheme.surfaceColor = .red
     colorScheme.onSurfaceColor = .blue

@@ -21,7 +21,7 @@ class ActionSheetColorThemerTest: XCTestCase {
     // Given
     let actionSheet = MDCActionSheetController()
     let surfaceColor: UIColor = .blue
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     colorScheme.surfaceColor = surfaceColor
 
     // When

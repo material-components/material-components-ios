@@ -102,6 +102,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (self) {
     _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
     _needsScrollToSelectedItem = YES;
+    _shouldAdjustForSafeAreaInsets = YES;
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
@@ -1030,7 +1031,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (CGRect)availableBoundsForSubviewLayout {
   CGRect availableBounds = CGRectStandardize(self.bounds);
   if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+    if (_shouldAdjustForSafeAreaInsets) {
+      availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+    }
   }
   return availableBounds;
 }

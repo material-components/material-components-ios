@@ -48,10 +48,6 @@ This pattern is not a delegation or data source-like relationship but rather a c
 
 - [Theming](theming.md)
 
-- [Color Theming](color-theming.md)
-
-- [Typography Theming](typography-theming.md)
-
 ## Accessibility
 
 - [Accessibility](accessibility.md)

@@ -107,6 +107,12 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nonatomic, readonly) MDCTabBarViewLayoutStyle effectiveLayoutStyle;
 
 /**
+ Whether or not the tab bar should adjust for safe area insets when calculating content size.
+ Default is YES.
+ */
+@property(nonatomic, assign) BOOL shouldAdjustForSafeAreaInsets;
+
+/**
  A block that is invoked when the @c MDCTabBarView receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */

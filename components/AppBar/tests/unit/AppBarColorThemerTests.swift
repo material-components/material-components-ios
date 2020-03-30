@@ -26,7 +26,7 @@ class AppBarColorThemerTests: XCTestCase {
     appBar.navigationBar.backgroundColor = .blue
     appBar.navigationBar.titleTextColor = .green;
     appBar.navigationBar.tintColor = .orange;
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     colorScheme.primaryColor = .purple
     colorScheme.onPrimaryColor = .lightGray
 
@@ -48,7 +48,7 @@ class AppBarColorThemerTests: XCTestCase {
     appBar.navigationBar.backgroundColor = .blue
     appBar.navigationBar.titleTextColor = .green;
     appBar.navigationBar.tintColor = .orange;
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     colorScheme.surfaceColor = .purple
     colorScheme.onSurfaceColor = .lightGray
 

@@ -286,7 +286,7 @@ equivalent Theming extension is described in the Themer's header documentation.
 
 ```swift
 // Old
-let colorScheme = MDCSemanticColorScheme()
+let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
 MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textField)
 
 // New
@@ -298,7 +298,7 @@ textField.applyTheme(withScheme: scheme)
 
 ```objc
 // Old
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
                             toTextInputControllerFilled:textFields];
 
@@ -317,7 +317,7 @@ then you'll likely only need to make these customizations once.
 
 ```swift
 // Old
-let colorScheme = MDCSemanticColorScheme()
+let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
 colorScheme.primaryColor = .red
 
 // New
@@ -329,7 +329,7 @@ scheme.colorScheme.primaryColor = .red
 
 ```objc
 // Old
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 colorScheme.primaryColor = UIColor.redColor;
 
 // New

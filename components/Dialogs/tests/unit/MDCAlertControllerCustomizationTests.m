@@ -19,6 +19,18 @@
 
 #import <XCTest/XCTest.h>
 
+static inline UIImage *TestImage(CGSize size) {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  UIGraphicsBeginImageContextWithOptions(size, false, scale);
+  [UIColor.redColor setFill];
+  CGRect fillRect = CGRectZero;
+  fillRect.size = size;
+  UIRectFill(fillRect);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MDCAlertControllerView (Testing)
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 @end
@@ -111,7 +123,7 @@
   // When
   self.presentationController.scrimColor = scrimColor;
 
-  // Then
+  // Them
   XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
 }
 
@@ -126,18 +138,35 @@
   XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
 }
 
-#pragma mark - helpers
+- (void)testTitleIconHasDefaultAlignment {
+  // Given
+  self.alert.titleIcon = TestImage(CGSizeMake(24.0f, 24.0f));
 
-static inline UIImage *TestImage(CGSize size) {
-  CGFloat scale = [UIScreen mainScreen].scale;
-  UIGraphicsBeginImageContextWithOptions(size, false, scale);
-  [UIColor.redColor setFill];
-  CGRect fillRect = CGRectZero;
-  fillRect.size = size;
-  UIRectFill(fillRect);
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return image;
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentNatural);
+}
+
+- (void)testTitleIconAlignmentChangesWithTitleAlignment {
+  // Given
+  self.alert.titleIcon = TestImage(CGSizeMake(24.0f, 24.0f));
+
+  // When
+  self.alert.titleAlignment = NSTextAlignmentRight;
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentRight);
+}
+
+- (void)testTitleIconAlignmentDoesntChangeWithTitleAlignmentAfterAssignment {
+  // Given
+  self.alert.titleIcon = TestImage(CGSizeMake(24.0f, 24.0f));
+
+  // When
+  self.alert.titleIconAlignment = NSTextAlignmentCenter;
+  self.alert.titleAlignment = NSTextAlignmentRight;
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentCenter);
 }
 
 @end

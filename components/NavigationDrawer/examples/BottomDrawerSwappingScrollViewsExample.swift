@@ -19,7 +19,7 @@ import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerSwappingScrollViewsExample: UIViewController {
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()

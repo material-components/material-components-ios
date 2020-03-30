@@ -61,6 +61,13 @@ class MDCCatalogWindow: MDCOverlayWindow {
         case .cancelled, .ended:
           endDisplayingTouch(touch)
           continue
+        default:
+          // TODO(b/152350850): Add support for new UITouchPhases
+          // New UITouchPhases added in iOS 13.4:
+          //   regionEntered = 5
+          //   regionMoved = 6
+          //   regionExited = 7
+          continue
         }
       }
     }

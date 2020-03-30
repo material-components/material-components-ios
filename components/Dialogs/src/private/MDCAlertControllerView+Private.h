@@ -34,8 +34,11 @@
 /** The scroll view that holds all of the buttons created for each action. */
 @property(nonatomic, nonnull, strong) UIScrollView *actionsScrollView;
 
-/** The backing image view of `titleIcon`. */
+/** The backing image view of @c titleIcon. */
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+
+/** The horizontal alignment of @c titleIcon. */
+@property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
 /** The alert actions alignment in horizontal layout. */
 @property(nonatomic, assign) MDCContentHorizontalAlignment actionsHorizontalAlignment;
@@ -67,63 +70,5 @@
  Default value is @c YES.
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-
-/**
- The edge insets around the title icon or title icon view against the dialog edges (top, leading,
- trailing) and the title (bottom). Note that `titleIconInsets.bottom` takes precedence over
- `titleInsets.top`.
-
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 12, trailing: 24).
- */
-@property(nonatomic, assign) UIEdgeInsets titleIconInsets;
-
-/**
- The edge insets around the title against the dialog edges or its neighbor elements. If either the
- title icon or title icon view is present, then `titleIconInsets.bottom` takes precedence over
- `titleInsets.top`. If there is no message, `titleInsets.bottom` is ignored.
-
-
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 20, trailing: 24).
- */
-@property(nonatomic, assign) UIEdgeInsets titleInsets;
-
-/**
- The edge insets around the content view (which includes the message and/or the accessory view)
- against the dialog edges or its neighbor elements, the title and the actions.
-
- Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
- */
-@property(nonatomic, assign) UIEdgeInsets contentInsets;
-
-/**
- The edge insets around the actions against the dialog edges and its neighbor, which could be any of
- the other elements: the message, accessory view, title, title icon or title icon view.
-
- Default value is UIEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8).
- */
-@property(nonatomic, assign) UIEdgeInsets actionsInsets;
-
-/**
- The horizontal space between the action buttons when the buttons are horizontally aligned, and if
- more than one button is presented.
-
- Default value is 8.
- */
-@property(nonatomic, assign) CGFloat actionsHorizontalMargin;
-
-/**
- The vertical space between the action buttons when the buttons are vertically aligned, and if more
- than one button is presented.
-
- Default value is 12.
- */
-@property(nonatomic, assign) CGFloat actionsVerticalMargin;
-
-/**
- The vertical inset between the accessory view and the message, if both are present.
-
- Default value is 20.
- */
-@property(nonatomic, assign) CGFloat accessoryViewVerticalInset;
 
 @end

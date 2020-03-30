@@ -30,7 +30,7 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    containerScheme.colorScheme = MDCSemanticColorScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     containerScheme.typographyScheme = MDCTypographyScheme()
   }
 

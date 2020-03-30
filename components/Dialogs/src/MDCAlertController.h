@@ -51,6 +51,25 @@
 + (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)title
                                          message:(nullable NSString *)message;
 
+/**
+ Convenience constructor to create and return a view controller for displaying an alert to the user.
+
+ After creating the alert controller, add actions to the controller by calling -addAction.
+
+ @note Most alerts don't need titles. Use only for high-risk situations.
+
+ @note This method receives an @c NSAttributedString for the display message. Use
+       @c alertControllerWithTitle:message: for regular @c NSString support.
+
+ @note Currently tappable embedded links within @c attributedMessage are not supported.
+
+ @param alertTitle The title of the alert.
+ @param attributedMessage Descriptive text that summarizes a decision in a sentence of two.
+ @return An initialized MDCAlertController object.
+ */
++ (nonnull instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
+                               attributedMessage:(nullable NSAttributedString *)attributedMessage;
+
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
@@ -78,6 +97,15 @@
 
 /** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
 @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
+
+/**
+ The alignment applied to the title icon.
+
+ To preserve backward compatibility, the default alignment of the title icon matches the alignment
+ of the title, set by @c titleAlignment. The @c titleIconAlignment value will automatically match
+ @c titleAlignment until the value of @c titleIconAlignment is first set.
+ */
+@property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
@@ -142,6 +170,15 @@
 
 /** Descriptive text that summarizes a decision in a sentence of two. */
 @property(nonatomic, nullable, copy) NSString *message;
+
+/**
+ Descriptive attributed text that summarizes a decision in a sentence of two.
+
+ If provided and non-empty, will be used instead of @c message property.
+
+ @note Currently tappable embedded links within @c attributedMessage are not supported.
+ */
+@property(nonatomic, nullable, copy) NSAttributedString *attributedMessage;
 
 /**
  A custom accessibility label for the message.

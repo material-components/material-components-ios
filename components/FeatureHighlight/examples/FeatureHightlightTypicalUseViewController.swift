@@ -24,7 +24,7 @@ class FeatureHighlightSwiftViewController: UIViewController {
 
   let showButton = MDCButton()
   let featureButton = MDCButton()
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
   @objc var typographyScheme = MDCTypographyScheme()
   let buttonScheme = MDCButtonScheme()
 
