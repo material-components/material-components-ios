@@ -34,8 +34,11 @@
 /** The scroll view that holds all of the buttons created for each action. */
 @property(nonatomic, nonnull, strong) UIScrollView *actionsScrollView;
 
-/** The backing image view of `titleIcon`. */
+/** The backing image view of @c titleIcon. */
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+
+/** The horizontal alignment of @c titleIcon. */
+@property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
 /** The alert actions alignment in horizontal layout. */
 @property(nonatomic, assign) MDCContentHorizontalAlignment actionsHorizontalAlignment;

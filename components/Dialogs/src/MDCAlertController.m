@@ -94,6 +94,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   CGSize _previousLayoutSize;
   BOOL _mdc_adjustsFontForContentSizeCategory;
   NSString *_imageAccessibilityLabel;
+  BOOL _alignIconWithTitle;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -128,6 +129,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _message = [message copy];
     _titleAlignment = NSTextAlignmentNatural;
     _messageAlignment = NSTextAlignmentNatural;
+    _titleIconAlignment = _titleAlignment;
+    _alignIconWithTitle = YES;
     _actionManager = [[MDCAlertActionManager alloc] init];
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _shadowColor = UIColor.blackColor;
@@ -378,8 +381,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
   _titleAlignment = titleAlignment;
+  if (_alignIconWithTitle) {
+    _titleIconAlignment = titleAlignment;
+  }
   if (self.alertView) {
     self.alertView.titleAlignment = titleAlignment;
+    if (_alignIconWithTitle) {
+      self.alertView.titleIconAlignment = titleAlignment;
+    }
   }
 }
 
@@ -417,6 +426,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (UIImageView *)titleIconImageView {
   return self.alertView.titleIconImageView;
+}
+
+- (void)setTitleIconAlignment:(NSTextAlignment)titleIconAlignment {
+  _alignIconWithTitle = NO;
+  _titleIconAlignment = titleIconAlignment;
+  if (self.alertView) {
+    self.alertView.titleIconAlignment = titleIconAlignment;
+  }
 }
 
 - (void)setScrimColor:(UIColor *)scrimColor {
@@ -720,6 +737,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageAlignment = self.messageAlignment;
   self.alertView.titleIcon = self.titleIcon;
   self.alertView.titleIconTintColor = self.titleIconTintColor;
+  self.alertView.titleIconAlignment = self.titleIconAlignment;
   self.alertView.titleIconView = self.titleIconView;
   self.alertView.cornerRadius = self.cornerRadius;
   self.alertView.enableRippleBehavior = self.enableRippleBehavior;

@@ -37,9 +37,6 @@
  'titleIconImageView' to fine tune the appearance of `titleIcon` when necessary, for instance, to
  set its `contentMode`.
 
- @discussion The `titleIcon` (and `titleIconImageView`) are aligned with the title and may be
-             resized to fit.
-
  @discussion Use `titleIcon` to display icons or images.  Use `titleIconView` for custom views
              implementations. If both `titleIcon` are `titleIconView` are set, 'titleIcon' (and
              `titleIconImageView`) are ignored.

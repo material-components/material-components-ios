@@ -228,6 +228,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   self.titleIconImageView.tintColor = titleIconTintColor;
 }
 
+- (void)setTitleIconAlignment:(NSTextAlignment)titleIconAlignment {
+  _titleIconAlignment = titleIconAlignment;
+  [self setNeedsLayout];
+}
+
 - (void)setTitleIconView:(UIView *)titleIconView {
   if (titleIconView != nil && self.titleIconImageView != nil) {
     NSLog(@"Warning: unintended use of the API. The following APIs are not expected to be used"
@@ -432,6 +437,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return self.titleIconImageView.image.size.height > 0.0f || self.titleIconView != nil;
 }
 
+- (BOOL)hasTitleIconView {
+  return self.titleIconView != nil;
+}
+
 - (BOOL)hasTitle {
   return self.title.length > 0;
 }
@@ -505,11 +514,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   // match the titleIcon alignment to the title alignment
   CGFloat leftInset = self.titleIconInsets.left;
   CGFloat topInset = self.titleIconInsets.top;
-  if (self.titleAlignment == NSTextAlignmentCenter) {
+  if (self.titleIconAlignment == NSTextAlignmentCenter) {
     leftInset =
         CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconViewSize.width) / 2.0f;
-  } else if (self.titleAlignment == NSTextAlignmentRight ||
-             (self.titleAlignment == NSTextAlignmentNatural &&
+  } else if (self.titleIconAlignment == NSTextAlignmentRight ||
+             (self.titleIconAlignment == NSTextAlignmentNatural &&
               [self mdf_effectiveUserInterfaceLayoutDirection] ==
                   UIUserInterfaceLayoutDirectionRightToLeft)) {
     leftInset = CGRectGetMaxX(titleFrame) - titleIconViewSize.width;

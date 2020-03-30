@@ -138,4 +138,35 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
 }
 
+- (void)testTitleIconHasDefaultAlignment {
+  // Given
+  self.alert.titleIcon = TestImage(CGSizeMake(24.0f, 24.0f));
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentNatural);
+}
+
+- (void)testTitleIconAlignmentChangesWithTitleAlignment {
+  // Given
+  self.alert.titleIcon = TestImage(CGSizeMake(24.0f, 24.0f));
+
+  // When
+  self.alert.titleAlignment = NSTextAlignmentRight;
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentRight);
+}
+
+- (void)testTitleIconAlignmentDoesntChangeWithTitleAlignmentAfterAssignment {
+  // Given
+  self.alert.titleIcon = TestImage(CGSizeMake(24.0f, 24.0f));
+
+  // When
+  self.alert.titleIconAlignment = NSTextAlignmentCenter;
+  self.alert.titleAlignment = NSTextAlignmentRight;
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentCenter);
+}
+
 @end

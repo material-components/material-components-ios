@@ -79,6 +79,15 @@
 /** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
 @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
 
+/**
+ The alignment applied to the title icon.
+
+ To preserve backward compatibility, the default alignment of the title icon matches the alignment
+ of the title, set by @c titleAlignment. The @c titleIconAlignment value will automatically match
+ @c titleAlignment until the value of @c titleIconAlignment is first set.
+ */
+@property(nonatomic, assign) NSTextAlignment titleIconAlignment;
+
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
