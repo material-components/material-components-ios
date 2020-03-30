@@ -1,6 +1,6 @@
-# 108.0.0
+# 107.5.0
 
-This major release includes several API additions to BottomSheet, Dialogs, and NavigationDrawer, along with a bug fix to Snackbar and improved Buttons documentation.
+This minor release includes several API additions to BottomSheet, Dialogs, and NavigationDrawer, along with a bug fix to Snackbar and improved Buttons documentation.
 
 ## New deprecations
 
@@ -8,7 +8,7 @@ MDCSemanticColorScheme's `init` was deprecated. Please use initWithDefaults: ins
 
 ## New features
 
-### Creating an `MDCAlertController` with attributed text
+### Creating a Dialog with attributed text
 
 ```objc
 NSAttributedString *attributedStr =
@@ -17,56 +17,26 @@ self.attributedAlert = [MDCAlertController alertControllerWithTitle:@"title"
                                                   attributedMessage:attributedStr];
 ```
 
-### Aligning subviews of an `MDCAlertControllerView`
+### Positioning subviews of a Dialog
 
-To set insets around the title icon or title icon view against the dialog edges:
+The default insets of dialogs work well for the majority of use cases. Use the adjustable insets APIs to accommodate special use cases:
+
 ```objc
+// Get a reference to the alert's view.
 MDCAlertControllerView *alertView =
     (MDCAlertControllerView *)mdcAlertController.view;
+
+// Set the insets of the alert's title icon:
 alertView.titleIconInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
-```
 
-To set the edge insets around the title against the dialog edges or its neighbor elements:
-```objc
-MDCAlertControllerView *alertView =
-    (MDCAlertControllerView *)mdcAlertController.view;
+// Set the insets of the alert's title:
 alertView.titleInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
-```
 
-To set the edge insets around the content view (which includes the message and/or the accessory view)
- against the dialog edges or its neighbor elements, the title and the actions:
-```objc
-MDCAlertControllerView *alertView =
-    (MDCAlertControllerView *)mdcAlertController.view;
+// Set the insets of the alert's content:
 alertView.contentInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
-```
 
-To set the edge insets around the actions against the dialog edges and its neighbor, which could be any of
- the other elements: the message, accessory view, title, title icon or title icon view:
-```objc
-MDCAlertControllerView *alertView =
-    (MDCAlertControllerView *)mdcAlertController.view;
+// Set the insets of the insets's actions:
 alertView.actionsInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
-```
-
-It is also possible to configure the spacing between alert view actions for both vertically-
-and horizontally-aligned actions:
-```objc
-MDCAlertControllerView *alertView =
-    (MDCAlertControllerView *)mdcAlertController.view;
-
-// Sets the spacing between action buttons when vertically-aligned
-alertView.actionsVerticalMargin = 10.0f;
-
-// Sets the spacing between action buttons when horizontally-aligned
-alertView.actionsHorizontalMargin = 10.0f;
-```
-
-To set the vertical inset between the accessory view and the message, if both are present:
-```objc
-MDCAlertControllerView *alertView =
-    (MDCAlertControllerView *)mdcAlertController.view;
-alertView.accessoryViewVerticalInset = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
 ```
 
 ## API changes
