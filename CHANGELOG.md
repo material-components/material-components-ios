@@ -1,3 +1,121 @@
+# 107.5.0
+
+This minor release includes several API additions to BottomSheet, Dialogs, and NavigationDrawer, along with a bug fix to Snackbar and improved Buttons documentation.
+
+## New deprecations
+
+MDCSemanticColorScheme's `init` was deprecated. Please use initWithDefaults: instead.
+
+## New features
+
+### Creating a Dialog with attributed text
+
+```objc
+NSAttributedString *attributedStr =
+    [[NSAttributedString alloc] initWithString:@"attributed message" attributes:@{}];
+self.attributedAlert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                  attributedMessage:attributedStr];
+```
+
+### Positioning subviews of a Dialog
+
+The default insets of dialogs work well for the majority of use cases. Use the adjustable insets APIs to accommodate special use cases:
+
+```objc
+// Get a reference to the alert's view.
+MDCAlertControllerView *alertView =
+    (MDCAlertControllerView *)mdcAlertController.view;
+
+// Set the insets of the alert's title icon:
+alertView.titleIconInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+
+// Set the insets of the alert's title:
+alertView.titleInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+
+// Set the insets of the alert's content:
+alertView.contentInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+
+// Set the insets of the insets's actions:
+alertView.actionsInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+```
+
+## API changes
+
+The following properties were added to `MDCAlertController`:
+* `titleIconAlignment`
+* `attributedMessage`
+
+`MDCAlertController` also has a new initializer:
+* `alertControllerWithTitle:attributedMessage:`
+
+The following previously private `MDCAlertControllerView` properties are now exposed:
+* `titleIconInset`
+* `titleInsets`
+* `contentInsets`
+* `actionsInsets`
+* `actionsHorizontalMargin`
+* `actionsVerticalMargin`
+* `accessoryViewVerticalInset`
+
+## Component changes
+
+### BottomSheet
+
+* [Give MDCBottomSheetPresentationController an opt-in mechanism to propagate presentingViewController safeAreaInsets to the presentedViewController.](https://github.com/material-components/material-components-ios/commit/3b7dfcd48c53292284d3759e3cb71e4d45414d9b) (Andrew Overton)
+
+### Buttons
+
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/d11159f59c9e3b1775cb91c0ab9feff16621becf) (Jeff Verkoeyen)
+* [Replace Buttons documentation](https://github.com/material-components/material-components-ios/commit/91595a819a608551186f66a24b54fa94fec42ff0) (Andrew Overton)
+
+### Chips
+
+* [Allow ending touch animation to proceed if chip is disabled on tap.](https://github.com/material-components/material-components-ios/commit/a23ac9406214720b001e681af0f0f2c0e4314ebf) (Bryan Oltman)
+
+### Dialogs
+
+* [Add support for attributed dialog message text](https://github.com/material-components/material-components-ios/commit/19a973ff44331438165e7ce73ca1756420040b48) (Vladimir Pomsztein)
+* [Calculate title Insets independently of content insets (resolve scuba diff)](https://github.com/material-components/material-components-ios/commit/6b790fe2e1e5fedd2783c2e43c5c0910ef71ce79) (Galia Kaufman)
+* [Calculate title Insets independently of content insets](https://github.com/material-components/material-components-ios/commit/144b2f61dc052661a81e8822c9739fc61a1df8e4) (Galia Kaufman)
+* [Moving static c helper functions outside of test classes.](https://github.com/material-components/material-components-ios/commit/8c7be049e94b0da2843869888281fdf115e2da7f) (Galia Kaufman)
+* [Publish Adjustable Insets API](https://github.com/material-components/material-components-ios/commit/a477732a95e56bd556dd1107c2ab8bbc86843f30) (Galia Kaufman)
+* [Publish Customize API](https://github.com/material-components/material-components-ios/commit/2a0d0febc5b3c68a88405932b85d3847dfdec04f) (Galia Kaufman)
+* [Remove the logic that sets accessibilityFrame manually on messageLabel.](https://github.com/material-components/material-components-ios/commit/db06c081c3f9a2c8e7fd085c61bb41b0c328a8c0) (Wenyu Zhang)
+* [Rollback of PR #9877 to fix the message text disappearing on device rotation when voiceover is active.](https://github.com/material-components/material-components-ios/commit/75fc33afc2db9c968b61d704b09292d9d850b8a6) (Galia Kaufman)
+* [Support custom alignment for the title image (independent of title)](https://github.com/material-components/material-components-ios/commit/a4d690cb1c01ea34e784e875ff447e913beacc73) (Galia Kaufman)
+* [snapshot test for custom insets.](https://github.com/material-components/material-components-ios/commit/0c1910ec64911d9e749b853bae83f8408a235fc9) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Update `MDCBottomDrawerContainerViewController` to account for non-full screen presentation styles when the content is large enough to scroll to fullscreen, by adjusting the container and scroll view height rather than just adjusting the scroll view offset.](https://github.com/material-components/material-components-ios/commit/a7451b084c9f7b3032807528a7537c7abc2c0035) (Jake Rockland)
+
+### ProgressView
+
+* [Adding default accessibility label](https://github.com/material-components/material-components-ios/commit/a8a560da42e41a8268f4081df0810f9e19d934f7) (Yarden Eitan)
+
+### Snackbar
+
+* [Add additional nil checks in SnackBar display/dismissal](https://github.com/material-components/material-components-ios/commit/5a03fc07abb2b34af5d0f7fa429f67c3caa75eb3) (Andrew Overton)
+* [Only use self.snackbarView for dismissing snackbars, not presenting them](https://github.com/material-components/material-components-ios/commit/1d30c3ee1f5ae9667824fb223de36ef898bb2504) (Andrew Overton)
+
+### Tabs
+
+* [Have an option in MDCTabBarView to not adjust for safe are insets (default is to adjust).](https://github.com/material-components/material-components-ios/commit/27d333c7495bbc6ac458927581abefff28a723ce) (Alvin Wong)
+
+### TextFields
+
+* [Update TextFields docs](https://github.com/material-components/material-components-ios/commit/d26c963b758933e8c51ac5e635cec73e046eb2a7) (Andrew Overton)
+
+### schemes/Color
+
+* [Mark init as deprecated.](https://github.com/material-components/material-components-ios/commit/086c1d590ea57279eff8547c31a58379920f3e7d) (Cody Weaver)
+
+## Multi-component changes
+
+* [Remove usage of `init` within MDC.](https://github.com/material-components/material-components-ios/commit/fdf87c59954e208df9a68999cb3ab7b24922c6d6) (Cody Weaver)
+
+---
+
 # 107.4.0
 
 This minor release includes improvements to Chips, Dialogs, HeaderStackView, ProgressView, NavigationBar, NavigationDrawer, and Tabs.
