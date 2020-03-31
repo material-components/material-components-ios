@@ -22,13 +22,26 @@ usage() {
   echo "Example usage: $0"
 }
 
+declare -a components_with_material_io_readmes=("Buttons")
+
 find components -type d | cut -d'/' -f1-2 | sort | uniq | grep / | while read line; do
   component=$(echo "$line" | cut -d'/' -f2)
   if [ ! -f "$line/docs/README.md" ]; then
     continue
   fi
 
-  echo "Generating readme for $component..."
-
-  ./scripts/generate_readme $component
+  if [ ${#components_with_material_io_readmes[@]} -eq 0 ]; then
+      echo "Generating readme for $component..."
+      ./scripts/generate_readme $component
+  else
+    for component_with_material_io_readme in "${components_with_material_io_readmes[@]}"
+    do
+      if [ "$component_with_material_io_readme" = "$component" ]; then
+        continue
+      else
+        echo "Generating readme for $component..."
+        ./scripts/generate_readme $component
+      fi
+    done
+  fi
 done
