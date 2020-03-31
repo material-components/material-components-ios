@@ -39,10 +39,6 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
 
 @implementation MDCSemanticColorScheme
 
-- (instancetype)init {
-  return [self initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-}
-
 - (instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults {
   self = [super init];
   if (self) {
