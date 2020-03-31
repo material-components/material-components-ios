@@ -53,6 +53,9 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
  */
 IB_DESIGNABLE
 @interface MDCButtonBar : UIView
+#ifdef __IPHONE_13_4
+                          <UIPointerInteractionDelegate>
+#endif
 
 #pragma mark Delegating
 
