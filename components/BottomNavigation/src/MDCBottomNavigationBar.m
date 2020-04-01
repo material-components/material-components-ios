@@ -47,6 +47,11 @@ static const CGFloat kItemsHorizontalMargin = 12;
 
 static NSString *const kOfAnnouncement = @"of";
 
+#ifdef __IPHONE_13_4
+@interface MDCBottomNavigationBar (UIPointerInteraction) <UIPointerInteractionDelegate>
+@end
+#endif
+
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
                                       MDCRippleTouchControllerDelegate>
 
@@ -639,6 +644,14 @@ static NSString *const kOfAnnouncement = @"of";
     }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
+#ifdef __IPHONE_13_4
+    if (@available(iOS 13.4, *)) {
+      UIPointerInteraction *pointerInteraction =
+          [[UIPointerInteraction alloc] initWithDelegate:self];
+      [itemView addInteraction:pointerInteraction];
+    }
+#endif
+
     [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
@@ -909,4 +922,19 @@ static NSString *const kOfAnnouncement = @"of";
   self.lastLargeContentViewerItem = nil;
 }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+
+#ifdef __IPHONE_13_4
+#pragma mark - UIPointerInteractionDelegate
+- (UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
+                        styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
+  UIPointerStyle *pointerStyle = nil;
+  if (interaction.view) {
+    UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
+    UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
+    pointerStyle = [UIPointerStyle styleWithEffect:highlightEffect shape:nil];
+  }
+  return pointerStyle;
+}
+#endif
+
 @end
