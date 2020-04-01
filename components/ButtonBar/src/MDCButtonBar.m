@@ -577,8 +577,7 @@ static NSString *const kEnabledSelector = @"enabled";
   if (interaction.view) {
     UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
     UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
-    UIPointerShape *pointerShape = [UIPointerShape shapeWithRoundedRect:interaction.view.bounds];
-    pointerStyle = [UIPointerStyle styleWithEffect:highlightEffect shape:pointerShape];
+    pointerStyle = [UIPointerStyle styleWithEffect:highlightEffect shape:nil];
   }
   return pointerStyle;
 }
