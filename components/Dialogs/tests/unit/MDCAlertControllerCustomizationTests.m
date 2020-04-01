@@ -140,10 +140,20 @@ static inline UIImage *TestImage(CGSize size) {
 
 - (void)testTitleIconHasDefaultAlignment {
   // Given
-  self.alert.titleIcon = TestImage(CGSizeMake(24.0f, 24.0f));
+  CGSize imageSize = CGSizeMake(24.0f, 24.0f);
+  self.alert.titleIcon = TestImage(imageSize);
+
+  // Adjust the dialog size to the calculated preferred size.
+  UIEdgeInsets insets = self.alertView.titleIconInsets;
+  CGSize bounds = CGSizeMake(300.0f, 300.0f);
+  CGSize alertSize = [self.alertView calculatePreferredContentSizeForBounds:bounds];
+  self.alertView.bounds = CGRectMake(0.f, 0.f, alertSize.width, alertSize.height);
+  [self.alertView layoutIfNeeded];
 
   // Then
   XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentNatural);
+  CGRect iconFrame = CGRectMake(insets.left, insets.top, imageSize.width, imageSize.height);
+  XCTAssertTrue(CGRectEqualToRect(self.alertView.titleIconImageView.frame, iconFrame));
 }
 
 - (void)testTitleIconAlignmentChangesWithTitleAlignment {
@@ -167,6 +177,52 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentCenter);
+}
+
+- (void)testTitleIconJustifiedAlignmentFrameIsFullWidth {
+  // Given
+  CGSize imageSize = CGSizeMake(24.0f, 24.0f);
+  self.alert.titleIcon = TestImage(imageSize);
+  UIEdgeInsets insets = self.alertView.titleIconInsets;
+
+  // When
+  self.alert.titleIconAlignment = NSTextAlignmentJustified;
+  [self sizeAlertToFitContent];
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentJustified);
+  CGFloat fullWidthMinusInsets = self.alertView.bounds.size.width - insets.left - insets.right;
+  CGRect iconFrame = CGRectMake(insets.left, insets.top, fullWidthMinusInsets, imageSize.height);
+  XCTAssertTrue(CGRectEqualToRect(self.alertView.titleIconImageView.frame, iconFrame));
+}
+
+// title icon alignment: Justified. image: extra wide, extra tall
+- (void)testTitleIconAlignmentIsJustifiedAndSquareImageResized {
+  // Given
+  CGSize imageSize = CGSizeMake(320.0f, 190.0f);
+  self.alert.titleIcon = TestImage(imageSize);
+  UIEdgeInsets insets = self.alertView.titleIconInsets;
+
+  // When
+  self.alert.titleIconAlignment = NSTextAlignmentJustified;
+  [self sizeAlertToFitContent];
+
+  // Then
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentJustified);
+  CGFloat fullWidthMinusInsets = self.alertView.bounds.size.width - insets.left - insets.right;
+  CGRect iconFrame = CGRectMake(insets.left, insets.top, fullWidthMinusInsets,
+                                imageSize.height * (fullWidthMinusInsets / imageSize.width));
+  XCTAssertTrue(CGRectEqualToRect(self.alertView.titleIconImageView.frame, iconFrame));
+}
+
+#pragma mark - Helpers
+
+// Adjust the alert size to match the calculated preferred size.
+- (void)sizeAlertToFitContent {
+  CGSize bounds = CGSizeMake(300.0f, 300.0f);
+  CGSize alertSize = [self.alertView calculatePreferredContentSizeForBounds:bounds];
+  self.alertView.bounds = CGRectMake(0.f, 0.f, alertSize.width, alertSize.height);
+  [self.alertView layoutIfNeeded];
 }
 
 @end

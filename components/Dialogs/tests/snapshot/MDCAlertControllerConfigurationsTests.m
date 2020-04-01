@@ -79,9 +79,8 @@ static NSString *const kMessageLongLatin =
   // final size when calculatePreferredContentSizeForBounds: is called - after all the dialog
   // configuration is complete.
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  CGRect bounds = alertView.bounds;
-  bounds.size = [alertView calculatePreferredContentSizeForBounds:bounds.size];
-  alertView.bounds = CGRectMake(0.f, 0.f, bounds.size.width, bounds.size.height);
+  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:alertView.bounds.size];
+  alertView.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
 }
 
 - (void)addOutlinedActionWithTitle:(NSString *)actionTitle {
@@ -899,6 +898,38 @@ static NSString *const kMessageLongLatin =
   // When
   self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   self.alertController.titleIconImageView.contentMode = UIViewContentModeRight;
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. image: extra wide
+- (void)testTitleIconAlignmentIsJustifiedAndWideImageResized {
+  // Given
+  [self configAlertWithWideImage];
+
+  // When
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
+  // Recalculate layout and adjust the snapshot size to fit the new dialog size.
+  [self sizeAlertToFitContent];
+  [self.alertController.view layoutIfNeeded];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. image: extra wide, extra tall
+- (void)testTitleIconAlignmentIsJustifiedAndSquareImageResized {
+  // Given
+  self.alertController.titleIcon = [[UIImage mdc_testImageOfSize:CGSizeMake(400.f, 360.f)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [self configAlertWithResetSettings];
+
+  // When
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
+  // Recalculate layout and adjust the snapshot size to fit the new dialog size.
+  [self sizeAlertToFitContent];
+  [self.alertController.view layoutIfNeeded];
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];

@@ -434,11 +434,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (BOOL)hasTitleIconOrImage {
-  return self.titleIconImageView.image.size.height > 0.0f || self.titleIconView != nil;
+  return [self hasTitleIcon] || self.titleIconView != nil;
 }
 
-- (BOOL)hasTitleIconView {
-  return self.titleIconView != nil;
+- (BOOL)hasTitleIcon {
+  return self.titleIconImageView.image.size.height > 0.0f;
 }
 
 - (BOOL)hasTitle {
@@ -507,23 +507,41 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return CGRectMake(self.contentInsets.left, top, messageSize.width, messageSize.height);
 }
 
-- (CGRect)titleIconFrameWithTitleSize:(CGSize)titleSize {
-  CGSize titleIconViewSize = [self titleIconViewSize];
-  CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
+/**
+ Calculate the frame of the titleIcon, given the title size and bounds size.
 
-  // match the titleIcon alignment to the title alignment
+ @param titleSize is the pre-calculated size of the title.
+ @param boundsSize is the total bounds without any internal margins or padding.
+*/
+- (CGRect)titleIconFrameWithTitleSize:(CGSize)titleSize boundsSize:(CGSize)boundsSize {
+  CGSize titleIconViewSize = [self titleIconViewSize];
   CGFloat leftInset = self.titleIconInsets.left;
   CGFloat topInset = self.titleIconInsets.top;
-  if (self.titleIconAlignment == NSTextAlignmentCenter) {
-    leftInset =
-        CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconViewSize.width) / 2.0f;
-  } else if (self.titleIconAlignment == NSTextAlignmentRight ||
-             (self.titleIconAlignment == NSTextAlignmentNatural &&
-              [self mdf_effectiveUserInterfaceLayoutDirection] ==
-                  UIUserInterfaceLayoutDirectionRightToLeft)) {
-    leftInset = CGRectGetMaxX(titleFrame) - titleIconViewSize.width;
+  CGFloat titleIconHeight = titleIconViewSize.height;
+  CGFloat titleIconWidth = titleIconViewSize.width;
+  BOOL isRightOrRTLNatural = (self.titleIconAlignment == NSTextAlignmentRight ||
+                              (self.titleIconAlignment == NSTextAlignmentNatural &&
+                               [self mdf_effectiveUserInterfaceLayoutDirection] ==
+                                   UIUserInterfaceLayoutDirectionRightToLeft));
+
+  if (self.titleIconAlignment == NSTextAlignmentJustified) {
+    // Justified images are sized to fit the alert's width (minus the insets).
+    titleIconWidth = boundsSize.width - leftInset - self.titleIconInsets.right;
+    if (titleIconViewSize.width > titleIconWidth && [self hasTitleIcon]) {
+      // If the width decreased, then decrease the height proportionally.
+      titleIconHeight *= titleIconWidth / titleIconViewSize.width;
+    }
+  } else {
+    CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
+    if (self.titleIconAlignment == NSTextAlignmentCenter) {
+      leftInset =
+          CGRectGetMinX(titleFrame) + (CGRectGetWidth(titleFrame) - titleIconViewSize.width) / 2.0f;
+    } else if (isRightOrRTLNatural) {
+      leftInset = CGRectGetMaxX(titleFrame) - titleIconViewSize.width;
+    }
   }
-  return CGRectMake(leftInset, topInset, titleIconViewSize.width, titleIconViewSize.height);
+
+  return CGRectMake(leftInset, topInset, titleIconWidth, titleIconHeight);
 }
 
 // @param boundsSize should not include any internal margins or padding
@@ -673,19 +691,21 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
                               verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
   accessoryViewSize.width = contentBoundsSize.width;
 
-  CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
-  CGRect messageFrame = [self messageFrameWithSize:messageSize];
-  CGRect accessoryViewFrame = CGRectMake(
-      self.contentInsets.left, CGRectGetMaxY(messageFrame) + [self accessoryVerticalInset],
-      accessoryViewSize.width, accessoryViewSize.height);
-
-  CGRect titleIconImageViewRect = [self titleIconFrameWithTitleSize:titleSize];
+  CGRect titleIconImageViewRect = [self titleIconFrameWithTitleSize:titleSize
+                                                         boundsSize:boundsSize];
   if (self.titleIconView != nil) {
     self.titleIconView.frame = titleIconImageViewRect;
   } else if (self.titleIconImageView != nil) {
     // Match the title icon alignment to the title alignment.
     self.titleIconImageView.frame = titleIconImageViewRect;
   }
+
+  // Calculate the title frame after the title icon size has been determined.
+  CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
+  CGRect messageFrame = [self messageFrameWithSize:messageSize];
+  CGRect accessoryViewFrame = CGRectMake(
+      self.contentInsets.left, CGRectGetMaxY(messageFrame) + [self accessoryVerticalInset],
+      accessoryViewSize.width, accessoryViewSize.height);
 
   self.titleLabel.frame = titleFrame;
   self.messageLabel.frame = messageFrame;
