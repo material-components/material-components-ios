@@ -1302,11 +1302,16 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     };
 
     if (UIAccessibilityIsVoiceOverRunning()) {
-      // Clamp the offset to at least -self.maximumHeight. Accessibility may attempt to scroll to
-      // a lesser offset than this to pull the flexible header into the center of the scrollview on
-      // focusing.
+      // Clamp the offset to at least the max of -self.maximumHeight and the topContentInset.
+      // Accessibility may attempt to scroll to a lesser offset than this to pull the flexible
+      // header into the center of the scrollview on focusing.
       CGPoint offset = self.trackingScrollView.contentOffset;
-      offset.y = MAX(offset.y, -self.minMaxHeight.maximumHeightWithTopSafeArea);
+      CGFloat scrollViewAdjustedContentInsetTop = self.trackingScrollView.contentInset.top;
+      if (@available(iOS 11.0, *)) {
+        scrollViewAdjustedContentInsetTop = self.trackingScrollView.adjustedContentInset.top;
+      }
+      offset.y = MAX(offset.y, -(MAX(self.minMaxHeight.maximumHeightWithTopSafeArea,
+                                     scrollViewAdjustedContentInsetTop)));
       [self fhv_setContentOffset:offset forTrackingScrollView:self.trackingScrollView];
       // Setting the transform on the same run loop as the accessibility scroll can cause additional
       // incorrect scrolling as the scrollview attempts to resolve to a position that will place
