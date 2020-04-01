@@ -179,9 +179,8 @@ let fab = MDCFloatingButton(shape: `default`)
 
 ### Anatomy and key properties
 
-<!-- This image has not been created yet. See b/152415254
 ![Regular FAB anatomy diagram](assets/regular-fab-anatomy.png)
- -->
+
 A regular FAB has a container and an icon.
 
 1. Container
@@ -232,9 +231,7 @@ let fab = MDCFloatingButton(shape: mini)
 
 ### Anatomy and key properties
 
-<!-- This image has not been created yet. See b/152415254
 ![Mini FAB anatomy diagram](assets/mini-fab-anatomy.png)
- -->
 
 A mini FAB has a container and an icon.
 
@@ -285,9 +282,7 @@ let fab = MDCFloatingButton(shape: mini)
 
 ### Anatomy and key properties
 
-<!-- This image has not been created yet. See b/152415254
 ![Extended FAB anatomy diagram](assets/extended-fab-anatomy.png)
- -->
 
 An extended FAB has a text label, a transparent container and an optional icon.
 
