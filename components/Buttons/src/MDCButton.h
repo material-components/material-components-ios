@@ -83,6 +83,14 @@
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 
 /**
+ The offset (in points) of the button's inkView or rippleView (depending on which is being used -
+ see @c enableRippleBehavior)
+
+ Default is CGSizeZero.
+ */
+@property(nonatomic) CGSize inkViewOffset;
+
+/**
  The minimum size of the button’s alignment rect. If either the height or width are non-positive
  (negative or zero), they will be ignored and that axis will adjust to its content size.
 
