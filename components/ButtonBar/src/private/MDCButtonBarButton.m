@@ -20,6 +20,17 @@ static const CGFloat kMinimumItemWidth = 36;
 
 @implementation MDCButtonBarButton
 
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  // Center the button's inkView around the content
+  // This is here because MDCAppBarButtonBarBuilder adjusts the content insets of the button based
+  // on where in the trailing/leading order the button is, and we want to center the ripple effect
+  // around this button's content.
+  CGFloat horizontalDifference = contentEdgeInsets.left - contentEdgeInsets.right;
+  CGFloat verticalDifference = contentEdgeInsets.top - contentEdgeInsets.bottom;
+  self.inkViewOffset = CGSizeMake(horizontalDifference / 2.f, verticalDifference / 2.f);
+  [super setContentEdgeInsets:contentEdgeInsets];
+}
+
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize fitSize = [super sizeThatFits:size];
   fitSize.height = MAX(kMinimumItemWidth, fitSize.height);
