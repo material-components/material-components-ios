@@ -27,6 +27,7 @@ static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 static const CGFloat MDCDialogMaximumWidth = 560.0f;
+static const CGFloat MDCDialogMinimumWidth = 280.0f;
 
 static const CGFloat MDCDialogActionButtonMinimumHeight = 36.0f;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0f;
@@ -547,7 +548,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 // @param boundsSize should not include any internal margins or padding
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize {
   // Even if we have more room, limit our maximum width
-  boundsSize.width = MIN(boundsSize.width, MDCDialogMaximumWidth);
+  boundsSize.width = MIN(MAX(boundsSize.width, MDCDialogMinimumWidth), MDCDialogMaximumWidth);
 
   // Title, Content & Actions
   CGSize titleViewSize = [self calculateTitleViewSizeThatFitsWidth:boundsSize.width];
@@ -556,7 +557,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   // Final Sizing
   CGSize totalSize;
-  totalSize.width = MAX(titleViewSize.width, MAX(contentSize.width, actionSize.width));
+  totalSize.width = MAX(MAX(titleViewSize.width, MAX(contentSize.width, actionSize.width)),
+                        MDCDialogMinimumWidth);
   totalSize.height = titleViewSize.height + contentSize.height + actionSize.height;
 
   return totalSize;

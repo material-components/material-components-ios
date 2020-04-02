@@ -21,11 +21,32 @@
 #import "MaterialContainerScheme.h"
 
 static NSString *const kTitleShortLatin = @"Title";
+static NSString *const kTitleLongLatin =
+    @"It's a long long long long long long long long long long long long long long long long long "
+     "long long long title";
 static NSString *const kMessageShortLatin = @"A short message.";
 static NSString *const kMessageLongLatin =
     @"Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
      "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
      "falli dicunt an. Praesent molestiae vim ut.";
+
+static NSString *const kMessageVeryLongLatin =
+    @"Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
+     "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
+     "falli dicunt an. Praesent molestiae vim ut. Lorem ipsum dolor sit amet, consul docendi "
+     "indoctum id quo, ad unum suavitate incorrupte  sea. An his meis consul cotidieque, eam "
+     "recteque mnesarchum et, mundi volumus cu cum. Quo  falli dicunt an. Praesent molestiae vim "
+     "ut. Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
+     "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
+     "falli dicunt an. Praesent molestiae vim ut. Lorem ipsum dolor sit amet, consul docendi "
+     "indoctum id quo, ad unum suavitate incorrupte  sea. An his meis consul cotidieque, eam "
+     "recteque mnesarchum et, mundi volumus cu cum. Quo  falli dicunt an. Praesent molestiae vim "
+     "ut. Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
+     "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
+     "falli dicunt an. Praesent molestiae vim ut. Lorem ipsum dolor sit amet, consul docendi "
+     "indoctum id quo, ad unum suavitate incorrupte sea. An his meis consul cotidieque, eam "
+     "recteque mnesarchum et, mundi volumus cu cum. Quo  falli dicunt an. Praesent molestiae vim "
+     "ut.";
 
 @interface MDCAlertControllerConfigurationsTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCAlertController *alertController;
@@ -933,6 +954,39 @@ static NSString *const kMessageLongLatin =
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// Min title
+- (void)testMinSizeDialog {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.title = @"A";
+
+  // When
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 100.f, 100.f);
+  [self.alertController.view layoutIfNeeded];
+  [self sizeAlertToFitContent];
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Max size message
+- (void)testMaxSizeDialog {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.title = kTitleLongLatin;
+  self.alertController.message = kMessageVeryLongLatin;
+
+  // When
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 1000.f, 1000.f);
+  [self.alertController.view layoutIfNeeded];
+  [self sizeAlertToFitContent];
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
 }
 
 @end
