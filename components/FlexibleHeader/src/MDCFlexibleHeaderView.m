@@ -1301,6 +1301,24 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
     };
 
+    CAAnimation *boundsAnimation = [self.trackingScrollView.layer animationForKey:@"bounds.origin"];
+
+    void (^updateTransformWithInFlightAnimation)(void) = ^{
+      // Check if there is an in-flight bounds animation and piggy-back its duration in order to
+      // avoid a jumping effect resulting from the transform otherwise updating instantly.
+      // This can happen if one of the cells positioned above the app bar shrinks in height, which
+      // causes the scroll view to animate its bounds origin in order to keep the scroll view's
+      // content from moving.
+      if (boundsAnimation) {
+        [UIView animateWithDuration:boundsAnimation.duration
+                         animations:^{
+                           updateTransform();
+                         }];
+      } else {
+        updateTransform();
+      }
+    };
+
     if (UIAccessibilityIsVoiceOverRunning()) {
       // Clamp the offset to at least the max of -self.maximumHeight and the topContentInset.
       // Accessibility may attempt to scroll to a lesser offset than this to pull the flexible
@@ -1313,29 +1331,22 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       offset.y = MAX(offset.y, -(MAX(self.minMaxHeight.maximumHeightWithTopSafeArea,
                                      scrollViewAdjustedContentInsetTop)));
       [self fhv_setContentOffset:offset forTrackingScrollView:self.trackingScrollView];
-      // Setting the transform on the same run loop as the accessibility scroll can cause additional
-      // incorrect scrolling as the scrollview attempts to resolve to a position that will place
-      // the header in the center of the scroll. Punting to the next loop prevents this.
-      dispatch_async(dispatch_get_main_queue(), ^{
-        updateTransform();
-        [self fhv_updateLayout];
-      });
-    } else {
-      // Check if there is an in-flight bounds animation and piggy-back its duration in order to
-      // avoid a jumping effect resulting from the transform otherwise updating instantly.
-      // This can happen if one of the cells positioned above the app bar shrinks in height, which
-      // causes the scroll view to animate its bounds origin in order to keep the scroll view's
-      // content from moving.
-      CAAnimation *boundsAnimation =
-          [self.trackingScrollView.layer animationForKey:@"bounds.origin"];
       if (boundsAnimation) {
-        [UIView animateWithDuration:boundsAnimation.duration
-                         animations:^{
-                           updateTransform();
-                         }];
+        // The transform will piggy-back with the in-flight bounds
+        // animation in order to avoid a jumping effect.
+        updateTransformWithInFlightAnimation();
       } else {
-        updateTransform();
+        // Setting the transform on the same run loop as the accessibility scroll can cause
+        // additional incorrect scrolling as the scrollview attempts to resolve to a position that
+        // will place the header in the center of the scroll. Punting to the next loop prevents
+        // this.
+        dispatch_async(dispatch_get_main_queue(), ^{
+          updateTransform();
+          [self fhv_updateLayout];
+        });
       }
+    } else {
+      updateTransformWithInFlightAnimation();
     }
   }
 
