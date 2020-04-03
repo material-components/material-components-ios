@@ -89,7 +89,7 @@
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
-/** The alignment applied to the title of the Alert. Default to NSTextAlignmentNatural. */
+/** The alignment applied to the title of the Alert. Defaults to NSTextAlignmentNatural. */
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
 /** An optional icon appearing above the title of the Alert Controller.*/
@@ -113,7 +113,9 @@
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
-/** The alignment applied to the message of Alert Controller. Default to NSTextAlignmentNatural. */
+/**
+ The alignment applied to the message of Alert Controller. Defaults to NSTextAlignmentNatural.
+ */
 @property(nonatomic, assign) NSTextAlignment messageAlignment;
 
 /**
@@ -136,13 +138,13 @@
      behind the Alert (the scrim) when presented by MDCDialogPresentationController.*/
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
-/** The Alert's background color.*/
+/** The Alert background color.*/
 @property(nonatomic, strong, nullable) UIColor *backgroundColor;
 
-/** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
+/** The corner radius applied to the Alert Controller view. Defaults to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
 
-/** The elevation that will be applied to the Alert Controller view. Default to 24. */
+/** The elevation that will be applied to the Alert Controller view. Defaults to 24. */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
@@ -240,7 +242,7 @@
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
- Default value is NO.
+ Defaults to NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
@@ -273,7 +275,7 @@
 
  If @c NO, the font size will only be adjusted if a scaled font has been provided.
 
- Default value is @c YES.
+ Defaults to @c YES.
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
@@ -354,7 +356,7 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
  presented vertically (for instance, in the portrait orientation on smaller devices). When set to @c
  NO, the higher emphasis actions will be displayed on the bottom.
 
- Default value is @c NO.
+ Defaults to @c NO.
 */
 @property(nonatomic, assign) BOOL orderVerticalActionsByEmphasis;
 
