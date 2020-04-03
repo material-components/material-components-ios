@@ -21,6 +21,9 @@
  The Material Design action sheet themer for instances of MDCActionSheet.
  */
 @interface MDCActionSheetThemer : NSObject
+@end
+
+@interface MDCActionSheetThemer (ToBeDeprecated)
 
 /**
  Applies a action scheme's properties to an MDCActionSheet.

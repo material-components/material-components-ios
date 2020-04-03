@@ -20,6 +20,9 @@
  The Material Design color system's themer for instances of MDCActionSheetController.
  */
 @interface MDCActionSheetColorThemer : NSObject
+@end
+
+@interface MDCActionSheetColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCActionSheetController

@@ -20,6 +20,9 @@
  The Material Design typography system's themer for instances of MDCActionSheetController.
  */
 @interface MDCActionSheetTypographyThemer : NSObject
+@end
+
+@interface MDCActionSheetTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to an MDCActionSheetController.
