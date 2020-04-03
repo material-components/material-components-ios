@@ -89,7 +89,7 @@
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
-/** The alignment applied to the title of the Alert. Defaults to NSTextAlignmentNatural. */
+/** The alignment applied to the title of the Alert. Defaults to @c NSTextAlignmentNatural. */
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
 /** An optional icon appearing above the title of the Alert Controller.*/
@@ -114,7 +114,7 @@
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
 /**
- The alignment applied to the message of Alert Controller. Defaults to NSTextAlignmentNatural.
+ The alignment applied to the message of Alert Controller. Defaults to @c NSTextAlignmentNatural.
  */
 @property(nonatomic, assign) NSTextAlignment messageAlignment;
 
@@ -135,7 +135,7 @@
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
 /** The semi-transparent color which is applied to the overlay covering the content
-     behind the Alert (the scrim) when presented by MDCDialogPresentationController.*/
+     behind the Alert (the scrim) when presented by @c MDCDialogPresentationController.*/
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /** The Alert background color.*/
@@ -242,7 +242,7 @@
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
- Defaults to NO.
+ Defaults to @c NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
@@ -255,12 +255,12 @@
  of our migration to Ripple. Learn more at
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
 
- Defaults to NO.
+ Defaults to @c NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
- A block that is invoked when the MDCAlertController receives a call to @c
+ A block that is invoked when the @c MDCAlertController receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
@@ -279,11 +279,11 @@
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
-/** MDCAlertController handles its own transitioning delegate. */
+/** @c MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:
     (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
 
-/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
+/** @c MDCAlertController.modalPresentationStyle is always @c UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
 #pragma mark - Alert Actions
@@ -304,7 +304,7 @@
 
  Material spec recommends alerts should not have more than two actions.
 
- @param action Will be added to the end of MDCAlertController.actions.
+ @param action Will be added to the end of @c MDCAlertController actions.
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
 
@@ -379,7 +379,7 @@ typedef NS_ENUM(NSInteger, MDCActionEmphasis) {
 typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
 /**
- MDCAlertAction is passed to an MDCAlertController to add a button to the alert dialog.
+ @c MDCAlertAction is passed to an @c MDCAlertController to add a button to the alert dialog.
  */
 @interface MDCAlertAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
@@ -389,7 +389,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
  @param title The title of the button shown on the alert dialog.
  @param handler A block to execute when the user selects the action.
- @return An initialized MDCActionAlert object.
+ @return An initialized @c MDCActionAlert object.
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                 handler:(__nullable MDCActionHandler)handler;
@@ -402,7 +402,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
         Unthemed actions will render all emphases as text. Apply themers to the alert
         to achieve different appearance for different emphases.
  @param handler A block to execute when the user selects the action.
- @return An initialized MDCActionAlert object.
+ @return An initialized @c MDCActionAlert object.
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                emphasis:(MDCActionEmphasis)emphasis
@@ -417,7 +417,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 @property(nonatomic, nullable, readonly) NSString *title;
 
 /**
- The MDCActionEmphasis emphasis of the button that will be rendered for the action.
+ The @c MDCActionEmphasis emphasis of the button that will be rendered for the action.
  */
 @property(nonatomic, readonly) MDCActionEmphasis emphasis;
 
