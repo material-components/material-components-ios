@@ -57,6 +57,16 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 
+/**
+ Returns a rect that is the union of all visible content views, inset by
+ kMDCButtonNavigationItemViewPointerEffectHoverRectInset. This rect will never be larger than the
+ view's bounds.
+
+ This is intended to be used by a @c UIPointerInteractionDelegate when creating a @c UIPointerShape
+ for a @c UIPointerStyle.
+ */
+- (CGRect)pointerEffectHighlightRect;
+
 #pragma mark - UILargeContentViewerItem
 
 /**

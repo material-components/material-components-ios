@@ -47,6 +47,10 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
+// The amount to inset pointerEffectHoverRect.
+// These values were chosen to achieve visual parity with UITabBar's highlight effect.
+const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, -12};
+
 @interface MDCBottomNavigationItemView ()
 
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
@@ -229,6 +233,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   self.inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
+  [self invalidatePointerInteractions];
 }
 
 - (void)calculateVerticalLayoutInBounds:(CGRect)contentBounds
@@ -453,6 +458,57 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (NSString *)badgeValue {
   return self.badge.badgeValue;
+}
+
+- (CGRect)pointerEffectHighlightRect {
+  NSMutableArray<UIView *> *visibleViews = [[NSMutableArray alloc] init];
+  if (!self.iconImageView.hidden) {
+    [visibleViews addObject:self.iconImageView];
+  }
+  if (!self.label.hidden) {
+    [visibleViews addObject:self.label];
+  }
+  if (!self.badge.hidden) {
+    [visibleViews addObject:self.badge];
+  }
+
+  // If we don't have any visible views, there is no content to frame
+  if (visibleViews.count == 0) {
+    return self.frame;
+  }
+
+  CGRect contentRect = visibleViews.firstObject.frame;
+  for (UIView *visibleView in visibleViews) {
+    contentRect = CGRectUnion(contentRect, visibleView.frame);
+  }
+
+  CGRect insetContentRect =
+      CGRectInset(contentRect, MDCButtonNavigationItemViewPointerEffectHighlightRectInset.width,
+                  MDCButtonNavigationItemViewPointerEffectHighlightRectInset.height);
+
+  // Ensure insetContentRect is the same size or smaller than self.bounds
+  CGSize boundsSize = CGRectStandardize(self.bounds).size;
+  if (insetContentRect.size.width > boundsSize.width) {
+    insetContentRect.origin.x = 0;
+    insetContentRect.size.width = boundsSize.width;
+  }
+
+  if (insetContentRect.size.height > boundsSize.height) {
+    insetContentRect.origin.y = 0;
+    insetContentRect.size.height = boundsSize.height;
+  }
+
+  return insetContentRect;
+}
+
+- (void)invalidatePointerInteractions {
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    for (UIPointerInteraction *interaction in self.interactions) {
+      [interaction invalidate];
+    }
+  }
+#endif
 }
 
 #pragma mark - Setters

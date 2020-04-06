@@ -14,6 +14,11 @@
 
 #import "MDCBottomNavigationBar.h"
 
+#ifdef __IPHONE_13_4
+@interface MDCBottomNavigationBar (PointerInteraction) <UIPointerInteractionDelegate>
+@end
+#endif
+
 @interface MDCBottomNavigationBar ()
 
 /**

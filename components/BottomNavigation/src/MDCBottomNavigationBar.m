@@ -47,11 +47,6 @@ static const CGFloat kItemsHorizontalMargin = 12;
 
 static NSString *const kOfAnnouncement = @"of";
 
-#ifdef __IPHONE_13_4
-@interface MDCBottomNavigationBar (UIPointerInteraction) <UIPointerInteractionDelegate>
-@end
-#endif
-
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
                                       MDCRippleTouchControllerDelegate>
 
@@ -927,13 +922,17 @@ static NSString *const kOfAnnouncement = @"of";
 #pragma mark - UIPointerInteractionDelegate
 - (UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
                         styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
-  UIPointerStyle *pointerStyle = nil;
-  if (interaction.view) {
-    UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
-    UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
-    pointerStyle = [UIPointerStyle styleWithEffect:highlightEffect shape:nil];
+  MDCBottomNavigationItemView *bottomNavigationView = interaction.view;
+  if (![bottomNavigationView isKindOfClass:[MDCBottomNavigationItemView class]]) {
+    return nil;
   }
-  return pointerStyle;
+  UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
+  UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
+  CGRect hoverRect =
+      [bottomNavigationView convertRect:[bottomNavigationView pointerEffectHighlightRect]
+                                 toView:self];
+  UIPointerShape *shape = [UIPointerShape shapeWithRoundedRect:hoverRect];
+  return [UIPointerStyle styleWithEffect:highlightEffect shape:shape];
 }
 #endif
 
