@@ -54,6 +54,11 @@ static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
 static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
+#ifdef __IPHONE_13_4
+@interface MDCTabBarView (PointerInteractions) <UIPointerInteractionDelegate>
+@end
+#endif
+
 @interface MDCTabBarView ()
 
 /** The views representing each tab bar item. */
@@ -233,6 +238,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
+
+#ifdef __IPHONE_13_4
+    if (@available(iOS 13.4, *)) {
+      UIPointerInteraction *pointerInteraction =
+          [[UIPointerInteraction alloc] initWithDelegate:self];
+      [itemView addInteraction:pointerInteraction];
+    }
+#endif
 
     [self addSubview:itemView];
     [itemViews addObject:itemView];
@@ -936,6 +949,20 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     CGRect estimatedItemFrame = [self estimatedFrameForItemAtIndex:index];
     [self scrollRectToVisible:estimatedItemFrame animated:animated];
   }
+
+  [self invalidateInteractionsForItemViews];
+}
+
+- (void)invalidateInteractionsForItemViews {
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    for (MDCTabBarView *view in self.itemViews) {
+      for (UIPointerInteraction *interaction in view.interactions) {
+        [interaction invalidate];
+      }
+    }
+  }
+#endif
 }
 
 - (CGRect)estimatedFrameForItemAtIndex:(NSUInteger)index {
@@ -1151,5 +1178,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   return self.itemViews[[self.items indexOfObject:self.selectedItem]];
 }
+
+#pragma mark - UIPointerInteractionDelegate
+
+#ifdef __IPHONE_13_4
+- (UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
+                        styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
+  UIPointerStyle *pointerStyle = nil;
+  if (interaction.view) {
+    UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
+    UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
+    UIPointerShape *pointerShape = [UIPointerShape shapeWithRoundedRect:interaction.view.frame];
+    pointerStyle = [UIPointerStyle styleWithEffect:highlightEffect shape:pointerShape];
+  }
+  return pointerStyle;
+}
+#endif
 
 @end

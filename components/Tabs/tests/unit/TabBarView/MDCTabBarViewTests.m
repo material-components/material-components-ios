@@ -1315,4 +1315,34 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+/**
+ Verifies that MDCTabBarView translates UITabBarItems into MDCTabBarViewItemViews and creates a
+ UIPointerInteraction for each of them.
+ */
+- (void)testItemViewsHavePointerInteractions {
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    // Given
+    self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+    NSMutableArray<MDCTabBarViewItemView *> *itemViews = [[NSMutableArray alloc] init];
+    for (UIView *subview in self.tabBarView.subviews) {
+      if ([subview isKindOfClass:[MDCTabBarViewItemView class]]) {
+        [itemViews addObject:(MDCTabBarViewItemView *)subview];
+      }
+    }
+
+    // Then
+    XCTAssertEqual(itemViews.count, self.tabBarView.items.count);
+
+    for (NSUInteger itemIndex = 0; itemIndex < itemViews.count; itemIndex++) {
+      MDCTabBarViewItemView *itemView = itemViews[itemIndex];
+      XCTAssertEqual(itemView.interactions.count, 1,
+                     @"itemView at index %lu should only have one UIInteraction.", itemIndex);
+      XCTAssert([itemView.interactions.firstObject isKindOfClass:[UIPointerInteraction class]],
+                @"itemView at index %lu should have a UIPointerInteraction.", itemIndex);
+    }
+  }
+#endif
+}
+
 @end
