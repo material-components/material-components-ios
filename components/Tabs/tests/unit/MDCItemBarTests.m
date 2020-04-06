@@ -20,6 +20,9 @@
 
 @interface MDCItemBar (Testing)
 - (UITabBarItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
+
+// Collection view for items.
+@property(nonatomic, strong, nullable) UICollectionView *collectionView;
 @end
 
 @interface MDCItemBarTests : XCTestCase
@@ -123,6 +126,25 @@
       }
     }
   }
+}
+
+/**
+ Verifies that @c MDCItemBar assigns a @c UIPointerInteraction to each of its cells.
+ */
+- (void)testItemBarAddsPointerInteractionsToCells {
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    NSArray *visibleCells = self.itemBar.collectionView.visibleCells;
+    XCTAssertEqual(visibleCells.count, self.itemBar.items.count);
+    for (NSUInteger itemIndex = 0; itemIndex < visibleCells.count; itemIndex++) {
+      UICollectionViewCell *cell = visibleCells[itemIndex];
+      XCTAssertEqual(cell.interactions.count, 1,
+                     @"cell at index %lu should only have one UIInteraction.", itemIndex);
+      XCTAssert([cell.interactions.firstObject isKindOfClass:[UIPointerInteraction class]],
+                @"cell at index %lu should have a UIPointerInteraction.", itemIndex);
+    }
+  }
+#endif
 }
 
 @end
