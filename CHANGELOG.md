@@ -1,16 +1,11 @@
-# #develop#
+# 108.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release removes the default `init` methods from MDCSemanticColorScheme, improved support
+for iOS 13.4's pointer effects on iPads, and various bugfixes.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+MDCSemanticColorScheme's `init` method is now unavailable. Please use `initWithDefaults:` instead.
 
 ## Component changes
 
@@ -21,6 +16,7 @@ Replace this text with example code for each new feature.
 ### AppBar
 
 * [Add example to dragons to demonstrate AppBar crash when VoiceOver is turned on and contentInset is set.](https://github.com/material-components/material-components-ios/commit/5e99873e0573cdb4922763128397bbac87d6d0f1) (Yarden Eitan)
+* [Fix AppBar from jumping when contentOffset updates when VoiceOver is on.](https://github.com/material-components/material-components-ios/commit/13b63828612cce8ddf54cad6aebc1b4361ec3532) (Yarden Eitan)
 
 ### BottomNavigation
 
@@ -63,12 +59,6 @@ Replace this text with example code for each new feature.
 ### schemes/Color
 
 * [Delete init.](https://github.com/material-components/material-components-ios/commit/8176beb6b145752677ad231f29c82976edaca8ad) (Cody Weaver)
-
-## Multi-component changes
-
-* [# 107.5.0](https://github.com/material-components/material-components-ios/commit/7c99769c68f5d016844d1e3deb15271a72a9d058) (Bryan Oltman)
-* [Fix AppBar from jumping when contentOffset updates when VoiceOver is on.](https://github.com/material-components/material-components-ios/commit/13b63828612cce8ddf54cad6aebc1b4361ec3532) (Yarden Eitan)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/d9340a2952d98e0bd315a6e68991ad41bd366864) (Bryan Oltman)
 
 ---
 
