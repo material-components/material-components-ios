@@ -1,7 +1,7 @@
 # 108.0.0
 
-This major release removes the default `init` methods from MDCSemanticColorScheme, improved support
-for iOS 13.4's pointer effects on iPads, and various bugfixes.
+This major release removes the default `init` methods from MDCSemanticColorScheme, improves support
+for iOS 13.4's pointer effects on iPads, and includes various bugfixes.
 
 ## Breaking changes
 
