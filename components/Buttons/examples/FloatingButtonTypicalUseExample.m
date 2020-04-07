@@ -18,8 +18,8 @@
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
 
-NSString *kButtonLabel = @"Create";
-NSString *kMiniButtonLabel = @"Add";
+static NSString *const kButtonLabel = @"Create";
+static NSString *const kMiniButtonLabel = @"Add";
 
 @interface FloatingButtonTypicalUseExample : UIViewController
 @property(nonatomic, strong) UILabel *iPadLabel;

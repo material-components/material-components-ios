@@ -19,7 +19,7 @@
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
-const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
+static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
 @interface ButtonsTypicalUseExample ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
