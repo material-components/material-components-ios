@@ -16,8 +16,12 @@
 
 #import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MDCBottomNavigationItemView+Testing.h"
 
 #import "MaterialInk.h"
+
+static NSString *const kTestTitleText = @"title";
+static NSString *const kTestBadgeValue = @"100";
 
 static UIImage *fakeImage(void) {
   CGSize imageSize = CGSizeMake(24, 24);
@@ -455,6 +459,79 @@ static UIImage *fakeImage(void) {
   // Then
   XCTAssertEqual(itemView.titleNumberOfLines, 7);
   XCTAssertEqual(itemView.label.numberOfLines, itemView.titleNumberOfLines);
+}
+
+/**
+ Verifies that pointerEffectHighlightRect is equivalent to an MDCBottomNavigationItemView's label
+ if the label is the only visible subview.
+ */
+- (void)testPointerEffectHoverRectIsFrameForOneVisibleView {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.frame = CGRectMake(0, 0, 100, 100);
+  itemView.title = kTestTitleText;
+  [itemView layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectInset(
+      itemView.label.frame, MDCButtonNavigationItemViewPointerEffectHighlightRectInset.width,
+      MDCButtonNavigationItemViewPointerEffectHighlightRectInset.height);
+  XCTAssert(CGRectEqualToRect([itemView pointerEffectHighlightRect], expectedRect), @"%@",
+            [self errorStringForExpectedPointerRect:expectedRect
+                             doesNotMatchActualRect:[itemView pointerEffectHighlightRect]]);
+}
+
+/**
+ Verifies that pointerEffectHighlightRect is equivalent to the bounding rect of all visible subviews
+ when multiple subviews are visible.
+*/
+- (void)testPointerEffectHoverRectIsFrameWhenAllViewsVisible {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.frame = CGRectMake(0, 0, 100, 100);
+  itemView.title = kTestTitleText;
+  itemView.image = fakeImage();
+  itemView.badgeValue = kTestBadgeValue;
+  [itemView layoutIfNeeded];
+
+  // Then
+  CGRect contentViewsRect = CGRectUnion(
+      itemView.label.frame, CGRectUnion(itemView.iconImageView.frame, itemView.badge.frame));
+  CGRect expectedRect = CGRectInset(
+      contentViewsRect, MDCButtonNavigationItemViewPointerEffectHighlightRectInset.width,
+      MDCButtonNavigationItemViewPointerEffectHighlightRectInset.height);
+  XCTAssert(CGRectEqualToRect([itemView pointerEffectHighlightRect], expectedRect), @"%@",
+            [self errorStringForExpectedPointerRect:expectedRect
+                             doesNotMatchActualRect:[itemView pointerEffectHighlightRect]]);
+}
+
+/**
+ Verifies that pointerEffectHighlightRect doesn't exceed the bounds of the
+ MDCBottomNavigationItemView.
+*/
+- (void)testPointerEffectHoverRectIsNotLargerThanBounds {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.frame = CGRectMake(0, 0, 10, 10);
+  itemView.title = kTestTitleText;
+  itemView.image = fakeImage();
+  itemView.badgeValue = kTestBadgeValue;
+  [itemView layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = itemView.bounds;
+  XCTAssert(CGRectEqualToRect([itemView pointerEffectHighlightRect], expectedRect), @"%@",
+            [self errorStringForExpectedPointerRect:expectedRect
+                             doesNotMatchActualRect:[itemView pointerEffectHighlightRect]]);
+}
+
+#pragma mark - Helpers
+
+- (NSString *)errorStringForExpectedPointerRect:(CGRect)expectedRect
+                         doesNotMatchActualRect:(CGRect)actualRect {
+  return
+      [NSString stringWithFormat:@"pointerEffectHighlightRect expected to equal %@ (got %@)",
+                                 NSStringFromCGRect(expectedRect), NSStringFromCGRect(actualRect)];
 }
 
 @end

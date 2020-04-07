@@ -19,10 +19,11 @@ import MaterialComponents.MaterialAppBar_Theming
 import MaterialComponents.MaterialContainerScheme
 
 // This example shows a bug when using an FlexibleHeader in a UITableViewController with expandable
-// cells.
-// 1. Expand a cell by tapping it.
-// 2. Scroll that expanded cell above the FlexibleHeader.
-// 3. Tap another cell to expand it and collapse the previously selected cell.
+// cells. This occurs both when VoiceOver is on and off.
+// 1. (Optional) Turn VoiceOver on
+// 2. Expand a cell by tapping it.
+// 3. Scroll that expanded cell above the FlexibleHeader.
+// 4. Tap another cell to expand it and collapse the previously selected cell.
 //
 // With the buggy behavior, the FlexibleHeader will shift off-screen unexpectedly.
 

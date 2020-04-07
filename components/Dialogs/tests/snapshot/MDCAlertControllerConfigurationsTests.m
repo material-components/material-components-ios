@@ -21,11 +21,32 @@
 #import "MaterialContainerScheme.h"
 
 static NSString *const kTitleShortLatin = @"Title";
+static NSString *const kTitleLongLatin =
+    @"It's a long long long long long long long long long long long long long long long long long "
+     "long long long title";
 static NSString *const kMessageShortLatin = @"A short message.";
 static NSString *const kMessageLongLatin =
     @"Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
      "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
      "falli dicunt an. Praesent molestiae vim ut.";
+
+static NSString *const kMessageVeryLongLatin =
+    @"Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
+     "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
+     "falli dicunt an. Praesent molestiae vim ut. Lorem ipsum dolor sit amet, consul docendi "
+     "indoctum id quo, ad unum suavitate incorrupte  sea. An his meis consul cotidieque, eam "
+     "recteque mnesarchum et, mundi volumus cu cum. Quo  falli dicunt an. Praesent molestiae vim "
+     "ut. Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
+     "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
+     "falli dicunt an. Praesent molestiae vim ut. Lorem ipsum dolor sit amet, consul docendi "
+     "indoctum id quo, ad unum suavitate incorrupte  sea. An his meis consul cotidieque, eam "
+     "recteque mnesarchum et, mundi volumus cu cum. Quo  falli dicunt an. Praesent molestiae vim "
+     "ut. Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
+     "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
+     "falli dicunt an. Praesent molestiae vim ut. Lorem ipsum dolor sit amet, consul docendi "
+     "indoctum id quo, ad unum suavitate incorrupte sea. An his meis consul cotidieque, eam "
+     "recteque mnesarchum et, mundi volumus cu cum. Quo  falli dicunt an. Praesent molestiae vim "
+     "ut.";
 
 @interface MDCAlertControllerConfigurationsTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCAlertController *alertController;
@@ -79,9 +100,8 @@ static NSString *const kMessageLongLatin =
   // final size when calculatePreferredContentSizeForBounds: is called - after all the dialog
   // configuration is complete.
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  CGRect bounds = alertView.bounds;
-  bounds.size = [alertView calculatePreferredContentSizeForBounds:bounds.size];
-  alertView.bounds = CGRectMake(0.f, 0.f, bounds.size.width, bounds.size.height);
+  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:alertView.bounds.size];
+  alertView.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
 }
 
 - (void)addOutlinedActionWithTitle:(NSString *)actionTitle {
@@ -902,6 +922,71 @@ static NSString *const kMessageLongLatin =
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. image: extra wide
+- (void)testTitleIconAlignmentIsJustifiedAndWideImageResized {
+  // Given
+  [self configAlertWithWideImage];
+
+  // When
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
+  // Recalculate layout and adjust the snapshot size to fit the new dialog size.
+  [self sizeAlertToFitContent];
+  [self.alertController.view layoutIfNeeded];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// title icon alignment: Justified. image: extra wide, extra tall
+- (void)testTitleIconAlignmentIsJustifiedAndSquareImageResized {
+  // Given
+  self.alertController.titleIcon = [[UIImage mdc_testImageOfSize:CGSizeMake(400.f, 360.f)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [self configAlertWithResetSettings];
+
+  // When
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
+  // Recalculate layout and adjust the snapshot size to fit the new dialog size.
+  [self sizeAlertToFitContent];
+  [self.alertController.view layoutIfNeeded];
+
+  // Then
+  [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// Min title
+- (void)testMinSizeDialog {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.title = @"A";
+
+  // When
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 100.f, 100.f);
+  [self.alertController.view layoutIfNeeded];
+  [self sizeAlertToFitContent];
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Max size message
+- (void)testMaxSizeDialog {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.title = kTitleLongLatin;
+  self.alertController.message = kMessageVeryLongLatin;
+
+  // When
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 1000.f, 1000.f);
+  [self.alertController.view layoutIfNeeded];
+  [self sizeAlertToFitContent];
+  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
 }
 
 @end

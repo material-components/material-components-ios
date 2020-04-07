@@ -61,6 +61,16 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     button.adjustsImageWhenHighlighted = false
     button.accessibilityLabel = "Menu"
     button.accessibilityHint = "Opens catalog configuration options."
+    // Without this compiler version check, the build fails on Xcode versions <11.4 with the error:
+    //   "Use of undeclared type 'UIPointerInteractionDelegate'"
+    // Ideally, we would be able to tie this to an iOS version rather than a compiler version, but
+    // such a solution does not seem to be available for Swift.
+#if compiler(>=5.2)
+      if #available(iOS 13.4, *) {
+        let interaction = UIPointerInteraction(delegate: self)
+        button.addInteraction(interaction)
+      }
+#endif
     return button
   }()
 
@@ -426,6 +436,26 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
                        constant: height).isActive = true
   }
 }
+
+// Without this compiler version check, the build fails on Xcode versions <11.4 with the error:
+//   "Use of undeclared type 'UIPointerInteractionDelegate'"
+// Ideally, we would be able to tie this to an iOS version rather than a compiler version, but such
+// a solution does not seem to be available for Swift.
+#if compiler(>=5.2)
+@available(iOS 13.4, *)
+extension MDCCatalogComponentsController: UIPointerInteractionDelegate {
+  @available(iOS 13.4, *)
+  func pointerInteraction(_ interaction: UIPointerInteraction,
+                          styleFor region: UIPointerRegion) -> UIPointerStyle? {
+    guard let interactionView = interaction.view else {
+      return nil
+    }
+    let targetedPreview = UITargetedPreview(view: interactionView)
+    let pointerStyle = UIPointerStyle(effect: .highlight(targetedPreview))
+    return pointerStyle
+  }
+}
+#endif
 
 // UIScrollViewDelegate
 extension MDCCatalogComponentsController {

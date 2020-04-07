@@ -639,6 +639,14 @@ static NSString *const kOfAnnouncement = @"of";
     }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
+#ifdef __IPHONE_13_4
+    if (@available(iOS 13.4, *)) {
+      UIPointerInteraction *pointerInteraction =
+          [[UIPointerInteraction alloc] initWithDelegate:self];
+      [itemView addInteraction:pointerInteraction];
+    }
+#endif
+
     [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
@@ -909,4 +917,23 @@ static NSString *const kOfAnnouncement = @"of";
   self.lastLargeContentViewerItem = nil;
 }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+
+#ifdef __IPHONE_13_4
+#pragma mark - UIPointerInteractionDelegate
+- (UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
+                        styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
+  MDCBottomNavigationItemView *bottomNavigationView = interaction.view;
+  if (![bottomNavigationView isKindOfClass:[MDCBottomNavigationItemView class]]) {
+    return nil;
+  }
+  UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
+  UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
+  CGRect hoverRect =
+      [bottomNavigationView convertRect:[bottomNavigationView pointerEffectHighlightRect]
+                                 toView:self];
+  UIPointerShape *shape = [UIPointerShape shapeWithRoundedRect:hoverRect];
+  return [UIPointerStyle styleWithEffect:highlightEffect shape:shape];
+}
+#endif
+
 @end

@@ -1,3 +1,67 @@
+# 108.0.0
+
+This major release removes the default `init` methods from MDCSemanticColorScheme, improves support
+for iOS 13.4's pointer effects on iPads, and includes various bugfixes.
+
+## Breaking changes
+
+MDCSemanticColorScheme's `init` method is now unavailable. Please use `initWithDefaults:` instead.
+
+## Component changes
+
+### ActionSheet
+
+* [Mark all Themer APIs as to-be-deprecated.](https://github.com/material-components/material-components-ios/commit/d779e63b9fb2266d902c351979ef7851721e69a9) (Jeff Verkoeyen)
+
+### AppBar
+
+* [Add example to dragons to demonstrate AppBar crash when VoiceOver is turned on and contentInset is set.](https://github.com/material-components/material-components-ios/commit/5e99873e0573cdb4922763128397bbac87d6d0f1) (Yarden Eitan)
+* [Fix AppBar from jumping when contentOffset updates when VoiceOver is on.](https://github.com/material-components/material-components-ios/commit/13b63828612cce8ddf54cad6aebc1b4361ec3532) (Yarden Eitan)
+
+### BottomNavigation
+
+* [Add UIPointerHighlightEffects to BottomNavigation button items.](https://github.com/material-components/material-components-ios/commit/e5f1498d4533d604177b2c0681d9159a184a6df7) (Bryan Oltman)
+* [Shrink UIPointerEffect frame size to fit content of navigation item views.](https://github.com/material-components/material-components-ios/commit/ef1cc6dfd73fee5a54307c79b321237b184b02e3) (Bryan Oltman)
+
+### ButtonBar
+
+* [Add highlight pointer effect to MDCButtonBarButtons](https://github.com/material-components/material-components-ios/commit/b05945db1872e617f145a8dfc501889330477f19) (Bryan Oltman)
+* [Remove custom shape for MDCButtonBarButton highlight effect.](https://github.com/material-components/material-components-ios/commit/57f98a60f2ee03d0c99f2f5a45dcb22a7ab4aacb) (Bryan Oltman)
+* [Set inkOffset when given asymmetric contentEdgeInsets.](https://github.com/material-components/material-components-ios/commit/e95d65a96ce1aab5ec1b3a5f94db62502a8257fc) (Bryan Oltman)
+
+### Buttons
+
+* [Add inkViewOffset property to allow adjustment of inkView/rippleView. This is pre-work to address an issue in MDCButtonBar, where buttons are assigned asymmetric contentEdgeInsets by MDCAppBarButtonBarBuilder](https://github.com/material-components/material-components-ios/commit/df522841a254b4da5d07e48fb99c70e1af4b6e28) (Bryan Oltman)
+* [Add new fab anatomy pngs](https://github.com/material-components/material-components-ios/commit/7fa3ffc10507d095531dc63a630b4a57303adc8e) (Andrew Overton)
+* [Fix broken links in README](https://github.com/material-components/material-components-ios/commit/12bc8b628a76c5703605fa9211695fb642269b6c) (Andrew Overton)
+* [Update images again because they weren't using secondary theming before](https://github.com/material-components/material-components-ios/commit/40a62dc32851016cbf10b9baf4135ec27daa8106) (Andrew Overton)
+
+### Dialogs
+
+* [Add a minimum dialog width.](https://github.com/material-components/material-components-ios/commit/4a53cc44c270affe12c4e749c652d5f12d61925e) (Iryna Berezan)
+* [Add missing @c in several places of MDCAlertController.](https://github.com/material-components/material-components-ios/commit/bb1fd86511f67a458de5939395d2f7b3dc852a8d) (Iryna Berezan)
+* [Fixing a repeated typo in comments "Default to" => "Defaults to".](https://github.com/material-components/material-components-ios/commit/d17210d02fe0852ceb437b5111a34104c1a8cc1b) (Iryna Berezan)
+* [Size justified-aligned title-icons to fit the alert's width.](https://github.com/material-components/material-components-ios/commit/e5b43d2e72582c0733845851390bdd13cef3699c) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Crash fix for VoiceOver + ContentInset](https://github.com/material-components/material-components-ios/commit/4a92b86f0a3d5c47696d719ea6beae8062153972) (Yarden Eitan)
+
+### NavigationDrawer
+
+* [Update `MDCBottomDrawerContainerViewController` to present fullscreen when Voice Over or Switch Control is running, even when the view controller presenting the bottom drawer is not presented fullscreen (ex. is presented with new iOS 13 pageSheet presentation style), by using `presentingViewYOffset` that is used to make adjustments for these non-fullscreen presentation styles when not forcing the drawer to present fullscreen.](https://github.com/material-components/material-components-ios/commit/c7ff69c0bd9b7d62491066f56b9c3d953a4a7f4b) (Jake Rockland)
+
+### Tabs
+
+* [Add UIPointerInteraction support to MDCTabBar.](https://github.com/material-components/material-components-ios/commit/cc82257e5c411f6340cc551db198056a22f70139) (Bryan Oltman)
+* [Add UIPointerInteraction support to MDCTabBarView.](https://github.com/material-components/material-components-ios/commit/3165207b57a4a73c9c3a5fd45a6197491030b5b3) (Bryan Oltman)
+
+### schemes/Color
+
+* [Delete init.](https://github.com/material-components/material-components-ios/commit/8176beb6b145752677ad231f29c82976edaca8ad) (Cody Weaver)
+
+---
+
 # 107.5.0
 
 This minor release includes several API additions to BottomSheet, Dialogs, and NavigationDrawer, along with a bug fix to Snackbar and improved Buttons documentation.

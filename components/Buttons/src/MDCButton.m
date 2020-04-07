@@ -271,12 +271,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
         CGPointMake(CGRectGetMidX(contentRect), CGRectGetMidY(contentRect));
     CGPoint boundsCenterPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
-    CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
-    CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
+    CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x + self.inkViewOffset.width;
+    CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y + self.inkViewOffset.height;
     _inkView.frame =
         CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
   } else {
     CGRect bounds = CGRectStandardize(self.bounds);
+    bounds = CGRectOffset(bounds, self.inkViewOffset.width, self.inkViewOffset.height);
     _inkView.frame = bounds;
     self.rippleView.frame = bounds;
   }
@@ -570,6 +571,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _inkMaxRippleRadius = inkMaxRippleRadius;
   _inkView.maxRippleRadius = inkMaxRippleRadius;
   self.rippleView.maximumRadius = inkMaxRippleRadius;
+}
+
+- (void)setInkViewOffset:(CGSize)inkViewOffset {
+  _inkViewOffset = inkViewOffset;
+  [self setNeedsLayout];
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {

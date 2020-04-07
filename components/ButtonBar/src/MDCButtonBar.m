@@ -570,4 +570,17 @@ static NSString *const kEnabledSelector = @"enabled";
   [self setNeedsLayout];
 }
 
+#ifdef __IPHONE_13_4
+- (UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
+                        styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
+  UIPointerStyle *pointerStyle = nil;
+  if (interaction.view) {
+    UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
+    UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
+    pointerStyle = [UIPointerStyle styleWithEffect:highlightEffect shape:nil];
+  }
+  return pointerStyle;
+}
+#endif
+
 @end

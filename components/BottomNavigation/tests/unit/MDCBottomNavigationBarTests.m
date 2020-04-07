@@ -18,8 +18,11 @@
 #import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MaterialAvailability.h"
 #import "MaterialBottomNavigation.h"
+#import "MDCBottomNavigationBar+Private.h"
 #import "MaterialPalettes.h"
 #import "MaterialShadowElevations.h"
+
+static NSString *const kTestItemTitleText = @"Title";
 
 /**
  A testing MDCBottomNavigationBar that allows safeAreaInsets to be set programmatically.
@@ -925,6 +928,60 @@ Tests the @c itemsHorizontalPadding property
                                   actualItemViewFrameWithDefaultItemsHorizontalPadding));
   XCTAssertTrue(CGRectEqualToRect(expectedItemViewFrameWithZeroItemsHorizontalPadding,
                                   actualItemViewFrameWithZeroItemsHorizontalPadding));
+}
+
+#ifdef __IPHONE_13_4
+/**
+ Verifies that MDCBottomNavigation generates a non-nil UIPointerStyle for its item views.
+ */
+- (void)testPointerStyleIsNonNilWithMDCBottomNavigationItemView {
+  if (@available(iOS 13.4, *)) {
+    // Given
+    // Pointer interactions require that the view being interacted with is in a UIWindow
+    [self createWindowWithView:self.bottomNavBar];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:kTestItemTitleText image:nil tag:0];
+    [self.bottomNavBar setItems:@[ item ]];
+
+    MDCBottomNavigationItemView *firstItemView = self.bottomNavBar.itemViews.firstObject;
+    UIPointerInteraction *interaction = firstItemView.interactions.firstObject;
+    XCTAssertEqual(interaction.delegate, self.bottomNavBar);
+    UIPointerRegion *region = [UIPointerRegion regionWithRect:firstItemView.frame identifier:nil];
+    UIPointerStyle *pointerStyle = [self.bottomNavBar pointerInteraction:interaction
+                                                          styleForRegion:region];
+
+    // Then
+    XCTAssertNotNil(pointerStyle);
+  }
+}
+
+/**
+ Verifies that MDCBottomNavigation does not generate a UIPointerStyle for a non-item view.
+ */
+- (void)testPointerStyleIsNilWithNonMDCBottomNavigationItemView {
+  if (@available(iOS 13.4, *)) {
+    // Given
+    // Pointer interactions require that the view being interacted with is in a UIWindow
+    [self createWindowWithView:self.bottomNavBar];
+    UIView *nonBottomNavigationItemView = [[UIView alloc] init];
+    UIPointerInteraction *interaction =
+        [[UIPointerInteraction alloc] initWithDelegate:self.bottomNavBar];
+    [nonBottomNavigationItemView addInteraction:interaction];
+    UIPointerRegion *region = [UIPointerRegion regionWithRect:nonBottomNavigationItemView.frame
+                                                   identifier:nil];
+    UIPointerStyle *pointerStyle = [self.bottomNavBar pointerInteraction:interaction
+                                                          styleForRegion:region];
+
+    // Then
+    XCTAssertNil(pointerStyle);
+  }
+}
+#endif
+
+#pragma mark - Helpers
+
+- (void)createWindowWithView:(UIView *)view {
+  UIWindow *window = [[UIWindow alloc] init];
+  [window addSubview:view];
 }
 
 @end

@@ -89,7 +89,7 @@
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
-/** The alignment applied to the title of the Alert. Default to NSTextAlignmentNatural. */
+/** The alignment applied to the title of the Alert. Defaults to @c NSTextAlignmentNatural. */
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
 /** An optional icon appearing above the title of the Alert Controller.*/
@@ -113,7 +113,9 @@
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
-/** The alignment applied to the message of Alert Controller. Default to NSTextAlignmentNatural. */
+/**
+ The alignment applied to the message of Alert Controller. Defaults to @c NSTextAlignmentNatural.
+ */
 @property(nonatomic, assign) NSTextAlignment messageAlignment;
 
 /**
@@ -133,16 +135,16 @@
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
 /** The semi-transparent color which is applied to the overlay covering the content
-     behind the Alert (the scrim) when presented by MDCDialogPresentationController.*/
+     behind the Alert (the scrim) when presented by @c MDCDialogPresentationController.*/
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
-/** The Alert's background color.*/
+/** The Alert background color.*/
 @property(nonatomic, strong, nullable) UIColor *backgroundColor;
 
-/** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
+/** The corner radius applied to the Alert Controller view. Defaults to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
 
-/** The elevation that will be applied to the Alert Controller view. Default to 24. */
+/** The elevation that will be applied to the Alert Controller view. Defaults to 24. */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
@@ -240,7 +242,7 @@
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
- Default value is NO.
+ Defaults to @c NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
@@ -253,12 +255,12 @@
  of our migration to Ripple. Learn more at
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
 
- Defaults to NO.
+ Defaults to @c NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
- A block that is invoked when the MDCAlertController receives a call to @c
+ A block that is invoked when the @c MDCAlertController receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
@@ -273,15 +275,15 @@
 
  If @c NO, the font size will only be adjusted if a scaled font has been provided.
 
- Default value is @c YES.
+ Defaults to @c YES.
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
-/** MDCAlertController handles its own transitioning delegate. */
+/** @c MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:
     (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
 
-/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
+/** @c MDCAlertController.modalPresentationStyle is always @c UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
 #pragma mark - Alert Actions
@@ -302,7 +304,7 @@
 
  Material spec recommends alerts should not have more than two actions.
 
- @param action Will be added to the end of MDCAlertController.actions.
+ @param action Will be added to the end of @c MDCAlertController actions.
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
 
@@ -354,7 +356,7 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
  presented vertically (for instance, in the portrait orientation on smaller devices). When set to @c
  NO, the higher emphasis actions will be displayed on the bottom.
 
- Default value is @c NO.
+ Defaults to @c NO.
 */
 @property(nonatomic, assign) BOOL orderVerticalActionsByEmphasis;
 
@@ -377,7 +379,7 @@ typedef NS_ENUM(NSInteger, MDCActionEmphasis) {
 typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
 /**
- MDCAlertAction is passed to an MDCAlertController to add a button to the alert dialog.
+ @c MDCAlertAction is passed to an @c MDCAlertController to add a button to the alert dialog.
  */
 @interface MDCAlertAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
@@ -387,7 +389,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
  @param title The title of the button shown on the alert dialog.
  @param handler A block to execute when the user selects the action.
- @return An initialized MDCActionAlert object.
+ @return An initialized @c MDCActionAlert object.
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                 handler:(__nullable MDCActionHandler)handler;
@@ -400,7 +402,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
         Unthemed actions will render all emphases as text. Apply themers to the alert
         to achieve different appearance for different emphases.
  @param handler A block to execute when the user selects the action.
- @return An initialized MDCActionAlert object.
+ @return An initialized @c MDCActionAlert object.
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                emphasis:(MDCActionEmphasis)emphasis
@@ -415,7 +417,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 @property(nonatomic, nullable, readonly) NSString *title;
 
 /**
- The MDCActionEmphasis emphasis of the button that will be rendered for the action.
+ The @c MDCActionEmphasis emphasis of the button that will be rendered for the action.
  */
 @property(nonatomic, readonly) MDCActionEmphasis emphasis;
 

@@ -156,6 +156,14 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
 
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];
 
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    UIPointerInteraction *pointerInteraction =
+        [[UIPointerInteraction alloc] initWithDelegate:buttonBar];
+    [button addInteraction:pointerInteraction];
+  }
+#endif
+
   // Contrary to intuition, UIKit provides the UIBarButtonItem as the action's first argument when
   // bar buttons are tapped, NOT the button itself. Simply adding the item's target/action to the
   // button does not allow us to pass the expected argument to the target.

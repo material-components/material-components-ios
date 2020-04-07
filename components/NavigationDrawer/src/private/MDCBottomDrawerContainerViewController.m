@@ -382,7 +382,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (CGFloat)maximumInitialDrawerHeight {
   if ([self shouldPresentFullScreen]) {
-    return self.presentingViewBounds.size.height;
+    return self.presentingViewBounds.size.height + self.presentingViewYOffset;
   }
   return _maximumInitialDrawerHeight + [self bottomSafeAreaInsetsToAdjustInitialDrawerHeight];
 }
