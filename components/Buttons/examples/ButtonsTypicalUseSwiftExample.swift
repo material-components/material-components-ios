@@ -19,7 +19,7 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialButtons_Theming
 
-class ButtonsSimpleExampleSwiftViewController: UIViewController {
+class ButtonsTypicalUseSwiftExample: UIViewController {
 
   let floatingButtonPlusDimension = CGFloat(24)
   let kMinimumAccessibleButtonSize = CGSize(width: 64, height: 48)
@@ -118,7 +118,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
 }
 
-extension ButtonsSimpleExampleSwiftViewController {
+extension ButtonsTypicalUseSwiftExample {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [

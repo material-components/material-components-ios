@@ -21,7 +21,7 @@
 NSString *kButtonLabel = @"Create";
 NSString *kMiniButtonLabel = @"Add";
 
-@interface FloatingButtonExampleViewController : UIViewController
+@interface FloatingButtonTypicalUseExample : UIViewController
 @property(nonatomic, strong) UILabel *iPadLabel;
 @property(nonatomic, strong) MDCFloatingButton *miniFloatingButton;
 @property(nonatomic, strong) MDCFloatingButton *defaultFloatingButton;
@@ -29,7 +29,7 @@ NSString *kMiniButtonLabel = @"Add";
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @end
 
-@implementation FloatingButtonExampleViewController
+@implementation FloatingButtonTypicalUseExample
 
 - (id)init {
   self = [super init];

@@ -18,7 +18,7 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialButtons_Theming
 
-class ButtonsCustomFontViewController: UIViewController {
+class ButtonsCustomFontExample: UIViewController {
 
   var containerScheme = MDCContainerScheme()
 

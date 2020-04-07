@@ -19,7 +19,7 @@ import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypography
 
-class ButtonsDynamicTypeViewController: UIViewController {
+class ButtonsDynamicTypeExample: UIViewController {
 
   @objc var containerScheme = MDCContainerScheme()
 
@@ -102,7 +102,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
 }
 
 // MARK: Catalog by conventions
-extension ButtonsDynamicTypeViewController {
+extension ButtonsDynamicTypeExample {
   @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],

@@ -19,7 +19,7 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialButtons_Theming
 
-class ButtonsSwiftAndStoryboardController: UIViewController {
+class ButtonsStoryboardExample: UIViewController {
 
   let containedButton = MDCButton()
   let flatButton = MDCButton()
@@ -209,11 +209,11 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
 }
 
-extension ButtonsSwiftAndStoryboardController {
+extension ButtonsStoryboardExample {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Buttons", "Buttons (Swift and Storyboard)"],
+      "breadcrumbs": ["Buttons", "Buttons (Storyboard)"],
       "primaryDemo": false,
       "presentable": false,
       "storyboardName": "ButtonsStoryboardAndProgrammatic",

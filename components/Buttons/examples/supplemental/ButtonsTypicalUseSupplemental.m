@@ -26,7 +26,7 @@ static const CGFloat kViewOffsetToCenter = 20;
 
 #pragma mark - ButtonsTypicalUseViewController
 
-@implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
+@implementation ButtonsTypicalUseExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
@@ -40,7 +40,7 @@ static const CGFloat kViewOffsetToCenter = 20;
 
 @end
 
-@implementation ButtonsShapesExampleViewController (CatalogByConvention)
+@implementation ButtonsShapesExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
