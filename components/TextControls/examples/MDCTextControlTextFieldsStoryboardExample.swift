@@ -63,7 +63,7 @@ extension MDCTextControlTextFieldsStoryboardExample {
     return [
       "breadcrumbs": ["Text Controls", "MDCTextControl TextFields (Storyboard)"],
       "primaryDemo": false,
-      "presentable": false,
+      "presentable": true,
       "storyboardName": "MDCTextControlTextFieldsStoryboardExample"
     ]
   }
