@@ -8,52 +8,18 @@ path: /catalog/cards/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Cards -->
-
 # Cards
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BCards%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BCards%5D)
 
-Cards contain content and actions about a single subject. They can be used standalone, or as part
-of a list. Cards are meant to be interactive, and aren't meant to be be used solely for style
-purposes.
+[Cards](https://material.io/components/cards/) contain content and actions about
+a single subject.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/cards.png" alt="Cards" width="320">
-</div>
+![Basic card](docs/assets/cards.png)
 
-## Design & API documentation
+## Using cards
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCard.html">MDCCard</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCardCollectionCell.html">MDCCardCollectionCell</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellHorizontalImageAlignment.html">MDCCardCellHorizontalImageAlignment</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellState.html">MDCCardCellState</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellVerticalImageAlignment.html">MDCCardCellVerticalImageAlignment</a></li>
-</ul>
-
-## Table of contents
-
-- [Overview](#overview)
-  - [Cards Classes](#cards-classes)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Typical use: as a view](#typical-use-as-a-view)
-  - [Typical use: in a collection view](#typical-use-in-a-collection-view)
-- [Extensions](#extensions)
-  - [Theming](#theming)
-- [Accessibility](#accessibility)
-  - [Card Accessibility](#card-accessibility)
-
-- - -
-
-## Overview
-
-Cards provides two different versions, `MDCCard` inheriting from `UIControl` and `MDCCardCollectionCell` inheriting from `UICollectionViewCell`.
+Cards are implemented by `MDCCard`, which inherits from `UIControl`, and `MDCCardCollectionCell`, which inherits from `UICollectionViewCell`.
 
 A card's state determines its visual styling.
 
@@ -92,28 +58,22 @@ An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionView
 
 `MDCCardCollectionCell` uses the `selected` property that is built-in in `UICollectionViewCell` and has its own `MDCCardCellState` to keep track of the current state it is in.
 
-## Installation
+### Install `MDCCard` or `MDCCardCollectionCell`
 
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
+In order to use `MDCCard` or `MDCCardCollectionCell`, first add Cards to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/Cards'
+pod MaterialComponents/Cards
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then, run the following command:
+Then, run the installer.
 
 ```bash
 pod install
 ```
 
-### Importing
-
-To import the component:
+After that, import the Cards target.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -122,20 +82,123 @@ import MaterialComponents.MaterialCards
 ```
 
 #### Objective-C
-
 ```objc
 #import "MaterialCards.h"
 ```
 <!--</div>-->
 
+From there, either initialize an `MDCCard` like you would any UIView or use `MDCCardCollectionCell` as a superclass for a custom `UICollectionViewCell`.
 
-## Usage
+### Making cards accessible
 
-<!-- Extracted from docs/typical-use-view.md -->
+To help ensure your cards are accessible to as many users as possible, please be sure to review the following 
+recommendations:
 
-### Typical use: as a view
+#### Accessibility for Cards in a Collection
 
-`MDCCard` can be used like a regular UIView.
+Since assistive technologies visit all cards in a collection in a sequential order, it is often 
+easier to distinguish between elements that belong to different cards by aggregating all the 
+card's information so the card is read as a single sentence.  
+This can be done by setting an appropriate 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+for the card. Additionally, set the card's 
+[`isAccessibilityElement`](https://developer.apple.com/documentation/objectivec/nsobject/1615141-isaccessibilityelement) 
+to true. Cards are a container element and setting isAccessibiltyElement for a container 
+turns off individually selecting its subelements.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+card.isAccessibilityElement = true
+card.accessibilityLabel = "Location \(userLocation.name) is popular with users " +
+  "who enjoy \(userLocation.popularActivityMatchingUserProfile(userProfile))"
+```
+
+#### Objective-C
+```objc
+card.isAccessibilityElement = YES;
+card.accessibilityLabel = [NSString 
+  stringWithFormat:@"Location %@ is popular with users who enjoy %@",  
+  userLocation.name, 
+  userLocation.popularActivityMatchingUserProfile(userProfile)];
+```
+<!--</div>-->
+
+#### Accessibility for Single Cards
+
+Nested elements in MDCCards are available to assistive technologies without additional 
+customization, however additional setup may be needed to accommodate special scenarios, 
+such as:
+
+#### Accessibility for Single Cards: Images 
+Images that have additional context beyond text that is already presented on the card.  
+For example, news article images can benefit from an 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+describing their content.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+articleImageView.isAccessibilityElement = true
+articleImageView.accessibilityLabel = "Event or scene description"
+```
+
+#### Objective-C
+```objc
+articleImageView.isAccessibilityElement = YES;
+articleImageView.accessibilityLabel = @"Event or scene description";
+```
+<!--</div>-->
+
+#### Accessibility for Single Cards: Star Rating
+Star or rating images should have an 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+describing its purpuse and an 
+[`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
+describing the rating value.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+ratingView.isAccessibilityElement = true
+ratingView.accessibilityLabel = "Average customer rating, out of " + 
+  "\(MDCProductRating.maximumValue) stars"
+ratingView.accessibilityValue = (String)product.averageRating
+```
+
+#### Objective-C
+```objc
+ratingView.isAccessibilityElement = YES;
+ratingView.accessibilityLabel = [NSString stringWithFormat:@"Average customer" +
+  " rating, out of %d stars", MDCProductRating.maximumValue];
+ratingView.accessibilityValue = @(product.averageRating).stringValue;
+```
+<!--</div>-->
+
+#### Accessibility for Single Cards: Reordering elements
+Primary content or actions that appear lower on the screen will be read last by assistive 
+technologies, sometimes after longer or non-primary content. To change the order, or group 
+elements together, you can make the card an accessibility container by adopting the 
+[`UIAccessibilityContainer`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) 
+protocol. Grouping and order is controlled by creating as many 
+[`UIAccessibilityElement`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) 
+elements as needed, and returning them in the desired order. 
+
+## Card
+
+`MDCCard` and `MDCCardCollectionCell` inherit from `UIControl` and `UICollectionViewCell`, respectively.
+
+* MDCCard
+  * [API documentation](https://material.io/develop/ios/components/cards/api-docs/Classes/MDCCard.html)
+  * [GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/Cards/src/MDCCard.h)
+
+* MDCCardCollectionCell
+  * [API documentation](https://material.io/develop/ios/components/cards/api-docs/Classes/MDCCardCollectionCell.html)
+  * [GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/Cards/src/MDCCardCollectionCell.h)
+
+### Card examples using MDCCard
+
+`MDCCard` can be used like a regular `UIView`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -159,11 +222,9 @@ UIImageView *imageView = [[UIImageView alloc] init];
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/typical-use-collections.md -->
+### Card examples using MDCCardCollectionCell
 
-### Typical use: in a collection view
-
-Use `MDCCardCollectionCell` as a base class for your custom collection view cell
+`MDCCardCollectionCell` can be used like a regular `UICollectionViewCell`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -210,25 +271,82 @@ func collectionView(_ collectionView: UICollectionView,
 ```
 <!--</div>-->
 
+### Anatomy and key properties
 
-## Extensions
+A card has a container and an optional thumbnail, header text, secondary text,
+media, supporting text, buttons and icons.
 
-<!-- Extracted from docs/theming.md -->
+![card anatomy diagram](docs/assets/card-anatomy.png)
 
-### Theming
+1.  Container
+2.  Thumbnail
+3.  Header text
+4.  Secondary text
+5.  Media
+6.  Supporting text
+7.  Buttons
+8.  Icons
+9.  Checked icon (not shown)
 
- `MDCCard` supports Material Theming using a Container Scheme.
-There are two variants for Material Theming of a MDCCard and MDCCardCollectionCell, which are the default theme
-and the outlined theme.
+_**Note:** All the optional elements of a card's content are implemented through the use of other views/components._
 
- <!--<div class="material-code-render" markdown="1">-->
+#### Container attributes for MDCCard
 
+&nbsp;               | Attribute                 | Related method(s)                                                   | Default value
+-------------------- | ------------------------- | ------------------------------------------------------------------- | -------------
+**Color**            | `backgroundColor`         | `-setBackgroundColor:`<br/>`backgroundColor:`                       | Surface color
+**Foreground color** | N/A                       | N/A                                                                 | N/A
+**Stroke color**     | `layer.borderColor`       | `-setBorderColor:forState:`<br/>`-borderColorForState:`             | On surface color at 37% opacity
+**Stroke width**     | `layer.borderWidth`       | `-setBorderWidth:forState:`<br/>`-borderWidthForState:`             | 1
+**Shape**            | `shapeGenerator`          | `-setShapeGenerator:`<br/>`-shapeGenerator`                         | `MDCRectangleShapeGenerator`
+**Elevation**        | N/A                       | `-setShadowElevation:forState:`<br/>`-shadowElevationForState:`     | 1
+**Ripple color**     | `rippleView.rippleColor`  | N/A                                                                 | `nil`
+
+#### Container attributes for MDCCardCollectionCell
+
+&nbsp;               | Attribute                 | Related method(s)                                                   | Default value
+-------------------- | ------------------------- | ------------------------------------------------------------------- | -------------
+**Color**            | `backgroundColor`         | `-setBackgroundColor:`<br/>`backgroundColor:`                       | Surface color
+**Foreground color** | N/A                       | N/A                                                                 | N/A
+**Stroke color**     | `layer.borderColor`       | `-setBorderColor:forState:`<br/>`-borderColorForState:`             | On surface color at 37% opacity
+**Stroke width**     | `layer.borderWidth`       | `-setBorderWidth:forState:`<br/>`-borderWidthForState:`             | 1
+**Shape**            | `shapeGenerator`          | `-setShapeGenerator:`<br/>`-shapeGenerator`                         | `MDCRectangleShapeGenerator`
+**Elevation**        | N/A                       | `-setShadowElevation:forState:`<br/>`-shadowElevationForState:`     | 1
+**Ripple color**     | `rippleView.rippleColor`  | N/A                                                                 | `nil`
+
+### Theming cards
+
+Cards supports Material Theming using a Container Scheme. MDCCard and MDCCardCollectionCell have both default and outlined theming methods. [Learn more about theming extensions](../../docs/theming.md). Below is a screenshot of an MDCCard with the Material Design Shrine theme:
+
+![Shrine card](docs/assets/shrine-card.png)
+
+### Cards theming example
+
+To make use of Cards theming install the Cards theming extensions with Cocoapods. First, add the following line to your `Podfile`.
+
+```bash
+pod MaterialComponents/Cards+Theming
+```
+
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then Run the installer.
+
+```bash
+pod install
+```
+
+Next, import the Cards theming target, and call the correct theming method.
+
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
-
 ```swift
-// Import the Cards Theming Extensions module
-import MaterialComponents.MaterialCards_MaterialTheming
- ...
+import MaterialComponents.MaterialCards
+import MaterialComponents.MaterialCards_Theming
+
+...
+ // Create a card
+let card = MDCCard()
  // Create or use your app's Container Scheme
 let containerScheme = MDCContainerScheme()
  // Theme the card with either default theme
@@ -238,11 +356,13 @@ card.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
 #### Objective-C
-
 ```objc
-// Import the Cards Theming Extensions header
-#import <MaterialComponents/MaterialCards+MaterialTheming.h>
- ...
+#import "MaterialCards.h"
+#import "MaterialCards+Theming.h"
+
+...
+ // Create a card
+MDCCard *card = [[MDCCard alloc] init];
  // Create or use your app's Container Scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
  // Theme the card with either default theme
@@ -250,99 +370,4 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
  // Or outlined theme
 [self.card applyOutlinedThemeWithScheme:containerScheme];
 ```
-
 <!--</div>-->
-
-
-## Accessibility
-
-<!-- Extracted from docs/accessibility.md -->
-
-### Card Accessibility
-
-To help ensure your cards are accessible to as many users as possible, please be sure to review the following 
-recommendations:
-
-#### Accessibility for Cards in a Collection
-
-Since assistive technologies visit all cards in a collection in a sequential order, it is often 
-easier to distinguish between elements that belong to different cards by aggregating all the 
-card's information so the card is read as a single sentence.  
-This can be done by setting an appropriate 
-[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
-for the card. Additionally, set the card's 
-[`isAccessibilityElement`](https://developer.apple.com/documentation/objectivec/nsobject/1615141-isaccessibilityelement) 
-to true. Cards are a container element and setting isAccessibiltyElement for a container 
-turns off individually selecting its subelements.
-
-##### Swift
-```swift
-  card.isAccessibilityElement = true
-  card.accessibilityLabel = "Location \(userLocation.name) is popular with users " +
-    "who enjoy \(userLocation.popularActivityMatchingUserProfile(userProfile))"
-```
-
-##### Objective-C
-```objc
-  card.isAccessibilityElement = YES;
-  card.accessibilityLabel = [NSString 
-    stringWithFormat:@"Location %@ is popular with users who enjoy %@",  
-    userLocation.name, 
-    userLocation.popularActivityMatchingUserProfile(userProfile)];
-```
-
-#### Accessibility for Single Cards
-
-Nested elements in MDCCards are available to assistive technologies without additional 
-customization, however additional setup may be needed to accommodate special scenarios, 
-such as:
-
-#### Accessibility for Single Cards: Images 
-Images that have additional context beyond text that is already presented on the card.  
-For example, news article images can benefit from an 
-[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
-describing their content.
-
-##### Swift
-```swift
-  articleImageView.isAccessibilityElement = true
-  articleImageView.accessibilityLabel = "Event or scene description"
-```
-
-##### Objective-C
-```objc
-  articleImageView.isAccessibilityElement = YES;
-  articleImageView.accessibilityLabel = @"Event or scene description";
-```
-
-#### Accessibility for Single Cards: Star Rating
-Star or rating images should have an 
-[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
-describing its purpuse and an 
-[`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
-describing the rating value.
-
-##### Swift
-```swift
-  ratingView.isAccessibilityElement = true
-  ratingView.accessibilityLabel = "Average customer rating, out of " + 
-    "\(MDCProductRating.maximumValue) stars"
-  ratingView.accessibilityValue = (String)product.averageRating
-```
-
-##### Objective-C
-```objc
-  ratingView.isAccessibilityElement = YES;
-  ratingView.accessibilityLabel = [NSString stringWithFormat:@"Average customer" +
-    " rating, out of %d stars", MDCProductRating.maximumValue];
-  ratingView.accessibilityValue = @(product.averageRating).stringValue;
-```
-
-#### Accessibility for Single Cards: Reordering elements
-Primary content or actions that appear lower on the screen will be read last by assistive 
-technologies, sometimes after longer or non-primary content. To change the order, or group 
-elements together, you can make the card an accessibility container by adopting the 
-[`UIAccessibilityContainer`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) 
-protocol. Grouping and order is controlled by creating as many 
-[`UIAccessibilityElement`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) 
-elements as needed, and returning them in the desired order. 
