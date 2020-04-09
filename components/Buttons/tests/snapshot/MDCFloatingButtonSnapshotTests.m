@@ -81,4 +81,80 @@
   [self generateSnapshotAndVerifyForView:button];
 }
 
+#pragma mark - Animated mode changes
+
+// This screenshot should identically match testModeToExpandedAnimated
+- (void)testModeFromNormalToExpandedImmediate {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [button setImage:buttonImage forState:UIControlStateNormal];
+
+  // When
+  [button setMode:MDCFloatingButtonModeExpanded animated:NO];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:button];
+}
+
+// This screenshot should identically match testModeToExpandedImmediate
+- (void)testModeFromNormalToExpandedAnimated {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [button setImage:buttonImage forState:UIControlStateNormal];
+
+  // When
+  button.layer.speed = 1000;
+  [button setMode:MDCFloatingButtonModeExpanded animated:YES];
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:button];
+}
+
+// This screenshot should identically match testModeFromExpandedToNormalAnimated
+- (void)testModeFromExpandedToNormalImmediate {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [button setImage:buttonImage forState:UIControlStateNormal];
+  [button setMode:MDCFloatingButtonModeExpanded animated:NO];
+
+  // When
+  [button setMode:MDCFloatingButtonModeNormal animated:NO];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:button];
+}
+
+// This screenshot should identically match testModeFromExpandedToNormalImmediate
+- (void)testModeFromExpandedToNormalAnimated {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [button setImage:buttonImage forState:UIControlStateNormal];
+  [button setMode:MDCFloatingButtonModeExpanded animated:NO];
+
+  // When
+  button.layer.speed = 1000;
+  [button setMode:MDCFloatingButtonModeNormal animated:YES];
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:button];
+}
+
 @end
