@@ -3,11 +3,9 @@ title: Buttons
 layout: detail
 section: components
 excerpt: "iOS Buttons"
-ide_version: "<cIDE name> <compatible IDE version and build number>"
-material_package_version: "<compatible Material platform package version number>"
 iconId:
-path: /catalog/buttons
-api_doc_root:
+path: /catalog/buttons/
+api_doc_root: true
 -->
 
 # Buttons
@@ -32,41 +30,40 @@ All Material buttons are implemented by `MDCButton`, a subclass of [UIButton](ht
 
 ### Install `MDCButton`
 
-`MDCButton` is used to implement all four Material Buttons. In order to use `MCDButton`, do the following:
+`MDCButton` is used to implement all four Material Buttons. In order to use `MCDButton`, first add Buttons to your `Podfile`:
 
-1. Install with Cocoapods
-    Add the following line to your `Podfile`:
+```bash
+pod MaterialComponents/Buttons
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
-    ```
-    pod MaterialComponents/Buttons
-    ```
-    <!--{: .code-renderer.code-renderer--install }-->
-    
-    Run the installer:
-    
-    ```
-    pod install
-    ```
+Then, run the installer.
 
-1. Import the Buttons and initialize them using `alloc`/`init`.
+```bash
+pod install
+```
 
-    <!--<div class="material-code-render" markdown="1">-->
-    #### Objective-C
-    ```objc
-    #import "MaterialButtons.h"
-    #import <MaterialComponents/MaterialButtons+Theming.h>
+After that, import the Buttons and initialize them using `alloc`/`init`.
 
-    MDCButton *button = [[MDCButton alloc] init];
-    ```
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 
-    #### Swift
-    ```swift
-    import MaterialComponents.MaterialButtons
-    import MaterialComponents.MaterialButtons_Theming
+let button = MDCButton()
+```
 
-    let button = MDCButton()
-    ```
-    <!--</div>-->
+#### Objective-C
+
+```objc
+#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons+Theming.h>
+
+MDCButton *button = [[MDCButton alloc] init];
+```
+<!--</div>-->
+
 
 ### Making Buttons accessible
 
@@ -81,14 +78,14 @@ value if your button does not have a title. This is often the case with Floating
 Action Button instances which typically only have an icon.
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Objective-C
-```objc
-button.accessibilityLabel = @"Create";
-```
-
-##### Swift
+#### Swift
 ```swift
 button.accessibilityLabel = "Create"
+```
+
+#### Objective-C
+```objc
+button.accessibilityLabel = @"Create";
 ```
 <!--</div>-->
 
@@ -112,14 +109,7 @@ targets](https://material.io/design/layout/spacing-methods.html#touch-click-targ
 in the spec.
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Objective-C
-```objc
-CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
-CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
-button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
-```
-
-##### Swift
+#### Swift
 ```swift
 let buttonVerticalInset =
 min(0, -(kMinimumAccessibleButtonSize.height - button.bounds.height) / 2);
@@ -128,6 +118,13 @@ min(0, -(kMinimumAccessibleButtonSize.width - button.bounds.width) / 2);
 button.hitAreaInsets =
 UIEdgeInsetsMake(buttonVerticalInset, buttonHorizontalInset,
 buttonVerticalInset, buttonHorizontalInset);
+```
+
+#### Objective-C
+```objc
+CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
+CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
+button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 ```
 <!--</div>-->
 
@@ -139,14 +136,14 @@ typically recommend [a minimum height of 36 points and a minimum width of 64
 points](https://material.io/design/components/buttons.html#specs).
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Objective-C
-```objc
-button.minimumSize = CGSizeMake(64, 36);
-```
-
-##### Swift
+#### Swift
 ```swift
 button.minimumSize = CGSize(width: 64, height: 48)
+```
+
+#### Objective-C
+```objc
+button.minimumSize = CGSizeMake(64, 36);
 ```
 <!--</div>-->
 
@@ -193,6 +190,7 @@ To use a text button use the text button theming method on the MDCButton theming
 ```
 
 #### Swift
+
 ```swift
 button.applyTextTheme(withScheme: containerScheme)
 ```
@@ -249,6 +247,7 @@ To achieve an outlined button use the outlined button theming method on the MDCB
 ```
 
 #### Swift
+
 ```swift
 button.applyOutlinedTheme(withScheme: containerScheme)
 ```
@@ -305,6 +304,7 @@ Contained buttons are implemented by [MDCButton](https://material.io/develop/ios
 ```
 
 #### Swift
+
 ```swift
 button.applyContainedTheme(withScheme: containerScheme)
 ```
@@ -353,44 +353,43 @@ A contained button has a text label, a container, and an optional icon.
 You can theme an MDCButton to match any of the Material Button styles using theming
 extensions. [Learn more about theming extensions](../../../docs/theming.md). Below is a screenshot of Material Buttons with the Material Design Shrine theme:
 
-![Shrine buttons](assets/shrine_buttons.png)
+![Shrine buttons](assets/shrine-buttons.png)
 
 ### Buttons theming example
 
-To make use of the theming methods shown in the examples above do the following:
+To make use of the theming methods shown in the examples above install the Buttons theming extensions with Cocoapods. First, add the following line to your `Podfile`.
 
-1. Install the theming extensions with Cocoapods
-    Add the following line to your `Podfile`:
+```bash
+pod MaterialComponents/Buttons+Theming
+```
 
-    ```
-    pod MaterialComponents/Buttons+Theming
-    ```
-    <!--{: .code-renderer.code-renderer--install }-->
-    
-    Run the installer:
-    
-    ```
-    pod install
-    ```
+<!--{: .code-renderer.code-renderer--install }-->
 
-1. Import the Buttons theming target
+Then Run the installer.
 
-    <!--<div class="material-code-render" markdown="1">-->
-    #### Objective-C
-    ```objc
-    #import "MaterialButtons.h"
-    #import "MaterialButtons+Theming.h"
+```bash
+pod install
+```
 
-    MDCButton *button = [[MDCButton alloc] init];
-    ```
+Next, import the Buttons theming target and initialize a button.
 
-    #### Swift
-    ```swift
-    import MaterialComponents.MaterialButtons
-    import MaterialComponents.MaterialButtons_Theming
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 
-    let button = MDCButton()
-    ```
-    <!--</div>-->
+let button = MDCButton()
+```
+
+#### Objective-C
+```objc
+#import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
+
+MDCButton *button = [[MDCButton alloc] init];
+```
+
+<!--</div>-->
 
 From there, use the theming methods from the examples to achieve your preferred button style.
