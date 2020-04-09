@@ -66,4 +66,19 @@
   [self generateSnapshotAndVerifyForView:button];
 }
 
+// TODO(b/153576427): The label should be hidden in this test, but it is not.
+- (void)testNormalModeWithTitleLabelDoesNotShowLabel {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [button setImage:buttonImage forState:UIControlStateNormal];
+  button.mode = MDCFloatingButtonModeNormal;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:button];
+}
+
 @end
