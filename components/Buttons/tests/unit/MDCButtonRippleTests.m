@@ -25,13 +25,13 @@
 /**
  This class confirms behavior of @c MDCButton when used with @c MDCStatefulRippleView.
  */
-@interface ButtonRippleTests : XCTestCase
+@interface MDCButtonRippleTests : XCTestCase
 
 @property(nonatomic, strong, nullable) MDCButton *button;
 
 @end
 
-@implementation ButtonRippleTests
+@implementation MDCButtonRippleTests
 
 - (void)setUp {
   [super setUp];

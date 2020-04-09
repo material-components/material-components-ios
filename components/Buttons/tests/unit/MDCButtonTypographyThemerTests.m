@@ -17,10 +17,10 @@
 #import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
 
-@interface ButtonTypographyThemerTests : XCTestCase
+@interface MDCButtonTypographyThemerTests : XCTestCase
 @end
 
-@implementation ButtonTypographyThemerTests
+@implementation MDCButtonTypographyThemerTests
 
 - (void)testButtonTypographyThemer {
   // Given

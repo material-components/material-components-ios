@@ -17,11 +17,11 @@
 
 #import "supplemental/ButtonTestView.h"
 
-@interface ButtonInterfaceBuilderCompatibilityTests : XCTestCase
+@interface MDCButtonInterfaceBuilderCompatibilityTests : XCTestCase
 
 @end
 
-@implementation ButtonInterfaceBuilderCompatibilityTests
+@implementation MDCButtonInterfaceBuilderCompatibilityTests
 
 - (void)testFontRestoredFromNib {
   // Given
