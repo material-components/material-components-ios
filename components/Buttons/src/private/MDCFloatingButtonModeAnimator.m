@@ -147,7 +147,7 @@ static NSString *const kModeVerticalDriftAnimationKey = @"position.y.fix";
         if (titleLabelCleanup) {
           titleLabelCleanup(finished);
         }
-        _titleLabelContainerView.clipsToBounds = NO;
+        self.titleLabelContainerView.clipsToBounds = NO;
         if (completion) {
           completion(finished);
         }
