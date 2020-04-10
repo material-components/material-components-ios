@@ -336,4 +336,41 @@
   XCTAssertTrue(cell.showsDivider);
 }
 
+- (void)testPointerInteractionsOnTheCellByDefault {
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    // Given
+    MDCActionSheetItemTableViewCell *cell =
+        [[MDCActionSheetItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                               reuseIdentifier:@"Foo"];
+
+    // Then
+    XCTAssertEqual(cell.contentView.interactions.count, 1);
+    XCTAssertTrue(
+        [cell.contentView.interactions.firstObject isKindOfClass:[UIPointerInteraction class]]);
+  }
+#endif
+}
+
+- (void)testPointerInteractionsOnTheCellWithActionIsAdded {
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    // Given
+    MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                   image:nil
+                                                                 handler:nil];
+
+    // When
+    [self.actionSheet addAction:action];
+
+    // Then
+    MDCActionSheetItemTableViewCell *cell =
+        [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+    XCTAssertEqual(cell.contentView.interactions.count, 1);
+    XCTAssertTrue(
+        [cell.contentView.interactions.firstObject isKindOfClass:[UIPointerInteraction class]]);
+  }
+#endif
+}
+
 @end
