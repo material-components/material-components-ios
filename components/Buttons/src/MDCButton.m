@@ -225,6 +225,20 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (_uppercaseTitle) {
     [self updateTitleCase];
   }
+
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    UIButtonPointerStyleProvider buttonPointerStyleProvider = ^UIPointerStyle *(
+        UIButton *buttonToStyle, UIPointerEffect *proposedEffect, UIPointerShape *proposedShape) {
+      UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:buttonToStyle];
+      UIPointerEffect *highlightEffect =
+          [UIPointerHighlightEffect effectWithPreview:targetedPreview];
+      return [UIPointerStyle styleWithEffect:highlightEffect shape:nil];
+    };
+    self.pointerStyleProvider = buttonPointerStyleProvider;
+    self.pointerInteractionEnabled = NO;
+  }
+#endif
 }
 
 - (void)dealloc {
