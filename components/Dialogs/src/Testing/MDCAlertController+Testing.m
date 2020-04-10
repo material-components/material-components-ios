@@ -1,0 +1,47 @@
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#import "MDCAlertController+Customize.h"
+#import "MDCAlertController+Testing.h"
+#import "MDCAlertControllerView+Private.h"
+
+@implementation MDCAlertController (Testing)
+
+- (void)sizeToFitContentInBounds:(CGSize)bounds {
+  CGRect viewBounds = self.view.bounds;
+  viewBounds.size = bounds;
+  self.view.bounds = viewBounds;
+  [self sizeToBounds:bounds];
+  [self.view layoutIfNeeded];
+}
+
+- (void)sizeToBounds:(CGSize)bounds {
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.view;
+  CGSize preferredSize = [alertView calculatePreferredContentSizeForBounds:bounds];
+  alertView.bounds = CGRectMake(0.f, 0.f, preferredSize.width, preferredSize.height);
+}
+
+- (void)highlightAlertPanels {
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.view;
+  alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
+  alertView.titleLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
+  alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.1f];
+  alertView.messageLabel.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.2f];
+  alertView.actionsScrollView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:.2f];
+
+  self.titleIconImageView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
+  self.titleIconView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.3f];
+}
+
+@end
