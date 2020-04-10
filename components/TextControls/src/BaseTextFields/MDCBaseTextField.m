@@ -159,6 +159,10 @@
     [self invalidateIntrinsicContentSize];
   }
   self.textControlState = [self determineCurrentTextControlState];
+  if (self.characterMax > 0) {
+    self.trailingAssistiveLabel.text =
+        [self determineTrailingAssistiveLabelTextWithCharacterMax:self.characterMax];
+  }
   self.labelPosition = [self determineCurrentLabelPosition];
   MDCTextControlColorViewModel *colorViewModel =
       [self textControlColorViewModelForState:self.textControlState];
@@ -166,6 +170,26 @@
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
   self.labelFrame = [self.layout labelFrameWithLabelPosition:self.labelPosition];
+}
+
+- (NSString *)determineTrailingAssistiveLabelTextWithCharacterMax:(NSInteger)characterMax {
+  NSNumber *characterMaxNsNumber = @(characterMax);
+  NSNumber *characterCountNsNumber = @(self.text.length);
+  NSString *formattedString =
+      [NSString stringWithFormat:@"%@ / %@", characterCountNsNumber, characterMaxNsNumber];
+  return formattedString;
+}
+
+- (void)setCharacterMax:(NSInteger)characterMax {
+  BOOL characterMaxWasPositive = _characterMax > 0;
+  _characterMax = characterMax;
+  BOOL characterMaxIsNowPositive = _characterMax > 0;
+  BOOL shouldResetTrailingAssistiveLabelText =
+      characterMaxWasPositive && !characterMaxIsNowPositive;
+  if (shouldResetTrailingAssistiveLabelText) {
+    self.trailingAssistiveLabel.text = nil;
+  }
+  [self setNeedsLayout];
 }
 
 - (void)postLayoutSubviews {

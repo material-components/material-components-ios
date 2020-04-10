@@ -48,6 +48,15 @@
 @property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
 
 /**
+ Setting the @c characterMax to a non-zero value results in the @c trailingAssistiveLabel displaying
+ the current number of characters as a fraction of the @c characterMax. When @c characterMax is
+ changed from a non-zero value to a value less than or equal to 0 @c trailingAssistiveLabel.text
+ stops getting updated. The @c trailingAssistiveLabel.text must be manually changed to something
+ else.
+ */
+@property(nonatomic, assign) NSInteger characterMax;
+
+/**
  This is an RTL-aware wrapper around UITextField's leftView/rightView class.
  */
 @property(strong, nonatomic, nullable) UIView *leadingView;
