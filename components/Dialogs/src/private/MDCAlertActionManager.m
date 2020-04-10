@@ -91,6 +91,11 @@
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
   [button setTitle:action.title forState:UIControlStateNormal];
   button.accessibilityIdentifier = action.accessibilityIdentifier;
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    button.pointerInteractionEnabled = YES;
+  }
+#endif
   [button addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
   return button;
 }

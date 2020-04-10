@@ -971,4 +971,20 @@ than @c UIContentSizeCategoryLarge.
   XCTAssertFalse(blockCalled);
 }
 
+- (void)testPointerInteractionsOnAlertControllerWithActionIsAdded {
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    // When
+    [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+
+    // Then
+    MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+    for (UIButton *button in view.actionManager.buttonsInActionOrder) {
+      XCTAssertTrue(button.isPointerInteractionEnabled);
+      XCTAssertEqual(button.interactions.count, 1);
+    }
+  }
+#endif
+}
+
 @end
