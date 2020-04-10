@@ -17,8 +17,8 @@
 #import "MaterialSnapshot.h"
 
 #import "MaterialDialogs.h"
+#import "MDCAlertController+Testing.h"
 #import "MaterialDialogs+Theming.h"
-#import "MDCAlertControllerView+Private.h"
 #import "MaterialTextFields.h"
 #import "MaterialContainerScheme.h"
 
@@ -41,8 +41,6 @@ static NSString *const kCellId = @"cellId";
   self.alert = [MDCAlertController alertControllerWithTitle:@"Title" message:nil];
   [self addOutlinedActionWithTitle:@"OK"];
 
-  self.alert.view.bounds = CGRectMake(0.f, 0.f, 300.f, 300.f);
-
   self.containerScheme = [[MDCContainerScheme alloc] init];
   self.containerScheme.colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
@@ -59,16 +57,6 @@ static NSString *const kCellId = @"cellId";
 
 #pragma mark - Helpers
 
-- (void)sizeAlertToFitContentForAlert:(MDCAlertController *)alert {
-  // Ensure snapshot view size resembles actual runtime size of the alert. This is the closest
-  // simulation to how an actual dialog will be sized on a screen. The dialog layouts itself with
-  // final size when calculatePreferredContentSizeForBounds: is called - after all the dialog
-  // configuration is complete.
-  MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
-  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:alertView.bounds.size];
-  alertView.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
-}
-
 - (void)addOutlinedActionWithTitle:(NSString *)actionTitle {
   [self.alert addAction:[MDCAlertAction actionWithTitle:actionTitle
                                                emphasis:MDCActionEmphasisMedium
@@ -76,9 +64,9 @@ static NSString *const kCellId = @"cellId";
 }
 
 - (void)generateSizedSnapshotAndVerifyForAlert:(MDCAlertController *)alert {
-  [self sizeAlertToFitContentForAlert:alert];
-  [self highlightSectionsForAlert:self.alert];
-  [self generateSnapshotAndVerifyForView:self.alert.view];
+  [alert sizeToFitContentInBounds:CGSizeMake(300.0f, 300.0f)];
+  [alert highlightAlertPanels];
+  [self generateSnapshotAndVerifyForView:alert.view];
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -90,15 +78,6 @@ static NSString *const kCellId = @"cellId";
 
 - (void)changeToRTL:(MDCAlertController *)alert {
   [self changeViewToRTL:alert.view];
-}
-
-- (void)highlightSectionsForAlert:(MDCAlertController *)alert {
-  MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
-  alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
-  alertView.titleLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
-  alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.1f];
-  alertView.messageLabel.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.2f];
-  alertView.actionsScrollView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:.2f];
 }
 
 #pragma mark - Tests
@@ -117,7 +96,6 @@ static NSString *const kCellId = @"cellId";
 }
 
 - (void)testAlertHasCollectionViewAccessory {
-  // Given
   // Given
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
   CGRect frame = CGRectMake(0.0f, 0.0f, 320.0f, 160.0f);
