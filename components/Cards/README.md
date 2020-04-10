@@ -15,7 +15,7 @@ api_doc_root: true
 [Cards](https://material.io/components/cards/) contain content and actions about
 a single subject.
 
-![Basic card](docs/assets/cards.png)
+![Basic card](docs/assets/card-hero.png)
 
 ## Using cards
 
