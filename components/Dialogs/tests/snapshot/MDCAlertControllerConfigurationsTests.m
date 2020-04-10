@@ -16,8 +16,8 @@
 
 #import "MDCAlertController+Customize.h"
 #import "MaterialDialogs.h"
+#import "MDCAlertController+Testing.h"
 #import "MaterialDialogs+Theming.h"
-#import "MDCAlertControllerView+Private.h"
 #import "MaterialContainerScheme.h"
 
 static NSString *const kTitleShortLatin = @"Title";
@@ -68,8 +68,6 @@ static NSString *const kMessageVeryLongLatin =
   self.alertController = [MDCAlertController alertControllerWithTitle:nil message:nil];
   [self addOutlinedActionWithTitle:@"OK"];
 
-  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 300.f);
-
   self.titleIcon = [[UIImage mdc_testImageOfSize:CGSizeMake(24.f, 24.f)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.titleImage = [[UIImage mdc_testImageOfSize:CGSizeMake(180.f, 120.f)]
@@ -94,16 +92,6 @@ static NSString *const kMessageVeryLongLatin =
 
 #pragma mark - Helpers
 
-- (void)sizeAlertToFitContent {
-  // Ensure snapshot view size resembles actual runtime size of the alert. This is the closest
-  // simulation to how an actual dialog will be sized on a screen. The dialog layouts itself with
-  // final size when calculatePreferredContentSizeForBounds: is called - after all the dialog
-  // configuration is complete.
-  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
-  CGSize bounds = [alertView calculatePreferredContentSizeForBounds:alertView.bounds.size];
-  alertView.bounds = CGRectMake(0.f, 0.f, bounds.width, bounds.height);
-}
-
 - (void)addOutlinedActionWithTitle:(NSString *)actionTitle {
   [self.alertController addAction:[MDCAlertAction actionWithTitle:actionTitle
                                                          emphasis:MDCActionEmphasisMedium
@@ -111,20 +99,13 @@ static NSString *const kMessageVeryLongLatin =
 }
 
 - (void)generateHighlightedSnapshotAndVerifyForAlert:(MDCAlertController *)alert {
-  MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
-  alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
-  alert.titleIconImageView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
-  alert.titleIconView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.3f];
-  alertView.titleLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
-  alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.1f];
-  alertView.messageLabel.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.2f];
-  alertView.actionsScrollView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:.2f];
-  [self generateSizedSnapshotAndVerifyForView:alertView];
+  [alert highlightAlertPanels];
+  [self generateSizedSnapshotAndVerifyForAlert:alert];
 }
 
-- (void)generateSizedSnapshotAndVerifyForView:(UIView *)view {
-  [self sizeAlertToFitContent];
-  [self generateSnapshotAndVerifyForView:view];
+- (void)generateSizedSnapshotAndVerifyForAlert:(MDCAlertController *)alert {
+  [alert sizeToFitContentInBounds:CGSizeMake(300.0f, 300.0f)];
+  [self generateSnapshotAndVerifyForView:alert.view];
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -182,7 +163,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-icon + actions
@@ -194,7 +175,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-image + actions
@@ -207,7 +188,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message + actions
@@ -219,7 +200,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // accessory-view + actions
@@ -232,7 +213,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-icon + message + actions
@@ -246,7 +227,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-image + message + actions
@@ -260,7 +241,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-icon + accessory-view + actions
@@ -273,7 +254,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-image + accessory-view + actions
@@ -287,7 +268,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message + accessory-view + actions
@@ -300,7 +281,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title + accessory-view + actions
@@ -314,7 +295,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title + title-icon + accessory-view + actions
@@ -328,7 +309,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title + title-image + accessory-view + actions
@@ -344,7 +325,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title + title-icon + message + accessory-view + actions
@@ -360,7 +341,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title + title-image + message + accessory-view + actions
@@ -375,7 +356,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title-image + vertical actions
@@ -407,10 +388,8 @@ static NSString *const kMessageVeryLongLatin =
 
   // Then
   // Ensure enough vertical space for all buttons before layout, then size to fit content.
-  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 500.f);
-  [self.alertController.view layoutIfNeeded];
-  [self sizeAlertToFitContent];
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self.alertController sizeToFitContentInBounds:CGSizeMake(300.0f, 500.0f)];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 // accessory-view + actions in RTL
@@ -423,7 +402,7 @@ static NSString *const kMessageVeryLongLatin =
   [self changeToRTL:self.alertController];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // title + title-icon + message + accessory-view + actions in RTL
@@ -440,7 +419,7 @@ static NSString *const kMessageVeryLongLatin =
   [self changeToRTL:self.alertController];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Use Cases Tests
@@ -458,7 +437,7 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Message Alignment Tests
@@ -468,7 +447,7 @@ static NSString *const kMessageVeryLongLatin =
   // Given
   self.alertController.message = kMessageLongLatin;
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: center
@@ -481,7 +460,7 @@ static NSString *const kMessageVeryLongLatin =
   self.alertController.messageAlignment = NSTextAlignmentCenter;
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: natural
@@ -509,7 +488,7 @@ static NSString *const kMessageVeryLongLatin =
   [self changeToRTL:self.alertController];
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: right
@@ -522,7 +501,7 @@ static NSString *const kMessageVeryLongLatin =
   self.alertController.messageAlignment = NSTextAlignmentRight;
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 // message alignment: right in RTL
@@ -595,7 +574,7 @@ static NSString *const kMessageVeryLongLatin =
   self.alertController.messageAlignment = NSTextAlignmentJustified;
 
   // Then
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Title Icon View Tests
@@ -932,8 +911,7 @@ static NSString *const kMessageVeryLongLatin =
   // When
   self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   // Recalculate layout and adjust the snapshot size to fit the new dialog size.
-  [self sizeAlertToFitContent];
-  [self.alertController.view layoutIfNeeded];
+  [self.alertController sizeToFitContentInBounds:CGSizeMake(300.0f, 300.0f)];
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
@@ -949,8 +927,7 @@ static NSString *const kMessageVeryLongLatin =
   // When
   self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   // Recalculate layout and adjust the snapshot size to fit the new dialog size.
-  [self sizeAlertToFitContent];
-  [self.alertController.view layoutIfNeeded];
+  [self.alertController sizeToFitContentInBounds:CGSizeMake(300.0f, 300.0f)];
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];
@@ -966,10 +943,8 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 100.f, 100.f);
-  [self.alertController.view layoutIfNeeded];
-  [self sizeAlertToFitContent];
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self.alertController sizeToFitContentInBounds:CGSizeMake(100.0f, 100.0f)];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 // Max size message
@@ -983,10 +958,8 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 1000.f, 1000.f);
-  [self.alertController.view layoutIfNeeded];
-  [self sizeAlertToFitContent];
-  [self generateSizedSnapshotAndVerifyForView:self.alertController.view];
+  [self.alertController sizeToFitContentInBounds:CGSizeMake(1000.0f, 1000.0f)];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 @end
