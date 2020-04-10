@@ -21,7 +21,12 @@
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
 @property(nonatomic, nonnull, strong) UILabel *messageLabel;
+
+/** An optional custom UIView that is displaed under the alert message. */
 @property(nonatomic, nullable, strong) UIView *accessoryView;
+
+/** An optional custom view above the title of the alert. */
+@property(nonatomic, strong, nullable) UIView *titleIconView;
 
 @property(nonatomic, nullable, weak) MDCAlertActionManager *actionManager;
 
@@ -39,6 +44,12 @@
 
 /** The horizontal alignment of @c titleIcon. */
 @property(nonatomic, assign) NSTextAlignment titleIconAlignment;
+
+/** The horizontal alignment of @c title. */
+@property(nonatomic, assign) NSTextAlignment titleAlignment;
+
+/** The horizontal alignment of @c message. */
+@property(nonatomic, assign) NSTextAlignment messageAlignment;
 
 /** The alert actions alignment in horizontal layout. */
 @property(nonatomic, assign) MDCContentHorizontalAlignment actionsHorizontalAlignment;
