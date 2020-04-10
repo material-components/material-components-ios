@@ -14,10 +14,11 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MaterialDialogs.h"
+#import "MDCAlertController+Testing.h"
+#import "MaterialDialogs+Theming.h"
 #import "MDCAlertControllerView+Private.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialDialogs+Theming.h"
-#import "MaterialDialogs.h"
 
 static NSString *const kTitleShortLatin = @"Short Title";
 static NSString *const kTitleLongLatin = @"Lorem ipsum dolor sit amet";
@@ -35,8 +36,6 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
 @property(nonatomic, assign) CGFloat alertWidth;
 @end
 
-// TODO: Test RTL using:  [self changeToRTL:self.alertController];
-
 @implementation MDCAlertControllerInsetsTests
 
 - (void)setUp {
@@ -50,7 +49,6 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
                                                               message:kMessageMediumLatin];
   self.alertView = (MDCAlertControllerView *)self.alertController.view;
   self.alertWidth = 300.f;
-  self.alertView.bounds = CGRectMake(0, 0, self.alertWidth, self.alertWidth);
 
   [self addOKAction];
   [self addCancelAction];
@@ -78,10 +76,12 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [super tearDown];
 }
 
+- (void)generateSizedSnapshotAndVerifyForAlert:(MDCAlertController *)alert {
+  [alert sizeToFitContentInBounds:CGSizeMake(self.alertWidth, self.alertWidth)];
+  [self generateSnapshotAndVerifyForView:alert.view];
+}
+
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  CGRect bounds = self.alertView.bounds;
-  bounds.size = [self.alertView calculatePreferredContentSizeForBounds:bounds.size];
-  self.alertView.bounds = CGRectMake(0.f, 0.f, bounds.size.width, bounds.size.height);
   [self setElementsBackgroundColors];
   [view layoutIfNeeded];
 
@@ -99,7 +99,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   // Given
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testDefaultAlertTitleImageHasDefaultInsets {
@@ -111,7 +111,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testDefaultAlertNoContentHasDefaultInsets {
@@ -120,7 +120,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testDefaultAlertNoTitleHasDefaultInsets {
@@ -129,7 +129,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testDefaultAlertAccessoryHasDefaultInsets {
@@ -139,7 +139,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testDefaultAlertContentAndAccessoryHaveDefaultInsets {
@@ -148,19 +148,16 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Custom insets
 
-// Attempting to reproduce issue in cl/300827008 -
-// https://drive.google.com/file/d/1w4wrrSMbG3E3C9qwfMfMZL_RHDbXkyjq/view
 - (void)testAlertTitleImageHasNoInsets {
   // Given
   self.alertController = [MDCAlertController alertControllerWithTitle:kTitleShortLatin
                                                               message:kMessageMediumLatin];
   self.alertView = (MDCAlertControllerView *)self.alertController.view;
-  self.alertView.bounds = CGRectMake(0, 0, self.alertWidth, self.alertWidth);
 
   [self addActionWithTitle:@"Extra Long Action Label"];
   [self addActionWithTitle:@"Another Long Action Label"];
@@ -175,7 +172,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.titleIconInsets = UIEdgeInsetsMake(0.f, 0.f, 20.f, 0.f);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertHasCustomInsets {
@@ -189,7 +186,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.actionsInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Custom title view insets
@@ -202,7 +199,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.titleInsets = UIEdgeInsetsMake(12.f, 12.f, 12.f, 12.f);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertTitleIconHasDefaultInsets {
@@ -210,7 +207,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertController.titleIcon = self.titleIcon;
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertTitleIconHasCustomInsets {
@@ -222,7 +219,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.titleIconInsets = UIEdgeInsetsMake(12.f, 12.f, 20.f, 12.f);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertTitleIconTitleZeroInsets {
@@ -235,7 +232,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.titleInsets = UIEdgeInsetsZero;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertTitleIconInsetsOverrideTitleInsets {
@@ -248,7 +245,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.titleInsets = UIEdgeInsetsMake(12.f, 12.f, 12.f, 12.f);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertTitleImageTitleZeroInsets {
@@ -263,7 +260,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.titleInsets = UIEdgeInsetsZero;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Custom content insets
@@ -276,7 +273,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.contentInsets = UIEdgeInsetsZero;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertContentHasCustomInsets {
@@ -287,7 +284,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.contentInsets = UIEdgeInsetsMake(30.f, 10.f, 10.f, 10.f);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertContentAccessoryHaveCustomInsets {
@@ -300,7 +297,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.accessoryViewVerticalInset = 0.f;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Custom actions insets
@@ -314,7 +311,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.actionsHorizontalMargin = 0.f;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertActionsHaveCustomInsets {
@@ -326,7 +323,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.actionsHorizontalMargin = 20.f;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertActionsHaveCenteredCustomInsets {
@@ -339,7 +336,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.actionsHorizontalMargin = 12.f;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertActionsHaveJustifiedCustomInsets {
@@ -354,7 +351,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.actionsHorizontalMargin = 20.f;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertActionsHaveVerticalCustomInsets {
@@ -368,7 +365,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.actionsVerticalMargin = 1.f;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 - (void)testAlertActionsHaveJustifiedVerticalCustomInsets {
@@ -385,7 +382,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.actionsVerticalMargin = 6.f;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertView];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 #pragma mark - Helpers
