@@ -259,9 +259,8 @@ func collectionView(_ collectionView: UICollectionView,
   // If you wanted to have the card show the selected state when tapped
   // then you need to turn selectable to true, otherwise the default is false.
   [cell setSelectable:YES];
-  
-  [cell setSelectedImageTintColor:[UIColor blueColor]];
   [cell setCornerRadius:8];
+  return cell;
 }
 ```
 <!--</div>-->
