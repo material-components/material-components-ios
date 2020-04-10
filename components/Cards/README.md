@@ -198,33 +198,34 @@ elements as needed, and returning them in the desired order.
 
 ### Card examples using MDCCard
 
-`MDCCard` can be used like a regular `UIView`.
+`MDCCard` can be used like a regular `UIView`. This is an example of a regular card:
+
+![single basic card](docs/assets/single-basic-card.png)
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-let card = MDCCard()
-
-// Create, position, and add content views:
-let imageView = UIImageView()
-card.addSubview(imageView)
+let card = MDCCard(frame: CGRect(x: 30, y: 100, width: 150, height: 150))
+card.applyTheme(withScheme: containerScheme)
+view.addSubview(card)
 ```
 
 #### Objective-C
 
 ```objc
-MDCCard *card = [[MDCCard alloc] init];
-
-// Create, position, and add content views:
-UIImageView *imageView = [[UIImageView alloc] init];
-[card addSubview:imageView];
+MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(30, 100, 150, 150)];
+[card applyThemeWithScheme:containerScheme];
+[view addSubview:card];
 ```
+
 <!--</div>-->
 
 ### Card examples using MDCCardCollectionCell
 
-`MDCCardCollectionCell` can be used like a regular `UICollectionViewCell`.
+`MDCCardCollectionCell` can be used like a regular `UICollectionViewCell`. This is an example of `MDCCardCollectionCell`s in a collection:
+
+![card collection cells](docs/assets/card-collection-cells.png)
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -239,11 +240,7 @@ func collectionView(_ collectionView: UICollectionView,
   // If you wanted to have the card show the selected state when tapped
   // then you need to turn isSelectable to true, otherwise the default is false.
   cell.isSelectable = true
-  
-  cell.selectedImageTintColor = .blue
   cell.cornerRadius = 8
-  cell.setShadowElevation(6, for: .selected)
-  cell.setShadowColor(UIColor.black, for: .highlighted)
   return cell
 }
 ```
@@ -265,8 +262,6 @@ func collectionView(_ collectionView: UICollectionView,
   
   [cell setSelectedImageTintColor:[UIColor blueColor]];
   [cell setCornerRadius:8];
-  [cell setShadowElevation:6 forState:MDCCardCellStateSelected];
-  [cell setShadowColor:[UIColor blackColor] forState:MDCCardCellStateHighlighted];
 }
 ```
 <!--</div>-->
