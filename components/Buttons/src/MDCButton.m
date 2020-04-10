@@ -228,14 +228,21 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #ifdef __IPHONE_13_4
   if (@available(iOS 13.4, *)) {
+    __weak typeof(self) weakSelf = self;
     UIButtonPointerStyleProvider buttonPointerStyleProvider = ^UIPointerStyle *(
         UIButton *buttonToStyle, UIPointerEffect *proposedEffect, UIPointerShape *proposedShape) {
-      UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:buttonToStyle];
-      UIPointerEffect *highlightEffect =
-          [UIPointerHighlightEffect effectWithPreview:targetedPreview];
-      return [UIPointerStyle styleWithEffect:highlightEffect shape:nil];
+      typeof(weakSelf) strongSelf = weakSelf;
+      if (!strongSelf) {
+        return [UIPointerStyle styleWithEffect:proposedEffect shape:proposedShape];
+      }
+      CGPathRef boundingCGPath = [strongSelf boundingPath].CGPath;
+      UIBezierPath *boundingBezierPath = [UIBezierPath bezierPathWithCGPath:boundingCGPath];
+      UIPointerShape *shape = [UIPointerShape shapeWithPath:boundingBezierPath];
+      return [UIPointerStyle styleWithEffect:proposedEffect shape:shape];
     };
     self.pointerStyleProvider = buttonPointerStyleProvider;
+    // Setting the pointerStyleProvider to a non-nil value flips pointerInteractionEnabled to YES.
+    // To maintain parity with UIButton's default behavior, we want it to default to NO.
     self.pointerInteractionEnabled = NO;
   }
 #endif
