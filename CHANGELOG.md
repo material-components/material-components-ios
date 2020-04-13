@@ -1,15 +1,22 @@
-# #develop#
+# 108.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release improves our support of the new iPadOS cursor APIs, deprecates a themer, and
+adds the ability to animate a floating button's mode.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+BottomSheet's ShapeThemer is now deprecated.
+
 ## New features
 
-Replace this text with example code for each new feature.
+Improved UIPointerInteraction support for ActionSheet, Buttons, and Dialogs.
+
+MDCFloatingButton has a new animated API for animating the mode from normal to expanded.
+
+```objc
+[button setMode:MDCFloatingButtonModeExpanded animated:YES];
+```
+
 ## API changes
 
 ## Component changes
@@ -29,7 +36,7 @@ Replace this text with example code for each new feature.
 * [Add support to MDCFloatingButton for animating mode changes.](https://github.com/material-components/material-components-ios/commit/6ac7e6c3d87795a6ade75500c7c6af768f1463f0) (Jeff Verkoeyen)
 * [Disable pointer interactions for MDCFloatingButton during animation.](https://github.com/material-components/material-components-ios/commit/4f75f7c33f8cb5e7999aa638102f04ce6de5f153) (Bryan Oltman)
 * [Fix broken link in Buttons docs](https://github.com/material-components/material-components-ios/commit/8c27dcf2e53f038ba97e4e6452143a8f223c35b7) (Andrew Overton)
-* [I got this build error when building on the latest Xcode: ``` "MDCFloatingButtonModeAnimator.m:150:9: Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior" ``` This change adds the explicit self. If I got this other people might.](https://github.com/material-components/material-components-ios/commit/f5841c6d2fe269f4b3cadde869e1db44d1ca49cc) (Andrew Overton)
+* [Fix build error](https://github.com/material-components/material-components-ios/commit/f5841c6d2fe269f4b3cadde869e1db44d1ca49cc) (Andrew Overton)
 * [Standardize all examples on the same <Component><Example>Example pattern.](https://github.com/material-components/material-components-ios/commit/3a157e1f4309fbf2c2fe4404acbbfcd34136666c) (Jeff Verkoeyen)
 * [Standardize all test names on <Symbol><TestCategory>Tests.](https://github.com/material-components/material-components-ios/commit/57ec631be27332140267393711e1c06400452fb1) (Jeff Verkoeyen)
 * [Update MDCButton to use the proposed pointer effect in pointerStyleProvider.](https://github.com/material-components/material-components-ios/commit/bff4209df216fd538dcb8d49b3941179b4a8a767) (Bryan Oltman)
