@@ -20,7 +20,7 @@ There are three types of FABS:
 
 <!--Get an image of a floating action button-->
 
-# Using FABs
+## Using FABs
 
 A FAB performs the primary, or most common, action on a screen. It appears in front of all screen content, typically as a circular shape with an icon in its center. 
 
