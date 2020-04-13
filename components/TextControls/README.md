@@ -89,7 +89,8 @@ To set up a single-line filled text field using [MDCFilledTextField](https://git
 ```swift
 let estimatedFrame = ...
 let textField = MDCFilledTextField(frame: estimatedFrame)
-textField.label.text = "This is the floating label"
+textField.label.text = "Phone number"
+textField.placeholder = "555-555-5555"
 textField.leadingAssistiveLabel.text = "This is helper text"
 textField.sizeToFit()
 view.addSubview(textField)
@@ -100,8 +101,9 @@ view.addSubview(textField)
 ```objc
 CGRect estimatedFrame = ...
 MDCFilledTextField *textField = [[MDCFilledTextField alloc] initWithFrame:estimatedFrame];
-textField.label.text = "This is the floating label";
-textField.leadingAssistiveLabel.text = "This is helper text";
+textField.label.text = @"Phone number";
+textField.placeholder = @"555-555-5555";
+textField.leadingAssistiveLabel.text = @"This is helper text";
 [textField sizeToFit];
 [view addSubview:textField];
 ```
@@ -119,7 +121,8 @@ To set up a multi-line filled text field (text area) using [MDCFilledTextArea](h
 ```swift
 let estimatedFrame = ...
 let textArea = MDCFilledTextArea(frame: estimatedFrame)
-textArea.label.text = "This is the floating label"
+textArea.label.text = "Label"
+textArea.textView.text = "This is a filled text area with enough text to span two lines."
 textArea.leadingAssistiveLabel.text = "This is helper text"
 textArea.sizeToFit()
 view.addSubview(textArea)
@@ -130,8 +133,9 @@ view.addSubview(textArea)
 ```objc
 CGRect estimatedFrame = ...
 MDCFilledTextArea *textArea = [[MDCFilledTextArea alloc] initWithFrame:estimatedFrame];
-textArea.label.text = "This is the floating label";
-textArea.leadingAssistiveLabel.text = "This is helper text";
+textArea.label.text = @"Label";
+textArea.leadingAssistiveLabel.text = @"This is helper text";
+textArea.textView.text = @"This is a filled text area with enough text to span two lines.";
 [textArea sizeToFit];
 [view addSubview:textArea];
 ```
@@ -223,7 +227,8 @@ To set up a single-line outlined text field using [MDCOutlinedTextField](https:/
 ```swift
 let estimatedFrame = ...
 let textField = MDCOutlinedTextField(frame: estimatedFrame)
-textField.label.text = "This is the floating label"
+textField.label.text = "Phone number"
+textField.placeholder = "555-555-5555"
 textField.leadingAssistiveLabel.text = "This is helper text"
 textField.sizeToFit()
 view.addSubview(textField)
@@ -234,8 +239,9 @@ view.addSubview(textField)
 ```objc
 CGRect estimatedFrame = ...
 MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:estimatedFrame];
-textField.label.text = "This is the floating label";
-textField.leadingAssistiveLabel.text = "This is helper text";
+textField.label.text = @"Phone number";
+textField.placeholder = @"555-555-5555";
+textField.leadingAssistiveLabel.text = @"This is helper text";
 [textField sizeToFit];
 [view addSubview:textField];
 ```
@@ -253,8 +259,9 @@ To set up a multi-line outlined text field (text area) using [MDCOutlinedTextAre
 ```swift
 let estimatedFrame = ...
 let textArea = MDCOutlinedTextArea(frame: estimatedFrame)
-textArea.label.text = "This is the floating label"
+textArea.label.text = "Label"
 textArea.leadingAssistiveLabel.text = "This is helper text"
+textArea.textView.text = "This is an outlined text area with enough text to span two lines."
 textArea.sizeToFit()
 view.addSubview(textArea)
 ```
@@ -264,8 +271,9 @@ view.addSubview(textArea)
 ```objc
 CGRect estimatedFrame = ...
 MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] initWithFrame:estimatedFrame];
-textArea.label.text = "This is the floating label";
-textArea.leadingAssistiveLabel.text = "This is helper text";
+textArea.label.text = @"Label";
+textArea.leadingAssistiveLabel.text = @"This is helper text";
+textArea.textView.text = @"This is an outlined text area with enough text to span two lines.";
 [textArea sizeToFit];
 [view addSubview:textArea];
 ```
