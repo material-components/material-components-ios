@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialRipple.h"
+
 @class MDCItemBarStyle;
 
 /** View displaying an individual item in an item bar. */
@@ -35,6 +37,9 @@
 
 /** Frame within the cell for its primary content. */
 @property(nonatomic, readonly) CGRect contentFrame;
+
+/** The @c MDCRippleTouchController responsible for user feedback in the cell. */
+@property(nonatomic, strong, nonnull) MDCRippleTouchController *rippleTouchController;
 
 /** Updates the cell to use the given style properties. */
 - (void)applyStyle:(nonnull MDCItemBarStyle *)itemStyle;

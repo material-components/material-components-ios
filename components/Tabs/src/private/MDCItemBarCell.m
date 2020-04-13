@@ -23,7 +23,6 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
-#import "MaterialRipple.h"
 #import "MaterialTypography.h"
 
 /// Size of image in points.
@@ -58,7 +57,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 @property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) MDCItemBarBadge *badge;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
-@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 
 @property(nonatomic, strong) MDCItemBarStyle *style;
 
@@ -593,6 +591,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 }
 
 - (void)updateRipple {
+  self.rippleTouchController.shouldProcessRippleWithScrollViewGestures = NO;
   MDCRippleView *rippleView = self.rippleTouchController.rippleView;
   rippleView.rippleColor = _style.rippleColor;
   rippleView.rippleStyle = _style.rippleStyle;

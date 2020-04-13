@@ -101,4 +101,13 @@
   XCTAssertEqualWithAccuracy(CGRectGetWidth(frameWithFiveDigitBadgeValue),
                              CGRectGetWidth(frameWithFourDigitBadgeValue), 0.001);
 }
+
+- (void)testRippleTouchControllerShouldProcessRippleWithScrollViewDefaultsToNo {
+  // Given
+  MDCItemBarCell *cell = [[MDCItemBarCell alloc] initWithFrame:CGRectZero];
+
+  // Then
+  XCTAssertFalse(cell.rippleTouchController.shouldProcessRippleWithScrollViewGestures);
+}
+
 @end
