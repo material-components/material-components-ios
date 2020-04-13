@@ -153,7 +153,7 @@ static NSString *const exampleSuperLongText =
   return @{
     @"breadcrumbs" : @[ @"Banner", @"Banner" ],
     @"primaryDemo" : @YES,
-    @"presentable" : @NO,
+    @"presentable" : @YES,
   };
 }
 
