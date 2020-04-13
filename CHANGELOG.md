@@ -1,3 +1,77 @@
+# 108.1.0
+
+This minor release improves our support of the new iPadOS cursor APIs, deprecates a themer, and
+adds the ability to animate a floating button's mode.
+
+## New deprecations
+
+BottomSheet's ShapeThemer is now deprecated.
+
+## New features
+
+Improved UIPointerInteraction support for ActionSheet, Buttons, and Dialogs.
+
+MDCFloatingButton has a new animated API for animating the mode from normal to expanded.
+
+```objc
+[button setMode:MDCFloatingButtonModeExpanded animated:YES];
+```
+
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Add UIPointerInteraction support for actions..](https://github.com/material-components/material-components-ios/commit/45671537f593d07164d2d8ec15edd9a651f680a7) (Wenyu Zhang)
+
+### BottomSheet
+
+* [Deprecate the ShapeThemer.](https://github.com/material-components/material-components-ios/commit/1cf770cc40f1b29f1f89b0a3ed03f5f8899e4647) (Jeff Verkoeyen)
+
+### Buttons
+
+* [Add a snapshot test for floating buttons in normal mode with a label.](https://github.com/material-components/material-components-ios/commit/bc113b658c9a9e1befe6e3b4f83d6fa3b0e9db87) (Jeff Verkoeyen)
+* [Add custom UIButtonPointerStyleProvider to MDCButton for better iPadOS pointer interaction.](https://github.com/material-components/material-components-ios/commit/5a2b2caae09680e38950dfb4c81c2c14f7a57359) (Bryan Oltman)
+* [Add support to MDCFloatingButton for animating mode changes.](https://github.com/material-components/material-components-ios/commit/6ac7e6c3d87795a6ade75500c7c6af768f1463f0) (Jeff Verkoeyen)
+* [Disable pointer interactions for MDCFloatingButton during animation.](https://github.com/material-components/material-components-ios/commit/4f75f7c33f8cb5e7999aa638102f04ce6de5f153) (Bryan Oltman)
+* [Fix broken link in Buttons docs](https://github.com/material-components/material-components-ios/commit/8c27dcf2e53f038ba97e4e6452143a8f223c35b7) (Andrew Overton)
+* [Fix build error](https://github.com/material-components/material-components-ios/commit/f5841c6d2fe269f4b3cadde869e1db44d1ca49cc) (Andrew Overton)
+* [Standardize all examples on the same <Component><Example>Example pattern.](https://github.com/material-components/material-components-ios/commit/3a157e1f4309fbf2c2fe4404acbbfcd34136666c) (Jeff Verkoeyen)
+* [Standardize all test names on <Symbol><TestCategory>Tests.](https://github.com/material-components/material-components-ios/commit/57ec631be27332140267393711e1c06400452fb1) (Jeff Verkoeyen)
+* [Update MDCButton to use the proposed pointer effect in pointerStyleProvider.](https://github.com/material-components/material-components-ios/commit/bff4209df216fd538dcb8d49b3941179b4a8a767) (Bryan Oltman)
+* [Use static storage for all local consts.](https://github.com/material-components/material-components-ios/commit/4454d0be942d588fcea5a390fb78711c07513a6c) (Jeff Verkoeyen)
+
+### Dialogs
+
+* [Add UIPointerInteraction support for buttons..](https://github.com/material-components/material-components-ios/commit/d36b5e8f3d12b4123032a3a3abc9296984a617a3) (Wenyu Zhang)
+* [Add a Testing target](https://github.com/material-components/material-components-ios/commit/f0747fdac58b97c1252e0c985e48913dce129c22) (Galia Kaufman)
+* [Adding accessory view tests](https://github.com/material-components/material-components-ios/commit/969f6f55460312e5f16236ad0e06c3e725f1fb74) (Galia Kaufman)
+* [Clean up some comments.](https://github.com/material-components/material-components-ios/commit/57a566909fb7d89247b93887262c7cb93597c75f) (Dave MacLachlan)
+* [Cleanup: move deprecated API to private header.](https://github.com/material-components/material-components-ios/commit/2f0a4af1c9a965cbe76b23ca5f1f92f500d11983) (Galia Kaufman)
+* [Disable broken test.](https://github.com/material-components/material-components-ios/commit/9c32878a48bc074e315f1edada3dd06b5302059e) (Jeff Verkoeyen)
+* [Resolve issue with sizing a dialog's accessoryView.](https://github.com/material-components/material-components-ios/commit/579370c4d6ae72931c83dcf32f6a62ef47473464) (Nobody)
+* [Using Testing target in configuration snapshots.](https://github.com/material-components/material-components-ios/commit/2e19a8aa7e363e49c7d345f76ce4b402bf245b68) (Galia Kaufman)
+* [Using the new Testing target in accessory snapshots.](https://github.com/material-components/material-components-ios/commit/f7d799a9cfb50384e2f304920fcfb87d574b6a55) (Galia Kaufman)
+* [Using the new Testing target in actions snapshots.](https://github.com/material-components/material-components-ios/commit/e48d79a9cc82c9187a80dcd24d513052554dbb79) (Galia Kaufman)
+* [Using the new Testing target in insets snapshots.](https://github.com/material-components/material-components-ios/commit/666ed14ba0cd16bb4914f0cbbad8f022b1e7ac15) (Galia Kaufman)
+* [Using the new Testing target in insets unit tests.](https://github.com/material-components/material-components-ios/commit/7346de3ce076b426cfc6f0e877ac457c255fd700) (Galia Kaufman)
+
+### Ripple
+
+* [Add a respondsToSelector check to resolve crashes of unrecognized selector.](https://github.com/material-components/material-components-ios/commit/1e969f0e46be66ddc8401c34e444a1378100a661) (Yarden Eitan)
+
+### TextControls
+
+* [This change finishes adding TextControls examples to the internal Catalog.](https://github.com/material-components/material-components-ios/commit/965cde39c85ca3e0e1e6295784321065c786dfe0) (Andrew Overton)
+
+## Multi-component changes
+
+* [Expose the catalog by convention tree via the AppDelegate and walk the tree with the UI test runner.](https://github.com/material-components/material-components-ios/commit/c2c1cc64b36fd93877a66e39867ec4917ad82a59) (Jeff Verkoeyen)
+* [Fix a lot of formatting issues with material.io and some broken links](https://github.com/material-components/material-components-ios/commit/f9a72c3df80e89904fa72ad058032059e74fcf59) (Andrew Overton)
+
+---
+
 # 108.0.0
 
 This major release removes the default `init` methods from MDCSemanticColorScheme, improves support
