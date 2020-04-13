@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   var window: UIWindow?
 
   let navigationController = MDCAppBarNavigationController()
+  var tree: CBCNode?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -38,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
     // The navigation tree will only take examples that implement
     // and return YES to catalogIsPresentable.
     let tree = CBCCreatePresentableNavigationTree()
+    self.tree = tree
 
     navigationController.delegate = self
 
@@ -58,6 +60,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
     }
 
     return true
+  }
+
+  // This method is exposed solely for the purposes of UI test runners to be able to fetch the
+  // catalog by convention example tree.
+  @objc func navigationTree() -> CBCNode? {
+    return self.tree
   }
 
   @objc func themeDidChange(notification: NSNotification) {
