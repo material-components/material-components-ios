@@ -167,15 +167,6 @@ Unit tests in MDC are run by the developer, the continuous integration service, 
 1. Ensure unit tests run with no errors.
 1. Enter YES or NO
 
-### Kokoro Support
-
-
-MDC-iOS uses Google's continuous integration service Kokoro for automated tests on each PR. Kokoro builds MDC with Google's open source build system, [Bazel](https://bazel.build/). For more information, see the [Kokoro & Bazel document](bazel_kokoro.md).
-
-1. Add a Bazel `BUILD` file to the root directory of the component.
-1. Add `BUILD` files for any components that are dependencies of the component. (If necessary.)
-1. Test locally with the .kokoro script in the repo's root directory. If necessary, propose adjustments to the script to support custom features of your target (like a private dependency.)
-1. Enter YES or NO
 
 ### Translations (If necessary)
 
