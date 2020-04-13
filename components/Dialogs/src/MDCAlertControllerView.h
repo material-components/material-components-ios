@@ -22,15 +22,6 @@
 @property(nonatomic, strong, nullable) UIImage *titleIcon;
 @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
 
-@property(nonatomic, assign) NSTextAlignment titleAlignment __deprecated_msg(
-    "Please use MDCAlertController titleAlignment instead.");
-@property(nonatomic, assign) NSTextAlignment messageAlignment __deprecated_msg(
-    "Please use MDCAlertController messageAlignment instead.");
-
-/** An optional custom icon view above the title of the alert. */
-@property(nonatomic, strong, nullable) UIView *titleIconView __deprecated_msg(
-    "Please use MDCAlertController+Customize titleIconView instead.");
-
 @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;
 

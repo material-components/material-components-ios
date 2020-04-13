@@ -19,11 +19,11 @@
 
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
-@interface ButtonsColorThemerTests : XCTestCase
+@interface MDCButtonColorThemerTests : XCTestCase
 
 @end
 
-@implementation ButtonsColorThemerTests
+@implementation MDCButtonColorThemerTests
 
 - (void)testTextButtonColorThemer {
   // Given

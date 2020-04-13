@@ -139,6 +139,7 @@ extension BottomDrawerExpandFullscreenExample {
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,
+      "flaky": true,
     ]
   }
 }

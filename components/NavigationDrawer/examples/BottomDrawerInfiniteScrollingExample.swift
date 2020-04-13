@@ -155,7 +155,6 @@ extension BottomDrawerInfiniteScrollingExample {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Infinite Scrolling"],
       "description": "Navigation Drawer",
-      "primaryDemo": true,
       "presentable": true,
     ]
   }

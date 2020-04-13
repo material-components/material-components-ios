@@ -22,10 +22,10 @@
 @interface MDCAlertController (Customize)
 
 /**
- An optional custom icon view above the title of the alert.
+ An optional custom view above the title of the alert.
 
  @discussion Use `titleIcon` to display icons or images.  Use `titleIconView` for custom views
-             implementations. If both `titleIcon` are `titleIconView` are set, 'titleIcon' is
+             implementations. If both `titleIcon` and `titleIconView` are set, 'titleIcon' is
              ignored.
 
  @discussion Custom title views are aligned with the title and may be resized to fit.
@@ -38,7 +38,7 @@
  set its `contentMode`.
 
  @discussion Use `titleIcon` to display icons or images.  Use `titleIconView` for custom views
-             implementations. If both `titleIcon` are `titleIconView` are set, 'titleIcon' (and
+             implementations. If both `titleIcon` and `titleIconView` are set, 'titleIcon' (and
              `titleIconImageView`) are ignored.
  */
 @property(nonatomic, nullable, strong, readonly) UIImageView *titleIconImageView;

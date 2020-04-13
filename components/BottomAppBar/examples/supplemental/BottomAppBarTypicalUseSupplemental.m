@@ -36,6 +36,7 @@ static NSString *const kCellIdentifier = @"cell";
                      @"bottom of the screen.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
+    @"flaky" : @YES,
   };
 }
 

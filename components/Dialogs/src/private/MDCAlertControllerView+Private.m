@@ -581,7 +581,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat contentWidth = MAX(titleWidth + titleInsets, maxWidth + contentInsets);
 
   CGFloat totalElementsHeight = messageSize.height + accessoryViewSize.height;
-  CGFloat contentHeight = (fabs(maxWidth) <= FLT_EPSILON)
+  CGFloat contentHeight = (fabs(contentWidth) <= FLT_EPSILON) || totalElementsHeight <= FLT_EPSILON
                               ? 0.0f
                               : totalElementsHeight + [self accessoryVerticalInset] +
                                     self.contentInsets.bottom + [self contentInsetTop];

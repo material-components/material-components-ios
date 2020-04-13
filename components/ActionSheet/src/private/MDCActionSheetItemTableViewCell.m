@@ -38,6 +38,11 @@ static inline UIColor *RippleColor() {
 @property(nonatomic, strong, nonnull) UIView *divider;
 @end
 
+#ifdef __IPHONE_13_4
+@interface MDCActionSheetItemTableViewCell (PointerInteractions) <UIPointerInteractionDelegate>
+@end
+#endif
+
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   NSLayoutConstraint *_titleLeadingConstraint;
@@ -139,6 +144,13 @@ static inline UIColor *RippleColor() {
       .active = YES;
   [_actionImageView.widthAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
   [_actionImageView.heightAnchor constraintEqualToConstant:kImageHeightAndWidth].active = YES;
+
+#ifdef __IPHONE_13_4
+  if (@available(iOS 13.4, *)) {
+    UIPointerInteraction *pointerInteraction = [[UIPointerInteraction alloc] initWithDelegate:self];
+    [self.contentView addInteraction:pointerInteraction];
+  }
+#endif
 }
 
 - (void)layoutSubviews {
@@ -229,5 +241,20 @@ static inline UIColor *RippleColor() {
   _imageRenderingMode = imageRenderingMode;
   [self setNeedsLayout];
 }
+
+#pragma mark - UIPointerInteractionDelegate
+
+#ifdef __IPHONE_13_4
+- (UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
+                        styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
+  UIPointerStyle *pointerStyle = nil;
+  if (interaction.view) {
+    UITargetedPreview *targetedPreview = [[UITargetedPreview alloc] initWithView:interaction.view];
+    UIPointerEffect *hoverEffect = [UIPointerHoverEffect effectWithPreview:targetedPreview];
+    pointerStyle = [UIPointerStyle styleWithEffect:hoverEffect shape:nil];
+  }
+  return pointerStyle;
+}
+#endif
 
 @end

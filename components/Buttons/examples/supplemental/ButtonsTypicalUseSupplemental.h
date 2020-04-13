@@ -37,10 +37,10 @@
 
 @end
 
-@interface ButtonsTypicalUseExampleViewController : ButtonsTypicalUseViewController
+@interface ButtonsTypicalUseExample : ButtonsTypicalUseViewController
 
 @end
 
-@interface ButtonsShapesExampleViewController : ButtonsTypicalUseViewController
+@interface ButtonsShapesExample : ButtonsTypicalUseViewController
 
 @end

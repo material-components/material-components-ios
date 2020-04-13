@@ -26,10 +26,8 @@
  Track progress here: https://github.com/material-components/material-components-ios/issues/7172
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-@interface MDCBottomSheetControllerShapeThemer : NSObject
-@end
-
-@interface MDCBottomSheetControllerShapeThemer (ToBeDeprecated)
+__deprecated_msg("There is no replacement for this API yet.")
+    @interface MDCBottomSheetControllerShapeThemer : NSObject
 
 /**
  Applies a shape scheme's properties to an MDCBottomSheetController.
@@ -42,6 +40,7 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-    toBottomSheetController:(nonnull MDCBottomSheetController *)bottomSheetController;
+    toBottomSheetController:(nonnull MDCBottomSheetController *)bottomSheetController
+    __deprecated_msg("There is no replacement for this API yet.");
 
 @end

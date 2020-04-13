@@ -17,31 +17,21 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 
-@interface FlatButtonsTests : XCTestCase
+@interface MDCRaisedButtonsTests : XCTestCase
 @end
 
-@implementation FlatButtonsTests
+@implementation MDCRaisedButtonsTests
 
 - (void)testDefaultElevationsForState {
   // Given
-  MDCFlatButton *button = [MDCFlatButton appearance];
+  MDCRaisedButton *button = [MDCRaisedButton appearance];
 
   // Then
-  XCTAssertEqual([button elevationForState:UIControlStateNormal], MDCShadowElevationNone);
-  XCTAssertEqual([button elevationForState:UIControlStateHighlighted], MDCShadowElevationNone);
+  XCTAssertEqual([button elevationForState:UIControlStateNormal],
+                 MDCShadowElevationRaisedButtonResting);
+  XCTAssertEqual([button elevationForState:UIControlStateHighlighted],
+                 MDCShadowElevationRaisedButtonPressed);
   XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
-  XCTAssertEqual([button elevationForState:UIControlStateSelected], MDCShadowElevationNone);
-}
-
-// TODO(#2782): Remove this test and replace it with default checks once UIAppearance is no longer
-//              used for overriding MDCButton
-- (void)testMDCFlatButtonDoesNotModifyInkColorInInit {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-  MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
-
-  // Then
-  XCTAssertEqualObjects(flatButton.inkColor, button.inkColor);
 }
 
 @end

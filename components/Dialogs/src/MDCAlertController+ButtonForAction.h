@@ -18,7 +18,7 @@
 
 /**
  Returns an MDCButton associated with the given action. This method might create the button if
- it no associated button exist for the action yet. Buttons returned by thismethod may not (yet)
+ no associated button exists for the action. Buttons returned by this method may not (yet)
  be attached to the view hierarchy at the time the method is called.
 
  This method is commonly used by themers to style the button associated with the action.

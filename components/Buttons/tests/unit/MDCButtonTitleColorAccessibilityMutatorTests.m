@@ -34,10 +34,10 @@ static NSArray<UIColor *> *testColors() {
 
 static NSString *controlStateDescription(UIControlState controlState);
 
-@interface ButtonTitleColorAccessibilityMutatorTests : XCTestCase
+@interface MDCButtonTitleColorAccessibilityMutatorTests : XCTestCase
 @end
 
-@implementation ButtonTitleColorAccessibilityMutatorTests
+@implementation MDCButtonTitleColorAccessibilityMutatorTests
 
 - (void)testMutateChangesTextColor {
   for (UIColor *color in testColors()) {

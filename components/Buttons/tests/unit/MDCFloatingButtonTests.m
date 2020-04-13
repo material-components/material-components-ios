@@ -67,10 +67,10 @@ static UIImage *fakeImage(void) {
 
 @end
 
-@interface FloatingButtonsTests : XCTestCase
+@interface MDCFloatingButtonsTests : XCTestCase
 @end
 
-@implementation FloatingButtonsTests
+@implementation MDCFloatingButtonsTests
 
 #pragma mark - setHitAreaInsets:forShape:inMode:
 

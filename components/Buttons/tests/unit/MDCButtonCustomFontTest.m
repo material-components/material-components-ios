@@ -17,10 +17,10 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
-@interface ButtonsCustomFontTests : XCTestCase
+@interface MDCButtonCustomFontTests : XCTestCase
 @end
 
-@implementation ButtonsCustomFontTests
+@implementation MDCButtonCustomFontTests
 
 - (void)testCustomFontTitle {
   // Given

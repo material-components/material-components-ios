@@ -18,14 +18,14 @@
 #import "MaterialButtons.h"
 #import "MaterialShapeLibrary.h"
 
-@interface ButtonsShapeThemerTests : XCTestCase
+@interface MDCButtonShapeThemerTests : XCTestCase
 
 @property(nonatomic, strong) MDCButton *button;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 
 @end
 
-@implementation ButtonsShapeThemerTests
+@implementation MDCButtonShapeThemerTests
 
 - (void)setUp {
   self.button = [[MDCButton alloc] init];

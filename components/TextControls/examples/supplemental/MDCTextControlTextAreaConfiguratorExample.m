@@ -46,7 +46,7 @@ static NSString *const kExampleTitle = @"MDCTextControl TextAreas";
   return @{
     @"breadcrumbs" : @[ @"Text Controls", kExampleTitle ],
     @"primaryDemo" : @NO,
-    @"presentable" : @NO,
+    @"presentable" : @YES,
   };
 }
 

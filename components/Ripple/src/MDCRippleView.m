@@ -189,23 +189,27 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   self.activeRippleColor = self.rippleColor;
 }
 
+- (void)setColorForRippleLayer:(MDCRippleLayer *)rippleLayer {
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([self.traitCollection respondsToSelector:@selector(performAsCurrentTraitCollection:)]) {
+      [self.traitCollection performAsCurrentTraitCollection:^{
+        rippleLayer.fillColor = self.rippleColor.CGColor;
+      }];
+      return;
+    }
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+  rippleLayer.fillColor = self.rippleColor.CGColor;
+}
+
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
   rippleLayer.rippleLayerDelegate = self;
   [self updateRippleStyle];
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13.0, *)) {
-    [self.traitCollection performAsCurrentTraitCollection:^{
-      rippleLayer.fillColor = self.rippleColor.CGColor;
-    }];
-  } else {
-    rippleLayer.fillColor = self.rippleColor.CGColor;
-  }
-#else
-  rippleLayer.fillColor = self.rippleColor.CGColor;
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+  [self setColorForRippleLayer:rippleLayer];
   rippleLayer.frame = self.bounds;
   if (self.rippleStyle == MDCRippleStyleUnbounded) {
     rippleLayer.maximumRadius = self.maximumRadius;

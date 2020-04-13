@@ -21,11 +21,11 @@
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
-@interface ButtonsShapesExampleViewController ()
+@interface ButtonsShapesExample ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
 @end
 
-@implementation ButtonsShapesExampleViewController
+@implementation ButtonsShapesExample
 
 - (id)init {
   self = [super init];

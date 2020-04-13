@@ -162,7 +162,6 @@ extension BottomDrawerSwappingScrollViewsExample {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Swapping ScrollViews"],
       "description": "Navigation Drawer",
-      "primaryDemo": true,
       "presentable": true,
     ]
   }

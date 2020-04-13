@@ -88,6 +88,18 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
 #endif
 
 - (void)expand:(BOOL)animated completion:(void (^_Nullable)(void))completion {
+// The typical approach to adjusting the iPad's pointer frame is to invalidate the relevant
+// pointer interactions. This was attempted, but, as you can see in go/mdc-fab-pointer-bug,
+// invalidating the interaction while a transform animation is happening causes undesired behavior.
+// Because of this, we instead temporarily disable pointer interaction for the button while it
+// animates and reenable (if previously enabled) once the animation has ended.
+#ifdef __IPHONE_13_4
+  BOOL wasPointerInteractionEnabled = NO;
+  if (@available(iOS 13.4, *)) {
+    wasPointerInteractionEnabled = self.pointerInteractionEnabled;
+    self.pointerInteractionEnabled = NO;
+  }
+#endif
   void (^expandActions)(void) = ^{
     self.layer.transform =
         CATransform3DConcat(self.layer.transform, [MDCFloatingButton expandTransform]);
@@ -97,6 +109,11 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
     [self.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
     [self.layer removeAnimationForKey:kMDCFloatingButtonOpacityKey];
     [self.imageView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
+#ifdef __IPHONE_13_4
+    if (@available(iOS 13.4, *)) {
+      self.pointerInteractionEnabled = wasPointerInteractionEnabled;
+    }
+#endif
     if (completion) {
       completion();
     }
@@ -163,6 +180,19 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
 }
 
 - (void)collapse:(BOOL)animated completion:(void (^_Nullable)(void))completion {
+// The typical approach to adjusting the iPad's pointer frame is to invalidate the relevant
+// pointer interactions. This was attempted, but, as you can see in go/mdc-fab-pointer-bug,
+// invalidating the interaction while a transform animation is happening causes undesired behavior.
+// Because of this, we instead temporarily disable pointer interaction for the button while it
+// animates and reenable (if previously enabled) once the animation has ended.
+#ifdef __IPHONE_13_4
+  BOOL wasPointerInteractionEnabled = NO;
+  if (@available(iOS 13.4, *)) {
+    wasPointerInteractionEnabled = self.pointerInteractionEnabled;
+    self.pointerInteractionEnabled = NO;
+  }
+#endif
+
   void (^collapseActions)(void) = ^{
     self.layer.transform =
         CATransform3DConcat(self.layer.transform, [MDCFloatingButton collapseTransform]);
@@ -172,6 +202,11 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
     [self.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
     [self.layer removeAnimationForKey:kMDCFloatingButtonOpacityKey];
     [self.imageView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
+#ifdef __IPHONE_13_4
+    if (@available(iOS 13.4, *)) {
+      self.pointerInteractionEnabled = wasPointerInteractionEnabled;
+    }
+#endif
     if (completion) {
       completion();
     }
