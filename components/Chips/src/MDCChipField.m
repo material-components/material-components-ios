@@ -202,6 +202,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   self.textField.frame = textFieldFrame;
 
   [self updateTextFieldPlaceholderText];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)updateTextFieldPlaceholderText {
@@ -256,7 +257,6 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     [self addChipSubview:chip];
   }
   [self notifyDelegateIfSizeNeedsToBeUpdated];
-  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -286,7 +286,6 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
   [self.textField setNeedsLayout];
   [self notifyDelegateIfSizeNeedsToBeUpdated];
-  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -298,7 +297,6 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   }
   [self notifyDelegateIfSizeNeedsToBeUpdated];
   [self.textField setNeedsLayout];
-  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -343,7 +341,6 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if (!UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, contentEdgeInsets)) {
     _contentEdgeInsets = contentEdgeInsets;
     [self setNeedsLayout];
-    [self invalidateIntrinsicContentSize];
   }
 }
 
@@ -351,7 +348,6 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if (_minTextFieldWidth != minTextFieldWidth) {
     _minTextFieldWidth = minTextFieldWidth;
     [self setNeedsLayout];
-    [self invalidateIntrinsicContentSize];
   }
 }
 
@@ -625,12 +621,10 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
     if (isTextTooWide && isTextFieldOnSameLineAsChips) {
       // The text is on the same line as the chips and doesn't fit
       // Trigger layout to move the text field down to the next line
-      [self invalidateIntrinsicContentSize];
       [self setNeedsLayout];
     } else if (!isTextTooWide && !isTextFieldOnSameLineAsChips) {
       // The text is on the line below the chips but can fit on the same line
       // Trigger layout to move the text field up to the previous line
-      [self invalidateIntrinsicContentSize];
       [self setNeedsLayout];
     }
   }
