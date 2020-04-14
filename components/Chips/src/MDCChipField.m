@@ -63,10 +63,10 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 #pragma mark UIKeyInput
 
 - (void)deleteBackward {
-  [super deleteBackward];
   if (self.text.length == 0) {
     [self.deletionDelegate textFieldShouldRespondToDeleteBackward:self];
   }
+  [super deleteBackward];
 }
 
 #if MDC_CHIPFIELD_PRIVATE_API_BUG_FIX && \
