@@ -228,10 +228,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #ifdef __IPHONE_13_4
   if (@available(iOS 13.4, *)) {
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof__(self) weakSelf = self;
     UIButtonPointerStyleProvider buttonPointerStyleProvider = ^UIPointerStyle *(
         UIButton *buttonToStyle, UIPointerEffect *proposedEffect, UIPointerShape *proposedShape) {
-      typeof(weakSelf) strongSelf = weakSelf;
+      __typeof__(weakSelf) strongSelf = weakSelf;
       if (!strongSelf) {
         return [UIPointerStyle styleWithEffect:proposedEffect shape:proposedShape];
       }
