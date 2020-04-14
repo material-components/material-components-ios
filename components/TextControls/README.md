@@ -1,56 +1,40 @@
-<!-- This file was auto-generated using ./scripts/generate_readme TextControls -->
+<!--docs:
+title: "Text Fields"
+layout: detail
+section: components
+excerpt: "A text field with an animated floating label and other Material Design features."
+iconId: text_field
+path: /catalog/text-fields/
+-->
 
-# TextControls
+# Text fields
 
-[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BTextControls%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BTextControls%5D)
+[Text fields](https://material.io/components/text-fields) allow users to enter text into a UI. They typically appear in forms and dialogs.
 
-TextControls are controls used for text input that make use of classes like UITextField and UITextView.
+Text fields come in two styles:
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/textfields.png" alt="TextFields" width="320">
-</div>
+1.  [Filled text fields](#filled-text-fields)
+2.  [Outlined text fields](#outlined-text-fields)
 
-## Design & API documentation
+!["Text field examples of both filled and outlined types, and each type showing
+both inactive and focused states. The filled text fields show a gray background
+and a darker gray activation indicator that is purple when focused. The outlined
+text fields show a clear background and an outline that is purple when
+focused"](docs/assets/text-field-generic.png)
 
+## Using text fields
 
-## Table of contents
+Material iOS text fields consist of both single-line and multi-line offerings in both filled and outlined styles. The single-line text fields, MDCFilledTextField and MDCOutlinedTextField, are subclasses of UITextField, and can generally be used in the same ways as UITextField. The multi-line text fields, also known as text areas, include MDCFilledTextArea and MDCOutlinedTextArea. These classes are subclasses of UIControl that contain UITextViews. 
 
-- [Overview](#overview)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Text fields](#text-fields)
-- [Theming](#theming)
-  - [Theming](#theming)
-- [Examples](#examples)
-  - [Creating a text field](#creating-a-text-field)
+Because these classes make use of things like floating labels and assistive labels, their layout considerations are different than those of UITextField and UITextView. Where UITextField and UITextView can be whatever height a developer wants them to be, these classes have heights that they need to be in order to look correct. The process for ensuring that instances of these classes are sized correctly depends on whether one is in an Auto Layout or Manual Layout environment. In an Auto Layout environment, the text field or text area's preferred height will be reflected in `-intrinsicContentSize`, and the user will probably not have to do anything other than set a width constraint on the view to ensure that the preferred height is achieved. In a Manual Layout environment, standard methods like `-sizeThatFits:` or `-sizeToFit` must be used to inform the frames of the text field. These methods assume that the view already has a preferred width, and that any relevant APIs related to preferred number of lines have been set.
 
-- - -
-
-## Overview
-
-At this time, the only text control we offer is the text field. There are three text field classes:
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link">MDCFilledTextField: A text field implementing the Material <a href="https://material.io/components/text-fields/#filled-text-field">filled style</a></li>
-  <li class="icon-list-item icon-list-item--link">MDCOutlinedTextField: A text field implementing the Material <a href="https://material.io/components/text-fields/#outlined-text-field">outlined style</a></li>
-  <li class="icon-list-item icon-list-item">MDCBaseTextField: An unstyled text field that the previous two inherit from</li>
-</ul>
-
-## Installation
-
-<!-- Extracted from docs/installation.md -->
-
-### Installation with CocoaPods
-
-Add any of the following to your `Podfile`, depending on which TextControl target you're interested in:
+To make use of filled or outlined text fields or text areas, add any of the following targets to your Podfile:
 
 ```bash
+pod 'MaterialComponents/TextControls+FilledTextAreas'
 pod 'MaterialComponents/TextControls+FilledTextFields'
-pod 'MaterialComponents/TextControls+FilledTextFieldsTheming'
+pod 'MaterialComponents/TextControls+OutlinedTextAreas'
 pod 'MaterialComponents/TextControls+OutlinedTextFields'
-pod 'MaterialComponents/TextControls+OutlinedTextFieldsTheming'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -60,94 +44,44 @@ Then, run the following command:
 pod install
 ```
 
-### Importing
-
-To use TextControls in your code, import the appropriate MaterialTextControls umbrella header (Objective-C) or MaterialComponents module (Swift).
+From there, import the relevant target.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
+import MaterialComponents.MaterialTextControls_FilledTextAreas
 import MaterialComponents.MaterialTextControls_FilledTextFields
-import MaterialComponents.MaterialTextControls_FilledTextFieldsTheming
+import MaterialComponents.MaterialTextControls_OutlinedTextAreas
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
-import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 ```
 
 #### Objective-C
 
 ```objc
+#import "MaterialTextControls+FilledTextAreas.h"
 #import "MaterialTextControls+FilledTextFields.h"
-#import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTextControls+OutlinedTextAreas.h"
 #import "MaterialTextControls+OutlinedTextFields.h"
-#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 ```
 
 <!--</div>-->
 
+## Making text fields accessible
 
+As mentioned above, MDCFilledTextField and MDCOutlinedTextField inherit from UITextField, and MDCFilledTextArea and MDCOutlinedTextArea contain UITextViews. Both UITextField and UITextView are accessible by default, and generally work out of the box with VoiceOver. The same is true for the text field and text area classes we provide. However, because they also make use of floating labels and assistive labels below the input text, their VoiceOver behavior is slightly different. If `accessibilityLabel` is _not_ explictly set on a text field or text area, the `accessibilityLabel` that VoiceOver reads is a concatenation of the floating label text, the entered text, and the assistive label text. If `accessibilityLabel` _is_ set, the screen reader will read whatever it is set to. If you would like fine-grained control over what VoiceOver reads for these classes it is probably best to set the `accessibilityLabel` yourself.
 
-## Usage
+## Filled text fields
 
-<!-- Extracted from docs/typical-use.md -->
+[Filled text fields](https://material.io/components/text-fields/#filled-text-field)
+have more visual emphasis than outlined text fields, making them stand out when
+surrounded by other content and components.
 
-### Text fields
+### Single-line filled text fields
 
-The largest difference between MDCTextControl text fields and UITextFields from a usability standpoint relates to the sizing behavior of MDCTextControl text fields. Where UITextField can be whatever height a user wants it to be, MDCTextControl text fields have heights that they need to be in order to look correct. The process for ensuring that MDCTextControl text fields have their preferred heights depends on whether one is in an Auto Layout or Manual Layout environment. In an Auto Layout environment, the text field's preferred height will be reflected in `intrinsicContentSize`, and the user will not have to do anything other than set a width constraint on the text field to ensure that the preferred height is achieved. In a Manual Layout environment, standard methods like `sizeThatFits:` or `sizeToFit` must be used to inform the frames of the text field. These methods assume that the text field already has the preferred width.
+![Filled text field](docs/assets/filled-text-field.png)
 
-
-## Theming
-
-<!-- Extracted from docs/theming.md -->
-
-### Theming
-
-You can theme a text field to match the Material Design style by importing a theming extension. The content below assumes you have read the article on [Theming](../../docs/theming.md).
-
-First, import the text field theming extension and create a text field.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
-
-let textField = MDCOutlinedTextField()
-```
-
-#### Objective-C
-
-```objc
-#import <MaterialComponents/MaterialTextControls+FilledTextFieldsTheming.h>
-
-MDCFilledTextField *filledTextField = [[MDCFilledTextField alloc] init];
-```
-<!--</div>-->
-
-Then pass a container scheme to one of the theming methods on the theming extension.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-filledTextField.applyTheme(withScheme: containerScheme)
-```
-
-#### Objective-C
-```objc
-[self.filledTextField applyThemeWithScheme:self.containerScheme];
-```
-<!--</div>-->
-
-
-
-
-
-
-
-## Examples
-
-<!-- Extracted from docs/examples.md -->
-
-### Creating a text field
+To set up a single-line filled text field using [MDCFilledTextField](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/FilledTextFields/MDCFilledTextField.h), do the following:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -155,7 +89,146 @@ filledTextField.applyTheme(withScheme: containerScheme)
 ```swift
 let estimatedFrame = ...
 let textField = MDCFilledTextField(frame: estimatedFrame)
-textField.label.text = "This is the floating label"
+textField.label.text = "Phone number"
+textField.placeholder = "555-555-5555"
+textField.leadingAssistiveLabel.text = "This is helper text"
+textField.sizeToFit()
+view.addSubview(textField)
+```
+
+#### Objective-C
+
+```objc
+CGRect estimatedFrame = ...
+MDCFilledTextField *textField = [[MDCFilledTextField alloc] initWithFrame:estimatedFrame];
+textField.label.text = @"Phone number";
+textField.placeholder = @"555-555-5555";
+textField.leadingAssistiveLabel.text = @"This is helper text";
+[textField sizeToFit];
+[view addSubview:textField];
+```
+<!--</div>-->
+
+### Multi-line filled text fields
+
+![Filled text area](docs/assets/filled-text-area.png)
+
+To set up a multi-line filled text field (text area) using [MDCFilledTextArea](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/FilledTextAreas/MDCFilledTextArea.h), do the following:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+let estimatedFrame = ...
+let textArea = MDCFilledTextArea(frame: estimatedFrame)
+textArea.label.text = "Label"
+textArea.textView.text = "This is a filled text area with enough text to span two lines."
+textArea.leadingAssistiveLabel.text = "This is helper text"
+textArea.sizeToFit()
+view.addSubview(textArea)
+```
+
+#### Objective-C
+
+```objc
+CGRect estimatedFrame = ...
+MDCFilledTextArea *textArea = [[MDCFilledTextArea alloc] initWithFrame:estimatedFrame];
+textArea.label.text = @"Label";
+textArea.leadingAssistiveLabel.text = @"This is helper text";
+textArea.textView.text = @"This is a filled text area with enough text to span two lines.";
+[textArea sizeToFit];
+[view addSubview:textArea];
+```
+<!--</div>-->
+
+### Anatomy and key properties
+
+A filled text field has a filled container, input text, a label, an activation indicator, optional helper/error text and optional leading/trailing icons. This applies to both text fields and text areas.
+
+![filled text field anatomy](docs/assets/filled-text-field-anatomy.png)
+
+1. Container
+2. Leading icon
+3. Label
+4. Input text
+5. Trailing icon
+6. Activation indicator 
+7. Helper/error/counter text
+8. Prefix/suffix/placeholder (not supported on iOS)
+
+#### Container attributes
+
+&nbsp;                 | Attribute                | Related method(s)                                                                       | Default value
+---------------------- | ------------------------ | --------------------------------------------------------------------------------------- | -------------
+**Color**              | N/A                      | `-setFilledBackgroundColor:forState:`<br/>`-filledBackgroundColorForState:`             | On surface color at 12% opacity
+
+#### Leading icon attributes
+
+&nbsp;                  | Attribute                         | Related method(s)                                                     | Default value
+----------------------- | --------------------------------- | --------------------------------------------------------------------- | -------------
+**Icon**                | `leadingView`                     | `-setLeadingView`<br/>`-leadingView`                                  | `nil`
+
+#### Label attributes
+
+&nbsp;                         | Attribute                | Related method(s)                                       | Default value
+------------------------------ | ------------------------ | ------------------------------------------------------- | -------------
+**Text**                       | `label.text`             | N/A                                                     | `nil`
+**Color**                      | `label.textColor` |  `-setFloatingColor:forState:` <br/> `-floatingLabelColorForState:` <br/>`-setNormalLabelColor:forState:` <br/> `-normalLabelColorForState:`  | On surface color at 60% opacity when not editing and primary color when editing
+
+#### Input text attributes
+
+&nbsp;               | Attribute                    | Related method(s)                                            | Default value
+-------------------- | --------------------------- | ------------------------------------------------------------ | -------------
+**Input text**       | `text`                        | `-setText:`<br/>`-text`                                      | `nil`
+**Typography**       | `font`                       | `-setFont:` <br/> `-font`                                     | Subtitle 1
+**Input text color** | `textColor`                  | `-setTextColor:`<br/>`-textColor`<br/>`-setTextColor:forState`<br/>`-textColorForState:`<br/> | On surface color at 87% opacity
+**Cursor color**     | `tintColor`                  |  `-setTintColor:`<br/>`-tintColor:`                            | Primary color                     
+
+#### Trailing icon attributes
+
+&nbsp;                  | Attribute                         | Related method(s)                                                     | Default value
+----------------------- | --------------------------------- | --------------------------------------------------------------------- | -------------
+**Icon**                | `trailingView`                     | `-setTrailingView`<br/>`-trailingView`                                  | `nil`
+
+#### Activation indicator attributes
+
+&nbsp;            | Attribute                   | Related method(s)                                                            | Default value
+----------------- | --------------------------- | ---------------------------------------------------------------------------- | -------------
+**Color**         | N/A | `-setUnderlineColor:forState:`<br/> `-underlineColorForState:` | On surface at 42% opacity when not editing and Primary when editing
+
+#### Helper/error/counter text attributes
+
+&nbsp;                      | Attribute                                                           | Related method(s)                                                                                                   | Default value
+--------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | -------------
+**Helper/Error text**      | `leadingAssistiveLabel.text`<br/>`trailingAssistiveLabel.text`  | N/A           | `nil`
+**Helper/Error text color**       | `leadingAssistiveLabel.textColor`<br/>`trailingAssistiveLabel.textColor` | N/A | On Surface at 60% opacity
+**Helper text typography**  | `leadingAssistiveLabel.font`<br/>`trailingAssistiveLabel.font`  | N/A  | Caption
+
+#### Prefix/suffix attributes
+
+Not supported.
+
+## Outlined text fields
+
+[Outlined text fields](https://material.io/components/text-fields/#outlined-text-field)
+have less visual emphasis than filled text fields. When they appear in places
+like forms, where many text fields are placed together, their reduced emphasis
+helps simplify the layout.
+
+### Single-line outlined text fields
+
+![Outlined text field](docs/assets/outlined-text-field.png)
+
+To set up a single-line outlined text field using [MDCOutlinedTextField](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/OutlinedTextFields/MDCOutlinedTextField.h), do the following:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+let estimatedFrame = ...
+let textField = MDCOutlinedTextField(frame: estimatedFrame)
+textField.label.text = "Phone number"
+textField.placeholder = "555-555-5555"
 textField.leadingAssistiveLabel.text = "This is helper text"
 textField.sizeToFit()
 view.addSubview(textField)
@@ -166,11 +239,180 @@ view.addSubview(textField)
 ```objc
 CGRect estimatedFrame = ...
 MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:estimatedFrame];
-textField.label.text = "This is the floating label";
-textField.leadingAssistiveLabel.text = "This is helper text";
+textField.label.text = @"Phone number";
+textField.placeholder = @"555-555-5555";
+textField.leadingAssistiveLabel.text = @"This is helper text";
 [textField sizeToFit];
 [view addSubview:textField];
 ```
-
 <!--</div>-->
 
+### Multi-line Outlined text fields
+
+![Outlined text area](docs/assets/outlined-text-area.png)
+
+To set up a multi-line outlined text field (text area) using [MDCOutlinedTextArea](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/OutlinedTextAreas/MDCOutlinedTextArea.h), do the following:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+let estimatedFrame = ...
+let textArea = MDCOutlinedTextArea(frame: estimatedFrame)
+textArea.label.text = "Label"
+textArea.leadingAssistiveLabel.text = "This is helper text"
+textArea.textView.text = "This is an outlined text area with enough text to span two lines."
+textArea.sizeToFit()
+view.addSubview(textArea)
+```
+
+#### Objective-C
+
+```objc
+CGRect estimatedFrame = ...
+MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] initWithFrame:estimatedFrame];
+textArea.label.text = @"Label";
+textArea.leadingAssistiveLabel.text = @"This is helper text";
+textArea.textView.text = @"This is an outlined text area with enough text to span two lines.";
+[textArea sizeToFit];
+[view addSubview:textArea];
+```
+<!--</div>-->
+
+### Anatomy and key properties
+
+An outlined text field has a stroked container, input text, a label, optional
+helper/error text and optional leading/trailing icons.
+
+![outlined text field anatomy](docs/assets/outlined-text-field-anatomy.png)
+
+1.  Container
+2.  Leading icon
+3.  Label
+4.  Input text
+5.  Trailing icon
+6.  Helper/error/counter text
+7.  Prefix/suffix/placeholder (not supported on iOS)
+
+The following examples shows a filled text field with a label.
+
+#### Container attributes
+
+&nbsp;                 | Attribute                | Related method(s)                                                                       | Default value
+---------------------- | ------------------------ | --------------------------------------------------------------------------------------- | -------------
+**Stroke color**       | N/A                      | `-setOutlineColor:forState:`<br/>`-outlineColorForState:`                               | On surface at 38% opacity when not editing and primary when editing
+
+#### Leading icon attributes
+
+&nbsp;                  | Attribute                         | Related method(s)                                                     | Default value
+----------------------- | --------------------------------- | --------------------------------------------------------------------- | -------------
+**Icon**                | `leadingView`                     | `-setLeadingView`<br/>`-leadingView`                                  | `nil`
+
+#### Label attributes
+
+&nbsp;                         | Attribute                | Related method(s)                                       | Default value
+------------------------------ | ------------------------ | ------------------------------------------------------- | -------------
+**Text**                       | `label.text`             | N/A                                                     | `nil`
+**Color**                      | `label.textColor` |  `-setFloatingColor:forState:` <br/> `-floatingLabelColorForState:` <br/>`-setNormalLabelColor:forState:` <br/> `-normalLabelColorForState:`  | On surface color at 60% opacity when not editing and primary color when editing
+
+#### Input text attributes
+
+&nbsp;               | Attribute                    | Related method(s)                                            | Default value
+-------------------- | --------------------------- | ------------------------------------------------------------ | -------------
+**Input text**       | `text`                        | `-setText:`<br/>`-text`                                      | `nil`
+**Typography**       | `font`                       | `-setFont:` <br/> `-font`                                     | Subtitle 1
+**Input text color** | `textColor`                  | `-setTextColor:`<br/>`-textColor`<br/>`-setTextColor:forState`<br/>`-textColorForState:`<br/> | On surface color at 87% opacity
+**Cursor color**     | `tintColor`                  |  `-setTintColor:`<br/>`-tintColor:`                            | Primary color                     
+
+#### Trailing icon attributes
+
+&nbsp;                  | Attribute                         | Related method(s)                                                     | Default value
+----------------------- | --------------------------------- | --------------------------------------------------------------------- | -------------
+**Icon**                | `trailingView`                     | `-setTrailingView`<br/>`-trailingView`                                  | `nil`
+
+#### Activation indicator attributes
+
+&nbsp;            | Attribute                   | Related method(s)                                                            | Default value
+----------------- | --------------------------- | ---------------------------------------------------------------------------- | -------------
+**Color**         | N/A | `-setUnderlineColor:forState:`<br/> `-underlineColorForState:` | On surface at 42% opacity when not editing and Primary when editing
+
+#### Helper/error/counter text attributes
+
+&nbsp;                      | Attribute                                                           | Related method(s)                                                                                                   | Default value
+--------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | -------------
+**Helper/Error text**      | `leadingAssistiveLabel.text`<br/>`trailingAssistiveLabel.text`  | N/A           | `nil`
+**Helper/Error text color**       | `leadingAssistiveLabel.textColor`<br/>`trailingAssistiveLabel.textColor` | N/A | On Surface at 60% opacity
+**Helper text typography**  | `leadingAssistiveLabel.font`<br/>`trailingAssistiveLabel.font`  | N/A  | Caption
+
+#### Prefix/suffix attributes
+
+Not supported.
+
+### Theming text fields and text areas
+
+Text fields and text areas support Material Theming using a Container Scheme. The filled and outlined text fields and text areas each have default theming methods and theming methods intended to convey an error state. [Learn more about theming extensions](../../docs/theming.md). Below are some screenshots of filled and outlined text fields using the Shrine theme:
+
+![Shrine filled text field](docs/assets/shrine-filled-text-field.png)
+
+![Shrine outlined text field](docs/assets/shrine-outlined-text-field.png)
+
+### Cards theming example
+
+In order to achieve something like the examples shown above, import your desired theming target.
+
+```bash
+pod 'MaterialComponents/TextControls+FilledTextAreasTheming'
+pod 'MaterialComponents/TextControls+FilledTextFieldsTheming'
+pod 'MaterialComponents/TextControls+OutlinedTextAreasTheming'
+pod 'MaterialComponents/TextControls+OutlinedTextFieldsTheming'
+```
+
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then Run the installer.
+
+```bash
+pod install
+```
+
+Next, import the appropriate theming target.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+import MaterialComponents.MaterialTextControls_FilledTextAreasTheming
+import MaterialComponents.MaterialTextControls_FilledTextFieldsTheming
+import MaterialComponents.MaterialTextControls_OutlinedTextAreasTheming
+import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialTextControls+FilledTextAreasTheming.h"
+#import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTextControls+OutlinedTextAreasTheming.h"
+#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
+```
+<!--</div>-->
+
+From there, call either the default or the error theming method.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+```objc
+MDCContainerScheme *containerScheme = ... // Set up a container scheme;
+[textField applyThemeWithScheme:self.containerScheme]; // Default theming method
+[textField applyErrorThemeWithScheme:self.containerScheme]; // Error theming method
+```
+
+#### Swift
+
+```swift
+let containerScheme = ... // Set up a container scheme
+textField.applyTheme(withScheme: self.containerScheme) // Default theming method
+textField.applyErrorTheme(withScheme: self.containerScheme) // Error theming method
+```
+<!--</div>-->
