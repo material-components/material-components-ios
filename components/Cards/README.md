@@ -186,7 +186,11 @@ elements as needed, and returning them in the desired order.
 
 ## Card
 
-`MDCCard` and `MDCCardCollectionCell` inherit from `UIControl` and `UICollectionViewCell`, respectively.
+![Card with sample image and buttons](docs/assets/custom-card.png)
+
+Cards can be used to build custom UIs, like the one shown above, from [CardWithImageViewAndButtonsExample](examples/CardWithImageViewAndButtonsExample.swift).
+
+MDCCard and MDCCardCollectionCell inherit from UIControl and UICollectionViewCell, respectively.
 
 * MDCCard
   * [API documentation](https://material.io/develop/ios/components/cards/api-docs/Classes/MDCCard.html)
