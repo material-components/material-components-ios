@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "A text field with an animated floating label and other Material Design features."
 iconId: text_field
-path: /catalog/text-fields/
+path: /catalog/textfields/
 -->
 
 # Text fields
