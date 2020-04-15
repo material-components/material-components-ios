@@ -82,7 +82,8 @@ class CardWithImageViewAndButtonsExample: UIViewController {
     card.cardButton2.setTitle("Action 2", for: .normal)
     card.cardButton1.applyTextTheme(withScheme: containerScheme)
     card.cardButton2.applyTextTheme(withScheme: containerScheme)
-    card.cornerRadius = 8ß    card.applyTheme(withScheme: containerScheme)
+    card.cornerRadius = 8
+    card.applyTheme(withScheme: containerScheme)
     card.setNeedsLayout()
     card.layoutIfNeeded()
     card.frame = CGRect(x: card.frame.minX,
