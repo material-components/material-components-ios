@@ -19,15 +19,15 @@ a single subject.
 
 ## Using cards
 
-Cards are implemented by MDCCard, which inherits from UIControl, and MDCCardCollectionCell, which inherits from UICollectionViewCell.
+Cards are implemented by `MDCCard`, which inherits from `UIControl`, and `MDCCardCollectionCell`, which inherits from `UICollectionViewCell`.
 
 A card's state determines its visual styling.
 
-When treated as a UIControl (MDCCard), it has a default styling (`UIControlStateNormal`), and a highlighted styling (`UIControlStateHighlighted`) when interacted with.
+When treated as a `UIControl` (`MDCCard`), it has a default styling (`UIControlStateNormal`), and a highlighted styling (`UIControlStateHighlighted`) when interacted with.
 
-When treated as a UICollectionViewCell (MDCCardCollectionCell), it has a default styling (`MDCCardCellStateNormal`), a highlighted styling (`MDCCardCellStateHighlighted`), and lastly a selected styling (`MDCCardCellStateSelected`).
+When treated as a `UICollectionViewCell` (`MDCCardCollectionCell`), it has a default styling (`MDCCardCellStateNormal`), a highlighted styling (`MDCCardCellStateHighlighted`), and lastly a selected styling (`MDCCardCellStateSelected`).
 
-Customization to the card is exposed via its API either in MDCCard or MDCCardCollectionCell. Currently the card consists of these customizations:
+Customization to the card is exposed via its API either in `MDCCard` or `MDCCardCollectionCell`. Currently the card consists of these customizations:
 
 - The border width for a specific state
 - The border color for a specific state
@@ -35,32 +35,32 @@ Customization to the card is exposed via its API either in MDCCard or MDCCardCol
 - The shadow color for a specific state
 - The corner radius for the card
 
-(MDCCardCollectionCell customization only):
+(`MDCCardCollectionCell` customization only):
 
 - Changing the image that appears in the Selected state.
 - Changing the image tint color that appears in the Selected state.
 
-An MDCCard can be added and used as you would add any UIView or UIControl, if manually in code, or through Interface Builder.
+An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through Interface Builder.
 
-An MDCCardCollectionCell can be added, used, and reused as a UICollectionViewCell, if manually in code, or through Interface Builder.
+An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through Interface Builder.
 
 ### Cards Classes
 
 #### MDCCard
 
-MDCCard subclasses UIControl and provides a simple class for developers to subclass and create custom cards with ink, shadows, corner radius, and stroke matching the Material spec.
+`MDCCard` subclasses `UIControl` and provides a simple class for developers to subclass and create custom cards with ink, shadows, corner radius, and stroke matching the Material spec.
 
-MDCCard uses the `highlighted` property that is built-in in UIControl and the `UIControlState` to move between states.
+`MDCCard` uses the `highlighted` property that is built-in in `UIControl` and the `UIControlState` to move between states.
 
 #### MDCCardCollectionCell
 
-MDCCardCollectionCell subclasses UICollectionViewCell and provides a simple collection view cell for developers to use in their collections with ink, shadows, corner radius, and stroke matching the Material spec.
+`MDCCardCollectionCell` subclasses `UICollectionViewCell` and provides a simple collection view cell for developers to use in their collections with ink, shadows, corner radius, and stroke matching the Material spec.
 
-MDCCardCollectionCell uses the `selected` property that is built-in in UICollectionViewCell and has its own `MDCCardCellState` to keep track of the current state it is in.
+`MDCCardCollectionCell` uses the `selected` property that is built-in in `UICollectionViewCell` and has its own `MDCCardCellState` to keep track of the current state it is in.
 
-### Install MDCCard or MDCCardCollectionCell
+### Install `MDCCard` or `MDCCardCollectionCell`
 
-In order to use MDCCard or MDCCardCollectionCell, first add Cards to your `Podfile`:
+In order to use `MDCCard` or `MDCCardCollectionCell`, first add Cards to your `Podfile`:
 
 ```bash
 pod MaterialComponents/Cards
@@ -87,7 +87,7 @@ import MaterialComponents.MaterialCards
 ```
 <!--</div>-->
 
-From there, either initialize an MDCCard like you would any UIView or use MDCCardCollectionCell as a superclass for a custom UICollectionViewCell.
+From there, either initialize an `MDCCard` like you would any UIView or use `MDCCardCollectionCell` as a superclass for a custom `UICollectionViewCell`.
 
 ### Making cards accessible
 
@@ -202,7 +202,7 @@ MDCCard and MDCCardCollectionCell inherit from UIControl and UICollectionViewCel
 
 ### Card examples using MDCCard
 
-MDCCard can be used like a regular UIView. This is an example of a regular car with no content:
+`MDCCard` can be used like a regular `UIView`. This is an example of a regular card:
 
 ![single basic card](docs/assets/single-basic-card.png)
 
@@ -227,7 +227,7 @@ MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(30, 100, 150, 150)];
 
 ### Card examples using MDCCardCollectionCell
 
-MDCCardCollectionCell can be used like a regular UICollectionViewCell. This example shows empty MDCCardCollectionCells in a collection:
+`MDCCardCollectionCell` can be used like a regular `UICollectionViewCell`. This is an example of `MDCCardCollectionCell`s in a collection:
 
 ![card collection cells](docs/assets/card-collection-cells.png)
 
