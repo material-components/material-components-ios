@@ -17,7 +17,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialAnimationTiming.h"
-#import "MaterialAvailability.h"
 #import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
@@ -148,15 +147,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [self updateScrollProperties];
   [self updateColors];
   [self updateSelectionIndicatorVisibility];
-
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13.0, *)) {
-    // If clients report conflicting gesture recognizers please see proposed solution in the
-    // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
-    // or file an issue on github mentioning the internal document.
-    [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:nil]];
-  }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)dealloc {
@@ -515,9 +505,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(badgeValue)),
       NSStringFromSelector(@selector(badgeColor)),
-      NSStringFromSelector(@selector(accessibilityIdentifier)),
-      NSStringFromSelector(@selector(largeContentSizeImage)),
-      NSStringFromSelector(@selector(largeContentImageInsets)),
+      NSStringFromSelector(@selector(accessibilityIdentifier))
     ];
   });
   // clang-format on

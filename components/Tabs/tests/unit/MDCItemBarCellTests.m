@@ -14,8 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialAvailability.h"
-
 #import "../../src/private/MDCItemBarCell+Private.h"
 #import "../../src/private/MDCItemBarCell.h"
 #import "../../src/private/MDCItemBarStyle.h"
@@ -111,78 +109,5 @@
   // Then
   XCTAssertFalse(cell.rippleTouchController.shouldProcessRippleWithScrollViewGestures);
 }
-
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-- (void)testLargeContentViewerTitleSetWhenCellUpdatesWithItem {
-  if (@available(iOS 13.0, *)) {
-    // Given.
-    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
-    MDCItemBarCell *cell = [[MDCItemBarCell alloc] init];
-
-    // When.
-    [cell updateWithItem:item atIndex:0 count:1];
-
-    // Then.
-    XCTAssertEqualObjects(cell.largeContentTitle, item.title);
-  }
-}
-
-- (void)testLargeContentViewerImageDefaultsToItemImageWhenCellUpdatesWithItem {
-  if (@available(iOS 13.0, *)) {
-    // Given.
-    UIImage *image = [[UIImage alloc] init];
-    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:image tag:0];
-    MDCItemBarCell *cell = [[MDCItemBarCell alloc] init];
-
-    // When.
-    [cell updateWithItem:item atIndex:0 count:1];
-
-    // Then.
-    XCTAssertEqualObjects(cell.largeContentImage, image);
-    XCTAssertTrue(cell.scalesLargeContentImage);
-  }
-}
-
-- (void)testLargeContentViewerImageSetToLargeContentImageWhenCellUpdatesWithItem {
-  if (@available(iOS 13.0, *)) {
-    // Given.
-    UIImage *image = [[UIImage alloc] init];
-    UIImage *largeContentImage = [[UIImage alloc] init];
-    largeContentImage.accessibilityLabel = @"largeContentImage";
-
-    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:image tag:0];
-    item.largeContentSizeImage = largeContentImage;
-    MDCItemBarCell *cell = [[MDCItemBarCell alloc] init];
-
-    // When.
-    [cell updateWithItem:item atIndex:0 count:1];
-
-    // Then.
-    XCTAssertEqualObjects(cell.largeContentImage.accessibilityLabel,
-                          largeContentImage.accessibilityLabel);
-    XCTAssertFalse(cell.scalesLargeContentImage);
-  }
-}
-
-- (void)testLargeContentImageInsetsSetWhenCellUpdatesWithItem {
-  if (@available(iOS 13.0, *)) {
-    // Given.
-    UIEdgeInsets insets = UIEdgeInsetsMake(2, 1, 1, 2);
-
-    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
-    item.largeContentSizeImageInsets = insets;
-    MDCItemBarCell *cell = [[MDCItemBarCell alloc] init];
-
-    // When.
-    [cell updateWithItem:item atIndex:0 count:1];
-
-    // Then.
-    XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(cell.largeContentImageInsets, insets),
-                  @"cell.largeContentImageInsets:%@ insets:%@",
-                  NSStringFromUIEdgeInsets(cell.largeContentImageInsets),
-                  NSStringFromUIEdgeInsets(insets));
-  }
-}
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
 @end
