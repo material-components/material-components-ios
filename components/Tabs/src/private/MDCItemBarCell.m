@@ -17,13 +17,15 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialAnimationTiming.h"
+#import "MaterialAvailability.h"
+#import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MDCItemBarBadge.h"
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialInk.h"
-#import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
 
 /// Size of image in points.
 static const CGSize kImageSize = {24, 24};
@@ -77,6 +79,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     _itemIndex = NSNotFound;
 
     self.isAccessibilityElement = YES;
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+    if (@available(iOS 13.0, *)) {
+      self.showsLargeContentViewer = YES;
+    }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
     // Create initial subviews
     [self updateSubviews];
@@ -229,6 +236,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     }
   }
   self.accessibilityIdentifier = item.accessibilityIdentifier;
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    self.largeContentTitle = item.title;
+    self.largeContentImage = item.largeContentSizeImage;
+    self.largeContentImageInsets = item.largeContentSizeImageInsets;
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   _itemIndex = itemIndex;
   _itemCount = itemCount;
@@ -402,6 +417,23 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   // Speak components with a pause in between.
   return [labelComponents componentsJoinedByString:@", "];
 }
+
+#pragma mark - UILargeContentViewerItem
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+- (UIImage *)largeContentImage NS_AVAILABLE_IOS(13.0) {
+  UIImage *superImage = super.largeContentImage;
+  if (!superImage) {
+    return self.image;
+  }
+
+  return superImage;
+}
+
+- (BOOL)scalesLargeContentImage NS_AVAILABLE_IOS(13.0) {
+  return super.largeContentImage == nil;
+}
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
 #pragma mark - Private
 
