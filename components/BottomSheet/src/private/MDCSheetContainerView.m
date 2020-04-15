@@ -239,6 +239,28 @@ static const CGFloat kSheetBounceBuffer = 150;
   }
 }
 
+- (void)setShouldFullyExtendSheetInCompactVerticalSizeClasses:
+    (BOOL)shouldFullyExtendSheetInCompactVerticalSizeClasses {
+  _shouldFullyExtendSheetInCompactVerticalSizeClasses =
+      shouldFullyExtendSheetInCompactVerticalSizeClasses;
+  [self updateSheetState];
+  [self updateSheetFrame];
+  // Adjusts the pane to the correct snap point, e.g. after a rotation.
+  if (self.window) {
+    [self animatePaneWithInitialVelocity:CGPointZero];
+  }
+}
+
+- (BOOL)shouldEnforceExtendedSheetState {
+  if (UIAccessibilityIsVoiceOverRunning()) {
+    // Always return the full height when VO is running, so that the entire content is on-screen
+    // and accessibile.
+    return YES;
+  }
+  return self.shouldFullyExtendSheetInCompactVerticalSizeClasses &&
+         self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
+}
+
 // Slides the sheet position downwards, so the right amount peeks above the bottom of the superview.
 - (void)updateSheetFrame {
   [self.animator removeAllBehaviors];
@@ -260,9 +282,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 }
 
 - (void)updateSheetState {
-  if (UIAccessibilityIsVoiceOverRunning()) {
-    // Always return the full height when VO is running, so that the entire content is on-screen
-    // and accessibile.
+  if ([self shouldEnforceExtendedSheetState]) {
     self.sheetState = MDCSheetStateExtended;
   } else {
     CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
@@ -287,8 +307,10 @@ static const CGFloat kSheetBounceBuffer = 150;
                                     self.sheet.scrollView.contentSize.height +
                                     self.sheet.scrollView.contentInset.bottom;
 
-  // If we have a scrollview, the sheet should never get taller than its content height.
-  if (scrollViewContentHeight > 0) {
+  if ([self shouldEnforceExtendedSheetState]) {
+    return boundsHeight;
+  } else if (scrollViewContentHeight > 0) {
+    // If we have a scrollview, the sheet should not be taller than its content height.
     return MIN(boundsHeight, scrollViewContentHeight);
   } else {
     return MIN(boundsHeight, self.preferredSheetHeight);

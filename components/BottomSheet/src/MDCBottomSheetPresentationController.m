@@ -125,6 +125,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   self.sheetView.delegate = self;
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
   self.sheetView.dismissOnDraggingDownSheet = self.dismissOnDraggingDownSheet;
+  self.sheetView.shouldFullyExtendSheetInCompactVerticalSizeClasses =
+      self.shouldFullyExtendSheetInCompactVerticalSizeClasses;
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
@@ -301,6 +303,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   if (self.sheetView) {
     self.sheetView.dismissOnDraggingDownSheet = dismissOnDraggingDownSheet;
   }
+}
+
+- (void)setShouldFullyExtendSheetInCompactVerticalSizeClasses:
+    (BOOL)shouldFullyExtendSheetInCompactVerticalSizeClasses {
+  _shouldFullyExtendSheetInCompactVerticalSizeClasses =
+      shouldFullyExtendSheetInCompactVerticalSizeClasses;
+  self.sheetView.shouldFullyExtendSheetInCompactVerticalSizeClasses =
+      shouldFullyExtendSheetInCompactVerticalSizeClasses;
 }
 
 #pragma mark - MDCSheetContainerViewDelegate

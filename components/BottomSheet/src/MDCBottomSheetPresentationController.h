@@ -57,6 +57,14 @@
 @property(nonatomic, assign) BOOL shouldPropagateSafeAreaInsetsToPresentedViewController;
 
 /**
+ When this property is set to @c YES presented sheets will be "full screen", instead of adopting the
+ @c preferredSheetHeight.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL shouldFullyExtendSheetInCompactVerticalSizeClasses;
+
+/**
  This is used to set a custom height on the sheet view.
 
  @note If a positive value is passed then the sheet view will be that height even if
