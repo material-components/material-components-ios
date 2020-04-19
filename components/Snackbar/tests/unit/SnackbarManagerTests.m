@@ -257,4 +257,10 @@
   XCTAssertLessThan(MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation, 0);
 }
 
+- (void)testDefaultValueForFocusedSnackbarsAccessibilityNotification {
+  // Then
+  XCTAssertEqual(MDCSnackbarManager.defaultManager.focusAccessibilityNotification,
+                 UIAccessibilityLayoutChangedNotification);
+}
+
 @end

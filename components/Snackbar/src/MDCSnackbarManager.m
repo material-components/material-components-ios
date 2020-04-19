@@ -247,7 +247,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
             completion:^{
               if (snackbarView.accessibilityViewIsModal || message.focusOnShow ||
                   ![self isSnackbarTransient:snackbarView]) {
-                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                UIAccessibilityPostNotification(self.manager.focusAccessibilityNotification,
                                                 snackbarView);
               } else {
                 snackbarView.accessibilityElementsHidden = YES;
@@ -573,6 +573,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _messageElevation = MDCShadowElevationSnackbar;
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _mdc_overrideBaseElevation = -1;
+    _focusAccessibilityNotification = UIAccessibilityLayoutChangedNotification;
   }
   return self;
 }
