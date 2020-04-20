@@ -1,27 +1,14 @@
-# #develop#
+# 108.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release deletes bazel support, improves documentation for Cards and TextControls, and
+adds the large content view support for MDCItemBar.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ## Component changes
 
 ### ActionSheet
 
-* [Internal change](https://github.com/material-components/material-components-ios/commit/16c6a8daa8bf341cdeb7e950c07c52f5ec67dc8d) (Jeff Verkoeyen)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/1f5035c6247f770a41c613060f57f4a57c792ee9) (Jeff Verkoeyen)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/2ffd66d74c85f3e19135155dbcb57ccca8f457a3) (Jeff Verkoeyen)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/64bf9aea71583cb95997014be4a3b0e85f4a783b) (Jeff Verkoeyen)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/8311f56970bdfd55eddc6502c70c6e70631ff61b) (Jeff Verkoeyen)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/a9131baeb2bb7cdf7222d0adca2f14a5581a8c25) (Jeff Verkoeyen)
 * [Remove duplicate primary demo bit.](https://github.com/material-components/material-components-ios/commit/b56963f4edb029e4642409a317a74637ab9f5e8b) (Jeff Verkoeyen)
 
 ### Banner
@@ -39,7 +26,6 @@ Replace this text with example code for each new feature.
 ### Buttons
 
 * [Fix compilation with -std=c11](https://github.com/material-components/material-components-ios/commit/e49657fb1435f04ad58bee8502cc4c32801fa26b) (Nobody)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/7bd2a4e31736374984a6871776385ab0cd2607a7) (Jeff Verkoeyen)
 
 ### Cards
 
@@ -72,13 +58,12 @@ Replace this text with example code for each new feature.
 ### TextControls
 
 * [Update TextControls readme metadata path](https://github.com/material-components/material-components-ios/commit/2a3a0adfaeb2837a1220ab23491c2702c2ae6787) (Andrew Overton)
+* [Replace TextControls documentation](https://github.com/material-components/material-components-ios/commit/512d6a00495b782b0979677178ce5caee188643b) (Andrew Overton)
 
 ## Multi-component changes
 
 * [Delete all bazel support.](https://github.com/material-components/material-components-ios/commit/8abbb099a920ee04e2cd6d50731930cd9fea9cdc) (Jeff Verkoeyen)
 * [Remove stale code coverage badge.](https://github.com/material-components/material-components-ios/commit/c577ec898cea2a5313a7c215f8a38be5d92e4417) (Jeff Verkoeyen)
-* [Replace TextControls documentation](https://github.com/material-components/material-components-ios/commit/512d6a00495b782b0979677178ce5caee188643b) (Andrew Overton)
-* [v108.1.0 release](https://github.com/material-components/material-components-ios/commit/a0a6643d92710ef5c32cc62396ef3cf2ed8a1c91) (Jeff Verkoeyen)
 
 ---
 
