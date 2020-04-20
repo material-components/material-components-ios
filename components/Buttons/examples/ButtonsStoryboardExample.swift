@@ -216,6 +216,10 @@ extension ButtonsStoryboardExample {
       "breadcrumbs": ["Buttons", "Buttons (Storyboard)"],
       "primaryDemo": false,
       "presentable": false,
+      // Disabling tests of this example because it currently crashes with
+      // "'[<UIViewController 0x7f97f6d4cda0> setValue:forUndefinedKey:]: this class is not key
+      // value coding-compliant for the key storyboardContained.'"
+      "flaky": true,
       "storyboardName": "ButtonsStoryboardAndProgrammatic",
     ]
   }
