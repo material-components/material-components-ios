@@ -679,7 +679,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGSize availableSize = [self availableSizeForSubviewLayout];
   switch (self.preferredLayoutStyle) {
     case MDCTabBarViewLayoutStyleScrollableCentered: {
-      return MDCTabBarViewLayoutStyleScrollableCentered;
+      if (self.contentSize.width < CGRectGetWidth(self.frame)) {
+        return MDCTabBarViewLayoutStyleFixedClusteredCentered;
+      } else {
+        return MDCTabBarViewLayoutStyleScrollableCentered;
+      }
+      break;
     }
     case MDCTabBarViewLayoutStyleScrollable: {
       return MDCTabBarViewLayoutStyleScrollable;
