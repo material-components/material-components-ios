@@ -1,9 +1,11 @@
-# 108.2.0
+# 109.0.0
 
-This minor release deletes bazel support, improves documentation for Cards and TextControls, and
+This major release deletes bazel support, improves documentation for Cards and TextControls, and
 adds the large content view support for MDCItemBar.
 
-## API changes
+## Breaking changes
+
+Bazel is no longer supported.
 
 ## Component changes
 
@@ -25,7 +27,7 @@ adds the large content view support for MDCItemBar.
 
 ### Buttons
 
-* [Fix compilation with -std=c11](https://github.com/material-components/material-components-ios/commit/e49657fb1435f04ad58bee8502cc4c32801fa26b) (Nobody)
+* [Fix compilation with -std=c11](https://github.com/material-components/material-components-ios/commit/e49657fb1435f04ad58bee8502cc4c32801fa26b) (Sylvain Defresne)
 
 ### Cards
 
