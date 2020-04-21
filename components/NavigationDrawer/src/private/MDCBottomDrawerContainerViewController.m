@@ -230,7 +230,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   [self removeScrollViewObserver];
   [self.headerShadowLayer removeFromSuperlayer];
   self.headerShadowLayer = nil;
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)hideDrawer {

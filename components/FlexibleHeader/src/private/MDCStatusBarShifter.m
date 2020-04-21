@@ -63,7 +63,6 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 
 - (void)dealloc {
   [_replicaInvalidatorTimer invalidate];
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init {

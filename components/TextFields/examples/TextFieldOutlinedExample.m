@@ -35,10 +35,6 @@
 
 @implementation TextFieldOutlinedObjectiveCExample
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)styleTextInputController:(id<MDCTextInputController>)controller {
   if ([controller isKindOfClass:[MDCTextInputControllerOutlined class]]) {
     MDCTextInputControllerOutlined *outlinedController =

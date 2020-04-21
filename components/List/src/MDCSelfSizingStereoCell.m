@@ -77,10 +77,6 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   [self createSubviews];
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark Setup
 
 - (void)createSubviews {

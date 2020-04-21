@@ -159,10 +159,6 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   return self;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)commonMDCChipFieldInit {
   _chips = [NSMutableArray array];
   _delimiter = MDCChipFieldDelimiterDefault;

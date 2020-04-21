@@ -242,9 +242,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self removeObservers];
   [self removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UIContentSizeCategoryDidChangeNotification
-                                                object:nil];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

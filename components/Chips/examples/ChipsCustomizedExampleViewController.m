@@ -26,10 +26,6 @@
 
 @implementation ChipsCustomizedExampleViewController
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (id)init {
   self = [super init];
   if (self) {

@@ -251,9 +251,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)dealloc {
   [self removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UIContentSizeCategoryDidChangeNotification
-                                                object:nil];
 }
 
 - (void)setUnderlyingColorHint:(UIColor *)underlyingColorHint {

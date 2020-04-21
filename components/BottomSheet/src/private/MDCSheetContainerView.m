@@ -127,7 +127,6 @@ static const CGFloat kSheetBounceBuffer = 150;
 - (void)dealloc {
   [self.sheet.scrollView removeObserver:self forKeyPath:kContentSizeKey];
   [self.sheet.scrollView removeObserver:self forKeyPath:kContentInsetKey];
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)voiceOverStatusDidChange {

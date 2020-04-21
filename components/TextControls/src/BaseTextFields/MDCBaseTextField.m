@@ -75,10 +75,6 @@
   [self observeContentSizeCategoryNotifications];
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark View Setup
 
 - (void)initializeProperties {
