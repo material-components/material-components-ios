@@ -436,6 +436,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
   if (item) {
     [self.tabBar.displayDelegate tabBar:self.tabBar willDisplayItem:item];
+    if ([cell isKindOfClass:[MDCItemBarCell class]]) {
+      cell.selected = (item == self.selectedItem);
+    }
   }
 }
 

@@ -31,7 +31,8 @@ class FloatingButtonTypicalUseSwiftExample: UIViewController {
 
     view.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
-    let plusImage = #imageLiteral(resourceName: "Plus")
+    let plusImage = UIImage(named: "Plus", in: Bundle(for: type(of: self)),
+                              compatibleWith: traitCollection)
     let plusImage36 = UIImage(named: "plus_white_36", in: Bundle(for: type(of: self)),
                               compatibleWith: traitCollection)
 

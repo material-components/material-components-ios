@@ -1,13 +1,3 @@
-<!--docs:
-title: "Text fields"
-layout: detail
-section: components
-excerpt: "Text fields allow users to input text into your app."
-iconId: text_field
-path: /catalog/textfields/
-api_doc_root: true
--->
-
 <!-- This file was auto-generated using ./scripts/generate_readme TextFields -->
 
 # Text fields

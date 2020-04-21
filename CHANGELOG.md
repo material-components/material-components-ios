@@ -1,3 +1,74 @@
+# 109.0.0
+
+This major release deletes bazel support, improves documentation for Cards and TextControls, and
+adds the large content view support for MDCItemBar.
+
+## Breaking changes
+
+Bazel is no longer supported.
+
+## Component changes
+
+### ActionSheet
+
+* [Remove duplicate primary demo bit.](https://github.com/material-components/material-components-ios/commit/b56963f4edb029e4642409a317a74637ab9f5e8b) (Jeff Verkoeyen)
+
+### Banner
+
+* [Make the primary demo presentable.](https://github.com/material-components/material-components-ios/commit/fb7a6f4f266117319b36ae57c89d3acf07412bb5) (Jeff Verkoeyen)
+
+### BottomAppBar
+
+* [Add MDCRipple support to MDCBottomAppBarView](https://github.com/material-components/material-components-ios/commit/cd30e764c252865d1d7c8fa973cb7996ac2421d2) (Cody Weaver)
+
+### BottomSheet
+
+* [Present in full screen in vertical compact size classes when the content height is taller than the sheet view's bounds.](https://github.com/material-components/material-components-ios/commit/b5c894e7e31b280a5ee2bc345cf0d7d6dbad4aa7) (Andrew Overton)
+
+### Buttons
+
+* [Fix compilation with -std=c11](https://github.com/material-components/material-components-ios/commit/e49657fb1435f04ad58bee8502cc4c32801fa26b) (Sylvain Defresne)
+
+### Cards
+
+* [Replace Cards documentation](https://github.com/material-components/material-components-ios/commit/54723a16a4a9c44e8866ddfe9977d85cbb8524c1) (Andrew Overton)
+
+### Chips
+
+* [Add unit tests for MDCChipField delegate interaction.](https://github.com/material-components/material-components-ios/commit/ee625232f81bacd82bb6347492ea4f3fc3ed9388) (Bryan Oltman)
+* [Invalidate MDCChipField intrinsic content size in layoutSubviews.](https://github.com/material-components/material-components-ios/commit/3171e89ed6698bb6df0c23e62173eb716ca367b9) (Bryan Oltman)
+* [When deleting text in MDCChipField, only select the last chip if the text field is empty.](https://github.com/material-components/material-components-ios/commit/6a6c33b4cc6a3b24c752a31b4cb0b894331f500b) (Bryan Oltman)
+
+### List
+
+* [Use standard "List Items" name for all Lists examples.](https://github.com/material-components/material-components-ios/commit/5957dd223a089155428806af5a13bb8cd13d039f) (Jeff Verkoeyen)
+
+### Snackbar
+
+* [Add a property to allow customization the accessibility post notification level.](https://github.com/material-components/material-components-ios/commit/23a372798c4844dae04c18fa3b9fee67292c328d) (Yarden Eitan)
+* [Ensure snackbar buttons meet minimum touch target requirements](https://github.com/material-components/material-components-ios/commit/853f461ab6b6d5b5b3429243df974e0931c47508) (Andrew Overton)
+
+### Tabs
+
+* [Add ScrollableCentered option to TabBarView example](https://github.com/material-components/material-components-ios/commit/1666348de940fc67bf2579bec7cc71574c80088b) (Andrew Overton)
+* [Add example to expose a bug where tab selection indicator and selected text highlighting can get out of sync.](https://github.com/material-components/material-components-ios/commit/99345ad5084f92db2ca46c15513b1a1d62a35509) (Bryan Oltman)
+* [Adds large content viewer support to MDCItemBar.](https://github.com/material-components/material-components-ios/commit/28c20ee11cd9bedff0f52687bf62cca900cb22cd) (Nobody)
+* [Adds large content viewer support to MDCItemBar.](https://github.com/material-components/material-components-ios/commit/b387c367d8addb0f88572991f4b763960ad7abaa) (Eric Lee)
+* [Ensure the cell representing MDCTabBar's selected item is selected before display.](https://github.com/material-components/material-components-ios/commit/c715e6bcf78953ee2aa4b21d21ef7cf2dd299284) (Bryan Oltman)
+* [Stop ripple in MDCTabBar from showing up on scroll](https://github.com/material-components/material-components-ios/commit/f1a125544b8b111fc90686ca9c9798dad6c6506c) (Cody Weaver)
+
+### TextControls
+
+* [Update TextControls readme metadata path](https://github.com/material-components/material-components-ios/commit/2a3a0adfaeb2837a1220ab23491c2702c2ae6787) (Andrew Overton)
+* [Replace TextControls documentation](https://github.com/material-components/material-components-ios/commit/512d6a00495b782b0979677178ce5caee188643b) (Andrew Overton)
+
+## Multi-component changes
+
+* [Delete all bazel support.](https://github.com/material-components/material-components-ios/commit/8abbb099a920ee04e2cd6d50731930cd9fea9cdc) (Jeff Verkoeyen)
+* [Remove stale code coverage badge.](https://github.com/material-components/material-components-ios/commit/c577ec898cea2a5313a7c215f8a38be5d92e4417) (Jeff Verkoeyen)
+
+---
+
 # 108.1.0
 
 This minor release improves our support of the new iPadOS cursor APIs, deprecates a themer, and

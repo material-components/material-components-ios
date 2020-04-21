@@ -105,6 +105,25 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 @property(nullable, nonatomic, strong) UIColor *shadowColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The color of ink that ripples across the buttons.
+
+ @note This API only has a visual effect if @c enableRippleBehavior is set to @c YES.
+ */
+@property(nonnull, nonatomic, copy) UIColor *rippleColor;
+
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
  Sets the visibility of the floating action button.
 
  @param animated Enable or disable animation.

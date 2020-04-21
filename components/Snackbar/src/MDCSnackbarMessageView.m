@@ -86,11 +86,6 @@ static const CGFloat kLegacyButtonPadding = 5;
 static const CGFloat kButtonPadding = 8;
 
 /**
- Minimum padding for the vertical padding of the buttons to the Snackbar
- */
-static const CGFloat kMinVerticalButtonPadding = 6;
-
-/**
  The width of the Snackbar.
  */
 static const CGFloat kMinimumViewWidth_iPad = 288;
@@ -706,7 +701,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kTopMargin" : @(self.safeContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kContentSafeBottomInset" : @(kBorderWidth + self.contentSafeBottomInset),
-    @"kMinVerticalButtonPadding" : @(kMinVerticalButtonPadding),
   };
   NSDictionary *views = @{
     @"container" : self.containerView,
@@ -803,7 +797,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                metrics:metrics
                                                                  views:views]];
 
-      formatString = @"V:|-(>=kMinVerticalButtonPadding)-[buttons]-(>=kMinVerticalButtonPadding)-|";
+      formatString = @"V:|[buttons]|";
       [constraints addObjectsFromArray:[NSLayoutConstraint
                                            constraintsWithVisualFormat:formatString
                                                                options:NSLayoutFormatAlignAllCenterY
@@ -911,11 +905,13 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   };
 
   __block UIView *previousButton = nil;
-  [self.buttons enumerateObjectsUsingBlock:^(UIView *button, NSUInteger idx, __unused BOOL *stop) {
+  [self.buttons enumerateObjectsUsingBlock:^(UIView *buttonContainer, NSUInteger idx,
+                                             __unused BOOL *stop) {
     // Convenience dictionary of views.
     NSMutableDictionary *views = [NSMutableDictionary dictionary];
-    views[@"buttonContainer"] = button;
-    views[@"button"] = [button viewWithTag:kButtonTagStart + idx];
+    views[@"buttonContainer"] = buttonContainer;
+    MDCButton *currentButton = [buttonContainer viewWithTag:kButtonTagStart + idx];
+    views[@"button"] = currentButton;
     if (previousButton) {
       views[@"previousButton"] = previousButton;
     }
@@ -927,11 +923,16 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                     metrics:metrics
                                                                       views:views]];
 
-    // Pin the button to the height of its container.
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|"
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
+    // Ensure that the button is vertically centered in its container view
+    NSLayoutConstraint *verticallyCenterConstraint =
+        [NSLayoutConstraint constraintWithItem:currentButton
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:buttonContainer
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1.0
+                                      constant:0];
+    [constraints addObject:verticallyCenterConstraint];
 
     // Pin the button to the width of its container.
     [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|"

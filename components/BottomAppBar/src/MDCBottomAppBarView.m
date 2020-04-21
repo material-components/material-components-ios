@@ -441,6 +441,19 @@ static const int kMDCButtonAnimationDuration = 200;
   _bottomBarLayer.shadowColor = shadowColor.CGColor;
 }
 
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = [rippleColor copy];
+  self.navBar.rippleColor = _rippleColor;
+}
+
+- (BOOL)enableRippleBehavior {
+  return self.navBar.enableRippleBehavior;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  self.navBar.enableRippleBehavior = enableRippleBehavior;
+}
+
 #pragma mark TraitCollection
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

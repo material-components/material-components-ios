@@ -199,6 +199,13 @@
 @property(nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
 
 /**
+ This accessibility notification posted when a Snackbar changes the focus of VoiceOver.
+
+ Default is set to UIAccessibilityLayoutChangedNotification.
+ */
+@property(nonatomic, assign) UIAccessibilityNotifications focusAccessibilityNotification;
+
+/**
  Returns the button title color for a particular control state.
 
  @param state The control state.

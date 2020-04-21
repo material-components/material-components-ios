@@ -353,11 +353,19 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
               handler:^(MDCActionSheetAction *_Nonnull action) {
                 self.tabBar.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
               }];
+  MDCActionSheetAction *scrollableCenteredAction = [MDCActionSheetAction
+      actionWithTitle:@"Scrollable Centered"
+                image:((currentStyle == MDCTabBarViewLayoutStyleScrollableCentered) ? checkIcon
+                                                                                    : nil)
+              handler:^(MDCActionSheetAction *_Nonnull action) {
+                self.tabBar.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollableCentered;
+              }];
   [actionSheet addAction:fixedJustifiedAction];
   [actionSheet addAction:fixedClusteredLeadingAction];
   [actionSheet addAction:fixedClusteredTrailingAction];
   [actionSheet addAction:fixedClusteredCenteredAction];
   [actionSheet addAction:scrollableAction];
+  [actionSheet addAction:scrollableCenteredAction];
   [actionSheet applyThemeWithScheme:self.containerScheme];
   actionSheet.alwaysAlignTitleLeadingEdges = YES;
   [self presentViewController:actionSheet animated:YES completion:nil];

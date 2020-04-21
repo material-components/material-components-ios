@@ -140,7 +140,7 @@
 + (NSDictionary *)catalogMetadata {
   return @{
     @"breadcrumbs" : @[ @"Action Sheet", @"Material : UIKit Comparison" ],
-    @"primaryDemo" : @YES,
+    @"primaryDemo" : @NO,
     @"presentable" : @NO
   };
 }

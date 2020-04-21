@@ -166,7 +166,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Lists", @"List Cell Example" ],
+    @"breadcrumbs" : @[ @"List Items", @"List Cell Example" ],
     @"description" : @"Material Collection Lists are continuous, vertical indexes of text "
                      @"or images.",
     @"primaryDemo" : @NO,

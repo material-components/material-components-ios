@@ -29,7 +29,9 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     _containerScheme = [[MDCContainerScheme alloc] init];
-    [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
+    [self setupExampleViews:@[
+      @"Change Alignment", @"Toggle Case", @"Clear Selection", @"Select First", @"Select Last"
+    ]];
   }
   return self;
 }
@@ -126,6 +128,14 @@
 
     case 2:
       [self clearSelection:collectionView];
+      break;
+
+    case 3:
+      [self.tabBar setSelectedItem:self.tabBar.items.firstObject animated:YES];
+      break;
+
+    case 4:
+      [self.tabBar setSelectedItem:self.tabBar.items.lastObject animated:YES];
       break;
 
     default:
