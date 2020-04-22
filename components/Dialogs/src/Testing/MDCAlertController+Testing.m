@@ -19,17 +19,29 @@
 @implementation MDCAlertController (Testing)
 
 - (void)sizeToFitContentInBounds:(CGSize)bounds {
-  CGRect viewBounds = self.view.bounds;
-  viewBounds.size = bounds;
-  self.view.bounds = viewBounds;
+  [self setViewBounds:bounds];
   [self sizeToBounds:bounds];
   [self.view layoutIfNeeded];
+}
+
+- (void)sizeToFitAutoLayoutContentInBounds:(CGSize)bounds {
+  [self setViewBounds:bounds];
+  // Making sure that tests that use accessory views with auto-layout are laid out with their final
+  // frames before `sizeToBounds:` invoke their `systemLayoutSizeFittingSize:'.
+  [self.view layoutIfNeeded];
+  [self sizeToBounds:bounds];
 }
 
 - (void)sizeToBounds:(CGSize)bounds {
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.view;
   CGSize preferredSize = [alertView calculatePreferredContentSizeForBounds:bounds];
   alertView.bounds = CGRectMake(0.f, 0.f, preferredSize.width, preferredSize.height);
+}
+
+- (void)setViewBounds:(CGSize)bounds {
+  CGRect viewBounds = self.view.bounds;
+  viewBounds.size = bounds;
+  self.view.bounds = viewBounds;
 }
 
 - (void)highlightAlertPanels {
