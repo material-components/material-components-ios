@@ -180,6 +180,7 @@ extension AnimationTimingSwiftExampleViewController {
       "breadcrumbs": ["Animation Timing", "Animation Timing (Swift)"],
       "primaryDemo": false,
       "presentable": false,
+      "flaky": true, // The automatic animations cause the snapshot tests to hang.
     ]
   }
 
