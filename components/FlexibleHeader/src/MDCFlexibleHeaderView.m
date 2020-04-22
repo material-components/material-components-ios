@@ -1328,8 +1328,13 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       if (@available(iOS 11.0, *)) {
         scrollViewAdjustedContentInsetTop = self.trackingScrollView.adjustedContentInset.top;
       }
-      offset.y = MAX(offset.y, -(MAX(self.minMaxHeight.maximumHeightWithTopSafeArea,
-                                     scrollViewAdjustedContentInsetTop)));
+      // The offset clamp needs to be rounded to the closest integer due to the contentOffset being
+      // re-adjusted by UIKit to a non-fractional number. Without rounding an infinite recurion
+      // occurs, where the content offset is set to a fractional number and then UIKit re-setting
+      // it back and re-calling this method over and over.
+      CGFloat offsetClamp = MDCRound(-(
+          MAX(self.minMaxHeight.maximumHeightWithTopSafeArea, scrollViewAdjustedContentInsetTop)));
+      offset.y = MAX(offset.y, offsetClamp);
       [self fhv_setContentOffset:offset forTrackingScrollView:self.trackingScrollView];
       if (boundsAnimation) {
         // The transform will piggy-back with the in-flight bounds
