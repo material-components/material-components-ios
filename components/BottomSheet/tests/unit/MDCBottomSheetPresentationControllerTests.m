@@ -59,6 +59,7 @@
 - (CGPoint)targetPoint;
 - (void)draggableView:(MDCDraggableView *)view didPanToOffset:(CGFloat)offset;
 - (BOOL)draggableView:(MDCDraggableView *)view shouldBeginDraggingWithVelocity:(CGPoint)velocity;
+- (void)draggableView:(MDCDraggableView *)view draggingEndedWithVelocity:(CGPoint)velocity;
 @end
 
 /**
@@ -340,7 +341,7 @@
   XCTAssertFalse(self.sheetView.dismissOnDraggingDownSheet);
 }
 
-- (void)testSettingDismissOnDraggingDownSheetViewBlocksGesture {
+- (void)testSettingDismissOnDraggingDownSheetViewDoesNotBlocksGesture {
   // Given
   self.sheetView.dismissOnDraggingDownSheet = NO;
 
@@ -349,7 +350,107 @@
                            shouldBeginDraggingWithVelocity:CGPointMake(0, 0)];
 
   // Then
-  XCTAssertFalse(shouldBeginDragging);
+  XCTAssertTrue(shouldBeginDragging);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetToNoViewShouldNotCloseWithDragDown {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = NO;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, 1)];
+
+  // Then
+  XCTAssertNotEqual(self.sheetView.sheetState, MDCSheetStateClosed);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetToNoViewShouldNotCloseWithDragDownWithPreferredHeight {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = NO;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+  self.sheetView.preferredSheetHeight = 222;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, 1)];
+
+  // Then
+  XCTAssertNotEqual(self.sheetView.sheetState, MDCSheetStateClosed);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetViewToYesShouldCloseWithDragDown {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = YES;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, 1)];
+
+  // Then
+  XCTAssertEqual(self.sheetView.sheetState, MDCSheetStateClosed);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetViewToYesShouldCloseWithDragDownWithPreferredHeight {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = YES;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+  self.sheetView.preferredSheetHeight = 222;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, 1)];
+
+  // Then
+  XCTAssertEqual(self.sheetView.sheetState, MDCSheetStateClosed);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetToNoViewShouldNotCloseWithDragUp {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = NO;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, -1)];
+
+  // Then
+  XCTAssertNotEqual(self.sheetView.sheetState, MDCSheetStateClosed);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetToNoViewShouldNotCloseWithDragUpWithPreferredHeight {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = NO;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+  self.sheetView.preferredSheetHeight = 222;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, -1)];
+
+  // Then
+  XCTAssertNotEqual(self.sheetView.sheetState, MDCSheetStateClosed);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetViewToYesShouldCloseWithDragUp {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = YES;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, -1)];
+
+  // Then
+  XCTAssertEqual(self.sheetView.sheetState, MDCSheetStatePreferred);
+}
+
+- (void)testSettingDismissOnDraggingDownSheetViewToYesShouldCloseWithDragUpWithPreferredHeight {
+  // Given
+  self.sheetView.dismissOnDraggingDownSheet = YES;
+  self.sheetView.sheetState = MDCSheetStatePreferred;
+  self.sheetView.preferredSheetHeight = 222;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet draggingEndedWithVelocity:CGPointMake(0, -1)];
+
+  // Then
+  XCTAssertEqual(self.sheetView.sheetState, MDCSheetStatePreferred);
 }
 
 @end

@@ -372,10 +372,6 @@ static const CGFloat kSheetBounceBuffer = 150;
     shouldBeginDraggingWithVelocity:(CGPoint)velocity {
   [self updateSheetState];
 
-  if (!self.dismissOnDraggingDownSheet) {
-    return NO;
-  }
-
   switch (self.sheetState) {
     case MDCSheetStatePreferred:
       return YES;
@@ -405,13 +401,15 @@ static const CGFloat kSheetBounceBuffer = 150;
   MDCSheetState targetState;
   if (self.preferredSheetHeight == [self maximumSheetHeight]) {
     // Cannot be extended, only closed.
-    targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
+    targetState = ((velocity.y >= 0 && self.dismissOnDraggingDownSheet) ? MDCSheetStateClosed
+                                                                        : MDCSheetStatePreferred);
   } else {
     CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
     if (currentSheetHeight >= self.preferredSheetHeight) {
       targetState = (velocity.y >= 0 ? MDCSheetStatePreferred : MDCSheetStateExtended);
     } else {
-      targetState = (velocity.y >= 0 ? MDCSheetStateClosed : MDCSheetStatePreferred);
+      targetState = ((velocity.y >= 0 && self.dismissOnDraggingDownSheet) ? MDCSheetStateClosed
+                                                                          : MDCSheetStatePreferred);
     }
   }
   self.isDragging = NO;

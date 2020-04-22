@@ -38,5 +38,8 @@
 @interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
 @end
 
+@interface BottomSheetDismissOnDraggingDownExample : BottomSheetPresenterViewController
+@end
+
 @interface BottomSheetShapedExample : BottomSheetPresenterViewController
 @end
