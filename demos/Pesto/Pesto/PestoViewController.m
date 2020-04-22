@@ -110,6 +110,7 @@ static CGFloat kPestoInset = 5.f;
           detailVC.title = cell.title;
           detailVC.descText = cell.descText;
           detailVC.iconImageName = cell.iconImageName;
+          detailVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
           [self presentViewController:detailVC
                              animated:NO
                            completion:^() {
