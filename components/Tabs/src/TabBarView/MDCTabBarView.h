@@ -52,6 +52,11 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
    The same as MDCTabBarViewLayoutStyleScrollable, but the selected tab is centered within the bar
    if its position in the scrollview's content area permits it.*/
   MDCTabBarViewLayoutStyleScrollableCentered = 5,
+
+  /**
+   Each item's width is based on its content. The items are arranged in the horizontal center of the bar.
+   */
+  MDCTabBarViewLayoutStyleNonFixedClusteredCentered = 6,
 };
 
 /**
