@@ -115,6 +115,46 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   [super tearDown];
 }
 
+- (void)testAlertInitialization {
+  // Then
+  XCTAssertEqual(self.alert.titleAlignment, NSTextAlignmentNatural);
+  XCTAssertEqual(self.alert.messageAlignment, NSTextAlignmentNatural);
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentNatural);
+  XCTAssertEqual(self.alert.orderVerticalActionsByEmphasis, NO);
+  XCTAssertEqual(self.alert.actionsHorizontalAlignment, MDCContentHorizontalAlignmentTrailing);
+  XCTAssertEqual(self.alert.actionsHorizontalAlignmentInVerticalLayout,
+                 MDCContentHorizontalAlignmentCenter);
+}
+
+- (void)testAlertValuesDontRevertToDefaultValuesAfterViewIsLoaded {
+  // Given
+  self.alert.titleAlignment = NSTextAlignmentLeft;
+  self.alert.messageAlignment = NSTextAlignmentLeft;
+  self.alert.titleIconAlignment = NSTextAlignmentRight;
+  self.alert.orderVerticalActionsByEmphasis = YES;
+  self.alert.actionsHorizontalAlignment = MDCContentHorizontalAlignmentLeading;
+  self.alert.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentJustified;
+
+  // When (invoking viewDidLoad)
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alert.view;
+
+  // Then
+  XCTAssertEqual(self.alert.titleAlignment, NSTextAlignmentLeft);
+  XCTAssertEqual(alertView.titleAlignment, NSTextAlignmentLeft);
+  XCTAssertEqual(self.alert.messageAlignment, NSTextAlignmentLeft);
+  XCTAssertEqual(alertView.messageAlignment, NSTextAlignmentLeft);
+  XCTAssertEqual(self.alert.titleIconAlignment, NSTextAlignmentRight);
+  XCTAssertEqual(alertView.titleIconAlignment, NSTextAlignmentRight);
+  XCTAssertEqual(self.alert.orderVerticalActionsByEmphasis, YES);
+  XCTAssertEqual(alertView.orderVerticalActionsByEmphasis, YES);
+  XCTAssertEqual(self.alert.actionsHorizontalAlignment, MDCContentHorizontalAlignmentLeading);
+  XCTAssertEqual(alertView.actionsHorizontalAlignment, MDCContentHorizontalAlignmentLeading);
+  XCTAssertEqual(self.alert.actionsHorizontalAlignmentInVerticalLayout,
+                 MDCContentHorizontalAlignmentJustified);
+  XCTAssertEqual(alertView.actionsHorizontalAlignmentInVerticalLayout,
+                 MDCContentHorizontalAlignmentJustified);
+}
+
 /**
  Verifies that the message init does call initialize other variables correctly and configures, as
  per the common init, and the message property
