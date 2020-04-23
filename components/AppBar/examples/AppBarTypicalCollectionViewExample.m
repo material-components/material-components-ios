@@ -133,4 +133,8 @@
   };
 }
 
+- (BOOL)catalogShouldHideNavigation {
+  return YES;
+}
+
 @end
