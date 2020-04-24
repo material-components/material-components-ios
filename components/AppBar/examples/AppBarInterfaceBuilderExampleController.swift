@@ -78,7 +78,7 @@ extension AppBarInterfaceBuilderSwiftExample {
       "primaryDemo": false,
       "presentable": false,
       "storyboardName": "AppBarInterfaceBuilderSwiftExampleController",
-      "flaky": true, // Currently crashing with "'NSUnknownKeyException', reason: '[<UIViewController 0x7fa0ca13f510> setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key scrollView.'"
+      "skip_snapshots": true, // Currently crashing with "'NSUnknownKeyException', reason: '[<UIViewController 0x7fa0ca13f510> setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key scrollView.'"
     ]
   }
 

@@ -146,7 +146,7 @@
     @"breadcrumbs" : @[ @"App Bar", @"WKWebView large content" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
-    @"flaky" : @YES,  // The webview content sometimes takes long to load.
+    @"skip_snapshots" : @YES,  // The webview content sometimes takes long to load.
   };
 }
 
