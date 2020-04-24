@@ -157,6 +157,20 @@ static NSString *const exampleSuperLongText =
   };
 }
 
+- (NSDictionary<NSString *, void (^)(void)> *)testRunners {
+  NSMutableDictionary *runners = [NSMutableDictionary dictionary];
+  NSArray<BannerExampleUseInfo *> *examples = [self getBannerExampleList];
+  for (BannerExampleUseInfo *example in examples) {
+    runners[example.displayName] = ^{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+      [example.exampleUseTarget performSelector:example.exampleUseSelector];
+#pragma clang diagnostic pop
+    };
+  }
+  return runners;
+}
+
 #pragma mark - UIViewController
 
 - (void)viewWillLayoutSubviews {

@@ -69,7 +69,7 @@ class BannerAutoLayoutSwiftExampleViewController: UIViewController {
 
 }
 
-// MARK: CBC
+// MARK: Catalog by Convention
 extension BannerAutoLayoutSwiftExampleViewController {
 
   @objc class func catalogMetadata() -> [String: Any] {
@@ -78,6 +78,14 @@ extension BannerAutoLayoutSwiftExampleViewController {
       "primaryDemo": false,
       "presentable": true,
     ]
+  }
+}
+
+// MARK: Snapshot Testing by Convention
+extension BannerAutoLayoutSwiftExampleViewController {
+
+  @objc func testDidTapShowBannerButton() {
+    self.didTapShowBannerButton()
   }
 
 }
