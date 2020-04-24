@@ -209,8 +209,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 - (void)updateTextFieldPlaceholderText {
   // Place holder label should be hidden if showPlaceholderWithChips is NO and there are chips.
   // MDCTextField sets the placeholderLabel opacity to 0 if the text field has no text.
-  self.textField.placeholderLabel.hidden =
-      (!self.showPlaceholderWithChips && self.chips.count > 0) || ![self isTextFieldEmpty];
+  self.textField.placeholderLabel.hidden = (!self.showPlaceholderWithChips && self.chips.count > 0);
 }
 
 + (UIFont *)textFieldFont {
