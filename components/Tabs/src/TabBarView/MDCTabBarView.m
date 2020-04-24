@@ -70,10 +70,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** @c YES if the items are laid-out in a scrollable style. */
 @property(nonatomic, readonly) BOOL isScrollableLayoutStyle;
 
-/** This flag is set to YES when something happens that should result in the scroll view scrolling without animation to the selected item during the next layout pass. */
+/** This flag is set to YES when something happens that should result in the scroll view scrolling
+ * without animation to the selected item during the next layout pass. */
 @property(nonatomic, assign) BOOL needsScrollToSelectedItem;
 
-/** This flag is set to YES when something happens that should result in the scroll view scrolling with animation to the selected item during the next layout pass. */
+/** This flag is set to YES when something happens that should result in the scroll view scrolling
+ * with animation to the selected item during the next layout pass. */
 @property(nonatomic, assign) BOOL needsAnimatedScrollToSelectedItem;
 
 /** The view that renders @c selectionIndicatorTemplate. */
@@ -654,7 +656,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.contentSize = [self calculatedContentSize];
   [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
 
-  BOOL pendingSelectionScroll = self.needsAnimatedScrollToSelectedItem || self.needsScrollToSelectedItem;
+  BOOL pendingSelectionScroll =
+      self.needsAnimatedScrollToSelectedItem || self.needsScrollToSelectedItem;
   if (pendingSelectionScroll && !self.isTracking) {
     [self scrollToItem:self.selectedItem animated:self.needsAnimatedScrollToSelectedItem];
   }
@@ -679,9 +682,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
--(void)safeAreaInsetsDidChange {
+- (void)safeAreaInsetsDidChange {
   [super safeAreaInsetsDidChange];
-  
+
   self.needsScrollToSelectedItem = YES;
   [self setNeedsLayout];
 }
@@ -698,14 +701,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGSize availableSize = [self availableSizeForSubviewLayout];
   switch (self.preferredLayoutStyle) {
     case MDCTabBarViewLayoutStyleScrollableCentered: {
-      CGFloat requiredWidthForScrollableCenteredLayout = [self intrinsicContentSizeForScrollableLayout:MDCTabBarViewLayoutStyleScrollableCentered].width;
-      BOOL scrollViewIsTooWideForScrollableCenteredLayout = requiredWidthForScrollableCenteredLayout < availableSize.width;
+      CGFloat requiredWidthForScrollableCenteredLayout =
+          [self intrinsicContentSizeForScrollableLayout:MDCTabBarViewLayoutStyleScrollableCentered]
+              .width;
+      BOOL scrollViewIsTooWideForScrollableCenteredLayout =
+          requiredWidthForScrollableCenteredLayout < availableSize.width;
       if (scrollViewIsTooWideForScrollableCenteredLayout) {
         CGFloat requiredWidthForNonFixedClusteredCenteredLayout =
-            [self
-                intrinsicContentSizeForNonFixedClusteredCenteredLayout]
-                .width;
-        BOOL scrollViewIsTooNarrowForNonFixedClusteredCenteredLayout = availableSize.width < requiredWidthForNonFixedClusteredCenteredLayout;
+            [self intrinsicContentSizeForNonFixedClusteredCenteredLayout].width;
+        BOOL scrollViewIsTooNarrowForNonFixedClusteredCenteredLayout =
+            availableSize.width < requiredWidthForNonFixedClusteredCenteredLayout;
         if (scrollViewIsTooNarrowForNonFixedClusteredCenteredLayout) {
           return MDCTabBarViewLayoutStyleScrollable;
         } else {
@@ -719,7 +724,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       return MDCTabBarViewLayoutStyleScrollable;
     }
     case MDCTabBarViewLayoutStyleNonFixedClusteredCentered: {
-      CGFloat requiredWidthForNonFixedClusteredCentered = [self intrinsicContentSizeForNonFixedClusteredCenteredLayout].width;
+      CGFloat requiredWidthForNonFixedClusteredCentered =
+          [self intrinsicContentSizeForNonFixedClusteredCenteredLayout].width;
       if (availableSize.width < requiredWidthForNonFixedClusteredCentered) {
         return MDCTabBarViewLayoutStyleScrollable;
       } else {
@@ -743,9 +749,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleFixedClusteredLeading:
     case MDCTabBarViewLayoutStyleFixedClusteredTrailing: {
       CGFloat requiredWidthForClusteredLayout =
-          [self
-           intrinsicContentSizeForClusteredLayout:self.preferredLayoutStyle]
-              .width;
+          [self intrinsicContentSizeForClusteredLayout:self.preferredLayoutStyle].width;
       BOOL scrollViewIsTooNarrowForClusteredCenteredLayout =
           availableSize.width < requiredWidthForClusteredLayout;
       if (scrollViewIsTooNarrowForClusteredCenteredLayout) {
@@ -760,14 +764,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   UIEdgeInsets safeAreaInsets = [self effectiveSafeAreaInsets];
   UIEdgeInsets contentInsets = [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleFixed];
   CGFloat lowestAllowableItemViewMinX = safeAreaInsets.left + contentInsets.left;
-  CGFloat highestAllowableItemViewMaxX = CGRectGetWidth(self.frame) - (safeAreaInsets.right + contentInsets.right);
+  CGFloat highestAllowableItemViewMaxX =
+      CGRectGetWidth(self.frame) - (safeAreaInsets.right + contentInsets.right);
   CGFloat combinedItemWidth = highestAllowableItemViewMaxX - lowestAllowableItemViewMinX;
   CGFloat itemViewWidth = combinedItemWidth / (CGFloat)self.itemViews.count;
   CGFloat itemViewMinX = lowestAllowableItemViewMinX;
   NSEnumerator<UIView *> *itemViewEnumerator =
       [self isRTL] ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
   CGFloat itemViewMinY = safeAreaInsets.top + contentInsets.top;
-  CGFloat itemViewHeight = CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
+  CGFloat itemViewHeight =
+      CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
   for (UIView *itemView in itemViewEnumerator) {
     itemView.frame = CGRectMake(itemViewMinX, itemViewMinY, itemViewWidth, itemViewHeight);
     itemViewMinX += itemViewWidth;
@@ -778,7 +784,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   UIEdgeInsets safeAreaInsets = [self effectiveSafeAreaInsets];
   UIEdgeInsets contentInsets = [self contentPaddingForLayoutStyle:layoutStyle];
   CGFloat lowestAllowableItemViewMinX = safeAreaInsets.left + contentInsets.left;
-  CGFloat highestAllowableItemViewMaxX = CGRectGetWidth(self.frame) - (safeAreaInsets.right + contentInsets.right);
+  CGFloat highestAllowableItemViewMaxX =
+      CGRectGetWidth(self.frame) - (safeAreaInsets.right + contentInsets.right);
   CGFloat combinedItemWidth = [self fixedClusteredCombinedItemSize].width;
   CGFloat itemViewWidth = combinedItemWidth / (CGFloat)self.itemViews.count;
 
@@ -791,7 +798,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleScrollable:
       break;
     case MDCTabBarViewLayoutStyleFixedClusteredCentered: {
-      CGFloat halfOfUsableSpace = (highestAllowableItemViewMaxX - lowestAllowableItemViewMinX) / (CGFloat)2.0;
+      CGFloat halfOfUsableSpace =
+          (highestAllowableItemViewMaxX - lowestAllowableItemViewMinX) / (CGFloat)2.0;
       CGFloat horizontalCenterOfUsableSpace = lowestAllowableItemViewMinX + halfOfUsableSpace;
       itemViewMinX = horizontalCenterOfUsableSpace - (combinedItemWidth / (CGFloat)2.0);
       break;
@@ -812,7 +820,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
   CGFloat itemViewMinY = safeAreaInsets.top + contentInsets.top;
-  CGFloat itemViewHeight = CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
+  CGFloat itemViewHeight =
+      CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
   for (UIView *itemView in itemViewEnumerator) {
     itemView.frame = CGRectMake(itemViewMinX, itemViewMinY, itemViewWidth, itemViewHeight);
     itemViewMinX += itemViewWidth;
@@ -828,27 +837,29 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   NSEnumerator<UIView *> *itemViewEnumerator =
       [self isRTL] ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
   CGFloat itemViewMinY = safeAreaInsets.top + contentInsets.top;
-  CGFloat itemViewHeight = CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
+  CGFloat itemViewHeight =
+      CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
   for (UIView *itemView in itemViewEnumerator) {
     CGFloat itemViewWidth = itemView.intrinsicContentSize.width;
     itemView.frame = CGRectMake(itemViewMinX, itemViewMinY, itemViewWidth, itemViewHeight);
     itemViewMinX += itemViewWidth;
   }
-
 }
 
 - (void)layoutSubviewsForNonFixedClusteredCentered {
   UIEdgeInsets safeAreaInsets = [self effectiveSafeAreaInsets];
   CGFloat lowestAllowableItemViewMinX = safeAreaInsets.left;
   CGFloat highestAllowableItemViewMaxX = CGRectGetWidth(self.frame) - safeAreaInsets.right;
-  CGFloat halfOfUsableSpace = (highestAllowableItemViewMaxX - lowestAllowableItemViewMinX) / (CGFloat)2.0;
+  CGFloat halfOfUsableSpace =
+      (highestAllowableItemViewMaxX - lowestAllowableItemViewMinX) / (CGFloat)2.0;
   CGFloat horizontalCenterOfUsableSpace = lowestAllowableItemViewMinX + halfOfUsableSpace;
   CGFloat combinedItemWidth = [self nonFixedCombinedItemSize].width;
   CGFloat itemViewMinX = horizontalCenterOfUsableSpace - (combinedItemWidth / (CGFloat)2.0);
   NSEnumerator<UIView *> *itemViewEnumerator =
       [self isRTL] ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
 
-  CGFloat itemViewHeight = CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
+  CGFloat itemViewHeight =
+      CGRectGetHeight(self.frame) - (safeAreaInsets.top + safeAreaInsets.bottom);
   for (UIView *itemView in itemViewEnumerator) {
     CGFloat itemViewWidth = itemView.intrinsicContentSize.width;
     itemView.frame = CGRectMake(itemViewMinX, safeAreaInsets.top, itemViewWidth, itemViewHeight);
@@ -857,7 +868,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (BOOL)isRTL {
-  return self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  return self.mdf_effectiveUserInterfaceLayoutDirection ==
+         UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -874,7 +886,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       return [self intrinsicContentSizeForNonFixedClusteredCenteredLayout];
     }
     case MDCTabBarViewLayoutStyleScrollableCentered: {
-      return [self intrinsicContentSizeForScrollableLayout:MDCTabBarViewLayoutStyleScrollableCentered];
+      return
+          [self intrinsicContentSizeForScrollableLayout:MDCTabBarViewLayoutStyleScrollableCentered];
     }
     case MDCTabBarViewLayoutStyleScrollable: {
       return [self intrinsicContentSizeForScrollableLayout:MDCTabBarViewLayoutStyleScrollable];
@@ -918,8 +931,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     case MDCTabBarViewLayoutStyleScrollable: {
       UIEdgeInsets safeAreaInsets = [self effectiveSafeAreaInsets];
       CGSize intrinsicContentSize = [self intrinsicContentSizeForScrollableLayout:layoutStyle];
-      CGSize contentSize = CGSizeMake(intrinsicContentSize.width + safeAreaInsets.left + safeAreaInsets.right,
-                               intrinsicContentSize.height + safeAreaInsets.top + safeAreaInsets.bottom);
+      CGSize contentSize =
+          CGSizeMake(intrinsicContentSize.width + safeAreaInsets.left + safeAreaInsets.right,
+                     intrinsicContentSize.height + safeAreaInsets.top + safeAreaInsets.bottom);
       return contentSize;
     }
   }
@@ -964,7 +978,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
--(CGSize)intrinsicContentSizeForNonFixedClusteredCenteredLayout {
+- (CGSize)intrinsicContentSizeForNonFixedClusteredCenteredLayout {
   CGSize contentSize = [self nonFixedCombinedItemSize];
   UIEdgeInsets contentPadding =
       [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleNonFixedClusteredCentered];
@@ -975,8 +989,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CGSize)intrinsicContentSizeForScrollableLayout:(MDCTabBarViewLayoutStyle)layoutStyle {
   CGSize contentSize = [self nonFixedCombinedItemSize];
-  UIEdgeInsets contentPadding =
-      [self contentPaddingForLayoutStyle:layoutStyle];
+  UIEdgeInsets contentPadding = [self contentPaddingForLayoutStyle:layoutStyle];
   contentSize = CGSizeMake(contentSize.width + contentPadding.left + contentPadding.right,
                            contentSize.height + contentPadding.top + contentPadding.bottom);
   return contentSize;
@@ -1022,7 +1035,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     } else {
       animationBlock();
     }
-  } else if (layoutStyle == MDCTabBarViewLayoutStyleScrollable){
+  } else if (layoutStyle == MDCTabBarViewLayoutStyleScrollable) {
     [self scrollRectToVisible:self.itemViews[index].frame animated:animated];
   } else {
     self.contentOffset = CGPointZero;
@@ -1048,7 +1061,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGFloat itemViewWidth = CGRectGetWidth(itemFrame);
   CGFloat scrollViewWidth = CGRectGetWidth(self.frame);
   CGFloat scrollViewHeight = CGRectGetHeight(self.frame);
-  CGRect frameNeededToCenterView = CGRectMake((0.5 * scrollViewWidth) - (0.5 * itemViewWidth), 0, itemViewWidth, scrollViewHeight);
+  CGRect frameNeededToCenterView = CGRectMake((0.5 * scrollViewWidth) - (0.5 * itemViewWidth), 0,
+                                              itemViewWidth, scrollViewHeight);
   CGFloat addedOffset = CGRectGetMinX(frameNeededToCenterView) - CGRectGetMinX(itemFrame);
   CGPoint centeredContentOffset = CGPointMake(0 - addedOffset, self.contentOffset.y);
   CGFloat contentWidth = self.contentSize.width;

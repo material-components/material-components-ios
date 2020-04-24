@@ -54,7 +54,8 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
   MDCTabBarViewLayoutStyleScrollableCentered = 5,
 
   /**
-   Each item's width is based on its content. The items are arranged in the horizontal center of the bar.
+   Each item's width is based on its content. The items are arranged in the horizontal center of the
+   bar.
    */
   MDCTabBarViewLayoutStyleNonFixedClusteredCentered = 6,
 };
