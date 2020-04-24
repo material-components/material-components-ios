@@ -36,11 +36,11 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.
-    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
+    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "ic_home"), tag: 0)
     let tabBarItem2 =
-      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 1)
+      UITabBarItem(title: "Messages", image: UIImage(named: "ic_email"), tag: 1)
     let tabBarItem3 =
-      UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 2)
+      UITabBarItem(title: "Favorites", image: UIImage(named: "ic_favorite"), tag: 2)
     bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
 
     // Select a bottom navigation bar item.

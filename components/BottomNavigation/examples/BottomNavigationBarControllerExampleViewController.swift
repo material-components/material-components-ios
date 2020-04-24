@@ -103,15 +103,15 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
     flowLayout.estimatedItemSize = CGSize(width: 96, height: 48)
     let viewController1 = BottomNavigationControllerExampleScrollableChildViewController(collectionViewLayout: flowLayout)
     viewController1.collectionView.backgroundColor = containerScheme.colorScheme.primaryColorVariant
-    viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)
+    viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "ic_home"), tag: 0)
 
     let viewController2 = BottomNavigationControllerExampleFixedChildViewController()
     viewController2.containerScheme = containerScheme
-    viewController2.tabBarItem = UITabBarItem(title: "Item 2", image: UIImage(named: "Favorite"), tag: 1)
+    viewController2.tabBarItem = UITabBarItem(title: "Item 2", image: UIImage(named: "ic_favorite"), tag: 1)
 
     let viewController3 = UIViewController()
     viewController3.view.backgroundColor = containerScheme.colorScheme.surfaceColor
-    viewController3.tabBarItem = UITabBarItem(title: "Item 3", image: UIImage(named: "Search"), tag: 2)
+    viewController3.tabBarItem = UITabBarItem(title: "Item 3", image: UIImage(named: "ic_search"), tag: 2)
 
     viewControllers = [ viewController1, viewController2, viewController3 ]
   }

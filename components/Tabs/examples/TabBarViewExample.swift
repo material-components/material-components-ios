@@ -32,11 +32,11 @@ class TabBarViewExample: UIViewController {
   }()
 
   let itemIcons = [
-    UIImage(named: "Home")?.withRenderingMode(.alwaysTemplate),
-    UIImage(named: "Favorite")?.withRenderingMode(.alwaysTemplate),
-    UIImage(named: "Cake")?.withRenderingMode(.alwaysTemplate),
-    UIImage(named: "Email")?.withRenderingMode(.alwaysTemplate),
-    UIImage(named: "Search")?.withRenderingMode(.alwaysTemplate)
+    UIImage(named: "ic_home")?.withRenderingMode(.alwaysTemplate),
+    UIImage(named: "ic_favorite")?.withRenderingMode(.alwaysTemplate),
+    UIImage(named: "ic_cake")?.withRenderingMode(.alwaysTemplate),
+    UIImage(named: "ic_email")?.withRenderingMode(.alwaysTemplate),
+    UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate)
   ]
 
   let itemTitles = ["Home", "Unselectable", "Cake", "Email", "Search"]

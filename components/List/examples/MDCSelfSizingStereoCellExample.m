@@ -114,9 +114,9 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.titleLabel.textAlignment = [self textAlignmentForText:cell.titleLabel.text];
   cell.detailLabel.textAlignment = [self textAlignmentForText:cell.detailLabel.text];
   cell.leadingImageView.image =
-      [[UIImage imageNamed:@"Cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  cell.trailingImageView.image =
-      [[UIImage imageNamed:@"Favorite"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [[UIImage imageNamed:@"ic_cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  cell.trailingImageView.image = [[UIImage imageNamed:@"ic_favorite"]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   cell.leadingImageView.tintColor = [UIColor darkGrayColor];
   cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;

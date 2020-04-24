@@ -40,7 +40,7 @@
 
 - (void)didTapButton:(id)sender {
   MDCFloatingButton *fab = [[MDCFloatingButton alloc] init];
-  [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [fab setImage:[UIImage imageNamed:@"ic_add"] forState:UIControlStateNormal];
   [fab sizeToFit];
   fab.center = _button.center;
 

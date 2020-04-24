@@ -47,15 +47,16 @@
   [self.view addSubview:self.bottomNavBar];
 
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                            image:[UIImage imageNamed:@"Home"]
+                                                            image:[UIImage imageNamed:@"ic_home"]
                                                               tag:0];
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
-                                                            image:[UIImage imageNamed:@"Email"]
+                                                            image:[UIImage imageNamed:@"ic_email"]
                                                               tag:0];
   tabBarItem2.badgeValue = @"8";
-  UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
-                                                            image:[UIImage imageNamed:@"Favorite"]
-                                                              tag:0];
+  UITabBarItem *tabBarItem3 =
+      [[UITabBarItem alloc] initWithTitle:@"Favorites"
+                                    image:[UIImage imageNamed:@"ic_favorite"]
+                                      tag:0];
   tabBarItem3.badgeValue = @"";
   UITabBarItem *tabBarItem4 = [[UITabBarItem alloc]
       initWithTitle:@"Reader"
@@ -68,7 +69,7 @@
                 tag:0];
   tabBarItem4.badgeValue = @"88";
   UITabBarItem *tabBarItem5 = [[UITabBarItem alloc] initWithTitle:@"Birthday"
-                                                            image:[UIImage imageNamed:@"Cake"]
+                                                            image:[UIImage imageNamed:@"ic_cake"]
                                                               tag:0];
   tabBarItem5.badgeValue = @"888+";
 #if MDC_AVAILABLE_SDK_IOS(10_0)
