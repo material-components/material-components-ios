@@ -12,7 +12,7 @@ api_doc_root: true
 
 A floating action button (FAB) represents the primary action of a screen.
 
-There are three types of FABS:
+There are three types of FABs:
 
 1. [Regular FABs](#regular-fabs)
 2. [Mini FABs](#mini-fabs)
