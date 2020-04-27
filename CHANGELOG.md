@@ -1,16 +1,7 @@
-# #develop#
+# 109.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This minor release includes bug fixes for Dialogs, BottomSheet Chips, and
+FlexibleHeader. It also cleans up the removeObserver calls on NSNotificationCenter.
 
 ## Component changes
 
@@ -20,7 +11,6 @@ Replace this text with example code for each new feature.
 
 ### ActivityIndicator
 
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/61bf79c626169ce9600ca56cb4992c28f0f39bc4) (Wenyu Zhang)
 * [Mark the swift example as flaky due to its use of animations and remove explicit titles.](https://github.com/material-components/material-components-ios/commit/204072049269406d9a4015798c9e055b423c5a61) (Jeff Verkoeyen)
 
 ### AnimationTiming
@@ -36,13 +26,10 @@ Replace this text with example code for each new feature.
 
 * [Add snapshot test hooks to the examples.](https://github.com/material-components/material-components-ios/commit/a9512e0dba1faa4ef632c06208b78cc9ae51e644) (Jeff Verkoeyen)
 
-### BottomAppBar
-
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/bcd0c79ef44191363f1ebdeef86f7b2b7500af66) (Jeff Verkoeyen)
-
 ### BottomSheet
 
 * [Set the contentView's frame later in the lifecycle.](https://github.com/material-components/material-components-ios/commit/59631d0077f91f75eaf250e2ae35389972b4e666) (Yarden Eitan)
+* [Fix dismissOnDraggingDownSheet behavior](https://github.com/material-components/material-components-ios/commit/0100cfe4147ce24c91cae51a0e0bfaa762624932) (Randall Li)
 
 ### Buttons
 
@@ -68,21 +55,9 @@ Replace this text with example code for each new feature.
 
 * [Adjust string description by added link to the material.io spec on tabs.](https://github.com/material-components/material-components-ios/commit/5125441f76fad429e55bd74606eafcd01787af85) (Randall Li)
 
-### private/Snapshot/TestHost
-
-* [Internal Change.](https://github.com/material-components/material-components-ios/commit/0bd1184f6f60f4ae9d9572cb08a3d1b4e81a92db) (Wenyu Zhang)
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/77ab521136cfd59537a8f78ee54aa89ee1f2d35f) (Wenyu Zhang)
-
-### private/Snapshot
-
-* [Internal Change.](https://github.com/material-components/material-components-ios/commit/0bd1184f6f60f4ae9d9572cb08a3d1b4e81a92db) (Wenyu Zhang)
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/77ab521136cfd59537a8f78ee54aa89ee1f2d35f) (Wenyu Zhang)
-
 ## Multi-component changes
 
 * [As of iOS 9/macOS 10.11 (circa 2015) removing objective C objects from the NSNotificationCenter in - (void)dealloc. is no longer required (the classic example is: [[NSNotificationCenter defaultCenter] removeObserver:self] but there are several variations).](https://github.com/material-components/material-components-ios/commit/ebac2a8eb7362a16cee5eaecde0e8d782ac9bf0b) (Dave MacLachlan)
-* [Fix dismissOnDraggingDownSheet behavior](https://github.com/material-components/material-components-ios/commit/0100cfe4147ce24c91cae51a0e0bfaa762624932) (Randall Li)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/44ec4e204c3c0d2c165d1a2c2a68fd0fe5bff5be) (Jeff Verkoeyen)
 * [Rename "flaky" to "skip_snapshots".](https://github.com/material-components/material-components-ios/commit/25471afea02324ad69d0788c46e447b0cd109654) (Jeff Verkoeyen)
 * [Rename all icons to an ic_<#name#> convention.](https://github.com/material-components/material-components-ios/commit/92254ea1198cff6ba81e51e52c235bafe87d1d05) (Jeff Verkoeyen)
 
