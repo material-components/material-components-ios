@@ -14,15 +14,16 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialActionSheet.h"  // ComponentImport
-#import "MaterialActionSheet+Theming.h"  // SubtargetImport
-#import "MaterialAnimationTiming.h"  // ComponentImport
-#import "MaterialButtons+Theming.h"  // ComponentImport
+#import <MaterialComponents/MaterialActionSheet+Theming.h>
+#import <MaterialComponents/MaterialActionSheet.h>
+#import <MaterialComponents/MaterialAnimationTiming.h>
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialIcons+ic_check.h>
+#import <MaterialComponents/MaterialIcons+ic_settings.h>
+#import <MaterialComponents/MaterialMath.h>
 #import "MaterialTabs+TabBarView.h"
-#import "MaterialIcons+ic_check.h"  // PrivateSubtargetImport
-#import "MaterialIcons+ic_settings.h"  // PrivateSubtargetImport
-#import "MaterialMath.h"  // PrivateImport
-#import "MaterialContainerScheme.h"  // SchemeImport
 
 static NSString *const kExampleTitle = @"TabBarView";
 
@@ -310,10 +311,9 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
       [[UISegmentedControl alloc] initWithItems:@[ @"Titles", @"Icons", @"Titles and Icons" ]];
   self.segmentedControl.selectedSegmentIndex = 2;
   [self.segmentedControl addTarget:self
-                            action:@selector(segmentedControlChangedValue:)
-                  forControlEvents:UIControlEventValueChanged];
+                       action:@selector(segmentedControlChangedValue:)
+             forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.segmentedControl];
-  self.segmentedControl.tintColor = self.containerScheme.colorScheme.primaryColor;
   self.segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
   if (@available(iOS 11.0, *)) {
     [self.view.layoutMarginsGuide.centerXAnchor
@@ -329,8 +329,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
         constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
         .active = YES;
   } else {
-    [self.view.centerXAnchor constraintEqualToAnchor:self.segmentedControl.centerXAnchor].active =
-        YES;
+    [self.view.centerXAnchor constraintEqualToAnchor:self.segmentedControl.centerXAnchor].active = YES;
     NSLayoutConstraint *centerYConstraint =
         [self.view.centerYAnchor constraintEqualToAnchor:self.segmentedControl.centerYAnchor];
     centerYConstraint.priority = UILayoutPriorityDefaultLow;
@@ -340,8 +339,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
         .active = YES;
     [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:self.segmentedControl.leadingAnchor]
         .active = YES;
-    [self.view.trailingAnchor
-        constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
+    [self.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
         .active = YES;
   }
 }
@@ -514,8 +512,8 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  [self logItemVisibilityChanges];
 
+  [self logItemVisibilityChanges];
   CGFloat centerX = self.segmentedControl.center.x;
   CGFloat centerY = CGRectGetMaxY(self.segmentedControl.frame) + 50;
   self.forwardButton.center = CGPointMake(centerX, centerY);
