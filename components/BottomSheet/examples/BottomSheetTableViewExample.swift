@@ -14,9 +14,11 @@
 
 import Foundation
 import MaterialComponents.MaterialBottomSheet
+import MaterialComponents.MaterialButtons_ButtonThemer 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
 
+/// In this example we present a custom tableview. For a more comprehensive example see
+/// BottomSheetTypicalUseExample.m.
 class BottomSheetTableViewExample: UIViewController {
   @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
   @objc var typographyScheme = MDCTypographyScheme()
@@ -38,9 +40,10 @@ class BottomSheetTableViewExample: UIViewController {
 
     let button = MDCButton()
     button.setTitle("Show bottom sheet", for: .normal)
-    button.addTarget(self,
-                     action: #selector(BottomSheetTableViewExample.didTapFloatingButton),
-                     for: .touchUpInside)
+    button.addTarget(
+      self,
+      action: #selector(BottomSheetTableViewExample.didTapFloatingButton),
+      for: .touchUpInside)
 
     let buttonScheme = MDCButtonScheme()
     buttonScheme.colorScheme = colorScheme
@@ -53,13 +56,13 @@ class BottomSheetTableViewExample: UIViewController {
       .flexibleLeftMargin,
       .flexibleTopMargin,
       .flexibleRightMargin,
-      .flexibleBottomMargin
+      .flexibleBottomMargin,
     ]
 
     view.addSubview(button)
   }
 
-  @objc func didTapFloatingButton(_ sender : MDCFloatingButton) {
+  @objc func didTapFloatingButton(_ sender: MDCFloatingButton) {
     let menu = BottomSheetTableViewMenu(style: .plain)
     let bottomSheet = MDCBottomSheetController(contentViewController: menu)
     bottomSheet.isScrimAccessibilityElement = true
@@ -74,7 +77,7 @@ private class BottomSheetTableViewMenu: UITableViewController {
   let tableData = [
     "Action 1",
     "Action 2",
-    "Action 3"
+    "Action 3",
   ]
   let cellIdentifier = "MenuCell"
 
@@ -84,8 +87,10 @@ private class BottomSheetTableViewMenu: UITableViewController {
     self.tableView.separatorStyle = .none
   }
 
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     let cellData = tableData[indexPath.item]
     cell.textLabel?.text = cellData
