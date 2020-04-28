@@ -324,6 +324,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
+  self.needsAnimatedScrollToSelectedItem = YES;
   [self setNeedsLayout];
   [self didSelectItemAtIndex:itemIndex animateTransition:animated];
 }
@@ -1182,7 +1183,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  self.needsAnimatedScrollToSelectedItem = YES;
   self.selectedItem = self.items[index];
   if ([self.tabBarDelegate respondsToSelector:@selector(tabBarView:didSelectItem:)]) {
     [self.tabBarDelegate tabBarView:self didSelectItem:self.items[index]];
