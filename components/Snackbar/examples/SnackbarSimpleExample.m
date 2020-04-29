@@ -247,3 +247,20 @@
 }
 
 @end
+
+@implementation SnackbarSimpleExample (SnapshotTestingByConvention)
+
+- (NSDictionary<NSString *, void (^)(void)> *)testRunners {
+  NSMutableDictionary<NSString *, void (^)(void)> *runners = [NSMutableDictionary dictionary];
+  NSInteger index = 0;
+  for (NSString *choice in self.choices) {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    runners[choice] = ^{
+      [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+    };
+    index++;
+  }
+  return runners;
+}
+
+@end
