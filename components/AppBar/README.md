@@ -81,8 +81,18 @@ does not require any extra work.
 
 See the following examples:
 
-##### Objective-C
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+self.navigationItem.rightBarButtonItem =
+    UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
+
+print("accessibilityLabel: \(self.navigationItem.rightBarButtonItem.accessibilityLabel)")
+// Prints out "accessibilityLabel: Right"
 ```
+
+#### Objective-C
+```objc
 self.navigationItem.rightBarButtonItem =
    [[UIBarButtonItem alloc] initWithTitle:@"Right"
                                     style:UIBarButtonItemStyleDone
@@ -92,15 +102,7 @@ self.navigationItem.rightBarButtonItem =
 NSLog(@"accessibilityLabel: %@",self.navigationItem.rightBarButtonItem.accessibilityLabel);
 // Prints out "accessibilityLabel: Right"
 ```
-
-##### Swift
-```
-self.navigationItem.rightBarButtonItem =
-    UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
-
-print("accessibilityLabel: \(self.navigationItem.rightBarButtonItem.accessibilityLabel)")
-// Prints out "accessibilityLabel: Right"
-```
+<!--</div>-->
 
 ## Top app bar examples
 
