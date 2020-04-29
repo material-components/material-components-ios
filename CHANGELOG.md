@@ -1,6 +1,6 @@
 # 109.1.0
 
-This minor release includes bug fixes for Dialogs, BottomSheet Chips, and
+This minor release includes bug fixes for Dialogs, BottomSheet, Chips, and
 FlexibleHeader. It also cleans up the removeObserver calls on NSNotificationCenter.
 
 ## Component changes
