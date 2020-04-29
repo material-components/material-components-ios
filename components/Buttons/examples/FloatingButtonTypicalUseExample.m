@@ -47,11 +47,9 @@ static NSString *const kMiniButtonLabel = @"Add";
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
   UIImage *plusImage =
-      [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  UIImage *plusImage36 = [UIImage imageNamed:@"plus_white_36"
-                                    inBundle:[NSBundle bundleForClass:[self class]]
-               compatibleWithTraitCollection:self.traitCollection];
-  plusImage36 = [plusImage36 imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [[UIImage imageNamed:@"ic_add"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIImage *plusImage36 = [[UIImage imageNamed:@"ic_add_36pt"]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   self.iPadLabel = [[UILabel alloc] init];
   self.iPadLabel.text = @"Try me on an iPad!";

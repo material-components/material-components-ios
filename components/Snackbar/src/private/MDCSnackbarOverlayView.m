@@ -249,10 +249,6 @@ static const CGFloat kMaximumHeight = 80;
   }
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 /**
  The bottom margin which is dependent on the keyboard and application-wide settings, and may
  change at any time during runtime.

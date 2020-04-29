@@ -41,7 +41,6 @@ static const CGSize kAnimationCircleSize = {48, 48};
 
 - (void)setupExampleViews {
   self.view.backgroundColor = UIColor.whiteColor;
-  self.title = @"Animation Timing";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
 

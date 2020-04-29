@@ -89,6 +89,7 @@ extension ActivityIndicatorSwiftExampleViewController : MDCActivityIndicatorDele
       "breadcrumbs": ["Activity Indicator", "Activity Indicator (Swift)"],
       "primaryDemo": false,
       "presentable": false,
+      "skip_snapshots": true, // The activity indicator animations cause the snapshot tests to hang.
     ]
   }
 

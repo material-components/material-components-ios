@@ -57,10 +57,6 @@ static const CGFloat kMinimumHeaderHeight = 8;
   return self;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
 

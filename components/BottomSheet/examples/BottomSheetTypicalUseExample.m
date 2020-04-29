@@ -70,7 +70,21 @@
 
 - (void)bottomSheetControllerStateChanged:(MDCBottomSheetController *)controller
                                     state:(MDCSheetState)state {
-  NSLog(@"bottom sheet state changed to: %lu", (unsigned long)state);
+  switch (state) {
+    case MDCSheetStateClosed:
+      NSLog(@"bottom sheet state changed to: Closed");
+      break;
+    case MDCSheetStatePreferred:
+      NSLog(@"bottom sheet state changed to: Preferred");
+      break;
+    case MDCSheetStateExtended:
+      NSLog(@"bottom sheet state changed to: Extended");
+      break;
+
+    default:
+      NSLog(@"bottom sheet state changed to: undefined");
+      break;
+  }
 }
 
 @end

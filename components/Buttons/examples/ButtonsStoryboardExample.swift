@@ -219,7 +219,7 @@ extension ButtonsStoryboardExample {
       // Disabling tests of this example because it currently crashes with
       // "'[<UIViewController 0x7f97f6d4cda0> setValue:forUndefinedKey:]: this class is not key
       // value coding-compliant for the key storyboardContained.'"
-      "flaky": true,
+      "skip_snapshots": true,
       "storyboardName": "ButtonsStoryboardAndProgrammatic",
     ]
   }

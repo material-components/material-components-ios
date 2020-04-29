@@ -150,10 +150,6 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   return self;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:action];
   if (self.alwaysAlignTitleLeadingEdges && action.image) {

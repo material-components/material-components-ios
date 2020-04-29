@@ -25,12 +25,12 @@ class BottomNavigationResetExample: UIViewController {
   let bottomNavBar = MDCBottomNavigationBar()
 
   // The tabs that will be reordered later
-  let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
+  let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "ic_home"), tag: 0)
   let tabBarItem2 =
-    UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 1)
+    UITabBarItem(title: "Messages", image: UIImage(named: "ic_email"), tag: 1)
   let tabBarItem3 =
-    UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 2)
-  let tabBarItem4 = UITabBarItem(title: "Cake", image: UIImage(named: "Cake"), tag: 3)
+    UITabBarItem(title: "Favorites", image: UIImage(named: "ic_favorite"), tag: 2)
+  let tabBarItem4 = UITabBarItem(title: "Cake", image: UIImage(named: "ic_cake"), tag: 3)
 
   let buttonOne = MDCButton()
   let buttonTwo = MDCButton()

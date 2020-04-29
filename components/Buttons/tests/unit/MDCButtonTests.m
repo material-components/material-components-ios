@@ -932,45 +932,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
  - underlyingColor (text color)
  */
 
-- (void)testAlphaRestoredWhenReenabled {
-  // Given
-  CGFloat alpha = (CGFloat)0.5;
-
-  // When
-  self.button.alpha = alpha;
-  self.button.enabled = NO;
-  self.button.enabled = YES;
-
-  // Then
-  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, 0.0001);
-}
-
-- (void)testEnabledAlphaNotSetWhileDisabled {
-  // Given
-  CGFloat alpha = (CGFloat)0.2;
-
-  // When
-  self.button.alpha = alpha;
-  self.button.enabled = NO;
-  self.button.alpha = 1 - alpha;
-  self.button.enabled = YES;
-
-  // Then
-  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, (CGFloat)0.0001);
-}
-
-- (void)testDisabledAlpha {
-  // Given
-  CGFloat alpha = 0.5;
-
-  // When
-  [self.button setDisabledAlpha:alpha];
-  self.button.enabled = NO;
-
-  // Then
-  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, (CGFloat)0.0001);
-}
-
 - (void)testPointInsideWithoutHitAreaInsets {
   // Given
   self.button.frame = CGRectMake(0, 0, 80, 50);

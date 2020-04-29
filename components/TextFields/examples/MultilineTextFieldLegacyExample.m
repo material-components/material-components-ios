@@ -26,10 +26,6 @@
 
 @implementation MultilineTextFieldLegacyExample
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.97 alpha:1];

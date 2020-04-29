@@ -31,7 +31,7 @@ class BottomDrawerExpandFullscreenExample: UIViewController {
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
@@ -139,7 +139,7 @@ extension BottomDrawerExpandFullscreenExample {
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,
-      "flaky": true,
+      "skip_snapshots": true,
     ]
   }
 }

@@ -155,6 +155,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _messageAlignment = NSTextAlignmentNatural;
     _titleIconAlignment = _titleAlignment;
     _alignIconWithTitle = YES;
+    _orderVerticalActionsByEmphasis = NO;
+    _actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
+    _actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentCenter;
     _actionManager = [[MDCAlertActionManager alloc] init];
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _shadowColor = UIColor.blackColor;
@@ -164,10 +167,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
-}
-
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -784,9 +783,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.titleIconView = self.titleIconView;
   self.alertView.cornerRadius = self.cornerRadius;
   self.alertView.enableRippleBehavior = self.enableRippleBehavior;
-  self.orderVerticalActionsByEmphasis = NO;
-  self.actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
-  self.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentCenter;
+  self.alertView.orderVerticalActionsByEmphasis = self.orderVerticalActionsByEmphasis;
+  self.alertView.actionsHorizontalAlignment = self.actionsHorizontalAlignment;
+  self.alertView.actionsHorizontalAlignmentInVerticalLayout =
+      self.actionsHorizontalAlignmentInVerticalLayout;
 
   // Create buttons for the actions (if not already created) and apply default styling
   for (MDCAlertAction *action in self.actions) {

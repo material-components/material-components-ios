@@ -108,10 +108,6 @@
   [self updateOverlayHiddenState];
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - Window positioning
 
 // Regardless of what was added to this window, ensure that the overlay view is on top.

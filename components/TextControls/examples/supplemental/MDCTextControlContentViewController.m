@@ -75,10 +75,6 @@ This button allows the user to signal that they want to toggle the layout direct
 
 #pragma mark Object Lifecycle
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark View Controller Overrides
 
 - (void)viewDidLoad {

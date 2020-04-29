@@ -50,7 +50,7 @@
 
   // Set the image on the floating button.
   UIImage *addImage =
-      [[UIImage imageNamed:@"Add"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [[UIImage imageNamed:@"ic_add"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.bottomBarView.floatingButton setImage:addImage forState:UIControlStateNormal];
 
   // Configure the navigation buttons to be shown on the bottom app bar.
@@ -60,7 +60,7 @@
                                       target:self
                                       action:@selector(didTapMenu:)];
   UIImage *menuImage =
-      [[UIImage imageNamed:@"Menu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [[UIImage imageNamed:@"ic_menu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [barButtonLeadingItem setImage:menuImage];
 
   UIBarButtonItem *barButtonTrailingItem =
@@ -69,7 +69,7 @@
                                       target:self
                                       action:@selector(didTapSearch:)];
   UIImage *searchImage =
-      [[UIImage imageNamed:@"Search"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [[UIImage imageNamed:@"ic_search"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [barButtonTrailingItem setImage:searchImage];
 
   [self.bottomBarView setLeadingBarButtonItems:@[ barButtonLeadingItem ]];

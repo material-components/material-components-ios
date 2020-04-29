@@ -23,8 +23,8 @@ class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelega
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
-  let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
-  let tabBarItem2 = UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
+  let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "ic_home"), tag: 0)
+  let tabBarItem2 = UITabBarItem(title: "Messages", image: UIImage(named: "ic_email"), tag: 0)
 
   init() {
     super.init(nibName: nil, bundle: nil)

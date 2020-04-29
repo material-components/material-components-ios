@@ -31,7 +31,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)

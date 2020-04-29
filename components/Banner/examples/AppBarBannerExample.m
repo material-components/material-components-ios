@@ -127,6 +127,18 @@
 
 @end
 
+@implementation AppBarBannerExample (SnapshotTestingByConvention)
+
+- (NSDictionary<NSString *, void (^)(void)> *)testRunners {
+  return @{
+    @"visible" : ^{
+      [self showBanner];
+    }
+  };
+}
+
+@end
+
 #pragma mark - Typical application code (not Material-specific)
 
 @implementation AppBarBannerExample (UITableViewDataSource)

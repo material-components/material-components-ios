@@ -560,6 +560,7 @@ extension MDCNodeListViewController {
     if node.isExample() {
       selectedNode = node
       vc = createViewController(from: node)
+      vc.title = node.title
     } else {
       vc = MDCNodeListViewController(node: node)
     }

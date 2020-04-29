@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCActionSheetItemTableViewCell.h"
+#import "MDCActionSheetAction.h"
 
 #import <MaterialComponents/MaterialRipple.h>
 #import <MaterialComponents/MaterialTypography.h>

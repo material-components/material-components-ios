@@ -105,4 +105,12 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
   };
 }
 
+- (NSDictionary<NSString *, void (^)(void)> *)testRunners {
+  return @{
+    @"visible" : ^{
+      [self didTapButton];
+    }
+  };
+}
+
 @end

@@ -69,12 +69,6 @@ static ChipModel *MakeModel(NSString *title,
   return self;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UIContentSizeCategoryDidChangeNotification
-                                                object:nil];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 

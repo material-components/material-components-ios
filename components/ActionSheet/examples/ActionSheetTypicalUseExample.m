@@ -72,16 +72,18 @@
 - (void)showActionSheet {
   MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
   MDCActionSheetAction *homeAction =
-      [MDCActionSheetAction actionWithTitle:@"Home" image:[UIImage imageNamed:@"Home"] handler:nil];
+      [MDCActionSheetAction actionWithTitle:@"Home"
+                                      image:[UIImage imageNamed:@"ic_home"]
+                                    handler:nil];
   MDCActionSheetAction *favoriteAction =
       [MDCActionSheetAction actionWithTitle:@"Favorite"
-                                      image:[UIImage imageNamed:@"Favorite"]
+                                      image:[UIImage imageNamed:@"ic_favorite"]
                                     handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Favorite Action");
                                     }];
   MDCActionSheetAction *emailAction =
       [MDCActionSheetAction actionWithTitle:@"Email"
-                                      image:[UIImage imageNamed:@"Email"]
+                                      image:[UIImage imageNamed:@"ic_email"]
                                     handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Email Action");
                                     }];

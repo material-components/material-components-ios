@@ -134,4 +134,8 @@ extension AppBarNavigationControllerExampleViewController {
       "presentable": true,
     ]
   }
+
+  @objc func catalogShouldHideNavigation() -> Bool {
+    return true
+  }
 }

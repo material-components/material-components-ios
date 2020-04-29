@@ -120,6 +120,18 @@
 
 @end
 
+@implementation BottomSheetDismissOnDraggingDownExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Bottom Sheet DismissOnDraggingDown" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
+}
+
+@end
+
 @implementation BottomSheetShapedExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {

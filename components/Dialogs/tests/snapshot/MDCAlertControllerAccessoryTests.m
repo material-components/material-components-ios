@@ -16,6 +16,7 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MaterialButtons+Theming.h"
 #import "MaterialDialogs.h"
 #import "MDCAlertController+Testing.h"
 #import "MaterialDialogs+Theming.h"
@@ -23,6 +24,11 @@
 #import "MaterialContainerScheme.h"
 
 static NSString *const kCellId = @"cellId";
+
+@interface TestView : UIView
+@property(nonatomic, strong) MDCButton *button;
+@property(nonatomic, strong) UILabel *label;
+@end
 
 @interface MDCAlertControllerAccessoryTests : MDCSnapshotTestCase <UICollectionViewDataSource>
 @property(nonatomic, strong) MDCAlertController *alert;
@@ -64,7 +70,7 @@ static NSString *const kCellId = @"cellId";
 }
 
 - (void)generateSizedSnapshotAndVerifyForAlert:(MDCAlertController *)alert {
-  [alert sizeToFitContentInBounds:CGSizeMake(300.0f, 300.0f)];
+  [alert sizeToFitAutoLayoutContentInBounds:CGSizeMake(300.0f, 300.0f)];
   [alert highlightAlertPanels];
   [self generateSnapshotAndVerifyForView:alert.view];
 }
@@ -90,6 +96,99 @@ static NSString *const kCellId = @"cellId";
 
   // When
   self.alert.accessoryView = textField;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alert];
+}
+
+/**
+ Accesory Views that use autolayout to layout their subviews must set the accessoryView's
+ translatesAutoresizingMaskIntoConstraints to YES, to allow the alert to calcualte the accessory
+ view's size correctly (Material Alerts use manual layout). In more complicated autolayout cases,
+ in which the snapshot size becomes very wide or otherwise caluclated incorrectly, implementing
+ `systemLayoutSizeFittingSize:` and/or
+ `systemLayoutSizeFittingSize:withHorizontalFittingPriority:verticalFittingPriority` may be
+ necessary in order to provide the alert with an accurate size of the accessory view.
+*/
+- (void)testAlertWithMessageAndButtonAccessoryWithAutoLayoutNoSubclassing {
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 250.0f, 250.0f)];
+  view.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.2f];
+
+  UILabel *label = [[UILabel alloc] init];
+  label.text = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.";
+  label.numberOfLines = 0;
+  label.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3f];
+
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitle:@"Learn More" forState:UIControlStateNormal];
+  [button applyOutlinedThemeWithScheme:self.containerScheme];
+
+  label.translatesAutoresizingMaskIntoConstraints = NO;
+  button.translatesAutoresizingMaskIntoConstraints = NO;
+  // Material Alerts expect this flag to be true when autolayout is used.
+  view.translatesAutoresizingMaskIntoConstraints = YES;
+  [view addSubview:label];
+  [view addSubview:button];
+
+  [label.leadingAnchor constraintEqualToAnchor:view.leadingAnchor].active = YES;
+  [label.trailingAnchor constraintEqualToAnchor:view.trailingAnchor].active = YES;
+  [label.topAnchor constraintEqualToAnchor:view.topAnchor].active = YES;
+  [label.bottomAnchor constraintEqualToAnchor:button.topAnchor].active = YES;
+
+  [button.leadingAnchor constraintEqualToAnchor:view.leadingAnchor].active = YES;
+  [button.trailingAnchor constraintLessThanOrEqualToAnchor:view.trailingAnchor].active = YES;
+  [button.bottomAnchor constraintEqualToAnchor:view.bottomAnchor].active = YES;
+
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alert.view;
+  alertView.contentInsets = UIEdgeInsetsMake(24.0f, 24.0f, 10.0f, 24.0f);
+
+  // When
+  self.alert.accessoryView = view;
+  [self.alert applyThemeWithScheme:self.containerScheme];
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alert];
+}
+
+- (void)testSubclassedAccessoryViewWithAutoLayout {
+  TestView *view = [[TestView alloc] initWithFrame:CGRectZero];
+  view.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.2f];
+  view.label.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3f];
+  // Material Alerts expect this flag to be true when autolayout is used.
+  view.translatesAutoresizingMaskIntoConstraints = YES;
+
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alert.view;
+  alertView.contentInsets = UIEdgeInsetsMake(24.0f, 24.0f, 10.0f, 24.0f);
+
+  // When
+  self.alert.accessoryView = view;
+  [self.alert applyThemeWithScheme:self.containerScheme];
+  [view.button applyOutlinedThemeWithScheme:self.containerScheme];
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alert];
+}
+
+- (void)testAlertHasMessageAndButtonAccessoryWithManualLayout {
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitle:@"Learn More" forState:UIControlStateNormal];
+  [button applyOutlinedThemeWithScheme:self.containerScheme];
+  [button sizeToFit];
+
+  CGSize size = button.bounds.size;
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, size.width, size.height)];
+  view.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.2f];
+
+  [view addSubview:button];
+
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alert.view;
+  alertView.accessoryViewVerticalInset = 0.0f;
+  alertView.contentInsets = UIEdgeInsetsMake(24.0f, 24.0f, 10.0f, 24.0f);
+
+  // When
+  self.alert.message = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.";
+  self.alert.accessoryView = view;
+  [self.alert applyThemeWithScheme:self.containerScheme];
 
   // Then
   [self generateSizedSnapshotAndVerifyForAlert:self.alert];
@@ -134,6 +233,36 @@ static NSString *const kCellId = @"cellId";
   [cell setBackgroundColor:[[UIColor purpleColor]
                                colorWithAlphaComponent:0.1f * (indexPath.item + 1)]];
   return cell;
+}
+
+@end
+
+@implementation TestView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  if (self = [super initWithFrame:frame]) {
+    self.label = [[UILabel alloc] init];
+    self.label.text = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.";
+    self.label.numberOfLines = 0;
+
+    self.button = [[MDCButton alloc] init];
+    [self.button setTitle:@"Learn More" forState:UIControlStateNormal];
+
+    self.label.translatesAutoresizingMaskIntoConstraints = NO;
+    self.button.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.label];
+    [self addSubview:self.button];
+
+    [self.label.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+    [self.label.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+    [self.label.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+    [self.label.bottomAnchor constraintEqualToAnchor:self.button.topAnchor].active = YES;
+
+    [self.button.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+    [self.button.trailingAnchor constraintLessThanOrEqualToAnchor:self.trailingAnchor].active = YES;
+    [self.button.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+  }
+  return self;
 }
 
 @end

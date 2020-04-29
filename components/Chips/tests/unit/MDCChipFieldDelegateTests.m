@@ -69,8 +69,8 @@
   self.chipField.textField.text = @"This is a very very long chip field string";
 
   // Then
-  // TODO(b/154325932): this exposes b/154325932, update this once the bug is resolved.
-  XCTAssertNil(self.delegate.heightChangedChipField);
+  XCTAssertNotNil(self.delegate.heightChangedChipField);
+  XCTAssertEqualObjects(self.delegate.heightChangedChipField, self.chipField);
 }
 
 /**
@@ -79,6 +79,7 @@
 - (void)testHeightChangedCalledOnChipAddition {
   // When
   [self.chipField addChip:[self chipViewWithTitle:@"Chip"]];
+  [self.chipField layoutIfNeeded];
 
   // Then
   XCTAssertNotNil(self.delegate.heightChangedChipField);
@@ -99,6 +100,7 @@
 
   // When
   [self.chipField removeChip:self.chipField.chips.firstObject];
+  [self.chipField layoutIfNeeded];
 
   // Then
   XCTAssertNotNil(self.delegate.heightChangedChipField);

@@ -63,7 +63,7 @@
   [containedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
   [containedButton applyContainedThemeWithScheme:self.containerScheme];
 
-  UIImage *plusImage = [UIImage imageNamed:@"Plus"];
+  UIImage *plusImage = [UIImage imageNamed:@"ic_add"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [containedButton setImage:plusImage forState:UIControlStateNormal];
 

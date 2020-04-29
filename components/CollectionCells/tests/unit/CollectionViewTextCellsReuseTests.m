@@ -58,7 +58,7 @@
   textCell.detailTextLabel.lineBreakMode = NSLineBreakByClipping;
   textCell.detailTextLabel.numberOfLines = 7;
 
-  textCell.imageView.image = [UIImage imageNamed:@"Plus"];
+  textCell.imageView.image = [UIImage imageNamed:@"ic_add"];
 
   // When
   [textCell prepareForReuse];

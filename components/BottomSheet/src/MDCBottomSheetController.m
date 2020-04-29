@@ -83,6 +83,7 @@
   self.mdc_bottomSheetPresentationController.dismissOnDraggingDownSheet =
       _transitionController.dismissOnDraggingDownSheet;
 
+  self.contentViewController.view.frame = self.view.bounds;
   [self.contentViewController.view layoutIfNeeded];
 }
 

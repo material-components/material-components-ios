@@ -158,15 +158,15 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
   [self.view addSubview:self.tabBar];
 
   NSMutableArray<UIImage *> *itemIcons = [NSMutableArray array];
-  [itemIcons addObject:[[UIImage imageNamed:@"Home"]
+  [itemIcons addObject:[[UIImage imageNamed:@"ic_home"]
                            imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-  [itemIcons addObject:[[UIImage imageNamed:@"Favorite"]
+  [itemIcons addObject:[[UIImage imageNamed:@"ic_favorite"]
                            imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-  [itemIcons addObject:[[UIImage imageNamed:@"Cake"]
+  [itemIcons addObject:[[UIImage imageNamed:@"ic_cake"]
                            imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-  [itemIcons addObject:[[UIImage imageNamed:@"Email"]
+  [itemIcons addObject:[[UIImage imageNamed:@"ic_email"]
                            imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-  [itemIcons addObject:[[UIImage imageNamed:@"Search"]
+  [itemIcons addObject:[[UIImage imageNamed:@"ic_search"]
                            imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
   self.tabBarItemIcons = itemIcons;
   self.tabBarItemTitles = @[ @"Home", @"Unselectable", @"Cake", @"Email", @"Search" ];
