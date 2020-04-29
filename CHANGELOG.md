@@ -1,16 +1,7 @@
-# #develop#
+# 109.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This minor release includes bug fixes for Dialogs, BottomSheet Chips, and
+FlexibleHeader. It also cleans up the removeObserver calls on NSNotificationCenter.
 
 ## Component changes
 
@@ -20,7 +11,6 @@ Replace this text with example code for each new feature.
 
 ### ActivityIndicator
 
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/61bf79c626169ce9600ca56cb4992c28f0f39bc4) (Wenyu Zhang)
 * [Mark the swift example as flaky due to its use of animations and remove explicit titles.](https://github.com/material-components/material-components-ios/commit/204072049269406d9a4015798c9e055b423c5a61) (Jeff Verkoeyen)
 
 ### AnimationTiming
@@ -36,16 +26,13 @@ Replace this text with example code for each new feature.
 
 * [Add snapshot test hooks to the examples.](https://github.com/material-components/material-components-ios/commit/a9512e0dba1faa4ef632c06208b78cc9ae51e644) (Jeff Verkoeyen)
 
-### BottomAppBar
-
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/bcd0c79ef44191363f1ebdeef86f7b2b7500af66) (Jeff Verkoeyen)
-
 ### BottomSheet
 
 * [Better logging output in example.](https://github.com/material-components/material-components-ios/commit/da90ed6640987d89d609a97203182a2e7a5af8a3) (Randall Li)
 * [Set the contentView's frame later in the lifecycle.](https://github.com/material-components/material-components-ios/commit/59631d0077f91f75eaf250e2ae35389972b4e666) (Yarden Eitan)
 * [TableViewExample: Fixed swift format and added class description to example.](https://github.com/material-components/material-components-ios/commit/fa0e96173d2ed4384192041dbd8d3614afc7f8e9) (Randall Li)
 * [recreate bug in catalog. Landscape presented tableviews resist scrolling up with longer content.](https://github.com/material-components/material-components-ios/commit/ceff0080c1f1e797fcd2202794a529ddcba6b2fc) (Randall Li)
+* [Fix dismissOnDraggingDownSheet behavior](https://github.com/material-components/material-components-ios/commit/0100cfe4147ce24c91cae51a0e0bfaa762624932) (Randall Li)
 
 ### Buttons
 
@@ -53,7 +40,6 @@ Replace this text with example code for each new feature.
 
 ### Chips
 
-* [Add EarlGrey test to expose issue where MDCChipField hides placeholder text after input and rotation.](https://github.com/material-components/material-components-ios/commit/6735eea13fb087063725abc048c869bb2d0700ed) (Bryan Oltman)
 * [Inform MDCChipField's delegate of height change in layoutSubviews.](https://github.com/material-components/material-components-ios/commit/4862d65e13517eedd540efc752bd81df690fecfb) (Bryan Oltman)
 * [Only hide MDCChipField's placeholder text if showPlaceholderWithChips is false and chips are present.](https://github.com/material-components/material-components-ios/commit/4c74563162241adc525369fa9d24b2f28e148c85) (Bryan Oltman)
 
@@ -75,22 +61,10 @@ Replace this text with example code for each new feature.
 
 * [Adjust string description by added link to the material.io spec on tabs.](https://github.com/material-components/material-components-ios/commit/5125441f76fad429e55bd74606eafcd01787af85) (Randall Li)
 
-### private/Snapshot/TestHost
-
-* [Internal Change.](https://github.com/material-components/material-components-ios/commit/0bd1184f6f60f4ae9d9572cb08a3d1b4e81a92db) (Wenyu Zhang)
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/77ab521136cfd59537a8f78ee54aa89ee1f2d35f) (Wenyu Zhang)
-
-### private/Snapshot
-
-* [Internal Change.](https://github.com/material-components/material-components-ios/commit/0bd1184f6f60f4ae9d9572cb08a3d1b4e81a92db) (Wenyu Zhang)
-* [Internal change.](https://github.com/material-components/material-components-ios/commit/77ab521136cfd59537a8f78ee54aa89ee1f2d35f) (Wenyu Zhang)
-
 ## Multi-component changes
 
 * [As of iOS 9/macOS 10.11 (circa 2015) removing objective C objects from the NSNotificationCenter in - (void)dealloc. is no longer required (the classic example is: [[NSNotificationCenter defaultCenter] removeObserver:self] but there are several variations).](https://github.com/material-components/material-components-ios/commit/ebac2a8eb7362a16cee5eaecde0e8d782ac9bf0b) (Dave MacLachlan)
-* [Fix dismissOnDraggingDownSheet behavior](https://github.com/material-components/material-components-ios/commit/0100cfe4147ce24c91cae51a0e0bfaa762624932) (Randall Li)
 * [Fix the bazel BUILD files and snapshot that were restored unintentionally.(#9983)](https://github.com/material-components/material-components-ios/commit/a3381717f73e96e015be27c3eabf20746fa4886b) (Wenyu Zhang)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/44ec4e204c3c0d2c165d1a2c2a68fd0fe5bff5be) (Jeff Verkoeyen)
 * [Project import generated by Copybara.](https://github.com/material-components/material-components-ios/commit/e035d70f5035f4f89a6123d4271fed78ba611b8f) (Nobody)
 * [Rename "flaky" to "skip_snapshots".](https://github.com/material-components/material-components-ios/commit/25471afea02324ad69d0788c46e447b0cd109654) (Jeff Verkoeyen)
 * [Rename all icons to an ic_<#name#> convention.](https://github.com/material-components/material-components-ios/commit/92254ea1198cff6ba81e51e52c235bafe87d1d05) (Jeff Verkoeyen)
