@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "The flexible header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
 iconId: header
-path: /catalog/flexible-headers/
+path: /catalog/flexible-header/
 api_doc_root: true
 -->
 
@@ -1125,7 +1125,7 @@ Deprecation schedule:
 - October 23, 2018: minMaxHeightIncludesSafeArea will be marked deprecated.
 - November 23, 2018: minMaxHeightIncludesSafeArea will be deleted.
 
-`minMaxHeightIncludesSafeArea` is a behavioral flag on `MDCFlexibleHeaderView that must be disabled
+`minMaxHeightIncludesSafeArea` is a behavioral flag on `MDCFlexibleHeaderView` that must be disabled
 to ensure iPhone X compatibility.
 
 When this property is enabled (the legacy behavior), the `minimumHeight` and `maximumHeight` values
