@@ -64,6 +64,7 @@ extension MDCTextControlTextFieldsStoryboardExample {
       "breadcrumbs": ["Text Controls", "MDCTextControl TextFields (Storyboard)"],
       "primaryDemo": false,
       "presentable": true,
+      "skip_snapshots": true,  // Crashing with '[<UIViewController 0x7fb2d2a457d0> setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key filledTextField.'
       "storyboardName": "MDCTextControlTextFieldsStoryboardExample"
     ]
   }

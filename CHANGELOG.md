@@ -284,7 +284,7 @@ The following previously private `MDCAlertControllerView` properties are now exp
 ### Dialogs
 
 * [Add support for attributed dialog message text](https://github.com/material-components/material-components-ios/commit/19a973ff44331438165e7ce73ca1756420040b48) (Vladimir Pomsztein)
-* [Calculate title Insets independently of content insets (resolve scuba diff)](https://github.com/material-components/material-components-ios/commit/6b790fe2e1e5fedd2783c2e43c5c0910ef71ce79) (Galia Kaufman)
+* [Calculate title Insets independently of content insets](https://github.com/material-components/material-components-ios/commit/6b790fe2e1e5fedd2783c2e43c5c0910ef71ce79) (Galia Kaufman)
 * [Calculate title Insets independently of content insets](https://github.com/material-components/material-components-ios/commit/144b2f61dc052661a81e8822c9739fc61a1df8e4) (Galia Kaufman)
 * [Moving static c helper functions outside of test classes.](https://github.com/material-components/material-components-ios/commit/8c7be049e94b0da2843869888281fdf115e2da7f) (Galia Kaufman)
 * [Publish Adjustable Insets API](https://github.com/material-components/material-components-ios/commit/a477732a95e56bd556dd1107c2ab8bbc86843f30) (Galia Kaufman)
@@ -1063,7 +1063,7 @@ Slider added an API for allowAnimatedValueChanges and trackEndsAreRounded or tra
 ### Dialogs
 
 * [Add a private API for passing a custom title icon view. It can be used for passing a custom animation into the title.](https://github.com/material-components/material-components-ios/commit/ecb0ddcae0965d3f779d2c1b99d8911a3462c6f2) (Iryna Berezan)
-* [Adding scuba tests for long, short, text and outlined actions in vertical and horizontal layout, in LTR and RTL.](https://github.com/material-components/material-components-ios/commit/31c2f236fd172a0303d599013c349687049cb60f) (Galia Kaufman)
+* [Adding snapshot tests for long, short, text and outlined actions in vertical and horizontal layout, in LTR and RTL.](https://github.com/material-components/material-components-ios/commit/31c2f236fd172a0303d599013c349687049cb60f) (Galia Kaufman)
 * [Avoid code duplication for placing action and content scroll views in 'layoutSubviews' method of MDCAlerControllerView.](https://github.com/material-components/material-components-ios/commit/654f3dff28baba58ca61942a1f10422bce1e629d) (Iryna Berezan)
 * [Ensure to remove correct notification observer for the style updates.](https://github.com/material-components/material-components-ios/commit/408359680fb78fb7e148b716494147cf431d6a9a) (Iryna Berezan)
 * [Initialize a few CGFloat expressions in dialogs with a single-precision floating point constant.](https://github.com/material-components/material-components-ios/commit/5aaf54801f29f98e8e9ead3949805c8102ab119b) (Iryna Berezan)
@@ -1272,7 +1272,7 @@ a bugfix change to Chips imagePadding handling, and the annotation of an AppBar 
 
 ## Multi-component changes
 
-* [Restructure Cocoapods and Blaze targets (#9430)](https://github.com/material-components/material-components-ios/commit/083cf8c12f8efe1d9351ddb56f513a5fed5cd289) (Andrew Overton)
+* [Restructure Cocoapods and Bazel targets (#9430)](https://github.com/material-components/material-components-ios/commit/083cf8c12f8efe1d9351ddb56f513a5fed5cd289) (Andrew Overton)
 
 ---
 

@@ -45,7 +45,6 @@
 
   self.chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   self.chipField.delegate = self;
-  self.chipField.textField.accessibilityIdentifier = @"chip_field_text_field";
   self.chipField.textField.placeholderLabel.text = @"This is a chip field.";
   self.chipField.textField.mdc_adjustsFontForContentSizeCategory = YES;
   if (self.containerScheme.colorScheme) {

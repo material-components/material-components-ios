@@ -51,23 +51,23 @@
   XCTAssertEqualWithAccuracy(alpha, self.button.alpha, 0.0001);
 }
 
-- (void)testEnabledAlphaNotSetWhileDisabled {
+- (void)testAlphaValueSetWhenDisabledDoesNotChangeWhenButtonReenabled {
   // Given
-  CGFloat alpha = (CGFloat)0.2;
+  CGFloat expectedAlpha = (CGFloat)0.8;
+  self.button.alpha = (CGFloat)0.2;
+  self.button.enabled = NO;
+  self.button.alpha = expectedAlpha;
 
   // When
-  self.button.alpha = alpha;
-  self.button.enabled = NO;
-  self.button.alpha = 1 - alpha;
   self.button.enabled = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy(alpha, self.button.alpha, (CGFloat)0.0001);
+  XCTAssertEqualWithAccuracy(expectedAlpha, self.button.alpha, (CGFloat)0.0001);
 }
 
 - (void)testDisabledAlpha {
   // Given
-  CGFloat alpha = 0.5;
+  CGFloat alpha = (CGFloat)0.5;
 
   // When
   [self.button setDisabledAlpha:alpha];
@@ -75,6 +75,22 @@
 
   // Then
   XCTAssertEqualWithAccuracy(alpha, self.button.alpha, (CGFloat)0.0001);
+}
+
+- (void)testSettingAlphaWhileDisabledDoesNotAlterDisabledAlpha {
+  // Given
+  CGFloat startAlpha = (CGFloat)0.1;
+  CGFloat endAlpha = (CGFloat)0.2;
+  CGFloat disabledAlpha = (CGFloat)0.3;
+  self.button.alpha = startAlpha;
+  self.button.disabledAlpha = disabledAlpha;
+
+  // When
+  self.button.enabled = NO;
+  self.button.alpha = endAlpha;
+
+  // Then
+  XCTAssertEqualWithAccuracy(disabledAlpha, self.button.disabledAlpha, (CGFloat)0.0001);
 }
 
 @end

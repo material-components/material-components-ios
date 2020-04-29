@@ -259,9 +259,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setAlpha:(CGFloat)alpha {
-  if (self.enabled) {
-    _enabledAlpha = alpha;
-  }
+  _enabledAlpha = alpha;
   [super setAlpha:alpha];
 }
 
@@ -890,7 +888,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateAlphaAndBackgroundColorAnimated:(BOOL)animated {
   void (^animations)(void) = ^{
-    self.alpha = self.enabled ? self->_enabledAlpha : self.disabledAlpha;
+    // Set super to avoid overwriting _enabledAlpha
+    super.alpha = self.enabled ? self->_enabledAlpha : self.disabledAlpha;
     [self updateBackgroundColor];
   };
 

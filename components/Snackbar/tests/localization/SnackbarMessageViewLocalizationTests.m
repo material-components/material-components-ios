@@ -1,0 +1,40 @@
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#import <XCTest/XCTest.h>
+#import "MaterialSnackbar.h"
+
+@interface SnackbarMessageViewLocalizationTests : XCTestCase
+
+@end
+
+@implementation SnackbarMessageViewLocalizationTests
+
+- (void)testAccessibilityHintOnLabelIsTranslated {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+  NSString *languageCode =
+      [NSLocale.preferredLanguages.firstObject componentsSeparatedByString:@"-"].firstObject;
+  UILabel *textLabel = [messageView accessibilityElementAtIndex:0];
+
+  // Then
+  if ([languageCode isEqualToString:@"ar"]) {
+    // TODO(b/155224845): Update accessibilityHint's value once its translation is ready.
+    XCTAssertEqualObjects(textLabel.accessibilityHint, @"Double-tap to dismiss");
+  } else {
+    XCTFail(@"Language %@ isn't supported by this localization test case", languageCode);
+  }
+}
+
+@end
