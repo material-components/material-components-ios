@@ -49,7 +49,11 @@
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
     _shapeGenerators = [NSMutableDictionary dictionary];
-    _state = MDCSheetStatePreferred;
+    if (UIAccessibilityIsVoiceOverRunning()) {
+      _state = MDCSheetStateExtended;
+    } else {
+      _state = MDCSheetStatePreferred;
+    }
     _elevation = MDCShadowElevationModalBottomSheet;
     _mdc_overrideBaseElevation = -1;
   }
