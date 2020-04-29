@@ -216,7 +216,7 @@
 @property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
 
 /** The text input the controller is affecting. */
-@property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
+@property(nonatomic, nullable, weak) UIView<MDCTextInput> *textInput;
 
 /**
  The tintColor applied to the textInput's clear button.
