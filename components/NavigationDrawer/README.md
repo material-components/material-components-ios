@@ -20,7 +20,6 @@ Navigation drawers are recommended for:
   <li class="icon-list-item icon-list-item">Apps with five or more top-level destinations.</li>
   <li class="icon-list-item icon-list-item">Apps with two or more levels of navigation hierarchy.</li>
   <li class="icon-list-item icon-list-item">Quick navigation between unrelated destinations.</li>
-</ul>
 
 ## Design & API documentation
 
