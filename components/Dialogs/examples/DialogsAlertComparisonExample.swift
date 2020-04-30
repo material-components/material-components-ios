@@ -201,3 +201,28 @@ extension DialogsAlertComparisonExample {
     ]
   }
 }
+
+// MARK: Snapshot Testing by Convention
+extension DialogsAlertComparisonExample {
+
+  func resetTests() {
+    if presentedViewController != nil {
+      dismiss(animated: false)
+    }
+  }
+
+  @objc func testMaterial() {
+    resetTests()
+    tapMaterial(UIButton())
+  }
+
+  @objc func testThemed() {
+    resetTests()
+    tapThemed(UIButton())
+  }
+
+  @objc func testUIKit() {
+    resetTests()
+    tapUIKit(UIButton())
+  }
+}

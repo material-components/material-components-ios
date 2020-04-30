@@ -345,3 +345,79 @@ extension DialogsAlertCustomizationExampleViewController {
     ]
   }
 }
+
+// MARK: Snapshot Testing by Convention
+extension DialogsAlertCustomizationExampleViewController {
+
+  func resetTests() {
+    if presentedViewController != nil {
+      dismiss(animated: false)
+    }
+  }
+
+  @objc func testCenteredTitle() {
+    resetTests()
+    present(performCenteredTitle(), animated: false, completion: nil)
+  }
+
+  @objc func testCenteredTitleWithIcon() {
+    resetTests()
+    present(performCenteredTitleWithIcon(), animated: false, completion: nil)
+  }
+
+  @objc func testNaturalTitleWithIcon() {
+    resetTests()
+    present(performNaturalTitleWithIcon(), animated: false, completion: nil)
+  }
+
+  @objc func testRightTitleWithResizedIcon() {
+    resetTests()
+    present(performRightTitleWithResizedIcon(), animated: false, completion: nil)
+  }
+
+  @objc func testTintedTitleIconNoTitle() {
+    resetTests()
+    present(performTintedTitleIconNoTitle(), animated: false, completion: nil)
+  }
+
+  @objc func testScrimColor() {
+    resetTests()
+    present(performScrimColor(), animated: false, completion: nil)
+  }
+
+  @objc func testLowElevationAlert() {
+    resetTests()
+    present(performLowElevationAlert(), animated: false, completion: nil)
+  }
+
+  @objc func testEmphasisButtonTheming() {
+    resetTests()
+    present(performEmphasisButtonTheming(), animated: false, completion: nil)
+  }
+
+  @objc func testDeprecatedTextButtonTheming() {
+    resetTests()
+    present(performDeprecatedTextButtonTheming(), animated: false, completion: nil)
+  }
+
+  @objc func testTextButtonThemingTheRightWay() {
+    resetTests()
+    present(performTextButtonThemingTheRightWay(), animated: false, completion: nil)
+  }
+
+  @objc func testCustomButtonTheming() {
+    resetTests()
+    present(performCustomButtonTheming(), animated: false, completion: nil)
+  }
+
+  @objc func testDarkTheming() {
+    resetTests()
+    present(performDarkTheming(), animated: false, completion: nil)
+  }
+
+  @objc func testNoTheming() {
+    resetTests()
+    present(performNoTheming(), animated: false, completion: nil)
+  }
+
+}

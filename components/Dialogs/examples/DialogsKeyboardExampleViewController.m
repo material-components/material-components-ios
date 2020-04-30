@@ -50,3 +50,15 @@
 }
 
 @end
+
+@implementation DialogsKeyboardExampleViewController (SnapshotTestingByConvention)
+
+- (void)testPresented {
+  if (self.presentedViewController) {
+    [self dismissViewControllerAnimated:NO completion:nil];
+  }
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+  [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+}
+
+@end

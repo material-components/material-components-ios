@@ -90,3 +90,18 @@ extension DialogsLongAlertExampleViewController {
     ]
   }
 }
+
+// MARK: Snapshot Testing by Convention
+extension DialogsLongAlertExampleViewController {
+
+  func resetTests() {
+    if presentedViewController != nil {
+      dismiss(animated: false)
+    }
+  }
+
+  @objc func testPresented() {
+    resetTests()
+    tap(UIButton())
+  }
+}

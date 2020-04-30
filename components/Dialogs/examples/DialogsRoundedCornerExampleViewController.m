@@ -208,3 +208,21 @@ static const CGFloat kCornerRadiusUnthemed = 12;
 }
 
 @end
+
+@implementation DialogsRoundedCornerExampleViewController (SnapshotTestingByConvention)
+
+- (void)testDefault {
+  if (self.presentedViewController) {
+    [self dismissViewControllerAnimated:NO completion:nil];
+  }
+  [self didTapPresentDefault:nil];
+}
+
+- (void)testThemed {
+  if (self.presentedViewController) {
+    [self dismissViewControllerAnimated:NO completion:nil];
+  }
+  [self didTapPresentThemed:nil];
+}
+
+@end

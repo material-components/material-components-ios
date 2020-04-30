@@ -275,3 +275,39 @@ extension DialogsAccessoryExampleViewController {
     ]
   }
 }
+
+// MARK: Snapshot Testing by Convention
+extension DialogsAccessoryExampleViewController {
+
+  func resetTests() {
+    if presentedViewController != nil {
+      dismiss(animated: false)
+    }
+  }
+
+  @objc func testTextView() {
+    resetTests()
+    self.present(performTextView(), animated: false, completion: nil)
+  }
+
+  @objc func testTextField() {
+    resetTests()
+    self.present(performTextField(), animated: false, completion: nil)
+  }
+
+  @objc func testMDCTextField() {
+    resetTests()
+    self.present(performMDCTextField(), animated: false, completion: nil)
+  }
+
+  @objc func testCustomLabelWithButton() {
+    resetTests()
+    self.present(performCustomLabelWithButton(), animated: false, completion: nil)
+  }
+
+  @objc func testDefaultLabelWithButton() {
+    resetTests()
+    self.present(performDefaultLabelWithButton(), animated: false, completion: nil)
+  }
+
+}

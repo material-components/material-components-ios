@@ -122,3 +122,14 @@
 }
 
 @end
+
+@implementation DialogsTypicalUseExampleViewController (SnapshotTestingByConvention)
+
+- (void)testPresented {
+  if (self.presentedViewController) {
+    [self dismissViewControllerAnimated:NO completion:nil];
+  }
+  [self showAlert:nil];
+}
+
+@end
