@@ -74,10 +74,9 @@ class EditReorderCollectionViewController: UIViewController,
     longPressGesture.cancelsTouchesInView = false
     collectionView.addGestureRecognizer(longPressGesture)
 
-    // randomly select images to display 30 items
-    let count = UInt32(images.count)
-    for _ in 0 ..< 30 {
-      let ind = Int(arc4random_uniform(count))
+    let count = Int(images.count)
+    for index in 0 ..< 30 {
+      let ind = index % count
       dataSource.append((image: images[ind].image, title: images[ind].title, selected: false))
     }
 

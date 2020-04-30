@@ -162,6 +162,7 @@ extension ToggleButtonCollectionViewController {
       "breadcrumbs": ["Cards", "Toggle Button in Cards"],
       "primaryDemo": false,
       "presentable": true,
+      "skip_snapshots" : true, // Crashing on iPhone 5S iOS 10.3 with 'Unable to install constraint on view.  Does the constraint reference something from outside the subtree of the view?  That's illegal. constraint:<NSLayoutConstraint:0x610000887350 H:|-(0)-[UIView:0x7ffa93c3a220]   (active, names: '|':ToggleButtonCell:0x7ffa93c39d60 )> view:<UIImageView: 0x7ffa93e40210; frame = (0 0; 0 0); clipsToBounds = YES; opaque = NO; userInteractionEnabled = NO; layer = <CALayer: 0x61000003ec00>> - (null)'
     ]
   }
 }

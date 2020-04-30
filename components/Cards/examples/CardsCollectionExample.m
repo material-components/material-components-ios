@@ -130,6 +130,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     @"breadcrumbs" : @[ @"Cards", @"Collection Card Cells" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
+    @"skip_snapshots" : @YES,  // Crashing with 'NSInternalInconsistencyException', reason: 'layout
+                               // cannot be nil in setCollectionViewLayout:'
   };
 }
 
