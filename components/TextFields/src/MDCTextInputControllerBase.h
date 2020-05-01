@@ -14,8 +14,6 @@
 
 #import "MDCTextInputControllerFloatingPlaceholder.h"
 
-extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
-
 /**
  Base class providing floating placeholder animation and other functionality.
 
@@ -81,6 +79,13 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
  Default is nil.
  */
 @property(nonatomic, nullable, strong) UIColor *borderStrokeColor;
+
+/**
+ The radius of the input field's border.
+
+ Default is 4.
+ */
+@property(nonatomic, assign) CGFloat borderRadius;
 
 /**
  Should the controller's .textInput grow vertically as new lines are added.
