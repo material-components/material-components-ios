@@ -110,7 +110,10 @@
                      @"Easing curves allow elements to move between positions or states.",
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
-    @"storyboardName" : @"AppBarInterfaceBuilderExampleController"
+    @"storyboardName" : @"AppBarInterfaceBuilderExampleController",
+    @"skip_snapshots" :
+        @YES,  // Crashing with "Could not find a storyboard named
+               // 'AppBarInterfaceBuilderExampleController' in bundle NSBundle <...> (loaded)"
   };
 }
 
