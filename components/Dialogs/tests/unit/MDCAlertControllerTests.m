@@ -126,6 +126,11 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
                  MDCContentHorizontalAlignmentCenter);
 }
 
+- (void)testAlertCanBecomeFirstResponder {
+  // Then
+  XCTAssertTrue(self.alert.canBecomeFirstResponder);
+}
+
 - (void)testAlertValuesDontRevertToDefaultValuesAfterViewIsLoaded {
   // Given
   self.alert.titleAlignment = NSTextAlignmentLeft;
