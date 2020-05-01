@@ -222,6 +222,22 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
+- (void)testAlertTitleIconHasCustomInsetsAndImageIsLarge {
+  // Given
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  self.alertController.titleIcon = [UIImage imageNamed:@"wide-image"
+                                              inBundle:bundle
+                         compatibleWithTraitCollection:nil];
+  self.alertController.titleIconAlignment = MDCContentHorizontalAlignmentJustified;
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  self.alertView.titleIconInsets = UIEdgeInsetsMake(20.f, 20.f, 8.f, 20.f);
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
 - (void)testAlertTitleIconTitleZeroInsets {
   // Given
   self.alertController.titleIcon = self.titleIcon;
