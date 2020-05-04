@@ -17,6 +17,27 @@
 #import "MaterialAvailability.h"
 #import "MaterialBottomAppBar.h"
 
+/** A test class that allows setting safe area insets. */
+@interface MDCBottomAppBarViewSnapshotTestsSuperview : UIView
+/** Allows overriding the safe area insets. */
+@property(nonatomic, assign) UIEdgeInsets customSafeAreaInsets;
+@end
+
+@implementation MDCBottomAppBarViewSnapshotTestsSuperview
+
+- (void)setCustomSafeAreaInsets:(UIEdgeInsets)customSafeAreaInsets {
+  _customSafeAreaInsets = customSafeAreaInsets;
+  if (@available(iOS 11.0, *)) {
+    [self safeAreaInsetsDidChange];
+  }
+}
+
+- (UIEdgeInsets)safeAreaInsets {
+  return _customSafeAreaInsets;
+}
+
+@end
+
 @interface MDCBottomAppBarSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCBottomAppBarView *appBar;
 @end
@@ -95,6 +116,23 @@
   [self generateSnapshotAndVerifyForView:self.appBar];
 }
 
+- (void)testFloatingButtonLeadingLTRWithSafeAreaInsets {
+  // Given
+  CGSize superviewSize = [self.appBar sizeThatFits:CGSizeMake(360, INFINITY)];
+  MDCBottomAppBarViewSnapshotTestsSuperview *superview =
+      [[MDCBottomAppBarViewSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, superviewSize.width, superviewSize.height)];
+  [superview addSubview:self.appBar];
+  self.appBar.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 44, 0, 44);
+  self.appBar.floatingButtonPosition = MDCBottomAppBarFloatingButtonPositionLeading;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
 - (void)testFloatingButtonLeadingRTL {
   // When
   self.appBar.floatingButtonPosition = MDCBottomAppBarFloatingButtonPositionLeading;
@@ -102,6 +140,24 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.appBar];
+}
+
+- (void)testFloatingButtonLeadingRTLWithSafeAreaInsets {
+  // Given
+  CGSize superviewSize = [self.appBar sizeThatFits:CGSizeMake(360, INFINITY)];
+  MDCBottomAppBarViewSnapshotTestsSuperview *superview =
+      [[MDCBottomAppBarViewSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, superviewSize.width, superviewSize.height)];
+  [superview addSubview:self.appBar];
+  self.appBar.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 44, 0, 44);
+  self.appBar.floatingButtonPosition = MDCBottomAppBarFloatingButtonPositionLeading;
+  [self changeViewToRTL:self.appBar];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
 }
 
 - (void)testFloatingButtonTrailingLTR {
@@ -112,6 +168,23 @@
   [self generateSnapshotAndVerifyForView:self.appBar];
 }
 
+- (void)testFloatingButtonTrailingLTRWithSafeAreaInsets {
+  // Given
+  CGSize superviewSize = [self.appBar sizeThatFits:CGSizeMake(360, INFINITY)];
+  MDCBottomAppBarViewSnapshotTestsSuperview *superview =
+      [[MDCBottomAppBarViewSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, superviewSize.width, superviewSize.height)];
+  [superview addSubview:self.appBar];
+  self.appBar.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 44, 0, 44);
+  self.appBar.floatingButtonPosition = MDCBottomAppBarFloatingButtonPositionTrailing;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
 - (void)testFloatingButtonTrailingRTL {
   // When
   self.appBar.floatingButtonPosition = MDCBottomAppBarFloatingButtonPositionTrailing;
@@ -119,6 +192,24 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.appBar];
+}
+
+- (void)testFloatingButtonTrailingRTLWithSafeAreaInsets {
+  // Given
+  CGSize superviewSize = [self.appBar sizeThatFits:CGSizeMake(360, INFINITY)];
+  MDCBottomAppBarViewSnapshotTestsSuperview *superview =
+      [[MDCBottomAppBarViewSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, superviewSize.width, superviewSize.height)];
+  [superview addSubview:self.appBar];
+  self.appBar.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 44, 0, 44);
+  self.appBar.floatingButtonPosition = MDCBottomAppBarFloatingButtonPositionTrailing;
+  [self changeViewToRTL:self.appBar];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
 }
 
 - (void)testFloatingButtonHiddenLTR {
