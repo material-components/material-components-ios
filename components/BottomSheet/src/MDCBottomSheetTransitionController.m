@@ -151,7 +151,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
     CGFloat leftPad = (containerSize.width - width) / 2;
     return CGRectMake(leftPad, 0, width, containerSize.height);
   } else {
-    return containerView.frame;
+    return CGRectStandardize(containerView.bounds);
   }
 }
 
