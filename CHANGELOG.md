@@ -1,3 +1,71 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Add test showcasing how when an Action's image is set it does not update an ActionSheet.](https://github.com/material-components/material-components-ios/commit/d30de4507cf9dd80bd1cf487fa0d3f09cc931416) (Cody Weaver)
+* [Support setting image later in lifecycle](https://github.com/material-components/material-components-ios/commit/b9822411b97730324dedca19492d895c68fc880a) (Cody Weaver)
+
+### BottomAppBar
+
+* [Have BottomAppBar respect safe area](https://github.com/material-components/material-components-ios/commit/9220d5b801487df51560e61327e8c47305c02bdf) (Andrew Overton)
+
+### BottomSheet
+
+* [Have the container sheet be laid out by the container view's bounds, not frame.](https://github.com/material-components/material-components-ios/commit/65b749fb56fc15fad14ff7f71c0fb432337ee033) (Yarden Eitan)
+* [[BottomSheet]Set MDCSheetStateExtended for MDCBottomSheetController in its initializer.](https://github.com/material-components/material-components-ios/commit/c8ba09ff95259644b70481a90681de38d5d1e184) (Wenyu Zhang)
+
+### Cards
+
+* [Add example snapshot tests.](https://github.com/material-components/material-components-ios/commit/f4b7c8eb2cd04e2afe8437772c5f85b0b0aceb47) (Jeff Verkoeyen)
+
+### Chips
+
+* [Internal change](https://github.com/material-components/material-components-ios/commit/c3f17b143a0f710a3f88a90d82f0baf4ca761622) (Bryan Oltman)
+
+### Collections
+
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/a866a00f778d73c44261327a86914e2ed73d40be) (Wenyu Zhang)
+
+### Dialogs
+
+* [Add example snapshot tests.](https://github.com/material-components/material-components-ios/commit/1920b96b2ab03f2ba2faf89b62396e71777b1303) (Jeff Verkoeyen)
+* [Allow MDCAlertController to become first responder.](https://github.com/material-components/material-components-ios/commit/da54c6f67a28691ecb3962e963f36d50ec501358) (Wenyu Zhang)
+* [Document icon image scaling condition](https://github.com/material-components/material-components-ios/commit/5b5156eab6bb4412ebef0f95b87c96308afb413b) (Galia Kaufman)
+* [No public changes, just a test that reproduces the issue.](https://github.com/material-components/material-components-ios/commit/99d6facc5bd41455bb86e6246745be29b699d67d) (Iryna Berezan)
+
+### FlexibleHeader
+
+* [Add example snapshot tests.](https://github.com/material-components/material-components-ios/commit/4a22863ca074ee5c5d1db7d7cd3e909e9feaf6ec) (Jeff Verkoeyen)
+
+### NavigationBar
+
+* [Add example snapshot tests.](https://github.com/material-components/material-components-ios/commit/9e3ab8703b8d7f2f124ceb90e9ceb01d7a60be99) (Jeff Verkoeyen)
+
+### TextFields
+
+* [Add borderRadius property](https://github.com/material-components/material-components-ios/commit/fb10ae1b1fc70a689949ac5e46e72a54751116c5) (Nobody)
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/81bd1dd07f3029dd7850fdfa299a58e06216b109) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Replace App Bar docs](https://github.com/material-components/material-components-ios/commit/7814b0c4600ac42504521d02178bcbaea79cbbe4) (Andrew Overton)
+
+---
+
 # 109.1.0
 
 This minor release includes new examples for Dialogs, and bug fixes BottomSheet, Chips, and
