@@ -324,7 +324,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
-  self.needsAnimatedScrollToSelectedItem = YES;
+  if (animated) {
+    self.needsAnimatedScrollToSelectedItem = YES;
+  } else {
+    self.needsScrollToSelectedItem = YES;
+  }
   [self setNeedsLayout];
   [self didSelectItemAtIndex:itemIndex animateTransition:animated];
 }
