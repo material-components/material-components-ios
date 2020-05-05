@@ -35,15 +35,10 @@
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self setupExampleViews:@[
-    @"Simple Snackbar",
-    @"Snackbar with Action Button",
-    @"Snackbar with Long Text",
-    @"Attributed Text Example",
-    @"Color Themed Snackbar",
-    @"Customize Font Example",
-    @"De-Customize Example",
-    @"Customized Message Using Block",
-    @"Non Transient Snackbar",
+    @"Simple Snackbar", @"Snackbar with Action Button", @"Snackbar with Long Text",
+    @"Attributed Text Example", @"Color Themed Snackbar", @"Customize Font Example",
+    @"De-Customize Example", @"Customized Message Using Block", @"Non Transient Snackbar",
+    @"Snackbar Presented On Custom View"
   ]];
   self.title = @"Snackbar";
   _legacyMode = YES;
@@ -204,6 +199,14 @@
   [MDCSnackbarManager showMessage:message];
 }
 
+- (void)showSimpleSnackbarOnCustomPresentationHostView:(id)sender {
+  MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
+  message.text = @"Snackbar Message";
+  message.focusOnShow = YES;
+  message.presentationHostViewOverride = self.collectionView;
+  [MDCSnackbarManager showMessage:message];
+}
+
 #pragma mark - UICollectionView
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -236,6 +239,9 @@
       break;
     case 8:
       [self showNonTransientSnackbar:nil];
+      break;
+    case 9:
+      [self showSimpleSnackbarOnCustomPresentationHostView:nil];
       break;
     default:
       break;

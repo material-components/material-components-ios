@@ -547,4 +547,24 @@
   [self waitForExpectationsWithTimeout:3 handler:nil];
 }
 
+- (void)testSettingPresentationHostViewOverrideDisplaysSnackbarInCorrectView {
+  // Given
+  UIView *customView = [[UIView alloc] init];
+  self.message.presentationHostViewOverride = customView;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_time_t popTime =
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)((CGFloat)0.1 * NSEC_PER_SEC));
+  dispatch_after(popTime, dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertTrue([customView.subviews count] > 0);
+  XCTAssertEqual([customView.subviews.firstObject class], [MDCSnackbarOverlayView class]);
+}
+
 @end

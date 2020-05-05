@@ -74,6 +74,7 @@ static BOOL _usesLegacySnackbar = NO;
   copy.focusOnShow = self.focusOnShow;
   copy.elementToFocusOnDismiss = self.elementToFocusOnDismiss;
   copy.automaticallyDismisses = self.automaticallyDismisses;
+  copy.presentationHostViewOverride = self.presentationHostViewOverride;
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the
