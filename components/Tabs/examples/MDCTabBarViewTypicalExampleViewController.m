@@ -311,8 +311,8 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
       [[UISegmentedControl alloc] initWithItems:@[ @"Titles", @"Icons", @"Titles and Icons" ]];
   self.segmentedControl.selectedSegmentIndex = 2;
   [self.segmentedControl addTarget:self
-                       action:@selector(segmentedControlChangedValue:)
-             forControlEvents:UIControlEventValueChanged];
+                            action:@selector(segmentedControlChangedValue:)
+                  forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.segmentedControl];
   self.segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
   if (@available(iOS 11.0, *)) {
@@ -329,7 +329,8 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
         constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
         .active = YES;
   } else {
-    [self.view.centerXAnchor constraintEqualToAnchor:self.segmentedControl.centerXAnchor].active = YES;
+    [self.view.centerXAnchor constraintEqualToAnchor:self.segmentedControl.centerXAnchor].active =
+        YES;
     NSLayoutConstraint *centerYConstraint =
         [self.view.centerYAnchor constraintEqualToAnchor:self.segmentedControl.centerYAnchor];
     centerYConstraint.priority = UILayoutPriorityDefaultLow;
@@ -339,7 +340,8 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
         .active = YES;
     [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:self.segmentedControl.leadingAnchor]
         .active = YES;
-    [self.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
+    [self.view.trailingAnchor
+        constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
         .active = YES;
   }
 }
@@ -514,6 +516,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
   [super viewDidLayoutSubviews];
 
   [self logItemVisibilityChanges];
+
   CGFloat centerX = self.segmentedControl.center.x;
   CGFloat centerY = CGRectGetMaxY(self.segmentedControl.frame) + 50;
   self.forwardButton.center = CGPointMake(centerX, centerY);
