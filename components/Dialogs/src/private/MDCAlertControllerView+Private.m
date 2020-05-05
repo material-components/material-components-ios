@@ -625,8 +625,15 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGSize horizontalSize = [self actionFittingSizeInHorizontalLayout];
   CGSize verticalSize = [self actionButtonsSizeInVerticalLayout];
 
+  BOOL isVertical = boundsSize.width < horizontalSize.width;
+  NSUInteger count = self.actionManager.buttonsInActionOrder.count;
+  if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified && count > 1) {
+    // b/155350470: ensure long justified actions are vertically aligned based on the longest
+    // button.
+    isVertical = verticalSize.width > boundingWidth / count;
+  }
   CGSize actionsSize;
-  if (boundsSize.width < horizontalSize.width) {
+  if (isVertical) {
     // Use VerticalLayout
     if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
       verticalSize.width = boundingWidth - (self.actionsInsets.left + self.actionsInsets.right);
@@ -636,7 +643,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.verticalActionsLayout = YES;
   } else {
     // Use HorizontalLayout
-    if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
+    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
       horizontalSize.width = boundingWidth - (self.actionsInsets.left + self.actionsInsets.right);
     }
     actionsSize.width = MIN(horizontalSize.width, boundsSize.width);

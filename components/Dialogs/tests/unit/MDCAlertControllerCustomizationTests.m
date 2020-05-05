@@ -33,6 +33,7 @@ static inline UIImage *TestImage(CGSize size) {
 
 @interface MDCAlertControllerView (Testing)
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+@property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
 @end
 
 @interface MDCAlertControllerCustomizationTests : XCTestCase
@@ -213,6 +214,25 @@ static inline UIImage *TestImage(CGSize size) {
   CGRect iconFrame = CGRectMake(insets.left, insets.top, fullWidthMinusInsets,
                                 imageSize.height * (fullWidthMinusInsets / imageSize.width));
   XCTAssertTrue(CGRectEqualToRect(self.alertView.titleIconImageView.frame, iconFrame));
+}
+
+// testing vertical alignment of long justified actions
+- (void)testLongJustifiedActionsAreVerticallyAligned {
+  // Given
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"First Long Action"
+                                               emphasis:MDCActionEmphasisMedium
+                                                handler:nil]];
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"Cancel"
+                                               emphasis:MDCActionEmphasisMedium
+                                                handler:nil]];
+
+  // When
+  self.alert.actionsHorizontalAlignment = MDCContentHorizontalAlignmentJustified;
+  self.alert.actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentJustified;
+  [self sizeAlertToFitContent];
+
+  // Then
+  XCTAssertEqual(self.alertView.isVerticalActionsLayout, true);
 }
 
 #pragma mark - Helpers

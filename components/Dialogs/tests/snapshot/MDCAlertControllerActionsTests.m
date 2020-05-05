@@ -420,6 +420,24 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
+// b/155350470: test long justified actions are vertically aligned.
+- (void)testLongJustifiedActionsAreVerticallyAligned {
+  // Given
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:@"First Long Action"
+                                                         emphasis:MDCActionEmphasisMedium
+                                                          handler:nil]];
+  [self addCancelActionWithEmphasis:MDCActionEmphasisMedium];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  self.alertController.actionsHorizontalAlignment = MDCContentHorizontalAlignmentJustified;
+  self.alertController.actionsHorizontalAlignmentInVerticalLayout =
+      MDCContentHorizontalAlignmentJustified;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
 #pragma mark - Vertical Order Tests
 
 - (void)testVerticalActionsAreOrderedByEmphasis {
