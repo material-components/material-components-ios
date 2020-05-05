@@ -98,6 +98,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, NSValue *> *layoutStyleToContentPadding;
 
+/**
+ The most recent size of the tab bar view. If a size change is noticed in `-layoutSubviews` the
+ `needsScrollToSelectedItem` flag is set to YES. This ensures that the selected item is always
+ visible in rotation-related edge cases involving MDCHeaderStackView.
+ */
+@property(nonatomic, assign) CGSize mostRecentlyRecordedSize;
 @end
 
 @implementation MDCTabBarView
@@ -266,7 +272,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     newSelectedItem = self.selectedItem;
   }
 
-  self.selectedItem = newSelectedItem;
+  [self setSelectedItem:newSelectedItem animated:NO];
   [self addObserversToTabBarItems];
 
   [self invalidateIntrinsicContentSize];
@@ -628,6 +634,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  if (!CGSizeEqualToSize(self.frame.size, self.mostRecentlyRecordedSize)) {
+    self.needsScrollToSelectedItem = YES;
+  }
+  self.mostRecentlyRecordedSize = self.frame.size;
 
   MDCTabBarViewLayoutStyle layoutStyle = [self effectiveLayoutStyle];
   switch (layoutStyle) {
