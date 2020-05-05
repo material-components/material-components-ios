@@ -1,16 +1,10 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release includes bug fixes and tests for ActionSheet, BottomAppBar, BottomSheet, Cards, Dialogs, FlexibleHeader, NavigationBar and TextFields.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+New example snapshot tests added to Cards, Dialogs, FlexibleHeader and NavigationBar.
 
 ## Component changes
 
@@ -57,7 +51,7 @@ Replace this text with example code for each new feature.
 
 ### TextFields
 
-* [Add borderRadius property](https://github.com/material-components/material-components-ios/commit/fb10ae1b1fc70a689949ac5e46e72a54751116c5) (Nobody)
+* [Add borderRadius property](https://github.com/material-components/material-components-ios/commit/fb10ae1b1fc70a689949ac5e46e72a54751116c5) (Jonathan Willing)
 * [Internal change.](https://github.com/material-components/material-components-ios/commit/81bd1dd07f3029dd7850fdfa299a58e06216b109) (Wenyu Zhang)
 
 ## Multi-component changes
