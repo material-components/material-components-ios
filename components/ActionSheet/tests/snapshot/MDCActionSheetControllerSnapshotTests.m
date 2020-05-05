@@ -771,4 +771,23 @@ static NSString *const kLongTitle5Arabic =
   [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
 }
 
+- (void)testActionSheetWhenActionImageIsSetAfterBeingSetAsAction {
+  // Given
+  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                                                 image:nil
+                                                               handler:nil];
+  [self.actionSheetController addAction:action];
+
+  // When
+  [self.actionSheetController.view setNeedsLayout];
+  [self.actionSheetController.view layoutIfNeeded];
+  [self.actionSheetController viewWillAppear:NO];
+  action.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
+  [self.actionSheetController.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.actionSheetController.view];
+}
+
 @end

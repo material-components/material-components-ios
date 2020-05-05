@@ -83,3 +83,18 @@ extension DialogsWithEmphasisButtonExampleViewController {
   }
 }
 
+
+// MARK: Snapshot Testing by Convention
+extension DialogsWithEmphasisButtonExampleViewController {
+
+  func resetTests() {
+    if presentedViewController != nil {
+      dismiss(animated: false)
+    }
+  }
+
+  @objc func testPresented() {
+    resetTests()
+    tapMaterial(UIButton())
+  }
+}

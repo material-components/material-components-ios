@@ -31,6 +31,8 @@
 static NSString *const kClearButtonKey = @"MaterialTextFieldClearButtonAccessibilityLabel";
 /** Table name within the bundle used for localizing accessibility values. */
 static NSString *const kAccessibilityLocalizationStringsTableName = @"MaterialTextField";
+// The Bundle for string resources.
+static NSString *const kBundle = @"MaterialTextFields.bundle";
 
 @interface MDCMultilineTextField () {
   UIColor *_cursorColor;
@@ -129,7 +131,7 @@ static NSString *const kAccessibilityLocalizationStringsTableName = @"MaterialTe
   // TODO: (#4331) This needs to be converted to the new text scheme.
   self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCMultilineTextField class]];
+  NSBundle *bundle = [[self class] bundle];
   NSString *accessibilityLabel =
       [bundle localizedStringForKey:kClearButtonKey
                               value:@"Clear text"
@@ -828,6 +830,24 @@ static NSString *const kAccessibilityLocalizationStringsTableName = @"MaterialTe
   }
 
   [_fundament mdc_setAdjustsFontForContentSizeCategory:adjusts];
+}
+
+#pragma mark - Resource Bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCMultilineTextField class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 @end

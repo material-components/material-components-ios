@@ -92,7 +92,12 @@
 /** The alignment applied to the title of the Alert. Defaults to @c NSTextAlignmentNatural. */
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
-/** An optional icon appearing above the title of the Alert Controller.*/
+/**
+ An (optional) icon or image that appears above the title of the Alert Controller.
+
+ @note: To proportionally scale large images to fit the available space, set
+        `titleIconAlignment` to `MDCContentHorizontalAlignmentJustified`.
+ */
 @property(nonatomic, strong, nullable) UIImage *titleIcon;
 
 /** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
@@ -104,7 +109,10 @@
  To preserve backward compatibility, the default alignment of the title icon matches the alignment
  of the title, set by @c titleAlignment. The @c titleIconAlignment value will automatically match
  @c titleAlignment until the value of @c titleIconAlignment is first set.
- */
+
+ @note: Large `titleIcon` images will be proportionally scaled to fit the available space when
+        `titleIconAlignment` is set to `MDCContentHorizontalAlignmentJustified`.
+*/
 @property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
 /** The font applied to the message of Alert Controller.*/

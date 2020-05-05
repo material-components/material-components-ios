@@ -27,9 +27,40 @@ static const CGFloat kActionImageAlpha = (CGFloat)0.6;
 static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 
+@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
+                                        UITableViewDelegate,
+                                        UITableViewDataSource>
+@property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) MDCActionSheetHeaderView *header;
+
+/** The view that divides the header from the table. */
+@property(nonatomic, strong, nonnull) UIView *headerDividerView;
+
+/**
+ Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL addLeadingPaddingToCell;
+
+/**
+ Reloads the tables data and does a layout pass.
+ */
+- (void)updateTable;
+
+@end
+
 @interface MDCActionSheetAction ()
 
 @property(nonatomic, nullable, copy) MDCActionSheetHandler completionHandler;
+
+/**
+ The @c MDCActionSheetController responsible for presenting the action.
+
+ @note This is only set when the @c MDCActionSheetController's view is in the heirarchy else it is
+ @c nil.
+ */
+@property(nonatomic, weak, nullable) MDCActionSheetController *actionSheet;
 
 @end
 
@@ -67,23 +98,13 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   return action;
 }
 
-@end
+- (void)setImage:(UIImage *)image {
+  _image = image;
+  if (self.actionSheet) {
+    [self.actionSheet updateTable];
+  }
+}
 
-@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
-                                        UITableViewDelegate,
-                                        UITableViewDataSource>
-@property(nonatomic, strong) UITableView *tableView;
-@property(nonatomic, strong) MDCActionSheetHeaderView *header;
-
-/** The view that divides the header from the table. */
-@property(nonatomic, strong, nonnull) UIView *headerDividerView;
-
-/**
- Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.
-
- @note Defaults to @c NO.
- */
-@property(nonatomic, assign) BOOL addLeadingPaddingToCell;
 @end
 
 @implementation MDCActionSheetController {
@@ -237,6 +258,10 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+  for (MDCActionSheetAction *action in self.actions) {
+    action.actionSheet = self;
+  }
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.mdc_bottomSheetPresentationController.delegate = self;
@@ -245,6 +270,12 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
       self.transitionController.dismissOnBackgroundTap;
   [self.view layoutIfNeeded];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  for (MDCActionSheetAction *action in self.actions) {
+    action.actionSheet = nil;
+  }
 }
 
 - (BOOL)accessibilityPerformEscape {

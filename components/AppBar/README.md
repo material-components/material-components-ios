@@ -4,74 +4,31 @@ layout: detail
 section: components
 excerpt: "The Material Design top app bar displays information and actions relating to the current view."
 iconId: toolbar
-path: /catalog/app-bars/
+path: /catalog/top-app-bars/
 api_doc_root: true
 -->
-
-<!-- This file was auto-generated using ./scripts/generate_readme AppBar -->
 
 # App bars: top
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BAppBar%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BAppBar%5D)
 
-The Material Design top app bar displays information and actions relating to the current view.
+[Top app bars](https://material.io/components/app-bars-top/#) display
+information and actions relating to the current screen.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/top-app-bar.gif" alt="An animation showing a top app bar appearing and disappearing." width="320">
-</div>
+Material makes a distinction between regular and [contextual app bars](https://material.io/components/app-bars-top#contextual-action-bar), but this distinction is less relevant on iOS.
 
-## Design & API documentation
+![Top app bar gif](docs/assets/top-app-bar.gif)
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">MDCAppBar</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarNavigationController.html">MDCAppBarNavigationController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarViewController.html">MDCAppBarViewController</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCAppBarNavigationControllerDelegate.html">MDCAppBarNavigationControllerDelegate</a></li>
-</ul>
+## Contents
 
-## Related components
+* [Using top app bars](#using-top-app-bars)
+* [Making top app bars accessible](#making-top-app-bars-accessible)
+* [Top app bar examples](#top-app-bar-examples)
+* [Theming top app bars](#theming-top-app-bars)
+* [Migration guides](#migration-guides)
+* [Unsupported](#unsupported)
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">FlexibleHeader</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">HeaderStackView</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">NavigationBar</a></li>
-</ul>
-
-## Table of contents
-
-- [Overview](#overview)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Typical use: View controller containment, as a navigation controller](#typical-use-view-controller-containment-as-a-navigation-controller)
-  - [Typical use: View controller containment, as a child](#typical-use-view-controller-containment-as-a-child)
-  - [Typical use: View controller containment, as a container](#typical-use-view-controller-containment-as-a-container)
-  - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
-  - [Enabling observation of the tracking scroll view](#enabling-observation-of-the-tracking-scroll-view)
-  - [UINavigationItem support](#uinavigationitem-support)
-  - [Interactive background views](#interactive-background-views)
-  - [Adjusting the top layout guide of a view controller](#adjusting-the-top-layout-guide-of-a-view-controller)
-- [Behavioral flags](#behavioral-flags)
-  - [Recommended behavioral flags](#recommended-behavioral-flags)
-  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-minmax-heights)
-  - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
-  - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
-- [Extensions](#extensions)
-  - [Theming](#theming)
-- [Accessibility](#accessibility)
-  - [MDCAppBar Accessibility](#mdcappbar-accessibility)
-- [Migration guides](#migration-guides)
-  - [Migration guide: MDCAppBar to MDCAppBarViewController](#migration-guide-mdcappbar-to-mdcappbarviewcontroller)
-- [Unsupported](#unsupported)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
-
-- - -
-
-## Overview
+## Using top app bars
 
 App bar is composed of the following components:
 
@@ -88,28 +45,22 @@ make use of it in some manner. Unlike UIKit, which shares a single `UINavigation
 many view controllers in a stack, app bar relies on each view controller creating and managing its
 own `MDCAppBarViewController` instance.
 
-## Installation
+### Installing `MDCAppBarViewController`
 
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
+In order to use `MDCAppBarViewController`, first add App Bar to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/AppBar'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then, run the following command:
+Then, run the installer.
 
 ```bash
 pod install
 ```
 
-### Importing
-
-To import the component:
+After that, import the App Bar target.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -118,16 +69,42 @@ import MaterialComponents.MaterialAppBar
 ```
 
 #### Objective-C
-
 ```objc
 #import "MaterialAppBar.h"
 ```
 <!--</div>-->
 
+## Making top app bars accessible
 
-## Usage
+Because the App Bar mirrors the state of your view controller's navigationItem, making an App Bar accessible often
+does not require any extra work.
 
-<!-- Extracted from docs/typical-use-navigation-controller.md -->
+See the following examples:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+self.navigationItem.rightBarButtonItem =
+    UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
+
+print("accessibilityLabel: \(self.navigationItem.rightBarButtonItem.accessibilityLabel)")
+// Prints out "accessibilityLabel: Right"
+```
+
+#### Objective-C
+```objc
+self.navigationItem.rightBarButtonItem =
+   [[UIBarButtonItem alloc] initWithTitle:@"Right"
+                                    style:UIBarButtonItemStyleDone
+                                   target:nil
+                                   action:nil];
+
+NSLog(@"accessibilityLabel: %@",self.navigationItem.rightBarButtonItem.accessibilityLabel);
+// Prints out "accessibilityLabel: Right"
+```
+<!--</div>-->
+
+## Top app bar examples
 
 ### Typical use: View controller containment, as a navigation controller
 
@@ -172,8 +149,6 @@ MDCAppBarNavigationController *navigationController =
 }
 ```
 <!--</div>-->
-
-<!-- Extracted from docs/typical-use-child.md -->
 
 ### Typical use: View controller containment, as a child
 
@@ -237,8 +212,6 @@ override func viewDidLoad() {
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/typical-use-container.md -->
-
 ### Typical use: View controller containment, as a container
 
 There are cases where adding an `MDCAppBarViewController` as a child is not possible, most notably:
@@ -276,8 +249,6 @@ MDCAppBarContainerViewController *container =
     [[MDCAppBarContainerViewController alloc] initWithContentViewController:<#(nonnull UIViewController *)#>];
 ```
 <!--</div>-->
-
-<!-- Extracted from docs/../../FlexibleHeader/docs/typical-use-tracking-a-scroll-view.md -->
 
 ### Typical use: Tracking a scroll view
 
@@ -407,8 +378,6 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/../../FlexibleHeader/docs/typical-use-scroll-view-observation.md -->
-
 ### Enabling observation of the tracking scroll view
 
 If you do not require the flexible header's shift behavior, then you can avoid having to manually
@@ -446,8 +415,6 @@ flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents =
 **Note:** if `observesTrackingScrollViewScrollEvents` is enabled then you can neither enable shift
 behavior nor manually forward scroll view delegate events to the flexible header.
 
-<!-- Extracted from docs/uinavigationitem-support.md -->
-
 ### UINavigationItem support
 
 The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
@@ -457,8 +424,6 @@ Learn more by reading the Navigation Bar section on
 [Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
 Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
 supported.
-
-<!-- Extracted from docs/interactive-background-views.md -->
 
 ### Interactive background views
 
@@ -479,8 +444,6 @@ Until [Issue #184](https://github.com/material-components/material-components-io
    [Usage](../FlexibleHeader/#usage) docs.
 3. Add your views to this flexible header instance.
 4. Create a Navigation Bar if you need one. Treat it like any other custom view.
-
-<!-- Extracted from docs/../../FlexibleHeader/docs/top-layout-guide-adjustment.md -->
 
 ### Adjusting the top layout guide of a view controller
 
@@ -511,7 +474,6 @@ flexibleHeaderViewController.topLayoutGuideViewController = contentViewControlle
 ```
 <!--</div>-->
 
-
 ## Behavioral flags
 
 A behavioral flag is a temporary API that is introduced to allow client teams to migrate from an old
@@ -521,8 +483,6 @@ cycle:
 1. The flag is introduced. The default is chosen such that clients must opt in to the new behavior.
 2. After some time, the default changes to the new behavior and the flag is marked as deprecated.
 3. After some time, the flag is removed.
-
-<!-- Extracted from docs/recommended-behavioral-flags.md -->
 
 ### Recommended behavioral flags
 
@@ -560,8 +520,6 @@ appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-minmax-safearea.md -->
-
 ### Removing safe area insets from the min/max heights
 
 The minimum and maximum height values of the flexible header view assume by default that the values
@@ -585,8 +543,6 @@ flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-top-layout-adjustment.md -->
-
 ### Enabling top layout guide adjustment
 
 The `topLayoutGuideAdjustmentEnabled` behavior flag affects `topLayoutGuideViewController`.
@@ -607,8 +563,6 @@ flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = true
 flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = YES;
 ```
 <!--</div>-->
-
-<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-inferred-top-safe-area-inset.md -->
 
 ### Enabling inferred top safe area insets
 
@@ -641,14 +595,52 @@ care that the `topLayoutGuideViewController` is not a direct ancestor of the fle
 app **will** enter an infinite loop. As a general rule, your `topLayoutGuideViewController` should
 be a sibling to the flexible header.
 
-
 See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage guides.
 
-## Extensions
+### Anatomy and Key properties
 
-<!-- Extracted from docs/theming.md -->
+![Regular app bar anatomy diagram](docs/assets/top-app-bar-anatomy.png)
 
-### Theming
+1.  Container
+2.  Navigation icon (optional)
+3.  Title (optional)
+4.  Action items (optional)
+5.  Overflow menu (optional)
+
+#### Container attributes
+
+&nbsp;                          | Attribute                   | Related method(s)                                | Default value
+------------------------------- | --------------------------- | ------------------------------------------------ | -------------
+**Color**                       | `headerView.backgroundColor` | `-setBackgroundColor:`<br>`-backgroundColor` | Primary color
+**Elevation**                   | `headerView.elevation`       | `-setElevation:`<br>`-elevation`              | 4
+
+#### Navigation icon attributes
+
+&nbsp;                           | Attribute            | Related method(s)                          | Default value
+-------------------------------- | -------------------- | ------------------------------------------ | -------------
+**Icons**                        | `-[UIViewController navigationItem]` | `-setLeftBarButtonItems:`<br>`-leftBarButtonItems`<br>`-setRightBarButtonItems:`<br>`-rightBarButtonItems` | `nil`
+
+#### Title attributes
+
+&nbsp;                                                   | Attribute                                                   | Related method(s)                 | Default value
+-------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------- | -------------
+**Title text**                                           | `-[UIViewController navigationItem]`                        | `-setTitle:`<br>`-title`          | `nil` |
+**Title color**                                           | `navigationBar.titleTextColor`                             | `-setTitleTextColor:`<br> `-titleTextColor`  | On primary color
+**Title font**                                           | `navigationBar.titleFont`                                   | `-setTitleFont:`<br>`-titleFont`   | Headline 6
+
+#### Action items attributes
+
+&nbsp;                           | Attribute            | Related method(s)                          | Default value
+-------------------------------- | -------------------- | ------------------------------------------ | -------------
+**Icons**                        | `-[UIViewController navigationItem]` | `-setLeftBarButtonItems:`<br>`-leftBarButtonItems`<br>`-setRightBarButtonItems:`<br>`-rightBarButtonItems` | `nil`
+
+#### Overflow menu attributes
+
+&nbsp;                           | Attribute            | Related method(s)                          | Default value
+-------------------------------- | -------------------- | ------------------------------------------ | -------------
+**Icons**                        | `-[UIViewController navigationItem]` | `-setLeftBarButtonItems:`<br>`-leftBarButtonItems`<br>`-setRightBarButtonItems:`<br>`-rightBarButtonItems` | `nil`
+
+## Theming top app bars
 
 `MDCAppBarViewController` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar
@@ -694,40 +686,6 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 ```
 
 <!--</div>-->
-
-
-## Accessibility
-
-<!-- Extracted from docs/accessibility.md -->
-
-### MDCAppBar Accessibility
-
-Because the App Bar mirrors the state of your view controller's navigationItem, making an App Bar accessible often
-does not require any extra work.
-
-See the following examples:
-
-##### Objective-C
-```
-self.navigationItem.rightBarButtonItem =
-   [[UIBarButtonItem alloc] initWithTitle:@"Right"
-                                    style:UIBarButtonItemStyleDone
-                                   target:nil
-                                   action:nil];
-
-NSLog(@"accessibilityLabel: %@",self.navigationItem.rightBarButtonItem.accessibilityLabel);
-// Prints out "accessibilityLabel: Right"
-```
-
-##### Swift
-```
-self.navigationItem.rightBarButtonItem =
-    UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
-
-print("accessibilityLabel: \(self.navigationItem.rightBarButtonItem.accessibilityLabel)")
-// Prints out "accessibilityLabel: Right"
-```
-
 
 ## Migration guides
 
@@ -875,4 +833,3 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
                                         toAppBar:component];
 ```
 <!--</div>-->
-

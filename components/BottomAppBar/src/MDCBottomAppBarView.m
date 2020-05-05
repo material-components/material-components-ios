@@ -134,31 +134,30 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (CGPoint)getFloatingButtonCenterPositionForAppBarWidth:(CGFloat)appBarWidth {
   CGPoint floatingButtonPoint = CGPointZero;
-  CGFloat navigationBarTopEdgeYOffset = CGRectGetMinY(self.navBar.frame);
-  CGFloat midX = appBarWidth / 2;
+  CGFloat navigationBarMinY = CGRectGetMinY(self.navBar.frame);
+  floatingButtonPoint.y = MAX(0, navigationBarMinY - self.floatingButtonVerticalOffset);
 
-  floatingButtonPoint.y = MAX(0, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    safeAreaInsets = self.safeAreaInsets;
+  }
+
+  CGFloat leftCenter = kMDCBottomAppBarFloatingButtonPositionX + safeAreaInsets.left;
+  CGFloat rightCenter =
+      appBarWidth - kMDCBottomAppBarFloatingButtonPositionX - safeAreaInsets.right;
+  BOOL isRTL =
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
-      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionLeftToRight) {
-        floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
-      } else {
-        floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
-      }
+      floatingButtonPoint.x = isRTL ? rightCenter : leftCenter;
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionCenter: {
-      floatingButtonPoint.x = midX;
+      floatingButtonPoint.x = appBarWidth / 2;
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionTrailing: {
-      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionLeftToRight) {
-        floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
-      } else {
-        floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
-      }
+      floatingButtonPoint.x = isRTL ? leftCenter : rightCenter;
       break;
     }
     default:

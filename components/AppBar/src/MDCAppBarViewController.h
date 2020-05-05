@@ -27,7 +27,7 @@
 
 /**
  The navigation bar often represents the information stored in a view controller's navigationItem
- propoerty, but it can also be directly configured.
+ property, but it can also be directly configured.
  */
 @property(nonatomic, strong, nonnull) MDCNavigationBar *navigationBar;
 

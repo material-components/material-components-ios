@@ -131,3 +131,18 @@ class DialogsCustomShadowExampleViewController: UIViewController {
     ]
   }
 }
+
+// MARK: Snapshot Testing by Convention
+extension DialogsCustomShadowExampleViewController {
+
+  func resetTests() {
+    if presentedViewController != nil {
+      dismiss(animated: false)
+    }
+  }
+
+  @objc func testPresented() {
+    resetTests()
+    tap(UIButton())
+  }
+}

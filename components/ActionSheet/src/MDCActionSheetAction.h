@@ -59,7 +59,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
  method.
 */
-@property(nonatomic, nullable, readonly) UIImage *image;
+@property(nonatomic, nullable) UIImage *image;
 
 /**
  The @c accessibilityIdentifier for the view associated with this action.

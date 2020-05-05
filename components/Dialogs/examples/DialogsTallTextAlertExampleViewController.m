@@ -113,3 +113,14 @@
 }
 
 @end
+
+@implementation DialogsTallTextAlertExampleViewController (SnapshotTestingByConvention)
+
+- (void)testPresented {
+  if (self.presentedViewController) {
+    [self dismissViewControllerAnimated:NO completion:nil];
+  }
+  [self didTapPresent:nil];
+}
+
+@end

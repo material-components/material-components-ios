@@ -307,3 +307,23 @@ static NSString *const kReusableIdentifierItem = @"cell";
 }
 
 @end
+
+@implementation DialogsAlertExampleViewController (SnapshotTestingByConvention)
+
+- (NSDictionary<NSString *, void (^)(void)> *)testRunners {
+  NSMutableDictionary<NSString *, void (^)(void)> *runners = [NSMutableDictionary dictionary];
+  NSInteger index = 0;
+  for (NSString *mode in self.modes) {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    runners[mode] = ^{
+      if (self.presentedViewController) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+      }
+      [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+    };
+    index++;
+  }
+  return runners;
+}
+
+@end

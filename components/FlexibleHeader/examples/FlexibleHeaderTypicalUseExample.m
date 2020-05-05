@@ -135,6 +135,8 @@
                      @"react to UIScrollViewDelegate events.",
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
+    @"skip_snapshots" : @YES,  // Crashing with "Could not load NIB in bundle: 'NSBundle <...>
+                               // (loaded)' with name 'FlexibleHeaderTypicalUseInstructionsView'"
   };
 }
 
