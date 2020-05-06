@@ -228,7 +228,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertController.titleIcon = [UIImage imageNamed:@"wide-image"
                                               inBundle:bundle
                          compatibleWithTraitCollection:nil];
-  self.alertController.titleIconAlignment = MDCContentHorizontalAlignmentJustified;
+  self.alertController.titleIconAlignment = NSTextAlignmentJustified;
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // When
