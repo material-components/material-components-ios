@@ -395,18 +395,14 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 #pragma mark - Internal
 
 - (CGSize)actionFittingSizeInHorizontalLayout {
-  CGSize size = CGSizeZero;
+  CGSize size = CGSizeMake([self horizontalSpacing], 0.0f);
   NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
   if (0 < buttons.count) {
     CGFloat maxButtonHeight = MDCDialogActionButtonMinimumHeight;
-    size.width = self.actionsInsets.left + self.actionsInsets.right;
     for (UIButton *button in buttons) {
       CGSize buttonSize = [button sizeThatFits:size];
       size.width += buttonSize.width;
       maxButtonHeight = MAX(maxButtonHeight, buttonSize.height);
-      if (button != buttons.lastObject) {
-        size.width += self.actionsHorizontalMargin;
-      }
     }
     size.height = self.actionsInsets.top + maxButtonHeight + self.actionsInsets.bottom;
   }
@@ -432,6 +428,24 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
 
   return size;
+}
+
+- (CGFloat)horizontalSpacing {
+  NSUInteger count = self.actionManager.buttonsInActionOrder.count;
+  CGFloat spacing = self.actionsInsets.left + self.actionsInsets.right +
+                    (count - 1) * self.actionsHorizontalMargin;
+  return spacing;
+}
+
+- (CGFloat)widestAction {
+  CGFloat widest = 0.0f;
+  for (UIButton *button in self.actionManager.buttonsInActionOrder) {
+    CGSize buttonSize = [button sizeThatFits:CGSizeZero];
+    if (buttonSize.width > widest) {
+      widest = buttonSize.width;
+    }
+  }
+  return widest;
 }
 
 - (BOOL)hasTitleIconOrImage {
@@ -630,7 +644,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified && count > 1) {
     // b/155350470: ensure long justified actions are vertically aligned based on the longest
     // button.
-    isVertical = verticalSize.width > boundingWidth / count;
+    isVertical =
+        [self widestAction] > (CGFloat)ceil((boundingWidth - [self horizontalSpacing]) / count);
   }
   CGSize actionsSize;
   if (isVertical) {
