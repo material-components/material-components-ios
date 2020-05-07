@@ -20,9 +20,9 @@
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialButtons+Theming.h>
 #import <MaterialComponents/MaterialContainerScheme.h>
-#import <MaterialComponents/MaterialIcons+ic_check.h>
-#import <MaterialComponents/MaterialIcons+ic_settings.h>
 #import <MaterialComponents/MaterialMath.h>
+#import "MaterialIcons+ic_check.h"
+#import "MaterialIcons+ic_settings.h"
 #import "MaterialTabs+TabBarView.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
@@ -314,6 +314,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
                             action:@selector(segmentedControlChangedValue:)
                   forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.segmentedControl];
+  self.segmentedControl.tintColor = self.containerScheme.colorScheme.primaryColor;
   self.segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
   if (@available(iOS 11.0, *)) {
     [self.view.layoutMarginsGuide.centerXAnchor
@@ -514,7 +515,6 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-
   [self logItemVisibilityChanges];
 
   CGFloat centerX = self.segmentedControl.center.x;
