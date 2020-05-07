@@ -30,8 +30,7 @@
 
   // Then
   if ([languageCode isEqualToString:@"ar"]) {
-    // TODO(b/155224845): Update accessibilityHint's value once its translation is ready.
-    XCTAssertEqualObjects(textLabel.accessibilityHint, @"Double-tap to dismiss");
+    XCTAssertEqualObjects(textLabel.accessibilityHint, @"انقر مرّتين للإغلاق.");
   } else {
     XCTFail(@"Language %@ isn't supported by this localization test case", languageCode);
   }
