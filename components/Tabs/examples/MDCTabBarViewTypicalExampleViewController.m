@@ -14,14 +14,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import <MaterialComponents/MaterialActionSheet+Theming.h>
-#import <MaterialComponents/MaterialActionSheet.h>
-#import <MaterialComponents/MaterialAnimationTiming.h>
-#import <MaterialComponents/MaterialContainerScheme.h>
-#import <MaterialComponents/MaterialIcons+ic_check.h>
-#import <MaterialComponents/MaterialIcons+ic_settings.h>
-#import <MaterialComponents/MaterialMath.h>
+#import "MaterialActionSheet.h"  // ComponentImport
+#import "MaterialActionSheet+Theming.h"  // SubtargetImport
+#import "MaterialAnimationTiming.h"  // ComponentImport
+#import "MaterialButtons+Theming.h"  // ComponentImport
 #import "MaterialTabs+TabBarView.h"
+#import "MaterialIcons+ic_check.h"  // PrivateSubtargetImport
+#import "MaterialIcons+ic_settings.h"  // PrivateSubtargetImport
+#import "MaterialMath.h"  // PrivateImport
+#import "MaterialContainerScheme.h"  // SchemeImport
 
 static NSString *const kExampleTitle = @"TabBarView";
 
@@ -128,6 +129,14 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 /** Image for toggle button when contentInset is zero. */
 @property(nonatomic, strong) UIImage *contentInsetToggleDisabledImage;
 
+/** Tapping this button goes to the next tab. */
+@property(nonatomic, strong) MDCButton *forwardButton;
+
+/** Tapping this button goes to the previous tab. */
+@property(nonatomic, strong) MDCButton *backwardButton;
+
+/** Segmented control. */
+@property(nonatomic, strong) UISegmentedControl *segmentedControl;
 @end
 
 @implementation MDCTabBarViewTypicalExampleViewController
@@ -210,6 +219,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
   [self applyThemingToTabBarView];
   [self addSegmentedControl];
+  [self addButtons];
 
   UIBarButtonItem *alignmentButton = [[UIBarButtonItem alloc]
       initWithImage:[MDCIcons.imageFor_ic_settings
@@ -251,40 +261,87 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
       [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
 }
 
+- (void)addButtons {
+  self.forwardButton = [[MDCButton alloc] init];
+  [self.forwardButton setTitle:@"Next tab" forState:UIControlStateNormal];
+  [self.forwardButton addTarget:self
+                         action:@selector(forwardButtonTapped:)
+               forControlEvents:UIControlEventTouchUpInside];
+  [self.forwardButton applyTextThemeWithScheme:self.containerScheme];
+  [self.forwardButton sizeToFit];
+  [self.view addSubview:self.forwardButton];
+
+  self.backwardButton = [[MDCButton alloc] init];
+  [self.backwardButton setTitle:@"Previous tab" forState:UIControlStateNormal];
+  [self.backwardButton addTarget:self
+                          action:@selector(backwardButtonTapped:)
+                forControlEvents:UIControlEventTouchUpInside];
+  [self.backwardButton applyTextThemeWithScheme:self.containerScheme];
+  [self.backwardButton sizeToFit];
+  [self.view addSubview:self.backwardButton];
+}
+
+- (void)backwardButtonTapped:(id)sender {
+  NSInteger index = [self.tabBar.items indexOfObject:self.tabBar.selectedItem];
+  if (index == NSNotFound) {
+    return;
+  }
+  index--;
+  if (index < 0) {
+    return;
+  }
+  self.tabBar.selectedItem = self.tabBar.items[index];
+}
+
+- (void)forwardButtonTapped:(id)sender {
+  NSInteger index = [self.tabBar.items indexOfObject:self.tabBar.selectedItem];
+  if (index == NSNotFound) {
+    return;
+  }
+  index++;
+  if (index >= (NSInteger)self.tabBar.items.count) {
+    return;
+  }
+  self.tabBar.selectedItem = self.tabBar.items[index];
+}
+
 - (void)addSegmentedControl {
-  UISegmentedControl *segmentedControl =
+  self.segmentedControl =
       [[UISegmentedControl alloc] initWithItems:@[ @"Titles", @"Icons", @"Titles and Icons" ]];
-  segmentedControl.selectedSegmentIndex = 2;
-  [segmentedControl addTarget:self
-                       action:@selector(segmentedControlChangedValue:)
-             forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:segmentedControl];
-  segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
+  self.segmentedControl.selectedSegmentIndex = 2;
+  [self.segmentedControl addTarget:self
+                            action:@selector(segmentedControlChangedValue:)
+                  forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:self.segmentedControl];
+  self.segmentedControl.tintColor = self.containerScheme.colorScheme.primaryColor;
+  self.segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
   if (@available(iOS 11.0, *)) {
     [self.view.layoutMarginsGuide.centerXAnchor
-        constraintEqualToAnchor:segmentedControl.centerXAnchor]
+        constraintEqualToAnchor:self.segmentedControl.centerXAnchor]
         .active = YES;
     [self.view.layoutMarginsGuide.centerYAnchor
-        constraintEqualToAnchor:segmentedControl.centerYAnchor]
+        constraintEqualToAnchor:self.segmentedControl.centerYAnchor]
         .active = YES;
     [self.view.layoutMarginsGuide.leadingAnchor
-        constraintLessThanOrEqualToAnchor:segmentedControl.leadingAnchor]
+        constraintLessThanOrEqualToAnchor:self.segmentedControl.leadingAnchor]
         .active = YES;
     [self.view.layoutMarginsGuide.trailingAnchor
-        constraintGreaterThanOrEqualToAnchor:segmentedControl.trailingAnchor]
+        constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
         .active = YES;
   } else {
-    [self.view.centerXAnchor constraintEqualToAnchor:segmentedControl.centerXAnchor].active = YES;
+    [self.view.centerXAnchor constraintEqualToAnchor:self.segmentedControl.centerXAnchor].active =
+        YES;
     NSLayoutConstraint *centerYConstraint =
-        [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor];
+        [self.view.centerYAnchor constraintEqualToAnchor:self.segmentedControl.centerYAnchor];
     centerYConstraint.priority = UILayoutPriorityDefaultLow;
     centerYConstraint.active = YES;
-    [self.tabBar.bottomAnchor constraintLessThanOrEqualToAnchor:segmentedControl.topAnchor
+    [self.tabBar.bottomAnchor constraintLessThanOrEqualToAnchor:self.segmentedControl.topAnchor
                                                        constant:-16]
         .active = YES;
-    [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:segmentedControl.leadingAnchor]
+    [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:self.segmentedControl.leadingAnchor]
         .active = YES;
-    [self.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:segmentedControl.trailingAnchor]
+    [self.view.trailingAnchor
+        constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
         .active = YES;
   }
 }
@@ -458,6 +515,12 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   [self logItemVisibilityChanges];
+
+  CGFloat centerX = self.segmentedControl.center.x;
+  CGFloat centerY = CGRectGetMaxY(self.segmentedControl.frame) + 50;
+  self.forwardButton.center = CGPointMake(centerX, centerY);
+  centerY = centerY + 50;
+  self.backwardButton.center = CGPointMake(centerX, centerY);
 }
 
 - (void)logItemVisibilityChanges {
