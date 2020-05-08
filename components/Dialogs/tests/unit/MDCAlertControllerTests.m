@@ -126,9 +126,9 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
                  MDCContentHorizontalAlignmentCenter);
 }
 
-- (void)testAlertCanBecomeFirstResponder {
+- (void)testAlertViewCanBecomeFirstResponder {
   // Then
-  XCTAssertTrue(self.alert.canBecomeFirstResponder);
+  XCTAssertTrue(self.alert.view.canBecomeFirstResponder);
 }
 
 - (void)testAlertValuesDontRevertToDefaultValuesAfterViewIsLoaded {

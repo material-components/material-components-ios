@@ -672,6 +672,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return actionsSize;
 }
 
+- (BOOL)canBecomeFirstResponder {
+  return YES;
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
