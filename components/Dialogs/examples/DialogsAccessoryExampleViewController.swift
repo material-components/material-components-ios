@@ -100,7 +100,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
 
   func performTextView() -> MDCAlertController {
     let alert = MDCAlertController()
-    let textView = UITextView()
+    let textView = DialogTextView()
     textView.attributedText = attributedText
     textView.font = MDCTypographyScheme().body1
     textView.isEditable = false
@@ -310,4 +310,20 @@ extension DialogsAccessoryExampleViewController {
     self.present(performDefaultLabelWithButton(), animated: false, completion: nil)
   }
 
+}
+
+/// Custom subclass of UITextView - to avoid resizing issue after 3D touch (b/155127456).
+private class DialogTextView: UITextView {
+
+  override func systemLayoutSizeFitting(
+    _ targetSize: CGSize,
+    withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+    verticalFittingPriority: UILayoutPriority
+  ) -> CGSize {
+    return self.sizeThatFits(targetSize)
+  }
+
+  override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
+    return self.sizeThatFits(targetSize)
+  }
 }
