@@ -106,4 +106,26 @@
   XCTAssertEqual(mdcProgressView.accessibilityLabel, expectedAccessibilityLabel);
 }
 
+- (void)testProgressTintColorIsNullable {
+  // Given
+  MDCProgressView *mdcProgressView = [[MDCProgressView alloc] init];
+
+  // When
+  mdcProgressView.progressTintColor = nil;
+
+  // Then
+  XCTAssertNil(mdcProgressView.progressTintColor);
+}
+
+- (void)testTrackTintColorIsNullable {
+  // Given
+  MDCProgressView *mdcProgressView = [[MDCProgressView alloc] init];
+
+  // When
+  mdcProgressView.trackTintColor = nil;
+
+  // Then
+  XCTAssertNil(mdcProgressView.trackTintColor);
+}
+
 @end

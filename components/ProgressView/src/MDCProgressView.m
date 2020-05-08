@@ -79,7 +79,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 
   _progressView.backgroundColor = MDCProgressViewDefaultTintColor();
   _trackView.backgroundColor =
-      [[self class] defaultTrackTintColorForProgressTintColor:_progressView.backgroundColor];
+      [[self class] defaultTrackTintColorForProgressTintColor:MDCProgressViewDefaultTintColor()];
 }
 
 - (void)willMoveToSuperview:(UIView *)superview {
@@ -110,9 +110,6 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 }
 
 - (void)setProgressTintColor:(UIColor *)progressTintColor {
-  if (progressTintColor == nil) {
-    progressTintColor = MDCProgressViewDefaultTintColor();
-  }
   self.progressView.backgroundColor = progressTintColor;
 }
 
@@ -121,10 +118,6 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 }
 
 - (void)setTrackTintColor:(UIColor *)trackTintColor {
-  if (trackTintColor == nil) {
-    trackTintColor =
-        [[self class] defaultTrackTintColorForProgressTintColor:self.progressTintColor];
-  }
   self.trackView.backgroundColor = trackTintColor;
 }
 
