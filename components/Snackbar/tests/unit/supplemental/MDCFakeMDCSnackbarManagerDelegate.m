@@ -21,6 +21,7 @@
   if (self.shouldSetSnackbarViewAccessibilityViewIsModal) {
     messageView.accessibilityViewIsModal = YES;
   }
+  [self.willPresentExpectation fulfill];
 }
 
 - (void)snackbarDidDisappear {

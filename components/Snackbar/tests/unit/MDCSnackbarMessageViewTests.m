@@ -567,4 +567,67 @@
   XCTAssertEqual([customView.subviews.firstObject class], [MDCSnackbarOverlayView class]);
 }
 
+/**
+ * This test creates a snackbar with 'shouldDismissOnOverlayTap' enabled, presents it, waits for the
+ * snackbar to appear, and then taps the screen.  The snackbar should dismiss at this point.
+ */
+- (void)testDismissOnScreenTap {
+  // Given
+  self.message.shouldDismissOnOverlayTap = YES;
+  self.message.duration = 0;
+  self.delegate.disappearExpectation = [self expectationWithDescription:@"disappeared"];
+  self.delegate.willPresentExpectation = [self expectationWithDescription:@"willPresent"];
+
+  // When
+  [self.manager showMessage:self.message];
+  [self waitForExpectations:@[ self.delegate.willPresentExpectation ] timeout:0.5];
+  [self.manager.internalManager.overlayView pointInside:CGPointMake(3, 3) withEvent:nil];
+
+  // Then
+  [self waitForExpectationsWithTimeout:0.5 handler:nil];
+}
+
+/**
+ * This test is identical to the one above, but we do *not* tap the screen, and check to make sure
+ * the snackbar has *not* been dismissed.
+ */
+- (void)testDismissOnScreenTap_NoTap {
+  // Given
+  self.message.shouldDismissOnOverlayTap = YES;
+  self.message.duration = 0;
+  self.delegate.willPresentExpectation = [self expectationWithDescription:@"willPresent"];
+
+  // When
+  [self.manager showMessage:self.message];
+  [self waitForExpectationsWithTimeout:0.5 handler:nil];
+
+  // Then
+  [NSThread sleepForTimeInterval:0.5];
+  // Unfortunately, there is no way to to assert an expectation  has *not* fired after a time
+  // interval. Instead we rely on 'internalManager.currentSnackbar' to be nil iff the snackbar is
+  // dismissed.
+  XCTAssertNotNil(self.manager.internalManager.currentSnackbar);
+}
+
+/**
+ * In a similar vein to the tests above, this test ensures the snackbar does *not* dismiss on tap if
+ * the user doesn't enable shouldDismissOnScreenTap.
+ */
+- (void)testNotDismissedOnScreenTap {
+  // Given
+  self.message.duration = 0;
+  self.delegate.willPresentExpectation = [self expectationWithDescription:@"willPresent"];
+
+  // When
+  [self.manager showMessage:self.message];
+  [self waitForExpectationsWithTimeout:0.5 handler:nil];
+
+  // Then
+  [NSThread sleepForTimeInterval:0.5];
+  // Unfortunately, there is no way to to assert an expectation  has *not* fired after a time
+  // interval. Instead we rely on 'internalManager.currentSnackbar' to be nil iff the snackbar is
+  // dismissed.
+  XCTAssertNotNil(self.manager.internalManager.currentSnackbar);
+}
+
 @end
