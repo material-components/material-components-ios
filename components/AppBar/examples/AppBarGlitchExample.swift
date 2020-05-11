@@ -26,9 +26,9 @@ class AppBarJumpExample: UIViewController {
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
-  fileprivate let firstTab = SimpleComposedTableViewController()
-  fileprivate let secondTab = SimpleComposedTableViewController()
-  private var currentTab: SimpleComposedTableViewController? = nil
+  fileprivate let firstTab = SiblingOfTrackingScrollViewViewController()
+  fileprivate let secondTab = SiblingOfTrackingScrollViewViewController()
+  private var currentTab: SiblingOfTrackingScrollViewViewController? = nil
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -69,7 +69,7 @@ class AppBarJumpExample: UIViewController {
     switchToTab(firstTab)
   }
 
-  fileprivate func switchToTab(_ tab: SimpleComposedTableViewController) {
+  fileprivate func switchToTab(_ tab: SiblingOfTrackingScrollViewViewController) {
 
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 

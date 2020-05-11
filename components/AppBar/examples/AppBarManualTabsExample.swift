@@ -30,9 +30,9 @@ class AppBarManualTabsExample: UIViewController {
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
-  fileprivate let firstTab = SimpleInheritedTableViewController()
-  fileprivate let secondTab = SimpleInheritedTableViewController()
-  private var currentTab: SimpleInheritedTableViewController? = nil
+  fileprivate let firstTab = ChildOfTrackingScrollViewViewController()
+  fileprivate let secondTab = ChildOfTrackingScrollViewViewController()
+  private var currentTab: ChildOfTrackingScrollViewViewController? = nil
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -73,7 +73,7 @@ class AppBarManualTabsExample: UIViewController {
     switchToTab(firstTab)
   }
 
-  fileprivate func switchToTab(_ tab: SimpleInheritedTableViewController) {
+  fileprivate func switchToTab(_ tab: ChildOfTrackingScrollViewViewController) {
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 
     if let currentTab = currentTab {

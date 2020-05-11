@@ -15,11 +15,12 @@
 import UIKit
 import MaterialComponents.MaterialFlexibleHeader
 
-/// A table view controller which inherits directly from UITableViewController.
+/// A table view controller that adds a UITableView as a child of its view.
 ///
-/// This intentionally sets things up such that its view is a subclass of UIScrollView, which is
-/// handled specially by some components.
-class SimpleInheritedTableViewController: UITableViewController {
+/// The purpose of this view controller is to demonstrate how the flexible header view interacts
+/// with view controllers whose self.view is *not* the tracking scroll view. In cases like these,
+/// the flexible header view can be added as a sibling to the tracking scroll view.
+class SiblingOfTrackingScrollViewViewController: UIViewController {
 
   init(title: String? = nil) {
     super.init(nibName: nil, bundle: nil)
@@ -30,43 +31,54 @@ class SimpleInheritedTableViewController: UITableViewController {
     fatalError("NSCoding unsupported")
   }
 
+  var tableView = UITableView(frame: CGRect(), style: .plain)
+
   var headerView: MDCFlexibleHeaderView?
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.view.addSubview(tableView)
+    self.tableView.frame = self.view.bounds
+
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     tableView.delegate = self
     tableView.dataSource = self
-  }
 
-  override func numberOfSections(in tableView: UITableView) -> Int {
+    view.isOpaque = false
+    view.backgroundColor = .white
+  }
+}
+
+extension SiblingOfTrackingScrollViewViewController: UITableViewDataSource {
+
+  func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 100
   }
+}
 
-  override func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath
-  ) -> UITableViewCell {
+extension SiblingOfTrackingScrollViewViewController: UITableViewDelegate {
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     let titleString = title ?? ""
     cell.textLabel?.text = "\(titleString): Row \(indexPath.item)"
     return cell
   }
 
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
     headerView?.trackingScrollDidScroll()
   }
 
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     headerView?.trackingScrollDidEndDecelerating()
   }
 
-  override func scrollViewWillEndDragging(
+  func scrollViewWillEndDragging(
     _ scrollView: UIScrollView,
     withVelocity velocity: CGPoint,
     targetContentOffset: UnsafeMutablePointer<CGPoint>
@@ -76,10 +88,13 @@ class SimpleInheritedTableViewController: UITableViewController {
       targetContentOffset: targetContentOffset)
   }
 
-  override func scrollViewDidEndDragging(
-    _ scrollView: UIScrollView,
-    willDecelerate decelerate: Bool
-  ) {
+  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     headerView?.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+  }
+
+  func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+    if #available(iOS 11.0, *) {
+      headerView?.trackingScrollDidChangeAdjustedContentInset(scrollView)
+    }
   }
 }
