@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialProgressView.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
 static const CGFloat MDCProgressViewAnimationDuration = 1;
@@ -33,6 +33,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
 
 @property(nonatomic, strong) MDCProgressView *fullyColoredProgressView;
 @property(nonatomic, strong) UILabel *fullyColoredProgressLabel;
+
+@property(nonatomic, strong) MDCProgressView *gradientColoredProgressView;
+@property(nonatomic, strong) UILabel *gradientColoredProgressLabel;
 
 @property(nonatomic, strong) MDCProgressView *backwardProgressResetView;
 @property(nonatomic, strong) UILabel *backwardProgressResetLabel;
@@ -70,6 +73,16 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   _fullyColoredProgressView.trackTintColor = MDCPalette.yellowPalette.tint500;
   // Hide the progress view at setup time.
   _fullyColoredProgressView.hidden = YES;
+
+  _gradientColoredProgressView = [[MDCProgressView alloc] init];
+  _gradientColoredProgressView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.container addSubview:_gradientColoredProgressView];
+  _gradientColoredProgressView.progressTintColors = @[
+    (id)MDCPalette.greenPalette.tint500.CGColor, (id)MDCPalette.bluePalette.tint500.CGColor,
+    (id)MDCPalette.redPalette.tint500.CGColor
+  ];
+  _gradientColoredProgressView.trackTintColor = MDCPalette.yellowPalette.tint500;
+  _gradientColoredProgressView.progress = 0.33f;
 
   _backwardProgressResetView = [[MDCProgressView alloc] init];
   _backwardProgressResetView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -164,6 +177,13 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   _fullyColoredProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.container addSubview:_fullyColoredProgressLabel];
 
+  _gradientColoredProgressLabel = [[UILabel alloc] init];
+  _gradientColoredProgressLabel.text = @"Progress with gradient colors";
+  _gradientColoredProgressLabel.font = self.typographyScheme.caption;
+  _gradientColoredProgressLabel.textColor = self.colorScheme.onBackgroundColor;
+  _gradientColoredProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.container addSubview:_gradientColoredProgressLabel];
+
   _backwardProgressResetLabel = [[UILabel alloc] init];
   _backwardProgressResetLabel.text = @"Backward progress (reset)";
   _backwardProgressResetLabel.font = self.typographyScheme.caption;
@@ -188,6 +208,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
     @"tintedLabel" : _tintedProgressLabel,
     @"coloredView" : _fullyColoredProgressView,
     @"coloredLabel" : _fullyColoredProgressLabel,
+    @"gradientView" : _gradientColoredProgressView,
+    @"gradientLabel" : _gradientColoredProgressLabel,
     @"backwardResetView" : _backwardProgressResetView,
     @"backwardResetLabel" : _backwardProgressResetLabel,
     @"backwardAnimateView" : _backwardProgressAnimateView,
@@ -205,6 +227,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
                                    "[stockView(==h)]-(p)-[stockLabel]-(s)-"
                                    "[tintedView(==h)]-(p)-[tintedLabel]-(s)-"
                                    "[coloredView(==h)]-(p)-[coloredLabel]-(s)-"
+                                   "[gradientView(==h)]-(p)-[gradientLabel]-(s)-"
                                    "[backwardResetView(==h)]-(p)-[backwardResetLabel]-(s)-"
                                    "[backwardAnimateView(==h)]-(p)-[backwardAnimateLabel]"
                           options:0
@@ -217,11 +240,13 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
     @"H:|-(p)-[stockView]-(p)-|",
     @"H:|-(p)-[tintedView]-(p)-|",
     @"H:|-(p)-[coloredView]-(p)-|",
+    @"H:|-(p)-[gradientView]-(p)-|",
     @"H:|-(p)-[backwardResetView]-(p)-|",
     @"H:|-(p)-[backwardAnimateView]-(p)-|",
     @"H:|-(p)-[stockLabel]-(p)-|",
     @"H:|-(p)-[tintedLabel]-(p)-|",
     @"H:|-(p)-[coloredLabel]-(p)-|",
+    @"H:|-(p)-[gradientLabel]-(p)-|",
     @"H:|-(p)-[backwardResetLabel]-(p)-|",
     @"H:|-(p)-[backwardAnimateLabel]-(p)-|",
   ];
@@ -240,6 +265,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   [self animateStep1:_stockProgressView];
   [self animateStep1:_tintedProgressView];
   [self animateStep1:_fullyColoredProgressView];
+  [self animateStep1:_gradientColoredProgressView];
   [self animateBackwardProgressResetViewWithCountdown:4];
   [self animateBackwardProgressAnimateViewWithCountdown:4
                                              completion:^(BOOL ignored) {
