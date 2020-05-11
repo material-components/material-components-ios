@@ -134,4 +134,85 @@
   [self generateSnapshotAndVerifyForView:self.progressView];
 }
 
+- (void)testGradientProgress000LTR {
+  // Given
+  self.progressView.progressTintColors = @[
+    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
+  ];
+
+  // When
+  self.progressView.progress = 0;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
+- (void)testGradientProgress050LTR {
+  // Given
+  self.progressView.progressTintColors = @[
+    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
+  ];
+
+  // When
+  self.progressView.progress = 0.5f;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
+- (void)testGradientProgress100LTR {
+  // Given
+  self.progressView.progressTintColors = @[
+    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
+  ];
+
+  // When
+  self.progressView.progress = 1;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
+- (void)testGradientProgress000RTL {
+  // Given
+  self.progressView.progressTintColors = @[
+    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
+  ];
+
+  // When
+  [self changeViewToRTL:self.progressView];
+  self.progressView.progress = 0;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
+- (void)testGradientProgress050RTL {
+  // Given
+  self.progressView.progressTintColors = @[
+    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
+  ];
+
+  // When
+  [self changeViewToRTL:self.progressView];
+  self.progressView.progress = 0.5f;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
+- (void)testGradientProgress100RTL {
+  // Given
+  self.progressView.progressTintColors = @[
+    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
+  ];
+
+  // When
+  [self changeViewToRTL:self.progressView];
+  self.progressView.progress = 1;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
 @end
