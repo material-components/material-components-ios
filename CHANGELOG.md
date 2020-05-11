@@ -1,15 +1,37 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release includes API improvements to ProgressView, SnackBars and TextFields, as well as tests and bug fixes for ActionSheet, AppBar, BottomAppBar, BottomSheet, Collections, Dialogs, FlexibleHeader and Tabs.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+ProgressView supports a gradient progress bar:
+
+```objc
+self.progressView.progressTintColors = @[
+    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
+  ];
+```
+
+Snackbars support setting presentation host view on a specific message:
+
+```objc
+MDCSnackbarMessage *snackbar = [MDCSnackbarMessage messageWithText:@"message"];
+snackbar.presentationHostViewOverride = self.collectionView;
+```
+
+Snackbars enable dismissing when the user taps anywhere on the snaclbar.
+
+```objc
+MDCSnackbarMessage *snackbar = [MDCSnackbarMessage messageWithText:@"message"];
+snackbar.shouldDismissOnOverlayTap = YES;
+```
+
+TextFields support setting the border radius:
+
+```objc
+textField.borderRadius = 4.0f;
+```
+
 ## API changes
 
 ## Component changes
@@ -44,11 +66,11 @@ Replace this text with example code for each new feature.
 
 * [Allow MDCAlertController to become first responder via its view.](https://github.com/material-components/material-components-ios/commit/776d02886183fa8e089740731c1ee97f28963868) (Jake Rockland)
 * [Allow MDCAlertController to become first responder.](https://github.com/material-components/material-components-ios/commit/da54c6f67a28691ecb3962e963f36d50ec501358) (Wenyu Zhang)
-* [Consider the size of the longest action in horizontally justified action alignment - testing if it can fit the available horizontal space to determine if the actions should be aligned vertically.](https://github.com/material-components/material-components-ios/commit/b3cf4e42e6a6daab59b0085de8038dc73d7e43d8) (Galia Kaufman)
+* [Fix the vertical alignment of long justified actions.](https://github.com/material-components/material-components-ios/commit/b3cf4e42e6a6daab59b0085de8038dc73d7e43d8) (Galia Kaufman)
 * [Fix UITextView accessory view example](https://github.com/material-components/material-components-ios/commit/e9802b3e148b7c06f749d13491a9d306a1ac68e9) (Galia Kaufman)
 * [Fixing broken unit test](https://github.com/material-components/material-components-ios/commit/67cb856040cd9d08c004b9e3ade21ad24f193422) (Galia Kaufman)
 * [Include insets in alignment calculations of long actions](https://github.com/material-components/material-components-ios/commit/b3bf62df4ea5e92b0626d02ea9149c7f2184e283) (Galia Kaufman)
-* [No public changes, just a test that reproduces the issue.](https://github.com/material-components/material-components-ios/commit/99d6facc5bd41455bb86e6246745be29b699d67d) (Iryna Berezan)
+* [Test a large title image with custom insets.](https://github.com/material-components/material-components-ios/commit/99d6facc5bd41455bb86e6246745be29b699d67d) (Iryna Berezan)
 
 ### FlexibleHeader
 
@@ -63,7 +85,7 @@ Replace this text with example code for each new feature.
 ### Snackbar
 
 * [Add ability to set presentation host view on specific message.](https://github.com/material-components/material-components-ios/commit/ec84eb996ed00b2e7e5f9376c59b3a453e561bb1) (Yarden Eitan)
-* [BEGIN_PUBLIC](https://github.com/material-components/material-components-ios/commit/330226bce2184c58a2ebd2057d9fdabd9aae47a9) (Nobody)
+* [Add an option to dismiss a snackbar when the user taps anywhere on the overlay.](https://github.com/material-components/material-components-ios/commit/330226bce2184c58a2ebd2057d9fdabd9aae47a9) (Nobody)
 * [Update localized string in localization test.](https://github.com/material-components/material-components-ios/commit/d14c658666b1a2882be5b7642e67f6035c237ec2) (Wenyu Zhang)
 
 ### Tabs
@@ -73,12 +95,11 @@ Replace this text with example code for each new feature.
 
 ### TextFields
 
-* [Add borderRadius property](https://github.com/material-components/material-components-ios/commit/fb10ae1b1fc70a689949ac5e46e72a54751116c5) (Nobody)
+* [Add borderRadius property](https://github.com/material-components/material-components-ios/commit/fb10ae1b1fc70a689949ac5e46e72a54751116c5) (Jonathan Willing)
 
 ## Multi-component changes
 
 * [Correct `accessibilityLabel` docs](https://github.com/material-components/material-components-ios/commit/5b2b452bb5de2becc209df346532c581446ba5c4) (Rob Moore)
-* [Sync to v109.2.0.](https://github.com/material-components/material-components-ios/commit/4394263aa1e6c450db937511c7bd79c244f6dfa3) (Galia Kaufman)
 
 ---
 
