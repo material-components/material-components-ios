@@ -23,7 +23,6 @@
 
 @interface AppBarPresentedHiddenExample : UIViewController
 
-@property(nonatomic, strong) AppBarSampleViewController *demoViewController;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
@@ -38,16 +37,6 @@
   }
 
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.95 alpha:1];
-
-  self.demoViewController = [[AppBarSampleViewController alloc] init];
-  self.demoViewController.appBarViewController.headerView.shiftBehavior =
-      MDCFlexibleHeaderShiftBehaviorHideable;
-  [self.demoViewController.appBarViewController.headerView shiftHeaderOffScreenAnimated:NO];
-  self.demoViewController.containerScheme = self.containerScheme;
-
-  UITapGestureRecognizer *tap =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDemo)];
-  [self.demoViewController.view addGestureRecognizer:tap];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
@@ -71,12 +60,23 @@
 }
 
 - (void)presentDemo {
-  [self presentDemoAnimated:YES];
+  [self presentDemoAnimated:YES modalPresentationStyle:UIModalPresentationFullScreen];
 }
 
-- (void)presentDemoAnimated:(BOOL)animated {
-  self.demoViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-  [self presentViewController:self.demoViewController animated:animated completion:nil];
+- (void)presentDemoAnimated:(BOOL)animated
+     modalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
+  AppBarSampleViewController *demoViewController = [[AppBarSampleViewController alloc] init];
+  demoViewController.appBarViewController.headerView.shiftBehavior =
+      MDCFlexibleHeaderShiftBehaviorHideable;
+  [demoViewController.appBarViewController.headerView shiftHeaderOffScreenAnimated:NO];
+  demoViewController.containerScheme = self.containerScheme;
+
+  UITapGestureRecognizer *tap =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDemo)];
+  [demoViewController.view addGestureRecognizer:tap];
+
+  demoViewController.modalPresentationStyle = modalPresentationStyle;
+  [self presentViewController:demoViewController animated:animated completion:nil];
 }
 
 @end
@@ -96,23 +96,21 @@
 @implementation AppBarPresentedHiddenExample (SnapshotTestingByConvention)
 
 - (void)testPresentedFullScreen {
-  [self dismissDemo];
+  [self dismissViewControllerAnimated:NO completion:nil];
 
   // TODO(b/152510959): The AppBar is not presented fully hidden on an iPhone 5s on iOS 10.
-  self.demoViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-  [self presentViewController:self.demoViewController animated:NO completion:nil];
+  [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationFullScreen];
 }
 
 - (void)testPresentedAutomatic {
-  [self dismissDemo];
+  [self dismissViewControllerAnimated:NO completion:nil];
 
   // TODO(b/152510959): The AppBar is not presented fully hidden on an iPhone 5s on iOS 10.
   if (@available(iOS 13, *)) {
-    self.demoViewController.modalPresentationStyle = UIModalPresentationAutomatic;
+    [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationAutomatic];
   } else {
-    self.demoViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationFullScreen];
   }
-  [self presentViewController:self.demoViewController animated:NO completion:nil];
 }
 
 @end
