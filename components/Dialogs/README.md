@@ -179,7 +179,7 @@ MDCAlertAction *alertAction =
 A Material dialog has a container, content (either supporting text or a set of
 items of a particular type), a background scrim, and, optionally, title and buttons.
 
-![anatomy](dics/assets/dialogs_anatomy.png)
+![anatomy](docs/assets/dialogs-anatomy.png)
 
 1.  Container
 2.  Title (optional)
@@ -257,10 +257,6 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
 Actions in MDCAlertController have emphasis which affects how the Dialog's buttons will be themed.
 High, Medium and low emphasis are supported.
-
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/dialogButtons.png" alt="An alert presented with a title, body, high-emphasis 'OK' button and low-emphasis 'Cancel' button." width="320">
-</div>
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
