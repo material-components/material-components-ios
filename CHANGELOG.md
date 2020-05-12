@@ -1,3 +1,87 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Add test showcasing how when an Action's image is set it does not update an ActionSheet.](https://github.com/material-components/material-components-ios/commit/d30de4507cf9dd80bd1cf487fa0d3f09cc931416) (Cody Weaver)
+* [Support setting image later in lifecycle](https://github.com/material-components/material-components-ios/commit/b9822411b97730324dedca19492d895c68fc880a) (Cody Weaver)
+
+### AppBar
+
+* [Add a presented hidden example.](https://github.com/material-components/material-components-ios/commit/3b99d09c6940733a05c68464fb1d47c7e51bc3b0) (Jeff Verkoeyen)
+* [Clarify the purpose of the example supplemental view controllers.](https://github.com/material-components/material-components-ios/commit/580a1ecbde28452041ca731d0bcc8f48ad0b1ded) (Jeff Verkoeyen)
+* [Don't hide the navigation bar in AppBarNavigationControllerExample.](https://github.com/material-components/material-components-ios/commit/459066d00ee638e32b6c46ed05fa7242ed524ae3) (Jeff Verkoeyen)
+* [Extract a sample app bar view controller to supplemental.](https://github.com/material-components/material-components-ios/commit/783c9de40ed114b6814fcf724e5d830e71b709ef) (Jeff Verkoeyen)
+* [Make the presented hidden example show a new view controller each time.](https://github.com/material-components/material-components-ios/commit/97702e8b0c958f726d01a08eb47ed676949ca20b) (Jeff Verkoeyen)
+
+### BottomAppBar
+
+* [Have BottomAppBar respect safe area](https://github.com/material-components/material-components-ios/commit/9220d5b801487df51560e61327e8c47305c02bdf) (Andrew Overton)
+
+### BottomSheet
+
+* [Have the container sheet be laid out by the container view's bounds, not frame.](https://github.com/material-components/material-components-ios/commit/65b749fb56fc15fad14ff7f71c0fb432337ee033) (Yarden Eitan)
+
+### Collections
+
+* [Fix dynamic color not working when it is used in collectionView:cellBackgroundColorAtIndexPath:.](https://github.com/material-components/material-components-ios/commit/5e0294184b61f0e1cd382b7d97066f0e73924ef1) (Wenyu Zhang)
+* [Remove special characters from example breadcrumbs.](https://github.com/material-components/material-components-ios/commit/146fb7754ca9f5d4e3615922399a8f6e78a9e716) (Jeff Verkoeyen)
+
+### Dialogs
+
+* [Allow MDCAlertController to become first responder via its view.](https://github.com/material-components/material-components-ios/commit/776d02886183fa8e089740731c1ee97f28963868) (Jake Rockland)
+* [Allow MDCAlertController to become first responder.](https://github.com/material-components/material-components-ios/commit/da54c6f67a28691ecb3962e963f36d50ec501358) (Wenyu Zhang)
+* [Consider the size of the longest action in horizontally justified action alignment - testing if it can fit the available horizontal space to determine if the actions should be aligned vertically.](https://github.com/material-components/material-components-ios/commit/b3cf4e42e6a6daab59b0085de8038dc73d7e43d8) (Galia Kaufman)
+* [Fix UITextView accessory view example](https://github.com/material-components/material-components-ios/commit/e9802b3e148b7c06f749d13491a9d306a1ac68e9) (Galia Kaufman)
+* [Fixing broken unit test](https://github.com/material-components/material-components-ios/commit/67cb856040cd9d08c004b9e3ade21ad24f193422) (Galia Kaufman)
+* [Include insets in alignment calculations of long actions](https://github.com/material-components/material-components-ios/commit/b3bf62df4ea5e92b0626d02ea9149c7f2184e283) (Galia Kaufman)
+* [No public changes, just a test that reproduces the issue.](https://github.com/material-components/material-components-ios/commit/99d6facc5bd41455bb86e6246745be29b699d67d) (Iryna Berezan)
+
+### FlexibleHeader
+
+* [Add a safe area layout guide example.](https://github.com/material-components/material-components-ios/commit/cb574d4141864606140b89787b3431d0120a7918) (Jeff Verkoeyen)
+
+### ProgressView
+
+* [Add support for gradient progress bar.](https://github.com/material-components/material-components-ios/commit/9c480c21a4bbebaae6b47d0e5d6bd14081504ae5) (Wenyu Zhang)
+* [Change progressTintColor and trackTintColor to nullable.](https://github.com/material-components/material-components-ios/commit/7ea444964588754841229d0d4ca24740112e6891) (Wenyu Zhang)
+* [Update expected translated string value for Progress localization test.](https://github.com/material-components/material-components-ios/commit/14bdd278b459c01249c7aa9077759afeac4b1460) (Wenyu Zhang)
+
+### Snackbar
+
+* [Add ability to set presentation host view on specific message.](https://github.com/material-components/material-components-ios/commit/ec84eb996ed00b2e7e5f9376c59b3a453e561bb1) (Yarden Eitan)
+* [Add an option to dismiss when the user taps anywhere on the overlay.](https://github.com/material-components/material-components-ios/commit/39e9475f5efb84aee6ed4c636057ecc20239d269) (Nobody)
+* [Update localized string in localization test.](https://github.com/material-components/material-components-ios/commit/d14c658666b1a2882be5b7642e67f6035c237ec2) (Wenyu Zhang)
+
+### Tabs
+
+* [Add programmatic tab switcher buttons to TabBarView example](https://github.com/material-components/material-components-ios/commit/0740f3d9e049944138f77947835740d8b0328723) (Andrew Overton)
+* [Move effectively private MDCTabBarExtendedAlignment.h and MDCTabBarSizeClassDelegate.h headers into extension directories.](https://github.com/material-components/material-components-ios/commit/b2d470ea7da67ec40b8a7226e23f686e29f9d81b) (Bryan Oltman)
+
+### TextFields
+
+* [Add borderRadius property](https://github.com/material-components/material-components-ios/commit/fb10ae1b1fc70a689949ac5e46e72a54751116c5) (Nobody)
+
+## Multi-component changes
+
+* [Correct `accessibilityLabel` docs](https://github.com/material-components/material-components-ios/commit/5b2b452bb5de2becc209df346532c581446ba5c4) (Rob Moore)
+* [Sync to v109.2.0.](https://github.com/material-components/material-components-ios/commit/4394263aa1e6c450db937511c7bd79c244f6dfa3) (Galia Kaufman)
+
+---
+
 # 109.2.0
 
 This minor release includes bug fixes and tests for ActionSheet, BottomAppBar, BottomSheet, Cards, Dialogs, FlexibleHeader, NavigationBar and TextFields.
