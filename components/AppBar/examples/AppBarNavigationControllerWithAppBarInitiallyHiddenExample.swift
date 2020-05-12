@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_Theming
 import MaterialComponents.MaterialContainerScheme
 
-class AppBarNavigationControllerExampleViewController:
+class AppBarNavigationControllerWithAppBarInitiallyHiddenExample:
     UIViewController,
     MDCAppBarNavigationControllerDelegate {
 
@@ -99,6 +99,12 @@ private class PresentedViewController: UITableViewController {
     super.init(coder: aDecoder)
   }
 
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    navigationController?.setNavigationBarHidden(true, animated: false)
+  }
+
   // MARK - Actions
 
   @objc func toggleVisibility() {
@@ -132,21 +138,22 @@ private class PresentedViewController: UITableViewController {
 }
 
 // MARK: Catalog by convention
-extension AppBarNavigationControllerExampleViewController {
+extension AppBarNavigationControllerWithAppBarInitiallyHiddenExample {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["App Bar", "Navigation Controller"],
+      "breadcrumbs": ["App Bar", "Navigation Controller (app bar hidden)"],
       "primaryDemo": false,
-      "presentable": true,
+      "presentable": false,
     ]
   }
 }
 
 // MARK: Snapshot testing by convention
-extension AppBarNavigationControllerExampleViewController {
+extension AppBarNavigationControllerWithAppBarInitiallyHiddenExample {
 
   @objc func testPresented() {
+    // TODO(b/152510959): The AppBar is expected to be hidden, but it is not.
     presentModal(animated: false)
   }
 }
