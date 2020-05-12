@@ -14,9 +14,10 @@
 
 #import "MDCCollectionViewStyler.h"
 
-#import "MDCCollectionViewStylingDelegate.h"
 #import "MaterialCollectionLayoutAttributes.h"
+#import "MDCCollectionViewStylingDelegate.h"
 #import "MaterialPalettes.h"
+#import "MaterialColor.h"
 
 #include <tgmath.h>
 
@@ -565,7 +566,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     UIColor *customBackgroundColor = [_delegate collectionView:_collectionView
                                 cellBackgroundColorAtIndexPath:attr.indexPath];
     if (customBackgroundColor) {
-      backgroundColor = customBackgroundColor;
+      backgroundColor = [customBackgroundColor
+          mdc_resolvedColorWithTraitCollection:self.collectionView.traitCollection];
     }
   }
 

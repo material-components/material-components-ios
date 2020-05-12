@@ -125,7 +125,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Collections", @"Collections À la carte" ],
+    @"breadcrumbs" : @[ @"Collections", @"Collections a-la carte" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };

@@ -29,8 +29,7 @@
 
   // Then
   if ([languageCode isEqualToString:@"ar"]) {
-    // TODO(b/155134131): Update accessibilityLabel's value once its translation is ready.
-    XCTAssertEqualObjects(progressView.accessibilityLabel, @"Progress View");
+    XCTAssertEqualObjects(progressView.accessibilityLabel, @"عرض مستوى التقدّم");
   } else {
     XCTFail(@"Language %@ isn't supported by this localization test case", languageCode);
   }

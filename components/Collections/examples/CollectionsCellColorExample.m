@@ -14,11 +14,13 @@
 
 #import "supplemental/CollectionsCellColorExample.h"
 
+#import "MaterialAvailability.h"
+
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellColorExample {
-  NSMutableArray<NSArray *> *_content;
-  NSArray *_cellBackgroundColors;
+  NSMutableArray<NSMutableArray *> *_content;
+  NSMutableArray *_cellBackgroundColors;
 }
 
 - (void)viewDidLoad {
@@ -29,20 +31,36 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Array of cell background colors.
-  _cellBackgroundColors = @[
+  _cellBackgroundColors = [@[
     [UIColor colorWithWhite:0 alpha:(CGFloat)0.2],
     [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
                     green:(CGFloat)0xA4 / (CGFloat)255
                      blue:(CGFloat)0xDD / (CGFloat)255
                     alpha:1],
     [UIColor whiteColor]
-  ];
+  ] mutableCopy];
 
   // Populate content.
   _content = [NSMutableArray array];
-  [_content addObject:@[
-    @"[UIColor colorWithWhite:0 alpha:(CGFloat)0.2]", @"Custom Blue Color", @"Default White Color"
-  ]];
+  [_content addObject:[@[
+              @"[UIColor colorWithWhite:0 alpha:(CGFloat)0.2]", @"Custom Blue Color",
+              @"Default White Color"
+            ] mutableCopy]];
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    UIColor *dynamicColor = [UIColor
+        colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            return UIColor.lightGrayColor;
+          } else {
+            return UIColor.darkGrayColor;
+          }
+        }];
+    [_cellBackgroundColors addObject:dynamicColor];
+    [_content[0] addObject:@"Dyanmic Color"];
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;

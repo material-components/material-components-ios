@@ -138,6 +138,12 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   _inkTouchController.delegate = self;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  [self.collectionViewLayout invalidateLayout];
+}
+
 #pragma mark - <MDCCollectionInfoBarViewDelegate>
 
 - (void)updateControllerWithInfoBar:(MDCCollectionInfoBarView *)infoBar {

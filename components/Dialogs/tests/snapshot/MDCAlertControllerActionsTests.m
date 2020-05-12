@@ -38,6 +38,10 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
 @property(nonatomic, strong) MDCContainerScheme *containerScheme2019;
 @end
 
+@interface MDCAlertControllerView (Testing)
+@property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
+@end
+
 @implementation MDCAlertControllerActionsTests
 
 - (void)setUp {
@@ -418,6 +422,50 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
 
   // Then
   [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+// b/155350470: test long justified actions are vertically aligned.
+- (void)testLongJustifiedActionsAreVerticallyAligned {
+  // Given
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:@"First Long Action"
+                                                         emphasis:MDCActionEmphasisMedium
+                                                          handler:nil]];
+  [self addCancelActionWithEmphasis:MDCActionEmphasisMedium];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+
+  // When
+  self.alertController.actionsHorizontalAlignment = MDCContentHorizontalAlignmentJustified;
+  self.alertController.actionsHorizontalAlignmentInVerticalLayout =
+      MDCContentHorizontalAlignmentJustified;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+  XCTAssertEqual(alertView.isVerticalActionsLayout, true);
+}
+
+// b/155350470: test long justified actions are horizontally aligned when there's enough space.
+- (void)testLongJustifiedActionsAreHorizontallyAligned {
+  // Given
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:@"Promoted Action"
+                                                         emphasis:MDCActionEmphasisHigh
+                                                          handler:nil]];
+  [self.alertController addAction:[MDCAlertAction actionWithTitle:@"Cancel Action"
+                                                         emphasis:MDCActionEmphasisMedium
+                                                          handler:nil]];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+  CGFloat width = 359.0f;  // Minimum width that fits both actions (calculated manually).
+  [self.alertController sizeToFitContentInBounds:CGSizeMake(width, 300.0f)];
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+
+  // When
+  self.alertController.actionsHorizontalAlignment = MDCContentHorizontalAlignmentJustified;
+  self.alertController.actionsHorizontalAlignmentInVerticalLayout =
+      MDCContentHorizontalAlignmentJustified;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+  XCTAssertEqual(alertView.isVerticalActionsLayout, false);
 }
 
 #pragma mark - Vertical Order Tests

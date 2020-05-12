@@ -27,11 +27,11 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   fileprivate let tabs = [
-    SimpleInheritedTableViewController(title: "First"),
-    SimpleInheritedTableViewController(title: "Second"),
-    SimpleInheritedTableViewController(title: "Third"),
+    ChildOfTrackingScrollViewViewController(title: "First"),
+    ChildOfTrackingScrollViewViewController(title: "Second"),
+    ChildOfTrackingScrollViewViewController(title: "Third"),
   ]
-  private var currentTab: SimpleInheritedTableViewController? = nil
+  private var currentTab: ChildOfTrackingScrollViewViewController? = nil
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -73,7 +73,7 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
     switchToTab(tabs[0], animated: false)
   }
 
-  fileprivate func switchToTab(_ tab: SimpleInheritedTableViewController, animated: Bool = true) {
+  fileprivate func switchToTab(_ tab: ChildOfTrackingScrollViewViewController, animated: Bool = true) {
 
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 

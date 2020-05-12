@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCFakeMDCSnackbarManagerDelegate.h"
+#import <UIKit/UIKit.h>
 
-@implementation FakeMDCSnackbarManagerDelegate
+/**
+ A gradient view used for an MDCProgressView's progress bar.
+ */
+__attribute__((objc_subclassing_restricted)) @interface MDCProgressGradientView : UIView
 
-- (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
-  self.presentedView = messageView;
-  if (self.shouldSetSnackbarViewAccessibilityViewIsModal) {
-    messageView.accessibilityViewIsModal = YES;
-  }
-  [self.willPresentExpectation fulfill];
-}
+/**
+ An array of CGColorRef objects defining the color of each gradient stop
 
-- (void)snackbarDidDisappear {
-  [self.disappearExpectation fulfill];
-}
+ Defaults to nil.
+ */
+@property(nonatomic, nullable, copy) NSArray *colors;
 
 @end

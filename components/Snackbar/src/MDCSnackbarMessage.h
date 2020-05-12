@@ -198,6 +198,28 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
  */
 @property(nonatomic) BOOL automaticallyDismisses;
 
+/**
+ MDCSnackbarManager will display the snackbar message in this view.
+
+ Call this method to choose where in the view hierarchy this specific snackbar message will be
+ presented. This method should be called only in cases where the default behavior is unable to find
+ the correct view to place the snackbar message in. Furthermore, please set this property only if
+ this message is a special case and needs to be presented on a view different than the other
+ messages of this specific snackbar manager. Otherwise, please set the presentation host view by
+ using MDCSnackbarManager's @c setPresentationHostView.
+ */
+@property(nonatomic, weak, nullable) UIView *presentationHostViewOverride;
+
+/**
+ If true, the snackbar is dismissed when the user taps anywhere on the overlay.
+
+ @note: If VoiceOver is turned on, this value will be ignored and the snackbar will behave as if it
+ were set to NO.
+
+ Defaults to NO.
+ */
+@property(nonatomic) BOOL shouldDismissOnOverlayTap;
+
 @end
 
 /**

@@ -17,6 +17,7 @@
 #include <tgmath.h>
 
 #import "MaterialPalettes.h"
+#import "MDCProgressGradientView.h"
 #import "MaterialProgressViewStrings.h"
 #import "MaterialProgressViewStrings_table.h"
 #import "MaterialMath.h"
@@ -35,7 +36,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 static NSString *const kBundle = @"MaterialProgressView.bundle";
 
 @interface MDCProgressView ()
-@property(nonatomic, strong) UIView *progressView;
+@property(nonatomic, strong) MDCProgressGradientView *progressView;
 @property(nonatomic, strong) UIView *trackView;
 @property(nonatomic) BOOL animatingHide;
 // A UIProgressView to return the same format for the accessibility value. For example, when
@@ -74,12 +75,14 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _trackView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self addSubview:_trackView];
 
-  _progressView = [[UIView alloc] initWithFrame:CGRectZero];
+  _progressView = [[MDCProgressGradientView alloc] initWithFrame:CGRectZero];
   [self addSubview:_progressView];
 
-  _progressView.backgroundColor = MDCProgressViewDefaultTintColor();
+  _progressView.colors = @[
+    (id)MDCProgressViewDefaultTintColor().CGColor, (id)MDCProgressViewDefaultTintColor().CGColor
+  ];
   _trackView.backgroundColor =
-      [[self class] defaultTrackTintColorForProgressTintColor:_progressView.backgroundColor];
+      [[self class] defaultTrackTintColorForProgressTintColor:MDCProgressViewDefaultTintColor()];
 }
 
 - (void)willMoveToSuperview:(UIView *)superview {
@@ -100,20 +103,30 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
+  if (self.progressTintColor) {
+    self.progressView.colors =
+        @[ (id)self.progressTintColor.CGColor, (id)self.progressTintColor.CGColor ];
+  }
+
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
-- (UIColor *)progressTintColor {
-  return self.progressView.backgroundColor;
+- (void)setProgressTintColor:(UIColor *)progressTintColor {
+  _progressTintColor = progressTintColor;
+  _progressTintColors = nil;
+  if (progressTintColor != nil) {
+    self.progressView.colors = @[ (id)progressTintColor.CGColor, (id)progressTintColor.CGColor ];
+  } else {
+    self.progressView.colors = nil;
+  }
 }
 
-- (void)setProgressTintColor:(UIColor *)progressTintColor {
-  if (progressTintColor == nil) {
-    progressTintColor = MDCProgressViewDefaultTintColor();
-  }
-  self.progressView.backgroundColor = progressTintColor;
+- (void)setProgressTintColors:(NSArray *)progressTintColors {
+  _progressTintColors = [progressTintColors copy];
+  _progressTintColor = nil;
+  self.progressView.colors = _progressTintColors;
 }
 
 - (UIColor *)trackTintColor {
@@ -121,10 +134,6 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 }
 
 - (void)setTrackTintColor:(UIColor *)trackTintColor {
-  if (trackTintColor == nil) {
-    trackTintColor =
-        [[self class] defaultTrackTintColorForProgressTintColor:self.progressTintColor];
-  }
   self.trackView.backgroundColor = trackTintColor;
 }
 

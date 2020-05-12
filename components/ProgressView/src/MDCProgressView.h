@@ -35,16 +35,26 @@ IB_DESIGNABLE
 /**
  The color shown for the portion of the progress view that is filled.
 
- The default is a blue color. When changed, the trackTintColor is reset.
+ The default is a blue color.
  */
-@property(nonatomic, strong, null_resettable) UIColor *progressTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *progressTintColor UI_APPEARANCE_SELECTOR;
+
+/**
+ An array of CGColorRef objects used to defining the color of each gradient stop.
+ All colors are spread uniformly across the range.
+
+ Setting @c progressTintColor resets this property to @c nil.
+
+ The default is nil.
+*/
+@property(nonatomic, copy, nullable) NSArray *progressTintColors;
 
 /**
  The color shown for the portion of the progress view that is not filled.
 
- The default is a light version of the current progressTintColor.
+ The default is a light blue color.
  */
-@property(nonatomic, strong, null_resettable) UIColor *trackTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *trackTintColor UI_APPEARANCE_SELECTOR;
 
 /**
  The corner radius for both the portion of the progress view that is filled and the track.
