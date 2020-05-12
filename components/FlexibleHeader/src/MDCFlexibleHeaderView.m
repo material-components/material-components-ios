@@ -521,8 +521,13 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // Ignore any content offset delta that occured as a result of any safe area insets change.
   _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
 
-  // The changes might require us to re-calculate the frame, or update the entire layout.
-  if (!_trackingScrollView) {
+  if (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable && _wantsToBeHidden &&
+      !_shiftAccumulatorDisplayLink) {
+    // Using the new safe area information, immediately shift the header such that it is off-screen.
+    _shiftAccumulator = self.fhv_accumulatorMax;
+    [self fhv_commitAccumulatorToFrame];
+  } else if (!_trackingScrollView) {
+    // The changes might require us to re-calculate the frame, or update the entire layout.
     CGRect bounds = self.bounds;
     bounds.size.height = self.minMaxHeight.minimumHeightWithTopSafeArea;
     self.bounds = bounds;

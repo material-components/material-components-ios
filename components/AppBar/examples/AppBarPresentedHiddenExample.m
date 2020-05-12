@@ -21,6 +21,8 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"
 
+// This example demonstrates a view controller being presented with the AppBar initially hidden.
+// When the view controller is presented, you can tap anywhere on the view controller to dismiss it.
 @interface AppBarPresentedHiddenExample : UIViewController
 
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
@@ -98,14 +100,12 @@
 - (void)testPresentedFullScreen {
   [self dismissViewControllerAnimated:NO completion:nil];
 
-  // TODO(b/152510959): The AppBar is not presented fully hidden on an iPhone 5s on iOS 10.
   [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationFullScreen];
 }
 
 - (void)testPresentedAutomatic {
   [self dismissViewControllerAnimated:NO completion:nil];
 
-  // TODO(b/152510959): The AppBar is not presented fully hidden on an iPhone 5s on iOS 10.
   if (@available(iOS 13, *)) {
     [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationAutomatic];
   } else {
