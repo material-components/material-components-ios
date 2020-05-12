@@ -128,6 +128,27 @@
   }
 }
 
+- (void)testItemBarViewUsesCustomAccessibilityLabelWhenSetAndNotTitle {
+  // Given
+  MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];
+  style.unselectedTitleFont = [UIFont systemFontOfSize:12];
+  style.selectedTitleFont = [UIFont systemFontOfSize:12];
+  MDCItemBar *itemBar = [[MDCItemBar alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  [itemBar applyStyle:style];
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"Item 1" image:nil tag:0];
+  NSString *customLabel = @"Custom label";
+
+  // When
+  item1.accessibilityLabel = customLabel;
+  itemBar.items = @[ item1 ];
+  itemBar.selectedItem = item1;
+
+  // Then
+  UIView *view = (UIView *)[itemBar accessibilityElementForItem:item1];
+  NSString *accessibilityLabel = view.accessibilityLabel;
+  XCTAssertTrue([accessibilityLabel containsString:customLabel]);
+}
+
 /**
  Verifies that @c MDCItemBar assigns a @c UIPointerInteraction to each of its cells.
  */

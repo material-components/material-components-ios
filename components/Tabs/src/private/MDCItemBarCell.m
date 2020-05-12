@@ -229,6 +229,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     }
   }
   self.accessibilityIdentifier = item.accessibilityIdentifier;
+  self.accessibilityLabel = item.accessibilityLabel;
 
   _itemIndex = itemIndex;
   _itemCount = itemCount;
@@ -363,8 +364,9 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 - (nullable NSString *)accessibilityLabel {
   NSMutableArray *labelComponents = [NSMutableArray array];
 
-  // Use untransformed title as accessibility label to ensure accurate reading.
-  NSString *titleComponent = _title;
+  // If a custom accessibility label has not been set on UITabBarItem,
+  // then use untransformed title as accessibility label to ensure accurate reading.
+  NSString *titleComponent = [super accessibilityLabel] ?: _title;
   if (titleComponent.length > 0) {
     [labelComponents addObject:titleComponent];
   }
