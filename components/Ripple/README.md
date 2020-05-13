@@ -23,7 +23,6 @@ Ripple is a visual form of feedback for touch events providing users a clear sig
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-ripple">Material Design guidelines: Ripple</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCRippleTouchController.html">MDCRippleTouchController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCRippleView.html">MDCRippleView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCStatefulRippleView.html">MDCStatefulRippleView</a></li>

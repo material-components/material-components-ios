@@ -22,7 +22,6 @@ the screen and displays actions a user can take.
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-action-sheet">Material Design guidelines: ActionSheet</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetAction.html">MDCActionSheetAction</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetController.html">MDCActionSheetController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Protocols/MDCActionSheetControllerDelegate.html">MDCActionSheetControllerDelegate</a></li>
