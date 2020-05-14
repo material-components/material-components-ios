@@ -30,10 +30,14 @@ involve multiple tasks.
 
 ## Using dialogs
 
-To display a modal using MaterialDialogs you set two properties on the view controller to be
-presented. Set `modalPresentationStyle` to `UIModalPresentationCustom` and set
-`transitioningDelegate` to and instance of `MDCDialogTransitionController`. Then you present the
-view controller from the root controller to display it as a modal dialog.
+The Dialogs component can be used to display Material Design alerts with things like title text and
+message text, as well as optional icons and accessory views. It can also be used to modally present
+custom dialogs.
+
+To use the Dialogs component when presenting your view controller set its `modalPresentationStyle`
+property to `UIModalPresentationCustom` and its `transitioningDelegate` property to an
+instance of `MDCDialogTransitionController`. Then, present the view controller from the
+root controller.
 
 ### Dialogs Classes
 
@@ -46,10 +50,10 @@ that observes the presented view controller for preferred content size.
 `MDCDialogTransitionController` implements `UIViewControllerAnimatedTransitioning` and
 `UIViewControllerTransitioningDelegate` to vend the presentation controller during the transition.
 
-#### MDCAlertController
+#### `MDCAlertController`
 
-`MDCAlertController` provides a simple interface for developers to present a modal dialog
-according to the Material spec.
+`MDCAlertController` provides a basic alert interface that can be used when a custom dialog 
+view controller class is not necessary.
 
 ### Installing dialogs
 
@@ -84,7 +88,7 @@ import MaterialComponents.MaterialDialogs
 
 ### MDCPresentationController Accessibility
 
-As MDCPresentationController is responsible for the presentation of your
+As `MDCPresentationController` is responsible for the presentation of your
 custom view controllers, it does not implement any accessibility
 functionality itself.
 
@@ -103,9 +107,10 @@ in VoiceOver.
 
 ## Dialogs examples
 
-The Dialogs component can be used to display both modal dialogs and simple alerts.
+### Custom dialog example
 
-### Modal dialog example
+The sample code below shows how to use the Dialogs component to present a custom dialog.
+For a more in depth example, see the [DialogsCustomShadowExampleViewController](examples/DialogsCustomShadowExampleViewController.swift).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -140,7 +145,11 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 ```
 <!--</div>-->
 
-### Alert example
+### `MDCAlertController` example
+
+The sample code below shows how to use the Dialogs component to present an 
+`MDCAlertController`. For a more in depth example, see the
+[DialogsTypicalUseExampleViewController](examples/DialogsTypicalUseExampleViewController.m).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
