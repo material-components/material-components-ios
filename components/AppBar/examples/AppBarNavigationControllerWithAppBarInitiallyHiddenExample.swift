@@ -17,9 +17,6 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_Theming
 import MaterialComponents.MaterialContainerScheme
 
-// This example demonstrates that it is possible to hide a view controller's
-// navigationController.navigationBar during viewDidLoad when presented within an
-// MDCAppBarNavigationController.
 class AppBarNavigationControllerWithAppBarInitiallyHiddenExample:
     UIViewController,
     MDCAppBarNavigationControllerDelegate {
@@ -156,6 +153,7 @@ extension AppBarNavigationControllerWithAppBarInitiallyHiddenExample {
 extension AppBarNavigationControllerWithAppBarInitiallyHiddenExample {
 
   @objc func testPresented() {
+    // TODO(b/152510959): The AppBar is expected to be hidden, but it is not.
     presentModal(animated: false)
   }
 }
