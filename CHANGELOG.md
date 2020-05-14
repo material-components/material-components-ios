@@ -1,3 +1,9 @@
+# 109.3.1
+
+This hotfix patch release fixes the podspec. Updating the podpsec with new folders that were added in the previous release.
+
+---
+
 # 109.3.0
 
 This minor release includes API improvements to ProgressView, SnackBars and TextFields, as well as tests and bug fixes for ActionSheet, AppBar, BottomAppBar, BottomSheet, Collections, Dialogs, FlexibleHeader and Tabs.
