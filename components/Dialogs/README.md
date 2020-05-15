@@ -34,7 +34,7 @@ The Dialogs component can be used to display Material Design alerts with things 
 message text, as well as optional icons and accessory views. It can also be used to modally present
 custom dialogs.
 
-To use the Dialogs component when presenting your view controller set its `modalPresentationStyle`
+To use the Dialogs component when presenting your view controller, set its `modalPresentationStyle`
 property to `UIModalPresentationCustom` and its `transitioningDelegate` property to an
 instance of `MDCDialogTransitionController`. Then, present the view controller from the
 root controller.
@@ -44,8 +44,8 @@ root controller.
 #### `MDCDialogPresentationController` and `MDCDialogTransitionController`
 
 The two classes involved in presenting dialogs are `MDCDialogPresentationController` and
-`MDCDialogTransitionController`. These allow the presentation of view controllers in a material
-specificed manner. `MDCDialogPresentationController` is a subclass of `UIPresentationController`
+`MDCDialogTransitionController`. These allow the presentation of view controllers in a Material
+fashion. `MDCDialogPresentationController` is a subclass of `UIPresentationController`
 that observes the presented view controller for preferred content size.
 `MDCDialogTransitionController` implements `UIViewControllerAnimatedTransitioning` and
 `UIViewControllerTransitioningDelegate` to vend the presentation controller during the transition.
@@ -86,7 +86,7 @@ import MaterialComponents.MaterialDialogs
 
 ## Making dialogs accessible
 
-### MDCPresentationController Accessibility
+### `MDCPresentationController` Accessibility
 
 As `MDCPresentationController` is responsible for the presentation of your
 custom view controllers, it does not implement any accessibility
@@ -94,9 +94,8 @@ functionality itself.
 
 #### `-accessibilityPerformEscape` Behavior
 
-Implementing `-performAccessibilityEscape` in a custom dialog will make it so that 
-your dialog gets dismissed when users perform the accessibility escape gesture
-in VoiceOver.
+Ensure that the accessibility escape gesture in VoiceOver works by implementing 
+the `-performAccessibilityEscape` method in your custom dialog view controller class.
 
 ```
 - (BOOL)accessibilityPerformEscape {
@@ -110,7 +109,7 @@ in VoiceOver.
 ### Custom dialog example
 
 The sample code below shows how to use the Dialogs component to present a custom dialog.
-For a more in depth example, see the [DialogsCustomShadowExampleViewController](examples/DialogsCustomShadowExampleViewController.swift).
+For a more in-depth example, see the [`DialogsCustomShadowExampleViewController`](examples/DialogsCustomShadowExampleViewController.swift).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -147,9 +146,10 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 
 ### `MDCAlertController` example
 
+
 The sample code below shows how to use the Dialogs component to present an 
-`MDCAlertController`. For a more in depth example, see the
-[DialogsTypicalUseExampleViewController](examples/DialogsTypicalUseExampleViewController.m).
+`MDCAlertController`. For a more in-depth example, see the
+[`DialogsTypicalUseExampleViewController`](examples/DialogsTypicalUseExampleViewController.m).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -185,8 +185,7 @@ MDCAlertAction *alertAction =
 
 ### Anatomy and key properties
 
-A Material dialog has a container, content (either supporting text or a set of
-items of a particular type), a background scrim, and, optionally, title and buttons.
+The following is an anatomy diagram of a Material dialog:
 
 ![anatomy](docs/assets/dialogs-anatomy.png)
 
@@ -223,7 +222,7 @@ items of a particular type), a background scrim, and, optionally, title and butt
 
 ### Theming dialogs
 
-You can theme an MDCDialog to match the Material Design Dialog using your app's scheme and the Dialogs theming
+You can theme a Material Dialog to match the Material Design Dialog using your app's scheme and the Dialogs theming
 extension. To add the theming extension to your project add the following line to your Podfile:
 
 ```bash
@@ -284,7 +283,7 @@ High, Medium and low emphasis are supported.
   // Make sure to apply theming after all actions are added, so they are themed too!
   alert.applyTheme(withScheme: scheme)
 
-  // present the alert
+  // Present the alert
   present(alertController, animated:true, completion:nil)
 ```
 
@@ -312,7 +311,7 @@ High, Medium and low emphasis are supported.
   // Make sure to apply theming after all actions are added, so they are themed too!
   [alert applyThemeWithScheme:scheme];
 
-  // present the alert
+  // Present the alert
   [self presentViewController:alert animated:YES completion:...];
 ```
 <!--</div>-->
