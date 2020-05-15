@@ -57,7 +57,7 @@ view controller class is not necessary.
 
 ### Installing dialogs
 
-In order to install Dialogs with Cocoapods first add the component to your `Podfile`:
+In order to install Dialogs with [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) first add the component to your `Podfile`:
 
 ```bash
 pod MaterialComponents/Dialogs
