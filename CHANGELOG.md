@@ -1,37 +1,3 @@
-# 109.4.0
-
-This minor release adds Theming extension support to MDCBottomDrawerViewController and includes bug fixes and minor refactoring.
-
-## New features
-
-- MDCBottomDrawerViewController now has Theming extension support.
-
-## Component changes
-
-### AppBar
-
-* [Add NavigationController example with AppBar initially hidden.](https://github.com/material-components/material-components-ios/commit/dbb9ab1170fda2c4fd571fe682d1af6a84278a8e) (Jeff Verkoeyen)
-
-### FlexibleHeader
-
-* [Change links in FlexibleHeader README](https://github.com/material-components/material-components-ios/commit/a31b69ecd1bb89c33bcae5843a309808872889e4) (Andrew Overton)
-* [Extract a shifter logical unit.](https://github.com/material-components/material-components-ios/commit/bebb73f5e55ec5b2fe9e6ba8bec57ca2e6b4b4aa) (Jeff Verkoeyen)
-
-### Tabs
-
-* [Add support for custom accessibility labels for tab bar items.](https://github.com/material-components/material-components-ios/commit/7335fb5ca9c46a4b27f731724f23c2c4cbdbeec3) (Yarden Eitan)
-
-## Multi-component changes
-
-* [  - 51170612999194997e160654411ac87bb61d4764 Automatic changelog preparation for release. by Galia Kaufman <galiak@google.com>   - 85feb7896b37c0a93b8c5b5dbcde72403b379dee [Tabs] Update podspec to include new folders. by Galia Kaufman <galiak@google.com>   - fbd3f81309b46b9d8e0a6a9dd03e4b63c7794f27 Hand-modified CHANGELOG.md API diff. by Galia Kaufman <galiak@google.com>   - 27927ce42748c7afb3ac270b6d6ec64d1c50d3bc Bumped version number to 109.3.1. by Galia Kaufman <galiak@google.com>](https://github.com/material-components/material-components-ios/commit/2d0d6a8faa6fe7acea7921552a8afe1f656c9088) (Galia Kaufman)
-* [Ensure that the FlexibleHeader's position reacts to safeAreaInsets changes when hidden.](https://github.com/material-components/material-components-ios/commit/a502ce66b98101fcc155f98696a974ff91083557) (Jeff Verkoeyen)
-* [Fix broken links This CL fixes some longstanding and some newly broken links.](https://github.com/material-components/material-components-ios/commit/0a36a3a12be81c9d2d1d84f15452ed6153c97f74) (Andrew Overton)
-* [Fix broken links This CL fixes some longstanding and some newly broken links.](https://github.com/material-components/material-components-ios/commit/1fa6c77ee83f13b2e9711ae182cef5999152f36b) (Andrew Overton)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/70716800b8db661d8efa744ab8a3f41e15b99f57) (Nobody)
-* [Internal change](https://github.com/material-components/material-components-ios/commit/efea2ddce69e4fdde643fe2e367b1f16b16c9880) (Jeff Verkoeyen)
-
----
-
 # 109.3.1
 
 This hotfix patch release fixes the podspec. Updating the podpsec with new folders that were added in the previous release.
