@@ -1,7 +1,6 @@
 # 109.4.0
 
-This minor release adds Theming extension support to MDCBottomDrawerViewController and includes
-bug fixes and minor refactoring.
+This minor release adds Theming extension support to MDCBottomDrawerViewController and includes bug fixes and minor refactoring.
 
 ## New features
 
