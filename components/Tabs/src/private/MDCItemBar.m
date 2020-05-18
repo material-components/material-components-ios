@@ -508,7 +508,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(badgeValue)),
       NSStringFromSelector(@selector(badgeColor)),
-      NSStringFromSelector(@selector(accessibilityIdentifier))
+      NSStringFromSelector(@selector(accessibilityIdentifier)),
+      NSStringFromSelector(@selector(accessibilityLabel))
     ];
   });
   // clang-format on

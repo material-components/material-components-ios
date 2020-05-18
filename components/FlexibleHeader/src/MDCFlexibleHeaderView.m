@@ -15,6 +15,7 @@
 #import "MDCFlexibleHeaderView.h"
 
 #import "private/MDCFlexibleHeaderMinMaxHeight.h"
+#import "private/MDCFlexibleHeaderShifter.h"
 #import "private/MDCFlexibleHeaderTopSafeArea.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
 #import "private/MDCStatusBarShifter.h"
@@ -189,6 +190,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // layout guide. Once we drop iOS 8 support this can be changed to a UILayoutGuide instead.
   UIView *_topSafeAreaGuide;
 
+  MDCFlexibleHeaderShifter *_shifter;
   MDCStatusBarShifter *_statusBarShifter;
 
   // Layers for header shadows.
@@ -271,6 +273,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   _wkWebViewClass = NSClassFromString(@"WKWebView");
 
+  _shifter = [[MDCFlexibleHeaderShifter alloc] init];
   _statusBarShifter = [[MDCStatusBarShifter alloc] init];
   _statusBarShifter.delegate = self;
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
@@ -521,8 +524,13 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // Ignore any content offset delta that occured as a result of any safe area insets change.
   _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
 
-  // The changes might require us to re-calculate the frame, or update the entire layout.
-  if (!_trackingScrollView) {
+  if (_shifter.behavior == MDCFlexibleHeaderShiftBehaviorHideable && _wantsToBeHidden &&
+      !_shiftAccumulatorDisplayLink) {
+    // Using the new safe area information, immediately shift the header such that it is off-screen.
+    _shiftAccumulator = self.fhv_accumulatorMax;
+    [self fhv_commitAccumulatorToFrame];
+  } else if (!_trackingScrollView) {
+    // The changes might require us to re-calculate the frame, or update the entire layout.
     CGRect bounds = self.bounds;
     bounds.size.height = self.minMaxHeight.minimumHeightWithTopSafeArea;
     self.bounds = bounds;
@@ -538,8 +546,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 - (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   return ([self fhv_canShiftOffscreen] &&
-          (_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
-           _shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
+          (_shifter.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
+           _shifter.behavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
           _statusBarShifter.prefersStatusBarHidden);
 }
 
@@ -765,10 +773,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (BOOL)fhv_canShiftOffscreen {
-  BOOL interactable = ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
-                        _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
+  BOOL interactable = ((_shifter.behavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
+                        _shifter.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) &&
                        !_trackingScrollView.pagingEnabled);
-  BOOL hideable = _shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable;
+  BOOL hideable = _shifter.behavior == MDCFlexibleHeaderShiftBehaviorHideable;
   return interactable || hideable;
 }
 
@@ -1073,7 +1081,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // When the shift behavior is MDCFlexibleHeaderShiftBehaviorHideable, we explicitly disable
   // interactive shifting behaviors so that the header's visibility is controlled only via direct
   // invocations to -shiftHeaderOnScreenAnimated: and shiftHeaderOffScreenAnimated:
-  BOOL allowsInteractiveShift = _shiftBehavior != MDCFlexibleHeaderShiftBehaviorHideable;
+  BOOL allowsInteractiveShift = _shifter.behavior != MDCFlexibleHeaderShiftBehaviorHideable;
 
   if (_shiftAccumulatorLastContentOffsetIsValid && allowsInteractiveShift) {
     // We track the last direction for our target offset behavior.
@@ -1753,8 +1761,8 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (BOOL)hidesStatusBarWhenCollapsed {
-  return ((_shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
-           _shiftBehavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
+  return ((_shifter.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
+           _shifter.behavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
           !_trackingScrollView.pagingEnabled);
 }
 
@@ -1778,12 +1786,12 @@ static BOOL isRunningiOS10_3OrAbove() {
            @" enabled.");
 
   shiftBehavior = ShiftBehaviorForCurrentAppContext(shiftBehavior);
-  if (_shiftBehavior == shiftBehavior) {
+  if (_shifter.behavior == shiftBehavior) {
     return;
   }
-  BOOL needsShiftOnScreen = (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
+  BOOL needsShiftOnScreen = (_shifter.behavior != MDCFlexibleHeaderShiftBehaviorDisabled &&
                              shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled);
-  _shiftBehavior = shiftBehavior;
+  _shifter.behavior = shiftBehavior;
 
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
 
@@ -1791,6 +1799,10 @@ static BOOL isRunningiOS10_3OrAbove() {
     _wantsToBeHidden = NO;
     [self fhv_startDisplayLink];
   }
+}
+
+- (MDCFlexibleHeaderShiftBehavior)shiftBehavior {
+  return _shifter.behavior;
 }
 
 - (void)setBehavior:(MDCFlexibleHeaderShiftBehavior)behavior {

@@ -275,6 +275,17 @@ static NSString *const kCellIdentifier = @"cell";
   [self.bottomBarView setFloatingButtonHidden:YES animated:NO];
 }
 
+- (void)testDynamic201907ColorSchemeWithCenteredFab {
+  // Given
+  [self resetTests];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
+  // When
+  [self.bottomBarView setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionCenter
+                                       animated:NO];
+}
+
 - (void)resetTests {
   [self.bottomBarView setFloatingButtonPosition:MDCBottomAppBarFloatingButtonPositionCenter
                                        animated:NO];

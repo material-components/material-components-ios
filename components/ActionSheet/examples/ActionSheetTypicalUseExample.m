@@ -26,6 +26,7 @@
     : UIViewController <MDCActionSheetControllerDelegate>
 
 @property(nonatomic, strong) MDCButton *showButton;
+@property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
@@ -92,6 +93,7 @@
   [actionSheet addAction:emailAction];
   [actionSheet applyThemeWithScheme:self.containerScheme];
   actionSheet.delegate = self;
+  self.actionSheet = actionSheet;
   [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
@@ -110,6 +112,37 @@
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
   };
+}
+
+@end
+
+@implementation ActionSheetTypicalUseExampleViewController (SnapshotTestingByConvention)
+
+- (void)testDefaults {
+  // Given
+  [self resetStates];
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self showActionSheet];
+}
+
+- (void)testDynamic201907ColorScheme {
+  // Given
+  [self resetStates];
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self showActionSheet];
+}
+
+- (void)resetStates {
+  [self.actionSheet dismissViewControllerAnimated:NO completion:nil];
+  self.actionSheet = nil;
 }
 
 @end

@@ -22,6 +22,12 @@
 static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
 @interface ButtonsTypicalUseExample ()
+@property(nonatomic, strong) MDCButton *containedButton;
+@property(nonatomic, strong) MDCButton *disabledContainedButton;
+@property(nonatomic, strong) MDCButton *textButton;
+@property(nonatomic, strong) MDCButton *disabledTextButton;
+@property(nonatomic, strong) MDCButton *outlinedButton;
+@property(nonatomic, strong) MDCButton *disabledOutlinedButton;
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
 @end
 
@@ -65,6 +71,7 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   [containedButton addTarget:self
                       action:@selector(didTap:)
             forControlEvents:UIControlEventTouchUpInside];
+  self.containedButton = containedButton;
   [self.view addSubview:containedButton];
 
   // Disabled contained button
@@ -77,6 +84,7 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
                               action:@selector(didTap:)
                     forControlEvents:UIControlEventTouchUpInside];
   [disabledContainedButton setEnabled:NO];
+  self.disabledContainedButton = disabledContainedButton;
   [self.view addSubview:disabledContainedButton];
 
   // Text button
@@ -94,6 +102,7 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
+  self.textButton = textButton;
   [self.view addSubview:textButton];
 
   // Disabled Text button
@@ -106,6 +115,7 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
                          action:@selector(didTap:)
                forControlEvents:UIControlEventTouchUpInside];
   [disabledTextButton setEnabled:NO];
+  self.disabledTextButton = disabledTextButton;
   [self.view addSubview:disabledTextButton];
 
   // Outlined button
@@ -124,6 +134,7 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   [outlinedButton addTarget:self
                      action:@selector(didTap:)
            forControlEvents:UIControlEventTouchUpInside];
+  self.outlinedButton = outlinedButton;
   [self.view addSubview:outlinedButton];
 
   // Disabled outlined button
@@ -136,6 +147,7 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
                              action:@selector(didTap:)
                    forControlEvents:UIControlEventTouchUpInside];
   [disabledOutlinedButton setEnabled:NO];
+  self.disabledOutlinedButton = disabledOutlinedButton;
   [self.view addSubview:disabledOutlinedButton];
 
   // Floating action button
@@ -211,6 +223,42 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   if (animated && !UIAccessibilityIsVoiceOverRunning()) {
     [self.floatingButton expand:YES completion:nil];
   }
+}
+
+@end
+
+@implementation ButtonsTypicalUseExample (SnapshotTestingByConvention)
+
+- (void)testDefaults {
+  // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self.containedButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.disabledContainedButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.textButton applyTextThemeWithScheme:self.containerScheme];
+  [self.disabledTextButton applyTextThemeWithScheme:self.containerScheme];
+  [self.outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
+  [self.disabledOutlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
+  [self.floatingButton applySecondaryThemeWithScheme:self.containerScheme];
+}
+
+- (void)testDynamic201907ColorScheme {
+  // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self.containedButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.disabledContainedButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.textButton applyTextThemeWithScheme:self.containerScheme];
+  [self.disabledTextButton applyTextThemeWithScheme:self.containerScheme];
+  [self.outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
+  [self.disabledOutlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
+  [self.floatingButton applySecondaryThemeWithScheme:self.containerScheme];
 }
 
 @end

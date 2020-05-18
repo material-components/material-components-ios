@@ -74,8 +74,9 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
 /**
  The behavior of the header in response to the user interacting with the tracking scroll view.
 
- @note If self.observesTrackingScrollViewScrollEvents is YES, then this property can only be
- MDCFlexibleHeaderShiftBehaviorDisabled. Attempts to set shiftBehavior to any other value if
+ @note If self.observesTrackingScrollViewScrollEvents is YES, then this property can not be
+ MDCFlexibleHeaderShiftBehaviorEnabled or MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar.
+ Attempts to set shiftBehavior to either of these values when
  self.observesTrackingScrollViewScrollEvents is YES will result in an assertion being thrown.
 
  Default: MDCFlexibleHeaderShiftBehaviorDisabled

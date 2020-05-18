@@ -19,7 +19,7 @@ font or button font.
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-typography-theming">Material Design guidelines: Typography theming</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/design/typography/the-type-system.html">Material Design guidelines: Typography</a></li>
 </ul>
 
 ## Related documentation

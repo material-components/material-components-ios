@@ -16,9 +16,10 @@ import UIKit
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer_Theming
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
-  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -26,9 +27,8 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = colorScheme.backgroundColor
-    contentViewController.colorScheme = colorScheme
-
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
+    contentViewController.colorScheme = containerScheme.colorScheme as? MDCSemanticColorScheme
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
     let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
@@ -37,13 +37,13 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
     bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
 
-    bottomAppBar.barTintColor = colorScheme.surfaceColor;
-    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+    bottomAppBar.barTintColor = containerScheme.colorScheme.surfaceColor
+    let barItemTintColor = containerScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.6)
     bottomAppBar.leadingBarItemsTintColor = barItemTintColor
     bottomAppBar.trailingBarItemsTintColor = barItemTintColor
-    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
-    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
-    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+    bottomAppBar.floatingButton.setBackgroundColor(containerScheme.colorScheme.primaryColor, for: .normal)
+    bottomAppBar.floatingButton.setTitleColor(containerScheme.colorScheme.onPrimaryColor, for: .normal)
+    bottomAppBar.floatingButton.setImageTintColor(containerScheme.colorScheme.onPrimaryColor, for: .normal)
 
     view.addSubview(bottomAppBar)
   }
@@ -76,9 +76,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     bottomDrawerViewController.isTopHandleHidden = false
-    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+    bottomDrawerViewController.applyTheme(withScheme: containerScheme)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }

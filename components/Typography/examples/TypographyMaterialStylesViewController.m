@@ -93,17 +93,15 @@
   UIKIT_EXTERN const CGFloat UIFontWeightBlack NS_AVAILABLE_IOS(8_2);
 */
 
-  if (@available(iOS 8.2, *)) {
-    NSLog(@"UIFontWeightUltraLight %f", UIFontWeightUltraLight);
-    NSLog(@"UIFontWeightThin %f", UIFontWeightThin);
-    NSLog(@"UIFontWeightLight %f", UIFontWeightLight);
-    NSLog(@"UIFontWeightRegular %f", UIFontWeightRegular);
-    NSLog(@"UIFontWeightMedium %f", UIFontWeightMedium);
-    NSLog(@"UIFontWeightSemibold %f", UIFontWeightSemibold);
-    NSLog(@"UIFontWeightBold %f", UIFontWeightBold);
-    NSLog(@"UIFontWeightHeavy %f", UIFontWeightHeavy);
-    NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
-  }
+  NSLog(@"UIFontWeightUltraLight %f", UIFontWeightUltraLight);
+  NSLog(@"UIFontWeightThin %f", UIFontWeightThin);
+  NSLog(@"UIFontWeightLight %f", UIFontWeightLight);
+  NSLog(@"UIFontWeightRegular %f", UIFontWeightRegular);
+  NSLog(@"UIFontWeightMedium %f", UIFontWeightMedium);
+  NSLog(@"UIFontWeightSemibold %f", UIFontWeightSemibold);
+  NSLog(@"UIFontWeightBold %f", UIFontWeightBold);
+  NSLog(@"UIFontWeightHeavy %f", UIFontWeightHeavy);
+  NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
 
   UIFont *defaultFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
   NSLog(@"Font Family : %@", defaultFont.familyName);

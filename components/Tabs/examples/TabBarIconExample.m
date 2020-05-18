@@ -14,10 +14,11 @@
 
 #import "supplemental/TabBarIconExampleSupplemental.h"
 
+#import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+Theming.h"
+#import "MaterialContainerScheme.h"
 
 @interface TabBarIconExample ()
 @property(nonatomic, strong) UIBarButtonItem *addStarButtonItem;
@@ -147,6 +148,32 @@
   } else {
     self.navigationItem.rightBarButtonItem = self.addStarButtonItem;
   }
+}
+
+@end
+
+@implementation TabBarIconExample (SnapshotTestingByConvention)
+
+- (void)testDefaults {
+  // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
+}
+
+- (void)testDynamic201907ColorScheme {
+  // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
+  [MDCAppBarColorThemer applyColorScheme:self.containerScheme.colorScheme
+                  toAppBarViewController:self.appBarViewController];
 }
 
 @end
