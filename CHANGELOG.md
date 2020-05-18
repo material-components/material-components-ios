@@ -11,8 +11,6 @@ This minor release adds Theming extension support to MDCBottomDrawerViewControll
 ### AppBar
 
 * [Add NavigationController example with AppBar initially hidden.](https://github.com/material-components/material-components-ios/commit/dbb9ab1170fda2c4fd571fe682d1af6a84278a8e) (Jeff Verkoeyen)
-* [Inject AppBars after view controllers have been added to the navigation controller.](https://github.com/material-components/material-components-ios/commit/c0b4ff9cb38828afeb617c5c18b2bd5e83f9995e) (Jeff Verkoeyen)
-* [Roll-back "inject AppBars after view controllers have been added to the navigation controller."](https://github.com/material-components/material-components-ios/commit/e479b366e735e55056b93559b6dc5eb29e4af47a) (Jeff Verkoeyen)
 
 ### FlexibleHeader
 
