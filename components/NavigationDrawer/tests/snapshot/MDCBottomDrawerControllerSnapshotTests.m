@@ -15,8 +15,9 @@
 #import "MaterialSnapshot.h"
 
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
-#import "MaterialNavigationDrawer.h"
 #import "supplemental/MDCBottomDrawerSnapshotTestMutableTraitCollection.h"
+#import "MaterialNavigationDrawer.h"
+#import "MaterialNavigationDrawer+MaterialTheming.h"
 
 /** Fake MDCBottomDrawerContainerViewController for snapshot testing. */
 @interface FakeBottomDrawerContainerViewController : MDCBottomDrawerContainerViewController
@@ -60,6 +61,9 @@
 /** Presenting view controller of the Bottom Drawer Container view controller. */
 @property(nonatomic, strong) UIViewController *presentingViewController;
 
+/** A container scheme. */
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+
 @end
 
 @implementation MDCBottomDrawerControllerSnapshotTests
@@ -81,6 +85,7 @@
   self.bottomDrawerViewController.contentViewController = contentViewController;
   self.bottomDrawerViewController.headerViewController = headerViewController;
   self.presentingViewController = [[UIViewController alloc] init];
+  self.containerScheme = [[MDCContainerScheme alloc] init];
 }
 
 - (void)tearDown {
@@ -115,6 +120,30 @@
   self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
   [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
   [self.bottomDrawerViewController addChildViewController:self.containerViewController];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
+}
+
+- (void)testPresentedDrawerWithTheming {
+  // Given
+  self.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
+  self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
+      initWithOriginalPresentingViewController:self.presentingViewController
+                            trackingScrollView:nil];
+  self.containerViewController.contentViewController =
+      self.bottomDrawerViewController.contentViewController;
+  self.containerViewController.headerViewController =
+      self.bottomDrawerViewController.headerViewController;
+
+  // When
+  self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
+  self.bottomDrawerViewController.contentViewController.preferredContentSize =
+      CGSizeMake(375, 1000);
+  self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
+  [self.bottomDrawerViewController applyThemeWithScheme:self.containerScheme];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];

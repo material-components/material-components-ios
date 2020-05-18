@@ -150,3 +150,27 @@
 }
 
 @end
+
+@implementation BottomNavigationTypicalUseExample (SnapshotTestingByConvention)
+
+- (void)testDefaults {
+  // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
+}
+
+- (void)testDynamic201907ColorScheme {
+  // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
+}
+
+@end

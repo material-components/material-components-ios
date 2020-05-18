@@ -193,3 +193,20 @@ static NSString *const kMiniButtonLabel = @"Add";
 }
 
 @end
+
+@implementation FloatingButtonTypicalUseExample (SnapshotTestingByConvention)
+
+- (void)testDynamic201907ColorScheme {
+  // Given
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+  self.containerScheme = containerScheme;
+
+  // When
+  [self.miniFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
+  [self.largeIconFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
+  [self.largeIconFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
+}
+
+@end
