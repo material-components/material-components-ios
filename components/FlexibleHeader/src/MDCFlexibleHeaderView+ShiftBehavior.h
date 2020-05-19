@@ -22,33 +22,33 @@
  Enabling shifting allows the header to enter the
  @c MDCFlexibleHeaderScrollPhaseShifting scroll phase.
  */
-typedef NS_ENUM(NSInteger, MDCFlexibleHeaderShiftBehavior) {
+typedef NSInteger MDCFlexibleHeaderShiftBehavior NS_TYPED_EXTENSIBLE_ENUM;
 
-  /** Header's y position never changes in reaction to scroll events. */
-  MDCFlexibleHeaderShiftBehaviorDisabled,
+/** Header's y position never changes in reaction to scroll events. */
+FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorDisabled;
 
-  /** When fully-collapsed, the header translates vertically in reaction to scroll events. */
-  MDCFlexibleHeaderShiftBehaviorEnabled,
+/** When fully-collapsed, the header translates vertically in reaction to scroll events. */
+FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorEnabled;
 
-  /**
-   When fully-collapsed, the header translates vertically in reaction to scroll events along with
-   the status bar.
+/**
+ When fully-collapsed, the header translates vertically in reaction to scroll events along with
+ the status bar.
 
-   If used with a vertically-paging scroll view, this behavior acts like
-   MDCFlexibleHeaderShiftBehaviorEnabled.
-   */
-  MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar,
+ If used with a vertically-paging scroll view, this behavior acts like
+ MDCFlexibleHeaderShiftBehaviorEnabled.
+ */
+FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior
+    MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
-  /**
-   Allows the header to be shifted on- and off-screen only via the @c shiftHeaderOnScreenAnimated:
-   and @c shiftHeaderOffScreenAnimated APIs. Scroll events will not affect the visibility of the
-   header.
+/**
+ Allows the header to be shifted on- and off-screen only via the @c shiftHeaderOnScreenAnimated:
+ and @c shiftHeaderOffScreenAnimated APIs. Scroll events will not affect the visibility of the
+ header.
 
-   Analogous to UINavigationController's setNavigationBarHidden: behavior, in that the visibility of
-   the navigation bar persists regardless of the user's subsequent interactions.
-   */
-  MDCFlexibleHeaderShiftBehaviorHideable,
-};
+ Analogous to UINavigationController's setNavigationBarHidden: behavior, in that the visibility of
+ the navigation bar persists regardless of the user's subsequent interactions.
+ */
+FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorHideable;
 
 /** The importance of content contained within the flexible header view. */
 typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {

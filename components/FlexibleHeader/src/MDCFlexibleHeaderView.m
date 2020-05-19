@@ -31,6 +31,11 @@
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
 #endif
 
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorDisabled = 0;
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorEnabled = 1;
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar = 2;
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorHideable = 3;
+
 // The maximum default opacity of the shadow.
 static const float kDefaultVisibleShadowOpacity = (float)0.4;
 
