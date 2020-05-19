@@ -72,15 +72,6 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 // KVO contexts
 static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHeaderView";
 
-static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
-    MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
-  if ([[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] &&
-      intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
-    return MDCFlexibleHeaderShiftBehaviorEnabled;
-  }
-  return intendedShiftBehavior;
-}
-
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate,
                                      MDCFlexibleHeaderTopSafeAreaDelegate,
                                      MDCFlexibleHeaderMinMaxHeightDelegate>
@@ -1785,7 +1776,8 @@ static BOOL isRunningiOS10_3OrAbove() {
            @"Flexible Header shift behavior must be disabled before content offset observation is"
            @" enabled.");
 
-  shiftBehavior = ShiftBehaviorForCurrentAppContext(shiftBehavior);
+  shiftBehavior = [MDCFlexibleHeaderShifter behaviorForCurrentContextFromBehavior:shiftBehavior];
+
   if (_shifter.behavior == shiftBehavior) {
     return;
   }

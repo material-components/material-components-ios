@@ -14,6 +14,9 @@
 
 #import "MDCFlexibleHeaderShifter.h"
 
+// The suffix for an app extension bundle path.
+static NSString *const kAppExtensionSuffix = @".appex";
+
 @implementation MDCFlexibleHeaderShifter
 
 - (instancetype)init {
@@ -22,6 +25,16 @@
     _behavior = MDCFlexibleHeaderShiftBehaviorDisabled;
   }
   return self;
+}
+
++ (MDCFlexibleHeaderShiftBehavior)behaviorForCurrentContextFromBehavior:
+    (MDCFlexibleHeaderShiftBehavior)behavior {
+  // In app extensions we do not allow shifting with the status bar.
+  if ([[[NSBundle mainBundle] bundlePath] hasSuffix:kAppExtensionSuffix] &&
+      behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
+    return MDCFlexibleHeaderShiftBehaviorEnabled;
+  }
+  return behavior;
 }
 
 @end

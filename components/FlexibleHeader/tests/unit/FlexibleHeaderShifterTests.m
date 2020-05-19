@@ -40,4 +40,23 @@
   XCTAssertEqual(shifter.behavior, MDCFlexibleHeaderShiftBehaviorEnabled);
 }
 
+#pragma mark - +behaviorForCurrentContextFromBehavior:
+
+- (void)testBehaviorForGivenContextReturnsSameContext {
+  // TODO(b/156978412): Test this in an app extension target as well.
+  XCTAssertEqual([MDCFlexibleHeaderShifter
+                     behaviorForCurrentContextFromBehavior:MDCFlexibleHeaderShiftBehaviorDisabled],
+                 MDCFlexibleHeaderShiftBehaviorDisabled);
+  XCTAssertEqual([MDCFlexibleHeaderShifter
+                     behaviorForCurrentContextFromBehavior:MDCFlexibleHeaderShiftBehaviorEnabled],
+                 MDCFlexibleHeaderShiftBehaviorEnabled);
+  XCTAssertEqual(
+      [MDCFlexibleHeaderShifter
+          behaviorForCurrentContextFromBehavior:MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar],
+      MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
+  XCTAssertEqual([MDCFlexibleHeaderShifter
+                     behaviorForCurrentContextFromBehavior:MDCFlexibleHeaderShiftBehaviorHideable],
+                 MDCFlexibleHeaderShiftBehaviorHideable);
+}
+
 @end

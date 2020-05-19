@@ -21,11 +21,28 @@
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderShifter : NSObject
 
+#pragma mark - Behavior
+
 /**
  The behavior of the header's vertical movement.
 
  Default: MDCFlexibleHeaderShiftBehaviorDisabled
  */
 @property(nonatomic) MDCFlexibleHeaderShiftBehavior behavior;
+
+/**
+ Returns a valid behavior for the current application context.
+
+ Not all behaviors are usable in all application contexts. In app extensions, for example, it is not
+ possible to adjust the status bar's positioning. This method should be used to adjust a desired
+ behavior to the current context's supported behaviors.
+
+ @param behavior The shift behavior that was originally desired.
+ @returns If the code is running in an app extension, then
+ MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar will be returned as
+ MDCFlexibleHeaderShiftBehaviorEnabled. In all other contexts, @c behavior is returned unmodified.
+ */
++ (MDCFlexibleHeaderShiftBehavior)behaviorForCurrentContextFromBehavior:
+    (MDCFlexibleHeaderShiftBehavior)behavior;
 
 @end
