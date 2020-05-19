@@ -270,6 +270,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                 });
               }
             }];
+
+  if ([self.delegate respondsToSelector:@selector(isPresentingSnackbarWithMessageView:)]) {
+    [self.delegate isPresentingSnackbarWithMessageView:snackbarView];
+  }
 }
 
 - (MDCSnackbarOverlayView *)overlayView {
