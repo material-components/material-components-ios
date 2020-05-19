@@ -1144,6 +1144,16 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/schemes/Color"
   end
 
+  mdc.subspec "NavigationDrawer+Theming" do |extension|
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = [
+    "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
+    ]
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Container"
+  end
+
   # OverlayWindow
 
   mdc.subspec "OverlayWindow" do |component|
