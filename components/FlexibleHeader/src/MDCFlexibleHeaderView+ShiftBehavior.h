@@ -13,32 +13,16 @@
 // limitations under the License.
 
 #import "MDCFlexibleHeaderView.h"
+#import "MaterialFlexibleHeader+ShiftBehavior.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 
 #pragma mark - Shift behavior-specific APIs
-
-/**
- The possible translation (shift) behaviors of a flexible header view.
-
- Enabling shifting allows the header to enter the
- @c MDCFlexibleHeaderScrollPhaseShifting scroll phase.
- */
-typedef NSInteger MDCFlexibleHeaderShiftBehavior NS_TYPED_EXTENSIBLE_ENUM;
 
 /** Header's y position never changes in reaction to scroll events. */
 FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorDisabled;
 
 /** When fully-collapsed, the header translates vertically in reaction to scroll events. */
 FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorEnabled;
-
-/**
- When fully-collapsed, the header translates vertically in reaction to scroll events along with
- the status bar.
-
- If used with a vertically-paging scroll view, this behavior acts like
- MDCFlexibleHeaderShiftBehaviorEnabled.
- */
-FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior
-    MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
 /**
  Allows the header to be shifted on- and off-screen only via the @c shiftHeaderOnScreenAnimated:

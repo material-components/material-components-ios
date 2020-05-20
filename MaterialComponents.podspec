@@ -905,6 +905,8 @@ Pod::Spec.new do |mdc|
     component.dependency 'MDFTextAccessibility'
     component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Elevation"
+    component.dependency "MaterialComponents/FlexibleHeader+ShiftBehavior"
+    component.dependency "MaterialComponents/FlexibleHeader+ShiftBehaviorEnabledWithStatusBar"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/Application"
@@ -919,6 +921,28 @@ Pod::Spec.new do |mdc|
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/ShadowLayer"
     end
+  end
+
+  mdc.subspec "FlexibleHeader+ShiftBehavior" do |extension|
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = [
+      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    ]
+    extension.source_files = [
+      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+    ]
+  end
+
+  mdc.subspec "FlexibleHeader+ShiftBehaviorEnabledWithStatusBar" do |extension|
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = [
+      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    ]
+    extension.source_files = [
+      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/FlexibleHeader+ShiftBehavior"
   end
 
   mdc.subspec "FlexibleHeader+CanAlwaysExpandToMaximumHeight" do |extension|
