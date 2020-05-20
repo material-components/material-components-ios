@@ -21,6 +21,18 @@
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderShifter : NSObject
 
+#pragma mark - Tracking scroll view
+
+/**
+ The scroll view whose content offset affects the shift behavior of the flexible header.
+
+ The tracking scroll view is weakly held so that we don't unintentionally keep the scroll view
+ around any longer than it needs to be. Doing so could get into tricky situations where the view
+ controller didn't nil out the scroll view's delegate in dealloc and UIScrollView's non-weak
+ delegate points to a dead object.
+ */
+@property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
 #pragma mark - Behavior
 
 /**
@@ -44,5 +56,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderShifter
  */
 + (MDCFlexibleHeaderShiftBehavior)behaviorForCurrentContextFromBehavior:
     (MDCFlexibleHeaderShiftBehavior)behavior;
+
+/**
+ Returns YES if the shifter will also hide the status bar when the header is shifting off-screen;
+ returns NO otherwise.
+ */
+- (BOOL)hidesStatusBarWhenShiftedOffscreen;
 
 @end

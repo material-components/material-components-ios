@@ -26,8 +26,12 @@
   MDCFlexibleHeaderShifter *shifter = [[MDCFlexibleHeaderShifter alloc] init];
 
   // Then
+  XCTAssertNil(shifter.trackingScrollView);
   XCTAssertEqual(shifter.behavior, MDCFlexibleHeaderShiftBehaviorDisabled);
+  XCTAssertFalse(shifter.hidesStatusBarWhenShiftedOffscreen);
 }
+
+#pragma mark - behavior
 
 - (void)testBehaviorSetterPersistsTheSetValue {
   // Given
@@ -38,6 +42,88 @@
 
   // Then
   XCTAssertEqual(shifter.behavior, MDCFlexibleHeaderShiftBehaviorEnabled);
+}
+
+#pragma mark - trackingScrollView
+
+- (void)testTrackingScrollViewIsWeaklyHeld {
+  // Given
+  MDCFlexibleHeaderShifter *shifter = [[MDCFlexibleHeaderShifter alloc] init];
+
+  // When
+  @autoreleasepool {
+    UIScrollView *scrollView = [[UIScrollView alloc] init];
+    shifter.trackingScrollView = scrollView;
+  }
+
+  // Then
+  XCTAssertNil(shifter.trackingScrollView);
+}
+
+#pragma mark - -hidesStatusBarWhenShiftedOffscreen
+
+- (void)testDoesNotHideStatusBarWhenShiftBehaviorEnabled {
+  // Given
+  MDCFlexibleHeaderShifter *shifter = [[MDCFlexibleHeaderShifter alloc] init];
+
+  // When
+  shifter.behavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+
+  // Then
+  XCTAssertFalse(shifter.hidesStatusBarWhenShiftedOffscreen);
+}
+
+- (void)testHidesStatusBarWhenShiftBehaviorEnabledWithStatusBar {
+  // Given
+  MDCFlexibleHeaderShifter *shifter = [[MDCFlexibleHeaderShifter alloc] init];
+
+  // When
+  shifter.behavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+
+  // Then
+  XCTAssertTrue(shifter.hidesStatusBarWhenShiftedOffscreen);
+}
+
+- (void)testHidesStatusBarWhenHideable {
+  // Given
+  MDCFlexibleHeaderShifter *shifter = [[MDCFlexibleHeaderShifter alloc] init];
+
+  // When
+  shifter.behavior = MDCFlexibleHeaderShiftBehaviorHideable;
+
+  // Then
+  XCTAssertTrue(shifter.hidesStatusBarWhenShiftedOffscreen);
+}
+
+- (void)
+    testDoesNotHideStatusBarWhenShiftBehaviorEnabledWithStatusBarAndTrackingScrollViewPagingEnabled {
+  // Given
+  MDCFlexibleHeaderShifter *shifter = [[MDCFlexibleHeaderShifter alloc] init];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  shifter.trackingScrollView = scrollView;
+
+  // When
+  shifter.behavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+  scrollView.pagingEnabled = YES;
+
+  // Then
+  XCTAssertFalse(shifter.hidesStatusBarWhenShiftedOffscreen);
+  XCTAssertNotNil(scrollView);  // Keep a strong reference to the tracking scroll view.
+}
+
+- (void)testDoesNotHideStatusBarWhenHideableAndTrackingScrollViewPagingEnabled {
+  // Given
+  MDCFlexibleHeaderShifter *shifter = [[MDCFlexibleHeaderShifter alloc] init];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  shifter.trackingScrollView = scrollView;
+
+  // When
+  shifter.behavior = MDCFlexibleHeaderShiftBehaviorHideable;
+  scrollView.pagingEnabled = YES;
+
+  // Then
+  XCTAssertFalse(shifter.hidesStatusBarWhenShiftedOffscreen);
+  XCTAssertNotNil(scrollView);  // Keep a strong reference to the tracking scroll view.
 }
 
 #pragma mark - +behaviorForCurrentContextFromBehavior:

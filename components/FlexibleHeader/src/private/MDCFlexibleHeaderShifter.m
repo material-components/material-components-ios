@@ -27,6 +27,15 @@ static NSString *const kAppExtensionSuffix = @".appex";
   return self;
 }
 
+#pragma mark - Behavior
+
+- (BOOL)hidesStatusBarWhenShiftedOffscreen {
+  BOOL behaviorWantsStatusBarHidden =
+      self.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
+      self.behavior == MDCFlexibleHeaderShiftBehaviorHideable;
+  return behaviorWantsStatusBarHidden && !self.trackingScrollView.pagingEnabled;
+}
+
 + (MDCFlexibleHeaderShiftBehavior)behaviorForCurrentContextFromBehavior:
     (MDCFlexibleHeaderShiftBehavior)behavior {
   // In app extensions we do not allow shifting with the status bar.

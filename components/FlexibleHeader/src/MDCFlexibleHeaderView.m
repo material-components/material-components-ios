@@ -761,11 +761,11 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
 #pragma mark Logical short forms
 
 - (BOOL)fhv_shouldAllowShifting {
-  return self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+  return _shifter.hidesStatusBarWhenShiftedOffscreen && self.statusBarHintCanOverlapHeader;
 }
 
 - (BOOL)fhv_shouldCollapseToStatusBar {
-  return !self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+  return !_shifter.hidesStatusBarWhenShiftedOffscreen && self.statusBarHintCanOverlapHeader;
 }
 
 - (BOOL)fhv_canShiftOffscreen {
@@ -967,7 +967,7 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
   }
 
   CGFloat shadowIntensity;
-  if (self.hidesStatusBarWhenCollapsed) {
+  if (_shifter.hidesStatusBarWhenShiftedOffscreen) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
     CGFloat accumulator =
@@ -1571,6 +1571,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
 
   BOOL wasTrackingScrollView = _trackingScrollView != nil;
+  _shifter.trackingScrollView = trackingScrollView;
   _trackingScrollView = trackingScrollView;
 
   // If this header is shared by many scroll views then we leave the insets when switching the
@@ -1754,12 +1755,6 @@ static BOOL isRunningiOS10_3OrAbove() {
 
 - (BOOL)prefersStatusBarHidden {
   return _statusBarShifter.prefersStatusBarHidden;
-}
-
-- (BOOL)hidesStatusBarWhenCollapsed {
-  return ((_shifter.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
-           _shifter.behavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
-          !_trackingScrollView.pagingEnabled);
 }
 
 - (void)setStatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
