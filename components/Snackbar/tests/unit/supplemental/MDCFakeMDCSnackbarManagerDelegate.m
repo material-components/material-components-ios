@@ -25,7 +25,11 @@
 }
 
 - (void)snackbarDidDisappear {
-  [self.disappearExpectation fulfill];
+  [self.didDisappearExpectation fulfill];
+}
+
+- (void)snackbarWillDisappear {
+  [self.willDisappearExpectation fulfill];
 }
 
 - (void)isPresentingSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {

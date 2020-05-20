@@ -32,6 +32,11 @@
 @optional
 
 /**
+ This method is called just before a Snackbar is dismissed.
+ */
+- (void)snackbarWillDisappear;
+
+/**
  This method is called after a Snackbar's dismissal animation is finished.
  */
 - (void)snackbarDidDisappear;

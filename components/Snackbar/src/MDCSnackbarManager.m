@@ -304,6 +304,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                                                  completion:nil];
                      }];
 
+  if ([self.delegate respondsToSelector:@selector(snackbarWillDisappear)]) {
+    [self.delegate snackbarWillDisappear];
+  }
+
   [self.overlayView
       dismissSnackbarViewAnimated:YES
                        completion:^{

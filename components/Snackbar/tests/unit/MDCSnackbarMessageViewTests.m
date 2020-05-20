@@ -541,9 +541,21 @@
   self.message.duration = kSnackbarDuration;
   // When
   [self.manager showMessage:self.message];
-  self.delegate.disappearExpectation = [self expectationWithDescription:@"disappeared"];
+  self.delegate.didDisappearExpectation = [self expectationWithDescription:@"didDisappear"];
   // Then
   // Expect 'snackbarDidDisappear' delegate method to be called.
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+}
+
+- (void)testSnackbarWillDisappearDelegateCalled {
+  // Given
+  const CGFloat kSnackbarDuration = (CGFloat)0.1;
+  self.message.duration = kSnackbarDuration;
+  // When
+  [self.manager showMessage:self.message];
+  self.delegate.willDisappearExpectation = [self expectationWithDescription:@"willDisappear"];
+  // Then
+  // Expect 'snackbarWillDisappear' delegate method to be called.
   [self waitForExpectationsWithTimeout:3 handler:nil];
 }
 
@@ -575,7 +587,7 @@
   // Given
   self.message.shouldDismissOnOverlayTap = YES;
   self.message.duration = 0;
-  self.delegate.disappearExpectation = [self expectationWithDescription:@"disappeared"];
+  self.delegate.didDisappearExpectation = [self expectationWithDescription:@"didDisappear"];
   self.delegate.willPresentExpectation = [self expectationWithDescription:@"willPresent"];
 
   // When
