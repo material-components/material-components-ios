@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCFlexibleHeaderShifter.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 
 // The suffix for an app extension bundle path.
 static NSString *const kAppExtensionSuffix = @".appex";

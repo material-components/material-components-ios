@@ -14,6 +14,8 @@
 
 #import "MDCFlexibleHeaderShifter.h"
 
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
+
 #import <XCTest/XCTest.h>
 
 @interface FlexibleHeaderShifterTests : XCTestCase

@@ -22,6 +22,7 @@
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderViewAnimationDelegate.h"
 #import "MDCFlexibleHeaderViewDelegate.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialApplication.h"
 #import "MaterialMath.h"

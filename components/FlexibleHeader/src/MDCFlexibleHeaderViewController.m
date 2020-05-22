@@ -22,6 +22,7 @@
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderViewLayoutDelegate.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 #import "MaterialApplication.h"
 #import "MaterialUIMetrics.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
