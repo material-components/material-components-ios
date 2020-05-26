@@ -1,16 +1,12 @@
-# #develop#
+# 109.5.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release adds functionality to MDCSnackbarManagerDelegate and includes internal cleanup of FlexibleHeader.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### Snackbar
+
+MDCSnackbarManagerDelegate has new `snackbarWillDisappear` and `isPresentingSnackbarWithMessageView:` methods.
 
 ## Component changes
 
