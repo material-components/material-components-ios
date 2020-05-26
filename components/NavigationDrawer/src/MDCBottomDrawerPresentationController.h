@@ -74,6 +74,17 @@
 @property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
 
 /**
+ The absolute height in points to which the drawer may expand when a user scrolls.
+
+ Defaults to 0, indicating no value has been set and it should use the default behavior of 100% of
+ the screen's height.
+
+ If the value is larger than the container's height, this will allow the drawer to be scrolled to
+ the full height of the container.
+ */
+@property(nonatomic, assign) CGFloat maximumDrawerHeight;
+
+/**
  A flag allowing clients to opt-out of the drawer closing when the user taps outside the content.
 
  @default YES The drawer should dismiss on tap.

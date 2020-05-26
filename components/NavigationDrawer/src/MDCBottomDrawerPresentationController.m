@@ -73,6 +73,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   if (self) {
     _topHandleHidden = YES;
     _maximumInitialDrawerHeight = 0;
+    _maximumDrawerHeight = 0;
     _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _elevation = MDCShadowElevationNavDrawer;
     _dismissOnBackgroundTap = YES;
@@ -98,6 +99,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   if (self.maximumInitialDrawerHeight > 0) {
     bottomDrawerContainerViewController.maximumInitialDrawerHeight =
         self.maximumInitialDrawerHeight;
+  }
+  if (self.maximumDrawerHeight > 0) {
+    bottomDrawerContainerViewController.maximumDrawerHeight = self.maximumDrawerHeight;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
@@ -346,6 +350,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
   self.bottomDrawerContainerViewController.maximumInitialDrawerHeight =
       self.maximumInitialDrawerHeight;
+}
+
+- (void)setMaximumDrawerHeight:(CGFloat)maximumDrawerHeight {
+  _maximumDrawerHeight = maximumDrawerHeight;
+  self.bottomDrawerContainerViewController.maximumDrawerHeight = self.maximumDrawerHeight;
 }
 
 - (BOOL)contentReachesFullscreen {
