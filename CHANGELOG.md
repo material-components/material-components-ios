@@ -39,8 +39,8 @@ MDCSnackbarManagerDelegate has new `snackbarWillDisappear` and `isPresentingSnac
 
 ### Snackbar
 
-* [Add snackbarIsPresenting to MDCSnackbarManagerDelegate.](https://github.com/material-components/material-components-ios/commit/0fcf353c3abde1b300e5aee8a0c9ca256bbd0212) (Nobody)
-* [Add snackbarWillDisappear to SnackbarManagerDelegate](https://github.com/material-components/material-components-ios/commit/c8b569bd60f0702f21b32fe55112e458f0db3a67) (Nobody)
+* [Add snackbarIsPresenting to MDCSnackbarManagerDelegate.](https://github.com/material-components/material-components-ios/commit/0fcf353c3abde1b300e5aee8a0c9ca256bbd0212) (mredding-goog)
+* [Add snackbarWillDisappear to SnackbarManagerDelegate](https://github.com/material-components/material-components-ios/commit/c8b569bd60f0702f21b32fe55112e458f0db3a67) (mredding-goog)
 
 ## Multi-component changes
 
