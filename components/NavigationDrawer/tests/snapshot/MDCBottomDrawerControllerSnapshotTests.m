@@ -17,7 +17,7 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "supplemental/MDCBottomDrawerSnapshotTestMutableTraitCollection.h"
 #import "MaterialNavigationDrawer.h"
-#import "MaterialNavigationDrawer+MaterialTheming.h"
+#import "MaterialNavigationDrawer+Theming.h"
 
 /** Fake MDCBottomDrawerContainerViewController for snapshot testing. */
 @interface FakeBottomDrawerContainerViewController : MDCBottomDrawerContainerViewController

@@ -541,9 +541,21 @@
   self.message.duration = kSnackbarDuration;
   // When
   [self.manager showMessage:self.message];
-  self.delegate.disappearExpectation = [self expectationWithDescription:@"disappeared"];
+  self.delegate.didDisappearExpectation = [self expectationWithDescription:@"didDisappear"];
   // Then
   // Expect 'snackbarDidDisappear' delegate method to be called.
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+}
+
+- (void)testSnackbarWillDisappearDelegateCalled {
+  // Given
+  const CGFloat kSnackbarDuration = (CGFloat)0.1;
+  self.message.duration = kSnackbarDuration;
+  // When
+  [self.manager showMessage:self.message];
+  self.delegate.willDisappearExpectation = [self expectationWithDescription:@"willDisappear"];
+  // Then
+  // Expect 'snackbarWillDisappear' delegate method to be called.
   [self waitForExpectationsWithTimeout:3 handler:nil];
 }
 
@@ -575,7 +587,7 @@
   // Given
   self.message.shouldDismissOnOverlayTap = YES;
   self.message.duration = 0;
-  self.delegate.disappearExpectation = [self expectationWithDescription:@"disappeared"];
+  self.delegate.didDisappearExpectation = [self expectationWithDescription:@"didDisappear"];
   self.delegate.willPresentExpectation = [self expectationWithDescription:@"willPresent"];
 
   // When
@@ -624,10 +636,20 @@
 
   // Then
   [NSThread sleepForTimeInterval:0.5];
-  // Unfortunately, there is no way to to assert an expectation  has *not* fired after a time
+  // Unfortunately, there is no way to to assert an expectation has *not* fired after a time
   // interval. Instead we rely on 'internalManager.currentSnackbar' to be nil iff the snackbar is
   // dismissed.
   XCTAssertNotNil(self.manager.internalManager.currentSnackbar);
+}
+
+- (void)testsnackbarIsPresentingDelegateCalled {
+  // Given
+  self.delegate.willPresentExpectation = [self expectationWithDescription:@"willPresent"];
+  self.delegate.isPresentingExpectation = [self expectationWithDescription:@"isPresenting"];
+  // When
+  [self.manager showMessage:self.message];
+  // Then
+  [self waitForExpectationsWithTimeout:0.2 handler:nil];
 }
 
 @end

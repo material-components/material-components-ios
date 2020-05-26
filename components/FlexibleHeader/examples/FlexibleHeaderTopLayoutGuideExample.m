@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialFlexibleHeader.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 #import "MaterialPalettes.h"
 
 @interface FlexibleHeaderTopLayoutGuideExample

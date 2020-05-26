@@ -222,8 +222,10 @@ The following is an anatomy diagram of a Material dialog:
 
 ### Theming dialogs
 
-You can theme a Material Dialog to match the Material Design Dialog using your app's scheme and the Dialogs theming
-extension. To add the theming extension to your project add the following line to your Podfile:
+![Dialogs with Shrine theming](docs/assets/shrine_dialog.png)
+
+You can theme a Material Dialog using a container scheme and the Dialogs theming extension. To achieve something like the
+Shrine theming above first add the Dialogs theming extension to your project by adding the following line to your Podfile:
 
 ```bash
 pod 'MaterialComponents/Dialogs+Theming'
@@ -278,7 +280,7 @@ High, Medium and low emphasis are supported.
   // Add actions with emphases that will generate buttons with the desired appearance. 
   // An example of a high and a medium emphasis actions:
   alert.addAction(MDCAlertAction(title:"Add Item", emphasis: .high, handler: handler))
-  alert.addAction(MDCAlertAction(title:"Cancel", emphasis: .medium, handler: handler))
+  alert.addAction(MDCAlertAction(title:"Cancel", emphasis: .high, handler: handler))
 
   // Make sure to apply theming after all actions are added, so they are themed too!
   alert.applyTheme(withScheme: scheme)

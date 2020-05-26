@@ -270,6 +270,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                 });
               }
             }];
+
+  if ([self.delegate respondsToSelector:@selector(isPresentingSnackbarWithMessageView:)]) {
+    [self.delegate isPresentingSnackbarWithMessageView:snackbarView];
+  }
 }
 
 - (MDCSnackbarOverlayView *)overlayView {
@@ -299,6 +303,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                        [message executeCompletionHandlerWithUserInteraction:userPrompted
                                                                  completion:nil];
                      }];
+
+  if ([self.delegate respondsToSelector:@selector(snackbarWillDisappear)]) {
+    [self.delegate snackbarWillDisappear];
+  }
 
   [self.overlayView
       dismissSnackbarViewAnimated:YES

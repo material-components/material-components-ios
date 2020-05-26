@@ -22,6 +22,7 @@
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderViewAnimationDelegate.h"
 #import "MDCFlexibleHeaderViewDelegate.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialApplication.h"
 #import "MaterialMath.h"
@@ -30,6 +31,11 @@
 #if TARGET_IPHONE_SIMULATOR
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
 #endif
+
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorDisabled = 0;
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorEnabled = 1;
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar = 2;
+const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorHideable = 3;
 
 // The maximum default opacity of the shadow.
 static const float kDefaultVisibleShadowOpacity = (float)0.4;
@@ -71,15 +77,6 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 
 // KVO contexts
 static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHeaderView";
-
-static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
-    MDCFlexibleHeaderShiftBehavior intendedShiftBehavior) {
-  if ([[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"] &&
-      intendedShiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
-    return MDCFlexibleHeaderShiftBehaviorEnabled;
-  }
-  return intendedShiftBehavior;
-}
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate,
                                      MDCFlexibleHeaderTopSafeAreaDelegate,
@@ -765,11 +762,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #pragma mark Logical short forms
 
 - (BOOL)fhv_shouldAllowShifting {
-  return self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+  return _shifter.hidesStatusBarWhenShiftedOffscreen && self.statusBarHintCanOverlapHeader;
 }
 
 - (BOOL)fhv_shouldCollapseToStatusBar {
-  return !self.hidesStatusBarWhenCollapsed && self.statusBarHintCanOverlapHeader;
+  return !_shifter.hidesStatusBarWhenShiftedOffscreen && self.statusBarHintCanOverlapHeader;
 }
 
 - (BOOL)fhv_canShiftOffscreen {
@@ -971,7 +968,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   }
 
   CGFloat shadowIntensity;
-  if (self.hidesStatusBarWhenCollapsed) {
+  if (_shifter.hidesStatusBarWhenShiftedOffscreen) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
     CGFloat accumulator =
@@ -1575,6 +1572,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   }
 
   BOOL wasTrackingScrollView = _trackingScrollView != nil;
+  _shifter.trackingScrollView = trackingScrollView;
   _trackingScrollView = trackingScrollView;
 
   // If this header is shared by many scroll views then we leave the insets when switching the
@@ -1760,12 +1758,6 @@ static BOOL isRunningiOS10_3OrAbove() {
   return _statusBarShifter.prefersStatusBarHidden;
 }
 
-- (BOOL)hidesStatusBarWhenCollapsed {
-  return ((_shifter.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
-           _shifter.behavior == MDCFlexibleHeaderShiftBehaviorHideable) &&
-          !_trackingScrollView.pagingEnabled);
-}
-
 - (void)setStatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
   if (_statusBarHintCanOverlapHeader == statusBarHintCanOverlapHeader) {
     return;
@@ -1785,7 +1777,8 @@ static BOOL isRunningiOS10_3OrAbove() {
            @"Flexible Header shift behavior must be disabled before content offset observation is"
            @" enabled.");
 
-  shiftBehavior = ShiftBehaviorForCurrentAppContext(shiftBehavior);
+  shiftBehavior = [MDCFlexibleHeaderShifter behaviorForCurrentContextFromBehavior:shiftBehavior];
+
   if (_shifter.behavior == shiftBehavior) {
     return;
   }

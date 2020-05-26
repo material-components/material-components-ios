@@ -17,6 +17,7 @@
 #import "AppBarSampleViewController.h"
 #import "MaterialAppBar.h"
 #import "MaterialAppBar+Theming.h"
+#import "MaterialAvailability.h"
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"
@@ -106,11 +107,15 @@
 - (void)testPresentedAutomatic {
   [self dismissViewControllerAnimated:NO completion:nil];
 
+#if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13, *)) {
     [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationAutomatic];
   } else {
     [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationFullScreen];
   }
+#else
+  [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationFullScreen];
+#endif
 }
 
 @end

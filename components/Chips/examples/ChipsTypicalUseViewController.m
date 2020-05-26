@@ -157,6 +157,7 @@ static ChipModel *MakeModel(NSString *title,
   cell.chipView.imageView.image = model.showProfilePic ? ChipsExampleAssets.faceImage : nil;
   cell.chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
   cell.chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
+  cell.chipView.hitAreaInsets = UIEdgeInsetsMake(-16, 0, -16, 0);
 
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;

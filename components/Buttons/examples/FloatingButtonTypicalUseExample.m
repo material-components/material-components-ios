@@ -61,12 +61,10 @@ static NSString *const kMiniButtonLabel = @"Add";
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
                                    inMode:MDCFloatingButtonModeExpanded];
-  [self.miniFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
   self.defaultFloatingButton.accessibilityLabel = kButtonLabel;
-  [self.defaultFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
   [self.largeIconFloatingButton setImage:plusImage36 forState:UIControlStateNormal];
@@ -74,8 +72,8 @@ static NSString *const kMiniButtonLabel = @"Add";
   [self.largeIconFloatingButton setContentEdgeInsets:UIEdgeInsetsMake(-6, -6, -6, 0)
                                             forShape:MDCFloatingButtonShapeDefault
                                               inMode:MDCFloatingButtonModeExpanded];
-  [self.largeIconFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
 
+  [self applyThemeToAllButtonsWithScheme:self.containerScheme];
   [self.view addSubview:self.iPadLabel];
   [self.view addSubview:self.miniFloatingButton];
   [self.view addSubview:self.defaultFloatingButton];
@@ -182,6 +180,20 @@ static NSString *const kMiniButtonLabel = @"Add";
   }
 }
 
+- (void)setContainerScheme:(id<MDCContainerScheming>)containerScheme {
+  _containerScheme = containerScheme;
+
+  if ([self isViewLoaded]) {
+    [self applyThemeToAllButtonsWithScheme:containerScheme];
+  }
+}
+
+- (void)applyThemeToAllButtonsWithScheme:(id<MDCContainerScheming>)containerScheme {
+  [self.miniFloatingButton applySecondaryThemeWithScheme:containerScheme];
+  [self.defaultFloatingButton applySecondaryThemeWithScheme:containerScheme];
+  [self.largeIconFloatingButton applySecondaryThemeWithScheme:containerScheme];
+}
+
 #pragma mark - Catalog by Convention
 
 + (NSDictionary *)catalogMetadata {
@@ -201,12 +213,9 @@ static NSString *const kMiniButtonLabel = @"Add";
   MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
   containerScheme.colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
-  self.containerScheme = containerScheme;
 
   // When
-  [self.miniFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
-  [self.largeIconFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
-  [self.largeIconFloatingButton applySecondaryThemeWithScheme:self.containerScheme];
+  self.containerScheme = containerScheme;
 }
 
 @end

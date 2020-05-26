@@ -17,6 +17,7 @@
  */
 
 #import "TabBarTextOnlyExampleSupplemental.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 
 static CGFloat const kAppBarMinHeight = 56;
 static CGFloat const kTabBarHeight = 48;

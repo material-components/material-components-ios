@@ -13,6 +13,10 @@
 // limitations under the License.
 
 #import "MDCFlexibleHeaderShifter.h"
+#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
+
+// The suffix for an app extension bundle path.
+static NSString *const kAppExtensionSuffix = @".appex";
 
 @implementation MDCFlexibleHeaderShifter
 
@@ -22,6 +26,25 @@
     _behavior = MDCFlexibleHeaderShiftBehaviorDisabled;
   }
   return self;
+}
+
+#pragma mark - Behavior
+
+- (BOOL)hidesStatusBarWhenShiftedOffscreen {
+  BOOL behaviorWantsStatusBarHidden =
+      self.behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar ||
+      self.behavior == MDCFlexibleHeaderShiftBehaviorHideable;
+  return behaviorWantsStatusBarHidden && !self.trackingScrollView.pagingEnabled;
+}
+
++ (MDCFlexibleHeaderShiftBehavior)behaviorForCurrentContextFromBehavior:
+    (MDCFlexibleHeaderShiftBehavior)behavior {
+  // In app extensions we do not allow shifting with the status bar.
+  if ([[[NSBundle mainBundle] bundlePath] hasSuffix:kAppExtensionSuffix] &&
+      behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar) {
+    return MDCFlexibleHeaderShiftBehaviorEnabled;
+  }
+  return behavior;
 }
 
 @end
