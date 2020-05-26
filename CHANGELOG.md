@@ -1,3 +1,59 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### AppBar
+
+* [Fix a failing snapshot test](https://github.com/material-components/material-components-ios/commit/09171d15c71e762844bf697f7f9c3541a0179854) (Galia Kaufman)
+
+### Buttons
+
+* [Fix theme being applied to a wrong floating button in the example snapshot.](https://github.com/material-components/material-components-ios/commit/dfd5109f15627b8c159aa77dd8e8e5652146be37) (Wenyu Zhang)
+
+### Chips
+
+* [Adjust hitAreaInsets in the typical example.](https://github.com/material-components/material-components-ios/commit/1992bbdd21a009c345a253a9aa7816bae8841961) (Wenyu Zhang)
+
+### Dialogs
+
+* [Add additional theming screenshot to Dialogs docs](https://github.com/material-components/material-components-ios/commit/112ea0d0894a769dba4384325d04d09ba26362af) (Andrew Overton)
+
+### FlexibleHeader
+
+* [Extract hidesStatusBarWhenShiftedOffscreen to the shifter.](https://github.com/material-components/material-components-ios/commit/9fde103ea50df2f85c3dfc0650fa70a285989cfb) (Jeff Verkoeyen)
+* [Move ShiftBehaviorForCurrentAppContext into the MDCFlexibleHeaderShifter.](https://github.com/material-components/material-components-ios/commit/3fc4f0cb472ef91e4761076f5f6444d6bb99aac0) (Jeff Verkoeyen)
+* [Move the shift behavior types to separate targets.](https://github.com/material-components/material-components-ios/commit/643170dea99036cac1680faa7045ee4a4ee1aac9) (Jeff Verkoeyen)
+* [Turn MDCFlexibleHeaderShiftBehavior into an extensible enum.](https://github.com/material-components/material-components-ios/commit/5b8abd6659b5c2ea71c18cb4ea8c6d04310f19ec) (Jeff Verkoeyen)
+
+### NavigationDrawer
+
+* [Add NavigationDrawer theming target to podspec](https://github.com/material-components/material-components-ios/commit/755a10e3be1344ba1ccb8671a7d8679cb278909a) (Andrew Overton)
+
+### Snackbar
+
+* [Add snackbarIsPresenting to MDCSnackbarManagerDelegate.](https://github.com/material-components/material-components-ios/commit/0fcf353c3abde1b300e5aee8a0c9ca256bbd0212) (Nobody)
+* [Add snackbarWillDisappear to SnackbarManagerDelegate](https://github.com/material-components/material-components-ios/commit/c8b569bd60f0702f21b32fe55112e458f0db3a67) (Nobody)
+
+## Multi-component changes
+
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/4d76e54f83e1d55910e1ec599668df6a18502c7c) (Wenyu Zhang)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/9c26a7e67aa298a57e5a78e22d7fbe5abc6fe34f) (Bryan Oltman)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/b5aa93e81cba6ab5670eb4096bb7c640d02585da) (Jeff Verkoeyen)
+
+---
+
 # 109.4.0
 
 This minor release adds Theming extension support to MDCBottomDrawerViewController and includes bug fixes and minor refactoring.
