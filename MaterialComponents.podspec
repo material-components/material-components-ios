@@ -942,7 +942,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
     ]
 
-    component.dependency "MaterialComponents/FlexibleHeader+ShiftBehavior"
+    extension.dependency "MaterialComponents/FlexibleHeader+ShiftBehavior"
   end
 
   mdc.subspec "FlexibleHeader+CanAlwaysExpandToMaximumHeight" do |extension|
