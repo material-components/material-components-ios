@@ -16,8 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons+Theming.h"
+#import "MaterialAvailability.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"
 
 /** A tests fake class of MDCButton. */
@@ -114,6 +115,30 @@
     // Then
     [self generateSnapshotAndVerifyForView:button];
   }
+}
+
+- (void)testButtonSupportsDynamicColorScheme {
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
+    [button setTitle:@"Title" forState:UIControlStateNormal];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+    [button applyContainedThemeWithScheme:containerScheme];
+
+    // When
+    UITraitCollection *darkModeTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    button.traitCollectionOverride = darkModeTraitCollection;
+    [button sizeToFit];
+
+    // Then
+    UIView *snapshotView = [button mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 @end
