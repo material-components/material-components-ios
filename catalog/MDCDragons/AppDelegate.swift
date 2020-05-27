@@ -19,10 +19,13 @@ import CatalogByConvention
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  var window: UIWindow?
+  var window: MDCCatalogWindow?
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    self.window = UIWindow(frame: UIScreen.main.bounds)
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
     UIApplication.shared.statusBarStyle = .lightContent
     let tree = CBCCreateNavigationTree()
     var rootNodeViewController: UIViewController
@@ -39,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     let navigationController = UINavigationController(rootViewController: rootNodeViewController)
     navigationController.interactivePopGestureRecognizer?.delegate = navigationController
-    
+
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
     return true
