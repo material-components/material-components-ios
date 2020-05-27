@@ -14,7 +14,6 @@
 
 #import "MDCFlexibleHeaderView.h"
 #import "MaterialFlexibleHeader+ShiftBehavior.h"
-#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
 
 #pragma mark - Shift behavior-specific APIs
 
