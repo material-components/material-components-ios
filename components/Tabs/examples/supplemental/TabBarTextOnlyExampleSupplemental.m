@@ -43,7 +43,7 @@ static NSString *const kReusableIdentifierItem = @"Cell";
 
   self.appBarViewController.headerView.trackingScrollView = self.collectionView;
   self.appBarViewController.headerView.shiftBehavior =
-      MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+      MDCFlexibleHeaderShiftBehaviorEnabled;
 
   self.appBarViewController.navigationBar.tintColor = [UIColor whiteColor];
   self.appBarViewController.headerView.tintColor = [UIColor whiteColor];
