@@ -373,6 +373,15 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   return cell;
 }
 
+- (void)tableView:(UITableView *)tableView
+      willDisplayCell:(nonnull UITableViewCell *)cell
+    forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+  if ([self.delegate respondsToSelector:@selector(actionSheetController:
+                                                        willDisplayView:forRowAtIndexPath:)]) {
+    [self.delegate actionSheetController:self willDisplayView:cell forRowAtIndexPath:indexPath];
+  }
+}
+
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
   if (UIEdgeInsetsEqualToEdgeInsets(_contentEdgeInsets, contentEdgeInsets)) {
     return;
