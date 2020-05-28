@@ -61,7 +61,7 @@
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertTrue([self color1:view.titleLabel.textColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]]);
-  XCTAssertTrue([self color1:view.messageLabel.textColor
+  XCTAssertTrue([self color1:view.messageTextView.textColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60]]);
   XCTAssertEqualObjects(view.backgroundColor, colorScheme.surfaceColor);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {

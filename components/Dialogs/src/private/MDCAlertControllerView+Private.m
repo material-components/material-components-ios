@@ -86,16 +86,24 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
     [self.titleScrollView addSubview:self.titleLabel];
 
-    self.messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.messageLabel.numberOfLines = 0;
-    self.messageLabel.textAlignment = NSTextAlignmentNatural;
+    self.messageTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    self.messageTextView.textAlignment = NSTextAlignmentNatural;
+    self.messageTextView.textContainerInset = UIEdgeInsetsZero;
+    self.messageTextView.textContainer.lineFragmentPadding = 0.0f;
+    self.messageTextView.editable = NO;
+    self.messageTextView.scrollEnabled = NO;
     if (self.mdc_adjustsFontForContentSizeCategory) {
-      self.messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+      self.messageTextView.font =
+          [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
     } else {
-      self.messageLabel.font = [MDCTypography body1Font];
+      self.messageTextView.font = [MDCTypography body1Font];
     }
-    self.messageLabel.textColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
-    [self.contentScrollView addSubview:self.messageLabel];
+    self.messageTextView.textColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
+    // The messageTextView is a private API, and therefore it needs to inherit its background
+    // color from the alert's background so it can be themed (necessary for dark mode support,
+    // for instance).
+    self.messageTextView.backgroundColor = UIColor.clearColor;
+    [self.contentScrollView addSubview:self.messageTextView];
 
     [self setNeedsLayout];
   }
@@ -256,11 +264,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (NSString *)message {
-  return self.messageLabel.text;
+  return self.messageTextView.text;
 }
 
 - (void)setMessage:(NSString *)message {
-  self.messageLabel.text = message;
+  self.messageTextView.text = message;
 
   [self setNeedsLayout];
 }
@@ -281,7 +289,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     }
   }
 
-  self.messageLabel.font = messageFont;
+  self.messageTextView.font = messageFont;
   [self setNeedsLayout];
 }
 
@@ -295,15 +303,15 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)setMessageColor:(UIColor *)messageColor {
   _messageColor = messageColor;
 
-  _messageLabel.textColor = messageColor;
+  _messageTextView.textColor = messageColor;
 }
 
 - (NSTextAlignment)messageAlignment {
-  return self.messageLabel.textAlignment;
+  return self.messageTextView.textAlignment;
 }
 
 - (void)setMessageAlignment:(NSTextAlignment)messageAlignment {
-  self.messageLabel.textAlignment = messageAlignment;
+  self.messageTextView.textAlignment = messageAlignment;
 }
 
 - (void)setAccessoryView:(UIView *)accessoryView {
@@ -469,6 +477,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return accessoryViewSize.height > 0.0f;
 }
 
+- (CGSize)messageTextViewSizeThatFits:(CGSize)size {
+  // Returns a size of zero when there's no message, to ensure no space is reserved for it.
+  return [self.messageTextView hasText] ? [self.messageTextView sizeThatFits:size] : CGSizeZero;
+}
+
 /** Return the space between the title and the title icon, or 0 if any of them is missing. */
 - (CGFloat)titleIconInsetBottom {
   return [self hasTitleIconOrImage] && [self hasTitle] ? self.titleIconInsets.bottom : 0.0f;
@@ -588,7 +601,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGFloat titleWidth = [self.titleLabel sizeThatFits:boundsSize].width;
 
   boundsSize.width = boundingWidth - contentInsets;
-  CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
+
+  CGSize messageSize = [self messageTextViewSizeThatFits:boundsSize];
   CGSize accessoryViewSize = [self.accessoryView systemLayoutSizeFittingSize:boundsSize];
 
   CGFloat maxWidth = MAX(messageSize.width, accessoryViewSize.width);
@@ -615,8 +629,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   CGSize contentSize = CGRectInfinite.size;
   contentSize.width = boundingWidth - contentInsets;
-  CGFloat contentWidth = MAX([self.messageLabel sizeThatFits:contentSize].width,
-                             [self.accessoryView systemLayoutSizeFittingSize:contentSize].width);
+  CGFloat messageWidth = [self messageTextViewSizeThatFits:contentSize].width;
+  CGFloat contentWidth =
+      MAX(messageWidth, [self.accessoryView systemLayoutSizeFittingSize:contentSize].width);
 
   CGSize titleViewSize = CGRectInfinite.size;
   titleViewSize.width = boundingWidth - titleInsets;
@@ -710,7 +725,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   CGSize contentBoundsSize = boundsSize;
   contentBoundsSize.width = boundsSize.width - (self.contentInsets.left + self.contentInsets.right);
-  CGSize messageSize = [self.messageLabel sizeThatFits:contentBoundsSize];
+  CGSize messageSize = [self messageTextViewSizeThatFits:contentBoundsSize];
   messageSize.width = contentBoundsSize.width;
 
   CGSize accessoryViewSize =
@@ -736,7 +751,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
       accessoryViewSize.width, accessoryViewSize.height);
 
   self.titleLabel.frame = titleFrame;
-  self.messageLabel.frame = messageFrame;
+  self.messageTextView.frame = messageFrame;
   self.accessoryView.frame = accessoryViewFrame;
 
   // Actions
@@ -782,7 +797,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     contentScrollViewRect.size.height =
         MAX(0.f, actionsScrollViewRect.origin.y - contentScrollViewRect.origin.y);
 
-    self.messageLabel.accessibilityFrame = UIAccessibilityConvertFrameToScreenCoordinates(
+    self.messageTextView.accessibilityFrame = UIAccessibilityConvertFrameToScreenCoordinates(
         CGRectMake(messageFrame.origin.x, contentScrollViewRect.origin.y, messageFrame.size.width,
                    MIN(contentScrollViewRect.size.height, messageFrame.size.height)),
         self);

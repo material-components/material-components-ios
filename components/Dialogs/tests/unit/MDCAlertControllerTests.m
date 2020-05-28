@@ -216,7 +216,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqualObjects(view.titleLabel.font, testFont);
-  XCTAssertEqualObjects(view.messageLabel.font, testFont);
+  XCTAssertEqualObjects(view.messageTextView.font, testFont);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqualObjects(button.titleLabel.font, testFont);
   }
@@ -235,7 +235,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
-  XCTAssertEqual(view.messageLabel.textColor, testColor);
+  XCTAssertEqual(view.messageTextView.textColor, testColor);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
@@ -259,7 +259,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
-  XCTAssertEqual(view.messageLabel.textColor, testColor);
+  XCTAssertEqual(view.messageTextView.textColor, testColor);
   NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
   for (UIButton *button in buttons) {
@@ -285,7 +285,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
-  XCTAssertEqual(view.messageLabel.textColor, testColor);
+  XCTAssertEqual(view.messageTextView.textColor, testColor);
   NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
   for (UIButton *button in buttons) {
@@ -312,7 +312,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
-  XCTAssertEqual(view.messageLabel.textColor, testColor);
+  XCTAssertEqual(view.messageTextView.textColor, testColor);
   NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
   for (UIButton *button in buttons) {
@@ -333,7 +333,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.text, title);
-  XCTAssertEqual(view.messageLabel.text, message);
+  XCTAssertEqualObjects(view.messageTextView.text, message);
 }
 
 - (void)testAlertControllerSettingTitleAndAttributedMessage {
@@ -347,7 +347,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.attributedAlert.view;
   XCTAssertEqual(view.titleLabel.text, title);
-  XCTAssertEqualObjects(view.messageLabel.text, message);
+  XCTAssertEqualObjects(view.messageTextView.text, message);
 }
 
 - (void)testAlertControllerSetMessageAccessibilityLabelWhenMessageIsSetWhenViewIsNotLoaded {
@@ -361,7 +361,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
-  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, messageAccessibilityLabel);
+  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, messageAccessibilityLabel);
 }
 
 - (void)testAlertControllerSetMessageAccessibilityLabelWhenMessageIsSetAndViewIsLoaded {
@@ -375,7 +375,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alert.messageAccessibilityLabel = messageAccessibilityLabel;
 
   // Then
-  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, messageAccessibilityLabel);
+  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, messageAccessibilityLabel);
 }
 
 - (void)testAlertControllerMessageAccessibilityLabelWhenOnlyMessageIsSet {
@@ -388,7 +388,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alert.messageAccessibilityLabel = nil;
 
   // Then
-  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, message);
+  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, message);
 }
 
 - (void)testAlertControllerMessageAccessibilityLabelWhenOnlyMessageIsSetWhenViewIsNotLoaded {
@@ -401,7 +401,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
-  XCTAssertEqualObjects(view.messageLabel.accessibilityLabel, message);
+  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, message);
 }
 
 - (void)testAlertControllerSetTitleAccessibilityLabelWhenTitleIsSetWhenViewIsNotLoaded {
@@ -631,8 +631,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
-  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
-                @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
+  XCTAssertTrue([view.messageTextView.font mdc_isSimplyEqual:fakeMessageFont],
+                @"%@ is not equal to %@", view.messageTextView.font, fakeMessageFont);
   MDCButton *button = [self.alert buttonForAction:fakeAction];
   XCTAssertTrue([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
                 @"%@ is not equal to %@", [button titleFontForState:UIControlStateNormal],
@@ -660,8 +660,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
-  XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
-                 view.messageLabel.font, fakeMessageFont);
+  XCTAssertFalse([view.messageTextView.font mdc_isSimplyEqual:fakeMessageFont],
+                 @"%@ is equal to %@", view.messageTextView.font, fakeMessageFont);
   MDCButton *button = [self.alert buttonForAction:fakeAction];
   XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
                  @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
@@ -695,8 +695,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
-  XCTAssertEqualObjects(self.alert.alertView.messageLabel.font.fontName, baseFont.fontName);
-  XCTAssertGreaterThan(self.alert.alertView.messageLabel.font.pointSize, baseFont.pointSize);
+  XCTAssertEqualObjects(self.alert.alertView.messageTextView.font.fontName, baseFont.fontName);
+  XCTAssertGreaterThan(self.alert.alertView.messageTextView.font.pointSize, baseFont.pointSize);
   XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, baseFont.fontName);
   XCTAssertGreaterThan(self.alert.alertView.titleLabel.font.pointSize, baseFont.pointSize);
   // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
@@ -737,7 +737,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
-  XCTAssertEqualObjects(self.alert.alertView.messageLabel.font.fontName, scaledFont.fontName);
+  XCTAssertEqualObjects(self.alert.alertView.messageTextView.font.fontName, scaledFont.fontName);
   XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, scaledFont.fontName);
   // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
   // these are equal
@@ -791,7 +791,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
             .doubleValue;
     // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
     // these are equal.
-    XCTAssertNotEqualWithAccuracy(alert.alertView.messageLabel.font.pointSize, expectedPointSize,
+    XCTAssertNotEqualWithAccuracy(alert.alertView.messageTextView.font.pointSize, expectedPointSize,
                                   0.001);
     // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
     // these are equal
@@ -849,7 +849,7 @@ than @c UIContentSizeCategoryLarge.
         (CGFloat)CustomScalingCurve()[UIContentSizeCategoryExtraSmall].doubleValue;
     // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
     // these are equal.
-    XCTAssertNotEqualWithAccuracy(alert.alertView.messageLabel.font.pointSize, expectedPointSize,
+    XCTAssertNotEqualWithAccuracy(alert.alertView.messageTextView.font.pointSize, expectedPointSize,
                                   0.001);
     // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
     // these are equal

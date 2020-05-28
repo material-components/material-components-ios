@@ -541,8 +541,8 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // When
-  self.alertController.messageAlignment = NSTextAlignmentLeft;
   [self changeToRTL:self.alertController];
+  self.alertController.messageAlignment = NSTextAlignmentLeft;
 
   // Then
   self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 200.f);
@@ -557,8 +557,8 @@ static NSString *const kMessageVeryLongLatin =
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
 
   // When
-  self.alertController.messageAlignment = NSTextAlignmentLeft;
   [self changeToRTL:self.alertController];
+  self.alertController.messageAlignment = NSTextAlignmentLeft;
 
   // Then
   [self generateHighlightedSnapshotAndVerifyForAlert:self.alertController];

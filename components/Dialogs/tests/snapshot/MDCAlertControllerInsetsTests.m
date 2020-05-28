@@ -409,7 +409,8 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   self.alertView.titleLabel.backgroundColor = [UIColor.purpleColor colorWithAlphaComponent:.1f];
   self.alertView.contentScrollView.backgroundColor =
       [UIColor.orangeColor colorWithAlphaComponent:.2f];
-  self.alertView.messageLabel.backgroundColor = [UIColor.orangeColor colorWithAlphaComponent:.2f];
+  self.alertView.messageTextView.backgroundColor =
+      [UIColor.orangeColor colorWithAlphaComponent:.2f];
   self.alertView.actionsScrollView.backgroundColor =
       [UIColor.blueColor colorWithAlphaComponent:.2f];
 }

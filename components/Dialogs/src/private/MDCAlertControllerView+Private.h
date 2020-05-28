@@ -20,7 +20,7 @@
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
-@property(nonatomic, nonnull, strong) UILabel *messageLabel;
+@property(nonatomic, nonnull, strong) UITextView *messageTextView;
 
 /** An optional custom UIView that is displaed under the alert message. */
 @property(nonatomic, nullable, strong) UIView *accessoryView;
@@ -33,7 +33,7 @@
 /** The scroll view that holds the @c titleLabel. */
 @property(nonatomic, nonnull, strong) UIScrollView *titleScrollView;
 
-/** The scroll view that holds the @c messageLabel. */
+/** The scroll view that holds the @c messageTextView and @c accessoryView. */
 @property(nonatomic, nonnull, strong) UIScrollView *contentScrollView;
 
 /** The scroll view that holds all of the buttons created for each action. */
