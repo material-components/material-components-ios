@@ -113,10 +113,12 @@ func layoutBottomNavBar() {
 To help ensure your bottom navigation item is accessible to as many users as possible, please
 be sure to review the following recommendations:
 
- `-accessibilityLabel` The label will be the title of the UITabBarItem. Currently you can't set this to a custom value.
+* Ensure that your `UITabBarItem`s have appropriate `accessibilityLabel`s. Setting a new
+`accessibilityLabel` on a `UITabBarItem` will result in the corresponding bottom navigation
+bar item's `accessibilityLabel` changing.
 
-`-accessibilityValue`  Set an appropriate `accessibilityValue` value if your item has a badge value.
-For example, an item with an inbox icon with a badge value for how many emails are unread. You should explicitly
+* Set an appropriate `accessibilityValue` value if your item has a badge value. For example,
+an item with an inbox icon with a badge value for how many emails are unread. You should explicitly
 set the `accessibilityValue` when the badge value doesn't provide enough context. For example, in an inbox
 example simply having the value "10" doesn't provide enough context, instead the accessibility value should explain
 what the badge value symbolizes. The default value if there is a badge value and you haven't set any
@@ -234,17 +236,13 @@ let favoritesItem = UITabBarItem(
 favoritesItem.badgeValue = ""
 let readerItem = UITabBarItem(
     title: "Reader",
-    image: UIImage(
-        named: "baseline_chrome_reader_mode_black_24pt",
-        in: Bundle(
-            for: BottomNavigationBlurExample.self),
-        compatibleWith: nil),
+    image: UIImage(named: "ic_reader"),
     tag: 0)
 readerItem.badgeValue = "88"
 
 let birthdayItem = UITabBarItem(
     title: "ic_birthday",
-    image: UIImage(named: "ic_ake"),
+    image: UIImage(named: "ic_cake"),
     tag: 0)
 birthdayItem.badgeValue = "888+"
 bottomNavBar.items = [homeItem, messagesItem, favoritesItem, readerItem, birthdayItem]
@@ -271,17 +269,12 @@ UITabBarItem *favoritesItem =
                                   image:[UIImage imageNamed:@"ic_favorite"]
                                     tag:0];
 favoritesItem.badgeValue = @"";
-UITabBarItem *readerItem = [[UITabBarItem alloc]
-    initWithTitle:@"Reader"
-            image:[UIImage imageNamed:@"baseline_chrome_reader_mode_black_24pt"
-                                           inBundle:[NSBundle
-                                                        bundleForClass:
-                                                            [BottomNavigationBlurExample class]]
-                      compatibleWithTraitCollection:nil]
-              tag:0];
+UITabBarItem *readerItem = [[UITabBarItem alloc] initWithTitle:@"Reader"
+                                                         image:[UIImage imageNamed:@"ic_reader"]
+                                                           tag:0];
 readerItem.badgeValue = @"88";
 UITabBarItem *birthdayItem = [[UITabBarItem alloc] initWithTitle:@"ic_birthday"
-                                                          image:[UIImage imageNamed:@"ic_ake"]
+                                                          image:[UIImage imageNamed:@"ic_cake"]
                                                             tag:0];
 birthdayItem.badgeValue = @"888+";
 self.bottomNavBar.items = @[ homeItem, messagesItem, favoritesItem, readerItem, birthdayItem ];
