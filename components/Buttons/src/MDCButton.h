@@ -73,14 +73,22 @@
 @property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle UI_APPEARANCE_SELECTOR;
 
 /**
- Insets to apply to the button’s hit area.
+ The inset margins for the rectangle surrounding all of the button’s visual representation.
+ Use this property when you wish to have the touch target (frame) be larger than the
+ visible content.
 
- Allows the button to detect touches outside of its bounds. A negative value indicates an
- extension past the bounds.
+ A positive value shrinks the visible area of the button. A negative value expands the visible area
+ of the button.
+
+ The button uses this property to determine intrinsicContentSize and sizeThatFits:.
+
+ @note This property sets the @c shapeGenerator. Therefore it is not advised to use both properties
+ simultaneously. If you do wish to use a custom shape with visibleAreaInsets, please set your own
+ shapeGenerator that is inset from the frame instead of setting this property directly.
 
  Default is UIEdgeInsetsZero.
- */
-@property(nonatomic) UIEdgeInsets hitAreaInsets;
+*/
+@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
 
 /**
  The offset (in points) of the button's inkView or rippleView (depending on which is being used -
@@ -335,6 +343,16 @@
  @note This API will eventually be deprecated and removed.
  */
 @property(nonatomic, assign) BOOL enableTitleFontForState;
+
+/**
+ Insets to apply to the button’s hit area.
+
+ Allows the button to detect touches outside of its bounds. A negative value indicates an
+ extension past the bounds.
+
+ Default is UIEdgeInsetsZero.
+ */
+@property(nonatomic) UIEdgeInsets hitAreaInsets;
 
 /**
  The font used by the button's @c title.
