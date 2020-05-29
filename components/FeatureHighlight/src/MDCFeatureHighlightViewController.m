@@ -15,14 +15,9 @@
 #import "MDCFeatureHighlightViewController.h"
 
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "MaterialFeatureHighlightStrings.h"
-#import "MaterialFeatureHighlightStrings_table.h"
 #import "MaterialTypography.h"
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView+Private.h"
-
-// The Bundle for string resources.
-static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
 
 static const CGFloat kMDCFeatureHighlightLineSpacing = 1;
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
@@ -34,7 +29,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 @implementation MDCFeatureHighlightViewController {
   MDCFeatureHighlightAnimationController *_animationController;
   MDCFeatureHighlightCompletion _completion;
-  NSString *_viewAccessiblityHint;
+  NSString *_viewAccessibilityHint;
   NSTimer *_pulseTimer;
   UIView *_displayedView;
   UIView *_highlightedView;
@@ -95,7 +90,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   self.featureHighlightView.bodyColor = _bodyColor;
   self.featureHighlightView.titleFont = _titleFont;
   self.featureHighlightView.bodyFont = _bodyFont;
-  self.featureHighlightView.accessibilityHint = _viewAccessiblityHint;
+  self.featureHighlightView.accessibilityHint = _viewAccessibilityHint;
 }
 
 /* Disable setter. Always use internal transition controller */
@@ -342,14 +337,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 #pragma mark - UIAccessibility
 
 - (void)setAccessibilityHint:(NSString *)accessibilityHint {
-  _viewAccessiblityHint = accessibilityHint;
+  _viewAccessibilityHint = accessibilityHint;
   if (self.isViewLoaded) {
     self.featureHighlightView.accessibilityHint = accessibilityHint;
   }
 }
 
 - (NSString *)accessibilityHint {
-  return _viewAccessiblityHint;
+  return _viewAccessibilityHint;
 }
 
 #pragma mark - Private
@@ -371,27 +366,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   }
 
   return [[NSAttributedString alloc] initWithString:string attributes:attrs];
-}
-
-#pragma mark - Resource bundle
-
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialFeatureHighlightBundle]];
-  });
-
-  return bundle;
-}
-
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCFeatureHighlightView class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 @end
