@@ -289,12 +289,11 @@ The following is an anatomy diagram for the bottom navigation bar:
 
 ![Bottom navigation anatomy diagram](docs/assets/bottom-nav-anatomy.png)
 
-*   (1) Container
-*   Navigation items:
-    *   (2) Inactive icon
-    *   (3) Inactive text label
-    *   (4) Active icon
-    *   (5) Active text label
+1. Container
+1. Inactive icon
+1. Inactive text label
+1. Active icon
+1. Active text label
 
 #### Container attributes
 
