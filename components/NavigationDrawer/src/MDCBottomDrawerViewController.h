@@ -45,6 +45,11 @@
 @property(nonatomic, nullable) UIViewController<MDCBottomDrawerHeader> *headerViewController;
 
 /**
+ A scroll view contained within the contentViewController.
+
+ If the contentViewController contains a UIScrollView or UIScrollView subclass it is recommended to
+ set that scroll view as the tracking scroll view.
+
  Setting the tracking scroll view allows the drawer scroll the content seamlessly as part of
  the drawer movement. This allows the provided scroll view to load the visible
  content as the drawer moves, and therefore not load all the content at once
