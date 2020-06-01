@@ -422,6 +422,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/ShapeLibrary"
     component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
@@ -845,9 +846,6 @@ Pod::Spec.new do |mdc|
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
-    ]
-    component.resources = [
-      "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
 
     component.dependency "MaterialComponents/Availability"
