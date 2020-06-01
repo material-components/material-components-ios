@@ -591,14 +591,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   }
   // Adjust height of scroll view to account for non-fullscreen presentation styles.
   scrollViewFrame.size.height += self.presentingViewYOffset;
-  // Since we are not adding any height, typically the safe area, to the header we need to shift the
-  // scroll view down by the safe area amount.
-  if ([self shouldUseMaximumDrawerHeight]) {
-    scrollViewFrame.origin.y += [self topSafeAreaInset];
-    if (self.shouldIncludeSafeAreaInContentHeight) {
-      scrollViewFrame.origin.y += [self bottomSafeAreaInsetsToAdjustContainerHeight];
-    }
-  }
   self.scrollView.frame = scrollViewFrame;
 
   // Layout the top header's bottom shadow.
@@ -863,16 +855,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   CGFloat contentHeaderViewTop =
       self.currentlyFullscreen ? 0
                                : self.contentHeaderTopInset - headerTransitionToTop * headersDiff;
-  // If we should be using the `maximumDrawerHeight` property then we assume the height of the
-  // drawer will be less than the screen height minus the top safe area so we do not need the header
-  // to expand. Since the header is no longer expanding we also need to adjust the origin of the
-  // header view.
+  // If we should be using the `maximumDrawerHeight` property then we reset the header height to be
+  // its original height and its origin to be the views height minus the drawer height.
   if (self.currentlyFullscreen && [self shouldUseMaximumDrawerHeight]) {
-    contentHeaderViewTop =
-        CGRectGetHeight(self.view.frame) - self.maximumDrawerHeight + self.topAreaInsetForHeader;
-    if (self.shouldIncludeSafeAreaInContentHeight) {
-      contentHeaderViewTop += [self bottomSafeAreaInsetsToAdjustContainerHeight];
-    }
+    contentHeaderViewTop = CGRectGetHeight(self.view.frame) - self.maximumDrawerHeight;
     contentHeaderViewHeight = self.contentHeaderHeight;
   }
   contentHeaderView.frame =
