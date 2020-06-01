@@ -183,6 +183,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   XCTAssertNotNil(self.attributedAlert.actions);
   XCTAssertNotNil(self.attributedAlert.title);
+  XCTAssertNil(self.attributedAlert.attributedMessageAction);
   XCTAssertTrue(self.attributedAlert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
   XCTAssertEqualObjects(self.attributedAlert.shadowColor, UIColor.blackColor);
 
@@ -402,6 +403,19 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // Then
   XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, message);
+}
+
+- (void)testAlertControllerMessageAccessibilityLabelWhenOnlyAttributedMessageIsSet {
+  // Given
+  NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Foo"];
+
+  // When
+  self.attributedAlert.attributedMessage = message;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.attributedAlert.view;
+  self.attributedAlert.messageAccessibilityLabel = nil;
+
+  // Then
+  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, message.string);
 }
 
 - (void)testAlertControllerSetTitleAccessibilityLabelWhenTitleIsSetWhenViewIsNotLoaded {

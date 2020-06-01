@@ -27,19 +27,21 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
 
   let attributedText: NSAttributedString = {
     typealias AttrDict = [NSAttributedString.Key: Any]
-    let bgAttr: AttrDict = [.backgroundColor: UIColor.blue.withAlphaComponent(0.2)]
+    let bgAttr: AttrDict = [.backgroundColor: UIColor.systemBlue.withAlphaComponent(0.3)]
     let orangeAttr: AttrDict = [.foregroundColor: UIColor.orange]
-    let linkAttr: AttrDict = [.link: URL(string: "https://www.google.com/search?q=lorem+ipsum")!]
+    let urlAttr: AttrDict = [.link: "https://www.google.com/search?q=lorem+ipsum"]
+    let customLinkAttr: AttrDict = [.link: "mdccatalog://"]  // A custom link.
 
     let attributedText = NSMutableAttributedString()
-    attributedText.append(NSAttributedString(string: "Lorem ipsum", attributes: linkAttr))
+    attributedText.append(NSAttributedString(string: "Lorem ipsum", attributes: urlAttr))
     attributedText.append(NSAttributedString(string: " dolor sit amet, ", attributes: nil))
     attributedText.append(
       NSAttributedString(
         string: "consectetur adipiscing elit, sed do ",
         attributes: nil))
     attributedText.append(NSAttributedString(string: " eiusmod ", attributes: bgAttr))
-    attributedText.append(NSAttributedString(string: " tempor incididunt ut ", attributes: nil))
+    attributedText.append(NSAttributedString(string: " tempor ", attributes: customLinkAttr))
+    attributedText.append(NSAttributedString(string: "incididunt ut ", attributes: nil))
     attributedText.append(NSAttributedString(string: "labore magna ", attributes: orangeAttr))
     attributedText.append(NSAttributedString(string: "aliqua.", attributes: nil))
     return attributedText
@@ -59,11 +61,10 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     loadCollectionView(menu: [
-      "Text View",
+      "Attributed Message With Links and a Custom Button",
+      "Material's Filled Text Field",
       "Title + Message + UI Text Field",
-      "Material Filled Text Field",
       "Custom Label and Button (autolayout)",
-      "Default Attributed Label and Button",
     ])
   }
 
@@ -83,44 +84,69 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
   private func performActionFor(row: Int) -> MDCAlertController? {
     switch row {
     case 0:
-      return performTextView()
+      return performAttributedMessageWithLinks()
     case 1:
-      return performTextField()
-    case 2:
       return performMDCTextField()
+    case 2:
+      return performTextField()
     case 3:
       return performCustomLabelWithButton()
-    case 4:
-      return performDefaultLabelWithButton()
     default:
       print("No row is selected")
       return nil
     }
   }
 
-  func performTextView() -> MDCAlertController {
-    let alert = MDCAlertController()
-    let textView = DialogTextView()
-    textView.attributedText = attributedText
-    textView.font = MDCTypographyScheme().body1
-    textView.isEditable = false
-    textView.isScrollEnabled = false
-    alert.accessoryView = textView
+  // Demonstrate Material Dialog's attributed message text with tappable links, used in conjunction
+  // with a custom accessory view.
+  func performAttributedMessageWithLinks() -> MDCAlertController {
+    // Set an attributed text as the message, with both internal and external URLs as tappable links.
+    let alert = MDCAlertController(title: "Title", attributedMessage: attributedText)
     alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
+
+    // Setup a custom accessory view.
+    let button = MDCButton()
+    button.setTitle("Learn More", for: UIControl.State.normal)
+    button.contentEdgeInsets = .zero
+    button.applyTextTheme(withScheme: containerScheme)
+    button.sizeToFit()
+
+    let size = button.bounds.size
+    let view = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+    view.addSubview(button)
+
+    alert.accessoryView = view
+    if let alertView = alert.view as? MDCAlertControllerView {
+      alertView.accessoryViewVerticalInset = 0
+      alertView.contentInsets = UIEdgeInsets(top: 24, left: 24, bottom: 10, right: 24)
+    }
+
+    // Enable dynamic type.
+    alert.mdc_adjustsFontForContentSizeCategory = true
+
+    // Respond to a link-tap event:
+    alert.attributedMessageAction = { url, range, interaction in
+      // Defer to the UITextView's default URL interaction for non-custom links.
+      guard url.absoluteString == "mdccatalog://" else { return true }
+
+      print("A custom action for link:", url.absoluteString, " in range:", range)
+
+      // Dismiss the alert for short-tap interactions.
+      if interaction == .invokeDefaultAction {
+        alert.dismiss(animated: true)
+      }
+
+      // Disable UITextView's default URL interaction.
+      return false
+    }
+
+    // Theming updates the message's text color, which may override foreground text attributes.
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
 
-  func performTextField() -> MDCAlertController {
-    let alert = MDCAlertController(title: "This is a title", message: "This is a message")
-    let textField = UITextField()
-    textField.placeholder = "This is a text field"
-    alert.accessoryView = textField
-    alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
-    alert.applyTheme(withScheme: self.containerScheme)
-    return alert
-  }
-
+  // Demonstrate a custom view with MDCFilledTextField being assigned to the accessoryView API.
+  // This example also demonstrates the use of autolayout in custom views.
   func performMDCTextField() -> MDCAlertController {
     let alert = MDCAlertController(title: "Rename File", message: nil)
     alert.addAction(MDCAlertAction(title: "Rename", emphasis: .medium, handler: handler))
@@ -161,7 +187,17 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     return alert
   }
 
-  // Demonstrating a custom accessory view with auto layout, presenting a label and a button.
+  func performTextField() -> MDCAlertController {
+    let alert = MDCAlertController(title: "This is a title", message: "This is a message")
+    let textField = UITextField()
+    textField.placeholder = "This is a text field"
+    alert.accessoryView = textField
+    alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
+    alert.applyTheme(withScheme: self.containerScheme)
+    return alert
+  }
+
+  // Demonstrate a custom accessory view with auto layout, presenting a label and a button.
   func performCustomLabelWithButton() -> MDCAlertController {
     let alert = MDCAlertController(title: "Title", message: nil)
     alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
@@ -191,32 +227,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
 
     alert.accessoryView = view
     alert.applyTheme(withScheme: self.containerScheme)
-    return alert
-  }
 
-  // Demonstrating a custom accessory view with manual layout, presenting a button, while using the
-  // alert's default label.
-  func performDefaultLabelWithButton() -> MDCAlertController {
-    let alert = MDCAlertController(title: "Title", attributedMessage: attributedText)
-    alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
-
-    let button = MDCButton()
-    button.setTitle("Learn More", for: UIControl.State.normal)
-    button.contentEdgeInsets = .zero
-    button.applyTextTheme(withScheme: containerScheme)
-    button.sizeToFit()
-
-    let size = button.bounds.size
-    let view = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-    view.addSubview(button)
-
-    alert.accessoryView = view
-    if let alertView = alert.view as? MDCAlertControllerView {
-      alertView.accessoryViewVerticalInset = 0
-      alertView.contentInsets = UIEdgeInsets(top: 24, left: 24, bottom: 10, right: 24)
-    }
-
-    alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
 
@@ -285,9 +296,10 @@ extension DialogsAccessoryExampleViewController {
     }
   }
 
-  @objc func testTextView() {
+  @objc func testAttributedMessageWithLinks() {
     resetTests()
-    self.present(performTextView(), animated: false, completion: nil)
+    self.present(
+      performAttributedMessageWithLinks(), animated: false, completion: nil)
   }
 
   @objc func testTextField() {
@@ -305,25 +317,4 @@ extension DialogsAccessoryExampleViewController {
     self.present(performCustomLabelWithButton(), animated: false, completion: nil)
   }
 
-  @objc func testDefaultLabelWithButton() {
-    resetTests()
-    self.present(performDefaultLabelWithButton(), animated: false, completion: nil)
-  }
-
-}
-
-/// Custom subclass of UITextView - to avoid resizing issue after 3D touch (b/155127456).
-private class DialogTextView: UITextView {
-
-  override func systemLayoutSizeFitting(
-    _ targetSize: CGSize,
-    withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-    verticalFittingPriority: UILayoutPriority
-  ) -> CGSize {
-    return self.sizeThatFits(targetSize)
-  }
-
-  override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
-    return self.sizeThatFits(targetSize)
-  }
 }
