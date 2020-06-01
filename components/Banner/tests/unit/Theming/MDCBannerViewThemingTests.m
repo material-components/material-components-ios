@@ -108,6 +108,8 @@ This class is used for creating a @UIWindow with customized size category.
   XCTAssertEqualObjects(
       self.bannerView.dividerColor,
       [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity]);
+  XCTAssertEqualObjects(self.bannerView.imageView.tintColor,
+                        self.containerScheme.colorScheme.primaryColor);
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                           self.containerScheme.colorScheme.primaryColor);
@@ -159,6 +161,8 @@ This class is used for creating a @UIWindow with customized size category.
   XCTAssertEqualObjects(
       self.bannerView.dividerColor,
       [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity]);
+  XCTAssertEqualObjects(self.bannerView.imageView.tintColor,
+                        self.containerScheme.colorScheme.primaryColor);
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
                           self.containerScheme.colorScheme.primaryColor);
