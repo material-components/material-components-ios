@@ -1,16 +1,32 @@
-# #develop#
+# 109.6.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release adds new functionality to NavigationDrawer, ActionSheet, and Dialogs, and adds accessibility improvements to Buttons, Chips, and private/Color.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+While there are no new deprecations in this release, the `hitAreaInsets` APIs on `MDCChipView` and `MDCButton` have been moved to a `ToBeDeprecated` category. `hitAreaInsets` will eventually be deprecated across components. Its replacement, `visibleHitAreaInsets`, is in the process of being added to all relevant components.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### ActionSheet
+
+- `MDCActionSheetControllerDelegate` has a new method, `-actionSheetController:willDisplayView:forRowAtIndexPath:`.
+
+### Buttons
+
+- `MDCButton` has a new `visibleHitAreaInsets` property.
+
+### Chips
+
+- `MDCChipView` has a new `visibleHitAreaInsets` property.
+
+### Dialogs
+
+- `MDCAlertController` has a new `attributedMessageAction` property.
+
+### NavigationDrawer
+
+- `MDCBottonDrawerPresentationController` has a new `maximumDrawerHeight` property.
 
 ## Component changes
 
