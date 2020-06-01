@@ -17,12 +17,13 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialInk.h"
-#import "MaterialMath.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
@@ -252,23 +253,59 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero)) {
+    // When visibleAreaInsets is set, custom shapeGenerater is not allow to be set through setter.
+    return;
+  }
+
+  [self configureLayerWithShapeGenerator:shapeGenerator];
+
+  if (!shapeGenerator) {
+    // Reset the chip to fully rounded corner.
+    CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
+    self.cornerRadius = cornerRadius;
+  }
+}
+
+- (void)configureLayerWithShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  self.layer.shapeGenerator = shapeGenerator;
+
   if (shapeGenerator) {
     self.layer.cornerRadius = 0;
     self.layer.shadowPath = nil;
-  } else {
-    CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
-    self.layer.cornerRadius = cornerRadius;
-    self.layer.shadowPath =
-        [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
   }
-
-  self.layer.shapeGenerator = shapeGenerator;
 
   [self updateBackgroundColor];
 }
 
 - (id)shapeGenerator {
   return self.layer.shapeGenerator;
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  if (!self.shapeGenerator) {
+    self.layer.cornerRadius = cornerRadius;
+    self.layer.shadowPath =
+        [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
+  } else if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero)) {
+    MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+    MDCCornerTreatment *cornerTreatment =
+        [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerRadius];
+    [shapeGenerator setCorners:cornerTreatment];
+    shapeGenerator.topLeftCornerOffset =
+        CGPointMake(self.visibleAreaInsets.left, self.visibleAreaInsets.top);
+    shapeGenerator.topRightCornerOffset =
+        CGPointMake(-self.visibleAreaInsets.right, self.visibleAreaInsets.top);
+    shapeGenerator.bottomLeftCornerOffset =
+        CGPointMake(self.visibleAreaInsets.left, -self.visibleAreaInsets.bottom);
+    shapeGenerator.bottomRightCornerOffset =
+        CGPointMake(-self.visibleAreaInsets.right, -self.visibleAreaInsets.bottom);
+    [self configureLayerWithShapeGenerator:shapeGenerator];
+  }
+}
+
+- (CGFloat)cornerRadius {
+  return self.layer.cornerRadius;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
@@ -659,6 +696,32 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   return CGRectContainsPoint(hitAreaRect, point);
 }
 
+#pragma mark - Visible area
+
+- (void)setVisibleAreaInsets:(UIEdgeInsets)visibleAreaInsets {
+  _visibleAreaInsets = visibleAreaInsets;
+
+  if (UIEdgeInsetsEqualToEdgeInsets(visibleAreaInsets, UIEdgeInsetsZero)) {
+    self.shapeGenerator = nil;
+  } else {
+    MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+    CGRect visibleFrame = UIEdgeInsetsInsetRect(self.frame, visibleAreaInsets);
+    CGFloat cornerRadius = MIN(CGRectGetHeight(visibleFrame), CGRectGetWidth(visibleFrame)) / 2;
+    ;
+    MDCCornerTreatment *cornerTreatment =
+        [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerRadius];
+    [shapeGenerator setCorners:cornerTreatment];
+    shapeGenerator.topLeftCornerOffset = CGPointMake(visibleAreaInsets.left, visibleAreaInsets.top);
+    shapeGenerator.topRightCornerOffset =
+        CGPointMake(-visibleAreaInsets.right, visibleAreaInsets.top);
+    shapeGenerator.bottomLeftCornerOffset =
+        CGPointMake(visibleAreaInsets.left, -visibleAreaInsets.bottom);
+    shapeGenerator.bottomRightCornerOffset =
+        CGPointMake(-visibleAreaInsets.right, -visibleAreaInsets.bottom);
+    [self configureLayerWithShapeGenerator:shapeGenerator];
+  }
+}
+
 #pragma mark - Control
 
 - (void)setEnabled:(BOOL)enabled {
@@ -699,12 +762,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   _selectedImageView.alpha = self.showSelectedImageView ? 1 : 0;
 
-  if (!self.layer.shapeGenerator) {
-    CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
-    self.layer.cornerRadius = cornerRadius;
-    self.layer.shadowPath =
-        [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
-  }
+  CGRect visibleFrame = UIEdgeInsetsInsetRect(self.frame, self.visibleAreaInsets);
+  self.cornerRadius = MIN(CGRectGetHeight(visibleFrame), CGRectGetWidth(visibleFrame)) / 2;
 
   // Handle RTL
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
@@ -720,7 +779,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)contentRect {
-  CGRect contentRect = UIEdgeInsetsInsetRect(self.bounds, self.contentPadding);
+  CGRect contentRect = UIEdgeInsetsInsetRect(self.bounds, self.visibleAreaInsets);
+  contentRect = UIEdgeInsetsInsetRect(contentRect, self.contentPadding);
   UIControlContentHorizontalAlignment alignment = self.contentHorizontalAlignment;
   if (alignment != UIControlContentHorizontalAlignmentCenter) {
     return contentRect;
@@ -843,7 +903,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGSize contentPaddedSize = CGSizeShrinkWithInsets(size, self.contentPadding);
+  CGSize visibleAreaSize = CGSizeShrinkWithInsets(size, self.visibleAreaInsets);
+  CGSize contentPaddedSize = CGSizeShrinkWithInsets(visibleAreaSize, self.contentPadding);
   CGSize imagePaddedSize = CGSizeShrinkWithInsets(contentPaddedSize, self.imagePadding);
   CGSize titlePaddedSize = CGSizeShrinkWithInsets(contentPaddedSize, self.titlePadding);
   CGSize accessoryPaddedSize = CGSizeShrinkWithInsets(contentPaddedSize, self.accessoryPadding);
@@ -881,6 +942,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   if (self.minimumSize.height > 0) {
     chipSize.height = MAX(self.minimumSize.height, chipSize.height);
   }
+  chipSize = CGSizeExpandWithInsets(chipSize, self.visibleAreaInsets);
   return MDCSizeCeilWithScale(chipSize, self.pixelScale);
 }
 
