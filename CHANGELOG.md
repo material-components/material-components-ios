@@ -1,3 +1,94 @@
+# 109.6.0
+
+This minor release adds new functionality to NavigationDrawer, ActionSheet, and Dialogs, and adds accessibility improvements to Buttons, Chips, and private/Color.
+
+## New deprecations
+
+While there are no new deprecations in this release, the `hitAreaInsets` APIs on `MDCChipView` and `MDCButton` have been moved to a `ToBeDeprecated` category. `hitAreaInsets` will eventually be deprecated across components. Its replacement, `visibleHitAreaInsets`, is in the process of being added to all relevant components.
+
+## New features
+
+### ActionSheet
+
+- `MDCActionSheetControllerDelegate` has a new method, `-actionSheetController:willDisplayView:forRowAtIndexPath:`.
+
+### Buttons
+
+- `MDCButton` has a new `visibleHitAreaInsets` property.
+
+### Chips
+
+- `MDCChipView` has a new `visibleHitAreaInsets` property.
+
+### Dialogs
+
+- `MDCAlertController` has a new `attributedMessageAction` property.
+
+### NavigationDrawer
+
+- `MDCBottonDrawerPresentationController` has a new `maximumDrawerHeight` property.
+
+## Component changes
+
+### ActionSheet
+
+* [internal change](https://github.com/material-components/material-components-ios/commit/abde17e493928c9ed2fd09620a4f2c7d848658b5) (Nobody)
+
+### AppBar
+
+* [Inject AppBars after view controllers have been added to the navigation controller.](https://github.com/material-components/material-components-ios/commit/b78737be488e0e3131d75aca928a4bff9d6f04fd) (Jeff Verkoeyen)
+
+### Banner
+
+* [Add example snapshot tests for verifying MDCColorSchemeDefaultsMaterial201907 color scheme.](https://github.com/material-components/material-components-ios/commit/f2f99a45206b546991b4ef19fef501997940ba58) (Wenyu Zhang)
+* [Apply container theme in examples.](https://github.com/material-components/material-components-ios/commit/be3c97421b9466ad0228dbace95dc9c15c752c04) (Wenyu Zhang)
+
+### Buttons
+
+* [Add a visibleAreaInsets API.](https://github.com/material-components/material-components-ios/commit/e8a1c4e7e14ff72cefd68eef1c0e8d2c0a801b14) (Yarden Eitan)
+
+### Chips
+
+* [Add visibleAreaInsets API to MDCChipView.](https://github.com/material-components/material-components-ios/commit/db48cefa9b3817bee3372ad77e64b0346d5f0487) (Wenyu Zhang)
+
+### Dialogs
+
+* [Adding tappable link support to the alert message](https://github.com/material-components/material-components-ios/commit/6bb3ece3935540754d20adeb45eaa856a9f63766) (Galia Kaufman)
+* [replace the message UILabel type to UITextview](https://github.com/material-components/material-components-ios/commit/f4fd6d015fedbb111adf25218f122825d465a51f) (Galia Kaufman)
+
+### FeatureHighlight
+
+* [Delete unused accessibility hint string and unused localization support.](https://github.com/material-components/material-components-ios/commit/b2ae9cdce12f2fc50816199417a4165b3ddcc052) (Bryan Oltman)
+
+### FlexibleHeader
+
+* [Remove ShiftBehaviorWithStatusBar from the public API.](https://github.com/material-components/material-components-ios/commit/0c4d18595824b22b0e9675723bf7e022e94db33e) (Jeff Verkoeyen)
+
+### NavigationDrawer
+
+* [Clarify `trackingScrollView` API.](https://github.com/material-components/material-components-ios/commit/57f25fd95aac12ca69567d74c2fac1fa74977254) (Cody Weaver)
+* [Fix bug where `maximumDrawerHeight` wouldn't allow for the correct height.](https://github.com/material-components/material-components-ios/commit/11db172e79913c3fafa379e91061a9aad213359c) (Cody Weaver)
+* [Fix bug where setting `maximumDrawerHeight` and `maximumInitialDrawerHeight` would allow scrolling.](https://github.com/material-components/material-components-ios/commit/2d533759d11e2596ea8106a3d7a8c1025f545e4c) (Cody Weaver)
+* [Support a max height](https://github.com/material-components/material-components-ios/commit/33daf325e650b27a44004ff44b97a61d98221b79) (Cody Weaver)
+
+### Shapes
+
+* [Resolve UIColor instance when it is set as shapedBackgroundColor to MDCShapedShadowLayer.](https://github.com/material-components/material-components-ios/commit/245b90cd57ced5096476824cefc3bf7c522d95ee) (Wenyu Zhang)
+
+### Tabs
+
+* [Internal change](https://github.com/material-components/material-components-ios/commit/d404e5e83271250b544431767e348cd411794445) (Jeff Verkoeyen)
+
+### private/Color
+
+* [Add colorWithAccessibilityContrastHigh:normal: API to support Increase Contrast color.](https://github.com/material-components/material-components-ios/commit/45b9b222e30dbd77e508ff742892ea1fe45b650b) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add prepareShadowPath to MDCShadowLayer to allow its subclass preparing shadow path before MDCShadowLayer lays out its sublayers.](https://github.com/material-components/material-components-ios/commit/b19e4e964d5a60e800d8ae71f7b87af7828094c8) (Wenyu Zhang)
+
+---
+
 # 109.5.0
 
 This minor release adds functionality to MDCSnackbarManagerDelegate and includes internal cleanup of FlexibleHeader.
