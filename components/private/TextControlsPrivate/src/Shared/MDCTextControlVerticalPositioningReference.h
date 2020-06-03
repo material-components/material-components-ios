@@ -32,3 +32,9 @@
 @property(nonatomic, assign, readonly) CGFloat containerHeight;
 
 @end
+
+CGFloat MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
+    CGFloat floatingLabelHeight, CGFloat textRowHeight, CGFloat numberOfTextRows,
+    CGFloat paddingBetweenContainerTopAndFloatingLabel,
+    CGFloat paddingBetweenFloatingLabelAndEditingText,
+    CGFloat paddingBetweenEditingTextAndContainerBottom);
