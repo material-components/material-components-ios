@@ -15,8 +15,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialBanner.h"
-#import "MaterialButtons+Theming.h"
+#import "MaterialBanner+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 
@@ -31,10 +32,17 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
 
 @implementation BannerAutolayoutExampleViewController
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    _containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.containerScheme = [[MDCContainerScheme alloc] init];
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   // Action Button
@@ -60,6 +68,7 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
   bannerView.trailingButton.hidden = YES;
   bannerView.showsDivider = YES;
   bannerView.layoutMargins = UIEdgeInsetsZero;
+  [bannerView applyThemeWithScheme:self.containerScheme];
   MDCButton *actionButton = bannerView.leadingButton;
   [actionButton applyTextThemeWithScheme:self.containerScheme];
   [actionButton setTitle:@"Dismiss" forState:UIControlStateNormal];

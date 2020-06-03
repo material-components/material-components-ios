@@ -75,7 +75,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @end
 
-@interface MDCAlertController ()
+@interface MDCAlertController () <UITextViewDelegate>
 
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
@@ -232,9 +232,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)messageDidChange {
   if (self.attributedMessage.length > 0) {
-    self.alertView.messageLabel.attributedText = self.attributedMessage;
+    self.alertView.messageTextView.attributedText = self.attributedMessage;
   } else {
-    self.alertView.messageLabel.text = self.message;
+    self.alertView.messageTextView.text = self.message;
   }
   self.preferredContentSize =
       [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
@@ -243,7 +243,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)setMessageAccessibilityLabel:(NSString *)messageAccessibilityLabel {
   _messageAccessibilityLabel = [messageAccessibilityLabel copy];
   if (self.alertView && messageAccessibilityLabel) {
-    self.alertView.messageLabel.accessibilityLabel = messageAccessibilityLabel;
+    self.alertView.messageTextView.accessibilityLabel = messageAccessibilityLabel;
   }
 }
 
@@ -594,6 +594,18 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
                                                     }];
 }
 
+#pragma mark - Text View Delegate
+
+- (BOOL)textView:(UITextView *)textView
+    shouldInteractWithURL:(NSURL *)URL
+                  inRange:(NSRange)characterRange
+              interaction:(UITextItemInteraction)interaction {
+  if (self.attributedMessageAction != nil) {
+    return self.attributedMessageAction(URL, characterRange, interaction);
+  }
+  return YES;
+}
+
 #pragma mark - UIViewController
 
 - (void)loadView {
@@ -744,17 +756,20 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
         self.adjustsFontForContentSizeCategory;
   }
   if (self.attributedMessage.length > 0) {
-    self.alertView.messageLabel.attributedText = self.attributedMessage;
+    self.alertView.messageTextView.attributedText = self.attributedMessage;
   } else {
-    self.alertView.messageLabel.text = self.message;
+    self.alertView.messageTextView.text = self.message;
   }
   self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
-  self.alertView.messageLabel.accessibilityLabel = self.messageAccessibilityLabel ?: self.message;
+  self.alertView.messageTextView.accessibilityLabel =
+      self.messageAccessibilityLabel ?: self.message ?: self.attributedMessage.string;
+  self.alertView.messageTextView.delegate = self;
+
   self.alertView.titleIconImageView.accessibilityLabel = self.imageAccessibilityLabel;
   self.alertView.titleIconView.accessibilityLabel = self.imageAccessibilityLabel;
 
   // TODO(https://github.com/material-components/material-components-ios/issues/8671): Update
-  // adjustsFontForContentSizeCategory for messageLabel
+  // adjustsFontForContentSizeCategory for messageTextView
   self.alertView.accessoryView = self.accessoryView;
   self.alertView.titleFont = self.titleFont;
   self.alertView.messageFont = self.messageFont;

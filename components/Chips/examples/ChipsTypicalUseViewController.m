@@ -29,6 +29,7 @@
 @property(nonatomic, strong) NSArray<ChipModel *> *model;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic) BOOL popRecognizerDelaysTouches;
+@property(nonatomic) UIEdgeInsets chipVisibleAreaInsets;
 @end
 
 static ChipModel *MakeModel(NSString *title,
@@ -157,7 +158,11 @@ static ChipModel *MakeModel(NSString *title,
   cell.chipView.imageView.image = model.showProfilePic ? ChipsExampleAssets.faceImage : nil;
   cell.chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
   cell.chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
-  cell.chipView.hitAreaInsets = UIEdgeInsetsMake(-16, 0, -16, 0);
+  if (!UIEdgeInsetsEqualToEdgeInsets(self.chipVisibleAreaInsets, UIEdgeInsetsZero)) {
+    cell.chipView.visibleAreaInsets = self.chipVisibleAreaInsets;
+  } else {
+    cell.chipView.hitAreaInsets = UIEdgeInsetsMake(-16, 0, -16, 0);
+  }
 
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
@@ -180,6 +185,27 @@ static ChipModel *MakeModel(NSString *title,
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
   };
+}
+
+@end
+
+@implementation ChipsTypicalUseViewController (SnapshotTestingByConvention)
+
+- (void)testDefaults {
+  // When
+  [self.collectionView reloadData];
+}
+
+- (void)testVisibleAreaInsets {
+  // Given
+  self.chipVisibleAreaInsets = UIEdgeInsetsMake(8, 0, 8, 0);
+
+  // When
+  [self.collectionView reloadData];
+}
+
+- (void)setUp {
+  self.chipVisibleAreaInsets = UIEdgeInsetsZero;
 }
 
 @end

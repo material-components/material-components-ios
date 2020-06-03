@@ -90,6 +90,62 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   }
 }
 
+- (void)testDynamicColorWhenAccessibilityContrastIsHighForiOS13 {
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *highContrastColor = UIColor.blackColor;
+    UIColor *normalContrastColor = UIColor.whiteColor;
+
+    // When
+    UIColor *dynamicColor = [UIColor colorWithAccessibilityContrastHigh:highContrastColor
+                                                                 normal:normalContrastColor];
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithAccessibilityContrast:UIAccessibilityContrastHigh];
+
+    // Then
+    XCTAssertEqualObjects([dynamicColor resolvedColorWithTraitCollection:traitCollection],
+                          highContrastColor);
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+}
+
+- (void)testDynamicColorWhenAccessibilityContrastIsNormalForiOS13 {
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *highContrastColor = UIColor.blackColor;
+    UIColor *normalContrastColor = UIColor.whiteColor;
+
+    // When
+    UIColor *dynamicColor = [UIColor colorWithAccessibilityContrastHigh:highContrastColor
+                                                                 normal:normalContrastColor];
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithAccessibilityContrast:UIAccessibilityContrastNormal];
+
+    // Then
+    XCTAssertEqualObjects([dynamicColor resolvedColorWithTraitCollection:traitCollection],
+                          normalContrastColor);
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+}
+
+- (void)testDynamicColorWhenAccessibilityContrastIsNormalForPreiOS13 {
+  if (@available(iOS 13.0, *)) {
+  } else {
+    // Given
+    UIColor *highContrastColor = UIColor.blackColor;
+    UIColor *normalContrastColor = UIColor.whiteColor;
+
+    // When
+    UIColor *dynamicColor = [UIColor colorWithAccessibilityContrastHigh:highContrastColor
+                                                                 normal:normalContrastColor];
+
+    // Then
+    XCTAssertEqualObjects(dynamicColor, normalContrastColor);
+  }
+}
+
 - (void)testColorMergeForOpaqueColor {
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];

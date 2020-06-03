@@ -27,4 +27,11 @@
  Tells the delegate that the action sheet was dismissed.
  */
 - (void)actionSheetControllerDidDismiss:(nonnull MDCActionSheetController *)actionSheetController;
+
+/**
+ Tells the delegate that the action sheet will display a view.
+ */
+- (void)actionSheetController:(nonnull MDCActionSheetController *)actionSheetController
+              willDisplayView:(nonnull UIView *)view
+            forRowAtIndexPath:(nonnull NSIndexPath *)indexPath;
 @end

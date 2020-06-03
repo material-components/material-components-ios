@@ -17,6 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
@@ -1505,6 +1506,108 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertEqualWithAccuracy(newElevation, [button elevationForState:button.state], 0.001);
+}
+
+- (void)testDefaultVisibleAreaInsetAndShapeGeneratorValues {
+  // Then
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.visibleAreaInsets, UIEdgeInsetsZero));
+  XCTAssertNil(self.button.shapeGenerator);
+}
+
+- (void)testSettingVisibleAreaInsetCreatesCorrectShape {
+  // Given
+  CGFloat cornerRadius = 5;
+  UIEdgeInsets visibleAreaInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+  MDCRectangleShapeGenerator *rectangleShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCornerTreatment *cornerTreatment =
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerRadius];
+  [rectangleShapeGenerator setCorners:cornerTreatment];
+  rectangleShapeGenerator.topLeftCornerOffset =
+      CGPointMake(visibleAreaInsets.left, visibleAreaInsets.top);
+  rectangleShapeGenerator.topRightCornerOffset =
+      CGPointMake(-visibleAreaInsets.right, visibleAreaInsets.top);
+  rectangleShapeGenerator.bottomLeftCornerOffset =
+      CGPointMake(visibleAreaInsets.left, -visibleAreaInsets.bottom);
+  rectangleShapeGenerator.bottomRightCornerOffset =
+      CGPointMake(-visibleAreaInsets.right, -visibleAreaInsets.bottom);
+  self.button.layer.cornerRadius = cornerRadius;
+  [self.button sizeToFit];
+
+  // When
+  self.button.visibleAreaInsets = visibleAreaInsets;
+
+  // Then
+  XCTAssertTrue(CGPathEqualToPath([self.button.shapeGenerator pathForSize:CGSizeMake(100, 100)],
+                                  [rectangleShapeGenerator pathForSize:CGSizeMake(100, 100)]));
+}
+
+- (void)testSettingVisibleAreaInsetAndAfterCornerRadiusCreatesCorrectShape {
+  // Given
+  CGFloat cornerRadius = 12;
+  UIEdgeInsets visibleAreaInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+  MDCRectangleShapeGenerator *rectangleShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCornerTreatment *cornerTreatment =
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerRadius];
+  [rectangleShapeGenerator setCorners:cornerTreatment];
+  rectangleShapeGenerator.topLeftCornerOffset =
+      CGPointMake(visibleAreaInsets.left, visibleAreaInsets.top);
+  rectangleShapeGenerator.topRightCornerOffset =
+      CGPointMake(-visibleAreaInsets.right, visibleAreaInsets.top);
+  rectangleShapeGenerator.bottomLeftCornerOffset =
+      CGPointMake(visibleAreaInsets.left, -visibleAreaInsets.bottom);
+  rectangleShapeGenerator.bottomRightCornerOffset =
+      CGPointMake(-visibleAreaInsets.right, -visibleAreaInsets.bottom);
+  self.button.layer.cornerRadius = 5;
+  [self.button sizeToFit];
+
+  // When
+  self.button.visibleAreaInsets = visibleAreaInsets;
+  self.button.layer.cornerRadius = cornerRadius;
+
+  // Then
+  XCTAssertTrue(CGPathEqualToPath([self.button.shapeGenerator pathForSize:CGSizeMake(100, 100)],
+                                  [rectangleShapeGenerator pathForSize:CGSizeMake(100, 100)]));
+}
+
+- (void)testSettingVisibleAreaInsetAndThenResetingItAndCheckingCorrectShapeGeneratorValue {
+  // Given
+  UIEdgeInsets visibleAreaInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+  [self.button sizeToFit];
+  self.button.visibleAreaInsets = visibleAreaInsets;
+
+  // When
+  self.button.visibleAreaInsets = UIEdgeInsetsZero;
+
+  // Then
+  XCTAssertNil(self.button.shapeGenerator);
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.visibleAreaInsets, UIEdgeInsetsZero));
+}
+
+- (void)testSettingVisibleAreaInsetsProvidesCorrectSizeThatFitsAndIntrinsicContentSize {
+  // Given
+  CGSize buttonSize = CGSizeMake(32, 33);
+  UIEdgeInsets visibleAreaInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+  [self.button sizeToFit];
+  CGRect beforeButtonFrame = self.button.frame;
+  CGSize beforeInsetsSize = [self.button intrinsicContentSize];
+
+  // When
+  self.button.visibleAreaInsets = visibleAreaInsets;
+  [self.button sizeToFit];
+  CGRect afterButtonFrame = self.button.frame;
+  CGSize afterInsetsSize = [self.button intrinsicContentSize];
+
+  // Then
+  XCTAssertTrue(CGSizeEqualToSize(beforeInsetsSize, buttonSize));
+  XCTAssertTrue(CGSizeEqualToSize(beforeButtonFrame.size, buttonSize));
+  XCTAssertTrue(CGSizeEqualToSize(
+      afterInsetsSize,
+      CGSizeMake(buttonSize.width + visibleAreaInsets.left + visibleAreaInsets.right,
+                 buttonSize.height + visibleAreaInsets.top + visibleAreaInsets.bottom)));
+  XCTAssertTrue(CGSizeEqualToSize(
+      afterButtonFrame.size,
+      CGSizeMake(buttonSize.width + visibleAreaInsets.left + visibleAreaInsets.right,
+                 buttonSize.height + visibleAreaInsets.top + visibleAreaInsets.bottom)));
 }
 
 @end

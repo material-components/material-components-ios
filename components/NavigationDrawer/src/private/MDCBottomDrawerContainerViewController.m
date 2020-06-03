@@ -310,14 +310,26 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   if (self.contentHeaderTopInset <= topAreaInsetForHeader + kEpsilon) {
     topAreaInsetForHeader = kEpsilon;
   }
+  // We reset this to 0 if the `maximumDrawerHeight` should be 0 since we assume that the
+  // `maximumDrawerHeight` will be less than the screen height minus the top safe area. Typically we
+  // add height to the header but if we are using the `maximumDrawerHeight` no height is added to
+  // the header.
+  if ([self shouldUseMaximumDrawerHeight]) {
+    topAreaInsetForHeader = 0;
+  }
+  CGFloat bottomSafeAreaInset = [self bottomSafeAreaInsetsToAdjustContainerHeight];
   CGFloat drawerOffset =
       self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
-  CGFloat bottomSafeAreaInset = [self bottomSafeAreaInsetsToAdjustContainerHeight];
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
                             CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset +
                             bottomSafeAreaInset - kScrollViewBufferForPerformance;
+  // Since we are not adding any height, typically the safe area, to the header. We need allow for
+  // additional scrolling of the content.
+  if ([self shouldUseMaximumDrawerHeight]) {
+    maxScrollOrigin += [self topSafeAreaInset];
+  }
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
 
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
@@ -344,7 +356,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(CGRectGetMinY(contentViewBounds), 0));
       self.trackingScrollView.bounds = contentViewBounds;
     } else {
-      self.scrimShouldAdoptTrackingScrollViewBackgroundColor = YES;
+      if (![self shouldUseMaximumDrawerHeight]) {
+        self.scrimShouldAdoptTrackingScrollViewBackgroundColor = YES;
+      }
 
       if (self.trackingScrollView.contentSize.height >=
           CGRectGetHeight(self.trackingScrollView.frame)) {
@@ -377,6 +391,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (BOOL)contentReachesFullscreen {
   return [self shouldPresentFullScreen] ? YES
                                         : self.contentHeightSurplus >= self.contentHeaderTopInset;
+}
+
+- (BOOL)shouldUseMaximumDrawerHeight {
+  return self.maximumDrawerHeight > 0 && ![self shouldPresentFullScreen];
 }
 
 - (CGFloat)maximumInitialDrawerHeight {
@@ -426,8 +444,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (void)updateDrawerState:(CGFloat)transitionPercentage {
   if (transitionPercentage >= 1 - kEpsilon) {
-    self.drawerState = self.contentReachesFullscreen ? MDCBottomDrawerStateFullScreen
-                                                     : MDCBottomDrawerStateExpanded;
+    BOOL fullScreen = (self.contentReachesFullscreen && ![self shouldUseMaximumDrawerHeight]);
+    self.drawerState = fullScreen ? MDCBottomDrawerStateFullScreen : MDCBottomDrawerStateExpanded;
   } else {
     self.drawerState = MDCBottomDrawerStateCollapsed;
   }
@@ -749,6 +767,12 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
   self.currentlyFullscreen =
       self.contentReachesFullscreen && headerTransitionToTop >= 1 && contentOffset.y > 0;
+  // If we are using maximumDrawerHeight then the drawer is not in full screen until it has scrolled
+  // the `contentHeaderTopInset` distance, as typically it assumes it needs to scroll the
+  // `contentHeaderTopInset` minus the safeAreaInsets.top.
+  if ([self shouldUseMaximumDrawerHeight]) {
+    self.currentlyFullscreen = contentOffset.y > self.contentHeaderTopInset ? YES : NO;
+  }
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
@@ -823,11 +847,20 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat headersDiff = fullscreenHeaderHeight - contentHeaderHeight;
+  if ([self shouldUseMaximumDrawerHeight]) {
+    headersDiff = 0;
+  }
   CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
   CGFloat contentHeaderViewWidth = self.presentingViewBounds.size.width;
   CGFloat contentHeaderViewTop =
       self.currentlyFullscreen ? 0
                                : self.contentHeaderTopInset - headerTransitionToTop * headersDiff;
+  // If we should be using the `maximumDrawerHeight` property then we reset the header height to be
+  // its original height and its origin to be the views height minus the drawer height.
+  if (self.currentlyFullscreen && [self shouldUseMaximumDrawerHeight]) {
+    contentHeaderViewTop = CGRectGetHeight(self.view.frame) - self.maximumDrawerHeight;
+    contentHeaderViewHeight = self.contentHeaderHeight;
+  }
   contentHeaderView.frame =
       CGRectMake(0, contentHeaderViewTop, contentHeaderViewWidth, contentHeaderViewHeight);
   self.shadowedView.frame = contentHeaderView.frame;
@@ -1018,7 +1051,10 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       _contentHeaderTopInset = MDCRound(_contentHeaderTopInset);
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
-      if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
+      // If we are using `maximumDrawerHeight` then we assume that the drawer does not go into the
+      // safe area so we allow a value less than the size of the safe area inset.
+      if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight &&
+          ![self shouldUseMaximumDrawerHeight]) {
         _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + kEpsilon;
       }
     } else {
@@ -1084,12 +1120,19 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 @implementation MDCBottomDrawerContainerViewController (LayoutValues)
 
 - (CGRect)presentingViewBounds {
+  if ([self shouldUseMaximumDrawerHeight]) {
+    CGRect originalBounds = CGRectStandardize(self.originalPresentingViewController.view.bounds);
+    return CGRectMake(originalBounds.origin.x,
+                      originalBounds.size.height - self.maximumDrawerHeight,
+                      originalBounds.size.width, self.maximumDrawerHeight);
+  }
   return CGRectStandardize(self.originalPresentingViewController.view.bounds);
 }
 
 - (CGFloat)presentingViewYOffset {
   CGFloat yOffset = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.presentingViewBounds);
-  if (yOffset > 0 && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
+  if (yOffset > 0 && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular &&
+      ![self shouldUseMaximumDrawerHeight]) {
     return yOffset;
   }
   return 0;

@@ -61,19 +61,19 @@
 }
 
 - (void)layoutSublayers {
-  // We have to set the path before calling [super layoutSublayers] because we need the shadowPath
-  // to be correctly set before MDCShadowLayer performs layoutSublayers.
-  if (self.shapeGenerator) {
-    CGRect standardizedBounds = CGRectStandardize(self.bounds);
-    self.path = [self.shapeGenerator pathForSize:standardizedBounds.size];
-  }
-
   [super layoutSublayers];
 
   CGRect bounds = self.bounds;
   CGPoint center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
   _colorLayer.position = center;
   _colorLayer.bounds = bounds;
+}
+
+- (void)prepareShadowPath {
+  if (self.shapeGenerator) {
+    CGRect standardizedBounds = CGRectStandardize(self.bounds);
+    self.path = [self.shapeGenerator pathForSize:standardizedBounds.size];
+  }
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
@@ -113,6 +113,12 @@
 
 - (void)setShapedBackgroundColor:(UIColor *)shapedBackgroundColor {
   _shapedBackgroundColor = shapedBackgroundColor;
+
+  if ([self.delegate isKindOfClass:[UIView class]]) {
+    UIView *view = (UIView *)self.delegate;
+    _shapedBackgroundColor =
+        [_shapedBackgroundColor mdc_resolvedColorWithTraitCollection:view.traitCollection];
+  }
 
   if (CGPathIsEmpty(self.path)) {
     self.backgroundColor = _shapedBackgroundColor.CGColor;

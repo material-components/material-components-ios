@@ -49,7 +49,7 @@
   alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
   alertView.titleLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
   alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.1f];
-  alertView.messageLabel.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.2f];
+  alertView.messageTextView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.2f];
   alertView.actionsScrollView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:.2f];
 
   self.titleIconImageView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];

@@ -45,6 +45,11 @@
 @property(nonatomic, nullable) UIViewController<MDCBottomDrawerHeader> *headerViewController;
 
 /**
+ A scroll view contained within the contentViewController.
+
+ If the contentViewController contains a UIScrollView or UIScrollView subclass it is recommended to
+ set that scroll view as the tracking scroll view.
+
  Setting the tracking scroll view allows the drawer scroll the content seamlessly as part of
  the drawer movement. This allows the provided scroll view to load the visible
  content as the drawer moves, and therefore not load all the content at once
@@ -88,6 +93,20 @@
  VoiceOver or SwitchControl, the drawer will always present at full screen.
  */
 @property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
+
+/**
+ The absolute height in points to which the drawer may expand when a user scrolls.
+
+ Defaults to 0, indicating no value has been set and it should use the default behavior of 100% of
+ the screen's height.
+
+ Once the maximumDrawerHeight is reached the drawer state will return @c
+ MDCBottomDrawerStateExpanded.
+
+ If the value is larger than the container's height, this will allow the drawer to be scrolled to
+ the full height of the container.
+ */
+@property(nonatomic, assign) CGFloat maximumDrawerHeight;
 
 /**
  A flag allowing clients to opt-out of the drawer closing when the user taps outside the content.

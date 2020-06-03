@@ -252,4 +252,29 @@
   XCTAssertGreaterThanOrEqual(newHeaderHeight, originalHeaderHeight);
 }
 
+- (void)testMaximumDrawerHeightBeingSetUpdatesTheUnderlyingPresentationControllerAndViewController {
+  // Given
+  self.navigationDrawer.headerViewController.preferredContentSize = CGSizeMake(100, 200);
+  self.navigationDrawer.contentViewController.preferredContentSize = CGSizeMake(100, 200);
+  [self.navigationDrawer.presentationController presentationTransitionWillBegin];
+
+  // When
+  self.navigationDrawer.maximumDrawerHeight = 300;
+
+  // Then
+  XCTAssertEqual(self.navigationDrawer.maximumDrawerHeight, 300);
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertEqual(presentationController.maximumDrawerHeight, 300);
+    XCTAssertEqual(presentationController.bottomDrawerContainerViewController.maximumDrawerHeight,
+                   300);
+  } else {
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
+  }
+}
+
 @end

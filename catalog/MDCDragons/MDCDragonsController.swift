@@ -25,6 +25,8 @@ import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialThemes
 import MaterialComponents.MaterialTypography
+import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 
 import UIKit
 
@@ -242,6 +244,18 @@ class MDCDragonsController: UIViewController,
 
   func setupTransition(nodeData: DragonCell) {
     var vc = nodeData.node.createExampleViewController()
+
+    let containerSchemeSel = NSSelectorFromString("containerScheme");
+    if vc.responds(to: containerSchemeSel) {
+      let containerScheme = MDCContainerScheme()
+
+      containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201907)
+      containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
+      containerScheme.shapeScheme = MDCShapeScheme()
+
+      vc.setValue(containerScheme, forKey: "containerScheme")
+    }
+
     if !vc.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
       let container = MDCAppBarContainerViewController(contentViewController: vc)
       container.appBar.headerViewController.headerView.backgroundColor = headerViewController.headerView.backgroundColor

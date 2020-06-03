@@ -121,7 +121,7 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
 //
 // components/Dialogs/tests/unit/MDCAlertControllerInsetsTests.m:144: error:
 // -[MDCAlertControllerInsetsTests testAlertFramesAdjustsToContentInsets] :
-// ((CGRectEqualToRect( self.alertView.messageLabel.frame,
+// ((CGRectEqualToRect( self.alertView.messageTextView.frame,
 //                      CGRectMake(10.0f, 0.0f, contentRect.size.width - 20.f,
 //                                 contentRect.size.height - 10.f))) is true) failed
 // Test Case '-[MDCAlertControllerInsetsTests testAlertFramesAdjustsToContentInsets]'
@@ -135,7 +135,7 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
   CGRect contentRect = self.alertView.contentScrollView.frame;
 
   XCTAssertTrue(CGRectEqualToRect(
-      self.alertView.messageLabel.frame,
+      self.alertView.messageTextView.frame,
       CGRectMake(10.0f, 0.0f, contentRect.size.width - 20.f, contentRect.size.height - 10.f)));
 }
 

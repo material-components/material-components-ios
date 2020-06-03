@@ -33,6 +33,8 @@
 // This is intentionally a private protocol conformance in order to avoid public reliance on our
 // conformance to this protocol.
 @interface MDCAppBarNavigationController () <UIGestureRecognizerDelegate>
+// Whether injected app bars should be hidden.
+@property(nonatomic, assign) BOOL appBarHidden;
 @end
 
 @implementation MDCAppBarNavigationControllerInfo
@@ -77,6 +79,8 @@
   // We always want the UIKit navigation bar to be hidden; to do so we must invoke the super
   // implementation.
   [super setNavigationBarHidden:YES animated:NO];
+
+  _appBarHidden = NO;
 }
 
 - (void)viewDidLoad {
@@ -99,23 +103,27 @@
 
 // Inject an App Bar, if necessary, when a view controller is pushed.
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-  // We call this before invoking super because super immediately queries the pushed view controller
-  // for things like status bar style, which we want to have rerouted to our flexible header view
-  // controller.
+  [super pushViewController:viewController animated:animated];
+
   [self injectAppBarIntoViewController:viewController];
 
-  [super pushViewController:viewController animated:animated];
+  [self setNeedsStatusBarAppearanceUpdate];
+  if (@available(iOS 11.0, *)) {
+    [self setNeedsUpdateOfHomeIndicatorAutoHidden];
+  }
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers animated:(BOOL)animated {
+  [super setViewControllers:viewControllers animated:animated];
+
   for (UIViewController *viewController in viewControllers) {
-    // We call this before invoking super because super immediately queries the pushed view
-    // controller for things like status bar style, which we want to have rerouted to our flexible
-    // header view controller.
     [self injectAppBarIntoViewController:viewController];
   }
 
-  [super setViewControllers:viewControllers animated:animated];
+  [self setNeedsStatusBarAppearanceUpdate];
+  if (@available(iOS 11.0, *)) {
+    [self setNeedsUpdateOfHomeIndicatorAutoHidden];
+  }
 }
 
 - (void)setNavigationBarHidden:(BOOL)navigationBarHidden {
@@ -166,6 +174,8 @@
 - (void)appbar_setNavigationBarHidden:(BOOL)navigationBarHidden
                              animated:(BOOL)animated
                     forViewController:(UIViewController *)viewController {
+  self.appBarHidden = navigationBarHidden;
+
   MDCAppBarViewController *appBarViewController =
       [self appBarViewControllerForViewController:viewController];
   if (!appBarViewController) {
@@ -249,8 +259,6 @@
   // flexible header. In those cases the client is expected to create their own App Bar.
   appBar.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  appBar.appBarViewController.headerView.trackingScrollView = trackingScrollView;
-
   appBar.appBarViewController.traitCollectionDidChangeBlock =
       self.traitCollectionDidChangeBlockForAppBarController;
 
@@ -269,8 +277,17 @@
                       asChildOfViewController:viewController];
   }
 
+  // Allow the delegates to configure the app bar's behavior before we inject the tracking scroll
+  // view in case features like observesTrackingScrollViewScrollEvents are disabled.
+  appBar.appBarViewController.headerView.trackingScrollView = trackingScrollView;
+
   [viewController addChildViewController:appBar.appBarViewController];
   [appBar addSubviewsToParent];
+
+  // Propagate the navigation bar visibility to the new app bar.
+  if (self.shouldSetNavigationBarHiddenHideAppBar && self.appBarHidden) {
+    [self appbar_setNavigationBarHidden:self.appBarHidden animated:NO];
+  }
 }
 
 - (BOOL)viewControllerHasFlexibleHeader:(UIViewController *)viewController {

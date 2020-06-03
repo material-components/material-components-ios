@@ -42,8 +42,6 @@
 
  After creating the alert controller, add actions to the controller by calling -addAction.
 
- @note Most alerts don't need titles. Use only for high-risk situations.
-
  @param title The title of the alert.
  @param message Descriptive text that summarizes a decision in a sentence of two.
  @return An initialized MDCAlertController object.
@@ -56,12 +54,10 @@
 
  After creating the alert controller, add actions to the controller by calling -addAction.
 
- @note Most alerts don't need titles. Use only for high-risk situations.
+ @note Set `attributedMessageAction` to respond to link-tap events, if needed.
 
  @note This method receives an @c NSAttributedString for the display message. Use
        @c alertControllerWithTitle:message: for regular @c NSString support.
-
- @note Currently tappable embedded links within @c attributedMessage are not supported.
 
  @param alertTitle The title of the alert.
  @param attributedMessage Descriptive text that summarizes a decision in a sentence of two.
@@ -76,6 +72,25 @@
 
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+
+/**
+ A block that is invoked whan a link (a URL) in the attributed message text is tapped.
+
+ @param URL The URL of the link that was tapped. May include external or internal URLs.
+ @param characterRange The range of characters (in the attributed text) of the link that was tapped.
+ @param interaction The UITextItemInteraction type of interaction performed by the user.
+
+ @return true if UIKit's default implementation of the interaction should proceed after this block
+         is invoked.
+*/
+typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange range,
+                                                  UITextItemInteraction interaction);
+
+/**
+ An action that is invoked when a link (URL) in the attributed message is interacted with. Applies
+ only when `attributedMessage` is set.
+*/
+@property(nonatomic, copy, nullable) MDCAttributedMessageActionHandler attributedMessageAction;
 
 /**
  An object conforming to @c MDCAlertControllerDelegate. When non-nil, the @c MDCAlertController will
@@ -178,15 +193,15 @@
  */
 @property(nonatomic, nullable, copy) NSString *titleAccessibilityLabel;
 
-/** Descriptive text that summarizes a decision in a sentence of two. */
+/** Descriptive text that summarizes a decision in a sentence or two. */
 @property(nonatomic, nullable, copy) NSString *message;
 
 /**
- Descriptive attributed text that summarizes a decision in a sentence of two.
+ Descriptive text that summarizes a decision in a sentence or two, in an attributed string format.
 
  If provided and non-empty, will be used instead of @c message property.
 
- @note Currently tappable embedded links within @c attributedMessage are not supported.
+ @note Set `attributedMessageAction` to respond to link-tap events, if needed.
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedMessage;
 

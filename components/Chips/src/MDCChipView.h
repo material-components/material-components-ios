@@ -179,6 +179,14 @@
 @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
 
 /**
+The inset or outset margins for the rectangle surrounding all of the chip’s visible area.
+
+A positive value shrinks the visible area of the chip. A negative value expands the visible area
+of the chip.
+*/
+@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
+
+/**
  A block that is invoked when the MDCChipView receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
