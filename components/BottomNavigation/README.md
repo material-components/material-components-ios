@@ -108,6 +108,36 @@ func layoutBottomNavBar() {
 ```
 <!--</div>-->
 
+## Installing bottom navigation
+
+In order to install bottom navigation with Cocoapods first add it to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/BottomNavigation'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
+
+From there, import the component:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialBottomNavigation
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialBottomNavigation.h"
+```
+<!--</div>-->
+
 ## Making bottom navigation accessible
 
 To help ensure your bottom navigation item is accessible to as many users as possible, please
@@ -166,36 +196,6 @@ bottomNavBar.frame = bottomNavBarFrame
 }
 
 ```
-
-## Installing bottom navigation
-
-In order to install bottom navigation with Cocoapods first add it to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/BottomNavigation'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
-
-From there, import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialBottomNavigation
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialBottomNavigation.h"
-```
-<!--</div>-->
 
 ## Bottom navigation bar
 
