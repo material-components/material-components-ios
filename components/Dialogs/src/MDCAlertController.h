@@ -98,10 +98,10 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  */
 @property(nonatomic, weak, nullable) id<MDCAlertControllerDelegate> delegate;
 
-/** The font applied to the title of Alert Controller.*/
+/** The font applied to the alert's title.*/
 @property(nonatomic, strong, nullable) UIFont *titleFont;
 
-/** The color applied to the title of Alert Controller.*/
+/** The color applied to the alert's title.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
 /** The alignment applied to the title of the Alert. Defaults to @c NSTextAlignmentNatural. */
@@ -130,11 +130,11 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  */
 @property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
-/** The font applied to the message of Alert Controller.*/
+/** The font applied to the alert's message.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
 /**
- The color applied to the message of Alert Controller.
+ The color applied to the alert's message.
 
  @note: If `messageColor` is set (including if set to nil), it will override foregroundColor
         attributes that were set by the attributed message text.
@@ -142,12 +142,12 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
 /**
- The alignment applied to the message of Alert Controller. Defaults to @c NSTextAlignmentNatural.
+ The alignment applied to the alert's message. Defaults to @c NSTextAlignmentNatural.
  */
 @property(nonatomic, assign) NSTextAlignment messageAlignment;
 
 /**
- The font applied to the button of Alert Controller.
+ The font applied to the alert's buttons.
 
  @note This property is deprecated and will be removed in an upcoming release.
  */
@@ -155,11 +155,11 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
     UIFont *buttonFont __deprecated_msg("Please use buttonForAction: to set button properties.");
 
 // b/117717380: Will be deprecated
-/** The color applied to the button title text of Alert Controller.*/
+/** The color applied to the alert's buttons title text.*/
 @property(nonatomic, strong, nullable) UIColor *buttonTitleColor;
 
 // b/117717380: Will be deprecated
-/** The color applied to the button ink effect of Alert Controller.*/
+/** The color applied to the alert's buttons ink effect.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
 /** The semi-transparent color which is applied to the overlay covering the content
