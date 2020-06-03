@@ -183,6 +183,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   XCTAssertNotNil(self.attributedAlert.actions);
   XCTAssertNotNil(self.attributedAlert.title);
+  XCTAssertNil(self.attributedAlert.attributedLinkColor);
   XCTAssertNil(self.attributedAlert.attributedMessageAction);
   XCTAssertTrue(self.attributedAlert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
   XCTAssertEqualObjects(self.attributedAlert.shadowColor, UIColor.blackColor);
@@ -203,6 +204,48 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertNotNil(self.attributedAlert.actions);
   XCTAssertEqualObjects(self.attributedAlert.title, @"title");
   XCTAssertEqualObjects(self.attributedAlert.attributedMessage.string, @"attributed message");
+}
+
+- (void)testAttributedMessageLinkColorIsApplied {
+  // Given
+  UIColor *testColor = [UIColor orangeColor];
+  UIColor *messageColor = [UIColor redColor];
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.attributedAlert.view;
+
+  // When
+  self.attributedAlert.messageColor = messageColor;  // Setting the message's textColor.
+  self.attributedAlert.attributedLinkColor = testColor;
+
+  // Then
+  XCTAssertEqual(view.messageTextView.tintColor, testColor);
+  XCTAssertEqual(view.messageTextView.textColor, messageColor);
+}
+
+- (void)testAttributedMessageForegroundColorIsPreserved {
+  // Given
+  UIColor *attributeColor = [UIColor blueColor];
+  UIColor *messageColor = [UIColor redColor];
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.attributedAlert.view;
+  NSAttributedString *attributedStr = [[NSAttributedString alloc]
+      initWithString:@"attributed message"
+          attributes:@{NSForegroundColorAttributeName : attributeColor}];
+
+  // When
+  self.attributedAlert.attributedMessage = attributedStr;
+
+  // Then
+  NSDictionary<NSAttributedStringKey, id> *attributes =
+      [view.messageTextView.attributedText attributesAtIndex:0 effectiveRange:nil];
+  // Before the text color is assigned, the attribute color is retained.
+  XCTAssertEqual(attributes[NSForegroundColorAttributeName], attributeColor);
+
+  // When
+  self.attributedAlert.messageColor = messageColor;  // Setting the message's textColor.
+
+  // Then
+  attributes = [view.messageTextView.attributedText attributesAtIndex:0 effectiveRange:nil];
+  // The foreground color attribute is overriden by the textColor. This is UIKit's default behavior.
+  XCTAssertEqual(attributes[NSForegroundColorAttributeName], messageColor);
 }
 
 - (void)testAlertControllerTyphography {
@@ -476,6 +519,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   UIColor *testColor = [UIColor redColor];
   self.alert.titleColor = testColor;
   self.alert.messageColor = testColor;
+  self.alert.attributedLinkColor = testColor;
   self.alert.buttonTitleColor = testColor;
   self.alert.buttonInkColor = testColor;
   self.alert.titleFont = [UIFont systemFontOfSize:12];

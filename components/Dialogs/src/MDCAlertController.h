@@ -127,13 +127,18 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
 
  @note: Large `titleIcon` images will be proportionally scaled to fit the available space when
         `titleIconAlignment` is set to `MDCContentHorizontalAlignmentJustified`.
-*/
+ */
 @property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
-/** The color applied to the message of Alert Controller.*/
+/**
+ The color applied to the message of Alert Controller.
+
+ @note: If `messageColor` is set (including if set to nil), it will override foregroundColor
+        attributes that were set by the attributed message text.
+ */
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
 /**
@@ -204,6 +209,11 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  @note Set `attributedMessageAction` to respond to link-tap events, if needed.
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedMessage;
+
+/**
+ The color applied to links in the attributed message. When nil, UIKit's default tint color is used.
+ */
+@property(nonatomic, strong, nullable) UIColor *attributedLinkColor;
 
 /**
  A custom accessibility label for the message.

@@ -230,6 +230,16 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setAttributedLinkColor:(UIColor *)attributedLinkColor {
+  if ([_attributedLinkColor isEqual:attributedLinkColor]) {
+    return;
+  }
+  _attributedLinkColor = attributedLinkColor;
+  if (self.alertView) {
+    self.alertView.messageTextView.tintColor = attributedLinkColor;
+  }
+}
+
 - (void)messageDidChange {
   if (self.attributedMessage.length > 0) {
     self.alertView.messageTextView.attributedText = self.attributedMessage;
@@ -774,7 +784,16 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.titleFont = self.titleFont;
   self.alertView.messageFont = self.messageFont;
   self.alertView.titleColor = self.titleColor ?: UIColor.blackColor;
-  self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
+  self.alertView.messageTextView.tintColor = self.attributedLinkColor;
+  if (self.attributedMessage.length > 0) {
+    // Avoid overriding `messageColor` during initialization, to allow the attributed messages's
+    // foregroundColor to take precedence in case `messageColor` was not set.
+    if (self.messageColor != nil) {
+      self.alertView.messageColor = self.messageColor;
+    }
+  } else {
+    self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
+  }
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   if (self.backgroundColor) {

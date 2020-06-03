@@ -25,9 +25,8 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
 
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
-  let attributedText: NSAttributedString = {
+  var attributedText: NSAttributedString {
     typealias AttrDict = [NSAttributedString.Key: Any]
-    let bgAttr: AttrDict = [.backgroundColor: UIColor.systemBlue.withAlphaComponent(0.3)]
     let orangeAttr: AttrDict = [.foregroundColor: UIColor.orange]
     let urlAttr: AttrDict = [.link: "https://www.google.com/search?q=lorem+ipsum"]
     let customLinkAttr: AttrDict = [.link: "mdccatalog://"]  // A custom link.
@@ -37,15 +36,14 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     attributedText.append(NSAttributedString(string: " dolor sit amet, ", attributes: nil))
     attributedText.append(
       NSAttributedString(
-        string: "consectetur adipiscing elit, sed do ",
+        string: "consectetur adipiscing elit, sed do eiusmod",
         attributes: nil))
-    attributedText.append(NSAttributedString(string: " eiusmod ", attributes: bgAttr))
     attributedText.append(NSAttributedString(string: " tempor ", attributes: customLinkAttr))
     attributedText.append(NSAttributedString(string: "incididunt ut ", attributes: nil))
     attributedText.append(NSAttributedString(string: "labore magna ", attributes: orangeAttr))
     attributedText.append(NSAttributedString(string: "aliqua.", attributes: nil))
     return attributedText
-  }()
+  }
 
   let kReusableIdentifierItem = "customCell"
 
@@ -140,7 +138,8 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
       return false
     }
 
-    // Theming updates the message's text color, which may override foreground text attributes.
+    // Note: Theming updates the message's text color, potentially overridding foreground text
+    //       attributes (if were set in the attributed message).
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
