@@ -38,7 +38,7 @@
 
 @end
 
-@implementation BottomSheetPresentationExample (CatalogByConvention)
+@implementation BottomSheetModalPresentationExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Bottom Sheet", @"Presentation from Modal" ];

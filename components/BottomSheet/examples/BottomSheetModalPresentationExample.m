@@ -62,7 +62,7 @@
 
 @end
 
-@implementation BottomSheetPresentationExample
+@implementation BottomSheetModalPresentationExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
