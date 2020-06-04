@@ -136,6 +136,16 @@
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;
 
+/**
+ The corner radius for the chip.
+
+ Use this property to configure corner radius instead of @c self.layer.cornerRadius it works with
+ @c visibleAreaInsets.
+
+ By default, it is set to keep the chip fully rounded.
+ */
+@property(nonatomic) CGFloat cornerRadius;
+
 /*
  Indicates whether the chip should automatically update its font when the device’s
  UIContentSizeCategory is changed.

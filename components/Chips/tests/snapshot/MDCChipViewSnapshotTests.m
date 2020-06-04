@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+#import "MaterialChips+Theming.h"
+#import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
 #import "MaterialSnapshot.h"
 
 /** A test fake for @c MDCChipView that allows overriding some read-only properties. */
@@ -621,6 +623,50 @@
   [self.chip applyOutlinedThemeWithScheme:self.scheme];
   self.chip.highlighted = YES;
   self.chip.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+#pragma mark - Corner Radius
+
+- (void)testChipWithCustomCornerRadius {
+  // When
+  self.chip.cornerRadius = 5;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testChipWithCustomCornerRadiusAndShapeGenerator {
+  // When
+  self.chip.cornerRadius = 5;
+  MDCRectangleShapeGenerator *rectangleShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCRoundedCornerTreatment *roundedCorners = [[MDCRoundedCornerTreatment alloc] initWithRadius:10];
+  [rectangleShapeGenerator setCorners:roundedCorners];
+  self.chip.shapeGenerator = rectangleShapeGenerator;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testChipWithCustomCornerRadiusAndResetShapeGeneratorToNil {
+  // When
+  self.chip.cornerRadius = 5;
+  MDCRectangleShapeGenerator *rectangleShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCRoundedCornerTreatment *roundedCorners = [[MDCRoundedCornerTreatment alloc] initWithRadius:10];
+  [rectangleShapeGenerator setCorners:roundedCorners];
+  self.chip.shapeGenerator = rectangleShapeGenerator;
+  self.chip.shapeGenerator = nil;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testChipWithCustomCornerRadiusAndVisibleAreaInsets {
+  // When
+  self.chip.cornerRadius = 5;
+  self.chip.visibleAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.chip];
