@@ -15,12 +15,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCTextControlLabelBehavior.h"
+#import "MDCTextControlState.h"
 #import "MDCTextControlAssistiveLabelDrawPriority.h"
 #import "MDCTextControlColorViewModel.h"
+#import "MDCTextControlHorizontalPositioningReference.h"
 #import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlLabelPosition.h"
-#import "MDCTextControlState.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
 UIFont *_Nonnull MDCTextControlDefaultUITextFieldFont(void);
@@ -188,5 +189,11 @@ FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
                                   numberOfTextRows:(CGFloat)numberOfTextRows
                                            density:(CGFloat)density
                           preferredContainerHeight:(CGFloat)preferredContainerHeight;
+
+/**
+ This method returns an object that tells the view where to position its views
+ horizontally.
+ */
+- (nonnull MDCTextControlHorizontalPositioningReferenceDefault *)horizontalPositioningReference;
 
 @end

@@ -16,6 +16,7 @@
 
 #import "../../../src/BaseTextFields/private/MDCBaseTextFieldLayout.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
+#import "MaterialTextControlsPrivate+Shared.h"
 
 @interface MDCBaseTextFieldLayout (Testing)
 - (CGFloat)textHeightWithFont:(UIFont *)font;
@@ -47,6 +48,8 @@
   MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
                   positioningReference:positioningReference
+        horizontalPositioningReference:[[MDCTextControlHorizontalPositioningReferenceDefault alloc]
+                                           init]
                                   text:@"Text"
                                   font:font
                           floatingFont:floatingFont

@@ -45,27 +45,29 @@
   of other objects to interfere with this process helps ensure that the resulting layout is correct
   and reliable.
  */
-- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                         positioningReference:
-                             (nonnull id<MDCTextControlVerticalPositioningReference>)
-                                 positioningReference
-                                         text:(nullable NSString *)text
-                                         font:(nonnull UIFont *)font
-                                 floatingFont:(nonnull UIFont *)floatingFont
-                                        label:(nonnull UILabel *)label
-                                     leftView:(nullable UIView *)leftView
-                                 leftViewMode:(UITextFieldViewMode)leftViewMode
-                                    rightView:(nullable UIView *)rightView
-                                rightViewMode:(UITextFieldViewMode)rightViewMode
-                        clearButtonSideLength:(CGFloat)clearButtonSideLength
-                              clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                        leadingAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
-                       trailingAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
-                   assistiveLabelDrawPriority:
-                       (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
-             customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-                                        isRTL:(BOOL)isRTL
-                                    isEditing:(BOOL)isEditing;
+- (nonnull instancetype)
+               initWithTextFieldSize:(CGSize)textFieldSize
+                positioningReference:
+                    (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference
+      horizontalPositioningReference:
+          (nonnull id<MDCTextControlHorizontalPositioningReference>)horizontalPositioningReference
+                                text:(nullable NSString *)text
+                                font:(nonnull UIFont *)font
+                        floatingFont:(nonnull UIFont *)floatingFont
+                               label:(nonnull UILabel *)label
+                            leftView:(nullable UIView *)leftView
+                        leftViewMode:(UITextFieldViewMode)leftViewMode
+                           rightView:(nullable UIView *)rightView
+                       rightViewMode:(UITextFieldViewMode)rightViewMode
+               clearButtonSideLength:(CGFloat)clearButtonSideLength
+                     clearButtonMode:(UITextFieldViewMode)clearButtonMode
+               leadingAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+              trailingAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+          assistiveLabelDrawPriority:
+              (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
+    customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
+                               isRTL:(BOOL)isRTL
+                           isEditing:(BOOL)isEditing;
 
 - (CGRect)labelFrameWithLabelPosition:(MDCTextControlLabelPosition)labelPosition;
 

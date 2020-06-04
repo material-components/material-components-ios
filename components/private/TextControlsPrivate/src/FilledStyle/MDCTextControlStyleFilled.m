@@ -154,6 +154,10 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
             preferredContainerHeight:preferredContainerHeight];
 }
 
+- (MDCTextControlHorizontalPositioningReferenceDefault *)horizontalPositioningReference {
+  return [[MDCTextControlHorizontalPositioningReferenceDefault alloc] init];
+}
+
 - (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
   CGFloat scaleFactor = kFilledFloatingLabelScaleFactor;
   CGFloat floatingFontSize = font.pointSize * scaleFactor;

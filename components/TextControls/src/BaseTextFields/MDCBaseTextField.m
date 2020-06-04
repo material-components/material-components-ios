@@ -214,6 +214,7 @@
   return [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
                   positioningReference:positioningReference
+        horizontalPositioningReference:self.containerStyle.horizontalPositioningReference
                                   text:self.text
                                   font:self.normalFont
                           floatingFont:self.floatingFont
