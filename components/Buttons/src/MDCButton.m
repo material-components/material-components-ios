@@ -109,6 +109,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSString *_accessibilityLabelExplicitValue;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
+  BOOL _cornerRadiusObserverAdded;
 }
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
@@ -269,7 +270,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)dealloc {
   [self removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 
-  if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero)) {
+  if (_cornerRadiusObserverAdded) {
     [self.layer removeObserver:self
                     forKeyPath:NSStringFromSelector(@selector(cornerRadius))
                        context:kKVOContextCornerRadius];
@@ -1048,21 +1049,31 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Visible area
 
 - (void)setVisibleAreaInsets:(UIEdgeInsets)visibleAreaInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(visibleAreaInsets, _visibleAreaInsets)) {
+    return;
+  }
+
   _visibleAreaInsets = visibleAreaInsets;
 
   if (UIEdgeInsetsEqualToEdgeInsets(visibleAreaInsets, UIEdgeInsetsZero)) {
     self.shapeGenerator = nil;
 
-    [self.layer removeObserver:self
-                    forKeyPath:NSStringFromSelector(@selector(cornerRadius))
-                       context:kKVOContextCornerRadius];
+    if (_cornerRadiusObserverAdded) {
+      [self.layer removeObserver:self
+                      forKeyPath:NSStringFromSelector(@selector(cornerRadius))
+                         context:kKVOContextCornerRadius];
+      _cornerRadiusObserverAdded = NO;
+    }
   } else {
     self.shapeGenerator = [self generateShapeWithCornerRadius:self.layer.cornerRadius];
 
-    [self.layer addObserver:self
-                 forKeyPath:NSStringFromSelector(@selector(cornerRadius))
-                    options:NSKeyValueObservingOptionNew
-                    context:kKVOContextCornerRadius];
+    if (!_cornerRadiusObserverAdded) {
+      [self.layer addObserver:self
+                   forKeyPath:NSStringFromSelector(@selector(cornerRadius))
+                      options:NSKeyValueObservingOptionNew
+                      context:kKVOContextCornerRadius];
+      _cornerRadiusObserverAdded = YES;
+    }
   }
 }
 
