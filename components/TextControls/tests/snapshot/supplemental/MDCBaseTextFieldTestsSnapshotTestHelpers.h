@@ -18,12 +18,14 @@
 
 #import "MaterialTextControls+FilledTextFieldsTheming.h"
 #import "MaterialTextControls+OutlinedTextFieldsTheming.h"
+#import "MaterialTextControls+UnderlinedTextFieldsTheming.h"
 
 @interface MDCBaseTextFieldTestsSnapshotTestHelpers : NSObject
 
 + (MDCBaseTextField *)createBaseTextField;
 + (MDCFilledTextField *)createFilledTextField;
 + (MDCOutlinedTextField *)createOutlinedTextField;
++ (MDCUnderlinedTextField *)createUnderlinedTextField;
 
 + (void)configureTextFieldWithColoredAssistiveLabelText:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithText:(MDCBaseTextField *)textField;

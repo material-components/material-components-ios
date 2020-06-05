@@ -20,12 +20,15 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
 
-#import "MDCFilledTextField+MaterialTheming.h"
 #import "MDCFilledTextField.h"
-#import "MDCOutlinedTextField+MaterialTheming.h"
+#import "MDCFilledTextField+MaterialTheming.h"
 #import "MDCOutlinedTextField.h"
+#import "MDCOutlinedTextField+MaterialTheming.h"
+#import "MDCUnderlinedTextField.h"
+#import "MDCUnderlinedTextField+MaterialTheming.h"
 
 @interface MDCTextControlTextFieldContentViewController ()
+@property(nonatomic, assign) BOOL shouldAddLeadingView;
 @end
 
 @implementation MDCTextControlTextFieldContentViewController
@@ -39,6 +42,22 @@
   textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingAssistiveLabel.text = @"This is a string.";
+  if (self.shouldAddLeadingView) {
+    [self addLeadingViewToTextField:textField];
+  }
+  [textField applyThemeWithScheme:self.containerScheme];
+  return textField;
+}
+
+- (MDCUnderlinedTextField *)createMaterialUnderlinedTextField {
+  MDCUnderlinedTextField *textField = [[MDCUnderlinedTextField alloc] init];
+  textField.placeholder = @"555-555-5555";
+  textField.label.text = @"Phone number";
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  textField.leadingAssistiveLabel.text = @"This is a string.";
+  if (self.shouldAddLeadingView) {
+    [self addLeadingViewToTextField:textField];
+  }
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
@@ -48,6 +67,9 @@
   textField.placeholder = @"555-555-5555";
   textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  if (self.shouldAddLeadingView) {
+    [self addLeadingViewToTextField:textField];
+  }
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
@@ -58,7 +80,20 @@
   textField.label.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.borderStyle = UITextBorderStyleRoundedRect;
+  if (self.shouldAddLeadingView) {
+    [self addLeadingViewToTextField:textField];
+  }
   return textField;
+}
+
+- (void)addLeadingViewToTextField:(MDCBaseTextField *)textField {
+  UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+  imageView.tintColor = self.containerScheme.colorScheme.primaryColor;
+  UIImage *image =
+      [[UIImage imageNamed:@"ic_cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  imageView.image = image;
+  textField.leadingView = imageView;
+  textField.leadingViewMode = UITextFieldViewModeAlways;
 }
 
 #pragma mark Overrides
@@ -71,6 +106,8 @@
     [self createMaterialFilledTextField],
     [self createLabelWithText:@"MDCOutlinedTextField:"],
     [self createMaterialOutlinedTextField],
+    [self createLabelWithText:@"MDCUnderlinedTextField:"],
+    [self createMaterialUnderlinedTextField],
     [self createLabelWithText:@"MDCBaseTextField:"],
     [self createDefaultBaseTextField],
   ];
@@ -154,6 +191,9 @@
           } else if ([textField isKindOfClass:[MDCOutlinedTextField class]]) {
             MDCOutlinedTextField *outlinedTextField = (MDCOutlinedTextField *)textField;
             [outlinedTextField applyErrorThemeWithScheme:self.containerScheme];
+          } else if ([textField isKindOfClass:[MDCUnderlinedTextField class]]) {
+            MDCUnderlinedTextField *underlinedTextField = (MDCUnderlinedTextField *)textField;
+            [underlinedTextField applyErrorThemeWithScheme:self.containerScheme];
           }
           if (isEven) {
             textField.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
@@ -169,6 +209,9 @@
           } else if ([textField isKindOfClass:[MDCOutlinedTextField class]]) {
             MDCOutlinedTextField *outlinedTextField = (MDCOutlinedTextField *)textField;
             [outlinedTextField applyThemeWithScheme:self.containerScheme];
+          } else if ([textField isKindOfClass:[MDCUnderlinedTextField class]]) {
+            MDCUnderlinedTextField *underlinedTextField = (MDCUnderlinedTextField *)textField;
+            [underlinedTextField applyThemeWithScheme:self.containerScheme];
           }
           if (isEven) {
             textField.leadingAssistiveLabel.text = @"This is helper text.";
