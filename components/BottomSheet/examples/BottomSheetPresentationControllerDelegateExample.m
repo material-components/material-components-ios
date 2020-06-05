@@ -41,6 +41,8 @@
     : BottomSheetPresenterViewController <MDCBottomSheetPresentationControllerDelegate>
 @property(nonatomic, strong)
     UILabel *bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel;
+@property(nonatomic, strong)
+    UILabel *bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel;
 @end
 
 @implementation BottomSheetPresentationControllerDelegateExample
@@ -48,6 +50,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self.button setTitle:@"Present Custom Controller" forState:UIControlStateNormal];
+
+  UIStackView *stackView = [[UIStackView alloc] init];
+  stackView.axis = UILayoutConstraintAxisVertical;
+  stackView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:stackView];
 
   self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel = [[UILabel alloc] init];
   self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.accessibilityIdentifier =
@@ -57,32 +64,33 @@
       @"bottomSheetPresentationControllerDidDismissBottomSheet called!";
   self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.numberOfLines = 0;
   self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.hidden = YES;
+  [stackView
+      addArrangedSubview:self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel];
 
-  [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel sizeToFit];
-  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel
-      .translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel];
+  self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel =
+      [[UILabel alloc] init];
+  self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel
+      .accessibilityIdentifier =
+      @"BottomSheetPresentationControllerDelegateExample."
+      @"bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel";
+  self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel.text =
+      @"bottomSheetPresentationControllerDidDismissBottomSheet called!";
+  self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel.numberOfLines = 0;
+  self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel.hidden = YES;
+  [stackView addArrangedSubview:
+                 self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel];
 
   if (@available(iOS 11.0, *)) {
-    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.topAnchor
-        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor]
+    [stackView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active =
+        YES;
+    [stackView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor]
         .active = YES;
-    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.leadingAnchor
-        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor]
-        .active = YES;
-    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.trailingAnchor
-        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor]
+    [stackView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor]
         .active = YES;
   } else {
-    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.topAnchor
-        constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor]
-        .active = YES;
-    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.leadingAnchor
-        constraintEqualToAnchor:self.view.leadingAnchor]
-        .active = YES;
-    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.trailingAnchor
-        constraintEqualToAnchor:self.view.trailingAnchor]
-        .active = YES;
+    [stackView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor].active = YES;
+    [stackView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [stackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
   }
 }
 
@@ -108,6 +116,14 @@
       });
 }
 
+- (void)showBottomSheetDismissalAnimationCompletedCalledLabel {
+  self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel.hidden = NO;
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel.hidden = YES;
+      });
+}
+
 #pragma mark - MDCBottomSheetPresentationControllerDelegate
 
 - (void)bottomSheetDidChangeYOffset:(MDCBottomSheetPresentationController *)bottomSheet
@@ -119,6 +135,12 @@
     (MDCBottomSheetPresentationController *)bottomSheet {
   NSLog(@"%@", NSStringFromSelector(_cmd));
   [self showBottomSheetPresentationControllerDidDismissBottomSheetCalledLabel];
+}
+
+- (void)bottomSheetPresentationControllerDismissalAnimationCompleted:
+    (MDCBottomSheetPresentationController *)bottomSheet {
+  NSLog(@"%@", NSStringFromSelector(_cmd));
+  [self showBottomSheetDismissalAnimationCompletedCalledLabel];
 }
 
 - (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
