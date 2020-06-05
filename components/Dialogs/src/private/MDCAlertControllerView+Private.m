@@ -889,8 +889,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGPoint buttonCenter;
   CGPoint buttonOrigin;
   buttonOrigin.y = self.orderVerticalActionsByEmphasis
-                       ? self.actionsInsets.bottom
-                       : self.actionsScrollView.contentSize.height - self.actionsInsets.bottom;
+                       ? self.actionsInsets.top
+                       : self.actionsScrollView.contentSize.height - self.actionsInsets.top;
   if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentCenter ||
       self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
     buttonCenter.x = self.actionsScrollView.contentSize.width / 2.0f;
