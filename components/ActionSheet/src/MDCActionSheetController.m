@@ -582,4 +582,12 @@ static const CGFloat kDividerDefaultAlpha = (CGFloat)0.12;
   }
 }
 
+- (void)bottomSheetPresentationControllerDismissalAnimationCompleted:
+    (MDCBottomSheetPresentationController *)bottomSheet {
+  if ([self.delegate
+          respondsToSelector:@selector(actionSheetControllerDismissalAnimationCompleted:)]) {
+    [self.delegate actionSheetControllerDismissalAnimationCompleted:self];
+  }
+}
+
 @end

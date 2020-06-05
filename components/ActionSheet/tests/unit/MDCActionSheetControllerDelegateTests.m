@@ -20,12 +20,21 @@
 
 @interface ActionSheetControllerDelegate : NSObject <MDCActionSheetControllerDelegate>
 @property(nonatomic, readonly) MDCActionSheetController *dismissedActionSheetController;
+@property(nonatomic, readonly)
+    MDCActionSheetController *dismissalAnimationCompletedActionSheetController;
 @end
 
 @implementation ActionSheetControllerDelegate
+
 - (void)actionSheetControllerDidDismiss:(MDCActionSheetController *)actionSheetController {
   _dismissedActionSheetController = actionSheetController;
 }
+
+- (void)actionSheetControllerDismissalAnimationCompleted:
+    (MDCActionSheetController *)actionSheetController {
+  _dismissalAnimationCompletedActionSheetController = actionSheetController;
+}
+
 @end
 
 @interface MDCActionSheetControllerDelegateTests : XCTestCase
@@ -67,6 +76,24 @@
   XCTAssertNotNil(self.actionSheetControllerDelegate.dismissedActionSheetController);
   XCTAssertEqualObjects(self.actionSheetControllerDelegate.dismissedActionSheetController,
                         self.actionSheet);
+}
+
+- (void)testDismissalAnimationCompletedIsCalledWithActionSheetController {
+  // Given
+  MDCBottomSheetPresentationController *presentationController =
+      self.actionSheet.mdc_bottomSheetPresentationController;
+
+  // When
+  [self.actionSheet loadView];
+  [presentationController.delegate
+      bottomSheetPresentationControllerDismissalAnimationCompleted:presentationController];
+
+  // Then
+  XCTAssertNotNil(
+      self.actionSheetControllerDelegate.dismissalAnimationCompletedActionSheetController);
+  XCTAssertEqualObjects(
+      self.actionSheetControllerDelegate.dismissalAnimationCompletedActionSheetController,
+      self.actionSheet);
 }
 
 @end

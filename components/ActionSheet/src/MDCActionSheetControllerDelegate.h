@@ -25,8 +25,18 @@
 
 /**
  Tells the delegate that the action sheet was dismissed.
+
+ @param actionSheetController the @c MDCActionSheetController that was dismissed.
  */
 - (void)actionSheetControllerDidDismiss:(nonnull MDCActionSheetController *)actionSheetController;
+
+/**
+ Tells the delegate that the action sheet has completed animating offscreen.
+
+ @param actionSheetController the @c MDCActionSheetController that was dismissed.
+ */
+- (void)actionSheetControllerDismissalAnimationCompleted:
+    (nonnull MDCActionSheetController *)actionSheetController;
 
 /**
  Tells the delegate that the action sheet will display a view.

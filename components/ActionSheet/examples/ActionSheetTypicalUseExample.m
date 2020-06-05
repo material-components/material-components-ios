@@ -102,6 +102,11 @@
   NSLog(@"Did dismiss");
 }
 
+- (void)actionSheetControllerDismissalAnimationCompleted:
+    (MDCActionSheetController *)actionSheetController {
+  NSLog(@"%@", NSStringFromSelector(_cmd));
+}
+
 @end
 
 @implementation ActionSheetTypicalUseExampleViewController (CatalogByConvention)
