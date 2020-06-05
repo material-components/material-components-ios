@@ -24,3 +24,26 @@ CGFloat MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
          paddingBetweenFloatingLabelAndEditingText + totalTextHeight +
          paddingBetweenEditingTextAndContainerBottom;
 }
+
+CGFloat MDCTextControlClampDensity(CGFloat density) {
+  CGFloat clampedDensity = density;
+  if (clampedDensity < 0) {
+    clampedDensity = 0;
+  } else if (clampedDensity > 1) {
+    clampedDensity = 1;
+  }
+  return clampedDensity;
+}
+
+CGFloat MDCTextControlPaddingValueWithMinimumPadding(CGFloat minimumPadding, CGFloat maximumPadding,
+                                                     CGFloat density) {
+  if (minimumPadding > maximumPadding) {
+    return 0;
+  } else if (minimumPadding == maximumPadding) {
+    return minimumPadding;
+  } else {
+    CGFloat minMaxPaddingDifference = maximumPadding - minimumPadding;
+    CGFloat additionToMinPadding = minMaxPaddingDifference * (1 - density);
+    return minimumPadding + additionToMinPadding;
+  }
+}

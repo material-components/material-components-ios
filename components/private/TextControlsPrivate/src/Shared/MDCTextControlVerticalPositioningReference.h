@@ -38,3 +38,8 @@ CGFloat MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
     CGFloat paddingBetweenContainerTopAndFloatingLabel,
     CGFloat paddingBetweenFloatingLabelAndEditingText,
     CGFloat paddingBetweenEditingTextAndContainerBottom);
+
+CGFloat MDCTextControlClampDensity(CGFloat density);
+
+CGFloat MDCTextControlPaddingValueWithMinimumPadding(CGFloat minimumPadding, CGFloat maximumPadding,
+                                                     CGFloat density);

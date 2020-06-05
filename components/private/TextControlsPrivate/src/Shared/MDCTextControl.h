@@ -26,12 +26,6 @@
 
 UIFont *_Nonnull MDCTextControlDefaultUITextFieldFont(void);
 
-CGFloat MDCTextControlPaddingValueWithMinimumPadding(CGFloat minimumPadding,
-                                                     CGFloat maximumPadding,
-                                                     CGFloat density);
-
-CGFloat MDCTextControlNormalizeDensity(CGFloat density);
-
 FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
 
 @protocol MDCTextControlStyle;
