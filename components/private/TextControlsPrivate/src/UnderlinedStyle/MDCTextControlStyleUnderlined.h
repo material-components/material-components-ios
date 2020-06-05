@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,25 +15,23 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTextControl.h"
-#import "MDCTextControlStyleUnderlined.h"
 
 /**
-This style object is used by MDCTextControls adopting the Material Filled style.
+This style object is used by MDCTextControls adopting the Material Underlined style.
 */
-@interface MDCTextControlStyleFilled : MDCTextControlStyleUnderlined <MDCTextControlStyle>
+@interface MDCTextControlStyleUnderlined : NSObject <MDCTextControlStyle>
 
 /**
-Sets the filled background color color for a given state.
-@param filledBackgroundColor The UIColor for the given state.
+Sets the underline color color for a given state.
+@param underlineColor The UIColor for the given state.
 @param state The MDCTextControlState.
 */
-- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
-                        forState:(MDCTextControlState)state;
+- (void)setUnderlineColor:(nonnull UIColor *)underlineColor forState:(MDCTextControlState)state;
 
 /**
-Returns the filled background color for a given state.
+Returns the underline color color for a given state.
 @param state The MDCTextControlState.
 */
-- (nonnull UIColor *)filledBackgroundColorForState:(MDCTextControlState)state;
+- (nonnull UIColor *)underlineColorForState:(MDCTextControlState)state;
 
 @end
