@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../../src/BaseTextFields/private/MDCBaseTextFieldLayout.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
+#import "MaterialTextControlsPrivate+TextFields.h"
 
 @interface MDCBaseTextFieldLayout (Testing)
 - (CGFloat)textHeightWithFont:(UIFont *)font;

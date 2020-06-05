@@ -21,7 +21,7 @@
 #import "MaterialMath.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
-#import "private/MDCBaseTextFieldLayout.h"
+#import "MaterialTextControlsPrivate+TextFields.h"
 
 @interface MDCBaseTextField () <MDCTextControl>
 
