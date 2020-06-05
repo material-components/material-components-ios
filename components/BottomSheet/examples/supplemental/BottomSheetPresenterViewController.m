@@ -32,6 +32,7 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   _button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  _button.accessibilityIdentifier = @"BottomSheetPresenterViewController.button";
   [_button setTitle:@"Show Bottom Sheet" forState:UIControlStateNormal];
   _button.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |

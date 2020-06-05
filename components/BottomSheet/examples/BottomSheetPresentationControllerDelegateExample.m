@@ -26,6 +26,8 @@
     self.view.backgroundColor = UIColor.purpleColor;
     self.view.isAccessibilityElement = YES;
     self.view.accessibilityLabel = @"Example content";
+    self.view.accessibilityIdentifier =
+        @"BottomSheetPresentationControllerDelegateExamplePresentedSheetController.view";
   }
   return self;
 }
@@ -37,6 +39,8 @@
 */
 @interface BottomSheetPresentationControllerDelegateExample
     : BottomSheetPresenterViewController <MDCBottomSheetPresentationControllerDelegate>
+@property(nonatomic, strong)
+    UILabel *bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel;
 @end
 
 @implementation BottomSheetPresentationControllerDelegateExample
@@ -44,6 +48,42 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self.button setTitle:@"Present Custom Controller" forState:UIControlStateNormal];
+
+  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel = [[UILabel alloc] init];
+  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.accessibilityIdentifier =
+      @"BottomSheetPresentationControllerDelegateExample."
+      @"bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel";
+  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.text =
+      @"bottomSheetPresentationControllerDidDismissBottomSheet called!";
+  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.numberOfLines = 0;
+  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.hidden = YES;
+
+  [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel sizeToFit];
+  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel
+      .translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel];
+
+  if (@available(iOS 11.0, *)) {
+    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.topAnchor
+        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor]
+        .active = YES;
+    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.leadingAnchor
+        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor]
+        .active = YES;
+    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.trailingAnchor
+        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor]
+        .active = YES;
+  } else {
+    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.topAnchor
+        constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor]
+        .active = YES;
+    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.leadingAnchor
+        constraintEqualToAnchor:self.view.leadingAnchor]
+        .active = YES;
+    [self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.trailingAnchor
+        constraintEqualToAnchor:self.view.trailingAnchor]
+        .active = YES;
+  }
 }
 
 - (void)presentBottomSheet {
@@ -60,6 +100,14 @@
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)showBottomSheetPresentationControllerDidDismissBottomSheetCalledLabel {
+  self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.hidden = NO;
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.bottomSheetPresentationControllerDidDismissBottomSheetCalledLabel.hidden = YES;
+      });
+}
+
 #pragma mark - MDCBottomSheetPresentationControllerDelegate
 
 - (void)bottomSheetDidChangeYOffset:(MDCBottomSheetPresentationController *)bottomSheet
@@ -70,6 +118,7 @@
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (MDCBottomSheetPresentationController *)bottomSheet {
   NSLog(@"%@", NSStringFromSelector(_cmd));
+  [self showBottomSheetPresentationControllerDidDismissBottomSheetCalledLabel];
 }
 
 - (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
