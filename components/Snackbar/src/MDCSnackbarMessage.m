@@ -83,6 +83,7 @@ static BOOL _usesLegacySnackbar = NO;
   copy.completionHandler = self.completionHandler;
   copy.action = self.action;
   copy.snackbarMessageWillPresentBlock = self.snackbarMessageWillPresentBlock;
+  copy.error = self.error;
 
   return copy;
 }
