@@ -980,6 +980,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero)) {
+    // When visibleAreaInsets is set, custom shapeGenerater is not allow to be set through setter.
+    return;
+  }
+
+  [self configureLayerWithShapeGenerator:shapeGenerator];
+}
+
+- (void)configureLayerWithShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
   if (shapeGenerator) {
     self.layer.shadowPath = nil;
   } else {
@@ -1065,7 +1074,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       _cornerRadiusObserverAdded = NO;
     }
   } else {
-    self.shapeGenerator = [self generateShapeWithCornerRadius:self.layer.cornerRadius];
+    [self configureLayerWithShapeGenerator:[self generateShapeWithCornerRadius:self.layer
+                                                                                   .cornerRadius]];
 
     if (!_cornerRadiusObserverAdded) {
       [self.layer addObserver:self
@@ -1084,7 +1094,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (context == kKVOContextCornerRadius) {
     if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero) &&
         self.shapeGenerator) {
-      self.shapeGenerator = [self generateShapeWithCornerRadius:self.layer.cornerRadius];
+      [self
+          configureLayerWithShapeGenerator:[self generateShapeWithCornerRadius:self.layer
+                                                                                   .cornerRadius]];
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
