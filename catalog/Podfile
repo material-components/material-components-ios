@@ -52,6 +52,7 @@ target "MDCCatalog" do
     'private/KeyboardWatcher/UnitTests',
     'private/Math/UnitTests',
     'private/Overlay/UnitTests',
+    'private/TextControlsPrivate+TextFields/UnitTests',
     'private/ThumbTrack/UnitTests',
     'private/UIMetrics/UnitTests',
     'ProgressView/UnitTests',
@@ -114,6 +115,7 @@ end
 target "MDCDragons" do
   platform :ios, '9.0'
   project 'MDCDragons.xcodeproj'
+  pod 'MaterialCatalog', :path => 'MaterialCatalog/'
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialComponents', :path => '../'
   pod 'MaterialComponentsBeta', :path => '../'

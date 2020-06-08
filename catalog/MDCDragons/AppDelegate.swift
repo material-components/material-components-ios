@@ -16,6 +16,7 @@
 
 import UIKit
 import CatalogByConvention
+import MaterialCatalog
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

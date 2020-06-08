@@ -19,7 +19,7 @@ import MaterialComponents.MaterialOverlayWindow
 /// A custom UIWindow that displays the user's touches for recording video or demos.
 ///
 /// Triple tapping anywhere will toggle the visible touches.
-class MDCCatalogWindow: MDCOverlayWindow {
+public class MDCCatalogWindow: MDCOverlayWindow {
   var showTouches = false
 
   fileprivate let fadeDuration: TimeInterval = 0.2
@@ -41,7 +41,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
     }
   }
 
-  override func sendEvent(_ event: UIEvent) {
+  public override func sendEvent(_ event: UIEvent) {
     if let touches = event.allTouches {
       for touch in touches {
         switch touch.phase {
