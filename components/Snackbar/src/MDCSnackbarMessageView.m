@@ -467,6 +467,17 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   }
 }
 
+- (NSString *)description {
+  NSString *messageString = self.message.description;
+  NSMutableString *description = [[NSMutableString alloc] init];
+  [description appendFormat:@"%@ {\n", [super description]];
+  [description appendFormat:@"  message: %@;\n",
+                            [messageString stringByReplacingOccurrencesOfString:@"\n"
+                                                                     withString:@"\n  "]];
+  [description appendString:@"}"];
+  return [description copy];
+}
+
 #pragma mark - Subclass overrides
 
 + (BOOL)requiresConstraintBasedLayout {

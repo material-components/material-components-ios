@@ -77,6 +77,44 @@
   [super tearDown];
 }
 
+- (void)testMessageDescription {
+  // Given
+  NSString *text = @"the message text";
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+
+  // When
+  self.message.text = text;
+  self.message.action = action;
+
+  // Then
+  XCTAssertNotNil(self.message.description);
+  XCTAssertTrue([self.message.description containsString:@"text:"]);
+  XCTAssertTrue([self.message.description containsString:text]);
+  XCTAssertTrue([self.message.description containsString:@"action:"]);
+  XCTAssertTrue([self.message.description containsString:action.title]);
+  XCTAssertTrue([self.message.description containsString:@"viewClass:"]);
+  XCTAssertTrue([self.message.description containsString:@"MDCSnackbarMessageView"]);
+}
+
+- (void)testDescription {
+  // Given
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+
+  // When
+  [self.manager showMessage:self.message];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  MDCSnackbarMessageView *messageView = self.delegate.presentedView;
+  XCTAssertNotNil(messageView.description);
+  XCTAssertTrue([messageView.description containsString:@"message:"]);
+  XCTAssertTrue([messageView.description containsString:@"MDCSnackbarMessage"]);
+}
+
 - (void)testDefaultColors {
   // Given
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];

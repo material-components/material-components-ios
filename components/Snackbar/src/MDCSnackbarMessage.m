@@ -92,6 +92,18 @@ static BOOL _usesLegacySnackbar = NO;
   return dispatch_get_main_queue();
 }
 
+- (NSString *)description {
+  NSMutableString *description = [[NSMutableString alloc] init];
+  [description appendFormat:@"<%@: %p> {\n", [self class], self];
+  [description appendFormat:@"  text: \"%@\",\n", self.text];
+  if (self.action) {
+    [description appendFormat:@"  action: \"%@\",\n", self.action.title];
+  }
+  [description appendFormat:@"  viewClass: \"%@\",\n", self.viewClass];
+  [description appendString:@"}"];
+  return [description copy];
+}
+
 #pragma mark Text
 
 - (void)setText:(NSString *)text {
