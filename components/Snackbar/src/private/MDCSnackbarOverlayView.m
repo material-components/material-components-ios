@@ -18,11 +18,13 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "../MDCSnackbarError.h"
 #import "../MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
-#import "MaterialApplication.h"
 #import "MaterialAvailability.h"
+#import "MDCSnackbarMessageInternal.h"
+#import "MDCSnackbarMessageViewInternal.h"
+#import "MaterialApplication.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
 
@@ -602,6 +604,15 @@ static const CGFloat kMaximumHeight = 80;
       if (scaleAnimation) {
         [animations addObject:scaleAnimation];
       }
+    }
+    if (animations.count == 0) {
+      NSDictionary *errorDictionary = @{
+        @"MDCSnackbarMessageView" : snackbarView,
+      };
+      snackbarView.message.error =
+          [[NSError alloc] initWithDomain:MDCSnackbarErrorDomain
+                                     code:MDCSnackbarErrorSlideAnimationMisconfigured
+                                 userInfo:errorDictionary];
     }
     animationsGroup.animations = animations;
     [snackbarView.layer addAnimation:animationsGroup forKey:@"snackbarAnimation"];

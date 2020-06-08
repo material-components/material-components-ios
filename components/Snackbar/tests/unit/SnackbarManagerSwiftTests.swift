@@ -28,7 +28,7 @@ class SnackbarManagerSwiftTests: XCTestCase {
 
     let suspendedMessage = MDCSnackbarMessage(text: "")
     suspendedMessage.duration = 0.05
-    suspendedMessage.completionHandler = { (userInitiated) -> Void  in
+    suspendedMessage.completionHandler = { (userInitiated) -> Void in
       expectation.fulfill()
     }
 
@@ -49,7 +49,7 @@ class SnackbarManagerSwiftTests: XCTestCase {
 
   func testHasMessagesShowingOrQueued() {
     let message = MDCSnackbarMessage(text: "foo1")
-    message.duration = 10;
+    message.duration = 10
     MDCSnackbarManager.show(message)
 
     let expectation = self.expectation(description: "has_shown_message")
