@@ -14,9 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialApplication.h"
+#import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
-#import "supplemental/BottomSheetSupplemental.h"
+#import "MaterialApplication.h"
+
+@interface BottomSheetAutolayoutSafeAreaExample : BottomSheetPresenterViewController
+@end
 
 static const CGFloat kSafeContentHeight = 150;
 static const CGFloat kSafeContentWidth = 300;
@@ -148,6 +151,18 @@ static const CGFloat kSafeContentWidth = 300;
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = YES;
   [self presentViewController:viewController animated:YES completion:nil];
+}
+
+@end
+
+@implementation BottomSheetAutolayoutSafeAreaExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Autolayout Safe Area Content" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

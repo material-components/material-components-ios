@@ -14,13 +14,16 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialAppBar.h"
-#import "MaterialBottomSheet+ShapeThemer.h"
-#import "MaterialBottomSheet.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
-#import "supplemental/BottomSheetSupplemental.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "BottomSheetPresenterViewController.h"
+#import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet+ShapeThemer.h"
+
+@interface BottomSheetDismissOnDraggingDownExample : BottomSheetPresenterViewController
+@end
 
 /**
  In this example you should not be able to drag to dismiss the bottom sheet. For a more
@@ -93,6 +96,18 @@
       NSLog(@"bottom sheet state changed to: undefined");
       break;
   }
+}
+
+@end
+
+@implementation BottomSheetDismissOnDraggingDownExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Bottom Sheet DismissOnDraggingDown" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

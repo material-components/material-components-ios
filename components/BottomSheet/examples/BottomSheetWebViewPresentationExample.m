@@ -15,8 +15,11 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
+#import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
-#import "supplemental/BottomSheetSupplemental.h"
+
+@interface BottomSheetWebViewPresentationExample : BottomSheetPresenterViewController
+@end
 
 @interface PresentedWebViewController : UIViewController
 
@@ -57,6 +60,18 @@
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [self presentViewController:bottomSheet animated:YES completion:nil];
+}
+
+@end
+
+@implementation BottomSheetWebViewPresentationExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Presentation from Modal (WebView)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

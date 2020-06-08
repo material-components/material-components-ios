@@ -14,13 +14,16 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialAppBar.h"
-#import "MaterialBottomSheet+ShapeThemer.h"
-#import "MaterialBottomSheet.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
-#import "supplemental/BottomSheetSupplemental.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "BottomSheetPresenterViewController.h"
+#import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet+ShapeThemer.h"
+
+@interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
+@end
 
 @interface BottomSheetTypicalUseExample () <MDCBottomSheetControllerDelegate>
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
@@ -85,6 +88,20 @@
       NSLog(@"bottom sheet state changed to: undefined");
       break;
   }
+}
+
+@end
+
+@implementation BottomSheetTypicalUseExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Bottom Sheet" ],
+    @"description" : @"Bottom sheets are surfaces anchored to the bottom of the screen "
+                     @"containing supplementary content, actions, or navigation.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
 }
 
 @end

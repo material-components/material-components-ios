@@ -14,33 +14,33 @@
 
 #import <UIKit/UIKit.h>
 
-#import "supplemental/BottomSheetDummyCollectionViewController.h"
+#import "supplemental/BottomSheetDummyStaticViewController.h"
 #import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
 
-@interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
+@interface BottomSheetSimpleExample : BottomSheetPresenterViewController
 @end
 
-@implementation BottomSheetShortCollectionExample
+@implementation BottomSheetSimpleExample
 
 - (void)presentBottomSheet {
-  BottomSheetDummyCollectionViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:6];
-  viewController.collectionView.accessibilityLabel = @"Example content";
+  BottomSheetDummyStaticViewController *viewController =
+      [[BottomSheetDummyStaticViewController alloc] init];
+  viewController.view.isAccessibilityElement = YES;
+  viewController.view.accessibilityLabel = @"Example content";
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
-  bottomSheet.trackingScrollView = viewController.collectionView;
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
 @end
 
-@implementation BottomSheetShortCollectionExample (CatalogByConvention)
+@implementation BottomSheetSimpleExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Bottom Sheet", @"Collection View (Short)" ],
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Static Content" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };

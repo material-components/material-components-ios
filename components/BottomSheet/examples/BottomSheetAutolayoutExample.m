@@ -14,9 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomSheet.h"
 #import "supplemental/BottomSheetDummyStaticViewController.h"
-#import "supplemental/BottomSheetSupplemental.h"
+#import "BottomSheetPresenterViewController.h"
+#import "MaterialBottomSheet.h"
+
+@interface BottomSheetAutolayoutExample : BottomSheetPresenterViewController
+@end
 
 @implementation BottomSheetAutolayoutExample
 
@@ -31,6 +34,18 @@
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [self presentViewController:bottomSheet animated:YES completion:nil];
+}
+
+@end
+
+@implementation BottomSheetAutolayoutExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Autolayout Content" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end
