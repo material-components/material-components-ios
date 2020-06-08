@@ -93,7 +93,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.messageTextView.editable = NO;
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.selectable = YES;  // Enables link tap.
-    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeLink;
     if (self.mdc_adjustsFontForContentSizeCategory) {
       self.messageTextView.font =
           [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
