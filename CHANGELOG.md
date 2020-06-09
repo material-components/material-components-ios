@@ -1,16 +1,36 @@
-# #develop#
+# 109.7.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release makes accessibility improvements related to high contrast colors, adds new functionality to Buttons, Chips, Dialogs, Snackbars, and Tabs, and adds a new TextControls text field, `MDCUnderlinedTextField`, which is intended to replace `MDCTextInputControllerLegacyDefault` and `MDCTextInputControllerUnderline`.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### ActionSheet
+
+- `MDCActionSheetControllerDelegate` has a new method, `-actionSheetControllerDismissalAnimationCompleted:`.
+
+### Buttons
+
+- `MDCFloatingButton` has a new `visibleHitAreaInsets` property.
+
+### Chips
+
+- `MDCChipView` has a new `cornerRadius` property.
+
+### Dialogs
+
+- `MDCAlertController` has improved attributed link support.
+
+### Snackbar
+
+- `MDCSnackbarMessage` has a new `completionHandlerWithError` property.
+
+### Tabs
+
+- `MDCItemBarCell` has a new `selectedImage` property.
+
+### TextControls
+
+- There is a new text field class, `MDCUnderlinedTextField`.
 
 ## Component changes
 
