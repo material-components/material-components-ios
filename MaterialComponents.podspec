@@ -1617,6 +1617,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     component.dependency "MaterialComponents/private/TextControlsPrivate+BaseStyle"
+    component.dependency "MaterialComponents/private/TextControlsPrivate+TextFields"
     component.dependency "MDFInternationalization"
 
     component.test_spec 'UnitTests' do |unit_tests|
