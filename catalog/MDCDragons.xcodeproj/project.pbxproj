@@ -16,6 +16,7 @@
 		5CA6E62B1FDB253E001F2A17 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA6E62A1FDB253E001F2A17 /* HeaderView.swift */; };
 		5CDA58A81FD735FE00DB25A8 /* MDCDrawDragons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDA58A71FD735FE00DB25A8 /* MDCDrawDragons.swift */; };
 		5CE8092D1FD729880068A050 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE8092C1FD729880068A050 /* AppDelegate.swift */; };
+		DF373EC2248FF0C900F47798 /* MDCCatalogWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF373EC1248FF0C900F47798 /* MDCCatalogWindow.swift */; };
 		FB8EC1F332014048A5D49496 /* Pods_MDCDragons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1727545609D5A05DD1A8DD8 /* Pods_MDCDragons.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		5CE809381FD729880068A050 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63301F6E1E07E3E0BAAFE1AF /* Pods-MDCDragons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons.release.xcconfig"; sourceTree = "<group>"; };
 		D1727545609D5A05DD1A8DD8 /* Pods_MDCDragons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCDragons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF373EC1248FF0C900F47798 /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		5CE8092B1FD729880068A050 /* MDCDragons */ = {
 			isa = PBXGroup;
 			children = (
+				DF373EC1248FF0C900F47798 /* MDCCatalogWindow.swift */,
 				5CE8092C1FD729880068A050 /* AppDelegate.swift */,
 				5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */,
 				5C96F51D1FDF168C00F5E8AF /* MDCDragonsTableViewCell.swift */,
@@ -235,6 +238,7 @@
 				5C96F5201FDF471A00F5E8AF /* DragonCell.swift in Sources */,
 				5C96F51E1FDF168C00F5E8AF /* MDCDragonsTableViewCell.swift in Sources */,
 				5CA6E62B1FDB253E001F2A17 /* HeaderView.swift in Sources */,
+				DF373EC2248FF0C900F47798 /* MDCCatalogWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
