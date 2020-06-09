@@ -123,19 +123,21 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     alert.mdc_adjustsFontForContentSizeCategory = true
 
     // Respond to a link-tap event:
-    alert.attributedMessageAction = { url, range, interaction in
-      // Defer to the UITextView's default URL interaction for non-custom links.
-      guard url.absoluteString == "mdccatalog://" else { return true }
+    if #available(iOS 10.0, *) {
+      alert.attributedMessageAction = { url, range, interaction in
+        // Defer to the UITextView's default URL interaction for non-custom links.
+        guard url.absoluteString == "mdccatalog://" else { return true }
 
-      print("A custom action for link:", url.absoluteString, " in range:", range)
+        print("A custom action for link:", url.absoluteString, " in range:", range)
 
-      // Dismiss the alert for short-tap interactions.
-      if interaction == .invokeDefaultAction {
-        alert.dismiss(animated: true)
+        // Dismiss the alert for short-tap interactions.
+        if interaction == .invokeDefaultAction {
+          alert.dismiss(animated: true)
+        }
+
+        // Disable UITextView's default URL interaction.
+        return false
       }
-
-      // Disable UITextView's default URL interaction.
-      return false
     }
 
     // Note: Theming updates the message's text color, potentially overridding foreground text

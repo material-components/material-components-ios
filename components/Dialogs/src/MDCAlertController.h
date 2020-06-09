@@ -77,12 +77,13 @@
  A block that is invoked whan a link (a URL) in the attributed message text is tapped.
 
  @param URL The URL of the link that was tapped. May include external or internal URLs.
- @param characterRange The range of characters (in the attributed text) of the link that was tapped.
+ @param range The range of characters (in the attributed text) of the link that was tapped.
  @param interaction The UITextItemInteraction type of interaction performed by the user.
 
  @return true if UIKit's default implementation of the interaction should proceed after this block
          is invoked.
 */
+API_AVAILABLE(ios(10.0))
 typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange range,
                                                   UITextItemInteraction interaction);
 
@@ -90,7 +91,9 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  An action that is invoked when a link (URL) in the attributed message is interacted with. Applies
  only when `attributedMessage` is set.
 */
-@property(nonatomic, copy, nullable) MDCAttributedMessageActionHandler attributedMessageAction;
+
+@property(nonatomic, copy, nullable)
+    MDCAttributedMessageActionHandler attributedMessageAction API_AVAILABLE(ios(10.0));
 
 /**
  An object conforming to @c MDCAlertControllerDelegate. When non-nil, the @c MDCAlertController will
