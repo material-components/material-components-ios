@@ -182,7 +182,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.contentEdgeInsets = UIEdgeInsetsMake(buttonContentPadding, buttonContentPadding,
                                               buttonContentPadding, buttonContentPadding);
-
+    // Minimum touch target size (44, 44).
+    self.minimumSize = CGSizeMake(44, 44);
     // Make sure the button doesn't get too compressed.
     [self setContentCompressionResistancePriority:UILayoutPriorityRequired
                                           forAxis:UILayoutConstraintAxisHorizontal];
