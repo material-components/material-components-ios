@@ -1796,6 +1796,35 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  # TextControls+UnderlinedTextFields
+
+  mdc.subspec "TextControls+UnderlinedTextFields" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+    component.source_files = [
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}",
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/Availability"
+    component.dependency "MaterialComponents/TextControls+BaseTextFields"
+    component.dependency "MaterialComponents/private/TextControlsPrivate+UnderlinedStyle"
+  end
+
+  # TextControls+UnderlinedTextFieldsTheming
+
+  mdc.subspec "TextControls+UnderlinedTextFieldsTheming" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+    component.source_files = [
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}",
+      "components/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/TextControls+UnderlinedTextFields"
+    component.dependency "MaterialComponents/schemes/Container"
+  end
+
   mdc.subspec "TextFields+ColorThemer" do |extension|
     extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
@@ -2068,9 +2097,37 @@ Pod::Spec.new do |mdc|
       component.dependency "MaterialComponents/AnimationTiming"
       component.dependency "MaterialComponents/private/Math"
       component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+UnderlinedStyle"
     end
 
     private_spec.subspec "TextControlsPrivate+OutlinedStyle" do |component|
+      component.ios.deployment_target = '9.0'
+      component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+      component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
+      ]
+      component.dependency "MaterialComponents/Availability"
+      component.dependency "MaterialComponents/AnimationTiming"
+      component.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+    end
+
+    private_spec.subspec "TextControlsPrivate+TextFields" do |component|
+      component.ios.deployment_target = '9.0'
+      component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
+      component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"
+      ]
+      component.dependency "MaterialComponents/private/Math"
+      component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
+
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = [
+        "components/private/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+        ]
+        unit_tests.dependency "MaterialComponents/schemes/Container"
+      end
+    end
+
+    private_spec.subspec "TextControlsPrivate+UnderlinedStyle" do |component|
       component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.h"
       component.source_files = [ "components/private/#{component.base_name.split('+')[0]}/src/#{component.base_name.split('+')[1]}/*.{h,m}"

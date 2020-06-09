@@ -52,6 +52,7 @@ target "MDCCatalog" do
     'private/KeyboardWatcher/UnitTests',
     'private/Math/UnitTests',
     'private/Overlay/UnitTests',
+    'private/TextControlsPrivate+TextFields/UnitTests',
     'private/ThumbTrack/UnitTests',
     'private/UIMetrics/UnitTests',
     'ProgressView/UnitTests',
