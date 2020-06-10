@@ -1,3 +1,120 @@
+# 109.7.0
+
+This minor release makes accessibility improvements related to high contrast colors, adds new functionality to Buttons, Chips, Dialogs, Snackbars, and Tabs, and adds a new TextControls text field, `MDCUnderlinedTextField`, which is intended to replace `MDCTextInputControllerLegacyDefault` and `MDCTextInputControllerUnderline`.
+
+## New features
+
+### ActionSheet
+
+- `MDCActionSheetControllerDelegate` has a new method, `-actionSheetControllerDismissalAnimationCompleted:`.
+
+### Buttons
+
+- `MDCFloatingButton` has a new `visibleHitAreaInsets` property.
+
+### Chips
+
+- `MDCChipView` has a new `cornerRadius` property.
+
+### Dialogs
+
+- `MDCAlertController` has improved attributed link support.
+
+### Snackbar
+
+- `MDCSnackbarMessage` has a new `completionHandlerWithError` property.
+
+### Tabs
+
+- `MDCItemBarCell` has a new `selectedImage` property.
+
+### TextControls
+
+- There is a new text field class, `MDCUnderlinedTextField`.
+
+## Component changes
+
+### ActionSheet
+
+* [Add actionSheetControllerDismissalAnimationCompleted method to MDCActionSheetControllerDelegate.](https://github.com/material-components/material-components-ios/commit/e5f4e3fcb044a47d1a4e83b2148224ac4b1261be) (Bryan Oltman)
+
+### Banner
+
+* [Apply primary color to icon in theming.](https://github.com/material-components/material-components-ios/commit/1591b685646089020affd50e2625bd6d40b0f264) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Replace bottom navigation README](https://github.com/material-components/material-components-ios/commit/87595333681e82b3ecbd26caa8483a6c84142f4a) (Andrew Overton)
+
+### BottomSheet
+
+* [Add BottomSheetPresentationControllerDelegateExample to demonstrate usage of MDCBottomSheetPresentationControllerDelegate.](https://github.com/material-components/material-components-ios/commit/4e461e2c13e5472a15e445d98353a5975b994500) (Bryan Oltman)
+* [Add bottomSheetDismissalAnimationCompleted method to MDCBottomSheetPresentationController.](https://github.com/material-components/material-components-ios/commit/464f202058020bee9f1f647f03e875eecd8b8460) (Bryan Oltman)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/b169119b9f8af5ccbad15cd08cc989b480f9d676) (Bryan Oltman)
+* [Rename BottomSheetPresentationExample to BottomSheetModalPresentationExample to better represent its purpose.](https://github.com/material-components/material-components-ios/commit/ee0b388c5ccc129020154c1702bad528587e13f4) (Bryan Oltman)
+* [Updating BottomSheet examples organization](https://github.com/material-components/material-components-ios/commit/87c8968e667106e9eda8669ed1a178624ed4a571) (Nobody)
+
+### ButtonBar
+
+* [Remove excess iPad insets from the button bar buttons.](https://github.com/material-components/material-components-ios/commit/b9e978c6e51715a9cd6498d2a9497b3553d420d4) (Jeff Verkoeyen)
+
+### Buttons
+
+* [Add a boolean for when observing cornerRadius so that we won't try to add 2 observers or remove a non-existent observer](https://github.com/material-components/material-components-ios/commit/3d5c27f12b93afddb3f43a33ff80daa2fecf0c19) (Yarden Eitan)
+* [Add visibleAreaInsets support for the FAB.](https://github.com/material-components/material-components-ios/commit/afb87e9860dfa444a5d999064c791240968c4df0) (Yarden Eitan)
+* [Put pointerStyleProvider API under a respondsToSelector conditional to ensure no crashes for 13.4 beta users.](https://github.com/material-components/material-components-ios/commit/da469c7660721d69f187f56db73ca76bc8868102) (Yarden Eitan)
+* [When visibleAreaInsets are set, don't allow additional setting of the shapeGenerator API directly.](https://github.com/material-components/material-components-ios/commit/dee8934c69d66b70b05a2cf2ccf02b5c805349f3) (Yarden Eitan)
+
+### Chips
+
+* [Add cornerRadius API to support customizing chip's corner radius.](https://github.com/material-components/material-components-ios/commit/ab2801297f0ac18d6fe1cea72d64e47e0e4fff96) (Wenyu Zhang)
+
+### Dialogs
+
+* [Adding attributed link color API and updating theming extension](https://github.com/material-components/material-components-ios/commit/ea8887e284310b81c16c1f7f0bc23786db2c47d4) (Galia Kaufman)
+* [Annotate API using UITextItemInteraction to be iOS 10 only](https://github.com/material-components/material-components-ios/commit/aa955479536c3a1c4e0c418204ac9885f861f855) (Andrew Overton)
+* [Disable UIDataDetectorTypeLink by default for attributed messages.](https://github.com/material-components/material-components-ios/commit/24ce1c979cfa1b97b21cc82abaa335e086d58d15) (Galia Kaufman)
+* [Fix mixed top and bottom insets for the actions.](https://github.com/material-components/material-components-ios/commit/5832985581a52767aa5823e286b42411e36a7cbf) (Iryna Berezan)
+* [Header file comments cleanup](https://github.com/material-components/material-components-ios/commit/c273dfcfb4867746063a7175ae4886de25e86944) (Galia Kaufman)
+* [Improve Dialogs docs Improve alt text and use string literals in Dialogs README examples.](https://github.com/material-components/material-components-ios/commit/226596fd7db10ddc2cc5224c9662632d2918d631) (Andrew Overton)
+* [Setting `orderVerticalActionsByEmphasis` incorrectly calculates top and bottom insets for actions.](https://github.com/material-components/material-components-ios/commit/ba359990d58d468cdf8878973c680e895ea03c1f) (Galia Kaufman)
+
+### Snackbar
+
+* [Add completion handler with error parameter to snackbar message.](https://github.com/material-components/material-components-ios/commit/7593c0dc3aef726757cf9fd06cc02e6d6c3e0bde) (Randall Li)
+* [Added error domain and code.](https://github.com/material-components/material-components-ios/commit/d4bc31276d19c459ad79f401f69b1f424634acc0) (Randall Li)
+* [Added more information in description to Message and MessageView.](https://github.com/material-components/material-components-ios/commit/70dd23c6807ee8cea536c69c0d4129286464e131) (Randall Li)
+* [Making the an internal read write Error property for messages.](https://github.com/material-components/material-components-ios/commit/86f5ae1f4a19e8f73af4cb30e2c9d3f10f53e875) (Randall Li)
+* [Remove the unneeded hitAreaInsets usage, and set minimumSize instead.](https://github.com/material-components/material-components-ios/commit/2bc13bf9815153d15e9e67ea89cf7dd21f3fc64d) (Yarden Eitan)
+
+### Tabs
+
+* [Add selectedImage property to MDCItemBarCell to allow MDCTabBar to support selected images.](https://github.com/material-components/material-components-ios/commit/863af97e65c2d23a8b6efd4c7708690667b6d1fe) (Bryan Oltman)
+* [Add snapshot test to expose MDCTabBar not respecting UITabBarItem's selectedImage property.](https://github.com/material-components/material-components-ios/commit/e7717be32c81da93c5ccacdfbca6d099ba08b6f6) (Bryan Oltman)
+
+### TextControls
+
+* [Add underlined text field](https://github.com/material-components/material-components-ios/commit/55f0fead0042f6610b272d45ecd2fd23e04042a5) (Andrew Overton)
+
+### private/TextControlsPrivate
+
+* [Add underlined style object](https://github.com/material-components/material-components-ios/commit/617675f3137259ed0cb0b7ca5875304284d1d2ce) (Andrew Overton)
+* [Extract duplicated methods to C function](https://github.com/material-components/material-components-ios/commit/80bbc9fc03b4eb57c369bcf1d8b1e40c5dc6b737) (Andrew Overton)
+* [Extract some duplicated methods to C functions](https://github.com/material-components/material-components-ios/commit/1d6faa1e6d92bb9ca5f7c170277dffb9644d56bf) (Andrew Overton)
+
+### schemes/Color
+
+* [[schemes/Color]Add high contrast color to MDCColorSchemeDefaultsMaterial201907 scheme to support Increase Contrast feature.](https://github.com/material-components/material-components-ios/commit/52ee2909025c3541284bae02d83b0d0d10bc90db) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add notion of horizontal positioning reference](https://github.com/material-components/material-components-ios/commit/1b63eabe19a648e09f4c73175e4b3ee426c15422) (Andrew Overton)
+* [Adding feedback menu option](https://github.com/material-components/material-components-ios/commit/ff5e5cfa2257d631f34857d9bca955f45c187780) (Galia Kaufman)
+* [Move private text fields files to TextControlsPrivate](https://github.com/material-components/material-components-ios/commit/9b2e7ecd7ab8ab88b81b2c8b60e6c7e6e7158fde) (Andrew Overton)
+* [Update Podspec after TextControls changes](https://github.com/material-components/material-components-ios/commit/6f169c99507495abc932f7bf1fa81b4b2f7ca003) (Andrew Overton)
+
+---
+
 # 109.6.0
 
 This minor release adds new functionality to NavigationDrawer, ActionSheet, and Dialogs, and adds accessibility improvements to Buttons, Chips, and private/Color.
