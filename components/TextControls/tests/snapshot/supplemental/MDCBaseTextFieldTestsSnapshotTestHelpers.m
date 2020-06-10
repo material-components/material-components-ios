@@ -18,8 +18,6 @@
 
 #import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "MDCTextControlSnapshotTestHelpers.h"
-#import "MaterialTextControls+FilledTextFieldsTheming.h"
-#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 
 @interface MDCBaseTextField (AnimationDuration)
 @property(nonatomic, assign) NSTimeInterval animationDuration;
@@ -52,6 +50,13 @@
 + (MDCOutlinedTextField *)createOutlinedTextField {
   CGRect frame = [MDCBaseTextFieldTestsSnapshotTestHelpers defaultTextFieldFrame];
   MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] initWithFrame:frame];
+  [MDCBaseTextFieldTestsSnapshotTestHelpers prepareTextFieldForSnapshotTesting:textField];
+  return textField;
+}
+
++ (MDCUnderlinedTextField *)createUnderlinedTextField {
+  CGRect frame = [MDCBaseTextFieldTestsSnapshotTestHelpers defaultTextFieldFrame];
+  MDCUnderlinedTextField *textField = [[MDCUnderlinedTextField alloc] initWithFrame:frame];
   [MDCBaseTextFieldTestsSnapshotTestHelpers prepareTextFieldForSnapshotTesting:textField];
   return textField;
 }

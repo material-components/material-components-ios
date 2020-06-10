@@ -46,4 +46,9 @@
 - (void)executeActionHandler:(MDCSnackbarMessageAction *)action
                   completion:(void (^)(void))completion;
 
+/**
+ The error if one is encountered while attempting to present the message.
+ */
+@property(nonatomic, strong, readwrite) NSError *error;
+
 @end

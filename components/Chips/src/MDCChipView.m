@@ -110,6 +110,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly) BOOL showImageView;
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
+@property(nonatomic, assign) BOOL shouldFullyRoundCorner;
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, strong) MDCStatefulRippleView *rippleView;
 @property(nonatomic, readonly) CGFloat pixelScale;
@@ -132,6 +133,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize cornerRadius = _cornerRadius;
 
 @dynamic layer;
 
@@ -225,6 +227,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     self.layer.elevation = [self elevationForState:UIControlStateNormal];
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
 
+    self.shouldFullyRoundCorner = YES;
+
     [self updateBackgroundColor];
 
     [self commonMDCChipViewInit];
@@ -242,7 +246,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)dealloc {
   [self removeObservers];
   [self removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
-
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -260,11 +263,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   [self configureLayerWithShapeGenerator:shapeGenerator];
 
-  if (!shapeGenerator) {
-    // Reset the chip to fully rounded corner.
-    CGFloat cornerRadius = MIN(CGRectGetHeight(self.frame), CGRectGetWidth(self.frame)) / 2;
-    self.cornerRadius = cornerRadius;
+  if (!shapeGenerator && !self.shouldFullyRoundCorner) {
+    [self configureLayerWithCornerRadius:self.cornerRadius];
   }
+  [self setNeedsLayout];
 }
 
 - (void)configureLayerWithShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
@@ -282,7 +284,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   return self.layer.shapeGenerator;
 }
 
-- (void)setCornerRadius:(CGFloat)cornerRadius {
+- (void)configureLayerWithCornerRadius:(CGFloat)cornerRadius {
   if (!self.shapeGenerator) {
     self.layer.cornerRadius = cornerRadius;
     self.layer.shadowPath =
@@ -304,7 +306,18 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 }
 
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  _cornerRadius = cornerRadius;
+  // When cornerRadius is set to a custom value, corner is not forced to be fully rounded.
+  self.shouldFullyRoundCorner = NO;
+
+  [self configureLayerWithCornerRadius:cornerRadius];
+}
+
 - (CGFloat)cornerRadius {
+  if (!self.shouldFullyRoundCorner) {
+    return _cornerRadius;
+  }
   return self.layer.cornerRadius;
 }
 
@@ -706,7 +719,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   } else {
     MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
     CGRect visibleFrame = UIEdgeInsetsInsetRect(self.frame, visibleAreaInsets);
-    CGFloat cornerRadius = MIN(CGRectGetHeight(visibleFrame), CGRectGetWidth(visibleFrame)) / 2;
+    CGFloat cornerRadius =
+        self.shouldFullyRoundCorner
+            ? MIN(CGRectGetHeight(visibleFrame), CGRectGetWidth(visibleFrame)) / 2
+            : self.cornerRadius;
     ;
     MDCCornerTreatment *cornerTreatment =
         [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerRadius];
@@ -762,8 +778,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   _selectedImageView.alpha = self.showSelectedImageView ? 1 : 0;
 
-  CGRect visibleFrame = UIEdgeInsetsInsetRect(self.frame, self.visibleAreaInsets);
-  self.cornerRadius = MIN(CGRectGetHeight(visibleFrame), CGRectGetWidth(visibleFrame)) / 2;
+  if (self.shouldFullyRoundCorner) {
+    CGRect visibleFrame = UIEdgeInsetsInsetRect(self.frame, self.visibleAreaInsets);
+    CGFloat cornerRadius = MIN(CGRectGetHeight(visibleFrame), CGRectGetWidth(visibleFrame)) / 2;
+    [self configureLayerWithCornerRadius:cornerRadius];
+  }
 
   // Handle RTL
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {

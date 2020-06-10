@@ -401,6 +401,22 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
+// Testing regression reported in: "b/157470757 - Dialog with too little bottom padding".
+- (void)testAlertVerticalActionsHaveCorrectVerticalCustomInsets {
+  // Given
+  [self addActionWithTitle:kFirstLongAction];
+  self.alertController.actionsHorizontalAlignmentInVerticalLayout =
+      MDCContentHorizontalAlignmentJustified;
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+  self.alertView.actionsInsets = UIEdgeInsetsMake(4.f, 20.f, 20.f, 20.f);
+
+  // When
+  self.alertController.orderVerticalActionsByEmphasis = YES;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
 #pragma mark - Helpers
 
 - (void)setElementsBackgroundColors {

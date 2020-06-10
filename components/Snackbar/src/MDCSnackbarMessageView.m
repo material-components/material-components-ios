@@ -182,7 +182,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.contentEdgeInsets = UIEdgeInsetsMake(buttonContentPadding, buttonContentPadding,
                                               buttonContentPadding, buttonContentPadding);
-
+    // Minimum touch target size (44, 44).
+    self.minimumSize = CGSizeMake(44, 44);
     // Make sure the button doesn't get too compressed.
     [self setContentCompressionResistancePriority:UILayoutPriorityRequired
                                           forAxis:UILayoutConstraintAxisHorizontal];
@@ -465,6 +466,17 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
+}
+
+- (NSString *)description {
+  NSString *messageString = self.message.description;
+  NSMutableString *description = [[NSMutableString alloc] init];
+  [description appendFormat:@"%@ {\n", [super description]];
+  [description appendFormat:@"  message: %@;\n",
+                            [messageString stringByReplacingOccurrencesOfString:@"\n"
+                                                                     withString:@"\n  "]];
+  [description appendString:@"}"];
+  return [description copy];
 }
 
 #pragma mark - Subclass overrides

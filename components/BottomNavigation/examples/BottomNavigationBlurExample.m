@@ -64,7 +64,7 @@
                 tag:0];
   tabBarItem4.badgeValue = @"88";
   UITabBarItem *tabBarItem5 = [[UITabBarItem alloc] initWithTitle:@"ic_birthday"
-                                                            image:[UIImage imageNamed:@"ic_ake"]
+                                                            image:[UIImage imageNamed:@"ic_cake"]
                                                               tag:0];
   tabBarItem5.badgeValue = @"888+";
   self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];

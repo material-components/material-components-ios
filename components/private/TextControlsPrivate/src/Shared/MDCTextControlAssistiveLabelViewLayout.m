@@ -32,7 +32,7 @@
           assistiveLabelDrawPriority:
               (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-                   horizontalPadding:(CGFloat)horizontalPadding
+               horizontalEdgePadding:(CGFloat)horizontalEdgePadding
          paddingAboveAssistiveLabels:(CGFloat)paddingAboveAssistiveLabels
          paddingBelowAssistiveLabels:(CGFloat)paddingBelowAssistiveLabels
                                isRTL:(BOOL)isRTL {
@@ -43,7 +43,7 @@
                      trailingAssistiveLabel:trailingAssistiveLabel
                  assistiveLabelDrawPriority:assistiveLabelDrawPriority
            customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
-                          horizontalPadding:horizontalPadding
+                      horizontalEdgePadding:horizontalEdgePadding
                 paddingAboveAssistiveLabels:(CGFloat)paddingAboveAssistiveLabels
                 paddingBelowAssistiveLabels:(CGFloat)paddingBelowAssistiveLabels
                                       isRTL:isRTL];
@@ -60,12 +60,12 @@
                assistiveLabelDrawPriority:
                    (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
          customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-                        horizontalPadding:(CGFloat)horizontalPadding
+                    horizontalEdgePadding:(CGFloat)horizontalEdgePadding
               paddingAboveAssistiveLabels:(CGFloat)paddingAboveAssistiveLabels
               paddingBelowAssistiveLabels:(CGFloat)paddingBelowAssistiveLabels
                                     isRTL:(BOOL)isRTL {
-  CGFloat assistiveLabelsCombinedMinX = horizontalPadding;
-  CGFloat assistiveLabelsCombinedMaxX = superviewWidth - horizontalPadding;
+  CGFloat assistiveLabelsCombinedMinX = horizontalEdgePadding;
+  CGFloat assistiveLabelsCombinedMaxX = superviewWidth - horizontalEdgePadding;
   CGFloat assistiveLabelsCombinedMaxWidth =
       assistiveLabelsCombinedMaxX - assistiveLabelsCombinedMinX;
 

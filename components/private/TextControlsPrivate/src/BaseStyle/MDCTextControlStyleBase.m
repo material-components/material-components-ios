@@ -53,4 +53,8 @@ static const CGFloat kBaseFloatingLabelScaleFactor = (CGFloat)0.8;
             preferredContainerHeight:preferredContainerHeight];
 }
 
+- (MDCTextControlHorizontalPositioningReferenceDefault *)horizontalPositioningReference {
+  return [[MDCTextControlHorizontalPositioningReferenceDefault alloc] init];
+}
+
 @end

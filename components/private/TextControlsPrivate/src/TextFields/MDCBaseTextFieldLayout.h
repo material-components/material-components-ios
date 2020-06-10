@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,9 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 #import "MaterialTextControlsPrivate+Shared.h"
 
@@ -45,27 +42,29 @@
   of other objects to interfere with this process helps ensure that the resulting layout is correct
   and reliable.
  */
-- (nonnull instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                         positioningReference:
-                             (nonnull id<MDCTextControlVerticalPositioningReference>)
-                                 positioningReference
-                                         text:(nullable NSString *)text
-                                         font:(nonnull UIFont *)font
-                                 floatingFont:(nonnull UIFont *)floatingFont
-                                        label:(nonnull UILabel *)label
-                                     leftView:(nullable UIView *)leftView
-                                 leftViewMode:(UITextFieldViewMode)leftViewMode
-                                    rightView:(nullable UIView *)rightView
-                                rightViewMode:(UITextFieldViewMode)rightViewMode
-                        clearButtonSideLength:(CGFloat)clearButtonSideLength
-                              clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                        leadingAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
-                       trailingAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
-                   assistiveLabelDrawPriority:
-                       (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
-             customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-                                        isRTL:(BOOL)isRTL
-                                    isEditing:(BOOL)isEditing;
+- (nonnull instancetype)
+               initWithTextFieldSize:(CGSize)textFieldSize
+                positioningReference:
+                    (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference
+      horizontalPositioningReference:
+          (nonnull id<MDCTextControlHorizontalPositioningReference>)horizontalPositioningReference
+                                text:(nullable NSString *)text
+                                font:(nonnull UIFont *)font
+                        floatingFont:(nonnull UIFont *)floatingFont
+                               label:(nonnull UILabel *)label
+                            leftView:(nullable UIView *)leftView
+                        leftViewMode:(UITextFieldViewMode)leftViewMode
+                           rightView:(nullable UIView *)rightView
+                       rightViewMode:(UITextFieldViewMode)rightViewMode
+               clearButtonSideLength:(CGFloat)clearButtonSideLength
+                     clearButtonMode:(UITextFieldViewMode)clearButtonMode
+               leadingAssistiveLabel:(nonnull UILabel *)leftAssistiveLabel
+              trailingAssistiveLabel:(nonnull UILabel *)rightAssistiveLabel
+          assistiveLabelDrawPriority:
+              (MDCTextControlAssistiveLabelDrawPriority)assistiveLabelDrawPriority
+    customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
+                               isRTL:(BOOL)isRTL
+                           isEditing:(BOOL)isEditing;
 
 - (CGRect)labelFrameWithLabelPosition:(MDCTextControlLabelPosition)labelPosition;
 

@@ -14,4 +14,8 @@
 
 import UIKit
 
+protocol MDCFeedback {
+  func showFeedbackDialog()
+}
+
 class MDCCatalogWindow: UIWindow {}

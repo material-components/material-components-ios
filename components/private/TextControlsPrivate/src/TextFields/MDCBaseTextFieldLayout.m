@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 
 #import "MaterialMath.h"
 
-static const CGFloat kHorizontalPadding = (CGFloat)12.0;
-
 @interface MDCBaseTextFieldLayout ()
 @end
 
@@ -28,6 +26,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                  positioningReference:
                      (id<MDCTextControlVerticalPositioningReference>)positioningReference
+       horizontalPositioningReference:
+           (id<MDCTextControlHorizontalPositioningReference>)horizontalPositioningReference
                                  text:(NSString *)text
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
@@ -49,6 +49,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   if (self) {
     [self calculateLayoutWithTextFieldSize:textFieldSize
                       positioningReference:positioningReference
+            horizontalPositioningReference:horizontalPositioningReference
                                       text:text
                                       font:font
                               floatingFont:floatingFont
@@ -75,6 +76,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
                     positioningReference:
                         (id<MDCTextControlVerticalPositioningReference>)positioningReference
+          horizontalPositioningReference:
+              (id<MDCTextControlHorizontalPositioningReference>)horizontalPositioningReference
                                     text:(NSString *)text
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
@@ -101,27 +104,32 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   BOOL displaysClearButton = [self shouldDisplayClearButtonWithViewMode:clearButtonMode
                                                               isEditing:isEditing
                                                                    text:text];
+
+  CGFloat horizontalEdgePadding = horizontalPositioningReference.horizontalEdgePadding;
+  CGFloat horizontalInterItemPadding = horizontalPositioningReference.horizontalInterItemSpacing;
+
   CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
   CGFloat leftViewMinX = 0;
   CGFloat leftViewMaxX = 0;
   if (displaysLeftView) {
-    leftViewMinX = kHorizontalPadding;
+    leftViewMinX = horizontalEdgePadding;
     leftViewMaxX = leftViewMinX + leftViewWidth;
   }
 
   CGFloat textFieldWidth = textFieldSize.width;
   CGFloat rightViewMinX = 0;
   if (displaysRightView) {
-    CGFloat rightViewMaxX = textFieldWidth - kHorizontalPadding;
+    CGFloat rightViewMaxX = textFieldWidth - horizontalEdgePadding;
     rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
   }
 
   CGFloat clearButtonMinX = 0;
   if (isRTL) {
-    clearButtonMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    clearButtonMinX =
+        displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : horizontalEdgePadding;
   } else {
-    CGFloat clearButtonMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
-                                                : textFieldWidth - kHorizontalPadding;
+    CGFloat clearButtonMaxX = displaysRightView ? rightViewMinX - horizontalInterItemPadding
+                                                : textFieldWidth - horizontalEdgePadding;
     clearButtonMinX = clearButtonMaxX - clearButtonSideLength;
   }
 
@@ -168,34 +176,36 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   if (isRTL) {
     if (displaysClearButton) {
       CGFloat clearButtonMaxX = clearButtonMinX + clearButtonSideLength;
-      textRectMinX = clearButtonMaxX + kHorizontalPadding;
+      textRectMinX = clearButtonMaxX + horizontalInterItemPadding;
       labelMinX = textRectMinX;
       floatingLabelMinX = clearButtonMinX;
     } else {
-      textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+      textRectMinX =
+          displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : horizontalEdgePadding;
       labelMinX = textRectMinX;
       floatingLabelMinX = textRectMinX;
     }
     if (displaysRightView) {
-      textRectMaxX = rightViewMinX - kHorizontalPadding;
+      textRectMaxX = rightViewMinX - horizontalInterItemPadding;
     } else {
-      textRectMaxX = textFieldWidth - kHorizontalPadding;
+      textRectMaxX = textFieldWidth - horizontalInterItemPadding;
     }
     labelMaxX = textRectMaxX;
     floatingLabelMaxX = labelMaxX;
   } else {
-    textRectMinX = displaysLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    textRectMinX =
+        displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : horizontalEdgePadding;
     labelMinX = textRectMinX;
     floatingLabelMinX = labelMinX;
     if (displaysClearButton) {
-      textRectMaxX = clearButtonMinX - kHorizontalPadding;
+      textRectMaxX = clearButtonMinX - horizontalInterItemPadding;
     } else {
-      textRectMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
-                                       : textFieldWidth - kHorizontalPadding;
+      textRectMaxX = displaysRightView ? rightViewMinX - horizontalInterItemPadding
+                                       : textFieldWidth - horizontalEdgePadding;
     }
     labelMaxX = textRectMaxX;
-    floatingLabelMaxX = displaysRightView ? rightViewMinX - kHorizontalPadding
-                                          : textFieldWidth - kHorizontalPadding;
+    floatingLabelMaxX = displaysRightView ? rightViewMinX - horizontalInterItemPadding
+                                          : textFieldWidth - horizontalEdgePadding;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
@@ -240,7 +250,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                 trailingAssistiveLabel:trailingAssistiveLabel
             assistiveLabelDrawPriority:assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
-                     horizontalPadding:kHorizontalPadding
+                 horizontalEdgePadding:horizontalEdgePadding
            paddingAboveAssistiveLabels:positioningReference.paddingAboveAssistiveLabels
            paddingBelowAssistiveLabels:positioningReference.paddingBelowAssistiveLabels
                                  isRTL:isRTL];

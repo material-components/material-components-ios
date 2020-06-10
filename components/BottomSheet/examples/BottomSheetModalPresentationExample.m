@@ -14,12 +14,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "supplemental/BottomSheetDummyStaticViewController.h"
+#import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialButtons.h"
-#import "supplemental/BottomSheetDummyStaticViewController.h"
-#import "supplemental/BottomSheetSupplemental.h"
 
 @interface PresentedSheetController : UIViewController
+@end
+
+@interface BottomSheetModalPresentationExample : BottomSheetPresenterViewController
 @end
 
 @implementation PresentedSheetController {
@@ -62,7 +65,7 @@
 
 @end
 
-@implementation BottomSheetPresentationExample
+@implementation BottomSheetModalPresentationExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -85,6 +88,22 @@
 
 - (void)exit {
   [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
+
+@implementation BottomSheetModalPresentationExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Presentation from Modal" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
 }
 
 @end

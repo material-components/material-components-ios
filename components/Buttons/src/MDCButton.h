@@ -82,7 +82,7 @@
 
  The button uses this property to determine intrinsicContentSize and sizeThatFits:.
 
- @note This property sets the @c shapeGenerator. Therefore it is not advised to use both properties
+ @note This property sets the @c shapeGenerator. Therefore you cannot use both properties
  simultaneously. If you do wish to use a custom shape with visibleAreaInsets, please set your own
  shapeGenerator that is inset from the frame instead of setting this property directly.
 
@@ -160,11 +160,14 @@
 /**
  The shape generator used to define the button's shape.
 
- note: If a layer property is explicitly set after the shapeGenerator has been set,
- it can lead to unexpected behavior.
-
  When the shapeGenerator is nil, MDCButton will use the default underlying layer with
  its default settings.
+
+ @note If a layer property is explicitly set after the shapeGenerator has been set,
+       it can lead to unexpected behavior.
+
+ @note When visibleAreaInsets is set to something other than UIEdgeInsetsZero,
+       this property can no longer be set.
 
  Default value for shapeGenerator is nil.
  */

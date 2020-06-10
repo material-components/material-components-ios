@@ -61,6 +61,9 @@ static NSString *const kMiniButtonLabel = @"Add";
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
                                    inMode:MDCFloatingButtonModeExpanded];
+  [self.miniFloatingButton setVisibleAreaInsets:UIEdgeInsetsMake(2, 2, 2, 2)
+                                       forShape:MDCFloatingButtonShapeMini
+                                         inMode:MDCFloatingButtonModeNormal];
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];

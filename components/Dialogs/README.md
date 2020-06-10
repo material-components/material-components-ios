@@ -18,7 +18,7 @@ Dialogs inform users about a task and can contain critical information, require 
 involve multiple tasks.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/dialogs.gif" alt="Dialogs" width="320">
+  <img src="docs/assets/dialogs.gif" alt="gif of a dialog being presented and dismissed" width="320">
 </div>
 
 ## Contents
@@ -156,7 +156,7 @@ The sample code below shows how to use the Dialogs component to present an
 
 ```swift
 // Present a modal alert
-let alertController = MDCAlertController(title: titleString, message: messageString)
+let alertController = MDCAlertController(title: "Title string", message: "Message string")
 let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
 alertController.addAction(action)
 
@@ -168,8 +168,8 @@ present(alertController, animated:true, completion:...)
 ```objc
 // Present a modal alert
 MDCAlertController *alertController =
-[MDCAlertController alertControllerWithTitle:titleString
-                                     message:messageString];
+[MDCAlertController alertControllerWithTitle:@"Title string"
+                                     message:@"Message string"];
 
 MDCAlertAction *alertAction =
     [MDCAlertAction actionWithTitle:@"OK"
@@ -222,7 +222,7 @@ The following is an anatomy diagram of a Material dialog:
 
 ### Theming dialogs
 
-![Dialogs with Shrine theming](docs/assets/shrine_dialog.png)
+![Alert dialog with Shrine theming](docs/assets/shrine_dialog.png)
 
 You can theme a Material Dialog using a container scheme and the Dialogs theming extension. To achieve something like the
 Shrine theming above first add the Dialogs theming extension to your project by adding the following line to your Podfile:

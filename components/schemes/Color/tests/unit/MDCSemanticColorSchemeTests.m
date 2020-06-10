@@ -214,6 +214,118 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   }
 }
 
+- (void)
+    testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsDarkAndAcccessibilityContrastIsHighForiOS13 {
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
+    // When
+    UITraitCollection *traitCollectionUserInterfaceDark =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UITraitCollection *traitCollectionAccessibilityContrastHigh =
+        [UITraitCollection traitCollectionWithAccessibilityContrast:UIAccessibilityContrastHigh];
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithTraitsFromCollections:@[
+          traitCollectionUserInterfaceDark, traitCollectionAccessibilityContrastHigh
+        ]];
+
+    // Then
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xEFB7FF));
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xBE9EFF));
+    XCTAssertEqualObjects(
+        [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x66FFF9));
+    XCTAssertEqualObjects([colorScheme.errorColor resolvedColorWithTraitCollection:traitCollection],
+                          ColorFromRGB(0x9B374D));
+    XCTAssertEqualObjects(
+        [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.elevationOverlayColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+}
+
+- (void)
+    testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsLightAndAcccessibilityContrastIsHighForiOS13 {
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
+    // When
+    UITraitCollection *traitCollectionUserInterfaceDark =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+    UITraitCollection *traitCollectionAccessibilityContrastHigh =
+        [UITraitCollection traitCollectionWithAccessibilityContrast:UIAccessibilityContrastHigh];
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithTraitsFromCollections:@[
+          traitCollectionUserInterfaceDark, traitCollectionAccessibilityContrastHigh
+        ]];
+
+    // Then
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x0000BA));
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000088));
+    XCTAssertEqualObjects(
+        [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x66FFF9));
+    XCTAssertEqualObjects([colorScheme.errorColor resolvedColorWithTraitCollection:traitCollection],
+                          ColorFromRGB(0x790000));
+    XCTAssertEqualObjects(
+        [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.elevationOverlayColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
+  }
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+}
+
 - (void)testColorMergeForOpaqueColor {
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];

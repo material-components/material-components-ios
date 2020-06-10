@@ -109,6 +109,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   NSString *_accessibilityLabelExplicitValue;
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
+  BOOL _cornerRadiusObserverAdded;
 }
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
@@ -244,22 +245,24 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #ifdef __IPHONE_13_4
   if (@available(iOS 13.4, *)) {
-    __weak __typeof__(self) weakSelf = self;
-    UIButtonPointerStyleProvider buttonPointerStyleProvider = ^UIPointerStyle *(
-        UIButton *buttonToStyle, UIPointerEffect *proposedEffect, UIPointerShape *proposedShape) {
-      __typeof__(weakSelf) strongSelf = weakSelf;
-      if (!strongSelf) {
-        return [UIPointerStyle styleWithEffect:proposedEffect shape:proposedShape];
-      }
-      CGPathRef boundingCGPath = [strongSelf boundingPath].CGPath;
-      UIBezierPath *boundingBezierPath = [UIBezierPath bezierPathWithCGPath:boundingCGPath];
-      UIPointerShape *shape = [UIPointerShape shapeWithPath:boundingBezierPath];
-      return [UIPointerStyle styleWithEffect:proposedEffect shape:shape];
-    };
-    self.pointerStyleProvider = buttonPointerStyleProvider;
-    // Setting the pointerStyleProvider to a non-nil value flips pointerInteractionEnabled to YES.
-    // To maintain parity with UIButton's default behavior, we want it to default to NO.
-    self.pointerInteractionEnabled = NO;
+    if ([self respondsToSelector:@selector(pointerStyleProvider)]) {
+      __weak __typeof__(self) weakSelf = self;
+      UIButtonPointerStyleProvider buttonPointerStyleProvider = ^UIPointerStyle *(
+          UIButton *buttonToStyle, UIPointerEffect *proposedEffect, UIPointerShape *proposedShape) {
+        __typeof__(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) {
+          return [UIPointerStyle styleWithEffect:proposedEffect shape:proposedShape];
+        }
+        CGPathRef boundingCGPath = [strongSelf boundingPath].CGPath;
+        UIBezierPath *boundingBezierPath = [UIBezierPath bezierPathWithCGPath:boundingCGPath];
+        UIPointerShape *shape = [UIPointerShape shapeWithPath:boundingBezierPath];
+        return [UIPointerStyle styleWithEffect:proposedEffect shape:shape];
+      };
+      self.pointerStyleProvider = buttonPointerStyleProvider;
+      // Setting the pointerStyleProvider to a non-nil value flips pointerInteractionEnabled to YES.
+      // To maintain parity with UIButton's default behavior, we want it to default to NO.
+      self.pointerInteractionEnabled = NO;
+    }
   }
 #endif
 }
@@ -267,7 +270,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)dealloc {
   [self removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 
-  if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero)) {
+  if (_cornerRadiusObserverAdded) {
     [self.layer removeObserver:self
                     forKeyPath:NSStringFromSelector(@selector(cornerRadius))
                        context:kKVOContextCornerRadius];
@@ -977,6 +980,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
+  if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero)) {
+    // When visibleAreaInsets is set, custom shapeGenerater is not allow to be set through setter.
+    return;
+  }
+
+  [self configureLayerWithShapeGenerator:shapeGenerator];
+}
+
+- (void)configureLayerWithShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
   if (shapeGenerator) {
     self.layer.shadowPath = nil;
   } else {
@@ -1046,21 +1058,32 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Visible area
 
 - (void)setVisibleAreaInsets:(UIEdgeInsets)visibleAreaInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(visibleAreaInsets, _visibleAreaInsets)) {
+    return;
+  }
+
   _visibleAreaInsets = visibleAreaInsets;
 
   if (UIEdgeInsetsEqualToEdgeInsets(visibleAreaInsets, UIEdgeInsetsZero)) {
     self.shapeGenerator = nil;
 
-    [self.layer removeObserver:self
-                    forKeyPath:NSStringFromSelector(@selector(cornerRadius))
-                       context:kKVOContextCornerRadius];
+    if (_cornerRadiusObserverAdded) {
+      [self.layer removeObserver:self
+                      forKeyPath:NSStringFromSelector(@selector(cornerRadius))
+                         context:kKVOContextCornerRadius];
+      _cornerRadiusObserverAdded = NO;
+    }
   } else {
-    self.shapeGenerator = [self generateShapeWithCornerRadius:self.layer.cornerRadius];
+    [self configureLayerWithShapeGenerator:[self generateShapeWithCornerRadius:self.layer
+                                                                                   .cornerRadius]];
 
-    [self.layer addObserver:self
-                 forKeyPath:NSStringFromSelector(@selector(cornerRadius))
-                    options:NSKeyValueObservingOptionNew
-                    context:kKVOContextCornerRadius];
+    if (!_cornerRadiusObserverAdded) {
+      [self.layer addObserver:self
+                   forKeyPath:NSStringFromSelector(@selector(cornerRadius))
+                      options:NSKeyValueObservingOptionNew
+                      context:kKVOContextCornerRadius];
+      _cornerRadiusObserverAdded = YES;
+    }
   }
 }
 
@@ -1071,7 +1094,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (context == kKVOContextCornerRadius) {
     if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero) &&
         self.shapeGenerator) {
-      self.shapeGenerator = [self generateShapeWithCornerRadius:self.layer.cornerRadius];
+      [self
+          configureLayerWithShapeGenerator:[self generateShapeWithCornerRadius:self.layer
+                                                                                   .cornerRadius]];
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

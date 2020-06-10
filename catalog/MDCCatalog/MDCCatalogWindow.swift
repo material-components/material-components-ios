@@ -13,15 +13,12 @@
 // limitations under the License.
 
 import UIKit
-
-import MaterialComponents.MaterialOverlayWindow
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialOverlayWindow
 
-/**
- A custom UIWindow that displays the user's touches for recording video or demos.
-
- Triple tapping anywhere will toggle the visible touches.
- */
+/// A custom UIWindow that displays the user's touches for recording video or demos.
+///
+/// Triple tapping anywhere will toggle the visible touches.
 class MDCCatalogWindow: MDCOverlayWindow {
   var showTouches = false
 
@@ -103,13 +100,14 @@ class MDCCatalogWindow: MDCOverlayWindow {
     let view = touchViews[touch.hash]
     touchViews[touch.hash] = nil
 
-    UIView.animate(withDuration: fadeDuration,
-                   animations: { view?.alpha = 0 },
-                   completion: { _ in view?.removeFromSuperview() })
+    UIView.animate(
+      withDuration: fadeDuration,
+      animations: { view?.alpha = 0 },
+      completion: { _ in view?.removeFromSuperview() })
   }
 }
 
-/** A circular view that represents a user's touch. */
+/// A circular view that represents a user's touch.
 class MDCTouchView: UIView {
   fileprivate let touchCircleSize: CGFloat = 80
   fileprivate let touchCircleAlpha: CGFloat = 0.25
@@ -136,4 +134,8 @@ class MDCTouchView: UIView {
     layer.borderWidth = touchCircleBorderWidth
     isUserInteractionEnabled = false
   }
+}
+
+protocol MDCFeedback {
+  func showFeedbackDialog()
 }

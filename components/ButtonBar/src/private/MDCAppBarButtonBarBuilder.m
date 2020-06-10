@@ -22,8 +22,7 @@
 #import "MaterialButtons.h"
 
 // Additional insets for the left-most or right-most items.
-static const CGFloat kEdgeButtonAdditionalMarginPhone = 4;
-static const CGFloat kEdgeButtonAdditionalMarginPad = 12;
+static const CGFloat kEdgeButtonAdditionalMargin = 4;
 
 // The default MDCButton's alpha for display state is 0.1 which in the context of bar buttons makes
 // it practically invisible. Setting button to a higher opacity is closer to what the button should
@@ -211,9 +210,7 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
                     userInterfaceIdiom:(UIUserInterfaceIdiom)userInterfaceIdiom {
   UIEdgeInsets contentInsets = kButtonInset;
   if ([button currentImage] || [button currentTitle].length) {
-    BOOL isPad = userInterfaceIdiom == UIUserInterfaceIdiomPad;
-    CGFloat additionalInset =
-        (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
+    CGFloat additionalInset = kEdgeButtonAdditionalMargin;
     BOOL isFirstButton = (layoutHints & MDCBarButtonItemLayoutHintsIsFirstButton) ==
                          MDCBarButtonItemLayoutHintsIsFirstButton;
     BOOL isLastButton = (layoutHints & MDCBarButtonItemLayoutHintsIsLastButton) ==

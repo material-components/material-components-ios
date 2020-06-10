@@ -21,7 +21,7 @@
 #import "MaterialMath.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
-#import "private/MDCBaseTextFieldLayout.h"
+#import "MaterialTextControlsPrivate+TextFields.h"
 
 @interface MDCBaseTextField () <MDCTextControl>
 
@@ -214,6 +214,7 @@
   return [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
                   positioningReference:positioningReference
+        horizontalPositioningReference:self.containerStyle.horizontalPositioningReference
                                   text:self.text
                                   font:self.normalFont
                           floatingFont:self.floatingFont

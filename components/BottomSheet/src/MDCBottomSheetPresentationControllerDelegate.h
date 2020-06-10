@@ -31,14 +31,24 @@
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 /**
- Called after dimissing the bottom sheet to let clients know it is no longer onscreen. The bottom
- sheet controller calls this method only in response to user actions such as tapping the background
- or dragging the sheet offscreen. This method is not called if the bottom sheet is dismissed
- programmatically.
+ Invoked immediately after @c dismissViewControllerAnimated:completed: is passed to the
+ presentingController. The bottom sheet controller calls this method only in response to user
+ actions such as tapping the background or dragging the sheet offscreen. This method is not called
+ if the bottom sheet is dismissed programmatically.
 
- @param bottomSheet The MDCBottomSheetPresentationController that was dismissed.
+ @param bottomSheet The @c MDCBottomSheetPresentationController that was dismissed.
  */
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
+    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+
+/**
+ Informs the delegate that the bottom sheet has completed animating offscreen. As with
+ @c bottomSheetPresentationControllerDidDismissBottomSheet, this method is not called if the bottom
+ sheet is dismissed programmatically.
+
+ @param bottomSheet The @c MDCBottomSheetPresentationController that was dismissed.
+ */
+- (void)bottomSheetPresentationControllerDismissalAnimationCompleted:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
 /**

@@ -77,12 +77,13 @@
  A block that is invoked whan a link (a URL) in the attributed message text is tapped.
 
  @param URL The URL of the link that was tapped. May include external or internal URLs.
- @param characterRange The range of characters (in the attributed text) of the link that was tapped.
+ @param range The range of characters (in the attributed text) of the link that was tapped.
  @param interaction The UITextItemInteraction type of interaction performed by the user.
 
  @return true if UIKit's default implementation of the interaction should proceed after this block
          is invoked.
 */
+API_AVAILABLE(ios(10.0))
 typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange range,
                                                   UITextItemInteraction interaction);
 
@@ -90,7 +91,9 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  An action that is invoked when a link (URL) in the attributed message is interacted with. Applies
  only when `attributedMessage` is set.
 */
-@property(nonatomic, copy, nullable) MDCAttributedMessageActionHandler attributedMessageAction;
+
+@property(nonatomic, copy, nullable)
+    MDCAttributedMessageActionHandler attributedMessageAction API_AVAILABLE(ios(10.0));
 
 /**
  An object conforming to @c MDCAlertControllerDelegate. When non-nil, the @c MDCAlertController will
@@ -98,10 +101,10 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  */
 @property(nonatomic, weak, nullable) id<MDCAlertControllerDelegate> delegate;
 
-/** The font applied to the title of Alert Controller.*/
+/** The font applied to the alert's title.*/
 @property(nonatomic, strong, nullable) UIFont *titleFont;
 
-/** The color applied to the title of Alert Controller.*/
+/** The color applied to the alert's title.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
 /** The alignment applied to the title of the Alert. Defaults to @c NSTextAlignmentNatural. */
@@ -127,22 +130,27 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
 
  @note: Large `titleIcon` images will be proportionally scaled to fit the available space when
         `titleIconAlignment` is set to `MDCContentHorizontalAlignmentJustified`.
-*/
+ */
 @property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
-/** The font applied to the message of Alert Controller.*/
+/** The font applied to the alert's message.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
-/** The color applied to the message of Alert Controller.*/
+/**
+ The color applied to the alert's message.
+
+ @note: If `messageColor` is set (including if set to nil), it will override foregroundColor
+        attributes that were set by the attributed message text.
+ */
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
 /**
- The alignment applied to the message of Alert Controller. Defaults to @c NSTextAlignmentNatural.
+ The alignment applied to the alert's message. Defaults to @c NSTextAlignmentNatural.
  */
 @property(nonatomic, assign) NSTextAlignment messageAlignment;
 
 /**
- The font applied to the button of Alert Controller.
+ The font applied to the alert's buttons.
 
  @note This property is deprecated and will be removed in an upcoming release.
  */
@@ -150,11 +158,11 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
     UIFont *buttonFont __deprecated_msg("Please use buttonForAction: to set button properties.");
 
 // b/117717380: Will be deprecated
-/** The color applied to the button title text of Alert Controller.*/
+/** The color applied to the alert's buttons title text.*/
 @property(nonatomic, strong, nullable) UIColor *buttonTitleColor;
 
 // b/117717380: Will be deprecated
-/** The color applied to the button ink effect of Alert Controller.*/
+/** The color applied to the alert's buttons ink effect.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
 /** The semi-transparent color which is applied to the overlay covering the content
@@ -204,6 +212,11 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  @note Set `attributedMessageAction` to respond to link-tap events, if needed.
  */
 @property(nonatomic, nullable, copy) NSAttributedString *attributedMessage;
+
+/**
+ The color applied to links in the attributed message. When nil, UIKit's default tint color is used.
+ */
+@property(nonatomic, strong, nullable) UIColor *attributedLinkColor;
 
 /**
  A custom accessibility label for the message.

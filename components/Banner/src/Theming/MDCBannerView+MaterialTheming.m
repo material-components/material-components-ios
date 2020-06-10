@@ -53,6 +53,7 @@ static CGFloat const kDividerOpacity = (CGFloat)0.12;
   }
   self.textView.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity];
   self.dividerColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity];
+  self.imageView.tintColor = colorScheme.primaryColor;
 
   if (colorScheme.elevationOverlayEnabledForDarkMode) {
     self.mdc_elevationDidChangeBlock =

@@ -13,11 +13,12 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialIcons
-import MaterialComponents.MaterialIcons_ic_settings
-import MaterialComponents.MaterialIcons_ic_color_lens
-import MaterialComponents.MaterialIcons_ic_help_outline
 import MaterialComponents.MaterialLibraryInfo
+import MaterialComponents.MaterialIcons
+import MaterialComponents.MaterialIcons_ic_color_lens
+import MaterialComponents.MaterialIcons_ic_feedback
+import MaterialComponents.MaterialIcons_ic_help_outline
+import MaterialComponents.MaterialIcons_ic_settings
 
 class MDCMenuViewController: UITableViewController {
 
@@ -26,8 +27,10 @@ class MDCMenuViewController: UITableViewController {
     let icon: UIImage?
     let accessibilityLabel: String?
     let accessibilityHint: String?
-    init(_ title: String, _ icon: UIImage?, _ accessibilityLabel: String?,
-         _ accessibilityHint: String?) {
+    init(
+      _ title: String, _ icon: UIImage?, _ accessibilityLabel: String?,
+      _ accessibilityHint: String?
+    ) {
       self.title = title
       self.icon = icon
       self.accessibilityLabel = accessibilityLabel
@@ -35,14 +38,35 @@ class MDCMenuViewController: UITableViewController {
     }
   }
 
-  private let tableData =
-    [MDCMenuItem("Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate),
-                 nil, "Opens debugging menu."),
-     MDCMenuItem("Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate),
-                  nil, "Opens color theme chooser."),
-     MDCMenuItem("v\(MDCLibraryInfo.versionString)",
-      MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate),
-      "Version \(MDCLibraryInfo.versionString)", "Closes this menu.")]
+  private let feedback: MDCFeedback? = {
+    // Using "as? MDCFeedback" (as opposed to "as MDCFeedback?") to avoid a build time error that
+    // occurs when MDCCatalogWindow does not conform to MDCFeedback.
+    return (UIApplication.shared.delegate as? AppDelegate)?.window as? MDCCatalogWindow
+      as? MDCFeedback
+  }()
+
+  private lazy var tableData: [MDCMenuItem] = {
+    var data = [
+      MDCMenuItem(
+        "Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate),
+        nil, "Opens debugging menu."),
+      MDCMenuItem(
+        "Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate),
+        nil, "Opens color theme chooser."),
+      MDCMenuItem(
+        "v\(MDCLibraryInfo.versionString)",
+        MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate),
+        "Version \(MDCLibraryInfo.versionString)", "Closes this menu."),
+    ]
+    if feedback != nil {
+      data.insert(
+        MDCMenuItem(
+          "Leave feedback", MDCIcons.imageFor_ic_feedback()?.withRenderingMode(.alwaysTemplate),
+          nil, "Opens debugging menu."), at: 0)
+    }
+    return data
+  }()
+
   let cellIdentifier = "MenuCell"
 
   override func viewDidLoad() {
@@ -51,8 +75,10 @@ class MDCMenuViewController: UITableViewController {
     self.tableView.separatorStyle = .none
   }
 
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
     let iconColor = AppTheme.containerScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     let cellData = tableData[indexPath.item]
@@ -78,21 +104,34 @@ class MDCMenuViewController: UITableViewController {
     guard let navController = self.presentingViewController as? UINavigationController else {
       return
     }
-    switch indexPath.item {
+    let action = feedback == nil ? indexPath.item + 1 : indexPath.item
+    switch action {
     case 0:
-      self.dismiss(animated: true, completion: {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-          let window = appDelegate.window as? MDCCatalogWindow {
-          window.showDebugSettings()
-        }
-      })
+      self.dismiss(
+        animated: true,
+        completion: {
+          if let feedback = self.feedback {
+            feedback.showFeedbackDialog()
+          }
+        })
     case 1:
-      self.dismiss(animated: true, completion: {
-        navController.pushViewController(MDCThemePickerViewController(), animated: true)
-      })
+      self.dismiss(
+        animated: true,
+        completion: {
+          if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let window = appDelegate.window as? MDCCatalogWindow
+          {
+            window.showDebugSettings()
+          }
+        })
+    case 2:
+      self.dismiss(
+        animated: true,
+        completion: {
+          navController.pushViewController(MDCThemePickerViewController(), animated: true)
+        })
     default:
       self.dismiss(animated: true, completion: nil)
     }
   }
 }
-

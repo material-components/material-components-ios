@@ -220,6 +220,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
                atIndex:(NSInteger)itemIndex
                  count:(NSInteger)itemCount {
   self.title = item.title;
+  self.selectedImage = item.selectedImage;
   self.image = item.image;
   self.badgeValue = item.badgeValue;
   if (@available(iOS 10.0, *)) {
@@ -346,6 +347,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   BOOL animate = (self.window != nil);
 
   [super setSelected:selected];
+  [self updateDisplayedImage];
   [self updateTitleTextColor];
   [self updateImageTintColor];
   [self updateAccessibilityTraits];
@@ -619,7 +621,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 }
 
 - (void)updateDisplayedImage {
-  _imageView.image = _image;
+  if (self.isSelected && self.selectedImage != nil) {
+    self.imageView.image = self.selectedImage;
+  } else {
+    self.imageView.image = self.image;
+  }
 }
 
 - (void)updateDisplayedTitle {

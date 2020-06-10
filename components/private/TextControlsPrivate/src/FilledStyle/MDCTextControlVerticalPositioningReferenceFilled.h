@@ -16,9 +16,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTextControlVerticalPositioningReference.h"
+#import "MDCTextControlVerticalPositioningReferenceUnderlined.h"
 
 @interface MDCTextControlVerticalPositioningReferenceFilled
-    : NSObject <MDCTextControlVerticalPositioningReference>
+    : MDCTextControlVerticalPositioningReferenceUnderlined <
+          MDCTextControlVerticalPositioningReference>
 
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                           normalFontLineHeight:(CGFloat)normalFontLineHeight

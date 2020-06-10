@@ -8,8 +8,6 @@ path: /catalog/bottomnavigation/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme BottomNavigation -->
-
 # Bottom navigation
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BBottomNavigation%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BBottomNavigation%5D)
@@ -17,38 +15,18 @@ api_doc_root: true
 Bottom navigation bars allow movement between primary destinations in an app. Tapping on a bottom
 navigation icon takes you directly to the associated view or refreshes the currently active view.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/bottom-navigation.gif" alt="An animation showing a change of selection in a bottom navigation component." width="320">
-</div>
+![A generic bottom navigation with the "music" item selected](docs/assets/bottom-nav-generic.png)
 
-## Design & API documentation
+## Contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-bottom-navigation">Material Design guidelines: Bottom navigation</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Classes/MDCBottomNavigationBar.html">MDCBottomNavigationBar</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Protocols/MDCBottomNavigationBarDelegate.html">MDCBottomNavigationBarDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Enums/MDCBottomNavigationBarAlignment.html">MDCBottomNavigationBarAlignment</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Enums/MDCBottomNavigationBarTitleVisibility.html">MDCBottomNavigationBarTitleVisibility</a></li>
-</ul>
-
-## Table of contents
-
-- [Overview](#overview)
-  - [Guidance](#guidance)
-- [Deprecations](#deprecations)
-  - [`sizeThatFitsIncludesSafeArea`](#`sizethatfitsincludessafearea`)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Extensions](#extensions)
-  - [Theming](#theming)
-- [Accessibility](#accessibility)
-  - [Minimum touch size](#minimum-touch-size)
+* [Using bottom navigation](#using-bottom-navigation)
+* [Making bottom navigation accessible](#making-bottom-navigation-accessible)
+* [Installing bottom navigation](#installing-bottom-navigation)
+* [Theming bottom navigation](#theming-bottom-navigation)
 
 - - -
 
-## Overview
+## Using bottom navigation
 
 MDCBottomNavigationBar can be added to a view hierarchy like any UIView. Material Design guidelines recommend always placing bottom navigation at the bottom of the screen.
 
@@ -60,17 +38,9 @@ Title visibility can be configured in three ways: only show the title of the *se
 
 In landscape orientation, items can be configured to be justified or compactly clustered together. When items are justified the bottom navigation bar is fitted to the width of the device. Justified items can have their titles shown below their respective icons or adjacent to their respective icons.
 
-### Guidance
+### Deprecations
 
-Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 
-
-Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
-
-## Deprecations
-
-<!-- Extracted from docs/deprecations.md -->
-
-### `sizeThatFitsIncludesSafeArea`
+#### `sizeThatFitsIncludesSafeArea`
 
 The current implementation of `-[MDCBottomNavigationBar sizeThatFits:]` incorrectly uses
 `safeAreaInsets` to increase the desired size. Instead, the superview or view controller should be
@@ -138,14 +108,9 @@ func layoutBottomNavBar() {
 ```
 <!--</div>-->
 
+## Installing bottom navigation
 
-## Installation
-
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
+In order to install bottom navigation with Cocoapods first add it to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/BottomNavigation'
@@ -158,9 +123,7 @@ Then, run the following command:
 pod install
 ```
 
-### Importing
-
-To import the component:
+From there, import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -175,70 +138,17 @@ import MaterialComponents.MaterialBottomNavigation
 ```
 <!--</div>-->
 
-
-## Extensions
-
-<!-- Extracted from docs/theming.md -->
-
-### Theming
-
-`MDCBottomNavigation` supports Material Theming using a Container Scheme.
-There are two variants for Material Theming of a BottomNavigation.  The Surface Variant colors the App Bar
-background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
-`primaryColor`.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-```swift
-// Import the BottomNavigation Theming Extensions module
-import MaterialComponents.MaterialBottomNavigation_Theming
-
-...
-
-// Apply your app's Container Scheme to the App Bar controller
-let containerScheme = MDCContainerScheme()
-
-// Either Primary Theme
-bottomNavigation.applyPrimaryTheme(withScheme: containerScheme)
-
-// Or Surface Theme
-bottomNavigation.applySurfaceTheme(withScheme: containerScheme)
-```
-
-#### Objective-C
-
-```objc
-// Import the BottomNavigation Theming Extensions header
-#import "MaterialBottomNavigation+Theming.h"
-
-...
-
-// Apply your app's Container Scheme to the App Bar controller
-MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-
-// Either Primary Theme
-[self.bottomNavigation applyPrimaryThemeWithScheme:containerScheme];
-
-// Or Surface Theme
-[self.bottomNavigation applySurfaceThemeWithScheme:containerScheme];
-```
-
-<!--</div>-->
-
-
-<!-- Extracted from docs/accessibility.md -->
-
-## Accessibility
+## Making bottom navigation accessible
 
 To help ensure your bottom navigation item is accessible to as many users as possible, please
 be sure to review the following recommendations:
 
- `-accessibilityLabel` The label will be the title of the UITabBarItem. Currently you can't set this to a custom value.
+* Ensure that your `UITabBarItem`s have appropriate `accessibilityLabel`s. Setting a new
+`accessibilityLabel` on a `UITabBarItem` will result in the corresponding bottom navigation
+bar item's `accessibilityLabel` changing.
 
-`-accessibilityValue`  Set an appropriate `accessibilityValue` value if your item has a badge value.
-For example, an item with an inbox icon with a badge value for how many emails are unread. You should explicitly
+* Set an appropriate `accessibilityValue` value if your item has a badge value. For example,
+an item with an inbox icon with a badge value for how many emails are unread. You should explicitly
 set the `accessibilityValue` when the badge value doesn't provide enough context. For example, in an inbox
 example simply having the value "10" doesn't provide enough context, instead the accessibility value should explain
 what the badge value symbolizes. The default value if there is a badge value and you haven't set any
@@ -287,3 +197,178 @@ bottomNavBar.frame = bottomNavBarFrame
 
 ```
 
+## Bottom navigation bar
+
+![A bottom navigation item with home, mail, favorites, reader, and birthday sections](docs/assets/bottom-nav-example.png)
+
+### Bottom navigation bar example
+
+API and source code:
+
+*   `MDCBottomNavigationBar`
+    *   [Class reference](https://material.io/components/ios/catalog/bottomnavigation/api-docs/Classes/MDCBottomNavigationBar.html)
+    *   [Class source](https://github.com/material-components/material-components-ios/blob/develop/components/BottomNavigation/src/MDCBottomNavigationBar.h)
+
+To achieve something like the example image above, add the following code to your view controller:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+bottomNavBar = MDCBottomNavigationBar()
+view.addSubview(bottomNavBar)
+bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected
+bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
+
+let homeItem = UITabBarItem(
+    title: "Home",
+    image: UIImage(named: "ic_home"),
+    tag: 0)
+let messagesItem = UITabBarItem(
+    title: "Messages",
+    image: UIImage(named: "ic_email"),
+    tag: 0)
+messagesItem.badgeValue = "8"
+let favoritesItem = UITabBarItem(
+    title: "Favorites",
+    image: UIImage(named: "ic_favorite"),
+    tag: 0)
+favoritesItem.badgeValue = ""
+let readerItem = UITabBarItem(
+    title: "Reader",
+    image: UIImage(named: "ic_reader"),
+    tag: 0)
+readerItem.badgeValue = "88"
+
+let birthdayItem = UITabBarItem(
+    title: "ic_birthday",
+    image: UIImage(named: "ic_cake"),
+    tag: 0)
+birthdayItem.badgeValue = "888+"
+bottomNavBar.items = [homeItem, messagesItem, favoritesItem, readerItem, birthdayItem]
+bottomNavBar.selectedItem = messagesItem
+```
+
+#### Objective-C
+
+```objc
+self.bottomNavBar = [[MDCBottomNavigationBar alloc] init];
+[self.view addSubview:self.bottomNavBar];
+self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+
+UITabBarItem *homeItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                          image:[UIImage imageNamed:@"ic_home"]
+                                                            tag:0];
+UITabBarItem *messagesItem = [[UITabBarItem alloc] initWithTitle:@"Messages"
+                                                          image:[UIImage imageNamed:@"ic_email"]
+                                                            tag:0];
+messagesItem.badgeValue = @"8";
+UITabBarItem *favoritesItem =
+    [[UITabBarItem alloc] initWithTitle:@"Favorites"
+                                  image:[UIImage imageNamed:@"ic_favorite"]
+                                    tag:0];
+favoritesItem.badgeValue = @"";
+UITabBarItem *readerItem = [[UITabBarItem alloc] initWithTitle:@"Reader"
+                                                         image:[UIImage imageNamed:@"ic_reader"]
+                                                           tag:0];
+readerItem.badgeValue = @"88";
+UITabBarItem *birthdayItem = [[UITabBarItem alloc] initWithTitle:@"ic_birthday"
+                                                          image:[UIImage imageNamed:@"ic_cake"]
+                                                            tag:0];
+birthdayItem.badgeValue = @"888+";
+self.bottomNavBar.items = @[ homeItem, messagesItem, favoritesItem, readerItem, birthdayItem ];
+self.bottomNavBar.selectedItem = messagesItem;
+```
+
+<!--</div>-->
+
+### Anatomy and key properties
+
+The following is an anatomy diagram for the bottom navigation bar:
+
+![Bottom navigation anatomy diagram](docs/assets/bottom-nav-anatomy.png)
+
+1. Container
+1. Inactive icon
+1. Inactive text label
+1. Active icon
+1. Active text label
+
+#### Container attributes
+
+&nbsp;        | **Attribute**        | **Related methods**      | **Default value**
+------------- | -------------------- | ------------------------ | -----------------
+**Color**     | `barTintColor` | `-setBarTintColor:` <br/> `-barTintColor` | Surface color
+**Elevation** | `elevation`      | `-setElevation:` <br/> `-elevation` | 8
+
+#### Navigation item attributes
+
+&nbsp;        | **Attribute**        | **Related methods**      | **Default value**
+------------- | -------------------- | ------------------------ | -----------------
+**Title**     | N/A                  | `-[UITabBarItem initWithTitle:image:tag:]` <br/> `-[UITabBarItem initWithTitle:image:selectedImage:]` | N/A
+**Unselected color**   | `unselectedItemTintColor`| `-setUnselectedItemTintColor:` <br/> `-unselectedItemTintColor` | `[UIColor grayColor]`
+**Selected color**     | `selectedItemTintColor`  | `-setSelectedItemTintColor:` <br/> `-selectedItemTintColor` | `[UIColor blackColor]`
+
+#### Icon attributes
+
+&nbsp;               | **Attribute**                         | **Related methods**                                              | **Default value**
+-------------------- | ------------------------------------- | ---------------------------------------------------------------- | -----------------
+**Image**            | N/A                                   | `-[UITabBarItem initWithTitle:image:tag:]` <br/> `-[UITabBarItem initWithTitle:image:selectedImage:]` | N/A
+**Selected image**  | `selectedImage`                         | `-[UITabBarItem setSelectedImage:]` <br/> `-[UITabBarItem selectedImage]` | `nil`
+**Badge value**  | `badgeValue` | `-[UITabBarItem setBadgeValue:]` <br/> `-[UITabBarItem badgeValue]` | `nil`
+**Badge color**  | `badgeColor` | `-[UITabBarItem setBadgeColor:]` <br/> `-[UITabBarItem badgeColor]` | `nil`
+
+#### Text label attributes
+
+&nbsp;                    | **Attribute**                          | **Related methods**                                                 | **Default value**
+------------------------- | -------------------------------------- | ------------------------------------------------------------------- | -----------------
+**Typography**            | `itemTitleFont`                        | `-setItemTitleFont:` <br/> `-itemTitleFont`                         | Headline 6
+**Color**                 | `selectedItemTitleColor`               | `-setSelectedItemTitleColor` <br/> `-selectedItemTitleColor`         | `[UIColor blackColor]`
+
+## Theming bottom navigation
+
+![A bottom navigation with Shrine theming](docs/assets/bottom-nav-shrine.png)
+
+You can theme a Material bottom navigation bar using a container scheme and the BottomNavigation theming extension. To achieve something like the
+Shrine theming above first add the BottomNavigation theming extension to your project by adding the following line to your Podfile:
+
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Swift
+
+```swift
+// Import the BottomNavigation Theming Extensions module
+import MaterialComponents.MaterialBottomNavigation_Theming
+
+...
+
+// Apply your app's Container Scheme to the App Bar controller
+let containerScheme = MDCContainerScheme()
+
+// Either Primary Theme
+bottomNavigation.applyPrimaryTheme(withScheme: containerScheme)
+
+// Or Surface Theme
+bottomNavigation.applySurfaceTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+// Import the BottomNavigation Theming Extensions header
+#import "MaterialBottomNavigation+Theming.h"
+
+...
+
+// Apply your app's Container Scheme to the App Bar controller
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+// Either Primary Theme
+[self.bottomNavigation applyPrimaryThemeWithScheme:containerScheme];
+
+// Or Surface Theme
+[self.bottomNavigation applySurfaceThemeWithScheme:containerScheme];
+```
+
+<!--</div>-->

@@ -14,9 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomSheet.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
-#import "supplemental/BottomSheetSupplemental.h"
+#import "BottomSheetPresenterViewController.h"
+#import "MaterialBottomSheet.h"
+
+@interface BottomSheetShortCollectionExample : BottomSheetPresenterViewController
+@end
 
 @implementation BottomSheetShortCollectionExample
 
@@ -29,6 +32,18 @@
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   bottomSheet.trackingScrollView = viewController.collectionView;
   [self presentViewController:bottomSheet animated:YES completion:nil];
+}
+
+@end
+
+@implementation BottomSheetShortCollectionExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Collection View (Short)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

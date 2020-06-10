@@ -18,11 +18,13 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "../MDCSnackbarError.h"
 #import "../MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialAnimationTiming.h"
-#import "MaterialApplication.h"
 #import "MaterialAvailability.h"
+#import "MDCSnackbarMessageInternal.h"
+#import "MDCSnackbarMessageViewInternal.h"
+#import "MaterialApplication.h"
 #import "MaterialKeyboardWatcher.h"
 #import "MaterialOverlay.h"
 
@@ -485,20 +487,6 @@ static const CGFloat kMaximumHeight = 80;
   return [self dynamicBottomMargin] == 0;
 }
 
-- (void)configureActionButtonHitAreaInsets:(MDCSnackbarMessageView *)snackbarView {
-  for (MDCButton *button in snackbarView.actionButtons) {
-    UIView *buttonSuperview = button.superview;
-    if (buttonSuperview) {
-      CGFloat superViewHeight = CGRectGetHeight(buttonSuperview.frame);
-      if (superViewHeight > 0) {
-        CGFloat spaceAboveButton = CGRectGetMinY(button.frame);
-        CGFloat spaceBelowButton = superViewHeight - CGRectGetMaxY(button.frame);
-        button.hitAreaInsets = UIEdgeInsetsMake(-spaceAboveButton, 0, 0, -spaceBelowButton);
-      }
-    }
-  }
-}
-
 #pragma mark - Safe Area Insets
 
 - (void)safeAreaInsetsDidChange {
@@ -603,6 +591,15 @@ static const CGFloat kMaximumHeight = 80;
         [animations addObject:scaleAnimation];
       }
     }
+    if (animations.count == 0) {
+      NSDictionary *errorDictionary = @{
+        @"MDCSnackbarMessageView" : snackbarView,
+      };
+      snackbarView.message.error =
+          [[NSError alloc] initWithDomain:MDCSnackbarErrorDomain
+                                     code:MDCSnackbarErrorSlideAnimationMisconfigured
+                                 userInfo:errorDictionary];
+    }
     animationsGroup.animations = animations;
     [snackbarView.layer addAnimation:animationsGroup forKey:@"snackbarAnimation"];
   }
@@ -628,8 +625,6 @@ static const CGFloat kMaximumHeight = 80;
                 completion:(void (^)(void))completion {
   // Make sure that the Snackbar has been properly sized to calculate the translation value.
   [self triggerSnackbarLayoutChange];
-
-  [self configureActionButtonHitAreaInsets:snackbarView];
 
   [self slideMessageView:snackbarView
                 onscreen:YES

@@ -32,6 +32,9 @@
 /** Image shown on the tab. Defaults to nil. */
 @property(nonatomic, strong, nullable) UIImage *image;
 
+/** Image shown on the tab when tab is in a selected state. Defaults to @c image if nil. */
+@property(nonatomic, strong, nullable) UIImage *selectedImage;
+
 /** Text displayed in upper-right corner of the tab. Uses title color. */
 @property(nonatomic, copy, nullable) NSString *badgeValue;
 

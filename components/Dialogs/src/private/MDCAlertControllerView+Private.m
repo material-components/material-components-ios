@@ -93,7 +93,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.messageTextView.editable = NO;
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.selectable = YES;  // Enables link tap.
-    self.messageTextView.dataDetectorTypes = UIDataDetectorTypeLink;
     if (self.mdc_adjustsFontForContentSizeCategory) {
       self.messageTextView.font =
           [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
@@ -889,8 +888,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGPoint buttonCenter;
   CGPoint buttonOrigin;
   buttonOrigin.y = self.orderVerticalActionsByEmphasis
-                       ? self.actionsInsets.bottom
-                       : self.actionsScrollView.contentSize.height - self.actionsInsets.bottom;
+                       ? self.actionsInsets.top
+                       : self.actionsScrollView.contentSize.height - self.actionsInsets.top;
   if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentCenter ||
       self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
     buttonCenter.x = self.actionsScrollView.contentSize.width / 2.0f;
