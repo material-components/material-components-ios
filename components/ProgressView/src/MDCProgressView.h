@@ -24,6 +24,15 @@ typedef NS_ENUM(NSInteger, MDCProgressViewBackwardAnimationMode) {
   MDCProgressViewBackwardAnimationModeAnimate
 };
 
+/** The mode the progress bar is in. */
+typedef NS_ENUM(NSInteger, MDCProgressViewMode) {
+  /** Display the progress in a determinate way. */
+  MDCProgressViewModeDeterminate,
+
+  /** Display the progress in an indeterminate way. */
+  MDCProgressViewModeIndeterminate
+};
+
 /**
  A Material linear determinate progress view.
 
@@ -77,6 +86,20 @@ IB_DESIGNABLE
 @property(nonatomic, assign) float progress;
 
 /**
+ If the progress view shows a constant loading animation (MDCProgressViewModeIndeterminate) or is
+ based on the progress property (MDCProgressViewModeDeterminate).
+ The default value is MDCProgressViewModeDeterminate.
+ */
+@property(nonatomic, assign) MDCProgressViewMode mode;
+
+/**
+ Indicates if the progress view is animating when @c mode is @MDCProgressViewModeIndeterminate.
+
+ The default value is NO.
+ */
+@property(nonatomic, assign, getter=isAnimating) BOOL animating;
+
+/**
  The backward progress animation mode.
 
  When animating progress which is lower than the current progress value, this mode
@@ -105,6 +128,26 @@ IB_DESIGNABLE
 - (void)setHidden:(BOOL)hidden
          animated:(BOOL)animated
        completion:(void (^__nullable)(BOOL finished))completion;
+
+/**
+ Changes the Determinate state, optionally animating the change.
+ @param mode The mode to change the progress view to.
+ @param animated Whether the change should be animated.
+ @param completion The completion block executed at the end of the animation.
+ */
+- (void)setMode:(MDCProgressViewMode)mode
+       animated:(BOOL)animated
+     completion:(void (^__nullable)(BOOL finished))completion;
+
+/**
+ Start the progress bar's indeterminate animation.
+ */
+- (void)startAnimating;
+
+/**
+ Stop the progress bar's indeterminate animation.
+ */
+- (void)stopAnimating;
 
 /**
  A block that is invoked when the @c MDCProgressView receives a call to @c

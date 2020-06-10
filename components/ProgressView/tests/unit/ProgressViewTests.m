@@ -61,6 +61,14 @@
   [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 }
 
+- (void)testIndeterminateProgressView {
+  _progressView.mode = MDCProgressViewModeIndeterminate;
+  [_progressView startAnimating];
+  XCTAssertTrue(_progressView.isAnimating);
+  [_progressView stopAnimating];
+  XCTAssertFalse(_progressView.isAnimating);
+}
+
 - (void)testProgressClampedAt0 {
   _progressView.progress = -1;
   XCTAssertEqual(_progressView.progress, 0);
