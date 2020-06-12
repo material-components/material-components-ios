@@ -112,9 +112,9 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
             preferredContainerHeight:preferredContainerHeight];
 }
 
-- (nonnull MDCTextControlHorizontalPositioningReferenceDefault *)horizontalPositioningReference {
-  MDCTextControlHorizontalPositioningReferenceDefault *positioningReference =
-      [[MDCTextControlHorizontalPositioningReferenceDefault alloc] init];
+- (nonnull MDCTextControlHorizontalPositioningReference *)horizontalPositioningReference {
+  MDCTextControlHorizontalPositioningReference *positioningReference =
+      [[MDCTextControlHorizontalPositioningReference alloc] init];
   return positioningReference;
 }
 

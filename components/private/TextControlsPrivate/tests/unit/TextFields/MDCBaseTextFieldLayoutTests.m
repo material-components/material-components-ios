@@ -48,8 +48,7 @@
   MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
                   positioningReference:positioningReference
-        horizontalPositioningReference:[[MDCTextControlHorizontalPositioningReferenceDefault alloc]
-                                           init]
+        horizontalPositioningReference:[[MDCTextControlHorizontalPositioningReference alloc] init]
                                   text:@"Text"
                                   font:font
                           floatingFont:floatingFont

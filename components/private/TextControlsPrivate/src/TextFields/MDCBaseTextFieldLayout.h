@@ -47,7 +47,7 @@
                 positioningReference:
                     (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference
       horizontalPositioningReference:
-          (nonnull id<MDCTextControlHorizontalPositioningReference>)horizontalPositioningReference
+          (nonnull id<MDCTextControlHorizontalPositioning>)horizontalPositioningReference
                                 text:(nullable NSString *)text
                                 font:(nonnull UIFont *)font
                         floatingFont:(nonnull UIFont *)floatingFont

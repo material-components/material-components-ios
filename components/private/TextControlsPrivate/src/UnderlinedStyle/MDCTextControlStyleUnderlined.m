@@ -25,6 +25,7 @@ static const CGFloat kUnderlinedContainerStyleUnderlineWidthThin = 1.0f;
 static const CGFloat kUnderlinedContainerStyleUnderlineWidthThick = 2.0f;
 
 static const CGFloat kUnderlinedFloatingLabelScaleFactor = 0.75f;
+static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
 
 @interface MDCTextControlStyleUnderlined () <CAAnimationDelegate>
 
@@ -127,10 +128,10 @@ static const CGFloat kUnderlinedFloatingLabelScaleFactor = 0.75f;
   return [font fontWithSize:floatingFontSize];
 }
 
-- (nonnull MDCTextControlHorizontalPositioningReferenceDefault *)horizontalPositioningReference {
-  MDCTextControlHorizontalPositioningReferenceDefault *positioningReference =
-      [[MDCTextControlHorizontalPositioningReferenceDefault alloc] init];
-  positioningReference.horizontalEdgePadding = 2;
+- (nonnull MDCTextControlHorizontalPositioningReference *)horizontalPositioningReference {
+  MDCTextControlHorizontalPositioningReference *positioningReference =
+      [[MDCTextControlHorizontalPositioningReference alloc] init];
+  positioningReference.horizontalEdgePadding = kUnderlinedHorizontalEdgePaddingDefault;
   return positioningReference;
 }
 

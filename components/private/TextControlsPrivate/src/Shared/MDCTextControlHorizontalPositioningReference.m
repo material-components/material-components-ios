@@ -12,35 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlHorizontalPositioningReference.h"
-
 #import <UIKit/UIKit.h>
 
-static const CGFloat kMDCTextControlHorizontalPositioningReferenceDefaultHorizontalEdgePadding =
+#import "MDCTextControlHorizontalPositioningReference.h"
+
+static const CGFloat kMDCTextControlHorizontalPositioningReferenceHorizontalEdgePadding = 12.0f;
+static const CGFloat kMDCTextControlHorizontalPositioningReferenceHorizontalInterItemPadding =
     12.0f;
-static const CGFloat
-    kMDCTextControlHorizontalPositioningReferenceDefaultHorizontalInterItemPadding = 12.0f;
 
-@interface MDCTextControlHorizontalPositioningReferenceDefault ()
-@end
-
-@implementation MDCTextControlHorizontalPositioningReferenceDefault
+@implementation MDCTextControlHorizontalPositioningReference
 @synthesize horizontalEdgePadding = _horizontalEdgePadding;
 @synthesize horizontalInterItemSpacing = _horizontalInterItemSpacing;
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonMDCTextControlHorizontalPositioningReferenceDefaultInit];
+    self.horizontalEdgePadding = kMDCTextControlHorizontalPositioningReferenceHorizontalEdgePadding;
+    self.horizontalInterItemSpacing =
+        kMDCTextControlHorizontalPositioningReferenceHorizontalInterItemPadding;
   }
   return self;
-}
-
-- (void)commonMDCTextControlHorizontalPositioningReferenceDefaultInit {
-  self.horizontalEdgePadding =
-      kMDCTextControlHorizontalPositioningReferenceDefaultHorizontalEdgePadding;
-  self.horizontalInterItemSpacing =
-      kMDCTextControlHorizontalPositioningReferenceDefaultHorizontalInterItemPadding;
 }
 
 @end
