@@ -47,6 +47,7 @@ static const CGFloat kMinimumHeaderHeight = 8;
     _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
     _titleLabel.numberOfLines = 0;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
 
     [self addSubview:_messageLabel];
     _messageLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
