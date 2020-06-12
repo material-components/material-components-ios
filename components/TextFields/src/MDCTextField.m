@@ -852,7 +852,11 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   if (self.text.length > 0) {
     return [super accessibilityValue];
   }
-  return nil;
+
+  // Returning nil here causes iOS to default to [super accessibilityValue], which results in both
+  // accessibilityValue and accessibilityLabel being read out by VoiceOver, so we return the empty
+  // string instead.
+  return @"";
 }
 
 #pragma mark - Testing
