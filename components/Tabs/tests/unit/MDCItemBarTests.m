@@ -160,9 +160,10 @@
     for (NSUInteger itemIndex = 0; itemIndex < visibleCells.count; itemIndex++) {
       UICollectionViewCell *cell = visibleCells[itemIndex];
       XCTAssertEqual(cell.interactions.count, 1,
-                     @"cell at index %lu should only have one UIInteraction.", itemIndex);
+                     @"cell at index %lu should only have one UIInteraction.",
+                     (unsigned long)itemIndex);
       XCTAssert([cell.interactions.firstObject isKindOfClass:[UIPointerInteraction class]],
-                @"cell at index %lu should have a UIPointerInteraction.", itemIndex);
+                @"cell at index %lu should have a UIPointerInteraction.", (unsigned long)itemIndex);
     }
   }
 #endif

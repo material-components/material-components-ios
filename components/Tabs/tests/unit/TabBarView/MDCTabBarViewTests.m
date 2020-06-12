@@ -1337,9 +1337,11 @@ static UIImage *fakeImage(CGSize size) {
     for (NSUInteger itemIndex = 0; itemIndex < itemViews.count; itemIndex++) {
       MDCTabBarViewItemView *itemView = itemViews[itemIndex];
       XCTAssertEqual(itemView.interactions.count, 1,
-                     @"itemView at index %lu should only have one UIInteraction.", itemIndex);
+                     @"itemView at index %lu should only have one UIInteraction.",
+                     (unsigned long)itemIndex);
       XCTAssert([itemView.interactions.firstObject isKindOfClass:[UIPointerInteraction class]],
-                @"itemView at index %lu should have a UIPointerInteraction.", itemIndex);
+                @"itemView at index %lu should have a UIPointerInteraction.",
+                (unsigned long)itemIndex);
     }
   }
 #endif
