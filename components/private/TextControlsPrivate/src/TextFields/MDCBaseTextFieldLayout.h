@@ -13,14 +13,14 @@
 // limitations under the License.
 
 #import "MaterialTextControlsPrivate+Shared.h"
+#import "MDCTextControlTextFieldSideViewAlignment.h"
 
 @interface MDCBaseTextFieldLayout : NSObject
 
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
 
-@property(nonatomic, assign) CGRect clearButtonFrameFloating;
-@property(nonatomic, assign) CGRect clearButtonFrameNormal;
+@property(nonatomic, assign) CGRect clearButtonFrame;
 @property(nonatomic, assign) CGRect labelFrameFloating;
 @property(nonatomic, assign) CGRect labelFrameNormal;
 @property(nonatomic, assign) CGRect textRectNormal;
@@ -52,6 +52,8 @@
                                 font:(nonnull UIFont *)font
                         floatingFont:(nonnull UIFont *)floatingFont
                                label:(nonnull UILabel *)label
+                       labelPosition:(MDCTextControlLabelPosition)labelPosition
+                   sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
                             leftView:(nullable UIView *)leftView
                         leftViewMode:(UITextFieldViewMode)leftViewMode
                            rightView:(nullable UIView *)rightView

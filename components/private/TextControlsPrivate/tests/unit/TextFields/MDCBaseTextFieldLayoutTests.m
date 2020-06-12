@@ -54,6 +54,8 @@
                                   font:font
                           floatingFont:floatingFont
                                  label:[[UILabel alloc] init]
+                         labelPosition:MDCTextControlLabelPositionFloating
+                     sideViewAlignment:MDCTextControlTextFieldSideViewAlignmentCenteredInContainer
                               leftView:[self createSideView]
                           leftViewMode:viewMode
                              rightView:[self createSideView]

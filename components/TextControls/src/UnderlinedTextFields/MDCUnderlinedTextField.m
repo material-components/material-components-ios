@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 
 #import "MaterialTextControlsPrivate+Shared.h"
+#import "MaterialTextControlsPrivate+TextFields.h"
 #import "MaterialTextControlsPrivate+UnderlinedStyle.h"
 
 @interface MDCUnderlinedTextField (Private) <MDCTextControl>
@@ -45,6 +46,10 @@
 
 - (void)commonMDCUnderlinedTextFieldInit {
   self.containerStyle = [[MDCTextControlStyleUnderlined alloc] init];
+}
+
+- (MDCTextControlTextFieldSideViewAlignment)sideViewAlignment {
+  return MDCTextControlTextFieldSideViewAlignmentAlignedWithText;
 }
 
 #pragma mark Stateful Color APIs

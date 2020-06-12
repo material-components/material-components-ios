@@ -32,6 +32,8 @@
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
+                        labelPosition:(MDCTextControlLabelPosition)labelPosition
+                    sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
@@ -54,6 +56,8 @@
                                       font:font
                               floatingFont:floatingFont
                                      label:label
+                             labelPosition:labelPosition
+                         sideViewAlignment:sideViewAlignment
                                   leftView:leftView
                               leftViewMode:leftViewMode
                                  rightView:rightView
@@ -82,6 +86,8 @@
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
                                    label:(UILabel *)label
+                           labelPosition:(MDCTextControlLabelPosition)labelPosition
+                       sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
@@ -133,39 +139,6 @@
     clearButtonMinX = clearButtonMaxX - clearButtonSideLength;
   }
 
-  CGFloat floatingLabelMinY = positioningReference.paddingBetweenContainerTopAndFloatingLabel;
-  CGFloat floatingLabelHeight = floatingFont.lineHeight;
-  CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
-
-  CGFloat textRectMinYWithFloatingLabel =
-      floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndEditingText;
-
-  CGFloat textRectHeight = [self textHeightWithFont:font];
-  CGFloat textRectCenterYWithFloatingLabel =
-      textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
-
-  CGFloat textRectMinYNormal = positioningReference.paddingBetweenContainerTopAndNormalLabel;
-  CGFloat textRectCenterYNormal = textRectMinYNormal + ((CGFloat)0.5 * textRectHeight);
-  CGFloat containerMidY = (CGFloat)0.5 * positioningReference.containerHeight;
-
-  CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
-  CGFloat leftViewMinY = 0;
-  if (displaysLeftView) {
-    leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:containerMidY];
-  }
-
-  CGFloat rightViewHeight = CGRectGetHeight(rightView.frame);
-  CGFloat rightViewMinY = 0;
-  if (displaysRightView) {
-    rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:containerMidY];
-  }
-
-  CGFloat clearButtonMinY = [self minYForSubviewWithHeight:clearButtonSideLength
-                                                   centerY:textRectCenterYNormal];
-  CGFloat clearButtonFloatingMinY =
-      [self minYForSubviewWithHeight:clearButtonSideLength
-                             centerY:textRectCenterYWithFloatingLabel];
-
   CGFloat textRectMinX = 0;
   CGFloat textRectMaxX = 0;
   CGFloat labelMinX = 0;
@@ -208,22 +181,43 @@
                                           : textFieldWidth - horizontalEdgePadding;
   }
 
+  CGFloat textRectMinYNormal = positioningReference.paddingBetweenContainerTopAndNormalLabel;
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
+  CGFloat textRectHeight = [self textHeightWithFont:font];
   CGRect textRectNormal =
       CGRectMake(textRectMinX, textRectMinYNormal, textRectWidth, textRectHeight);
+
+  CGFloat floatingLabelMinY = positioningReference.paddingBetweenContainerTopAndFloatingLabel;
+  CGFloat floatingLabelHeight = floatingFont.lineHeight;
+  CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
+  CGFloat textRectMinYWithFloatingLabel =
+      floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndEditingText;
+  CGFloat textRectCenterYWithFloatingLabel =
+      textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
   CGFloat textRectMinYFloatingLabel =
       (CGFloat)floor((double)(textRectCenterYWithFloatingLabel - (textRectHeight * (CGFloat)0.5)));
   CGRect textRectFloating =
       CGRectMake(textRectMinX, textRectMinYFloatingLabel, textRectWidth, textRectHeight);
 
+  CGFloat containerMidY = (CGFloat)0.5 * positioningReference.containerHeight;
+  BOOL isFloatingLabel = labelPosition == MDCTextControlLabelPositionFloating;
+  CGFloat textRectMidY =
+      isFloatingLabel ? CGRectGetMidY(textRectFloating) : CGRectGetMidY(textRectNormal);
+  CGFloat sideViewMidY = [self sideViewMidYWithSideViewAlignment:sideViewAlignment
+                                                   containerMidY:containerMidY
+                                                    textRectMidY:textRectMidY];
+
+  CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
+  CGFloat rightViewHeight = CGRectGetHeight(rightView.frame);
+  CGFloat leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:sideViewMidY];
+  CGFloat rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:sideViewMidY];
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame =
       CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
-
-  CGRect clearButtonFrameNormal =
+  CGFloat clearButtonMinY = [self minYForSubviewWithHeight:clearButtonSideLength
+                                                   centerY:sideViewMidY];
+  CGRect clearButtonFrame =
       CGRectMake(clearButtonMinX, clearButtonMinY, clearButtonSideLength, clearButtonSideLength);
-  CGRect clearButtonFrameFloating = CGRectMake(clearButtonMinX, clearButtonFloatingMinY,
-                                               clearButtonSideLength, clearButtonSideLength);
 
   CGRect labelFrameNormal = [self labelFrameWithText:label.text
                                        labelPosition:MDCTextControlLabelPositionNormal
@@ -258,8 +252,7 @@
                                             self.assistiveLabelViewLayout.calculatedHeight);
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
-  self.clearButtonFrameFloating = clearButtonFrameFloating;
-  self.clearButtonFrameNormal = clearButtonFrameNormal;
+  self.clearButtonFrame = clearButtonFrame;
   self.textRectFloating = textRectFloating;
   self.textRectNormal = textRectNormal;
   self.labelFrameFloating = labelFrameFloating;
@@ -267,6 +260,23 @@
   self.leftViewHidden = !displaysLeftView;
   self.rightViewHidden = !displaysRightView;
   self.containerHeight = positioningReference.containerHeight;
+}
+
+- (CGFloat)sideViewMidYWithSideViewAlignment:
+               (MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
+                               containerMidY:(CGFloat)containerMidY
+                                textRectMidY:(CGFloat)textRectMidY {
+  CGFloat sideViewMidY = containerMidY;
+  switch (sideViewAlignment) {
+    case MDCTextControlTextFieldSideViewAlignmentCenteredInContainer:
+      break;
+    case MDCTextControlTextFieldSideViewAlignmentAlignedWithText:
+      sideViewMidY = textRectMidY;
+      break;
+    default:
+      break;
+  }
+  return sideViewMidY;
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
