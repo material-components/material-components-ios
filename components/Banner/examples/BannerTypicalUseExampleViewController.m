@@ -389,6 +389,7 @@ static NSString *const exampleSuperLongText =
 
   MDCButton *button = bannerView.leadingButton;
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
 

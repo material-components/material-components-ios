@@ -180,14 +180,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   _mdc_overrideBaseElevation = -1;
 }
 
-- (void)setBannerViewLayoutStyle:(MDCBannerViewLayoutStyle)bannerViewLayoutStyle {
-  _bannerViewLayoutStyle = bannerViewLayoutStyle;
-  if (bannerViewLayoutStyle == MDCBannerViewLayoutStyleSingleRow) {
-    // Only leadingButton is supported in MDCBannerViewLayoutStyleSingleRow.
-    self.trailingButton.hidden = YES;
-  }
-}
-
 - (void)setDividerColor:(UIColor *)dividerColor {
   self.divider.backgroundColor = dividerColor;
 }
@@ -442,7 +434,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   if (layoutStyle == MDCBannerViewLayoutStyleSingleRow) {
     self.imageViewConstraintCenterY.active = YES;
     self.textViewConstraintCenterY.active = YES;
-    self.buttonContainerConstraintWidthWithLeadingButton.active = YES;
+    if (self.trailingButton.hidden) {
+      self.buttonContainerConstraintWidthWithLeadingButton.active = YES;
+    }
     self.buttonContainerConstraintTopWithMargin.active = YES;
     if (self.leadingButton.hidden) {
       self.textViewConstraintTrailing.active = YES;
