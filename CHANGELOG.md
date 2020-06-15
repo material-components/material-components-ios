@@ -1,16 +1,36 @@
-# #develop#
+# 109.8.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we added indeterminate mode to `MDCProgressView`. As well as various bug fixes to ActionSheet, Banner, Dialog, and TextFields components.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+`MDCProgressView` now supports indeterminate mode.
+
+```objc
+MDCProgressView *progressView = [[MDCProgressView alloc] init];
+progressView.mode = MDCProgressViewModeIndeterminate;
+[progressView startAnimating];
+```
+
 ## API changes
+
+### Buttons
+
+*new* property: `defaultContentEdgeInsets` in `MDCButton`
+
+### ProgressView
+
+*new* enum: `MDCProgressViewMode`
+
+*new* property: `mode` in `MDCProgressView`
+
+*new* property: `animating` in `MDCProgressView`
+
+*new* method: `setMode:animated:completion:` in `MDCProgressView`
+
+*new* method: `startAnimating` in `MDCProgressView`
+
+*new* method: `stopAnimating` in `MDCProgressView`
 
 ## Component changes
 
