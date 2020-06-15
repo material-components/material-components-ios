@@ -1,3 +1,59 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Mark title as accessibility `.header`](https://github.com/material-components/material-components-ios/commit/386ba003220db035244c9d66cfe1468e1110ee37) (Rob Moore)
+
+### Banner
+
+* [Support two buttons on a single row style banner.](https://github.com/material-components/material-components-ios/commit/c13125fb26e64aea98392855ec3bfcda2a89ff36) (Wenyu Zhang)
+
+### Buttons
+
+* [Expose `defaultContentEdgeInsets` readonly property on MDCButton in regular header for the class, rather than only in the subclassing header, as clients may need to reset content insets back to their defaults after using a themer, even if they do not subclass MDCButton.](https://github.com/material-components/material-components-ios/commit/df6658771a83f2e8d3637f7ff0549437fb9c1d5f) (Jake Rockland)
+
+### Dialogs
+
+* [Voice over reads the message twice](https://github.com/material-components/material-components-ios/commit/8b4e6058db8a5235ef0ca145427795850c6b676f) (Nobody)
+
+### ProgressView
+
+* [Add and indeterminate state to the progress bar.](https://github.com/material-components/material-components-ios/commit/1a75f9dbbb5e5297834c1deb2c604d63175f4ed7) (Nobody)
+
+### Tabs
+
+* [Add explicit cast in MDCTabBarViewTests.](https://github.com/material-components/material-components-ios/commit/7c4dab62cf371ee9f89a9bff26c0d2ba1a0eb015) (Wenyu Zhang)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/a66e645d94f6d59e5ba8f97e75447ee57b3b7144) (Jeff Verkoeyen)
+
+### TextFields
+
+* [Return the empty string instead of nil in MDCTextField's accessibilityValue method to avoid VoiceOver defaulting to [super accessibilityValue].](https://github.com/material-components/material-components-ios/commit/d4880b46008f1636b39a50f939b746811994e37e) (Bryan Oltman)
+
+### private/TextControlsPrivate
+
+* [Rename + small refactor of horizontal positioning stuff](https://github.com/material-components/material-components-ios/commit/765676cca8d7705fe56c1d796c920b96fd45f5d0) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add a convenience math method to calculate the correct visibleAreaInsets given a frame and a minimum touch target.](https://github.com/material-components/material-components-ios/commit/6bd4757079daa8a85828303d4826d46cb6e05583) (Yarden Eitan)
+* [Change side view positioning for MDCUnderlinedTextField](https://github.com/material-components/material-components-ios/commit/c302339943de305772db2809fe864a53cbe5ab0f) (Andrew Overton)
+
+---
+
 # 109.7.0
 
 This minor release makes accessibility improvements related to high contrast colors, adds new functionality to Buttons, Chips, Dialogs, Snackbars, and Tabs, and adds a new TextControls text field, `MDCUnderlinedTextField`, which is intended to replace `MDCTextInputControllerLegacyDefault` and `MDCTextInputControllerUnderline`.
