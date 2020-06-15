@@ -330,6 +330,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
   [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button1.uppercaseTitle = YES;
+  self.bannerView.trailingButton.hidden = YES;
   self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
   self.bannerView.imageView.hidden = YES;
 
@@ -344,9 +345,47 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
   [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button1.uppercaseTitle = YES;
+  self.bannerView.trailingButton.hidden = YES;
   self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
   [self changeViewToRTL:self.bannerView];
   self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testSingleRowStyleShortTextWithTwoActionsLTR {
+  // When
+  self.bannerView.textView.text = kBannerShortText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+  self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testSingleRowStyleShortTextWithTwoActionsRTL {
+  // When
+  self.bannerView.textView.text = kBannerShortText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+  self.bannerView.imageView.hidden = YES;
+  [self changeViewToRTL:self.bannerView];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];

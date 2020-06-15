@@ -43,6 +43,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
 @property(nonatomic, strong) MDCProgressView *backwardProgressAnimateView;
 @property(nonatomic, strong) UILabel *backwardProgressAnimateLabel;
 
+@property(nonatomic, strong) MDCProgressView *indeterminateProgressView;
+@property(nonatomic, strong) UILabel *indeterminateProgressLabel;
+
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
@@ -97,6 +100,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   [self.container addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
   _backwardProgressAnimateView.progress = (float)0.33;
+
+  _indeterminateProgressView = [[MDCProgressView alloc] init];
+  _indeterminateProgressView.translatesAutoresizingMaskIntoConstraints = NO;
+  _indeterminateProgressView.mode = MDCProgressViewModeIndeterminate;
+  _indeterminateProgressView.progressTintColor = self.colorScheme.primaryColor;
+  _indeterminateProgressView.trackTintColor =
+      [self.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.24];
+  [self.container addSubview:_indeterminateProgressView];
 }
 
 @end
@@ -197,6 +208,13 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   _backwardProgressAnimateLabel.textColor = self.colorScheme.onBackgroundColor;
   _backwardProgressAnimateLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.container addSubview:_backwardProgressAnimateLabel];
+
+  _indeterminateProgressLabel = [[UILabel alloc] init];
+  _indeterminateProgressLabel.text = @"Indeterminate progress";
+  _indeterminateProgressLabel.font = self.typographyScheme.caption;
+  _indeterminateProgressLabel.textColor = self.colorScheme.onBackgroundColor;
+  _indeterminateProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.container addSubview:_indeterminateProgressLabel];
 }
 
 - (void)setupConstraints {
@@ -214,6 +232,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
     @"backwardResetLabel" : _backwardProgressResetLabel,
     @"backwardAnimateView" : _backwardProgressAnimateView,
     @"backwardAnimateLabel" : _backwardProgressAnimateLabel,
+    @"indeterminateView" : _indeterminateProgressView,
+    @"indeterminateLabel" : _indeterminateProgressLabel,
   };
   NSDictionary *metrics = @{
     @"t" : @20,
@@ -229,7 +249,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
                                    "[coloredView(==h)]-(p)-[coloredLabel]-(s)-"
                                    "[gradientView(==h)]-(p)-[gradientLabel]-(s)-"
                                    "[backwardResetView(==h)]-(p)-[backwardResetLabel]-(s)-"
-                                   "[backwardAnimateView(==h)]-(p)-[backwardAnimateLabel]"
+                                   "[backwardAnimateView(==h)]-(p)-[backwardAnimateLabel]-(s)-"
+                                   "[indeterminateView(==h)]-(p)-[indeterminateLabel]"
                           options:0
                           metrics:metrics
                             views:views];
@@ -243,12 +264,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
     @"H:|-(p)-[gradientView]-(p)-|",
     @"H:|-(p)-[backwardResetView]-(p)-|",
     @"H:|-(p)-[backwardAnimateView]-(p)-|",
+    @"H:|-(p)-[indeterminateView]-(p)-|",
     @"H:|-(p)-[stockLabel]-(p)-|",
     @"H:|-(p)-[tintedLabel]-(p)-|",
     @"H:|-(p)-[coloredLabel]-(p)-|",
     @"H:|-(p)-[gradientLabel]-(p)-|",
     @"H:|-(p)-[backwardResetLabel]-(p)-|",
     @"H:|-(p)-[backwardAnimateLabel]-(p)-|",
+    @"H:|-(p)-[indeterminateLabel]-(p)-|",
   ];
   for (NSString *format in horizontalVisualFormats) {
     [horizontalConstraints
@@ -271,6 +294,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
                                              completion:^(BOOL ignored) {
                                                sender.enabled = YES;
                                              }];
+  [self animateIndeterminateProgressBarWithCountdown:4];
 }
 
 - (void)animateStep1:(MDCProgressView *)progressView {
@@ -334,6 +358,27 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
                      [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
                                                                     completion:completion];
                    });
+  }
+}
+
+- (void)animateIndeterminateProgressBarWithCountdown:(NSInteger)remainingCounts {
+  --remainingCounts;
+  __weak ProgressViewExample *weakSelf = self;
+
+  if (!_indeterminateProgressView.animating) {
+    [_indeterminateProgressView setHidden:NO animated:YES completion:nil];
+    [_indeterminateProgressView startAnimating];
+  }
+
+  if (remainingCounts > 0) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                     [weakSelf animateIndeterminateProgressBarWithCountdown:remainingCounts];
+                   });
+  } else {
+    [_indeterminateProgressView setHidden:YES animated:YES completion:nil];
+    [_indeterminateProgressView stopAnimating];
   }
 }
 

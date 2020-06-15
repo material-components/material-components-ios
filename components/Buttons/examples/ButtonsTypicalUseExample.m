@@ -14,8 +14,9 @@
 
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
-#import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
+#import "MaterialContainerScheme.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
@@ -60,14 +61,9 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Button" forState:UIControlStateNormal];
   [containedButton applyContainedThemeWithScheme:self.containerScheme];
-  CGSize containedButtonSize = [containedButton intrinsicContentSize];
-  CGFloat containedButtonVerticalInset =
-      MAX(0, (kMinimumAccessibleButtonSize.height - containedButtonSize.height) / 2);
-  CGFloat containedButtonHorizontalInset =
-      MAX(0, (kMinimumAccessibleButtonSize.width - containedButtonSize.width) / 2);
-  containedButton.visibleAreaInsets =
-      UIEdgeInsetsMake(containedButtonVerticalInset, containedButtonHorizontalInset,
-                       containedButtonVerticalInset, containedButtonHorizontalInset);
+  [containedButton sizeToFit];
+  containedButton.visibleAreaInsets = MDCVisibleAreaInsetsForMinimumTappability(
+      containedButton.frame, kMinimumAccessibleButtonSize);
   [containedButton sizeToFit];
   [containedButton addTarget:self
                       action:@selector(didTap:)
@@ -93,14 +89,9 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   MDCButton *textButton = [[MDCButton alloc] init];
   [textButton applyTextThemeWithScheme:self.containerScheme];
   [textButton setTitle:@"Button" forState:UIControlStateNormal];
-  CGSize textButtonSize = [textButton intrinsicContentSize];
-  CGFloat textButtonVerticalInset =
-      MAX(0, (kMinimumAccessibleButtonSize.height - textButtonSize.height) / 2);
-  CGFloat textButtonHorizontalInset =
-      MAX(0, (kMinimumAccessibleButtonSize.width - textButtonSize.width) / 2);
+  [textButton sizeToFit];
   textButton.visibleAreaInsets =
-      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset, textButtonVerticalInset,
-                       textButtonHorizontalInset);
+      MDCVisibleAreaInsetsForMinimumTappability(textButton.frame, kMinimumAccessibleButtonSize);
   [textButton sizeToFit];
   [textButton addTarget:self
                  action:@selector(didTap:)

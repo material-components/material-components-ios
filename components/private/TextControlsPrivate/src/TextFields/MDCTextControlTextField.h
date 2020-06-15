@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextFieldLayout.h"
-#import "MDCTextControlTextField.h"
-#import "MDCTextControlTextFieldSideViewAlignment.h"
+#import "MDCTextControlTextFieldSideViewAlignment.h"  // IWYU pragma: export
+
+@protocol MDCTextControlTextField <MDCTextControl>
+@property(nonatomic, assign, readonly) MDCTextControlTextFieldSideViewAlignment sideViewAlignment;
+@end

@@ -14,28 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCTextControlHorizontalPositioning.h"
+
 /**
- Objects conforming to this protocol provide information to layout objects regarding the horizontal
- positioning of TextControl subviews.
+ An object conforming to @c MDCTextControlHorizontalPositioning
  */
-@protocol MDCTextControlHorizontalPositioningReference
-
-/**
- The amount of horizontal padding between the leftmost subview and the left edge of the screen as
- well as the rightmost view and the right edge of the screen.
-*/
-@property(nonatomic, assign) CGFloat horizontalEdgePadding;
-
-/**
- The amount of horizontal padding between the various subviews.
-*/
-@property(nonatomic, assign) CGFloat horizontalInterItemSpacing;
-
-@end
-
-/**
- A default implementation of @c MDCTextControlHorizontalPositioningReference
- */
-@interface MDCTextControlHorizontalPositioningReferenceDefault
-    : NSObject <MDCTextControlHorizontalPositioningReference>
+@interface MDCTextControlHorizontalPositioningReference
+    : NSObject <MDCTextControlHorizontalPositioning>
 @end

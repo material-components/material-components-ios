@@ -188,6 +188,6 @@ FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
  This method returns an object that tells the view where to position its views
  horizontally.
  */
-- (nonnull MDCTextControlHorizontalPositioningReferenceDefault *)horizontalPositioningReference;
+- (nonnull MDCTextControlHorizontalPositioningReference *)horizontalPositioningReference;
 
 @end

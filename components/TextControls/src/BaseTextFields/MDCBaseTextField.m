@@ -23,7 +23,7 @@
 #import "MaterialTextControlsPrivate+Shared.h"
 #import "MaterialTextControlsPrivate+TextFields.h"
 
-@interface MDCBaseTextField () <MDCTextControl>
+@interface MDCBaseTextField () <MDCTextControlTextField>
 
 @property(strong, nonatomic) UILabel *label;
 @property(nonatomic, strong) MDCTextControlAssistiveLabelView *assistiveLabelView;
@@ -219,6 +219,8 @@
                                   font:self.normalFont
                           floatingFont:self.floatingFont
                                  label:self.label
+                         labelPosition:self.labelPosition
+                     sideViewAlignment:self.sideViewAlignment
                               leftView:self.leftView
                           leftViewMode:self.leftViewMode
                              rightView:self.rightView
@@ -469,10 +471,7 @@
 }
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
-  if (self.labelPosition == MDCTextControlLabelPositionFloating) {
-    return self.layout.clearButtonFrameFloating;
-  }
-  return self.layout.clearButtonFrameNormal;
+  return self.layout.clearButtonFrame;
 }
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
@@ -617,6 +616,12 @@
     colorViewModel = [[MDCTextControlColorViewModel alloc] initWithState:textControlState];
   }
   return colorViewModel;
+}
+
+#pragma mark MDCTextControlTextField
+
+- (MDCTextControlTextFieldSideViewAlignment)sideViewAlignment {
+  return MDCTextControlTextFieldSideViewAlignmentCenteredInContainer;
 }
 
 #pragma mark Accessibility Overrides

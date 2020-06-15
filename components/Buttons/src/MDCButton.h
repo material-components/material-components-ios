@@ -91,6 +91,11 @@
 @property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
 
 /**
+ The default content edge insets of the button. They are set at initialization time.
+ */
+@property(nonatomic, readonly) UIEdgeInsets defaultContentEdgeInsets;
+
+/**
  The offset (in points) of the button's inkView or rippleView (depending on which is being used -
  see @c enableRippleBehavior)
 

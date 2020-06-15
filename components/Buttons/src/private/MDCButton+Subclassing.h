@@ -37,7 +37,4 @@
 /** The bounding path of the button. The shadow will follow that path. */
 - (nonnull UIBezierPath *)boundingPath;
 
-/** The default content edge insets of the button. They are set at initialization time. */
-- (UIEdgeInsets)defaultContentEdgeInsets;
-
 @end

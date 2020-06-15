@@ -254,3 +254,43 @@ static inline BOOL MDCEdgeInsetsEqualToEdgeInsets(UIEdgeInsets insets1, UIEdgeIn
   BOOL rightEqual = MDCCGFloatEqual(insets1.right, insets2.right);
   return topEqual && leftEqual && bottomEqual && rightEqual;
 }
+
+/**
+ This method calculates and returns the @c visibleAreaInsets to set on the view in order for it to
+ fit the correct minimumTouchTarget, given the view's frame.
+
+ @param frame The provided view's frame that needs to be adjusted to fit the minimum touch target
+ size.
+ @param minimumTouchTarget Given the width and height of the minimum touch target we can provide a
+ correct
+ @c visibleAreaInsets for the provided view frame.
+ */
+static inline UIEdgeInsets MDCVisibleAreaInsetsForMinimumTappability(CGRect frame,
+                                                                     CGSize minimumTouchTarget) {
+  UIEdgeInsets visibleAreaInsets = UIEdgeInsetsZero;
+  CGFloat additionalRequiredHeight;
+  CGFloat height = CGRectGetHeight(frame);
+  if (MDCCGFloatEqual(height, 0.f)) {
+    NSLog(@"Frame has no height to tap: %@", @(frame));
+    additionalRequiredHeight = 0.f;
+  } else {
+    additionalRequiredHeight = minimumTouchTarget.height - height;
+  }
+  CGFloat additionalRequiredWidth;
+  CGFloat width = CGRectGetWidth(frame);
+  if (MDCCGFloatEqual(width, 0.f)) {
+    NSLog(@"Frame has no width to tap: %@", @(frame));
+    additionalRequiredWidth = 0.f;
+  } else {
+    additionalRequiredWidth = minimumTouchTarget.width - width;
+  }
+  if (additionalRequiredHeight > 0.f) {
+    visibleAreaInsets.top = MDCCeil(additionalRequiredHeight * 0.5f);
+    visibleAreaInsets.bottom = additionalRequiredHeight - visibleAreaInsets.top;
+  }
+  if (additionalRequiredWidth > 0.f) {
+    visibleAreaInsets.left = MDCCeil(additionalRequiredWidth * 0.5f);
+    visibleAreaInsets.right = additionalRequiredWidth - visibleAreaInsets.left;
+  }
+  return visibleAreaInsets;
+}

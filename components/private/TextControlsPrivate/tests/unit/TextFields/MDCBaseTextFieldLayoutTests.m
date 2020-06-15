@@ -48,12 +48,13 @@
   MDCBaseTextFieldLayout *layout = [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
                   positioningReference:positioningReference
-        horizontalPositioningReference:[[MDCTextControlHorizontalPositioningReferenceDefault alloc]
-                                           init]
+        horizontalPositioningReference:[[MDCTextControlHorizontalPositioningReference alloc] init]
                                   text:@"Text"
                                   font:font
                           floatingFont:floatingFont
                                  label:[[UILabel alloc] init]
+                         labelPosition:MDCTextControlLabelPositionFloating
+                     sideViewAlignment:MDCTextControlTextFieldSideViewAlignmentCenteredInContainer
                               leftView:[self createSideView]
                           leftViewMode:viewMode
                              rightView:[self createSideView]

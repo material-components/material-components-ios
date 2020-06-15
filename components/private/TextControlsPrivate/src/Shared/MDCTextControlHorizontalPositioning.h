@@ -12,13 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControl.h"
-#import "MDCTextControlAssistiveLabelView.h"
-#import "MDCTextControlAssistiveLabelViewLayout.h"
-#import "MDCTextControlColorViewModel.h"
-#import "MDCTextControlGradientManager.h"
-#import "MDCTextControlHorizontalPositioning.h"
-#import "MDCTextControlHorizontalPositioningReference.h"
-#import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelPosition.h"
-#import "MDCTextControlVerticalPositioningReference.h"
+#import <UIKit/UIKit.h>
+
+/**
+ Objects conforming to this protocol provide information to layout objects regarding the horizontal
+ positioning of TextControl subviews.
+ */
+@protocol MDCTextControlHorizontalPositioning
+
+/**
+ The amount of horizontal padding between the leftmost subview and the left edge of the screen as
+ well as the rightmost view and the right edge of the screen.
+*/
+@property(nonatomic, assign) CGFloat horizontalEdgePadding;
+
+/**
+ The amount of horizontal padding between the various subviews.
+*/
+@property(nonatomic, assign) CGFloat horizontalInterItemSpacing;
+
+@end
