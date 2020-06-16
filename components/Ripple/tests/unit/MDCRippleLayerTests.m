@@ -177,6 +177,7 @@
 - (void)testStartRippleAnimationCorrectness {
   // Given
   FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
+  rippleLayer.bounds = CGRectMake(0, 0, 100, 100);
   CGPoint point = CGPointMake(10, 10);
 
   // When
@@ -200,7 +201,7 @@
         animationsCount += 1;
         XCTAssertEqualObjects(@1, basicAnimation.toValue);
         XCTAssertEqualWithAccuracy(
-            (CGFloat)0.6, (CGFloat)((NSNumber *)basicAnimation.fromValue).doubleValue, 0.0001);
+            (CGFloat)0.37169, (CGFloat)((NSNumber *)basicAnimation.fromValue).doubleValue, 0.01);
       }
     } else if ([animation isKindOfClass:[CAKeyframeAnimation class]]) {
       animationsCount += 1;

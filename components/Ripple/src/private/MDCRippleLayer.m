@@ -30,7 +30,11 @@ static NSString *const kRippleLayerOpacityString = @"opacity";
 static NSString *const kRippleLayerPositionString = @"position";
 static NSString *const kRippleLayerScaleString = @"transform.scale";
 
-static CGFloat GetDefaultRippleRadius(CGRect rect) {
+static CGFloat GetInitialRippleRadius(CGRect rect) {
+  return MAX(CGRectGetWidth(rect), CGRectGetHeight(rect)) * kRippleStartingScale / 2.f;
+}
+
+static CGFloat GetFinalRippleRadius(CGRect rect) {
   return (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + kExpandRippleBeyondSurface);
 }
 
@@ -39,13 +43,16 @@ static CGFloat GetDefaultRippleRadius(CGRect rect) {
 - (void)setNeedsLayout {
   [super setNeedsLayout];
 
-  [self setPathFromRadii];
+  [self calculateRadiusAndSetPath];
   self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
 
-- (void)setPathFromRadii {
-  CGFloat radius =
-      self.maximumRadius > 0 ? self.maximumRadius : GetDefaultRippleRadius(self.bounds);
+- (void)calculateRadiusAndSetPath {
+  CGFloat radius = self.maximumRadius > 0 ? self.maximumRadius : GetFinalRippleRadius(self.bounds);
+  [self setPathFromRadii:radius];
+}
+
+- (void)setPathFromRadii:(CGFloat)radius {
   CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - radius,
                                CGRectGetMidY(self.bounds) - radius, radius * 2, radius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
@@ -56,7 +63,9 @@ static CGFloat GetDefaultRippleRadius(CGRect rect) {
                   animated:(BOOL)animated
                 completion:(MDCRippleCompletionBlock)completion {
   [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidBegin:self];
-  [self setPathFromRadii];
+  CGFloat finalRadius =
+      self.maximumRadius > 0 ? self.maximumRadius : GetFinalRippleRadius(self.bounds);
+  [self setPathFromRadii:finalRadius];
   self.opacity = 1;
   self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
   if (!animated) {
@@ -67,9 +76,10 @@ static CGFloat GetDefaultRippleRadius(CGRect rect) {
   } else {
     _startAnimationActive = YES;
 
+    CGFloat startingScale = GetInitialRippleRadius(self.bounds) / finalRadius;
     CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
     scaleAnim.keyPath = kRippleLayerScaleString;
-    scaleAnim.fromValue = @(kRippleStartingScale);
+    scaleAnim.fromValue = @(startingScale);
     scaleAnim.toValue = @1;
     scaleAnim.timingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
