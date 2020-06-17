@@ -1,113 +1,59 @@
 <!--docs:
-title: "List"
+title: "Lists"
 layout: detail
 section: components
-excerpt: "Material Design Lists are used to show continuous groups of images or text."
+excerpt: "Lists are continuous, vertical indexes of text or images."
 iconId: <#icon_id#>
 path: /catalog/list/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme List -->
-
-# List
+# Lists
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BList%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BList%5D)
 
-Material Design Lists are continuous groups of text and/or images. The [Material guidelines](https://material.io/go/design-lists) for Lists are extensive, and there is no class at this time for implementing any one of them, let alone all of them. However, we are starting to add classes that represent individual List Items. We currently offer two List Item Cells:
+[Lists](https://material.io/components/lists/) are continuous, vertical indexes of text or images.
 
-### MDCBaseCell
+There are three list types:
+1. [Single-line list](#single-line-list)
+1. [Two-line list](#two-line-list)
+1. [Three-line list](#three-line-list)
 
-The MDCBaseCell is a List Item at its simplest--a basic UICollectionViewCell subclass with Material Ink Ripple and Elevation. The MDCBaseCell provides a starting point to build anything the guidelines provide. To build a List using the MDCBaseCell simply treat it like you would any other UICollectionViewCell.
+![Composite image of the three list types](docs/assets/lists-types.png)
 
-Below is an example:
+## Contents
+
+* [Using lists](#using-lists)
+* [Installing lists](#installing-lists)
+* [Making lists accessible](#making-lists-accessible)
+* [List anatomy](#list-anatomy)
+* [Types of lists](#types-of-list)
+* [Theming lists](#theming-lists)
+* [Building your own list item](#building-your-own-list-item)
+
+- - -
+
+## Using lists
+
+We currently offer two `UICollectionViewCell` subclasses that can be used to create Material Design lists: `MDCBaseCell` and `MDCSelfSizingStereoCell`. 
+
+### `MDCBaseCell`
+
+The `MDCBaseCell` is a list item at its simplest--a `UICollectionViewCell` subclass with ripple and elevation. The `MDCBaseCell` provides a starting point to build anything demonstrated in the extensive [design guidelines](https://material.io/go/design-lists). To build a list using `MDCBaseCell` simply treat it like you would any other `UICollectionViewCell`.
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/list_base_cell_animated.gif" alt="Animation showing a list of MDCBaseCell views with Ripple effects." width="356">
 </div>
 
-### MDCSelfSizingStereoCell
+### `MDCSelfSizingStereoCell`
 
-The MDCSelfSizingStereoCell is a subclass of MDCBaseCell. It exposes two image views (trailing and leading) and two labels (title and detail) that the user can configure however they like.
+The `MDCSelfSizingStereoCell` is a subclass of `MDCBaseCell`. It exposes two image views (trailing and leading) and two labels (title and detail) that the user can configure however they like.
 
-Below is an example:
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/list_stereo_cell_animated.gif" alt="Animation showing a list of MDCStereoCell views scrolling up and down." width="480">
 </div>
 
-## Design & API documentation
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/go/lists">Material Design guidelines: Lists</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/list/api-docs/Classes/MDCBaseCell.html">MDCBaseCell</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/list/api-docs/Classes/MDCSelfSizingStereoCell.html">MDCSelfSizingStereoCell</a></li>
-</ul>
-
-## Table of contents
-
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Typical use](#typical-use)
-- [Theming](#theming)
-- [Accessibility](#accessibility)
-  - [Setting `-isAccessibilityElement`](#setting-`-isaccessibilityelement`)
-- [How to implement your own List Cell](#how-to-implement-your-own-list-cell)
-  - [Layout](#layout)
-  - [Ink Ripple](#ink-ripple)
-  - [Self Sizing](#self-sizing)
-  - [Typography](#typography)
-  - [Dynamic Type](#dynamic-type)
-  - [iPhone X Safe Area Support](#iphone-x-safe-area-support)
-  - [Landscape Support](#landscape-support)
-  - [Right to Left Text Support](#right-to-left-text-support)
-
-
-## Installation
-
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/List'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
-
-### Importing
-
-To import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialList
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialList.h"
-```
-<!--</div>-->
-
-
-## Usage
-
-<!-- Extracted from docs/typical-use.md -->
-
-### Typical use
-
-Because List Items ultimately inherit from UICollectionViewCell, clients are not expected to instantiate them themselves. Rather, cell classes are registered with UICollectionViews. Then, in `-collectionView:cellForItemAtIndexPath:`, the client is expected to cast the cell to a List Item class.
+Because the list items we provide inherit from `UICollectionViewCell`, clients are not expected to instantiate them themselves. Rather, clients should register the cell classes with `UICollectionViews`, and then cast the cells to the correct class in their implementations of `-collectionView:cellForItemAtIndexPath:`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -134,14 +80,221 @@ MDCBaseCell *cell =
 ```
 <!--</div>-->
 
+## Installing lists
 
-<!-- Extracted from docs/theming.md -->
+In order to install lists with Cocoapods first add the List component subspec to your `Podfile`:
 
-## Theming
+```bash
+pod 'MaterialComponents/List'
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
-You can theme a List Item with your app's shared scheme using the MaterialKist Theming extension.
+Then, run the following command:
 
-You must first add the Theming extension to your project:
+```bash
+pod install
+```
+
+From there, import the component:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialList
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialList.h"
+```
+<!--</div>-->
+
+## Making lists accessible
+
+To help ensure your Lists are accessible to as many users as possible, please be sure to review the following recommendation:
+
+### Setting `-isAccessibilityElement`
+
+It is generally recommended to set UICollectionViewCells (and UITableViewCells) as accessibilityElements. That way, VoiceOver doesn't traverse the entire cell and articulate an overwhelming amount of accessibility information for each of its subviews.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+cell.isAccessibilityElement = true
+```
+
+#### Objective-C
+
+```objc
+cell.isAccessibilityElement = YES;
+```
+<!--</div>-->
+
+## List anatomy
+
+The following is a typical list anatomy diagram that applies to single-line, two-line, and three-line lists:
+
+![List anatomy diagram showing list, row, and list item content](docs/assets/list-content-anatomy.png)
+
+This list item consists of the following attributes:
+1. Leading image view
+1. Title label and detail label
+1. Trailing label
+
+It is important to note that `MDCSelfSizingStereoCell` currently only supports leading and trailing _image views_, so the trailing label in this case would have to be represented by a `UIImageView`.
+
+An instance of `MDCSelfSizingStereoCell` can be configured to be a single-line, two-line, or three-line list item. The features above map to the following propertieis and methods:
+
+#### Container attributes
+
+&nbsp;        | **Attribute**        | **Related methods**      | **Default value**
+------------- | -------------------- | ------------------------ | -----------------
+**Color**     | `rippleColor` | `-setRippleColor:` <br/> `-setRippleColor` | On surface color at 0.16 opacity
+**Elevation** | `elevation`      | `-setElevation:` <br/> `-elevation` | 0
+
+#### Icon attributes
+
+&nbsp;               | **Attribute**                         | **Related methods**                                              | **Default value**
+-------------------- | ------------------------------------- | ---------------------------------------------------------------- | -----------------
+**Leading image**            | `leadingImageView`            | N/A  | N/A
+**Trailing image**            | `trailingImageView`          | N/A  | N/A
+
+#### Text label attributes
+
+&nbsp;                    | **Attribute**                          | **Related methods**                                                 | **Default value**
+------------------------- | -------------------------------------- | ------------------------------ | -----------------
+**Title text**            |`titleLabel`                             | N/A                           | N/A
+**Detail text**            |`titleLabel`                              | N/A                          | N/A
+
+## Types of list
+
+### Single-line list
+
+Single-line list items contain a maximum of one line of text.
+
+### Single-line list example
+
+![Image of three single-line list items with sample text](docs/assets/single-line-list-example.png)
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+```objc
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCSelfSizingStereoCell *cell =
+      (MDCSelfSizingStereoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
+  cell.titleLabel.text = @"This is a single-line list";
+  return cell;
+}
+```
+
+#### Swift
+
+```swift
+func collectionView(_ collectionView: UICollectionView,
+                    cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  guard cell = collectionView.dequeueReusableCell(
+    withReuseIdentifier: kSelfSizingStereoCellIdentifier,
+    for: indexPath)
+    as? MDCCollectionViewTextCell
+    else { return }
+  cell.titleLabel.text = "This is a single-line list"
+  return cell
+}
+```
+<!--</div>-->
+
+### Two-line list
+
+Two-line list items contain a maximum of two lines of text.
+
+### Two-line list example
+
+![Image of three two-line list items with sample text](docs/assets/two-line-list-example.png)
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+```objc
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCSelfSizingStereoCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
+  cell.titleLabel.text = @"This is a two-line list";
+  cell.detailLabel.text = @"This is secondary text that occupies one line.";
+  return cell;
+}
+```
+
+#### Swift
+
+```swift
+func collectionView(_ collectionView: UICollectionView,
+                    cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  guard cell = collectionView.dequeueReusableCell(
+    withReuseIdentifier: kSelfSizingStereoCellIdentifier,
+    for: indexPath)
+    as? MDCCollectionViewTextCell
+    else { return }
+  cell.titleLabel.text = "This is a two-line list"
+  cell.detailLabel.text = "This is secondary text that occupies one line."
+  return cell
+}
+```
+<!--</div>-->
+
+### Three-line list
+
+Three-line list items contains a maximum of three lines of text.
+
+### Three-line list example
+
+![Image of three three-line list items with sample text](docs/assets/three-line-list-example.png)
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Objective-C
+
+```objc
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCSelfSizingStereoCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
+  cell.titleLabel.text = @"This is a three-line list";
+  cell.detailLabel.text = @"This is secondary text\nthat occupies two lines.";
+  return cell;
+}
+```
+
+#### Swift
+
+```swift
+func collectionView(_ collectionView: UICollectionView,
+                    cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  guard cell = collectionView.dequeueReusableCell(
+    withReuseIdentifier: kSelfSizingStereoCellIdentifier,
+    for: indexPath)
+    as? MDCCollectionViewTextCell
+    else { return }
+  cell.titleLabel.text = "This is a three-line list"
+  cell.detailLabel.text = "This is secondary text\nthat occupies two lines."
+  return cell
+}
+```
+<!--</div>-->
+
+## Theming lists
+
+This is an example of a two-line list with Shrine theming:
+
+![A two-line list item with example text and shrine theming](docs/assets/shrine-list.png)
+
+To theme a list item in your own app, use the Material Theming extension. To do that, first add the
+Theming extension to your project:
 
 ```bash
 pod `MaterialComponents/List+Theming`
@@ -177,33 +330,7 @@ id<MDCContainerScheming> containerScheme = [[MDCContainerScheme alloc] init];
 ```
 <!--</div>-->
 
-
-<!-- Extracted from docs/accessibility.md -->
-
-## Accessibility
-
-To help ensure your Lists are accessible to as many users as possible, please be sure to review the following
-recommendations:
-
-### Setting `-isAccessibilityElement`
-
-It is generally recommended to set UICollectionViewCells (and UITableViewCells) as accessibilityElements. That way, VoiceOver doesn't traverse the entire cell and articulate an overwhelming amount of accessibility information for each of its subviews.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-cell.isAccessibilityElement = true
-```
-
-#### Objective-C
-
-```objc
-cell.isAccessibilityElement = YES;
-```
-<!--</div>-->
-
-
-## How to implement your own List Cell
+## Building your own list item
 
 <!-- Extracted from docs/create-your-own.md -->
 
@@ -673,4 +800,5 @@ _titleLabel.autoresizingMask =
   MDFTrailingMarginAutoresizingMaskForLayoutDirection(mdf_effectiveUserInterfaceLayoutDirection)
 ```
 <!--</div>-->
+
 
