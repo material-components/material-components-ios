@@ -20,6 +20,7 @@
 #import "MaterialTypographyScheme.h"
 
 static const CGFloat MDCProgressViewAnimationDuration = 1;
+static const CGFloat MDCProgressViewIndeterminateAnimationDuration = 4;
 
 @interface ProgressViewExample : UIViewController
 
@@ -103,10 +104,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
 
   _indeterminateProgressView = [[MDCProgressView alloc] init];
   _indeterminateProgressView.translatesAutoresizingMaskIntoConstraints = NO;
-  _indeterminateProgressView.mode = MDCProgressViewModeIndeterminate;
   _indeterminateProgressView.progressTintColor = self.colorScheme.primaryColor;
   _indeterminateProgressView.trackTintColor =
       [self.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.24];
+  _indeterminateProgressView.progress = 0.33f;
   [self.container addSubview:_indeterminateProgressView];
 }
 
@@ -294,7 +295,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
                                              completion:^(BOOL ignored) {
                                                sender.enabled = YES;
                                              }];
-  [self animateIndeterminateProgressBarWithCountdown:4];
+  [self animateIndeterminateProgressBarWithCountdown:1];
 }
 
 - (void)animateStep1:(MDCProgressView *)progressView {
@@ -362,23 +363,25 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
 }
 
 - (void)animateIndeterminateProgressBarWithCountdown:(NSInteger)remainingCounts {
-  --remainingCounts;
   __weak ProgressViewExample *weakSelf = self;
 
   if (!_indeterminateProgressView.animating) {
-    [_indeterminateProgressView setHidden:NO animated:YES completion:nil];
+    [_indeterminateProgressView setMode:MDCProgressViewModeIndeterminate
+                               animated:YES
+                             completion:nil];
     [_indeterminateProgressView startAnimating];
   }
 
   if (remainingCounts > 0) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^{
-                     [weakSelf animateIndeterminateProgressBarWithCountdown:remainingCounts];
-                   });
+    dispatch_after(
+        dispatch_time(DISPATCH_TIME_NOW,
+                      (int64_t)(MDCProgressViewIndeterminateAnimationDuration * NSEC_PER_SEC)),
+        dispatch_get_main_queue(), ^{
+          [weakSelf animateIndeterminateProgressBarWithCountdown:remainingCounts - 1];
+        });
   } else {
-    [_indeterminateProgressView setHidden:YES animated:YES completion:nil];
     [_indeterminateProgressView stopAnimating];
+    [_indeterminateProgressView setMode:MDCProgressViewModeDeterminate animated:YES completion:nil];
   }
 }
 
