@@ -133,7 +133,8 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                 trailingAssistiveLabel:trailingAssistiveLabel
             assistiveLabelDrawPriority:assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
-                 horizontalEdgePadding:kHorizontalPadding
+                    leadingEdgePadding:kHorizontalPadding
+                   trailingEdgePadding:kHorizontalPadding
            paddingAboveAssistiveLabels:positioningReference.paddingAboveAssistiveLabels
            paddingBelowAssistiveLabels:positioningReference.paddingBelowAssistiveLabels
                                  isRTL:isRTL];

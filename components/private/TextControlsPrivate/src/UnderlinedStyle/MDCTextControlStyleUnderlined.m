@@ -131,7 +131,8 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
 - (nonnull MDCTextControlHorizontalPositioningReference *)horizontalPositioningReference {
   MDCTextControlHorizontalPositioningReference *positioningReference =
       [[MDCTextControlHorizontalPositioningReference alloc] init];
-  positioningReference.horizontalEdgePadding = kUnderlinedHorizontalEdgePaddingDefault;
+  positioningReference.leadingEdgePadding = kUnderlinedHorizontalEdgePaddingDefault;
+  positioningReference.trailingEdgePadding = kUnderlinedHorizontalEdgePaddingDefault;
   return positioningReference;
 }
 
