@@ -48,8 +48,7 @@ static CGFloat GetFinalRippleRadius(CGRect rect) {
 }
 
 - (void)calculateRadiusAndSetPath {
-  CGFloat radius = self.maximumRadius > 0 ? self.maximumRadius : GetFinalRippleRadius(self.bounds);
-  [self setPathFromRadii:radius];
+  [self setPathFromRadii:[self calculateRadius]];
 }
 
 - (void)setPathFromRadii:(CGFloat)radius {
@@ -59,12 +58,15 @@ static CGFloat GetFinalRippleRadius(CGRect rect) {
   self.path = circlePath.CGPath;
 }
 
+- (CGFloat)calculateRadius {
+  return self.maximumRadius > 0 ? self.maximumRadius : GetFinalRippleRadius(self.bounds);
+}
+
 - (void)startRippleAtPoint:(CGPoint)point
                   animated:(BOOL)animated
                 completion:(MDCRippleCompletionBlock)completion {
   [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidBegin:self];
-  CGFloat finalRadius =
-      self.maximumRadius > 0 ? self.maximumRadius : GetFinalRippleRadius(self.bounds);
+  CGFloat finalRadius = [self calculateRadius];
   [self setPathFromRadii:finalRadius];
   self.opacity = 1;
   self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
