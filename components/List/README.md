@@ -31,27 +31,21 @@ There are three list types:
 * [Theming lists](#theming-lists)
 * [Building your own list item](#building-your-own-list-item)
 
-- - -
-
 ## Using lists
 
-We currently offer two `UICollectionViewCell` subclasses that can be used to create Material Design lists: `MDCBaseCell` and `MDCSelfSizingStereoCell`. 
+We currently offer two `UICollectionViewCell` subclasses that can be used to create Material Design lists: `MDCBaseCell` and `MDCSelfSizingStereoCell`.
 
 ### `MDCBaseCell`
 
 The `MDCBaseCell` is a list item at its simplest--a `UICollectionViewCell` subclass with ripple and elevation. The `MDCBaseCell` provides a starting point to build anything demonstrated in the extensive [design guidelines](https://material.io/go/design-lists). To build a list using `MDCBaseCell` simply treat it like you would any other `UICollectionViewCell`.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/list_base_cell_animated.gif" alt="Animation showing a list of MDCBaseCell views with Ripple effects." width="356">
-</div>
+![Animation showing a list of MDCBaseCell views with Ripple effects](docs/assets/list_base_cell_animated.gif)
 
 ### `MDCSelfSizingStereoCell`
 
 The `MDCSelfSizingStereoCell` is a subclass of `MDCBaseCell`. It exposes two image views (trailing and leading) and two labels (title and detail) that the user can configure however they like.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/list_stereo_cell_animated.gif" alt="Animation showing a list of MDCStereoCell views scrolling up and down." width="480">
-</div>
+![Animation showing a list of stereo cell scrolling up and down](docs/assets/list_stereo_cell_animated.gif)
 
 Because the list items we provide inherit from `UICollectionViewCell`, clients are not expected to instantiate them themselves. Rather, clients should register the cell classes with `UICollectionViews`, and then cast the cells to the correct class in their implementations of `-collectionView:cellForItemAtIndexPath:`.
 
@@ -112,11 +106,9 @@ import MaterialComponents.MaterialList
 
 ## Making lists accessible
 
-To help ensure your Lists are accessible to as many users as possible, please be sure to review the following recommendation:
-
 ### Setting `-isAccessibilityElement`
 
-It is generally recommended to set UICollectionViewCells (and UITableViewCells) as accessibilityElements. That way, VoiceOver doesn't traverse the entire cell and articulate an overwhelming amount of accessibility information for each of its subviews.
+We recommend setting `UICollectionViewCell`s (and `UITableViewCell`s) as `accessibilityElements`. That way, VoiceOver doesn't traverse the entire cell and articulate an overwhelming amount of accessibility information for each of its subviews.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -133,7 +125,7 @@ cell.isAccessibilityElement = YES;
 
 ## List anatomy
 
-The following is a typical list anatomy diagram that applies to single-line, two-line, and three-line lists:
+The following is an anatomy diagram of a typical list that applies to single-line, two-line, and three-line lists:
 
 ![List anatomy diagram showing list, row, and list item content](docs/assets/list-content-anatomy.png)
 
@@ -142,7 +134,7 @@ This list item consists of the following attributes:
 1. Title label and detail label
 1. Trailing label
 
-It is important to note that `MDCSelfSizingStereoCell` currently only supports leading and trailing _image views_, so the trailing label in this case would have to be represented by a `UIImageView`.
+_**NOTE: `MDCSelfSizingStereoCell` currently only supports leading and trailing _image views_, so the trailing label would be represented by a `UIImageView`.**_
 
 An instance of `MDCSelfSizingStereoCell` can be configured to be a single-line, two-line, or three-line list item. The features above map to the following propertieis and methods:
 
@@ -150,7 +142,7 @@ An instance of `MDCSelfSizingStereoCell` can be configured to be a single-line, 
 
 &nbsp;        | **Attribute**        | **Related methods**      | **Default value**
 ------------- | -------------------- | ------------------------ | -----------------
-**Color**     | `rippleColor` | `-setRippleColor:` <br/> `-setRippleColor` | On surface color at 0.16 opacity
+**Color**     | `rippleColor` | `-setRippleColor:` <br/> `-setRippleColor` | On surface color at 0.12 opacity
 **Elevation** | `elevation`      | `-setElevation:` <br/> `-elevation` | 0
 
 #### Icon attributes
@@ -336,7 +328,7 @@ id<MDCContainerScheming> containerScheme = [[MDCContainerScheme alloc] init];
 
 The example files can be found <a href="examples/">here</a>
 
-<img src="docs/assets/listcellexample.gif" alt="List Cell Example" width="300">
+![List Cell Example](docs/assets/listcellexample.gif)
 
 Our example consists of a custom `UICollectionViewController`: <a
 href="examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
@@ -361,7 +353,7 @@ the `(void)setupConstraints` method in our custom cell. It is important to
 make sure we set `translatesAutoresizingMaskIntoConstraints` to `NO` for all
 the views we are applying constraints on.
 
-### Ink Ripple
+### Ink ripple
 
 Interactable Material components and specifically List Cells have an ink
 ripple when tapped on. To add ink to your cells there are a few steps you need
@@ -479,7 +471,7 @@ override func prepareForReuse() {
 
 Now there is ink in our cells!
 
-### Self Sizing
+### Self sizing
 
 In order to have cells self-size based on content and not rely on magic number
 constants to decide how big they should be, we need to follow these steps:
@@ -692,7 +684,7 @@ func contentSizeCategoryDidChange(_: NSNotification) {
 ```
 <!--</div>-->
 
-### iPhone X Safe Area Support
+### iPhone X safe area support
 
 Our collection view needs to be aware of the safe areas when being presented
 on iPhone X. To do so need to set its `contentInsetAdjustmentBehavior` to be
@@ -721,7 +713,7 @@ Lastly, as seen in the self-sizing section on step 2, when setting the width
 of the cell we need to set it to be the width of the collection view bounds
 minus the adjustedContentInset that now insets based on the safe area.
 
-### Landscape Support
+### Landscape support
 
 In your view controller you need to invalidate the layout of your collection
 view when there is an orientation change. Please see below for the desired
@@ -767,7 +759,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
 ```
 <!--</div>-->
 
-### Right to Left Text Support
+### Right to left text support
 
 To support right to left text we need to import `MDFInternationalization`:
 
@@ -800,5 +792,3 @@ _titleLabel.autoresizingMask =
   MDFTrailingMarginAutoresizingMaskForLayoutDirection(mdf_effectiveUserInterfaceLayoutDirection)
 ```
 <!--</div>-->
-
-
