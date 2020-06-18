@@ -87,6 +87,10 @@
  The edge insets around the actions against the dialog edges and its neighbor, which could be any of
  the other elements: the message, accessory view, title, title icon or title icon view.
 
+ The action insets are taken based on the visible area of the button, not its frame.
+ Since the default size of the alert buttons do not meet minimum touch area requirement,
+ the buttons frame are larger than the visible area, allowing for a large enough touch area.
+
  Default value is UIEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8).
  */
 @property(nonatomic, assign) UIEdgeInsets actionsInsets;
@@ -102,6 +106,10 @@
 /**
  The vertical space between the action buttons when the buttons are vertically aligned, and if more
  than one button is presented.
+
+ The action buttons represent the visible areas of the buttons, it can differ from the frame when
+ the button doesn't meet the minimum touch area requirement and its frame is adjusted to be larger
+ then its visible area.
 
  Default value is 12.
  */

@@ -73,7 +73,7 @@ static const CGFloat kFourInchLandscapeWidth = 568.0;
 
   // The vertical layout should be approximately twice as high as the horizontal layout, +/-
   // padding between buttons.
-  XCTAssertEqualWithAccuracy(sizeOnFourInchLandscape.height * 2, sizeOnFourInchPortrait.height, 5);
+  XCTAssertEqualWithAccuracy(sizeOnFourInchLandscape.height * 2, sizeOnFourInchPortrait.height, 20);
   XCTAssertGreaterThan(sizeOnFourInchLandscape.width, sizeOnFourInchPortrait.width);
 }
 
