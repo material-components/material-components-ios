@@ -89,7 +89,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _transitionView.backgroundColor = MDCProgressViewDefaultTintColor();
   [self addSubview:_transitionView];
 
-  float barWidth = [self indeterminateLoadingBarWidth];
+  CGFloat barWidth = [self indeterminateLoadingBarWidth];
   CGRect progressBarFrame = CGRectMake(-barWidth, 0, barWidth, CGRectGetHeight(self.bounds));
 
   _progressView = [[MDCProgressGradientView alloc] initWithFrame:progressBarFrame];
