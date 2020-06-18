@@ -37,7 +37,7 @@ We currently offer two `UICollectionViewCell` subclasses that can be used to cre
 
 ### `MDCBaseCell`
 
-The `MDCBaseCell` is a list item at its simplest--a `UICollectionViewCell` subclass with ripple and elevation. The `MDCBaseCell` provides a starting point to build anything demonstrated in the extensive [design guidelines](https://material.io/go/design-lists). To build a list using `MDCBaseCell` simply treat it like you would any other `UICollectionViewCell`.
+The `MDCBaseCell` is a list item in its simplest form, a `UICollectionViewCell` subclass with ripple and elevation. The `MDCBaseCell` provides a starting point to build anything demonstrated in the extensive [design guidelines](https://material.io/go/design-lists). To build a list using `MDCBaseCell` simply treat it like you would any other `UICollectionViewCell`.
 
 ![Animation showing a list of MDCBaseCell views with Ripple effects](docs/assets/list_base_cell_animated.gif)
 
