@@ -20,8 +20,8 @@ navigation icon takes you directly to the associated view or refreshes the curre
 ## Contents
 
 * [Using bottom navigation](#using-bottom-navigation)
-* [Making bottom navigation accessible](#making-bottom-navigation-accessible)
 * [Installing bottom navigation](#installing-bottom-navigation)
+* [Making bottom navigation accessible](#making-bottom-navigation-accessible)
 * [Theming bottom navigation](#theming-bottom-navigation)
 
 - - -
