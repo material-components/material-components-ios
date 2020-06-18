@@ -589,174 +589,174 @@ support it in our cells we need to follow these steps:
 1. Set each of the label fonts to use the dynamically sized MDC fonts in their
 set/update methods:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-- (void)updateTitleFont {
-  if (!_titleFont) {
-    _titleFont = defaultTitleFont();
-  }
-  _titleLabel.font =
-    [_titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-  [self setNeedsLayout];
-}
-```
+    #### Objective-C
+    ```objc
+    - (void)updateTitleFont {
+      if (!_titleFont) {
+        _titleFont = defaultTitleFont();
+      }
+      _titleLabel.font =
+        [_titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      [self setNeedsLayout];
+    }
+    ```
 
-#### Swift
-```swift
-func updateTitleFont() {
-  if (_titleFont == nil) {
-    _titleFont = defaultTitleFont
-  }
-  _titleLabel.font = 
-      _titleFont.mdc_fontSized(forMaterialTextStyle: .subheadline, 
-                               scaledForDynamicType: mdc_adjustsFontForContentSizeCategory)
-}
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    func updateTitleFont() {
+      if (_titleFont == nil) {
+        _titleFont = defaultTitleFont
+      }
+      _titleLabel.font = 
+          _titleFont.mdc_fontSized(forMaterialTextStyle: .subheadline, 
+                                   scaledForDynamicType: mdc_adjustsFontForContentSizeCategory)
+    }
+    ```
+    <!--</div>-->
 
-2. Add an observer in the cell to check for the
+1. Add an observer in the cell to check for the
 `UIContentSizeCategoryDidChangeNotification` which tells us the a system-wide
 text size has been changed.
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-[[NSNotificationCenter defaultCenter]
-    addObserver:self
-       selector:@selector(contentSizeCategoryDidChange:)
-           name:UIContentSizeCategoryDidChangeNotification
-         object:nil];
-```
+    #### Objective-C
+    ```objc
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(contentSizeCategoryDidChange:)
+               name:UIContentSizeCategoryDidChangeNotification
+             object:nil];
+    ```
 
-#### Swift
-```swift
-NotificationCenter.default.addObserver(self, 
-                                       selector: #selector(contentSizeCategoryDidChange(notification:)), 
-                                       name: UIContentSizeCategory.didChangeNotification, 
-                                       object: nil)
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    NotificationCenter.default.addObserver(self, 
+                                           selector: #selector(contentSizeCategoryDidChange(notification:)), 
+                                           name: UIContentSizeCategory.didChangeNotification, 
+                                           object: nil)
+    ```
+    <!--</div>-->
 
 
-In the selector update the font sizes to reflect the change:
+    In the selector update the font sizes to reflect the change:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self updateTitleFont];
-  [self updateDetailsFont];
-}
-```
+    #### Objective-C
+    ```objc
+    - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+      [self updateTitleFont];
+      [self updateDetailsFont];
+    }
+    ```
 
-#### Swift
-```swift
-func contentSizeCategoryDidChange(_: NSNotification) {
-  updateTitleFont()
-  updateDetailsFont()
-}
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    func contentSizeCategoryDidChange(_: NSNotification) {
+      updateTitleFont()
+      updateDetailsFont()
+    }
+    ```
+    <!--</div>-->
 
-3. Add an observer also in the `UIViewController` so we can reload the
+1. Add an observer also in the `UIViewController` so we can reload the
    collection view once there is a change:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self.collectionView reloadData];
-}
-```
+    #### Objective-C
+    ```objc
+    - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+      [self.collectionView reloadData];
+    }
+    ```
 
-#### Swift
-```swift
-func contentSizeCategoryDidChange(_: NSNotification) {
-  collectionView.reloadData()
-}
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    func contentSizeCategoryDidChange(_: NSNotification) {
+      collectionView.reloadData()
+    }
+    ```
+    <!--</div>-->
 
-### iPhone X safe area support
+    ### iPhone X safe area support
 
-Our collection view needs to be aware of the safe areas when being presented
-on iPhone X. To do so need to set its `contentInsetAdjustmentBehavior` to be
-aware of the safe area:
+    Our collection view needs to be aware of the safe areas when being presented
+    on iPhone X. To do so need to set its `contentInsetAdjustmentBehavior` to be
+    aware of the safe area:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-if (@available(iOS 11.0, *)) {
-  self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
-}
-#endif
-```
+    #### Objective-C
+    ```objc
+    #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    }
+    #endif
+    ```
 
-#### Swift
-```swift
-if #available(iOS 11.0, *) {
-  collectionView.contentInsetAdjustmentBehavior = .always
-}
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    if #available(iOS 11.0, *) {
+      collectionView.contentInsetAdjustmentBehavior = .always
+    }
+    ```
+    <!--</div>-->
 
-Lastly, as seen in the self-sizing section on step 2, when setting the width
-of the cell we need to set it to be the width of the collection view bounds
-minus the adjustedContentInset that now insets based on the safe area.
+    Lastly, as seen in the self-sizing section on step 2, when setting the width
+    of the cell we need to set it to be the width of the collection view bounds
+    minus the adjustedContentInset that now insets based on the safe area.
 
-### Landscape support
+    ### Landscape support
 
-In your view controller you need to invalidate the layout of your collection
-view when there is an orientation change. Please see below for the desired
-code changes to achieve that:
+    In your view controller you need to invalidate the layout of your collection
+    view when there is an orientation change. Please see below for the desired
+    code changes to achieve that:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  [self.collectionView.collectionViewLayout invalidateLayout];
-  [self.collectionView reloadData];
-}
+    #### Objective-C
+    ```objc
+    - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+      [super traitCollectionDidChange:previousTraitCollection];
+      [self.collectionView.collectionViewLayout invalidateLayout];
+      [self.collectionView reloadData];
+    }
 
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    - (void)viewWillTransitionToSize:(CGSize)size
+           withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+      [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  [self.collectionView.collectionViewLayout invalidateLayout];
+      [self.collectionView.collectionViewLayout invalidateLayout];
 
-  [coordinator animateAlongsideTransition:nil completion:^(__unused id context) {
-    [self.collectionView.collectionViewLayout invalidateLayout];
-  }];
-}
-```
+      [coordinator animateAlongsideTransition:nil completion:^(__unused id context) {
+        [self.collectionView.collectionViewLayout invalidateLayout];
+      }];
+    }
+    ```
 
-#### Swift
-```swift
-override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-  super.traitCollectionDidChange(previousTraitCollection)
-  self.collectionView.collectionViewLayout.invalidateLayout()
-  self.collectionView.reloadData()
-}
+    #### Swift
+    ```swift
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+      super.traitCollectionDidChange(previousTraitCollection)
+      self.collectionView.collectionViewLayout.invalidateLayout()
+      self.collectionView.reloadData()
+    }
 
-override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-  super.viewWillTransition(to: size, with: coordinator)
-  self.collectionView.collectionViewLayout.invalidateLayout()
-  coordinator.animate(alongsideTransition: nil) { (_) in
-    self.collectionView.collectionViewLayout.invalidateLayout()
-  }
-}
-```
-<!--</div>-->
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+      super.viewWillTransition(to: size, with: coordinator)
+      self.collectionView.collectionViewLayout.invalidateLayout()
+      coordinator.animate(alongsideTransition: nil) { (_) in
+        self.collectionView.collectionViewLayout.invalidateLayout()
+      }
+    }
+    ```
+    <!--</div>-->
 
 ### Right to left text support
 
