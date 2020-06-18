@@ -361,115 +361,115 @@ to take:
 
 1. Add an `MDCInkView` property to your custom cell.
 
-2. Initialize `MDCInkView` on init and add it as a subview:
+1. Initialize `MDCInkView` on init and add it as a subview:
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
+    <!--<div class="material-code-render" markdown="1">-->
+    #### Objective-C
 
-```objc
-_inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-_inkView.usesLegacyInkRipple = NO;
-[self addSubview:_inkView];
-```
+    ```objc
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.usesLegacyInkRipple = NO;
+    [self addSubview:_inkView];
+    ```
 
-#### Swift
+    #### Swift
 
-```swift
-let inkView = MDCInkView(frame: bounds)
-inkView.usesLegacyInkRipple = false
-addSubview(inkView)
-```
-<!--</div>-->
+    ```swift
+    let inkView = MDCInkView(frame: bounds)
+    inkView.usesLegacyInkRipple = false
+    addSubview(inkView)
+    ```
+    <!--</div>-->
 
-3. Initialize a `CGPoint` property in your cell (`CGPoint _lastTouch;`) to
+1. Initialize a `CGPoint` property in your cell (`CGPoint _lastTouch;`) to
 indicate where the last tap was in the cell.
 
-4. Override the `UIResponder`'s `touchesBegan` method in your cell to identify
+1. Override the `UIResponder`'s `touchesBegan` method in your cell to identify
 and save where the touches were so we can then start the ripple animation from
 that point:
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
+    <!--<div class="material-code-render" markdown="1">-->
+    #### Objective-C
 
-```objc
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  _lastTouch = location;
+    ```objc
+    - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+      UITouch *touch = [touches anyObject];
+      CGPoint location = [touch locationInView:self];
+      _lastTouch = location;
 
-  [super touchesBegan:touches withEvent:event];
-}
-```
+      [super touchesBegan:touches withEvent:event];
+    }
+    ```
 
-#### Swift
+    #### Swift
 
-```swift
-override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-  let touch = touches.first
-  let location = touch?.location(in: self)
-  lastTouch = location
-}
-```
-<!--</div>-->
+    ```swift
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+      let touch = touches.first
+      let location = touch?.location(in: self)
+      lastTouch = location
+    }
+    ```
+    <!--</div>-->
 
-5. Override the `setHighlighted` method for your cell and apply the start and
+1. Override the `setHighlighted` method for your cell and apply the start and
 stop ripple animations:
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
+    <!--<div class="material-code-render" markdown="1">-->
+    #### Objective-C
 
-```objc
-- (void)setHighlighted:(BOOL)highlighted {
-  [super setHighlighted:highlighted];
-  if (highlighted) {
-    [_inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
-  } else {
-    [_inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
-  }
-}
-```
-
-#### Swift
-
-```swift
-override var isHighlighted: Bool {
-  set {
-    super.isHighlighted = newValue
-    if (newValue) {
-      inkView.startTouchBeganAnimation(at: lastTouch, completion: nil)
-    } else {
-      inkView.startTouchEndedAnimation(at: lastTouch, completion: nil)
+    ```objc
+    - (void)setHighlighted:(BOOL)highlighted {
+      [super setHighlighted:highlighted];
+      if (highlighted) {
+        [_inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+      } else {
+        [_inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+      }
     }
-  }
-  // get...
-}
-```
-<!--</div>-->
+    ```
 
-6. When the cell is reused we must make sure no outstanding ripple animations
+    #### Swift
+
+    ```swift
+    override var isHighlighted: Bool {
+      set {
+        super.isHighlighted = newValue
+        if (newValue) {
+          inkView.startTouchBeganAnimation(at: lastTouch, completion: nil)
+        } else {
+          inkView.startTouchEndedAnimation(at: lastTouch, completion: nil)
+        }
+      }
+      // get...
+    }
+    ```
+    <!--</div>-->
+
+1. When the cell is reused we must make sure no outstanding ripple animations
 stay on the cell so we need to clear the ink before:
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
+    <!--<div class="material-code-render" markdown="1">-->
+    #### Objective-C
 
-```objc
-- (void)prepareForReuse {
-  [_inkView cancelAllAnimationsAnimated:NO];
-  [super prepareForReuse];
-}
-```
+    ```objc
+    - (void)prepareForReuse {
+      [_inkView cancelAllAnimationsAnimated:NO];
+      [super prepareForReuse];
+    }
+    ```
 
-#### Swift
+    #### Swift
 
-```swift
-override func prepareForReuse() {
-  inkView.cancelAllAnimations(animated: false)
-  super.prepareForReuse()
-}
-```
-<!--</div>-->
+    ```swift
+    override func prepareForReuse() {
+      inkView.cancelAllAnimations(animated: false)
+      super.prepareForReuse()
+    }
+    ```
+    <!--</div>-->
 
-Now there is ink in our cells!
+    Now there is ink in our cells!
 
 ### Self sizing
 
@@ -477,102 +477,101 @@ In order to have cells self-size based on content and not rely on magic number
 constants to decide how big they should be, we need to follow these steps:
 
 1. Apply autolayout constraints of our added subviews relative to each other
-and their superview (the cell's `contentView`). We need to make sure our
-constraints don't define static heights or widths but rather constraints that
-are relative or our cell won't calculate itself based on the dynamically sized
-content.
+and their superview (the cell's `contentView`).
 
-You can see how it is achieved in the `setupConstraints` method in our
-example. If you'll notice there are some constraints that are set up to be
-accessible throughout the file:
+    We need to make sure our constraints don't define static heights or widths but 
+    rather constraints that are relative or our cell won't calculate itself based
+    on the dynamically sized content. You can see how it is achieved in the
+    `setupConstraints` method in our example. If you'll notice there are some
+    constraints that are set up to be accessible throughout the file:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-NSLayoutConstraint *_imageLeftPaddingConstraint;
-NSLayoutConstraint *_imageRightPaddingConstraint;
-NSLayoutConstraint *_imageWidthConstraint;
-``` 
+    #### Objective-C
+    ```objc
+    NSLayoutConstraint *_imageLeftPaddingConstraint;
+    NSLayoutConstraint *_imageRightPaddingConstraint;
+    NSLayoutConstraint *_imageWidthConstraint;
+    ``` 
 
-#### Swift
-```swift
-var imageLeftPaddingConstraint: NSLayoutConstraint
-var imageRightPaddingConstraint: NSLayoutConstraint
-var imageWidthConstraint: NSLayoutConstraint
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    var imageLeftPaddingConstraint: NSLayoutConstraint
+    var imageRightPaddingConstraint: NSLayoutConstraint
+    var imageWidthConstraint: NSLayoutConstraint
+    ```
+    <!--</div>-->
 
-This is in order to support the changing layout if an image is set or not.
+    This is in order to support the changing layout if an image is set or not.
 
-2. Because our list cells need to fill the entire width of the collection
+1. Because our list cells need to fill the entire width of the collection
 view, we want to expose the cell's width to be settable by the view controller
 when the cell is set up. For that we expose a `setCellWidth` method that sets
 the width constraint of the `contentView`:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-- (void)setCellWidth:(CGFloat)width {
-  _cellWidthConstraint.constant = width;
-  _cellWidthConstraint.active = YES;
-}
-```
+    #### Objective-C
+    ```objc
+    - (void)setCellWidth:(CGFloat)width {
+      _cellWidthConstraint.constant = width;
+      _cellWidthConstraint.active = YES;
+    }
+    ```
 
-#### Swift
-```swift
-func set(cellWidth: CGFloat) {
-  cellWidthConstraint.constant = cellWidth
-  cellWidthConstraint.isActive = true
-}
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    func set(cellWidth: CGFloat) {
+      cellWidthConstraint.constant = cellWidth
+      cellWidthConstraint.isActive = true
+    }
+    ```
+    <!--</div>-->
 
-and then in the collection view's `cellForItemAtIndexPath` delegate method we
-set the width:
+    and then in the collection view's `cellForItemAtIndexPath` delegate method we
+    set the width:
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
-if (@available(iOS 11.0, *)) {
-  cellWidth -=
-    (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
-}
-[cell setCellWidth:cellWidth];
-```
+    #### Objective-C
+    ```objc
+    CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
+    if (@available(iOS 11.0, *)) {
+      cellWidth -=
+        (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
+    }
+    [cell setCellWidth:cellWidth];
+    ```
 
-#### Swift
-```swift
-var cellWidth = collectionView.bounds.width
-if #available(iOS 11.0, *) {
-  cellWidth -= collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right
-}
-set(cellWidth: cellWidth)
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    var cellWidth = collectionView.bounds.width
+    if #available(iOS 11.0, *) {
+      cellWidth -= collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right
+    }
+    set(cellWidth: cellWidth)
+    ```
+    <!--</div>-->
 
-3. In our collection view's flow layout we must set an `estimatedItemSize` so
+1. In our collection view's flow layout we must set an `estimatedItemSize` so
 the collection view will defer the size calculations to its content.
 
-Note: It is better to set the size smaller rather than larger or constraints
-might break in runtime.
+    Note: It is better to set the size smaller rather than larger or constraints
+    might break in runtime.
 
-<!--<div class="material-code-render" markdown="1">-->
+    <!--<div class="material-code-render" markdown="1">-->
 
-#### Objective-C
-```objc
-_flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
-```
+    #### Objective-C
+    ```objc
+    _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
+    ```
 
-#### Swift
-```swift
-flowLayout.estimatedItemSize = CGSize(width: kSmallArbitraryCellWidth, 
-                                     height: kSmallestCellHeight)
-```
-<!--</div>-->
+    #### Swift
+    ```swift
+    flowLayout.estimatedItemSize = CGSize(width: kSmallArbitraryCellWidth, 
+                                         height: kSmallestCellHeight)
+    ```
+    <!--</div>-->
 
 ### Typography
 
