@@ -103,11 +103,11 @@ static const CGFloat MDCProgressViewIndeterminateAnimationDuration = 4;
   _backwardProgressAnimateView.progress = (float)0.33;
 
   _indeterminateProgressView = [[MDCProgressView alloc] init];
+  _indeterminateProgressView.mode = MDCProgressViewModeIndeterminate;
   _indeterminateProgressView.translatesAutoresizingMaskIntoConstraints = NO;
   _indeterminateProgressView.progressTintColor = self.colorScheme.primaryColor;
   _indeterminateProgressView.trackTintColor =
       [self.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.24];
-  _indeterminateProgressView.progress = 0.33f;
   [self.container addSubview:_indeterminateProgressView];
 }
 
@@ -366,9 +366,6 @@ static const CGFloat MDCProgressViewIndeterminateAnimationDuration = 4;
   __weak ProgressViewExample *weakSelf = self;
 
   if (!_indeterminateProgressView.animating) {
-    [_indeterminateProgressView setMode:MDCProgressViewModeIndeterminate
-                               animated:YES
-                             completion:nil];
     [_indeterminateProgressView startAnimating];
   }
 
@@ -381,7 +378,6 @@ static const CGFloat MDCProgressViewIndeterminateAnimationDuration = 4;
         });
   } else {
     [_indeterminateProgressView stopAnimating];
-    [_indeterminateProgressView setMode:MDCProgressViewModeDeterminate animated:YES completion:nil];
   }
 }
 
