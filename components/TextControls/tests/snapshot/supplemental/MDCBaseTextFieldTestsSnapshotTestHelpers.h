@@ -32,7 +32,8 @@
 + (void)configureTextFieldWithLeadingView:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithLeadingViewAndTextWhileEditing:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithTrailingViewAndText:(MDCBaseTextField *)textField;
-+ (void)configureTextFieldWithLeadingViewAndTrailingViewAndText:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithLeadingViewAndTrailingViewAndTextWithCustomPadding:
+    (MDCBaseTextField *)textField;
 + (void)configureTextFieldWithVisibleClearButtonAndText:(MDCBaseTextField *)textField;
 + (void)configureWithColoredFloatingLabelTextAndTextWhileEditing:(MDCBaseTextField *)textField;
 + (void)configureDisabledTextFieldWithLabelTextAndText:(MDCBaseTextField *)textField;

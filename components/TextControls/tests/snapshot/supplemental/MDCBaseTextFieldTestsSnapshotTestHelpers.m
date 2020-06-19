@@ -112,12 +112,15 @@
   textField.trailingViewMode = UITextFieldViewModeAlways;
 }
 
-+ (void)configureTextFieldWithLeadingViewAndTrailingViewAndText:(MDCBaseTextField *)textField {
++ (void)configureTextFieldWithLeadingViewAndTrailingViewAndTextWithCustomPadding:
+    (MDCBaseTextField *)textField {
   textField.text = @"Text";
   textField.leadingView = [self createBlueSideView];
   textField.trailingView = [self createRedSideView];
   textField.trailingViewMode = UITextFieldViewModeAlways;
   textField.leadingViewMode = UITextFieldViewModeAlways;
+  textField.leadingEdgePaddingOverride = @0;
+  textField.trailingEdgePaddingOverride = @20;
 }
 
 + (void)configureTextFieldWithVisibleClearButtonAndText:(MDCBaseTextField *)textField {

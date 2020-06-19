@@ -43,8 +43,10 @@
  and reliable.
 */
 - (nonnull instancetype)initWithSize:(CGSize)size
-                positioningReference:
-                    (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference
+        verticalPositioningReference:
+            (nonnull id<MDCTextControlVerticalPositioningReference>)verticalPositioningReference
+      horizontalPositioningReference:
+          (nonnull id<MDCTextControlHorizontalPositioning>)horizontalPositioningReference
                                 text:(nullable NSString *)text
                                 font:(nonnull UIFont *)font
                         floatingFont:(nonnull UIFont *)floatingFont

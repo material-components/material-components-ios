@@ -135,4 +135,20 @@ values are allowed.
  */
 - (nonnull UIColor *)trailingAssistiveLabelColorForState:(MDCTextControlState)state;
 
+/**
+ When this property is set, the text field will convert it to a @c CGFloat and use that as the
+ horizontal distance between the leading edge of the text field and the subview closest to it. When
+ this property is @c nil, the text field will use a default value that depends on the style. This
+ property is @c nil by default.
+ */
+@property(nullable, nonatomic, strong) NSNumber *leadingEdgePaddingOverride;
+
+/**
+ When this property is set, the text field will convert it to a @c CGFloat and use that as the
+ horizontal distance between the trailing edge of the text field and the subview closest to it. When
+ this property is @c nil, the text field will use a default value that depends on the style. This
+ property is @c nil by default.
+ */
+@property(nullable, nonatomic, strong) NSNumber *trailingEdgePaddingOverride;
+
 @end
