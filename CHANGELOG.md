@@ -1,16 +1,44 @@
-# #develop#
+# 110.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we removed an API from `MDCProgressView`. As well as various bug fixes to ActionSheet, Dialog, ProgressView, Ripple and TextControls components.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+In this release we removed the `setMode:animated:completion:` that was added in the previous release.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+`MDCActionSheetController` now announces it has been presented when VoiceOver is enabled.
+
+`MDCBottomDrawerViewController` now supports coloring the `trackingScrollView` via the theming extension.
+
+`MDCRippleView` allows users to query if a ripple was added to a given view.
+
+`MDCRippleTouchController` allows users to control the creation and reuse of ripple views.
+
+`MDCTextControls` now support custom padding for the leading and trailing views.
+
 ## API changes
+
+### NavigationDrawer
+
+*new* method: `applyThemeWithScheme:applyToTrackingScrollView:` in `MDCBottomDrawerViewController`
+
+### Ripple
+
+*new* method: `rippleTouchController:rippleViewAtTouchLocation:` in `MDCRippleTouchControllerDelegate`
+
+*new* method: `injectedRippleViewForView:` in `MDCRippleView`
+
+### TextControls
+
+*new* property: `leadingEdgePaddingOverride` in `MDCBaseTextArea`
+
+*new* property: `trailingEdgePaddingOverride` in `MDCBaseTextArea`
+
+*new* property: `leadingEdgePaddingOverride` in `MDCBaseTextField`
+
+*new* property: `trailingEdgePaddingOverride` in `MDCBaseTextArea`
 
 ## Component changes
 
@@ -50,19 +78,16 @@ Replace this text with example code for each new feature.
 * [Add delegate method to RippleTouchController existing in InkTouchController.](https://github.com/material-components/material-components-ios/commit/a68702e3a4d833ce6456189ccb2f888ceea4a63b) (Yarden Eitan)
 * [Align ripple starting size with spec guidance.](https://github.com/material-components/material-components-ios/commit/ef53fab9cac468f10d2e1b80c3329cf7cea0f0bc) (Yarden Eitan)
 * [Move the radius calculation into its own method.](https://github.com/material-components/material-components-ios/commit/3817d4523195da79e9831a927d2e70562b4e1bd1) (Yarden Eitan)
+* [Update alpha value of Ripple to 0.12 instead of 0.16](https://github.com/material-components/material-components-ios/commit/f425b8995b257a45e8414503e4b04ba653ebd917) (Yarden Eitan)
 
 ### TextControls
 
 * [Add padding customizing properties to MDCBaseTextField and MDCBaseTextArea](https://github.com/material-components/material-components-ios/commit/9c99bc9006f20b3e918a63b914f8f912f561383a) (Andrew Overton)
+* [Separate side padding into leading/trailing padding](https://github.com/material-components/material-components-ios/commit/b7f5b0dd2b972e31b2edc89909acb9e1bab488e3) (Andrew Overton)
 
 ### Typography
 
 * [Use MDFTextAccessibility's isLargeForContrastRatios.](https://github.com/material-components/material-components-ios/commit/244dd62b6c59218c9847fcf948f17aecdb727a45) (Jeff Verkoeyen)
-
-## Multi-component changes
-
-* [Separate side padding into leading/trailing padding](https://github.com/material-components/material-components-ios/commit/b7f5b0dd2b972e31b2edc89909acb9e1bab488e3) (Andrew Overton)
-* [Update alpha value of Ripple to 0.12 instead of 0.16](https://github.com/material-components/material-components-ios/commit/f425b8995b257a45e8414503e4b04ba653ebd917) (Yarden Eitan)
 
 ---
 
