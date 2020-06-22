@@ -1,10 +1,10 @@
 # 110.0.0
 
-In this major release we removed an API from `MDCProgressView`. As well as various bug fixes to ActionSheet, Dialog, ProgressView, Ripple and TextControls components.
+In this major release we removed an API from `MDCProgressView` and fixed bugs in ActionSheet, Dialogs, ProgressView, Ripple, and TextControls.
 
 ## Breaking changes
 
-In this release we removed the `setMode:animated:completion:` that was added in the previous release.
+In this release we removed the `-setMode:animated:completion:` method that was added in the previous release.
 
 ## New features
 
@@ -22,13 +22,13 @@ In this release we removed the `setMode:animated:completion:` that was added in 
 
 ### NavigationDrawer
 
-*new* method: `applyThemeWithScheme:applyToTrackingScrollView:` in `MDCBottomDrawerViewController`
+*new* method: `- applyThemeWithScheme:applyToTrackingScrollView:` in `MDCBottomDrawerViewController`
 
 ### Ripple
 
-*new* method: `rippleTouchController:rippleViewAtTouchLocation:` in `MDCRippleTouchControllerDelegate`
+*new* method: `- rippleTouchController:rippleViewAtTouchLocation:` in `MDCRippleTouchControllerDelegate`
 
-*new* method: `injectedRippleViewForView:` in `MDCRippleView`
+*new* method: `+ injectedRippleViewForView:` in `MDCRippleView`
 
 ### TextControls
 
