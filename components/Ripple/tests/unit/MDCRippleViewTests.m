@@ -273,4 +273,31 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testInjectedRippleViewFindsRippleViewInHierarchy {
+  // Given
+  UIView *parentView = [[UIView alloc] init];
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  [parentView addSubview:rippleView];
+
+  // When
+  MDCRippleView *injectedRippleView = [MDCRippleView injectedRippleViewForView:parentView];
+
+  // Then
+  XCTAssertEqual(rippleView, injectedRippleView);
+}
+
+- (void)testInjectedRippleViewCreatesRippleViewInstance {
+  // Given
+  UIView *firstLevelView = [[UIView alloc] init];
+  UIView *secondLevelView = [[UIView alloc] init];
+  [firstLevelView addSubview:secondLevelView];
+
+  // When
+  MDCRippleView *injectedRippleView = [MDCRippleView injectedRippleViewForView:firstLevelView];
+
+  // Then
+  XCTAssertNotNil(injectedRippleView);
+  XCTAssertEqualObjects(injectedRippleView.superview, firstLevelView);
+}
+
 @end

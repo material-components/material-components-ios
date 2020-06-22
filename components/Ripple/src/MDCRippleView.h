@@ -152,4 +152,19 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion;
 
+/**
+ Enumerates the given view's subviews for an instance of MDCRippleView and returns it if found, or
+ creates and adds a new instance of MDCRippleView if not.
+
+ This method is a convenience method for adding ripple to an arbitrary view without needing to
+ subclass the target view. Use this method in situations where you expect there to be many distinct
+ ripple views in existence for a single ripple touch controller. Example scenarios include:
+
+ - Adding ripple to individual collection view/table view cells
+
+ This method can be used in your MDCRippleTouchController delegate's
+ -rippleTouchController:rippleViewAtTouchLocation: implementation.
+ */
++ (nonnull MDCRippleView *)injectedRippleViewForView:(nonnull UIView *)view;
+
 @end
