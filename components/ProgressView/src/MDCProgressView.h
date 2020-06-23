@@ -130,16 +130,6 @@ IB_DESIGNABLE
        completion:(void (^__nullable)(BOOL finished))completion;
 
 /**
- Changes the Determinate state, optionally animating the change.
- @param mode The mode to change the progress view to.
- @param animated Whether the change should be animated.
- @param completion The completion block executed at the end of the animation.
- */
-- (void)setMode:(MDCProgressViewMode)mode
-       animated:(BOOL)animated
-     completion:(void (^__nullable)(BOOL finished))completion;
-
-/**
  Start the progress bar's indeterminate animation.
  */
 - (void)startAnimating;

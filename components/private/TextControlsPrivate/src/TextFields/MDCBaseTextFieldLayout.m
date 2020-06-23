@@ -111,40 +111,41 @@
                                                               isEditing:isEditing
                                                                    text:text];
 
-  CGFloat horizontalEdgePadding = horizontalPositioningReference.horizontalEdgePadding;
+  CGFloat leadingEdgePadding = horizontalPositioningReference.leadingEdgePadding;
+  CGFloat trailingEdgePadding = horizontalPositioningReference.trailingEdgePadding;
+  CGFloat leftEdgePadding = isRTL ? trailingEdgePadding : leadingEdgePadding;
+  CGFloat rightEdgePadding = isRTL ? leadingEdgePadding : trailingEdgePadding;
   CGFloat horizontalInterItemPadding = horizontalPositioningReference.horizontalInterItemSpacing;
 
   CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
   CGFloat leftViewMinX = 0;
   CGFloat leftViewMaxX = 0;
   if (displaysLeftView) {
-    leftViewMinX = horizontalEdgePadding;
+    leftViewMinX = leftEdgePadding;
     leftViewMaxX = leftViewMinX + leftViewWidth;
   }
 
   CGFloat textFieldWidth = textFieldSize.width;
   CGFloat rightViewMinX = 0;
   if (displaysRightView) {
-    CGFloat rightViewMaxX = textFieldWidth - horizontalEdgePadding;
+    CGFloat rightViewMaxX = textFieldWidth - rightEdgePadding;
     rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
   }
 
   CGFloat clearButtonMinX = 0;
   if (isRTL) {
     clearButtonMinX =
-        displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : horizontalEdgePadding;
+        displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : leftEdgePadding;
   } else {
     CGFloat clearButtonMaxX = displaysRightView ? rightViewMinX - horizontalInterItemPadding
-                                                : textFieldWidth - horizontalEdgePadding;
+                                                : textFieldWidth - rightEdgePadding;
     clearButtonMinX = clearButtonMaxX - clearButtonSideLength;
   }
 
   CGFloat textRectMinX = 0;
   CGFloat textRectMaxX = 0;
   CGFloat labelMinX = 0;
-  CGFloat labelMaxX = 0;
   CGFloat floatingLabelMinX = 0;
-  CGFloat floatingLabelMaxX = 0;
 
   if (isRTL) {
     if (displaysClearButton) {
@@ -153,8 +154,7 @@
       labelMinX = textRectMinX;
       floatingLabelMinX = clearButtonMinX;
     } else {
-      textRectMinX =
-          displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : horizontalEdgePadding;
+      textRectMinX = displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : leftEdgePadding;
       labelMinX = textRectMinX;
       floatingLabelMinX = textRectMinX;
     }
@@ -163,22 +163,16 @@
     } else {
       textRectMaxX = textFieldWidth - horizontalInterItemPadding;
     }
-    labelMaxX = textRectMaxX;
-    floatingLabelMaxX = labelMaxX;
   } else {
-    textRectMinX =
-        displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : horizontalEdgePadding;
+    textRectMinX = displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : leftEdgePadding;
     labelMinX = textRectMinX;
     floatingLabelMinX = labelMinX;
     if (displaysClearButton) {
       textRectMaxX = clearButtonMinX - horizontalInterItemPadding;
     } else {
       textRectMaxX = displaysRightView ? rightViewMinX - horizontalInterItemPadding
-                                       : textFieldWidth - horizontalEdgePadding;
+                                       : textFieldWidth - rightEdgePadding;
     }
-    labelMaxX = textRectMaxX;
-    floatingLabelMaxX = displaysRightView ? rightViewMinX - horizontalInterItemPadding
-                                          : textFieldWidth - horizontalEdgePadding;
   }
 
   CGFloat textRectMinYNormal = positioningReference.paddingBetweenContainerTopAndNormalLabel;
@@ -224,8 +218,6 @@
                                                 font:font
                                         floatingFont:floatingFont
                                    floatingLabelMinY:floatingLabelMinY
-                                           labelMinX:labelMinX
-                                           labelMaxX:labelMaxX
                                             textRect:textRectNormal
                                                isRTL:isRTL];
   CGRect labelFrameFloating = [self labelFrameWithText:label.text
@@ -233,8 +225,6 @@
                                                   font:font
                                           floatingFont:floatingFont
                                      floatingLabelMinY:floatingLabelMinY
-                                             labelMinX:floatingLabelMinX
-                                             labelMaxX:floatingLabelMaxX
                                               textRect:textRectNormal
                                                  isRTL:isRTL];
 
@@ -244,7 +234,8 @@
                 trailingAssistiveLabel:trailingAssistiveLabel
             assistiveLabelDrawPriority:assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
-                 horizontalEdgePadding:horizontalEdgePadding
+                    leadingEdgePadding:leadingEdgePadding
+                   trailingEdgePadding:trailingEdgePadding
            paddingAboveAssistiveLabels:positioningReference.paddingAboveAssistiveLabels
            paddingBelowAssistiveLabels:positioningReference.paddingBelowAssistiveLabels
                                  isRTL:isRTL];
@@ -347,10 +338,10 @@
                         font:(UIFont *)font
                 floatingFont:(UIFont *)floatingFont
            floatingLabelMinY:(CGFloat)floatingLabelMinY
-                   labelMinX:(CGFloat)labelMinX
-                   labelMaxX:(CGFloat)labelMaxX
                     textRect:(CGRect)textRect
                        isRTL:(BOOL)isRTL {
+  CGFloat labelMinX = CGRectGetMinX(textRect);
+  CGFloat labelMaxX = CGRectGetMaxX(textRect);
   CGFloat maxWidth = labelMaxX - labelMinX;
   CGSize size = CGSizeZero;
   CGRect rect = CGRectZero;

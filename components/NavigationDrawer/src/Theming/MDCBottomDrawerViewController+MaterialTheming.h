@@ -24,7 +24,19 @@
 
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
+ @note This method does not apply the Material theme to @c trackingScrollView.
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
+/**
+ Applies the Material theme to a MDCBottomDrawerViewController instance.
+
+ @param scheme A container scheme instance containing any desired customizations to the theming
+ system.
+ @param applyToTrackingScrollView Whether or not the Material theme should be applied to
+ @c trackingScrollView.
+ */
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme
+    applyToTrackingScrollView:(BOOL)applyToTrackingScrollView;
 
 @end

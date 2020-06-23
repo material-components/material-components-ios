@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import "MDCTypography.h"
+
 #import "private/UIFont+MaterialTypographyPrivate.h"
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
 const CGFloat MDCTypographyStandardOpacity = (CGFloat)0.87;
@@ -144,11 +146,7 @@ const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
     return [fontLoader isLargeForContrastRatios:font];
   }
 
-  // Copied from [MDFTextAccessibility isLargeForContrastRatios:]
-  UIFontDescriptor *fontDescriptor = font.fontDescriptor;
-  BOOL isBold =
-      (fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) == UIFontDescriptorTraitBold;
-  return font.pointSize >= 18 || (isBold && font.pointSize >= 14);
+  return [MDFTextAccessibility isLargeForContrastRatios:font];
 }
 
 + (UIFont *)italicFontFromFont:(UIFont *)font {

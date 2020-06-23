@@ -1,0 +1,2 @@
+/* Accessibility announcement when an action sheet is displayed. */
+"MaterialActionSheetPresentedAccessibilityAnnouncement" = "Alert";

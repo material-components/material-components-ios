@@ -209,12 +209,14 @@
   CGFloat clampedCustomAssistiveLabelDrawPriority =
       [self clampedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   CGFloat clearButtonSideLength = [self clearButtonSideLengthWithTextFieldSize:textFieldSize];
-  id<MDCTextControlVerticalPositioningReference> positioningReference =
-      [self createPositioningReference];
+  id<MDCTextControlVerticalPositioningReference> verticalPositioningReference =
+      [self createVerticalPositioningReference];
+  id<MDCTextControlHorizontalPositioning> horizontalPositioningReference =
+      [self createHorizontalPositioningReference];
   return [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
-                  positioningReference:positioningReference
-        horizontalPositioningReference:self.containerStyle.horizontalPositioningReference
+                  positioningReference:verticalPositioningReference
+        horizontalPositioningReference:horizontalPositioningReference
                                   text:self.text
                                   font:self.normalFont
                           floatingFont:self.floatingFont
@@ -235,7 +237,21 @@
                              isEditing:self.isEditing];
 }
 
-- (id<MDCTextControlVerticalPositioningReference>)createPositioningReference {
+- (id<MDCTextControlHorizontalPositioning>)createHorizontalPositioningReference {
+  id<MDCTextControlHorizontalPositioning> horizontalPositioningReference =
+      self.containerStyle.horizontalPositioningReference;
+  if (self.leadingEdgePaddingOverride) {
+    horizontalPositioningReference.leadingEdgePadding =
+        (CGFloat)[self.leadingEdgePaddingOverride doubleValue];
+  }
+  if (self.trailingEdgePaddingOverride) {
+    horizontalPositioningReference.trailingEdgePadding =
+        (CGFloat)[self.trailingEdgePaddingOverride doubleValue];
+  }
+  return horizontalPositioningReference;
+}
+
+- (id<MDCTextControlVerticalPositioningReference>)createVerticalPositioningReference {
   return [self.containerStyle
       positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
                                 normalFontLineHeight:self.normalFont.lineHeight
@@ -311,6 +327,16 @@
 }
 
 #pragma mark Custom Accessors
+
+- (void)setLeadingEdgePaddingOverride:(NSNumber *)leadingEdgePaddingOverride {
+  _leadingEdgePaddingOverride = leadingEdgePaddingOverride;
+  [self setNeedsLayout];
+}
+
+- (void)setTrailingEdgePaddingOverride:(NSNumber *)trailingEdgePaddingOverride {
+  _trailingEdgePaddingOverride = trailingEdgePaddingOverride;
+  [self setNeedsLayout];
+}
 
 - (UILabel *)leadingAssistiveLabel {
   return self.assistiveLabelView.leadingAssistiveLabel;

@@ -108,7 +108,7 @@
 
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
-      configureTextFieldWithLeadingViewAndTrailingViewAndText:textField];
+      configureTextFieldWithLeadingViewAndTrailingViewAndTextWithCustomPadding:textField];
 
   // Then
   [self validateTextField:textField];

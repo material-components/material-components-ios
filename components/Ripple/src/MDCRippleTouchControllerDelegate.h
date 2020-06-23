@@ -69,4 +69,19 @@
              insertRippleView:(nonnull MDCRippleView *)rippleView
                      intoView:(nonnull UIView *)view;
 
+/**
+ Returns the ripple view to use for a touch located at location in rippleTouchController.view.
+
+ If the delegate implements this method, the controller will not create a ripple view of its own and
+ rippleTouchController:insertRippleView:intoView: will not be called. This method allows the
+ delegate to control the creation and reuse of ripple views.
+
+ @param rippleTouchController The ripple touch controller.
+ @param location The touch location in the coordinates of @c rippleTouchController.view.
+ @return A ripple view to use at the touch location.
+ */
+- (nullable MDCRippleView *)rippleTouchController:
+                                (nonnull MDCRippleTouchController *)rippleTouchController
+                        rippleViewAtTouchLocation:(CGPoint)location;
+
 @end

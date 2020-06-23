@@ -16,8 +16,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-static const CGFloat kHorizontalPadding = (CGFloat)12.0;
-
 static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 
 @interface MDCBaseTextAreaLayout ()
@@ -41,8 +39,10 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 @implementation MDCBaseTextAreaLayout
 
 - (nonnull instancetype)initWithSize:(CGSize)size
-                positioningReference:
-                    (nonnull id<MDCTextControlVerticalPositioningReference>)positioningReference
+        verticalPositioningReference:
+            (nonnull id<MDCTextControlVerticalPositioningReference>)verticalPositioningReference
+      horizontalPositioningReference:
+          (nonnull id<MDCTextControlHorizontalPositioning>)horizontalPositioningReference
                                 text:(nullable NSString *)text
                                 font:(nonnull UIFont *)font
                         floatingFont:(nonnull UIFont *)floatingFont
@@ -59,7 +59,8 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
   self = [super init];
   if (self) {
     [self calculateLayoutWithSize:size
-                    positioningReference:positioningReference
+            verticalPositioningReference:verticalPositioningReference
+          horizontalPositioningReference:horizontalPositioningReference
                                     text:text
                                     font:font
                             floatingFont:floatingFont
@@ -77,8 +78,10 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 }
 
 - (void)calculateLayoutWithSize:(CGSize)size
-                positioningReference:
-                    (id<MDCTextControlVerticalPositioningReference>)positioningReference
+        verticalPositioningReference:
+            (nonnull id<MDCTextControlVerticalPositioningReference>)verticalPositioningReference
+      horizontalPositioningReference:
+          (nonnull id<MDCTextControlHorizontalPositioning>)horizontalPositioningReference
                                 text:(NSString *)text
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
@@ -92,15 +95,19 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
-  CGFloat globalTextMinX = isRTL ? kHorizontalPadding : kHorizontalPadding;
-  CGFloat globalTextMaxX =
-      isRTL ? size.width - kHorizontalPadding : size.width - kHorizontalPadding;
+  CGFloat leadingEdgePadding = horizontalPositioningReference.leadingEdgePadding;
+  CGFloat trailingEdgePadding = horizontalPositioningReference.trailingEdgePadding;
+  CGFloat leftEdgePadding = isRTL ? trailingEdgePadding : leadingEdgePadding;
+  CGFloat rightEdgePadding = isRTL ? leadingEdgePadding : trailingEdgePadding;
+
+  CGFloat globalTextMinX = leftEdgePadding;
+  CGFloat globalTextMaxX = size.width - rightEdgePadding;
   CGRect floatingLabelFrame =
       [self floatingLabelFrameWithText:label.text
                                         floatingFont:floatingFont
                                       globalTextMinX:globalTextMinX
                                       globalTextMaxX:globalTextMaxX
-          paddingBetweenContainerTopAndFloatingLabel:positioningReference
+          paddingBetweenContainerTopAndFloatingLabel:verticalPositioningReference
                                                          .paddingBetweenContainerTopAndFloatingLabel
                                                isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(floatingLabelFrame);
@@ -110,7 +117,7 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                                               font:font
                                     globalTextMinX:globalTextMinX
                                     globalTextMaxX:globalTextMaxX
-          paddingBetweenContainerTopAndNormalLabel:positioningReference
+          paddingBetweenContainerTopAndNormalLabel:verticalPositioningReference
                                                        .paddingBetweenContainerTopAndNormalLabel
                                              isRTL:isRTL];
 
@@ -119,11 +126,12 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
   CGFloat textViewMinY = textViewMinYNormal;
   if (labelPosition == MDCTextControlLabelPositionFloating) {
     textViewMinY =
-        floatingLabelMaxY + positioningReference.paddingBetweenFloatingLabelAndEditingText;
+        floatingLabelMaxY + verticalPositioningReference.paddingBetweenFloatingLabelAndEditingText;
   }
 
-  CGFloat bottomPadding = positioningReference.paddingBetweenEditingTextAndContainerBottom;
-  CGFloat textViewHeight = positioningReference.containerHeight - bottomPadding - textViewMinY;
+  CGFloat bottomPadding = verticalPositioningReference.paddingBetweenEditingTextAndContainerBottom;
+  CGFloat textViewHeight =
+      verticalPositioningReference.containerHeight - bottomPadding - textViewMinY;
   CGRect textViewFrame =
       CGRectMake(globalTextMinX, textViewMinY, globalTextMaxX - globalTextMinX, textViewHeight);
 
@@ -133,14 +141,16 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                 trailingAssistiveLabel:trailingAssistiveLabel
             assistiveLabelDrawPriority:assistiveLabelDrawPriority
       customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
-                 horizontalEdgePadding:kHorizontalPadding
-           paddingAboveAssistiveLabels:positioningReference.paddingAboveAssistiveLabels
-           paddingBelowAssistiveLabels:positioningReference.paddingBelowAssistiveLabels
+                    leadingEdgePadding:leadingEdgePadding
+                   trailingEdgePadding:trailingEdgePadding
+           paddingAboveAssistiveLabels:verticalPositioningReference.paddingAboveAssistiveLabels
+           paddingBelowAssistiveLabels:verticalPositioningReference.paddingBelowAssistiveLabels
                                  isRTL:isRTL];
-  self.assistiveLabelViewFrame = CGRectMake(0, positioningReference.containerHeight, size.width,
-                                            self.assistiveLabelViewLayout.calculatedHeight);
+  self.assistiveLabelViewFrame =
+      CGRectMake(0, verticalPositioningReference.containerHeight, size.width,
+                 self.assistiveLabelViewLayout.calculatedHeight);
 
-  self.containerHeight = positioningReference.containerHeight;
+  self.containerHeight = verticalPositioningReference.containerHeight;
   self.textViewFrame = textViewFrame;
   self.labelFrameFloating = floatingLabelFrame;
   self.labelFrameNormal = normalLabelFrame;
@@ -154,7 +164,7 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 
   CGFloat topFadeStart = floatingLabelMaxY;
   CGFloat topFadeEnd = floatingLabelMaxY + kGradientBlurLength;
-  CGFloat bottomFadeStart = positioningReference.containerHeight - bottomPadding;
+  CGFloat bottomFadeStart = verticalPositioningReference.containerHeight - bottomPadding;
   CGFloat bottomFadeEnd = bottomFadeStart + kGradientBlurLength;
   if (labelBehavior == MDCTextControlLabelBehaviorDisappears) {
     topFadeStart = textViewMinY - kGradientBlurLength;
@@ -163,12 +173,13 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
     bottomFadeEnd = bottomFadeStart + kGradientBlurLength;
   }
 
-  self.verticalGradientLocations = [self
-      determineVerticalGradientLocationsWithTopFadeStart:topFadeStart
-                                              topFadeEnd:topFadeEnd
-                                         bottomFadeStart:bottomFadeStart
-                                           bottomFadeEnd:bottomFadeEnd
-                                         containerHeight:positioningReference.containerHeight];
+  self.verticalGradientLocations =
+      [self determineVerticalGradientLocationsWithTopFadeStart:topFadeStart
+                                                    topFadeEnd:topFadeEnd
+                                               bottomFadeStart:bottomFadeStart
+                                                 bottomFadeEnd:bottomFadeEnd
+                                               containerHeight:verticalPositioningReference
+                                                                   .containerHeight];
 
   return;
 }

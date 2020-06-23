@@ -148,11 +148,13 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
   [self.alert sizeToFitContentInBounds:CGSizeMake(300.0f, 300.0f)];
 
   // Then
+  UIEdgeInsets visibleAreaInsets = button.visibleAreaInsets;
+  CGRect visibleButtonFrame = UIEdgeInsetsInsetRect(button.frame, visibleAreaInsets);
   CGRect contentRect = self.alertView.actionsScrollView.frame;
   CGRect buttonFrame =
-      CGRectMake(CGRectGetWidth(contentRect) - CGRectGetWidth(button.frame) - 10.0f, 10.0f,
-                 CGRectGetWidth(button.frame), CGRectGetHeight(button.frame));
-  XCTAssertTrue(CGRectEqualToRect(button.frame, buttonFrame));
+      CGRectMake(CGRectGetWidth(contentRect) - CGRectGetWidth(visibleButtonFrame) - 10.0f, 10.0f,
+                 CGRectGetWidth(visibleButtonFrame), CGRectGetHeight(visibleButtonFrame));
+  XCTAssertTrue(CGRectEqualToRect(visibleButtonFrame, buttonFrame));
 }
 
 @end

@@ -42,12 +42,10 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 @interface MDCProgressView ()
 @property(nonatomic, strong) MDCProgressGradientView *progressView;
 @property(nonatomic, strong) UIView *trackView;
-@property(nonatomic, strong) UIView *transitionView;
 @property(nonatomic) BOOL animatingHide;
 // A UIProgressView to return the same format for the accessibility value. For example, when
 // progress is 0.497, it reports "fifty per cent".
 @property(nonatomic, readonly) UIProgressView *accessibilityProgressView;
-@property(nonatomic) CFTimeInterval indeterminateAnimationStartTime;
 
 @end
 
@@ -84,12 +82,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _trackView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self addSubview:_trackView];
 
-  _transitionView =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGRectGetHeight(self.bounds))];
-  _transitionView.backgroundColor = MDCProgressViewDefaultTintColor();
-  [self addSubview:_transitionView];
-
-  float barWidth = [self indeterminateLoadingBarWidth];
+  CGFloat barWidth = [self indeterminateLoadingBarWidth];
   CGRect progressBarFrame = CGRectMake(-barWidth, 0, barWidth, CGRectGetHeight(self.bounds));
 
   _progressView = [[MDCProgressGradientView alloc] initWithFrame:progressBarFrame];
@@ -157,7 +150,6 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 
 - (void)setTrackTintColor:(UIColor *)trackTintColor {
   self.trackView.backgroundColor = trackTintColor;
-  self.transitionView.backgroundColor = _progressTintColor;
 }
 
 - (void)setMode:(MDCProgressViewMode)mode {
@@ -170,80 +162,6 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   if (_animating && _mode == MDCProgressViewModeIndeterminate) {
     [self stopAnimating];
     [self startAnimating];
-  }
-}
-
-- (void)setMode:(MDCProgressViewMode)mode
-       animated:(BOOL)animated
-     completion:(void (^__nullable)(BOOL finished))completion {
-  if (_mode == mode) {
-    if (completion) {
-      completion(YES);
-    }
-    return;
-  }
-  _mode = mode;
-
-  if (!animated) {
-    if (_mode == MDCProgressViewModeIndeterminate) {
-      self.progressView.frame = CGRectMake(0, 0, 0, CGRectGetHeight(self.bounds));
-    }
-    // Update the transition without an animation.
-    [self updateProgressView];
-    if (completion) {
-      completion(YES);
-    }
-  }
-
-  // Change from indeterminate to determinate.
-  if (_mode == MDCProgressViewModeDeterminate) {
-    // If the indeterminate view wasn't animating, just animate the determinate bar in.
-    if (!_animating) {
-      [self setProgress:_progress animated:animated completion:completion];
-      if (completion) {
-        completion(YES);
-      }
-      return;
-    }
-
-    // Transition from the indeterminate to the determinate bar.
-    CFTimeInterval stopTime = [self.progressView.layer convertTime:CACurrentMediaTime()
-                                                         fromLayer:nil];
-    CFTimeInterval timeDiff = stopTime - _indeterminateAnimationStartTime;
-
-    CGFloat percentage = timeDiff / kAnimationDuration - floor(timeDiff / kAnimationDuration);
-    CGFloat xPosition =
-        (CGRectGetWidth(self.bounds) + [self indeterminateLoadingBarWidth]) * percentage -
-        [self indeterminateLoadingBarWidth];
-
-    [self.progressView.layer removeAllAnimations];
-    CGRect progressBarStartFrame =
-        CGRectMake(xPosition, 0, [self indeterminateLoadingBarWidth], CGRectGetHeight(self.bounds));
-    self.progressView.frame = progressBarStartFrame;
-
-    [UIView animateWithDuration:[[self class] animationDuration]
-                          delay:0
-                        options:[[self class] animationOptions]
-                     animations:^{
-                       [self updateProgressView];
-                     }
-                     completion:completion];
-  } else {
-    // Change from determinate to indeterminate.
-    CGRect zeroFrame = CGRectMake(0, 0, 0, CGRectGetHeight(self.bounds));
-    // Animate the transition from progress to indeterminate.
-    CGRect transitionViewFrame =
-        CGRectMake(0, 0, CGRectGetWidth(self.bounds) * _progress, CGRectGetHeight(self.bounds));
-    self.transitionView.frame = transitionViewFrame;
-    [self layoutIfNeeded];
-
-    [UIView animateWithDuration:[[self class] animationDuration]
-                          delay:0
-                        options:[[self class] animationOptions]
-                     animations:^{
-                       self.transitionView.frame = zeroFrame;
-                     }
-                     completion:completion];
   }
 }
 
@@ -502,8 +420,6 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   animation.duration = kAnimationDuration;
   animation.repeatCount = HUGE_VALF;
   [self.progressView.layer addAnimation:animation forKey:@"position"];
-  _indeterminateAnimationStartTime = [self.progressView.layer convertTime:CACurrentMediaTime()
-                                                                fromLayer:nil];
 }
 
 - (CGFloat)indeterminateLoadingBarWidth {

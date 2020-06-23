@@ -197,10 +197,13 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 - (MDCBaseTextAreaLayout *)calculateLayoutWithSize:(CGSize)size {
   CGFloat clampedCustomAssistiveLabelDrawPriority =
       [self clampedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
-  id<MDCTextControlVerticalPositioningReference> positioningReference =
-      [self createPositioningReference];
+  id<MDCTextControlVerticalPositioningReference> verticalPositioningReference =
+      [self createVerticalPositioningReference];
+  id<MDCTextControlHorizontalPositioning> horizontalPositioningReference =
+      [self createHorizontalPositioningReference];
   return [[MDCBaseTextAreaLayout alloc] initWithSize:size
-                                positioningReference:positioningReference
+                        verticalPositioningReference:verticalPositioningReference
+                      horizontalPositioningReference:horizontalPositioningReference
                                                 text:self.baseTextAreaTextView.text
                                                 font:self.normalFont
                                         floatingFont:self.floatingFont
@@ -215,7 +218,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                            isEditing:self.textView.isFirstResponder];
 }
 
-- (id<MDCTextControlVerticalPositioningReference>)createPositioningReference {
+- (id<MDCTextControlVerticalPositioningReference>)createVerticalPositioningReference {
   return [self.containerStyle
       positioningReferenceWithFloatingFontLineHeight:self.floatingFont.lineHeight
                                 normalFontLineHeight:self.normalFont.lineHeight
@@ -224,6 +227,20 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                     numberOfTextRows:self.numberOfLinesOfVisibleText
                                              density:0
                             preferredContainerHeight:self.preferredContainerHeight];
+}
+
+- (id<MDCTextControlHorizontalPositioning>)createHorizontalPositioningReference {
+  id<MDCTextControlHorizontalPositioning> horizontalPositioningReference =
+      self.containerStyle.horizontalPositioningReference;
+  if (self.leadingEdgePaddingOverride) {
+    horizontalPositioningReference.leadingEdgePadding =
+        (CGFloat)[self.leadingEdgePaddingOverride doubleValue];
+  }
+  if (self.trailingEdgePaddingOverride) {
+    horizontalPositioningReference.trailingEdgePadding =
+        (CGFloat)[self.trailingEdgePaddingOverride doubleValue];
+  }
+  return horizontalPositioningReference;
 }
 
 - (CGFloat)clampedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
@@ -323,6 +340,16 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 }
 
 #pragma mark Custom Accessors
+
+- (void)setLeadingEdgePaddingOverride:(NSNumber *)leadingEdgePaddingOverride {
+  _leadingEdgePaddingOverride = leadingEdgePaddingOverride;
+  [self setNeedsLayout];
+}
+
+- (void)setTrailingEdgePaddingOverride:(NSNumber *)trailingEdgePaddingOverride {
+  _trailingEdgePaddingOverride = trailingEdgePaddingOverride;
+  [self setNeedsLayout];
+}
 
 - (UITextView *)textView {
   return self.baseTextAreaTextView;

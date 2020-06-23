@@ -21,13 +21,15 @@ static const CGFloat kMDCTextControlHorizontalPositioningReferenceHorizontalInte
     12.0f;
 
 @implementation MDCTextControlHorizontalPositioningReference
-@synthesize horizontalEdgePadding = _horizontalEdgePadding;
+@synthesize leadingEdgePadding = _leadingEdgePadding;
+@synthesize trailingEdgePadding = _trailingEdgePadding;
 @synthesize horizontalInterItemSpacing = _horizontalInterItemSpacing;
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.horizontalEdgePadding = kMDCTextControlHorizontalPositioningReferenceHorizontalEdgePadding;
+    self.leadingEdgePadding = kMDCTextControlHorizontalPositioningReferenceHorizontalEdgePadding;
+    self.trailingEdgePadding = kMDCTextControlHorizontalPositioningReferenceHorizontalEdgePadding;
     self.horizontalInterItemSpacing =
         kMDCTextControlHorizontalPositioningReferenceHorizontalInterItemPadding;
   }

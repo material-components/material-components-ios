@@ -23,21 +23,32 @@ static const CGFloat kTopHandleAlpha = 0.12f;
 @implementation MDCBottomDrawerViewController (MaterialTheming)
 
 - (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme {
-  [self applyColorThemeWithColorScheme:scheme.colorScheme];
+  [self applyThemeWithScheme:scheme applyToTrackingScrollView:NO];
+}
+
+- (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme
+    applyToTrackingScrollView:(BOOL)applyToTrackingScrollView {
+  [self applyColorThemeWithColorScheme:scheme.colorScheme
+             applyToTrackingScrollView:applyToTrackingScrollView];
   [self setTopCornersRadius:kCollapsedCornerRadius forDrawerState:MDCBottomDrawerStateCollapsed];
   [self setTopCornersRadius:kFullScreenCornerRadius forDrawerState:MDCBottomDrawerStateFullScreen];
 }
 
-- (void)applyColorThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  [MDCBottomDrawerViewController mdc_setResolvedBackgroundColorForBottomDrawer:self
-                                                                    withScheme:colorScheme];
+- (void)applyColorThemeWithColorScheme:(id<MDCColorScheming>)colorScheme
+             applyToTrackingScrollView:(BOOL)applyToTrackingScrollView {
+  [MDCBottomDrawerViewController
+      mdc_setResolvedBackgroundColorForBottomDrawer:self
+                          applyToTrackingScrollView:applyToTrackingScrollView
+                                         withScheme:colorScheme];
   if (colorScheme.elevationOverlayEnabledForDarkMode) {
     self.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _Nonnull object,
                                          CGFloat absoluteElevation) {
       if ([object isKindOfClass:[MDCBottomDrawerViewController class]]) {
         MDCBottomDrawerViewController *bottomDrawer = (MDCBottomDrawerViewController *)object;
-        [MDCBottomDrawerViewController mdc_setResolvedBackgroundColorForBottomDrawer:bottomDrawer
-                                                                          withScheme:colorScheme];
+        [MDCBottomDrawerViewController
+            mdc_setResolvedBackgroundColorForBottomDrawer:bottomDrawer
+                                applyToTrackingScrollView:applyToTrackingScrollView
+                                               withScheme:colorScheme];
       }
     };
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
@@ -46,8 +57,10 @@ static const CGFloat kTopHandleAlpha = 0.12f;
                                              UITraitCollection *_Nullable previousTraitCollection) {
         if ([bottomDrawer.traitCollection
                 hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-          [MDCBottomDrawerViewController mdc_setResolvedBackgroundColorForBottomDrawer:bottomDrawer
-                                                                            withScheme:colorScheme];
+          [MDCBottomDrawerViewController
+              mdc_setResolvedBackgroundColorForBottomDrawer:bottomDrawer
+                                  applyToTrackingScrollView:applyToTrackingScrollView
+                                                 withScheme:colorScheme];
         }
       };
     }
@@ -58,12 +71,16 @@ static const CGFloat kTopHandleAlpha = 0.12f;
 }
 
 + (void)mdc_setResolvedBackgroundColorForBottomDrawer:(MDCBottomDrawerViewController *)bottomDrawer
+                            applyToTrackingScrollView:(BOOL)applyToTrackingScrollView
                                            withScheme:(id<MDCColorScheming>)scheme {
   UIColor *backgroundColor = [scheme.backgroundColor
       mdc_resolvedColorWithTraitCollection:bottomDrawer.traitCollection
                                  elevation:bottomDrawer.view.mdc_absoluteElevation];
   bottomDrawer.headerViewController.view.backgroundColor = backgroundColor;
   bottomDrawer.contentViewController.view.backgroundColor = backgroundColor;
+  if (applyToTrackingScrollView) {
+    bottomDrawer.trackingScrollView.backgroundColor = backgroundColor;
+  }
 }
 
 @end

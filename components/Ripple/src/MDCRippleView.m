@@ -35,7 +35,7 @@
 
 @end
 
-static const CGFloat kRippleDefaultAlpha = (CGFloat)0.16;
+static const CGFloat kRippleDefaultAlpha = (CGFloat)0.12;
 static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 @implementation MDCRippleView
@@ -302,6 +302,22 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
     return pendingAnim;
   }
   return nil;
+}
+
+#pragma mark - Convenience API
+
++ (MDCRippleView *)injectedRippleViewForView:(UIView *)view {
+  for (MDCRippleView *subview in view.subviews) {
+    if ([subview isKindOfClass:[MDCRippleView class]]) {
+      return subview;
+    }
+  }
+
+  MDCRippleView *newRippleView = [[MDCRippleView alloc] initWithFrame:view.bounds];
+  newRippleView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [view addSubview:newRippleView];
+  return newRippleView;
 }
 
 @end

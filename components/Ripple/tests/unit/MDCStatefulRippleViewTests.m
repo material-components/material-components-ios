@@ -36,7 +36,7 @@
   // Then
   XCTAssertNil(rippleView.rippleViewDelegate);
   XCTAssertEqualObjects(rippleView.rippleColor, [[UIColor alloc] initWithWhite:0
-                                                                         alpha:(CGFloat)0.16]);
+                                                                         alpha:(CGFloat)0.12]);
   XCTAssertEqual(rippleView.rippleStyle, MDCRippleStyleBounded);
 }
 

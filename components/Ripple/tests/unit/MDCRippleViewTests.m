@@ -65,7 +65,7 @@
   // Then
   XCTAssertNil(rippleView.rippleViewDelegate);
   XCTAssertEqualObjects(rippleView.rippleColor, [[UIColor alloc] initWithWhite:0
-                                                                         alpha:(CGFloat)0.16]);
+                                                                         alpha:(CGFloat)0.12]);
   XCTAssertEqual(rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertEqual(rippleView.maximumRadius, 0);
 }
@@ -271,6 +271,33 @@
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedRippleView, testRippleView);
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
+- (void)testInjectedRippleViewFindsRippleViewInHierarchy {
+  // Given
+  UIView *parentView = [[UIView alloc] init];
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  [parentView addSubview:rippleView];
+
+  // When
+  MDCRippleView *injectedRippleView = [MDCRippleView injectedRippleViewForView:parentView];
+
+  // Then
+  XCTAssertEqual(rippleView, injectedRippleView);
+}
+
+- (void)testInjectedRippleViewCreatesRippleViewInstance {
+  // Given
+  UIView *firstLevelView = [[UIView alloc] init];
+  UIView *secondLevelView = [[UIView alloc] init];
+  [firstLevelView addSubview:secondLevelView];
+
+  // When
+  MDCRippleView *injectedRippleView = [MDCRippleView injectedRippleViewForView:firstLevelView];
+
+  // Then
+  XCTAssertNotNil(injectedRippleView);
+  XCTAssertEqualObjects(injectedRippleView.superview, firstLevelView);
 }
 
 @end
