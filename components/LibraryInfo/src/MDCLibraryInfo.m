@@ -19,7 +19,7 @@
 // This string is updated automatically as a part of the release process and should not be edited
 // manually. Do not rename this constant or change the formatting without updating the release
 // scripts.
-static NSString const *MDCLibraryInfoVersionString = @"109.8.0";
+static NSString const *MDCLibraryInfoVersionString = @"110.0.0";
 
 @implementation MDCLibraryInfo
 
