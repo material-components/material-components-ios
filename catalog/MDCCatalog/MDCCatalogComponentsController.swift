@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import UIKit
 import CatalogByConvention
 import MaterialCatalog
-
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MaterialIcons_ic_arrow_back
-import MaterialComponents.MaterialInk
 import MaterialComponents.MaterialLibraryInfo
+import MaterialComponents.MaterialRipple
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialThemes
 import MaterialComponents.MaterialTypography
+import MaterialComponents.MaterialIcons_ic_arrow_back
 
-import UIKit
-
-class MDCCatalogComponentsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MDCInkTouchControllerDelegate {
+class MDCCatalogComponentsController: UICollectionViewController,
+  UICollectionViewDelegateFlowLayout, MDCRippleTouchControllerDelegate
+{
 
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 30
@@ -39,10 +39,10 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
 
   fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
 
-  private lazy var inkController: MDCInkTouchController = {
-    let controller = MDCInkTouchController(view: self.collectionView!)
-    controller.delaysInkSpread = true
+  private lazy var rippleController: MDCRippleTouchController = {
+    let controller = MDCRippleTouchController()
     controller.delegate = self
+    controller.shouldProcessRippleWithScrollViewGestures = false
     return controller
   }()
 
@@ -146,7 +146,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    inkController.addInkView()
+    rippleController.addRipple(to: self.collectionView!)
 
     let containerView = UIView(frame: headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -318,27 +318,24 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     return node.children.count
   }
 
-  func inkViewForView(_ view: UIView) -> MDCInkView {
-    let foundInkView = MDCInkView.injectedInkView(for: view)
-    foundInkView.inkStyle = .bounded
-    foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
-    return foundInkView
+  // MARK: MDCRippleTouchControllerDelegate
+
+  func rippleTouchController(
+    _ rippleTouchController: MDCRippleTouchController,
+    shouldProcessRippleTouchesAtTouchLocation location: CGPoint
+  ) -> Bool {
+    return self.collectionView?.indexPathForItem(at: location) != nil
   }
 
-  // MARK: MDCInkTouchControllerDelegate
-
-  func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
-    return self.collectionView!.indexPathForItem(at: location) != nil
-  }
-
-  func inkTouchController(_ inkTouchController: MDCInkTouchController,
-                          inkViewAtTouchLocation location: CGPoint) -> MDCInkView? {
-    if let indexPath = self.collectionView!.indexPathForItem(at: location) {
-      let cell = self.collectionView!.cellForItem(at: indexPath)
-      return inkViewForView(cell!)
+  func rippleTouchController(
+    _ rippleTouchController: MDCRippleTouchController,
+    rippleViewAtTouchLocation location: CGPoint
+  ) -> MDCRippleView? {
+    if let indexPath = self.collectionView?.indexPathForItem(at: location) {
+      let cell = self.collectionView?.cellForItem(at: indexPath)
+      return MDCRippleView.injectedRippleView(for: cell!)
     }
-    return MDCInkView()
+    return MDCRippleView()
   }
 
   // MARK: UICollectionViewDelegate
@@ -346,8 +343,8 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell =
-        collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
-                                           for: indexPath)
+      collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
+                                         for: indexPath)
     cell.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     let componentName = node.children[indexPath.row].title
@@ -355,8 +352,8 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
       catalogCell.populateView(componentName)
     }
 
-    // Ensure that ink animations aren't recycled.
-    MDCInkView.injectedInkView(for: view).cancelAllAnimations(animated: false)
+    // Ensure that ripple animations aren't recycled.
+    MDCRippleView.injectedRippleView(for: view).cancelAllRipples(animated: false, completion: nil)
 
     return cell
   }
