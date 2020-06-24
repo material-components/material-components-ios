@@ -17,6 +17,7 @@
 @interface MDCProgressGradientView ()
 
 @property(nonatomic, readonly) CAGradientLayer *gradientLayer;
+@property(nonatomic, readwrite) CAShapeLayer *shapeLayer;
 
 @end
 
@@ -41,6 +42,25 @@
 - (void)commonMDCProgressGradientViewInit {
   self.gradientLayer.startPoint = CGPointMake(0.0f, 0.5f);
   self.gradientLayer.endPoint = CGPointMake(1.0f, 0.5f);
+
+  self.shapeLayer = [CAShapeLayer layer];
+  self.gradientLayer.mask = self.shapeLayer;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  UIBezierPath *path = [UIBezierPath bezierPath];
+  [path moveToPoint:CGPointMake(CGRectGetWidth(self.gradientLayer.bounds),
+                                CGRectGetMidY(self.gradientLayer.bounds))];
+  [path addLineToPoint:CGPointMake(0, CGRectGetMidY(self.gradientLayer.bounds))];
+  self.shapeLayer.frame = self.gradientLayer.bounds;
+  self.shapeLayer.strokeColor = UIColor.blackColor.CGColor;
+  self.shapeLayer.lineWidth = CGRectGetHeight(self.gradientLayer.bounds);
+  if (self.gradientLayer.cornerRadius > 0) {
+    self.shapeLayer.lineCap = kCALineCapRound;
+  }
+  self.shapeLayer.path = path.CGPath;
 }
 
 - (void)setColors:(NSArray *)colors {

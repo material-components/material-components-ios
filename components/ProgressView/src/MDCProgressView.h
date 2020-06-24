@@ -71,6 +71,9 @@ IB_DESIGNABLE
  This is not equivalent to configuring self.layer.cornerRadius; it instead configures the progress
  and track views directly.
 
+ Under @c MDCProgressViewModeIndeterminate mode, the progress view is fully rounded if this value
+ is larger than 0.
+
  The default is 0.
  */
 @property(nonatomic) CGFloat cornerRadius;

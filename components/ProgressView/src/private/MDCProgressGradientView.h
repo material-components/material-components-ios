@@ -26,4 +26,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCProgressGradientView 
  */
 @property(nonatomic, nullable, copy) NSArray *colors;
 
+/**
+ The shape layer used as the mask of @c MDCProgressGradientView.
+ */
+@property(nonatomic, nonnull, readonly) CAShapeLayer *shapeLayer;
+
 @end
