@@ -14,13 +14,14 @@
 
 #import "MDCCollectionViewController.h"
 
-#import "MDCCollectionViewFlowLayout.h"
-#import "MaterialCollectionCells.h"
-#import "MaterialInk.h"
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionStringResources.h"
 #import "private/MDCCollectionViewEditor.h"
 #import "private/MDCCollectionViewStyler.h"
+#import "MaterialCollectionCells.h"
+#import "MDCCollectionViewFlowLayout.h"
+#import "MaterialInk.h"
+#import "MaterialRipple.h"
 
 #include <tgmath.h>
 
@@ -28,12 +29,14 @@ NSString *const MDCCollectionInfoBarKindHeader = @"MDCCollectionInfoBarKindHeade
 NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFooter";
 
 @interface MDCCollectionViewController () <MDCCollectionInfoBarViewDelegate,
-                                           MDCInkTouchControllerDelegate>
+                                           MDCInkTouchControllerDelegate,
+                                           MDCRippleTouchControllerDelegate>
 @property(nonatomic, assign) BOOL currentlyActiveInk;
 @end
 
 @implementation MDCCollectionViewController {
   MDCInkTouchController *_inkTouchController;
+  MDCRippleTouchController *_rippleTouchController;
   MDCCollectionInfoBarView *_headerInfoBar;
   MDCCollectionInfoBarView *_footerInfoBar;
   BOOL _headerInfoBarDismissed;
@@ -101,6 +104,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
   _inkTouchController.delegate = self;
 
+  _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self.collectionView
+                                                                 deferred:YES];
+  _rippleTouchController.delegate = self;
+
   // Register our supplementary header and footer
   NSString *classIdentifier = NSStringFromClass([MDCCollectionInfoBarView class]);
   NSString *headerKind = MDCCollectionInfoBarKindHeader;
@@ -134,8 +141,14 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   // Reset editor and ink to provided collection view.
   _editor = [[MDCCollectionViewEditor alloc] initWithCollectionView:collectionView];
   _editor.delegate = self;
-  _inkTouchController = [[MDCInkTouchController alloc] initWithView:collectionView];
-  _inkTouchController.delegate = self;
+  if (self.enableRippleBehavior) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:collectionView
+                                                                   deferred:YES];
+    _rippleTouchController.delegate = self;
+  } else {
+    _inkTouchController = [[MDCInkTouchController alloc] initWithView:collectionView];
+    _inkTouchController.delegate = self;
+  }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -394,13 +407,52 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   }
   if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
     MDCCollectionViewCell *inkCell = (MDCCollectionViewCell *)cell;
-    if ([inkCell respondsToSelector:@selector(inkView)]) {
-      // Set cell ink.
-      ink = [cell performSelector:@selector(inkView)];
+    if (!inkCell.enableRippleBehavior) {
+      if ([inkCell respondsToSelector:@selector(inkView)]) {
+        // Set cell ink.
+        ink = [cell performSelector:@selector(inkView)];
+      }
     }
   }
 
   return ink;
+}
+
+#pragma mark - <MDCRippleTouchControllerDelegate>
+
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+    shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
+  // Only store touch location and do not allow ripple processing. This ripple location will be used
+  // when manually starting/stopping the ripple animation during cell highlight/unhighlight states.
+  if (!self.currentlyActiveInk) {
+    _inkTouchLocation = location;
+  }
+  return NO;
+}
+
+- (MDCRippleView *)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+               rippleViewAtTouchLocation:(CGPoint)location {
+  NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
+  UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+  MDCRippleView *ripple = nil;
+
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:
+                                               rippleTouchController:rippleViewAtIndexPath:)]) {
+    return [_styler.delegate collectionView:self.collectionView
+                      rippleTouchController:rippleTouchController
+                      rippleViewAtIndexPath:indexPath];
+  }
+  if ([cell isKindOfClass:[MDCCollectionViewCell class]]) {
+    MDCCollectionViewCell *rippleCell = (MDCCollectionViewCell *)cell;
+    if (rippleCell.enableRippleBehavior) {
+      if ([rippleCell respondsToSelector:@selector(rippleView)]) {
+        // Set cell ripple.
+        ripple = [cell performSelector:@selector(rippleView)];
+      }
+    }
+  }
+
+  return ripple;
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -453,24 +505,43 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
-  // Start cell ink show animation.
-  MDCInkView *inkView;
-  if ([cell respondsToSelector:@selector(inkView)]) {
-    inkView = [cell performSelector:@selector(inkView)];
-  } else {
-    return;
-  }
-
-  // Update ink color if necessary.
-  if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
-    inkView.inkColor = [_styler.delegate collectionView:collectionView
-                                    inkColorAtIndexPath:indexPath];
-    if (!inkView.inkColor) {
-      inkView.inkColor = inkView.defaultInkColor;
+  if (self.enableRippleBehavior) {
+    MDCRippleView *rippleView;
+    if ([cell respondsToSelector:@selector(rippleView)]) {
+      rippleView = [cell performSelector:@selector(rippleView)];
+    } else {
+      return;
     }
+
+    if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
+      rippleView.rippleColor = [_styler.delegate collectionView:collectionView
+                                            inkColorAtIndexPath:indexPath];
+      if (!rippleView.rippleColor) {
+        rippleView.rippleColor = [UIColor colorWithWhite:0 alpha:0.12f];
+      }
+    }
+    self.currentlyActiveInk = YES;
+    [rippleView beginRippleTouchDownAtPoint:location animated:YES completion:nil];
+  } else {
+    // Start cell ink show animation.
+    MDCInkView *inkView;
+    if ([cell respondsToSelector:@selector(inkView)]) {
+      inkView = [cell performSelector:@selector(inkView)];
+    } else {
+      return;
+    }
+
+    // Update ink color if necessary.
+    if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
+      inkView.inkColor = [_styler.delegate collectionView:collectionView
+                                      inkColorAtIndexPath:indexPath];
+      if (!inkView.inkColor) {
+        inkView.inkColor = inkView.defaultInkColor;
+      }
+    }
+    self.currentlyActiveInk = YES;
+    [inkView startTouchBeganAnimationAtPoint:location completion:nil];
   }
-  self.currentlyActiveInk = YES;
-  [inkView startTouchBeganAnimationAtPoint:location completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -478,16 +549,28 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
-  // Start cell ink evaporate animation.
-  MDCInkView *inkView;
-  if ([cell respondsToSelector:@selector(inkView)]) {
-    inkView = [cell performSelector:@selector(inkView)];
-  } else {
-    return;
-  }
+  if (self.enableRippleBehavior) {
+    MDCRippleView *rippleView;
+    if ([cell respondsToSelector:@selector(rippleView)]) {
+      rippleView = [cell performSelector:@selector(rippleView)];
+    } else {
+      return;
+    }
 
-  self.currentlyActiveInk = NO;
-  [inkView startTouchEndedAnimationAtPoint:location completion:nil];
+    self.currentlyActiveInk = NO;
+    [rippleView beginRippleTouchUpAnimated:YES completion:nil];
+  } else {
+    // Start cell ink evaporate animation.
+    MDCInkView *inkView;
+    if ([cell respondsToSelector:@selector(inkView)]) {
+      inkView = [cell performSelector:@selector(inkView)];
+    } else {
+      return;
+    }
+
+    self.currentlyActiveInk = NO;
+    [inkView startTouchEndedAnimationAtPoint:location completion:nil];
+  }
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
@@ -524,9 +607,15 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (void)collectionViewWillBeginEditing:(__unused UICollectionView *)collectionView {
   if (self.currentlyActiveInk) {
-    MDCInkView *activeInkView = [self inkTouchController:_inkTouchController
-                                  inkViewAtTouchLocation:_inkTouchLocation];
-    [activeInkView startTouchEndedAnimationAtPoint:_inkTouchLocation completion:nil];
+    if (self.enableRippleBehavior) {
+      MDCRippleView *activeRippleView = [self rippleTouchController:_rippleTouchController
+                                          rippleViewAtTouchLocation:_inkTouchLocation];
+      [activeRippleView beginRippleTouchUpAnimated:YES completion:nil];
+    } else {
+      MDCInkView *activeInkView = [self inkTouchController:_inkTouchController
+                                    inkViewAtTouchLocation:_inkTouchLocation];
+      [activeInkView startTouchEndedAnimationAtPoint:_inkTouchLocation completion:nil];
+    }
   }
   // Inlay all items.
   _styler.allowsItemInlay = YES;

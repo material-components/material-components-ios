@@ -17,13 +17,13 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialCollectionLayoutAttributes.h"
+#import "MaterialPalettes.h"
 #import "MaterialIcons+ic_check.h"
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialIcons+ic_chevron_right.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 #import "MaterialIcons+ic_reorder.h"
-#import "MaterialPalettes.h"
 
 static CGFloat kEditingControlAppearanceOffset = 16;
 
@@ -73,6 +73,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 }
 
 @synthesize inkView = _inkView;
+@synthesize rippleView = _rippleView;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -125,6 +126,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   self.hidden = NO;
 
   [self.inkView cancelAllAnimationsAnimated:NO];
+  [self.rippleView cancelAllRipplesAnimated:NO completion:nil];
 }
 
 - (void)layoutSubviews {
@@ -284,7 +286,9 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   if (!_inkView) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
     _inkView.usesLegacyInkRipple = NO;
-    [self addSubview:_inkView];
+    if (!self.enableRippleBehavior) {
+      [self addSubview:_inkView];
+    }
   }
   return _inkView;
 }
@@ -296,10 +300,49 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   if (_inkView) {
     [_inkView removeFromSuperview];
   }
-  if (inkView) {
+  if (inkView && !self.enableRippleBehavior) {
     [self addSubview:inkView];
   }
   _inkView = inkView;
+}
+
+- (MDCRippleView *)rippleView {
+  if (!_rippleView) {
+    _rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
+    if (self.enableRippleBehavior) {
+      [self addSubview:_rippleView];
+    }
+  }
+  return _rippleView;
+}
+
+- (void)setRippleView:(MDCRippleView *)rippleView {
+  if (rippleView == _rippleView) {
+    return;
+  }
+  if (_rippleView) {
+    [_rippleView removeFromSuperview];
+  }
+  if (rippleView && self.enableRippleBehavior) {
+    [self addSubview:rippleView];
+  }
+  _rippleView = rippleView;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (self.enableRippleBehavior) {
+    [self.inkView removeFromSuperview];
+    _rippleView.frame = self.bounds;
+    [self addSubview:_rippleView];
+  } else {
+    [_rippleView removeFromSuperview];
+    [self addSubview:_inkView];
+  }
 }
 
 #pragma mark - Separator

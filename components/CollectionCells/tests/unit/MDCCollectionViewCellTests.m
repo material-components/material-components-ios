@@ -37,4 +37,26 @@
   XCTAssertNotEqualObjects(originalImage, newImage);
 }
 
+- (void)testRippleViewIsNotActiveByDefault {
+  // Given
+  MDCCollectionViewCell *cell = [[MDCCollectionViewCell alloc] initWithFrame:CGRectZero];
+
+  // Then
+  XCTAssertNil(cell.rippleView.superview);
+  XCTAssertNotNil(cell.inkView.superview);
+  XCTAssertFalse(cell.enableRippleBehavior);
+}
+
+- (void)testSettingEnableRippleBehaviorToYes {
+  // Given
+  MDCCollectionViewCell *cell = [[MDCCollectionViewCell alloc] initWithFrame:CGRectZero];
+
+  // When
+  cell.enableRippleBehavior = YES;
+
+  // Then
+  XCTAssertEqual(cell.rippleView.superview, cell);
+  XCTAssertNil(cell.inkView.superview);
+}
+
 @end

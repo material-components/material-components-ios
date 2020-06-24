@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialInk.h"
-
 #import <UIKit/UIKit.h>
+
+#import "MaterialInk.h"  // IWYU pragma: export
+#import "MaterialRipple.h"  // IWYU pragma: export
 
 /** The available cell accessory view types. Based on UITableViewCellAccessoryType. */
 typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {
@@ -102,5 +103,22 @@ FOUNDATION_EXPORT NSString *_Nonnull const kDeselectedCellAccessibilityHintKey;
 
 /** View containing the ink effect. */
 @property(nonatomic, strong, nullable) MDCInkView *inkView;
+
+/**
+ This property determines if an @c MDCCollectionViewCell should use the @c MDCInkView behavior or
+ not.
+
+ By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+The rippleView for the cell that is initiated on tap. The ripple view is the successor of ink
+view, and can be used by setting `enableRippleBehavior` to YES.
+*/
+@property(nonatomic, strong, nullable) MDCRippleView *rippleView;
 
 @end

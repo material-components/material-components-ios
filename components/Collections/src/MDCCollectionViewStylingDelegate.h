@@ -14,10 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCCollectionViewStyling.h"
+#import "MDCCollectionViewStyling.h"  // IWYU pragma: export
 
 @class MDCInkTouchController;
 @class MDCInkView;
+@class MDCRippleTouchController;
+@class MDCRippleView;
 
 /** A delegate protocol which allows setting collection view cell styles. */
 @protocol MDCCollectionViewStylingDelegate <NSObject>
@@ -177,5 +179,17 @@
 - (nonnull MDCInkView *)collectionView:(nonnull UICollectionView *)collectionView
                     inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
                     inkViewAtIndexPath:(nonnull NSIndexPath *)indexPath;
+
+/**
+ Allows the receiver to set the ripple view at the specified collection view index path.
+
+ @param collectionView The collection view.
+ @param rippleTouchController The ripple controller of the ink view.
+ @param indexPath The collection view index path.
+ @return The rippleView to be used at the specified index path.
+ */
+- (nonnull MDCRippleView *)collectionView:(nonnull UICollectionView *)collectionView
+                    rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
+                    rippleViewAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
 @end

@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCCollectionViewEditingDelegate.h"
-#import "MDCCollectionViewStylingDelegate.h"
+#import "MDCCollectionViewStylingDelegate.h"  // IWYU pragma: export
 
 @protocol MDCCollectionViewEditing;
 @protocol MDCCollectionViewStyling;
@@ -40,6 +40,17 @@
 
 /** The collection view editor. */
 @property(nonatomic, strong, readonly, nonnull) id<MDCCollectionViewEditing> editor;
+
+/**
+ This property determines if an @c MDCCollectionViewController should use the @c MDCInkView behavior
+ or not.
+
+ By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 #pragma mark - Subclassing
 
