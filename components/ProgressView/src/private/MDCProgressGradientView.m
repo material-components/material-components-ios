@@ -14,6 +14,8 @@
 
 #import "MDCProgressGradientView.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 @interface MDCProgressGradientView ()
 
 @property(nonatomic, readonly) CAGradientLayer *gradientLayer;
@@ -51,9 +53,16 @@
   [super layoutSubviews];
 
   UIBezierPath *path = [UIBezierPath bezierPath];
-  [path moveToPoint:CGPointMake(CGRectGetWidth(self.gradientLayer.bounds),
-                                CGRectGetMidY(self.gradientLayer.bounds))];
-  [path addLineToPoint:CGPointMake(0, CGRectGetMidY(self.gradientLayer.bounds))];
+  CGPoint leftPoint = CGPointMake(0, CGRectGetMidY(self.gradientLayer.bounds));
+  CGPoint rightPoint = CGPointMake(CGRectGetWidth(self.gradientLayer.bounds),
+                                   CGRectGetMidY(self.gradientLayer.bounds));
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    [path moveToPoint:leftPoint];
+    [path addLineToPoint:rightPoint];
+  } else {
+    [path moveToPoint:rightPoint];
+    [path addLineToPoint:leftPoint];
+  }
   self.shapeLayer.frame = self.gradientLayer.bounds;
   self.shapeLayer.strokeColor = UIColor.blackColor.CGColor;
   self.shapeLayer.lineWidth = CGRectGetHeight(self.gradientLayer.bounds);
