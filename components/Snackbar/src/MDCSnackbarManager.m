@@ -903,7 +903,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 @end
 
-@implementation MDCSnackbarManager (LegacyAPI)
+@implementation MDCSnackbarManager (ToBeDeprecated)
 
 + (MDCSnackbarAlignment)alignment {
   return MDCSnackbarManager.defaultManager.alignment;
