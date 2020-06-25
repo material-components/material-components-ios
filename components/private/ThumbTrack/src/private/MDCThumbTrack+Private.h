@@ -12,31 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCNumericValueLabel.h"
 #import "MDCThumbTrack.h"
+
 #import "MaterialInk.h"
-
-// Credit to the Beacon Tools iOS team for the idea for this implementations
-@interface MDCDiscreteDotView : UIView
-
-@property(nonatomic, assign) NSUInteger numDiscreteDots;
-
-/** The color of dots within the @c activeDotsSegment bounds. Defaults to black. */
-@property(nonatomic, strong, nonnull) UIColor *activeDotColor;
-
-/** The color of dots outside the @c activeDotsSegment bounds. Defaults to black. */
-@property(nonatomic, strong, nonnull) UIColor *inactiveDotColor;
-
-/**
- The segment of the track that uses @c activeDotColor. The horizontal dimension should be bound
- to [0..1]. The vertical dimension is ignored.
-
- @note Only the @c origin.x and @c size.width are used to determine whether a dot is in the active
- segment.
- */
-@property(nonatomic, assign) CGRect activeDotsSegment;
-
-@end
+#import "MDCNumericValueLabel.h"
+#import "MDCDiscreteDotView.h"
 
 @interface MDCThumbTrack (Private)
 
