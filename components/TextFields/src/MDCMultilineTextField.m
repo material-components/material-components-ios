@@ -343,10 +343,11 @@ static NSString *const kBundle = @"MaterialTextFields.bundle";
                                         toItem:self
                                      attribute:NSLayoutAttributeBottom
                                     multiplier:1
-                                      constant:-1 * MDCTextInputHalfPadding];
+                                      constant:-1 * self.textInsets.bottom];
     self.textViewBottomSuperviewBottom.priority = UILayoutPriorityDefaultLow;
     self.textViewBottomSuperviewBottom.active = YES;
   }
+  self.textViewBottomSuperviewBottom.constant = -1 * self.textInsets.bottom;
 
   if (!self.textViewTop) {
     self.textViewTop = [NSLayoutConstraint constraintWithItem:self.textView
