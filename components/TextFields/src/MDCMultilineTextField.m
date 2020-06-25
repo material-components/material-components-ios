@@ -252,6 +252,9 @@ static NSString *const kBundle = @"MaterialTextFields.bundle";
 #pragma mark - Layout (UIView)
 
 - (CGSize)intrinsicContentSize {
+  if (self.useConstraintsForIntrinsicContentSize) {
+    return [super intrinsicContentSize];
+  }
   CGSize boundingSize = CGSizeZero;
   boundingSize.width = UIViewNoIntrinsicMetric;
 

@@ -78,6 +78,13 @@
 @property(nonatomic, nullable, strong) IBOutlet MDCIntrinsicHeightTextView *textView;
 
 /**
+ * Whether or not the multiline text field should use its contraints to calculate its intrinsic
+ * content size. Default is NO, in which case the multiline text field gives an approximate
+ * intrinsic content size using its subviews.
+ */
+@property(nonatomic) BOOL useConstraintsForIntrinsicContentSize;
+
+/**
  A block that is invoked when the @c MDCMultilineTextField receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
