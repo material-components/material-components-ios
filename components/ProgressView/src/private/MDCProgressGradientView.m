@@ -57,11 +57,11 @@
   CGPoint rightPoint = CGPointMake(CGRectGetWidth(self.gradientLayer.bounds),
                                    CGRectGetMidY(self.gradientLayer.bounds));
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    [path moveToPoint:leftPoint];
-    [path addLineToPoint:rightPoint];
-  } else {
     [path moveToPoint:rightPoint];
     [path addLineToPoint:leftPoint];
+  } else {
+    [path moveToPoint:leftPoint];
+    [path addLineToPoint:rightPoint];
   }
   self.shapeLayer.frame = self.gradientLayer.bounds;
   self.shapeLayer.strokeColor = UIColor.blackColor.CGColor;

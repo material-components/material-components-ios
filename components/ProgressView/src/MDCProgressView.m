@@ -425,18 +425,18 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   [self.indeterminateProgressView.shapeLayer removeAllAnimations];
 
   // The numeric values used here conform to https://material.io/components/progress-indicators.
-  CABasicAnimation *progressViewHead = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-  progressViewHead.fromValue = @1;
-  progressViewHead.toValue = @0;
+  CABasicAnimation *progressViewHead = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+  progressViewHead.fromValue = @0;
+  progressViewHead.toValue = @1;
   progressViewHead.duration = 0.75;
   progressViewHead.timingFunction =
       [[CAMediaTimingFunction alloc] initWithControlPoints:0.20f:0.00f:0.80f:1.00f];
-  progressViewHead.fillMode = kCAFillModeForwards;
+  progressViewHead.fillMode = kCAFillModeBackwards;
 
-  CABasicAnimation *progressViewTail = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+  CABasicAnimation *progressViewTail = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
   progressViewTail.beginTime = 0.333;
-  progressViewTail.fromValue = @1;
-  progressViewTail.toValue = @0;
+  progressViewTail.fromValue = @0;
+  progressViewTail.toValue = @1;
   progressViewTail.duration = 0.85;
   progressViewTail.timingFunction =
       [[CAMediaTimingFunction alloc] initWithControlPoints:0.40f:0.00f:1.00f:1.00f];
@@ -451,9 +451,9 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
                                       forKey:@"kProgressViewAnimation"];
 
   CABasicAnimation *indeterminateProgressViewHead =
-      [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-  indeterminateProgressViewHead.fromValue = @1;
-  indeterminateProgressViewHead.toValue = @0;
+      [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+  indeterminateProgressViewHead.fromValue = @0;
+  indeterminateProgressViewHead.toValue = @1;
   indeterminateProgressViewHead.duration = 0.567;
   indeterminateProgressViewHead.beginTime = 1;
   indeterminateProgressViewHead.timingFunction =
@@ -461,10 +461,10 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   indeterminateProgressViewHead.fillMode = kCAFillModeBackwards;
 
   CABasicAnimation *indeterminateProgressViewTail =
-      [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+      [CABasicAnimation animationWithKeyPath:@"strokeStart"];
   indeterminateProgressViewTail.beginTime = 1.267;
-  indeterminateProgressViewTail.fromValue = @1;
-  indeterminateProgressViewTail.toValue = @0;
+  indeterminateProgressViewTail.fromValue = @0;
+  indeterminateProgressViewTail.toValue = @1;
   indeterminateProgressViewTail.duration = 0.533;
   indeterminateProgressViewTail.timingFunction =
       [[CAMediaTimingFunction alloc] initWithControlPoints:0.10f:0.00f:0.45f:1.00f];
@@ -475,6 +475,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
       @[ indeterminateProgressViewHead, indeterminateProgressViewTail ];
   indeterminateProgressViewAnimationGroup.duration = 1.8;
   indeterminateProgressViewAnimationGroup.repeatCount = HUGE_VALF;
+
   [self.indeterminateProgressView.shapeLayer addAnimation:indeterminateProgressViewAnimationGroup
                                                    forKey:@"kIndeterminateProgressViewAnimation"];
 }
