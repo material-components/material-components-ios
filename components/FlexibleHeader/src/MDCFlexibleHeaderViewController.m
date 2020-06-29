@@ -99,6 +99,10 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
  */
 @property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
 
+@property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
+@property(nonatomic)
+    BOOL permitInferringTopSafeAreaFromTopLayoutGuideViewController NS_AVAILABLE_IOS(11.0);
+
 @end
 
 @implementation MDCFlexibleHeaderViewController
