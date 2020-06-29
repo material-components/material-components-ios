@@ -101,12 +101,15 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 @implementation MDCNavigationBarSandbagView
 @end
 
-@interface MDCNavigationBar (PrivateAPIs) <MDCButtonBarDelegate>
+@interface MDCNavigationBar () <MDCButtonBarDelegate>
 
 /// titleLabel is hidden if there is a titleView. When not hidden, displays self.title.
 - (UILabel *)titleLabel;
 - (MDCButtonBar *)leadingButtonBar;
 - (MDCButtonBar *)trailingButtonBar;
+
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
 
 @end
 
