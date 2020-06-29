@@ -114,6 +114,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
+@property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
+@property(nonatomic, assign) BOOL enableTitleFontForState;
+@property(nonatomic) UIEdgeInsets hitAreaInsets;
 @end
 
 @implementation MDCButton

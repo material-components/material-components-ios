@@ -30,6 +30,8 @@
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic) BOOL popRecognizerDelaysTouches;
 @property(nonatomic) UIEdgeInsets chipVisibleAreaInsets;
+@property(nonatomic) CGSize chipSize;
+@property(nonatomic) BOOL chipCenterVisibleArea;
 @end
 
 static ChipModel *MakeModel(NSString *title,
@@ -174,6 +176,32 @@ static ChipModel *MakeModel(NSString *title,
   [self updateClearButton];
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCChipView *chipView = (MDCChipView *)[collectionView cellForItemAtIndexPath:indexPath];
+  if (!chipView) {
+    ChipModel *model = self.model[indexPath.row];
+    chipView = [[MDCChipView alloc] init];
+    chipView.enableRippleBehavior = YES;
+    chipView.titleLabel.text = model.title;
+    chipView.imageView.image = model.showProfilePic ? ChipsExampleAssets.faceImage : nil;
+    chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
+    chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
+    chipView.centerVisibleArea = self.chipCenterVisibleArea;
+    if (!UIEdgeInsetsEqualToEdgeInsets(self.chipVisibleAreaInsets, UIEdgeInsetsZero)) {
+      chipView.visibleAreaInsets = self.chipVisibleAreaInsets;
+    }
+    [chipView applyThemeWithScheme:self.containerScheme];
+  }
+  CGSize chipViewSize = [chipView intrinsicContentSize];
+  if (!CGSizeEqualToSize(self.chipSize, CGSizeZero)) {
+    chipViewSize.height = MAX(self.chipSize.height, chipViewSize.height);
+    chipViewSize.width = MAX(self.chipSize.width, chipViewSize.width);
+  }
+  return chipViewSize;
+}
+
 @end
 
 @implementation ChipsTypicalUseViewController (CatalogByConvention)
@@ -199,6 +227,15 @@ static ChipModel *MakeModel(NSString *title,
 - (void)testVisibleAreaInsets {
   // Given
   self.chipVisibleAreaInsets = UIEdgeInsetsMake(8, 0, 8, 0);
+
+  // When
+  [self.collectionView reloadData];
+}
+
+- (void)testCustomSizeWhenCenterVisibleArea {
+  // Given
+  self.chipSize = CGSizeMake(44, 44);
+  self.chipCenterVisibleArea = YES;
 
   // When
   [self.collectionView reloadData];

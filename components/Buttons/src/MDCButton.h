@@ -179,16 +179,6 @@
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
- If @c true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
- If @c false, @c accessibilityTraits will inherit its behavior from @c UIButton.
-
- @note Defaults to true.
- @note This API is intended as a migration flag to restore @c UIButton behavior to @c MDCButton. In
-       a future version, this API will eventually be deprecated and then deleted.
- */
-@property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
-
-/**
  A block that is invoked when the MDCButton receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
@@ -340,7 +330,9 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - To Be Deprecated
+@end
+
+@interface MDCButton (ToBeDeprecated)
 
 /**
  Enables the state-based font behavior of the receiver.
@@ -383,5 +375,15 @@
  @note This API will eventually be deprecated and removed.
  */
 - (nullable UIFont *)titleFontForState:(UIControlState)state;
+
+/**
+ If @c true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+ If @c false, @c accessibilityTraits will inherit its behavior from @c UIButton.
+
+ @note Defaults to true.
+ @note This API is intended as a migration flag to restore @c UIButton behavior to @c MDCButton. In
+       a future version, this API will eventually be deprecated and then deleted.
+ */
+@property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
 
 @end

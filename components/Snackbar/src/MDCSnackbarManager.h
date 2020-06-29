@@ -292,9 +292,7 @@
 @protocol MDCSnackbarSuspensionToken <NSObject>
 @end
 
-#pragma mark - To be deprecated
-
-@interface MDCSnackbarManager (LegacyAPI)
+@interface MDCSnackbarManager (ToBeDeprecated)
 
 /**
  The @c alignment property of the @c defaultManager instance.

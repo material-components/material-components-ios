@@ -14,21 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-/**
- A gradient view used for an MDCProgressView's progress bar.
- */
-__attribute__((objc_subclassing_restricted)) @interface MDCProgressGradientView : UIView
+#import "MaterialCollections.h"
 
-/**
- An array of CGColorRef objects defining the color of each gradient stop
-
- Defaults to nil.
- */
-@property(nonatomic, nullable, copy) NSArray *colors;
-
-/**
- The shape layer used as the mask of @c MDCProgressGradientView.
- */
-@property(nonatomic, nonnull, readonly) CAShapeLayer *shapeLayer;
-
+@interface CollectionsRippleExample : MDCCollectionViewController
 @end

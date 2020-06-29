@@ -33,6 +33,10 @@
  */
 @interface MDCFlatButton : MDCButton
 
+@end
+
+@interface MDCFlatButton (ToBeDeprecated)
+
 /**
  Use an opaque background color (default is NO).
 

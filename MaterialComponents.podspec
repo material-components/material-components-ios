@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "110.0.0"
+  mdc.version      = "110.1.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -669,6 +669,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/CollectionLayoutAttributes"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/private/Icons/ic_check"
@@ -723,6 +724,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/CollectionLayoutAttributes"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"

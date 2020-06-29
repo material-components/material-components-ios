@@ -32,15 +32,12 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 
 static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
-static const NSTimeInterval kAnimationDuration = 1.8;
-
-static const CGFloat MDCProgressViewBarIndeterminateWidthPercentage = (CGFloat)0.52;
-
 // The Bundle for string resources.
 static NSString *const kBundle = @"MaterialProgressView.bundle";
 
 @interface MDCProgressView ()
 @property(nonatomic, strong) MDCProgressGradientView *progressView;
+@property(nonatomic, strong) MDCProgressGradientView *indeterminateProgressView;
 @property(nonatomic, strong) UIView *trackView;
 @property(nonatomic) BOOL animatingHide;
 // A UIProgressView to return the same format for the accessibility value. For example, when
@@ -82,13 +79,17 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _trackView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   [self addSubview:_trackView];
 
-  CGFloat barWidth = [self indeterminateLoadingBarWidth];
-  CGRect progressBarFrame = CGRectMake(-barWidth, 0, barWidth, CGRectGetHeight(self.bounds));
-
-  _progressView = [[MDCProgressGradientView alloc] initWithFrame:progressBarFrame];
+  _progressView = [[MDCProgressGradientView alloc] initWithFrame:CGRectZero];
   [self addSubview:_progressView];
 
+  _indeterminateProgressView = [[MDCProgressGradientView alloc] initWithFrame:CGRectZero];
+  _indeterminateProgressView.hidden = YES;
+  [self addSubview:_indeterminateProgressView];
+
   _progressView.colors = @[
+    (id)MDCProgressViewDefaultTintColor().CGColor, (id)MDCProgressViewDefaultTintColor().CGColor
+  ];
+  _indeterminateProgressView.colors = @[
     (id)MDCProgressViewDefaultTintColor().CGColor, (id)MDCProgressViewDefaultTintColor().CGColor
   ];
   _trackView.backgroundColor =
@@ -106,12 +107,8 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   // Don't update the views when the hide animation is in progress.
   if (!self.animatingHide) {
     [self updateProgressView];
+    [self updateIndeterminateProgressView];
     [self updateTrackView];
-  }
-
-  if (_mode == MDCProgressViewModeIndeterminate && _animating) {
-    [self stopAnimating];
-    [self startAnimating];
   }
 }
 
@@ -120,6 +117,8 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 
   if (self.progressTintColor) {
     self.progressView.colors =
+        @[ (id)self.progressTintColor.CGColor, (id)self.progressTintColor.CGColor ];
+    self.indeterminateProgressView.colors =
         @[ (id)self.progressTintColor.CGColor, (id)self.progressTintColor.CGColor ];
   }
 
@@ -133,8 +132,11 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _progressTintColors = nil;
   if (progressTintColor != nil) {
     self.progressView.colors = @[ (id)progressTintColor.CGColor, (id)progressTintColor.CGColor ];
+    self.indeterminateProgressView.colors =
+        @[ (id)progressTintColor.CGColor, (id)progressTintColor.CGColor ];
   } else {
     self.progressView.colors = nil;
+    self.indeterminateProgressView.colors = nil;
   }
 }
 
@@ -142,6 +144,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _progressTintColors = [progressTintColors copy];
   _progressTintColor = nil;
   self.progressView.colors = _progressTintColors;
+  self.indeterminateProgressView.colors = _progressTintColors;
 }
 
 - (UIColor *)trackTintColor {
@@ -158,21 +161,19 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   }
   _mode = mode;
 
-  // If the progress bar is animating in indeterminate mode, restart the animation.
-  if (_animating && _mode == MDCProgressViewModeIndeterminate) {
-    [self stopAnimating];
-    [self startAnimating];
-  }
+  self.indeterminateProgressView.hidden = (mode == MDCProgressViewModeDeterminate);
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   _cornerRadius = cornerRadius;
 
   _progressView.layer.cornerRadius = cornerRadius;
+  _indeterminateProgressView.layer.cornerRadius = cornerRadius;
   _trackView.layer.cornerRadius = cornerRadius;
 
   BOOL hasNonZeroCornerRadius = !MDCCGFloatIsExactlyZero(cornerRadius);
   _progressView.clipsToBounds = hasNonZeroCornerRadius;
+  _indeterminateProgressView.clipsToBounds = hasNonZeroCornerRadius;
   _trackView.clipsToBounds = hasNonZeroCornerRadius;
 }
 
@@ -332,11 +333,16 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 - (void)startAnimating {
   [self startAnimatingBar];
   _animating = YES;
+
+  [self setNeedsLayout];
 }
 
 - (void)stopAnimating {
   _animating = NO;
-  [self.progressView.layer removeAllAnimations];
+  [self.progressView.shapeLayer removeAllAnimations];
+  [self.indeterminateProgressView.shapeLayer removeAllAnimations];
+
+  [self setNeedsLayout];
 }
 
 #pragma mark - Resource Bundle
@@ -382,18 +388,26 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 }
 
 - (void)updateProgressView {
-  if (_mode == MDCProgressViewModeIndeterminate) {
-    return;
+  CGRect progressFrame = self.bounds;
+  if (_mode == MDCProgressViewModeDeterminate) {
+    // Update progressView with the current progress value.
+    CGFloat scale = self.window.screen.scale > 0 ? self.window.screen.scale : 1;
+    CGFloat pointWidth = self.progress * CGRectGetWidth(self.bounds);
+    CGFloat pixelAlignedWidth = MDCRound(pointWidth * scale) / scale;
+    progressFrame = CGRectMake(0, 0, pixelAlignedWidth, CGRectGetHeight(self.bounds));
+  } else {
+    if (!self.animating) {
+      progressFrame = CGRectZero;
+    }
   }
-  // Update progressView with the current progress value.
-  CGFloat scale = self.window.screen.scale > 0 ? self.window.screen.scale : 1;
-  CGFloat pointWidth = self.progress * CGRectGetWidth(self.bounds);
-  CGFloat pixelAlignedWidth = MDCRound(pointWidth * scale) / scale;
-  CGRect progressFrame = CGRectMake(0, 0, pixelAlignedWidth, CGRectGetHeight(self.bounds));
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     progressFrame = MDFRectFlippedHorizontally(progressFrame, CGRectGetWidth(self.bounds));
   }
   self.progressView.frame = progressFrame;
+}
+
+- (void)updateIndeterminateProgressView {
+  self.indeterminateProgressView.frame = self.animating ? self.bounds : CGRectZero;
 }
 
 - (void)updateTrackView {
@@ -407,23 +421,63 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
     return;
   }
 
-  CGFloat barWidth = [self indeterminateLoadingBarWidth];
-  CGRect progressBarStartFrame = CGRectMake(-barWidth, 0, barWidth, CGRectGetHeight(self.bounds));
-  self.progressView.frame = progressBarStartFrame;
+  [self.progressView.shapeLayer removeAllAnimations];
+  [self.indeterminateProgressView.shapeLayer removeAllAnimations];
 
-  CGPoint progressBarEndPoint =
-      CGPointMake(self.progressView.layer.position.x + CGRectGetWidth(self.bounds) + barWidth,
-                  CGRectGetHeight(self.bounds) / 2);
-  CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-  animation.fromValue = [NSValue valueWithCGPoint:self.progressView.layer.position];
-  animation.toValue = [NSValue valueWithCGPoint:progressBarEndPoint];
-  animation.duration = kAnimationDuration;
-  animation.repeatCount = HUGE_VALF;
-  [self.progressView.layer addAnimation:animation forKey:@"position"];
-}
+  // The numeric values used here conform to https://material.io/components/progress-indicators.
+  CABasicAnimation *progressViewHead = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+  progressViewHead.fromValue = @0;
+  progressViewHead.toValue = @1;
+  progressViewHead.duration = 0.75;
+  progressViewHead.timingFunction =
+      [[CAMediaTimingFunction alloc] initWithControlPoints:0.20f:0.00f:0.80f:1.00f];
+  progressViewHead.fillMode = kCAFillModeBackwards;
 
-- (CGFloat)indeterminateLoadingBarWidth {
-  return CGRectGetWidth(self.bounds) * MDCProgressViewBarIndeterminateWidthPercentage;
+  CABasicAnimation *progressViewTail = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+  progressViewTail.beginTime = 0.333;
+  progressViewTail.fromValue = @0;
+  progressViewTail.toValue = @1;
+  progressViewTail.duration = 0.85;
+  progressViewTail.timingFunction =
+      [[CAMediaTimingFunction alloc] initWithControlPoints:0.40f:0.00f:1.00f:1.00f];
+  progressViewTail.fillMode = kCAFillModeForwards;
+
+  CAAnimationGroup *progressViewAnimationGroup = [[CAAnimationGroup alloc] init];
+  progressViewAnimationGroup.animations = @[ progressViewHead, progressViewTail ];
+  progressViewAnimationGroup.duration = 1.8;
+  progressViewAnimationGroup.repeatCount = HUGE_VALF;
+
+  [self.progressView.shapeLayer addAnimation:progressViewAnimationGroup
+                                      forKey:@"kProgressViewAnimation"];
+
+  CABasicAnimation *indeterminateProgressViewHead =
+      [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+  indeterminateProgressViewHead.fromValue = @0;
+  indeterminateProgressViewHead.toValue = @1;
+  indeterminateProgressViewHead.duration = 0.567;
+  indeterminateProgressViewHead.beginTime = 1;
+  indeterminateProgressViewHead.timingFunction =
+      [[CAMediaTimingFunction alloc] initWithControlPoints:0.00f:0.00f:0.65f:1.00f];
+  indeterminateProgressViewHead.fillMode = kCAFillModeBackwards;
+
+  CABasicAnimation *indeterminateProgressViewTail =
+      [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+  indeterminateProgressViewTail.beginTime = 1.267;
+  indeterminateProgressViewTail.fromValue = @0;
+  indeterminateProgressViewTail.toValue = @1;
+  indeterminateProgressViewTail.duration = 0.533;
+  indeterminateProgressViewTail.timingFunction =
+      [[CAMediaTimingFunction alloc] initWithControlPoints:0.10f:0.00f:0.45f:1.00f];
+  indeterminateProgressViewTail.fillMode = kCAFillModeBackwards;
+
+  CAAnimationGroup *indeterminateProgressViewAnimationGroup = [[CAAnimationGroup alloc] init];
+  indeterminateProgressViewAnimationGroup.animations =
+      @[ indeterminateProgressViewHead, indeterminateProgressViewTail ];
+  indeterminateProgressViewAnimationGroup.duration = 1.8;
+  indeterminateProgressViewAnimationGroup.repeatCount = HUGE_VALF;
+
+  [self.indeterminateProgressView.shapeLayer addAnimation:indeterminateProgressViewAnimationGroup
+                                                   forKey:@"kIndeterminateProgressViewAnimation"];
 }
 
 @end

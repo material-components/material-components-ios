@@ -64,8 +64,6 @@
 
 @interface MDCAppBarContainerViewController (ToBeDeprecated)
 
-#pragma mark - To be deprecated
-
 /**
  If enabled, the content view controller's top layout guide will be adjusted as the flexible
  header's height changes and the content view controller view's frame will be set to the container

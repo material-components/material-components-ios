@@ -139,8 +139,7 @@
 /**
  The corner radius for the chip.
 
- Use this property to configure corner radius instead of @c self.layer.cornerRadius it works with
- @c visibleAreaInsets.
+ Use this property to configure corner radius instead of @c self.layer.cornerRadius.
 
  By default, it is set to keep the chip fully rounded.
  */
@@ -189,12 +188,15 @@
 @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
 
 /**
-The inset or outset margins for the rectangle surrounding all of the chip’s visible area.
+ A Boolean value that determines whether the visible area is centered in the bounds of the view.
 
-A positive value shrinks the visible area of the chip. A negative value expands the visible area
-of the chip.
+ If set to YES, the visible area is centered in the bounds of the view, which is often used to
+ configure invisible tappable area. If set to NO, the visible area fills its bounds. This property
+ doesn't affect the result of @c sizeThatFits:.
+
+ The default value is @c NO.
 */
-@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
+@property(nonatomic, assign) BOOL centerVisibleArea;
 
 /**
  A block that is invoked when the MDCChipView receives a call to @c
@@ -343,5 +345,16 @@ of the chip.
  */
 - (void)setTitleColor:(nullable UIColor *)titleColor
              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+#pragma mark - Deprecated
+
+/**
+The inset or outset margins for the rectangle surrounding all of the chip’s visible area.
+
+A positive value shrinks the visible area of the chip. A negative value expands the visible area
+of the chip.
+*/
+@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets
+    __attribute__((deprecated("Consider using centerVisibleArea to adjust visible area.")));
 
 @end

@@ -21,6 +21,15 @@ involve multiple tasks.
   <img src="docs/assets/dialogs.gif" alt="gif of a dialog being presented and dismissed" width="320">
 </div>
 
+There are four types of dialogs:
+
+1. [Alert](#alert-dialog)
+1. [Simple](#simple-dialog)
+1. [Confirmation](#confirmation-dialog)
+1. [Full-screen](#full-screen-dialog)
+
+The alert style is the only style supported on iOS. Consider using the [ActionSheet](https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/README.md) component in situations where one of the unsupported dialog types would have been appropriate.
+
 ## Contents
 
 * [Using dialogs](#using-dialogs)
@@ -30,30 +39,16 @@ involve multiple tasks.
 
 ## Using dialogs
 
-The Dialogs component can be used to display Material Design alerts with things like title text and
-message text, as well as optional icons and accessory views. It can also be used to modally present
-custom dialogs.
+Our dialogs offerings consist of three classes.
 
-To use the Dialogs component when presenting your view controller, set its `modalPresentationStyle`
+* `MDCAlertController` provides a basic alert interface with support for things like title text, message text, and optional accessory views.
+* `MDCDialogTransitionController` is involved in the presentation of dialogs. It conforms to `UIViewControllerAnimatedTransitioning` and `UIViewControllerTransitioningDelegate`, and vends the presentation controllers to be used in presentation and dismissal transitions. It can be used in the presentation of `MDCAlertController`s as well as custom dialog view controller classes.
+* `MDCDialogPresentationController` is the `UIPresentationController` subclass provided by `MDCDialogTransitionController`.
+
+To present either an `MDCAlertController` or a custom dialog, set its `modalPresentationStyle`
 property to `UIModalPresentationCustom` and its `transitioningDelegate` property to an
 instance of `MDCDialogTransitionController`. Then, present the view controller from the
 root controller.
-
-### Dialogs Classes
-
-#### `MDCDialogPresentationController` and `MDCDialogTransitionController`
-
-The two classes involved in presenting dialogs are `MDCDialogPresentationController` and
-`MDCDialogTransitionController`. These allow the presentation of view controllers in a Material
-fashion. `MDCDialogPresentationController` is a subclass of `UIPresentationController`
-that observes the presented view controller for preferred content size.
-`MDCDialogTransitionController` implements `UIViewControllerAnimatedTransitioning` and
-`UIViewControllerTransitioningDelegate` to vend the presentation controller during the transition.
-
-#### `MDCAlertController`
-
-`MDCAlertController` provides a basic alert interface that can be used when a custom dialog 
-view controller class is not necessary.
 
 ### Installing dialogs
 
@@ -190,10 +185,10 @@ The following is an anatomy diagram of a Material dialog:
 ![anatomy](docs/assets/dialogs-anatomy.png)
 
 1.  Container
-2.  Title (optional)
-3.  Content
-4.  Buttons (optional)
-5.  Scrim
+1.  Title (optional)
+1.  Content
+1.  Buttons (optional)
+1.  Scrim
 
 #### Container attributes
 
@@ -266,7 +261,7 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 ### Theming Actions
 
 Actions in MDCAlertController have emphasis which affects how the Dialog's buttons will be themed.
-High, Medium and low emphasis are supported.
+High, Medium and Low emphasis are supported.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
