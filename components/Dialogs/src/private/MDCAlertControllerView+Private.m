@@ -39,6 +39,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
 
+@property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
 @end
 
 @implementation MDCAlertControllerView {
