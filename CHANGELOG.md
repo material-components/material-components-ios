@@ -1,16 +1,72 @@
-# #develop#
+# 110.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release, we deprecated `visibleAreaInsets` from `MDCChipView` and added `centerVisibleArea` API. We annotated several APIs as to be deprecated in Buttons. Ripple support is added to CollectionCells and Collections as well.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+### Chips
+
+`visibleAreaInsets` is deprecated.
+
 ## New features
 
-Replace this text with example code for each new feature.
+### CollectionCells
+
+Ripple is supported as an opt-in behavior.
+
+**Objective-C**
+
+```objc
+MDCCollectionCell *cell= [[MDCCollectionCell alloc] init];
+cell.enableRippleBehavior = YES;
+```
+
+**Swift**
+
+```swift
+let cell = MDCCollectionCell()
+cell.enableRippleBehavior = true
+```
+
+### Chips
+
+Chips supports `centerVisibleArea`, which is often used to configure invisible part of frame for tappable area.
+
+**Objective-C**
+
+```objc
+MDChipView *chip = [[MDCChipView alloc] init];
+chip.centerVisibleArea = YES;
+```
+
+**Swift**
+
+```swift
+let chip = MDCChipView()
+chip.centerVisibleArea = true
+```
+
 ## API changes
+
+### Chips
+
+*new* property: `centerVisibleArea` in `MDCChipView`
+
+### CollectionCells
+
+*new* property: `enableRippleBehavior` in `MDCCollectionViewCell`
+
+*new* property: `rippleView` in `MDCCollectionViewCell`
+
+### Collections
+
+*new* property: `enableRippleBehavior` in `MDCCollectionViewController`
+
+*new* method: `- collectionView:rippleTouchController:rippleViewAtIndexPath:` in `MDCCollectionViewStylingDelegate`
+
+### TextFields
+
+*new* property: `useConstraintsForIntrinsicContentSize` in `MDCMultilineTextField`
 
 ## Component changes
 
