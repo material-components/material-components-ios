@@ -483,6 +483,21 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
   [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
+- (void)testVerticalTrailingActionsAreOrderedByEmphasis {
+  // Given
+  [self addFirstLongActionWithEmphasis:MDCActionEmphasisHigh];
+  [self addCancelActionWithEmphasis:MDCActionEmphasisMedium];
+  [self.alertController applyThemeWithScheme:self.containerScheme2019];
+
+  // When
+  self.alertController.orderVerticalActionsByEmphasis = YES;
+  self.alertController.actionsHorizontalAlignmentInVerticalLayout =
+      MDCContentHorizontalAlignmentTrailing;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
 #pragma mark - Helpers
 
 - (void)addFirstLongActionWithEmphasis:(MDCActionEmphasis)emphasis {
