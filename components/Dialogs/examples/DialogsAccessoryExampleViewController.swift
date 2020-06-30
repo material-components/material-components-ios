@@ -97,6 +97,14 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     namefield.clearButtonMode = UITextField.ViewMode.whileEditing
     namefield.leadingAssistiveLabel.text = "An optional assistive message"
     namefield.applyTheme(withScheme: containerScheme)
+    if #available(iOS 10.0, *) {
+      // Enable dynamic type.
+      namefield.adjustsFontForContentSizeCategory = true
+      namefield.font = UIFont.preferredFont(
+        forTextStyle: .body, compatibleWith: namefield.traitCollection)
+      namefield.leadingAssistiveLabel.font = UIFont.preferredFont(
+        forTextStyle: .caption2, compatibleWith: namefield.traitCollection)
+    }
 
     label.translatesAutoresizingMaskIntoConstraints = false
     namefield.translatesAutoresizingMaskIntoConstraints = false
@@ -115,6 +123,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     namefield.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
     alert.accessoryView = view
+    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
@@ -125,6 +134,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     textField.placeholder = "This is a text field"
     alert.accessoryView = textField
     alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
+    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
@@ -158,6 +168,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     button.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
     alert.accessoryView = view
+    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
 
     return alert
