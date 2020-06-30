@@ -23,27 +23,12 @@ import MaterialComponents.MaterialTypographyScheme
 
 class DialogsAccessoryExampleViewController: MDCCollectionViewController {
 
-  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
-
-  var attributedText: NSAttributedString {
-    typealias AttrDict = [NSAttributedString.Key: Any]
-    let orangeAttr: AttrDict = [.foregroundColor: UIColor.orange]
-    let urlAttr: AttrDict = [.link: "https://www.google.com/search?q=lorem+ipsum"]
-    let customLinkAttr: AttrDict = [.link: "mdccatalog://"]  // A custom link.
-
-    let attributedText = NSMutableAttributedString()
-    attributedText.append(NSAttributedString(string: "Lorem ipsum", attributes: urlAttr))
-    attributedText.append(NSAttributedString(string: " dolor sit amet, ", attributes: nil))
-    attributedText.append(
-      NSAttributedString(
-        string: "consectetur adipiscing elit, sed do eiusmod",
-        attributes: nil))
-    attributedText.append(NSAttributedString(string: " tempor ", attributes: customLinkAttr))
-    attributedText.append(NSAttributedString(string: "incididunt ut ", attributes: nil))
-    attributedText.append(NSAttributedString(string: "labore magna ", attributes: orangeAttr))
-    attributedText.append(NSAttributedString(string: "aliqua.", attributes: nil))
-    return attributedText
-  }
+  @objc lazy var containerScheme: MDCContainerScheming = {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = MDCSemanticColorScheme(defaults: .material201907)
+    scheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
+    return scheme
+  }()
 
   let kReusableIdentifierItem = "customCell"
 
@@ -59,10 +44,9 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     loadCollectionView(menu: [
-      "Attributed Message With Links and a Custom Button",
-      "Material's Filled Text Field",
-      "Title + Message + UI Text Field",
-      "Custom Label and Button (autolayout)",
+      "Material Filled Text Field",
+      "UI Text Field",
+      "Autolayout in Custom View",
     ])
   }
 
@@ -82,68 +66,15 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
   private func performActionFor(row: Int) -> MDCAlertController? {
     switch row {
     case 0:
-      return performAttributedMessageWithLinks()
-    case 1:
       return performMDCTextField()
+    case 1:
+      return performUITextField()
     case 2:
-      return performTextField()
-    case 3:
       return performCustomLabelWithButton()
     default:
       print("No row is selected")
       return nil
     }
-  }
-
-  // Demonstrate Material Dialog's attributed message text with tappable links, used in conjunction
-  // with a custom accessory view.
-  func performAttributedMessageWithLinks() -> MDCAlertController {
-    // Set an attributed text as the message, with both internal and external URLs as tappable links.
-    let alert = MDCAlertController(title: "Title", attributedMessage: attributedText)
-    alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
-
-    // Setup a custom accessory view.
-    let button = MDCButton()
-    button.setTitle("Learn More", for: UIControl.State.normal)
-    button.contentEdgeInsets = .zero
-    button.applyTextTheme(withScheme: containerScheme)
-    button.sizeToFit()
-
-    let size = button.bounds.size
-    let view = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-    view.addSubview(button)
-
-    alert.accessoryView = view
-    if let alertView = alert.view as? MDCAlertControllerView {
-      alertView.accessoryViewVerticalInset = 0
-      alertView.contentInsets = UIEdgeInsets(top: 24, left: 24, bottom: 10, right: 24)
-    }
-
-    // Enable dynamic type.
-    alert.mdc_adjustsFontForContentSizeCategory = true
-
-    // Respond to a link-tap event:
-    if #available(iOS 10.0, *) {
-      alert.attributedMessageAction = { url, range, interaction in
-        // Defer to the UITextView's default URL interaction for non-custom links.
-        guard url.absoluteString == "mdccatalog://" else { return true }
-
-        print("A custom action for link:", url.absoluteString, " in range:", range)
-
-        // Dismiss the alert for short-tap interactions.
-        if interaction == .invokeDefaultAction {
-          alert.dismiss(animated: true)
-        }
-
-        // Disable UITextView's default URL interaction.
-        return false
-      }
-    }
-
-    // Note: Theming updates the message's text color, potentially overridding foreground text
-    //       attributes (if were set in the attributed message).
-    alert.applyTheme(withScheme: self.containerScheme)
-    return alert
   }
 
   // Demonstrate a custom view with MDCFilledTextField being assigned to the accessoryView API.
@@ -188,7 +119,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     return alert
   }
 
-  func performTextField() -> MDCAlertController {
+  func performUITextField() -> MDCAlertController {
     let alert = MDCAlertController(title: "This is a title", message: "This is a message")
     let textField = UITextField()
     textField.placeholder = "This is a text field"
@@ -297,15 +228,9 @@ extension DialogsAccessoryExampleViewController {
     }
   }
 
-  @objc func testAttributedMessageWithLinks() {
-    resetTests()
-    self.present(
-      performAttributedMessageWithLinks(), animated: false, completion: nil)
-  }
-
   @objc func testTextField() {
     resetTests()
-    self.present(performTextField(), animated: false, completion: nil)
+    self.present(performUITextField(), animated: false, completion: nil)
   }
 
   @objc func testMDCTextField() {
