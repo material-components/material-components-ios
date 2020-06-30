@@ -13,20 +13,23 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialCollections.h"
+#import "MaterialDialogs.h"
+#import "MaterialDialogs+Theming.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialDialogs+Theming.h"
-#import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
+
+static NSString *const kTitleString = @"Reset Settings?";
+static NSString *const kMessageString =
+    @"This will reset your device to its default factory settings.";
 
 #pragma mark - DialogsTypicalUseExampleViewController
 
 @interface DialogsTypicalUseExampleViewController : UIViewController
 @property(nonatomic, strong, nullable) id<MDCContainerScheming> containerScheme;
-@property(nonatomic, strong, nullable) NSArray *modes;
-@property(nonatomic, strong, nullable) MDCButton *button;
 @end
 
 @implementation DialogsTypicalUseExampleViewController
@@ -36,7 +39,9 @@
   if (self) {
     MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
     scheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+    scheme.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
     _containerScheme = scheme;
   }
   return self;
@@ -45,63 +50,68 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  id<MDCColorScheming> colorScheme =
-      self.containerScheme.colorScheme
-          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  self.view.backgroundColor = colorScheme.backgroundColor;
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
-  MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
-  self.button = dismissButton;
-  dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [dismissButton setTitle:@"Show Alert Dialog" forState:UIControlStateNormal];
-  [dismissButton addTarget:self
-                    action:@selector(showAlert:)
+  MDCButton *defaultButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  defaultButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [defaultButton setTitle:@"Material Alert" forState:UIControlStateNormal];
+  [defaultButton addTarget:self
+                    action:@selector(showMaterialAlert:)
           forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:dismissButton];
+  [self.view addSubview:defaultButton];
 
-  [dismissButton applyTextThemeWithScheme:self.containerScheme];
+  [defaultButton applyTextThemeWithScheme:self.containerScheme];
 
-  [self.view addConstraints:@[
-    [NSLayoutConstraint constraintWithItem:dismissButton
-                                 attribute:NSLayoutAttributeCenterX
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeCenterX
-                                multiplier:1.0
-                                  constant:0.0],
-    [NSLayoutConstraint constraintWithItem:dismissButton
-                                 attribute:NSLayoutAttributeCenterY
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeCenterY
-                                multiplier:1.0
-                                  constant:0.0]
-  ]];
+  MDCButton *emphasisButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  emphasisButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [emphasisButton setTitle:@"Material Alert With Styled Actions" forState:UIControlStateNormal];
+  [emphasisButton addTarget:self
+                     action:@selector(showStyledActionsAlert:)
+           forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:emphasisButton];
+
+  [emphasisButton applyTextThemeWithScheme:self.containerScheme];
+
+  [self.view.centerXAnchor constraintEqualToAnchor:defaultButton.centerXAnchor].active = YES;
+  [self.view.centerYAnchor constraintEqualToAnchor:defaultButton.centerYAnchor].active = YES;
+  [self.view.centerXAnchor constraintEqualToAnchor:emphasisButton.centerXAnchor].active = YES;
+  [emphasisButton.topAnchor constraintEqualToAnchor:defaultButton.bottomAnchor constant:8.0f]
+      .active = YES;
 }
 
-- (void)showAlert:(UIButton *)button {
-  NSString *titleString = @"Reset Settings?";
-  NSString *messageString = @"This will reset your device to its default factory settings.";
-
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:titleString
-                                                                   message:messageString];
+- (void)showMaterialAlert:(UIButton *)button {
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:kTitleString
+                                                                   message:kMessageString];
   alert.mdc_adjustsFontForContentSizeCategory = YES;
   alert.enableRippleBehavior = YES;
   MDCActionHandler handler = ^(MDCAlertAction *action) {
     NSLog(@"action pressed: %@", action.title);
   };
 
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"Cancel"
-                                                        emphasis:MDCActionEmphasisLow
-                                                         handler:handler];
-  [alert addAction:agreeAaction];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"Accept" handler:handler]];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"Cancel" handler:handler]];
 
-  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"Accept"
-                                                           emphasis:MDCActionEmphasisLow
-                                                            handler:handler];
-  [alert addAction:disagreeAaction];
   [alert applyThemeWithScheme:self.containerScheme];
+  [self presentViewController:alert animated:YES completion:NULL];
+}
 
+- (void)showStyledActionsAlert:(UIButton *)button {
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:kTitleString
+                                                                   message:kMessageString];
+  alert.mdc_adjustsFontForContentSizeCategory = YES;
+  alert.enableRippleBehavior = YES;
+  MDCActionHandler handler = ^(MDCAlertAction *action) {
+    NSLog(@"action pressed: %@", action.title);
+  };
+
+  [alert addAction:[MDCAlertAction actionWithTitle:@"Accept"
+                                          emphasis:MDCActionEmphasisHigh
+                                           handler:handler]];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"Cancel"
+                                          emphasis:MDCActionEmphasisMedium
+                                           handler:handler]];
+
+  [alert applyThemeWithScheme:self.containerScheme];
   [self presentViewController:alert animated:YES completion:NULL];
 }
 
@@ -129,7 +139,14 @@
   if (self.presentedViewController) {
     [self dismissViewControllerAnimated:NO completion:nil];
   }
-  [self showAlert:nil];
+  [self showMaterialAlert:nil];
+}
+
+- (void)testActionEmphasis {
+  if (self.presentedViewController) {
+    [self dismissViewControllerAnimated:NO completion:nil];
+  }
+  [self showStyledActionsAlert:nil];
 }
 
 @end
