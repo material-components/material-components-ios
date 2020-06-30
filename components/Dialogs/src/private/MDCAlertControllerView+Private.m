@@ -1007,15 +1007,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
         buttonOrigin.x =
             self.actionsScrollView.contentSize.width - buttonRect.size.width - actionsInsets.right;
       }
-      buttonOrigin.y += multiplier * buttonRect.size.height;
-
       buttonRect.origin = buttonOrigin;
       button.frame = buttonRect;
       if (button != buttons.lastObject) {
         MDCButton *nextButton = buttons[index + 1];
         CGFloat verticalMargin = [self actionsVerticalMarginBetweenTopButton:button
                                                                 bottomButton:nextButton];
-        buttonOrigin.y += multiplier * verticalMargin;
+        buttonOrigin.y += multiplier * (buttonRect.size.height + verticalMargin);
       }
     }
     // Handle RTL
