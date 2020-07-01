@@ -594,11 +594,22 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return ([self hasMessage] && [self hasAccessoryView]) ? self.accessoryViewVerticalInset : 0.0f;
 }
 
+// Returns the size of the title view or the current size of the title icon imageView.
 - (CGSize)titleIconViewSize {
   if (self.titleIconView != nil) {
     return self.titleIconView.frame.size;
   } else if (self.titleIconImageView != nil) {
     return self.titleIconImageView.frame.size;
+  }
+  return CGSizeZero;
+}
+
+// Returns the size of the title view or the original size of the title icon image.
+- (CGSize)titleIconImageSize {
+  if (self.titleIconView != nil) {
+    return self.titleIconView.frame.size;
+  } else if (self.titleIcon != nil) {
+    return self.titleIcon.size;
   }
   return CGSizeZero;
 }
@@ -622,7 +633,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
  @param boundsSize is the total bounds without any internal margins or padding.
 */
 - (CGRect)titleIconFrameWithTitleSize:(CGSize)titleSize boundsSize:(CGSize)boundsSize {
-  CGSize titleIconViewSize = [self titleIconViewSize];
+  CGSize titleIconViewSize = [self titleIconImageSize];
   CGFloat leftInset = self.titleIconInsets.left;
   CGFloat topInset = self.titleIconInsets.top;
   CGFloat titleIconHeight = titleIconViewSize.height;
