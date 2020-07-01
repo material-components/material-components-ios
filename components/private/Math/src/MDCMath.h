@@ -265,8 +265,8 @@ static inline BOOL MDCEdgeInsetsEqualToEdgeInsets(UIEdgeInsets insets1, UIEdgeIn
  correct
  @c visibleAreaInsets for the provided view frame.
  */
-static inline UIEdgeInsets MDCVisibleAreaInsetsForMinimumTappability(CGRect frame,
-                                                                     CGSize minimumTouchTarget) {
+static inline __deprecated_msg("Please calculate visibleAreaInsets inline.") UIEdgeInsets
+    MDCVisibleAreaInsetsForMinimumTappability(CGRect frame, CGSize minimumTouchTarget) {
   UIEdgeInsets visibleAreaInsets = UIEdgeInsetsZero;
   CGFloat additionalRequiredHeight;
   CGFloat height = CGRectGetHeight(frame);
