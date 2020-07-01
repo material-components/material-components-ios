@@ -13,8 +13,15 @@
 // limitations under the License.
 
 #import "MDCTextControlVerticalPositioningReference.h"
+#import "MDCTextControlLabelBehavior.h"
 
-CGFloat MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
+CGFloat MDCTextControlCalculateContainerHeightWhenNoFloatingLabelWithTextRowHeight(
+    CGFloat textRowHeight, CGFloat numberOfTextRows, CGFloat paddingAroundTextWhenNoFloatingLabel) {
+  CGFloat totalTextHeight = numberOfTextRows * textRowHeight;
+  return (paddingAroundTextWhenNoFloatingLabel * 2.0f) + totalTextHeight;
+}
+
+CGFloat MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
     CGFloat floatingLabelHeight, CGFloat textRowHeight, CGFloat numberOfTextRows,
     CGFloat paddingBetweenContainerTopAndFloatingLabel,
     CGFloat paddingBetweenFloatingLabelAndEditingText,
@@ -45,5 +52,16 @@ CGFloat MDCTextControlPaddingValueWithMinimumPadding(CGFloat minimumPadding, CGF
     CGFloat minMaxPaddingDifference = maximumPadding - minimumPadding;
     CGFloat additionToMinPadding = minMaxPaddingDifference * (1 - density);
     return minimumPadding + additionToMinPadding;
+  }
+}
+
+BOOL MDCTextControlShouldLayoutForFloatingLabelWithLabelPosition(
+    MDCTextControlLabelPosition labelPosition, MDCTextControlLabelBehavior labelBehavior,
+    NSString *labelText) {
+  if (labelBehavior == MDCTextControlLabelBehaviorDisappears) {
+    return NO;
+  } else {
+    BOOL hasLabelText = labelText.length > 0;
+    return hasLabelText;
   }
 }

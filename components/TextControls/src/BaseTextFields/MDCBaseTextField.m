@@ -222,6 +222,7 @@
                           floatingFont:self.floatingFont
                                  label:self.label
                          labelPosition:self.labelPosition
+                         labelBehavior:self.labelBehavior
                      sideViewAlignment:self.sideViewAlignment
                               leftView:self.leftView
                           leftViewMode:self.leftViewMode

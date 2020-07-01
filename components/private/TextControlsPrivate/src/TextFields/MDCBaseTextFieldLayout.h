@@ -53,6 +53,7 @@
                         floatingFont:(nonnull UIFont *)floatingFont
                                label:(nonnull UILabel *)label
                        labelPosition:(MDCTextControlLabelPosition)labelPosition
+                       labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                    sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
                             leftView:(nullable UIView *)leftView
                         leftViewMode:(UITextFieldViewMode)leftViewMode

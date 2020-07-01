@@ -13,12 +13,15 @@
 // limitations under the License.
 
 #import "MDCTextControlVerticalPositioningReferenceOutlined.h"
+#import "MDCTextControlVerticalPositioningReference.h"
 
 /**
  These values do not come from anywhere in particular. They are values I chose in an attempt to
  achieve the look and feel of the textfields at
  https://material.io/design/components/text-fields.html.
 */
+static const CGFloat kMinPaddingAroundTextWhenNoLabel = 6.0f;
+static const CGFloat kMaxPaddingAroundTextWhenNoLabel = 10.0f;
 static const CGFloat kMinPaddingBetweenFloatingLabelAndEditingText = (CGFloat)8.0;
 static const CGFloat kMaxPaddingBetweenFloatingLabelAndEditingText = (CGFloat)12.0;
 static const CGFloat kMinPaddingAroundAssistiveLabels = (CGFloat)3.0;
@@ -41,7 +44,9 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
 @synthesize paddingBetweenFloatingLabelAndEditingText = _paddingBetweenFloatingLabelAndEditingText;
 @synthesize paddingBetweenEditingTextAndContainerBottom =
     _paddingBetweenEditingTextAndContainerBottom;
-@synthesize containerHeight = _containerHeight;
+@synthesize containerHeightWithFloatingLabel = _containerHeightWithFloatingLabel;
+@synthesize containerHeightWithoutFloatingLabel = _containerHeightWithoutFloatingLabel;
+@synthesize paddingAroundTextWhenNoFloatingLabel = _paddingAroundTextWhenNoFloatingLabel;
 
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                           normalFontLineHeight:(CGFloat)normalFontLineHeight
@@ -85,7 +90,7 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
       kMinPaddingAroundAssistiveLabels, kMaxPaddingAroundAssistiveLabels, clampedDensity);
 
   CGFloat containerHeightWithPaddingsDeterminedByDensity =
-      MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
+      MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
           floatingLabelHeight, textRowHeight, numberOfTextRows,
           _paddingBetweenContainerTopAndFloatingLabel, _paddingBetweenFloatingLabelAndEditingText,
           _paddingBetweenEditingTextAndContainerBottom);
@@ -108,21 +113,44 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
   }
 
   if (clientHasSpecifiedValidPreferredContainerHeight) {
-    _containerHeight = preferredContainerHeight;
+    _containerHeightWithFloatingLabel = preferredContainerHeight;
   } else {
-    _containerHeight = containerHeightWithPaddingsDeterminedByDensity;
+    _containerHeightWithFloatingLabel = containerHeightWithPaddingsDeterminedByDensity;
   }
 
   CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
   if (isMultiline) {
-    CGFloat heightWithOneRow = MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
+    CGFloat heightWithOneRow = MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
         floatingLabelHeight, textRowHeight, 1, _paddingBetweenContainerTopAndFloatingLabel,
         _paddingBetweenFloatingLabelAndEditingText, _paddingBetweenEditingTextAndContainerBottom);
     CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
     _paddingBetweenContainerTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
   } else {
-    CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeight;
+    CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeightWithFloatingLabel;
     _paddingBetweenContainerTopAndNormalLabel = halfOfContainerHeight - halfOfNormalFontLineHeight;
+  }
+
+  _paddingAroundTextWhenNoFloatingLabel = MDCTextControlPaddingValueWithMinimumPadding(
+      kMinPaddingAroundTextWhenNoLabel, kMaxPaddingAroundTextWhenNoLabel, clampedDensity);
+
+  CGFloat containerHeightWhenNoFloatingLabelWithPaddingsDeterminedByDensity =
+      MDCTextControlCalculateContainerHeightWhenNoFloatingLabelWithTextRowHeight(
+          textRowHeight, numberOfTextRows, _paddingAroundTextWhenNoFloatingLabel);
+  BOOL clientHasSpecifiedValidPreferredContainerHeightWhenNoFloatingLabel =
+      preferredContainerHeight > containerHeightWhenNoFloatingLabelWithPaddingsDeterminedByDensity;
+  if (clientHasSpecifiedValidPreferredContainerHeightWhenNoFloatingLabel && !isMultiline) {
+    CGFloat difference = preferredContainerHeight - containerHeightWithPaddingsDeterminedByDensity;
+    CGFloat sumOfPaddingValues = _paddingAroundTextWhenNoFloatingLabel * 2.0f;
+    _paddingAroundTextWhenNoFloatingLabel =
+        _paddingAroundTextWhenNoFloatingLabel +
+        ((_paddingAroundTextWhenNoFloatingLabel / sumOfPaddingValues) * difference);
+  }
+
+  if (clientHasSpecifiedValidPreferredContainerHeightWhenNoFloatingLabel) {
+    _containerHeightWithoutFloatingLabel = preferredContainerHeight;
+  } else {
+    _containerHeightWithoutFloatingLabel =
+        containerHeightWhenNoFloatingLabelWithPaddingsDeterminedByDensity;
   }
 }
 
@@ -150,8 +178,16 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
   return self.paddingAroundAssistiveLabels;
 }
 
-- (CGFloat)containerHeight {
-  return _containerHeight;
+- (CGFloat)containerHeightWithFloatingLabel {
+  return _containerHeightWithFloatingLabel;
+}
+
+- (CGFloat)containerHeightWithoutFloatingLabel {
+  return _containerHeightWithoutFloatingLabel;
+}
+
+- (CGFloat)paddingAroundTextWhenNoFloatingLabel {
+  return _paddingAroundTextWhenNoFloatingLabel;
 }
 
 @end

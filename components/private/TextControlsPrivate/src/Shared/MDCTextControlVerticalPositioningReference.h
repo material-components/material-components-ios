@@ -15,6 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCTextControlLabelBehavior.h"
+#import "MDCTextControlLabelPosition.h"
+
 /**
  Style objects vend objects conforming to this protocol to provide the MDCTextControl's layout
  object with information about the vertical positions of views. This helps achieve the variations in
@@ -29,11 +32,16 @@
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenEditingTextAndContainerBottom;
 @property(nonatomic, assign, readonly) CGFloat paddingAboveAssistiveLabels;
 @property(nonatomic, assign, readonly) CGFloat paddingBelowAssistiveLabels;
-@property(nonatomic, assign, readonly) CGFloat containerHeight;
+@property(nonatomic, assign, readonly) CGFloat containerHeightWithFloatingLabel;
+@property(nonatomic, assign, readonly) CGFloat containerHeightWithoutFloatingLabel;
+@property(nonatomic, assign, readonly) CGFloat paddingAroundTextWhenNoFloatingLabel;
 
 @end
 
-CGFloat MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
+CGFloat MDCTextControlCalculateContainerHeightWhenNoFloatingLabelWithTextRowHeight(
+    CGFloat textRowHeight, CGFloat numberOfTextRows, CGFloat paddingAroundTextWhenNoFloatingLabel);
+
+CGFloat MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
     CGFloat floatingLabelHeight, CGFloat textRowHeight, CGFloat numberOfTextRows,
     CGFloat paddingBetweenContainerTopAndFloatingLabel,
     CGFloat paddingBetweenFloatingLabelAndEditingText,
@@ -43,3 +51,7 @@ CGFloat MDCTextControlClampDensity(CGFloat density);
 
 CGFloat MDCTextControlPaddingValueWithMinimumPadding(CGFloat minimumPadding, CGFloat maximumPadding,
                                                      CGFloat density);
+
+BOOL MDCTextControlShouldLayoutForFloatingLabelWithLabelPosition(
+    MDCTextControlLabelPosition labelPosition, MDCTextControlLabelBehavior labelBehavior,
+    NSString *labelText);
