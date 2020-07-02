@@ -728,7 +728,16 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
 }
 
 - (CGFloat)fhv_rawTopContentInset {
-  return _trackingScrollView.contentInset.top - _trackingInfo.injectedTopContentInset;
+  UIEdgeInsets contentInset = _trackingScrollView.contentInset;
+  if (@available(iOS 13.0, *)) {
+    // As of iOS 13, UIRefreshControl does no longer adjust the contentInset directly. Using
+    // adjustedContentInset directly does not work here (as other things adjust the content inset as
+    // well), so this explicitly checks for a UIRefreshControl and adds its size here.
+    if ([_trackingScrollView.refreshControl isRefreshing]) {
+      contentInset.top += CGRectGetHeight(_trackingScrollView.refreshControl.frame);
+    }
+  }
+  return contentInset.top - _trackingInfo.injectedTopContentInset;
 }
 
 - (CGFloat)fhv_contentOffsetWithoutInjectedTopInset {
