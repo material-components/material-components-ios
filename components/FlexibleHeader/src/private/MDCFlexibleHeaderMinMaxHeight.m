@@ -26,6 +26,7 @@ static const CGFloat kFlexibleHeaderDefaultHeight = 56;
 
 @property(nonatomic) BOOL hasExplicitlySetMinHeight;
 @property(nonatomic) BOOL hasExplicitlySetMaxHeight;
+@property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
 
 @end
 

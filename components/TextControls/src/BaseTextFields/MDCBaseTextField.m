@@ -32,7 +32,7 @@
 @property(nonatomic, assign) MDCTextControlLabelPosition labelPosition;
 @property(nonatomic, assign) CGRect labelFrame;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
-@property(nonatomic, assign) CGSize mostRecentlyComputedIntrinsicContentSize;
+@property(nonatomic, assign) CGSize cachedIntrinsicContentSize;
 
 /**
  This property maps MDCTextControlStates as NSNumbers to
@@ -125,9 +125,8 @@
 }
 
 - (CGSize)intrinsicContentSize {
-  self.mostRecentlyComputedIntrinsicContentSize =
-      [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
-  return self.mostRecentlyComputedIntrinsicContentSize;
+  self.cachedIntrinsicContentSize = [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+  return self.cachedIntrinsicContentSize;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -151,7 +150,7 @@
  -layoutSubviews in the layout cycle.
  */
 - (void)preLayoutSubviews {
-  if ([self widthHasChangedSinceIntrinsicContentSizeWasLastComputed]) {
+  if (![self validateWidth]) {
     [self invalidateIntrinsicContentSize];
   }
   self.textControlState = [self determineCurrentTextControlState];
@@ -173,7 +172,7 @@
   self.rightView.hidden = self.layout.rightViewHidden;
   [self animateLabel];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
-  if ([self calculatedHeightHasChangedSinceIntrinsicContentSizeWasLastComputed]) {
+  if (![self validateHeight]) {
     [self invalidateIntrinsicContentSize];
   }
 }
@@ -222,6 +221,7 @@
                           floatingFont:self.floatingFont
                                  label:self.label
                          labelPosition:self.labelPosition
+                         labelBehavior:self.labelBehavior
                      sideViewAlignment:self.sideViewAlignment
                               leftView:self.leftView
                           leftViewMode:self.leftViewMode
@@ -283,12 +283,12 @@
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
-- (BOOL)widthHasChangedSinceIntrinsicContentSizeWasLastComputed {
-  return CGRectGetWidth(self.bounds) != self.mostRecentlyComputedIntrinsicContentSize.width;
+- (BOOL)validateWidth {
+  return CGRectGetWidth(self.bounds) == self.cachedIntrinsicContentSize.width;
 }
 
-- (BOOL)calculatedHeightHasChangedSinceIntrinsicContentSizeWasLastComputed {
-  return self.layout.calculatedHeight != self.mostRecentlyComputedIntrinsicContentSize.height;
+- (BOOL)validateHeight {
+  return self.layout.calculatedHeight == self.cachedIntrinsicContentSize.height;
 }
 
 - (BOOL)shouldLayoutForRTL {

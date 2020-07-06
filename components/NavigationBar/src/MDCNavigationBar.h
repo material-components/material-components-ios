@@ -357,20 +357,6 @@ IB_DESIGNABLE
 /* Equivalent to leadingItemsSupplementBackButton. */
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
 
-#pragma mark - To be deprecated
-
-/**
- Display attributes for the titleView's title text.
-
- Font attribute will take precedence over titleFont property.
- Setting this property will render an NSAttributedString with the assigned attributes across the
- entire text.
-
- Note: this property will be deprecated in future, please use titleFont and titleTextColor instead.
- */
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-
 @end
 
 @interface MDCNavigationBar (ToBeDeprecated)
@@ -384,5 +370,17 @@ IB_DESIGNABLE
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
  */
 @property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
+ Display attributes for the titleView's title text.
+
+ Font attribute will take precedence over titleFont property.
+ Setting this property will render an NSAttributedString with the assigned attributes across the
+ entire text.
+
+ Note: this property will be deprecated in future, please use titleFont and titleTextColor instead.
+ */
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
 
 @end

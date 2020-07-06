@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCTextControlLabelBehavior.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
 #import "MaterialTextControlsPrivate+TextFields.h"
@@ -54,6 +55,7 @@
                           floatingFont:floatingFont
                                  label:[[UILabel alloc] init]
                          labelPosition:MDCTextControlLabelPositionFloating
+                         labelBehavior:MDCTextControlLabelBehaviorFloats
                      sideViewAlignment:MDCTextControlTextFieldSideViewAlignmentCenteredInContainer
                               leftView:[self createSideView]
                           leftViewMode:viewMode

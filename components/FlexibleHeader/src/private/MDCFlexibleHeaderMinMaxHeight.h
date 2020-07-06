@@ -110,9 +110,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderMinMaxH
 
 @end
 
-#pragma mark APIs that will be deprecated
-
-@interface MDCFlexibleHeaderMinMaxHeight ()
+@interface MDCFlexibleHeaderMinMaxHeight (ToBeDeprecated)
 
 /**
  See MDCFlexibleHeaderView.h for complete documentation of this property.

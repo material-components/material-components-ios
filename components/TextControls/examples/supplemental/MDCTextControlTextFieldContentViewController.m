@@ -16,15 +16,17 @@
 
 #import "MaterialButtons.h"
 
-#import "MDCBaseTextField.h"
 #import "MaterialButtons+Theming.h"
+#import "MDCBaseTextField.h"
+#import "MaterialTextControls+BaseTextFields.h"
 #import "MaterialColorScheme.h"
 
-#import "MDCFilledTextField.h"
+#import "MaterialTextControls+Enums.h"
+#import "MaterialTextControls+FilledTextFields.h"
 #import "MDCFilledTextField+MaterialTheming.h"
-#import "MDCOutlinedTextField.h"
+#import "MaterialTextControls+OutlinedTextFields.h"
 #import "MDCOutlinedTextField+MaterialTheming.h"
-#import "MDCUnderlinedTextField.h"
+#import "MaterialTextControls+UnderlinedTextFields.h"
 #import "MDCUnderlinedTextField+MaterialTheming.h"
 
 @interface MDCTextControlTextFieldContentViewController ()
@@ -101,16 +103,38 @@
 - (void)initializeScrollViewSubviewsArray {
   [super initializeScrollViewSubviewsArray];
 
+  MDCFilledTextField *filledTextFieldWithoutFloatingLabel = [self createMaterialFilledTextField];
+  filledTextFieldWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+  MDCOutlinedTextField *outlinedTextFieldWithoutFloatingLabel =
+      [self createMaterialOutlinedTextField];
+  outlinedTextFieldWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+  MDCUnderlinedTextField *underlinedTextFieldWithoutFloatingLabel =
+      [self createMaterialUnderlinedTextField];
+  underlinedTextFieldWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+  MDCBaseTextField *baseTextFieldWithoutFloatingLabel = [self createDefaultBaseTextField];
+  baseTextFieldWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+
   NSArray *textFieldRelatedScrollViewSubviews = @[
     [self createLabelWithText:@"MDCFilledTextField:"],
     [self createMaterialFilledTextField],
+    [self createLabelWithText:@"MDCFilledTextField without floating label:"],
+    filledTextFieldWithoutFloatingLabel,
     [self createLabelWithText:@"MDCOutlinedTextField:"],
     [self createMaterialOutlinedTextField],
+    [self createLabelWithText:@"MDCOutlinedTextField without floating label:"],
+    outlinedTextFieldWithoutFloatingLabel,
     [self createLabelWithText:@"MDCUnderlinedTextField:"],
     [self createMaterialUnderlinedTextField],
+    [self createLabelWithText:@"MDCUnderlinedTextField:"],
+    [self createMaterialUnderlinedTextField],
+    [self createLabelWithText:@"MDCUnderlinedTextField without floating label:"],
+    underlinedTextFieldWithoutFloatingLabel,
     [self createLabelWithText:@"MDCBaseTextField:"],
     [self createDefaultBaseTextField],
+    [self createLabelWithText:@"MDCBaseTextField without floating label:"],
+    baseTextFieldWithoutFloatingLabel,
   ];
+
   NSMutableArray *mutableScrollViewSubviews = [self.scrollViewSubviews mutableCopy];
   self.scrollViewSubviews =
       [mutableScrollViewSubviews arrayByAddingObjectsFromArray:textFieldRelatedScrollViewSubviews];

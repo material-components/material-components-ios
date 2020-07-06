@@ -33,6 +33,7 @@
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
                         labelPosition:(MDCTextControlLabelPosition)labelPosition
+                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                     sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
@@ -57,6 +58,7 @@
                               floatingFont:floatingFont
                                      label:label
                              labelPosition:labelPosition
+                             labelBehavior:labelBehavior
                          sideViewAlignment:sideViewAlignment
                                   leftView:leftView
                               leftViewMode:leftViewMode
@@ -87,6 +89,7 @@
                             floatingFont:(UIFont *)floatingFont
                                    label:(UILabel *)label
                            labelPosition:(MDCTextControlLabelPosition)labelPosition
+                           labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                        sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
@@ -193,7 +196,7 @@
   CGRect textRectFloating =
       CGRectMake(textRectMinX, textRectMinYFloatingLabel, textRectWidth, textRectHeight);
 
-  CGFloat containerMidY = (CGFloat)0.5 * positioningReference.containerHeight;
+  CGFloat containerMidY = (CGFloat)0.5 * positioningReference.containerHeightWithFloatingLabel;
   BOOL isFloatingLabel = labelPosition == MDCTextControlLabelPositionFloating;
   CGFloat textRectMidY =
       isFloatingLabel ? CGRectGetMidY(textRectFloating) : CGRectGetMidY(textRectNormal);
@@ -239,8 +242,9 @@
            paddingAboveAssistiveLabels:positioningReference.paddingAboveAssistiveLabels
            paddingBelowAssistiveLabels:positioningReference.paddingBelowAssistiveLabels
                                  isRTL:isRTL];
-  self.assistiveLabelViewFrame = CGRectMake(0, positioningReference.containerHeight, textFieldWidth,
-                                            self.assistiveLabelViewLayout.calculatedHeight);
+  self.assistiveLabelViewFrame =
+      CGRectMake(0, positioningReference.containerHeightWithFloatingLabel, textFieldWidth,
+                 self.assistiveLabelViewLayout.calculatedHeight);
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.clearButtonFrame = clearButtonFrame;
@@ -250,7 +254,7 @@
   self.labelFrameNormal = labelFrameNormal;
   self.leftViewHidden = !displaysLeftView;
   self.rightViewHidden = !displaysRightView;
-  self.containerHeight = positioningReference.containerHeight;
+  self.containerHeight = positioningReference.containerHeightWithFloatingLabel;
 }
 
 - (CGFloat)sideViewMidYWithSideViewAlignment:

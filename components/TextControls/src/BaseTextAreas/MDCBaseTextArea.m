@@ -49,6 +49,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 @property(nonatomic, strong) MDCTextControlGradientManager *gradientManager;
 
 @property(strong, nonatomic) UITapGestureRecognizer *tapGesture;
+@property(nonatomic, assign) CGSize cachedIntrinsicContentSize;
 
 @end
 
@@ -150,7 +151,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 }
 
 - (CGSize)intrinsicContentSize {
-  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+  self.cachedIntrinsicContentSize = [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+  return self.cachedIntrinsicContentSize;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -172,6 +174,9 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 #pragma mark Private Layout
 
 - (void)preLayoutSubviews {
+  if (![self validateWidth]) {
+    [self invalidateIntrinsicContentSize];
+  }
   self.textControlState = [self determineCurrentTextControlState];
   self.labelPosition = [self determineCurrentLabelPosition];
   MDCTextControlColorViewModel *colorViewModel =
@@ -191,6 +196,9 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self animateLabel];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   [self layoutGradientLayers];
+  if (![self validateHeight]) {
+    [self invalidateIntrinsicContentSize];
+  }
   [self.textView scrollRangeToVisible:self.textView.selectedRange];
 }
 
@@ -257,6 +265,14 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
   MDCBaseTextAreaLayout *layout = [self calculateLayoutWithSize:fittingSize];
   return CGSizeMake(width, layout.calculatedHeight);
+}
+
+- (BOOL)validateWidth {
+  return CGRectGetWidth(self.bounds) == self.cachedIntrinsicContentSize.width;
+}
+
+- (BOOL)validateHeight {
+  return self.layout.calculatedHeight == self.cachedIntrinsicContentSize.height;
 }
 
 - (void)layoutGradientLayers {

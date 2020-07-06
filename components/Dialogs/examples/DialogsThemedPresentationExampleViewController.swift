@@ -13,20 +13,21 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialDialogs_Theming
+import MaterialComponents.MaterialDialogs_Theming 
 import MaterialComponents.MaterialList
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 
-class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class CustomDialogViewController: UIViewController, UICollectionViewDelegate,
+  UICollectionViewDataSource
+{
   let dialogTitle: String = "Set backup account"
-  var userAccounts: [String] = ["user01@gmail.com", "user02@gmail.com"];
+  var userAccounts: [String] = ["user01@gmail.com", "user02@gmail.com"]
   var containerScheme = MDCContainerScheme()
-  var userCollectionView : UICollectionView!
+  var userCollectionView: UICollectionView!
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -53,11 +54,13 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
     flowLayout.minimumLineSpacing = 0
     flowLayout.estimatedItemSize = CGSize(width: 250.0, height: 10.0)
 
-    userCollectionView = UICollectionView(frame: .zero,
-                                          collectionViewLayout: flowLayout)
+    userCollectionView = UICollectionView(
+      frame: .zero,
+      collectionViewLayout: flowLayout)
     userCollectionView.backgroundColor = UIColor.clear
-    userCollectionView.register(MDCSelfSizingStereoCell.self,
-                                forCellWithReuseIdentifier: "MDCSelfSizingStereoCell")
+    userCollectionView.register(
+      MDCSelfSizingStereoCell.self,
+      forCellWithReuseIdentifier: "MDCSelfSizingStereoCell")
     userCollectionView.translatesAutoresizingMaskIntoConstraints = false
     userCollectionView.delegate = self
     userCollectionView.dataSource = self
@@ -71,69 +74,77 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
     self.view.addSubview(cancelButton)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: titleLabel,
-                         attribute: .left,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .left,
-                         multiplier: 1.0,
-                         constant: 20.0),
-      NSLayoutConstraint(item: titleLabel,
-                         attribute: .top,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .top,
-                         multiplier: 1.0,
-                         constant: 25.0),
-      NSLayoutConstraint(item: cancelButton,
-                         attribute: .right,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .right,
-                         multiplier: 1.0,
-                         constant: -10.0),
-      NSLayoutConstraint(item: cancelButton,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .bottom,
-                         multiplier: 1.0,
-                         constant: -15.0),
-      NSLayoutConstraint(item: userCollectionView,
-                         attribute: .left,
-                         relatedBy: .equal,
-                         toItem: titleLabel,
-                         attribute: .left,
-                         multiplier: 1.0,
-                         constant: 0.0),
-      NSLayoutConstraint(item: userCollectionView,
-                         attribute: .right,
-                         relatedBy: .equal,
-                         toItem: cancelButton,
-                         attribute: .right,
-                         multiplier: 1.0,
-                         constant: 0.0),
-      NSLayoutConstraint(item: userCollectionView,
-                         attribute: .top,
-                         relatedBy: .equal,
-                         toItem: titleLabel,
-                         attribute: .bottom,
-                         multiplier: 1.0,
-                         constant: 30.0),
-      NSLayoutConstraint(item: userCollectionView,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: cancelButton,
-                         attribute: .top,
-                         multiplier: 1.0,
-                         constant: -30.0),
+      NSLayoutConstraint(
+        item: titleLabel,
+        attribute: .left,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .left,
+        multiplier: 1.0,
+        constant: 20.0),
+      NSLayoutConstraint(
+        item: titleLabel,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .top,
+        multiplier: 1.0,
+        constant: 25.0),
+      NSLayoutConstraint(
+        item: cancelButton,
+        attribute: .right,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .right,
+        multiplier: 1.0,
+        constant: -10.0),
+      NSLayoutConstraint(
+        item: cancelButton,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .bottom,
+        multiplier: 1.0,
+        constant: -15.0),
+      NSLayoutConstraint(
+        item: userCollectionView,
+        attribute: .left,
+        relatedBy: .equal,
+        toItem: titleLabel,
+        attribute: .left,
+        multiplier: 1.0,
+        constant: 0.0),
+      NSLayoutConstraint(
+        item: userCollectionView,
+        attribute: .right,
+        relatedBy: .equal,
+        toItem: cancelButton,
+        attribute: .right,
+        multiplier: 1.0,
+        constant: 0.0),
+      NSLayoutConstraint(
+        item: userCollectionView,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: titleLabel,
+        attribute: .bottom,
+        multiplier: 1.0,
+        constant: 30.0),
+      NSLayoutConstraint(
+        item: userCollectionView,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: cancelButton,
+        attribute: .top,
+        multiplier: 1.0,
+        constant: -30.0),
 
-      ])
+    ])
   }
 
   override var preferredContentSize: CGSize {
     get {
-      return CGSize(width:200.0, height:330.0);
+      return CGSize(width: 200.0, height: 330.0)
     }
     set {
       super.preferredContentSize = newValue
@@ -141,7 +152,7 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
   }
 
   @objc func dismissDialog() {
-    self.dismiss(animated:true)
+    self.dismiss(animated: true)
   }
 
   // MARK: Collection View Data Source
@@ -150,15 +161,21 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
     return 1
   }
 
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int)
+    -> Int
+  {
     return userAccounts.count + 1
   }
 
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MDCSelfSizingStereoCell",
-                                                  for: indexPath) as! MDCSelfSizingStereoCell
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
+    -> UICollectionViewCell
+  {
+    let cell =
+      collectionView.dequeueReusableCell(
+        withReuseIdentifier: "MDCSelfSizingStereoCell",
+        for: indexPath) as! MDCSelfSizingStereoCell
     let bundle = Bundle(for: CustomDialogViewController.self)
-    if (indexPath.item < 2) {
+    if indexPath.item < 2 {
       cell.leadingImageView.image = UIImage(named: "ic_person", in: bundle, compatibleWith: nil)
       cell.titleLabel.text = userAccounts[indexPath.item]
       cell.titleLabel.font = containerScheme.typographyScheme.body2
@@ -190,27 +207,29 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
     self.view.addSubview(materialButton)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item:materialButton,
-                         attribute: .centerX,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .centerX,
-                         multiplier: 1.0,
-                         constant: 0.0),
-      NSLayoutConstraint(item: materialButton,
-                         attribute: .centerY,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .centerY,
-                         multiplier: 1.0,
-                         constant: 0.0)
-      ])
+      NSLayoutConstraint(
+        item: materialButton,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerX,
+        multiplier: 1.0,
+        constant: 0.0),
+      NSLayoutConstraint(
+        item: materialButton,
+        attribute: .centerY,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerY,
+        multiplier: 1.0,
+        constant: 0.0),
+    ])
   }
 
   @objc func tap(_ sender: Any) {
     let customDialogController = CustomDialogViewController()
-    customDialogController.modalPresentationStyle = .custom;
-    customDialogController.transitioningDelegate = self.transitionController;
+    customDialogController.modalPresentationStyle = .custom
+    customDialogController.transitioningDelegate = self.transitionController
 
     customDialogController.mdc_dialogPresentationController?.applyTheme(withScheme: containerScheme)
     present(customDialogController, animated: true, completion: nil)
@@ -223,7 +242,7 @@ extension DialogsThemedPresentationExampleViewController {
     return [
       "breadcrumbs": ["Dialogs", "Dialog Presentation Controller Theming"],
       "primaryDemo": false,
-      "presentable": true,
+      "presentable": false,
     ]
   }
 }

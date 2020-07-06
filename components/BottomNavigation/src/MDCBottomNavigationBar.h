@@ -213,18 +213,6 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) NSInteger titlesNumberOfLines;
 
 /**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
-
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
- Defaults to NO.
- */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
-
-/**
 A block that is invoked when the @c MDCBottomNavigationBar receives a call to @c
 traitCollectionDidChange:. The block is called after the call to the superclass.
 */
@@ -239,11 +227,6 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 - (nullable UIView *)viewForItem:(nonnull UITabBarItem *)item;
 
-@end
-
-/** APIs that are deprecated. No new code should rely on these APIs. */
-@interface MDCBottomNavigationBar (Deprecated)
-
 /**
  Flag to allow clients to gradually correct the size/position of the Bottom Navigation bar relative
  to the safe area on iOS 11+.
@@ -255,6 +238,23 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea __deprecated_msg(
     "This was a migration API and is being removed.");
+
+@end
+
+/** APIs that are deprecated. No new code should rely on these APIs. */
+@interface MDCBottomNavigationBar (ToBeDeprecated)
+
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 @end
 

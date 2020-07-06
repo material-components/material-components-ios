@@ -606,17 +606,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 #pragma mark - Text View Delegate
 
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_10_0)
 - (BOOL)textView:(UITextView *)textView
     shouldInteractWithURL:(NSURL *)URL
                   inRange:(NSRange)characterRange
-              interaction:(UITextItemInteraction)interaction {
+              interaction:(UITextItemInteraction)interaction API_AVAILABLE(ios(10.0)) {
   if (self.attributedMessageAction != nil) {
     return self.attributedMessageAction(URL, characterRange, interaction);
   }
   return YES;
 }
-#endif
 
 #pragma mark - UIViewController
 

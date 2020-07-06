@@ -50,9 +50,6 @@ static NSString *const kOfAnnouncement = @"of";
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
                                       MDCRippleTouchControllerDelegate>
 
-// Declared in MDCBottomNavigationBar (ToBeDeprecated)
-@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
-
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, readonly) BOOL isTitleBelowIcon;
 @property(nonatomic, assign) CGFloat maxLandscapeClusterContainerWidth;
@@ -65,6 +62,7 @@ static NSString *const kOfAnnouncement = @"of";
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
 /**

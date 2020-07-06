@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCTextControlVerticalPositioningReferenceFilled.h"
+#import "MDCTextControlVerticalPositioningReference.h"
 
 /**
  For slightly more context on what this class is doing look at
@@ -43,7 +44,7 @@
     BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
     CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
     if (isMultiline) {
-      CGFloat heightWithOneRow = MDCTextControlCalculateContainerHeightWithFoatingLabelHeight(
+      CGFloat heightWithOneRow = MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
           floatingLabelHeight, textRowHeight, 1, self.paddingBetweenContainerTopAndFloatingLabel,
           self.paddingBetweenFloatingLabelAndEditingText,
           self.paddingBetweenEditingTextAndContainerBottom);
@@ -51,7 +52,7 @@
       _paddingBetweenContainerTopAndNormalLabel =
           halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
     } else {
-      CGFloat halfOfContainerHeight = (CGFloat)0.5 * self.containerHeight;
+      CGFloat halfOfContainerHeight = (CGFloat)0.5 * self.containerHeightWithFloatingLabel;
       _paddingBetweenContainerTopAndNormalLabel =
           halfOfContainerHeight - halfOfNormalFontLineHeight;
     }

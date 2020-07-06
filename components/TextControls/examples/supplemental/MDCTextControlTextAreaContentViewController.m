@@ -20,10 +20,11 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
 
-#import "MDCFilledTextArea+MaterialTheming.h"
+#import "MDCTextControlLabelBehavior.h"
 #import "MDCFilledTextArea.h"
-#import "MDCOutlinedTextArea+MaterialTheming.h"
+#import "MDCFilledTextArea+MaterialTheming.h"
 #import "MDCOutlinedTextArea.h"
+#import "MDCOutlinedTextArea+MaterialTheming.h"
 
 @interface MDCTextControlTextAreaContentViewController () <UITextViewDelegate>
 @end
@@ -66,13 +67,26 @@
 - (void)initializeScrollViewSubviewsArray {
   [super initializeScrollViewSubviewsArray];
 
+  MDCFilledTextArea *filledTextAreaWithoutFloatingLabel = [self createMaterialFilledTextArea];
+  filledTextAreaWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+  MDCOutlinedTextArea *outlinedTextAreaWithoutFloatingLabel = [self createMaterialOutlinedTextArea];
+  outlinedTextAreaWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+  MDCBaseTextArea *baseTextAreaWithoutFloatingLabel = [self createDefaultBaseTextArea];
+  baseTextAreaWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
+
   NSArray *textAreaRelatedScrollViewSubviews = @[
     [self createLabelWithText:@"MDCFilledTextArea:"],
     [self createMaterialFilledTextArea],
+    [self createLabelWithText:@"MDCFilledTextArea without floating label:"],
+    filledTextAreaWithoutFloatingLabel,
     [self createLabelWithText:@"MDCOutlinedTextArea:"],
     [self createMaterialOutlinedTextArea],
+    [self createLabelWithText:@"MDCOutlinedTextArea without floating label:"],
+    outlinedTextAreaWithoutFloatingLabel,
     [self createLabelWithText:@"MDCBaseTextArea:"],
     [self createDefaultBaseTextArea],
+    [self createLabelWithText:@"MDCBaseTextArea without floating label:"],
+    baseTextAreaWithoutFloatingLabel,
   ];
   NSMutableArray *mutableScrollViewSubviews = [self.scrollViewSubviews mutableCopy];
   self.scrollViewSubviews =
