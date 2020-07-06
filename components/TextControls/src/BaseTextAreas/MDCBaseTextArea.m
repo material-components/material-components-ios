@@ -285,14 +285,24 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 }
 
 - (CGFloat)numberOfLinesOfText {
-  CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.textView.bounds), CGFLOAT_MAX);
-  NSDictionary *attributes = @{NSFontAttributeName : self.textView.font};
-  CGRect boundingRect =
-      [self.textView.text boundingRectWithSize:fittingSize
-                                       options:NSStringDrawingUsesLineFragmentOrigin
-                                    attributes:attributes
-                                       context:nil];
-  return MDCRound(CGRectGetHeight(boundingRect) / self.normalFont.lineHeight);
+  // For more context on measurinig the lines in a UITextView see here:
+  // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextLayout/Tasks/CountLines.html
+  NSLayoutManager *layoutManager = self.textView.layoutManager;
+  NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
+  NSRange lineRange = NSMakeRange(0, 1);
+  NSUInteger index = 0;
+  NSUInteger numberOfLines = 0;
+  while (index < numberOfGlyphs) {
+    [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+    index = NSMaxRange(lineRange);
+    numberOfLines += 1;
+  }
+
+  if (self.textView.text.length > 0 &&
+      [self.textView.text characterAtIndex:self.textView.text.length - 1] == '\n') {
+    numberOfLines += 1;
+  }
+  return (CGFloat)numberOfLines;
 }
 
 - (CGFloat)numberOfLinesOfVisibleText {
