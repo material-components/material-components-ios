@@ -631,10 +631,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  // Have _contentHeaderTopInset recalculated the next time self.contentHeaderTopInset is called so
-  // it has the correct value when the app is in iPad Slide Over.
-  _contentHeaderTopInset = NSNotFound;
-
   [self setupLayout];
   UIView *topView;
   if (self.headerViewController) {

@@ -193,8 +193,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
   }
 
-  [self setupBottomDrawerContainerViewControllerConstraints];
-
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
 
@@ -212,26 +210,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   [self.delegate bottomDrawerPresentTransitionWillBegin:self
                                         withCoordinator:transitionCoordinator
                                           targetYOffset:frame.origin.y];
-}
-
-/**
- Setup constraints so bottomDrawerContainerViewController has the correct size in iPad Slide Over.
-
- Without these constraints when the app is in iPad Slide Over, the view controller will
- have the wrong size that is equal to the screen when it should instead be the size of the Slide
- Over window.
- */
-- (void)setupBottomDrawerContainerViewControllerConstraints {
-  UIView *bottomDrawerView = self.bottomDrawerContainerViewController.view;
-  UIView *bottomDrawerSuperview = bottomDrawerView.superview;
-
-  bottomDrawerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [NSLayoutConstraint activateConstraints:@[
-    [bottomDrawerView.leftAnchor constraintEqualToAnchor:bottomDrawerSuperview.leftAnchor],
-    [bottomDrawerView.rightAnchor constraintEqualToAnchor:bottomDrawerSuperview.rightAnchor],
-    [bottomDrawerView.topAnchor constraintEqualToAnchor:bottomDrawerSuperview.topAnchor],
-    [bottomDrawerView.bottomAnchor constraintEqualToAnchor:bottomDrawerSuperview.bottomAnchor],
-  ]];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
