@@ -1,16 +1,6 @@
-# #develop#
+# 110.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+In this minor release, we annotated several APIs as to be deprecated in BottomNavigation, Chips, Dialogs, FlexibleHeader, and NavigationBar. We also made improvements and bug fixes to Dialogs, NavigationDrawer, and TextControls.
 
 ## Component changes
 
@@ -51,6 +41,7 @@ Replace this text with example code for each new feature.
 ### TextControls
 
 * [Make text areas respond to width changes](https://github.com/material-components/material-components-ios/commit/2675070cd5dbfaabe4af22f73117011bcc932ab6) (Andrew Overton)
+* [Make text areas shorter when there is no floating label](https://github.com/material-components/material-components-ios/commit/cfd9b3ff560a6c75643f2d8c2c5748982ca3e9df) (Andrew Overton)
 
 ### private/Math
 
@@ -59,7 +50,6 @@ Replace this text with example code for each new feature.
 ## Multi-component changes
 
 * [Internal change](https://github.com/material-components/material-components-ios/commit/45ef431efa2898cb63ba237a73e3a70618db7cb6) (Wenyu Zhang)
-* [Make text areas shorter when there is no floating label](https://github.com/material-components/material-components-ios/commit/cfd9b3ff560a6c75643f2d8c2c5748982ca3e9df) (Andrew Overton)
 * [Mark more apis as to-be-deprecated.](https://github.com/material-components/material-components-ios/commit/d0809e93bf13eb0a74313a50d91263fe4f23b6b4) (Jeff Verkoeyen)
 
 ---
