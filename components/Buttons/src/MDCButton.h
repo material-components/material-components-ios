@@ -73,22 +73,15 @@
 @property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle UI_APPEARANCE_SELECTOR;
 
 /**
- The inset margins for the rectangle surrounding all of the button’s visual representation.
- Use this property when you wish to have the touch target (frame) be larger than the
- visible content.
+ A Boolean value that determines whether the visible area is centered in the bounds of the view.
 
- A positive value shrinks the visible area of the button. A negative value expands the visible area
- of the button.
+ If set to YES, the visible area is centered in the bounds of the view, which is often used to
+ configure invisible tappable area. If set to NO, the visible area fills its bounds. This property
+ doesn't affect the result of @c sizeThatFits:.
 
- The button uses this property to determine intrinsicContentSize and sizeThatFits:.
-
- @note This property sets the @c shapeGenerator. Therefore you cannot use both properties
- simultaneously. If you do wish to use a custom shape with visibleAreaInsets, please set your own
- shapeGenerator that is inset from the frame instead of setting this property directly.
-
- Default is UIEdgeInsetsZero.
+ The default value is @c NO.
 */
-@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
+@property(nonatomic, assign) BOOL centerVisibleArea;
 
 /**
  The default content edge insets of the button. They are set at initialization time.
@@ -171,8 +164,7 @@
  @note If a layer property is explicitly set after the shapeGenerator has been set,
        it can lead to unexpected behavior.
 
- @note When visibleAreaInsets is set to something other than UIEdgeInsetsZero,
-       this property can no longer be set.
+ @note When @c centerVisibleArea is set to YES, this property can no longer be set.
 
  Default value for shapeGenerator is nil.
  */
@@ -353,6 +345,24 @@
  Default is UIEdgeInsetsZero.
  */
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
+
+/**
+ The inset margins for the rectangle surrounding all of the button’s visual representation.
+ Use this property when you wish to have the touch target (frame) be larger than the
+ visible content.
+
+ A positive value shrinks the visible area of the button. A negative value expands the visible area
+ of the button.
+
+ The button uses this property to determine intrinsicContentSize and sizeThatFits:.
+
+ @note This property sets the @c shapeGenerator. Therefore you cannot use both properties
+ simultaneously. If you do wish to use a custom shape with visibleAreaInsets, please set your own
+ shapeGenerator that is inset from the frame instead of setting this property directly.
+
+ Default is UIEdgeInsetsZero.
+*/
+@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
 
 /**
  The font used by the button's @c title.

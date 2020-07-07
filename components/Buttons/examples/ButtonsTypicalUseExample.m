@@ -15,7 +15,6 @@
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialTypography.h"
-#import "MaterialMath.h"
 #import "MaterialContainerScheme.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -61,10 +60,12 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Button" forState:UIControlStateNormal];
   [containedButton applyContainedThemeWithScheme:self.containerScheme];
-  [containedButton sizeToFit];
-  containedButton.visibleAreaInsets = MDCVisibleAreaInsetsForMinimumTappability(
-      containedButton.frame, kMinimumAccessibleButtonSize);
-  [containedButton sizeToFit];
+  CGSize containedButtonSize = [containedButton sizeThatFits:CGSizeZero];
+  CGFloat containedButtonHeight =
+      MAX(kMinimumAccessibleButtonSize.height, containedButtonSize.height);
+  CGFloat containedButtonWidth = MAX(kMinimumAccessibleButtonSize.width, containedButtonSize.width);
+  containedButton.frame = CGRectMake(0, 0, containedButtonWidth, containedButtonHeight);
+  containedButton.centerVisibleArea = YES;
   [containedButton addTarget:self
                       action:@selector(didTap:)
             forControlEvents:UIControlEventTouchUpInside];
@@ -89,10 +90,11 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   MDCButton *textButton = [[MDCButton alloc] init];
   [textButton applyTextThemeWithScheme:self.containerScheme];
   [textButton setTitle:@"Button" forState:UIControlStateNormal];
-  [textButton sizeToFit];
-  textButton.visibleAreaInsets =
-      MDCVisibleAreaInsetsForMinimumTappability(textButton.frame, kMinimumAccessibleButtonSize);
-  [textButton sizeToFit];
+  textButton.centerVisibleArea = YES;
+  CGSize textButtonSize = [containedButton sizeThatFits:CGSizeZero];
+  CGFloat textButtonHeight = MAX(kMinimumAccessibleButtonSize.height, textButtonSize.height);
+  CGFloat textButtonWidth = MAX(kMinimumAccessibleButtonSize.width, textButtonSize.width);
+  textButton.frame = CGRectMake(0, 0, textButtonWidth, textButtonHeight);
   [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -117,15 +119,11 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   MDCButton *outlinedButton = [[MDCButton alloc] init];
   [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
   [outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
+  outlinedButton.centerVisibleArea = YES;
   CGSize outlineButtonSize = [outlinedButton intrinsicContentSize];
-  CGFloat outlineButtonVerticalInset =
-      MAX(0, (kMinimumAccessibleButtonSize.height - outlineButtonSize.height) / 2);
-  CGFloat outlineButtonHorizontalInset =
-      MAX(0, (kMinimumAccessibleButtonSize.width - outlineButtonSize.width) / 2);
-  outlinedButton.visibleAreaInsets =
-      UIEdgeInsetsMake(outlineButtonVerticalInset, outlineButtonHorizontalInset,
-                       outlineButtonVerticalInset, outlineButtonHorizontalInset);
-  [outlinedButton sizeToFit];
+  CGFloat outlinedButtonHeight = MAX(kMinimumAccessibleButtonSize.height, outlineButtonSize.height);
+  CGFloat outlinedButtonWidth = MAX(kMinimumAccessibleButtonSize.width, outlineButtonSize.width);
+  outlinedButton.frame = CGRectMake(0, 0, outlinedButtonWidth, outlinedButtonHeight);
   [outlinedButton addTarget:self
                      action:@selector(didTap:)
            forControlEvents:UIControlEventTouchUpInside];
