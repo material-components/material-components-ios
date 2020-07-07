@@ -774,7 +774,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   UIEdgeInsets visibleAreaInsets = UIEdgeInsetsZero;
   if (self.centerVisibleArea) {
-    CGSize visibleAreaSize = [self sizeThatFits:CGSizeZero];
+    CGSize visibleAreaSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
     CGFloat additionalRequiredHeight =
         MAX(0, CGRectGetHeight(self.bounds) - visibleAreaSize.height);
     CGFloat additionalRequiredWidth = MAX(0, CGRectGetWidth(self.bounds) - visibleAreaSize.width);
