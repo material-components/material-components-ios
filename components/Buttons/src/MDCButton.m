@@ -1079,6 +1079,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Visible area
 
 - (void)setCenterVisibleArea:(BOOL)centerVisibleArea {
+  if (_centerVisibleArea == centerVisibleArea) {
+    return;
+  }
+
   _centerVisibleArea = centerVisibleArea;
 
   if (!centerVisibleArea && UIEdgeInsetsEqualToEdgeInsets(_visibleAreaInsets, UIEdgeInsetsZero)) {
