@@ -848,4 +848,70 @@ static UIImage *fakeImage(void) {
   XCTAssertFalse(button.layoutSubviewsCalled);
 }
 
+#pragma mark - setCenterVisibleArea:forShape:inMode:
+
+- (void)testDefaultCenterVisibleAreaValues {
+  // Given
+  MDCFloatingButton *defaultButtonNormal =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  MDCFloatingButton *defaultButtonExpanded =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  defaultButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+  MDCFloatingButton *miniButtonNormal =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  MDCFloatingButton *miniButtonExpanded =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  miniButtonExpanded.mode = MDCFloatingButtonModeExpanded;
+
+  // Then
+  XCTAssertFalse(defaultButtonNormal.centerVisibleArea);
+  XCTAssertFalse(defaultButtonExpanded.centerVisibleArea);
+  XCTAssertFalse(miniButtonNormal.centerVisibleArea);
+  XCTAssertFalse(miniButtonExpanded.centerVisibleArea);
+}
+
+- (void)testSetCenterVisibleAreaForShapeInNormalMode {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
+  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  miniButton.mode = MDCFloatingButtonModeExpanded;
+
+  // When
+  [defaultButton setCenterVisibleArea:YES
+                             forShape:MDCFloatingButtonShapeDefault
+                               inMode:MDCFloatingButtonModeNormal];
+  defaultButton.mode = MDCFloatingButtonModeNormal;
+  [miniButton setCenterVisibleArea:YES
+                          forShape:MDCFloatingButtonShapeMini
+                            inMode:MDCFloatingButtonModeNormal];
+  miniButton.mode = MDCFloatingButtonModeNormal;
+
+  // Then
+  XCTAssertTrue(defaultButton.centerVisibleArea);
+  XCTAssertTrue(miniButton.centerVisibleArea);
+}
+
+- (void)testSetCenterVisibleAreaForShapeInExpandedMode {
+  // Given
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
+  MDCFloatingButton *miniButton =
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+
+  // When
+  [defaultButton setCenterVisibleArea:YES
+                             forShape:MDCFloatingButtonShapeDefault
+                               inMode:MDCFloatingButtonModeExpanded];
+  defaultButton.mode = MDCFloatingButtonModeExpanded;
+  [miniButton setCenterVisibleArea:YES
+                          forShape:MDCFloatingButtonShapeMini
+                            inMode:MDCFloatingButtonModeExpanded];
+  miniButton.mode = MDCFloatingButtonModeExpanded;
+
+  // Then
+  XCTAssertTrue(defaultButton.centerVisibleArea);
+  XCTAssertTrue(miniButton.centerVisibleArea);
+}
+
 @end
