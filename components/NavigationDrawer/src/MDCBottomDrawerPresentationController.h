@@ -165,6 +165,14 @@
 @property(nonatomic, assign) BOOL shouldAlwaysExpandHeader;
 
 /**
+ Whether layout adjustments should be made to support iPad Slide Over.
+
+ Defaults to NO to maintain the same behavior that existed before this property
+ was added and to allow apps to migrate on their own schedule.
+ */
+@property(nonatomic) BOOL adjustLayoutForIPadSlideOver;
+
+/**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
  drawer will scroll to the start of its content.
 

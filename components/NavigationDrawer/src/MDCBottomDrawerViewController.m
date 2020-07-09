@@ -453,4 +453,14 @@
   }
 }
 
+- (void)setAdjustLayoutForIPadSlideOver:(BOOL)adjustLayoutForIPadSlideOver {
+  _adjustLayoutForIPadSlideOver = adjustLayoutForIPadSlideOver;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.adjustLayoutForIPadSlideOver =
+        self.adjustLayoutForIPadSlideOver;
+  }
+}
+
 @end

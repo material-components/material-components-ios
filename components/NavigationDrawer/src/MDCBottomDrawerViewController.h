@@ -189,6 +189,14 @@
 @property(nonatomic, assign) BOOL shouldAdjustOnContentSizeChange;
 
 /**
+ Whether layout adjustments should be made to support iPad Slide Over.
+
+ Defaults to NO to maintain the same behavior that existed before this property
+ was added and to allow apps to migrate on their own schedule.
+ */
+@property(nonatomic) BOOL adjustLayoutForIPadSlideOver;
+
+/**
  Sets the top corners radius for an MDCBottomDrawerState drawerState
 
  @param radius The corner radius to set the top corners.

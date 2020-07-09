@@ -113,6 +113,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
+  bottomDrawerContainerViewController.adjustLayoutForIPadSlideOver =
+      self.adjustLayoutForIPadSlideOver;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     // If in fact the presentedViewController is an MDCBottomDrawerViewController,
     // we then know there is a content and an (optional) header view controller.
@@ -193,6 +195,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
   }
 
+  if (self.adjustLayoutForIPadSlideOver) {
+    [self setupBottomDrawerContainerViewControllerConstraints];
+  }
+
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
 
@@ -210,6 +216,26 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   [self.delegate bottomDrawerPresentTransitionWillBegin:self
                                         withCoordinator:transitionCoordinator
                                           targetYOffset:frame.origin.y];
+}
+
+/**
+ Setup constraints so bottomDrawerContainerViewController has the correct size in iPad Slide Over.
+
+ Without these constraints when the app is in iPad Slide Over, the view controller will
+ have the wrong size that is equal to the screen when it should instead be the size of the Slide
+ Over window.
+ */
+- (void)setupBottomDrawerContainerViewControllerConstraints {
+  UIView *bottomDrawerView = self.bottomDrawerContainerViewController.view;
+  UIView *bottomDrawerSuperview = bottomDrawerView.superview;
+
+  bottomDrawerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [NSLayoutConstraint activateConstraints:@[
+    [bottomDrawerView.leftAnchor constraintEqualToAnchor:bottomDrawerSuperview.leftAnchor],
+    [bottomDrawerView.rightAnchor constraintEqualToAnchor:bottomDrawerSuperview.rightAnchor],
+    [bottomDrawerView.topAnchor constraintEqualToAnchor:bottomDrawerSuperview.topAnchor],
+    [bottomDrawerView.bottomAnchor constraintEqualToAnchor:bottomDrawerSuperview.bottomAnchor],
+  ]];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
