@@ -29,7 +29,6 @@
 @property(nonatomic, strong) NSArray<ChipModel *> *model;
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic) BOOL popRecognizerDelaysTouches;
-@property(nonatomic) UIEdgeInsets chipVisibleAreaInsets;
 @property(nonatomic) CGSize chipSize;
 @property(nonatomic) BOOL chipCenterVisibleArea;
 @end
@@ -54,8 +53,6 @@ static ChipModel *MakeModel(NSString *title,
 - (instancetype)init {
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
-  MDCChipCollectionViewCell *cell = [[MDCChipCollectionViewCell alloc] init];
-  layout.estimatedItemSize = [cell intrinsicContentSize];
 
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
@@ -160,11 +157,8 @@ static ChipModel *MakeModel(NSString *title,
   cell.chipView.imageView.image = model.showProfilePic ? ChipsExampleAssets.faceImage : nil;
   cell.chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
   cell.chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
-  if (!UIEdgeInsetsEqualToEdgeInsets(self.chipVisibleAreaInsets, UIEdgeInsetsZero)) {
-    cell.chipView.visibleAreaInsets = self.chipVisibleAreaInsets;
-  } else {
-    cell.chipView.hitAreaInsets = UIEdgeInsetsMake(-16, 0, -16, 0);
-  }
+  cell.chipView.centerVisibleArea = self.chipCenterVisibleArea;
+  cell.chipView.hitAreaInsets = UIEdgeInsetsMake(-16, 0, -16, 0);
 
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
@@ -189,9 +183,6 @@ static ChipModel *MakeModel(NSString *title,
     chipView.selectedImageView.image = model.showDoneImage ? ChipsExampleAssets.doneImage : nil;
     chipView.accessoryView = model.showDeleteButton ? ChipsExampleAssets.deleteButton : nil;
     chipView.centerVisibleArea = self.chipCenterVisibleArea;
-    if (!UIEdgeInsetsEqualToEdgeInsets(self.chipVisibleAreaInsets, UIEdgeInsetsZero)) {
-      chipView.visibleAreaInsets = self.chipVisibleAreaInsets;
-    }
     [chipView applyThemeWithScheme:self.containerScheme];
   }
   CGSize chipViewSize = [chipView intrinsicContentSize];
@@ -224,14 +215,6 @@ static ChipModel *MakeModel(NSString *title,
   [self.collectionView reloadData];
 }
 
-- (void)testVisibleAreaInsets {
-  // Given
-  self.chipVisibleAreaInsets = UIEdgeInsetsMake(8, 0, 8, 0);
-
-  // When
-  [self.collectionView reloadData];
-}
-
 - (void)testCustomSizeWhenCenterVisibleArea {
   // Given
   self.chipSize = CGSizeMake(44, 44);
@@ -239,10 +222,6 @@ static ChipModel *MakeModel(NSString *title,
 
   // When
   [self.collectionView reloadData];
-}
-
-- (void)setUp {
-  self.chipVisibleAreaInsets = UIEdgeInsetsZero;
 }
 
 @end
