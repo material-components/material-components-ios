@@ -14,27 +14,26 @@
  limitations under the License.
  */
 
+import UIKit
 import CatalogByConvention
-
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MaterialIcons_ic_chevron_right
-import MaterialComponents.MaterialKeyboardWatcher
 import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialThemes
 import MaterialComponents.MaterialTypography
+import MaterialComponents.MaterialIcons_ic_chevron_right
+import MaterialComponents.MaterialKeyboardWatcher
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 
-import UIKit
-
 class MDCDragonsController: UIViewController,
-                            UITableViewDelegate,
-                            UITableViewDataSource,
-                            UISearchBarDelegate,
-                            UIGestureRecognizerDelegate {
+  UITableViewDelegate,
+  UITableViewDataSource,
+  UISearchBarDelegate,
+  UIGestureRecognizerDelegate
+{
 
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
@@ -60,9 +59,11 @@ class MDCDragonsController: UIViewController,
   init(node: CBCNode) {
     let filteredPresentable = node.children.filter { return $0.isPresentable() }
     let filteredDragons = Set(node.children).subtracting(filteredPresentable)
-    cellsBySection = [filteredDragons.map { DragonCell(node: $0) },
-                      filteredPresentable.map { DragonCell(node: $0) }]
-    cellsBySection = cellsBySection.map { $0.sorted() { $0.node.title < $1.node.title } }
+    cellsBySection = [
+      filteredDragons.map { DragonCell(node: $0) },
+      filteredPresentable.map { DragonCell(node: $0) },
+    ]
+    cellsBySection = cellsBySection.map { $0.sorted { $0.node.title < $1.node.title } }
     super.init(nibName: nil, bundle: nil)
     results = getLeafNodes(node: node)
     searched = results
@@ -99,8 +100,9 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
     headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
     tableView = UITableView(frame: self.view.bounds, style: .grouped)
-    tableView.register(MDCDragonsTableViewCell.self,
-                       forCellReuseIdentifier: "MDCDragonsTableViewCell")
+    tableView.register(
+      MDCDragonsTableViewCell.self,
+      forCellReuseIdentifier: "MDCDragonsTableViewCell")
     tableView.backgroundColor = Constants.bgColor
     tableView.delegate = self
     tableView.dataSource = self
@@ -113,10 +115,12 @@ class MDCDragonsController: UIViewController,
       tableView.translatesAutoresizingMaskIntoConstraints = false
 
       let guide = view.safeAreaLayoutGuide
-      NSLayoutConstraint.activate([tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-                                   tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-                                   tableView.topAnchor.constraint(equalTo: view.topAnchor),
-                                   tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+      NSLayoutConstraint.activate([
+        tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+        tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+        tableView.topAnchor.constraint(equalTo: view.topAnchor),
+        tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+      ])
     } else {
       preiOS11Constraints()
     }
@@ -186,13 +190,17 @@ class MDCDragonsController: UIViewController,
 
   // MARK: UITableViewDelegate
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell =
-      tableView.dequeueReusableCell(withIdentifier: "MDCDragonsTableViewCell",
-                                    for: indexPath) as? MDCDragonsTableViewCell else {
+    guard
+      let cell =
+        tableView.dequeueReusableCell(
+          withIdentifier: "MDCDragonsTableViewCell",
+          for: indexPath) as? MDCDragonsTableViewCell
+    else {
       return UITableViewCell()
     }
     cell.backgroundColor = .white
-    let nodeData = isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
+    let nodeData =
+      isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
     let componentName = nodeData.node.title
     cell.textLabel?.text = componentName
     let node = nodeData.node
@@ -223,7 +231,8 @@ class MDCDragonsController: UIViewController,
     guard let cell = tableView.cellForRow(at: indexPath) as? MDCDragonsTableViewCell else {
       return
     }
-    let nodeData = isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
+    let nodeData =
+      isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
     if nodeData.node.isExample() || isSearchActive {
       setupTransition(nodeData: nodeData)
     } else if !isSearchActive {
@@ -245,7 +254,7 @@ class MDCDragonsController: UIViewController,
   func setupTransition(nodeData: DragonCell) {
     var vc = nodeData.node.createExampleViewController()
 
-    let containerSchemeSel = NSSelectorFromString("containerScheme");
+    let containerSchemeSel = NSSelectorFromString("setContainerScheme:")
     if vc.responds(to: containerSchemeSel) {
       let containerScheme = MDCContainerScheme()
 
@@ -253,16 +262,19 @@ class MDCDragonsController: UIViewController,
       containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
       containerScheme.shapeScheme = MDCShapeScheme()
 
-      vc.setValue(containerScheme, forKey: "containerScheme")
+      vc.perform(containerSchemeSel, with: containerScheme)
     }
 
     if !vc.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
       let container = MDCAppBarContainerViewController(contentViewController: vc)
-      container.appBar.headerViewController.headerView.backgroundColor = headerViewController.headerView.backgroundColor
+      container.appBar.headerViewController.headerView.backgroundColor =
+        headerViewController.headerView.backgroundColor
       container.appBar.navigationBar.tintColor = .white
       container.appBar.navigationBar.titleTextAttributes =
-        [ .foregroundColor: UIColor.white,
-          .font: UIFont.systemFont(ofSize: 16) ]
+        [
+          .foregroundColor: UIColor.white,
+          .font: UIFont.systemFont(ofSize: 16),
+        ]
       container.isTopLayoutGuideAdjustmentEnabled = true
       vc.title = nodeData.node.title
 
@@ -289,7 +301,7 @@ extension MDCDragonsController {
     }
   }
 
-  func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
@@ -302,13 +314,16 @@ extension MDCDragonsController {
     }
   }
 
-  func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                          withVelocity velocity: CGPoint,
-                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  func scrollViewWillEndDragging(
+    _ scrollView: UIScrollView,
+    withVelocity velocity: CGPoint,
+    targetContentOffset: UnsafeMutablePointer<CGPoint>
+  ) {
     let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity,
-                                               targetContentOffset: targetContentOffset)
+      headerView.trackingScrollWillEndDragging(
+        withVelocity: velocity,
+        targetContentOffset: targetContentOffset)
     }
   }
 
@@ -351,7 +366,9 @@ extension MDCDragonsController {
   }
 
   @objc(gestureRecognizer:shouldReceiveTouch:)
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch)
+    -> Bool
+  {
     if gestureRecognizer is UITapGestureRecognizer {
       let location = touch.location(in: tableView)
       return (tableView.indexPathForRow(at: location) == nil)
@@ -364,31 +381,39 @@ extension MDCDragonsController {
 extension MDCDragonsController {
   func collapseCells(at indexPath: IndexPath) {
     let upperCount = cellsBySection[indexPath.section][indexPath.row].node.children.count
-    let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
+    let indexPaths = (indexPath.row + 1..<indexPath.row + 1 + upperCount).map {
       IndexPath(row: $0, section: indexPath.section)
     }
     tableView.deleteRows(at: indexPaths, with: .automatic)
-    cellsBySection[indexPath.section].removeSubrange((indexPath.row+1..<indexPath.row+1+upperCount))
+    cellsBySection[indexPath.section].removeSubrange(
+      (indexPath.row + 1..<indexPath.row + 1 + upperCount))
 
   }
 
   func expandCells(at indexPath: IndexPath) {
     let nodeChildren = cellsBySection[indexPath.section][indexPath.row].node.children
     let upperCount = nodeChildren.count
-    let indexPaths = (indexPath.row+1..<indexPath.row+1+upperCount).map {
+    let indexPaths = (indexPath.row + 1..<indexPath.row + 1 + upperCount).map {
       IndexPath(row: $0, section: indexPath.section)
     }
     tableView.insertRows(at: indexPaths, with: .automatic)
-    cellsBySection[indexPath.section].insert(contentsOf: nodeChildren.map { DragonCell(node: $0) },
-                                                     at: indexPath.row+1)
+    cellsBySection[indexPath.section].insert(
+      contentsOf: nodeChildren.map { DragonCell(node: $0) },
+      at: indexPath.row + 1)
   }
 }
 
 extension MDCDragonsController {
   func setUpKeyboardWatcher() {
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .MDCKeyboardWatcherKeyboardWillShow, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .MDCKeyboardWatcherKeyboardWillHide, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(notification:)), name: .MDCKeyboardWatcherKeyboardWillChangeFrame, object: nil)
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(keyboardWillShow(notification:)),
+      name: .MDCKeyboardWatcherKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(keyboardWillHide(notification:)),
+      name: .MDCKeyboardWatcherKeyboardWillHide, object: nil)
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(keyboardWillChangeFrame(notification:)),
+      name: .MDCKeyboardWatcherKeyboardWillChangeFrame, object: nil)
   }
 
   @objc func keyboardWillShow(notification: NSNotification) {
@@ -408,7 +433,7 @@ extension MDCDragonsController {
 
   func updateScrollViewWithKeyboardNotificationUserInfo(userInfo: [AnyHashable: Any]) {
     guard let endFrame = userInfo[AnyHashable("UIKeyboardFrameEndUserInfoKey")] as? CGRect
-      else { return }
+    else { return }
     let endKeyboardFrameOriginInWindow = view.convert(endFrame.origin, from: nil)
     let tableViewMaxY = tableView.frame.maxY
     let baseInset = tableViewMaxY - endKeyboardFrameOriginInWindow.y
