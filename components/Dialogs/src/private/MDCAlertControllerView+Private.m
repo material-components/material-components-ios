@@ -36,6 +36,9 @@ static const CGFloat MDCDialogActionMinTouchTarget = 48.0f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
+@interface MDCNonselectableTextView : UITextView
+@end
+
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
@@ -92,7 +95,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
     [self.titleScrollView addSubview:self.titleLabel];
 
-    self.messageTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    self.messageTextView = [[MDCNonselectableTextView alloc] initWithFrame:CGRectZero];
     self.messageTextView.textAlignment = NSTextAlignmentNatural;
     self.messageTextView.textContainerInset = UIEdgeInsetsZero;
     self.messageTextView.textContainer.lineFragmentPadding = 0.0f;
@@ -1061,6 +1064,33 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self updateButtonFont];
 
   [self setNeedsLayout];
+}
+
+@end
+
+@implementation MDCNonselectableTextView
+
+// Disabling text selection when selectable is YES, while allowing gestures for inlined links.
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+  if (![super pointInside:point withEvent:event]) {
+    return NO;
+  }
+
+  UITextPosition *position = [self closestPositionToPoint:point];
+  if (!position) {
+    return NO;
+  }
+
+  UITextRange *range = [self.tokenizer rangeEnclosingPosition:position
+                                              withGranularity:UITextGranularityCharacter
+                                                  inDirection:UITextLayoutDirectionLeft];
+  if (!range) {
+    return NO;
+  }
+
+  NSInteger offset = [self offsetFromPosition:self.beginningOfDocument toPosition:range.start];
+  id link = [self.attributedText attribute:NSLinkAttributeName atIndex:offset effectiveRange:nil];
+  return link != nil;
 }
 
 @end
