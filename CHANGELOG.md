@@ -1,4 +1,4 @@
-# 110.1.0
+# 110.3.0
 
 In this sprint we switched button to use a `centerVisibleArea` over the `visibleAreaInsets` because it iys more versitile. Textcontrol improvements to layout occured as well. Bottom drawer is can now respond to iPad Slide Over layout changes.
 
