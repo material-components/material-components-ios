@@ -8,7 +8,25 @@ Deprecated method `setVisibleAreaInsets:forShape:inMode:` in `MDCFloatingButton`
 
 ## New features
 
-Button can now center the visible area so that the button's frame can maintain a toucable size. Bottom Drawer response to iPad Slide Over layout changes when the `adjustLayoutForIPadSlideOver` flag is used.
+### Buttons
+
+Button can now center the visible area so that the button's frame can maintain a toucable size. 
+
+```
+  CGSize containedButtonSize = [containedButton sizeThatFits:CGSizeZero];
+  containedButton.visibleAreaInsets = MDCVisibleAreaInsetsForMinimumTappability(	  CGFloat containedButtonHeight =
+      containedButton.frame, kMinimumAccessibleButtonSize);	      MAX(kMinimumAccessibleButtonSize.height, containedButtonSize.height);
+  [containedButton sizeToFit];	  CGFloat containedButtonWidth = MAX(kMinimumAccessibleButtonSize.width, containedButtonSize.width);
+  containedButton.frame = CGRectMake(0, 0, containedButtonWidth, containedButtonHeight);
+  containedButton.centerVisibleArea = YES;
+```
+### NavigationDrawer
+
+Bottom Drawer response to iPad Slide Over layout changes when the `adjustLayoutForIPadSlideOver` flag is used.
+
+```
+  bottomDrawer.adjustLayoutForIPadSlideOver = YES;
+```
 
 ## API changes
 
