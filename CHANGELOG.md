@@ -1,6 +1,6 @@
 # 110.3.0
 
-In this release we switched button to use a `centerVisibleArea` over the `visibleAreaInsets` because it is more versitile. Textcontrol improvements to layout occured as well. Bottom drawer can now respond to iPad Slide Over layout changes.
+In this release we switched button to use a `centerVisibleArea` over the `visibleAreaInsets` because it is more versitile. We made improvements to TextControl's layout as well. Bottom drawer can now respond to iPad Slide Over layout changes.
 
 ## New deprecations
 
@@ -10,21 +10,22 @@ Deprecated method `setVisibleAreaInsets:forShape:inMode:` in `MDCFloatingButton`
 
 ### Buttons
 
-Button can now center the visible area so that the button's frame can maintain a toucable size. 
+Button can now center the visible area so that the button's frame can maintain a touchable size. 
+
 
 ```
-  CGSize containedButtonSize = [containedButton sizeThatFits:CGSizeZero];
-  containedButton.visibleAreaInsets = MDCVisibleAreaInsetsForMinimumTappability(	  CGFloat containedButtonHeight =
-      containedButton.frame, kMinimumAccessibleButtonSize);	      MAX(kMinimumAccessibleButtonSize.height, containedButtonSize.height);
-  [containedButton sizeToFit];	  CGFloat containedButtonWidth = MAX(kMinimumAccessibleButtonSize.width, containedButtonSize.width);
-  containedButton.frame = CGRectMake(0, 0, containedButtonWidth, containedButtonHeight);
-  containedButton.centerVisibleArea = YES;
+CGSize containedButtonSize = [containedButton sizeThatFits:CGSizeZero];
+CGFloat containedButtonHeight =
+      MAX(kMinimumAccessibleButtonSize.height, containedButtonSize.height);
+CGFloat containedButtonWidth = MAX(kMinimumAccessibleButtonSize.width, containedButtonSize.width);
+containedButton.frame = CGRectMake(0, 0, containedButtonWidth, containedButtonHeight);
+containedButton.centerVisibleArea = YES;
 ```
 ### NavigationDrawer
 
 Bottom Drawer response to iPad Slide Over layout changes when the `adjustLayoutForIPadSlideOver` flag is used.
 
-```
+```objc
   bottomDrawer.adjustLayoutForIPadSlideOver = YES;
 ```
 
