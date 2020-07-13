@@ -1,17 +1,15 @@
 # 110.3.0
 
-In this sprint we switched button to use a `centerVisibleArea` over the `visibleAreaInsets` because it iys more versitile. Textcontrol improvements to layout occured as well. Bottom drawer is can now respond to iPad Slide Over layout changes.
+In this release we switched button to use a `centerVisibleArea` over the `visibleAreaInsets` because it is more versitile. Textcontrol improvements to layout occured as well. Bottom drawer can now respond to iPad Slide Over layout changes.
 
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
 Deprecated method `setVisibleAreaInsets:forShape:inMode:` in `MDCFloatingButton`. Consider using `setCenterVisibleArea:forShape:InMode:` to adjust visible area.
 
 ## New features
 
-Replace this text with example code for each new feature.
+Button can now center the visible area so that the button's frame can maintain a toucable size. Bottom Drawer response to iPad Slide Over layout changes when the `adjustLayoutForIPadSlideOver` flag is used.
+
 ## API changes
 
 ### Buttons
