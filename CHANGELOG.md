@@ -10,8 +10,7 @@ Deprecated method `setVisibleAreaInsets:forShape:inMode:` in `MDCFloatingButton`
 
 ### Buttons
 
-Button can now center the visible area so that the button's frame can maintain a touchable size. 
-
+Button can now center the visible area so that the button's frame can maintain a touchable size.
 
 ```
 CGSize containedButtonSize = [containedButton sizeThatFits:CGSizeZero];
