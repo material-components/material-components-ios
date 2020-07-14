@@ -113,6 +113,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
+  bottomDrawerContainerViewController.adjustLayoutForIPadSlideOver =
+      self.adjustLayoutForIPadSlideOver;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     // If in fact the presentedViewController is an MDCBottomDrawerViewController,
     // we then know there is a content and an (optional) header view controller.
@@ -193,7 +195,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
   }
 
-  [self setupBottomDrawerContainerViewControllerConstraints];
+  if (self.adjustLayoutForIPadSlideOver) {
+    [self setupBottomDrawerContainerViewControllerConstraints];
+  }
 
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];

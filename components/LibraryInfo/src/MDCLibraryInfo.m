@@ -19,12 +19,12 @@
 // This string is updated automatically as a part of the release process and should not be edited
 // manually. Do not rename this constant or change the formatting without updating the release
 // scripts.
-static NSString const *MDCLibraryInfoVersionString = @"110.2.0";
+static NSString* const kMDCLibraryInfoVersionString = @"110.3.0";
 
 @implementation MDCLibraryInfo
 
 + (NSString *)versionString {
-  return [MDCLibraryInfoVersionString copy];  // Copy because caller isn't expecting `const`.
+  return [kMDCLibraryInfoVersionString copy];  // Copy because caller isn't expecting `const`.
 }
 
 @end

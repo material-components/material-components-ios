@@ -16,8 +16,8 @@
 
 readonly COMPONENT_DIR=$1
 
-# TODO: Remove this whitelist once our GitHub repo is publicly accessible.
-readonly WHITELIST_PATTERN1="github.com/material-components/material-components-ios"
+# TODO: Remove this allowed pattern once our GitHub repo is publicly accessible.
+readonly ALLOWED_PATTERN1="github.com/material-components/material-components-ios"
 
 # Check source and documentation files.
 readonly FILES=$(find "$COMPONENT_DIR" -name '*.m' -or -name '*.h' -or -name '*.swift' -or -name '*.md')
@@ -33,8 +33,8 @@ readonly URLS=$(grep $GREP_OPTIONS --no-filename "$URL_PATTERN" $FILES | sort -u
 readonly CURL_OPTIONS="--fail --silent --location --range 0-1"
 success=1
 for url in $URLS; do 
-  # Skip explicitly whitelisted URLs.
-  if [[ $url == *"$WHITELIST_PATTERN1"* ]]; then
+  # Skip explicitly allowlisted URLs.
+  if [[ $url == *"$ALLOWED_PATTERN1"* ]]; then
     continue
   fi
 

@@ -1,3 +1,85 @@
+# 110.3.0
+
+In this release we switched button to use a `centerVisibleArea` over the `visibleAreaInsets` because it is more versitile. We made improvements to TextControl's layout as well. Bottom drawer can now respond to iPad Slide Over layout changes.
+
+## New deprecations
+
+Deprecated method `setVisibleAreaInsets:forShape:inMode:` in `MDCFloatingButton`. Consider using `setCenterVisibleArea:forShape:InMode:` to adjust visible area.
+
+## New features
+
+### Buttons
+
+Button can now center the visible area so that the button's frame can maintain a touchable size.
+
+```
+CGSize containedButtonSize = [containedButton sizeThatFits:CGSizeZero];
+CGFloat containedButtonHeight =
+      MAX(kMinimumAccessibleButtonSize.height, containedButtonSize.height);
+CGFloat containedButtonWidth = MAX(kMinimumAccessibleButtonSize.width, containedButtonSize.width);
+containedButton.frame = CGRectMake(0, 0, containedButtonWidth, containedButtonHeight);
+containedButton.centerVisibleArea = YES;
+```
+### NavigationDrawer
+
+Bottom Drawer response to iPad Slide Over layout changes when the `adjustLayoutForIPadSlideOver` flag is used.
+
+```objc
+  bottomDrawer.adjustLayoutForIPadSlideOver = YES;
+```
+
+## API changes
+
+### Buttons
+
+*new* property: `centerVisibleArea` in `MDCButton`
+*new* method: `setCenterVisibleArea:forShape:inMode:` in `MDCFloatingButton`
+
+### NavigationDrawer
+
+*new* property: `adjustLayoutForIPadSlideOver` in `MDCBottomDrawerPresentationController`
+*new* property: `adjustLayoutForIPadSlideOver` in `MDCBottomDrawerViewController`
+
+## Component changes
+
+### Buttons
+
+* [Add centerVisibleArea support for the FAB and deprecate visibleAreaMode API.](https://github.com/material-components/material-components-ios/commit/222ae37fc9d2fb002a7ec98747e2db653c5f0af3) (Wenyu Zhang)
+* [Add centerVisibleArea to MDCButton and mark visibleAreaInsets as to be deprecated.](https://github.com/material-components/material-components-ios/commit/59c44fb3bdcd70d8f332b3443b5cbf2ac48537fd) (Wenyu Zhang)
+* [Add safeguard to avoid overwriting centerVisibleArea with the same value.](https://github.com/material-components/material-components-ios/commit/2207b7a7d4035a43f1e7506968387a0f5f9f5a64) (Wenyu Zhang)
+
+### Chips
+
+* [Remove visibleAreaInsets usage in examples with their corresponding snapshot tests.](https://github.com/material-components/material-components-ios/commit/c7dfe422271f059d52c8dbc8539a1b2191106f64) (Wenyu Zhang)
+* [Use MAX to decide the size of visible area instead of CGSizeZero.](https://github.com/material-components/material-components-ios/commit/a9d85c476aeb42b76e78b2d5750f602aaf342e99) (Wenyu Zhang)
+
+### Dialogs
+
+* [Migrate Dialogs to use centerVisibleArea from visibleAreaInsets.](https://github.com/material-components/material-components-ios/commit/0861811377f3919a21c1a09e00d1ce207d5219ec) (Wenyu Zhang)
+
+### LibraryInfo
+
+* [Add "k" to string const to fix clang-tidy](https://github.com/material-components/material-components-ios/commit/a998a88dd5f7c08022ed934a0323ead4d000da5a) (Cody Weaver)
+
+### NavigationDrawer
+
+* [Automated g4 rollback of changelist 319253730.](https://github.com/material-components/material-components-ios/commit/b4ceacb4aa34bb64583ebbdc6647a4c9ab961550) (Nobody)
+* [Fix bug - New task options don’t have enough padding in iPad Slide Over.](https://github.com/material-components/material-components-ios/commit/54b62c91da5b93312ce7d40daaea957e86da7b4b) (Nobody)
+
+### TextControls
+
+* [Fix line counting mechanism in text areas](https://github.com/material-components/material-components-ios/commit/b919fad3a2973ee44bdc4845c28d20195dc6470f) (Andrew Overton)
+
+### private/Math
+
+* [Delete MDCVisibleAreaInsetsForMinimumTappability.](https://github.com/material-components/material-components-ios/commit/98f43faf56fd87f1c07896e22d07604ccc550d2f) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Make text fields without floating labels shorter](https://github.com/material-components/material-components-ios/commit/9480bf4c88224ce393268bee04774736cccbc343) (Andrew Overton)
+
+---
+
 # 110.2.0
 
 In this minor release, we annotated several APIs as to be deprecated in BottomNavigation, Chips, Dialogs, FlexibleHeader, and NavigationBar. We also made improvements and bug fixes to Dialogs, NavigationDrawer, and TextControls.

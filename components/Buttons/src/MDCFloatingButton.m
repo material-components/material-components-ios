@@ -45,6 +45,10 @@ static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
         *shapeToModeToHitAreaInsets;
 
 @property(nonatomic, readonly)
+    NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSNumber *> *>
+        *shapeToModeToCenterVisibleArea;
+
+@property(nonatomic, readonly)
     NSMutableDictionary<NSNumber *, NSMutableDictionary<NSNumber *, NSValue *> *>
         *shapeToModeToVisibleAreaInsets;
 
@@ -180,6 +184,8 @@ static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
   } mutableCopy];
 
   _shapeToModeToVisibleAreaInsets = [[NSMutableDictionary alloc] init];
+
+  _shapeToModeToCenterVisibleArea = [[NSMutableDictionary alloc] init];
 }
 
 #pragma mark - UIView
@@ -239,7 +245,8 @@ static inline CGSize CGSizeExpandWithInsets(CGSize size, UIEdgeInsets edgeInsets
     contentSize.width = MIN(self.maximumSize.width, contentSize.width);
   }
 
-  CGSize adjustedSize = CGSizeExpandWithInsets(contentSize, self.visibleAreaInsets);
+  UIEdgeInsets visibleAreaInsets = [self visibleAreaInsetsForMode:self.mode];
+  CGSize adjustedSize = CGSizeExpandWithInsets(contentSize, visibleAreaInsets);
   return adjustedSize;
 }
 
@@ -529,6 +536,33 @@ static inline CGSize CGSizeExpandWithInsets(CGSize size, UIEdgeInsets edgeInsets
   super.hitAreaInsets = [self hitAreaInsetsForMode:self.mode];
 }
 
+- (void)setCenterVisibleArea:(BOOL)centerVisibleArea
+                    forShape:(MDCFloatingButtonShape)shape
+                      inMode:(MDCFloatingButtonMode)mode {
+  NSMutableDictionary *modeToCenterVisibleArea = self.shapeToModeToCenterVisibleArea[@(shape)];
+  if (!modeToCenterVisibleArea) {
+    modeToCenterVisibleArea = [@{} mutableCopy];
+    self.shapeToModeToCenterVisibleArea[@(shape)] = modeToCenterVisibleArea;
+  }
+  modeToCenterVisibleArea[@(mode)] = @(centerVisibleArea);
+  if (shape == _shape && mode == self.mode) {
+    [self updateShapeAndAllowResize:NO];
+  }
+}
+
+- (BOOL)centerVisibleAreaForMode:(MDCFloatingButtonMode)mode {
+  NSMutableDictionary *modeToCenterVisibleArea = self.shapeToModeToCenterVisibleArea[@(_shape)];
+  if (!modeToCenterVisibleArea) {
+    return NO;
+  }
+
+  return [modeToCenterVisibleArea[@(mode)] boolValue];
+}
+
+- (void)updateCenterVisibleArea {
+  super.centerVisibleArea = [self centerVisibleAreaForMode:self.mode];
+}
+
 - (void)setVisibleAreaInsets:(UIEdgeInsets)insets
                     forShape:(MDCFloatingButtonShape)shape
                       inMode:(MDCFloatingButtonMode)mode {
@@ -566,6 +600,7 @@ static inline CGSize CGSizeExpandWithInsets(CGSize size, UIEdgeInsets edgeInsets
   BOOL maximumSizeChanged = [self updateMaximumSize];
   [self updateContentEdgeInsets];
   [self updateHitAreaInsets];
+  [self updateCenterVisibleArea];
   [self updateVisibleAreaInsets];
 
   if (allowsResize && (minimumSizeChanged || maximumSizeChanged)) {

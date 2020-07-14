@@ -125,8 +125,6 @@
     outlinedTextFieldWithoutFloatingLabel,
     [self createLabelWithText:@"MDCUnderlinedTextField:"],
     [self createMaterialUnderlinedTextField],
-    [self createLabelWithText:@"MDCUnderlinedTextField:"],
-    [self createMaterialUnderlinedTextField],
     [self createLabelWithText:@"MDCUnderlinedTextField without floating label:"],
     underlinedTextFieldWithoutFloatingLabel,
     [self createLabelWithText:@"MDCBaseTextField:"],

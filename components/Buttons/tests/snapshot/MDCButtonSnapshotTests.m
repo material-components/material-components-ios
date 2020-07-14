@@ -19,6 +19,7 @@
 #import "MaterialAvailability.h"
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "UIView+MDCSnapshot.h"
 #import "MaterialContainerScheme.h"
 
 /** A tests fake class of MDCButton. */
@@ -139,6 +140,39 @@
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+}
+
+- (void)testButtonWithCustomFrameWhenCenterVisibleArea {
+  // Given
+  MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
+  [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+
+  // When
+  button.centerVisibleArea = YES;
+  button.frame = CGRectMake(0, 0, 100, 100);
+  [button layoutIfNeeded];
+
+  // Then
+  UIView *snapshotView = [button mdc_addToBackgroundView];
+  [self snapshotVerifyView:snapshotView];
+}
+
+- (void)testButtonWithCustomCornerRadiusAndCustomFrameWhenCenterVisibleArea {
+  // Given
+  MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
+  [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+
+  // When
+  button.centerVisibleArea = YES;
+  button.layer.cornerRadius = 10;
+  button.frame = CGRectMake(0, 0, 100, 100);
+  [button layoutIfNeeded];
+
+  // Then
+  UIView *snapshotView = [button mdc_addToBackgroundView];
+  [self snapshotVerifyView:snapshotView];
 }
 
 @end
