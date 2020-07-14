@@ -436,6 +436,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
     // When
+    self.bannerView.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
     self.bannerView.textView.text = kBannerShortText;
     self.bannerView.textView.font = self.typographyScheme.body2;
     MDCButton *button = self.bannerView.leadingButton;
@@ -460,6 +461,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
     MDCButton *button = self.bannerView.leadingButton;
+    self.bannerView.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
     [button setTitle:@"Action" forState:UIControlStateNormal];
     [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
     button.uppercaseTitle = YES;
