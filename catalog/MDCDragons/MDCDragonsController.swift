@@ -45,6 +45,7 @@ class MDCDragonsController: UIViewController,
     static let subtitleColor = UIColor(white: 0, alpha: 0.60)
   }
   fileprivate var cellsBySection: [[DragonCell]]
+  fileprivate var nodes: [CBCNode]
   fileprivate var searched: [DragonCell]!
   fileprivate var results: [DragonCell]!
   fileprivate var tableView: UITableView!
@@ -56,6 +57,14 @@ class MDCDragonsController: UIViewController,
 
   var headerView: HeaderView!
 
+  enum Section {
+    case main
+  }
+
+  @available(iOS 14.0, *)
+  private(set) lazy var dataSource: UICollectionViewDiffableDataSource<Section, CBCNode>! = nil
+  var collectionView: UICollectionView! = nil
+
   init(node: CBCNode) {
     let filteredPresentable = node.children.filter { return $0.isPresentable() }
     let filteredDragons = Set(node.children).subtracting(filteredPresentable)
@@ -64,6 +73,7 @@ class MDCDragonsController: UIViewController,
       filteredPresentable.map { DragonCell(node: $0) },
     ]
     cellsBySection = cellsBySection.map { $0.sorted { $0.node.title < $1.node.title } }
+    nodes = node.children
     super.init(nibName: nil, bundle: nil)
     results = getLeafNodes(node: node)
     searched = results
@@ -99,40 +109,46 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
     headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
-    tableView = UITableView(frame: self.view.bounds, style: .grouped)
-    tableView.register(
-      MDCDragonsTableViewCell.self,
-      forCellReuseIdentifier: "MDCDragonsTableViewCell")
-    tableView.backgroundColor = Constants.bgColor
-    tableView.delegate = self
-    tableView.dataSource = self
-    tableView.rowHeight = UITableView.automaticDimension
-    tableView.estimatedRowHeight = 44
-    view.addSubview(tableView)
+
     view.backgroundColor = Constants.bgColor
 
-    if #available(iOS 11, *) {
-      tableView.translatesAutoresizingMaskIntoConstraints = false
-
-      let guide = view.safeAreaLayoutGuide
-      NSLayoutConstraint.activate([
-        tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-        tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-        tableView.topAnchor.constraint(equalTo: view.topAnchor),
-        tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-      ])
+    if #available(iOS 14.0, *) {
+      #if compiler(>=5.3)
+        configureCollectionView()
+        configureDataSource()
+      #endif
     } else {
-      preiOS11Constraints()
+      tableView = UITableView(frame: self.view.bounds, style: .grouped)
+      tableView.register(
+        MDCDragonsTableViewCell.self,
+        forCellReuseIdentifier: "MDCDragonsTableViewCell")
+      tableView.backgroundColor = Constants.bgColor
+      tableView.delegate = self
+      tableView.dataSource = self
+      tableView.rowHeight = UITableView.automaticDimension
+      tableView.estimatedRowHeight = 44
+      view.addSubview(tableView)
+      if #available(iOS 11, *) {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+          tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+          tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+          tableView.topAnchor.constraint(equalTo: view.topAnchor),
+          tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+        ])
+
+        tableView.contentInsetAdjustmentBehavior = .always
+      } else {
+        preiOS11Constraints()
+      }
     }
 
     setupHeaderView()
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tapgesture.delegate = self
     view.addGestureRecognizer(tapgesture)
-
-    if #available(iOS 11.0, *) {
-      tableView.contentInsetAdjustmentBehavior = .always
-    }
   }
 
   func preiOS11Constraints() {
@@ -148,7 +164,11 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.addSubview(headerView)
     headerViewController.headerView.forwardTouchEvents(for: headerView)
     headerViewController.headerView.backgroundColor = Constants.headerColor
-    headerViewController.headerView.trackingScrollView = tableView
+    if #available(iOS 14.0, *) {
+      headerViewController.headerView.trackingScrollView = collectionView
+    } else {
+      headerViewController.headerView.trackingScrollView = tableView
+    }
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParent: self)
   }
@@ -342,12 +362,13 @@ extension MDCDragonsController {
         return $0.node.title.range(of: searchText, options: .caseInsensitive) != nil
       }
     }
-    tableView.reloadData()
+    // load our initial data
+    refreshTable()
   }
 
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     searched = results
-    tableView.reloadData()
+    refreshTable()
   }
 
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -356,13 +377,23 @@ extension MDCDragonsController {
 
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     isSearchActive = true
-    tableView.reloadData()
+    refreshTable()
   }
 
   @objc func dismissKeyboard() {
     self.view.endEditing(true)
     isSearchActive = false
-    tableView.reloadData()
+
+  }
+
+  func refreshTable() {
+    if #available(iOS 14.0, *) {
+      #if compiler(>=5.3)
+        applySnapshot()
+      #endif
+    } else {
+      tableView.reloadData()
+    }
   }
 
   @objc(gestureRecognizer:shouldReceiveTouch:)
@@ -370,8 +401,13 @@ extension MDCDragonsController {
     -> Bool
   {
     if gestureRecognizer is UITapGestureRecognizer {
-      let location = touch.location(in: tableView)
-      return (tableView.indexPathForRow(at: location) == nil)
+      if #available(iOS 14.0, *) {
+        let location = touch.location(in: collectionView)
+        return (collectionView.indexPathForItem(at: location) == nil)
+      } else {
+        let location = touch.location(in: tableView)
+        return (tableView.indexPathForRow(at: location) == nil)
+      }
     }
     return true
   }
@@ -432,19 +468,133 @@ extension MDCDragonsController {
   }
 
   func updateScrollViewWithKeyboardNotificationUserInfo(userInfo: [AnyHashable: Any]) {
-    guard let endFrame = userInfo[AnyHashable("UIKeyboardFrameEndUserInfoKey")] as? CGRect
-    else { return }
-    let endKeyboardFrameOriginInWindow = view.convert(endFrame.origin, from: nil)
-    let tableViewMaxY = tableView.frame.maxY
-    let baseInset = tableViewMaxY - endKeyboardFrameOriginInWindow.y
-    let scrollIndicatorInset = baseInset
-    var contentInset = baseInset
-    if #available(iOS 11, *) {
-      if endKeyboardFrameOriginInWindow.y < tableViewMaxY {
-        contentInset -= view.safeAreaInsets.bottom
+    if #available(iOS 14.0, *) {
+    } else {
+      guard let endFrame = userInfo[AnyHashable("UIKeyboardFrameEndUserInfoKey")] as? CGRect
+      else { return }
+      let endKeyboardFrameOriginInWindow = view.convert(endFrame.origin, from: nil)
+      let tableViewMaxY = tableView.frame.maxY
+      let baseInset = tableViewMaxY - endKeyboardFrameOriginInWindow.y
+      let scrollIndicatorInset = baseInset
+      var contentInset = baseInset
+      if #available(iOS 11, *) {
+        if endKeyboardFrameOriginInWindow.y < tableViewMaxY {
+          contentInset -= view.safeAreaInsets.bottom
+        }
+      }
+      tableView.contentInset.bottom = contentInset
+      tableView.scrollIndicatorInsets.bottom = scrollIndicatorInset
+    }
+  }
+
+  #if compiler(>=5.3)
+    @available(iOS 14.0, *)
+    func configureCollectionView() {
+      let collectionView = UICollectionView(
+        frame: view.bounds, collectionViewLayout: generateLayout())
+      view.addSubview(collectionView)
+      collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+      collectionView.backgroundColor = .white
+      self.collectionView = collectionView
+      collectionView.delegate = self
+    }
+
+    @available(iOS 14.0, *)
+    func configureDataSource() {
+      let containerCellRegistration =
+        UICollectionView.CellRegistration<
+          UICollectionViewListCell,
+          CBCNode
+        > { (cell, indexPath, menuItem) in
+          // Populate the cell with our item description.
+          var contentConfiguration = cell.defaultContentConfiguration()
+          contentConfiguration.text = menuItem.title
+          contentConfiguration.textProperties.color = Constants.titleColor
+          cell.contentConfiguration = contentConfiguration
+
+          let disclosureOptions = UICellAccessory.OutlineDisclosureOptions(style: .header)
+          cell.accessories = [.outlineDisclosure(options: disclosureOptions)]
+          cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
+        }
+
+      let cellRegistration =
+        UICollectionView.CellRegistration<
+          UICollectionViewListCell,
+          CBCNode
+        > { cell, indexPath, menuItem in
+          // Populate the cell with our item description.
+          var contentConfiguration = cell.defaultContentConfiguration()
+          contentConfiguration.text = menuItem.title
+          contentConfiguration.textProperties.color = Constants.subtitleColor
+          cell.contentConfiguration = contentConfiguration
+          cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
+        }
+
+      dataSource =
+        UICollectionViewDiffableDataSource<Section, CBCNode>(collectionView: collectionView) {
+          (
+            collectionView: UICollectionView,
+            indexPath: IndexPath,
+            item: CBCNode
+          ) -> UICollectionViewCell? in
+          // Return the cell.
+          if item.children.isEmpty {
+            return collectionView.dequeueConfiguredReusableCell(
+              using: cellRegistration,
+              for: indexPath,
+              item: item)
+          } else {
+            return collectionView.dequeueConfiguredReusableCell(
+              using: containerCellRegistration,
+              for: indexPath,
+              item: item)
+          }
+        }
+      // load our initial data
+      applySnapshot(animatingDifferences: false)
+    }
+
+    @available(iOS 14.0, *)
+    func generateLayout() -> UICollectionViewLayout {
+      let listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
+      let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
+      return layout
+    }
+
+    @available(iOS 14.0, *)
+    func applySnapshot(animatingDifferences: Bool = true) {
+      let sectionSnapshot =
+        createSectionSnapshot(section: isSearchActive ? searched.map { $0.node } : nodes)
+      self.dataSource.apply(sectionSnapshot, to: .main, animatingDifferences: animatingDifferences)
+    }
+
+    @available(iOS 14.0, *)
+    func createSectionSnapshot(section: [CBCNode]) -> NSDiffableDataSourceSectionSnapshot<CBCNode> {
+      var snapshot = NSDiffableDataSourceSectionSnapshot<CBCNode>()
+
+      func addItems(_ menuItems: [CBCNode], to parent: CBCNode?) {
+        snapshot.append(menuItems, to: parent)
+        for menuItem in menuItems where !menuItem.children.isEmpty {
+          addItems(menuItem.children, to: menuItem)
+        }
+      }
+
+      addItems(section, to: nil)
+      return snapshot
+    }
+  #endif
+
+}
+
+extension MDCDragonsController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if #available(iOS 14.0, *) {
+      guard let menuItem = self.dataSource.itemIdentifier(for: indexPath) else { return }
+      collectionView.deselectItem(at: indexPath, animated: true)
+
+      if menuItem.isExample() || isSearchActive {
+        setupTransition(nodeData: DragonCell(node: menuItem))
       }
     }
-    tableView.contentInset.bottom = contentInset
-    tableView.scrollIndicatorInsets.bottom = scrollIndicatorInset
   }
 }
