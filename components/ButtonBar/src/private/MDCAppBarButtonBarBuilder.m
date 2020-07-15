@@ -17,8 +17,9 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <objc/runtime.h>
 
-#import "MDCButtonBar+Private.h"
+#import "MaterialAvailability.h"
 #import "MDCButtonBarButton.h"
+#import "MDCButtonBar+Private.h"
 #import "MaterialButtons.h"
 
 // Additional insets for the left-most or right-most items.
@@ -133,7 +134,17 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
            NSStringFromClass([MDCButtonBar class]));
 #endif
 
+#ifdef __IPHONE_14_0
+  MDCButtonBarButton *button;
+  if (@available(iOS 14.0, *)) {
+    button = [MDCButtonBarButton buttonWithType:UIButtonTypeCustom
+                                  primaryAction:buttonItem.primaryAction];
+  } else {
+    button = [[MDCButtonBarButton alloc] init];
+  }
+#else
   MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
+#endif
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
   button.enableRippleBehavior = buttonBar.enableRippleBehavior;
@@ -172,6 +183,19 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
   [button addTarget:buttonBar
                 action:@selector(didTapButton:event:)
       forControlEvents:UIControlEventTouchUpInside];
+#if MDC_AVAILABLE_SDK_IOS(14_0)
+  if (@available(iOS 14.0, *)) {
+    if (buttonItem.menu) {
+      // Setting the menu as primary action will result in the target / action pair not being
+      // called. Setting the primaryAction on a menu item will result in it not having a target /
+      // action pair anymore and not taking a new one on until primaryAction is cleared again.
+      button.menu = buttonItem.menu;
+      if (!buttonItem.primaryAction) {
+        button.showsMenuAsPrimaryAction = YES;
+      }
+    }
+  }
+#endif
 
   UIEdgeInsets contentInsets = [MDCAppBarButtonBarBuilder
       contentInsetsForButton:button
