@@ -496,17 +496,34 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       scrimShouldAdoptTrackingScrollViewBackgroundColor) {
     _scrimShouldAdoptTrackingScrollViewBackgroundColor =
         scrimShouldAdoptTrackingScrollViewBackgroundColor;
-    if ([self.delegate respondsToSelector:@selector
-                       (bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
-                                    scrimShouldAdoptTrackingScrollViewBackgroundColor:)]) {
-      [self.delegate bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:self
-                                 scrimShouldAdoptTrackingScrollViewBackgroundColor:
-                                     _scrimShouldAdoptTrackingScrollViewBackgroundColor];
-    }
+    [self updateScrimViewColor];
   }
   self.shadowedView.layer.shadowColor = _scrimShouldAdoptTrackingScrollViewBackgroundColor
                                             ? UIColor.clearColor.CGColor
                                             : self.drawerShadowColor.CGColor;
+}
+
+- (void)updateScrimViewColor {
+  if ([self.delegate respondsToSelector:@selector
+                     (bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:
+                                  scrimShouldAdoptTrackingScrollViewBackgroundColor:)]) {
+    [self.delegate bottomDrawerContainerViewControllerNeedsScrimAppearanceUpdate:self
+                               scrimShouldAdoptTrackingScrollViewBackgroundColor:
+                                   _scrimShouldAdoptTrackingScrollViewBackgroundColor];
+  }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if ([self.traitCollection
+            hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+      [self updateScrimViewColor];
+    }
+  }
+#endif
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
