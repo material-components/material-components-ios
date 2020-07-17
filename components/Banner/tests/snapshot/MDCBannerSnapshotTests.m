@@ -201,6 +201,29 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
+- (void)testLongTextWithNoActionLTR {
+  // When
+  self.bannerView.textView.text = kBannerLongText;
+  self.bannerView.imageView.hidden = YES;
+  self.bannerView.leadingButton.hidden = YES;
+  self.bannerView.trailingButton.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testLongTextWithNoActionRTL {
+  // When
+  self.bannerView.textView.text = kBannerLongText;
+  self.bannerView.imageView.hidden = YES;
+  self.bannerView.leadingButton.hidden = YES;
+  self.bannerView.trailingButton.hidden = YES;
+  [self changeViewToRTL:self.bannerView];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
 - (void)testLongTextWithSingleActionLTR {
   // When
   self.bannerView.textView.text = kBannerLongText;
