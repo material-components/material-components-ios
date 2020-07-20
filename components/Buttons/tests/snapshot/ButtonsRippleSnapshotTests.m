@@ -160,4 +160,14 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+- (void)testButtonRippleWhenContentEdgeInsetsAreSet {
+  // When
+  self.button.rippleEdgeInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+  self.button.rippleView.backgroundColor = UIColor.purpleColor;
+  [self.button layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
 @end

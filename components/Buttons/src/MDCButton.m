@@ -337,6 +337,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   } else {
     CGRect bounds = CGRectStandardize(self.bounds);
     bounds = CGRectOffset(bounds, self.inkViewOffset.width, self.inkViewOffset.height);
+    bounds = UIEdgeInsetsInsetRect(bounds, self.rippleEdgeInsets);
     _inkView.frame = bounds;
     self.rippleView.frame = bounds;
   }
@@ -638,6 +639,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkViewOffset:(CGSize)inkViewOffset {
   _inkViewOffset = inkViewOffset;
+  [self setNeedsLayout];
+}
+
+- (void)setRippleEdgeInsets:(UIEdgeInsets)rippleEdgeInsets {
+  _rippleEdgeInsets = rippleEdgeInsets;
+
   [self setNeedsLayout];
 }
 

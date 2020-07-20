@@ -182,4 +182,23 @@
   XCTAssertFalse(self.button.rippleView.isSelected);
 }
 
+- (void)testSettingContentEdgeInsetsUpdatesRipple {
+  // Given
+  self.button.enableRippleBehavior = YES;
+  CGRect buttonFrame = CGRectMake(0, 0, 100, 100);
+  self.button.frame = buttonFrame;
+  UIEdgeInsets buttonRippleInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+
+  // When
+  self.button.rippleEdgeInsets = buttonRippleInsets;
+  [self.button layoutIfNeeded];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(UIEdgeInsetsInsetRect(buttonFrame, buttonRippleInsets),
+                                  self.button.rippleView.frame),
+                @"%@ is not equal to %@",
+                NSStringFromCGRect(UIEdgeInsetsInsetRect(buttonFrame, buttonRippleInsets)),
+                NSStringFromCGRect(self.button.rippleView.frame));
+}
+
 @end

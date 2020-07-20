@@ -97,6 +97,11 @@
 @property(nonatomic) CGSize inkViewOffset;
 
 /**
+ The inset or outset margins for the rectangle surrounding the button’s ripple.
+ */
+@property(nonatomic, assign) UIEdgeInsets rippleEdgeInsets;
+
+/**
  The minimum size of the button’s alignment rect. If either the height or width are non-positive
  (negative or zero), they will be ignored and that axis will adjust to its content size.
 
