@@ -20,6 +20,7 @@
 @interface ButtonBarTypicalUseExample : UIViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @implementation ButtonBarTypicalUseExample
@@ -27,20 +28,17 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
+    _colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme =
+    _typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme = _colorScheme;
+    containerScheme.typographyScheme = _typographyScheme;
+    _containerScheme = containerScheme;
     self.title = @"Button Bar";
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)viewDidLoad {
