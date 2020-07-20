@@ -1,16 +1,69 @@
-# #develop#
+# 111.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this Major release we removed some deprecated action sheet themers, made visual improvements to Chips, ProgressView, Banner and Tabs. We also made links clickable in Alert Dialogs
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### ActionSheet
 
-Replace this text with links to deprecation guides.
+We deleted ActionSheet Themers. Use theming extensions.
+
 ## New features
 
-Replace this text with example code for each new feature.
+### Banner
+
+Update sizeThatFits calculation to include layout margins.
+
+```objc
+banner.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
+```
+
+### ButtonBar
+
+Add UIMenu support for MDCButtonBar.
+
+```objc
+MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
+UIMenu *primaryMenu = [self exampleMenuWithTitle:@"A primary action menu"];
+menuAsPrimaryActionItem = [[UIBarButtonItem alloc] initWithImage:nil menu:primaryMenu];
+menuAsPrimaryActionItem.title = @"Menu on tap";
+
+buttonBar.items = @[ menuAsSecondaryActionItem, menuAsPrimaryActionItem, changingActionItem ];
+
+…
+- (UIMenu *)exampleMenuWithTitle:(NSString *)title API_AVAILABLE(ios(14.0)) {
+  UIAction *firstAction = [UIAction actionWithTitle:@"An action"
+                                              image:nil
+                                         identifier:nil
+                                            handler:^(__kindof UIAction *_Nonnull action) {
+                                              NSLog(@"First element was tapped.");
+                                            }];
+  UIAction *secondAction = [UIAction actionWithTitle:@"A second action"
+                                               image:nil
+                                          identifier:nil
+                                             handler:^(__kindof UIAction *_Nonnull action) {
+                                               NSLog(@"Second element was tapped.");
+                                             }];
+
+  NSArray<UIAction *> *menuElements = @[ firstAction, secondAction ];
+  return [UIMenu menuWithTitle:title children:menuElements];
+}
+```
+
+### Tabs
+
+Add non fixed clustered centered layout style.
+
+```objc
+tabBar.preferredLayoutStyle =
+                    MDCTabBarViewLayoutStyleNonFixedClusteredCentered;
+```
+
 ## API changes
+
+### TabBarView
+
+*new* enum: `MDCTabBarViewLayoutStyleNonFixedClusteredCentered`
 
 ## Component changes
 
