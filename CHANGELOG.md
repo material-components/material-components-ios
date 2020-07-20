@@ -12,7 +12,7 @@ We deleted ActionSheet Themers. Use theming extensions.
 
 ### Banner
 
-Update sizeThatFits calculation to include layout margins.
+Update sizeThatFits calculation to include layout margins to ensure entire leading button can be clicked when trailing button is hidden.
 
 ```objc
 banner.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
