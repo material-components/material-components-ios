@@ -16,6 +16,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialAvailability.h"
 #import "MDCButtonBarDelegate.h"
 #import "MDCAppBarButtonBarBuilder.h"
 #import "MaterialButtons.h"
@@ -313,7 +314,28 @@ static NSString *const kEnabledSelector = @"enabled";
             [self invalidateIntrinsicContentSize];
           }
 
-        } else {
+        }
+#if MDC_AVAILABLE_SDK_IOS(14_0)
+        else if (@available(iOS 14.0, *)) {
+          if ([keyPath isEqualToString:NSStringFromSelector(@selector(menu))]) {
+            if ([buttonView isKindOfClass:[UIButton class]]) {
+              ((UIButton *)buttonView).menu = newValue;
+              if (!self.items[itemIndex].primaryAction) {
+                ((UIButton *)buttonView).showsMenuAsPrimaryAction = YES;
+              }
+            }
+          } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(primaryAction))]) {
+            // As of iOS 14.0 there is no public API to change the primary action of a button.
+            // It's only possible to provide the action upon initialization of the view, so all
+            // views get reloaded.
+            [self reloadButtonViews];
+          } else {
+            NSLog(@"Unknown key path notification received by %@ for %@.",
+                  NSStringFromClass([self class]), keyPath);
+          }
+        }
+#endif
+        else {
           NSLog(@"Unknown key path notification received by %@ for %@.",
                 NSStringFromClass([self class]), keyPath);
         }
@@ -419,6 +441,14 @@ static NSString *const kEnabledSelector = @"enabled";
       NSStringFromSelector(@selector(image)), NSStringFromSelector(@selector(tag)),
       NSStringFromSelector(@selector(tintColor)), NSStringFromSelector(@selector(title))
     ];
+#if MDC_AVAILABLE_SDK_IOS(14_0)
+    if (@available(iOS 14.0, *)) {
+      NSMutableArray<NSString *> *mutableKeyPaths = [keyPaths mutableCopy];
+      [mutableKeyPaths addObject:NSStringFromSelector(@selector(menu))];
+      [mutableKeyPaths addObject:NSStringFromSelector(@selector(primaryAction))];
+      keyPaths = mutableKeyPaths;
+    }
+#endif
 
     // Remove old observers
     for (UIBarButtonItem *item in _items) {

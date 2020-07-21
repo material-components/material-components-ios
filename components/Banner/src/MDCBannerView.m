@@ -73,6 +73,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong)
     NSLayoutConstraint *buttonContainerConstraintTopWithTextViewGreater;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintBottom;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintHeight;
 
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintLeading;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTop;
@@ -82,9 +83,12 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     NSLayoutConstraint *leadingButtonConstraintBaseLineWithTrailingButton;
 @property(nonatomic, readwrite, strong)
     NSLayoutConstraint *leadingButtonConstraintTrailingWithTrailingButton;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintHeightZero;
+
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintBottom;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTop;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTrailing;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintHeightZero;
 
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintHeight;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintBottom;
@@ -117,6 +121,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (void)commonBannerViewInit {
   self.backgroundColor = UIColor.whiteColor;
   _bannerViewLayoutStyle = MDCBannerViewLayoutStyleAutomatic;
+  self.layoutMargins = UIEdgeInsetsZero;
 
   // Create textView
   UITextView *textView = [[UITextView alloc] init];
@@ -258,6 +263,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintTopWithTextViewGreater = [self.buttonContainerView.topAnchor
       constraintGreaterThanOrEqualToAnchor:self.textView.bottomAnchor
                                   constant:kVerticalSpaceBetweenButtonAndTextView];
+  self.buttonContainerConstraintHeight = [self.buttonContainerView.heightAnchor
+      constraintGreaterThanOrEqualToAnchor:self.leadingButton.heightAnchor
+                                  constant:0];
 }
 
 - (void)setUpButtonsConstraints {
@@ -278,6 +286,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
                                                       forAxis:UILayoutConstraintAxisHorizontal];
   [self.leadingButton setContentHuggingPriority:UILayoutPriorityRequired
                                         forAxis:UILayoutConstraintAxisHorizontal];
+  self.leadingButtonConstraintHeightZero =
+      [self.leadingButton.heightAnchor constraintEqualToConstant:0.f];
   self.trailingButtonConstraintBottom = [self.trailingButton.bottomAnchor
       constraintEqualToAnchor:self.buttonContainerView.bottomAnchor];
   self.trailingButtonConstraintTop =
@@ -289,6 +299,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
                                                        forAxis:UILayoutConstraintAxisHorizontal];
   [self.trailingButton setContentHuggingPriority:UILayoutPriorityRequired
                                          forAxis:UILayoutConstraintAxisHorizontal];
+  self.trailingButtonConstraintHeightZero =
+      [self.trailingButton.heightAnchor constraintEqualToConstant:0.f];
 }
 
 - (void)setUpDividerConstraints {
@@ -319,15 +331,18 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintTopWithTextView.active = NO;
   self.buttonContainerConstraintTopWithTextViewGreater.active = NO;
   self.buttonContainerConstraintBottom.active = NO;
+  self.buttonContainerConstraintHeight.active = NO;
   self.leadingButtonConstraintLeading.active = NO;
   self.leadingButtonConstraintTop.active = NO;
   self.leadingButtonConstraintTrailing.active = NO;
   self.leadingButtonConstraintCenterY.active = NO;
   self.leadingButtonConstraintBaseLineWithTrailingButton.active = NO;
   self.leadingButtonConstraintTrailingWithTrailingButton.active = NO;
+  self.leadingButtonConstraintHeightZero.active = NO;
   self.trailingButtonConstraintBottom.active = NO;
   self.trailingButtonConstraintTop.active = NO;
   self.trailingButtonConstraintTrailing.active = NO;
+  self.trailingButtonConstraintHeightZero.active = NO;
   self.dividerConstraintBottom.active = NO;
   self.dividerConstraintHeight.active = NO;
   self.dividerConstraintLeading.active = NO;
@@ -345,7 +360,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (CGSize)sizeThatFits:(CGSize)size {
   MDCBannerViewLayoutStyle layoutStyle = [self layoutStyleForSizeToFit:size];
-  CGFloat frameHeight = 0.0f;
+  CGFloat frameHeight = self.layoutMargins.top + self.layoutMargins.bottom;
   CGSize contentSize = [self contentSizeForLayoutSize:size];
   switch (layoutStyle) {
     case MDCBannerViewLayoutStyleSingleRow: {
@@ -375,18 +390,25 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     case MDCBannerViewLayoutStyleMultiRowAlignedButton: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
       frameHeight += [self getFrameHeightOfImageViewAndTextViewWithSizeToFit:contentSize];
-      CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
-      CGSize trailingButtonSize = [self.trailingButton sizeThatFits:CGSizeZero];
+      CGSize leadingButtonSize =
+          self.leadingButton.hidden ? CGSizeZero : [self.leadingButton sizeThatFits:CGSizeZero];
+      CGSize trailingButtonSize =
+          self.trailingButton.hidden ? CGSizeZero : [self.trailingButton sizeThatFits:CGSizeZero];
       frameHeight += MAX(leadingButtonSize.height, trailingButtonSize.height);
       break;
     }
     case MDCBannerViewLayoutStyleMultiRowStackedButton: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
       frameHeight += [self getFrameHeightOfImageViewAndTextViewWithSizeToFit:contentSize];
-      CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
-      CGSize trailingButtonSize = [self.trailingButton sizeThatFits:CGSizeZero];
-      frameHeight +=
-          leadingButtonSize.height + trailingButtonSize.height + kButtonVerticalIntervalSpace;
+      CGSize leadingButtonSize =
+          self.leadingButton.hidden ? CGSizeZero : [self.leadingButton sizeThatFits:CGSizeZero];
+      CGSize trailingButtonSize =
+          self.trailingButton.hidden ? CGSizeZero : [self.trailingButton sizeThatFits:CGSizeZero];
+      CGFloat verticalIntervalSpace = kButtonVerticalIntervalSpace;
+      if (self.leadingButton.hidden || self.trailingButton.hidden) {
+        verticalIntervalSpace = 0.f;
+      }
+      frameHeight += leadingButtonSize.height + trailingButtonSize.height + verticalIntervalSpace;
       break;
     }
     default:
@@ -430,6 +452,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   }
   self.buttonContainerConstraintTrailing.active = YES;
   self.buttonContainerConstraintBottom.active = YES;
+  self.buttonContainerConstraintHeight.active = YES;
 
   if (layoutStyle == MDCBannerViewLayoutStyleSingleRow) {
     self.imageViewConstraintCenterY.active = YES;
@@ -470,6 +493,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   if (self.trailingButton.hidden) {
     self.leadingButtonConstraintTrailing.active = YES;
     self.leadingButtonConstraintCenterY.active = YES;
+    self.trailingButtonConstraintHeightZero.active = YES;
   } else {
     if (layoutStyle == MDCBannerViewLayoutStyleMultiRowStackedButton) {
       self.leadingButtonConstraintTop.active = YES;
@@ -479,6 +503,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       self.leadingButtonConstraintTrailingWithTrailingButton.active = YES;
       self.leadingButtonConstraintBaseLineWithTrailingButton.active = YES;
     }
+  }
+  if (self.leadingButton.hidden) {
+    self.leadingButtonConstraintHeightZero.active = YES;
   }
   self.leadingButtonConstraintLeading.active = YES;
   self.trailingButtonConstraintTrailing.active = YES;

@@ -445,6 +445,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   CAAnimationGroup *progressViewAnimationGroup = [[CAAnimationGroup alloc] init];
   progressViewAnimationGroup.animations = @[ progressViewHead, progressViewTail ];
   progressViewAnimationGroup.duration = 1.8;
+  progressViewAnimationGroup.removedOnCompletion = NO;
   progressViewAnimationGroup.repeatCount = HUGE_VALF;
 
   [self.progressView.shapeLayer addAnimation:progressViewAnimationGroup
@@ -474,6 +475,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   indeterminateProgressViewAnimationGroup.animations =
       @[ indeterminateProgressViewHead, indeterminateProgressViewTail ];
   indeterminateProgressViewAnimationGroup.duration = 1.8;
+  indeterminateProgressViewAnimationGroup.removedOnCompletion = NO;
   indeterminateProgressViewAnimationGroup.repeatCount = HUGE_VALF;
 
   [self.indeterminateProgressView.shapeLayer addAnimation:indeterminateProgressViewAnimationGroup

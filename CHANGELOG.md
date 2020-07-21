@@ -1,3 +1,108 @@
+# 111.0.0
+
+In this Major release we removed some deprecated action sheet themers, made visual improvements to Chips, ProgressView, Banner and Tabs. We also made links clickable in Alert Dialogs
+
+## Breaking changes
+
+### ActionSheet
+
+We deleted ActionSheet Themers. Use theming extensions.
+
+## New features
+
+### ButtonBar
+
+Add UIMenu support for MDCButtonBar.
+
+```objc
+MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
+UIMenu *primaryMenu = [self exampleMenuWithTitle:@"A primary action menu"];
+menuAsPrimaryActionItem = [[UIBarButtonItem alloc] initWithImage:nil menu:primaryMenu];
+menuAsPrimaryActionItem.title = @"Menu on tap";
+
+buttonBar.items = @[ menuAsSecondaryActionItem, menuAsPrimaryActionItem, changingActionItem ];
+
+…
+- (UIMenu *)exampleMenuWithTitle:(NSString *)title API_AVAILABLE(ios(14.0)) {
+  UIAction *firstAction = [UIAction actionWithTitle:@"An action"
+                                              image:nil
+                                         identifier:nil
+                                            handler:^(__kindof UIAction *_Nonnull action) {
+                                              NSLog(@"First element was tapped.");
+                                            }];
+  UIAction *secondAction = [UIAction actionWithTitle:@"A second action"
+                                               image:nil
+                                          identifier:nil
+                                             handler:^(__kindof UIAction *_Nonnull action) {
+                                               NSLog(@"Second element was tapped.");
+                                             }];
+
+  NSArray<UIAction *> *menuElements = @[ firstAction, secondAction ];
+  return [UIMenu menuWithTitle:title children:menuElements];
+}
+```
+
+### Tabs
+
+Add non fixed clustered centered layout style.
+
+```objc
+tabBar.preferredLayoutStyle =
+                    MDCTabBarViewLayoutStyleNonFixedClusteredCentered;
+```
+
+## API changes
+
+### TabBarView
+
+*new* enum: `MDCTabBarViewLayoutStyleNonFixedClusteredCentered`
+
+## Component changes
+
+### ActionSheet
+
+* [Delete MDCActionSheetColorThemer](https://github.com/material-components/material-components-ios/commit/e4805f0c2c439b8e0d1099021a5aadfcbc23b532) (Andrew Overton)
+* [Delete MDCActionSheetThemer and MDCActionSheetScheme](https://github.com/material-components/material-components-ios/commit/742c7b3da7b51551110740f9b062d1a4eb7712e6) (Andrew Overton)
+* [Delete MDCActionSheetTypographyThemer](https://github.com/material-components/material-components-ios/commit/a5d83de736d27458c42e3c76a4208e2e40704d53) (Andrew Overton)
+* [Rename ActionSheet assets](https://github.com/material-components/material-components-ios/commit/1bca00af2f0aaefaf8c6f80cfe659b8a990d9094) (Andrew Overton)
+
+### Banner
+
+* [Add Banner snapshots for long text with no action style.](https://github.com/material-components/material-components-ios/commit/c1bc33cc4219ca4c4586316f87e8bf64d10972d0) (Wenyu Zhang)
+* [Add height constraints to leadingButton and trailingButton on MDCBannerView to handle the case where they are hidden.](https://github.com/material-components/material-components-ios/commit/4216eb6ed560b65e7e5903d12da072a1f322b30d) (Wenyu Zhang)
+* [Update sizeThatFits calculation to include layout margins in the height calculation and ensure entire leading button can be clicked when trailing button is hidden, by constraining the buttonContainerView to always be at least as tall as the leading button.](https://github.com/material-components/material-components-ios/commit/1b69ff6f39089b1e8a842f11bdd9a7fb98bdb22b) (Ingerid Fosli)
+
+### BottomAppBar
+
+* [Internal change](https://github.com/material-components/material-components-ios/commit/eb324d0394c0c0ee474551ac63650d617f5646a5) (Alyssa Weiss)
+
+### ButtonBar
+
+* [Add UIMenu support to MDCButtonBar.](https://github.com/material-components/material-components-ios/commit/3002e9a73f9b6c070495fc7f27d1cc183b8bdd4f) (Jan Philipp Sachse)
+
+### Chips
+
+* [Update inter-chip spacing in chip field to align with Material spec (8dp vertical and horizontal inter-chip spacing)](https://github.com/material-components/material-components-ios/commit/f2dd90e06cca99d66d4e33c99fad0d13180b1e04) (Bryan Oltman)
+
+### Dialogs
+
+* [Disabling selection in alerts while allowing tappable links](https://github.com/material-components/material-components-ios/commit/81b5c39f7e072bf57f4e1dabfb5d26d60736861e) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Make sure to update color of scrim view background when trait collection changes its user interface style.](https://github.com/material-components/material-components-ios/commit/45c4130d1804c5324beda3aaf719a8d25af75f8d) (Yarden Eitan)
+* [Update the MDCBottomDrawerViewController MDC themer to use dynamic colors.](https://github.com/material-components/material-components-ios/commit/dde71806927bbc0af0ba01dfa7055e6d6a89476b) (Jake Rockland)
+
+### ProgressView
+
+* [Fix indeterminate animation being removed before it is presented on screen.](https://github.com/material-components/material-components-ios/commit/be54e359513d3156f40198becf635d230449a64a) (Wenyu Zhang)
+
+### Tabs
+
+* [Add non fixed clustered centered layout style](https://github.com/material-components/material-components-ios/commit/40e108d6b3e005372ae3afe07c1b6ca29abe19d2) (Andrew Overton)
+
+---
+
 # 110.3.0
 
 In this release we switched button to use a `centerVisibleArea` over the `visibleAreaInsets` because it is more versitile. We made improvements to TextControl's layout as well. Bottom drawer can now respond to iPad Slide Over layout changes.
