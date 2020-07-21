@@ -153,6 +153,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
     _trackOnLayer = [CALayer layer];
     [_trackView.layer addSublayer:_trackOnLayer];
+    _trackView.layer.masksToBounds = YES;
 
     [self addSubview:_trackView];
 
