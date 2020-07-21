@@ -453,10 +453,18 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   } else if (labelPosition == MDCTextControlLabelPositionFloating) {
     labelColor = colorViewModel.floatingLabelColor;
   }
-  self.textView.textColor = colorViewModel.textColor;
-  self.leadingAssistiveLabel.textColor = colorViewModel.leadingAssistiveLabelColor;
-  self.trailingAssistiveLabel.textColor = colorViewModel.trailingAssistiveLabelColor;
-  self.label.textColor = labelColor;
+  if (![self.textView.textColor isEqual:colorViewModel.textColor]) {
+    self.textView.textColor = colorViewModel.textColor;
+  }
+  if (![self.leadingAssistiveLabel.textColor isEqual:colorViewModel.leadingAssistiveLabelColor]) {
+    self.leadingAssistiveLabel.textColor = colorViewModel.leadingAssistiveLabelColor;
+  }
+  if (![self.trailingAssistiveLabel.textColor isEqual:colorViewModel.trailingAssistiveLabelColor]) {
+    self.trailingAssistiveLabel.textColor = colorViewModel.trailingAssistiveLabelColor;
+  }
+  if (![self.label.textColor isEqual:labelColor]) {
+    self.label.textColor = labelColor;
+  }
 }
 
 - (void)setTextControlColorViewModel:(MDCTextControlColorViewModel *)TextControlColorViewModel
