@@ -104,7 +104,23 @@
     _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
     _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
     _colorLayer.lineWidth = self.shapedBorderWidth;
+    [self generateColorPathGivenLineWidth];
   }
+}
+
+- (void)generateColorPathGivenLineWidth {
+  if (CGPathIsEmpty(self.path) || _colorLayer.lineWidth <= 0) {
+    return;
+  }
+  CGFloat halfOfBorderWidth = self.shapedBorderWidth / 2.f;
+  CGRect standardizedBounds = CGRectStandardize(self.bounds);
+  CGRect insetBounds = CGRectInset(standardizedBounds, halfOfBorderWidth, halfOfBorderWidth);
+  CGAffineTransform transform =
+      CGAffineTransformMakeTranslation(halfOfBorderWidth, halfOfBorderWidth);
+  transform = CGAffineTransformScale(
+      transform, CGRectGetWidth(insetBounds) / CGRectGetWidth(standardizedBounds),
+      CGRectGetHeight(insetBounds) / CGRectGetHeight(standardizedBounds));
+  _colorLayer.path = CGPathCreateCopyByTransformingPath(_colorLayer.path, &transform);
 }
 
 - (CGPathRef)path {
@@ -155,6 +171,7 @@
   } else {
     self.borderWidth = 0;
     _colorLayer.lineWidth = _shapedBorderWidth;
+    [self generateColorPathGivenLineWidth];
   }
 }
 
