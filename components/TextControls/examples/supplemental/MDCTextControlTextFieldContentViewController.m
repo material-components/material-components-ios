@@ -30,7 +30,8 @@
 #import "MDCUnderlinedTextField+MaterialTheming.h"
 
 @interface MDCTextControlTextFieldContentViewController ()
-@property(nonatomic, assign) BOOL shouldAddLeadingView;
+@property(nonatomic, assign) BOOL shouldAddDebugLeadingView;
+@property(nonatomic, assign) BOOL shouldAddDebugBorder;
 @end
 
 @implementation MDCTextControlTextFieldContentViewController
@@ -44,8 +45,11 @@
   textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingAssistiveLabel.text = @"This is a string.";
-  if (self.shouldAddLeadingView) {
+  if (self.shouldAddDebugLeadingView) {
     [self addLeadingViewToTextField:textField];
+  }
+  if (self.shouldAddDebugBorder) {
+    [self addBorderToTextField:textField];
   }
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
@@ -57,8 +61,11 @@
   textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingAssistiveLabel.text = @"This is a string.";
-  if (self.shouldAddLeadingView) {
+  if (self.shouldAddDebugLeadingView) {
     [self addLeadingViewToTextField:textField];
+  }
+  if (self.shouldAddDebugBorder) {
+    [self addBorderToTextField:textField];
   }
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
@@ -69,8 +76,11 @@
   textField.placeholder = @"555-555-5555";
   textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  if (self.shouldAddLeadingView) {
+  if (self.shouldAddDebugLeadingView) {
     [self addLeadingViewToTextField:textField];
+  }
+  if (self.shouldAddDebugBorder) {
+    [self addBorderToTextField:textField];
   }
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
@@ -82,10 +92,18 @@
   textField.label.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.borderStyle = UITextBorderStyleRoundedRect;
-  if (self.shouldAddLeadingView) {
+  if (self.shouldAddDebugLeadingView) {
     [self addLeadingViewToTextField:textField];
   }
+  if (self.shouldAddDebugBorder) {
+    [self addBorderToTextField:textField];
+  }
   return textField;
+}
+
+- (void)addBorderToTextField:(MDCBaseTextField *)textField {
+  textField.layer.borderColor = UIColor.redColor.CGColor;
+  textField.layer.borderWidth = 1;
 }
 
 - (void)addLeadingViewToTextField:(MDCBaseTextField *)textField {
@@ -102,6 +120,9 @@
 
 - (void)initializeScrollViewSubviewsArray {
   [super initializeScrollViewSubviewsArray];
+
+  self.shouldAddDebugBorder = NO;
+  self.shouldAddDebugLeadingView = NO;
 
   MDCFilledTextField *filledTextFieldWithoutFloatingLabel = [self createMaterialFilledTextField];
   filledTextFieldWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;

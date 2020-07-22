@@ -27,6 +27,7 @@
 #import "MDCOutlinedTextArea+MaterialTheming.h"
 
 @interface MDCTextControlTextAreaContentViewController () <UITextViewDelegate>
+@property(nonatomic, assign) BOOL shouldAddDebugBorder;
 @end
 
 @implementation MDCTextControlTextAreaContentViewController
@@ -39,6 +40,9 @@
   textArea.labelBehavior = MDCTextControlLabelBehaviorFloats;
   textArea.label.text = @"Phone number";
   textArea.leadingAssistiveLabel.text = @"This is a string.";
+  if (self.shouldAddDebugBorder) {
+    [self addBorderToTextArea:textArea];
+  }
   [textArea applyThemeWithScheme:self.containerScheme];
   return textArea;
 }
@@ -48,6 +52,9 @@
   textArea.textView.delegate = self;
   textArea.label.text = @"Phone number";
   [textArea applyThemeWithScheme:self.containerScheme];
+  if (self.shouldAddDebugBorder) {
+    [self addBorderToTextArea:textArea];
+  }
   return textArea;
 }
 
@@ -55,6 +62,9 @@
   MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] init];
   textArea.textView.delegate = self;
   textArea.label.text = @"This is a floating label";
+  if (self.shouldAddDebugBorder) {
+    [self addBorderToTextArea:textArea];
+  }
   return textArea;
 }
 
@@ -62,10 +72,17 @@
   [self.view setNeedsLayout];
 }
 
+- (void)addBorderToTextArea:(MDCBaseTextArea *)textArea {
+  textArea.layer.borderColor = UIColor.redColor.CGColor;
+  textArea.layer.borderWidth = 1;
+}
+
 #pragma mark Overrides
 
 - (void)initializeScrollViewSubviewsArray {
   [super initializeScrollViewSubviewsArray];
+
+  self.shouldAddDebugBorder = NO;
 
   MDCFilledTextArea *filledTextAreaWithoutFloatingLabel = [self createMaterialFilledTextArea];
   filledTextAreaWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
