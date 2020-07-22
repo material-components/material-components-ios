@@ -33,6 +33,7 @@
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
 static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
 static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
+static const CGFloat kDefaultRippleAlpha = (CGFloat)0.12;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -230,7 +231,8 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-  _rippleView.rippleColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.12];
+  _rippleColor = [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
+  _rippleView.rippleColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.12];
 
   // Default content insets
   // The default contentEdgeInsets are set here (instead of above, as they were previously) because
@@ -622,6 +624,12 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
       (inkStyle == MDCInkStyleUnbounded) ? MDCRippleStyleUnbounded : MDCRippleStyleBounded;
 }
 
+- (void)setRippleStyle:(MDCRippleStyle)rippleStyle {
+  _rippleStyle = rippleStyle;
+
+  self.rippleView.rippleStyle = rippleStyle;
+}
+
 - (UIColor *)inkColor {
   return _inkView.inkColor;
 }
@@ -629,6 +637,11 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 - (void)setInkColor:(UIColor *)inkColor {
   _inkView.inkColor = inkColor;
   [self.rippleView setRippleColor:inkColor forState:MDCRippleStateHighlighted];
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor ?: [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
+  [self.rippleView setRippleColor:_rippleColor forState:MDCRippleStateHighlighted];
 }
 
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {

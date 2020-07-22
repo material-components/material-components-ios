@@ -17,6 +17,7 @@
 
 #import "MaterialElevation.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
@@ -36,11 +37,15 @@
  */
 @interface MDCButton : UIButton <MDCElevatable, MDCElevationOverriding>
 
-/** The ink style of the button. */
-@property(nonatomic, assign) MDCInkStyle inkStyle UI_APPEARANCE_SELECTOR;
+/** The ripple style of the button. */
+@property(nonatomic, assign) MDCRippleStyle rippleStyle;
 
-/** The ink color of the button. */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+/**
+ The color of the ripple.
+
+ @note Defaults to a transparent black.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *rippleColor;
 
 /*
  Maximum radius of the button's ink. If the radius <= 0 then half the length of the diagonal of
@@ -400,5 +405,11 @@
        a future version, this API will eventually be deprecated and then deleted.
  */
 @property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
+
+/** The ink style of the button. */
+@property(nonatomic, assign) MDCInkStyle inkStyle UI_APPEARANCE_SELECTOR;
+
+/** The ink color of the button. */
+@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 @end

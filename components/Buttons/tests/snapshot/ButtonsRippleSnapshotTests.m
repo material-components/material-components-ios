@@ -43,7 +43,7 @@
   UIImage *testImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.button setImage:testImage forState:UIControlStateNormal];
-  self.button.inkColor = [UIColor.magentaColor colorWithAlphaComponent:0.25];
+  self.button.rippleColor = [UIColor.magentaColor colorWithAlphaComponent:0.25];
   [self.button sizeToFit];
   [self configureButton:self.button
                forState:UIControlStateNormal
