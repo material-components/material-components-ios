@@ -199,7 +199,16 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   if (![self validateHeight]) {
     [self invalidateIntrinsicContentSize];
   }
-  [self.textView scrollRangeToVisible:self.textView.selectedRange];
+  [self scrollToVisibleText];
+}
+
+- (void)scrollToVisibleText {
+  // This method was added to address b/161887902, with help from
+  // https://stackoverflow.com/a/49631521
+  NSRange range = NSMakeRange(self.textView.text.length - 1, 1);
+  [self.textView scrollRangeToVisible:range];
+  self.textView.scrollEnabled = NO;
+  self.textView.scrollEnabled = YES;
 }
 
 - (MDCBaseTextAreaLayout *)calculateLayoutWithSize:(CGSize)size {
@@ -285,7 +294,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 }
 
 - (CGFloat)numberOfLinesOfText {
-  // For more context on measurinig the lines in a UITextView see here:
+  // For more context on measuring the lines in a UITextView see here:
   // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextLayout/Tasks/CountLines.html
   NSLayoutManager *layoutManager = self.textView.layoutManager;
   NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
@@ -298,8 +307,10 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
     numberOfLines += 1;
   }
 
-  if (self.textView.text.length > 0 &&
-      [self.textView.text characterAtIndex:self.textView.text.length - 1] == '\n') {
+  BOOL textEndsInNewLine =
+      self.textView.text.length > 0 &&
+      [self.textView.text characterAtIndex:self.textView.text.length - 1] == '\n';
+  if (textEndsInNewLine) {
     numberOfLines += 1;
   }
   return (CGFloat)numberOfLines;
