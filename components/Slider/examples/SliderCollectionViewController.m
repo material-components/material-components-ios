@@ -18,7 +18,6 @@
 #import "MaterialSlider+ColorThemer.h"
 #import "MaterialSlider.h"
 #import "MaterialTypographyScheme.h"
-#import "supplemental/SliderCollectionSupplemental.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16;
@@ -208,6 +207,10 @@ static CGFloat const kSliderVerticalMargin = 12;
 
 @end
 
+@interface SliderCollectionViewController : UICollectionViewController
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@end
+
 @implementation SliderCollectionViewController {
   NSMutableArray<MDCSliderModel *> *_sliders;
   MDCTypographyScheme *_typographyScheme;
@@ -313,6 +316,19 @@ static CGFloat const kSliderVerticalMargin = 12;
   [cell applyModel:model withColorScheme:self.colorScheme];
   cell.labelFont = _typographyScheme.subtitle2;
   return cell;
+}
+
+@end
+
+@implementation SliderCollectionViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Slider", @"Slider" ],
+    @"description" : @"Sliders allow users to make selections from a range of values.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
 }
 
 @end
