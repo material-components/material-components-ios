@@ -2,86 +2,82 @@
 title: "App bars: bottom"
 layout: detail
 section: components
-excerpt: "A bottom app bar displays navigation and key actions at the bottom of the screen."
+excerpt: "A bottom app bar displays navigation and key actions at the bottom of mobile screens."
 iconId: bottom_app_bar
 path: /catalog/bottomappbar/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme BottomAppBar -->
-
 # App bars: bottom
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BBottomAppBar%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BBottomAppBar%5D)
 
-A bottom app bar displays navigation and key actions at the bottom of the screen. Bottom app bars
-work like [navigation bars](../NavigationBar), but with the additional option to show a
-[floating action button](../Buttons).
+[Bottom app bars](https://material.io/components/app-bars-bottom/) display navigation and key actions at the bottom of the screen.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/bottomappbar.png" alt="A screenshot of a bottom app bar." width="375">
-</div>
+![Bottom app bar hero](docs/assets/bottom-app-bar-hero.png)
 
-## Design & API documentation
+## Contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-bottom">Material Design guidelines: App bars: bottom</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Classes/MDCBottomAppBarView.html">MDCBottomAppBarView</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonElevation.html">MDCBottomAppBarFloatingButtonElevation</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonPosition.html">MDCBottomAppBarFloatingButtonPosition</a></li>
-</ul>
+* [Using bottom app bars](#using-bottom-app-bars)
+* [Installing bottom app bars](#installing-bottom-app-bars)
+* [Making bottom app bars accessible](#making-bottom-app-bars-accessible)
+* [Bottom app bar anatomy](#bottom-app-bar-anatomy)
+* [Theming bottom app bars](#theming-bottom-app-bars)
 
-## Table of contents
+## Using bottom app bars
 
-- [Overview](#overview)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Typical use](#typical-use)
-- [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-- [Accessibility](#accessibility)
-  - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
-  - [Set `-accessibilityHint`](#set-`-accessibilityhint`)
+Bottom app bars group primary and secondary actions at the bottom of the screen, where they are easily reachable by the user's thumb.
 
-- - -
+Use the `UIView` subclass `MDCBottomAppBarView` to add a bottom app bar to your app. `MDCBottomAppBarView` contains a horizontally centered [floating action button](https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html) for primary actions and a customizable [navigation bar](https://material.io/components/ios/catalog/flexible-headers/navigation-bars/) for secondary actions. The `MDCBottomAppBarView` API includes properties that allow changes in elevation, position, and visibility of the embedded floating action button.
 
-## Overview
+Instances of `UIBarButtonItem` can be added to a `MDCBottomAppBarView`'s navigation bar. Leading and trailing navigation items will be shown and hidden based on the position of the floating action button.
 
-Bottom app bars follow a recommended Material Design interaction design pattern for providing primary and secondary actions that are easily accessible. With a bottom app bar users are more easily able to use single-handed touch interaction with an application since actions are displayed close to the bottom of the screen within easy reach of a user's thumb.
+Transitions between floating action button position, elevation, and visibility states are animated by default, but can be disabled if desired.
 
-The bottom app bar includes a <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">floating action button</a> that is intended to provide users with a primary action. Secondary actions are available on a <a href="https://material.io/components/ios/catalog/navigation-bar/">navigation bar</a> that can be customized with several buttons on the left and right sides of the navigation bar. The primary action floating action button is centered on the bottom app bar by default.
+### Bottom app bar example
 
-MDCBottomAppBarView should be attached to the bottom of the screen or used in conjunction with an expandable bottom drawer. The MDCBottomAppBarView API includes properties that allow changes to the elevation, position and visibility of the embedded floating action button.
+`MDCBottomAppBarView` can be added to a view hierarchy like any `UIView`. Material Design guidelines
+recommend always placing the bottom app bar at the bottom of the screen.
 
-UIBarButtonItems can be added to the navigation bar of the MDCBottomAppBarView. Leading and trailing navigation items will be shown and hidden based on the position of the floating action button.
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
 
-Transitions between floating action button position, elevation and visibility states are animated by default, but can be disabled if desired.
+```swift
+let bottomAppBar = MDCBottomAppBarView()
+addSubview(bottomAppBar)
+view.leftAnchor.constraint(equalTo: bottomAppBarView.leftAnchor).isActive = true
+view.rightAnchor.constraint(equalTo: bottomAppBarView.rightAnchor).isActive = true
+view.bottomAnchor.constraint(equalTo: bottomAppBarView.bottomAnchor).isActive = true
+```
 
-## Installation
+#### Objective-C
 
-<!-- Extracted from docs/../../../docs/component-installation.md -->
+```objc
+MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+[self addSubview:bottomAppBar];
+[self.view.leftAnchor constraintEqualToAnchor:bottomAppBarView.leftAnchor].active = YES;
+[self.view.rightAnchor constraintEqualToAnchor:bottomAppBarView.rightAnchor].active = YES;
+[self.view.bottomAnchor constraintEqualToAnchor:self.textField.bottomAnchor].active = YES;
+```
 
-### Installation with CocoaPods
+<!--</div>-->
 
-Add the following to your `Podfile`:
+## Installing `MDCBottomAppBarView`
+
+In order to use `MDCBottomAppBarView`, first add the component to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/BottomAppBar'
+pod MaterialComponents/BottomAppBar
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then, run the following command:
+Then, run the installer.
 
 ```bash
 pod install
 ```
 
-### Importing
-
-To import the component:
+After that, import the component target.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -90,38 +86,16 @@ import MaterialComponents.MaterialBottomAppBar
 ```
 
 #### Objective-C
-
 ```objc
 #import "MaterialBottomAppBar.h"
 ```
 <!--</div>-->
 
+From there, initialize an `MDCBottomAppBarView` like you would any `UIView`.
 
-## Usage
+## Making bottom app bars accessible
 
-<!-- Extracted from docs/typical-use.md -->
-
-### Typical use
-
-MDCBottomAppBarView can be added to a view hierarchy like any UIView. Material Design guidelines
-recommend always placing the bottom app bar at the bottom of the screen.
-
-
-## Extensions
-
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-MDCBottomAppBarView does not yet have a Material Design color system theming extension. Please
-indicate interest by commenting on https://github.com/material-components/material-components-ios/issues/7172.
-
-## Accessibility
-
-<!-- Extracted from docs/accessibility.md -->
-
-To help ensure your bottom app bar is accessible to as many users as possible, please be sure to review the
-following recommendations:
+The following recommendations will ensure that the bottom app bar is accessible to as many users as possible:
 
 ### Set `-accessibilityLabel`
 
@@ -183,3 +157,39 @@ trailingButton.accessibilityHint = @"Purchase the item";
 ```
 <!--</div>-->
 
+## Bottom app bar anatomy
+
+A bottom app bar has a container and an optional navigation icon, anchored
+floating action button (FAB), action item(s) and an overflow menu.
+
+![Bottom app bar anatomy diagram](docs/assets/bottom-app-bar-anatomy.png)
+
+1.  Container
+2.  Navigation icon (optional)
+3.  Floating action button (FAB) (optional)
+4.  Action item(s) (optional)
+5.  Overflow menu (optional)
+
+### Container attributes
+
+&nbsp;        | Attribute            | Related method(s)                          | Default value
+------------- | -------------------- | ------------------------------------------ | -------------
+**Color**     | `barTintColor`       | `-setBarTintColor:` <br> `-barTintColor`   | White
+**Elevation** | `elevation`         | `-setElevation:` <br> `-elevation`          | 8
+
+### Navigation icon attributes
+
+&nbsp;    | Attribute            | Related method(s)                          | Default value
+--------- | -------------------- | ------------------------------------------ | -------------
+**Icon**  | `leadingBarButtonItems` <br> `trailingBarButtonItems` | `-setLeadingBarButtonItems:` <br> `-leadingBarButtonItems` <br> `-setTrailingBarButtonItems:` <br> `-trailingBarButtonItems` | `nil`
+
+### FAB attributes
+
+&nbsp;                           | Attribute                          | Related method(s)                                                      | Default value
+-------------------------------- | ---------------------------------- | ---------------------------------------------------------------------- | -------------
+**Alignment mode**               | `floatingButtonPosition`           | `-setFloatingButtonPosition:` <br> `-floatingButtonPosition`           | `.center`
+**Elevation**                    | `floatingButtonElevation`          | `-setFloatingButtonElevation:` <br> `-floatingButtonElevation`           | 0
+
+## Theming bottom app bars
+
+`MDCBottomAppBarView` does not currently have a Material Design theming extension or otherwise support theming. Please indicate interest in adding theming support by commenting on [issue #7172](https://github.com/material-components/material-components-ios/issues/7172).
