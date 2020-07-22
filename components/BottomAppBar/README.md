@@ -28,7 +28,7 @@ api_doc_root: true
 
 Bottom app bars group primary and secondary actions at the bottom of the screen, where they are easily reachable by the user's thumb.
 
-Bottom app bars are implemented by `MDCBottomAppBarView`, a subclass of `UIView`. `MDCBottomAppBarView` contains a horizontally centered [floating action button](https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html) for primary actions and a customizable [navigation bar](https://material.io/components/ios/catalog/flexible-headers/navigation-bars/) for secondary actions. The `MDCBottomAppBarView` API includes properties that allow changes in elevation, position, and visibility of the embedded floating action button.
+Use the `UIView` subclass `MDCBottomAppBarView` to add a bottom app bar to your app. `MDCBottomAppBarView` contains a horizontally centered [floating action button](https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html) for primary actions and a customizable [navigation bar](https://material.io/components/ios/catalog/flexible-headers/navigation-bars/) for secondary actions. The `MDCBottomAppBarView` API includes properties that allow changes in elevation, position, and visibility of the embedded floating action button.
 
 Instances of `UIBarButtonItem` can be added to a `MDCBottomAppBarView`'s navigation bar. Leading and trailing navigation items will be shown and hidden based on the position of the floating action button.
 
