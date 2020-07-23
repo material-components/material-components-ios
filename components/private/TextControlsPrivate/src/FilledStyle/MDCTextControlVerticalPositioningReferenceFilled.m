@@ -15,18 +15,36 @@
 #import "MDCTextControlVerticalPositioningReferenceFilled.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
+static const CGFloat kMinPaddingAroundTextWhenNoFloatingLabel = 6.0f;
+static const CGFloat kMaxPaddingAroundTextWhenNoFloatingLabel = 10.0f;
+static const CGFloat kMinPaddingBetweenContainerTopAndFloatingLabel = 6.0f;
+static const CGFloat kMaxPaddingBetweenContainerTopAndFloatingLabel = 10.0f;
+static const CGFloat kMinPaddingBetweenFloatingLabelAndEditingText = 3.0f;
+static const CGFloat kMaxPaddingBetweenFloatingLabelAndEditingText = 6.0f;
+static const CGFloat kMinPaddingBetweenEditingTextAndContainerBottom = 6.0f;
+static const CGFloat kMaxPaddingBetweenEditingTextAndContainerBottom = 10.0f;
+static const CGFloat kMinPaddingAroundAssistiveLabels = 3.0f;
+static const CGFloat kMaxPaddingAroundAssistiveLabels = 6.0f;
+
 /**
  For slightly more context on what this class is doing look at
  MDCTextControlVerticalPositioningReferenceBase. It's very similar and has some comments. Maybe at
  some point all the positioning references should be refactored to share a superclass, because
  there's currently a lot of duplicated code among the three of them.
 */
-@interface MDCTextControlVerticalPositioningReferenceFilled ()
-@end
-
 @implementation MDCTextControlVerticalPositioningReferenceFilled
 
+@synthesize paddingBetweenContainerTopAndFloatingLabel =
+    _paddingBetweenContainerTopAndFloatingLabel;
 @synthesize paddingBetweenContainerTopAndNormalLabel = _paddingBetweenContainerTopAndNormalLabel;
+@synthesize paddingBetweenFloatingLabelAndEditingText = _paddingBetweenFloatingLabelAndEditingText;
+@synthesize paddingBetweenEditingTextAndContainerBottom =
+    _paddingBetweenEditingTextAndContainerBottom;
+@synthesize paddingAboveAssistiveLabels = _paddingAboveAssistiveLabels;
+@synthesize paddingBelowAssistiveLabels = _paddingBelowAssistiveLabels;
+@synthesize containerHeightWithFloatingLabel = _containerHeightWithFloatingLabel;
+@synthesize containerHeightWithoutFloatingLabel = _containerHeightWithoutFloatingLabel;
+@synthesize paddingAroundTextWhenNoFloatingLabel = _paddingAroundTextWhenNoFloatingLabel;
 
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                           normalFontLineHeight:(CGFloat)normalFontLineHeight
@@ -34,25 +52,89 @@
                               numberOfTextRows:(CGFloat)numberOfTextRows
                                        density:(CGFloat)density
                       preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  self = [super initWithFloatingFontLineHeight:floatingLabelHeight
-                          normalFontLineHeight:normalFontLineHeight
-                                 textRowHeight:textRowHeight
-                              numberOfTextRows:numberOfTextRows
-                                       density:density
-                      preferredContainerHeight:preferredContainerHeight];
+  self = [super init];
   if (self) {
-    BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
+    BOOL isMultilineTextControl = numberOfTextRows > 1 || numberOfTextRows == 0;
+    CGFloat clampedDensity = MDCTextControlClampDensity(density);
+
+    _paddingBetweenContainerTopAndFloatingLabel = MDCTextControlPaddingValueWithMinimumPadding(
+        kMinPaddingBetweenContainerTopAndFloatingLabel,
+        kMaxPaddingBetweenContainerTopAndFloatingLabel, clampedDensity);
+
+    _paddingBetweenFloatingLabelAndEditingText = MDCTextControlPaddingValueWithMinimumPadding(
+        kMinPaddingBetweenFloatingLabelAndEditingText,
+        kMaxPaddingBetweenFloatingLabelAndEditingText, clampedDensity);
+
+    _paddingBetweenEditingTextAndContainerBottom = MDCTextControlPaddingValueWithMinimumPadding(
+        kMinPaddingBetweenEditingTextAndContainerBottom,
+        kMaxPaddingBetweenEditingTextAndContainerBottom, clampedDensity);
+
+    _paddingAboveAssistiveLabels = MDCTextControlPaddingValueWithMinimumPadding(
+        kMinPaddingAroundAssistiveLabels, kMaxPaddingAroundAssistiveLabels, clampedDensity);
+    _paddingBelowAssistiveLabels = _paddingAboveAssistiveLabels;
+
+    CGFloat defaultContainerHeightForFloatingLabel =
+        MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
+            floatingLabelHeight, textRowHeight, numberOfTextRows,
+            _paddingBetweenContainerTopAndFloatingLabel, _paddingBetweenFloatingLabelAndEditingText,
+            _paddingBetweenEditingTextAndContainerBottom);
+    BOOL preferredContainerHeightIsValidForFloatingLabel =
+        preferredContainerHeight > defaultContainerHeightForFloatingLabel;
+    if (preferredContainerHeightIsValidForFloatingLabel) {
+      _containerHeightWithFloatingLabel = preferredContainerHeight;
+      BOOL shouldUpdatePaddingValuesToMeetMinimumHeight = !isMultilineTextControl;
+      if (shouldUpdatePaddingValuesToMeetMinimumHeight) {
+        CGFloat difference = preferredContainerHeight - defaultContainerHeightForFloatingLabel;
+        CGFloat sumOfPaddingValues = _paddingBetweenContainerTopAndFloatingLabel +
+                                     _paddingBetweenFloatingLabelAndEditingText +
+                                     _paddingBetweenEditingTextAndContainerBottom;
+        _paddingBetweenContainerTopAndFloatingLabel =
+            _paddingBetweenContainerTopAndFloatingLabel +
+            ((_paddingBetweenContainerTopAndFloatingLabel / sumOfPaddingValues) * difference);
+        _paddingBetweenFloatingLabelAndEditingText =
+            _paddingBetweenFloatingLabelAndEditingText +
+            ((_paddingBetweenFloatingLabelAndEditingText / sumOfPaddingValues) * difference);
+        _paddingBetweenEditingTextAndContainerBottom =
+            _paddingBetweenEditingTextAndContainerBottom +
+            ((_paddingBetweenEditingTextAndContainerBottom / sumOfPaddingValues) * difference);
+      }
+    } else {
+      _containerHeightWithFloatingLabel = defaultContainerHeightForFloatingLabel;
+    }
+
+    _paddingAroundTextWhenNoFloatingLabel = MDCTextControlPaddingValueWithMinimumPadding(
+        kMinPaddingAroundTextWhenNoFloatingLabel, kMaxPaddingAroundTextWhenNoFloatingLabel,
+        clampedDensity);
+
+    CGFloat defaultContainerHeightForNoFloatingLabel =
+        MDCTextControlCalculateContainerHeightWhenNoFloatingLabelWithTextRowHeight(
+            textRowHeight, numberOfTextRows, _paddingAroundTextWhenNoFloatingLabel);
+    BOOL preferredContainerHeightIsValidForNoFloatingLabel =
+        preferredContainerHeight > defaultContainerHeightForNoFloatingLabel;
+    if (preferredContainerHeightIsValidForNoFloatingLabel) {
+      _containerHeightWithoutFloatingLabel = preferredContainerHeight;
+      BOOL shouldUpdatePaddingValuesToMeetMinimumHeight = !isMultilineTextControl;
+      if (shouldUpdatePaddingValuesToMeetMinimumHeight) {
+        CGFloat difference = preferredContainerHeight - defaultContainerHeightForNoFloatingLabel;
+        CGFloat sumOfPaddingValues = _paddingAroundTextWhenNoFloatingLabel * 2.0f;
+        _paddingAroundTextWhenNoFloatingLabel =
+            _paddingAroundTextWhenNoFloatingLabel +
+            ((_paddingAroundTextWhenNoFloatingLabel / sumOfPaddingValues) * difference);
+      }
+    } else {
+      _containerHeightWithoutFloatingLabel = defaultContainerHeightForNoFloatingLabel;
+    }
+
     CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
-    if (isMultiline) {
+    if (isMultilineTextControl) {
       CGFloat heightWithOneRow = MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
-          floatingLabelHeight, textRowHeight, 1, self.paddingBetweenContainerTopAndFloatingLabel,
-          self.paddingBetweenFloatingLabelAndEditingText,
-          self.paddingBetweenEditingTextAndContainerBottom);
+          floatingLabelHeight, textRowHeight, 1, _paddingBetweenContainerTopAndFloatingLabel,
+          _paddingBetweenFloatingLabelAndEditingText, _paddingBetweenEditingTextAndContainerBottom);
       CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
       _paddingBetweenContainerTopAndNormalLabel =
           halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
     } else {
-      CGFloat halfOfContainerHeight = (CGFloat)0.5 * self.containerHeightWithFloatingLabel;
+      CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeightWithFloatingLabel;
       _paddingBetweenContainerTopAndNormalLabel =
           halfOfContainerHeight - halfOfNormalFontLineHeight;
     }
@@ -60,8 +142,40 @@
   return self;
 }
 
+- (CGFloat)paddingBetweenContainerTopAndFloatingLabel {
+  return _paddingBetweenContainerTopAndFloatingLabel;
+}
+
 - (CGFloat)paddingBetweenContainerTopAndNormalLabel {
   return _paddingBetweenContainerTopAndNormalLabel;
+}
+
+- (CGFloat)paddingBetweenFloatingLabelAndEditingText {
+  return _paddingBetweenFloatingLabelAndEditingText;
+}
+
+- (CGFloat)paddingBetweenEditingTextAndContainerBottom {
+  return _paddingBetweenEditingTextAndContainerBottom;
+}
+
+- (CGFloat)paddingAboveAssistiveLabels {
+  return _paddingAboveAssistiveLabels;
+}
+
+- (CGFloat)paddingBelowAssistiveLabels {
+  return _paddingBelowAssistiveLabels;
+}
+
+- (CGFloat)containerHeightWithFloatingLabel {
+  return _containerHeightWithFloatingLabel;
+}
+
+- (CGFloat)containerHeightWithoutFloatingLabel {
+  return _containerHeightWithoutFloatingLabel;
+}
+
+- (CGFloat)paddingAroundTextWhenNoFloatingLabel {
+  return _paddingAroundTextWhenNoFloatingLabel;
 }
 
 @end
