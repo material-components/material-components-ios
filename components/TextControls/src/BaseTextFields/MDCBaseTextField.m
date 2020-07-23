@@ -258,7 +258,8 @@
                                        textRowHeight:self.normalFont.lineHeight
                                     numberOfTextRows:self.numberOfLinesOfVisibleText
                                              density:0
-                            preferredContainerHeight:self.preferredContainerHeight];
+                            preferredContainerHeight:self.preferredContainerHeight
+                              isMultilineTextControl:NO];
 }
 
 - (CGFloat)clampedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {

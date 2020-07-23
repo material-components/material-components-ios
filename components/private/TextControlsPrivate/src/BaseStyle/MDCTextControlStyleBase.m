@@ -43,14 +43,16 @@ static const CGFloat kBaseFloatingLabelScaleFactor = (CGFloat)0.8;
                                      textRowHeight:(CGFloat)textRowHeight
                                   numberOfTextRows:(CGFloat)numberOfTextRows
                                            density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight
+                            isMultilineTextControl:(BOOL)isMultilineTextControl {
   return [[MDCTextControlVerticalPositioningReferenceBase alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight
                     numberOfTextRows:numberOfTextRows
                              density:density
-            preferredContainerHeight:preferredContainerHeight];
+            preferredContainerHeight:preferredContainerHeight
+              isMultilineTextControl:isMultilineTextControl];
 }
 
 - (MDCTextControlHorizontalPositioningReference *)horizontalPositioningReference {

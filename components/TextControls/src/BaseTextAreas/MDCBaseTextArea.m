@@ -243,7 +243,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                                       self.normalFont.leading)
                                     numberOfTextRows:self.numberOfLinesOfVisibleText
                                              density:0
-                            preferredContainerHeight:self.preferredContainerHeight];
+                            preferredContainerHeight:self.preferredContainerHeight
+                              isMultilineTextControl:YES];
 }
 
 - (id<MDCTextControlHorizontalPositioning>)createHorizontalPositioningReference {

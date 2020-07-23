@@ -24,6 +24,7 @@
                                  textRowHeight:(CGFloat)textRowHeight
                               numberOfTextRows:(CGFloat)numberOfTextRows
                                        density:(CGFloat)density
-                      preferredContainerHeight:(CGFloat)preferredContainerHeight;
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight
+                        isMultilineTextControl:(BOOL)isMultilineTextControl;
 
 @end
