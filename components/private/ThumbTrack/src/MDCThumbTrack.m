@@ -675,11 +675,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                             delay:0
                           options:options
                        animations:^{
-                         self.value = self.filledTrackAnchorValue;
+                         // Set _value ivar instead of property to avoid conflicts with logic that
+                         // sends UIControlEventValueChanged.
+
+                         // Setting self.value programmatically here causes _lastDispatchedValue to
+                         // be updated to the new value before sendDiscreteChangeAction executes.
+                         // sendDiscreteChangeAction uses _lastDispatchedValue to ensure that
+                         // UIControlEventValueChanged actions aren't sent as a result of
+                         // programmatic changes to the value property.
+                         _value = self.filledTrackAnchorValue;
                          [self updateViewsMainIsAnimated:animated
                                             withDuration:animationDurationToAnchor
                                         animationOptions:options];
-                         self.value = currentValue;
+                         _value = currentValue;
                        }
                        completion:afterCrossingAnchorAnimation];
     } else {
