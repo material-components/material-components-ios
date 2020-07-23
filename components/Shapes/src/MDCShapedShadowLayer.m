@@ -113,6 +113,7 @@ static const CGFloat kDimensionalEpsilon = 0.001;
 
 - (void)generateColorPathGivenLineWidth {
   if (CGPathIsEmpty(self.path) || _colorLayer.lineWidth <= 0) {
+    _colorLayer.path = _shapeLayer.path;
     return;
   }
   CGFloat halfOfBorderWidth = self.shapedBorderWidth / 2.f;
@@ -126,7 +127,7 @@ static const CGFloat kDimensionalEpsilon = 0.001;
     transform = CGAffineTransformScale(transform, CGRectGetWidth(insetBounds) / width,
                                        CGRectGetHeight(insetBounds) / height);
   }
-  _colorLayer.path = CGPathCreateCopyByTransformingPath(_colorLayer.path, &transform);
+  _colorLayer.path = CGPathCreateCopyByTransformingPath(_shapeLayer.path, &transform);
 }
 
 - (CGPathRef)path {
