@@ -17,6 +17,9 @@
 #import "MDCShapeGenerating.h"
 #import "MaterialColor.h"
 
+// An epsilon for use with width/height values.
+static const CGFloat kDimensionalEpsilon = 0.001;
+
 @implementation MDCShapedShadowLayer
 
 - (instancetype)init {
@@ -117,9 +120,12 @@
   CGRect insetBounds = CGRectInset(standardizedBounds, halfOfBorderWidth, halfOfBorderWidth);
   CGAffineTransform transform =
       CGAffineTransformMakeTranslation(halfOfBorderWidth, halfOfBorderWidth);
-  transform = CGAffineTransformScale(
-      transform, CGRectGetWidth(insetBounds) / CGRectGetWidth(standardizedBounds),
-      CGRectGetHeight(insetBounds) / CGRectGetHeight(standardizedBounds));
+  CGFloat width = CGRectGetWidth(standardizedBounds);
+  CGFloat height = CGRectGetHeight(standardizedBounds);
+  if (width > kDimensionalEpsilon && height > kDimensionalEpsilon) {
+    transform = CGAffineTransformScale(transform, CGRectGetWidth(insetBounds) / width,
+                                       CGRectGetHeight(insetBounds) / height);
+  }
   _colorLayer.path = CGPathCreateCopyByTransformingPath(_colorLayer.path, &transform);
 }
 

@@ -27,7 +27,7 @@
 }
 
 - (void)
-    testEmptyFrameWithNonEmptyPathAndPositiveShapedBorderWidthGeneratesColorLayerPathInsetByHalfOfLineWidth {
+    testEmptyFrameWithNonEmptyPathAndPositiveShapedBorderWidthGeneratesColorLayerPathOffsetByHalfOfLineWidth {
   // Given
   MDCShapedShadowLayer *shadowLayer = [[MDCShapedShadowLayer alloc] init];
   UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 100, 100)];
@@ -38,12 +38,9 @@
   shadowLayer.path = bezierPath.CGPath;
 
   // Then
-  // TODO(b/161932830): This should not return NULL. The path assignment above is causing a runtime
-  // failure to a divide by zero, with the following error message:
-  // "[Unknown process name] Error: this application, or a library it uses, has passed an invalid
-  // numeric value (NaN, or not-a-number) to CoreGraphics API and this value is being ignored.
-  // Please fix this problem."
-  XCTAssertTrue(shadowLayer.colorLayer.path == NULL);
+  // Note that the X and Y values here are shifted by half of the shaped border width.
+  UIBezierPath *insetPath = [UIBezierPath bezierPathWithRect:CGRectMake(1, 1, 100, 100)];
+  XCTAssertTrue(CGPathEqualToPath(shadowLayer.colorLayer.path, insetPath.CGPath));
 }
 
 @end
