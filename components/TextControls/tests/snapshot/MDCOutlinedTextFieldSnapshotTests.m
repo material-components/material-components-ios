@@ -16,10 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextControls+FilledTextFieldsTheming.h"
-#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 #import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "supplemental/MDCTextControlSnapshotTestHelpers.h"
+#import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTextControls+OutlinedTextFields.h"
+#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 
 @interface MDCOutlinedTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCOutlinedTextField *textField;
@@ -205,6 +206,30 @@
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
       configureTextFieldWithScaledFontsAndAXXXLargeContentSize:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing {
+  // Given
+  MDCOutlinedTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing {
+  // Given
+  MDCOutlinedTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];
