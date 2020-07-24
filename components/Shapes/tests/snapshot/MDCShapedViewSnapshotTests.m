@@ -52,6 +52,26 @@
 
 #pragma mark - Tests
 
+- (void)testRectShapedViewWithBorderWidthAndCorrectMaskingOfContent {
+  // Given
+  MDCShapedShadowLayer *shadowLayer = (MDCShapedShadowLayer *)self.shapedView.layer;
+  MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCRoundedCornerTreatment *cornerTreatment = [MDCRoundedCornerTreatment cornerWithRadius:50.f];
+  [shapeGenerator setCorners:cornerTreatment];
+  shadowLayer.shapedBorderWidth = 10;
+  shadowLayer.shapedBorderColor = UIColor.redColor;
+  UIView *contentView = [[UIView alloc] initWithFrame:self.shapedView.bounds];
+  contentView.backgroundColor = UIColor.systemPinkColor;
+  [self.shapedView addSubview:contentView];
+
+  // When
+  self.shapedView.shapeGenerator = shapeGenerator;
+  contentView.layer.mask = shadowLayer.shapeLayer;
+
+  // Then
+  [self generateSnapshotAndVerifyView];
+}
+
 - (void)testRectShapedViewWithCornerRadiusBySettingABorderWidthToPositiveThenZero {
   // Given
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];

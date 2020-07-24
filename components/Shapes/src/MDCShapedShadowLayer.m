@@ -113,21 +113,32 @@ static const CGFloat kDimensionalEpsilon = 0.001;
 
 - (void)generateColorPathGivenLineWidth {
   if (CGPathIsEmpty(self.path) || _colorLayer.lineWidth <= 0) {
-    _colorLayer.path = _shapeLayer.path;
+    _colorLayer.path = self.shadowPath;
+    _shapeLayer.path = self.shadowPath;
     return;
   }
   CGFloat halfOfBorderWidth = self.shapedBorderWidth / 2.f;
+  CGAffineTransform colorLayerTransform = [self generateTransformInsetByValue:halfOfBorderWidth];
+  _colorLayer.path = CGPathCreateCopyByTransformingPath(self.shadowPath, &colorLayerTransform);
+  // The shape layer is used to provide the user a mask for their content, which means also
+  // show the full border. Because the border is shown half outside and half inside
+  // the color layer path, we must inset the shape layer by the full border width.
+  CGAffineTransform shapeLayerTransform =
+      [self generateTransformInsetByValue:self.shapedBorderWidth];
+  _shapeLayer.path = CGPathCreateCopyByTransformingPath(self.shadowPath, &shapeLayerTransform);
+}
+
+- (CGAffineTransform)generateTransformInsetByValue:(CGFloat)value {
   CGRect standardizedBounds = CGRectStandardize(self.bounds);
-  CGRect insetBounds = CGRectInset(standardizedBounds, halfOfBorderWidth, halfOfBorderWidth);
-  CGAffineTransform transform =
-      CGAffineTransformMakeTranslation(halfOfBorderWidth, halfOfBorderWidth);
+  CGRect insetBounds = CGRectInset(standardizedBounds, value, value);
+  CGAffineTransform transform = CGAffineTransformMakeTranslation(value, value);
   CGFloat width = CGRectGetWidth(standardizedBounds);
   CGFloat height = CGRectGetHeight(standardizedBounds);
   if (width > kDimensionalEpsilon && height > kDimensionalEpsilon) {
     transform = CGAffineTransformScale(transform, CGRectGetWidth(insetBounds) / width,
                                        CGRectGetHeight(insetBounds) / height);
   }
-  _colorLayer.path = CGPathCreateCopyByTransformingPath(_shapeLayer.path, &transform);
+  return transform;
 }
 
 - (CGPathRef)path {

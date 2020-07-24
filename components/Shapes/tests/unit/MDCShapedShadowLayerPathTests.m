@@ -43,4 +43,21 @@
   XCTAssertTrue(CGPathEqualToPath(shadowLayer.colorLayer.path, insetPath.CGPath));
 }
 
+- (void)testGeneratedColorLayerAndShapeLayerPathsGivenABorderAndShadowLayer {
+  // Given
+  MDCShapedShadowLayer *shadowLayer = [[MDCShapedShadowLayer alloc] init];
+  UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 100, 100)];
+
+  // When
+  shadowLayer.frame = CGRectMake(0, 0, 100, 100);
+  shadowLayer.shapedBorderWidth = 6;
+  shadowLayer.path = bezierPath.CGPath;
+
+  // Then
+  UIBezierPath *halfInsetPath = [UIBezierPath bezierPathWithRect:CGRectMake(3, 3, 94, 94)];
+  XCTAssertTrue(CGPathEqualToPath(shadowLayer.colorLayer.path, halfInsetPath.CGPath));
+  UIBezierPath *fullInsetPath = [UIBezierPath bezierPathWithRect:CGRectMake(6, 6, 88, 88)];
+  XCTAssertTrue(CGPathEqualToPath(shadowLayer.shapeLayer.path, fullInsetPath.CGPath));
+}
+
 @end
