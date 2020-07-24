@@ -201,4 +201,18 @@
                 NSStringFromCGRect(self.button.rippleView.frame));
 }
 
+- (void)testDefaultRippleMaximumRadius {
+  // Then
+  XCTAssertEqualWithAccuracy(self.button.rippleMaximumRadius, 0, 0.001);
+}
+
+- (void)testSettingRippleMaximumRadiusUpdatesTheRippleView {
+  // When
+  self.button.rippleMaximumRadius = 5;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.button.rippleMaximumRadius, 5, 0.001);
+  XCTAssertEqualWithAccuracy(self.button.rippleView.maximumRadius, 5, 0.001);
+}
+
 @end

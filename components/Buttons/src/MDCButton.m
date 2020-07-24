@@ -112,6 +112,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _cornerRadiusObserverAdded;
+  CGFloat _inkMaxRippleRadius;
 }
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
@@ -644,10 +645,20 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   [self.rippleView setRippleColor:_rippleColor forState:MDCRippleStateHighlighted];
 }
 
+- (CGFloat)inkMaxRippleRadius {
+  return _inkMaxRippleRadius;
+}
+
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
   _inkMaxRippleRadius = inkMaxRippleRadius;
   _inkView.maxRippleRadius = inkMaxRippleRadius;
   self.rippleView.maximumRadius = inkMaxRippleRadius;
+}
+
+- (void)setRippleMaximumRadius:(CGFloat)rippleMaximumRadius {
+  _rippleMaximumRadius = rippleMaximumRadius;
+
+  self.rippleView.maximumRadius = rippleMaximumRadius;
 }
 
 - (void)setInkViewOffset:(CGSize)inkViewOffset {

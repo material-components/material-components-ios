@@ -47,11 +47,14 @@
  */
 @property(nonatomic, strong, null_resettable) UIColor *rippleColor;
 
-/*
- Maximum radius of the button's ink. If the radius <= 0 then half the length of the diagonal of
- self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
+/**
+ The maximum radius the ripple can expand to.
+
+ @note This property is ignored if @c rippleStyle is set to @c MDCRippleStyleBounded.
+
+ @note Defaults to 0.
  */
-@property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) CGFloat rippleMaximumRadius;
 
 /**
  This property determines if an @c MDCButton should use the @c MDCInkView behavior or not.
@@ -411,5 +414,11 @@
 
 /** The ink color of the button. */
 @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+
+/*
+ Maximum radius of the button's ink. If the radius <= 0 then half the length of the diagonal of
+ self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
+ */
+@property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
 
 @end
