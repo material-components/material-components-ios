@@ -23,14 +23,13 @@ Ripple is a visual form of feedback for touch events providing users a clear sig
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCRippleTouchController.html">MDCRippleTouchController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCRippleView.html">MDCRippleView</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCStatefulRippleView.html">MDCStatefulRippleView</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Protocols/MDCRippleTouchControllerDelegate.html">MDCRippleTouchControllerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Protocols/MDCRippleViewDelegate.html">MDCRippleViewDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Enums/MDCRippleState.html">MDCRippleState</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Enums/MDCRippleStyle.html">MDCRippleStyle</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ripple/src/MDCRippleTouchController.h">MDCRippleTouchController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ripple/src/MDCRippleView.h">MDCRippleView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ripple/src/MDCStatefulRippleView.h">MDCStatefulRippleView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ripple/src/MDCRippleTouchControllerDelegate.h">MDCRippleTouchControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ripple/src/MDCRippleViewDelegate.h">MDCRippleViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ripple/src/MDCStatefulRippleView.h">MDCRippleState</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ripple/src/MDCRippleView.h">MDCRippleStyle</a></li>
 </ul>
 
 ## Table of contents

@@ -24,7 +24,7 @@ used Material Design elevations for components.
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/design/environment/elevation.html">Material Design guidelines: Elevation</a></li>
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/design/environment/light-shadows.html#light">Material Design guidelines: Light & Shadows</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/shadows/shadow-elevations/api-docs/Constants.html">API: Constants</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/ShadowElevations/src/MDCShadowElevations.h">API: Constants</a></li>
 </ul>
 
 - - -

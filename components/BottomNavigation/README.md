@@ -206,7 +206,6 @@ bottomNavBar.frame = bottomNavBarFrame
 API and source code:
 
 *   `MDCBottomNavigationBar`
-    *   [Class reference](https://material.io/components/ios/catalog/bottomnavigation/api-docs/Classes/MDCBottomNavigationBar.html)
     *   [Class source](https://github.com/material-components/material-components-ios/blob/develop/components/BottomNavigation/src/MDCBottomNavigationBar.h)
 
 To achieve something like the example image above, add the following code to your view controller:

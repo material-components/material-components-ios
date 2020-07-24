@@ -24,8 +24,8 @@ elevation.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/what-is-material/elevation-shadows.html">Material Design guidelines: Elevation & Shadows</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/shadows/shadow-layers/api-docs/Classes/MDCShadowLayer.html">API: MDCShadowLayer</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/shadows/shadow-layers/api-docs/Classes/MDCShadowMetrics.html">API: MDCShadowMetrics</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/ShadowLayer/src/MDCShadowLayer.h">API: MDCShadowLayer</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/ShadowLayer/src/MDCShadowLayer.h">API: MDCShadowMetrics</a></li>
 </ul>
 
 ### MDCShadowLayer
