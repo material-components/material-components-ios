@@ -916,6 +916,15 @@ static NSString *const kOfAnnouncement = @"of";
 - (void)largeContentViewerInteraction:(UILargeContentViewerInteraction *)interaction
                          didEndOnItem:(id<UILargeContentViewerItem>)item
                               atPoint:(CGPoint)point NS_AVAILABLE_IOS(13_0) {
+  if (item) {
+    for (NSUInteger i = 0; i < self.items.count; i++) {
+      MDCBottomNavigationItemView *itemView = self.itemViews[i];
+      if (item == itemView) {
+        [self didTouchUpInsideButton:itemView.button];
+      }
+    }
+  }
+
   self.lastLargeContentViewerItem = nil;
 }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
