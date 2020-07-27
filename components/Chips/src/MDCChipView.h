@@ -285,6 +285,27 @@
            forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
+ Returns the ripple color associated with the specified state.
+
+ The ripple color for the specified state. If no ripple color has been set for the specific state,
+ this method returns the title associated with the @c UIControlStateNormal state.
+
+ @note Defaults to @c nil. When @c nil transparent black is used.
+
+ @param state The state that uses the ripple color.
+ @return The ripple color for the requested state.
+ */
+- (nullable UIColor *)rippleColorForState:(UIControlState)state;
+
+/*
+ Sets the ripple color for a particular control state.
+
+ @param rippleColor The ripple color to use for the specified state.
+ @param state The state that uses the specified ripple color.
+ */
+- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(UIControlState)state;
+
+/*
  Returns the shadow color for a particular control state.
 
  If no shadow color has been set for a given state, the returned value will fall back to the value

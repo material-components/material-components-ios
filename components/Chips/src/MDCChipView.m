@@ -114,6 +114,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, assign) BOOL shouldFullyRoundCorner;
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, strong) MDCStatefulRippleView *rippleView;
+@property(nonatomic, strong, nonnull) NSMutableDictionary<NSNumber *, UIColor *> *rippleColors;
 @property(nonatomic, readonly) CGFloat pixelScale;
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
@@ -196,6 +197,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self addSubview:_inkView];
 
     _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+    _rippleColors = [NSMutableDictionary dictionary];
 
     _imageView = [[UIImageView alloc] init];
     [self addSubview:_imageView];
@@ -520,6 +522,23 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
   self.inkView.inkColor = inkColor ?: self.inkView.defaultInkColor;
+}
+
+- (UIColor *)rippleColorForState:(UIControlState)state {
+  UIColor *rippleColor = self.rippleColors[@(state)];
+  if (!rippleColor && state != UIControlStateNormal) {
+    rippleColor = self.rippleColors[@(UIControlStateNormal)];
+  }
+  return rippleColor;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor forState:(UIControlState)state {
+  self.rippleColors[@(state)] = rippleColor;
+  NSNumber *rippleState = [self rippleStateForControlState:state];
+  if (rippleState) {
+    [self.rippleView setRippleColor:rippleColor forState:rippleState.integerValue];
+  }
+  [self updateRippleColor];
 }
 
 - (void)updateRippleColor {
