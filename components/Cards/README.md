@@ -193,11 +193,9 @@ Cards can be used to build custom UIs, like the one shown above, from [CardWithI
 MDCCard and MDCCardCollectionCell inherit from UIControl and UICollectionViewCell, respectively.
 
 * MDCCard
-  * [API documentation](https://material.io/develop/ios/components/cards/api-docs/Classes/MDCCard.html)
   * [GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/Cards/src/MDCCard.h)
 
 * MDCCardCollectionCell
-  * [API documentation](https://material.io/develop/ios/components/cards/api-docs/Classes/MDCCardCollectionCell.html)
   * [GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/Cards/src/MDCCardCollectionCell.h)
 
 ### Card examples using MDCCard

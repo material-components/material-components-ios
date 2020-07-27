@@ -22,9 +22,9 @@ the screen and displays actions a user can take.
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetAction.html">MDCActionSheetAction</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetController.html">MDCActionSheetController</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Protocols/MDCActionSheetControllerDelegate.html">MDCActionSheetControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/src/MDCActionSheetAction.h">MDCActionSheetAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/src/MDCActionSheetController.h">MDCActionSheetController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/src/MDCActionSheetControllerDelegate.h">MDCActionSheetControllerDelegate</a></li>
 </ul>
 
 ## Table of contents

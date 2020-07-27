@@ -24,8 +24,7 @@ There are three types of FABs:
 
 A FAB performs the primary, or most common, action on a screen. It appears in front of all screen content, typically as a circular shape with an icon in its center. 
 
-FABs are implemented by `MDCFloatingButton`, a subclass of [MDCButton](https://material.io/develop/ios/components/buttons/api-docs/Classes/MDCButton.html).
-* [API documentation](https://material.io/develop/ios/components/buttons/api-docs/Classes/MDCFloatingButton.html)
+FABs are implemented by `MDCFloatingButton`, a subclass of [MDCButton](https://github.com/material-components/material-components-ios/blob/stable/components/Buttons/src/MDCButton.h).
 * [GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/Buttons/src/MDCFloatingButton.h)
 
 Only use a FAB if it is the most suitable way to present a screen’s primary action.

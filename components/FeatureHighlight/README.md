@@ -23,8 +23,8 @@ The Feature Highlight component is a way to visually highlight a part of the scr
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/feature-highlights/api-docs/Classes/MDCFeatureHighlightView.html">MDCFeatureHighlightView</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/feature-highlights/api-docs/Classes/MDCFeatureHighlightViewController.html">MDCFeatureHighlightViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FeatureHighlight/src/MDCFeatureHighlightView.h">MDCFeatureHighlightView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FeatureHighlight/src/MDCFeatureHighlightViewController.h">MDCFeatureHighlightViewController</a></li>
 </ul>
 
 ## Table of contents
