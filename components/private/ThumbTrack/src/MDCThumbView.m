@@ -15,18 +15,25 @@
 #import "MDCThumbView.h"
 
 #import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
+#import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
+#import "MaterialMath.h"
 
 @interface MDCThumbView ()
 
 @property(nonatomic, strong) UIImageView *iconView;
+// The shape generator used to define the shape of the thumb view.
+@property(nullable, nonatomic, strong) MDCRectangleShapeGenerator *shapeGenerator;
+@property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 
 @end
 
 @implementation MDCThumbView
 
+@dynamic layer;
+
 + (Class)layerClass {
-  return [MDCShadowLayer class];
+  return [MDCShapedShadowLayer class];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -35,39 +42,50 @@
     // TODO: Remove once MDCShadowLayer is rasterized by default.
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+
     _shadowColor = UIColor.blackColor;
+    _shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+    self.layer.shadowColor = _shadowColor.CGColor;
+    self.layer.shapeGenerator = _shapeGenerator;
   }
   return self;
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
-  _borderWidth = borderWidth;
-  self.layer.borderWidth = borderWidth;
+  self.layer.shapedBorderWidth = borderWidth;
+}
+
+- (CGFloat)borderWidth {
+  return self.layer.shapedBorderWidth;
+}
+
+- (void)setBorderColor:(UIColor *)borderColor {
+  self.layer.shapedBorderColor = borderColor;
+}
+
+- (UIColor *)borderColor {
+  return self.layer.shapedBorderColor;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
+  if (cornerRadius == _cornerRadius) {
+    return;
+  }
   _cornerRadius = cornerRadius;
-  self.layer.cornerRadius = cornerRadius;
+
+  MDCCornerTreatment *cornerTreatment =
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerRadius];
+  [self.shapeGenerator setCorners:cornerTreatment];
+
   [self setNeedsLayout];
 }
 
 - (MDCShadowElevation)elevation {
-  return [self shadowLayer].elevation;
+  return self.layer.elevation;
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
-  [self shadowLayer].elevation = elevation;
-}
-
-- (MDCShadowLayer *)shadowLayer {
-  return (MDCShadowLayer *)self.layer;
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  self.layer.shadowPath =
-      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:_cornerRadius].CGPath;
-  self.layer.shadowColor = self.shadowColor.CGColor;
+  self.layer.elevation = elevation;
 }
 
 - (void)setIcon:(nullable UIImage *)icon {
@@ -91,6 +109,14 @@
 - (void)setShadowColor:(UIColor *)shadowColor {
   _shadowColor = shadowColor;
   self.layer.shadowColor = shadowColor.CGColor;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  self.layer.shapedBackgroundColor = backgroundColor;
+}
+
+- (UIColor *)backgroundColor {
+  return self.layer.shapedBackgroundColor;
 }
 
 @end
