@@ -55,7 +55,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TabBarView"
+    extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}+TabBarView"
     extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
