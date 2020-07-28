@@ -73,11 +73,50 @@
   }
   _cornerRadius = cornerRadius;
 
+  [self configureShapeGeneratorWithCornerRadius:cornerRadius
+                              centerVisibleArea:self.centerVisibleArea];
+
+  [self setNeedsLayout];
+}
+
+- (void)setCenterVisibleArea:(BOOL)centerVisibleArea {
+  if (centerVisibleArea == _centerVisibleArea) {
+    return;
+  }
+  _centerVisibleArea = centerVisibleArea;
+
+  [self configureShapeGeneratorWithCornerRadius:self.cornerRadius
+                              centerVisibleArea:centerVisibleArea];
+
+  [self setNeedsLayout];
+}
+
+- (void)configureShapeGeneratorWithCornerRadius:(CGFloat)cornerRadius
+                              centerVisibleArea:(BOOL)centerVisibleArea {
   MDCCornerTreatment *cornerTreatment =
       [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerRadius];
   [self.shapeGenerator setCorners:cornerTreatment];
 
-  [self setNeedsLayout];
+  if (centerVisibleArea) {
+    UIEdgeInsets visibleAreaInsets = UIEdgeInsetsZero;
+    CGSize visibleAreaSize = CGSizeMake(cornerRadius * 2, cornerRadius * 2);
+    CGFloat additionalRequiredHeight =
+        MAX(0, CGRectGetHeight(self.bounds) - visibleAreaSize.height);
+    CGFloat additionalRequiredWidth = MAX(0, CGRectGetWidth(self.bounds) - visibleAreaSize.width);
+    visibleAreaInsets.top = MDCCeil(additionalRequiredHeight * 0.5f);
+    visibleAreaInsets.bottom = additionalRequiredHeight - visibleAreaInsets.top;
+    visibleAreaInsets.left = MDCCeil(additionalRequiredWidth * 0.5f);
+    visibleAreaInsets.right = additionalRequiredWidth - visibleAreaInsets.left;
+
+    self.shapeGenerator.topLeftCornerOffset =
+        CGPointMake(visibleAreaInsets.left, visibleAreaInsets.top);
+    self.shapeGenerator.topRightCornerOffset =
+        CGPointMake(-visibleAreaInsets.right, visibleAreaInsets.top);
+    self.shapeGenerator.bottomLeftCornerOffset =
+        CGPointMake(visibleAreaInsets.left, -visibleAreaInsets.bottom);
+    self.shapeGenerator.bottomRightCornerOffset =
+        CGPointMake(-visibleAreaInsets.right, -visibleAreaInsets.bottom);
+  }
 }
 
 - (MDCShadowElevation)elevation {
