@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "SnackbarExampleSupplemental.h"
-#import "MaterialSnackbar+TypographyThemer.h"
 
 static NSString *const kCellIdentifier = @"Cell";
 
@@ -24,7 +23,6 @@ static NSString *const kCellIdentifier = @"Cell";
   self.view.backgroundColor = [UIColor whiteColor];
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCellIdentifier];
-  [MDCSnackbarTypographyThemer applyTypographyScheme:self.typographyScheme];
 }
 
 #pragma mark - UICollectionView

@@ -53,4 +53,3 @@ visible to the user.
 ## Extensions
 
 - [Color Theming](color-theming.md)
-- [Typography Theming](typography-theming.md)
