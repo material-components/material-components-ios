@@ -103,6 +103,25 @@
   [self generateSnapshotAndVerifyView];
 }
 
+- (void)testSmallRectShapedViewWithCornerRadiusSameAsBoarderWidth {
+  // Given
+  MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCRoundedCornerTreatment *cornerTreatment = [MDCRoundedCornerTreatment cornerWithRadius:10.f];
+  [shapeGenerator setCorners:cornerTreatment];
+  shapeGenerator.topLeftCornerOffset = CGPointMake(40.f, 40.f);
+  shapeGenerator.topRightCornerOffset = CGPointMake(-40.f, 40.f);
+  shapeGenerator.bottomLeftCornerOffset = CGPointMake(40.f, -40.f);
+  shapeGenerator.bottomRightCornerOffset = CGPointMake(-40.f, -40.f);
+  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderWidth = 10;
+  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderColor = UIColor.redColor;
+
+  // When
+  self.shapedView.shapeGenerator = shapeGenerator;
+
+  // Then
+  [self generateSnapshotAndVerifyView];
+}
+
 - (void)testCurvedRectShapedViewElevation00 {
   // When
   self.shapedView.shapeGenerator =
