@@ -18,6 +18,7 @@
 #import <objc/runtime.h>
 
 #import "MaterialAvailability.h"
+#import "MDCButtonBar.h"
 #import "MDCButtonBarButton.h"
 #import "MDCButtonBar+Private.h"
 #import "MaterialButtons.h"
@@ -168,9 +169,13 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
 
 #ifdef __IPHONE_13_4
   if (@available(iOS 13.4, *)) {
-    UIPointerInteraction *pointerInteraction =
-        [[UIPointerInteraction alloc] initWithDelegate:buttonBar];
-    [button addInteraction:pointerInteraction];
+    // Because some iOS 13 betas did not have the UIPointerInteraction class, we need to verify
+    // that it exists before attempting to use it.
+    if (NSClassFromString(@"UIPointerInteraction")) {
+      UIPointerInteraction *pointerInteraction =
+          [[UIPointerInteraction alloc] initWithDelegate:buttonBar];
+      [button addInteraction:pointerInteraction];
+    }
   }
 #endif
 
