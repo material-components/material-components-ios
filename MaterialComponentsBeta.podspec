@@ -26,47 +26,6 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  mdc.subspec "Tabs+TabBarView" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
-    ]
-    extension.dependency "MaterialComponents/AnimationTiming"
-    extension.dependency "MaterialComponents/Ripple"
-    extension.dependency "MaterialComponents/private/Math"
-    extension.dependency "MDFInternationalization"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      ]
-      unit_tests.dependency "MaterialComponents/AppBar"
-      unit_tests.dependency "MaterialComponents/HeaderStackView"
-      unit_tests.dependency "MaterialComponents/Typography"
-    end
-  end
-
-  mdc.subspec "Tabs+TabBarViewTheming" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
-    ]
-    extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}+TabBarView"
-    extension.dependency "MaterialComponents/schemes/Container"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/TabBarView/MDCTabBarViewThemingTests.m",
-      ]
-      unit_tests.dependency "MaterialComponents/schemes/Container"
-    end
-  end
-
-
   # Private
 
   mdc.subspec "private" do |private_spec|
