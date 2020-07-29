@@ -72,7 +72,7 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
                                        numberOfTextRows:(CGFloat)numberOfTextRows
                                                 density:(CGFloat)density
                                preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                 isMultilineTextControl:(CGFloat)isMultilineTextControl {
+                                 isMultilineTextControl:(BOOL)isMultilineTextControl {
   CGFloat clampedDensity = MDCTextControlClampDensity(density);
 
   _paddingBetweenContainerTopAndFloatingLabel = MDCTextControlPaddingValueWithMinimumPadding(

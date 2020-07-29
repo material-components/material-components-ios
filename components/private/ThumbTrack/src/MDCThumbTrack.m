@@ -683,11 +683,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                          // sendDiscreteChangeAction uses _lastDispatchedValue to ensure that
                          // UIControlEventValueChanged actions aren't sent as a result of
                          // programmatic changes to the value property.
-                         _value = self.filledTrackAnchorValue;
+                         self->_value = self.filledTrackAnchorValue;
                          [self updateViewsMainIsAnimated:animated
                                             withDuration:animationDurationToAnchor
                                         animationOptions:options];
-                         _value = currentValue;
+                         self->_value = currentValue;
                        }
                        completion:afterCrossingAnchorAnimation];
     } else {

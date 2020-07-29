@@ -70,6 +70,7 @@ target "MDCCatalog" do
     'Snackbar/UnitTests',
     'Tabs/UnitTests',
     'Tabs+Theming/UnitTests',
+    'Tabs+TabBarView/UnitTests',
     'TextFields/UnitTests',
     'TextFields+Theming/UnitTests',
     'TextControls+BaseTextAreas/UnitTests',
@@ -87,7 +88,6 @@ target "MDCCatalog" do
   ]
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
     'BottomNavigation/UnitTests',
-    'Tabs+TabBarView/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'SnapshotTests'
