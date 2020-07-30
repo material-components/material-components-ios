@@ -1,15 +1,30 @@
-# #develop#
+# 112.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major releases deletes several deprecated APIs, expands Ripple support, and fixes several bugs.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Buttons' `MDCTitleColorAccessibilityMutator` and FeatureHighlight's
+`MDCFeatureHighlightAccessibilityMutator` have been deleted. There are no official replacements for
+these APIs.
 
-Replace this text with links to deprecation guides.
+`MDCHeaderStackViewColorThemer` has been deleted. There is no replacement for this API; use the
+AppBar Theming APIs instead.
+
+`MDCSnackbarFontThemer` and `MDCSnackbarTypographyThemer` have been deleted. Use the Snackbar
+Theming APIs instead.
+
 ## New features
 
-Replace this text with example code for each new feature.
+Buttons has several new Ripple APIs, including `rippleStyle`, `rippleColor`, `rippleEdgeInsets`,
+and `rippleMaximumRadius`. These APIs are intended to act as replacements for the similar Ink APIs.
+
+Chips similarly has added a `rippleForState` API.
+
+TabBarView now has a Theming extension.
+
+TextControls now expose a `preferredContainerHeight` API.
+
 ## API changes
 
 ## Component changes
