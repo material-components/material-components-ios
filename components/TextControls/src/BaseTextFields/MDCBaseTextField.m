@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCBaseTextFieldDelegate.h"
 #import "MaterialMath.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
@@ -741,6 +742,15 @@
 - (nonnull UIColor *)trailingAssistiveLabelColorForState:(MDCTextControlState)state {
   MDCTextControlColorViewModel *colorViewModel = [self textControlColorViewModelForState:state];
   return colorViewModel.trailingAssistiveLabelColor;
+}
+
+#pragma mark UIKeyInput
+
+- (void)deleteBackward {
+  [super deleteBackward];
+  if ([_baseTextFieldDelegate respondsToSelector:@selector(baseTextFieldDidDeleteBackward:)]) {
+    [_baseTextFieldDelegate baseTextFieldDidDeleteBackward:self];
+  }
 }
 
 @end

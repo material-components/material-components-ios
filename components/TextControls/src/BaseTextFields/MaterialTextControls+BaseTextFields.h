@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCBaseTextField.h"
+#import "MDCBaseTextFieldDelegate.h"
