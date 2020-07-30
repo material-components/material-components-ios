@@ -25,6 +25,7 @@
 #import "MaterialAvailability.h"
 #import "MDCBottomNavigationBarDelegate.h"
 #import "MaterialPalettes.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -909,6 +910,21 @@ static NSString *const kOfAnnouncement = @"of";
     return self.lastLargeContentViewerItem;
   }
 
+  MDCBottomNavigationItemView *lastItemView =
+      (MDCBottomNavigationItemView *)self.lastLargeContentViewerItem;
+
+  if (lastItemView && lastItemView != itemView) {
+    if (self.enableRippleBehavior) {
+      [lastItemView.rippleTouchController.rippleView cancelAllRipplesAnimated:NO completion:nil];
+      [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:itemView.center
+                                                                    animated:NO
+                                                                  completion:nil];
+    } else {
+      [lastItemView.inkView cancelAllAnimationsAnimated:NO];
+      [itemView.inkView startTouchBeganAtPoint:itemView.center animated:NO withCompletion:nil];
+    }
+  }
+
   self.lastLargeContentViewerItem = itemView;
   return itemView;
 }
@@ -920,6 +936,11 @@ static NSString *const kOfAnnouncement = @"of";
     for (NSUInteger i = 0; i < self.items.count; i++) {
       MDCBottomNavigationItemView *itemView = self.itemViews[i];
       if (item == itemView) {
+        if (self.enableRippleBehavior) {
+          [itemView.rippleTouchController.rippleView beginRippleTouchUpAnimated:YES completion:nil];
+        } else {
+          [itemView.inkView startTouchEndAtPoint:itemView.center animated:YES withCompletion:nil];
+        }
         [self didTouchUpInsideButton:itemView.button];
       }
     }
