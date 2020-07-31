@@ -41,5 +41,9 @@
 + (void)configureTextFieldWithColoredAssistiveLabelTextWhileEditing:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithColoredAssistiveLabelTextWhileDisabled:(MDCBaseTextField *)textField;
 + (void)configureTextFieldWithScaledFontsAndAXXXLargeContentSize:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing:
+    (MDCBaseTextField *)textField;
++ (void)configureTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing:
+    (MDCBaseTextField *)textField;
 
 @end

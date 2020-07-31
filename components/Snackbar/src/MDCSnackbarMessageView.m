@@ -66,8 +66,9 @@ static const CGFloat kLegacyCornerRadius = 0;
 /**
  Padding between the edges of the Snackbar and any content.
  */
-static UIEdgeInsets kContentMargin = (UIEdgeInsets){16.0, 16.0, 16.0, 8.0};
-static UIEdgeInsets kLegacyContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0};
+static const UIEdgeInsets kContentMarginSingleLineText = (UIEdgeInsets){6.0, 16.0, 6.0, 8.0};
+static const UIEdgeInsets kContentMarginMutliLineText = (UIEdgeInsets){16.0, 16.0, 16.0, 8.0};
+static const UIEdgeInsets kLegacyContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0};
 
 /**
  Padding between the image and the main title.
@@ -97,6 +98,11 @@ static const CGFloat kMaximumViewWidth_iPhone = 320;
  The minimum height of the Snackbar.
  */
 static const CGFloat kMinimumHeight = 48;
+
+/**
+ The minimum height of a multiline Snackbar.
+ */
+static const CGFloat kMinimumHeightMultiline = 68;
 
 /**
  Each button will have a tag indexed starting from this value.
@@ -207,6 +213,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 
   BOOL _shouldDismissOnOverlayTap;
+
+  BOOL _isMultilineText;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -674,21 +682,30 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 #pragma mark - Constraints and layout
 
+- (NSInteger)numberOfLines {
+  CGSize maxLabelSize = self.label.intrinsicContentSize;
+  CGFloat lineHeight = self.label.font.lineHeight;
+  return (NSInteger)MDCRound(maxLabelSize.height / lineHeight);
+}
+
+- (void)resetConstraints {
+  [self removeConstraints:self.viewConstraints];
+  self.viewConstraints = nil;
+  [self setNeedsUpdateConstraints];
+}
+
 - (void)setAnchoredToScreenBottom:(BOOL)anchoredToScreenBottom {
   _anchoredToScreenBottom = anchoredToScreenBottom;
   [self invalidateIntrinsicContentSize];
 
   if (self.viewConstraints) {
-    [self removeConstraints:self.viewConstraints];
-    self.viewConstraints = nil;
-    [self updateConstraints];
+    [self resetConstraints];
   }
 }
 
 - (void)updateConstraints {
-  [super updateConstraints];
-
   if (self.viewConstraints) {
+    [super updateConstraints];
     return;
   }
 
@@ -700,6 +717,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
   [self addConstraints:constraints];
   self.viewConstraints = constraints;
+
+  [super updateConstraints];
 }
 
 /**
@@ -707,13 +726,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  @c kBorderWidth. Also positions the content view and button view inside of the container view.
  */
 - (NSArray *)containerViewConstraints {
+  UIEdgeInsets safeContentMargin = self.safeContentMargin;
   NSDictionary *metrics = @{
     @"kBorderMargin" : @(kBorderWidth),
-    @"kBottomMargin" : @(self.safeContentMargin.bottom),
-    @"kLeftMargin" : @(self.safeContentMargin.left),
-    @"kRightMargin" : @(self.safeContentMargin.right),
+    @"kBottomMargin" : @(safeContentMargin.bottom),
+    @"kLeftMargin" : @(safeContentMargin.left),
+    @"kRightMargin" : @(safeContentMargin.right),
     @"kTitleImagePadding" : @(kTitleImagePadding),
-    @"kTopMargin" : @(self.safeContentMargin.top),
+    @"kTopMargin" : @(safeContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kContentSafeBottomInset" : @(kBorderWidth + self.contentSafeBottomInset),
   };
@@ -835,12 +855,13 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  Provides constraints for the image view and label within the content view.
  */
 - (NSArray *)contentViewConstraints {
+  UIEdgeInsets safeContentMargin = self.safeContentMargin;
   NSDictionary *metrics = @{
-    @"kBottomMargin" : @(self.safeContentMargin.bottom),
-    @"kLeftMargin" : @(self.safeContentMargin.left),
-    @"kRightMargin" : @(self.safeContentMargin.right),
+    @"kBottomMargin" : @(safeContentMargin.bottom),
+    @"kLeftMargin" : @(safeContentMargin.left),
+    @"kRightMargin" : @(safeContentMargin.right),
     @"kTitleImagePadding" : @(kTitleImagePadding),
-    @"kTopMargin" : @(self.safeContentMargin.top),
+    @"kTopMargin" : @(safeContentMargin.top),
   };
 
   NSMutableDictionary *views = [NSMutableDictionary dictionary];
@@ -906,12 +927,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  */
 - (NSArray *)horizontalButtonLayoutConstraints {
   NSMutableArray *constraints = [NSMutableArray array];
-
+  UIEdgeInsets safeContentMargin = self.safeContentMargin;
   NSDictionary *metrics = @{
-    @"kLeftMargin" : @(self.safeContentMargin.left),
-    @"kRightMargin" : @(self.safeContentMargin.right),
-    @"kTopMargin" : @(self.safeContentMargin.top),
-    @"kBottomMargin" : @(self.safeContentMargin.bottom),
+    @"kLeftMargin" : @(safeContentMargin.left),
+    @"kRightMargin" : @(safeContentMargin.right),
+    @"kTopMargin" : @(safeContentMargin.top),
+    @"kBottomMargin" : @(safeContentMargin.bottom),
     @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kBorderMargin" : @(kBorderWidth),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
@@ -989,6 +1010,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  BOOL isMultilineText = [self numberOfLines] > 1;
+  if (_isMultilineText != isMultilineText) {
+    _isMultilineText = isMultilineText;
+    [self resetConstraints];
+  }
+
   // As our layout changes, make sure that the shadow path is kept up-to-date.
   UIBezierPath *path = [UIBezierPath
       bezierPathWithRoundedRect:self.bounds
@@ -1012,7 +1039,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   height += self.safeContentMargin.top + self.safeContentMargin.bottom;
 
   // Make sure that the height of the image and text is larger than the minimum height;
-  height = MAX(kMinimumHeight, height) + self.contentSafeBottomInset;
+  height = MAX(_isMultilineText ? kMinimumHeightMultiline : kMinimumHeight, height) +
+           self.contentSafeBottomInset;
 
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
@@ -1031,8 +1059,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (UIEdgeInsets)safeContentMargin {
-  UIEdgeInsets contentMargin =
-      MDCSnackbarMessage.usesLegacySnackbar ? kLegacyContentMargin : kContentMargin;
+  UIEdgeInsets contentMargin = UIEdgeInsetsZero;
+  if (MDCSnackbarMessage.usesLegacySnackbar) {
+    contentMargin = kLegacyContentMargin;
+  } else {
+    contentMargin = _isMultilineText ? kContentMarginMutliLineText : kContentMarginSingleLineText;
+  }
 
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
   if (@available(iOS 11.0, *)) {

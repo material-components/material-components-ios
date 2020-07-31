@@ -210,4 +210,28 @@
   [self validateTextField:textField];
 }
 
+- (void)testTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 @end

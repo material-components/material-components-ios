@@ -17,29 +17,36 @@
 #import <Foundation/Foundation.h>
 
 #include "MaterialAvailability.h"
+#import "MDCTextControlState.h"
 #import "MDCTextControl.h"
 #import "UIBezierPath+MDCTextControlStyle.h"
 #import "MDCTextControlVerticalPositioningReferenceUnderlined.h"
 
-static const CGFloat kUnderlinedContainerStyleUnderlineWidthThin = 1.0f;
-static const CGFloat kUnderlinedContainerStyleUnderlineWidthThick = 2.0f;
+static const CGFloat kUnderlinedContainerStyleUnderlineThicknessNormal = 1.0f;
+static const CGFloat kUnderlinedContainerStyleUnderlineThicknessEditing = 2.0f;
 
 static const CGFloat kUnderlinedFloatingLabelScaleFactor = 0.75f;
 static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
 
 @interface MDCTextControlStyleUnderlined () <CAAnimationDelegate>
 
-@property(strong, nonatomic) CAShapeLayer *thinUnderlineLayer;
-@property(strong, nonatomic) CAShapeLayer *thickUnderlineLayer;
+@property(strong, nonatomic) CAShapeLayer *normalUnderlineLayer;
+@property(strong, nonatomic) CAShapeLayer *editingUnderlineLayer;
 
-@property(strong, nonatomic, readonly, class) NSString *thickUnderlineGrowKey;
-@property(strong, nonatomic, readonly, class) NSString *thickUnderlineShrinkKey;
-@property(strong, nonatomic, readonly, class) NSString *thinUnderlineGrowKey;
-@property(strong, nonatomic, readonly, class) NSString *thinUnderlineShrinkKey;
+@property(strong, nonatomic, readonly, class) NSString *editingUnderlineGrowKey;
+@property(strong, nonatomic, readonly, class) NSString *editingUnderlineShrinkKey;
+@property(strong, nonatomic, readonly, class) NSString *normalUnderlineGrowKey;
+@property(strong, nonatomic, readonly, class) NSString *normalUnderlineShrinkKey;
+
+@property(strong, nonatomic, readonly, class) NSString *editingUnderlineThicknessKey;
+@property(strong, nonatomic, readonly, class) NSString *normalUnderlineThicknessKey;
 
 @property(strong, nonatomic) NSMutableDictionary<NSNumber *, UIColor *> *underlineColors;
 
 @property(nonatomic, assign) CGRect mostRecentBounds;
+@property(nonatomic, assign) BOOL isEditing;
+@property(nonatomic, assign) CGFloat containerHeight;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 @end
 
@@ -58,9 +65,11 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
 #pragma mark Setup
 
 - (void)commonMDCTextControlStyleUnderlinedInit {
+  self.mostRecentBounds = CGRectZero;
+  self.normalUnderlineThickness = kUnderlinedContainerStyleUnderlineThicknessNormal;
+  self.editingUnderlineThickness = kUnderlinedContainerStyleUnderlineThicknessEditing;
   [self setUpUnderlineColors];
   [self setUpUnderlineSublayers];
-  self.mostRecentBounds = CGRectZero;
 }
 
 - (void)setUpUnderlineColors {
@@ -77,8 +86,8 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
 }
 
 - (void)setUpUnderlineSublayers {
-  self.thinUnderlineLayer = [[CAShapeLayer alloc] init];
-  self.thickUnderlineLayer = [[CAShapeLayer alloc] init];
+  self.normalUnderlineLayer = [[CAShapeLayer alloc] init];
+  self.editingUnderlineLayer = [[CAShapeLayer alloc] init];
 }
 
 #pragma mark Accessors
@@ -89,6 +98,46 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
 
 - (void)setUnderlineColor:(nonnull UIColor *)underlineColor forState:(MDCTextControlState)state {
   self.underlineColors[@(state)] = underlineColor;
+}
+
+- (void)setEditingUnderlineThickness:(CGFloat)editingUnderlineThickness {
+  [self setEditingUnderlineThickness:editingUnderlineThickness animated:NO];
+}
+
+- (void)setNormalUnderlineThickness:(CGFloat)normalUnderlineThickness {
+  [self setNormalUnderlineThickness:normalUnderlineThickness animated:NO];
+}
+
+- (void)setEditingUnderlineThickness:(CGFloat)thickness animated:(BOOL)animated {
+  _editingUnderlineThickness = thickness;
+
+  UIBezierPath *targetUnderlineBezier = [self targetEditingUnderlineBezier];
+  [self.editingUnderlineLayer removeAllAnimations];
+  if (animated) {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:self.animationDuration];
+    [self.editingUnderlineLayer addAnimation:[self pathAnimationTo:targetUnderlineBezier]
+                                      forKey:self.class.editingUnderlineThicknessKey];
+    [CATransaction commit];
+  } else {
+    self.editingUnderlineLayer.path = targetUnderlineBezier.CGPath;
+  }
+}
+
+- (void)setNormalUnderlineThickness:(CGFloat)thickness animated:(BOOL)animated {
+  _normalUnderlineThickness = thickness;
+
+  UIBezierPath *targetUnderlineBezier = [self targetNormalUnderlineBezier];
+  [self.normalUnderlineLayer removeAllAnimations];
+  if (animated) {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:self.animationDuration];
+    [self.normalUnderlineLayer addAnimation:[self pathAnimationTo:targetUnderlineBezier]
+                                     forKey:self.class.normalUnderlineThicknessKey];
+    [CATransaction commit];
+  } else {
+    self.normalUnderlineLayer.path = targetUnderlineBezier.CGPath;
+  }
 }
 
 #pragma mark MDCTextControl
@@ -102,8 +151,8 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
 }
 
 - (void)removeStyleFrom:(id<MDCTextControl>)textControl {
-  [self.thinUnderlineLayer removeFromSuperlayer];
-  [self.thickUnderlineLayer removeFromSuperlayer];
+  [self.normalUnderlineLayer removeFromSuperlayer];
+  [self.editingUnderlineLayer removeFromSuperlayer];
 }
 
 - (id<MDCTextControlVerticalPositioningReference>)
@@ -112,14 +161,16 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
                                      textRowHeight:(CGFloat)textRowHeight
                                   numberOfTextRows:(CGFloat)numberOfTextRows
                                            density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight
+                            isMultilineTextControl:(BOOL)isMultilineTextControl {
   return [[MDCTextControlVerticalPositioningReferenceUnderlined alloc]
       initWithFloatingFontLineHeight:floatingLabelHeight
                 normalFontLineHeight:normalFontLineHeight
                        textRowHeight:textRowHeight
                     numberOfTextRows:numberOfTextRows
                              density:density
-            preferredContainerHeight:preferredContainerHeight];
+            preferredContainerHeight:preferredContainerHeight
+              isMultilineTextControl:isMultilineTextControl];
 }
 
 - (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
@@ -148,156 +199,131 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
     self.mostRecentBounds = view.bounds;
   }
 
-  self.thinUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
-  self.thickUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
+  self.containerHeight = CGRectGetMaxY(containerFrame);
+  self.isEditing = state == MDCTextControlStateEditing;
+  self.animationDuration = animationDuration;
 
-  CGFloat containerHeight = CGRectGetMaxY(containerFrame);
+  self.normalUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
+  self.editingUnderlineLayer.fillColor = [self.underlineColors[@(state)] CGColor];
 
   BOOL styleIsBeingAppliedToView = NO;
-  if (self.thickUnderlineLayer.superlayer != view.layer) {
-    [view.layer insertSublayer:self.thickUnderlineLayer atIndex:0];
+  if (self.editingUnderlineLayer.superlayer != view.layer) {
+    [view.layer insertSublayer:self.editingUnderlineLayer atIndex:0];
     styleIsBeingAppliedToView = YES;
   }
-  if (self.thinUnderlineLayer.superlayer != view.layer) {
-    [view.layer insertSublayer:self.thinUnderlineLayer atIndex:0];
+  if (self.normalUnderlineLayer.superlayer != view.layer) {
+    [view.layer insertSublayer:self.normalUnderlineLayer atIndex:0];
     styleIsBeingAppliedToView = YES;
   }
 
-  BOOL shouldShowThickUnderline = [self shouldShowThickUnderlineWithState:state];
-  CGFloat viewWidth = CGRectGetWidth(view.bounds);
-  CGFloat thickUnderlineThickness = shouldShowThickUnderline ? viewWidth : 0;
-  UIBezierPath *targetThickUnderlineBezier =
-      [self filledSublayerUnderlinePathWithViewBounds:view.bounds
-                                      containerHeight:containerHeight
-                                   underlineThickness:kUnderlinedContainerStyleUnderlineWidthThick
-                                       underlineWidth:thickUnderlineThickness];
-  CGFloat thinUnderlineThickness =
-      shouldShowThickUnderline ? 0 : kUnderlinedContainerStyleUnderlineWidthThin;
-  UIBezierPath *targetThinUnderlineBezier =
-      [self filledSublayerUnderlinePathWithViewBounds:view.bounds
-                                      containerHeight:containerHeight
-                                   underlineThickness:thinUnderlineThickness
-                                       underlineWidth:viewWidth];
-
+  UIBezierPath *targetEditingUnderlineBezier = [self targetEditingUnderlineBezier];
+  UIBezierPath *targetNormalUnderlineBezier = [self targetNormalUnderlineBezier];
   if (animationDuration <= 0 || styleIsBeingAppliedToView || didChangeBounds) {
-    [self.thinUnderlineLayer removeAllAnimations];
-    [self.thickUnderlineLayer removeAllAnimations];
-    self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
-    self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+    [self.normalUnderlineLayer removeAllAnimations];
+    [self.editingUnderlineLayer removeAllAnimations];
+    self.normalUnderlineLayer.path = targetNormalUnderlineBezier.CGPath;
+    self.editingUnderlineLayer.path = targetEditingUnderlineBezier.CGPath;
     return;
   }
 
-  CABasicAnimation *preexistingThickUnderlineShrinkAnimation =
-      (CABasicAnimation *)[self.thickUnderlineLayer
-          animationForKey:self.class.thickUnderlineShrinkKey];
-  CABasicAnimation *preexistingThickUnderlineGrowAnimation =
-      (CABasicAnimation *)[self.thickUnderlineLayer
-          animationForKey:self.class.thickUnderlineGrowKey];
+  CABasicAnimation *preexistingEditingUnderlineShrinkAnimation =
+      (CABasicAnimation *)[self.editingUnderlineLayer
+          animationForKey:self.class.editingUnderlineShrinkKey];
+  CABasicAnimation *preexistingEditingUnderlineGrowAnimation =
+      (CABasicAnimation *)[self.editingUnderlineLayer
+          animationForKey:self.class.editingUnderlineGrowKey];
 
-  CABasicAnimation *preexistingThinUnderlineGrowAnimation =
-      (CABasicAnimation *)[self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
-  CABasicAnimation *preexistingThinUnderlineShrinkAnimation =
-      (CABasicAnimation *)[self.thinUnderlineLayer
-          animationForKey:self.class.thinUnderlineShrinkKey];
+  CABasicAnimation *preexistingNormalUnderlineGrowAnimation =
+      (CABasicAnimation *)[self.normalUnderlineLayer
+          animationForKey:self.class.normalUnderlineGrowKey];
+  CABasicAnimation *preexistingNormalUnderlineShrinkAnimation =
+      (CABasicAnimation *)[self.normalUnderlineLayer
+          animationForKey:self.class.normalUnderlineShrinkKey];
 
   [CATransaction begin];
   {
     [CATransaction setAnimationDuration:animationDuration];
 
-    if (shouldShowThickUnderline) {
-      if (preexistingThickUnderlineShrinkAnimation) {
-        [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
+    if (self.isEditing) {
+      if (preexistingEditingUnderlineShrinkAnimation) {
+        [self.editingUnderlineLayer removeAnimationForKey:self.class.editingUnderlineShrinkKey];
       }
-      BOOL needsThickUnderlineGrowAnimation = NO;
-      if (preexistingThickUnderlineGrowAnimation) {
-        CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineGrowAnimation.toValue;
-        if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
-          [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineGrowKey];
-          needsThickUnderlineGrowAnimation = YES;
-          self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+      BOOL needsEditingUnderlineGrowAnimation = NO;
+      if (preexistingEditingUnderlineGrowAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingEditingUnderlineGrowAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetEditingUnderlineBezier.CGPath)) {
+          [self.editingUnderlineLayer removeAnimationForKey:self.class.editingUnderlineGrowKey];
+          needsEditingUnderlineGrowAnimation = YES;
+          self.editingUnderlineLayer.path = targetEditingUnderlineBezier.CGPath;
         }
       } else {
-        needsThickUnderlineGrowAnimation = YES;
+        needsEditingUnderlineGrowAnimation = YES;
       }
-      if (needsThickUnderlineGrowAnimation) {
-        [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
-                                        forKey:self.class.thickUnderlineGrowKey];
+      if (needsEditingUnderlineGrowAnimation) {
+        [self.editingUnderlineLayer addAnimation:[self pathAnimationTo:targetEditingUnderlineBezier]
+                                          forKey:self.class.editingUnderlineGrowKey];
       }
 
-      if (preexistingThinUnderlineGrowAnimation) {
-        [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
+      if (preexistingNormalUnderlineGrowAnimation) {
+        [self.normalUnderlineLayer removeAnimationForKey:self.class.normalUnderlineGrowKey];
       }
-      BOOL needsThinUnderlineShrinkAnimation = NO;
-      if (preexistingThinUnderlineShrinkAnimation) {
-        CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineShrinkAnimation.toValue;
-        if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
-          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
-          needsThinUnderlineShrinkAnimation = YES;
-          self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
+      BOOL needsNormalUnderlineShrinkAnimation = NO;
+      if (preexistingNormalUnderlineShrinkAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingNormalUnderlineShrinkAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetNormalUnderlineBezier.CGPath)) {
+          [self.normalUnderlineLayer removeAnimationForKey:self.class.normalUnderlineShrinkKey];
+          needsNormalUnderlineShrinkAnimation = YES;
+          self.normalUnderlineLayer.path = targetNormalUnderlineBezier.CGPath;
         }
       } else {
-        needsThinUnderlineShrinkAnimation = YES;
+        needsNormalUnderlineShrinkAnimation = YES;
       }
-      if (needsThinUnderlineShrinkAnimation) {
-        [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
-                                       forKey:self.class.thinUnderlineShrinkKey];
+      if (needsNormalUnderlineShrinkAnimation) {
+        [self.normalUnderlineLayer addAnimation:[self pathAnimationTo:targetNormalUnderlineBezier]
+                                         forKey:self.class.normalUnderlineShrinkKey];
       }
 
     } else {
-      if (preexistingThickUnderlineGrowAnimation) {
-        [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineGrowKey];
+      if (preexistingEditingUnderlineGrowAnimation) {
+        [self.editingUnderlineLayer removeAnimationForKey:self.class.editingUnderlineGrowKey];
       }
-      BOOL needsThickUnderlineShrinkAnimation = NO;
-      if (preexistingThickUnderlineShrinkAnimation) {
-        CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineShrinkAnimation.toValue;
-        if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
-          [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
-          needsThickUnderlineShrinkAnimation = YES;
-          self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+      BOOL needsEditingUnderlineShrinkAnimation = NO;
+      if (preexistingEditingUnderlineShrinkAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingEditingUnderlineShrinkAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetEditingUnderlineBezier.CGPath)) {
+          [self.editingUnderlineLayer removeAnimationForKey:self.class.editingUnderlineShrinkKey];
+          needsEditingUnderlineShrinkAnimation = YES;
+          self.editingUnderlineLayer.path = targetEditingUnderlineBezier.CGPath;
         }
       } else {
-        needsThickUnderlineShrinkAnimation = YES;
+        needsEditingUnderlineShrinkAnimation = YES;
       }
-      if (needsThickUnderlineShrinkAnimation) {
-        [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
-                                        forKey:self.class.thickUnderlineShrinkKey];
+      if (needsEditingUnderlineShrinkAnimation) {
+        [self.editingUnderlineLayer addAnimation:[self pathAnimationTo:targetEditingUnderlineBezier]
+                                          forKey:self.class.editingUnderlineShrinkKey];
       }
 
-      if (preexistingThinUnderlineShrinkAnimation) {
-        [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
+      if (preexistingNormalUnderlineShrinkAnimation) {
+        [self.normalUnderlineLayer removeAnimationForKey:self.class.normalUnderlineShrinkKey];
       }
-      BOOL needsThickUnderlineGrowAnimation = NO;
-      if (preexistingThinUnderlineGrowAnimation) {
-        CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineGrowAnimation.toValue;
-        if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
-          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
-          needsThickUnderlineGrowAnimation = YES;
-          self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
+      BOOL needsEditingUnderlineGrowAnimation = NO;
+      if (preexistingNormalUnderlineGrowAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingNormalUnderlineGrowAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetNormalUnderlineBezier.CGPath)) {
+          [self.normalUnderlineLayer removeAnimationForKey:self.class.normalUnderlineGrowKey];
+          needsEditingUnderlineGrowAnimation = YES;
+          self.normalUnderlineLayer.path = targetNormalUnderlineBezier.CGPath;
         }
       } else {
-        needsThickUnderlineGrowAnimation = YES;
+        needsEditingUnderlineGrowAnimation = YES;
       }
-      if (needsThickUnderlineGrowAnimation) {
-        [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
-                                       forKey:self.class.thinUnderlineGrowKey];
+      if (needsEditingUnderlineGrowAnimation) {
+        [self.normalUnderlineLayer addAnimation:[self pathAnimationTo:targetNormalUnderlineBezier]
+                                         forKey:self.class.normalUnderlineGrowKey];
       }
     }
   }
   [CATransaction commit];
-}
-
-- (BOOL)shouldShowThickUnderlineWithState:(MDCTextControlState)state {
-  BOOL shouldShow = NO;
-  switch (state) {
-    case MDCTextControlStateEditing:
-      shouldShow = YES;
-      break;
-    case MDCTextControlStateNormal:
-    case MDCTextControlStateDisabled:
-    default:
-      break;
-  }
-  return shouldShow;
 }
 
 #pragma mark Animation
@@ -330,44 +356,87 @@ static const CGFloat kUnderlinedHorizontalEdgePaddingDefault = 2;
   CABasicAnimation *animation = (CABasicAnimation *)anim;
   CGPathRef toValue = (__bridge CGPathRef)animation.toValue;
 
-  CABasicAnimation *thickGrowAnimation = (CABasicAnimation *)[self.thickUnderlineLayer
-      animationForKey:self.class.thickUnderlineGrowKey];
-  CABasicAnimation *thickShrinkAnimation = (CABasicAnimation *)[self.thickUnderlineLayer
-      animationForKey:self.class.thickUnderlineShrinkKey];
-  CABasicAnimation *thinGrowAnimation =
-      (CABasicAnimation *)[self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
-  CABasicAnimation *thinShrinkAnimation = (CABasicAnimation *)[self.thinUnderlineLayer
-      animationForKey:self.class.thinUnderlineShrinkKey];
+  CABasicAnimation *thickGrowAnimation = (CABasicAnimation *)[self.editingUnderlineLayer
+      animationForKey:self.class.editingUnderlineGrowKey];
+  CABasicAnimation *thickShrinkAnimation = (CABasicAnimation *)[self.editingUnderlineLayer
+      animationForKey:self.class.editingUnderlineShrinkKey];
+  CABasicAnimation *thinGrowAnimation = (CABasicAnimation *)[self.normalUnderlineLayer
+      animationForKey:self.class.normalUnderlineGrowKey];
+  CABasicAnimation *thinShrinkAnimation = (CABasicAnimation *)[self.normalUnderlineLayer
+      animationForKey:self.class.normalUnderlineShrinkKey];
+
+  CABasicAnimation *editingUnderlineAnimation = (CABasicAnimation *)[self.editingUnderlineLayer
+      animationForKey:self.class.editingUnderlineThicknessKey];
+  CABasicAnimation *normalUnderlineAnimation = (CABasicAnimation *)[self.normalUnderlineLayer
+      animationForKey:self.class.normalUnderlineThicknessKey];
 
   if (flag) {
     if ((animation == thickGrowAnimation) || (animation == thickShrinkAnimation)) {
-      self.thickUnderlineLayer.path = toValue;
+      self.editingUnderlineLayer.path = toValue;
     }
     if ((animation == thinGrowAnimation) || (animation == thinShrinkAnimation)) {
-      self.thinUnderlineLayer.path = toValue;
+      self.normalUnderlineLayer.path = toValue;
+    }
+    if (animation == editingUnderlineAnimation) {
+      self.editingUnderlineLayer.path = toValue;
+    }
+    if (animation == normalUnderlineAnimation) {
+      self.normalUnderlineLayer.path = toValue;
     }
   }
 }
 
-+ (NSString *)thinUnderlineShrinkKey {
-  return @"thinUnderlineShrinkKey";
++ (NSString *)normalUnderlineShrinkKey {
+  return @"normalUnderlineShrinkKey";
 }
-+ (NSString *)thinUnderlineGrowKey {
-  return @"thinUnderlineGrowKey";
+
++ (NSString *)normalUnderlineGrowKey {
+  return @"normalUnderlineGrowKey";
 }
-+ (NSString *)thickUnderlineShrinkKey {
-  return @"thickUnderlineShrinkKey";
+
++ (NSString *)editingUnderlineShrinkKey {
+  return @"editingUnderlineShrinkKey";
 }
-+ (NSString *)thickUnderlineGrowKey {
-  return @"thickUnderlineGrowKey";
+
++ (NSString *)editingUnderlineGrowKey {
+  return @"editingUnderlineGrowKey";
+}
+
++ (NSString *)normalUnderlineThicknessKey {
+  return @"normalUnderlineThicknessKey";
+}
+
++ (NSString *)editingUnderlineThicknessKey {
+  return @"editingUnderlineThicknessKey";
 }
 
 #pragma mark Path Drawing
 
-- (UIBezierPath *)filledSublayerUnderlinePathWithViewBounds:(CGRect)viewBounds
-                                            containerHeight:(CGFloat)containerHeight
-                                         underlineThickness:(CGFloat)underlineThickness
-                                             underlineWidth:(CGFloat)underlineWidth {
+- (UIBezierPath *)targetEditingUnderlineBezier {
+  CGFloat editingUnderlineWidth = self.isEditing ? CGRectGetWidth(self.mostRecentBounds) : 0;
+  CGFloat editingUnderlineThickness = self.isEditing ? self.editingUnderlineThickness : 0;
+  UIBezierPath *targetEditingUnderlineBezier =
+      [self underlinePathWithViewBounds:self.mostRecentBounds
+                        containerHeight:self.containerHeight
+                     underlineThickness:editingUnderlineThickness
+                         underlineWidth:editingUnderlineWidth];
+  return targetEditingUnderlineBezier;
+}
+
+- (UIBezierPath *)targetNormalUnderlineBezier {
+  CGFloat normalUnderlineThickness = self.isEditing ? 0 : self.normalUnderlineThickness;
+  UIBezierPath *targetNormalUnderlineBezier =
+      [self underlinePathWithViewBounds:self.mostRecentBounds
+                        containerHeight:self.containerHeight
+                     underlineThickness:normalUnderlineThickness
+                         underlineWidth:CGRectGetWidth(self.mostRecentBounds)];
+  return targetNormalUnderlineBezier;
+}
+
+- (UIBezierPath *)underlinePathWithViewBounds:(CGRect)viewBounds
+                              containerHeight:(CGFloat)containerHeight
+                           underlineThickness:(CGFloat)underlineThickness
+                               underlineWidth:(CGFloat)underlineWidth {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat viewWidth = CGRectGetWidth(viewBounds);
   CGFloat halfViewWidth = 0.5f * viewWidth;

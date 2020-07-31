@@ -43,7 +43,7 @@
   UIImage *testImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.button setImage:testImage forState:UIControlStateNormal];
-  self.button.inkColor = [UIColor.magentaColor colorWithAlphaComponent:0.25];
+  self.button.rippleColor = [UIColor.magentaColor colorWithAlphaComponent:0.25];
   [self.button sizeToFit];
   [self configureButton:self.button
                forState:UIControlStateNormal
@@ -155,6 +155,16 @@
   [self.button.rippleView beginRippleTouchDownAtPoint:self.button.center
                                              animated:NO
                                            completion:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testButtonRippleWhenContentEdgeInsetsAreSet {
+  // When
+  self.button.rippleEdgeInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+  self.button.rippleView.backgroundColor = UIColor.purpleColor;
+  [self.button layoutIfNeeded];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];

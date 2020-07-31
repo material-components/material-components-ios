@@ -22,13 +22,12 @@ the user's touch.
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkGestureRecognizer.html">MDCInkGestureRecognizer</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkView.html">MDCInkView</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/ink/api-docs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/ink/api-docs/Protocols/MDCInkViewDelegate.html">MDCInkViewDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/ink/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/ink/api-docs/Enums/MDCInkStyle.html">MDCInkStyle</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ink/src/MDCInkGestureRecognizer.h">MDCInkGestureRecognizer</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ink/src/MDCInkTouchController.h">MDCInkTouchController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ink/src/MDCInkView.h">MDCInkView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ink/src/MDCInkTouchControllerDelegate.h">MDCInkTouchControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ink/src/MDCInkViewDelegate.h">MDCInkViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Ink/src/MDCInkView.h">MDCInkStyle</a></li>
 </ul>
 
 ## Table of contents

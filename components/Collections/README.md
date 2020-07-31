@@ -17,11 +17,11 @@ Collection view classes that adhere to Material Design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-lists#lists-specs">Material Design guidelines: Collection List Specs</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Classes/MDCCollectionViewController.html">API: MDCCollectionViewController</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditing.html">API: MDCCollectionViewEditing</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditingDelegate.html">API: MDCCollectionViewEditingDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewStyling.html">API: MDCCollectionViewStyling</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewStylingDelegate.html">API: MDCCollectionViewStylingDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/Collections/src/MDCCollectionViewController.h">API: MDCCollectionViewController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/Collections/src/MDCCollectionViewEditing.h">API: MDCCollectionViewEditing</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/Collections/src/MDCCollectionViewEditing.h">API: MDCCollectionViewEditingDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/Collections/src/MDCCollectionViewStyling.h">API: MDCCollectionViewStyling</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/Collections/src/MDCCollectionViewStylingDelegate.h">API: MDCCollectionViewStylingDelegate</a></li>
 </ul>
 
 - - -

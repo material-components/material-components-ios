@@ -153,6 +153,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
     _trackOnLayer = [CALayer layer];
     [_trackView.layer addSublayer:_trackOnLayer];
+    _trackView.layer.masksToBounds = YES;
 
     [self addSubview:_trackView];
 
@@ -674,11 +675,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                             delay:0
                           options:options
                        animations:^{
-                         self.value = self.filledTrackAnchorValue;
+                         // Set _value ivar instead of property to avoid conflicts with logic that
+                         // sends UIControlEventValueChanged.
+
+                         // Setting self.value programmatically here causes _lastDispatchedValue to
+                         // be updated to the new value before sendDiscreteChangeAction executes.
+                         // sendDiscreteChangeAction uses _lastDispatchedValue to ensure that
+                         // UIControlEventValueChanged actions aren't sent as a result of
+                         // programmatic changes to the value property.
+                         _value = self.filledTrackAnchorValue;
                          [self updateViewsMainIsAnimated:animated
                                             withDuration:animationDurationToAnchor
                                         animationOptions:options];
-                         self.value = currentValue;
+                         _value = currentValue;
                        }
                        completion:afterCrossingAnchorAnimation];
     } else {
@@ -742,11 +751,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       [self updateTrackMask];
 
       _thumbView.backgroundColor = _thumbEnabledColor;
-      _thumbView.layer.borderColor = _thumbEnabledColor.CGColor;
+      _thumbView.borderColor = _thumbEnabledColor;
     }
   } else {
     _thumbView.backgroundColor = _thumbDisabledColor;
-    _thumbView.layer.borderColor = _clearColor.CGColor;
+    _thumbView.borderColor = _clearColor;
 
     if (_thumbIsSmallerWhenDisabled) {
       [self setDisplayThumbRadius:_thumbRadius - _trackHeight];
@@ -888,7 +897,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self updateTrackMask];
 
     _thumbView.backgroundColor = _clearColor;
-    _thumbView.layer.borderColor = _trackOffColor.CGColor;
+    _thumbView.borderColor = _trackOffColor;
   }
 
   CGFloat radius;
@@ -903,7 +912,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     radius = _thumbRadius;
   }
 
-  if (radius == _thumbView.layer.cornerRadius || !_thumbGrowsWhenDragging) {
+  if (radius == _thumbView.cornerRadius || !_thumbGrowsWhenDragging) {
     // No need to change anything
     return;
   }
@@ -912,7 +921,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
     anim.timingFunction =
         [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    anim.fromValue = [NSNumber numberWithDouble:_thumbView.layer.cornerRadius];
+    anim.fromValue = [NSNumber numberWithDouble:_thumbView.cornerRadius];
     anim.toValue = [NSNumber numberWithDouble:radius];
     anim.duration = duration;
     anim.delegate = self;
@@ -949,7 +958,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGMutablePathRef path = CGPathCreateMutable();
   CGPathAddRect(path, NULL, maskFrame);
 
-  CGFloat radius = _thumbView.layer.cornerRadius;
+  CGFloat radius = _thumbView.cornerRadius;
   if (_thumbView.layer.presentationLayer != NULL) {
     // If we're animating (growing or shrinking) lean on the side of the smaller radius, to prevent
     // a gap from appearing between the thumb and the track in the intermediate frames.

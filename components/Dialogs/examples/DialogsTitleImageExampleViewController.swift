@@ -280,22 +280,55 @@ extension DialogsTitleImageExampleViewController {
 
 extension UIView {
   fileprivate func animateIn(
-    duration: TimeInterval = 2, options: UIView.AnimationOptions = [.curveEaseOut]
+    duration: TimeInterval = 4,
+    repeating: Bool = true,
+    options: UIView.AnimationOptions = [.curveEaseOut]
   ) {
-    alpha = 0.2
-    self.transform = self.transform
-      .translatedBy(x: -self.frame.origin.x / 2, y: 0)
-      .scaledBy(x: 0.2, y: 0.2)
-      .rotated(by: CGFloat.pi)
-    UIView.animate(
-      withDuration: duration,
-      delay: 0,
-      usingSpringWithDamping: 0.3,
-      initialSpringVelocity: 0.3,
-      options: options,
+    self.alpha = 1
+    let initialTransform = self.transform.translatedBy(x: -150, y: 0)
+    self.transform = initialTransform
+    let transform1 =
+      initialTransform
+      .concatenating(CGAffineTransform(translationX: 80, y: 0))
+      .rotated(by: CGFloat.pi * 0.8)
+    let transform2 =
+      initialTransform
+      .concatenating(CGAffineTransform(translationX: 160, y: 0))
+      .rotated(by: CGFloat.pi * 1.5)
+    let transform3 =
+      initialTransform
+      .concatenating(CGAffineTransform(translationX: 240, y: 0))
+    let transform4 =
+      initialTransform
+      .concatenating(CGAffineTransform(translationX: 360, y: 0))
+      .rotated(by: CGFloat.pi * 0.75)
+
+    let animationOptions: UInt
+    if repeating {
+      animationOptions =
+        UIView.AnimationOptions.curveLinear.rawValue | UIView.AnimationOptions.repeat.rawValue
+    } else {
+      animationOptions = UIView.AnimationOptions.curveLinear.rawValue
+    }
+
+    let keyFrameAnimationOptions = UIView.KeyframeAnimationOptions(rawValue: animationOptions)
+
+    UIView.animateKeyframes(
+      withDuration: duration, delay: 0,
+      options: [keyFrameAnimationOptions, .calculationModeLinear],
       animations: {
-        self.transform = CGAffineTransform.identity
-        self.alpha = 1
+        UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.14) {  // 0.375
+          self.transform = transform1
+        }
+        UIView.addKeyframe(withRelativeStartTime: 0.14, relativeDuration: 0.14) {  // 0.375
+          self.transform = transform2
+        }
+        UIView.addKeyframe(withRelativeStartTime: 0.28, relativeDuration: 0.15) {  //0.25) {
+          self.transform = transform3
+        }
+        UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: 0.15) {  //0.25) {
+          self.transform = transform4
+        }
       }, completion: nil)
   }
 }

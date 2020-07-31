@@ -28,8 +28,21 @@
 /** The border width of the thumbview layer. */
 @property(nonatomic, assign) CGFloat borderWidth;
 
+/** The border color of the thumbview layer. */
+@property(nullable, nonatomic) UIColor *borderColor;
+
 /** The corner radius of the thumbview layer. */
 @property(nonatomic, assign) CGFloat cornerRadius;
+
+/**
+ A Boolean value that determines whether the visible area is centered in the bounds of the view.
+
+ If set to YES, the visible area is centered in the bounds of the view, which is often used to
+ configure invisible tappable area. If set to NO, the visible area fills its bounds.
+
+ The default value is @c NO.
+*/
+@property(nonatomic, assign) BOOL centerVisibleArea;
 
 /** Set the @c icon shown on the thumb. */
 - (void)setIcon:(nullable UIImage *)icon;

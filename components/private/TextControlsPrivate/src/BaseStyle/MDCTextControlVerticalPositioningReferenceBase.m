@@ -16,8 +16,8 @@
 #import "MaterialMath.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
-static const CGFloat kMinPaddingAroundTextWhenNoLabel = 6.0f;
-static const CGFloat kMaxPaddingAroundTextWhenNoLabel = 10.0f;
+static const CGFloat kMinPaddingAroundTextWhenNoFloatingLabel = 6.0f;
+static const CGFloat kMaxPaddingAroundTextWhenNoFloatingLabel = 10.0f;
 static const CGFloat kMinPaddingBetweenContainerTopAndFloatingLabel = (CGFloat)6.0;
 static const CGFloat kMaxPaddingBetweenContainerTopAndFloatingLabel = (CGFloat)10.0;
 static const CGFloat kMinPaddingBetweenFloatingLabelAndEditingText = (CGFloat)3.0;
@@ -51,7 +51,8 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
                                  textRowHeight:(CGFloat)textRowHeight
                               numberOfTextRows:(CGFloat)numberOfTextRows
                                        density:(CGFloat)density
-                      preferredContainerHeight:(CGFloat)preferredContainerHeight {
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight
+                        isMultilineTextControl:(BOOL)isMultilineTextControl {
   self = [super init];
   if (self) {
     [self calculatePaddingValuesWithFoatingFontLineHeight:floatingLabelHeight
@@ -59,7 +60,8 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
                                             textRowHeight:textRowHeight
                                          numberOfTextRows:numberOfTextRows
                                                   density:density
-                                 preferredContainerHeight:preferredContainerHeight];
+                                 preferredContainerHeight:preferredContainerHeight
+                                   isMultilineTextControl:isMultilineTextControl];
   }
   return self;
 }
@@ -69,12 +71,9 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
                                           textRowHeight:(CGFloat)textRowHeight
                                        numberOfTextRows:(CGFloat)numberOfTextRows
                                                 density:(CGFloat)density
-                               preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
+                               preferredContainerHeight:(CGFloat)preferredContainerHeight
+                                 isMultilineTextControl:(CGFloat)isMultilineTextControl {
   CGFloat clampedDensity = MDCTextControlClampDensity(density);
-
-  _paddingAroundTextWhenNoFloatingLabel = MDCTextControlPaddingValueWithMinimumPadding(
-      kMinPaddingAroundTextWhenNoLabel, kMaxPaddingAroundTextWhenNoLabel, clampedDensity);
 
   _paddingBetweenContainerTopAndFloatingLabel = MDCTextControlPaddingValueWithMinimumPadding(
       kMinPaddingBetweenContainerTopAndFloatingLabel,
@@ -90,77 +89,71 @@ static const CGFloat kMaxPaddingBelowAssistiveLabels = (CGFloat)6.0;
 
   _paddingAboveAssistiveLabels = MDCTextControlPaddingValueWithMinimumPadding(
       kMinPaddingAboveAssistiveLabels, kMaxPaddingAboveAssistiveLabels, clampedDensity);
-
   _paddingBelowAssistiveLabels = MDCTextControlPaddingValueWithMinimumPadding(
       kMinPaddingBelowAssistiveLabels, kMaxPaddingBelowAssistiveLabels, clampedDensity);
 
-  // The container height below is the "default" container height, given the density. This height
-  // will be used if the client has not specified a preferredContainerHeight.
-  CGFloat containerHeightWithPaddingsDeterminedByDensity =
+  CGFloat defaultContainerHeightForFloatingLabel =
       MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
           floatingLabelHeight, textRowHeight, numberOfTextRows,
           _paddingBetweenContainerTopAndFloatingLabel, _paddingBetweenFloatingLabelAndEditingText,
           _paddingBetweenEditingTextAndContainerBottom);
-  BOOL clientHasSpecifiedValidPreferredContainerHeight =
-      preferredContainerHeight > containerHeightWithPaddingsDeterminedByDensity;
-  if (clientHasSpecifiedValidPreferredContainerHeight && !isMultiline) {
-    // modify the previously computed padding values so that they ultimately result in a container
-    // with the preferred container height.
-    CGFloat difference = preferredContainerHeight - containerHeightWithPaddingsDeterminedByDensity;
-    CGFloat sumOfPaddingValues = _paddingBetweenContainerTopAndFloatingLabel +
-                                 _paddingBetweenFloatingLabelAndEditingText +
-                                 _paddingBetweenEditingTextAndContainerBottom;
-    _paddingBetweenContainerTopAndFloatingLabel =
-        _paddingBetweenContainerTopAndFloatingLabel +
-        ((_paddingBetweenContainerTopAndFloatingLabel / sumOfPaddingValues) * difference);
-    _paddingBetweenFloatingLabelAndEditingText =
-        _paddingBetweenFloatingLabelAndEditingText +
-        ((_paddingBetweenFloatingLabelAndEditingText / sumOfPaddingValues) * difference);
-    _paddingBetweenEditingTextAndContainerBottom =
-        _paddingBetweenEditingTextAndContainerBottom +
-        ((_paddingBetweenEditingTextAndContainerBottom / sumOfPaddingValues) * difference);
+  BOOL preferredContainerHeightIsValidForFloatingLabel =
+      preferredContainerHeight > defaultContainerHeightForFloatingLabel;
+  if (preferredContainerHeightIsValidForFloatingLabel) {
+    _containerHeightWithFloatingLabel = preferredContainerHeight;
+    BOOL shouldUpdatePaddingValuesToMeetMinimumHeight = !isMultilineTextControl;
+    if (shouldUpdatePaddingValuesToMeetMinimumHeight) {
+      CGFloat difference = preferredContainerHeight - defaultContainerHeightForFloatingLabel;
+      CGFloat sumOfPaddingValues = _paddingBetweenContainerTopAndFloatingLabel +
+                                   _paddingBetweenFloatingLabelAndEditingText +
+                                   _paddingBetweenEditingTextAndContainerBottom;
+      _paddingBetweenContainerTopAndFloatingLabel =
+          _paddingBetweenContainerTopAndFloatingLabel +
+          ((_paddingBetweenContainerTopAndFloatingLabel / sumOfPaddingValues) * difference);
+      _paddingBetweenFloatingLabelAndEditingText =
+          _paddingBetweenFloatingLabelAndEditingText +
+          ((_paddingBetweenFloatingLabelAndEditingText / sumOfPaddingValues) * difference);
+      _paddingBetweenEditingTextAndContainerBottom =
+          _paddingBetweenEditingTextAndContainerBottom +
+          ((_paddingBetweenEditingTextAndContainerBottom / sumOfPaddingValues) * difference);
+    }
+  } else {
+    _containerHeightWithFloatingLabel = defaultContainerHeightForFloatingLabel;
   }
 
-  if (clientHasSpecifiedValidPreferredContainerHeight) {
-    _containerHeightWithFloatingLabel = preferredContainerHeight;
+  _paddingAroundTextWhenNoFloatingLabel = MDCTextControlPaddingValueWithMinimumPadding(
+      kMinPaddingAroundTextWhenNoFloatingLabel, kMaxPaddingAroundTextWhenNoFloatingLabel,
+      clampedDensity);
+
+  CGFloat defaultContainerHeightForNoFloatingLabel =
+      MDCTextControlCalculateContainerHeightWhenNoFloatingLabelWithTextRowHeight(
+          textRowHeight, numberOfTextRows, _paddingAroundTextWhenNoFloatingLabel);
+  BOOL preferredContainerHeightIsValidForNoFloatingLabel =
+      preferredContainerHeight > defaultContainerHeightForNoFloatingLabel;
+  if (preferredContainerHeightIsValidForNoFloatingLabel) {
+    _containerHeightWithoutFloatingLabel = preferredContainerHeight;
+    BOOL shouldUpdatePaddingValuesToMeetMinimumHeight = !isMultilineTextControl;
+    if (shouldUpdatePaddingValuesToMeetMinimumHeight) {
+      CGFloat difference = preferredContainerHeight - defaultContainerHeightForNoFloatingLabel;
+      CGFloat sumOfPaddingValues = _paddingAroundTextWhenNoFloatingLabel * 2.0f;
+      _paddingAroundTextWhenNoFloatingLabel =
+          _paddingAroundTextWhenNoFloatingLabel +
+          ((_paddingAroundTextWhenNoFloatingLabel / sumOfPaddingValues) * difference);
+    }
   } else {
-    _containerHeightWithFloatingLabel = containerHeightWithPaddingsDeterminedByDensity;
+    _containerHeightWithoutFloatingLabel = defaultContainerHeightForNoFloatingLabel;
   }
 
   CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
-  if (isMultiline) {
-    // For multiline text controls the normal label (i.e. the label when it's not floating) should
-    // be positioned where it would be positioned if it were single-line.
+  if (isMultilineTextControl) {
     CGFloat heightWithOneRow = MDCTextControlCalculateContainerHeightWithFloatingLabelHeight(
         floatingLabelHeight, textRowHeight, 1, _paddingBetweenContainerTopAndFloatingLabel,
         _paddingBetweenFloatingLabelAndEditingText, _paddingBetweenEditingTextAndContainerBottom);
     CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
     _paddingBetweenContainerTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
   } else {
-    // For single-line text controls the normal label (i.e. the label when it's not floating) should
-    // be vertically centered.
     CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeightWithFloatingLabel;
     _paddingBetweenContainerTopAndNormalLabel = halfOfContainerHeight - halfOfNormalFontLineHeight;
-  }
-
-  CGFloat containerHeightWhenNoFloatingLabelWithPaddingsDeterminedByDensity =
-      MDCTextControlCalculateContainerHeightWhenNoFloatingLabelWithTextRowHeight(
-          textRowHeight, numberOfTextRows, _paddingAroundTextWhenNoFloatingLabel);
-  BOOL clientHasSpecifiedValidPreferredContainerHeightWhenNoFloatingLabel =
-      preferredContainerHeight > containerHeightWhenNoFloatingLabelWithPaddingsDeterminedByDensity;
-  if (clientHasSpecifiedValidPreferredContainerHeightWhenNoFloatingLabel && !isMultiline) {
-    CGFloat difference = preferredContainerHeight - containerHeightWithPaddingsDeterminedByDensity;
-    CGFloat sumOfPaddingValues = _paddingAroundTextWhenNoFloatingLabel * 2.0f;
-    _paddingAroundTextWhenNoFloatingLabel =
-        _paddingAroundTextWhenNoFloatingLabel +
-        ((_paddingAroundTextWhenNoFloatingLabel / sumOfPaddingValues) * difference);
-  }
-
-  if (clientHasSpecifiedValidPreferredContainerHeightWhenNoFloatingLabel) {
-    _containerHeightWithoutFloatingLabel = preferredContainerHeight;
-  } else {
-    _containerHeightWithoutFloatingLabel =
-        containerHeightWhenNoFloatingLabelWithPaddingsDeterminedByDensity;
   }
 }
 

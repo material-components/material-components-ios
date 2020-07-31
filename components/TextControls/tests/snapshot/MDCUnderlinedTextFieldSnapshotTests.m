@@ -18,7 +18,9 @@
 
 #import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "supplemental/MDCTextControlSnapshotTestHelpers.h"
+
 #import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTextControls+UnderlinedTextFields.h"
 #import "MaterialTextControls+UnderlinedTextFieldsTheming.h"
 
 @interface MDCUnderlinedTextFieldTestsSnapshotTests : MDCSnapshotTestCase
@@ -205,6 +207,30 @@
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
       configureTextFieldWithScaledFontsAndAXXXLargeContentSize:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing {
+  // Given
+  MDCUnderlinedTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing {
+  // Given
+  MDCUnderlinedTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing:textField];
 
   // Then
   [self validateTextField:textField];

@@ -17,6 +17,9 @@
 #import "MDCShapeGenerating.h"
 #import "MaterialColor.h"
 
+// An epsilon for use with width/height values.
+static const CGFloat kDimensionalEpsilon = 0.001;
+
 @implementation MDCShapedShadowLayer
 
 - (instancetype)init {
@@ -104,7 +107,38 @@
     _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
     _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
     _colorLayer.lineWidth = self.shapedBorderWidth;
+    [self generateColorPathGivenLineWidth];
   }
+}
+
+- (void)generateColorPathGivenLineWidth {
+  if (CGPathIsEmpty(self.path) || _colorLayer.lineWidth <= 0) {
+    _colorLayer.path = self.shadowPath;
+    _shapeLayer.path = self.shadowPath;
+    return;
+  }
+  CGFloat halfOfBorderWidth = self.shapedBorderWidth / 2.f;
+  CGAffineTransform colorLayerTransform = [self generateTransformInsetByValue:halfOfBorderWidth];
+  _colorLayer.path = CGPathCreateCopyByTransformingPath(self.shadowPath, &colorLayerTransform);
+  // The shape layer is used to provide the user a mask for their content, which means also
+  // show the full border. Because the border is shown half outside and half inside
+  // the color layer path, we must inset the shape layer by the full border width.
+  CGAffineTransform shapeLayerTransform =
+      [self generateTransformInsetByValue:self.shapedBorderWidth];
+  _shapeLayer.path = CGPathCreateCopyByTransformingPath(self.shadowPath, &shapeLayerTransform);
+}
+
+- (CGAffineTransform)generateTransformInsetByValue:(CGFloat)value {
+  CGRect standardizedBounds = CGRectStandardize(self.bounds);
+  CGRect insetBounds = CGRectInset(standardizedBounds, value, value);
+  CGAffineTransform transform = CGAffineTransformMakeTranslation(value, value);
+  CGFloat width = CGRectGetWidth(standardizedBounds);
+  CGFloat height = CGRectGetHeight(standardizedBounds);
+  if (width > kDimensionalEpsilon && height > kDimensionalEpsilon) {
+    transform = CGAffineTransformScale(transform, CGRectGetWidth(insetBounds) / width,
+                                       CGRectGetHeight(insetBounds) / height);
+  }
+  return transform;
 }
 
 - (CGPathRef)path {
@@ -155,6 +189,7 @@
   } else {
     self.borderWidth = 0;
     _colorLayer.lineWidth = _shapedBorderWidth;
+    [self generateColorPathGivenLineWidth];
   }
 }
 

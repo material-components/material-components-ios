@@ -182,7 +182,8 @@ FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
                                      textRowHeight:(CGFloat)textRowHeight
                                   numberOfTextRows:(CGFloat)numberOfTextRows
                                            density:(CGFloat)density
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight;
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight
+                            isMultilineTextControl:(BOOL)isMultilineTextControl;
 
 /**
  This method returns an object that tells the view where to position its views

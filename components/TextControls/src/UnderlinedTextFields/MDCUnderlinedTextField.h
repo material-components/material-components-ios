@@ -27,6 +27,30 @@ __attribute__((objc_subclassing_restricted)) @interface MDCUnderlinedTextField :
 @property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
 
 /**
+The thickness of the underline that shows in the normal and disabled states. The default is 1.
+*/
+@property(nonatomic, assign) CGFloat normalUnderlineThickness;
+
+/**
+The thickness of the underline that shows in the editing state. The default is 2.
+*/
+@property(nonatomic, assign) CGFloat editingUnderlineThickness;
+
+/**
+Sets the normal underline thickness.
+@param thickness The thickness of the underline.
+@param animated Determines whether or not the change is animated.
+*/
+- (void)setNormalUnderlineThickness:(CGFloat)thickness animated:(BOOL)animated;
+
+/**
+Sets the editing underline thickness.
+@param thickness The thickness of the underline.
+@param animated Determines whether or not the change is animated.
+*/
+- (void)setEditingUnderlineThickness:(CGFloat)thickness animated:(BOOL)animated;
+
+/**
  Sets the underline color for a given state.
  @param underlineColor The UIColor for the given state.
  @param state The MDCTextControlState.

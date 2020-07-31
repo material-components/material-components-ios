@@ -25,14 +25,13 @@ Navigation drawers are recommended for:
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-navigation-drawer">Material Design guidelines: Navigation Drawer</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerPresentationController.html">MDCBottomDrawerPresentationController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerTransitionController.html">MDCBottomDrawerTransitionController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerViewController.html">MDCBottomDrawerViewController</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerHeader.html">MDCBottomDrawerHeader</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerPresentationControllerDelegate.html">MDCBottomDrawerPresentationControllerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerViewControllerDelegate.html">MDCBottomDrawerViewControllerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Enums/MDCBottomDrawerState.html">MDCBottomDrawerState</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/NavigationDrawer/src/MDCBottomDrawerPresentationController.h">MDCBottomDrawerPresentationController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/NavigationDrawer/src/MDCBottomDrawerTransitionController.h">MDCBottomDrawerTransitionController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/NavigationDrawer/src/MDCBottomDrawerViewController.h">MDCBottomDrawerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/NavigationDrawer/src/MDCBottomDrawerHeader.h">MDCBottomDrawerHeader</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/NavigationDrawer/src/MDCBottomDrawerPresentationControllerDelegate.h">MDCBottomDrawerPresentationControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/NavigationDrawer/src/MDCBottomDrawerViewControllerDelegate.h">MDCBottomDrawerViewControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/NavigationDrawer/src/MDCBottomDrawerState.h">MDCBottomDrawerState</a></li>
 </ul>
 
 ## Table of contents

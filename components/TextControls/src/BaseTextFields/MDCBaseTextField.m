@@ -47,7 +47,6 @@
 @synthesize containerStyle = _containerStyle;
 @synthesize assistiveLabelDrawPriority = _assistiveLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
-@synthesize preferredContainerHeight = _preferredContainerHeight;
 
 #pragma mark Object Lifecycle
 
@@ -258,7 +257,8 @@
                                        textRowHeight:self.normalFont.lineHeight
                                     numberOfTextRows:self.numberOfLinesOfVisibleText
                                              density:0
-                            preferredContainerHeight:self.preferredContainerHeight];
+                            preferredContainerHeight:self.preferredContainerHeight
+                              isMultilineTextControl:NO];
 }
 
 - (CGFloat)clampedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
@@ -622,10 +622,18 @@
   } else if (labelPosition == MDCTextControlLabelPositionFloating) {
     labelColor = colorViewModel.floatingLabelColor;
   }
-  self.textColor = colorViewModel.textColor;
-  self.leadingAssistiveLabel.textColor = colorViewModel.leadingAssistiveLabelColor;
-  self.trailingAssistiveLabel.textColor = colorViewModel.trailingAssistiveLabelColor;
-  self.label.textColor = labelColor;
+  if (![self.textColor isEqual:colorViewModel.textColor]) {
+    self.textColor = colorViewModel.textColor;
+  }
+  if (![self.leadingAssistiveLabel.textColor isEqual:colorViewModel.leadingAssistiveLabelColor]) {
+    self.leadingAssistiveLabel.textColor = colorViewModel.leadingAssistiveLabelColor;
+  }
+  if (![self.trailingAssistiveLabel.textColor isEqual:colorViewModel.trailingAssistiveLabelColor]) {
+    self.trailingAssistiveLabel.textColor = colorViewModel.trailingAssistiveLabelColor;
+  }
+  if (![self.label.textColor isEqual:labelColor]) {
+    self.label.textColor = labelColor;
+  }
 }
 
 - (void)setTextControlColorViewModel:(MDCTextControlColorViewModel *)colorViewModel

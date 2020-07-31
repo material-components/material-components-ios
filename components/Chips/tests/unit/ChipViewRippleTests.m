@@ -18,6 +18,29 @@
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 
+static UIColor *RandomColor() {
+  switch (arc4random_uniform(5)) {
+    case 0:
+      return [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+      break;
+    case 1:
+      return [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+      break;
+    case 2:
+      return [UIColor redColor];
+      break;
+    case 3:
+      return [UIColor orangeColor];
+      break;
+    case 4:
+      return [UIColor greenColor];
+      break;
+    default:
+      return [UIColor blueColor];
+      break;
+  }
+}
+
 @interface MDCChipView (Testing)
 @property(nonatomic, strong) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
@@ -173,6 +196,33 @@
 
   // Then
   XCTAssertFalse(self.chipView.rippleView.isRippleHighlighted);
+}
+
+- (void)testSetRippleColorForStateReturnsTheCorrectValue {
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (NSUInteger state = 0; state <= maxState; ++state) {
+    // Given
+    UIColor *color = RandomColor();
+
+    // When
+    [self.chipView setRippleColor:color forState:state];
+
+    // Then
+    XCTAssertEqualObjects([self.chipView rippleColorForState:state], color);
+  }
+}
+
+- (void)testSetRippleColorToNilReturnsTheCorrectValueForNormal {
+  // Given
+  UIColor *color = UIColor.orangeColor;
+  [self.chipView setRippleColor:color forState:UIControlStateNormal];
+
+  // When
+  [self.chipView setRippleColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.chipView rippleColorForState:UIControlStateSelected], color);
 }
 
 @end

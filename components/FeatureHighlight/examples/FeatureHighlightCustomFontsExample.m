@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MaterialButtons.h"
-#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight.h"
 #import "MaterialTypography.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
@@ -56,7 +55,6 @@
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  [MDCFeatureHighlightAccessibilityMutator mutate:vc];
 
   vc.titleText = @"Feature Highlight can use custom fonts";
   vc.bodyText = @"The title and body font can be set individually.";

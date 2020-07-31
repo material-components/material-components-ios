@@ -24,9 +24,8 @@ Progress view is a linear progress indicator that implements Material Design ani
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & Activity</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Classes/MDCProgressView.html">MDCProgressView</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Enums/MDCProgressViewBackwardAnimationMode.html">MDCProgressViewBackwardAnimationMode</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/ProgressView/src/MDCProgressView.h">MDCProgressView</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/ProgressView/src/MDCProgressView.h">MDCProgressViewBackwardAnimationMode</a></li>
 </ul>
 
 ## Related components

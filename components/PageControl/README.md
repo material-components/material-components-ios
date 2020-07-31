@@ -26,7 +26,7 @@ desired animation of the control.
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/page-controls/api-docs/Classes/MDCPageControl.html">MDCPageControl</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/PageControl/src/MDCPageControl.h">MDCPageControl</a></li>
 </ul>
 
 ## Table of contents

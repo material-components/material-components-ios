@@ -26,14 +26,13 @@ contain a text action, but no icons.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-snackbar">Material Design guidelines: Snack Bar</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarManager.html">MDCSnackbarManager</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessage.html">MDCSnackbarMessage</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageAction.html">MDCSnackbarMessageAction</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageView.html">MDCSnackbarMessageView</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Protocols.html#/c:objc(pl)MDCSnackbarSuspensionToken">MDCSnackbarSuspensionToken</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Protocols/MDCSnackbarManagerDelegate.html">MDCSnackbarManagerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Enums/MDCSnackbarAlignment.html">MDCSnackbarAlignment</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarManager.h">MDCSnackbarManager</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarMessage.h">MDCSnackbarMessage</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarMessage.h">MDCSnackbarMessageAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarMessageView.h">MDCSnackbarMessageView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarManager.h">MDCSnackbarSuspensionToken</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarManagerDelegate.h">MDCSnackbarManagerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarAlignment.h">MDCSnackbarAlignment</a></li>
 </ul>
 
 ## Related components
@@ -55,7 +54,6 @@ contain a text action, but no icons.
   - [Typical use: display a message with an action](#typical-use-display-a-message-with-an-action)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
 
 - - -
 
@@ -183,43 +181,4 @@ message.action = action;
 ### Color Theming
 
 There is currently no theing extension for MDCSnackbar.
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-You can theme an snackbar with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Snackbar+TypographyThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialSnackbar_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCSnackbarTypographyThemer.applyTypographyScheme(typographyScheme)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialSnackbar+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCSnackbarTypographyThemer applyTypographyScheme:colorScheme];
-```
-<!--</div>-->
 

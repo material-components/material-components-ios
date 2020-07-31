@@ -926,6 +926,17 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualObjects(self.button.inkColor, color);
 }
 
+- (void)testRippleColors {
+  // Given
+  UIColor *color = randomColor();
+
+  // When
+  self.button.rippleColor = color;
+
+  // Then
+  XCTAssertEqualObjects(self.button.rippleColor, color);
+}
+
 /*
  TODO: things to unit test
  (should these even be a thing?)

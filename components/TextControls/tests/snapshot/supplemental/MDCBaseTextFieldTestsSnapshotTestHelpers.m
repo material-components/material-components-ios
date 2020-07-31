@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
+#import "MaterialTextControls+BaseTextFields.h"
 #import "MDCTextControlSnapshotTestHelpers.h"
+#import "MaterialSnapshot.h"
 
 @interface MDCBaseTextField (AnimationDuration)
 @property(nonatomic, assign) NSTimeInterval animationDuration;
@@ -189,6 +190,21 @@
              compatibleWithTraitCollection:textField.traitCollection];
   }
 
+  [textField becomeFirstResponder];
+}
+
++ (void)configureTextFieldWithTextAndLabelTextAndPreferredContainerHeightWhileEditing:
+    (MDCBaseTextField *)textField {
+  textField.text = @"Some text";
+  textField.label.text = @"Label text";
+  textField.preferredContainerHeight = 100;
+  [textField becomeFirstResponder];
+}
+
++ (void)configureTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing:
+    (MDCBaseTextField *)textField {
+  textField.text = @"Some text";
+  textField.preferredContainerHeight = 100;
   [textField becomeFirstResponder];
 }
 

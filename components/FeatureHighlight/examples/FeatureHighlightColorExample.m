@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
@@ -31,7 +30,6 @@
   highlightController.accessibilityHint = nil;
   highlightController.bodyText = @"What a nice color you've chosen.";
   highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
-  [MDCFeatureHighlightAccessibilityMutator mutate:highlightController];
   [self presentViewController:highlightController animated:YES completion:nil];
 }
 

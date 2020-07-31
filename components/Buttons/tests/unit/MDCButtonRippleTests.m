@@ -51,7 +51,7 @@
 - (void)testDefaultButtonBehaviorWithRipple {
   // Then
   XCTAssertNotNil(self.button.rippleView);
-  XCTAssertEqualObjects(self.button.rippleView.rippleColor, [UIColor colorWithWhite:1
+  XCTAssertEqualObjects(self.button.rippleView.rippleColor, [UIColor colorWithWhite:0
                                                                               alpha:(CGFloat)0.12]);
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.button.enableRippleBehavior);
@@ -89,14 +89,14 @@
 }
 
 /**
- Test setting @c inkColor correctly sets the @c rippleColor on @c rippleView of the button.
+ Test setting @c rippleColor correctly sets the @c rippleColor on @c rippleView of the button.
  */
-- (void)testSetCustomInkColorUpdatesRippleViewForHighlightedState {
+- (void)testSetCustomRippleColorUpdatesRippleViewForHighlightedState {
   // Given
   UIColor *fakeColor = UIColor.redColor;
 
   // When
-  self.button.inkColor = fakeColor;
+  self.button.rippleColor = fakeColor;
 
   // Then
   XCTAssertEqualObjects([self.button.rippleView rippleColorForState:MDCRippleStateHighlighted],
@@ -104,22 +104,22 @@
 }
 
 /**
- Test setting @c inkStyle correctly sets the @c rippleStyle on @c rippleView of the button.
+ Test setting @c rippleStyle correctly sets the @c rippleStyle on @c rippleView of the button.
  */
-- (void)testSetInkStyleUnboundedUpdatesRippleView {
+- (void)testSetRippleStyleUnboundedUpdatesRippleView {
   // When
-  self.button.inkStyle = MDCInkStyleUnbounded;
+  self.button.rippleStyle = MDCRippleStyleUnbounded;
 
   // Then
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleUnbounded);
 }
 
 /**
- Test setting @c inkStyle correctly sets the @c rippleStyle on @c rippleView of the button.
+ Test setting @c rippleStyle correctly sets the @c rippleStyle on @c rippleView of the button.
  */
-- (void)testSetInkStyleBoundedUpdatesRippleView {
+- (void)testSetRippleStyleBoundedUpdatesRippleView {
   // When
-  self.button.inkStyle = MDCInkStyleBounded;
+  self.button.rippleStyle = MDCRippleStyleBounded;
 
   // Then
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
@@ -180,6 +180,39 @@
 
   // Then
   XCTAssertFalse(self.button.rippleView.isSelected);
+}
+
+- (void)testSettingContentEdgeInsetsUpdatesRipple {
+  // Given
+  self.button.enableRippleBehavior = YES;
+  CGRect buttonFrame = CGRectMake(0, 0, 100, 100);
+  self.button.frame = buttonFrame;
+  UIEdgeInsets buttonRippleInsets = UIEdgeInsetsMake(1, 2, 3, 4);
+
+  // When
+  self.button.rippleEdgeInsets = buttonRippleInsets;
+  [self.button layoutIfNeeded];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(UIEdgeInsetsInsetRect(buttonFrame, buttonRippleInsets),
+                                  self.button.rippleView.frame),
+                @"%@ is not equal to %@",
+                NSStringFromCGRect(UIEdgeInsetsInsetRect(buttonFrame, buttonRippleInsets)),
+                NSStringFromCGRect(self.button.rippleView.frame));
+}
+
+- (void)testDefaultRippleMaximumRadius {
+  // Then
+  XCTAssertEqualWithAccuracy(self.button.rippleMaximumRadius, 0, 0.001);
+}
+
+- (void)testSettingRippleMaximumRadiusUpdatesTheRippleView {
+  // When
+  self.button.rippleMaximumRadius = 5;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.button.rippleMaximumRadius, 5, 0.001);
+  XCTAssertEqualWithAccuracy(self.button.rippleView.maximumRadius, 5, 0.001);
 }
 
 @end

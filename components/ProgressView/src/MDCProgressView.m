@@ -217,11 +217,6 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
                    completion:userCompletion];
 }
 
-- (void)setHidden:(BOOL)hidden {
-  [super setHidden:hidden];
-  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, hidden ? nil : self);
-}
-
 - (void)setHidden:(BOOL)hidden
          animated:(BOOL)animated
        completion:(void (^__nullable)(BOOL finished))userCompletion {

@@ -1,3 +1,132 @@
+# 112.0.0
+
+This major releases deletes several deprecated APIs, expands Ripple support, and fixes several bugs.
+
+## Breaking changes
+
+Buttons' `MDCTitleColorAccessibilityMutator` and FeatureHighlight's
+`MDCFeatureHighlightAccessibilityMutator` have been deleted. There are no official replacements for
+these APIs.
+
+`MDCHeaderStackViewColorThemer` has been deleted. There is no replacement for this API; use the
+AppBar Theming APIs instead.
+
+`MDCSnackbarFontThemer` and `MDCSnackbarTypographyThemer` have been deleted. Use the Snackbar
+Theming APIs instead.
+
+## New features
+
+Buttons has several new Ripple APIs, including `rippleStyle`, `rippleColor`, `rippleEdgeInsets`,
+and `rippleMaximumRadius`. These APIs are intended to act as replacements for the similar Ink APIs.
+
+Chips similarly has added a `rippleForState` API.
+
+TabBarView now has a Theming extension.
+
+TextControls now expose a `preferredContainerHeight` API.
+
+## API changes
+
+## Component changes
+
+### BottomAppBar
+
+* [Material io bottom app bar](https://github.com/material-components/material-components-ios/commit/d6255fa0f431f3ee62b83637f0a50fb07c153292) (Andrew Overton)
+
+### BottomNavigation
+
+* [When large content view is enabled, on long presses it will correctly switch to the last selected item](https://github.com/material-components/material-components-ios/commit/3481620f18b9c3e62d1f9a5858f362843269099b) (Alyssa Weiss)
+
+### ButtonBar
+
+* [Fix ButtonBar typical example's crash by making containerScheme a property.](https://github.com/material-components/material-components-ios/commit/0a0f7347fac7639ac132934705e88f69d7fedc6b) (Wenyu Zhang)
+
+### Buttons
+
+* [Add rippleColor and rippleStyle APIs](https://github.com/material-components/material-components-ios/commit/9039d47602220f44f5ea2fa72d1683173e35b5c8) (Cody Weaver)
+* [Add rippleEdgeInsets API.](https://github.com/material-components/material-components-ios/commit/330125967a95335c7c678982715b2bbdb085d9de) (Cody Weaver)
+* [Add rippleMaximumRadius API.](https://github.com/material-components/material-components-ios/commit/2a5996b407f3ba821672bf35cee5cace2bebdbd8) (Cody Weaver)
+* [Fix lint error `UppercaseAttributedString` in `MDCButton`](https://github.com/material-components/material-components-ios/commit/3132beea793356e3b0f6cb77c32c9c5a1a23e68b) (Nobody)
+* [Remove unused TitleColorAccessibilityMutator.](https://github.com/material-components/material-components-ios/commit/7b45e787db8aaa9885e8c42bb94aa6406658f3dc) (Bryan Oltman)
+
+### Chips
+
+* [Add rippleForState APIs.](https://github.com/material-components/material-components-ios/commit/8a509d558ffdf3225b56823140c632fb2aa39ca1) (Cody Weaver)
+
+### Dialogs
+
+* [Improved titleIconView example with animation.](https://github.com/material-components/material-components-ios/commit/89ddea0cf1a5d6b646be808f288978318d7ce0dc) (Galia Kaufman)
+
+### FeatureHighlight
+
+* [Delete deprecated FeatureHighlightAccessibilityMutator.](https://github.com/material-components/material-components-ios/commit/180a5bf724f0fac5fa824660cca1c11a02de9721) (Bryan Oltman)
+
+### HeaderStackView
+
+* [Delete deprecated MDCHeaderStackViewColorThemer](https://github.com/material-components/material-components-ios/commit/77c7bfae5f113d90971c95f20fccb82cd3fe1cd2) (Bryan Oltman)
+
+### ProgressView
+
+* [Remove request for VoiceOver focus in MDCProgressView's setHidden.](https://github.com/material-components/material-components-ios/commit/1b68b485221f21a1a4ee4655f3971a3b56b769e4) (Bryan Oltman)
+
+### Shapes
+
+* [Add unit tests demonstrating a divide by zero error.](https://github.com/material-components/material-components-ios/commit/fb4f43d36c7b1887f8396dada4d88177ea32d3d7) (Jeff Verkoeyen)
+* [Fix divide by zero bug.](https://github.com/material-components/material-components-ios/commit/2db3fd1ced49aefcd3d440e91e7fbc675967053d) (Jeff Verkoeyen)
+* [Fixes for the shape shadow layer if the borderWidth is set multiple times and there isn't a prepareShadowPath pass.](https://github.com/material-components/material-components-ios/commit/a5ddb265b2967e449e18ab228f1da841e3bf4ae3) (Yarden Eitan)
+* [Update shapeLayer to the correct path to correctly be a mask for content.](https://github.com/material-components/material-components-ios/commit/f4263fe70ed103b05912bec7cdf48b271d3b31ca) (Yarden Eitan)
+* [Updates the shapeGenerator with a line width to inset the line rather than center it.](https://github.com/material-components/material-components-ios/commit/3f3816f014bc4c5f0760c8838a0dc6916dd42f33) (Yarden Eitan)
+
+### Slider
+
+* [Add EarlGrey test to expose bug where tapping on slider track opposite anchor point doesn't trigger UIControlEventValueChanged](https://github.com/material-components/material-components-ios/commit/0495b7987138dab2608f57772fdc5869481e59a7) (Bryan Oltman)
+* [Remove supplemental directory from examples.](https://github.com/material-components/material-components-ios/commit/de482d077aa4fa1310bcb268952ce98a6d2291ba) (Bryan Oltman)
+
+### Snackbar
+
+* [Delete deprecated MDCSnackbarFontThemer.](https://github.com/material-components/material-components-ios/commit/40e66874e6ab9000226e825b75d71f91c93e07c0) (Bryan Oltman)
+* [Delete deprecated MDCSnackbarTypographyThemer.](https://github.com/material-components/material-components-ios/commit/9b23c3474ad643d9ae63e6b163cd989e0c36d135) (Bryan Oltman)
+* [Use different margins for multi-line snackbars](https://github.com/material-components/material-components-ios/commit/d6498592978d0ef3e22f11a7c49fc9f1aad25547) (Alyssa Weiss)
+
+### Tabs
+
+* [Adding theming extension for TabBarView](https://github.com/material-components/material-components-ios/commit/6f3b23dfb83d883b88aa061c05de4dc6c4d72a0c) (Alyssa Weiss)
+
+### TextControls
+
+* [Add debug stuff to text controls examples](https://github.com/material-components/material-components-ios/commit/93fb8836455d7716810afa054e09ccb9e4e02220) (Andrew Overton)
+* [Expose preferredContainerHeight on MDCBaseTextField](https://github.com/material-components/material-components-ios/commit/e360f3c1c4e26bfad204876072241de753fc261e) (Andrew Overton)
+* [Fix jumpiness in text areas](https://github.com/material-components/material-components-ios/commit/66497f78375748c4d71d1a45a82420ff438373e4) (Andrew Overton)
+* [Fix secureTextEntry layout pass infinite loop](https://github.com/material-components/material-components-ios/commit/b18a9191cc84973f74003e277627676bb245177f) (Andrew Overton)
+
+### private/Snapshot
+
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/8410fe26310d619a73d3ca54d2a143b33d4f9ffb) (Wenyu Zhang)
+
+### private/TextControlsPrivate
+
+* [Make filled positioning reference subclass NSObject](https://github.com/material-components/material-components-ios/commit/ae6938670e6083c94f300cbd2e9484d69ec060a4) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Add centerVisibleArea support with snapshot tests.](https://github.com/material-components/material-components-ios/commit/a142aae3e7be48a732d1730c1858f9c15125abc3) (Wenyu Zhang)
+* [Add snapshot tests to MDCThumbTrack.](https://github.com/material-components/material-components-ios/commit/e4efea4264dd431768cc491c8e442624f4d39937) (Wenyu Zhang)
+* [Fix an issue where sliders with non-min/max anchor points do not publish a UIControlEventValueChanged event when a track tap causes the value to cross the anchor point.](https://github.com/material-components/material-components-ios/commit/c5dbf01d5a072596ee9447a67e6dff5090936ea7) (Bryan Oltman)
+* [Internal Change](https://github.com/material-components/material-components-ios/commit/6aea60a148025c15ddf8b8558192f4366abfb672) (Alyssa Weiss)
+* [Use shapeGenerator to render the backing layer.](https://github.com/material-components/material-components-ios/commit/634db350f56c83c4337bbe7041be86beb347734f) (Wenyu Zhang)
+
+### schemes/Shape
+
+* [Add test demonstrating issue with calling borderWidth multiple times with same value.](https://github.com/material-components/material-components-ios/commit/719d68811944b8d20e92d83db3d95d6844dedc70) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Allow setting underline thickness regardless of state](https://github.com/material-components/material-components-ios/commit/0950ece8f3d980d9fd13cd2718dc32e67e4ed18c) (Andrew Overton)
+* [Prepare to expose preferredContainerHeight on text controls](https://github.com/material-components/material-components-ios/commit/49b441e84976df1d1f70b1809c2630c5073f1a44) (Andrew Overton)
+* [Replace material.io API doc links with links to the relevant header f…](https://github.com/material-components/material-components-ios/commit/07c46757cc73d995eddc6205455d8c480f3270b5) (Andrew Overton)
+
+---
+
 # 111.0.0
 
 In this Major release we removed some deprecated action sheet themers, made visual improvements to Chips, ProgressView, Banner and Tabs. We also made links clickable in Alert Dialogs

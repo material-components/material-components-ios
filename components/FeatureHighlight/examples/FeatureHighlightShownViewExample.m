@@ -15,7 +15,6 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
-#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
@@ -54,7 +53,6 @@
                                                                   [self fabDidTap:fab];
                                                                 }
                                                               }];
-  [MDCFeatureHighlightAccessibilityMutator mutate:vc];
   [MDCFeatureHighlightColorThemer applySemanticColorScheme:self.colorScheme
                           toFeatureHighlightViewController:vc];
   vc.titleFont = self.typographyScheme.headline6;

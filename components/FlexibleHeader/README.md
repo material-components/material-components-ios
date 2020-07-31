@@ -25,17 +25,16 @@ UIScrollViewDelegate events.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Protocols/MDCFlexibleHeaderSafeAreaDelegate.html">MDCFlexibleHeaderSafeAreaDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Protocols/MDCFlexibleHeaderViewAnimationDelegate.html">MDCFlexibleHeaderViewAnimationDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Enums/MDCFlexibleHeaderContentImportance.html">MDCFlexibleHeaderContentImportance</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Enums/MDCFlexibleHeaderScrollPhase.html">MDCFlexibleHeaderScrollPhase</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-header/api-docs/Enums/MDCFlexibleHeaderShiftBehavior.html">MDCFlexibleHeaderShiftBehavior</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderContainerViewController.h">MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderView.h">MDCFlexibleHeaderView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderViewController.h">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderSafeAreaDelegate.h">MDCFlexibleHeaderSafeAreaDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderViewAnimationDelegate.h">MDCFlexibleHeaderViewAnimationDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderViewDelegate.h">MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderViewLayoutDelegate.h">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderView+ShiftBehavior.h">MDCFlexibleHeaderContentImportance</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/MDCFlexibleHeaderView.h">MDCFlexibleHeaderScrollPhase</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/src/ShiftBehavior/MDCFlexibleHeaderShiftBehavior.h">MDCFlexibleHeaderShiftBehavior</a></li>
 </ul>
 
 ## Related components

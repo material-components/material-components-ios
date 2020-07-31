@@ -33,6 +33,7 @@
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
 static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
 static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
+static const CGFloat kDefaultRippleAlpha = (CGFloat)0.12;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -65,7 +66,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
                     MAX(0, size.height - (edgeInsets.top + edgeInsets.bottom)));
 }
 
-static NSAttributedString *uppercaseAttributedString(NSAttributedString *string) {
+static NSAttributedString *UppercaseAttributedString(NSAttributedString *string) {
   // Store the attributes.
   NSMutableArray<NSDictionary *> *attributes = [NSMutableArray array];
   [string enumerateAttributesInRange:NSMakeRange(0, [string length])
@@ -111,6 +112,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _cornerRadiusObserverAdded;
+  CGFloat _inkMaxRippleRadius;
 }
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
@@ -230,7 +232,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-  _rippleView.rippleColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.12];
+  _rippleColor = [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
+  _rippleView.rippleColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.12];
 
   // Default content insets
   // The default contentEdgeInsets are set here (instead of above, as they were previously) because
@@ -337,6 +340,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   } else {
     CGRect bounds = CGRectStandardize(self.bounds);
     bounds = CGRectOffset(bounds, self.inkViewOffset.width, self.inkViewOffset.height);
+    bounds = UIEdgeInsetsInsetRect(bounds, self.rippleEdgeInsets);
     _inkView.frame = bounds;
     self.rippleView.frame = bounds;
   }
@@ -559,7 +563,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 
   if (_uppercaseTitle) {
-    title = uppercaseAttributedString(title);
+    title = UppercaseAttributedString(title);
   }
   [super setAttributedTitle:title forState:state];
 }
@@ -621,6 +625,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       (inkStyle == MDCInkStyleUnbounded) ? MDCRippleStyleUnbounded : MDCRippleStyleBounded;
 }
 
+- (void)setRippleStyle:(MDCRippleStyle)rippleStyle {
+  _rippleStyle = rippleStyle;
+
+  self.rippleView.rippleStyle = rippleStyle;
+}
+
 - (UIColor *)inkColor {
   return _inkView.inkColor;
 }
@@ -630,14 +640,35 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self.rippleView setRippleColor:inkColor forState:MDCRippleStateHighlighted];
 }
 
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor ?: [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
+  [self.rippleView setRippleColor:_rippleColor forState:MDCRippleStateHighlighted];
+}
+
+- (CGFloat)inkMaxRippleRadius {
+  return _inkMaxRippleRadius;
+}
+
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
   _inkMaxRippleRadius = inkMaxRippleRadius;
   _inkView.maxRippleRadius = inkMaxRippleRadius;
   self.rippleView.maximumRadius = inkMaxRippleRadius;
 }
 
+- (void)setRippleMaximumRadius:(CGFloat)rippleMaximumRadius {
+  _rippleMaximumRadius = rippleMaximumRadius;
+
+  self.rippleView.maximumRadius = rippleMaximumRadius;
+}
+
 - (void)setInkViewOffset:(CGSize)inkViewOffset {
   _inkViewOffset = inkViewOffset;
+  [self setNeedsLayout];
+}
+
+- (void)setRippleEdgeInsets:(UIEdgeInsets)rippleEdgeInsets {
+  _rippleEdgeInsets = rippleEdgeInsets;
+
   [self setNeedsLayout];
 }
 

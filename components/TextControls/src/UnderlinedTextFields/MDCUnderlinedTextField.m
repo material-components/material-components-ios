@@ -48,11 +48,13 @@
   self.containerStyle = [[MDCTextControlStyleUnderlined alloc] init];
 }
 
+#pragma mark MDCTextControlTextField methods
+
 - (MDCTextControlTextFieldSideViewAlignment)sideViewAlignment {
   return MDCTextControlTextFieldSideViewAlignmentAlignedWithText;
 }
 
-#pragma mark Stateful Color APIs
+#pragma mark Accessors
 
 - (void)setUnderlineColor:(UIColor *)underlineColor forState:(MDCTextControlState)state {
   [self.underlinedStyle setUnderlineColor:underlineColor forState:state];
@@ -63,8 +65,28 @@
   return [self.underlinedStyle underlineColorForState:state];
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
+- (void)setNormalUnderlineThickness:(CGFloat)normalUnderlineThickness {
+  self.underlinedStyle.normalUnderlineThickness = normalUnderlineThickness;
+}
+
+- (void)setEditingUnderlineThickness:(CGFloat)editingUnderlineThickness {
+  self.underlinedStyle.editingUnderlineThickness = editingUnderlineThickness;
+}
+
+- (CGFloat)normalUnderlineThickness {
+  return self.underlinedStyle.normalUnderlineThickness;
+}
+
+- (CGFloat)editingUnderlineThickness {
+  return self.underlinedStyle.editingUnderlineThickness;
+}
+
+- (void)setNormalUnderlineThickness:(CGFloat)thickness animated:(BOOL)animated {
+  [self.underlinedStyle setNormalUnderlineThickness:thickness animated:animated];
+}
+
+- (void)setEditingUnderlineThickness:(CGFloat)thickness animated:(BOOL)animated {
+  [self.underlinedStyle setEditingUnderlineThickness:thickness animated:animated];
 }
 
 #pragma mark Private Helpers
