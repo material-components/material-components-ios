@@ -1,15 +1,17 @@
-# #develop#
+# 112.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor change introduces two new features and fixes crashes due to UIPointerInteraction use in
+iOS 13 betas.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+BottomDrawer's MDCBottomDrawerPresentationControllerDelegate has a new method,
+`bottomDrawerDidTapScrim:`. This method is invoked when the user taps the background behind the
+bottom drawer.
+
+MDCBaseTextFieldDelegate and its sole method, `baseTextFieldDidDeleteBackward:` have been added to
+TextControls.
+
 ## API changes
 
 ## Component changes
