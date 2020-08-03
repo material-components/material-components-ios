@@ -1406,22 +1406,8 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponents/Snackbar+FontThemer"
       unit_tests.dependency "MaterialComponents/Themes"
     end
-  end
-
-  mdc.subspec "Snackbar+FontThemer" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/Themes"
   end
 
   # Tabs
@@ -2139,6 +2125,7 @@ Pod::Spec.new do |mdc|
       component.dependency "MaterialComponents/Ripple"
       component.dependency "MaterialComponents/ShadowElevations"
       component.dependency "MaterialComponents/ShadowLayer"
+      component.dependency "MaterialComponents/ShapeLibrary"
       component.dependency "MaterialComponents/Typography"
       component.dependency "MDFInternationalization"
       component.dependency "MaterialComponents/private/Math"
