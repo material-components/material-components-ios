@@ -1,9 +1,3 @@
-# 112.0.1
-
-This patch release fixes the broken podspec configuration.
-
----
-
 # 112.0.0
 
 This major releases deletes several deprecated APIs, expands Ripple support, and fixes several bugs.
