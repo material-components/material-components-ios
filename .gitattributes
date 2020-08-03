@@ -1,3 +1,25 @@
-# Do not merge this version into `stable`.	# DO NOT CHANGE THIS FILE
-snapshot_test_goldens/**/*.png filter=lfs diff=lfs merge=lfs -text	# DO NOT EDIT THE LINE BELOW.
-.gitattributes merge=gitattributes
+# DO NOT CHANGE THIS FILE
+# DO NOT EDIT THE LINE BELOW.
+/.gitattributes merge=gitattributes
+# DO NOT EDIT THE LINE ABOVE.
+#
+# You can of course edit this file, but make sure you understand what you are
+# doing. This file defines a custom filter driver that prevents snapshot test
+# images from being merged into `stable`. Snapshot test images are only
+# valuable in `develop` because they are only intended to help developers
+# identify changes in the appearance of the library.
+#
+# Before you change this file, please carefully consider whether such a change
+# is actually necessary. When you do change this file, it should almost always
+# be done in a dedicated commit directly on the `stable` branch and not part
+# of a release.  If you see this file being changed as part of a release,
+# block the release and work with the releaser to ensure that the change needs
+# to be propagated from the `develop` branch to the `stable` branch. In nearly
+# all cases, it should not be propagated from `develop` to `stable`.
+#
+# If you are a releaser and see this file change and you're not sure why, you
+# might have accidentally skipped [setting the correct
+# driver in your cloned
+# repository](https://github.com/material-components/material-components-ios/blob/develop/contributing/releasing.md#configure-the-merge-strategy-for-gitattributes).
+# If that's the case, please either revert the accidental change manually or
+# restart the release with a fresh clone and the correct driver.
