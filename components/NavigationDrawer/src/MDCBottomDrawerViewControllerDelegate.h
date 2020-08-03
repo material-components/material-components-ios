@@ -92,4 +92,11 @@
 - (void)bottomDrawerControllerDidEndCloseTransition:
     (nonnull MDCBottomDrawerViewController *)controller;
 
+/**
+ Called when the bottom drawer's scrim was tapped.
+
+ @param controller The MDCBottomDrawerViewController.
+ */
+- (void)bottomDrawerControllerDidTapScrim:(nonnull MDCBottomDrawerViewController *)controller;
+
 @end
