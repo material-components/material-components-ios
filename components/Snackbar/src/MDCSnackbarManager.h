@@ -161,11 +161,6 @@
 @property(nonatomic, assign) MDCShadowElevation messageElevation;
 
 /**
- The color for the message text in the Snackbar message view.
- */
-@property(nonatomic, strong, nullable) UIColor *messageTextColor;
-
-/**
  The font for the message text in the Snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIFont *messageFont;
@@ -296,11 +291,6 @@
 @interface MDCSnackbarManager (ToBeDeprecated)
 
 /**
- The @c alignment property of the @c defaultManager instance.
- */
-@property(class, nonatomic, assign) MDCSnackbarAlignment alignment;
-
-/**
  Calls @c -showMessage: on the @c defaultManager instance.
  */
 + (void)showMessage:(nullable MDCSnackbarMessage *)message;
@@ -342,44 +332,14 @@
 + (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token;
 
 /**
- Bound to @c snackbarMessageViewBackgroundColor on the @c defaultManager instance.
+ Calls @c -setButtonTitleColor:forState: on the @c defaultManager instance.
  */
-@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
-
-/**
- Bound to @c snackbarMessageViewShadowColor on the @c defaultManager instance.
- */
-@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
++ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
 
 /**
  Bound to @c messageTextColor on the @c defaultManager instance.
  */
 @property(class, nonatomic, strong, nullable) UIColor *messageTextColor;
-
-/**
- Bound to @c messageFont on the @c defaultManager instance.
- */
-@property(class, nonatomic, strong, nullable) UIFont *messageFont;
-
-/**
- Bound to @c buttonFont on the @c defaultManager instance.
- */
-@property(class, nonatomic, strong, nullable) UIFont *buttonFont;
-
-/**
- Bound to @c shouldApplyStyleChangesToVisibleSnackbars on the @c defaultManager instance.
- */
-@property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
-
-/**
- Calls @c -buttonTitleColorForState: on the @c defaultManager instance.
- */
-+ (nullable UIColor *)buttonTitleColorForState:(UIControlState)state;
-
-/**
- Calls @c -setButtonTitleColor:forState: on the @c defaultManager instance.
- */
-+ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
 
 /**
  Bound to @c mdc_adjustsFontForContentSizeCategory on the @c defaultManager instance.
@@ -391,5 +351,60 @@
  Bound to @c delegate on the @c defaultManager instance.
  */
 @property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
+
+@end
+
+@interface MDCSnackbarManager (Deprecated)
+
+/**
+ The @c alignment property of the @c defaultManager instance.
+ */
+@property(class, nonatomic, assign) MDCSnackbarAlignment alignment __deprecated_msg(
+    "Use MDCSnackbarManager.defaultManager.alignment instead.");
+
+/**
+ Bound to @c snackbarMessageViewBackgroundColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable)
+    UIColor *snackbarMessageViewBackgroundColor __deprecated_msg(
+        "Use MDCSnackbarManager.defaultManager.snackbarMessageViewBackgroundColor instead.");
+
+/**
+ Bound to @c snackbarMessageViewShadowColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable)
+    UIColor *snackbarMessageViewShadowColor __deprecated_msg(
+        "Use MDCSnackbarManager.defaultManager.snackbarMessageViewShadowColor instead.");
+
+/**
+ The color for the message text in the Snackbar message view.
+ */
+@property(nonatomic, strong, nullable) UIColor *messageTextColor __deprecated_msg(
+    "Use MDCSnackbarManager.defaultManager.messageTextColor instead.");
+
+/**
+ Bound to @c messageFont on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIFont *messageFont __deprecated_msg(
+    "Use MDCSnackbarManager.defaultManager.messageFont instead.");
+
+/**
+ Bound to @c buttonFont on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable)
+    UIFont *buttonFont __deprecated_msg("Use MDCSnackbarManager.defaultManager.buttonFont instead.")
+        ;
+
+/**
+ Bound to @c shouldApplyStyleChangesToVisibleSnackbars on the @c defaultManager instance.
+ */
+@property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars __deprecated_msg(
+    "Use MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars instead.");
+
+/**
+ Calls @c -buttonTitleColorForState: on the @c defaultManager instance.
+ */
++ (nullable UIColor *)buttonTitleColorForState:(UIControlState)state
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager buttonTitleColorForState:] instead.");
 
 @end
