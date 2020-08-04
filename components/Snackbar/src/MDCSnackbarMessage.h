@@ -214,7 +214,7 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic) BOOL automaticallyDismisses;
 
 /**
- MDCSnackbarManager will display the snackbar message in this view.
+ MDCSnackbarManager.defaultManager will display the snackbar message in this view.
 
  Call this method to choose where in the view hierarchy this specific snackbar message will be
  presented. This method should be called only in cases where the default behavior is unable to find

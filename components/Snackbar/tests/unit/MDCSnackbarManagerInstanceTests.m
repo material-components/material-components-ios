@@ -44,7 +44,8 @@
   NSUInteger maxState = UIControlStateNormal | UIControlStateDisabled | UIControlStateSelected |
                         UIControlStateHighlighted;
   for (NSUInteger state = 0; state < maxState; ++state) {
-    self.titleColorForState[@(state)] = [MDCSnackbarManager buttonTitleColorForState:state];
+    self.titleColorForState[@(state)] =
+        [MDCSnackbarManager.defaultManager buttonTitleColorForState:state];
   }
 }
 
@@ -55,8 +56,8 @@
   MDCSnackbarManager.snackbarMessageViewBackgroundColor = self.snackbarMessageViewBackgroundColor;
   for (NSNumber *state in self.titleColorForState.allKeys) {
     if (self.titleColorForState[state] != nil) {
-      [MDCSnackbarManager setButtonTitleColor:self.titleColorForState[state]
-                                     forState:state.unsignedIntegerValue];
+      [MDCSnackbarManager.defaultManager setButtonTitleColor:self.titleColorForState[state]
+                                                    forState:state.unsignedIntegerValue];
     }
   }
 
@@ -95,13 +96,14 @@
   MDCSnackbarManager.alignment = MDCSnackbarAlignmentLeading;
   MDCSnackbarManager.buttonFont = [UIFont systemFontOfSize:72];
   MDCSnackbarManager.delegate = delegate;
-  [MDCSnackbarManager mdc_setAdjustsFontForContentSizeCategory:YES];
+  [MDCSnackbarManager.defaultManager mdc_setAdjustsFontForContentSizeCategory:YES];
   MDCSnackbarManager.messageFont = [UIFont systemFontOfSize:66];
   MDCSnackbarManager.messageTextColor = UIColor.orangeColor;
   MDCSnackbarManager.shouldApplyStyleChangesToVisibleSnackbars = YES;
   MDCSnackbarManager.snackbarMessageViewBackgroundColor = UIColor.brownColor;
   MDCSnackbarManager.snackbarMessageViewShadowColor = UIColor.purpleColor;
-  [MDCSnackbarManager setButtonTitleColor:UIColor.greenColor forState:UIControlStateDisabled];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:UIColor.greenColor
+                                                forState:UIControlStateDisabled];
 
   // Then
   XCTAssertEqual(manager.alignment, MDCSnackbarManager.alignment);
@@ -117,8 +119,9 @@
                  MDCSnackbarManager.snackbarMessageViewBackgroundColor);
   XCTAssertEqual(manager.snackbarMessageViewShadowColor,
                  MDCSnackbarManager.snackbarMessageViewShadowColor);
-  XCTAssertEqual([manager buttonTitleColorForState:UIControlStateDisabled],
-                 [MDCSnackbarManager buttonTitleColorForState:UIControlStateDisabled]);
+  XCTAssertEqual(
+      [manager buttonTitleColorForState:UIControlStateDisabled],
+      [MDCSnackbarManager.defaultManager buttonTitleColorForState:UIControlStateDisabled]);
 }
 
 - (void)testInstancesDoNotSharePropertyStorage {

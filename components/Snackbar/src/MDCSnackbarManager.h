@@ -32,7 +32,7 @@
  The style and location of the message can vary depending on the configuration of the message to be
  shown. This class will queue repeated calls to @c showMessage: and show them at the appropriate
  time, once previous messages have been dismissed. This class is thread-safe as long as the messages
- given to MDCSnackbarManager are not mutated after being passed to @c showMessage:
+ given to MDCSnackbarManager.defaultManager are not mutated after being passed to @c showMessage:
 
  Snackbars prefer an application's main window is a subclass of @c MDCOverlayWindow. When a standard
  UIWindow is used an attempt is made to find the top-most view controller in the view hierarchy.
@@ -67,15 +67,15 @@
 - (void)showMessage:(nullable MDCSnackbarMessage *)message;
 
 /**
- MDCSnackbarManager will display the messages in this view.
+ MDCSnackbarManager.defaultManager will display the messages in this view.
 
  Call this method to choose where in the view hierarchy Snackbar messages will be presented. It is
  only necessary to provide a host view if the default behavior is unable to find one on it's own,
- most commonly when using MDCSnackbarManager inside an application extension. By default, if you use
- MDCSnackbarManager without calling @c setPresentationHostView, the manager will attempt to find a
- suitable view by stepping through the application windows. Explicitly providing a host view is only
- required if you need to manually manage the view hierarchy, or are inside a UIApplication
- extension.
+ most commonly when using MDCSnackbarManager.defaultManager inside an application extension. By
+ default, if you use MDCSnackbarManager.defaultManager without calling @c setPresentationHostView,
+ the manager will attempt to find a suitable view by stepping through the application windows.
+ Explicitly providing a host view is only required if you need to manually manage the view
+ hierarchy, or are inside a UIApplication extension.
 
  @note This method must be called from the main thread.
  @note Calling setPresentationHostView will not change the parent of the currently visible message.
@@ -262,7 +262,8 @@
 @property(nonatomic, assign) BOOL shouldEnableAccessibilityViewIsModal;
 
 /**
- The delegate for MDCSnackbarManager through which it may inform of snackbar presentation updates.
+ The delegate for MDCSnackbarManager.defaultManager through which it may inform of snackbar
+ presentation updates.
  */
 @property(nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 

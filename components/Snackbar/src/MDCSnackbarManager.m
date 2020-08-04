@@ -56,8 +56,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @property(nonatomic) BOOL isVoiceOverRunningOverride;
 
 /**
- The instance of MDCSnackbarManager that "owns" this internal manager.  Used to get theming
- properties. Can be refactored away in the future.
+ The instance of MDCSnackbarManager.defaultManager that "owns" this internal manager.  Used to get
+ theming properties. Can be refactored away in the future.
  */
 @property(nonatomic, weak) MDCSnackbarManager *manager;
 

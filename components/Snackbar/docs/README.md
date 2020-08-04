@@ -43,7 +43,7 @@ method with the suspension token, then messages will resume being displayed.
 
 Displaying a snackbar requires using two classes: MDCSnackbarManager and MDCSnackbarMessage.
 First, create an instance of MDCSnackbarMessage and provide a string to display to the user. Next,
-pass the MDCSnackbarMessage to the MDCSnackbarManager with the static showMessage method. This will
+pass the MDCSnackbarMessage to the MDCSnackbarManager.defaultManager with the static showMessage method. This will
 automatically construct an MDCSnackbarMessageView and appropriate overlay views so the snackbar is
 visible to the user.
 

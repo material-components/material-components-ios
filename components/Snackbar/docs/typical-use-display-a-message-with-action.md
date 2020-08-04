@@ -22,7 +22,7 @@ MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
   answerMessage.text = @"A lot";
-  [MDCSnackbarManager showMessage:answerMessage];
+  [MDCSnackbarManager.defaultManager showMessage:answerMessage];
 };
 action.handler = actionHandler;
 action.title = @"Answer";

@@ -113,7 +113,7 @@ import MaterialComponents.MaterialSnackbar
 
 Displaying a snackbar requires using two classes: MDCSnackbarManager and MDCSnackbarMessage.
 First, create an instance of MDCSnackbarMessage and provide a string to display to the user. Next,
-pass the MDCSnackbarMessage to the MDCSnackbarManager with the static showMessage method. This will
+pass the MDCSnackbarMessage to the MDCSnackbarManager.defaultManager with the static showMessage method. This will
 automatically construct an MDCSnackbarMessageView and appropriate overlay views so the snackbar is
 visible to the user.
 
@@ -135,7 +135,7 @@ MDCSnackbarManager.show(message)
 ```objc
 MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
 message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
-[MDCSnackbarManager showMessage:message];
+[MDCSnackbarManager.defaultManager showMessage:message];
 ```
 <!--</div>-->
 
@@ -165,7 +165,7 @@ MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
   answerMessage.text = @"A lot";
-  [MDCSnackbarManager showMessage:answerMessage];
+  [MDCSnackbarManager.defaultManager showMessage:answerMessage];
 };
 action.handler = actionHandler;
 action.title = @"Answer";

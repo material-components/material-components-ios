@@ -73,7 +73,7 @@
   } else {
     [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT Off"];
   }
-  [MDCSnackbarManager mdc_setAdjustsFontForContentSizeCategory:_dynamicType];
+  [MDCSnackbarManager.defaultManager mdc_setAdjustsFontForContentSizeCategory:_dynamicType];
 }
 
 #pragma mark - Event Handling
@@ -82,7 +82,7 @@
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
   message.focusOnShow = YES;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showSnackbarWithAction:(id)sender {
@@ -92,7 +92,7 @@
   action.title = @"Tap Me";
   message.action = action;
   message.enableRippleBehavior = YES;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showLongSnackbarMessage:(id)sender {
@@ -102,13 +102,13 @@
   MDCSnackbarMessageActionHandler actionHandler = ^() {
     MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
     answerMessage.text = @"The sky was cloudless and of a deep dark blue.";
-    [MDCSnackbarManager showMessage:answerMessage];
+    [MDCSnackbarManager.defaultManager showMessage:answerMessage];
   };
   action.handler = actionHandler;
   action.title = @"Action";
   message.action = action;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showBoldSnackbar:(id)sender {
@@ -121,7 +121,7 @@
                                    initWithString:@" go where no one has gone before."]];
   message.attributedText = text;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showColorThemedSnackbar:(id)sender {
@@ -130,12 +130,12 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
-  [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint400
-                                 forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint700
-                                 forState:UIControlStateHighlighted];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:MDCPalette.purplePalette.tint400
+                                                forState:UIControlStateNormal];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:MDCPalette.purplePalette.tint700
+                                                forState:UIControlStateHighlighted];
   MDCSnackbarManager.messageTextColor = MDCPalette.greenPalette.tint500;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showCustomizedSnackbar:(id)sender {
@@ -153,14 +153,14 @@
   action.title = @"Fancy";
   message.action = action;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showDecustomizedSnackbar:(id)sender {
   MDCSnackbarManager.messageFont = nil;
   MDCSnackbarManager.buttonFont = nil;
-  [MDCSnackbarManager setButtonTitleColor:nil forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateNormal];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
   MDCSnackbarManager.messageTextColor = nil;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
@@ -169,7 +169,7 @@
   action.title = @"Okay";
   message.action = action;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showCustomizedSnackbarWithActionUsingBlock:(id)sender {
@@ -188,7 +188,7 @@
           [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
         }
       };
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showNonTransientSnackbar:(id)sender {
@@ -196,7 +196,7 @@
   message.text = @"Snackbar Message";
   message.automaticallyDismisses = NO;
   message.enableRippleBehavior = YES;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showSimpleSnackbarOnCustomPresentationHostView:(id)sender {
@@ -204,7 +204,7 @@
   message.text = @"Snackbar Message";
   message.focusOnShow = YES;
   message.presentationHostViewOverride = self.collectionView;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 #pragma mark - UICollectionView
