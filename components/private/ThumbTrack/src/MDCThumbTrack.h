@@ -313,19 +313,17 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 /** Disable setting multitouch. Has to be NO. */
 - (void)setMultipleTouchEnabled:(BOOL)multipleTouchEnabled NS_UNAVAILABLE;
 
-#pragma mark - To be deprecated
+@end
+
+@interface MDCThumbTrack (ToBeDeprecated)
 
 /**
  The color of the thumb and left track.
 
  @note This API will be deprecated. Use @c thumbEnabledColor, @c trackOnColor, and
-       @c inkColor instead.
+       @c rippleColor instead.
  */
 @property(nullable, nonatomic, strong) UIColor *primaryColor;
-
-@end
-
-@interface MDCThumbTrack (ToBeDeprecated)
 
 /**
  The color of the Ink ripple.

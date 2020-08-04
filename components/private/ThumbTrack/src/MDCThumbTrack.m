@@ -84,6 +84,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #endif  // MDC_AVAILABLE_SDK_IOS(10_0)
 
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
+@property(nonatomic, strong, nullable) UIColor *primaryColor;
 @property(nonatomic, strong, nullable) MDCRippleView *rippleView;
 @property(nonatomic, strong, nullable) MDCInkTouchController *touchController;
 @end
@@ -110,6 +111,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat _panThumbGrabPosition;
 }
 
+@synthesize primaryColor = _primaryColor;
 @synthesize thumbEnabledColor = _thumbEnabledColor;
 @synthesize trackOnColor = _trackOnColor;
 @synthesize touchController = _touchController;
