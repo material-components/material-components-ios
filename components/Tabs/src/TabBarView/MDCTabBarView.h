@@ -115,6 +115,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /**
  Whether or not the tab bar should adjust for safe area insets when calculating content size.
  Default is YES.
+ @note If you set set this property to @c NO you should also set @c contentInsetAdjustmentBehavior
+ to @c UIScrollViewContentInsetAdjustmentNever.
  */
 @property(nonatomic, assign) BOOL shouldAdjustForSafeAreaInsets;
 

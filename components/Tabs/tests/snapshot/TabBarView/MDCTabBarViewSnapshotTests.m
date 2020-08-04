@@ -1039,6 +1039,63 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:superview];
 }
 
+- (void)testSafeAreaShouldAdjustForSafeAreaInsets {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+    MDCTabBarViewSnapshotTestsSuperview *superview =
+        [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+    [superview addSubview:self.tabBarView];
+    self.tabBarView.items = @[ item1, item2 ];
+    [self.tabBarView setSelectedItem:item2 animated:NO];
+    self.tabBarView.shouldAdjustForSafeAreaInsets = YES;
+
+    // When
+    UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(30, 45, 0, 0);
+    superview.customSafeAreaInsets = safeAreaInsets;
+    CGSize fitSize = self.tabBarView.intrinsicContentSize;
+    fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
+    self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+    superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                  CGRectGetHeight(self.tabBarView.bounds));
+    self.tabBarView.center =
+        CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+
+    // Then
+    [self generateSnapshotAndVerifyForView:superview];
+  }
+}
+
+- (void)testSafeAreaShouldNotAdjustForSafeAreaInsets {
+  if (@available(iOS 11.0, *)) {
+    // Given
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+    MDCTabBarViewSnapshotTestsSuperview *superview =
+        [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+    [superview addSubview:self.tabBarView];
+    self.tabBarView.items = @[ item1, item2 ];
+    [self.tabBarView setSelectedItem:item2 animated:NO];
+    self.tabBarView.shouldAdjustForSafeAreaInsets = NO;
+    [self.tabBarView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+
+    // When
+    UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(30, 45, 0, 0);
+    superview.customSafeAreaInsets = safeAreaInsets;
+    CGSize fitSize = self.tabBarView.intrinsicContentSize;
+    fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
+    self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+    superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                  CGRectGetHeight(self.tabBarView.bounds));
+    self.tabBarView.center =
+        CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+
+    // Then
+    [self generateSnapshotAndVerifyForView:superview];
+  }
+}
+
 #pragma mark - MDCTabBarView Properties
 
 - (void)testSetTitleColorForExplicitItemStates {
