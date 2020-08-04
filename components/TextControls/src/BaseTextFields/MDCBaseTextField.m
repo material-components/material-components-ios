@@ -24,6 +24,8 @@
 #import "MaterialTextControlsPrivate+Shared.h"
 #import "MaterialTextControlsPrivate+TextFields.h"
 
+static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
+
 @interface MDCBaseTextField () <MDCTextControlTextField>
 
 @property(strong, nonatomic) UILabel *label;
@@ -73,6 +75,11 @@
   [self setUpLabel];
   [self setUpAssistiveLabels];
   [self observeContentSizeCategoryNotifications];
+  [self observeAssistiveLabelKeyPaths];
+}
+
+- (void)dealloc {
+  [self removeObservers];
 }
 
 #pragma mark View Setup
@@ -751,6 +758,63 @@
   if ([_baseTextFieldDelegate respondsToSelector:@selector(baseTextFieldDidDeleteBackward:)]) {
     [_baseTextFieldDelegate baseTextFieldDidDeleteBackward:self];
   }
+}
+
+#pragma mark - Key-value observing
+
+- (void)observeAssistiveLabelKeyPaths {
+  for (NSString *keyPath in [MDCBaseTextField assistiveLabelKVOKeyPaths]) {
+    [self.leadingAssistiveLabel addObserver:self
+                                 forKeyPath:keyPath
+                                    options:NSKeyValueObservingOptionNew
+                                    context:kKVOContextMDCBaseTextField];
+    [self.trailingAssistiveLabel addObserver:self
+                                  forKeyPath:keyPath
+                                     options:NSKeyValueObservingOptionNew
+                                     context:kKVOContextMDCBaseTextField];
+  }
+}
+
+- (void)removeObservers {
+  for (NSString *keyPath in [MDCBaseTextField assistiveLabelKVOKeyPaths]) {
+    [self.leadingAssistiveLabel removeObserver:self
+                                    forKeyPath:keyPath
+                                       context:kKVOContextMDCBaseTextField];
+    [self.trailingAssistiveLabel removeObserver:self
+                                     forKeyPath:keyPath
+                                        context:kKVOContextMDCBaseTextField];
+  }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context {
+  if (context == kKVOContextMDCBaseTextField) {
+    if (object != self.leadingAssistiveLabel && object != self.trailingAssistiveLabel) {
+      return;
+    }
+
+    for (NSString *assistiveLabelKeyPath in [MDCBaseTextField assistiveLabelKVOKeyPaths]) {
+      if ([assistiveLabelKeyPath isEqualToString:keyPath]) {
+        [self invalidateIntrinsicContentSize];
+        [self setNeedsLayout];
+        break;
+      }
+    }
+  }
+}
+
++ (NSArray<NSString *> *)assistiveLabelKVOKeyPaths {
+  static NSArray<NSString *> *keyPaths = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    keyPaths = @[
+      NSStringFromSelector(@selector(text)),
+      NSStringFromSelector(@selector(font)),
+    ];
+  });
+  return keyPaths;
 }
 
 @end
