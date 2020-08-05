@@ -663,25 +663,6 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
-// TODO(b/159934812): Remove this test after removing visibleAreaInsets.
-- (void)testChipWithVisibleAreaInsets {
-  // When
-  self.chip.visibleAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.chip];
-}
-
-// TODO(b/159934812): Remove this test after removing visibleAreaInsets.
-- (void)testChipWithCustomCornerRadiusAndVisibleAreaInsets {
-  // When
-  self.chip.cornerRadius = 5;
-  self.chip.visibleAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.chip];
-}
-
 - (void)testChipWithCustomFrame {
   // When
   self.chip.bounds = CGRectMake(0, 0, 80, 44);
