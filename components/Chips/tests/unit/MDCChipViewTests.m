@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCChipView.h"
+#import "MaterialMath.h"
 
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;
@@ -246,6 +247,39 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertGreaterThan(CGRectGetWidth(chip.bounds), chipSize.width);
+}
+
+- (void)testVisibleAreaInsetsIsZeroWhenCenterVisibleAreaIsNO {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+  chip.titleLabel.text = @"Chip";
+
+  // When
+  chip.centerVisibleArea = NO;
+
+  // Then
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(chip.visibleAreaInsets, UIEdgeInsetsZero));
+}
+
+- (void)testVisibleAreaInsetsIsCorrectWhenCenterVisibleAreaIsYES {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+  chip.titleLabel.text = @"Chip";
+
+  // When
+  chip.centerVisibleArea = YES;
+
+  // Then
+  CGSize visibleAreaSize = [chip sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  CGFloat verticalInsets = 50 - visibleAreaSize.height;
+  CGFloat horizontalInsets = 300 - visibleAreaSize.width;
+  CGFloat topInsets = MDCCeil(verticalInsets * 0.5f);
+  CGFloat bottomInsets = verticalInsets - topInsets;
+  CGFloat leftInsets = MDCCeil(horizontalInsets * 0.5f);
+  CGFloat rightInsets = horizontalInsets - leftInsets;
+  UIEdgeInsets expectedVisibleAreaInsets =
+      UIEdgeInsetsMake(topInsets, leftInsets, bottomInsets, rightInsets);
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(chip.visibleAreaInsets, expectedVisibleAreaInsets));
 }
 
 - (void)forceAutoLayoutUpdateForView:(UIView *)view {

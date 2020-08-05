@@ -177,6 +177,13 @@
 @property(nonatomic, assign) BOOL centerVisibleArea;
 
 /**
+The calculated inset or outset margins for the rectangle surrounding all of the chip’s visible area.
+
+When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
+*/
+@property(nonatomic, readonly) UIEdgeInsets visibleAreaInsets;
+
+/**
  A block that is invoked when the MDCChipView receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
