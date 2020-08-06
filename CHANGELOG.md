@@ -1,3 +1,57 @@
+# 112.1.0
+
+This minor change introduces two new features and fixes crashes due to UIPointerInteraction use in
+iOS 13 betas.
+
+## New features
+
+BottomDrawer's MDCBottomDrawerPresentationControllerDelegate has a new method,
+`bottomDrawerDidTapScrim:`. This method is invoked when the user taps the background behind the
+bottom drawer.
+
+MDCBaseTextFieldDelegate and its sole method, `baseTextFieldDidDeleteBackward:` have been added to
+TextControls.
+
+## API changes
+
+## Component changes
+
+### Banner
+
+* [Add setUp and tearDown to AppBarBannerExample to avoid flaky testing result.](https://github.com/material-components/material-components-ios/commit/0f8c5f7f3c9d84477be3569035bd886fdc59ad08) (Wenyu Zhang)
+* [Remove AppBar example snapshot tests because the animation involved causes flakiness.](https://github.com/material-components/material-components-ios/commit/22020cdccfff0679ec724588f54a4fac8f58e7a3) (Wenyu Zhang)
+
+### BottomAppBar
+
+* [Update links in README](https://github.com/material-components/material-components-ios/commit/68fa549cc13942ac5abb6b4d5f9b4b94e738ac46) (Andrew Overton)
+
+### BottomNavigation
+
+* [Updating handling of ripple/ink for long presses when large content view is enabled](https://github.com/material-components/material-components-ios/commit/e310d3c31366815abf5dccf042a995a0d56f8cb5) (Alyssa Weiss)
+
+### NavigationDrawer
+
+* [Add new delegate for when scrim is tapped.](https://github.com/material-components/material-components-ios/commit/f3b77c466b4000e0a08605cbd93aaf7f089f5ad5) (Nobody)
+
+### Shapes
+
+* [ Add a snapshot test for small path rendered in a large bounding box with same borderWidth and cornerRadius.](https://github.com/material-components/material-components-ios/commit/aeacc8dcc61e84af4da1f1680a8c95b8a05b94c2) (Wenyu Zhang)
+* [Use the path's boundingBox to determine the scale used when borderWidth is deducted from the path.](https://github.com/material-components/material-components-ios/commit/bb04d0aab52f75f8b4596b340482791c549472e1) (Wenyu Zhang)
+
+### TextControls
+
+* [Add MDCBaseTextFieldDelegate](https://github.com/material-components/material-components-ios/commit/36ee03d99dc6c1b03bfea19fea275e7f1c893506) (Nobody)
+* [Add typical use example](https://github.com/material-components/material-components-ios/commit/9b6db6fb44838e007cdcafba3b6b6fbd7a74e116) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add checks for existence of UIPointerInteraction class to avoid iOS 13 beta crashes](https://github.com/material-components/material-components-ios/commit/f75ff1a02fa99d0194ef7720ca39e3a1d44bfde0) (Bryan Oltman)
+* [Fix Cocoapods/compilation issues](https://github.com/material-components/material-components-ios/commit/1f46b8b02d62ffc92ed45fb9b1d1d133ecf79623) (Andrew Overton)
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/e2fd01ccdc84078c08bbb7fbbd2a1109c06e675d) (Jeff Verkoeyen)
+* [Remove AppBar example snapshot tests because the animation involved causes flakiness.](https://github.com/material-components/material-components-ios/commit/1a4412cdbe0446b2cc4b65f3955237b30ac94922) (Wenyu Zhang)
+
+---
+
 # 112.0.1
 
 This patch release fixes the broken podspec configuration.
