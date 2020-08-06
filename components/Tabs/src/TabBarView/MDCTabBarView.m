@@ -241,9 +241,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 #ifdef __IPHONE_13_4
     if (@available(iOS 13.4, *)) {
-      UIPointerInteraction *pointerInteraction =
-          [[UIPointerInteraction alloc] initWithDelegate:self];
-      [itemView addInteraction:pointerInteraction];
+      // Because some iOS 13 betas did not have the UIPointerInteraction class, we need to verify
+      // that it exists before attempting to use it.
+      if (NSClassFromString(@"UIPointerInteraction")) {
+        UIPointerInteraction *pointerInteraction =
+            [[UIPointerInteraction alloc] initWithDelegate:self];
+        [itemView addInteraction:pointerInteraction];
+      }
     }
 #endif
 

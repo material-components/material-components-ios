@@ -128,30 +128,6 @@
 
 @end
 
-@implementation AppBarBannerExample (SnapshotTestingByConvention)
-
-- (NSDictionary<NSString *, void (^)(void)> *)testRunners {
-  return @{
-    @"visible" : ^{
-      [self showBanner];
-    }
-  };
-}
-
-- (void)testDynamic201907ColorScheme {
-  // Given
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
-  self.containerScheme = containerScheme;
-
-  // When
-  [self.appBarViewController applyPrimaryThemeWithScheme:_containerScheme];
-  [self showBanner];
-}
-
-@end
-
 #pragma mark - Typical application code (not Material-specific)
 
 @implementation AppBarBannerExample (UITableViewDataSource)

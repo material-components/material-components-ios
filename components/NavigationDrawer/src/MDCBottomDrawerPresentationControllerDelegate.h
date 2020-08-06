@@ -114,4 +114,12 @@
 - (void)bottomDrawerDismissTransitionDidEnd:
     (nonnull MDCBottomDrawerPresentationController *)presentationController;
 
+/**
+ This method is called when the bottom drawer's scrim was tapped.
+
+ @param presentationController presentation controller of the bottom drawer
+ */
+- (void)bottomDrawerDidTapScrim:
+    (nonnull MDCBottomDrawerPresentationController *)presentationController;
+
 @end

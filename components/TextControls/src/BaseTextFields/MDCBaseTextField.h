@@ -16,6 +16,8 @@
 
 #import "MaterialTextControls+Enums.h"
 
+@protocol MDCBaseTextFieldDelegate;
+
 /**
  The superclass of MDCFilledTextField and MDCOutlinedTextField. While not forbidden by the compiler,
  subclassing this class is not supported and is highly discouraged.
@@ -174,6 +176,11 @@
  default height of the container it will be ignored.
  */
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
+
+/**
+ This delegate receives text field related updates not covered by @c UITextFieldDelegate.
+ */
+@property(nonatomic, weak, nullable) id<MDCBaseTextFieldDelegate> baseTextFieldDelegate;
 
 @end
 

@@ -39,7 +39,7 @@
 
   // Then
   // Note that the X and Y values here are shifted by half of the shaped border width.
-  UIBezierPath *insetPath = [UIBezierPath bezierPathWithRect:CGRectMake(1, 1, 100, 100)];
+  UIBezierPath *insetPath = [UIBezierPath bezierPathWithRect:CGRectMake(1, 1, 98, 98)];
   XCTAssertTrue(CGPathEqualToPath(shadowLayer.colorLayer.path, insetPath.CGPath));
 }
 

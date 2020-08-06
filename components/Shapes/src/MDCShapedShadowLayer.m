@@ -129,15 +129,37 @@ static const CGFloat kDimensionalEpsilon = 0.001;
 }
 
 - (CGAffineTransform)generateTransformInsetByValue:(CGFloat)value {
-  CGRect standardizedBounds = CGRectStandardize(self.bounds);
-  CGRect insetBounds = CGRectInset(standardizedBounds, value, value);
-  CGAffineTransform transform = CGAffineTransformMakeTranslation(value, value);
-  CGFloat width = CGRectGetWidth(standardizedBounds);
-  CGFloat height = CGRectGetHeight(standardizedBounds);
-  if (width > kDimensionalEpsilon && height > kDimensionalEpsilon) {
-    transform = CGAffineTransformScale(transform, CGRectGetWidth(insetBounds) / width,
-                                       CGRectGetHeight(insetBounds) / height);
+  // Use the identitfy transfrom when inset is less than Epsilon.
+  if (value < kDimensionalEpsilon) {
+    return CGAffineTransformIdentity;
   }
+
+  // Use the path's boundingBox to get the proportion of inset value,
+  // because this tranform is expected to be applied on a CGPath.
+  CGRect pathBoundingBox = CGPathGetPathBoundingBox(self.shadowPath);
+  CGRect pathStandardizedBounds = CGRectStandardize(pathBoundingBox);
+
+  if (CGRectGetWidth(pathStandardizedBounds) < kDimensionalEpsilon ||
+      CGRectGetHeight(pathStandardizedBounds) < kDimensionalEpsilon) {
+    return CGAffineTransformIdentity;
+  }
+
+  CGRect insetBounds = CGRectInset(pathStandardizedBounds, value, value);
+  CGFloat width = CGRectGetWidth(pathStandardizedBounds);
+  CGFloat height = CGRectGetHeight(pathStandardizedBounds);
+  CGFloat pathCenterX = CGRectGetMidX(pathStandardizedBounds);
+  CGFloat pathCenterY = CGRectGetMidY(pathStandardizedBounds);
+  // Calculate the shifted center and re-center it by applying a translation transform.
+  // value * 2 represents the accumulated borderWidth on each side, value * 2 / width
+  // represents the proportion of accumulated borderWidth in path bounds, which is also
+  // the value used for scale transform.
+  // The shiftWidth represents the shifted length horizontally on the center.
+  CGFloat shiftWidth = value * 2 / width * pathCenterX;
+  // Same calculation for height.
+  CGFloat shiftHeight = value * 2 / height * pathCenterY;
+  CGAffineTransform transform = CGAffineTransformMakeTranslation(shiftWidth, shiftHeight);
+  transform = CGAffineTransformScale(transform, CGRectGetWidth(insetBounds) / width,
+                                     CGRectGetHeight(insetBounds) / height);
   return transform;
 }
 

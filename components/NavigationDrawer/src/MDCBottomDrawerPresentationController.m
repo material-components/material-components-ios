@@ -239,13 +239,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
-  if (self.dismissOnBackgroundTap) {
-    // Set up the tap recognizer to dimiss the drawer by.
-    UITapGestureRecognizer *tapGestureRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
-    [self.containerView addGestureRecognizer:tapGestureRecognizer];
-    tapGestureRecognizer.delegate = self;
-  }
+  // Set up the tap recognizer.
+  UITapGestureRecognizer *tapGestureRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrimTapped)];
+  [self.containerView addGestureRecognizer:tapGestureRecognizer];
+  tapGestureRecognizer.delegate = self;
 
   self.bottomDrawerContainerViewController.animatingPresentation = NO;
   [self.bottomDrawerContainerViewController.view setNeedsLayout];
@@ -391,6 +389,15 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)hideDrawer {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)scrimTapped {
+  [self.delegate bottomDrawerDidTapScrim:self];
+
+  // Dismiss the drawer on tap if enabled.
+  if (self.dismissOnBackgroundTap) {
+    [self hideDrawer];
+  }
 }
 
 #pragma mark UIGestureRecognizerDelegate

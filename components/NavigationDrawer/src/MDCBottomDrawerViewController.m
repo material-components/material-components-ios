@@ -360,6 +360,12 @@
   }
 }
 
+- (void)bottomDrawerDidTapScrim:(MDCBottomDrawerPresentationController *)presentationController {
+  if ([self.delegate respondsToSelector:@selector(bottomDrawerControllerDidTapScrim:)]) {
+    [self.delegate bottomDrawerControllerDidTapScrim:self];
+  }
+}
+
 - (void)bottomDrawerPresentTransitionWillBegin:
             (MDCBottomDrawerPresentationController *)presentationController
                                withCoordinator:

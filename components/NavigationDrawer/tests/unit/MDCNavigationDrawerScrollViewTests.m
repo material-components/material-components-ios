@@ -80,6 +80,10 @@
   [_commands addObject:NSStringFromSelector(_cmd)];
 }
 
+- (void)bottomDrawerDidTapScrim:(MDCBottomDrawerPresentationController *)presentationController {
+  [_commands addObject:NSStringFromSelector(_cmd)];
+}
+
 - (void)bottomDrawerControllerDidEndOpenTransition:(MDCBottomDrawerViewController *)controller {
   [_commands addObject:NSStringFromSelector(_cmd)];
 }
@@ -112,6 +116,10 @@
                                withCoordinator:(nullable id<UIViewControllerTransitionCoordinator>)
                                                    transitionCoordinator
                                  targetYOffset:(CGFloat)targetYOffset {
+  [_commands addObject:NSStringFromSelector(_cmd)];
+}
+
+- (void)bottomDrawerControllerDidTapScrim:(nonnull MDCBottomDrawerViewController *)controller {
   [_commands addObject:NSStringFromSelector(_cmd)];
 }
 
@@ -153,6 +161,7 @@
 @property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
 @property(nonatomic, strong, nullable) UIView *topHandle;
+- (void)scrimTapped;
 @end
 
 @interface MDCNavigationDrawerScrollViewTests : XCTestCase
@@ -594,6 +603,18 @@
   [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, 50)];
   XCTAssertFalse([self.delegateTest
       verifyCallback:@selector(bottomDrawerControllerDidChangeTopYOffset:yOffset:)]);
+}
+
+- (void)testBottomDrawerControllerDidTapScrimCallback {
+  // Given
+  self.presentationController.delegate = self.delegateTest;
+  self.presentationController.bottomDrawerContainerViewController = self.fakeBottomDrawer;
+
+  // When
+  [self.presentationController scrimTapped];
+
+  // Then
+  XCTAssertTrue([self.delegateTest verifyCallback:@selector(bottomDrawerDidTapScrim:)]);
 }
 
 - (void)testBottomDrawerCornersAPICollapsed {

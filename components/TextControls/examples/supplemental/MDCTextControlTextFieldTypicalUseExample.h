@@ -12,5 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField.h"
-#import "MDCBaseTextFieldDelegate.h"
+#import <UIKit/UIKit.h>
+
+#import "MaterialContainerScheme.h"
+
+@interface MDCTextControlTextFieldTypicalUseExample : UIViewController
+
+/**
+The MDCContainerScheming for the class.
+*/
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
+
+@end
