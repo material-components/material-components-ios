@@ -76,10 +76,12 @@
   // Then
   XCTAssertNil(self.thumbTrack.touchController.defaultInkView.superview);
   XCTAssertEqualObjects(self.thumbTrack.rippleView.superview, self.thumbTrack.thumbView);
-  CGRect thumbViewBounds = CGRectStandardize(self.thumbTrack.thumbView.bounds);
+  CGFloat thumbViewRadius = self.thumbTrack.thumbRadius;
+  CGSize visibleThumbViewSize = CGSizeMake(2 * thumbViewRadius, 2 * thumbViewRadius);
   CGRect rippleBounds = CGRectStandardize(self.thumbTrack.rippleView.bounds);
-  XCTAssertTrue(CGRectEqualToRect(thumbViewBounds, rippleBounds), @"%@ is not equal to %@",
-                NSStringFromCGRect(thumbViewBounds), NSStringFromCGRect(rippleBounds));
+  XCTAssertTrue(CGSizeEqualToSize(visibleThumbViewSize, rippleBounds.size),
+                @"%@ is not equal to %@", NSStringFromCGSize(visibleThumbViewSize),
+                NSStringFromCGSize(rippleBounds.size));
 }
 
 /**
