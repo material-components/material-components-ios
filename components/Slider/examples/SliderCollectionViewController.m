@@ -22,6 +22,7 @@
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16;
 static CGFloat const kSliderVerticalMargin = 12;
+static CGFloat const kSliderMinimumTouchSize = 48;
 
 @interface MDCSliderModel : NSObject
 
@@ -160,11 +161,13 @@ static CGFloat const kSliderVerticalMargin = 12;
 
   _label.frame = UIEdgeInsetsInsetRect(labelFrame, safeArea);
 
-  CGSize intrinsicSize = [_slider intrinsicContentSize];
+  CGSize sliderSize = [_slider intrinsicContentSize];
+  sliderSize.width = MAX(kSliderMinimumTouchSize, sliderSize.width);
+  sliderSize.height = MAX(kSliderMinimumTouchSize, sliderSize.height);
   CGRect sliderFrame = CGRectMake(
       kSliderHorizontalMargin,
-      self.contentView.frame.size.height - kSliderVerticalMargin - intrinsicSize.height,
-      self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), intrinsicSize.height);
+      self.contentView.frame.size.height - kSliderVerticalMargin - sliderSize.height,
+      self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), sliderSize.height);
   _slider.frame = UIEdgeInsetsInsetRect(sliderFrame, safeArea);
 }
 
@@ -198,7 +201,7 @@ static CGFloat const kSliderVerticalMargin = 12;
 }
 
 - (CGSize)itemSize {
-  return CGSizeMake(self.collectionView.bounds.size.width, 80);
+  return CGSizeMake(self.collectionView.bounds.size.width, 100);
 }
 
 - (CGFloat)minimumInteritemSpacing {
