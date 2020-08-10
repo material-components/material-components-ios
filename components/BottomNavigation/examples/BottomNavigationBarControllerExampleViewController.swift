@@ -14,7 +14,7 @@
 
 import UIKit
 
-import MaterialComponentsBeta.MaterialBottomNavigationBeta
+import MaterialComponents.MaterialBottomNavigation_BottomNavigationController
 import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialBottomNavigation_Theming
 import MaterialComponents.MaterialContainerScheme

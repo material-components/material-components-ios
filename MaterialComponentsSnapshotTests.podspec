@@ -62,7 +62,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.0'
   s.requires_arc = true
   s.dependency 'MaterialComponents'
-  s.dependency 'MaterialComponentsBeta'
   s.dependency 'MaterialComponentsExamples'
 
   # Top level sources are required. Without them, unit test targets do not show up in Xcode.
