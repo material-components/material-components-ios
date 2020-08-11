@@ -69,6 +69,17 @@ def registerIcons(s)
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
     end
 
+    iss.subspec "ic_feedback" do |ss|
+      ss.public_header_files = "components/private/Icons/icons/ic_feedback/src/*.h"
+      ss.source_files = "components/private/Icons/icons/ic_feedback/src/*.{h,m}"
+      ss.resource_bundles = {
+        "MaterialIcons_ic_feedback" => [
+          "components/private/Icons/icons/ic_feedback/src/MaterialIcons_ic_feedback.xcassets",
+        ]
+      }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
+    end
+
     iss.subspec "ic_help_outline" do |ss|
       ss.public_header_files = "components/private/Icons/icons/ic_help_outline/src/*.h"
       ss.source_files = "components/private/Icons/icons/ic_help_outline/src/*.{h,m}"
