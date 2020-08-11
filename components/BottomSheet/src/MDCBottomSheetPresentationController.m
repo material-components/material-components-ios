@@ -21,7 +21,8 @@
 #import "MDCSheetContainerViewDelegate.h"
 #import "MaterialMath.h"
 
-static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController) API_UNAVAILABLE(macCatalyst) {
+static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewController)
+    API_UNAVAILABLE(macCatalyst) {
   UIScrollView *scrollView = nil;
 
   // Ensure the view is loaded - occasionally during non-animated transitions the view may not be

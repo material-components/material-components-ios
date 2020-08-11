@@ -41,7 +41,6 @@ __deprecated_msg("There is no replacement for this API yet.")
  */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
     toBottomSheetController:(nonnull MDCBottomSheetController *)bottomSheetController
-    API_UNAVAILABLE(macCatalyst)
-    __deprecated_msg("There is no replacement for this API yet.");
+    API_UNAVAILABLE(macCatalyst)__deprecated_msg("There is no replacement for this API yet.");
 
 @end

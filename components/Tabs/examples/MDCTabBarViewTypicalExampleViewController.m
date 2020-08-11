@@ -230,11 +230,11 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
 #if !TARGET_OS_MACCATALYST
   UIBarButtonItem *alignmentButton = [[UIBarButtonItem alloc]
-                                      initWithImage:[MDCIcons.imageFor_ic_settings
-                                                     imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                                      style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(didTapAlignmentButton)];
+      initWithImage:[MDCIcons.imageFor_ic_settings
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:UIBarButtonItemStylePlain
+             target:self
+             action:@selector(didTapAlignmentButton)];
   alignmentButton.accessibilityLabel = kPreferredLayoutMenuAccessibilityLabel;
 
   self.navigationItem.rightBarButtonItems = @[ alignmentButton, insetsButton ];
