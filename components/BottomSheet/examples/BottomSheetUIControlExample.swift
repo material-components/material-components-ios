@@ -16,11 +16,11 @@ import Foundation
 
 #if !targetEnvironment(macCatalyst)
 
-import MaterialComponents.MaterialBottomSheet
-import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
+  import MaterialComponents.MaterialBottomSheet
+  import MaterialComponents.MaterialButtons
+  import MaterialComponents.MaterialButtons_ButtonThemer
 
-class BottomSheetUIControlExample: UIViewController {
+  class BottomSheetUIControlExample: UIViewController {
 
     @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     @objc var typographyScheme = MDCTypographyScheme()
@@ -42,9 +42,10 @@ class BottomSheetUIControlExample: UIViewController {
 
       let button = MDCButton()
       button.setTitle("Show bottom sheet", for: .normal)
-      button.addTarget(self,
-                       action: #selector(BottomSheetTableViewExample.didTapFloatingButton),
-                       for: .touchUpInside)
+      button.addTarget(
+        self,
+        action: #selector(BottomSheetTableViewExample.didTapFloatingButton),
+        for: .touchUpInside)
 
       let buttonScheme = MDCButtonScheme()
       buttonScheme.colorScheme = colorScheme
@@ -57,51 +58,49 @@ class BottomSheetUIControlExample: UIViewController {
         .flexibleLeftMargin,
         .flexibleTopMargin,
         .flexibleRightMargin,
-        .flexibleBottomMargin
+        .flexibleBottomMargin,
       ]
 
       view.addSubview(button)
     }
 
-    @objc func didTapFloatingButton(_ sender : MDCFloatingButton) {
+    @objc func didTapFloatingButton(_ sender: MDCFloatingButton) {
       let menu = BottomSheetUIControl()
       let bottomSheet = MDCBottomSheetController(contentViewController: menu)
       present(bottomSheet, animated: true)
     }
 
-}
-
-class BottomSheetUIControl: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.view.backgroundColor = .white
-
-        
-        let slideControl = UISlider()
-        slideControl.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(slideControl)
-        
-        NSLayoutConstraint.activate([
-            slideControl.widthAnchor.constraint(equalToConstant: 300),
-            slideControl.heightAnchor.constraint(equalToConstant: 20),
-            slideControl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            slideControl.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
-    }
-}
-
-
-// MARK: Catalog by convention
-extension BottomSheetUIControlExample {
-
-  @objc class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Bottom Sheet", "Bottom sheet with UIControl"],
-      "primaryDemo": false,
-      "presentable": true,
-    ]
   }
-}
+
+  class BottomSheetUIControl: UIViewController {
+    override func viewDidLoad() {
+      super.viewDidLoad()
+
+      self.view.backgroundColor = .white
+
+      let slideControl = UISlider()
+      slideControl.translatesAutoresizingMaskIntoConstraints = false
+      self.view.addSubview(slideControl)
+
+      NSLayoutConstraint.activate([
+        slideControl.widthAnchor.constraint(equalToConstant: 300),
+        slideControl.heightAnchor.constraint(equalToConstant: 20),
+        slideControl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+        slideControl.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+      ])
+    }
+  }
+
+  // MARK: Catalog by convention
+  extension BottomSheetUIControlExample {
+
+    @objc class func catalogMetadata() -> [String: Any] {
+      return [
+        "breadcrumbs": ["Bottom Sheet", "Bottom sheet with UIControl"],
+        "primaryDemo": false,
+        "presentable": true,
+      ]
+    }
+  }
 
 #endif

@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
-
 import CatalogByConvention
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_ColorThemer
@@ -21,6 +19,7 @@ import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialBottomSheet
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialIcons_ic_more_horiz
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationControllerDelegate {
@@ -32,8 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   let navigationController = MDCAppBarNavigationController()
   var tree: CBCNode?
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions
-                   launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
 
     // The navigation tree will only take examples that implement
@@ -81,13 +82,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
 
   // MARK: MDCAppBarNavigationControllerInjectorDelegate
 
-  func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
-                                  willAdd appBarViewController: MDCAppBarViewController,
-                                  asChildOf viewController: UIViewController) {
-    MDCAppBarColorThemer.applyColorScheme(AppTheme.containerScheme.colorScheme,
-                                                        to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.containerScheme.typographyScheme,
-                                                    to: appBarViewController)
+  func appBarNavigationController(
+    _ navigationController: MDCAppBarNavigationController,
+    willAdd appBarViewController: MDCAppBarViewController,
+    asChildOf viewController: UIViewController
+  ) {
+    MDCAppBarColorThemer.applyColorScheme(
+      AppTheme.containerScheme.colorScheme,
+      to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(
+      AppTheme.containerScheme.typographyScheme,
+      to: appBarViewController)
 
     if let injectee = viewController as? CatalogAppBarInjectee {
       injectee.appBarNavigationControllerInjector(willAdd: appBarViewController)
@@ -116,10 +121,11 @@ extension UINavigationController {
   @available(macCatalyst, unavailable)
   func setMenuBarButton(for viewController: UIViewController) {
     let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
-    let menuItem = UIBarButtonItem(image: dotsImage,
-                                   style: .plain,
-                                   target: self,
-                                   action: #selector(presentMenu))
+    let menuItem = UIBarButtonItem(
+      image: dotsImage,
+      style: .plain,
+      target: self,
+      action: #selector(presentMenu))
     menuItem.accessibilityLabel = "Menu"
     menuItem.accessibilityHint = "Opens catalog configuration options."
     viewController.navigationItem.rightBarButtonItem = menuItem
