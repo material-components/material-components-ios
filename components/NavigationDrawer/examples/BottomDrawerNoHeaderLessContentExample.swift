@@ -16,84 +16,85 @@ import UIKit
 
 #if !targetEnvironment(macCatalyst)
 
-import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialNavigationDrawer
+  import MaterialComponents.MaterialBottomAppBar
+  import MaterialComponents.MaterialColorScheme
+  import MaterialComponents.MaterialNavigationDrawer
 
-class BottomDrawerNoHeaderLessContentExample: UIViewController {
-  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-  let bottomAppBar = MDCBottomAppBarView()
+  class BottomDrawerNoHeaderLessContentExample: UIViewController {
+    @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let bottomAppBar = MDCBottomAppBarView()
 
-  let contentViewController = DrawerContentViewController()
-  let bottomDrawerTransitionController = MDCBottomDrawerTransitionController()
+    let contentViewController = DrawerContentViewController()
+    let bottomDrawerTransitionController = MDCBottomDrawerTransitionController()
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    override func viewDidLoad() {
+      super.viewDidLoad()
 
-    contentViewController.preferredHeight = UIScreen.main.bounds.size.height
+      contentViewController.preferredHeight = UIScreen.main.bounds.size.height
 
-    view.backgroundColor = colorScheme.backgroundColor
-    contentViewController.view.backgroundColor = colorScheme.primaryColor
+      view.backgroundColor = colorScheme.backgroundColor
+      contentViewController.view.backgroundColor = colorScheme.primaryColor
 
-    bottomAppBar.isFloatingButtonHidden = true
-    let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
-    barButtonLeadingItem.image = menuImage
-    barButtonLeadingItem.target = self
-    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
-    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+      bottomAppBar.isFloatingButtonHidden = true
+      let barButtonLeadingItem = UIBarButtonItem()
+      let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
+      barButtonLeadingItem.image = menuImage
+      barButtonLeadingItem.target = self
+      barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+      bottomAppBar.leadingBarButtonItems = [barButtonLeadingItem]
 
-    bottomAppBar.barTintColor = colorScheme.surfaceColor;
-    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
-    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
-    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
-    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
-    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
-    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+      bottomAppBar.barTintColor = colorScheme.surfaceColor
+      let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+      bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+      bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+      bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+      bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+      bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
 
-    view.addSubview(bottomAppBar)
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-
-    layoutBottomAppBar()
-  }
-
-  private func layoutBottomAppBar() {
-    let size = bottomAppBar.sizeThatFits(view.bounds.size)
-    var bottomBarViewFrame = CGRect(x: 0,
-                                    y: view.bounds.size.height - size.height,
-                                    width: size.width,
-                                    height: size.height)
-    if #available(iOS 11.0, *) {
-      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
-      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+      view.addSubview(bottomAppBar)
     }
-    bottomAppBar.frame = bottomBarViewFrame
+
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+
+      layoutBottomAppBar()
+    }
+
+    private func layoutBottomAppBar() {
+      let size = bottomAppBar.sizeThatFits(view.bounds.size)
+      var bottomBarViewFrame = CGRect(
+        x: 0,
+        y: view.bounds.size.height - size.height,
+        width: size.width,
+        height: size.height)
+      if #available(iOS 11.0, *) {
+        bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+        bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+      }
+      bottomAppBar.frame = bottomBarViewFrame
+    }
+
+    @objc func presentNavigationDrawer() {
+      // This shows that it is possible to present the content view controller directly without
+      // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
+      // inside the drawer, both the transition controller and the custom presentation controller
+      // of the drawer need to be set.
+      contentViewController.transitioningDelegate = bottomDrawerTransitionController
+      contentViewController.modalPresentationStyle = .custom
+      present(contentViewController, animated: true, completion: nil)
+    }
   }
 
-  @objc func presentNavigationDrawer() {
-    // This shows that it is possible to present the content view controller directly without
-    // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
-    // inside the drawer, both the transition controller and the custom presentation controller
-    // of the drawer need to be set.
-    contentViewController.transitioningDelegate = bottomDrawerTransitionController
-    contentViewController.modalPresentationStyle = .custom
-    present(contentViewController, animated: true, completion: nil)
+  extension BottomDrawerNoHeaderLessContentExample {
+
+    @objc class func catalogMetadata() -> [String: Any] {
+      return [
+        "breadcrumbs": ["Navigation Drawer", "Bottom Drawer No Header Less Content"],
+        "primaryDemo": false,
+        "presentable": false,
+      ]
+    }
+
   }
-}
-
-extension BottomDrawerNoHeaderLessContentExample {
-
-  @objc class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer No Header Less Content"],
-      "primaryDemo": false,
-      "presentable": false,
-    ]
-  }
-
-}
 
 #endif

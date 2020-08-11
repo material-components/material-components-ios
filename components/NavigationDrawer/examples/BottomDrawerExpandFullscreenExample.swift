@@ -16,135 +16,143 @@ import UIKit
 
 #if !targetEnvironment(macCatalyst)
 
-import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialNavigationDrawer
+  import MaterialComponents.MaterialBottomAppBar
+  import MaterialComponents.MaterialColorScheme
+  import MaterialComponents.MaterialNavigationDrawer
 
-class BottomDrawerExpandFullscreenExample: UIViewController {
-  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-  let bottomAppBar = MDCBottomAppBarView()
+  class BottomDrawerExpandFullscreenExample: UIViewController {
+    @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let bottomAppBar = MDCBottomAppBarView()
 
-  let headerViewController = DrawerHeaderViewController()
-  let contentViewController = ExpandFullscreenContentViewController()
+    let headerViewController = DrawerHeaderViewController()
+    let contentViewController = ExpandFullscreenContentViewController()
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = colorScheme.backgroundColor
-    contentViewController.colorScheme = colorScheme
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      view.backgroundColor = colorScheme.backgroundColor
+      contentViewController.colorScheme = colorScheme
 
-    bottomAppBar.isFloatingButtonHidden = true
-    let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
-    barButtonLeadingItem.image = menuImage
-    barButtonLeadingItem.target = self
-    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
-    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+      bottomAppBar.isFloatingButtonHidden = true
+      let barButtonLeadingItem = UIBarButtonItem()
+      let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
+      barButtonLeadingItem.image = menuImage
+      barButtonLeadingItem.target = self
+      barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+      bottomAppBar.leadingBarButtonItems = [barButtonLeadingItem]
 
-    bottomAppBar.barTintColor = colorScheme.surfaceColor;
-    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
-    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
-    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
-    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
-    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
-    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+      bottomAppBar.barTintColor = colorScheme.surfaceColor
+      let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+      bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+      bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+      bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+      bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+      bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
 
-    view.addSubview(bottomAppBar)
-  }
-
-  private func layoutBottomAppBar() {
-    let size = bottomAppBar.sizeThatFits(view.bounds.size)
-    var bottomBarViewFrame = CGRect(x: 0,
-                                    y: view.bounds.size.height - size.height,
-                                    width: size.width,
-                                    height: size.height)
-    if #available(iOS 11.0, *) {
-      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
-      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+      view.addSubview(bottomAppBar)
     }
-    bottomAppBar.frame = bottomBarViewFrame
-  }
 
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
+    private func layoutBottomAppBar() {
+      let size = bottomAppBar.sizeThatFits(view.bounds.size)
+      var bottomBarViewFrame = CGRect(
+        x: 0,
+        y: view.bounds.size.height - size.height,
+        width: size.width,
+        height: size.height)
+      if #available(iOS 11.0, *) {
+        bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+        bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+      }
+      bottomAppBar.frame = bottomBarViewFrame
+    }
 
-    layoutBottomAppBar()
-  }
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
 
-  @objc private func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
-    bottomDrawerViewController.contentViewController = contentViewController
-    contentViewController.drawerVC = bottomDrawerViewController
-    bottomDrawerViewController.headerViewController = headerViewController
-    bottomDrawerViewController.trackingScrollView = contentViewController.tableView
-    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
-    present(bottomDrawerViewController, animated: true, completion: nil)
-  }
-}
+      layoutBottomAppBar()
+    }
 
-class ExpandFullscreenContentViewController: UITableViewController {
-  @objc var colorScheme: MDCSemanticColorScheme!
-  weak var drawerVC: MDCBottomDrawerViewController!
-
-  init() {
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    if self.preferredContentSize == .zero {
-      self.tableView.layoutIfNeeded()
-      self.preferredContentSize = CGSize(width: view.bounds.width,
-                                         height: tableView.contentSize.height)
+    @objc private func presentNavigationDrawer() {
+      let bottomDrawerViewController = MDCBottomDrawerViewController()
+      bottomDrawerViewController.contentViewController = contentViewController
+      contentViewController.drawerVC = bottomDrawerViewController
+      bottomDrawerViewController.headerViewController = headerViewController
+      bottomDrawerViewController.trackingScrollView = contentViewController.tableView
+      bottomDrawerViewController.headerViewController?.view.backgroundColor =
+        colorScheme.surfaceColor
+      bottomDrawerViewController.contentViewController?.view.backgroundColor =
+        colorScheme.surfaceColor
+      bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+      present(bottomDrawerViewController, animated: true, completion: nil)
     }
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel?.text = "cell #\(indexPath.item)"
-    cell.backgroundColor = colorScheme.surfaceColor
-    print(cell.textLabel?.text ?? "")
-    return cell
+  class ExpandFullscreenContentViewController: UITableViewController {
+    @objc var colorScheme: MDCSemanticColorScheme!
+    weak var drawerVC: MDCBottomDrawerViewController!
+
+    init() {
+      super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+      super.init(coder: aDecoder)
+    }
+
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    }
+
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+      if self.preferredContentSize == .zero {
+        self.tableView.layoutIfNeeded()
+        self.preferredContentSize = CGSize(
+          width: view.bounds.width,
+          height: tableView.contentSize.height)
+      }
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
+      -> UITableViewCell
+    {
+      let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+      cell.textLabel?.text = "cell #\(indexPath.item)"
+      cell.backgroundColor = colorScheme.surfaceColor
+      print(cell.textLabel?.text ?? "")
+      return cell
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return 4
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+      return 1
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      tableView.deselectRow(at: indexPath, animated: true)
+      drawerVC.expandToFullscreen(
+        withDuration: 0.2,
+        completion: { _ in
+          print("finished expanding")
+        })
+    }
+
   }
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 4
+  extension BottomDrawerExpandFullscreenExample {
+
+    @objc class func catalogMetadata() -> [String: Any] {
+      return [
+        "breadcrumbs": ["Navigation Drawer", "Expand to Fullscreen Example"],
+        "description": "Navigation Drawer",
+        "primaryDemo": true,
+        "presentable": true,
+        "skip_snapshots": true,
+      ]
+    }
   }
-
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.expandToFullscreen(withDuration: 0.2, completion: { _ in
-      print("finished expanding");
-    })
-  }
-
-}
-
-extension BottomDrawerExpandFullscreenExample {
-
-  @objc class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Navigation Drawer", "Expand to Fullscreen Example"],
-      "description": "Navigation Drawer",
-      "primaryDemo": true,
-      "presentable": true,
-      "skip_snapshots": true,
-    ]
-  }
-}
 
 #endif
