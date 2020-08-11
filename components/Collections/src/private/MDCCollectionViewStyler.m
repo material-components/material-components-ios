@@ -492,8 +492,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
       [attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter];
   BOOL isDecorationView =
       attr.representedElementCategory == UICollectionElementCategoryDecorationView;
-  BOOL isTop = attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalTop;
-  BOOL isBottom = attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalBottom;
+  BOOL isTop = (attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalTop) ? YES : NO;
+  BOOL isBottom = (attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalBottom) ? YES : NO;
 
   MDCCollectionViewCellStyle cellStyle = [self cellStyleAtSectionIndex:attr.indexPath.section];
   BOOL isCardStyle = cellStyle == MDCCollectionViewCellStyleCard;
