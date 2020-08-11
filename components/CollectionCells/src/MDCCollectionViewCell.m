@@ -368,7 +368,8 @@ NSString *const kDeselectedCellAccessibilityHintKey =
       _usesCellSeparatorHiddenOverride ? _shouldHideSeparator : _attr.shouldHideSeparators;
   UIEdgeInsets separatorInset =
       _usesCellSeparatorInsetOverride ? _separatorInset : _attr.separatorInset;
-  BOOL isBottom = (_attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalBottom) ? YES : NO;
+  BOOL isBottom =
+      (_attr.sectionOrdinalPosition & MDCCollectionViewOrdinalPositionVerticalBottom) ? YES : NO;
   BOOL isGrid = _attr.isGridLayout;
 
   BOOL hideSeparator = isBottom || isHidden || isGrid;
