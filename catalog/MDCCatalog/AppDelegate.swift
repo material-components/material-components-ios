@@ -106,12 +106,14 @@ protocol CatalogAppBarInjectee {
 }
 
 extension UINavigationController {
+  @available(macCatalyst, unavailable)
   @objc func presentMenu() {
     let menuViewController = MDCMenuViewController(style: .plain)
     let bottomSheet = MDCBottomSheetController(contentViewController: menuViewController)
     self.present(bottomSheet, animated: true, completion: nil)
   }
 
+  @available(macCatalyst, unavailable)
   func setMenuBarButton(for viewController: UIViewController) {
     let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
     let menuItem = UIBarButtonItem(image: dotsImage,

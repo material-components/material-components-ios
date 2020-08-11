@@ -14,6 +14,8 @@
 
 import UIKit
 
+#if !targetEnvironment(macCatalyst)
+
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
@@ -107,7 +109,6 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
       "presentable": false,
     ]
   }
-
 }
 
 extension ActionSheetTypicalUseSwiftExampleViewController : UITableViewDelegate {
@@ -232,5 +233,6 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
     }
     return actionSheet
   }
-
 }
+
+#endif

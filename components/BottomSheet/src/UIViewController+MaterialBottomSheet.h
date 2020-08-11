@@ -28,6 +28,7 @@
  controller.
  */
 @property(nonatomic, nullable, readonly)
-    MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController;
+    MDCBottomSheetPresentationController *mdc_bottomSheetPresentationController
+    API_UNAVAILABLE(macCatalyst);
 
 @end

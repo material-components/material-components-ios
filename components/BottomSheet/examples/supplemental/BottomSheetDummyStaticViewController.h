@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 @interface BottomSheetDummyStaticViewController : UIViewController
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
@@ -22,3 +24,5 @@
                          bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 @end
+
+#endif

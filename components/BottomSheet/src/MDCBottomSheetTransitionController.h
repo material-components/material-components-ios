@@ -29,6 +29,7 @@
  The presenting UIViewController then calls presentViewController:animated:completion:
  [rootViewController presentViewController:myDialogViewController animated:YES completion:...];
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomSheetTransitionController
     : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 

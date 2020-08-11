@@ -14,6 +14,8 @@
 
 #import "BottomSheetPresenterViewController.h"
 
+#if !TARGET_OS_MACCATALYST
+
 @implementation BottomSheetPresenterViewController
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -54,3 +56,5 @@
 }
 
 @end
+
+#endif

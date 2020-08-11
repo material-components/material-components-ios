@@ -221,14 +221,6 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
   [self addSegmentedControl];
   [self addButtons];
 
-  UIBarButtonItem *alignmentButton = [[UIBarButtonItem alloc]
-      initWithImage:[MDCIcons.imageFor_ic_settings
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-              style:UIBarButtonItemStylePlain
-             target:self
-             action:@selector(didTapAlignmentButton)];
-  alignmentButton.accessibilityLabel = kPreferredLayoutMenuAccessibilityLabel;
-
   UIBarButtonItem *insetsButton =
       [[UIBarButtonItem alloc] initWithImage:self.contentInsetToggleDisabledImage
                                        style:UIBarButtonItemStylePlain
@@ -236,7 +228,19 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
                                       action:@selector(didToggleInsets:)];
   insetsButton.accessibilityLabel = kToggleContentInsetsAccessibilityLabel;
 
+#if !TARGET_OS_MACCATALYST
+  UIBarButtonItem *alignmentButton = [[UIBarButtonItem alloc]
+                                      initWithImage:[MDCIcons.imageFor_ic_settings
+                                                     imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                      style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didTapAlignmentButton)];
+  alignmentButton.accessibilityLabel = kPreferredLayoutMenuAccessibilityLabel;
+
   self.navigationItem.rightBarButtonItems = @[ alignmentButton, insetsButton ];
+#else
+  self.navigationItem.rightBarButtonItems = @[ insetsButton ];
+#endif
 }
 
 - (void)applyThemingToTabBarView {
@@ -371,7 +375,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 
 #pragma mark - Item style variations
 
-- (void)didTapAlignmentButton {
+- (void)didTapAlignmentButton API_UNAVAILABLE(macCatalyst) {
   MDCTabBarViewLayoutStyle currentStyle = self.tabBar.preferredLayoutStyle;
   UIImage *checkIcon =
       [MDCIcons.imageFor_ic_check imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

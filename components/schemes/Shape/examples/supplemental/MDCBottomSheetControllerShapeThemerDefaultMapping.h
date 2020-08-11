@@ -19,6 +19,7 @@
 /**
  The Material Design shape system's themer for instances of MDCBottomSheetController.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomSheetControllerShapeThemerDefaultMapping : MDCBottomSheetControllerShapeThemer
 
 /**

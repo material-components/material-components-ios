@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 #import "MaterialActionSheet+Theming.h"
 #import "MaterialActionSheet.h"
 #import "MaterialButtons+Theming.h"
@@ -146,3 +148,5 @@
 }
 
 @end
+
+#endif

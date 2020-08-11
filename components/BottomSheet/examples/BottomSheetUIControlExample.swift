@@ -13,6 +13,9 @@
 // limitations under the License.
 
 import Foundation
+
+#if !targetEnvironment(macCatalyst)
+
 import MaterialComponents.MaterialBottomSheet
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_ButtonThemer
@@ -100,3 +103,5 @@ extension BottomSheetUIControlExample {
     ]
   }
 }
+
+#endif

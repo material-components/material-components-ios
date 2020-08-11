@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 @interface BottomSheetAutolayoutDummyViewController : UIViewController
 
 @end
+
+#endif

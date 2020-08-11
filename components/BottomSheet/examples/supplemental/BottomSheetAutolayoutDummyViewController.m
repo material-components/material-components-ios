@@ -14,6 +14,8 @@
 
 #import "BottomSheetAutolayoutDummyViewController.h"
 
+#if !TARGET_OS_MACCATALYST
+
 @implementation BottomSheetAutolayoutDummyViewController
 
 - (IBAction)dismissButtonPressed:(id)sender {
@@ -21,3 +23,5 @@
 }
 
 @end
+
+#endif

@@ -14,6 +14,8 @@
 
 #import "BottomSheetDummyCollectionViewController.h"
 
+#if !TARGET_OS_MACCATALYST
+
 @interface BottomSheetDummyCollectionViewController () <UICollectionViewDataSource>
 @end
 
@@ -72,3 +74,5 @@
 
 @implementation DummyCollectionViewCell
 @end
+
+#endif

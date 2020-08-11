@@ -14,6 +14,8 @@
 
 #import "BottomSheetDummyStaticViewController.h"
 
+#if !TARGET_OS_MACCATALYST
+
 @implementation BottomSheetDummyStaticViewController {
   // Add a view just beyond the bottom of our bounds so that bottom sheet bounce doesn't reveal the
   // background underneath.
@@ -44,3 +46,5 @@
 }
 
 @end
+
+#endif

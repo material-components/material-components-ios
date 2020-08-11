@@ -570,7 +570,9 @@ extension MDCNodeListViewController {
   func createViewController(from node: CBCNode) -> UIViewController {
     let contentVC = node.createExampleViewController()
     themeExample(vc: contentVC)
+    #if !targetEnvironment(macCatalyst)
     self.navigationController?.setMenuBarButton(for: contentVC)
+    #endif
     return contentVC
   }
 

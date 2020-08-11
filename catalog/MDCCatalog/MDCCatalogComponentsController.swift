@@ -180,11 +180,13 @@ class MDCCatalogComponentsController: UICollectionViewController,
                              colorScheme)
     logo.image = image
 
+    #if !targetEnvironment(macCatalyst)
     menuButton.addTarget(self.navigationController,
                          action: #selector(navigationController?.presentMenu),
                          for: .touchUpInside)
     menuButton.tintColor = colorScheme.onPrimaryColor
     containerView.addSubview(menuButton)
+    #endif
 
     setupFlexibleHeaderContentConstraints()
     constrainLabel(label: titleLabel,
@@ -251,6 +253,7 @@ class MDCCatalogComponentsController: UICollectionViewController,
                                                    constant: Constants.inset)
     logoLeftPaddingConstraint?.isActive = true
 
+    #if !targetEnvironment(macCatalyst)
     menuButtonRightPaddingConstraint = NSLayoutConstraint(item: menuButton,
                                                           attribute: .trailing,
                                                           relatedBy: .equal,
@@ -276,21 +279,6 @@ class MDCCatalogComponentsController: UICollectionViewController,
                        attribute: .centerY,
                        multiplier: 1,
                        constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: Constants.logoWidthHeight).isActive = true
-
     NSLayoutConstraint(item: menuButton,
                        attribute: .width,
                        relatedBy: .equal,
@@ -305,6 +293,22 @@ class MDCCatalogComponentsController: UICollectionViewController,
                        attribute: .notAnAttribute,
                        multiplier: 1,
                        constant: Constants.menuButtonWidthHeight).isActive = true
+    #endif
+
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: logo,
+                       attribute: .height,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1,
+                       constant: Constants.logoWidthHeight).isActive = true
   }
 
   // MARK: UICollectionViewDataSource
@@ -390,7 +394,9 @@ class MDCCatalogComponentsController: UICollectionViewController,
     } else {
       vc = MDCNodeListViewController(node: node)
     }
+    #if !targetEnvironment(macCatalyst)
     self.navigationController?.setMenuBarButton(for: vc)
+    #endif
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
@@ -408,6 +414,7 @@ class MDCCatalogComponentsController: UICollectionViewController,
                        multiplier: 1.0,
                        constant: insets.left).isActive = true
 
+    #if !targetEnvironment(macCatalyst)
     NSLayoutConstraint(item: label,
                        attribute: .trailing,
                        relatedBy: .equal,
@@ -415,6 +422,7 @@ class MDCCatalogComponentsController: UICollectionViewController,
                        attribute: .leading,
                        multiplier: 1.0,
                        constant: -insets.right).isActive = true
+    #endif
 
     NSLayoutConstraint(item: label,
                        attribute: .bottom,
