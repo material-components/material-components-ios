@@ -13,6 +13,9 @@
 // limitations under the License.
 
 import UIKit
+
+#if !targetEnvironment(macCatalyst)
+
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
@@ -100,3 +103,5 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
     dismiss(animated: true)
   }
 }
+
+#endif

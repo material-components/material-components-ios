@@ -13,6 +13,9 @@
 // limitations under the License.
 
 import UIKit
+
+#if !targetEnvironment(macCatalyst)
+
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_Theming 
@@ -165,3 +168,5 @@ extension BottomDrawerInfiniteScrollingExample {
     ]
   }
 }
+
+#endif

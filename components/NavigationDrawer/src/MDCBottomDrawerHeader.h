@@ -18,6 +18,7 @@
  A protocol view controllers should conform to for enabling the view controller to be
  used as a drawer header view controller.
  */
+API_UNAVAILABLE(macCatalyst)
 @protocol MDCBottomDrawerHeader
 
 @optional

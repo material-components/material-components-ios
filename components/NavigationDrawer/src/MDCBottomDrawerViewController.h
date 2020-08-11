@@ -27,6 +27,7 @@
 /**
  View controller for containing a Material bottom drawer.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomDrawerViewController
     : UIViewController <MDCBottomDrawerPresentationControllerDelegate,
                         MDCElevatable,

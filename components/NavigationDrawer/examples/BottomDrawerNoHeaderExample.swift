@@ -13,6 +13,9 @@
 // limitations under the License.
 
 import UIKit
+
+#if !targetEnvironment(macCatalyst)
+
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
@@ -89,3 +92,5 @@ extension BottomDrawerNoHeaderExample {
   }
 
 }
+
+#endif

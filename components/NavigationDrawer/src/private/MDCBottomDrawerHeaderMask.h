@@ -19,6 +19,7 @@
  MDCBottomDrawerHeaderLayer handles the shape calculations for
  MDCBottomDrawerContainerViewController.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomDrawerHeaderMask : NSObject
 
 /**

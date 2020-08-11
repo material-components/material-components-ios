@@ -26,6 +26,7 @@
 /**
  View controller for containing a Material bottom drawer. Used internally only.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomDrawerContainerViewController : UIViewController <UIGestureRecognizerDelegate>
 
 /**

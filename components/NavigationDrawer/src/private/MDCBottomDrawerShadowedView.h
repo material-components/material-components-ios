@@ -14,6 +14,7 @@
 
 #import "MaterialShadowLayer.h"
 
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomDrawerShadowedView : UIView
 - (MDCShadowLayer *)shadowLayer;
 @end

@@ -26,6 +26,7 @@
 /**
  The presentation controller to use for presenting an MDC bottom drawer.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomDrawerPresentationController : UIPresentationController
 
 /**

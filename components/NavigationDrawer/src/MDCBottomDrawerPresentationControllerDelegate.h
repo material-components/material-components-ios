@@ -21,6 +21,7 @@
 /**
  Delegate for MDCBottomSheetPresentationController.
  */
+API_UNAVAILABLE(macCatalyst)
 @protocol MDCBottomDrawerPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
 /**
  This method is called when the bottom drawer will change its presented state to one of the
