@@ -37,12 +37,11 @@ errors to allow the normal deprecation process to work:
 
 ### Xcode
 
-The core team tests against **Xcode 10.0 and Swift 3.2**. 
-Swift 4 support is added whenever possible and will be the standard when Xcode 8 support is dropped.
+The core team tests against **Xcode 10.0 and Swift 5**. 
 
 ### iOS
 
-Our components currently support **iOS 9.0 and up**.
+Our components currently support **iOS 10.0 and up**.
 
 ### CocoaPods
 

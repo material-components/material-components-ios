@@ -44,43 +44,20 @@
 }
 
 - (void)testScaledFontForTraitEnvironmentOniOS10AndAboveConsultsTheTraitEnvironment {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    UIFont *font = [UIFont systemFontOfSize:22.0];
-    font = [[[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1]
-        scaledFontWithFont:font] mdc_scaledFontAtDefaultSize];
-    MDCTypographyMockTraitEnvironment *traitEnvironment =
-        [[MDCTypographyMockTraitEnvironment alloc] init];
-    traitEnvironment.traitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraLarge];
-
-    // When
-    UIFont *scaledFont = [font mdc_scaledFontForTraitEnvironment:traitEnvironment];
-
-    // Then
-    XCTAssertGreaterThan(scaledFont.pointSize, font.pointSize);
-  }
-}
-
-- (void)testScaledFontForTraitEnvironmentWithNoApplicationOniOS9DoesNothing {
-  // Only run this test on iOS 9
-  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
-  if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-    return;
-  }
-
   // Given
-  XCTAssertNil([UIApplication mdc_safeSharedApplication]);
   UIFont *font = [UIFont systemFontOfSize:22.0];
-  font = [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
+  font = [[[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font]
+      mdc_scaledFontAtDefaultSize];
   MDCTypographyMockTraitEnvironment *traitEnvironment =
       [[MDCTypographyMockTraitEnvironment alloc] init];
+  traitEnvironment.traitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraLarge];
 
   // When
   UIFont *scaledFont = [font mdc_scaledFontForTraitEnvironment:traitEnvironment];
 
   // Then
-  XCTAssertTrue([scaledFont mdc_isSimplyEqual:font]);
+  XCTAssertGreaterThan(scaledFont.pointSize, font.pointSize);
 }
 
 @end

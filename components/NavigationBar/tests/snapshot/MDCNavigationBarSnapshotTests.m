@@ -85,9 +85,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
                                                          action:NULL];
 
   UIImage *backImage = [MDCIcons imageFor_ic_arrow_back];
-  if (@available(iOS 9.0, *)) {
-    backImage = [backImage imageFlippedForRightToLeftLayoutDirection];
-  }
+  backImage = [backImage imageFlippedForRightToLeftLayoutDirection];
   UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:backImage
                                                                style:UIBarButtonItemStylePlain
                                                               target:nil

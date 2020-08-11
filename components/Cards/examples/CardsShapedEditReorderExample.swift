@@ -13,10 +13,9 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialCards
-import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeLibrary
+import MaterialComponents.MaterialContainerScheme
 
 class ShapedCardCollectionCell: MDCCardCollectionCell {
   override init(frame: CGRect) {
@@ -43,7 +42,8 @@ class ShapedCardCollectionCell: MDCCardCollectionCell {
 class CardsShapedEditReorderExampleViewController: UIViewController,
   UICollectionViewDelegate,
   UICollectionViewDataSource,
-  UICollectionViewDelegateFlowLayout {
+  UICollectionViewDelegateFlowLayout
+{
 
   @objc var containerScheme: MDCContainerScheming
 
@@ -57,11 +57,13 @@ class CardsShapedEditReorderExampleViewController: UIViewController,
   }
 
   enum ToggleMode: Int {
-    case edit = 1, reorder
+    case edit = 1
+    case reorder
   }
-  
-  let collectionView = UICollectionView(frame: .zero,
-                                        collectionViewLayout: UICollectionViewFlowLayout())
+
+  let collectionView = UICollectionView(
+    frame: .zero,
+    collectionViewLayout: UICollectionViewFlowLayout())
   var dataSource = [(Int, Bool)]()
   var longPressGesture: UILongPressGestureRecognizer!
   var toggle = ToggleMode.reorder
@@ -74,19 +76,21 @@ class CardsShapedEditReorderExampleViewController: UIViewController,
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.backgroundColor = UIColor(white: 0.9, alpha: 1)
-    collectionView.alwaysBounceVertical = true;
+    collectionView.alwaysBounceVertical = true
     collectionView.register(ShapedCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reorder",
-                                                        style: .plain,
-                                                        target: self,
-                                                        action: #selector(toggleModes))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      title: "Reorder",
+      style: .plain,
+      target: self,
+      action: #selector(toggleModes))
 
-    longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                    action: #selector(handleReordering(gesture:)))
+    longPressGesture = UILongPressGestureRecognizer(
+      target: self,
+      action: #selector(handleReordering(gesture:)))
     longPressGesture.cancelsTouchesInView = false
     collectionView.addGestureRecognizer(longPressGesture)
 
@@ -100,7 +104,8 @@ class CardsShapedEditReorderExampleViewController: UIViewController,
         collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
         collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
         collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+      ])
       collectionView.contentInsetAdjustmentBehavior = .always
     } else {
       preiOS11Constraints()
@@ -108,14 +113,18 @@ class CardsShapedEditReorderExampleViewController: UIViewController,
   }
 
   func preiOS11Constraints() {
-    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
-                                                            options: [],
-                                                            metrics: nil,
-                                                            views: ["view": collectionView]));
-    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
-                                                            options: [],
-                                                            metrics: nil,
-                                                            views: ["view": collectionView]));
+    self.view.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[view]|",
+        options: [],
+        metrics: nil,
+        views: ["view": collectionView]))
+    self.view.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[view]|",
+        options: [],
+        metrics: nil,
+        views: ["view": collectionView]))
   }
 
   @objc func toggleModes() {
@@ -129,10 +138,14 @@ class CardsShapedEditReorderExampleViewController: UIViewController,
     collectionView.reloadData()
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
-                                                  for: indexPath) as! MDCCardCollectionCell
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
+    let cell =
+      collectionView.dequeueReusableCell(
+        withReuseIdentifier: "Cell",
+        for: indexPath) as! MDCCardCollectionCell
     cell.applyTheme(withScheme: containerScheme)
     cell.backgroundColor = .white
     cell.isSelectable = (toggle == .edit)
@@ -149,54 +162,70 @@ class CardsShapedEditReorderExampleViewController: UIViewController,
     return 1
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      numberOfItemsInSection section: Int) -> Int {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return dataSource.count
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      moveItemAt sourceIndexPath: IndexPath,
-                      to destinationIndexPath: IndexPath) {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    moveItemAt sourceIndexPath: IndexPath,
+    to destinationIndexPath: IndexPath
+  ) {
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
     let cardSize = (collectionView.bounds.size.width / 3) - 12
     return CGSize(width: cardSize, height: cardSize)
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      insetForSectionAt section: Int) -> UIEdgeInsets {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
     return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumLineSpacingForSectionAt section: Int
+  ) -> CGFloat {
     return 8
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumInteritemSpacingForSectionAt section: Int
+  ) -> CGFloat {
     return 8
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      canMoveItemAt indexPath: IndexPath) -> Bool {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    canMoveItemAt indexPath: IndexPath
+  ) -> Bool {
     return toggle == .reorder
   }
 
-  @available(iOS 9.0, *)
   @objc func handleReordering(gesture: UILongPressGestureRecognizer) {
     if toggle == .reorder {
-      switch(gesture.state) {
+      switch gesture.state {
       case .began:
-        guard let selectedIndexPath = collectionView.indexPathForItem(at:
-          gesture.location(in: collectionView)) else {
-            break
+        guard
+          let selectedIndexPath = collectionView.indexPathForItem(
+            at:
+              gesture.location(in: collectionView))
+        else {
+          break
         }
         collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
       case .changed:
@@ -221,4 +250,3 @@ extension CardsShapedEditReorderExampleViewController {
     ]
   }
 }
-
