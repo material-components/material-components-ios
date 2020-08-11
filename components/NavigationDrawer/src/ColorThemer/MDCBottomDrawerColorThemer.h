@@ -27,8 +27,7 @@
 __deprecated_msg("No replacement exists. Please comment on"
                  " https://github.com/material-components/material-components-ios/issues/7172"
                  " in order to indicate interest in a replacement API.")
-API_UNAVAILABLE(macCatalyst)
-@interface MDCBottomDrawerColorThemer : NSObject
+    API_UNAVAILABLE(macCatalyst) @interface MDCBottomDrawerColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCBottomDrawerViewController
