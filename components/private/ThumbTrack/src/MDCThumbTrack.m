@@ -84,6 +84,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #endif  // MDC_AVAILABLE_SDK_IOS(10_0)
 
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
+@property(nonatomic, strong, nullable) UIColor *primaryColor;
 @property(nonatomic, strong, nullable) MDCRippleView *rippleView;
 @property(nonatomic, strong, nullable) MDCInkTouchController *touchController;
 @end
@@ -110,6 +111,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat _panThumbGrabPosition;
 }
 
+@synthesize primaryColor = _primaryColor;
 @synthesize thumbEnabledColor = _thumbEnabledColor;
 @synthesize trackOnColor = _trackOnColor;
 @synthesize touchController = _touchController;
@@ -138,11 +140,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _discrete = YES;
 
     // Default thumb view.
-    CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
+    CGFloat sideLength = MAX(_thumbRadius * 2, kMinTouchSize);
+    CGRect thumbFrame = CGRectMake(0, 0, sideLength * 2, sideLength * 2);
     _thumbView = [[MDCThumbView alloc] initWithFrame:thumbFrame];
     _thumbView.borderWidth = kDefaultThumbBorderWidth;
     _thumbView.cornerRadius = self.thumbRadius;
     _thumbView.layer.zPosition = 1;
+    _thumbView.centerVisibleArea = YES;
     [self addSubview:_thumbView];
 
     _trackView = [[UIView alloc] init];
@@ -497,8 +501,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)setDisplayThumbRadius:(CGFloat)thumbRadius {
   _thumbView.cornerRadius = thumbRadius;
   CGPoint thumbCenter = _thumbView.center;
-  _thumbView.frame = CGRectMake(thumbCenter.x - thumbRadius, thumbCenter.y - thumbRadius,
-                                2 * thumbRadius, 2 * thumbRadius);
+  CGFloat halfSideLength = MAX(thumbRadius, kMinTouchSize / 2);
+  _thumbView.frame = CGRectMake(thumbCenter.x - halfSideLength, thumbCenter.y - halfSideLength,
+                                2 * halfSideLength, 2 * halfSideLength);
 }
 
 #pragma clang diagnostic push
@@ -543,7 +548,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
   if (self.enableRippleBehavior) {
     [self.touchController.defaultInkView removeFromSuperview];
-    _rippleView.frame = self.thumbView.bounds;
+    _rippleView.frame = CGRectMake(CGRectGetMidX(self.thumbView.bounds) - self.thumbRadius,
+                                   CGRectGetMidY(self.thumbView.bounds) - self.thumbRadius,
+                                   2 * self.thumbRadius, 2 * self.thumbRadius);
     [self.thumbView addSubview:_rippleView];
   } else {
     [_rippleView removeFromSuperview];

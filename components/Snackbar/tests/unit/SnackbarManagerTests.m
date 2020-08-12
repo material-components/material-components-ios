@@ -31,7 +31,7 @@
 @implementation SnackbarManagerTests
 
 - (void)tearDown {
-  [MDCSnackbarManager dismissAndCallCompletionBlocksWithCategory:nil];
+  [MDCSnackbarManager.defaultManager dismissAndCallCompletionBlocksWithCategory:nil];
   [super tearDown];
 }
 
@@ -47,8 +47,8 @@
 
   // Encourage the runtime to deallocate the token immediately
   @autoreleasepool {
-    id<MDCSnackbarSuspensionToken> token = [MDCSnackbarManager suspendAllMessages];
-    [MDCSnackbarManager showMessage:suspendedMessage];
+    id<MDCSnackbarSuspensionToken> token = [MDCSnackbarManager.defaultManager suspendAllMessages];
+    [MDCSnackbarManager.defaultManager showMessage:suspendedMessage];
 
     // When
     token = nil;
@@ -61,14 +61,14 @@
 - (void)testHasMessagesShowingOrQueued {
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
   message.duration = 10;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 
   XCTestExpectation *expectation = [self expectationWithDescription:@"has_shown_message"];
 
   // We need to dispatch_async in order to assure that the assertion happens after showMessage:
   // actually displays the message.
   dispatch_async(dispatch_get_main_queue(), ^{
-    XCTAssertTrue([MDCSnackbarManager hasMessagesShowingOrQueued]);
+    XCTAssertTrue([MDCSnackbarManager.defaultManager hasMessagesShowingOrQueued]);
     [expectation fulfill];
   });
 
@@ -135,7 +135,7 @@
       };
 
   // When
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
   XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
   dispatch_async(dispatch_get_main_queue(), ^{
     [mainQueueExpectation fulfill];
@@ -160,7 +160,7 @@
   MDCSnackbarManager.defaultManager.messageElevation = 4;
 
   // When
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
   XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
   dispatch_async(dispatch_get_main_queue(), ^{
     [mainQueueExpectation fulfill];
@@ -180,7 +180,7 @@
   CGFloat expectedBaseElevation = 99;
 
   // When
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
   XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
   dispatch_async(dispatch_get_main_queue(), ^{
     [mainQueueExpectation fulfill];
@@ -201,7 +201,7 @@
   MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars = YES;
 
   // When
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
   XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
   dispatch_async(dispatch_get_main_queue(), ^{
     [mainQueueExpectation fulfill];
@@ -230,7 +230,7 @@
   MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars = YES;
 
   // When
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
   XCTestExpectation *mainQueueExpectation = [self expectationWithDescription:@"completed"];
   dispatch_async(dispatch_get_main_queue(), ^{
     [mainQueueExpectation fulfill];

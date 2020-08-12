@@ -312,7 +312,7 @@ _**Note:** All the optional elements of a card's content are implemented through
 
 ### Theming cards
 
-Cards supports Material Theming using a Container Scheme. MDCCard and MDCCardCollectionCell have both default and outlined theming methods. [Learn more about theming extensions](../../docs/theming.md). Below is a screenshot of an MDCCard with the Material Design Shrine theme:
+Cards supports Material Theming using a Container Scheme. `MDCCard` and `MDCCardCollectionCell` have both default and outlined theming methods. [Learn more about theming extensions](../../docs/theming.md). Below is a screenshot of an `MDCCard` with the Material Design Shrine theme:
 
 ![Shrine card](docs/assets/shrine-card.png)
 

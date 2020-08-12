@@ -14,6 +14,6 @@ MDCSnackbarManager.show(message)
 ```objc
 MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
 message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
-[MDCSnackbarManager showMessage:message];
+[MDCSnackbarManager.defaultManager showMessage:message];
 ```
 <!--</div>-->

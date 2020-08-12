@@ -280,9 +280,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     CGPoint contentOffset = [(NSValue *)[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
     CGPoint oldContentOffset =
         [(NSValue *)[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
-    self.scrollViewIsDraggedToBottom = contentOffset.y == oldContentOffset.y
-                                           ? self.scrollViewIsDraggedToBottom
-                                           : contentOffset.y < oldContentOffset.y;
+    self.scrollViewIsDraggedToBottom =
+        (contentOffset.y == oldContentOffset.y ? self.scrollViewIsDraggedToBottom
+                                               : contentOffset.y < oldContentOffset.y)
+            ? YES
+            : NO;
 
     // The normalized content offset takes the content offset and updates it if using the
     // performance logic that comes with setting the tracking scroll view. The reason we update

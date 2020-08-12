@@ -177,6 +177,13 @@
 @property(nonatomic, assign) BOOL centerVisibleArea;
 
 /**
+The calculated inset or outset margins for the rectangle surrounding all of the chip’s visible area.
+
+When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
+*/
+@property(nonatomic, readonly) UIEdgeInsets visibleAreaInsets;
+
+/**
  A block that is invoked when the MDCChipView receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
@@ -344,17 +351,6 @@
  */
 - (void)setTitleColor:(nullable UIColor *)titleColor
              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
-
-#pragma mark - Deprecated
-
-/**
-The inset or outset margins for the rectangle surrounding all of the chip’s visible area.
-
-A positive value shrinks the visible area of the chip. A negative value expands the visible area
-of the chip.
-*/
-@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets
-    __attribute__((deprecated("Consider using centerVisibleArea to adjust visible area.")));
 
 @end
 

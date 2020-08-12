@@ -35,6 +35,7 @@
 		5CE8092C1FD729880068A050 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CE809381FD729880068A050 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63301F6E1E07E3E0BAAFE1AF /* Pods-MDCDragons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons.release.xcconfig"; sourceTree = "<group>"; };
+		66A69D4224E310E100D0698E /* MDCDragons.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MDCDragons.entitlements; sourceTree = "<group>"; };
 		D1727545609D5A05DD1A8DD8 /* Pods_MDCDragons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCDragons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF373EC1248FF0C900F47798 /* MDCCatalogWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCCatalogWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +73,7 @@
 		5CE8092B1FD729880068A050 /* MDCDragons */ = {
 			isa = PBXGroup;
 			children = (
+				66A69D4224E310E100D0698E /* MDCDragons.entitlements */,
 				DF373EC1248FF0C900F47798 /* MDCCatalogWindow.swift */,
 				5CE8092C1FD729880068A050 /* AppDelegate.swift */,
 				5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */,
@@ -372,16 +374,21 @@
 			baseConfigurationReference = 096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconInverse;
+				CODE_SIGN_ENTITLEMENTS = MDCDragons/MDCDragons.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				DEVELOPMENT_TEAM = "";
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				INFOPLIST_FILE = MDCDragons/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCDragons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Google Development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -390,16 +397,21 @@
 			baseConfigurationReference = 63301F6E1E07E3E0BAAFE1AF /* Pods-MDCDragons.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconInverse;
+				CODE_SIGN_ENTITLEMENTS = MDCDragons/MDCDragons.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = EQHXZ8M8AV;
+				DEVELOPMENT_TEAM = "";
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				INFOPLIST_FILE = MDCDragons/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.MDCDragons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Google Development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};

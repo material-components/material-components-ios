@@ -51,6 +51,13 @@
   return self;
 }
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  [self configureShapeGeneratorWithCornerRadius:self.cornerRadius
+                              centerVisibleArea:self.centerVisibleArea];
+}
+
 - (void)setBorderWidth:(CGFloat)borderWidth {
   self.layer.shapedBorderWidth = borderWidth;
 }

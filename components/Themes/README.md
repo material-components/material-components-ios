@@ -16,8 +16,8 @@ Themes provides a mechanism to colorize components with color schemes. Color sch
 
 ### Requirements
 
-- Xcode 8.0 or higher.
-- iOS SDK version 9.0 or higher.
+- Xcode 10.0 or higher.
+- iOS SDK version 10.0 or higher.
 
 ### Installation with CocoaPods
 

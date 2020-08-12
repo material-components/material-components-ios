@@ -8,338 +8,45 @@ path: /catalog/tabs/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Tabs -->
-
 # Tabs
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BTabs%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BTabs%5D)
 
-Tabs are bars of buttons used to navigate between groups of content.
+[Tabs](https://material.io/components/tabs) organize content across different screens, data sets, and other interactions.
 
-<div class="article__asset article__asset--screenshot">
-    <img src="docs/assets/tabs.png" alt="Tabs" width="375">
-</div>
+Material tabs can be broken into two main categories: fixed and scrollable.
 
-## Design & API documentation
+### Fixed tabs
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-tabs">Material Design guidelines: Tabs</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarUnderlineIndicatorTemplate.h">MDCTabBarUnderlineIndicatorTemplate</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBar.h">MDCTabBar</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarIndicatorAttributes.h">MDCTabBarIndicatorAttributes</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarViewController.h">MDCTabBarViewController</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarControllerDelegate.h">MDCTabBarControllerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarDelegate.h">MDCTabBarDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarIndicatorContext.h">MDCTabBarIndicatorContext</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarIndicatorTemplate.h">MDCTabBarIndicatorTemplate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarAlignment.h">MDCTabBarAlignment</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarItemAppearance.h">MDCTabBarItemAppearance</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBar.h">MDCTabBarItemState</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Tabs/src/MDCTabBarTextTransform.h">MDCTabBarTextTransform</a></li>
-</ul>
+![fixed tab example](docs/assets/tabs-fixed-hero.png)
 
-## Table of contents
+### Scrollable tabs
 
-- [Overview](#overview)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Importing](#importing)
-  - [Delegate](#delegate)
-  - [Selected item](#selected-item)
-  - [Appearance](#appearance)
-  - [Styling](#styling)
-  - [Custom selection indicators](#custom-selection-indicators)
-  - [Bottom navigation](#bottom-navigation)
-- [Examples](#examples)
-  - [Creating a tab bar](#creating-a-tab-bar)
-- [Extensions](#extensions)
-  - [Typography Theming](#typography-theming)
-  - [Theming Extensions](#theming-extensions)
-- [MDCTabBarView](#mdctabbarview)
-  - [Importing MDCTabBarView](#importing-mdctabbarview)
-  - [Typical Use of MDCTabBarView](#typical-use-of-mdctabbarview)
-  - [Migrating from MDCTabBar](#migrating-from-mdctabbar)
+![scrollabe tab example](docs/assets/tabs-scrollable-hero.png)
 
-- - -
+## Contents
 
-## Overview
+* [Using tabs](#using-tabs)
+* [Installing tabs](#installing-tabs)
+* [Making tabs accessible](#making-tabs-accessible)
+* [Tabs anatomy](#tabs-anatomy)
+* [Theming tabs](#theming-tabs)
+* [Migrating from legacy tabs](#migrating-from-legacy-tabs)
 
-When a user taps a tab, the content changes to match the selected subject in the tabs.
+## Using tabs
 
-We provide this functionality through MDCTabBar which communicates via a delegate as well as
-MDCTabBarViewController which provides a view containment model similar to UITabViewController.
-
-Tabs can also show a badge (usually a number) like UITabBar.
-
-## Installation
-
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/Tabs'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
-
-### Importing
-
-To import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialTabs
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialTabs.h"
-```
-<!--</div>-->
-
-
-## Usage
-
-<!-- Extracted from docs/usage.md -->
-
-### Importing
-
-To use the tab bar in your code, import the MaterialTabs umbrella header (Objective-C) or MaterialComponents module (Swift).
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-import MaterialComponents
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialTabs.h"
-```
-
-<!--</div>-->
-
-### Delegate
-
-Conform your class to the MDCTabBarDelegate protocol and set it as the tab bar's delegate to handle updating the UI when the user selects a tab.
-
-### Selected item
-
-Update the selected tab programmatically by setting `selectedItem`, optionally with an animation. Delegate methods are not called for programmatic changes, so callers are responsible for updating UI as needed after updating the selected item.
-
-### Appearance
-
-Set the `itemAppearance` property on the tab bar to switch between item display modes. Items can be displayed as titles (the default), icons, or combined.
-
-### Styling
-
-By default, the tab bar is configured to display items with white text and icons. To customize the color of the tab bar, set the `tintColor`, `selectedItemTintColor`, `unselectedItemTintColor`, `inkColor`, and `barTintColor` properties. If `selectedItemTintColor` is nil, the tab bar's `tintColor` will be used automatically for selected items.
-
-Configure where items are placed in the tab bar by setting the `alignment` property.
-
-### Custom selection indicators
-
-The currently-selected tab is indicated visually by a *selection indicator*. By default this is an
-underline, but you can customize its appearance by defining a selection indicator template and
-setting the `selectionIndicatorTemplate` property on the tab bar. Template objects are provided
-contextual information about a tab's content and return *attributes* that describe how that tab's
-indicator should appear. The indicator will then automatically display the provided shape and
-animate changes as the user selects different tabs.
-
-See `MDCTabBarIndicatorTemplate` and `MDCTabBarIndicatorAttributes` for details.
-
-### Bottom navigation
-
-Implement `positionForBar:` and return `UIBarPositionBottom` to configure the tab bar as a bottom
-navigation bar. The bar will automatically update with the appropriate styling.
-
-
-## Examples
-
-<!-- Extracted from docs/examples.md -->
-
-### Creating a tab bar
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-let tabBar = MDCTabBar(frame: view.bounds)
-tabBar.items = [
-UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
-UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
-]
-tabBar.itemAppearance = .titledImages
-tabBar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-tabBar.sizeToFit()
-view.addSubview(tabBar)
-```
-
-#### Objective-C
-
-```objc
-MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:self.view.bounds];
-tabBar.items = @[
-    [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Favorites" image:[UIImage imageNamed:@"heart"] tag:0],
-];
-tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-tabBar.autoresizingMask =
-    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-[tabBar sizeToFit];
-[self.view addSubview:tabBar];
-```
-
-<!--</div>-->
-
-
-## Extensions
-
-<!-- Extracted from docs/color-theming.md -->
-
-
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-You can theme a tab bar with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Tabs+TypographyThemer'
-```
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialTabs_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCTabBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialTabs+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCTabBarTypographyThemer applyTypographyScheme:colorScheme
-     toTabBar:component];
-```
-<!--</div>-->
-
-
-<!-- Extracted from docs/theming-extensions.md -->
-
-### Theming Extensions
-
-`MDCTabBar` supports Material Theming using a Container Scheme.
-There are two variants for Material Theming of a MDCTabBar, which are the Primary Theme
-and the Surface Theme.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-```swift
-// Import the Tabs Theming Extensions module
-import MaterialComponents.MaterialTabs_MaterialTheming
- ...
- // Create or use your app's Container Scheme
-let containerScheme = MDCContainerScheme()
- // Theme the tab bar with either Primary Theme
-tabBar.applyPrimaryTheme(withScheme: containerScheme)
- // Or Surface Theme
-tabBar.applySurfaceTheme(withScheme: containerScheme)
-```
-
-#### Objective-C
-
-```objc
-// Import the Tabs Theming Extensions header
-#import <MaterialComponents/MaterialTabBar+MaterialTheming.h>
- ...
- // Create or use your app's Container Scheme
-MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
- // Theme the tab bar with either Primary Theme
-[self.tabBar applyPrimaryThemeWithScheme:containerScheme];
- // Or Surface Theme
-[self.tabBar applySurfaceThemeWithScheme:containerScheme];
-```
-
-<!--</div>-->
-
-
-## MDCTabBarView
-
-<!-- Extracted from docs/tabbarview.md -->
-
-> **_NOTE:_** This is currently in Beta. Features may change without warning and without a change in the Material 
-> Components for iOS version number.
-
-<div class="article__asset article__asset--screenshot">
-    <img src="docs/assets/tabbarview-defaults-Fixed-Justified.png" alt="TabBarView showing only titles in a Justified Fixed Tabs layout." width="375">
-</div>
-<div class="article__asset article__asset--screenshot">
-    <img src="docs/assets/tabbarview-defaults-Scrollable-Leading.png" alt="TabBarView showing only titles in a Scrollable layout." width="375">
-</div>
-
-
-### Importing MDCTabBarView
-
-`MDCTabBarView` is currently part of the MaterialComponentsBeta podspec. You
-may need to follow the [Material Components for iOS Beta integration
-guide](https://github.com/material-components/material-components-ios/blob/develop/contributing/beta_components.md)
-to configure your project to use `MDCTabBarView`.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-import MaterialComponentsBeta.MaterialTabs_TabBarView
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialTabs+TabBarView.h"
-```
-<!--</div>-->
-
-### Typical Use of MDCTabBarView
+`MDCTabBarView` supports both fixed and scrolling tabs. By default, `MDCTabbarView` has a fixed layout. To set it up for scrolling, set the `preferredLayoutStyle` property to `.scrolling`. To receive updates about user actions, set the `delegate` property to an object conforming to `MDCTabBarViewDelegate`. Here is a simple set up of an `MDCTabBarView`:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
 let tabBarView = MDCTabBarView()
-addSubview(tabBarView)
-
+tabBarView.items = [
+  UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
+  UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
+]
+view.addSubview(tabBarView)
 // Configure constraints
 ```
 
@@ -347,13 +54,157 @@ addSubview(tabBarView)
 
 ```objc
 MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
+tabBarView.items = @[
+    [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Favorites" image:[UIImage imageNamed:@"heart"] tag:0],
+];
 [self.view addSubview:tabBarView];
-
 // Configure constraints
 ```
 <!--</div>-->
 
-### Migrating from MDCTabBar
+## Installing tabs
+
+In order to use `MDCTabBarView`, first add the component to your `Podfile`:
+
+```bash
+pod MaterialComponents/Tabs+TabBarView
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run `pod install`.
+
+```bash
+pod install
+```
+
+After that, import the component target.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialTabs_TabBarView
+```
+
+#### Objective-C
+```objc
+#import <MaterialComponents/MaterialTabs+TabBarView.h>
+```
+<!--</div>-->
+
+From there, initialize an `MDCTabBarView` and add it to your view controller's view.
+
+## Making tabs accessible
+
+`MDCTabBarView` is accessible by default. VoiceOver reads the titles of the `UITabBarItem`s contained within a tab bar as `accessibilityLabels`, and the `MDCTabBarView` handles setting the `accessibilityTraits` when tab bar items become selected and unselected.
+
+## Tabs anatomy
+
+Tab bars contain tab bar items with optional icons and text labels. Tab bar items can be selected or unselected. The selection indicator appears below the currently selected tab bar item.
+
+![Tabs anatomy diagram](docs/assets/tabs-anatomy.png)
+
+1.  Container
+2.  Selected icon (optional if there’s a label)
+3.  Selected text label (optional if there’s an icon)
+4.  Selection indicator
+5.  Unselected icon (optional if there’s a label)
+6.  Unselected text label (optional if there’s an icon)
+7.  Tab bar item
+
+### Container attributes
+
+&nbsp;        | Attribute            | Related method(s)                  | Default value
+------------- | -------------------- | ---------------------------------- | -------------
+**Color**     | `barTintColor` | `-setBarTintColor:`<br>`-barTintColor` | white
+**Layout style**  | `preferredLayoutStyle`            | `-setPreferredLayoutStyle:`<br>`-preferredLayoutStyle`  | `.fixed`
+
+### Tab item icon attributes
+
+&nbsp;    | Attribute      | Related method(s)                                                | Default value
+--------- | -------------- | ---------------------------------------------------------------- | -------------
+**Icon**  | N/A | `-[UITabBarItem initWithTitle:image:tag:]` <br/> `-[UITabBarItem initWithTitle:image:selectedImage:]` | `nil`
+**Color** | N/A  | `-setImageTintColor:forState:` <br> `-imageTintColorForState:` | `nil`
+
+### Tab item text label attributes
+
+&nbsp;           | Attribute           | Related method(s)                                               | Default value
+---------------- | ------------------- | --------------------------------------------------------------- | -------------
+**Text**         | N/A        | `-[UITabBarItem initWithTitle:image:tag:]` <br/> `-[UITabBarItem initWithTitle:image:selectedImage:]` | `nil`
+**Color**        | N/A      | `-setTitleColor:forState:` <br> `-titleColorForState:` | On primary color
+**Typography**   | N/A  | `-setTitleFont:forState:` <br> `-titleFontForState:`    | Button
+
+### Tab item container attributes
+
+&nbsp;               | Attribute                                                                                     | Related method(s)                                                            | Default value
+-------------------- | ------------------------------------------- | ------------------------------------------------ | -------------
+**Ripple color**     | `rippleColor`   | `-setRippleColor:`<br>`-rippleColor`   | White at 16% opacity
+
+### Tab indicator attributes
+
+&nbsp;                 | Attribute                       | Related method(s)                                            | Default value
+---------------------- | ------------------------------- | ------------------------------------------------------------ | -------------
+**Color**              | `selectionIndicatorStrokeColor`  | `-setSelectionIndicatorStrokeColor:` <br> `-selectionIndicatorStrokeColor` | On primary color
+
+## Theming tabs
+
+Tabs supports Material Theming using a Container Scheme. To learn more about theming extensions, see [here](https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md). Below is a screenshot of an `MDCTabBarView` with the Material Design Shrine theme:
+
+![Shrine card](docs/assets/shrine-tabs.png)
+
+### Tabs theming example
+
+To make use of tabs theming install the tabs theming extensions with Cocoapods. First, add the following line to your `Podfile`.
+
+```bash
+pod MaterialComponents/Tabs+TabBarViewTheming
+```
+
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then Run the installer.
+
+```bash
+pod install
+```
+
+Next, import the Tabs theming target, and call the correct theming method.
+
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+import MaterialComponents.MaterialTabs_TabBarViewTheming
+...
+
+// Create an MDCTabbarView
+let tabBar = MDCTabBarView()
+// Create or use your app's Container Scheme
+let containerScheme = MDCContainerScheme()
+// Theme the tab bar with either Primary Theme
+tabBar.applyPrimaryTheme(withScheme: containerScheme)
+// Or Surface Theme
+tabBar.applySurfaceTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+// Import the Tabs Theming Extensions header
+#import <MaterialComponents/MaterialTabs+TabBarViewTheming.h>
+...
+// Create or use your app's Container Scheme
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+// Theme the tab bar with either Primary Theme
+[self.tabBar applyPrimaryThemeWithScheme:containerScheme];
+// Or Surface Theme
+[self.tabBar applySurfaceThemeWithScheme:containerScheme];
+```
+
+## Migrating from legacy tabs
+
+Below are some of the differences between `MDCTabBarView` and its predecessor, `MDCTabBar`. If you have been using `MDCTabBar`, make note of the following changes.
 
 #### Subclassing Restricted
 
@@ -442,6 +293,3 @@ MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
 tabBarView.items = @[ customItem ]
 ```
 <!--</div>-->
-
-> **_NOTE:_** This will be updated as APIs are added and migrations are defined.
-

@@ -64,7 +64,7 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 @end

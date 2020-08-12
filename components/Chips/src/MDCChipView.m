@@ -118,6 +118,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly) CGFloat pixelScale;
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
 @property(nonatomic, assign) UIEdgeInsets currentVisibleAreaInsets;
 @property(nonatomic, assign) CGFloat currentCornerRadius;
 @end

@@ -13,11 +13,9 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialShapeLibrary
 
-@available(iOS 9.0, *)
 class CardView: MDCCard {
 
   let contentView = UIView()
@@ -44,8 +42,9 @@ class CardView: MDCCard {
     contentView.isUserInteractionEnabled = false
     self.addSubview(contentView)
 
-    label.text = "abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jkl" +
-        "nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcdefg"
+    label.text =
+      "abcde fghi jklm nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jkl"
+      + "nopq rstuv wxyz abcd efgh ijkl mnop qrst uvw xyz abcde fghi jklm nopq rstuv wxyz abcdefg"
     label.numberOfLines = 0
     label.translatesAutoresizingMaskIntoConstraints = false
     self.contentView.addSubview(label)
@@ -89,7 +88,6 @@ class CardView: MDCCard {
 
 }
 
-@available(iOS 9.0, *)
 class ShapedCardViewController: UIViewController {
   var card = CardView()
   var primarySlider = UISlider()
@@ -112,39 +110,50 @@ class ShapedCardViewController: UIViewController {
     card.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
 
     primarySlider.translatesAutoresizingMaskIntoConstraints = false
-    primarySlider.bottomAnchor.constraint(equalTo: secondarySlider.topAnchor,
-                                          constant: -20).isActive = true
+    primarySlider.bottomAnchor.constraint(
+      equalTo: secondarySlider.topAnchor,
+      constant: -20
+    ).isActive = true
     primarySlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    primarySlider.widthAnchor.constraint(equalTo: view.widthAnchor,
-                                         multiplier: 0.5,
-                                         constant: 0).isActive = true
-    primarySlider.addTarget(self,
-                            action: #selector(didChangeSliderValue(slider:)),
-                            for: .valueChanged)
+    primarySlider.widthAnchor.constraint(
+      equalTo: view.widthAnchor,
+      multiplier: 0.5,
+      constant: 0
+    ).isActive = true
+    primarySlider.addTarget(
+      self,
+      action: #selector(didChangeSliderValue(slider:)),
+      for: .valueChanged)
 
     secondarySlider.translatesAutoresizingMaskIntoConstraints = false
-    secondarySlider.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                            constant: -20).isActive = true
+    secondarySlider.bottomAnchor.constraint(
+      equalTo: view.bottomAnchor,
+      constant: -20
+    ).isActive = true
     secondarySlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    secondarySlider.widthAnchor.constraint(equalTo: view.widthAnchor,
-                                           multiplier: 0.5,
-                                           constant: 0).isActive = true
-    secondarySlider.addTarget(self,
-                            action: #selector(didChangeSliderValue(slider:)),
-                            for: .valueChanged)
-    
-    let barButton = UIBarButtonItem(title: "Change Shape",
-                                    style: .plain,
-                                    target: self,
-                                    action: #selector(changeShape))
+    secondarySlider.widthAnchor.constraint(
+      equalTo: view.widthAnchor,
+      multiplier: 0.5,
+      constant: 0
+    ).isActive = true
+    secondarySlider.addTarget(
+      self,
+      action: #selector(didChangeSliderValue(slider:)),
+      for: .valueChanged)
+
+    let barButton = UIBarButtonItem(
+      title: "Change Shape",
+      style: .plain,
+      target: self,
+      action: #selector(changeShape))
     self.navigationItem.rightBarButtonItem = barButton
   }
 
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
-    primarySlider.maximumValue = Float(min(card.bounds.width, card.bounds.height)/2)
+    primarySlider.maximumValue = Float(min(card.bounds.width, card.bounds.height) / 2)
     primarySlider.sendActions(for: .valueChanged)
-    secondarySlider.maximumValue = Float(min(card.bounds.width, card.bounds.height)/2)
+    secondarySlider.maximumValue = Float(min(card.bounds.width, card.bounds.height) / 2)
     secondarySlider.sendActions(for: .valueChanged)
   }
 
@@ -154,8 +163,9 @@ class ShapedCardViewController: UIViewController {
         let cutCornerTreatment = MDCCutCornerTreatment(cut: CGFloat(slider.value))
         shape.setCorners(cutCornerTreatment)
       } else if slider == secondarySlider {
-        let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: CGFloat(slider.value),
-                                                             style: MDCTriangleEdgeStyleCut)
+        let triangleEdgeTreatment = MDCTriangleEdgeTreatment(
+          size: CGFloat(slider.value),
+          style: MDCTriangleEdgeStyleCut)
         shape.setEdges(triangleEdgeTreatment)
       }
       card.setNeedsLayout()
@@ -165,10 +175,12 @@ class ShapedCardViewController: UIViewController {
   @objc func changeShape() {
     primarySlider.isHidden = true
     secondarySlider.isHidden = true
-    switch(card.shapeGenerator) {
+    switch card.shapeGenerator {
     case is MDCRectangleShapeGenerator:
-      let shapeGenerator = MDCCurvedRectShapeGenerator(cornerSize: CGSize(width: 50,
-                                                                          height: 100))
+      let shapeGenerator = MDCCurvedRectShapeGenerator(
+        cornerSize: CGSize(
+          width: 50,
+          height: 100))
       card.shapeGenerator = shapeGenerator
       card.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
     case is MDCCurvedRectShapeGenerator:
@@ -202,7 +214,6 @@ class ShapedCardViewController: UIViewController {
   }
 }
 
-@available(iOS 9.0, *)
 extension ShapedCardViewController {
 
   @objc class func catalogMetadata() -> [String: Any] {
