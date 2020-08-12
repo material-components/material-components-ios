@@ -1,3 +1,54 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Chips
+
+* [Expose visibleAreaInsets as a public readonly API.](https://github.com/material-components/material-components-ios/commit/f716061f0fe2ad5f05692ee84c1094f20dbbf84f) (Wenyu Zhang)
+* [Remove visibleAreaInsets from public API.](https://github.com/material-components/material-components-ios/commit/899c57e8d5d27d2f57a91c8da50d7d05c0e54798) (Wenyu Zhang)
+
+### Slider
+
+* [Update Slider example to conform to minimum touch size by change frame.](https://github.com/material-components/material-components-ios/commit/e5c046c89a57d382bd01d23abbae9cd2711cdff2) (Wenyu Zhang)
+
+### Snackbar
+
+* [Deprecate all unused class methods.](https://github.com/material-components/material-components-ios/commit/12aa90eac30400ce3400d0946f31d4b46dd9e8ae) (Jeff Verkoeyen)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/0dd6376c6de22ff059f68023f0e876d0e275aeb1) (Jeff Verkoeyen)
+
+### Tabs
+
+* [Clarify handling of safe area layout in the documentation to make clear all properties that need to be set](https://github.com/material-components/material-components-ios/commit/8dac13ae51e05e60b394ac81dffa40cfcfd05bec) (Alyssa Weiss)
+
+### TextControls
+
+* [Add KVO for assistive labels](https://github.com/material-components/material-components-ios/commit/6e52d049a67499ca83c2b3094a4979e12cb06f7d) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Move primaryColor to the ToBeDeprecated category.](https://github.com/material-components/material-components-ios/commit/79e16bbf1fb0c519007df0a12b5c66a0da6354c1) (Jeff Verkoeyen)
+
+## Multi-component changes
+
+* [Drop support for iOS 9.](https://github.com/material-components/material-components-ios/commit/d7ff705337e62a33e31494ffd58d20239aff80ce) (Jeff Verkoeyen)
+* [Enable Catalyst support for the catalogs.](https://github.com/material-components/material-components-ios/commit/8cea56b40566532b579110e7639be40c52e01e0c) (featherless)
+* [Replace tabs docs](https://github.com/material-components/material-components-ios/commit/0448a330e3f5efe8e5581e31fd1b3fc7a5add79b) (Andrew Overton)
+* [Turn centerVisibleArea on on ThumbView to ensure its minimum touch target size.](https://github.com/material-components/material-components-ios/commit/ab519cac9fef728d8b2a08552f6603634a411c3e) (Wenyu Zhang)
+
+---
+
 # 112.1.0
 
 This minor change introduces two new features and fixes crashes due to UIPointerInteraction use in
