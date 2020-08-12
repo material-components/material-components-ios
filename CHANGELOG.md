@@ -1,16 +1,19 @@
-# #develop#
+# 113.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we have dropped support for iOS 9.0, added support to Catalyst for our catalogs, and enlarged the minimum touch target of the thumb view of our Slider component.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+* We have dropped support for iOS 9, our minimum iOS version is now set to 10.0.
+* MDCChips visibleAreaInsets property is now set to read only.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
-## New features
+* We have deprecated some MDCSnackbarManager class methods. Please use MDCSnackbarManager.defaultManager and their corresponding instance methods instead.
 
-Replace this text with example code for each new feature.
 ## API changes
+
+*modified* property: `visibleAreaInsets` in `MDCChipView` to be `readonly`.
 
 ## Component changes
 
@@ -39,13 +42,13 @@ Replace this text with example code for each new feature.
 ### private/ThumbTrack
 
 * [Move primaryColor to the ToBeDeprecated category.](https://github.com/material-components/material-components-ios/commit/79e16bbf1fb0c519007df0a12b5c66a0da6354c1) (Jeff Verkoeyen)
+* [Turn centerVisibleArea on on ThumbView to ensure its minimum touch target size.](https://github.com/material-components/material-components-ios/commit/ab519cac9fef728d8b2a08552f6603634a411c3e) (Wenyu Zhang)
 
 ## Multi-component changes
 
 * [Drop support for iOS 9.](https://github.com/material-components/material-components-ios/commit/d7ff705337e62a33e31494ffd58d20239aff80ce) (Jeff Verkoeyen)
 * [Enable Catalyst support for the catalogs.](https://github.com/material-components/material-components-ios/commit/8cea56b40566532b579110e7639be40c52e01e0c) (featherless)
 * [Replace tabs docs](https://github.com/material-components/material-components-ios/commit/0448a330e3f5efe8e5581e31fd1b3fc7a5add79b) (Andrew Overton)
-* [Turn centerVisibleArea on on ThumbView to ensure its minimum touch target size.](https://github.com/material-components/material-components-ios/commit/ab519cac9fef728d8b2a08552f6603634a411c3e) (Wenyu Zhang)
 
 ---
 
