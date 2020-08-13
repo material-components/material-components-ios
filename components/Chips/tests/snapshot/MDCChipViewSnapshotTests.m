@@ -695,6 +695,18 @@
   [self snapshotVerifyView:snapshotView];
 }
 
+- (void)testChipWithMinimumSizeWhenCenterVisibleAreaIsYES {
+  // When
+  self.chip.centerVisibleArea = YES;
+  self.chip.minimumSize = CGSizeMake(80, 44);
+  self.chip.bounds = CGRectMake(0, 0, 80, 44);
+  [self.chip layoutIfNeeded];
+
+  // Then
+  UIView *snapshotView = [self.chip mdc_addToBackgroundView];
+  [self snapshotVerifyView:snapshotView];
+}
+
 - (void)testChipWithCustomCornerRadiusAndCustomFrameWhenCenterVisibleArea {
   // When
   self.chip.centerVisibleArea = YES;
