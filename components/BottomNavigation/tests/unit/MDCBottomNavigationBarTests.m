@@ -450,6 +450,33 @@ static NSString *const kTestItemTitleText = @"Title";
                 NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
 }
 
+/*
+ Tests when the bottomNavBar width is not evenly divisible by the number of items, the  difference
+ between start of the frame and center of the first element and end of the frame and center of the
+ last element is max one pixel
+ */
+- (void)testLaysoutAcrossBarEvenly {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"3" image:nil tag:0];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"4" image:nil tag:0];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"5" image:nil tag:0];
+  CGFloat bottomNavBarWidth = 304;
+  self.bottomNavBar.frame = CGRectMake(0, 0, bottomNavBarWidth, 56);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2, item3, item4, item5 ];
+  [self.bottomNavBar layoutIfNeeded];
+
+  // Then
+  MDCBottomNavigationItemView *viewForItem1 =
+      (MDCBottomNavigationItemView *)[self.bottomNavBar viewForItem:item1];
+  MDCBottomNavigationItemView *viewForItem5 =
+      (MDCBottomNavigationItemView *)[self.bottomNavBar viewForItem:item5];
+  XCTAssertEqualWithAccuracy(viewForItem1.center.x, bottomNavBarWidth - viewForItem5.center.x, 1.0);
+}
+
 #pragma mark - Autolayout support
 
 - (void)testIntrinsicContentSizeIgnoresSafeArea {
