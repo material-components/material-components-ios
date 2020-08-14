@@ -296,9 +296,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
   if (!selectedItem) {
     _selectedItem = selectedItem;
-    [self updateTitleColorForAllViews];
-    [self updateImageTintColorForAllViews];
-    [self updateTitleFontForAllViews];
+    [self updateTitleColorForAllViewsAnimated:animated];
     [self didSelectItemAtIndex:NSNotFound animateTransition:animated];
     return;
   }
@@ -319,9 +317,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
         (UIView<MDCTabBarViewCustomViewable> *)newSelectedItemView;
     [customViewableView setSelected:YES animated:animated];
   }
-  [self updateTitleColorForAllViews];
-  [self updateImageTintColorForAllViews];
-  [self updateTitleFontForAllViews];
+  [self updateTitleColorForAllViewsAnimated:animated];
   [self scrollToItem:self.items[itemIndex] animated:animated];
   [self didSelectItemAtIndex:itemIndex animateTransition:animated];
 }
@@ -363,7 +359,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return color;
 }
 
-- (void)updateTitleColorForAllViews {
+- (void)updateTitleColorForAllViewsAnimated:(BOOL)animated {
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
@@ -377,17 +373,30 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       continue;
     }
     MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
-    if (item == self.selectedItem) {
-      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+    void (^animations)(void) = ^{
+      if (item == self.selectedItem) {
+        tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+      } else {
+        tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+      }
+    };
+    if (animated) {
+      // UILabel::textColor can't be implicitly animated, so we use a cross-fade dissolve transition
+      // on the label to accomplish the effect instead.
+      [UIView transitionWithView:tabBarViewItemView.titleLabel
+                        duration:self.selectionChangeAnimationDuration
+                         options:UIViewAnimationOptionTransitionCrossDissolve
+                      animations:animations
+                      completion:nil];
     } else {
-      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+      animations();
     }
   }
 }
 
 - (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
   self.stateToTitleColor[@(state)] = titleColor;
-  [self updateTitleColorForAllViews];
+  [self updateTitleColorForAllViewsAnimated:NO];
 }
 
 - (UIColor *)titleColorForState:(UIControlState)state {
@@ -1227,6 +1236,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
  */
 - (void)didSelectItemAtIndex:(NSUInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
+    [self updateImageTintColorForAllViews];
+    [self updateTitleFontForAllViews];
     [self updateSelectionIndicatorToIndex:index];
 
     // Force layout so any changes to the selection indicator are captured by the animation block.
