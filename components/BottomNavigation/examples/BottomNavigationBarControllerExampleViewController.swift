@@ -13,10 +13,9 @@
 // limitations under the License.
 
 import UIKit
-
-import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation
-import MaterialComponents.MaterialBottomNavigation_Theming
+import MaterialComponents.MaterialBottomNavigation_BottomNavigationController 
+import MaterialComponents.MaterialBottomNavigation_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 class BottomNavigationControllerExampleFixedChildViewController: UIViewController {
@@ -62,11 +61,15 @@ class BottomNavigationControllerExampleScrollableChildViewController: UICollecti
     return 1
   }
 
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(
+    _ collectionView: UICollectionView, numberOfItemsInSection section: Int
+  ) -> Int {
     return numberOfItems
   }
 
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  override func collectionView(
+    _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
     let hue = CGFloat(indexPath.row) / CGFloat(numberOfItems)
     cell.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
@@ -101,25 +104,29 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
 
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.estimatedItemSize = CGSize(width: 96, height: 48)
-    let viewController1 = BottomNavigationControllerExampleScrollableChildViewController(collectionViewLayout: flowLayout)
+    let viewController1 = BottomNavigationControllerExampleScrollableChildViewController(
+      collectionViewLayout: flowLayout)
     viewController1.collectionView.backgroundColor = containerScheme.colorScheme.primaryColorVariant
-    viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "ic_home"), tag: 0)
+    viewController1.tabBarItem = UITabBarItem(
+      title: "Item 1", image: UIImage(named: "ic_home"), tag: 0)
 
     let viewController2 = BottomNavigationControllerExampleFixedChildViewController()
     viewController2.containerScheme = containerScheme
-    viewController2.tabBarItem = UITabBarItem(title: "Item 2", image: UIImage(named: "ic_favorite"), tag: 1)
+    viewController2.tabBarItem = UITabBarItem(
+      title: "Item 2", image: UIImage(named: "ic_favorite"), tag: 1)
 
     let viewController3 = UIViewController()
     viewController3.view.backgroundColor = containerScheme.colorScheme.surfaceColor
-    viewController3.tabBarItem = UITabBarItem(title: "Item 3", image: UIImage(named: "ic_search"), tag: 2)
+    viewController3.tabBarItem = UITabBarItem(
+      title: "Item 3", image: UIImage(named: "ic_search"), tag: 2)
 
-    viewControllers = [ viewController1, viewController2, viewController3 ]
+    viewControllers = [viewController1, viewController2, viewController3]
   }
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Controller"],
-      "presentable": false
+      "presentable": false,
     ]
   }
 }

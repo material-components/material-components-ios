@@ -311,7 +311,7 @@ Pod::Spec.new do |mdc|
     ]
     component.exclude_files = [
       "components/#{component.base_name}/src/MDCBottomNavigationBarController.*",
-      "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"
+      "components/#{component.base_name}/src/MaterialBottomNavigation+BottomNavigationController.h"
     ]
     component.resources = [
       "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
@@ -338,6 +338,25 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerDelegateTests.m"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+    end
+  end
+
+  mdc.subspec "BottomNavigation+BottomNavigationController" do |component|
+    component.ios.deployment_target = '10.0'
+    component.public_header_files = [
+      "components/#{component.base_name.split('+')[0]}/src/MDCBottomNavigationBarController.h",
+      "components/#{component.base_name.split('+')[0]}/src/MaterialBottomNavigation+BottomNavigationController.h",
+    ]
+    component.source_files = [
+      "components/#{component.base_name.split('+')[0]}/src/MDCBottomNavigationBarController.*",
+      "components/#{component.base_name.split('+')[0]}/src/MaterialBottomNavigation+BottomNavigationController.h",
+    ]
+    component.dependency "MaterialComponents/BottomNavigation"
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name.split('+')[0]}/tests/unit/MDCBottomNavigationBarControllerTests.m",
+        "components/#{component.base_name.split('+')[0]}/tests/unit/MDCBottomNavigationBarControllerDelegateTests.m"
+      ]
     end
   end
 
