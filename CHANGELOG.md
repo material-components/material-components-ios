@@ -1,3 +1,65 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomAppBar
+
+* [Fix bug where FAB shadow would "bounce" when the position changed.](https://github.com/material-components/material-components-ios/commit/453eaa8a9a33e344276892ebb005ceaec205bab8) (Jeff Verkoeyen)
+
+### BottomNavigation
+
+* [modify layouts with division to use floor(), as not using this was causing some non integer pixel values, which then resulted in a blurry layout](https://github.com/material-components/material-components-ios/commit/4a3058d59175eb455ef2f4e38df262b3cb6040cf) (Alyssa Weiss)
+
+### ButtonBar
+
+* [Adds Large Content Viewer support to MDCButtonBar, MDCNavigationBar, and MDCAppBar.](https://github.com/material-components/material-components-ios/commit/7f9d2cc3504b12da7a8dec3d8028c6b6102cd75e) (Yarden Eitan)
+* [Fall back to accessibilityLabel for UILargeContentView when there is an image and no title.](https://github.com/material-components/material-components-ios/commit/ae3fc08aac3722feb31148011d52af7a7dc926f5) (Yarden Eitan)
+* [Removes nullability modifiers from file.](https://github.com/material-components/material-components-ios/commit/4511a9f5e4d2909dbc0c84b65af45a7e0d7e03f2) (Nobody)
+
+### Chips
+
+* [Add a snapshot test case for MDCChipView with minimumSize set and centerVisible set to YES.](https://github.com/material-components/material-components-ios/commit/70d7a73cb4beaf4aa67e1d51626c6e1ab9b12b6a) (Wenyu Zhang)
+
+### NavigationDrawer
+
+* [Adds shouldDisplayMobileLandscapeFullscreen property to MDCBottomDrawerViewController.](https://github.com/material-components/material-components-ios/commit/d63936f671a2b113eb57cbcc589b4ba14a160309) (Nobody)
+
+### ScalableFontDescriptor
+
+* [Add a new ScalableFontDescriptor library.](https://github.com/material-components/material-components-ios/commit/1baab835a533df37b5e599444937f75deadca056) (Jeff Verkoeyen)
+
+### Snackbar
+
+* [  Material Snackbar support for selecting which window to present on.](https://github.com/material-components/material-components-ios/commit/c48cd65ade15bc29ab2329ed9e8032e1f5f01a2c) (Nobody)
+* [Deprecate more class methods on MDCSnackbarManager.](https://github.com/material-components/material-components-ios/commit/8dc2768f7fabd5451cf8b8956098020465ac9088) (Jeff Verkoeyen)
+* [Deprecate remaining class methods on MDCSnackbarManager.](https://github.com/material-components/material-components-ios/commit/b928b4d5c8e854288450be0938b8bfc3927ad46e) (Jeff Verkoeyen)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/ad2b16134b8dc04667604a7b8609686a1c401494) (Jeff Verkoeyen)
+
+### Tabs
+
+* [Adds Large Content Viewer support to MDCTabBarView.](https://github.com/material-components/material-components-ios/commit/eb13147f839302bd0b0b42fcb74f90cf94fe72f1) (Yarden Eitan)
+* [Animate text and icon colors when switching tabs.](https://github.com/material-components/material-components-ios/commit/3022102dbfd9833f325fbebe9ff7bceccb0c5778) (Jeff Verkoeyen)
+
+## Multi-component changes
+
+* [Add isPointerInteractionEnabled availability check.](https://github.com/material-components/material-components-ios/commit/91a2953b0d052bd6411c178be22923445ed03b35) (Bryan Oltman)
+* [Ensure transition controller pass-through accessors work following presentation controller initialization](https://github.com/material-components/material-components-ios/commit/225cd3c0cba6ac194c77a418188d1c4421227f2e) (Andrew Overton)
+* [Move MDCBottomNavigationBarController to main podspec](https://github.com/material-components/material-components-ios/commit/b22eef526fcd0ecb164f5eab0d8e42a36fc313de) (Andrew Overton)
+
+---
+
 # 113.0.0
 
 In this major release we have dropped support for iOS 9.0, added support to Catalyst for our catalogs, and enlarged the minimum touch target of the thumb view of our Slider component.
