@@ -293,25 +293,6 @@
 @protocol MDCSnackbarSuspensionToken <NSObject>
 @end
 
-@interface MDCSnackbarManager (ToBeDeprecated)
-
-/**
- Calls @c -showMessage: on the @c defaultManager instance.
- */
-+ (void)showMessage:(nullable MDCSnackbarMessage *)message;
-
-/**
- Calls @c -dismissAndCallCompletionBlocksWithCategory: on the @c defaultManager instance.
- */
-+ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
-
-/**
- Bound to @c delegate on the @c defaultManager instance.
- */
-@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
-
-@end
-
 @interface MDCSnackbarManager (Deprecated)
 
 /**
@@ -367,6 +348,12 @@
     "Use MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars instead.");
 
 /**
+ Bound to @c delegate on the @c defaultManager instance.
+ */
+@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate
+    __deprecated_msg("Use MDCSnackbarManager.defaultManager.delegate instead.");
+
+/**
  Calls @c -buttonTitleColorForState: on the @c defaultManager instance.
  */
 + (nullable UIColor *)buttonTitleColorForState:(UIControlState)state
@@ -416,5 +403,18 @@
  */
 + (void)setPresentationHostView:(nullable UIView *)hostView
     __deprecated_msg("Use [MDCSnackbarManager.defaultManager setPresentationHostView:] instead.");
+
+/**
+ Calls @c -dismissAndCallCompletionBlocksWithCategory: on the @c defaultManager instance.
+ */
++ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager "
+                     "dismissAndCallCompletionBlocksWithCategory:] instead.");
+
+/**
+ Calls @c -showMessage: on the @c defaultManager instance.
+ */
++ (void)showMessage:(nullable MDCSnackbarMessage *)message
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager showMessage:] instead.");
 
 @end
