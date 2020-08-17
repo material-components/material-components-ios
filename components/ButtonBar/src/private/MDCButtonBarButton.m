@@ -68,7 +68,12 @@ static const CGFloat kMinimumItemWidth = 36;
     return _largeContentTitle;
   }
 
-  return [self titleForState:UIControlStateNormal];
+  NSString *title = [self titleForState:UIControlStateNormal];
+  if (!title && self.largeContentImage) {
+    return self.accessibilityLabel;
+  }
+
+  return title;
 }
 
 - (UIImage *)largeContentImage {

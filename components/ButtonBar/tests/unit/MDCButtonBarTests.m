@@ -124,6 +124,26 @@
   }
 }
 
+- (void)testSettingImageWihNoTitleFallbacksToAccessibilityLabel {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIImage *image = [[UIImage alloc] init];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:image
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:nil
+                                                            action:nil];
+    item.accessibilityLabel = @"foo";
+    self.buttonBar.items = @[ item ];
+
+    // When
+    NSArray<UIView *> *itemViews = [self.buttonBar viewsForItems:self.buttonBar.items];
+    NSString *largeContentTitle = itemViews.firstObject.largeContentTitle;
+
+    // Then
+    XCTAssertEqualObjects(largeContentTitle, item.accessibilityLabel);
+  }
+}
+
 - (void)testSettingLargeContentSizeImageInsetsOnBarButtonSetsItOnButtonBarView {
   if (@available(iOS 13.0, *)) {
     // Given
