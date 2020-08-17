@@ -738,6 +738,11 @@
                         self.drawerViewController.nextResponder);
 }
 
+- (void)testSetShouldDisplayMobileLandscapeFullscreenCorrectly {
+  self.drawerViewController.shouldDisplayMobileLandscapeFullscreen = NO;
+  XCTAssertFalse(self.drawerViewController.shouldDisplayMobileLandscapeFullscreen);
+}
+
 - (void)testBottomDrawerTopInset {
   // Given
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
