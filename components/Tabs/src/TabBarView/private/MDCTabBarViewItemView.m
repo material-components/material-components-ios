@@ -322,4 +322,35 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
       self.window.screen.scale);
 }
 
+#pragma mark - UILargeContentViewerItem
+
+- (BOOL)showsLargeContentViewer {
+  return YES;
+}
+
+- (NSString *)largeContentTitle {
+  if (_largeContentTitle) {
+    return _largeContentTitle;
+  }
+
+  NSString *title = self.titleLabel.text;
+  if (!title && self.largeContentImage) {
+    return self.accessibilityLabel;
+  }
+
+  return title;
+}
+
+- (UIImage *)largeContentImage {
+  if (_largeContentImage) {
+    return _largeContentImage;
+  }
+
+  return self.image;
+}
+
+- (BOOL)scalesLargeContentImage {
+  return _largeContentImage == nil;
+}
+
 @end
