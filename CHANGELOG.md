@@ -1,16 +1,43 @@
-# #develop#
+# 113.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we have added a ScalableFontDescriptor library to represent custom scalable fonts from iOS 11 and up, added UILargeContentViewer support to AppBar, NavigationBar, TabBarView, as well as other improvements.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+* We have deprecated some MDCSnackbarManager class methods. Please use MDCSnackbarManager.defaultManager and their corresponding instance methods instead.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+On iOS 11 and up, using ScalableFontDescriptor enables you to describe a custom font and the corresponding UIFontMetrics that enable the font to scale in response to Dynamic Type settings.
+This type enables you to pair font descriptors with specific UIFontMetrics. This is most commonly used for describing the metrics of a collection of custom fonts.
+
+```swift
+// Create the type scale.
+let fontDescriptor = UIFontDescriptor(name: "CustomFont-Light", size: UIFont.labelFontSize)
+let scalableFontDescriptor: MDCScalableFontDescriptor
+if #available(iOS 11, *) {
+ scalableFontDescriptor = MDCScalableFontDescriptor(
+   fontDescriptor: fontDescriptor,
+   fontMetrics: UIFontMetrics(forTextStyle: .largeTitle)
+ )
+} else {
+ scalableFontDescriptor = MDCScalableFontDescriptor(fontDescriptor: fontDescriptor)
+}
+// Use the scalable font descriptor.
+if #available(iOS 11, *) {
+ label.font = scalableFontDescriptor.preferredFont(compatibleWith: label.traitCollection)
+ label.adjustsFontForContentSizeCategory = true
+} else {
+ label.font = scalableFontDescriptor.baseFont()
+}
+```
+
+You can now toggle if you would like that your BottomDrawer will display at fullscreen or not when in mobile landscape by setting the `shouldDisplayMobileLandscapeFullscreen` property on `MDCBottomDrawerViewController`.
+
+```swift
+let controller = MDCBottomDrawerViewController()
+controller.shouldDisplayMobileLandscapeFullscreen = false
+```
 
 ## Component changes
 
