@@ -151,6 +151,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   [self.selectedViewController.view removeFromSuperview];
   [self.content addSubview:selectedViewController.view];
   [self addConstraintsForChildViewControllerView:selectedViewController.view];
+  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 
   // Set the iVar and update selected index
   _selectedViewController = selectedViewController;
