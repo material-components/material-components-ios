@@ -57,4 +57,35 @@ static const CGFloat kMinimumItemWidth = 36;
   [super setTitleFont:font forState:state];
 }
 
+#pragma mark - UILargeContentViewerItem
+
+- (BOOL)showsLargeContentViewer {
+  return YES;
+}
+
+- (NSString *)largeContentTitle {
+  if (_largeContentTitle) {
+    return _largeContentTitle;
+  }
+
+  NSString *title = [self titleForState:UIControlStateNormal];
+  if (!title && self.largeContentImage) {
+    return self.accessibilityLabel;
+  }
+
+  return title;
+}
+
+- (UIImage *)largeContentImage {
+  if (_largeContentImage) {
+    return _largeContentImage;
+  }
+
+  return [self imageForState:UIControlStateNormal];
+}
+
+- (BOOL)scalesLargeContentImage {
+  return _largeContentImage == nil;
+}
+
 @end

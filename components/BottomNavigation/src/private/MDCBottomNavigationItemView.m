@@ -197,12 +197,12 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
   CGRect badgeFrame =
-      CGRectMake(badgeCenter.x - badgeSize.width / 2, badgeCenter.y - badgeSize.height / 2,
-                 badgeSize.width, badgeSize.height);
+      CGRectMake(MDCFloor(badgeCenter.x - badgeSize.width / 2),
+                 MDCFloor(badgeCenter.y - badgeSize.height / 2), badgeSize.width, badgeSize.height);
   CGRect labelFrame = CGRectZero;
   if (!titleHidden) {
     CGSize labelSize = [self.label sizeThatFits:maxSize];
-    labelFrame = CGRectMake(CGRectGetMidX(iconFrame) - labelSize.width / 2,
+    labelFrame = CGRectMake(MDCFloor(CGRectGetMidX(iconFrame) - labelSize.width / 2),
                             CGRectGetMaxY(iconFrame) + self.contentVerticalMargin, labelSize.width,
                             labelSize.height);
   }
@@ -216,12 +216,12 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
   CGRect badgeFrame =
-      CGRectMake(badgeCenter.x - badgeSize.width / 2, badgeCenter.y - badgeSize.height / 2,
-                 badgeSize.width, badgeSize.height);
+      CGRectMake(MDCFloor(badgeCenter.x - badgeSize.width / 2),
+                 MDCFloor(badgeCenter.y - badgeSize.height / 2), badgeSize.width, badgeSize.height);
   CGSize labelSize = [self.label sizeThatFits:maxSize];
   CGRect labelFrame = CGRectMake(CGRectGetMaxX(iconFrame) + self.contentHorizontalMargin,
-                                 CGRectGetMidY(iconFrame) - labelSize.height / 2, labelSize.width,
-                                 labelSize.height);
+                                 MDCFloor(CGRectGetMidY(iconFrame) - labelSize.height / 2),
+                                 labelSize.width, labelSize.height);
   return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
 }
 
@@ -256,9 +256,10 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   // Determine the position of the label and icon
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   CGFloat iconImageViewCenterY =
-      MAX(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 +
-              iconHeight / 2,                                  // Content centered
-          CGRectGetMinY(contentBoundingRect) + iconHeight / 2  // Pinned to top of bounding rect.
+      MAX(MDCFloor(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 +
+                   iconHeight / 2),  // Content centered
+          MDCFloor(CGRectGetMinY(contentBoundingRect) +
+                   iconHeight / 2)  // Pinned to top of bounding rect.
       );
   CGPoint iconImageViewCenter = CGPointMake(centerX, iconImageViewCenterY);
   // Ignore the horizontal titlePositionAdjustment in a vertical layout to match UITabBar behavior.
@@ -272,13 +273,13 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
   // Assign the frames to the inout arguments
   if (outLabelFrame != NULL) {
-    *outLabelFrame =
-        CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
-                   labelSize.width, labelSize.height);
+    *outLabelFrame = CGRectMake(MDCFloor(labelCenter.x - (labelSize.width / 2)),
+                                MDCFloor(labelCenter.y - (labelSize.height / 2)), labelSize.width,
+                                labelSize.height);
   }
   if (outIconFrame != NULL) {
-    *outIconFrame = CGRectMake(iconImageViewCenter.x - (iconImageViewSize.width / 2),
-                               iconImageViewCenter.y - (iconImageViewSize.height / 2),
+    *outIconFrame = CGRectMake(MDCFloor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
+                               MDCFloor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
                                iconImageViewSize.width, iconImageViewSize.height);
   }
 }
@@ -316,7 +317,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
   CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   // Amount icon center is offset from the leading edge.
-  CGFloat iconCenterOffset = contentPadding + (iconImageViewSize.width / 2);
+  CGFloat iconCenterOffset = contentPadding + iconImageViewSize.width / 2;
 
   // Determine the position of the label and icon
   CGPoint iconImageViewCenter =
@@ -329,13 +330,13 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
   // Assign the frames to the inout arguments
   if (outLabelFrame != NULL) {
-    *outLabelFrame =
-        CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
-                   labelSize.width, labelSize.height);
+    *outLabelFrame = CGRectMake(MDCFloor(labelCenter.x - (labelSize.width / 2)),
+                                MDCFloor(labelCenter.y - (labelSize.height / 2)), labelSize.width,
+                                labelSize.height);
   }
   if (outIconFrame != NULL) {
-    *outIconFrame = CGRectMake(iconImageViewCenter.x - (iconImageViewSize.width / 2),
-                               iconImageViewCenter.y - (iconImageViewSize.height / 2),
+    *outIconFrame = CGRectMake(MDCFloor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
+                               MDCFloor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
                                iconImageViewSize.width, iconImageViewSize.height);
   }
 }
@@ -446,7 +447,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   // https://material.io/tools/icons/?icon=chrome_reader_mode&style=baseline
   CGFloat badgeCenterY = CGRectGetMinY(iconFrame) + (badgeSize.height / 2);
 
-  CGFloat badgeCenterXOffset = kBadgeXOffsetFromIconEdgeWithTextLTR + (badgeSize.width / 2);
+  CGFloat badgeCenterXOffset = kBadgeXOffsetFromIconEdgeWithTextLTR + badgeSize.width / 2;
   if (self.badgeValue.length == 0) {
     badgeCenterXOffset = kBadgeXOffsetFromIconEdgeEmptyLTR;
   }

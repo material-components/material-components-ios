@@ -53,7 +53,7 @@ end
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
-  s.version      = "113.0.0"
+  s.version      = "113.1.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components snapshot tests."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -62,7 +62,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '10.0'
   s.requires_arc = true
   s.dependency 'MaterialComponents'
-  s.dependency 'MaterialComponentsBeta'
   s.dependency 'MaterialComponentsExamples'
 
   # Top level sources are required. Without them, unit test targets do not show up in Xcode.

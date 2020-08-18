@@ -53,7 +53,7 @@
                                     target:self
                                     action:@selector(toggleDynamicType)]
   ];
-  MDCSnackbarManager.delegate = self;
+  MDCSnackbarManager.defaultManager.delegate = self;
 }
 
 - (void)toggleModes {
@@ -134,7 +134,7 @@
                                                 forState:UIControlStateNormal];
   [MDCSnackbarManager.defaultManager setButtonTitleColor:MDCPalette.purplePalette.tint700
                                                 forState:UIControlStateHighlighted];
-  MDCSnackbarManager.messageTextColor = MDCPalette.greenPalette.tint500;
+  MDCSnackbarManager.defaultManager.messageTextColor = MDCPalette.greenPalette.tint500;
   [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
@@ -161,7 +161,7 @@
   MDCSnackbarManager.buttonFont = nil;
   [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateNormal];
   [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
-  MDCSnackbarManager.messageTextColor = nil;
+  MDCSnackbarManager.defaultManager.messageTextColor = nil;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Back to the standard snackbar";

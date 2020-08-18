@@ -165,6 +165,13 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
   }
   [self updateTitleColorForButton:button withItem:buttonItem];
 
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    button.largeContentImage = self.largeContentImage;
+    button.largeContentTitle = self.largeContentTitle;
+  }
+#endif
+
   [self updateButton:button withItem:buttonItem barMetrics:UIBarMetricsDefault];
 
 #ifdef __IPHONE_13_4
@@ -304,6 +311,12 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
   }
 
   destinationButton.tag = sourceButtonItem.tag;
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+  if (@available(iOS 13.0, *)) {
+    destinationButton.largeContentImageInsets = sourceButtonItem.largeContentSizeImageInsets;
+  }
+#endif
 }
 
 - (void)updateButton:(UIButton *)button

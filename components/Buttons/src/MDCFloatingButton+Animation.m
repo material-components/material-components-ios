@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCFloatingButton+Animation.h"
+#import "MDCFloatingButton.h"
 
 #if TARGET_IPHONE_SIMULATOR
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
@@ -96,8 +97,10 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
 #ifdef __IPHONE_13_4
   BOOL wasPointerInteractionEnabled = NO;
   if (@available(iOS 13.4, *)) {
-    wasPointerInteractionEnabled = self.pointerInteractionEnabled;
-    self.pointerInteractionEnabled = NO;
+    if ([self respondsToSelector:@selector(isPointerInteractionEnabled)]) {
+      wasPointerInteractionEnabled = self.pointerInteractionEnabled;
+      self.pointerInteractionEnabled = NO;
+    }
   }
 #endif
   void (^expandActions)(void) = ^{
@@ -111,7 +114,9 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
     [self.imageView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
 #ifdef __IPHONE_13_4
     if (@available(iOS 13.4, *)) {
-      self.pointerInteractionEnabled = wasPointerInteractionEnabled;
+      if ([self respondsToSelector:@selector(isPointerInteractionEnabled)]) {
+        self.pointerInteractionEnabled = wasPointerInteractionEnabled;
+      }
     }
 #endif
     if (completion) {
@@ -188,8 +193,10 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
 #ifdef __IPHONE_13_4
   BOOL wasPointerInteractionEnabled = NO;
   if (@available(iOS 13.4, *)) {
-    wasPointerInteractionEnabled = self.pointerInteractionEnabled;
-    self.pointerInteractionEnabled = NO;
+    if ([self respondsToSelector:@selector(isPointerInteractionEnabled)]) {
+      wasPointerInteractionEnabled = self.pointerInteractionEnabled;
+      self.pointerInteractionEnabled = NO;
+    }
   }
 #endif
 
@@ -204,7 +211,9 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
     [self.imageView.layer removeAnimationForKey:kMDCFloatingButtonTransformKey];
 #ifdef __IPHONE_13_4
     if (@available(iOS 13.4, *)) {
-      self.pointerInteractionEnabled = wasPointerInteractionEnabled;
+      if ([self respondsToSelector:@selector(isPointerInteractionEnabled)]) {
+        self.pointerInteractionEnabled = wasPointerInteractionEnabled;
+      }
     }
 #endif
     if (completion) {

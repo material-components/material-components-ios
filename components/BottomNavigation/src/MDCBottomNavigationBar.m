@@ -321,9 +321,9 @@ static NSString *const kOfAnnouncement = @"of";
     CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
     layoutFrameWidth = MIN(bottomNavWidthInset, layoutFrameWidth);
     containerWidth = MIN(bottomNavWidthInset, MAX(containerWidth, layoutFrameWidth));
-    CGFloat clusteredOffsetX = (bottomNavSize.width - containerWidth) / 2;
+    CGFloat clusteredOffsetX = MDCFloor((bottomNavSize.width - containerWidth) / 2);
     self.itemsLayoutView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
-    CGFloat itemLayoutFrameOffsetX = (containerWidth - layoutFrameWidth) / 2;
+    CGFloat itemLayoutFrameOffsetX = MDCFloor((containerWidth - layoutFrameWidth) / 2);
     self.itemLayoutFrame = CGRectMake(itemLayoutFrameOffsetX, 0, layoutFrameWidth, barHeight);
   }
 }
@@ -340,13 +340,15 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame = CGRectMake(
-          CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + self.itemsHorizontalPadding, 0,
-          itemWidth - 2 * self.itemsHorizontalPadding, navBarHeight);
+      itemView.frame =
+          CGRectMake(MDCFloor(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth +
+                              self.itemsHorizontalPadding),
+                     0, MDCFloor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
     } else {
-      itemView.frame = CGRectMake(
-          CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth + self.itemsHorizontalPadding,
-          0, itemWidth - 2 * self.itemsHorizontalPadding, navBarHeight);
+      itemView.frame =
+          CGRectMake(MDCFloor(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth +
+                              self.itemsHorizontalPadding),
+                     0, MDCFloor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
     }
   }
 }

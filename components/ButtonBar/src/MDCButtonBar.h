@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialAvailability.h"
+
 /**
  The position of the button bar, typically aligned with the leading or trailing edge of the screen.
 
@@ -234,3 +236,25 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
   /** Whether or not this bar button item is the last button in the list. */
   MDCBarButtonItemLayoutHintsIsLastButton = 1 << 1,
 };
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+/**
+ This component supports UIKit's Large Content Viewer. It is recommended that images associated with
+ each bar button item be backed with a PDF image with "preserve vector data" enabled within the
+ assets entry in the catalog. This ensures that the image is scaled appropriately in the content
+ viewer.
+
+ Alternatively specify an image to use for the large content viewer using UIBarButtonItem's property
+ @c largeContentSizeImage . If an image is specified, the given image is used as-is for the large
+ content viewer and will not be scaled.
+
+ If the image is not backed by PDF and a @c largeContentSizeImage is not specified, the given
+ @c image will be scaled and may be blurry.
+
+ For more details on the Large Content Viewer see:
+ https://developer.apple.com/videos/play/wwdc2019/261/
+ */
+@interface MDCButtonBar (UILargeContentViewerInteractionDelegate) <
+    UILargeContentViewerInteractionDelegate>
+@end
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)

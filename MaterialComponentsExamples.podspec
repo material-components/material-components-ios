@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsExamples"
-  s.version      = "113.0.0"
+  s.version      = "113.1.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components examples."
   s.description  = "This spec is made for use in the MDC Catalog. Used in conjunction with CatalogByConvention we create our Material Catalog."
@@ -13,6 +13,5 @@ Pod::Spec.new do |s|
 
   s.resources = ['components/*/examples/resources/*', 'components/private/*/examples/resources/*', 'components/schemes/*/examples/resources/*']
   s.dependency 'MaterialComponents'
-  s.dependency 'MaterialComponentsBeta'
   s.public_header_files = ['components/*/examples/*.h', 'components/*/examples/supplemental/*.h', 'components/private/*/examples/*.h', 'components/schemes/*/examples/*.h']
 end

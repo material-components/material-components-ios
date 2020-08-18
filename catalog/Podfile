@@ -19,6 +19,7 @@ target "MDCCatalog" do
     'Banner+Theming/UnitTests',
     'BottomAppBar/UnitTests',
     'BottomNavigation/UnitTests',
+    'BottomNavigation+BottomNavigationController/UnitTests',
     'BottomNavigation+Theming/UnitTests',
     'BottomSheet/UnitTests',
     'ButtonBar/UnitTests',
@@ -86,9 +87,6 @@ target "MDCCatalog" do
     'Themes/UnitTests',
     'Typography/UnitTests',
   ]
-  pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
-    'BottomNavigation/UnitTests',
-  ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'SnapshotTests'
   ]
@@ -103,7 +101,6 @@ target "MDCActionExtension" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'MaterialComponentsBeta', :path => '../'
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
 
@@ -115,7 +112,6 @@ target "MDCDragons" do
   project 'MDCDragons.xcodeproj'
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialComponents', :path => '../'
-  pod 'MaterialComponentsBeta', :path => '../'
   pod 'MaterialComponentsExamples', :path => '../'
   use_frameworks!
 end
@@ -124,7 +120,7 @@ post_install do |installer|
 
   mdc_xcconfigs = []
   target_support_files_path = File.dirname(installer.pods_project.path) + "/" + "Target Support Files"
-  subdirectories = ["MaterialComponents", "MaterialComponentsBeta", "MaterialComponentsExamples", "Pods-MDCCatalog"]
+  subdirectories = ["MaterialComponents", "MaterialComponentsExamples", "Pods-MDCCatalog"]
   subdirectories.each do |subdirectory|
   subdirectory_path = target_support_files_path + "/" + subdirectory
     Dir.foreach(subdirectory_path) do |file|

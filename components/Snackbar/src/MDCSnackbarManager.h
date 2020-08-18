@@ -166,6 +166,11 @@
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
 /**
+ The color for the message text in the Snackbar message view.
+ */
+@property(nonatomic, strong, nullable) UIColor *messageTextColor;
+
+/**
  The font for the button text in the Snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIFont *buttonFont;
@@ -288,72 +293,6 @@
 @protocol MDCSnackbarSuspensionToken <NSObject>
 @end
 
-@interface MDCSnackbarManager (ToBeDeprecated)
-
-/**
- Calls @c -showMessage: on the @c defaultManager instance.
- */
-+ (void)showMessage:(nullable MDCSnackbarMessage *)message;
-
-/**
- Calls @c -setPresentationHostView: on the @c defaultManager instance.
- */
-+ (void)setPresentationHostView:(nullable UIView *)hostView;
-
-/**
- Calls @c -hasMessagesShowingORQueued on the @c defaultManager instance.
- */
-+ (BOOL)hasMessagesShowingOrQueued;
-
-/**
- Calls @c -dismissAndCallCompletionBlocksWithCategory: on the @c defaultManager instance.
- */
-+ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
-
-/**
- Calls -setBottomOffset: on the @c defaultManager instance.
- */
-+ (void)setBottomOffset:(CGFloat)offset;
-
-/**
- Calls @c -suspendAllMessages on the @c defaultManager instance.
- */
-+ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages;
-
-/**
- Calls @c -suspendMessagesWithCategory: on the @c defaultManager instance.
- */
-+ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:
-    (nullable NSString *)category;
-
-/**
- Calls @c -resumeMessagesWithToken: on the @c defaultManager instance.
- */
-+ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token;
-
-/**
- Calls @c -setButtonTitleColor:forState: on the @c defaultManager instance.
- */
-+ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
-
-/**
- Bound to @c messageTextColor on the @c defaultManager instance.
- */
-@property(class, nonatomic, strong, nullable) UIColor *messageTextColor;
-
-/**
- Bound to @c mdc_adjustsFontForContentSizeCategory on the @c defaultManager instance.
- */
-@property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
-
-/**
- Bound to @c delegate on the @c defaultManager instance.
- */
-@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
-
-@end
-
 @interface MDCSnackbarManager (Deprecated)
 
 /**
@@ -379,7 +318,7 @@
 /**
  The color for the message text in the Snackbar message view.
  */
-@property(nonatomic, strong, nullable) UIColor *messageTextColor __deprecated_msg(
+@property(class, nonatomic, strong, nullable) UIColor *messageTextColor __deprecated_msg(
     "Use MDCSnackbarManager.defaultManager.messageTextColor instead.");
 
 /**
@@ -396,15 +335,86 @@
         ;
 
 /**
+ Bound to @c mdc_adjustsFontForContentSizeCategory on the @c defaultManager instance.
+ */
+@property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory __deprecated_msg(
+        "Use MDCSnackbarManager.defaultManager.mdc_adjustsFontForContentSizeCategory instead.");
+
+/**
  Bound to @c shouldApplyStyleChangesToVisibleSnackbars on the @c defaultManager instance.
  */
 @property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars __deprecated_msg(
     "Use MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars instead.");
 
 /**
+ Bound to @c delegate on the @c defaultManager instance.
+ */
+@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate
+    __deprecated_msg("Use MDCSnackbarManager.defaultManager.delegate instead.");
+
+/**
  Calls @c -buttonTitleColorForState: on the @c defaultManager instance.
  */
 + (nullable UIColor *)buttonTitleColorForState:(UIControlState)state
     __deprecated_msg("Use [MDCSnackbarManager.defaultManager buttonTitleColorForState:] instead.");
+
+/**
+ Calls @c -resumeMessagesWithToken: on the @c defaultManager instance.
+ */
++ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager resumeMessagesWithToken:] instead.");
+
+/**
+ Calls @c -suspendAllMessages on the @c defaultManager instance.
+ */
++ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages __deprecated_msg(
+    "Use [MDCSnackbarManager.defaultManager suspendAllMessages] instead.");
+
+/**
+ Calls @c -suspendMessagesWithCategory: on the @c defaultManager instance.
+ */
++ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:(nullable NSString *)category
+    __deprecated_msg(
+        "Use [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:] instead.");
+
+/**
+ Calls @c -setButtonTitleColor:forState: on the @c defaultManager instance.
+ */
++ (void)setButtonTitleColor:(nullable UIColor *)titleColor
+                   forState:(UIControlState)state
+    __deprecated_msg(
+        "Use [MDCSnackbarManager.defaultManager setButtonTitleColor:forState:] instead.");
+
+/**
+ Calls -setBottomOffset: on the @c defaultManager instance.
+ */
++ (void)setBottomOffset:(CGFloat)offset
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager setBottomOffset:] instead.");
+
+/**
+ Calls @c -hasMessagesShowingORQueued on the @c defaultManager instance.
+ */
++ (BOOL)hasMessagesShowingOrQueued __deprecated_msg(
+    "Use [MDCSnackbarManager.defaultManager hasMessagesShowingOrQueued] instead.");
+
+/**
+ Calls @c -setPresentationHostView: on the @c defaultManager instance.
+ */
++ (void)setPresentationHostView:(nullable UIView *)hostView
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager setPresentationHostView:] instead.");
+
+/**
+ Calls @c -dismissAndCallCompletionBlocksWithCategory: on the @c defaultManager instance.
+ */
++ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager "
+                     "dismissAndCallCompletionBlocksWithCategory:] instead.");
+
+/**
+ Calls @c -showMessage: on the @c defaultManager instance.
+ */
++ (void)showMessage:(nullable MDCSnackbarMessage *)message
+    __deprecated_msg("Use [MDCSnackbarManager.defaultManager showMessage:] instead.");
 
 @end

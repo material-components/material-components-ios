@@ -72,6 +72,7 @@
 
   _dismissOnBackgroundTap = YES;
   _shouldForwardBackgroundTouchEvents = NO;
+  _shouldDisplayMobileLandscapeFullscreen = YES;
   _isDrawerClosed = YES;
   _lastOffset = NSNotFound;
 }
@@ -169,7 +170,8 @@
   return self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
 }
 - (BOOL)shouldPresentFullScreen {
-  return [self isAccessibilityMode] || [self isMobileLandscape];
+  return [self isAccessibilityMode] ||
+         (self.shouldDisplayMobileLandscapeFullscreen && [self isMobileLandscape]);
 }
 
 - (BOOL)contentReachesFullScreen {

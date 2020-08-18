@@ -476,9 +476,11 @@ static UIImage *fakeImage(void) {
   CGRect expectedRect = CGRectInset(
       itemView.label.frame, MDCButtonNavigationItemViewPointerEffectHighlightRectInset.width,
       MDCButtonNavigationItemViewPointerEffectHighlightRectInset.height);
-  XCTAssert(CGRectEqualToRect([itemView pointerEffectHighlightRect], expectedRect), @"%@",
-            [self errorStringForExpectedPointerRect:expectedRect
-                             doesNotMatchActualRect:[itemView pointerEffectHighlightRect]]);
+  CGRect actualRect = [itemView pointerEffectHighlightRect];
+  XCTAssertEqualWithAccuracy(actualRect.size.width, expectedRect.size.width, 0.001);
+  XCTAssertEqualWithAccuracy(actualRect.size.height, expectedRect.size.height, 0.001);
+  XCTAssertEqualWithAccuracy(actualRect.origin.x, expectedRect.origin.x, 0.001);
+  XCTAssertEqualWithAccuracy(actualRect.origin.y, expectedRect.origin.y, 0.001);
 }
 
 /**

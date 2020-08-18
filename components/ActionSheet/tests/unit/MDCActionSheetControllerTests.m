@@ -15,9 +15,11 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
+#import "MaterialActionSheet.h"
 #import "MDCActionSheetTestHelper.h"
-#import "MaterialMath.h"
+#import "MaterialBottomSheet.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialMath.h"
 
 static const CGFloat kSafeAreaAmount = 20;
 static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
@@ -257,6 +259,25 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
   // Then
   XCTAssertFalse(self.actionSheet.addLeadingPaddingToCell);
+}
+
+- (void)testPassThroughPropertiesToPresentationControllerWorkAfterItsInitialization {
+  // Given
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"An action"
+                                                              image:nil
+                                                            handler:nil]];
+  NSString *expectedScrimAccessibilityLabel =
+      @"Accessibility label to be passed to presentation controller";
+  __unused UIView *forceLoadedViewResultingInInitializationOfPresentationController =
+      self.actionSheet.view;
+
+  // When
+  self.actionSheet.transitionController.scrimAccessibilityLabel = expectedScrimAccessibilityLabel;
+
+  // Then
+  NSString *actualScrimAccessibilityLabel =
+      self.actionSheet.mdc_bottomSheetPresentationController.scrimAccessibilityLabel;
+  XCTAssertEqualObjects(expectedScrimAccessibilityLabel, actualScrimAccessibilityLabel);
 }
 
 #pragma mark - Opening height

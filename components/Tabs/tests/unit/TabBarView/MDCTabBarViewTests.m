@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
+#import "MaterialAvailability.h"
 #import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewCustomViewable.h"
@@ -89,6 +90,7 @@ static UIImage *fakeImage(CGSize size) {
 
 /** Category exposing implementation methods to aid testing. */
 @interface MDCTabBarView (UnitTestingExposesPrivateMethods)
+@property(nonnull, nonatomic, copy) NSArray<UIView *> *itemViews;
 - (void)didTapItemView:(UITapGestureRecognizer *)tap;
 @end
 
@@ -1346,5 +1348,172 @@ static UIImage *fakeImage(CGSize size) {
   }
 #endif
 }
+
+#pragma mark - UILargeContentViewerItem
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+
+- (void)testLargeContentTitleEqualsToTitle {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
+    self.tabBarView.items = @[ item ];
+
+    // When
+    NSString *largeContentTitle = self.tabBarView.itemViews.firstObject.largeContentTitle;
+
+    // Then
+    XCTAssertEqualObjects(largeContentTitle, item.title);
+  }
+}
+
+- (void)testLargeContentImageEqualsToDefaultImage {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIImage *image = [[UIImage alloc] init];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:image tag:0];
+    item.largeContentSizeImage = image;
+    self.tabBarView.items = @[ item ];
+
+    // When
+    UIImage *largeContentImage = self.tabBarView.itemViews.firstObject.largeContentImage;
+
+    // Then
+    XCTAssertEqualObjects(largeContentImage, image);
+  }
+}
+
+- (void)testSettingImageWihNoTitleFallbacksToAccessibilityLabel {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIImage *image = [[UIImage alloc] init];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:image tag:0];
+    item.accessibilityLabel = @"foo";
+    self.tabBarView.items = @[ item ];
+
+    // When
+    NSString *largeContentTitle = self.tabBarView.itemViews.firstObject.largeContentTitle;
+
+    // Then
+    XCTAssertEqualObjects(largeContentTitle, item.accessibilityLabel);
+  }
+}
+
+- (void)testSettingLargeContentImageOnTabBarSetsItOnButtonBarView {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIImage *image = [[UIImage alloc] init];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    item.largeContentSizeImage = image;
+    self.tabBarView.items = @[ item ];
+
+    // When
+    UIImage *largeContentImage = self.tabBarView.itemViews.firstObject.largeContentImage;
+
+    // Then
+    XCTAssertEqualObjects(largeContentImage, image);
+  }
+}
+
+- (void)testSettingLargeContentSizeImageInsetsOnTabBarItemSetsItOnTabBarViewItem {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIEdgeInsets insets = UIEdgeInsetsMake(10, 10, 10, 10);
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    item.largeContentSizeImageInsets = insets;
+    self.tabBarView.items = @[ item ];
+
+    // When
+    UIEdgeInsets largeImageInsets = self.tabBarView.itemViews.firstObject.largeContentImageInsets;
+
+    // Then
+    XCTAssertEqual(largeImageInsets.bottom, insets.bottom);
+    XCTAssertEqual(largeImageInsets.top, insets.top);
+    XCTAssertEqual(largeImageInsets.left, insets.left);
+    XCTAssertEqual(largeImageInsets.right, insets.right);
+  }
+}
+
+- (void)testLargeContentImageUpdatesWhenTabBarPropertyUpdates {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIImage *image = [[UIImage alloc] init];
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    self.tabBarView.items = @[ item ];
+
+    // When
+    item.largeContentSizeImage = image;
+    UIImage *largeContentImage = self.tabBarView.itemViews.firstObject.largeContentImage;
+
+    // Then
+    XCTAssertEqualObjects(largeContentImage, image);
+  }
+}
+
+- (void)testLargeContentInsetUpdatesWhenTabBarPropertyUpdates {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIEdgeInsets insets = UIEdgeInsetsMake(10, 10, 10, 10);
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:0];
+    self.tabBarView.items = @[ item ];
+
+    // When
+    item.largeContentSizeImageInsets = insets;
+    UIEdgeInsets largeContentInsets = self.tabBarView.itemViews.firstObject.largeContentImageInsets;
+
+    // Then
+    XCTAssertEqual(largeContentInsets.left, insets.left);
+    XCTAssertEqual(largeContentInsets.bottom, insets.bottom);
+    XCTAssertEqual(largeContentInsets.right, insets.right);
+    XCTAssertEqual(largeContentInsets.top, insets.top);
+  }
+}
+
+- (void)testLargeContentViewerInteractionWhenItemIsSelectedThenDeselectedButStillInNavBarBounds {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    NSString *title1 = @"Title1";
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:title1 image:nil tag:0];
+    self.tabBarView.items = @[ item1 ];
+    self.tabBarView.frame = CGRectMake(0, 0, 350, 125);
+    [self.tabBarView layoutIfNeeded];
+    UILargeContentViewerInteraction *interaction = [[UILargeContentViewerInteraction alloc] init];
+    self.continueAfterFailure = NO;
+
+    // When/Then
+    XCTAssertTrue([self.tabBarView respondsToSelector:@selector(largeContentViewerInteraction:
+                                                                                  itemAtPoint:)]);
+    CGPoint itemViewOrigin = self.tabBarView.itemViews.firstObject.frame.origin;
+    id<UILargeContentViewerItem> largeContentItem =
+        [self.tabBarView largeContentViewerInteraction:interaction itemAtPoint:itemViewOrigin];
+    XCTAssertEqualObjects(largeContentItem.largeContentTitle, title1);
+
+    largeContentItem = [self.tabBarView largeContentViewerInteraction:interaction
+                                                          itemAtPoint:CGPointZero];
+    XCTAssertEqualObjects(largeContentItem.largeContentTitle, title1);
+  }
+}
+
+- (void)testLargeContentViewerInteractionWhenPointIsOutSideNavBarBounds {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title1" image:nil tag:0];
+    self.tabBarView.items = @[ item ];
+    self.tabBarView.frame = CGRectMake(0, 0, 350, 125);
+    [self.tabBarView layoutIfNeeded];
+    UILargeContentViewerInteraction *interaction = [[UILargeContentViewerInteraction alloc] init];
+    self.continueAfterFailure = NO;
+
+    // When/Then
+    XCTAssertTrue([self.tabBarView respondsToSelector:@selector(largeContentViewerInteraction:
+                                                                                  itemAtPoint:)]);
+    CGPoint pointOutsideNavBar = CGPointMake(-1, -1);
+
+    id<UILargeContentViewerItem> largeContentItem =
+        [self.tabBarView largeContentViewerInteraction:interaction itemAtPoint:pointOutsideNavBar];
+    XCTAssertNil(largeContentItem);
+  }
+}
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
 @end

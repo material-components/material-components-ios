@@ -53,6 +53,9 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
 static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
 static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
+static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
+static NSString *const kLargeContentSizeImage = @"largeContentSizeImage";
+static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageInsets";
 
 #ifdef __IPHONE_13_4
 @interface MDCTabBarView (PointerInteractions) <UIPointerInteractionDelegate>
@@ -92,6 +95,15 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
  */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, NSValue *> *layoutStyleToContentPadding;
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+/**
+ The last large content viewer item displayed by the content viewer while the interaction is
+ running. When the interaction ends this property is nil.
+ */
+@property(nonatomic, nullable) id<UILargeContentViewerItem> lastLargeContentViewerItem
+    NS_AVAILABLE_IOS(13_0);
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
 
 @end
 
@@ -142,6 +154,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     if (@available(iOS 11.0, *)) {
       [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
     }
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+    if (@available(iOS 13, *)) {
+      // If clients report conflicting gesture recognizers please see proposed solution in the
+      // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
+      [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
+    }
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   }
   return self;
 }
@@ -233,6 +253,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       mdcItemView.selectedImage = item.selectedImage;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
       mdcItemView.rippleTouchController.shouldProcessRippleWithScrollViewGestures = NO;
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+      if (@available(iOS 13, *)) {
+        mdcItemView.largeContentImageInsets = item.largeContentSizeImageInsets;
+        mdcItemView.largeContentImage = item.largeContentSizeImage;
+      }
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+
       itemView = mdcItemView;
     }
     UITapGestureRecognizer *tapGesture =
@@ -296,9 +324,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
   if (!selectedItem) {
     _selectedItem = selectedItem;
-    [self updateTitleColorForAllViews];
-    [self updateImageTintColorForAllViews];
-    [self updateTitleFontForAllViews];
+    [self updateTitleColorForAllViewsAnimated:animated];
     [self didSelectItemAtIndex:NSNotFound animateTransition:animated];
     return;
   }
@@ -319,9 +345,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
         (UIView<MDCTabBarViewCustomViewable> *)newSelectedItemView;
     [customViewableView setSelected:YES animated:animated];
   }
-  [self updateTitleColorForAllViews];
-  [self updateImageTintColorForAllViews];
-  [self updateTitleFontForAllViews];
+  [self updateTitleColorForAllViewsAnimated:animated];
   [self scrollToItem:self.items[itemIndex] animated:animated];
   [self didSelectItemAtIndex:itemIndex animateTransition:animated];
 }
@@ -363,7 +387,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return color;
 }
 
-- (void)updateTitleColorForAllViews {
+- (void)updateTitleColorForAllViewsAnimated:(BOOL)animated {
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
@@ -377,17 +401,30 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       continue;
     }
     MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
-    if (item == self.selectedItem) {
-      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+    void (^animations)(void) = ^{
+      if (item == self.selectedItem) {
+        tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+      } else {
+        tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+      }
+    };
+    if (animated) {
+      // UILabel::textColor can't be implicitly animated, so we use a cross-fade dissolve transition
+      // on the label to accomplish the effect instead.
+      [UIView transitionWithView:tabBarViewItemView.titleLabel
+                        duration:self.selectionChangeAnimationDuration
+                         options:UIViewAnimationOptionTransitionCrossDissolve
+                      animations:animations
+                      completion:nil];
     } else {
-      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+      animations();
     }
   }
 }
 
 - (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
   self.stateToTitleColor[@(state)] = titleColor;
-  [self updateTitleColorForAllViews];
+  [self updateTitleColorForAllViewsAnimated:NO];
 }
 
 - (UIColor *)titleColorForState:(UIControlState)state {
@@ -535,6 +572,18 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
            forKeyPath:kAccessibilityTraitsKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kTitlePositionAdjustment
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kLargeContentSizeImage
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kLargeContentSizeImageInsets
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -554,6 +603,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                  context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityTraitsKeyPath
+                 context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kTitlePositionAdjustment context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kLargeContentSizeImage context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kLargeContentSizeImageInsets
                  context:kKVOContextMDCTabBarView];
   }
 }
@@ -604,7 +658,18 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
         tabBarItemView.accessibilityTraits =
             (tabBarItemView.accessibilityTraits | UIAccessibilityTraitSelected);
       }
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(largeContentSizeImage))]) {
+      if (@available(iOS 13.0, *)) {
+        tabBarItemView.largeContentImage = newValue;
+      }
+    } else if ([keyPath
+                   isEqualToString:NSStringFromSelector(@selector(largeContentSizeImageInsets))]) {
+      if (@available(iOS 13.0, *)) {
+        tabBarItemView.largeContentImageInsets = [newValue UIEdgeInsetsValue];
+      }
     }
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
@@ -1161,14 +1226,18 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
+  [self didReleaseTapOnTabBarItem:self.items[index]];
+}
+
+- (void)didReleaseTapOnTabBarItem:(UITabBarItem *)item {
   if ([self.tabBarDelegate respondsToSelector:@selector(tabBarView:shouldSelectItem:)] &&
-      ![self.tabBarDelegate tabBarView:self shouldSelectItem:self.items[index]]) {
+      ![self.tabBarDelegate tabBarView:self shouldSelectItem:item]) {
     return;
   }
 
-  self.selectedItem = self.items[index];
+  self.selectedItem = item;
   if ([self.tabBarDelegate respondsToSelector:@selector(tabBarView:didSelectItem:)]) {
-    [self.tabBarDelegate tabBarView:self didSelectItem:self.items[index]];
+    [self.tabBarDelegate tabBarView:self didSelectItem:item];
   }
 }
 
@@ -1227,6 +1296,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
  */
 - (void)didSelectItemAtIndex:(NSUInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
+    [self updateImageTintColorForAllViews];
+    [self updateTitleFontForAllViews];
     [self updateSelectionIndicatorToIndex:index];
 
     // Force layout so any changes to the selection indicator are captured by the animation block.
@@ -1263,5 +1334,80 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return pointerStyle;
 }
 #endif
+
+#pragma mark - UILargeContentViewerInteractionDelegate
+
+/** Returns the item view at the given point. Nil if there is no view at the given point. */
+- (UIView *)itemViewForPoint:(CGPoint)point {
+  for (NSUInteger i = 0; i < self.itemViews.count; i++) {
+    UIView *itemView = self.itemViews[i];
+    if (CGRectContainsPoint(itemView.frame, point)) {
+      return itemView;
+    }
+  }
+
+  return nil;
+}
+
+#if MDC_AVAILABLE_SDK_IOS(13_0)
+- (id<UILargeContentViewerItem>)largeContentViewerInteraction:
+                                    (UILargeContentViewerInteraction *)interaction
+                                                  itemAtPoint:(CGPoint)point
+    NS_AVAILABLE_IOS(13_0) {
+  if (!CGRectContainsPoint(self.bounds, point)) {
+    // The touch has wandered outside of the view. Do not display the content viewer.
+    if ([self.lastLargeContentViewerItem isKindOfClass:[MDCTabBarViewItemView class]]) {
+      [((MDCTabBarViewItemView *)self.lastLargeContentViewerItem).rippleTouchController.rippleView
+          cancelAllRipplesAnimated:NO
+                        completion:nil];
+    }
+    self.lastLargeContentViewerItem = nil;
+    return nil;
+  }
+
+  UIView *itemView = [self itemViewForPoint:point];
+  if (!itemView) {
+    // The touch is still within the navigation bar. Return the last seen item view.
+    return self.lastLargeContentViewerItem;
+  }
+
+  if (self.lastLargeContentViewerItem && self.lastLargeContentViewerItem != itemView) {
+    if ([self.lastLargeContentViewerItem isKindOfClass:[MDCTabBarViewItemView class]]) {
+      [((MDCTabBarViewItemView *)self.lastLargeContentViewerItem).rippleTouchController.rippleView
+          cancelAllRipplesAnimated:NO
+                        completion:nil];
+    }
+    if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      [((MDCTabBarViewItemView *)itemView).rippleTouchController.rippleView
+          beginRippleTouchDownAtPoint:itemView.center
+                             animated:NO
+                           completion:nil];
+    }
+  }
+
+  self.lastLargeContentViewerItem = itemView;
+  return itemView;
+}
+
+- (void)largeContentViewerInteraction:(UILargeContentViewerInteraction *)interaction
+                         didEndOnItem:(id<UILargeContentViewerItem>)item
+                              atPoint:(CGPoint)point NS_AVAILABLE_IOS(13_0) {
+  if (item) {
+    for (NSUInteger i = 0; i < self.items.count; i++) {
+      UIView *itemView = self.itemViews[i];
+      if (item == itemView) {
+        if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+          [((MDCTabBarViewItemView *)itemView).rippleTouchController.rippleView
+              beginRippleTouchUpAnimated:YES
+                              completion:nil];
+        }
+        [self didReleaseTapOnTabBarItem:self.items[i]];
+      }
+    }
+  }
+
+  self.lastLargeContentViewerItem = nil;
+}
+#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
 @end
