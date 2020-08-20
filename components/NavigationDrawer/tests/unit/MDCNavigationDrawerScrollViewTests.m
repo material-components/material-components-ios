@@ -740,7 +740,11 @@
 
 - (void)testSetShouldDisplayMobileLandscapeFullscreenCorrectly {
   self.drawerViewController.shouldDisplayMobileLandscapeFullscreen = NO;
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+
   XCTAssertFalse(self.drawerViewController.shouldDisplayMobileLandscapeFullscreen);
+  XCTAssertFalse(drawerPresentationController.shouldDisplayMobileLandscapeFullscreen);
 }
 
 - (void)testBottomDrawerTopInset {

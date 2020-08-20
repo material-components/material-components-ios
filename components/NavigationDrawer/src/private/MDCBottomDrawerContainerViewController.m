@@ -222,6 +222,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _elevation = MDCShadowElevationNavDrawer;
     _shadowedView = [[MDCBottomDrawerShadowedView alloc] init];
     _shouldAdjustOnContentSizeChange = NO;
+    _shouldDisplayMobileLandscapeFullscreen = YES;
   }
   return self;
 }
@@ -387,7 +388,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (BOOL)shouldPresentFullScreen {
-  return [self isAccessibilityMode] || [self isMobileLandscape] || _shouldPresentAtFullscreen;
+  return [self isAccessibilityMode] || _shouldPresentAtFullscreen ||
+         (_shouldDisplayMobileLandscapeFullscreen && [self isMobileLandscape]);
 }
 
 - (BOOL)contentReachesFullscreen {

@@ -471,4 +471,14 @@
   }
 }
 
+- (void)setShouldDisplayMobileLandscapeFullscreen:(BOOL)shouldDisplayMobileLandscapeFullscreen {
+  _shouldDisplayMobileLandscapeFullscreen = shouldDisplayMobileLandscapeFullscreen;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldDisplayMobileLandscapeFullscreen =
+        self.shouldDisplayMobileLandscapeFullscreen;
+  }
+}
+
 @end
