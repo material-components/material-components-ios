@@ -241,7 +241,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
 @end
 
-/** APIs that are deprecated. No new code should rely on these APIs. */
+/** APIs that are ToBeDeprecated. */
 @interface MDCBottomNavigationBar (ToBeDeprecated)
 
 /**
