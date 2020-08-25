@@ -41,7 +41,7 @@ static const CGFloat kMinItemWidth = 80;
 static const CGFloat kPreferredItemWidth = 120;
 static const CGFloat kMaxItemWidth = 168;
 // The default amount of internal padding on the leading/trailing edges of each bar item.
-static const CGFloat kDefaultItemHorizontalPadding = 12;
+static const CGFloat kDefaultItemHorizontalPadding = 0;
 static const CGFloat kBarHeightStackedTitle = 56;
 static const CGFloat kBarHeightAdjacentTitle = 40;
 static const CGFloat kItemsHorizontalMargin = 12;
