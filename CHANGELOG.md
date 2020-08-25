@@ -1,16 +1,14 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we have made minor improvements to BottomNavigation, NavigationDrawer and Tabs.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+Adding a new property to MDCBottomDrawerViewController and MDCBottomDrawerContainerViewController that allows for non-fullscreen mobile landscape bottom drawer view.
+
+```swift
+drawerViewController.shouldDisplayMobileLandscapeFullscreen = false
+```
 
 ## Component changes
 
