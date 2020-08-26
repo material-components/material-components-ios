@@ -941,7 +941,7 @@ Tests the @c itemsHorizontalPadding property
 
   MDCBottomNavigationItemView *itemView = [self.bottomNavBar.itemViews firstObject];
   CGRect expectedItemViewFrameWithDefaultItemsHorizontalPadding =
-      CGRectInset(self.bottomNavBar.frame, 12, 0);
+      CGRectInset(self.bottomNavBar.frame, 0, 0);
   CGRect actualItemViewFrameWithDefaultItemsHorizontalPadding = itemView.frame;
 
   self.bottomNavBar.itemsHorizontalPadding = 0;

@@ -181,6 +181,15 @@
 @property(nonatomic) BOOL adjustLayoutForIPadSlideOver;
 
 /**
+ Whether to display mobile landscape view as fullscreen.
+
+ When enabled, the drawer will fill the screen in landscape on mobile devices.
+
+ Defaults to YES.
+*/
+@property(nonatomic, assign) BOOL shouldDisplayMobileLandscapeFullscreen;
+
+/**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
  drawer will scroll to the start of its content.
 

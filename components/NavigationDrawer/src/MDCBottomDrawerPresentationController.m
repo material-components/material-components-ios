@@ -77,6 +77,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _elevation = MDCShadowElevationNavDrawer;
     _dismissOnBackgroundTap = YES;
+    _shouldDisplayMobileLandscapeFullscreen = YES;
   }
   return self;
 }
@@ -115,6 +116,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
   bottomDrawerContainerViewController.adjustLayoutForIPadSlideOver =
       self.adjustLayoutForIPadSlideOver;
+  bottomDrawerContainerViewController.shouldDisplayMobileLandscapeFullscreen =
+      self.shouldDisplayMobileLandscapeFullscreen;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     // If in fact the presentedViewController is an MDCBottomDrawerViewController,
     // we then know there is a content and an (optional) header view controller.
