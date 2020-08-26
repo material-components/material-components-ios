@@ -1,3 +1,39 @@
+# 113.2.0
+
+In this minor release we have made minor improvements to BottomNavigation, NavigationDrawer and Tabs.
+
+## New features
+
+Adding a new property to MDCBottomDrawerViewController and MDCBottomDrawerContainerViewController that allows for non-fullscreen mobile landscape bottom drawer view.
+
+```swift
+drawerViewController.shouldDisplayMobileLandscapeFullscreen = false
+```
+
+## Component changes
+
+### BottomNavigation
+
+* [Clarify wording to reflect that enableRippleBehavior is To Be Deprecated and can still be used in new code](https://github.com/material-components/material-components-ios/commit/d60a9203a82fe103fda3bf90b6521653bb68bdec) (Alyssa Weiss)
+* [Set default horizontal item padding to 0](https://github.com/material-components/material-components-ios/commit/fb9eec8ba09901184d62d7c9b227ab9977767cef) (Alyssa Weiss)
+* [Update accessibility logic when switching selected view controllers so that VoiceOver will always switch to a new element visible on screen](https://github.com/material-components/material-components-ios/commit/915bc063fbbf52eef3a5c9f106d571378cce12db) (Alyssa Weiss)
+
+### NavigationBar
+
+* [Add example to demonstrate how to to set source for popover alert on iPad.](https://github.com/material-components/material-components-ios/commit/36430632eddbf535052023800fc33aeaa53a7c11) (Bryan Oltman)
+* [Delete supplemental code from Swift examples](https://github.com/material-components/material-components-ios/commit/e28711a930df4024a9427af6e00683551945845e) (Bryan Oltman)
+
+### NavigationDrawer
+
+* [Adds shouldDisplayMobileLandscapeFullscreen property to MDCBottomDrawerContainerViewController and MDCBottomDrawerPresentationController to share the property between MDCBottomDrawerContainerViewController and MDCBottomDrawerViewController.](https://github.com/material-components/material-components-ios/commit/4cba6bbf5cc2ae64757e442a449f3409dff0b66b) (Nobody)
+* [Replace navigation drawer component README](https://github.com/material-components/material-components-ios/commit/a278ec6b07b8323dfe735064323f3aafe43ef9ce) (Andrew Overton)
+
+### Tabs
+
+* [Remove the old selected view controller from the view hierarchy when switching selected view controller, and add accessibility post notifications when switching selected view controllers so that VoiceOver will always switch to a new element visible on screen.](https://github.com/material-components/material-components-ios/commit/c8d8757a66bdf7cf0291329d544a4f34d96fdb93) (Alyssa Weiss)
+
+---
+
 # 113.1.0
 
 In this minor release we have added a ScalableFontDescriptor library to represent custom scalable fonts from iOS 11 and up, added UILargeContentViewer support to AppBar, NavigationBar, TabBarView, as well as other improvements.
