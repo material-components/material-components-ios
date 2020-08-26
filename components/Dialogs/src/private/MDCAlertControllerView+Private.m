@@ -19,8 +19,9 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialButtons.h"
-#import "MaterialMath.h"
+#import "MaterialDialogs.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
 
 // https://material.io/go/design-dialogs#dialogs-specs
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
@@ -583,16 +584,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   return ([self hasTitle] || [self hasTitleIconOrImage]) ? self.titleInsets.bottom : 0.0f;
 }
 
-- (CGFloat)titleViewInsetLeft {
-  return [self hasTitleIconOrImage] ? MIN(self.titleInsets.left, self.titleIconInsets.left)
-                                    : self.titleInsets.left;
-}
-
-- (CGFloat)titleViewInsetRight {
-  return [self hasTitleIconOrImage] ? MIN(self.titleInsets.right, self.titleIconInsets.right)
-                                    : self.titleInsets.right;
-}
-
 - (CGFloat)contentInsetTop {
   return ([self hasTitle] || [self hasTitleIconOrImage]) ? 0.0f : self.contentInsets.top;
 }
@@ -692,7 +683,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 // @param boundingWidth should not include any internal margins or padding
 - (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
   CGFloat contentInsets = self.contentInsets.left + self.contentInsets.right;
-  CGFloat titleInsets = [self titleViewInsetLeft] + [self titleViewInsetRight];
+  CGFloat titleInsets = self.titleInsets.left + self.titleInsets.right;
   CGSize boundsSize = CGRectInfinite.size;
 
   boundsSize.width = boundingWidth - titleInsets;
@@ -723,7 +714,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 */
 - (CGSize)calculateTitleViewSizeThatFitsWidth:(CGFloat)boundingWidth {
   CGFloat contentInsets = self.contentInsets.left + self.contentInsets.right;
-  CGFloat titleInsets = [self titleViewInsetLeft] + [self titleViewInsetRight];
+  CGFloat titleInsets = self.titleInsets.left + self.titleInsets.left;
 
   CGSize contentSize = CGRectInfinite.size;
   contentSize.width = boundingWidth - contentInsets;
