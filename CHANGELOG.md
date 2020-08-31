@@ -1,4 +1,4 @@
-# #develop#
+# 114.0.0
 
 In this major release we have updated BottomNavigation safe area calculations and removed the deprecated `sizeThatFitsIncludesSafeArea` API, including a minor bug fix for Dialogs.
 
