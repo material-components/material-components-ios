@@ -1,16 +1,12 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
+In this major release we have updated BottomNavigation safe area calculations and removed the deprecated `sizeThatFitsIncludesSafeArea` API, including a minor bug fix for Dialogs.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### BottomNavigation
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+The deprecated sizeThatFitsIncludesSafeArea property is deleted.
 
 ## Component changes
 
