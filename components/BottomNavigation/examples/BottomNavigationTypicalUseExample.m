@@ -82,6 +82,11 @@
 #endif  // MDC_AVAILABLE_SDK_IOS(10_0)
   self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   self.bottomNavBar.selectedItem = tabBarItem2;
+  if (@available(iOS 11.0, *)) {
+    [self.bottomNavBar.barItemsBottomAnchor
+        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
+        .active = YES;
+  }
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"+Message"

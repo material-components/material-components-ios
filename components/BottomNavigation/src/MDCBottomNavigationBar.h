@@ -227,18 +227,6 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 - (nullable UIView *)viewForItem:(nonnull UITabBarItem *)item;
 
-/**
- Flag to allow clients to gradually correct the size/position of the Bottom Navigation bar relative
- to the safe area on iOS 11+.
-
- NOTE: In an upcoming release, this flag will be removed and the default behavior will be to exclude
- the safe area in size calculations.
-
- Defaults to @c NO.
- */
-@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea __deprecated_msg(
-    "This was a migration API and is being removed.");
-
 @end
 
 /** APIs that are ToBeDeprecated. */

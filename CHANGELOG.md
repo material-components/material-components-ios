@@ -1,3 +1,30 @@
+# 114.0.0
+
+In this major release we have updated BottomNavigation safe area calculations and removed the deprecated `sizeThatFitsIncludesSafeArea` API, including a minor bug fix for Dialogs.
+
+## Breaking changes
+
+### BottomNavigation
+
+The deprecated sizeThatFitsIncludesSafeArea property is deleted.
+
+## Component changes
+
+### BottomNavigation
+
+* [Align barItemsBottomAnchor with safeAreaInsets.](https://github.com/material-components/material-components-ios/commit/ac3c854dc494a0e15e8b47304ca4ee89b31f528a) (Wenyu Zhang)
+* [Delete deprecated sizeThatFitsIncludesSafeArea property.](https://github.com/material-components/material-components-ios/commit/f854548b975e308d9fb335fce554cdc6ccbd8985) (Wenyu Zhang)
+
+### Dialogs
+
+* [Update logic for using title insets in calculations](https://github.com/material-components/material-components-ios/commit/805a2af3a84866b7361d27faeb74b343cfcdbca3) (Alyssa Weiss)
+
+## Multi-component changes
+
+* [Remove reference to beta](https://github.com/material-components/material-components-ios/commit/378fab16a8f424ba9aa459197768a89bf210c023) (Andrew Overton)
+
+---
+
 # 113.2.0
 
 In this minor release we have made minor improvements to BottomNavigation, NavigationDrawer and Tabs.

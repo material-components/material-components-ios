@@ -109,7 +109,6 @@ static NSString *const kOfAnnouncement = @"of";
   _itemsDistributed = YES;
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
-  _sizeThatFitsIncludesSafeArea = NO;
   _titlesNumberOfLines = 1;
   _mdc_overrideBaseElevation = -1;
   _itemBadgeTextColor = UIColor.whiteColor;
@@ -221,14 +220,6 @@ static NSString *const kOfAnnouncement = @"of";
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     height = kBarHeightAdjacentTitle;
   }
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if (@available(iOS 11.0, *)) {
-    if (self.sizeThatFitsIncludesSafeArea) {
-      height += self.safeAreaInsets.bottom;
-    }
-  }
-#pragma clang diagnostic pop
 
   return CGSizeMake(size.width, height);
 }
