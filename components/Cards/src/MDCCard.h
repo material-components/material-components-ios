@@ -32,7 +32,10 @@
 /**
  The inkView for the card that is initiated on tap
  */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+#pragma clang diagnostic pop
 
 /**
  The rippleView for the card that is initiated on tap. The ripple view is the successor of ink

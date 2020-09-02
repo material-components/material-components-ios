@@ -35,7 +35,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 @end
 
 @implementation MDCCollectionViewController {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   MDCInkTouchController *_inkTouchController;
+#pragma clang diagnostic pop
   MDCRippleTouchController *_rippleTouchController;
   MDCCollectionInfoBarView *_headerInfoBar;
   MDCCollectionInfoBarView *_footerInfoBar;
@@ -101,7 +104,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   _editor.delegate = self;
 
   // Set up ink touch controller.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   _inkTouchController = [[MDCInkTouchController alloc] initWithView:self.collectionView];
+#pragma clang diagnostic pop
   _inkTouchController.delegate = self;
 
   _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self.collectionView
@@ -146,7 +152,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
                                                                    deferred:YES];
     _rippleTouchController.delegate = self;
   } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:collectionView];
+#pragma clang diagnostic pop
     _inkTouchController.delegate = self;
   }
 }
@@ -382,7 +391,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 }
 
 #pragma mark - <MDCInkTouchControllerDelegate>
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (BOOL)inkTouchController:(__unused MDCInkTouchController *)inkTouchController
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   // Only store touch location and do not allow ink processing. This ink location will be used when
@@ -417,6 +427,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
   return ink;
 }
+#pragma clang diagnostic pop
 
 #pragma mark - <MDCRippleTouchControllerDelegate>
 
@@ -524,7 +535,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     [rippleView beginRippleTouchDownAtPoint:location animated:YES completion:nil];
   } else {
     // Start cell ink show animation.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     MDCInkView *inkView;
+#pragma clang diagnostic pop
     if ([cell respondsToSelector:@selector(inkView)]) {
       inkView = [cell performSelector:@selector(inkView)];
     } else {
@@ -561,7 +575,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     [rippleView beginRippleTouchUpAnimated:YES completion:nil];
   } else {
     // Start cell ink evaporate animation.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     MDCInkView *inkView;
+#pragma clang diagnostic pop
     if ([cell respondsToSelector:@selector(inkView)]) {
       inkView = [cell performSelector:@selector(inkView)];
     } else {
@@ -612,8 +629,11 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
                                           rippleViewAtTouchLocation:_inkTouchLocation];
       [activeRippleView beginRippleTouchUpAnimated:YES completion:nil];
     } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       MDCInkView *activeInkView = [self inkTouchController:_inkTouchController
                                     inkViewAtTouchLocation:_inkTouchLocation];
+#pragma clang diagnostic pop
       [activeInkView startTouchEndedAnimationAtPoint:_inkTouchLocation completion:nil];
     }
   }

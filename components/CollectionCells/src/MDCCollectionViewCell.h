@@ -102,7 +102,10 @@ FOUNDATION_EXPORT NSString *_Nonnull const kDeselectedCellAccessibilityHintKey;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 
 /** View containing the ink effect. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong, nullable) MDCInkView *inkView;
+#pragma clang diagnostic pop
 
 /**
  This property determines if an @c MDCCollectionViewCell should use the @c MDCInkView behavior or

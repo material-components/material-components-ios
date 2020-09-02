@@ -582,7 +582,10 @@ static NSString *const kOfAnnouncement = @"of";
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
     itemView.badgeColor = self.itemBadgeBackgroundColor;
     itemView.badgeTextColor = self.itemBadgeTextColor;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
+#pragma clang diagnostic pop
     controller.delegate = self;
     [self.inkControllers addObject:controller];
     itemView.rippleTouchController.delegate = self;
@@ -852,6 +855,8 @@ static NSString *const kOfAnnouncement = @"of";
 
 #pragma mark - MDCInkTouchControllerDelegate methods
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController
             inkViewAtTouchLocation:(CGPoint)location {
   if ([inkTouchController.view isKindOfClass:[MDCBottomNavigationItemView class]]) {
@@ -867,6 +872,7 @@ static NSString *const kOfAnnouncement = @"of";
   }
   return YES;
 }
+#pragma clang diagnostic pop
 
 #pragma mark - MDCRippleTouchControllerDelegate methods
 

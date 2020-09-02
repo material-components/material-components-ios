@@ -90,8 +90,11 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
     NSUInteger totalViewsProcessed = 0;
     for (UIView *view in self.subviews) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       if ([view isKindOfClass:[MDCInkView class]]) {
         _inkView = (MDCInkView *)view;
+#pragma clang diagnostic pop
         ++totalViewsProcessed;
       } else if ([view isKindOfClass:[UIImageView class]]) {
         _iconImageView = (UIImageView *)view;
@@ -156,7 +159,10 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   }
 
   if (!_inkView) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+#pragma clang diagnostic pop
     _inkView.autoresizingMask =
         (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
