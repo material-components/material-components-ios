@@ -1063,6 +1063,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 // Disabling text selection when selectable is YES, while allowing gestures for inlined links.
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+  if (UIAccessibilityIsVoiceOverRunning()) {
+    return [super pointInside:point withEvent:event];
+  }
+
   if (![super pointInside:point withEvent:event]) {
     return NO;
   }
