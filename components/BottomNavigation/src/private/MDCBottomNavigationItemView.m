@@ -19,8 +19,6 @@
 
 #import "MDCBottomNavigationItemBadge.h"
 #import "MaterialAvailability.h"
-#import "MaterialBottomNavigationStrings.h"
-#import "MaterialBottomNavigationStrings_table.h"
 #import "MaterialMath.h"
 
 // A number large enough to be larger than any reasonable screen dimension but small enough that
@@ -56,7 +54,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
-@property(nonatomic) BOOL shouldPretendToBeATab;
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 
 @end
@@ -66,17 +63,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-#if MDC_AVAILABLE_SDK_IOS(10_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
-    if (&UIAccessibilityTraitTabBar == NULL) {
-      _shouldPretendToBeATab = YES;
-    }
-#pragma clang diagnostic pop
-#else
-    _shouldPretendToBeATab = YES;
-#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
     _titleBelowIcon = YES;
     [self commonMDCBottomNavigationItemViewInit];
   }
@@ -427,15 +413,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   // Use untransformed title as accessibility label to ensure accurate reading.
   if (title.length > 0) {
     [labelComponents addObject:title];
-  }
-
-  if (self.shouldPretendToBeATab) {
-    NSString *key = kMaterialBottomNavigationStringTable
-        [kStr_MaterialBottomNavigationTabElementAccessibilityLabel];
-    NSString *tabString = NSLocalizedStringFromTableInBundle(
-        key, kMaterialBottomNavigationStringsTableName, [[self class] bundle],
-        kMDCBottomNavigationItemViewTabString);
-    [labelComponents addObject:tabString];
   }
 
   // Speak components with a pause in between.

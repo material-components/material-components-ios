@@ -20,8 +20,6 @@
 
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationItemView.h"
-#import "private/MaterialBottomNavigationStrings.h"
-#import "private/MaterialBottomNavigationStrings_table.h"
 #import "MaterialAvailability.h"
 #import "MDCBottomNavigationBarDelegate.h"
 #import "MaterialPalettes.h"
@@ -61,7 +59,6 @@ static NSString *const kOfAnnouncement = @"of";
 @property(nonatomic, strong) UIVisualEffectView *blurEffectView;
 @property(nonatomic, strong) UIView *itemsLayoutView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
-@property(nonatomic) BOOL shouldPretendToBeATabBar;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
@@ -146,19 +143,7 @@ static NSString *const kOfAnnouncement = @"of";
   _itemsLayoutView.clipsToBounds = NO;
   [_barView addSubview:_itemsLayoutView];
 
-#if MDC_AVAILABLE_SDK_IOS(10_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
-  if (&UIAccessibilityTraitTabBar != NULL) {
-    _itemsLayoutView.accessibilityTraits = UIAccessibilityTraitTabBar;
-  } else {
-    _shouldPretendToBeATabBar = YES;
-  }
-#pragma clang diagnostic pop
-#else
-  _shouldPretendToBeATabBar = YES;
-#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
+  _itemsLayoutView.accessibilityTraits = UIAccessibilityTraitTabBar;
   _elevation = MDCShadowElevationBottomNavigationBar;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
   UIColor *defaultShadowColor = UIColor.blackColor;
@@ -590,21 +575,6 @@ static NSString *const kOfAnnouncement = @"of";
     [self.inkControllers addObject:controller];
     itemView.rippleTouchController.delegate = self;
 
-    if (self.shouldPretendToBeATabBar) {
-      NSString *key = kMaterialBottomNavigationStringTable
-          [kStr_MaterialBottomNavigationItemCountAccessibilityHint];
-      NSString *itemOfTotalString = NSLocalizedStringFromTableInBundle(
-          key, kMaterialBottomNavigationStringsTableName, [[self class] bundle], kOfString);
-      NSString *localizedPosition =
-          [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
-      // Allow a custom `accessibilityHint` to be assigned even if "faking" a tab bar is enabled.
-      if (itemView.button.accessibilityHint.length) {
-        itemView.button.accessibilityHint =
-            [NSString stringWithFormat:@"%@. %@", localizedPosition, itemView.accessibilityHint];
-      } else {
-        itemView.button.accessibilityHint = localizedPosition;
-      }
-    }
     if (item.image) {
       itemView.image = item.image;
     }
