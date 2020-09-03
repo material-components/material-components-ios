@@ -168,6 +168,8 @@
 - (nullable UIColor *)collectionView:(nonnull UICollectionView *)collectionView
                  inkColorAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Allows the receiver to set the ink view at the specified collection view index path.
 
@@ -179,6 +181,7 @@
 - (nonnull MDCInkView *)collectionView:(nonnull UICollectionView *)collectionView
                     inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
                     inkViewAtIndexPath:(nonnull NSIndexPath *)indexPath;
+#pragma clang diagnostic pop
 
 /**
  Allows the receiver to set the ripple view at the specified collection view index path.
