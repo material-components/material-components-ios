@@ -201,6 +201,13 @@ IB_DESIGNABLE
 @property(nonatomic, assign) CGFloat thumbRadius UI_APPEARANCE_SELECTOR;
 
 /**
+ The border width of the cursor (thumb).
+
+ Default value is 2 points.
+ */
+@property(nonatomic, assign) CGFloat thumbBorderWidth;
+
+/**
  The elevation of the cursor (thumb).
 
  Default value is MDCElevationNone.
@@ -213,6 +220,13 @@ IB_DESIGNABLE
  Default value is black
  */
 @property(nonatomic, strong, nonnull) UIColor *thumbShadowColor;
+
+/**
+ Whether or not the thumb should be smaller when the track is disabled.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL thumbIsSmallerWhenDisabled;
 
 /**
  The number of discrete values that the slider can take.

@@ -971,14 +971,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 #pragma mark - Thumb
 
-- (void)testThumbRadiusDefault {
+- (void)testThumbDefaults {
   // Then
   XCTAssertEqualWithAccuracy(self.slider.thumbRadius, 6, kEpsilonAccuracy);
-}
-
-- (void)testThumbElevationDefault {
-  // Then
+  XCTAssertEqualWithAccuracy(self.slider.thumbBorderWidth, 2, kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(self.slider.thumbElevation, MDCShadowElevationNone, kEpsilonAccuracy);
+  XCTAssertTrue(self.slider.thumbIsSmallerWhenDisabled);
 }
 
 #pragma mark Numeric value label
