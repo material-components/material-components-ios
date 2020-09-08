@@ -313,9 +313,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/MDCBottomNavigationBarController.*",
       "components/#{component.base_name}/src/MaterialBottomNavigation+BottomNavigationController.h"
     ]
-    component.resources = [
-      "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
-    ]
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Availability"
