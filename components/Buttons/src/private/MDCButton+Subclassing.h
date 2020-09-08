@@ -19,7 +19,10 @@
 @interface MDCButton (Subclassing)
 
 /** Access to the ink view layer. Mainly used for subclasses to override ink properties. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+#pragma clang diagnostic pop
 
 /** Whether the background color should be opaque. */
 - (BOOL)shouldHaveOpaqueBackground;

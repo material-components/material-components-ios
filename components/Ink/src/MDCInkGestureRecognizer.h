@@ -21,7 +21,8 @@
  fails if the touch moves outside the recongizer's view. Multiple touches will cause the
  recognizer to transition to the UIGestureRecognizerStateCancelled state.
  */
-@interface MDCInkGestureRecognizer : UIGestureRecognizer
+__deprecated_msg("Please use MDCRippleTouchController instead.") @interface MDCInkGestureRecognizer
+    : UIGestureRecognizer
 
 /**
  Set the distance that causes the recognizer to cancel.

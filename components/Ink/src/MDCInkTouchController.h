@@ -36,7 +36,8 @@
  It is expected that the view will keep a strong reference to its own ink controller, or that the
  view controller controlling the view will keep a strong reference to that view's ink controller.
  */
-@interface MDCInkTouchController : NSObject <UIGestureRecognizerDelegate>
+__deprecated_msg("Please use MDCRippleTouchController instead.") @interface MDCInkTouchController
+    : NSObject<UIGestureRecognizerDelegate>
 
 /** Weak reference to the view that responds to touch events. */
 @property(nonatomic, weak, readonly, nullable) UIView *view;

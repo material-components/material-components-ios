@@ -112,7 +112,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
 @property(nonatomic, assign) BOOL shouldFullyRoundCorner;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong) MDCInkView *inkView;
+#pragma clang diagnostic pop
 @property(nonatomic, strong) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong, nonnull) NSMutableDictionary<NSNumber *, UIColor *> *rippleColors;
 @property(nonatomic, readonly) CGFloat pixelScale;
@@ -192,7 +195,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _shadowColors = [NSMutableDictionary dictionary];
     _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+#pragma clang diagnostic pop
     _inkView.usesLegacyInkRipple = NO;
     _inkView.inkColor = [self inkColorForState:UIControlStateNormal];
     [self addSubview:_inkView];

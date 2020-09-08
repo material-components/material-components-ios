@@ -263,6 +263,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.thumbRadius;
 }
 
+- (void)setThumbBorderWidth:(CGFloat)borderWidth {
+  _thumbTrack.thumbView.borderWidth = borderWidth;
+}
+
+- (CGFloat)thumbBorderWidth {
+  return _thumbTrack.thumbView.borderWidth;
+}
+
 - (void)setThumbElevation:(MDCShadowElevation)thumbElevation {
   if (MDCCGFloatEqual(_thumbTrack.thumbElevation, thumbElevation)) {
     return;
@@ -273,6 +281,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (MDCShadowElevation)thumbElevation {
   return _thumbTrack.thumbElevation;
+}
+
+- (void)setThumbIsSmallerWhenDisabled:(BOOL)thumbIsSmallerWhenDisabled {
+  _thumbTrack.thumbIsSmallerWhenDisabled = thumbIsSmallerWhenDisabled;
+}
+
+- (BOOL)thumbIsSmallerWhenDisabled {
+  return _thumbTrack.thumbIsSmallerWhenDisabled;
 }
 
 - (CGFloat)mdc_currentElevation {

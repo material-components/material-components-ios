@@ -21,7 +21,10 @@
 @interface MDCThumbTrack (Private)
 
 @property(nonatomic, nonnull, readonly) MDCNumericValueLabel *numericValueLabel;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, nonnull, readonly) MDCInkTouchController *touchController;
+#pragma clang diagnostic pop
 @property(nonatomic, nonnull, readonly) MDCDiscreteDotView *discreteDotView;
 
 @end

@@ -56,7 +56,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
 @property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) MDCItemBarBadge *badge;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+#pragma clang diagnostic pop
 
 @property(nonatomic, strong) MDCItemBarStyle *style;
 
@@ -82,7 +85,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     [self updateSubviews];
 
     // Set up ink controller to splash ink on taps.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
+#pragma clang diagnostic pop
     [_inkTouchController addInkView];  // Ink should always be on top of other views
 
     _rippleTouchController = [[MDCRippleTouchController alloc] init];
@@ -587,7 +593,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 }
 
 - (void)updateInk {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   MDCInkView *inkView = _inkTouchController.defaultInkView;
+#pragma clang diagnostic pop
   inkView.inkColor = _style.inkColor;
   inkView.inkStyle = _style.inkStyle;
   inkView.usesLegacyInkRipple = NO;

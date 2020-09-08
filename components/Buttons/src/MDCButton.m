@@ -115,7 +115,10 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   CGFloat _inkMaxRippleRadius;
 }
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong) MDCInkView *inkView;
+#pragma clang diagnostic pop
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
 @property(nonatomic, assign) BOOL enableTitleFontForState;
@@ -211,7 +214,10 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   _shadowColors[@(UIControlStateNormal)] = [UIColor colorWithCGColor:self.layer.shadowColor];
 
   // Set up ink layer.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+#pragma clang diagnostic pop
   _inkView.usesLegacyInkRipple = NO;
   [self insertSubview:_inkView belowSubview:self.imageView];
   // UIButton has a drag enter/exit boundary that is outside of the frame of the button itself.

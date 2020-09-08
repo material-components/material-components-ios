@@ -86,7 +86,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
 @property(nonatomic, strong, nullable) UIColor *primaryColor;
 @property(nonatomic, strong, nullable) MDCRippleView *rippleView;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong, nullable) MDCInkTouchController *touchController;
+#pragma clang diagnostic pop
 @end
 
 @implementation MDCThumbTrack {
@@ -162,7 +165,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self addSubview:_trackView];
 
     // Set up ink layer.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     _touchController = [[MDCInkTouchController alloc] initWithView:_thumbView];
+#pragma clang diagnostic pop
     _touchController.delegate = self;
     [_touchController addInkView];
     _touchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
@@ -574,10 +580,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 #pragma mark - MDCInkTouchControllerDelegate
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (BOOL)inkTouchController:(nonnull __unused MDCInkTouchController *)inkTouchController
     shouldProcessInkTouchesAtTouchLocation:(__unused CGPoint)location {
   return _shouldDisplayInk;
 }
+#pragma clang diagnostic pop
 
 #pragma mark - Animation helpers
 

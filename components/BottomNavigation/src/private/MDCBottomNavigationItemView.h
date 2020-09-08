@@ -23,7 +23,10 @@
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong, nonnull) MDCInkView *inkView;
+#pragma clang diagnostic pop
 @property(nonatomic, strong, nonnull) MDCRippleTouchController *rippleTouchController;
 @property(nonatomic, assign) UIOffset titlePositionAdjustment;
 

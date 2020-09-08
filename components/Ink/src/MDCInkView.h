@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  bounded ink isn't just clipped unbounded ink. Whether the ink is bounded or not depends on the kind
  of UI element the user is interacting with.
  */
-@interface MDCInkView : UIView
+__deprecated_msg("Please use MDCRippleView instead.") @interface MDCInkView : UIView
 
 /**
  Ink view animation delegate. Clients set this delegate to receive updates when ink animations

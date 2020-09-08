@@ -229,13 +229,7 @@ static NSString *const kTestItemTitleText = @"Title";
   // Then
   MDCBottomNavigationItemView *itemView = bar.itemViews.firstObject;
   UIButton *itemViewButton = itemView.button;
-  if (@available(iOS 10.0, *)) {
-    XCTAssertEqualObjects(itemViewButton.accessibilityHint, initialHint);
-  } else {
-    // On iOS 9, the bar "fakes" being a tab bar and modifies the hint.
-    XCTAssertTrue([itemViewButton.accessibilityHint containsString:initialHint],
-                  @"(%@) does not contain (%@)", itemViewButton.accessibilityHint, initialHint);
-  }
+  XCTAssertEqualObjects(itemViewButton.accessibilityHint, initialHint);
 }
 
 - (void)testAccessibilityHintValueChanged {
@@ -566,14 +560,8 @@ static NSString *const kTestItemTitleText = @"Title";
 - (NSInteger)countOfButtonsWithAccessibilityHint:(NSString *)accessibilityHint
                                     fromRootView:(UIView *)view {
   BOOL foundMatchingElement = NO;
-  if (@available(iOS 10.0, *)) {
-    foundMatchingElement = ([view isKindOfClass:[UIButton class]] &&
-                            [view.accessibilityHint isEqualToString:accessibilityHint]);
-  } else {
-    // Accounts for the "fake" tab bar behavior that modifies the `accessibilityHint` on iOS 9.
-    foundMatchingElement = ([view isKindOfClass:[UIButton class]] &&
-                            [view.accessibilityHint containsString:accessibilityHint]);
-  }
+  foundMatchingElement = ([view isKindOfClass:[UIButton class]] &&
+                          [view.accessibilityHint isEqualToString:accessibilityHint]);
   NSInteger count = foundMatchingElement ? 1 : 0;
   for (UIView *subview in view.subviews) {
     count += [self countOfButtonsWithAccessibilityHint:accessibilityHint fromRootView:subview];

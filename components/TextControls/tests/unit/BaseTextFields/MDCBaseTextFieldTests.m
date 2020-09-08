@@ -513,4 +513,20 @@
   XCTAssertFalse(textField.shouldLayoutForRTL);
 }
 
+- (void)testPreferredContainerHeightChangesIntrinsicContentSize {
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 100, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  [textField sizeToFit];
+  CGFloat initialHeight = textField.intrinsicContentSize.height;
+
+  // When
+  textField.preferredContainerHeight = 150;
+  [textField sizeToFit];
+
+  // Then
+  XCTAssertTrue(textField.intrinsicContentSize.height > initialHeight);
+  XCTAssertEqual(textField.intrinsicContentSize.height, 150);
+}
+
 @end

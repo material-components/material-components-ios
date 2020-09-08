@@ -57,7 +57,10 @@
   _inkTouchControllers = [[NSMutableArray alloc] init];
 
   for (UIView *view in self.shapes.subviews) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
+#pragma clang diagnostic pop
     inkTouchController.delegate = self;
     inkTouchController.defaultInkView.inkColor = blueColor;
     inkTouchController.defaultInkView.usesLegacyInkRipple = NO;
@@ -66,8 +69,11 @@
   }
   [containerView addSubview:self.shapes];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   MDCInkTouchController *inkTouchController =
       [[MDCInkTouchController alloc] initWithView:self.legacyShape];
+#pragma clang diagnostic pop
   inkTouchController.delegate = self;
   inkTouchController.defaultInkView.inkColor = blueColor;
   [inkTouchController addInkView];
@@ -77,12 +83,15 @@
 
 #pragma mark - Private
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)inkTouchController:(MDCInkTouchController *)inkTouchController
          didProcessInkView:(MDCInkView *)inkView
            atTouchLocation:(CGPoint)location {
   NSLog(@"InkTouchController %p did process ink view: %p at touch location: %@", inkTouchController,
         inkView, NSStringFromCGPoint(location));
 }
+#pragma clang diagnostic pop
 
 #pragma mark - Supplemental
 
