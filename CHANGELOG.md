@@ -1,16 +1,15 @@
-# #develop#
+# 115.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release, we deprecated the Ink component in favor of Ripple and deleted the
+deprecated `fontSize` property from the ThumbTrack component.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+The `fontSize` property of ThumbTrack is now deleted. Please use the `font` property instead.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+The Ink component has been deprecated. Please use Ripple instead.
 
 ## Component changes
 
@@ -25,10 +24,6 @@ Replace this text with example code for each new feature.
 ### Dialogs
 
 * [Issue:- We currently disable tap for message text view.](https://github.com/material-components/material-components-ios/commit/6e42102550f3ca3aff560951b037d3fe8a30cf7c) (Nobody)
-
-### Slider
-
-* [Expose thumbBorderWidth and thumbIsSmallerWhenDisabled.](https://github.com/material-components/material-components-ios/commit/7119e0c1fee38e75fe5c849a9f70cb923ae3d36e) (Jeff Verkoeyen)
 
 ### TextControls
 
