@@ -56,6 +56,13 @@
   MDCSnackbarManager.defaultManager.delegate = self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  // Push or pop, when the view controller goes away we should dismiss snackbars because snackbars
+  // with actions will not self dismiss in voice over.
+  [MDCSnackbarManager.defaultManager dismissAndCallCompletionBlocksWithCategory:nil];
+}
+
 - (void)toggleModes {
   _legacyMode = !_legacyMode;
   if (_legacyMode) {
