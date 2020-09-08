@@ -1,3 +1,45 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomNavigation
+
+* [Remove pre-iOS 10 handling for voiceover now that components support iOS 10+](https://github.com/material-components/material-components-ios/commit/01b1cbaa6621bafda648716f0e9074315cfcc0f3) (Alyssa Weiss)
+
+### Collections
+
+* [Silence warnings when including a header with a method that uses deprecated declarations.](https://github.com/material-components/material-components-ios/commit/21d67fef12496fa026e32d1b203e15464b7e5378) (Nobody)
+
+### Dialogs
+
+* [Issue:- We currently disable tap for message text view.](https://github.com/material-components/material-components-ios/commit/6e42102550f3ca3aff560951b037d3fe8a30cf7c) (Nobody)
+
+### TextControls
+
+* [Improve TextControls test coverage](https://github.com/material-components/material-components-ios/commit/9d12dc1f981b317877bf713b1ed906b9363cfb19) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Delete deprecated fontSize property.](https://github.com/material-components/material-components-ios/commit/959e66d5aea00e0aa124b5ac604c29856b6c4905) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Official deprecation of Ink.](https://github.com/material-components/material-components-ios/commit/8d7bc88a110d1c0ad0e2a14c6c4f106d5fd91d3e) (Yarden Eitan)
+
+---
+
 # 114.0.0
 
 In this major release we have updated BottomNavigation safe area calculations and removed the deprecated `sizeThatFitsIncludesSafeArea` API, including a minor bug fix for Dialogs.
