@@ -86,44 +86,25 @@
   XCTAssertFalse(itemBar.isAccessibilityElement);
 }
 
-- (void)testItemBarIsAccessibilityTabBarOniOS10Plus {
-  if (@available(iOS 10.0, *)) {
-    // When
-    self.itemBar.accessibilityTraits = UIAccessibilityTraitLink;
+- (void)testItemBarIsAccessibilityTabBar {
+  // When
+  self.itemBar.accessibilityTraits = UIAccessibilityTraitLink;
 
-    // Then
-    XCTAssertEqual(self.itemBar.accessibilityTraits,
-                   UIAccessibilityTraitTabBar | UIAccessibilityTraitLink);
-  }
+  // Then
+  XCTAssertEqual(self.itemBar.accessibilityTraits,
+                 UIAccessibilityTraitTabBar | UIAccessibilityTraitLink);
 }
 
-- (void)testItemBarViewIncludesTabInAccessibilityLabelOniOS9 {
-  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
-  if (![NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-    // When
-    for (UITabBarItem *item in self.itemBar.items) {
-      UIView *view = [self.itemBar accessibilityElementForItem:item];
-      XCTAssertTrue([view isKindOfClass:[UIView class]]);
-      if ([view isKindOfClass:[UIView class]]) {
-        NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
-        XCTAssertTrue([accessibilityLabel localizedCaseInsensitiveContainsString:@"tab"],
-                      @"Item bar items should include the faked 'tab' information on iOS 9.");
-      }
-    }
-  }
-}
-
-- (void)testItemBarViewDoesNotIncludesTabInAccessibilityLabelOniOS10Plus {
-  if (@available(iOS 10.0, *)) {
-    // When
-    for (UITabBarItem *item in self.itemBar.items) {
-      UIView *view = [self.itemBar accessibilityElementForItem:item];
-      XCTAssertTrue([view isKindOfClass:[UIView class]]);
-      if ([view isKindOfClass:[UIView class]]) {
-        NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
-        XCTAssertFalse([accessibilityLabel localizedCaseInsensitiveContainsString:@"tab"],
-                       @"Item bar items should not include the faked 'tab' information on iOS 9.");
-      }
+- (void)testItemBarViewDoesNotIncludesTabInAccessibilityLabel {
+  // When
+  for (UITabBarItem *item in self.itemBar.items) {
+    UIView *view = [self.itemBar accessibilityElementForItem:item];
+    XCTAssertTrue([view isKindOfClass:[UIView class]]);
+    if ([view isKindOfClass:[UIView class]]) {
+      NSString *accessibilityLabel = ((UIView *)view).accessibilityLabel;
+      XCTAssertFalse([accessibilityLabel localizedCaseInsensitiveContainsString:@"tab"],
+                     @"Item bar items should not include the faked 'tab' information previously "
+                     @"used for iOS 9.");
     }
   }
 }
