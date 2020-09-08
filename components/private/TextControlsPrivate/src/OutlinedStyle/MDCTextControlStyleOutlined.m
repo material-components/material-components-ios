@@ -19,7 +19,7 @@
 #include "MaterialAvailability.h"
 #import "UIBezierPath+MDCTextControlStyle.h"
 
-static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
+static const CGFloat kDefaultOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 
@@ -46,6 +46,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 #pragma mark Setup
 
 - (void)commonMDCTextControlStyleOutlinedInit {
+  self.outlineCornerRadius = kDefaultOutlinedContainerStyleCornerRadius;
   [self setUpOutlineColors];
   [self setUpOutlineLineWidths];
   [self setUpOutlineSublayer];
@@ -145,11 +146,13 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
      containerHeight:(CGFloat)containerHeight
      isLabelFloating:(BOOL)isLabelFloating
     outlineLineWidth:(CGFloat)outlineLineWidth {
-  UIBezierPath *path = [MDCTextControlStyleOutlined outlinePathWithViewBounds:view.bounds
-                                                                   labelFrame:labelFrame
-                                                              containerHeight:containerHeight
-                                                                    lineWidth:outlineLineWidth
-                                                              isLabelFloating:isLabelFloating];
+  UIBezierPath *path =
+      [MDCTextControlStyleOutlined outlinePathWithViewBounds:view.bounds
+                                                  labelFrame:labelFrame
+                                             containerHeight:containerHeight
+                                                   lineWidth:outlineLineWidth
+                                                cornerRadius:self.outlineCornerRadius
+                                             isLabelFloating:isLabelFloating];
 
   [CATransaction begin];
   [CATransaction setDisableActions:YES];
@@ -166,9 +169,9 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
                                  labelFrame:(CGRect)labelFrame
                             containerHeight:(CGFloat)containerHeight
                                   lineWidth:(CGFloat)lineWidth
+                               cornerRadius:(CGFloat)radius
                             isLabelFloating:(BOOL)isLabelFloating {
   UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat radius = kOutlinedContainerStyleCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
   CGFloat sublayerMaxY = containerHeight;

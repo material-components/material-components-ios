@@ -25,6 +25,11 @@
 @interface MDCTextControlStyleOutlined : NSObject <MDCTextControlStyle>
 
 /**
+The corner radius for the outline.
+*/
+@property(nonatomic, assign) CGFloat outlineCornerRadius;
+
+/**
 Sets the outline color for a given state.
 @param outlineColor The UIColor for the given state.
 @param state The MDCTextControlState.
