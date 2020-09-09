@@ -1437,9 +1437,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/ExtendedAlignment/*.{h,m}",
       "components/#{component.base_name}/src/SizeClassDelegate/*.{h,m}"
     ]
-    component.resources = [
-      "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
-    ]
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/AnimationTiming"
