@@ -157,4 +157,15 @@ values are allowed.
  */
 @property(nullable, nonatomic, strong) NSNumber *trailingEdgePaddingOverride;
 
+/**
+ This property determines the corner radius of the container, when applicable. Setting this property
+ is a no-op for MDCBaseTextField and any subclasses with invisible containers. For subclasses with
+ visible containers it will apply the radius to a combination of the four corners that is
+ approrpriate for the given style.
+
+ @note If the value of this property is sufficiently large you may need to set @c
+ leadingEdgePaddingOverride or @c trailingEdgePaddingOverride.
+ */
+@property(nonatomic, assign) CGFloat containerRadius;
+
 @end

@@ -53,7 +53,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 @property(strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property(nonatomic, assign) CGSize cachedIntrinsicContentSize;
-@property(nonatomic, assign) CGFloat cachedNumberOfLinesOfVisibleText;
+@property(nonatomic, assign) CGFloat cachedNumberOfLinesOfText;
 
 @end
 
@@ -328,11 +328,11 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   if (textEndsInNewLine) {
     numberOfLines += 1;
   }
-  BOOL numberOfLinesChanged = self.cachedNumberOfLinesOfVisibleText != (CGFloat)numberOfLines;
+  BOOL numberOfLinesChanged = self.cachedNumberOfLinesOfText != (CGFloat)numberOfLines;
   if (numberOfLinesChanged) {
     [self setNeedsLayout];
   }
-  self.cachedNumberOfLinesOfVisibleText = (CGFloat)numberOfLines;
+  self.cachedNumberOfLinesOfText = (CGFloat)numberOfLines;
   return (CGFloat)numberOfLines;
 }
 
