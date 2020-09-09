@@ -165,7 +165,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     _button = [[UIButton alloc] initWithFrame:self.bounds];
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
-    _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
     _button.accessibilityValue = self.accessibilityValue;
     [self addSubview:_button];
   }
