@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCBaseTextAreaDelegate.h"
 #import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlState.h"
 
@@ -21,6 +22,11 @@
  A UIControl subclass that leverages UITextView to provide multi-line text input
 */
 @interface MDCBaseTextArea : UIControl <UIContentSizeCategoryAdjusting>
+
+/**
+ The text area's delegate.
+ */
+@property(weak, nonatomic, nullable) id<MDCBaseTextAreaDelegate> baseTextAreaDelegate;
 
 /**
  The @c label is a label that occupies the area the text usually occupies when there is no

@@ -12,5 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextArea.h"
-#import "MDCBaseTextAreaDelegate.h"
+#import <UIKit/UIKit.h>
+
+@class MDCBaseTextArea;
+
+/**
+This delegate protocol for @c MDCBaseTextArea and its subclasses provides updates about the text
+area unrelated to the text area's contained @c textView.
+ */
+@protocol MDCBaseTextAreaDelegate <NSObject>
+
+@optional
+
+- (void)baseTextArea:(nonnull MDCBaseTextArea *)baseTextArea shouldChangeSize:(CGSize)newSize;
+
+@end

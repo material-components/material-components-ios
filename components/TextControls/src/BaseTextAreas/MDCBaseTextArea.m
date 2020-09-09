@@ -18,11 +18,12 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "private/MDCBaseTextAreaLayout.h"
+#import "private/MDCBaseTextAreaTextView.h"
+#import "MDCBaseTextAreaDelegate.h"
 #import "MaterialMath.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
-#import "private/MDCBaseTextAreaLayout.h"
-#import "private/MDCBaseTextAreaTextView.h"
 
 static char *const kKVOContextMDCBaseTextArea = "kKVOContextMDCBaseTextArea";
 
@@ -52,6 +53,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 @property(strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property(nonatomic, assign) CGSize cachedIntrinsicContentSize;
+@property(nonatomic, assign) CGFloat cachedNumberOfLinesOfVisibleText;
 
 @end
 
@@ -181,9 +183,6 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 #pragma mark Private Layout
 
 - (void)preLayoutSubviews {
-  if (![self validateWidth]) {
-    [self invalidateIntrinsicContentSize];
-  }
   self.textControlState = [self determineCurrentTextControlState];
   self.labelPosition = [self determineCurrentLabelPosition];
   MDCTextControlColorViewModel *colorViewModel =
@@ -203,10 +202,10 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self animateLabel];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   [self layoutGradientLayers];
-  if (![self validateHeight]) {
-    [self invalidateIntrinsicContentSize];
-  }
   [self scrollToVisibleText];
+  if ([self widthHasChanged] || [self calculatedHeightHasChanged]) {
+    [self handleIntrinsicContentSizeChange];
+  }
 }
 
 - (void)scrollToVisibleText {
@@ -284,12 +283,20 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
-- (BOOL)validateWidth {
-  return CGRectGetWidth(self.bounds) == self.cachedIntrinsicContentSize.width;
+- (BOOL)widthHasChanged {
+  return CGRectGetWidth(self.bounds) != self.cachedIntrinsicContentSize.width;
 }
 
-- (BOOL)validateHeight {
-  return self.layout.calculatedHeight == self.cachedIntrinsicContentSize.height;
+- (BOOL)calculatedHeightHasChanged {
+  return self.layout.calculatedHeight != self.cachedIntrinsicContentSize.height;
+}
+
+- (void)handleIntrinsicContentSizeChange {
+  [self invalidateIntrinsicContentSize];
+  if ([self.baseTextAreaDelegate respondsToSelector:@selector(baseTextArea:shouldChangeSize:)]) {
+    CGSize preferredSize = CGSizeMake(CGRectGetWidth(self.bounds), self.layout.calculatedHeight);
+    [self.baseTextAreaDelegate baseTextArea:self shouldChangeSize:preferredSize];
+  }
 }
 
 - (void)layoutGradientLayers {
@@ -321,6 +328,11 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   if (textEndsInNewLine) {
     numberOfLines += 1;
   }
+  BOOL numberOfLinesChanged = self.cachedNumberOfLinesOfVisibleText != (CGFloat)numberOfLines;
+  if (numberOfLinesChanged) {
+    [self setNeedsLayout];
+  }
+  self.cachedNumberOfLinesOfVisibleText = (CGFloat)numberOfLines;
   return (CGFloat)numberOfLines;
 }
 
