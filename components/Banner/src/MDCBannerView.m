@@ -20,7 +20,8 @@
 static const NSInteger kTextNumberOfLineLimit = 3;
 static const CGFloat kImageViewSideLength = 40;
 static const CGFloat kLeadingPadding = 16.0f;
-static const CGFloat kTrailingPadding = 8.0f;
+static const CGFloat kTextTrailingPadding = 16.0f;
+static const CGFloat kButtonContainerTrailingPadding = 8.0f;
 static const CGFloat kTopPaddingSmall = 10.0f;
 static const CGFloat kTopPaddingLarge = 24.0f;
 static const CGFloat kBottomPadding = 8.0f;
@@ -226,7 +227,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       [self.textView.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
   self.textViewConstraintTrailing =
       [self.textView.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
-                                                   constant:-kTrailingPadding];
+                                                   constant:-kTextTrailingPadding];
   self.textViewConstraintLeadingWithImage =
       [self.textView.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor
                                                   constant:kSpaceBetweenIconImageAndTextView];
@@ -243,7 +244,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       [self.buttonContainerView.widthAnchor constraintEqualToAnchor:self.leadingButton.widthAnchor];
   self.buttonContainerConstraintTrailing = [self.buttonContainerView.trailingAnchor
       constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
-                     constant:-kTrailingPadding];
+                     constant:-kButtonContainerTrailingPadding];
   self.buttonContainerConstraintBottom = [self.buttonContainerView.bottomAnchor
       constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
                      constant:-kBottomPadding];
@@ -561,7 +562,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   CGFloat remainingWidth = layoutSize.width;
   CGFloat marginsPadding = self.layoutMargins.left + self.layoutMargins.right;
   remainingWidth -= marginsPadding;
-  remainingWidth -= (kLeadingPadding + kTrailingPadding);
+  remainingWidth -= (kLeadingPadding + kButtonContainerTrailingPadding);
   return CGSizeMake(remainingWidth, layoutSize.height);
 }
 
