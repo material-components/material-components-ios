@@ -14,15 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BottomNavigationTypicalUseSupplemental.h"
-
-#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialAvailability.h"
 #import "MaterialBottomNavigation.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialPalettes.h"
 
-@interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
+@interface BottomNavigationTypicalUseExample : UIViewController <MDCBottomNavigationBarDelegate>
 
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 
@@ -152,6 +151,20 @@
 - (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
               didSelectItem:(nonnull UITabBarItem *)item {
   NSLog(@"Selected Item: %@", item.title);
+}
+
+@end
+
+@implementation BottomNavigationTypicalUseExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Navigation", @"Bottom Navigation" ],
+    @"description" : @"Bottom navigation bars allow movement between primary destinations in "
+                     @"an app.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
 }
 
 @end
