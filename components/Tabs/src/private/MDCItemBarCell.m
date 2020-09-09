@@ -18,7 +18,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCItemBarBadge.h"
-#import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
