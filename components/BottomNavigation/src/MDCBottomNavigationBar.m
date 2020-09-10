@@ -29,9 +29,6 @@
 #import "MaterialTypography.h"
 #import "MaterialMath.h"
 
-// The Bundle for string resources.
-static NSString *const kBundleName = @"MaterialBottomNavigation.bundle";
-
 // KVO context
 static char *const kKVOContextMDCBottomNavigationBar = "kKVOContextMDCBottomNavigationBar";
 
@@ -812,26 +809,6 @@ static NSString *const kOfAnnouncement = @"of";
   }
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
-}
-
-#pragma mark - Resource bundle
-
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundleName]];
-  });
-  return bundle;
-}
-
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 #pragma mark - MDCInkTouchControllerDelegate methods
