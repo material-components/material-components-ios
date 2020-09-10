@@ -191,4 +191,10 @@
   [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
 }
 
+- (void)testSmallerBarHeight {
+  // When
+  self.bottomNavBar.barHeight = 44;
+  [self.bottomNavBar setNeedsLayout];
+}
+
 @end

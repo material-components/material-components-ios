@@ -189,7 +189,7 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat height = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
+  CGFloat height = [self calculateBarHeight];
   CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
   CGSize size = CGSizeMake(itemWidth * self.items.count, height);
   return size;
@@ -200,10 +200,13 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat height = kBarHeightStackedTitle;
-  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
-      self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    height = kBarHeightAdjacentTitle;
+  CGFloat height = self.barHeight;
+  if (self.barHeight <= 0) {
+    height = kBarHeightStackedTitle;
+    if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+        self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+      height = kBarHeightAdjacentTitle;
+    }
   }
 
   return CGSizeMake(size.width, height);
@@ -240,6 +243,14 @@ static NSString *const kOfAnnouncement = @"of";
       return YES;
       break;
   }
+}
+
+- (CGFloat)calculateBarHeight {
+  CGFloat height = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
+  if (self.barHeight > 0) {
+    height = self.barHeight;
+  }
+  return height;
 }
 
 - (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
@@ -285,7 +296,7 @@ static NSString *const kOfAnnouncement = @"of";
 - (void)sizeItemsLayoutViewItemsDistributed:(BOOL)itemsDistributed
                           withBottomNavSize:(CGSize)bottomNavSize
                              containerWidth:(CGFloat)containerWidth {
-  CGFloat barHeight = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
+  CGFloat barHeight = [self calculateBarHeight];
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat bottomNavWidthInset = bottomNavSize.width - insets.left - insets.right;
   if (itemsDistributed) {

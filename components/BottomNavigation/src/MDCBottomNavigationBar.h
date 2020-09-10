@@ -221,6 +221,20 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
      UITraitCollection *_Nullable previousTraitCollection);
 
 /**
+ Sets the height of the navigation bar.
+
+ Note: If set to a value smaller or equal to zero (<= 0), the bar will default to a height of 56 in
+ the normal case, and to 40 if alignment is set to
+ MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles and horizontalSizeClass is set to
+ UIUserInterfaceSizeClassRegular.
+
+ If value is bigger than 0 ( > 0), then the intrinsic height will match the provided barHeight.
+
+ Defaults to 0.
+ */
+@property(nonatomic, assign) CGFloat barHeight;
+
+/**
  Returns the navigation bar subview associated with the specific item.
 
  @param item A UITabBarItem
