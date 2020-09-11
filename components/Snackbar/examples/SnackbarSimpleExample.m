@@ -151,11 +151,11 @@
 - (void)showCustomizedSnackbar:(id)sender {
   UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14];
   NSAssert(customMessageFont, @"Unable to instantiate font");
-  MDCSnackbarManager.messageFont = customMessageFont;
+  MDCSnackbarManager.defaultManager.messageFont = customMessageFont;
 
   UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14];
   NSAssert(customButtonFont, @"Unable to instantiate font");
-  MDCSnackbarManager.buttonFont = customButtonFont;
+  MDCSnackbarManager.defaultManager.buttonFont = customButtonFont;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Customized Fonts";
@@ -167,8 +167,8 @@
 }
 
 - (void)showDecustomizedSnackbar:(id)sender {
-  MDCSnackbarManager.messageFont = nil;
-  MDCSnackbarManager.buttonFont = nil;
+  MDCSnackbarManager.defaultManager.messageFont = nil;
+  MDCSnackbarManager.defaultManager.buttonFont = nil;
   [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateNormal];
   [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
   MDCSnackbarManager.defaultManager.messageTextColor = nil;
