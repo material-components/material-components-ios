@@ -41,10 +41,6 @@ static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180;
 
-// The Bundle for string resources.
-static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
-static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
-
 // The amount to inset pointerEffectHoverRect.
 // These values were chosen to achieve visual parity with UITabBar's highlight effect.
 const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, -12};
@@ -165,7 +161,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     _button = [[UIButton alloc] initWithFrame:self.bounds];
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
-    _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
     _button.accessibilityValue = self.accessibilityValue;
     [self addSubview:_button];
   }
@@ -661,26 +656,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 - (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
   _titleBelowIcon = titleBelowIcon;
   self.label.numberOfLines = [self renderedTitleNumberOfLines];
-}
-
-#pragma mark - Resource bundle
-
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialBottomNavigationBundle]];
-  });
-  return bundle;
-}
-
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 #pragma mark - UILargeContentViewerItem

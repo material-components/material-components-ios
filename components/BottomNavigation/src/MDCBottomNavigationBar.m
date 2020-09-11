@@ -29,9 +29,6 @@
 #import "MaterialTypography.h"
 #import "MaterialMath.h"
 
-// The Bundle for string resources.
-static NSString *const kBundleName = @"MaterialBottomNavigation.bundle";
-
 // KVO context
 static char *const kKVOContextMDCBottomNavigationBar = "kKVOContextMDCBottomNavigationBar";
 
@@ -189,7 +186,7 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat height = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
+  CGFloat height = [self calculateBarHeight];
   CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
   CGSize size = CGSizeMake(itemWidth * self.items.count, height);
   return size;
@@ -200,10 +197,13 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat height = kBarHeightStackedTitle;
-  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
-      self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    height = kBarHeightAdjacentTitle;
+  CGFloat height = self.barHeight;
+  if (self.barHeight <= 0) {
+    height = kBarHeightStackedTitle;
+    if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+        self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+      height = kBarHeightAdjacentTitle;
+    }
   }
 
   return CGSizeMake(size.width, height);
@@ -240,6 +240,14 @@ static NSString *const kOfAnnouncement = @"of";
       return YES;
       break;
   }
+}
+
+- (CGFloat)calculateBarHeight {
+  CGFloat height = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
+  if (self.barHeight > 0) {
+    height = self.barHeight;
+  }
+  return height;
 }
 
 - (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
@@ -285,7 +293,7 @@ static NSString *const kOfAnnouncement = @"of";
 - (void)sizeItemsLayoutViewItemsDistributed:(BOOL)itemsDistributed
                           withBottomNavSize:(CGSize)bottomNavSize
                              containerWidth:(CGFloat)containerWidth {
-  CGFloat barHeight = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
+  CGFloat barHeight = [self calculateBarHeight];
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat bottomNavWidthInset = bottomNavSize.width - insets.left - insets.right;
   if (itemsDistributed) {
@@ -584,17 +592,9 @@ static NSString *const kOfAnnouncement = @"of";
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
     }
-#if MDC_AVAILABLE_SDK_IOS(10_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-    NSOperatingSystemVersion iOS10Version = {10, 0, 0};
-    if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-      if (item.badgeColor) {
-        itemView.badgeColor = item.badgeColor;
-      }
+    if (item.badgeColor) {
+      itemView.badgeColor = item.badgeColor;
     }
-#pragma clang diagnostic pop
-#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
     itemView.selected = NO;
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
@@ -763,11 +763,8 @@ static NSString *const kOfAnnouncement = @"of";
   _itemBadgeBackgroundColor = itemBadgeBackgroundColor;
   for (NSUInteger i = 0; i < self.items.count; ++i) {
     UITabBarItem *item = self.items[i];
-    if (@available(iOS 10.0, *)) {
-      // Skip items with a custom color
-      if (item.badgeColor) {
-        continue;
-      }
+    if (item.badgeColor) {
+      continue;
     }
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.badgeColor = itemBadgeBackgroundColor;
@@ -801,26 +798,6 @@ static NSString *const kOfAnnouncement = @"of";
   }
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
-}
-
-#pragma mark - Resource bundle
-
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundleName]];
-  });
-  return bundle;
-}
-
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 #pragma mark - MDCInkTouchControllerDelegate methods

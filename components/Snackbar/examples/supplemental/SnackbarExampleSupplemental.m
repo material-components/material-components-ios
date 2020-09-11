@@ -14,7 +14,7 @@
 
 #import "SnackbarExampleSupplemental.h"
 
-static NSString *const kCellIdentifier = @"Cell";
+NSString *const kSnackbarExamplesCellIdentifier = @"Cell";
 
 @implementation SnackbarExample
 
@@ -22,7 +22,7 @@ static NSString *const kCellIdentifier = @"Cell";
   self.choices = choices;
   self.view.backgroundColor = [UIColor whiteColor];
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
-          forCellWithReuseIdentifier:kCellIdentifier];
+          forCellWithReuseIdentifier:kSnackbarExamplesCellIdentifier];
 }
 
 #pragma mark - UICollectionView
@@ -35,7 +35,7 @@ static NSString *const kCellIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSnackbarExamplesCellIdentifier
                                                 forIndexPath:indexPath];
   cell.textLabel.text = self.choices[indexPath.row];
   cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
@@ -47,82 +47,3 @@ static NSString *const kCellIdentifier = @"Cell";
 
 @end
 
-@implementation SnackbarSimpleExample (CatalogByConvention)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar" ],
-    @"description" : @"Snackbars provide brief messages about app processes at the bottom of "
-                     @"the screen.",
-    @"primaryDemo" : @YES,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
-@implementation SnackbarOverlayViewExample (CatalogByConvention)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Overlay View" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end
-
-@implementation SnackbarInputAccessoryViewController (CatalogByConvention)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Input Accessory" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @NO,
-  };
-}
-
-@end
-
-@implementation SnackbarSuspensionExample (CollectionView)
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewTextCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
-                                                forIndexPath:indexPath];
-
-  cell.textLabel.text = self.choices[indexPath.row];
-  cell.isAccessibilityElement = YES;
-  cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
-  cell.accessibilityLabel = cell.textLabel.text;
-  if (indexPath.row > 2) {
-    UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-    [editingSwitch setTag:indexPath.row];
-    [editingSwitch addTarget:self
-                      action:@selector(handleSuspendStateChanged:)
-            forControlEvents:UIControlEventValueChanged];
-    cell.accessoryView = editingSwitch;
-    cell.accessibilityValue = editingSwitch.isOn ? @"on" : @"off";
-  } else {
-    cell.accessoryView = nil;
-    cell.accessibilityValue = nil;
-  }
-
-  return cell;
-}
-
-@end
-
-@implementation SnackbarSuspensionExample (CatalogByConvention)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Suspension" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-  };
-}
-
-@end

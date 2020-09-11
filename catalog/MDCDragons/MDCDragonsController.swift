@@ -35,14 +35,18 @@ class MDCDragonsController: UIViewController,
   UIGestureRecognizerDelegate
 {
 
+  let containerScheme: MDCContainerScheming = {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = MDCSemanticColorScheme(defaults: .material201907)
+    scheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
+    scheme.shapeScheme = MDCShapeScheme()
+    return scheme
+  }()
+
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
     static let headerViewMaxHeight: CGFloat = 113
     static let headerViewMinHeight: CGFloat = 53
-    static let bgColor = UIColor(white: 0.97, alpha: 1)
-    static let headerColor = UIColor(red: 0.384, green: 0, blue: 0.933, alpha: 1.0)
-    static let titleColor = UIColor(white: 0, alpha: 0.87)
-    static let subtitleColor = UIColor(white: 0, alpha: 0.60)
   }
   fileprivate var cellsBySection: [[DragonCell]]
   fileprivate var nodes: [CBCNode]
@@ -110,7 +114,7 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
     headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
 
-    view.backgroundColor = Constants.bgColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     if #available(iOS 14.0, *) {
       #if compiler(>=5.3)
@@ -122,7 +126,7 @@ class MDCDragonsController: UIViewController,
       tableView.register(
         MDCDragonsTableViewCell.self,
         forCellReuseIdentifier: "MDCDragonsTableViewCell")
-      tableView.backgroundColor = Constants.bgColor
+      tableView.backgroundColor = containerScheme.colorScheme.backgroundColor
       tableView.delegate = self
       tableView.dataSource = self
       tableView.rowHeight = UITableView.automaticDimension
@@ -163,7 +167,7 @@ class MDCDragonsController: UIViewController,
 
     headerViewController.headerView.addSubview(headerView)
     headerViewController.headerView.forwardTouchEvents(for: headerView)
-    headerViewController.headerView.backgroundColor = Constants.headerColor
+    headerViewController.headerView.backgroundColor = containerScheme.colorScheme.primaryColor
     if #available(iOS 14.0, *) {
       headerViewController.headerView.trackingScrollView = collectionView
     } else {
@@ -218,29 +222,30 @@ class MDCDragonsController: UIViewController,
     else {
       return UITableViewCell()
     }
-    cell.backgroundColor = .white
     let nodeData =
       isSearchActive ? searched[indexPath.item] : cellsBySection[indexPath.section][indexPath.row]
     let componentName = nodeData.node.title
     cell.textLabel?.text = componentName
+    cell.textLabel?.textColor = containerScheme.colorScheme.onBackgroundColor
+    cell.tintColor = containerScheme.colorScheme.onBackgroundColor
     let node = nodeData.node
     if !node.isExample() && !isSearchActive {
       if nodeData.expanded {
         cell.accessoryView = cell.expandedAccessoryView
-        cell.textLabel?.textColor = Constants.headerColor
+        cell.textLabel?.textColor = containerScheme.colorScheme.primaryColor
       } else {
         cell.accessoryView = cell.collapsedAccessoryView
-        cell.textLabel?.textColor = Constants.titleColor
+        cell.textLabel?.textColor = containerScheme.colorScheme.onBackgroundColor
       }
     } else {
       cell.accessoryView = nil
       if indexPath.section != 0 {
-        cell.textLabel?.textColor = Constants.subtitleColor
+        cell.textLabel?.textColor = containerScheme.colorScheme.onBackgroundColor
         if let text = cell.textLabel?.text {
           cell.textLabel?.text = "  " + text
         }
       } else if isSearchActive {
-        cell.textLabel?.textColor = Constants.titleColor
+        cell.textLabel?.textColor = containerScheme.colorScheme.onBackgroundColor
       }
     }
     return cell
@@ -260,11 +265,12 @@ class MDCDragonsController: UIViewController,
       if nodeData.expanded {
         collapseCells(at: indexPath)
         cell.accessoryView = cell.collapsedAccessoryView
-        cell.textLabel?.textColor = Constants.titleColor
+        cell.textLabel?.textColor = containerScheme.colorScheme.onBackgroundColor
+
       } else {
         expandCells(at: indexPath)
         cell.accessoryView = cell.expandedAccessoryView
-        cell.textLabel?.textColor = Constants.headerColor
+        cell.textLabel?.textColor = containerScheme.colorScheme.primaryColor
       }
       self.tableView.endUpdates()
       nodeData.expanded = !nodeData.expanded
@@ -276,12 +282,6 @@ class MDCDragonsController: UIViewController,
 
     let containerSchemeSel = NSSelectorFromString("setContainerScheme:")
     if vc.responds(to: containerSchemeSel) {
-      let containerScheme = MDCContainerScheme()
-
-      containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201907)
-      containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
-      containerScheme.shapeScheme = MDCShapeScheme()
-
       vc.perform(containerSchemeSel, with: containerScheme)
     }
 
@@ -494,7 +494,7 @@ extension MDCDragonsController {
         frame: view.bounds, collectionViewLayout: generateLayout())
       view.addSubview(collectionView)
       collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-      collectionView.backgroundColor = .white
+      collectionView.backgroundColor = containerScheme.colorScheme.backgroundColor
       self.collectionView = collectionView
       collectionView.delegate = self
     }
@@ -509,7 +509,7 @@ extension MDCDragonsController {
           // Populate the cell with our item description.
           var contentConfiguration = cell.defaultContentConfiguration()
           contentConfiguration.text = menuItem.title
-          contentConfiguration.textProperties.color = Constants.titleColor
+          contentConfiguration.textProperties.color = containerScheme.colorScheme.onBackgroundColor
           cell.contentConfiguration = contentConfiguration
 
           let disclosureOptions = UICellAccessory.OutlineDisclosureOptions(style: .header)
@@ -525,7 +525,7 @@ extension MDCDragonsController {
           // Populate the cell with our item description.
           var contentConfiguration = cell.defaultContentConfiguration()
           contentConfiguration.text = menuItem.title
-          contentConfiguration.textProperties.color = Constants.subtitleColor
+          contentConfiguration.textProperties.color = containerScheme.colorScheme.onBackgroundColor
           cell.contentConfiguration = contentConfiguration
           cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }

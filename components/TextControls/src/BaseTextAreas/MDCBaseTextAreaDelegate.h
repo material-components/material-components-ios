@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,17 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialContainerScheme.h"
 
-@interface BottomNavigationTypicalUseExample : UIViewController
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@class MDCBaseTextArea;
+
+/**
+This delegate protocol for @c MDCBaseTextArea and its subclasses provides updates about the text
+area unrelated to the text area's contained @c textView.
+ */
+@protocol MDCBaseTextAreaDelegate <NSObject>
+
+@optional
+
+- (void)baseTextArea:(nonnull MDCBaseTextArea *)baseTextArea shouldChangeSize:(CGSize)newSize;
+
 @end

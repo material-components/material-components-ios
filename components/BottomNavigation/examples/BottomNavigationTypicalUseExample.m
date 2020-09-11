@@ -14,15 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BottomNavigationTypicalUseSupplemental.h"
-
-#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialAvailability.h"
 #import "MaterialBottomNavigation.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialPalettes.h"
 
-@interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
+@interface BottomNavigationTypicalUseExample : UIViewController <MDCBottomNavigationBarDelegate>
 
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 
@@ -72,14 +71,10 @@
                                                             image:[UIImage imageNamed:@"ic_cake"]
                                                               tag:0];
   tabBarItem5.badgeValue = @"888+";
-#if MDC_AVAILABLE_SDK_IOS(10_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
+
   if ([tabBarItem5 respondsToSelector:@selector(badgeColor)]) {
     tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
   }
-#pragma clang diagnostic pop
-#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
   self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   self.bottomNavBar.selectedItem = tabBarItem2;
   if (@available(iOS 11.0, *)) {
@@ -156,6 +151,20 @@
 
 @end
 
+@implementation BottomNavigationTypicalUseExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Bottom Navigation", @"Bottom Navigation" ],
+    @"description" : @"Bottom navigation bars allow movement between primary destinations in "
+                     @"an app.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
+}
+
+@end
+
 @implementation BottomNavigationTypicalUseExample (SnapshotTestingByConvention)
 
 - (void)testDefaults {
@@ -176,6 +185,12 @@
 
   // When
   [self.bottomNavBar applyPrimaryThemeWithScheme:self.containerScheme];
+}
+
+- (void)testSmallerBarHeight {
+  // When
+  self.bottomNavBar.barHeight = 44;
+  [self.bottomNavBar setNeedsLayout];
 }
 
 @end

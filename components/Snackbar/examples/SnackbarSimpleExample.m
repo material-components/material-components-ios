@@ -18,6 +18,9 @@
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
+@interface SnackbarSimpleExample : SnackbarExample <MDCSnackbarManagerDelegate>
+@end
+
 @implementation SnackbarSimpleExample {
   BOOL _legacyMode;
   BOOL _dynamicType;
@@ -54,6 +57,13 @@
                                     action:@selector(toggleDynamicType)]
   ];
   MDCSnackbarManager.defaultManager.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  // Push or pop, when the view controller goes away we should dismiss snackbars because snackbars
+  // with actions will not self dismiss in voice over.
+  [MDCSnackbarManager.defaultManager dismissAndCallCompletionBlocksWithCategory:nil];
 }
 
 - (void)toggleModes {
@@ -141,11 +151,11 @@
 - (void)showCustomizedSnackbar:(id)sender {
   UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14];
   NSAssert(customMessageFont, @"Unable to instantiate font");
-  MDCSnackbarManager.messageFont = customMessageFont;
+  MDCSnackbarManager.defaultManager.messageFont = customMessageFont;
 
   UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14];
   NSAssert(customButtonFont, @"Unable to instantiate font");
-  MDCSnackbarManager.buttonFont = customButtonFont;
+  MDCSnackbarManager.defaultManager.buttonFont = customButtonFont;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Customized Fonts";
@@ -157,8 +167,8 @@
 }
 
 - (void)showDecustomizedSnackbar:(id)sender {
-  MDCSnackbarManager.messageFont = nil;
-  MDCSnackbarManager.buttonFont = nil;
+  MDCSnackbarManager.defaultManager.messageFont = nil;
+  MDCSnackbarManager.defaultManager.buttonFont = nil;
   [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateNormal];
   [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
   MDCSnackbarManager.defaultManager.messageTextColor = nil;
@@ -250,6 +260,20 @@
 
 - (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
   NSLog(@"A snackbar will be presented");
+}
+
+@end
+
+@implementation SnackbarSimpleExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar" ],
+    @"description" : @"Snackbars provide brief messages about app processes at the bottom of "
+                     @"the screen.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
 }
 
 @end

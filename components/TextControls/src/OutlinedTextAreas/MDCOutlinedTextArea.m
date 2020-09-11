@@ -14,6 +14,7 @@
 
 #import "MDCOutlinedTextArea.h"
 
+#import "MDCBaseTextArea.h"
 #import "MaterialTextControlsPrivate+OutlinedStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
 
@@ -43,6 +44,14 @@
 
 - (void)commonMDCOutlinedTextAreaInit {
   self.containerStyle = [[MDCTextControlStyleOutlined alloc] init];
+}
+
+- (void)setContainerRadius:(CGFloat)containerRadius {
+  self.outlinedStyle.outlineCornerRadius = containerRadius;
+}
+
+- (CGFloat)containerRadius {
+  return self.outlinedStyle.outlineCornerRadius;
 }
 
 #pragma mark Stateful Color APIs

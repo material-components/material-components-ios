@@ -672,6 +672,29 @@ static NSString *const kTestItemTitleText = @"Title";
   XCTAssertFalse(blockCalled);
 }
 
+- (void)testSettingBarHeightPropertyUpdatesIntrinsicContentSizeOfBar {
+  // Given
+  CGFloat barHeight = 20;
+
+  // When
+  self.bottomNavBar.barHeight = barHeight;
+
+  // Then
+  XCTAssertEqual(self.bottomNavBar.intrinsicContentSize.height, barHeight);
+}
+
+- (void)testSettingBarHeightPropertyUpdatesSizeThatFitsOfBar {
+  // Given
+  CGFloat barHeight = 20;
+
+  // When
+  self.bottomNavBar.barHeight = barHeight;
+
+  // Then
+  XCTAssertEqual([self.bottomNavBar sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].height,
+                 barHeight);
+}
+
 #pragma mark - UILargeContentViewerItem
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)

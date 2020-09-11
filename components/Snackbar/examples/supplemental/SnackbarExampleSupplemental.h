@@ -21,34 +21,12 @@
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
 
+extern NSString *const kSnackbarExamplesCellIdentifier;
+
 @interface SnackbarExample : MDCCollectionViewController
 @property(nonatomic) NSArray *choices;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 - (void)setupExampleViews:(NSArray *)choices;
-@end
-
-@interface SnackbarOverlayViewExample : SnackbarExample
-
-/** The floating action button shown in the bottom right corner. */
-@property(nonatomic) MDCFloatingButton *floatingButton;
-
-@property(nonatomic) UIView *bottomBar;
-
-@property(nonatomic) BOOL isShowingBottomBar;
-
-@end
-
-@interface SnackbarSimpleExample : SnackbarExample <MDCSnackbarManagerDelegate>
-@end
-
-@interface SnackbarSuspensionExample : SnackbarExample
-
-- (void)handleSuspendStateChanged:(UISwitch *)sender;
-
-@end
-
-@interface SnackbarInputAccessoryViewController : UIViewController
-
 @end

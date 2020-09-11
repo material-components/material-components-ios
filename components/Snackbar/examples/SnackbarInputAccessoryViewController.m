@@ -16,9 +16,8 @@
 
 #import "MaterialPalettes.h"
 #import "MaterialSnackbar.h"
-#import "supplemental/SnackbarExampleSupplemental.h"
 
-@interface SnackbarInputAccessoryViewController ()
+@interface SnackbarInputAccessoryViewController : UIViewController
 
 @property(nonatomic, strong) UITextField *textField;
 
@@ -65,6 +64,18 @@
   action.title = @"Tap Me";
   message.action = action;
   [MDCSnackbarManager.defaultManager showMessage:message];
+}
+
+@end
+
+@implementation SnackbarInputAccessoryViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Input Accessory" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end

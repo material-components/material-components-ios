@@ -19,6 +19,7 @@
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationLargeItemDialogView.h"
 #import "MDCBottomNavigationBarControllerDelegate.h"
+#import "MaterialBottomNavigation.h"
 #import "MaterialApplication.h"
 
 // A context for Key Value Observing
@@ -27,6 +28,7 @@ static const CGFloat kLargeItemViewHeight = 210;
 static const CGFloat kLargeItemViewWidth = 210;
 static const NSTimeInterval kLargeItemViewAnimationDuration = 0.1;
 static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
+static const NSTimeInterval kNavigationBarHideShowAnimationDuration = 0.3;
 static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
 static NSString *const kSelectedViewControllerRestorationKey = @"selectedViewController";
 
@@ -76,6 +78,12 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
  animation is not started again if it is already animating a dismissal.
  */
 @property(nonatomic, getter=isDismissingLargeItemDialog) BOOL dismissingLargeItemView;
+
+/** The constraint between the bottom of @c navigationBar and its superview. */
+@property(nonatomic, strong, nullable) NSLayoutConstraint *navigationBarBottomAnchorConstraint;
+
+/** The constraint between @c navigationBar.barItemsBottomAnchor and the bottom of the safe area. */
+@property(nonatomic, strong, nullable) NSLayoutConstraint *navigationBarItemsBottomAnchorConstraint;
 
 @end
 
@@ -240,6 +248,31 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   }
 
   return _navigationBarLongPressRecognizer;
+}
+
+#pragma mark - NavigationBar visibility
+
+- (void)setNavigationBarHidden:(BOOL)navigationBarHidden {
+  [self setNavigationBarHidden:navigationBarHidden animated:NO];
+}
+
+- (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
+  if (hidden == _navigationBarHidden) {
+    return;
+  }
+
+  _navigationBarHidden = hidden;
+
+  self.navigationBarItemsBottomAnchorConstraint.active = !hidden;
+  self.navigationBarBottomAnchorConstraint.constant =
+      hidden ? CGRectGetHeight(self.navigationBar.frame) : 0;
+
+  [UIView animateWithDuration:kNavigationBarHideShowAnimationDuration
+                   animations:^{
+                     [self.view setNeedsLayout];
+                     [self.view layoutIfNeeded];
+                     [self updateNavigationBarInsets];
+                   }];
 }
 
 #pragma mark - MDCBottomNavigationBarDelegate
@@ -420,7 +453,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
  */
 - (void)updateNavigationBarInsets {
   UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
-  CGFloat navigationBarHeight = CGRectGetHeight(self.navigationBar.frame);
+  CGFloat navigationBarHeight =
+      self.isNavigationBarHidden ? 0 : CGRectGetHeight(self.navigationBar.frame);
   if (@available(iOS 11.0, *)) {
     currentSafeAreaInsets = self.view.safeAreaInsets;
   }
@@ -501,12 +535,14 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
-  [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+  self.navigationBarBottomAnchorConstraint =
+      [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
+  self.navigationBarBottomAnchorConstraint.active = YES;
 
   if (@available(iOS 11.0, *)) {
-    [self.navigationBar.barItemsBottomAnchor
-        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
-        .active = YES;
+    self.navigationBarItemsBottomAnchorConstraint = [self.navigationBar.barItemsBottomAnchor
+        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor];
+    self.navigationBarItemsBottomAnchorConstraint.active = YES;
   }
 }
 
@@ -613,11 +649,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 /** Returns if the receiver's size category is an accessibility category. */
 - (BOOL)isContentSizeCategoryAccessibilityCategory {
   UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if (@available(iOS 10.0, *)) {
-    sizeCategory = self.traitCollection.preferredContentSizeCategory;
-  } else {
-    sizeCategory = UIApplication.mdc_safeSharedApplication.preferredContentSizeCategory;
-  }
+  sizeCategory = self.traitCollection.preferredContentSizeCategory;
 
   if (@available(iOS 11.0, *)) {
     return UIContentSizeCategoryIsAccessibilityCategory(sizeCategory);

@@ -77,6 +77,19 @@
  */
 @property(nonatomic, getter=isLongPressPopUpViewEnabled) BOOL longPressPopUpViewEnabled;
 
+/**
+ A Boolean value that determines whether @c navigationBar is hidden.
+ */
+@property(nonatomic, getter=isNavigationBarHidden) BOOL navigationBarHidden;
+
+/**
+ Shows or hides @c navigationBar with optional animation.
+
+ @param hidden Whether @c navigationBar should be hidden.
+ @param animated Whether the transition should be animated.
+ */
+- (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
+
 - (void)viewDidLoad NS_REQUIRES_SUPER;
 
 #pragma mark - MDCBottomNavigationBarDelegate

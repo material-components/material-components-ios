@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCBaseTextArea.h"
+#import "MDCBaseTextAreaDelegate.h"

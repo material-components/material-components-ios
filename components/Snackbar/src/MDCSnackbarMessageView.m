@@ -1246,9 +1246,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
   BOOL result = [super pointInside:point withEvent:event];
-  BOOL accessibilityEnabled =
-      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
-  if (!result && !accessibilityEnabled && _shouldDismissOnOverlayTap) {
+  if (!result && _shouldDismissOnOverlayTap) {
     [self dismissWithAction:nil userInitiated:YES];
   }
   return result;

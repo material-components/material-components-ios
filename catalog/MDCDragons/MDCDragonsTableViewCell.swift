@@ -19,14 +19,14 @@ import MaterialComponents.MaterialIcons_ic_arrow_back
 class MDCDragonsTableViewCell: UITableViewCell {
 
   lazy var collapsedAccessoryView: UIView = {
-    let image = MDCIcons.imageFor_ic_chevron_right()
+    let image = MDCIcons.imageFor_ic_chevron_right()?.withRenderingMode(.alwaysTemplate)
     let view = UIImageView(image: image)
     view.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
     return view
   }()
 
   lazy var expandedAccessoryView: UIView = {
-    let image = MDCIcons.imageFor_ic_chevron_right()
+    let image = MDCIcons.imageFor_ic_chevron_right()?.withRenderingMode(.alwaysTemplate)
     let view = UIImageView(image: image)
     view.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
     view.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)

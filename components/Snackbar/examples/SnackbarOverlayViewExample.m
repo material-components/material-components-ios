@@ -22,7 +22,15 @@ static const CGFloat kFABBottomOffset = 24;
 static const CGFloat kFABSideOffset = 24;
 static const CGFloat kBottomBarHeight = 44;
 
-@interface SnackbarOverlayViewExample ()
+@interface SnackbarOverlayViewExample : SnackbarExample
+
+/** The floating action button shown in the bottom right corner. */
+@property(nonatomic) MDCFloatingButton *floatingButton;
+
+@property(nonatomic) UIView *bottomBar;
+
+@property(nonatomic) BOOL isShowingBottomBar;
+
 @property(nonatomic, assign) CGFloat floatingButtonOffset;
 @end
 
@@ -174,6 +182,18 @@ static const CGFloat kBottomBarHeight = 44;
     self.floatingButton.center =
         CGPointMake(self.floatingButton.center.x, self.floatingButton.center.y + fabVerticalShift);
   }];
+}
+
+@end
+
+@implementation SnackbarOverlayViewExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Overlay View" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
 }
 
 @end
