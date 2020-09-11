@@ -121,7 +121,10 @@
 
  Defaults to: Yes.
  */
-@property(nonatomic) BOOL rippleAllowsSelection;
+@property(nonatomic) BOOL rippleAllowsSelection __deprecated_msg(
+    "Use native UIKit APIs to control whether the chip is selected or not, using either the "
+    ".selected API, or, with MDCChipCollectionViewCell, by calling the `deselectItemAtIndexPath` "
+    "API to remove selection.");
 
 /*
  The shape generator used to define the chip's shape.
