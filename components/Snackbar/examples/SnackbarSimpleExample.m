@@ -18,6 +18,9 @@
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
+@interface SnackbarSimpleExample : SnackbarExample <MDCSnackbarManagerDelegate>
+@end
+
 @implementation SnackbarSimpleExample {
   BOOL _legacyMode;
   BOOL _dynamicType;
@@ -257,6 +260,20 @@
 
 - (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
   NSLog(@"A snackbar will be presented");
+}
+
+@end
+
+@implementation SnackbarSimpleExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar" ],
+    @"description" : @"Snackbars provide brief messages about app processes at the bottom of "
+                     @"the screen.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
 }
 
 @end

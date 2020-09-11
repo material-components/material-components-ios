@@ -20,7 +20,9 @@
 static NSString *const kCategoryA = @"CategoryA";
 static NSString *const kCategoryB = @"CategoryB";
 
-@interface SnackbarSuspensionExample ()
+@interface SnackbarSuspensionExample : SnackbarExample
+
+- (void)handleSuspendStateChanged:(UISwitch *)sender;
 
 /** The current suspension token. */
 @property(nonatomic) id<MDCSnackbarSuspensionToken> allMessagesToken;
@@ -175,6 +177,48 @@ static NSString *const kCategoryB = @"CategoryB";
   } else if (sender.tag == 5) {
     [self setSuspendedAllMessages:suspended];
   }
+}
+
+@end
+
+@implementation SnackbarSuspensionExample (CollectionView)
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSnackbarExamplesCellIdentifier
+                                                forIndexPath:indexPath];
+
+  cell.textLabel.text = self.choices[indexPath.row];
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
+  cell.accessibilityLabel = cell.textLabel.text;
+  if (indexPath.row > 2) {
+    UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    [editingSwitch setTag:indexPath.row];
+    [editingSwitch addTarget:self
+                      action:@selector(handleSuspendStateChanged:)
+            forControlEvents:UIControlEventValueChanged];
+    cell.accessoryView = editingSwitch;
+    cell.accessibilityValue = editingSwitch.isOn ? @"on" : @"off";
+  } else {
+    cell.accessoryView = nil;
+    cell.accessibilityValue = nil;
+  }
+
+  return cell;
+}
+
+@end
+
+@implementation SnackbarSuspensionExample (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Suspension" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
 }
 
 @end
