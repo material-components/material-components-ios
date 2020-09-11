@@ -1,3 +1,59 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Banner
+
+* [Change the trailing padding constraint for textView on MDCBannerView to match the Material Banner specs (https://material.io/components/banners#specs).](https://github.com/material-components/material-components-ios/commit/56226bbef5e50d2604b43699fad75c9d2d0b0873) (Nobody)
+
+### BottomNavigation
+
+* [Add navigationBarHidden property to MDCBottomNavigationBarController.](https://github.com/material-components/material-components-ios/commit/bb71d6bcbbf9205661e8a324db0d9ae260874689) (Bryan Oltman)
+* [Provide an API to set the bar's height.](https://github.com/material-components/material-components-ios/commit/5d3662f0a203cf38e3e379b094b0ffb5f6563b59) (Yarden Eitan)
+* [Remove all checks for iOS 10 availability now that components support iOS 10+](https://github.com/material-components/material-components-ios/commit/ef9fd055935cb3f29644ec1eeec10433355a3b31) (Alyssa Weiss)
+* [Remove no longer used string bundle references](https://github.com/material-components/material-components-ios/commit/6878fc63446902f4d78c73f4a486ad28ef6caf72) (Alyssa Weiss)
+* [Remove supplemental directory from examples.](https://github.com/material-components/material-components-ios/commit/d79d9a86c59ea80f5bbab56d3eaa9badc308d432) (Bryan Oltman)
+* [Update Bottom Navigation Item View accessibility traits so that VoiceOver works correctly on iOS 14.](https://github.com/material-components/material-components-ios/commit/898e373ea257b1122a758cd3855420204c5c018e) (Alyssa Weiss)
+
+### Chips
+
+* [Deprecate rippleAllowsSelection as we move away from MDCStatefulRippleView and to a simpler MDCRippleView when enableRippleBehavior is set to YES.](https://github.com/material-components/material-components-ios/commit/4bcf88708b46a38db2f9d695a8e44e0b744ba7ba) (Yarden Eitan)
+
+### Snackbar
+
+* [Enable shouldDismissOnOverlayTap for VO enabled scenario](https://github.com/material-components/material-components-ios/commit/dcda0408f462d9e15e31ed6d95d9654145dab3f4) (Yun Zhang)
+* [Example: Dismiss snackbars when push or popping the example VC.](https://github.com/material-components/material-components-ios/commit/4c6b2357e9cd89228049ae9cb4ea5b504fddafac) (Randall Li)
+* [Remove non-shared classes from Snackbar supplemental directory.](https://github.com/material-components/material-components-ios/commit/63670a7b2c49c376b13be1dc5bb29356469bc516) (Bryan Oltman)
+* [Remove references to deprecated static MDCSnackbarManager methods.](https://github.com/material-components/material-components-ios/commit/78868b55e6a01ed868f7a0918282d678605ce392) (Bryan Oltman)
+
+### Tabs
+
+* [Remove pre-iOS 10 handling for voiceover now that components support iOS 10+](https://github.com/material-components/material-components-ios/commit/6e127557ebe8d85faab9c4e1420343fad983fca6) (Alyssa Weiss)
+* [Remove unused StringsConstant file from Tabs](https://github.com/material-components/material-components-ios/commit/ef4dc34cad6855f43dc39b8e432761d9259516c7) (Alyssa Weiss)
+
+### TextControls
+
+* [Refactor sizing behavior + expose sizing delegate method](https://github.com/material-components/material-components-ios/commit/58ae5f81390b44bd675a0694caaf4e385a6e39a1) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add `containerRadius` to MDCBaseTextField](https://github.com/material-components/material-components-ios/commit/d303da4db4c820f39ea5c69a29785aa43bb084a8) (Andrew Overton)
+* [Add containerRadius to filled style object and base text area](https://github.com/material-components/material-components-ios/commit/3aace45a832e030d2e7812e310ffb4488e0bf77b) (Andrew Overton)
+
+---
+
 # 115.0.0
 
 In this major release, we deprecated the Ink component in favor of Ripple and deleted the
