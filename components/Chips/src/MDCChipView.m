@@ -63,7 +63,6 @@ static const CGFloat MDCChipSelectedDarkenPercent = (CGFloat)0.16;
 static const CGFloat MDCChipDisabledLightenPercent = (CGFloat)0.38;
 static const CGFloat MDCChipTitleColorWhite = (CGFloat)0.13;
 static const CGFloat MDCChipTitleColorDisabledLightenPercent = (CGFloat)0.38;
-static const CGFloat MDCChipViewRippleDefaultOpacity = (CGFloat)0.12;
 
 static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
@@ -116,7 +115,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong) MDCInkView *inkView;
 #pragma clang diagnostic pop
-@property(nonatomic, strong) MDCStatefulRippleView *rippleView;
+@property(nonatomic, strong) MDCRippleView *rippleView;
 @property(nonatomic, strong, nonnull) NSMutableDictionary<NSNumber *, UIColor *> *rippleColors;
 @property(nonatomic, readonly) CGFloat pixelScale;
 @property(nonatomic, assign) BOOL enableRippleBehavior;
@@ -154,7 +153,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
-  self.rippleAllowsSelection = YES;
   self.isAccessibilityElement = YES;
   self.accessibilityTraits = UIAccessibilityTraitButton;
   _mdc_overrideBaseElevation = -1;
@@ -203,7 +201,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _inkView.inkColor = [self inkColorForState:UIControlStateNormal];
     [self addSubview:_inkView];
 
-    _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+    _rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
+    _rippleView.rippleColor = [self rippleColorForState:UIControlStateNormal];
     _rippleColors = [NSMutableDictionary dictionary];
 
     _imageView = [[UIImageView alloc] init];
@@ -231,16 +230,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _currentVisibleAreaInsets = UIEdgeInsetsZero;
     _currentCornerRadius = 0.0f;
     _centerVisibleArea = NO;
-
-    // UIControl has a drag enter/exit boundary that is outside of the frame of the button itself.
-    // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
-    // change ink state. So instead we fall back on adding target/actions for these specific events.
-    [self addTarget:self
-                  action:@selector(touchDragEnter:forEvent:)
-        forControlEvents:UIControlEventTouchDragEnter];
-    [self addTarget:self
-                  action:@selector(touchDragExit:forEvent:)
-        forControlEvents:UIControlEventTouchDragExit];
 
     self.layer.elevation = [self elevationForState:UIControlStateNormal];
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
@@ -365,14 +354,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self.rippleView removeFromSuperview];
     [self insertSubview:self.inkView belowSubview:self.imageView];
   }
-}
-
-- (BOOL)rippleAllowsSelection {
-  return self.rippleView.allowsSelection;
-}
-
-- (void)setRippleAllowsSelection:(BOOL)allowsSelection {
-  self.rippleView.allowsSelection = allowsSelection;
 }
 
 #pragma mark - Dynamic Type Support
@@ -517,13 +498,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)setInkColor:(UIColor *)inkColor forState:(UIControlState)state {
   _inkColors[@(state)] = inkColor;
 
-  NSNumber *rippleState = [self rippleStateForControlState:state];
-  if (rippleState) {
-    [self.rippleView setRippleColor:inkColor forState:rippleState.integerValue];
-  }
-
   [self updateInkColor];
-  [self updateRippleColor];
+
+  // Set Ripple color as well when using the Ink API.
+  [self setRippleColor:inkColor forState:state];
 }
 
 - (void)updateInkColor {
@@ -540,40 +518,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor forState:(UIControlState)state {
-  self.rippleColors[@(state)] = rippleColor;
-  NSNumber *rippleState = [self rippleStateForControlState:state];
-  if (rippleState) {
-    [self.rippleView setRippleColor:rippleColor forState:rippleState.integerValue];
-  }
+  _rippleColors[@(state)] = rippleColor;
+
   [self updateRippleColor];
 }
 
 - (void)updateRippleColor {
-  UIColor *rippleColor = [self inkColorForState:self.state];
-  // MDCStatefulRippleView sets the ripple color internally when its state changes.
-  // If that specific state isn't supported by the stateful ripple, then we directly set the
-  // ripple view's color to the requested color.
-  if (![self rippleStateForControlState:self.state]) {
-    self.rippleView.rippleColor =
-        rippleColor ?: [UIColor colorWithWhite:1 alpha:MDCChipViewRippleDefaultOpacity];
-  }
-}
-
-- (NSNumber *)rippleStateForControlState:(UIControlState)state {
-  // We check to see if MDCRippleState conforms to a UIControlState and return it, otherwise
-  // we return nil for non-supported ripple states.
-  switch (state) {
-    case UIControlStateNormal:
-      return [NSNumber numberWithInteger:MDCRippleStateNormal];
-    case UIControlStateHighlighted:
-      return [NSNumber numberWithInteger:MDCRippleStateHighlighted];
-    case UIControlStateSelected:
-      return [NSNumber numberWithInteger:MDCRippleStateSelected];
-    case (UIControlStateHighlighted | UIControlStateSelected):
-      return [NSNumber numberWithInteger:(MDCRippleStateHighlighted | MDCRippleStateSelected)];
-    default:
-      return nil;
-  }
+  UIColor *rippleColor = [self rippleColorForState:self.state];
+  self.rippleView.rippleColor = rippleColor ?: self.inkView.defaultInkColor;
 }
 
 - (nullable UIColor *)shadowColorForState:(UIControlState)state {
@@ -818,24 +770,18 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
 
-  if (self.enableRippleBehavior && !enabled) {
-    [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
-  }
-
   [self updateState];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
 
-  self.rippleView.rippleHighlighted = highlighted;
   [self updateState];
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
-  self.rippleView.selected = selected;
   [self updateState];
   [self setNeedsLayout];
 }
@@ -1070,63 +1016,21 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 #pragma mark - Ink Touches
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (self.enableRippleBehavior) {
-    // This method needs to be invoked before the super.
-    // Please see the `MDCStatefulRippleView` class header for more details.
-    [self rippleViewTouchesBegan:touches withEvent:event];
-  }
   [super touchesBegan:touches withEvent:event];
 
-  if (!self.enableRippleBehavior) {
-    [self startTouchBeganAnimationAtPoint:[self locationFromTouches:touches]];
-  }
+  [self startTouchBeganAnimationAtPoint:[self locationFromTouches:touches]];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (self.enableRippleBehavior) {
-    // This method needs to be invoked before the super.
-    // Please see the `MDCStatefulRippleView` class header for more details.
-    [self rippleViewTouchesEnded:touches withEvent:event];
-  }
   [super touchesEnded:touches withEvent:event];
 
-  if (!self.enableRippleBehavior) {
-    [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
-  }
+  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (self.enableRippleBehavior) {
-    // This method needs to be invoked before the super.
-    // Please see the `MDCStatefulRippleView` class header for more details.
-    [self rippleViewTouchesCancelled:touches withEvent:event];
-  }
   [super touchesCancelled:touches withEvent:event];
 
-  if (!self.enableRippleBehavior) {
-    [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
-  }
-}
-
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  if (self.enableRippleBehavior) {
-    // This method needs to be invoked before the super.
-    // Please see the `MDCStatefulRippleView` class header for more details.
-    [self rippleViewTouchesMoved:touches withEvent:event];
-  }
-  [super touchesMoved:touches withEvent:event];
-}
-
-- (void)touchDragEnter:(__unused MDCChipView *)button forEvent:(UIEvent *)event {
-  if (!self.enableRippleBehavior) {
-    [self startTouchBeganAnimationAtPoint:[self locationFromTouches:event.allTouches]];
-  }
-}
-
-- (void)touchDragExit:(__unused MDCChipView *)button forEvent:(UIEvent *)event {
-  if (!self.enableRippleBehavior) {
-    [self startTouchEndedAnimationAtPoint:[self locationFromTouches:event.allTouches]];
-  }
+  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
 }
 
 - (CGPoint)locationFromTouches:(NSSet *)touches {
@@ -1144,14 +1048,23 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
   CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat widthDiff = 24;  // Difference between unselected and selected frame widths.
-  _inkView.maxRippleRadius =
+  CGFloat maxRadius =
       (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10 + widthDiff / 2);
-
-  [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
+  if (self.enableRippleBehavior) {
+    _rippleView.maximumRadius = maxRadius;
+    [_rippleView beginRippleTouchDownAtPoint:point animated:YES completion:nil];
+  } else {
+    _inkView.maxRippleRadius = maxRadius;
+    [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
+  }
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point {
-  [_inkView startTouchEndedAnimationAtPoint:point completion:nil];
+  if (self.enableRippleBehavior) {
+    [_rippleView beginRippleTouchUpAnimated:YES completion:nil];
+  } else {
+    [_inkView startTouchEndedAnimationAtPoint:point completion:nil];
+  }
 }
 
 - (BOOL)willChangeSizeWithSelectedValue:(BOOL)selected {
@@ -1162,22 +1075,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   BOOL hasSelectedImage = self.selectedImageView.image != nil;
 
   return !hasImage && hasSelectedImage;
-}
-
-- (void)rippleViewTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleView touchesBegan:touches withEvent:event];
-}
-
-- (void)rippleViewTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleView touchesEnded:touches withEvent:event];
-}
-
-- (void)rippleViewTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleView touchesMoved:touches withEvent:event];
-}
-
-- (void)rippleViewTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleView touchesCancelled:touches withEvent:event];
 }
 
 @end

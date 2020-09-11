@@ -111,21 +111,6 @@
  */
 @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 
-/**
- Enabling the selection of the Chip on tap (when RippleBehavior is enabled).
- When rippleAllowsSelection is enabled, tapping a chip automatically toggles the chip's selected
- state (after a short ripple animation). When disabled, tapping a chip creates a momentary ripple
- animation while the chip remains unselected.
-
- @note: This property is ignored when RippleBehavior is disabled.
-
- Defaults to: Yes.
- */
-@property(nonatomic) BOOL rippleAllowsSelection __deprecated_msg(
-    "Use native UIKit APIs to control whether the chip is selected or not, using either the "
-    ".selected API, or, with MDCChipCollectionViewCell, by calling the `deselectItemAtIndexPath` "
-    "API to remove selection.");
-
 /*
  The shape generator used to define the chip's shape.
  */
