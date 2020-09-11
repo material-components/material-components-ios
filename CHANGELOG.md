@@ -34,8 +34,8 @@ bottomNavBarController.setNavigationBarHidden(true, animated: true)
 
 ### TextControls
 
-Both `MDCBaseTextArea` and `MDCBaseTextField` now have a `containerRadius` API, which determines the corner radius of the container, when applicable. 
-Setting this property is a no-op for MDCBaseTextField and any subclasses with invisible containers. 
+Both `MDCBaseTextArea` and `MDCBaseTextField` now have a `containerRadius` API, which determines the corner radius of the container, when applicable.
+Setting this property is a no-op for MDCBaseTextField and any subclasses with invisible containers.
 
 ```swift
 let filledTextField = MDCFilledTextField()
