@@ -592,17 +592,9 @@ static NSString *const kOfAnnouncement = @"of";
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
     }
-#if MDC_AVAILABLE_SDK_IOS(10_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-    NSOperatingSystemVersion iOS10Version = {10, 0, 0};
-    if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-      if (item.badgeColor) {
-        itemView.badgeColor = item.badgeColor;
-      }
+    if (item.badgeColor) {
+      itemView.badgeColor = item.badgeColor;
     }
-#pragma clang diagnostic pop
-#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
     itemView.selected = NO;
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
@@ -771,11 +763,8 @@ static NSString *const kOfAnnouncement = @"of";
   _itemBadgeBackgroundColor = itemBadgeBackgroundColor;
   for (NSUInteger i = 0; i < self.items.count; ++i) {
     UITabBarItem *item = self.items[i];
-    if (@available(iOS 10.0, *)) {
-      // Skip items with a custom color
-      if (item.badgeColor) {
-        continue;
-      }
+    if (item.badgeColor) {
+      continue;
     }
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.badgeColor = itemBadgeBackgroundColor;

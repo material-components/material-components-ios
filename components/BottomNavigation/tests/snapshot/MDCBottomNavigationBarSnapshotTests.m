@@ -455,9 +455,7 @@ static const CGFloat kHeightShort = 48;
                                         MDCBottomNavigationBarTestHeightTypical);
 
   // When
-  if (@available(iOS 10.0, *)) {
-    self.tabItem3.badgeColor = UIColor.greenColor;
-  }
+  self.tabItem3.badgeColor = UIColor.greenColor;
   self.navigationBar.itemBadgeBackgroundColor = UIColor.yellowColor;
   self.navigationBar.itemBadgeTextColor = UIColor.darkGrayColor;
 
@@ -474,9 +472,7 @@ static const CGFloat kHeightShort = 48;
                                         MDCBottomNavigationBarTestHeightTypical);
 
   // When
-  if (@available(iOS 10.0, *)) {
-    self.tabItem3.badgeColor = UIColor.greenColor;
-  }
+  self.tabItem3.badgeColor = UIColor.greenColor;
   self.navigationBar.itemBadgeBackgroundColor = UIColor.yellowColor;
   self.navigationBar.itemBadgeTextColor = UIColor.darkGrayColor;
   self.navigationBar.items =
@@ -495,9 +491,7 @@ static const CGFloat kHeightShort = 48;
                                         MDCBottomNavigationBarTestHeightTypical);
 
   // When
-  if (@available(iOS 10.0, *)) {
-    self.tabItem3.badgeColor = UIColor.greenColor;
-  }
+  self.tabItem3.badgeColor = UIColor.greenColor;
   self.navigationBar.itemBadgeBackgroundColor = nil;
   self.navigationBar.itemBadgeTextColor = nil;
 

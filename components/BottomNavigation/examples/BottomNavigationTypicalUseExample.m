@@ -71,14 +71,10 @@
                                                             image:[UIImage imageNamed:@"ic_cake"]
                                                               tag:0];
   tabBarItem5.badgeValue = @"888+";
-#if MDC_AVAILABLE_SDK_IOS(10_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
+
   if ([tabBarItem5 respondsToSelector:@selector(badgeColor)]) {
     tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
   }
-#pragma clang diagnostic pop
-#endif  // MDC_AVAILABLE_SDK_IOS(10_0)
   self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   self.bottomNavBar.selectedItem = tabBarItem2;
   if (@available(iOS 11.0, *)) {

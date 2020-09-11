@@ -55,9 +55,7 @@ static UIImage *fakeImage() {
   self.barItem.accessibilityTraits = UIAccessibilityTraitLink;
   self.barItem.accessibilityIdentifier = @"identifier";
   self.barItem.isAccessibilityElement = YES;
-  if (@available(iOS 10.0, *)) {
-    self.barItem.badgeColor = UIColor.darkGrayColor;
-  }
+  self.barItem.badgeColor = UIColor.darkGrayColor;
   self.bottomNavigationBar.items = @[ self.barItem ];
 }
 
@@ -150,24 +148,20 @@ static UIImage *fakeImage() {
 
 - (void)testChangeBadgeColorToNewColor {
   // When
-  if (@available(iOS 10.0, *)) {
-    self.barItem.badgeColor = [UIColor.purpleColor colorWithAlphaComponent:(CGFloat)0.712];
+  self.barItem.badgeColor = [UIColor.purpleColor colorWithAlphaComponent:(CGFloat)0.712];
 
-    // Then
-    MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-    XCTAssertEqualObjects(itemView.badgeColor, self.barItem.badgeColor);
-  }
+  // Then
+  MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
+  XCTAssertEqualObjects(itemView.badgeColor, self.barItem.badgeColor);
 }
 
 - (void)testChangeBadgeColorToNil {
   // When
-  if (@available(iOS 10.0, *)) {
-    self.barItem.badgeColor = nil;
+  self.barItem.badgeColor = nil;
 
-    // Then
-    MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-    XCTAssertNil(itemView.badgeColor);
-  }
+  // Then
+  MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
+  XCTAssertNil(itemView.badgeColor);
 }
 
 - (void)testChangeTitlePositionAdjustmentToNonZeroOffsetDoesNotRaiseException {

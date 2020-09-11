@@ -613,11 +613,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 /** Returns if the receiver's size category is an accessibility category. */
 - (BOOL)isContentSizeCategoryAccessibilityCategory {
   UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if (@available(iOS 10.0, *)) {
-    sizeCategory = self.traitCollection.preferredContentSizeCategory;
-  } else {
-    sizeCategory = UIApplication.mdc_safeSharedApplication.preferredContentSizeCategory;
-  }
+  sizeCategory = self.traitCollection.preferredContentSizeCategory;
 
   if (@available(iOS 11.0, *)) {
     return UIContentSizeCategoryIsAccessibilityCategory(sizeCategory);
