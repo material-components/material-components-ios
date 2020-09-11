@@ -1,16 +1,47 @@
-# #develop#
+# 115.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we add 2 APIs to customize BottomNavigation's appearance and behavior, we deprecate the property `rippleAllowsSelection` from `MDCChipView`, we provide a `containerRadius` API to `MDCBaseTextField` and `MDCBaseTextArea`, along with other code cleanups.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+`MDCChipView`'s `rippleAllowSelection` property is now deprecated. Please instead use native UIKit APIs to control whether the chip is selected or not, using either the .selected API, or, with MDCChipCollectionViewCell, by calling the `deselectItemAtIndexPath` API to remove selection. Note, this only applies if you have the `enableRippleBehavior` property set to `YES` on `MDCChipView`.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### BottomNavigation
+
+You can now customize MDCBottomNavigationBar's height using the `barHeight` property.
+
+```objc
+MDCBottomNavigationBar *bottomNavBar;
+bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
+bottomNavBar.barHeight = 44;
+[self.view addSubview:bottomNavBar];
+```
+
+You can now also decide when to hide or show your navigation bar using the new `navigationBarHidden` APIs on MDCBottomNavigationBarController.
+
+```swift
+let bottomNavBarController = MDCBottomNavigationBarController()
+bottomNavBarController.willMove(toParent: self)
+view.addSubview(bottomNavBarController.view)
+addChild(bottomNavBarController)
+bottomNavBarController.didMove(toParent: self)
+let viewController = UIViewController()
+bottomNavBarController.viewControllers = [viewController]
+bottomNavBarController.setNavigationBarHidden(true, animated: true)
+```
+
+### TextControls
+
+Both `MDCBaseTextArea` and `MDCBaseTextField` now have a `containerRadius` API, which determines the corner radius of the container, when applicable. 
+Setting this property is a no-op for MDCBaseTextField and any subclasses with invisible containers. 
+
+```swift
+let filledTextField = MDCFilledTextField()
+filledTextField.label.text = "label text"
+filledTextField.containerRadius = 8
+```
 
 ## Component changes
 
@@ -46,9 +77,6 @@ Replace this text with example code for each new feature.
 ### TextControls
 
 * [Refactor sizing behavior + expose sizing delegate method](https://github.com/material-components/material-components-ios/commit/58ae5f81390b44bd675a0694caaf4e385a6e39a1) (Andrew Overton)
-
-## Multi-component changes
-
 * [Add `containerRadius` to MDCBaseTextField](https://github.com/material-components/material-components-ios/commit/d303da4db4c820f39ea5c69a29785aa43bb084a8) (Andrew Overton)
 * [Add containerRadius to filled style object and base text area](https://github.com/material-components/material-components-ios/commit/3aace45a832e030d2e7812e310ffb4488e0bf77b) (Andrew Overton)
 
