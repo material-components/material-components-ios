@@ -1,3 +1,30 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Chips
+
+* [Have Ripple imitate Ink's behavior in MDCChipView.](https://github.com/material-components/material-components-ios/commit/6543af21be74965abb609e792d744f8f76fe4c63) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Add containerRadius support to filled text field](https://github.com/material-components/material-components-ios/commit/0907c196231629d9af7e86feeed86748ec96a20f) (Andrew Overton)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/9f62e64603adc68475ee3d21981dd79cdaff1129) (Yarden Eitan)
+
+---
+
 # 115.1.0
 
 In this minor release we add 2 APIs to customize BottomNavigation's appearance and behavior, we deprecate the property `rippleAllowsSelection` from `MDCChipView`, we provide a `containerRadius` API to `MDCBaseTextField` and `MDCBaseTextArea`, along with other code cleanups.
