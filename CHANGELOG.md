@@ -1,16 +1,10 @@
-# #develop#
+# 116.0.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this major release, we deleted the `rippleAllowsSelection` property from MDCChipView and added containerRadius support to filled text fields.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
+
+`rippleAllowsSelection` has been deleted from MDCChipView.
 
 ## Component changes
 
