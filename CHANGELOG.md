@@ -1,3 +1,25 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Multi-component changes
+
+* [Optional dismiss on accessibilityPerformEscape.](https://github.com/material-components/material-components-ios/commit/e79fd9b19188be0a23263e3f0c5dc11105534412) (Nobody)
+
+---
+
 # 115.1.0
 
 In this minor release we add 2 APIs to customize BottomNavigation's appearance and behavior, we deprecate the property `rippleAllowsSelection` from `MDCChipView`, we provide a `containerRadius` API to `MDCBaseTextField` and `MDCBaseTextArea`, along with other code cleanups.
