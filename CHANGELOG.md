@@ -4,7 +4,8 @@ In this major release, we deleted the `rippleAllowsSelection` property from MDCC
 
 ## API changes
 
-`rippleAllowsSelection` has been deleted from MDCChipView.
+* Chips: `rippleAllowsSelection` has been deleted from MDCChipView.
+* NavigationDrawer: `shouldDismissOnAccessibilityPerformEscape` property added to allow VoiceOver users to dismiss the Navigation Drawer using the VoiceOver dismiss gesture.
 
 ## Component changes
 
@@ -14,6 +15,7 @@ In this major release, we deleted the `rippleAllowsSelection` property from MDCC
 
 ## Multi-component changes
 
+* [Optional dismiss on accessibilityPerformEscape.](https://github.com/material-components/material-components-ios/commit/e79fd9b19188be0a23263e3f0c5dc11105534412) (Nobody)
 * [Add containerRadius support to filled text field](https://github.com/material-components/material-components-ios/commit/0907c196231629d9af7e86feeed86748ec96a20f) (Andrew Overton)
 * [Internal change](https://github.com/material-components/material-components-ios/commit/9f62e64603adc68475ee3d21981dd79cdaff1129) (Yarden Eitan)
 
