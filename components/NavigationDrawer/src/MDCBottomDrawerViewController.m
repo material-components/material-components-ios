@@ -71,6 +71,7 @@
   _mdc_overrideBaseElevation = -1;
 
   _dismissOnBackgroundTap = YES;
+  _shouldDismissOnAccessibilityPerformEscape = YES;
   _shouldForwardBackgroundTouchEvents = NO;
   _shouldDisplayMobileLandscapeFullscreen = YES;
   _isDrawerClosed = YES;
@@ -334,6 +335,10 @@
 
 // Adds the Z gesture for dismissal.
 - (BOOL)accessibilityPerformEscape {
+  if (!self.shouldDismissOnAccessibilityPerformEscape) {
+    return NO;
+  }
+
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
   return YES;
 }

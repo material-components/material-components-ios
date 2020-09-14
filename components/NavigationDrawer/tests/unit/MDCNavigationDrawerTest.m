@@ -277,4 +277,17 @@
   }
 }
 
+- (void)testDefaultShouldDismissOnAccessibilityPerformEscape {
+  // Default
+  XCTAssertTrue([self.navigationDrawer accessibilityPerformEscape]);
+}
+
+- (void)testSettingShouldDismissOnAccessibilityPerformEscape {
+  // When
+  self.navigationDrawer.shouldDismissOnAccessibilityPerformEscape = NO;
+
+  // Then
+  XCTAssertFalse([self.navigationDrawer accessibilityPerformEscape]);
+}
+
 @end
