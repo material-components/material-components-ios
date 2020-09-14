@@ -42,7 +42,7 @@ static UIColor *RandomColor() {
 }
 
 @interface MDCChipView (Testing)
-@property(nonatomic, strong) MDCStatefulRippleView *rippleView;
+@property(nonatomic, strong) MDCRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
 @end
 
@@ -75,15 +75,10 @@ static UIColor *RandomColor() {
 - (void)testDefaultChipViewBehaviorWithRipple {
   // Then
   XCTAssertNotNil(self.chipView.rippleView);
-  XCTAssertEqualObjects([self.chipView.rippleView rippleColorForState:MDCRippleStateNormal],
-                        [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
-  XCTAssertEqualObjects([self.chipView.rippleView rippleColorForState:MDCRippleStateHighlighted],
-                        [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
+  XCTAssertEqualObjects([self.chipView rippleColorForState:UIControlStateNormal], nil);
   XCTAssertEqual(self.chipView.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.chipView.enableRippleBehavior);
   XCTAssertNil(self.chipView.rippleView.superview);
-  XCTAssertTrue(self.chipView.rippleAllowsSelection);
-  XCTAssertTrue(self.chipView.rippleView.allowsSelection);
   CGRect chipViewBounds = CGRectStandardize(self.chipView.bounds);
   CGRect rippleBounds = CGRectStandardize(self.chipView.rippleView.bounds);
   XCTAssertTrue(CGRectEqualToRect(chipViewBounds, rippleBounds), @"%@ is not equal to %@",
@@ -117,7 +112,6 @@ static UIColor *RandomColor() {
 
 - (void)testAllowsSelectionDefaultState {
   // Then
-  XCTAssertTrue(self.chipView.rippleAllowsSelection);
   XCTAssertFalse(self.chipView.selected);
   XCTAssertFalse(self.chipView.highlighted);
 }
@@ -127,19 +121,15 @@ static UIColor *RandomColor() {
   self.chipView.selected = YES;
 
   // Then
-  XCTAssertTrue(self.chipView.rippleAllowsSelection);
   XCTAssertTrue(self.chipView.selected);
   XCTAssertFalse(self.chipView.highlighted);
 }
 
 - (void)testNotAllowingSelection {
   // When
-  self.chipView.rippleAllowsSelection = NO;
   self.chipView.selected = YES;
 
   // Then
-  XCTAssertFalse(self.chipView.rippleAllowsSelection);
-  XCTAssertFalse(self.chipView.rippleView.allowsSelection);
   XCTAssertTrue(self.chipView.selected);
   XCTAssertFalse(self.chipView.highlighted);
 }
@@ -153,10 +143,10 @@ static UIColor *RandomColor() {
 
   // When
   [self.chipView setInkColor:color forState:UIControlStateHighlighted];
+  self.chipView.highlighted = YES;
 
   // Then
-  XCTAssertEqualObjects([self.chipView.rippleView rippleColorForState:MDCRippleStateHighlighted],
-                        color);
+  XCTAssertEqualObjects(self.chipView.rippleView.rippleColor, color);
 }
 
 /**
@@ -173,29 +163,6 @@ static UIColor *RandomColor() {
 
   // Then
   XCTAssertEqualObjects(self.chipView.rippleView.rippleColor, color);
-}
-
-- (void)testChipViewHighlightedSetsRippleHighlightedToYES {
-  // Given
-  self.chipView.enableRippleBehavior = YES;
-
-  // When
-  self.chipView.highlighted = YES;
-
-  // Then
-  XCTAssertTrue(self.chipView.rippleView.isRippleHighlighted);
-}
-
-- (void)testChipViewNotHighlightedSetsRippleHighlightedToNO {
-  // Given
-  self.chipView.enableRippleBehavior = YES;
-  self.chipView.rippleView.rippleHighlighted = YES;
-
-  // When
-  self.chipView.highlighted = NO;
-
-  // Then
-  XCTAssertFalse(self.chipView.rippleView.isRippleHighlighted);
 }
 
 - (void)testSetRippleColorForStateReturnsTheCorrectValue {

@@ -16,6 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MaterialTextControls+BaseTextFields.h"
 #import "MaterialTextControlsPrivate+FilledStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
 
@@ -48,6 +49,14 @@
 
 - (void)commonMDCFilledTextFieldInit {
   self.containerStyle = [[MDCTextControlStyleFilled alloc] init];
+}
+
+- (void)setContainerRadius:(CGFloat)containerRadius {
+  self.filledStyle.topCornerRadius = containerRadius;
+}
+
+- (CGFloat)containerRadius {
+  return self.filledStyle.topCornerRadius;
 }
 
 #pragma mark Stateful Color APIs
