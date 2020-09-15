@@ -15,7 +15,6 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCChipView.h"
-#import "MaterialMath.h"
 
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;
@@ -273,9 +272,9 @@ static inline UIImage *TestImage(CGSize size) {
   CGSize visibleAreaSize = [chip sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat verticalInsets = 50 - visibleAreaSize.height;
   CGFloat horizontalInsets = 300 - visibleAreaSize.width;
-  CGFloat topInsets = MDCCeil(verticalInsets * 0.5f);
+  CGFloat topInsets = ceil(verticalInsets * 0.5f);
   CGFloat bottomInsets = verticalInsets - topInsets;
-  CGFloat leftInsets = MDCCeil(horizontalInsets * 0.5f);
+  CGFloat leftInsets = ceil(horizontalInsets * 0.5f);
   CGFloat rightInsets = horizontalInsets - leftInsets;
   UIEdgeInsets expectedVisibleAreaInsets =
       UIEdgeInsetsMake(topInsets, leftInsets, bottomInsets, rightInsets);

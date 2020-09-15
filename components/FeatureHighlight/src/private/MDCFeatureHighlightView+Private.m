@@ -23,7 +23,7 @@
 #import "MaterialTypography.h"
 
 static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
-  return MDCHypot(a.x - b.x, a.y - b.y);
+  return hypot(a.x - b.x, a.y - b.y);
 }
 
 const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44;

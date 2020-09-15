@@ -75,7 +75,7 @@ static CGRect CGRectVerticallyCentered(CGRect rect,
                                        CGFloat pixelScale) {
   CGFloat viewHeight = CGRectGetHeight(rect) + padding.top + padding.bottom;
   CGFloat yValue = (height - viewHeight) / 2;
-  yValue = MDCRound(yValue * pixelScale) / pixelScale;
+  yValue = round(yValue * pixelScale) / pixelScale;
   return CGRectOffset(rect, 0, yValue);
 }
 
@@ -756,9 +756,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     CGFloat additionalRequiredHeight =
         MAX(0, CGRectGetHeight(self.bounds) - visibleAreaSize.height);
     CGFloat additionalRequiredWidth = MAX(0, CGRectGetWidth(self.bounds) - visibleAreaSize.width);
-    visibleAreaInsets.top = MDCCeil(additionalRequiredHeight * 0.5f);
+    visibleAreaInsets.top = ceil(additionalRequiredHeight * 0.5f);
     visibleAreaInsets.bottom = additionalRequiredHeight - visibleAreaInsets.top;
-    visibleAreaInsets.left = MDCCeil(additionalRequiredWidth * 0.5f);
+    visibleAreaInsets.left = ceil(additionalRequiredWidth * 0.5f);
     visibleAreaInsets.right = additionalRequiredWidth - visibleAreaInsets.left;
   }
 
@@ -1049,7 +1049,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat widthDiff = 24;  // Difference between unselected and selected frame widths.
   CGFloat maxRadius =
-      (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10 + widthDiff / 2);
+      (CGFloat)(hypot(size.height, size.width + widthDiff) / 2 + 10 + widthDiff / 2);
   if (self.enableRippleBehavior) {
     _rippleView.maximumRadius = maxRadius;
     [_rippleView beginRippleTouchDownAtPoint:point animated:YES completion:nil];
