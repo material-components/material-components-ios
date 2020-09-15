@@ -156,10 +156,9 @@
   self.bottomSheet.elevation = 5;
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
-  self.bottomSheet.mdc_elevationDidChangeBlock =
-      ^(MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation) {
-        [expectation fulfill];
-      };
+  self.bottomSheet.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat absoluteElevation) {
+    [expectation fulfill];
+  };
 
   // When
   self.bottomSheet.elevation = self.bottomSheet.elevation + 1;
@@ -171,10 +170,9 @@
 - (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
   // Given
   __block BOOL blockCalled = NO;
-  self.bottomSheet.mdc_elevationDidChangeBlock =
-      ^(MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation) {
-        blockCalled = YES;
-      };
+  self.bottomSheet.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat absoluteElevation) {
+    blockCalled = YES;
+  };
 
   // When
   self.bottomSheet.elevation = self.bottomSheet.elevation;

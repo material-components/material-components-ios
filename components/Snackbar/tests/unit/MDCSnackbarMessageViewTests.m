@@ -402,7 +402,7 @@
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
   messageView.elevation = 5;
   __block BOOL blockCalled = NO;
-  messageView.mdc_elevationDidChangeBlock = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+  messageView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     blockCalled = YES;
   };
 
@@ -418,7 +418,7 @@
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
   messageView.elevation = 5;
   __block BOOL blockCalled = NO;
-  messageView.mdc_elevationDidChangeBlock = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+  messageView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     blockCalled = YES;
   };
 

@@ -158,7 +158,7 @@
   const CGFloat finalElevation = 6;
   self.baseCell.elevation = finalElevation - 1;
   __block CGFloat newElevation = -1;
-  self.baseCell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *cell, CGFloat elevation) {
+  self.baseCell.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     newElevation = elevation;
   };
 
@@ -173,7 +173,7 @@
   // Given
   self.baseCell.elevation = 5;
   __block BOOL blockCalled = NO;
-  self.baseCell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *object, CGFloat elevation) {
+  self.baseCell.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     blockCalled = YES;
   };
 

@@ -211,7 +211,7 @@
 
   __block BOOL blockCalled = NO;
   MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView =
-      ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+      ^(id<MDCElevatable> _, CGFloat elevation) {
         blockCalled = YES;
       };
 
@@ -240,7 +240,7 @@
 
   __block BOOL blockCalled = NO;
   MDCSnackbarManager.defaultManager.mdc_elevationDidChangeBlockForMessageView =
-      ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+      ^(id<MDCElevatable> _, CGFloat elevation) {
         blockCalled = YES;
       };
 

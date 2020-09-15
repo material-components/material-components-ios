@@ -229,7 +229,7 @@
   const CGFloat finalElevation = 6;
   cell.elevation = finalElevation - 1;
   __block CGFloat newElevation = -1;
-  cell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *blockCell, CGFloat elevation) {
+  cell.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     newElevation = elevation;
   };
 
@@ -245,7 +245,7 @@
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
   cell.elevation = 5;
   __block BOOL blockCalled = NO;
-  cell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *blockCell, CGFloat elevation) {
+  cell.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     blockCalled = YES;
   };
 

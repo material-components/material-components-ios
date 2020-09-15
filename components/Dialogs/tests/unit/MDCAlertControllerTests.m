@@ -1045,10 +1045,9 @@ than @c UIContentSizeCategoryLarge.
   MDCAlertController *alertController = [[MDCAlertController alloc] init];
   alertController.elevation = 5;
   __block BOOL blockCalled = NO;
-  alertController.mdc_elevationDidChangeBlock =
-      ^(MDCAlertController *controller, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  alertController.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   alertController.elevation = alertController.elevation + 1;
@@ -1062,10 +1061,9 @@ than @c UIContentSizeCategoryLarge.
   MDCAlertController *alertController = [[MDCAlertController alloc] init];
   alertController.elevation = 5;
   __block BOOL blockCalled = NO;
-  alertController.mdc_elevationDidChangeBlock =
-      ^(MDCAlertController *controller, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  alertController.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   alertController.elevation = alertController.elevation;

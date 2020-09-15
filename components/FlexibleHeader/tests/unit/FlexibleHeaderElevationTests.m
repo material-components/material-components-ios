@@ -39,10 +39,9 @@
   const CGFloat finalElevation = 6;
   _flexibleHeaderView.elevation = finalElevation - 1;
   __block CGFloat newElevation = -1;
-  _flexibleHeaderView.mdc_elevationDidChangeBlock =
-      ^(MDCFlexibleHeaderView *blockHeaderView, CGFloat elevation) {
-        newElevation = elevation;
-      };
+  _flexibleHeaderView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    newElevation = elevation;
+  };
 
   // When
   _flexibleHeaderView.elevation = _flexibleHeaderView.elevation + 1;
@@ -55,10 +54,9 @@
   // Given
   _flexibleHeaderView.elevation = 5;
   __block BOOL blockCalled = NO;
-  _flexibleHeaderView.mdc_elevationDidChangeBlock =
-      ^(MDCFlexibleHeaderView *blockHeaderView, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  _flexibleHeaderView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   _flexibleHeaderView.elevation = _flexibleHeaderView.elevation;
