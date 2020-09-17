@@ -176,9 +176,6 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
  */
 @property(nonatomic, assign) BOOL thumbIsHollowAtStart;
 
-/** Whether or not the thumb should grow when the user is dragging it. Default is NO. */
-@property(nonatomic, assign) BOOL thumbGrowsWhenDragging;
-
 /** The max radius of the ripple when the user touches the thumb. */
 @property(nonatomic, assign) CGFloat thumbRippleMaximumRadius;
 

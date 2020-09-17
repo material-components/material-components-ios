@@ -916,15 +916,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _thumbView.borderColor = _trackOffColor;
   }
 
-  CGFloat radius;
-  if (_isDraggingThumb && !_shouldDisplayThumbWithDiscreteValueLabel && _discrete &&
-      _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
-    radius = 0;
-  } else {
-    radius = _thumbRadius;
-  }
-
-  if (radius == _thumbView.cornerRadius || !_thumbGrowsWhenDragging) {
+  if (_thumbRadius == _thumbView.cornerRadius) {
     // No need to change anything
     return;
   }
@@ -934,13 +926,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     anim.timingFunction =
         [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     anim.fromValue = [NSNumber numberWithDouble:_thumbView.cornerRadius];
-    anim.toValue = [NSNumber numberWithDouble:radius];
+    anim.toValue = [NSNumber numberWithDouble:_thumbRadius];
     anim.duration = duration;
     anim.delegate = self;
     anim.removedOnCompletion = NO;  // We'll remove it ourselves as the delegate
     [_thumbView.layer addAnimation:anim forKey:anim.keyPath];
   }
-  [self setDisplayThumbRadius:radius];  // Updates frame and corner radius
+  [self setDisplayThumbRadius:_thumbRadius];  // Updates frame and corner radius
 
   [self updateTrackMask];
 }
