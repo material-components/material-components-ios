@@ -86,6 +86,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
 @property(nonatomic, strong, nullable) UIColor *primaryColor;
 @property(nonatomic, strong, nullable) MDCRippleView *rippleView;
+@property(nonatomic, nonnull, readonly) UIPanGestureRecognizer *dummyPanRecognizer;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, strong, nullable) MDCInkTouchController *touchController;
@@ -102,7 +103,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   BOOL _shouldDisplayInk;
   BOOL _shouldDisplayRipple;
   MDCNumericValueLabel *_valueLabel;
-  UIPanGestureRecognizer *_dummyPanRecognizer;
   CGFloat _valueLabelHeight;
 
   // Attributes to handle interaction. To associate touches to previous touches, we keep a reference
