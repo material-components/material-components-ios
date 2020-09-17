@@ -157,7 +157,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
 #pragma mark - MDCSliderDelegate methods
 
 - (NSString *)slider:(MDCSlider *)slider displayedStringForValue:(CGFloat)value {
-  NSInteger points = (NSInteger)MDCRound(value);
+  NSInteger points = (NSInteger)round(value);
   return [NSString stringWithFormat:@"%ld pt", (long)points];
 }
 
@@ -181,7 +181,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
 #pragma mark - Internal methods
 
 - (MDCShadowElevation)shadowElevationFromSliderValue:(CGFloat)sliderValue {
-  return MDCRound(sliderValue);
+  return round(sliderValue);
 }
 
 + (NSString *)elevationStringForShadowElevationValue:(MDCShadowElevation)shadowElevationValue {

@@ -19,7 +19,6 @@
 #import "MDCActionSheetTestHelper.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialMath.h"
 
 static const CGFloat kSafeAreaAmount = 20;
 static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
@@ -307,7 +306,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
-  cellHeight = MDCCeil(cellHeight);
+  cellHeight = ceil(cellHeight);
   CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
@@ -336,7 +335,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
-  cellHeight = MDCCeil(cellHeight);
+  cellHeight = ceil(cellHeight);
   CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
@@ -371,7 +370,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
-  cellHeight = MDCCeil(cellHeight);
+  cellHeight = ceil(cellHeight);
   CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
@@ -398,7 +397,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
-  cellHeight = MDCCeil(cellHeight);
+  cellHeight = ceil(cellHeight);
   CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 
@@ -425,7 +424,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
-  cellHeight = MDCCeil(cellHeight);
+  cellHeight = ceil(cellHeight);
   CGFloat halfCellHeight = cellHeight * (CGFloat)0.5;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
 

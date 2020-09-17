@@ -305,9 +305,9 @@ static NSString *const kOfAnnouncement = @"of";
     CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
     layoutFrameWidth = MIN(bottomNavWidthInset, layoutFrameWidth);
     containerWidth = MIN(bottomNavWidthInset, MAX(containerWidth, layoutFrameWidth));
-    CGFloat clusteredOffsetX = MDCFloor((bottomNavSize.width - containerWidth) / 2);
+    CGFloat clusteredOffsetX = floor((bottomNavSize.width - containerWidth) / 2);
     self.itemsLayoutView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
-    CGFloat itemLayoutFrameOffsetX = MDCFloor((containerWidth - layoutFrameWidth) / 2);
+    CGFloat itemLayoutFrameOffsetX = floor((containerWidth - layoutFrameWidth) / 2);
     self.itemLayoutFrame = CGRectMake(itemLayoutFrameOffsetX, 0, layoutFrameWidth, barHeight);
   }
 }
@@ -325,14 +325,14 @@ static NSString *const kOfAnnouncement = @"of";
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
       itemView.frame =
-          CGRectMake(MDCFloor(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth +
+          CGRectMake(floor(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth +
                               self.itemsHorizontalPadding),
-                     0, MDCFloor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
+                     0, floor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
     } else {
       itemView.frame =
-          CGRectMake(MDCFloor(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth +
+          CGRectMake(floor(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth +
                               self.itemsHorizontalPadding),
-                     0, MDCFloor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
+                     0, floor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
     }
   }
 }

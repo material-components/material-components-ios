@@ -685,7 +685,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (NSInteger)numberOfLines {
   CGSize maxLabelSize = self.label.intrinsicContentSize;
   CGFloat lineHeight = self.label.font.lineHeight;
-  return (NSInteger)MDCRound(maxLabelSize.height / lineHeight);
+  return (NSInteger)round(maxLabelSize.height / lineHeight);
 }
 
 - (void)resetConstraints {

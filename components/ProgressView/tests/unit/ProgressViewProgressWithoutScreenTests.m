@@ -14,7 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialMath.h"
 #import "MaterialProgressView.h"
 
 @interface MDCProgressView ()

@@ -19,7 +19,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCBaseTextFieldDelegate.h"
-#import "MaterialMath.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 #import "MaterialTextControlsPrivate+Shared.h"
 #import "MaterialTextControlsPrivate+TextFields.h"
@@ -105,7 +104,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 - (void)setUpAssistiveLabels {
   self.assistiveLabelDrawPriority = MDCTextControlAssistiveLabelDrawPriorityTrailing;
   self.assistiveLabelView = [[MDCTextControlAssistiveLabelView alloc] init];
-  CGFloat assistiveFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
+  CGFloat assistiveFontSize = round([UIFont systemFontSize] * (CGFloat)0.75);
   UIFont *assistiveFont = [UIFont systemFontOfSize:assistiveFontSize];
   self.assistiveLabelView.leadingAssistiveLabel.font = assistiveFont;
   self.assistiveLabelView.trailingAssistiveLabel.font = assistiveFont;

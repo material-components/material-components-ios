@@ -1074,7 +1074,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
+      (CGFloat)(hypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
   self.rippleView.layer.masksToBounds = NO;
 }
@@ -1192,9 +1192,9 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
     CGFloat additionalRequiredHeight =
         MAX(0, CGRectGetHeight(self.bounds) - visibleAreaSize.height);
     CGFloat additionalRequiredWidth = MAX(0, CGRectGetWidth(self.bounds) - visibleAreaSize.width);
-    visibleAreaInsets.top = MDCCeil(additionalRequiredHeight * 0.5f);
+    visibleAreaInsets.top = ceil(additionalRequiredHeight * 0.5f);
     visibleAreaInsets.bottom = additionalRequiredHeight - visibleAreaInsets.top;
-    visibleAreaInsets.left = MDCCeil(additionalRequiredWidth * 0.5f);
+    visibleAreaInsets.left = ceil(additionalRequiredWidth * 0.5f);
     visibleAreaInsets.right = additionalRequiredWidth - visibleAreaInsets.left;
   }
 
