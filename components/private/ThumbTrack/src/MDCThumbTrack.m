@@ -917,13 +917,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 
   CGFloat radius;
-  if (_isDraggingThumb) {
-    if (!_shouldDisplayThumbWithDiscreteValueLabel && _discrete &&
-        _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
-      radius = 0;
-    } else {
-      radius = _thumbRadius + _trackHeight;
-    }
+  if (_isDraggingThumb && !_shouldDisplayThumbWithDiscreteValueLabel && _discrete &&
+      _shouldDisplayDiscreteValueLabel && _numDiscreteValues > 1) {
+    radius = 0;
   } else {
     radius = _thumbRadius;
   }
