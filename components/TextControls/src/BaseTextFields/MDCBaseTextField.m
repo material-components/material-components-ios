@@ -691,6 +691,10 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   return nil;
 }
 
+- (UIBezierPath *)accessibilityPath {
+  return [UIBezierPath bezierPathWithRect:self.frame];
+}
+
 #pragma mark Color Accessors
 
 - (void)setNormalLabelColor:(nonnull UIColor *)labelColor forState:(MDCTextControlState)state {
