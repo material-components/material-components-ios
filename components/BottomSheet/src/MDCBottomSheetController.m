@@ -21,6 +21,8 @@
 #import "UIViewController+MaterialBottomSheet.h"
 #import "MaterialMath.h"
 
+static const CGFloat kElevationSpreadMaskAffordance = 50.0f;
+
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
 @property(nonatomic, readonly, strong) MDCShapedView *view;
 @end
@@ -97,6 +99,12 @@
   if (self.shouldFlashScrollIndicatorsOnAppearance) {
     [self.trackingScrollView flashScrollIndicators];
   }
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  self.view.layer.mask = [self createBottomEdgeElevationMask];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -225,6 +233,19 @@
 
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
+}
+
+- (CAShapeLayer *)createBottomEdgeElevationMask {
+  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
+  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  CGRect visibleRectOutsideBounds =
+      CGRectMake(0 - kElevationSpreadMaskAffordance, 0 - kElevationSpreadMaskAffordance,
+                 boundsWidth + (2.0f * kElevationSpreadMaskAffordance),
+                 boundsHeight + kElevationSpreadMaskAffordance);
+  CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+  UIBezierPath *visibleAreaPath = [UIBezierPath bezierPathWithRect:visibleRectOutsideBounds];
+  maskLayer.path = visibleAreaPath.CGPath;
+  return maskLayer;
 }
 
 /* Disable setter. Always use internal transition controller */
