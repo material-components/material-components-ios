@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialDialogs.h"
+#import "MDCAlertController+Testing.h"
 #import "MaterialSnapshot.h"
 
 static NSString *const kTitleUrdu = @"عنوان";
@@ -64,6 +65,12 @@ static NSString *const kActionLowUrdu = @"کم";
   [super tearDown];
 }
 
+- (void)generateSizedSnapshotAndVerifyForAlert:(MDCAlertController *)alert {
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  [alert sizeToFitContentInBounds:preferredContentSize];
+  [self generateSnapshotAndVerifyForView:alert.view];
+}
+
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   [view layoutIfNeeded];
 
@@ -103,12 +110,9 @@ static NSString *const kActionLowUrdu = @"کم";
   [self.alertController addAction:actionMedium];
 
   [self changeToRTL:self.alertController];
-  CGSize preferredContentSize = self.alertController.preferredContentSize;
-  self.alertController.view.bounds =
-      CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
 @end
