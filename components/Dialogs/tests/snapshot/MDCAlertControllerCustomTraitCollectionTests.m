@@ -19,9 +19,9 @@
 
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MaterialAvailability.h"
-#import "MaterialColor.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
+#import "MaterialColor.h"
 
 static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
@@ -146,17 +146,11 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   [self snapshotVerifyView:snapshotView];
 }
 
-/**
- Used to set the @c UIContentSizeCategory on an @c MDCAlertController.
-
- @note On iOS 9 or below this method has no impact.
- */
+/** Used to set the @c UIContentSizeCategory on an @c MDCAlertController. */
 - (void)setAlertControllerContentSizeCategory:(UIContentSizeCategory)sizeCategory {
   UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
-  if (@available(iOS 10.0, *)) {
-    traitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
-  }
+  traitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
 
   self.alertController.traitCollectionOverride = traitCollection;
 }

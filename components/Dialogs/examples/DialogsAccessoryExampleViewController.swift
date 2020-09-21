@@ -97,14 +97,12 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     namefield.clearButtonMode = UITextField.ViewMode.whileEditing
     namefield.leadingAssistiveLabel.text = "An optional assistive message"
     namefield.applyTheme(withScheme: containerScheme)
-    if #available(iOS 10.0, *) {
-      // Enable dynamic type.
-      namefield.adjustsFontForContentSizeCategory = true
-      namefield.font = UIFont.preferredFont(
-        forTextStyle: .body, compatibleWith: namefield.traitCollection)
-      namefield.leadingAssistiveLabel.font = UIFont.preferredFont(
-        forTextStyle: .caption2, compatibleWith: namefield.traitCollection)
-    }
+    // Enable dynamic type.
+    namefield.adjustsFontForContentSizeCategory = true
+    namefield.font = UIFont.preferredFont(
+      forTextStyle: .body, compatibleWith: namefield.traitCollection)
+    namefield.leadingAssistiveLabel.font = UIFont.preferredFont(
+      forTextStyle: .caption2, compatibleWith: namefield.traitCollection)
 
     label.translatesAutoresizingMaskIntoConstraints = false
     namefield.translatesAutoresizingMaskIntoConstraints = false
