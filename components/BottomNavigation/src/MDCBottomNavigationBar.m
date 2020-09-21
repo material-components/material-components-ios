@@ -66,12 +66,12 @@ static NSString *const kOfAnnouncement = @"of";
  */
 @property(nonatomic, nullable) id<UILargeContentViewerItem> lastLargeContentViewerItem
     NS_AVAILABLE_IOS(13_0);
+@property(nonatomic, assign) BOOL isLargeContentLongPressInProgress;
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
 @end
 
 @implementation MDCBottomNavigationBar
-
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
@@ -324,14 +324,13 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame =
-          CGRectMake(floor(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth +
-                              self.itemsHorizontalPadding),
-                     0, floor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
+      itemView.frame = CGRectMake(
+          floor(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + self.itemsHorizontalPadding),
+          0, floor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
     } else {
       itemView.frame =
           CGRectMake(floor(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth +
-                              self.itemsHorizontalPadding),
+                           self.itemsHorizontalPadding),
                      0, floor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
     }
   }
@@ -837,6 +836,32 @@ static NSString *const kOfAnnouncement = @"of";
   return self.elevation;
 }
 
+- (void)cancelRippleInItemView:(MDCBottomNavigationItemView *)itemView animated:(BOOL)animated {
+  if (self.enableRippleBehavior) {
+    if (animated) {
+      [itemView.rippleTouchController.rippleView beginRippleTouchUpAnimated:YES completion:nil];
+    } else {
+      [itemView.rippleTouchController.rippleView cancelAllRipplesAnimated:NO completion:nil];
+    }
+  } else {
+    if (animated) {
+      [itemView.inkView startTouchEndAtPoint:itemView.center animated:YES withCompletion:nil];
+    } else {
+      [itemView.inkView cancelAllAnimationsAnimated:NO];
+    }
+  }
+}
+
+- (void)beginRippleInItemView:(MDCBottomNavigationItemView *)itemView animated:(BOOL)animated {
+  if (self.enableRippleBehavior) {
+    [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:itemView.center
+                                                                  animated:animated
+                                                                completion:nil];
+  } else {
+    [itemView.inkView startTouchBeganAtPoint:itemView.center animated:animated withCompletion:nil];
+  }
+}
+
 #pragma mark - UILargeContentViewerInteractionDelegate
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
@@ -844,8 +869,15 @@ static NSString *const kOfAnnouncement = @"of";
                                     (UILargeContentViewerInteraction *)interaction
                                                   itemAtPoint:(CGPoint)point
     NS_AVAILABLE_IOS(13_0) {
+  MDCBottomNavigationItemView *lastItemView =
+      (MDCBottomNavigationItemView *)self.lastLargeContentViewerItem;
+
   if (!CGRectContainsPoint(self.bounds, point)) {
-    // The touch has wandered outside of the view. Do not display the content viewer.
+    // The touch has wandered outside of the view. Clear the ripple/ink and do not display the
+    // content viewer.
+    if (lastItemView) {
+      [self cancelRippleInItemView:lastItemView animated:NO];
+    }
     self.lastLargeContentViewerItem = nil;
     return nil;
   }
@@ -856,43 +888,32 @@ static NSString *const kOfAnnouncement = @"of";
     return self.lastLargeContentViewerItem;
   }
 
-  MDCBottomNavigationItemView *lastItemView =
-      (MDCBottomNavigationItemView *)self.lastLargeContentViewerItem;
-
-  if (lastItemView && lastItemView != itemView) {
-    if (self.enableRippleBehavior) {
-      [lastItemView.rippleTouchController.rippleView cancelAllRipplesAnimated:NO completion:nil];
-      [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:itemView.center
-                                                                    animated:NO
-                                                                  completion:nil];
-    } else {
-      [lastItemView.inkView cancelAllAnimationsAnimated:NO];
-      [itemView.inkView startTouchBeganAtPoint:itemView.center animated:NO withCompletion:nil];
+  if (lastItemView != itemView) {
+    if (lastItemView) {
+      [self cancelRippleInItemView:lastItemView animated:NO];
     }
+    // Only start ink/ripple if it's not the first touch down of the long press
+    if (self.isLargeContentLongPressInProgress) {
+      [self beginRippleInItemView:itemView animated:NO];
+    }
+    self.lastLargeContentViewerItem = itemView;
   }
-
-  self.lastLargeContentViewerItem = itemView;
+  self.isLargeContentLongPressInProgress = YES;
   return itemView;
 }
 
 - (void)largeContentViewerInteraction:(UILargeContentViewerInteraction *)interaction
                          didEndOnItem:(id<UILargeContentViewerItem>)item
                               atPoint:(CGPoint)point NS_AVAILABLE_IOS(13_0) {
-  if (item) {
-    for (NSUInteger i = 0; i < self.items.count; i++) {
-      MDCBottomNavigationItemView *itemView = self.itemViews[i];
-      if (item == itemView) {
-        if (self.enableRippleBehavior) {
-          [itemView.rippleTouchController.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-        } else {
-          [itemView.inkView startTouchEndAtPoint:itemView.center animated:YES withCompletion:nil];
-        }
-        [self didTouchUpInsideButton:itemView.button];
-      }
-    }
+  if (self.lastLargeContentViewerItem) {
+    MDCBottomNavigationItemView *lastItemView =
+        (MDCBottomNavigationItemView *)self.lastLargeContentViewerItem;
+    [self cancelRippleInItemView:lastItemView animated:YES];
+    [self didTouchUpInsideButton:lastItemView.button];
   }
 
   self.lastLargeContentViewerItem = nil;
+  self.isLargeContentLongPressInProgress = NO;
 }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
