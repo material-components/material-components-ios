@@ -72,7 +72,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) { return MDCPalette.blueP
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
   _thumbTrack.thumbRadius = kSliderDefaultThumbRadius;
-  _thumbTrack.thumbIsSmallerWhenDisabled = YES;
+  _thumbTrack.thumbIsSmallerWhenDisabled = NO;
   _thumbTrack.thumbIsHollowAtStart = YES;
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.shouldDisplayRipple = YES;

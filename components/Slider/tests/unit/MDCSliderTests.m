@@ -976,7 +976,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(self.slider.thumbRadius, 6, kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(self.slider.thumbBorderWidth, 2, kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy(self.slider.thumbElevation, MDCShadowElevationNone, kEpsilonAccuracy);
-  XCTAssertTrue(self.slider.thumbIsSmallerWhenDisabled);
+  XCTAssertFalse(self.slider.thumbIsSmallerWhenDisabled);
 }
 
 #pragma mark Numeric value label
