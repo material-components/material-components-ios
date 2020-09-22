@@ -1,3 +1,60 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomNavigation
+
+* [Update ink and ripple handling for long press when LargeContentViewer is enabled](https://github.com/material-components/material-components-ios/commit/8ef317c16263975659da535ca1fabd583694570f) (Alyssa Weiss)
+
+### BottomSheet
+
+* [Mask elevation on bottom edge](https://github.com/material-components/material-components-ios/commit/588d9d2fe5c71931dad726c3d48e7b6133c79d89) (Andrew Overton)
+
+### Dialogs
+
+* [Remove iOS 10+ checks now that the minimum support contract is iOS 10.](https://github.com/material-components/material-components-ios/commit/d40c6d86080e060f7f20462f3f009b44674f6a57) (Alyssa Weiss)
+* [Update the testing for the localization snapshot tests.](https://github.com/material-components/material-components-ios/commit/8842f55760143bc00b0d4457f9e2ed7b3eb20800) (Alyssa Weiss)
+
+### Slider
+
+* [Add call to [super prepareForReuse] in example.](https://github.com/material-components/material-components-ios/commit/5da1486c9f591ace570de1efef991ccd4ac6d148) (Bryan Oltman)
+* [Remove checks for iOS 10 availability.](https://github.com/material-components/material-components-ios/commit/c861bd32c9cbedf74dde4bbd10b4bcf4bbdbfcf9) (Bryan Oltman)
+* [Set thumbIsSmallerWhenDisabled to NO to match Material spec.](https://github.com/material-components/material-components-ios/commit/8e0ed49dc626d6e9ad91a9d3eb11c3517fb2af42) (Wenyu Zhang)
+
+### Snackbar
+
+* [Automated g4 rollback of changelist 331153646.](https://github.com/material-components/material-components-ios/commit/aba747b4808a48603bae4798569aff2eb7d2404d) (Yun Zhang)
+
+### TextControls
+
+* [Override accessibilityPath in MDCBaseTextField](https://github.com/material-components/material-components-ios/commit/873c0b78d8a57f77d19cf1ef20c701f2233a1f0e) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Do not adjust thumb size on touch down.](https://github.com/material-components/material-components-ios/commit/2a13da03738e3dddd1ff2ebe430778e22452f3be) (Bryan Oltman)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/bc81b052abdd2520546ba3bec428aafd2ca74cd8) (Bryan Oltman)
+
+## Multi-component changes
+
+* [Fix mdc_elevationDidChangeBlock block parameter types for Xcode 12](https://github.com/material-components/material-components-ios/commit/da4b8f7c7f99941332c13d56c7ccc8d08b25665e) (Bryan Oltman)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/eb829842242a3f8f657992381100407d205892fd) (Jeff Verkoeyen)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/fbb1f20aa253b4023b19353a7cbb6846edac8393) (Jeff Verkoeyen)
+* [Remove ability for thumb view to grow while dragging.](https://github.com/material-components/material-components-ios/commit/39af7115f76986a039406143dad8a83abd2f0f0d) (Bryan Oltman)
+
+---
+
 # 116.0.0
 
 In this major release, we deleted the `rippleAllowsSelection` property from MDCChipView and added containerRadius support to filled text fields.
