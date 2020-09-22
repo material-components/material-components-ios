@@ -125,10 +125,9 @@
   // Given
   self.navigationDrawer.elevation = 5;
   __block BOOL blockCalled = NO;
-  self.navigationDrawer.mdc_elevationDidChangeBlock =
-      ^(MDCBottomDrawerViewController *object, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  self.navigationDrawer.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   self.navigationDrawer.elevation = self.navigationDrawer.elevation + 1;
@@ -141,10 +140,9 @@
   // Given
   self.navigationDrawer.elevation = 5;
   __block BOOL blockCalled = NO;
-  self.navigationDrawer.mdc_elevationDidChangeBlock =
-      ^(MDCBottomDrawerViewController *object, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  self.navigationDrawer.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   self.navigationDrawer.elevation = self.navigationDrawer.elevation;

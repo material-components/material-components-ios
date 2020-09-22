@@ -509,7 +509,8 @@ extension MDCDragonsController {
           // Populate the cell with our item description.
           var contentConfiguration = cell.defaultContentConfiguration()
           contentConfiguration.text = menuItem.title
-          contentConfiguration.textProperties.color = containerScheme.colorScheme.onBackgroundColor
+          contentConfiguration.textProperties.color =
+            self.containerScheme.colorScheme.onBackgroundColor
           cell.contentConfiguration = contentConfiguration
 
           let disclosureOptions = UICellAccessory.OutlineDisclosureOptions(style: .header)
@@ -525,7 +526,8 @@ extension MDCDragonsController {
           // Populate the cell with our item description.
           var contentConfiguration = cell.defaultContentConfiguration()
           contentConfiguration.text = menuItem.title
-          contentConfiguration.textProperties.color = containerScheme.colorScheme.onBackgroundColor
+          contentConfiguration.textProperties.color =
+            self.containerScheme.colorScheme.onBackgroundColor
           cell.contentConfiguration = contentConfiguration
           cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
         }

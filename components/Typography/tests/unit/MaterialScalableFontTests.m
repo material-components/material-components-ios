@@ -16,7 +16,6 @@
 
 #import "MaterialTypography.h"
 
-#import "MaterialMath.h"
 
 @interface UIFont_MaterialScalable : XCTestCase
 

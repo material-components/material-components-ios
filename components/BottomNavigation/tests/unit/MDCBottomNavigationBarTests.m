@@ -644,10 +644,9 @@ static NSString *const kTestItemTitleText = @"Title";
   // Given
   self.bottomNavBar.elevation = 5;
   __block BOOL blockCalled = NO;
-  self.bottomNavBar.mdc_elevationDidChangeBlock =
-      ^(MDCBottomNavigationBar *object, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  self.bottomNavBar.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   self.bottomNavBar.elevation = self.bottomNavBar.elevation + 1;
@@ -660,10 +659,9 @@ static NSString *const kTestItemTitleText = @"Title";
   // Given
   self.bottomNavBar.elevation = 5;
   __block BOOL blockCalled = NO;
-  self.bottomNavBar.mdc_elevationDidChangeBlock =
-      ^(MDCBottomNavigationBar *object, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  self.bottomNavBar.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   self.bottomNavBar.elevation = self.bottomNavBar.elevation;

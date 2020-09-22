@@ -67,7 +67,7 @@
       // alpha value of 2. This formula provides a gradual polynomial curve that makes the delta
       // of the alpha value between lower numbers to be smaller than the higher numbers.
       // AlphaValue = 5.11916 * elevationValue ^ 2
-      alphaValue = (CGFloat)5.11916 * MDCPow((CGFloat)elevation, 2);
+      alphaValue = (CGFloat)5.11916 * pow((CGFloat)elevation, 2);
     } else {
       // A formula is used here to simulate the alpha percentage stated on
       // https://material.io/design/color/dark-theme.html#properties

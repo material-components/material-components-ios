@@ -19,7 +19,6 @@
 
 #import "MDCBottomNavigationItemBadge.h"
 #import "MaterialAvailability.h"
-#import "MaterialMath.h"
 
 // A number large enough to be larger than any reasonable screen dimension but small enough that
 // CGFloat doesn't lose precision.
@@ -184,12 +183,12 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
   CGRect badgeFrame =
-      CGRectMake(MDCFloor(badgeCenter.x - badgeSize.width / 2),
-                 MDCFloor(badgeCenter.y - badgeSize.height / 2), badgeSize.width, badgeSize.height);
+      CGRectMake(floor(badgeCenter.x - badgeSize.width / 2),
+                 floor(badgeCenter.y - badgeSize.height / 2), badgeSize.width, badgeSize.height);
   CGRect labelFrame = CGRectZero;
   if (!titleHidden) {
     CGSize labelSize = [self.label sizeThatFits:maxSize];
-    labelFrame = CGRectMake(MDCFloor(CGRectGetMidX(iconFrame) - labelSize.width / 2),
+    labelFrame = CGRectMake(floor(CGRectGetMidX(iconFrame) - labelSize.width / 2),
                             CGRectGetMaxY(iconFrame) + self.contentVerticalMargin, labelSize.width,
                             labelSize.height);
   }
@@ -203,11 +202,11 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
   CGRect badgeFrame =
-      CGRectMake(MDCFloor(badgeCenter.x - badgeSize.width / 2),
-                 MDCFloor(badgeCenter.y - badgeSize.height / 2), badgeSize.width, badgeSize.height);
+      CGRectMake(floor(badgeCenter.x - badgeSize.width / 2),
+                 floor(badgeCenter.y - badgeSize.height / 2), badgeSize.width, badgeSize.height);
   CGSize labelSize = [self.label sizeThatFits:maxSize];
   CGRect labelFrame = CGRectMake(CGRectGetMaxX(iconFrame) + self.contentHorizontalMargin,
-                                 MDCFloor(CGRectGetMidY(iconFrame) - labelSize.height / 2),
+                                 floor(CGRectGetMidY(iconFrame) - labelSize.height / 2),
                                  labelSize.width, labelSize.height);
   return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
 }
@@ -218,7 +217,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   [self.label sizeToFit];
   [self.badge sizeToFit];
   self.inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
+      (CGFloat)(hypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
   [self invalidatePointerInteractions];
 }
@@ -243,9 +242,9 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   // Determine the position of the label and icon
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   CGFloat iconImageViewCenterY =
-      MAX(MDCFloor(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 +
+      MAX(floor(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 +
                    iconHeight / 2),  // Content centered
-          MDCFloor(CGRectGetMinY(contentBoundingRect) +
+          floor(CGRectGetMinY(contentBoundingRect) +
                    iconHeight / 2)  // Pinned to top of bounding rect.
       );
   CGPoint iconImageViewCenter = CGPointMake(centerX, iconImageViewCenterY);
@@ -260,13 +259,13 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
   // Assign the frames to the inout arguments
   if (outLabelFrame != NULL) {
-    *outLabelFrame = CGRectMake(MDCFloor(labelCenter.x - (labelSize.width / 2)),
-                                MDCFloor(labelCenter.y - (labelSize.height / 2)), labelSize.width,
+    *outLabelFrame = CGRectMake(floor(labelCenter.x - (labelSize.width / 2)),
+                                floor(labelCenter.y - (labelSize.height / 2)), labelSize.width,
                                 labelSize.height);
   }
   if (outIconFrame != NULL) {
-    *outIconFrame = CGRectMake(MDCFloor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
-                               MDCFloor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
+    *outIconFrame = CGRectMake(floor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
+                               floor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
                                iconImageViewSize.width, iconImageViewSize.height);
   }
 }
@@ -317,13 +316,13 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
   // Assign the frames to the inout arguments
   if (outLabelFrame != NULL) {
-    *outLabelFrame = CGRectMake(MDCFloor(labelCenter.x - (labelSize.width / 2)),
-                                MDCFloor(labelCenter.y - (labelSize.height / 2)), labelSize.width,
+    *outLabelFrame = CGRectMake(floor(labelCenter.x - (labelSize.width / 2)),
+                                floor(labelCenter.y - (labelSize.height / 2)), labelSize.width,
                                 labelSize.height);
   }
   if (outIconFrame != NULL) {
-    *outIconFrame = CGRectMake(MDCFloor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
-                               MDCFloor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
+    *outIconFrame = CGRectMake(floor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
+                               floor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
                                iconImageViewSize.width, iconImageViewSize.height);
   }
 }

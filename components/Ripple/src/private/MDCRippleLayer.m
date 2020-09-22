@@ -16,7 +16,6 @@
 
 #import "MaterialAnimationTiming.h"
 #import "MDCRippleLayerDelegate.h"
-#import "MaterialMath.h"
 
 static const CGFloat kExpandRippleBeyondSurface = 10;
 static const CGFloat kRippleStartingScale = (CGFloat)0.6;
@@ -35,7 +34,7 @@ static CGFloat GetInitialRippleRadius(CGRect rect) {
 }
 
 static CGFloat GetFinalRippleRadius(CGRect rect) {
-  return (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + kExpandRippleBeyondSurface);
+  return (CGFloat)(hypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + kExpandRippleBeyondSurface);
 }
 
 @implementation MDCRippleLayer

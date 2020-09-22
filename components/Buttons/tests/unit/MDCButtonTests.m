@@ -1474,7 +1474,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setElevation:1 forState:UIControlStateNormal];
   [button setElevation:9 forState:UIControlStateSelected];
   __block CGFloat newElevation = 0;
-  button.mdc_elevationDidChangeBlock = ^(MDCButton *object, CGFloat elevation) {
+  button.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     newElevation = elevation;
   };
 
@@ -1492,7 +1492,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setElevation:1 forState:UIControlStateNormal];
   [button setElevation:1 forState:UIControlStateHighlighted];
   __block BOOL blockCalled = NO;
-  button.mdc_elevationDidChangeBlock = ^(MDCButton *object, CGFloat elevation) {
+  button.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     blockCalled = YES;
   };
 
@@ -1508,7 +1508,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] init];
   button.selected = YES;
   __block CGFloat newElevation = 0;
-  button.mdc_elevationDidChangeBlock = ^(MDCButton *object, CGFloat elevation) {
+  button.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
     newElevation = elevation;
   };
 

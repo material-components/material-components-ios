@@ -257,7 +257,7 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   if (@available(iOS 11.0, *)) {
     preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
   }
-  return MDCCeil(preferredHeight);
+  return ceil(preferredHeight);
 }
 
 - (void)viewDidAppear:(BOOL)animated {

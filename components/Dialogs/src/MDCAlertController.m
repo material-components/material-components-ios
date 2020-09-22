@@ -174,12 +174,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
-  if (@available(iOS 10.0, *)) {
-    if (![self.traitCollection.preferredContentSizeCategory
-            isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
-      self.preferredContentSize = [self.alertView
-          calculatePreferredContentSizeForBounds:CGRectStandardize(self.view.bounds).size];
-    }
+  if (![self.traitCollection.preferredContentSizeCategory
+          isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
+    self.preferredContentSize = [self.alertView
+        calculatePreferredContentSizeForBounds:CGRectStandardize(self.view.bounds).size];
   }
 }
 
@@ -588,20 +586,19 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
   // which is already presenting.
-  [self.presentingViewController dismissViewControllerAnimated:YES
-                                                    completion:^(void) {
-                                                      if (action.completionHandler) {
-                                                        if ([self.delegate
-                                                                respondsToSelector:@selector
-                                                                (alertController:
-                                                                    didTapAction:withEvent:)]) {
-                                                          [self.delegate alertController:self
-                                                                            didTapAction:action
-                                                                               withEvent:event];
-                                                        }
-                                                        action.completionHandler(action);
-                                                      }
-                                                    }];
+  [self.presentingViewController
+      dismissViewControllerAnimated:YES
+                         completion:^(void) {
+                           if (action.completionHandler) {
+                             if ([self.delegate respondsToSelector:@selector
+                                                (alertController:didTapAction:withEvent:)]) {
+                               [self.delegate alertController:self
+                                                 didTapAction:action
+                                                    withEvent:event];
+                             }
+                             action.completionHandler(action);
+                           }
+                         }];
 }
 
 #pragma mark - Text View Delegate
@@ -609,7 +606,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (BOOL)textView:(UITextView *)textView
     shouldInteractWithURL:(NSURL *)URL
                   inRange:(NSRange)characterRange
-              interaction:(UITextItemInteraction)interaction API_AVAILABLE(ios(10.0)) {
+              interaction:(UITextItemInteraction)interaction {
   if (self.attributedMessageAction != nil) {
     return self.attributedMessageAction(URL, characterRange, interaction);
   }
@@ -761,10 +758,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setupAlertView {
   self.alertView.titleLabel.text = self.title;
-  if (@available(iOS 10.0, *)) {
-    self.alertView.titleLabel.adjustsFontForContentSizeCategory =
-        self.adjustsFontForContentSizeCategory;
-  }
+  self.alertView.titleLabel.adjustsFontForContentSizeCategory =
+      self.adjustsFontForContentSizeCategory;
   if (self.attributedMessage.length > 0) {
     self.alertView.messageTextView.attributedText = self.attributedMessage;
   } else {

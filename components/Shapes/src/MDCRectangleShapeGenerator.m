@@ -17,10 +17,9 @@
 #import "MDCCornerTreatment.h"
 #import "MDCEdgeTreatment.h"
 #import "MDCPathGenerator.h"
-#import "MaterialMath.h"
 
 static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
-  return MDCHypot(a.x - b.x, a.y - b.y);
+  return hypot(a.x - b.x, a.y - b.y);
 }
 
 // Edges in clockwise order
@@ -208,8 +207,8 @@ typedef enum : NSUInteger {
       CGPointMake(prevCornerCoord.x - cornerCoord.x, prevCornerCoord.y - cornerCoord.y);
   CGPoint nextVector =
       CGPointMake(nextCornerCoord.x - cornerCoord.x, nextCornerCoord.y - cornerCoord.y);
-  CGFloat prevAngle = MDCAtan2(prevVector.y, prevVector.x);
-  CGFloat nextAngle = MDCAtan2(nextVector.y, nextVector.x);
+  CGFloat prevAngle = atan2(prevVector.y, prevVector.x);
+  CGFloat nextAngle = atan2(nextVector.y, nextVector.x);
   CGFloat angle = prevAngle - nextAngle;
   if (angle < 0)
     angle += (CGFloat)(2 * M_PI);
@@ -224,7 +223,7 @@ typedef enum : NSUInteger {
 
   CGPoint edgeVector =
       CGPointMake(endCornerCoord.x - startCornerCoord.x, endCornerCoord.y - startCornerCoord.y);
-  return MDCAtan2(edgeVector.y, edgeVector.x);
+  return atan2(edgeVector.y, edgeVector.x);
 }
 
 - (CGPoint)cornerCoordsForPosition:(MDCShapeCornerPosition)cornerPosition

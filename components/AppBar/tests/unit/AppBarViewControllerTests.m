@@ -76,7 +76,7 @@
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Invoked mdc_elevationDidChangeBlock"];
   appBarController.headerView.mdc_elevationDidChangeBlock =
-      ^(MDCFlexibleHeaderView *headerView, CGFloat elevation) {
+      ^(id<MDCElevatable> _, CGFloat elevation) {
         blockCalled = YES;
         [expectation fulfill];
       };

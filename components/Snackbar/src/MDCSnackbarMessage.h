@@ -228,6 +228,9 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 /**
  If true, the snackbar is dismissed when the user taps anywhere on the overlay.
 
+ @note: If VoiceOver is turned on, this value will be ignored and the snackbar will behave as if it
+ were set to NO.
+
  Defaults to NO.
  */
 @property(nonatomic) BOOL shouldDismissOnOverlayTap;

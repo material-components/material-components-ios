@@ -16,7 +16,6 @@
 
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight.h"
-#import "MaterialMath.h"
 #import "MaterialTypographyScheme.h"
 
 @implementation FeatureHighlightScalableDynamicTypeController

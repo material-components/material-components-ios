@@ -15,7 +15,6 @@
 #import "MDCBottomAppBarLayer.h"
 
 #import "MDCBottomAppBarAttributes.h"
-#import "MaterialMath.h"
 
 @interface MDCBottomAppBarLayer (PathGenerators)
 - (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath

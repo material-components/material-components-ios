@@ -139,6 +139,8 @@ static CGFloat const kSliderMinimumTouchSize = 48;
 }
 
 - (void)prepareForReuse {
+  [super prepareForReuse];
+
   // Remove target/action pairs
   NSSet *targets = [_slider allTargets];
   for (id target in targets) {

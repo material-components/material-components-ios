@@ -208,10 +208,9 @@
   const CGFloat finalElevation = 6;
   bottomAppBar.elevation = finalElevation - 1;
   __block CGFloat newElevation = -1;
-  bottomAppBar.mdc_elevationDidChangeBlock =
-      ^(MDCBottomAppBarView *blockAppBar, CGFloat elevation) {
-        newElevation = elevation;
-      };
+  bottomAppBar.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    newElevation = elevation;
+  };
 
   // When
   bottomAppBar.elevation = bottomAppBar.elevation + 1;
@@ -225,10 +224,9 @@
   MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
   bottomAppBar.elevation = 5;
   __block BOOL blockCalled = NO;
-  bottomAppBar.mdc_elevationDidChangeBlock =
-      ^(MDCBottomAppBarView *blockAppBar, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  bottomAppBar.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   bottomAppBar.elevation = bottomAppBar.elevation;

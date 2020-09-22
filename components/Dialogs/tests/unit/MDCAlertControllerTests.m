@@ -812,58 +812,56 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
  than @c UIContentSizeCategoryLarge.
  */
 - (void)testMDCAdjustsFontForContentSizeCategoryUpscalesFontScalerFontsWithLocalTraitCollection {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    MDCAlertControllerTestsControllerFake *alert =
-        [[MDCAlertControllerTestsControllerFake alloc] init];
-    alert.title = @"Title";
-    alert.message = @"A message.";
-    alert.traitCollectionOverride =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  // Given
+  MDCAlertControllerTestsControllerFake *alert =
+      [[MDCAlertControllerTestsControllerFake alloc] init];
+  alert.title = @"Title";
+  alert.message = @"A message.";
+  alert.traitCollectionOverride =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 
-    UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
-    scaledFont.mdc_scalingCurve = CustomScalingCurve();
-    scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
+  UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+  scaledFont.mdc_scalingCurve = CustomScalingCurve();
+  scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
 
-    MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
-    [alert addAction:action];
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  [alert addAction:action];
 
-    alert.titleFont = scaledFont;
-    alert.messageFont = scaledFont;
-    MDCButton *actionButton = [alert buttonForAction:action];
-    if (actionButton.enableTitleFontForState) {
-      [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
-    } else {
-      actionButton.titleLabel.font = scaledFont;
-    }
+  alert.titleFont = scaledFont;
+  alert.messageFont = scaledFont;
+  MDCButton *actionButton = [alert buttonForAction:action];
+  if (actionButton.enableTitleFontForState) {
+    [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+  } else {
+    actionButton.titleLabel.font = scaledFont;
+  }
 
-    // When
-    [alert loadViewIfNeeded];
-    alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-    alert.mdc_adjustsFontForContentSizeCategory = YES;
+  // When
+  [alert loadViewIfNeeded];
+  alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  alert.mdc_adjustsFontForContentSizeCategory = YES;
 
-    // Then
-    CGFloat expectedPointSize =
-        (CGFloat)CustomScalingCurve()[UIContentSizeCategoryAccessibilityExtraExtraExtraLarge]
-            .doubleValue;
-    // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
-    // these are equal.
-    XCTAssertNotEqualWithAccuracy(alert.alertView.messageTextView.font.pointSize, expectedPointSize,
+  // Then
+  CGFloat expectedPointSize =
+      (CGFloat)CustomScalingCurve()[UIContentSizeCategoryAccessibilityExtraExtraExtraLarge]
+          .doubleValue;
+  // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
+  // these are equal.
+  XCTAssertNotEqualWithAccuracy(alert.alertView.messageTextView.font.pointSize, expectedPointSize,
+                                0.001);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
+  // these are equal
+  XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
+                                0.001);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+  // these are equal
+  if (actionButton.enableTitleFontForState) {
+    XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                                  expectedPointSize, 0.001);
+  } else {
+    XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, scaledFont.pointSize,
                                   0.001);
-    // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
-    // these are equal
-    XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
-                                  0.001);
-    // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
-    // these are equal
-    if (actionButton.enableTitleFontForState) {
-      XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
-                                    expectedPointSize, 0.001);
-    } else {
-      XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, scaledFont.pointSize,
-                                    0.001);
-    }
   }
 }
 
@@ -872,56 +870,53 @@ Verifies that MDCFontScaler fonts get scaled to lesser point sizes for size cate
 than @c UIContentSizeCategoryLarge.
 */
 - (void)testMDCAdjustsFontForContentSizeCategoryDownscalesFontScalerFontsWithLocalTraitCollection {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    MDCAlertControllerTestsControllerFake *alert =
-        [[MDCAlertControllerTestsControllerFake alloc] init];
-    alert.title = @"Title";
-    alert.message = @"A message.";
-    alert.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  // Given
+  MDCAlertControllerTestsControllerFake *alert =
+      [[MDCAlertControllerTestsControllerFake alloc] init];
+  alert.title = @"Title";
+  alert.message = @"A message.";
+  alert.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
 
-    UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
-    scaledFont.mdc_scalingCurve = CustomScalingCurve();
-    scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
+  UIFont *scaledFont = [UIFont fontWithName:@"Zapfino" size:16];
+  scaledFont.mdc_scalingCurve = CustomScalingCurve();
+  scaledFont = [scaledFont mdc_scaledFontAtDefaultSize];
 
-    MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
-    [alert addAction:action];
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  [alert addAction:action];
 
-    alert.titleFont = scaledFont;
-    alert.messageFont = scaledFont;
-    MDCButton *actionButton = [alert buttonForAction:action];
-    if (actionButton.enableTitleFontForState) {
-      [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
-    } else {
-      actionButton.titleLabel.font = scaledFont;
-    }
+  alert.titleFont = scaledFont;
+  alert.messageFont = scaledFont;
+  MDCButton *actionButton = [alert buttonForAction:action];
+  if (actionButton.enableTitleFontForState) {
+    [actionButton setTitleFont:scaledFont forState:UIControlStateNormal];
+  } else {
+    actionButton.titleLabel.font = scaledFont;
+  }
 
-    // When
-    [alert loadViewIfNeeded];
-    alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-    alert.mdc_adjustsFontForContentSizeCategory = YES;
+  // When
+  [alert loadViewIfNeeded];
+  alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  alert.mdc_adjustsFontForContentSizeCategory = YES;
 
-    // Then
-    CGFloat expectedPointSize =
-        (CGFloat)CustomScalingCurve()[UIContentSizeCategoryExtraSmall].doubleValue;
-    // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
-    // these are equal.
-    XCTAssertNotEqualWithAccuracy(alert.alertView.messageTextView.font.pointSize, expectedPointSize,
-                                  0.001);
-    // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
-    // these are equal
-    XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
-                                  0.001);
-    // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
-    // these are equal
-    if (actionButton.enableTitleFontForState) {
-      XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
-                                    expectedPointSize, 0.001);
-    } else {
-      XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, expectedPointSize,
-                                    0.001);
-    }
+  // Then
+  CGFloat expectedPointSize =
+      (CGFloat)CustomScalingCurve()[UIContentSizeCategoryExtraSmall].doubleValue;
+  // TODO(https://github.com/material-components/material-components-ios/issues/8671): Assert that
+  // these are equal.
+  XCTAssertNotEqualWithAccuracy(alert.alertView.messageTextView.font.pointSize, expectedPointSize,
+                                0.001);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8672): Assert that
+  // these are equal
+  XCTAssertNotEqualWithAccuracy(alert.alertView.titleLabel.font.pointSize, expectedPointSize,
+                                0.001);
+  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
+  // these are equal
+  if (actionButton.enableTitleFontForState) {
+    XCTAssertNotEqualWithAccuracy([actionButton titleFontForState:UIControlStateNormal].pointSize,
+                                  expectedPointSize, 0.001);
+  } else {
+    XCTAssertNotEqualWithAccuracy(actionButton.titleLabel.font.pointSize, expectedPointSize, 0.001);
   }
 }
 
@@ -1045,10 +1040,9 @@ than @c UIContentSizeCategoryLarge.
   MDCAlertController *alertController = [[MDCAlertController alloc] init];
   alertController.elevation = 5;
   __block BOOL blockCalled = NO;
-  alertController.mdc_elevationDidChangeBlock =
-      ^(MDCAlertController *controller, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  alertController.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   alertController.elevation = alertController.elevation + 1;
@@ -1062,10 +1056,9 @@ than @c UIContentSizeCategoryLarge.
   MDCAlertController *alertController = [[MDCAlertController alloc] init];
   alertController.elevation = 5;
   __block BOOL blockCalled = NO;
-  alertController.mdc_elevationDidChangeBlock =
-      ^(MDCAlertController *controller, CGFloat elevation) {
-        blockCalled = YES;
-      };
+  alertController.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> _, CGFloat elevation) {
+    blockCalled = YES;
+  };
 
   // When
   alertController.elevation = alertController.elevation;

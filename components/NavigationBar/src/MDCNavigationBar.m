@@ -296,8 +296,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                                                  attributes:attributes
                                                     context:NULL]
                          .size;
-  titleSize.width = MDCCeil(titleSize.width);
-  titleSize.height = MDCCeil(titleSize.height);
+  titleSize.width = ceil(titleSize.width);
+  titleSize.height = ceil(titleSize.height);
   CGRect titleFrame = CGRectMake(textFrame.origin.x, 0, titleSize.width, titleSize.height);
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     titleFrame = MDFRectFlippedHorizontally(titleFrame, CGRectGetWidth(self.bounds));
@@ -497,7 +497,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
     case UIControlContentVerticalAlignmentCenter: {
       CGFloat centeredY =
-          MDCFloor((CGRectGetHeight(bounds) - CGRectGetHeight(frame)) / 2) + CGRectGetMinY(bounds);
+          floor((CGRectGetHeight(bounds) - CGRectGetHeight(frame)) / 2) + CGRectGetMinY(bounds);
       return CGRectMake(CGRectGetMinX(frame), centeredY, CGRectGetWidth(frame),
                         CGRectGetHeight(frame));
     }
@@ -507,7 +507,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       // the header regardless of the header's height.
       CGFloat maxHeight = kNavigationBarDefaultHeight;
       CGFloat height = MIN(CGRectGetHeight(bounds), maxHeight);
-      CGFloat navigationBarCenteredY = MDCFloor((height - CGRectGetHeight(frame)) / 2);
+      CGFloat navigationBarCenteredY = floor((height - CGRectGetHeight(frame)) / 2);
       navigationBarCenteredY = MAX(0, navigationBarCenteredY);
       return CGRectMake(CGRectGetMinX(frame), navigationBarCenteredY, CGRectGetWidth(frame),
                         CGRectGetHeight(frame));
