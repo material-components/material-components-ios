@@ -14,7 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialMath.h"
 #import "MaterialShapeLibrary.h"
 
 @interface ShapeLibraryTests : XCTestCase

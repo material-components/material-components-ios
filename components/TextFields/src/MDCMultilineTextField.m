@@ -406,7 +406,7 @@ static NSString *const kBundle = @"MaterialTextFields.bundle";
 
 - (CGFloat)estimatedTextViewLineHeight {
   CGFloat scale = UIScreen.mainScreen.scale;
-  return MDCCeil(self.textView.font.lineHeight * scale) / scale;
+  return ceil(self.textView.font.lineHeight * scale) / scale;
 }
 
 - (void)updateIntrinsicSizeFromTextView {

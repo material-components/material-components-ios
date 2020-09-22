@@ -267,8 +267,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   UIEdgeInsets insets = [self textInsets];
   CGFloat scale = UIScreen.mainScreen.scale;
-  CGFloat centerYConstant =
-      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2;
+  CGFloat centerYConstant = insets.top + (ceil(self.textInput.font.lineHeight * scale) / scale) / 2;
   self.clearButtonCenterY = [NSLayoutConstraint constraintWithItem:_clearButton
                                                          attribute:NSLayoutAttributeCenterY
                                                          relatedBy:NSLayoutRelationEqual
@@ -583,8 +582,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 
   CGFloat scale = UIScreen.mainScreen.scale;
-  CGFloat centerYConstant =
-      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2;
+  CGFloat centerYConstant = insets.top + (ceil(self.textInput.font.lineHeight * scale) / scale) / 2;
   if (self.clearButtonCenterY.constant != centerYConstant) {
     self.clearButtonCenterY.constant = centerYConstant;
     shouldInvalidateSize = YES;
@@ -796,8 +794,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   textInsets.top = MDCTextInputFullPadding;
 
   CGFloat scale = UIScreen.mainScreen.scale;
-  CGFloat leadingOffset = MDCCeil(self.leadingUnderlineLabel.font.lineHeight * scale) / scale;
-  CGFloat trailingOffset = MDCCeil(self.trailingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat leadingOffset = ceil(self.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat trailingOffset = ceil(self.trailingUnderlineLabel.font.lineHeight * scale) / scale;
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputHalfPadding or the biggest estimated underlineLabel height +
   // MDCTextInputHalfPadding. It's also dependent on the .textInsetsMode.

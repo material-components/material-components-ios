@@ -14,7 +14,6 @@
 
 #import "UIBezierPath+MDCTextControlStyle.h"
 
-#import "MaterialMath.h"
 
 // TODO: Consider looking into whether or not the Shapes library already has this functionality, as
 // recommended in https://github.com/material-components/material-components-ios/pull/8628.
