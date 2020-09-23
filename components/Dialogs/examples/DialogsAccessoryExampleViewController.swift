@@ -46,6 +46,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     loadCollectionView(menu: [
       "Material Filled Text Field",
       "UI Text Field",
+      "Confirmation Dialog",
       "Autolayout in Custom View",
     ])
   }
@@ -70,6 +71,8 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     case 1:
       return performUITextField()
     case 2:
+      return performConfirmationDialog()
+    case 3:
       return performCustomLabelWithButton()
     default:
       print("No row is selected")
@@ -132,6 +135,26 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     textField.placeholder = "This is a text field"
     alert.accessoryView = textField
     alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
+    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
+    alert.applyTheme(withScheme: self.containerScheme)
+    return alert
+  }
+
+  // Demonstrate a confirmation dialog with a custom table view.d
+  func performConfirmationDialog() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Phone ringtone", message: "Please select a ringtone:")
+    alert.addAction(MDCAlertAction(title: "OK", handler: handler))
+    alert.addAction(MDCAlertAction(title: "Cancel", handler: handler))
+
+    alert.accessoryView = ExampleTableSeparatorView()
+
+    if let alertView = alert.view as? MDCAlertControllerView {
+      // Zero bottom-inset ensuring the bottom separator appears immediately above the actions.
+      alertView.contentInsets.bottom = 0
+      // Decreasing vertical margin between the accessory view and the message
+      alertView.accessoryViewVerticalInset = 8
+    }
+
     alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
@@ -252,4 +275,87 @@ extension DialogsAccessoryExampleViewController {
     self.present(performCustomLabelWithButton(), animated: false, completion: nil)
   }
 
+  @objc func testConfirmationDialog() {
+    resetTests()
+    self.present(performConfirmationDialog(), animated: false, completion: nil)
+  }
+}
+
+// An example view with a tableview and a bottom separator.
+class ExampleTableSeparatorView: UIView, UITableViewDataSource {
+
+  let ringtones = ["Callisto", "Luna", "Phobos", "Dione"]
+
+  let tableView: UITableView = {
+    let tv = AutoSizedTableView()
+    tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    tv.separatorStyle = .none
+    tv.rowHeight = 40
+    return tv
+  }()
+
+  init() {
+    super.init(frame: .zero)
+    setup()
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func setup() {
+    tableView.dataSource = self
+    addSubview(tableView)
+
+    let separator = UIView(frame: .zero)
+    separator.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+    addSubview(separator)
+
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    separator.translatesAutoresizingMaskIntoConstraints = false
+
+    NSLayoutConstraint.activate([
+      tableView.topAnchor.constraint(equalTo: self.topAnchor),
+      tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      separator.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+      separator.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      separator.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      separator.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      separator.heightAnchor.constraint(equalToConstant: 2),
+    ])
+
+    tableView.reloadData()
+    let currentRingtone = IndexPath(row: 1, section: 0)
+    tableView.selectRow(at: currentRingtone, animated: false, scrollPosition: .top)
+  }
+
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return ringtones.count
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+    cell.textLabel?.text = ringtones[indexPath.row]
+    cell.indentationWidth = 0
+    return cell
+  }
+}
+
+// A tableview with intrinsic size that matches its content size.
+final class AutoSizedTableView: UITableView {
+  override var contentSize: CGSize {
+    didSet {
+      invalidateIntrinsicContentSize()
+    }
+  }
+
+  override var intrinsicContentSize: CGSize {
+    layoutIfNeeded()
+    return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+  }
 }
