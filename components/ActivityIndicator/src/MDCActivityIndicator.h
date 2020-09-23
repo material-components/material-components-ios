@@ -63,7 +63,7 @@ IB_DESIGNABLE
 @property(nonatomic, assign) CGFloat radius UI_APPEARANCE_SELECTOR;
 
 /**
- Spinner stroke width. Defaults to 2dp.
+ Spinner stroke width. Defaults to 2.5.
  */
 @property(nonatomic, assign) CGFloat strokeWidth UI_APPEARANCE_SELECTOR;
 
