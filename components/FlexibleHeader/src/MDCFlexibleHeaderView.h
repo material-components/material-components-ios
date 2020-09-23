@@ -365,28 +365,6 @@ IB_DESIGNABLE
 
 @interface MDCFlexibleHeaderView (ToBeDeprecated)
 
-// Pre-iOS 8 Interface Orientation APIs
-
-/**
- Informs the receiver that the interface orientation is about to change.
-
- Must be called from UIViewController::willRotateToInterfaceOrientation:duration:.
- */
-- (void)interfaceOrientationWillChange;
-
-/**
- Informs the receiver that the interface orientation is in the process of changing.
-
- Must be called from UIViewController::willAnimateRotationToInterfaceOrientation:duration:.
- */
-- (void)interfaceOrientationIsChanging;
-
-/**
- Informs the receiver that the interface orientation has changed.
-
- Must be called from UIViewController::didRotateFromInterfaceOrientation:.
- */
-- (void)interfaceOrientationDidChange;
 
 /**
  When this is enabled, the flexible header will assume that minimumHeight and maximumHeight both
@@ -433,6 +411,36 @@ IB_DESIGNABLE
  Default is NO.
  */
 @property(nonatomic, assign) BOOL allowShadowLayerFrameAnimationsWhenChangingTrackingScrollView;
+
+@end
+
+@interface MDCFlexibleHeaderView (Deprecated)
+
+// Pre-iOS 8 Interface Orientation APIs
+
+/**
+ Informs the receiver that the interface orientation is about to change.
+
+ Must be called from UIViewController::willRotateToInterfaceOrientation:duration:.
+ */
+- (void)interfaceOrientationWillChange __deprecated_msg(
+    "Use viewWillTransitionToSize:withTransitionCoordinator: instead.");
+
+/**
+ Informs the receiver that the interface orientation is in the process of changing.
+
+ Must be called from UIViewController::willAnimateRotationToInterfaceOrientation:duration:.
+ */
+- (void)interfaceOrientationIsChanging __deprecated_msg(
+    "Use viewWillTransitionToSize:withTransitionCoordinator: instead.");
+
+/**
+ Informs the receiver that the interface orientation has changed.
+
+ Must be called from UIViewController::didRotateFromInterfaceOrientation:.
+ */
+- (void)interfaceOrientationDidChange __deprecated_msg(
+    "Use viewWillTransitionToSize:withTransitionCoordinator: instead.");
 
 @end
 
