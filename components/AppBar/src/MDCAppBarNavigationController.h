@@ -176,7 +176,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
 
 @end
 
-@interface MDCAppBarNavigationController (ToBeDeprecated)
+@interface MDCAppBarNavigationController (Deprecated)
 
 /**
  Returns the injected App Bar for a given view controller, if an App Bar was injected.
@@ -185,6 +185,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
  instead. Learn more at
  https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
-- (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
+- (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController
+    __deprecated_msg("Use -appBarViewControllerForViewController: instead.");
 
 @end
