@@ -125,8 +125,6 @@
 
 @interface MDCAlertControllerView (Deprecated)
 
-@property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR __deprecated_msg(
-    "Use MDCAlertController's buttonForAction API");
 @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR __deprecated_msg(
     "Use MDCAlertController's buttonForAction API");
 @property(nonatomic, strong, nullable)

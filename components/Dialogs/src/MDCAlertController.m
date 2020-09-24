@@ -395,14 +395,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-// b/117717380: Will be deprecated
-- (void)setButtonFont:(UIFont *)buttonFont {
-  _buttonFont = buttonFont;
-  if (self.alertView) {
-    self.alertView.buttonFont = buttonFont;
-  }
-}
-
 - (void)setTitleColor:(UIColor *)titleColor {
   _titleColor = titleColor;
   if (self.alertView) {
@@ -804,7 +796,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     // Avoid reset title color to white when setting it to nil. only set it for an actual UIColor.
     self.alertView.buttonColor = self.buttonTitleColor;  // b/117717380: Will be deprecated
   }
-  self.alertView.buttonFont = self.buttonFont;  // b/117717380: Will be deprecated
   if (self.buttonInkColor) {
     // Avoid reset ink color to white when setting it to nil. only set it for an actual UIColor.
     self.alertView.buttonInkColor = self.buttonInkColor;  // b/117717380: Will be deprecated

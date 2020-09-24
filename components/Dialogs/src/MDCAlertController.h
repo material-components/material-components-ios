@@ -149,14 +149,6 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  */
 @property(nonatomic, assign) NSTextAlignment messageAlignment;
 
-/**
- The font applied to the alert's buttons.
-
- @note This property is deprecated and will be removed in an upcoming release.
- */
-@property(nonatomic, strong, nullable)
-    UIFont *buttonFont __deprecated_msg("Please use buttonForAction: to set button properties.");
-
 // b/117717380: Will be deprecated
 /** The color applied to the alert's buttons title text.*/
 @property(nonatomic, strong, nullable) UIColor *buttonTitleColor;
