@@ -145,10 +145,14 @@ chipView.invalidateIntrinsicContentSize()
 
 ## Types
 
-There are four types of chips: 1\. [input (entry)](#input-chip), 2\.
-[choice](#choice-chip), 3\. [filter](#filter-chip), 4\. [action](#action-chip)
+There are four types of chips:
 
-![Examples of the four different chip types](assets/chips/chips-composite.png)
+1. [input (text entry)](#input-chips)
+1. [choice](#choice-chips)
+1. [filter](#filter-chips)
+1. [action](#action-chips)
+
+![Examples of the four different chip types](docs/assets/chips-composite.png)
 
 ### Input chips
 
@@ -319,7 +323,7 @@ It is easiest to create action Chips using a `UICollectionView`:
 
 The following is an anatomy diagram of a chip:
 
-![Chip anatomy diagram](assets/chips/chips-anatomy.png)
+![Chip anatomy diagram](docs/assets/chips-anatomy.png)
 
 1.  Container
 1.  Thumbnail (optional)
@@ -328,17 +332,15 @@ The following is an anatomy diagram of a chip:
 
 #### Container attributes
 
-&nbsp;               | Attribute                                                       | Related method(s)                                                                                          | Default value
--------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------
-**Color**            | `app:chipBackgroundColor`                                       | `setChipBackgroundColor`<br/>`setChipBackgroundColorResource`<br/>`getChipBackgroundColor`                 | `?attr/colorOnSurface` at 10%
-**Ripple color**     | `app:rippleColor`                                               | `setRippleColor`<br/>`setRippleColorResource`<br/>`getRippleColor`                                         | `?attr/colorOnSurface` at 12%
-**Stroke width**     | `app:chipStrokeWidth`                                           | `setStrokeWidth`<br/>`setChipStrokeWidthResource`<br/>`getChipStrokeWidth`                                 | `0dp`
-**Stroke color**     | `app:chipStrokeColor`                                           | `setStrokeColor`<br/>`setChipStrokeColorResource`<br/>`getChipStrokeColor`                                 | `?attr/colorOnSurface`
-**Min height**       | `app:chipMinHeight`                                             | `setChipMinHeight`<br/>`setChipMinHeightResource`<br/>`getChipMinHeight`                                   | `32dp`
-**Padding**          | `app:chipStartPadding`<br/>`app:chipEndPadding`                 | `setChip*Padding`<br/>`setChip*PaddingResource`<br/>`getChip*Padding`                                      | `4dp` (start)<br/>`6dp` (end)
-**Shape**            | `app:shapeAppearance`<br/>`shapeAppearanceOverlay`              | `setShapeAppearanceModel`<br/>`getShapeAppearanceModel`                                                    | `?attr/shapeAppearanceSmallComponent` with 50% `cornerSize`
-**Min touch target** | `app:chipMinTouchTargetSize`<br/>`app:ensureMinTouchTargetSize` | `ensureAccessibleTouchTarget`<br/>`setEnsureAccessibleTouchTarget`<br/>`shouldEnsureAccessibleTouchTarget` | `48dp`<br/>`true`
-**Checkable**        | `android:checkable`                                             | `setCheckable`<br/>`setCheckableResource`<br/>`isCheckable`                                                | `true` (entry, filter, choice)
+&nbsp;               | Attribute                        | Related method(s)                               | Default value
+-------------------- | -------------------------------- | ------------------------------- | -------------
+**Color**            | N/A                              | `-setBackgroundColor:forState:`<br/>`-backgroundColorForState:`  | On surface color at 12% opacity
+**Ripple color**     | N/A                              | `-setRippleColor:forState:`<br/>`-rippleColorForState:`  | White at 14% opacity
+**Stroke width**     | N/A                              | `-setBorderWidth:forState:`<br/>`-borderWidthForState:`  | 0
+**Stroke color**     | N/A                              | `-setBorderColor:forState:`<br/>`-borderColorForState:`  | `nil`
+**Min height**       | `minimumSize`                    | N/A                                                      | `{ 0, 32 }`
+**Padding**          | `contentPadding` | N/A | `{ 4, 4, 4, 4 }` 
+**Min touch target** | `centerVisibleArea`, `visibleAreaInsets` | N/A                          | `NO`, `{ 0, 0, 0, 0 }`
 
 #### Thumbnail attributes
 
@@ -346,72 +348,17 @@ The following is an anatomy diagram of a chip:
 
 &nbsp;         | Attribute                                       | Related method(s)                                                     | Default value
 -------------- | ----------------------------------------------- | --------------------------------------------------------------------- | -------------
-**Icon**       | `app:chipIcon`                                  | `setChipIconVisible`<br/>`isChipIconVisible`                          | `null`
-**Visibility** | `app:chipIconVisible`                           | `setChipIcon`<br/>`setChipIconResource`<br/>`getChipIcon`             | `true` (action and entry)
-**Color**      | `app:chipIconTint`                              | `setChipIconTint`<br/>`setChipIconTintResource`<br/>`getChipIconTint` | `null`
-**Size**       | `app:chipIconSize`                              | `setChipIconSize`<br/>`setChipIconSizeResource`<br/>`getChipIconSize` | `24dp`
-**Padding**    | `app:iconStartPadding`<br/>`app:iconEndPadding` | `setIcon*Padding`<br/>`setIcon*PaddingResource`<br/>`getIcon*Padding` | `0dp`
-
-**Checked icon**
-
-If visible, the checked icon overlays the chip icon.
-
-&nbsp;         | Attribute                | Related method(s)                                                              | Default value
--------------- | ------------------------ | ------------------------------------------------------------------------------ | -------------
-**Icon**       | `app:checkedIcon`        | `setCheckedIconVisible`<br/>`isCheckedIconVisible`                             | `@drawable/ic_mtrl_chip_checked_circle`
-**Visibility** | `app:checkedIconVisible` | `setCheckedIcon`<br/>`setCheckedIconResource`<br/>`getCheckedIcon`             | `true` (entry, filter, choice)
-**Color**      | `app:checkedIconTint`    | `setCheckedIconTint`<br/>`setCheckedIconTintResource`<br/>`getCheckedIconTint` | `null`
+**Icon**       | `imageView`, `selectedImageView`                | N/A                                                                   | `nil`
+**Padding**    | `imagePadding`, `accessoryPadding` | N/A | `{ 0, 0, 0, 0 }`, `{ 0, 0, 0, 0 }`
 
 #### Text attributes
 
 &nbsp;         | Attribute                                       | Related method(s)                                                           | Default value
 -------------- | ----------------------------------------------- | --------------------------------------------------------------------------- | -------------
-**Text label** | `android:text`                                  | `setChipText`<br/>`setChipTextResource`<br/>`getChipText`                   | `null`
-**Color**      | `android:textColor`                             | `setTextColor`<br/>`getTextColors`                                          | `?attr/colorOnSurface` at 87%
-**Typography** | `android:textAppearance`                        | `setTextAppearance`<br/>`setTextAppearanceResource`<br/>`getTextAppearance` | `?attr/textAppearanceBody2`
-**Padding**    | `app:textStartPadding`<br/>`app:textEndPadding` | `setText*Padding`<br/>`setText*PaddingResource`<br/>`getText*Padding`       | `8dp` (start)<br/>`6dp` (end)
-
-#### Remove (close) icon attributes
-
-&nbsp;                  | Attribute                                                 | Related method(s)                                                                    | Default value
------------------------ | --------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------
-**Icon**                | `app:closeIcon`                                           | `setCloseIcon`<br/>`setCloseIconResource`<br/>`getCloseIcon`                         | `@drawable/ic_mtrl_chip_close_circle`
-**Visibility**          | `app:closeIconVisible`                                    | `setCloseIconVisible`<br/>`isCloseIconVisible`                                       | `true` for entry
-**Color**               | `app:closeIconTint`                                       | `setCloseIconTint`<br/>`setCloseIconTintResource`<br/>`getCloseIconTint`             | `?attr/colorOnSurface` at 87%
-**Size**                | `app:closeIconSize`                                       | `setCloseIconSize`<br/>`setCloseIconSizeResource`<br/>`getCloseIconSize`             | `18dp`
-**Padding**             | `app:closeIconStartPadding`<br/>`app:closeIconEndPadding` | `setCloseIcon*Padding`<br/>`setCloseIcon*PaddingResource`<br/>`getCloseIcon*Padding` | `2dp`
-**Content description** | N/A                                                       | `setCloseIconContentDescription`<br/>`getCloseIconContentDescription`                | `@string/mtrl_chip_close_icon_content_description`
-
-#### `ChipGroup` attributes
-
-&nbsp;        | Attribute                                                                   | Related method(s)                                             | Default value
-------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------- | -------------
-**Layout**    | `app:singleLine`                                                            | `setSingleLine`<br/>`isSingleLine`                            | `false`
-**Selection** | `app:singleSelection`<br/>`app:selectionRequired`                           | `setSingleSelection*`<br/>`isSingleSelection*`                | `false`<br/>`false`
-**Spacing**   | `app:chipSpacing`<br/>`app:chipSpacingHorizontal`<br/>`chipSpacingVertical` | `setSpacing*`<br/>`setChipSpacing*Resource`<br/>`getSpacing*` | `8dp`
-
-#### Styles
-
-&nbsp;                          | Style
-------------------------------- | ---------------------------------------
-**Default style (action chip)** | `Widget.MaterialComponents.Chip.Action`
-**Input (entry) chip**          | `Widget.MaterialComponents.Chip.Entry`
-**Choice chip**                 | `Widget.MaterialComponents.Chip.Choice`
-**Filter chip**                 | `Widget.MaterialComponents.Chip.Filter`
-**`ChipGroup` style**           | `Widget.MaterialComponents.ChipGroup`
-
-#### Theme attributes
-
-&nbsp;             | Theme attribute             | Default style
------------------- | --------------------------- | -------------
-**`Chip`**         | `?attr/chipStyle`           | `Widget.MaterialComponents.Chip.Action`
-**`ChipGroup`**    | `?attr/chipGroupStyle`      | `Widget.MaterialComponents.ChipGroup`
-**`ChipDrawable`** | `?attr/chipStandaloneStyle` | `Widget.MaterialComponents.Chip.Entry`
-
-See the full list of
-[styles](https://github.com/material-components/material-components-android/tree/master/lib/java/com/google/android/material/chip/res/values/styles.xml)
-and
-[attributes](https://github.com/material-components/material-components-android/tree/master/lib/java/com/google/android/material/chip/res/values/attrs.xml).
+**Text label** | `titleLabel`                                    | N/A                   | N/A
+**Color**       | N/A                              | `-setTitleColor:forState:`<br/>`-titleColorForState:`  | On surface color at 87% opacity
+**Typography** | `titleFont`                        | N/A | Body 2
+**Padding**    | `titlePadding` | N/A       | `{ 3, 8, 4, 8 }`
 
 ## Theming chips
 
