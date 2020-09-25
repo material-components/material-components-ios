@@ -21,15 +21,47 @@ api_doc_root: true
 ## Contents
 
 * [Using chips](#using-chips)
-* [Installing chips](#installing-chips)
-* [Making chips accessible](#making-chips-accessible)
+* [Input chips](#input-chips)
+* [Choice chips](#choice-chips)
+* [Filter chips](#filter-chips)
+* [Action chips](#action-chips)
 * [Theming chips](#theming-chips)
 
 ## Using chips
 
-Our chips implementation allows you to add individual chips to your view controller using `-addSubview:` or build chip collections by putting chips in `UICollectionViewCells`.
+### Installing chips
 
-### Creating an individual chip
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/Chips'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
+
+### Importing chips
+
+To import the component:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialChips
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialChips.h"
+```
+<!--</div>-->
+
+### Usage
 
 Create and add a single chip to your view controller just like any other `UIView`.
 
@@ -58,17 +90,83 @@ chipView.titleLabel.text = @"Tap me";
 ```
 <!--</div>-->
 
-### Creating a chip collection
+### Making chips accessible
 
-Material design suggests building chip collections with input chips, choice chips, filter chips, or action chips.
+Always ensure that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 48x48 minimum touch target.
 
-#### Input chips
+Remember to set any relevation `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system values.
+
+### Ink ripple animation
+
+Chips display animated ink splashes when the user presses the chip. Keep in mind this will appear on
+top of your 'highlighted' backgroundColor.
+
+### Stateful properties
+
+Like UIButton, Material Chips have many state-dependant properties. Set your background color, title
+color, border style, and elevation for each of their states. If you don't set a value for a specific
+state it will fall back to whatever value has been provided for the Normal state. Don't forget that
+you'll also need to set values for the combined states, such as Highlighted | Selected.
+
+### Selected Image View
+
+In order to make it as clear as possible a chip has been selected, you can optionally set the image
+of the `selectedImageView`. This image will only appear when the chip is selected. If you have a
+image set on the standard `imageView`, then the `selectedImageView` will appear on top. Otherwise
+you'll need to resize the chip to show the selected image. See the Filter chip example to see this
+in action.
+
+### Padding
+
+There are 4 `padding` properties which control how a chip is laid out. One for each of the chip's
+subviews (`imageView` and `selectedImageView` share one padding property), and one which wraps all
+the others (`contentPadding`). This is useful so that you can set each of the padding properties to
+ensure your chips look correct whether or not they have an image and/or accessory view. The chip
+uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
+
+### Adjusting chip sizes after changing the label
+
+If the label of a chip in a collection view can be changed dynamically (e.g. in reaction to a user's
+tap), then you may notice that the chip's frame does not automatically update to accomodate the new
+size of the chip's label. To force your chip to update its layout when this happens you can invoke
+`invalidateIntrinsicContentSize` on the chip view. For example:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+chipView.invalidateIntrinsicContentSize()
+```
+
+#### Objective-C
+```objc
+[chipView invalidateIntrinsicContentSize];
+```
+<!--</div>-->
+
+## Types
+
+There are four types of chips: 1\. [input (entry)](#input-chip), 2\.
+[choice](#choice-chip), 3\. [filter](#filter-chip), 4\. [action](#action-chip)
+
+![Examples of the four different chip types](assets/chips/chips-composite.png)
+
+### Input chips
 
 Input chips represent a complex piece of information in compact form, such as an entity (person, place, or thing) or text. They enable user input and verify that input by converting text into chips.
 
-We currently provide an implementation of Input Chips called `MDCChipField`. 
+We currently provide an implementation of Input Chips called `MDCChipField`.
 
-#### Choice chips
+```objc
+MDCChipField *chipField = [[MDCChipField alloc] init];
+chipField.delegate = self;
+chipField.textField.placeholderLabel.text = @"This is a chip field.";
+chipField.showChipsDeleteButton = true
+[chipField sizeToFit];
+[self.view addSubview:chipField];
+```
+<!--</div>-->
+
+### Choice chips
 
 Choice chips allow selection of a single chip from a set of options.
 
@@ -112,7 +210,7 @@ It is easiest to create choice Chips using a `UICollectionView`:
 
 - Use `UICollectionView` `selectItemAtIndexPath:animated:scrollPosition:` method to edit choice selection programmatically.
 
-#### Filter chips
+### Filter chips
 
 Filter chips use tags or descriptive words to filter content.
 
@@ -161,7 +259,7 @@ It is easiest to create filter Chips using a `UICollectionView`:
 
 - Use `UICollectionView` `deselectItemAtIndexPath:animated:` and `selectItemAtIndexPath:animated:scrollPosition:` methods to edit filter selection in code.
 
-#### Action chips
+### Action chips
 
 Action chips offer actions related to primary content. They should appear dynamically and contextually in a UI.
 
@@ -217,92 +315,103 @@ It is easiest to create action Chips using a `UICollectionView`:
 
 - Use `UICollectionViewDelegate` method `collectionView:didSelectItemAtIndexPath:` to Trigger the action.
 
-### Tips when using chips 
+### Anatomy and key properties
 
-#### Ink ripple animation
+The following is an anatomy diagram of a chip:
 
-Chips display animated ink splashes when the user presses the chip. Keep in mind this will appear on
-top of your 'highlighted' backgroundColor.
+![Chip anatomy diagram](assets/chips/chips-anatomy.png)
 
-#### Stateful properties
+1.  Container
+1.  Thumbnail (optional)
+1.  Text
+1.  Remove icon (optional)
 
-Like UIButton, Material Chips have many state-dependant properties. Set your background color, title
-color, border style, and elevation for each of their states. If you don't set a value for a specific
-state it will fall back to whatever value has been provided for the Normal state. Don't forget that
-you'll also need to set values for the combined states, such as Highlighted | Selected.
+#### Container attributes
 
-#### Selected Image View
+&nbsp;               | Attribute                                                       | Related method(s)                                                                                          | Default value
+-------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------
+**Color**            | `app:chipBackgroundColor`                                       | `setChipBackgroundColor`<br/>`setChipBackgroundColorResource`<br/>`getChipBackgroundColor`                 | `?attr/colorOnSurface` at 10%
+**Ripple color**     | `app:rippleColor`                                               | `setRippleColor`<br/>`setRippleColorResource`<br/>`getRippleColor`                                         | `?attr/colorOnSurface` at 12%
+**Stroke width**     | `app:chipStrokeWidth`                                           | `setStrokeWidth`<br/>`setChipStrokeWidthResource`<br/>`getChipStrokeWidth`                                 | `0dp`
+**Stroke color**     | `app:chipStrokeColor`                                           | `setStrokeColor`<br/>`setChipStrokeColorResource`<br/>`getChipStrokeColor`                                 | `?attr/colorOnSurface`
+**Min height**       | `app:chipMinHeight`                                             | `setChipMinHeight`<br/>`setChipMinHeightResource`<br/>`getChipMinHeight`                                   | `32dp`
+**Padding**          | `app:chipStartPadding`<br/>`app:chipEndPadding`                 | `setChip*Padding`<br/>`setChip*PaddingResource`<br/>`getChip*Padding`                                      | `4dp` (start)<br/>`6dp` (end)
+**Shape**            | `app:shapeAppearance`<br/>`shapeAppearanceOverlay`              | `setShapeAppearanceModel`<br/>`getShapeAppearanceModel`                                                    | `?attr/shapeAppearanceSmallComponent` with 50% `cornerSize`
+**Min touch target** | `app:chipMinTouchTargetSize`<br/>`app:ensureMinTouchTargetSize` | `ensureAccessibleTouchTarget`<br/>`setEnsureAccessibleTouchTarget`<br/>`shouldEnsureAccessibleTouchTarget` | `48dp`<br/>`true`
+**Checkable**        | `android:checkable`                                             | `setCheckable`<br/>`setCheckableResource`<br/>`isCheckable`                                                | `true` (entry, filter, choice)
 
-In order to make it as clear as possible a chip has been selected, you can optionally set the image
-of the `selectedImageView`. This image will only appear when the chip is selected. If you have a
-image set on the standard `imageView`, then the `selectedImageView` will appear on top. Otherwise
-you'll need to resize the chip to show the selected image. See the Filter chip example to see this
-in action.
+#### Thumbnail attributes
 
-#### Padding
+**Chip icon**
 
-There are 4 `padding` properties which control how a chip is laid out. One for each of the chip's
-subviews (`imageView` and `selectedImageView` share one padding property), and one which wraps all
-the others (`contentPadding`). This is useful so that you can set each of the padding properties to
-ensure your chips look correct whether or not they have an image and/or accessory view. The chip
-uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
+&nbsp;         | Attribute                                       | Related method(s)                                                     | Default value
+-------------- | ----------------------------------------------- | --------------------------------------------------------------------- | -------------
+**Icon**       | `app:chipIcon`                                  | `setChipIconVisible`<br/>`isChipIconVisible`                          | `null`
+**Visibility** | `app:chipIconVisible`                           | `setChipIcon`<br/>`setChipIconResource`<br/>`getChipIcon`             | `true` (action and entry)
+**Color**      | `app:chipIconTint`                              | `setChipIconTint`<br/>`setChipIconTintResource`<br/>`getChipIconTint` | `null`
+**Size**       | `app:chipIconSize`                              | `setChipIconSize`<br/>`setChipIconSizeResource`<br/>`getChipIconSize` | `24dp`
+**Padding**    | `app:iconStartPadding`<br/>`app:iconEndPadding` | `setIcon*Padding`<br/>`setIcon*PaddingResource`<br/>`getIcon*Padding` | `0dp`
 
-#### Adjusting chip sizes after changing the label
+**Checked icon**
 
-If the label of a chip in a collection view can be changed dynamically (e.g. in reaction to a user's
-tap), then you may notice that the chip's frame does not automatically update to accomodate the new
-size of the chip's label. To force your chip to update its layout when this happens you can invoke
-`invalidateIntrinsicContentSize` on the chip view. For example:
+If visible, the checked icon overlays the chip icon.
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-chipView.invalidateIntrinsicContentSize()
-```
+&nbsp;         | Attribute                | Related method(s)                                                              | Default value
+-------------- | ------------------------ | ------------------------------------------------------------------------------ | -------------
+**Icon**       | `app:checkedIcon`        | `setCheckedIconVisible`<br/>`isCheckedIconVisible`                             | `@drawable/ic_mtrl_chip_checked_circle`
+**Visibility** | `app:checkedIconVisible` | `setCheckedIcon`<br/>`setCheckedIconResource`<br/>`getCheckedIcon`             | `true` (entry, filter, choice)
+**Color**      | `app:checkedIconTint`    | `setCheckedIconTint`<br/>`setCheckedIconTintResource`<br/>`getCheckedIconTint` | `null`
 
-#### Objective-C
-```objc
-[chipView invalidateIntrinsicContentSize];
-```
-<!--</div>-->
+#### Text attributes
 
-## Installing chips
+&nbsp;         | Attribute                                       | Related method(s)                                                           | Default value
+-------------- | ----------------------------------------------- | --------------------------------------------------------------------------- | -------------
+**Text label** | `android:text`                                  | `setChipText`<br/>`setChipTextResource`<br/>`getChipText`                   | `null`
+**Color**      | `android:textColor`                             | `setTextColor`<br/>`getTextColors`                                          | `?attr/colorOnSurface` at 87%
+**Typography** | `android:textAppearance`                        | `setTextAppearance`<br/>`setTextAppearanceResource`<br/>`getTextAppearance` | `?attr/textAppearanceBody2`
+**Padding**    | `app:textStartPadding`<br/>`app:textEndPadding` | `setText*Padding`<br/>`setText*PaddingResource`<br/>`getText*Padding`       | `8dp` (start)<br/>`6dp` (end)
 
-Add the following to your `Podfile`:
+#### Remove (close) icon attributes
 
-```bash
-pod 'MaterialComponents/Chips'
-```
-<!--{: .code-renderer.code-renderer--install }-->
+&nbsp;                  | Attribute                                                 | Related method(s)                                                                    | Default value
+----------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------
+**Icon**                | `app:closeIcon`                                           | `setCloseIcon`<br/>`setCloseIconResource`<br/>`getCloseIcon`                         | `@drawable/ic_mtrl_chip_close_circle`
+**Visibility**          | `app:closeIconVisible`                                    | `setCloseIconVisible`<br/>`isCloseIconVisible`                                       | `true` for entry
+**Color**               | `app:closeIconTint`                                       | `setCloseIconTint`<br/>`setCloseIconTintResource`<br/>`getCloseIconTint`             | `?attr/colorOnSurface` at 87%
+**Size**                | `app:closeIconSize`                                       | `setCloseIconSize`<br/>`setCloseIconSizeResource`<br/>`getCloseIconSize`             | `18dp`
+**Padding**             | `app:closeIconStartPadding`<br/>`app:closeIconEndPadding` | `setCloseIcon*Padding`<br/>`setCloseIcon*PaddingResource`<br/>`getCloseIcon*Padding` | `2dp`
+**Content description** | N/A                                                       | `setCloseIconContentDescription`<br/>`getCloseIconContentDescription`                | `@string/mtrl_chip_close_icon_content_description`
 
-Then, run the following command:
+#### `ChipGroup` attributes
 
-```bash
-pod install
-```
+&nbsp;        | Attribute                                                                   | Related method(s)                                             | Default value
+------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------- | -------------
+**Layout**    | `app:singleLine`                                                            | `setSingleLine`<br/>`isSingleLine`                            | `false`
+**Selection** | `app:singleSelection`<br/>`app:selectionRequired`                           | `setSingleSelection*`<br/>`isSingleSelection*`                | `false`<br/>`false`
+**Spacing**   | `app:chipSpacing`<br/>`app:chipSpacingHorizontal`<br/>`chipSpacingVertical` | `setSpacing*`<br/>`setChipSpacing*Resource`<br/>`getSpacing*` | `8dp`
 
-### Importing
+#### Styles
 
-To import the component:
+&nbsp;                          | Style
+------------------------------- | ---------------------------------------
+**Default style (action chip)** | `Widget.MaterialComponents.Chip.Action`
+**Input (entry) chip**          | `Widget.MaterialComponents.Chip.Entry`
+**Choice chip**                 | `Widget.MaterialComponents.Chip.Choice`
+**Filter chip**                 | `Widget.MaterialComponents.Chip.Filter`
+**`ChipGroup` style**           | `Widget.MaterialComponents.ChipGroup`
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialChips
-```
+#### Theme attributes
 
-#### Objective-C
+&nbsp;             | Theme attribute             | Default style
+------------------ | --------------------------- | -------------
+**`Chip`**         | `?attr/chipStyle`           | `Widget.MaterialComponents.Chip.Action`
+**`ChipGroup`**    | `?attr/chipGroupStyle`      | `Widget.MaterialComponents.ChipGroup`
+**`ChipDrawable`** | `?attr/chipStandaloneStyle` | `Widget.MaterialComponents.Chip.Entry`
 
-```objc
-#import "MaterialChips.h"
-```
-<!--</div>-->
-
-## Making chips accessible
-
-Always ensure that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 48x48 minimum touch target.
-
-Remember to set any relevation `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system values.
+See the full list of
+[styles](https://github.com/material-components/material-components-android/tree/master/lib/java/com/google/android/material/chip/res/values/styles.xml)
+and
+[attributes](https://github.com/material-components/material-components-android/tree/master/lib/java/com/google/android/material/chip/res/values/attrs.xml).
 
 ## Theming chips
 
