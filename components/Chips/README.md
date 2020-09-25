@@ -92,9 +92,9 @@ chipView.titleLabel.text = @"Tap me";
 
 ### Making chips accessible
 
-Always ensure that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 48x48 minimum touch target.
+Always ensure that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 44x44 minimum touch target.
 
-Remember to set any relevation `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system values.
+Remember to set any relevant `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system values.
 
 ### Ink ripple animation
 
