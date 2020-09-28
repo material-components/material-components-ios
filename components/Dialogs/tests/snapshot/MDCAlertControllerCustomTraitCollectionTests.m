@@ -19,6 +19,8 @@
 
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MaterialAvailability.h"
+#import "MaterialButtons.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 #import "MaterialColor.h"
@@ -130,7 +132,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:14];
   buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
-  self.alertController.buttonFont = buttonFont;
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:buttonFont
+                                                       forState:UIControlStateNormal];
+  }
   self.alertController.view.bounds = CGRectMake(0, 0, 300, 300);
 }
 
@@ -163,7 +168,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
   self.alertController.messageFont = originalFont;
   self.alertController.titleFont = originalFont;
-  self.alertController.buttonFont = originalFont;
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:originalFont
+                                                       forState:UIControlStateNormal];
+  }
   [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
@@ -181,7 +189,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
   self.alertController.messageFont = originalFont;
   self.alertController.titleFont = originalFont;
-  self.alertController.buttonFont = originalFont;
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:originalFont
+                                                       forState:UIControlStateNormal];
+  }
   [self
       setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
@@ -204,12 +215,15 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Given
 
   // Although the font is initialized with point size 1, the MDCTypography behavior will select a
-  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which is
-  // not 1.
+  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which
+  // is not 1.
   UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
   self.alertController.messageFont = originalFont;
   self.alertController.titleFont = originalFont;
-  self.alertController.buttonFont = originalFont;
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:originalFont
+                                                       forState:UIControlStateNormal];
+  }
   [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
@@ -230,13 +244,16 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 - (void)testSystemFontScaledWhenScaledFontUnavailableForContentSizeAXXXL {
   // Given
 
-  // Although the font is initialized with point size 1, the MDCTypography behavior will select a
-  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which is
-  // not 1.
+  // Although the font is initialized with point size 1, the MDCTypography behavior will select
+  // a fixed point size for the font at the current UIContentSizeCategory (of the host app),
+  // which is not 1.
   UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
   self.alertController.messageFont = originalFont;
   self.alertController.titleFont = originalFont;
-  self.alertController.buttonFont = originalFont;
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:originalFont
+                                                       forState:UIControlStateNormal];
+  }
   [self
       setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
@@ -257,7 +274,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   originalFont.mdc_scalingCurve = CustomScalingCurve();
   self.alertController.messageFont = originalFont;
   self.alertController.titleFont = originalFont;
-  self.alertController.buttonFont = originalFont;
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:originalFont
+                                                       forState:UIControlStateNormal];
+  }
   [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
 
   // When
@@ -276,7 +296,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   originalFont.mdc_scalingCurve = CustomScalingCurve();
   self.alertController.messageFont = originalFont;
   self.alertController.titleFont = originalFont;
-  self.alertController.buttonFont = originalFont;
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:originalFont
+                                                       forState:UIControlStateNormal];
+  }
   [self
       setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 
@@ -289,8 +312,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 }
 
 /**
- Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a larger size when
- the preferred content size category increases.
+ Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a larger
+ size when the preferred content size category increases.
  */
 - (void)testAdjustsFontForContentSizeUpscalesUIFontMetricsFontsForSizeCategoryAXXXL {
   if (@available(iOS 11.0, *)) {
@@ -335,8 +358,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 }
 
 /**
- Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a smaller size
- when the preferred content size category decreases.
+ Test that @c adjustsFontForContentSizeCategory will scale an appropriate font to a
+ smaller size when the preferred content size category decreases.
  */
 - (void)testAdjustsFontForContentSizeDownscalesUIFontMetricsFontsForSizeCategoryXS {
   if (@available(iOS 11.0, *)) {

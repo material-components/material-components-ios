@@ -1394,9 +1394,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
  The vertical layout is, at most complex, this form:
  MDCTextInputControllerBaseDefaultPadding                             // Top padding
- MDCRint(self.textInput.placeholderLabel.font.lineHeight * scale)     // Placeholder when up
+ rint(self.textInput.placeholderLabel.font.lineHeight * scale)     // Placeholder when up
  MDCTextInputControllerBaseDefaultPadding                             // Padding
- MDCCeil(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
+ ceil(MAX(self.textInput.font.lineHeight,                          // Text field or placeholder
              self.textInput.placeholderLabel.font.lineHeight))
  MDCTextInputControllerBaseDefaultPadding                             // Padding to underline
  --Underline--                                                        // Underline (height not counted)
@@ -1412,14 +1412,14 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   if (self.isFloatingEnabled) {
     textInsets.top = MDCTextInputControllerBaseDefaultPadding +
-                     MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-                             (CGFloat)self.floatingPlaceholderScale.floatValue) +
+                     rint(self.textInput.placeholderLabel.font.lineHeight *
+                          (CGFloat)self.floatingPlaceholderScale.floatValue) +
                      MDCTextInputControllerBaseDefaultPadding;
   }
 
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat leadingOffset =
-      MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+      ceil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
   CGFloat calculatedNumberOfLinesForLeadingLabel = [MDCTextInputControllerBase
       calculatedNumberOfLinesForLeadingLabel:self.textInput.leadingUnderlineLabel
                           givenTrailingLabel:self.textInput.trailingUnderlineLabel
@@ -1427,7 +1427,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                    widthHint:widthHint];
   leadingOffset = MAX(leadingOffset, calculatedNumberOfLinesForLeadingLabel * leadingOffset);
   CGFloat trailingOffset =
-      MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
+      ceil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
 
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputControllerBaseDefaultPadding or the biggest estimated underlineLabel height +

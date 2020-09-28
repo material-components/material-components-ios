@@ -16,7 +16,6 @@
 // swiftlint:disable type_body_length
 
 import XCTest
-import MaterialComponents.MaterialMath
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTextFields
 
@@ -51,7 +50,8 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
       XCTAssertEqual(controller.characterCountViewMode, controllerCopy.characterCountViewMode)
       XCTAssertEqual(controller.disabledColor, controllerCopy.disabledColor)
       XCTAssertEqual(controller.isFloatingEnabled, controllerCopy.isFloatingEnabled)
-      XCTAssertEqual(controller.floatingPlaceholderNormalColor, controllerCopy.floatingPlaceholderNormalColor)
+      XCTAssertEqual(
+        controller.floatingPlaceholderNormalColor, controllerCopy.floatingPlaceholderNormalColor)
       XCTAssertEqual(controller.floatingPlaceholderScale, controllerCopy.floatingPlaceholderScale)
       XCTAssertEqual(controller.placeholderText, controllerCopy.placeholderText)
       XCTAssertEqual(controller.helperText, controllerCopy.helperText)
@@ -59,10 +59,12 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
       XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
-      XCTAssertEqual(controller.leadingUnderlineLabelTextColor,
-                     controllerCopy.leadingUnderlineLabelTextColor)
-      XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
-                     controllerCopy.trailingUnderlineLabelTextColor)
+      XCTAssertEqual(
+        controller.leadingUnderlineLabelTextColor,
+        controllerCopy.leadingUnderlineLabelTextColor)
+      XCTAssertEqual(
+        controller.trailingUnderlineLabelTextColor,
+        controllerCopy.trailingUnderlineLabelTextColor)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -93,8 +95,9 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
       XCTAssertEqual(controller.activeColor, controllerCopy.activeColor)
       XCTAssertEqual(controller.normalColor, controllerCopy.normalColor)
       XCTAssertEqual(controller.underlineViewMode, controllerCopy.underlineViewMode)
-      XCTAssertEqual(controller.trailingUnderlineLabelTextColor,
-                     controllerCopy.trailingUnderlineLabelTextColor)
+      XCTAssertEqual(
+        controller.trailingUnderlineLabelTextColor,
+        controllerCopy.trailingUnderlineLabelTextColor)
     } else {
       XCTFail("No copy or copy is wrong class")
     }
@@ -304,7 +307,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
 
     controller.helperText = "Helper"
     textField.sizeToFit()
-    XCTAssertEqual(MDCCeil(textField.frame.height), 85.0)
+    XCTAssertEqual(ceil(textField.frame.height), 85.0)
 
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)

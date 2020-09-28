@@ -580,9 +580,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
   // Y that works.
   CGFloat actualY =
-      (CGRectGetHeight(bounds) / 2) - MDCRint(MAX(self.font.lineHeight,
-                                                  self.placeholderLabel.font.lineHeight) /
-                                              2);  // Text field or placeholder
+      (CGRectGetHeight(bounds) / 2) - rint(MAX(self.font.lineHeight,
+                                               self.placeholderLabel.font.lineHeight) /
+                                           2);  // Text field or placeholder
   actualY = textInsets.top - actualY + MDCTextInputTextRectYCorrection;
   textRect.origin.y = actualY;
 
@@ -707,7 +707,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
 - (CGFloat)estimatedTextHeight {
   CGFloat scale = UIScreen.mainScreen.scale;
-  CGFloat estimatedTextHeight = MDCCeil(self.font.lineHeight * scale) / scale;
+  CGFloat estimatedTextHeight = ceil(self.font.lineHeight * scale) / scale;
 
   return estimatedTextHeight;
 }

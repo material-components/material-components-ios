@@ -213,7 +213,7 @@ IB_DESIGNABLE
 
 @end
 
-@interface MDCButtonBar (ToBeDeprecated)
+@interface MDCButtonBar (Deprecated)
 
 /**
  The inkColor that is used for all buttons in the button bar.
@@ -223,7 +223,8 @@ IB_DESIGNABLE
  enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
  */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
+@property(nonatomic, strong, nullable) UIColor *inkColor __deprecated_msg(
+    "Set enableRippleBehavior to YES and use rippleColor instead.");
 
 @end
 

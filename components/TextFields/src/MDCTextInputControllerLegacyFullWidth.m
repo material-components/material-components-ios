@@ -23,7 +23,6 @@
 #import "private/MDCTextInputArt.h"
 
 #import "MaterialAnimationTiming.h"
-#import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 

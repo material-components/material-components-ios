@@ -15,6 +15,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MaterialDialogs.h"
 #import "MDCAlertController+Testing.h"
 #import "MaterialSnapshot.h"
@@ -99,7 +101,6 @@ static NSString *const kActionLowUrdu = @"کم";
     dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
   }
   self.alertController.messageFont = dialogBodyFont;
-  self.alertController.buttonFont = dialogButtonFont;
   MDCAlertAction *actionLow = [MDCAlertAction actionWithTitle:kActionLowUrdu
                                                      emphasis:MDCActionEmphasisLow
                                                       handler:nil];
@@ -108,6 +109,10 @@ static NSString *const kActionLowUrdu = @"کم";
                                                          handler:nil];
   [self.alertController addAction:actionLow];
   [self.alertController addAction:actionMedium];
+  for (MDCAlertAction *action in self.alertController.actions) {
+    [[self.alertController buttonForAction:action] setTitleFont:dialogButtonFont
+                                                       forState:UIControlStateNormal];
+  }
 
   [self changeToRTL:self.alertController];
 

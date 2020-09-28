@@ -91,6 +91,7 @@ static UIImage *fakeImage(CGSize size) {
 /** Category exposing implementation methods to aid testing. */
 @interface MDCTabBarView (UnitTestingExposesPrivateMethods)
 @property(nonnull, nonatomic, copy) NSArray<UIView *> *itemViews;
+@property(nonatomic, assign) BOOL needsScrollToSelectedItem;
 - (void)didTapItemView:(UITapGestureRecognizer *)tap;
 @end
 
@@ -1226,6 +1227,18 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertTrue(CGRectEqualToRect(itemFrame, self.tabBarView.bounds), @"(%@) is not equal to (%@)",
                 NSStringFromCGRect(itemFrame), NSStringFromCGRect(self.tabBarView.bounds));
+}
+
+- (void)testChangingBoundsSizeSetsScrollToSelectedIndexToYes {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.tabBarView.needsScrollToSelectedItem = NO;
+
+  // When
+  self.tabBarView.bounds = CGRectMake(0, 0, 200, 200);
+
+  // Then
+  XCTAssertTrue(self.tabBarView.needsScrollToSelectedItem);
 }
 
 - (void)testRectForItemConvertedToSuperView {

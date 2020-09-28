@@ -692,7 +692,13 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 }
 
 - (UIBezierPath *)accessibilityPath {
-  return [UIBezierPath bezierPathWithRect:self.frame];
+  if (self.window) {
+    CGRect frameInScreenCoordinates = [self convertRect:self.bounds
+                                      toCoordinateSpace:self.window.screen.coordinateSpace];
+    return [UIBezierPath bezierPathWithRect:frameInScreenCoordinates];
+  } else {
+    return [super accessibilityPath];
+  }
 }
 
 #pragma mark Color Accessors

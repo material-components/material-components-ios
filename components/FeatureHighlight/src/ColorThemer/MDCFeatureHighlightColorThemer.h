@@ -27,7 +27,7 @@
 @interface MDCFeatureHighlightColorThemer : NSObject
 @end
 
-@interface MDCFeatureHighlightColorThemer (ToBeDeprecated)
+@interface MDCFeatureHighlightColorThemer (Deprecated)
 
 /**
  Applies a color scheme's properties to an MDCFeatureHighlightViewController.
@@ -42,7 +42,8 @@
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
     toFeatureHighlightViewController:
-        (nonnull MDCFeatureHighlightViewController *)featureHighlightViewController;
+        (nonnull MDCFeatureHighlightViewController *)featureHighlightViewController
+    __deprecated_msg("Customize your MDCFeatureHighlight using its styling APIs directly.");
 
 /**
  Applies a color scheme to theme to a MDCFeatureHighlightView.
@@ -55,6 +56,7 @@
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-    toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;
+    toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView
+    __deprecated_msg("Customize your MDCFeatureHighlight using its styling APIs directly.");
 
 @end

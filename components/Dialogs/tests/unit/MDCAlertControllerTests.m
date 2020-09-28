@@ -255,7 +255,9 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // When
   self.alert.titleFont = testFont;
   self.alert.messageFont = testFont;
-  self.alert.buttonFont = testFont;
+  for (MDCAlertAction *action in self.alert.actions) {
+    [[self.alert buttonForAction:action] setTitleFont:testFont forState:UIControlStateNormal];
+  }
 
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
@@ -524,7 +526,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   self.alert.buttonInkColor = testColor;
   self.alert.titleFont = [UIFont systemFontOfSize:12];
   self.alert.messageFont = [UIFont systemFontOfSize:14];
-  self.alert.buttonFont = [UIFont systemFontOfSize:10];
+  for (MDCAlertAction *action in self.alert.actions) {
+    [[self.alert buttonForAction:action] setTitleFont:[UIFont systemFontOfSize:10]
+                                             forState:UIControlStateNormal];
+  }
   [self.alert addAction:[MDCAlertAction actionWithTitle:@"test"
                                                 handler:^(MDCAlertAction *_Nonnull action){
                                                 }]];
@@ -679,7 +684,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
                                                        }];
   [self.alert addAction:fakeAction];
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
-  self.alert.buttonFont = fakeButtonFont;
+  [[self.alert buttonForAction:fakeAction] setTitleFont:fakeButtonFont
+                                               forState:UIControlStateNormal];
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
@@ -708,7 +714,8 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
                                                        }];
   [self.alert addAction:fakeAction];
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
-  self.alert.buttonFont = fakeButtonFont;
+  [[self.alert buttonForAction:fakeAction] setTitleFont:fakeButtonFont
+                                               forState:UIControlStateNormal];
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
@@ -724,6 +731,86 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
                  @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
                  fakeButtonFont);
+}
+
+/** Verifies that buttons respond to dynamic type if they were added before or after dynamic type
+ * properties where turned on */
+- (void)testDynamicTypeEnabledUpdatesButtonFonts {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
+                                                       handler:^(MDCAlertAction *action){
+                                                       }];
+  MDCAlertAction *fakeAction2 = [MDCAlertAction actionWithTitle:@"Bar"
+                                                        handler:^(MDCAlertAction *action){
+                                                        }];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+
+  // When
+  [self.alert addAction:fakeAction];
+  [[self.alert buttonForAction:fakeAction] setTitleFont:fakeButtonFont
+                                               forState:UIControlStateNormal];
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+  [self.alert addAction:fakeAction2];
+  [[self.alert buttonForAction:fakeAction2] setTitleFont:fakeButtonFont
+                                                forState:UIControlStateNormal];
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
+                 view.titleLabel.font, fakeTitleFont);
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+                 @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
+                 fakeButtonFont);
+  MDCButton *button2 = [self.alert buttonForAction:fakeAction2];
+  XCTAssertFalse(
+      [[button2 titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+      @"%@ is equal to %@", [button2 titleFontForState:UIControlStateNormal], fakeButtonFont);
+}
+
+/** Verifies that buttons respond to dynamic type if it uses both the to be deprecated setTitleFont
+ * forState when enableTitleFontForState is YES and titlelabel.font to set the button font when
+ * enableTitleFontForState is NO */
+- (void)testDynamicTypeEnabledUpdatesButtonFontsLegacyAndNewButtonFontSettings {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
+                                                       handler:^(MDCAlertAction *action){
+                                                       }];
+  MDCAlertAction *fakeAction2 = [MDCAlertAction actionWithTitle:@"Bar"
+                                                        handler:^(MDCAlertAction *action){
+                                                        }];
+
+  // When
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  [self.alert addAction:fakeAction];
+  [self.alert addAction:fakeAction2];
+
+  MDCButton *fakeActionButton = [self.alert buttonForAction:fakeAction];
+  fakeActionButton.enableTitleFontForState = YES;
+  [fakeActionButton setTitleFont:fakeButtonFont forState:UIControlStateNormal];
+  MDCButton *fakeActionButton2 = [self.alert buttonForAction:fakeAction2];
+  fakeActionButton2.enableTitleFontForState = NO;
+  fakeActionButton2.titleLabel.font = fakeButtonFont;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
+                 view.titleLabel.font, fakeTitleFont);
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+                 @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
+                 fakeButtonFont);
+  MDCButton *button2 = [self.alert buttonForAction:fakeAction2];
+  XCTAssertFalse(
+      [[button2 titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+      @"%@ is equal to %@", [button2 titleFontForState:UIControlStateNormal], fakeButtonFont);
 }
 
 /**
@@ -757,11 +844,9 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertGreaterThan(self.alert.alertView.messageTextView.font.pointSize, baseFont.pointSize);
   XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, baseFont.fontName);
   XCTAssertGreaterThan(self.alert.alertView.titleLabel.font.pointSize, baseFont.pointSize);
-  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
-  // these are equal
   if (actionButton.enableTitleFontForState) {
-    XCTAssertNotEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
-                             baseFont.fontName);
+    XCTAssertEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
+                          baseFont.fontName);
     XCTAssertGreaterThan([actionButton titleFontForState:UIControlStateNormal].pointSize,
                          baseFont.pointSize);
   } else {
@@ -797,11 +882,9 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   XCTAssertEqualObjects(self.alert.alertView.messageTextView.font.fontName, scaledFont.fontName);
   XCTAssertEqualObjects(self.alert.alertView.titleLabel.font.fontName, scaledFont.fontName);
-  // TODO(https://github.com/material-components/material-components-ios/issues/8673): Assert that
-  // these are equal
   if (actionButton.enableTitleFontForState) {
-    XCTAssertNotEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
-                             scaledFont.fontName);
+    XCTAssertEqualObjects([actionButton titleFontForState:UIControlStateNormal].fontName,
+                          scaledFont.fontName);
   } else {
     XCTAssertNotEqualObjects(actionButton.titleLabel.font.fontName, scaledFont.fontName);
   }

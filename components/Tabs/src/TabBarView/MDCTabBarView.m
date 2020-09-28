@@ -740,6 +740,13 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   }
 }
 
+- (void)setBounds:(CGRect)bounds {
+  if (!CGSizeEqualToSize(bounds.size, self.bounds.size)) {
+    self.needsScrollToSelectedItem = YES;
+  }
+  [super setBounds:bounds];
+}
+
 - (BOOL)isScrollableLayoutStyle {
   return [self effectiveLayoutStyle] == MDCTabBarViewLayoutStyleScrollable;
 }

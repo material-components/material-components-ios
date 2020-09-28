@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialMath.h"
 
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2;
 
@@ -23,10 +22,9 @@ static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2;
 static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   // GENERATED CODE
 
-  CGRect innerBounds =
-      CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
-                 MDCFloor((frame.size.width - 2) * (CGFloat)0.90909 + (CGFloat)0.5),
-                 MDCFloor((frame.size.height - 2) * (CGFloat)0.90909 + (CGFloat)0.5));
+  CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
+                                  floor((frame.size.width - 2) * (CGFloat)0.90909 + (CGFloat)0.5),
+                                  floor((frame.size.height - 2) * (CGFloat)0.90909 + (CGFloat)0.5));
 
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
   [ic_clear_path moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) +
@@ -135,8 +133,8 @@ static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) 
 
   CGRect innerBounds =
       CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,
-                 MDCFloor((frame.size.width - 10) * (CGFloat)0.73684 + (CGFloat)0.5),
-                 MDCFloor((frame.size.height - 10) * (CGFloat)0.73684 + (CGFloat)0.5));
+                 floor((frame.size.width - 10) * (CGFloat)0.73684 + (CGFloat)0.5),
+                 floor((frame.size.height - 10) * (CGFloat)0.73684 + (CGFloat)0.5));
 
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
   [ic_clear_path moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,

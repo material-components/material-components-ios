@@ -14,7 +14,6 @@
 
 #import "MDCBaseTextFieldLayout.h"
 
-#import "MaterialMath.h"
 
 @interface MDCBaseTextFieldLayout ()
 @end
@@ -401,7 +400,7 @@
   if (assistiveLabelViewMaxY > maxY) {
     maxY = assistiveLabelViewMaxY;
   }
-  return MDCCeil(maxY);
+  return ceil(maxY);
 }
 
 - (CGRect)labelFrameWithLabelPosition:(MDCTextControlLabelPosition)labelPosition {
