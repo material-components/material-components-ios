@@ -1,3 +1,76 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActivityIndicator
+
+* [Update default stroke width to be 2.5](https://github.com/material-components/material-components-ios/commit/f87b98f26b0952e9e39139608e34d1c6e59a6bd4) (Alyssa Weiss)
+
+### AppBar
+
+* [Deprecate API from MDCAppBarNavigationController.](https://github.com/material-components/material-components-ios/commit/bf908863531f43f5bb1f987ac274e8b89246f1f9) (Yarden Eitan)
+* [Deprecate AppBar color themer APIs.](https://github.com/material-components/material-components-ios/commit/5a4f5baac656235517b1174a3918b2e9f658750f) (Yarden Eitan)
+
+### ButtonBar
+
+* [Deprecate inkColor API.](https://github.com/material-components/material-components-ios/commit/30b6cc170310343f85fa693ded5326be13b0fb45) (Yarden Eitan)
+
+### Dialogs
+
+* [Add an accessoryView with a collection example](https://github.com/material-components/material-components-ios/commit/e9b0eee25d5465c5fe43551754afcd7536879a41) (Galia Kaufman)
+* [Adding accessoryViewHorizontalInset API](https://github.com/material-components/material-components-ios/commit/9d9bd938474d41c200417aef3ae338d9c1d329d6) (Galia Kaufman)
+* [Delete deprecated buttonFont for MDCAlert and make all appropriate changes following deletion](https://github.com/material-components/material-components-ios/commit/bd6484925b3a3a26479dcca0cddef6c8d567510d) (Alyssa Weiss)
+* [Deprecate button styling APIs.](https://github.com/material-components/material-components-ios/commit/c5c231c879fc92ca7c9e8e942d1fb98205ec151a) (Yarden Eitan)
+
+### FeatureHighlight
+
+* [Deprecate color themer APIs.](https://github.com/material-components/material-components-ios/commit/89606772218a555537d1835a2c9c21feea2221a4) (Yarden Eitan)
+
+### FlexibleHeader
+
+* [Deprecate MDCFlexibleHeaderMinMaxHeight API.](https://github.com/material-components/material-components-ios/commit/39e7aed49c1d791f4528d06c44ad9064bad54935) (Yarden Eitan)
+* [Deprecate pre iOS 8 ToBeDeprecated APIs.](https://github.com/material-components/material-components-ios/commit/caafdae2176aad77b8759554af80fe8abe9fc710) (Yarden Eitan)
+
+### NavigationBar
+
+* [Deprecate color themer APIs.](https://github.com/material-components/material-components-ios/commit/2294616a4d06a258089c71337feeeac03aaccfbc) (Yarden Eitan)
+* [Deprecate typography themer APIs.](https://github.com/material-components/material-components-ios/commit/654c6cfdd7a3003696d345ca5dcd70f411b9f0c6) (Yarden Eitan)
+
+### Tabs
+
+* [Deprecate typography themer API.](https://github.com/material-components/material-components-ios/commit/70f2368ffc78e35b76ac26826725de5b46b17367) (Yarden Eitan)
+* [Scroll to selected item when there is an orientation/size change.](https://github.com/material-components/material-components-ios/commit/89b43fd8ffb98c0100a7d17e90bce4f4a3704ebc) (Yarden Eitan)
+
+### TextControls
+
+* [Translate frame to window coordinates in accessibilityPath](https://github.com/material-components/material-components-ios/commit/ea59fefa1c59d913903f9b5da38456d2b7c85080) (Andrew Overton)
+
+### private/Math
+
+* [Deprecate all APIs that have a direct standard library equivalent.](https://github.com/material-components/material-components-ios/commit/e1afe22cfb01722fd7e52a3ac61503e90e3a89c9) (Jeff Verkoeyen)
+
+### private/ThumbTrack
+
+* [Deprecate Ink APIs.](https://github.com/material-components/material-components-ios/commit/9a176d6c073ff103704b375eedbf051fe667c062) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Internal change](https://github.com/material-components/material-components-ios/commit/09a07ca6d2514e6553f45537b300fb689d620e5c) (Jeff Verkoeyen)
+
+---
+
 # 116.0.1
 
 This patch release contains various bug fixes and internal cleanup.
