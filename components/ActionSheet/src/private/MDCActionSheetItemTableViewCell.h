@@ -17,6 +17,7 @@
 #import "MDCActionSheetController.h"
 #import "MaterialInk.h"
 
+API_UNAVAILABLE(macCatalyst)
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 /**
   The action contains the title, image, and handler

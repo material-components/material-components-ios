@@ -24,6 +24,8 @@
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
 
+#if !TARGET_OS_MACCATALYST
+
 @interface BottomSheetShapedExample : BottomSheetPresenterViewController
 @end
 
@@ -69,3 +71,5 @@
 }
 
 @end
+
+#endif

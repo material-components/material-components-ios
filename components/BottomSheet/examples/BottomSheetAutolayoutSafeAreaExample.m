@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 #import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialApplication.h"
@@ -166,3 +168,5 @@ static const CGFloat kSafeContentWidth = 300;
 }
 
 @end
+
+#endif

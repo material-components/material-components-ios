@@ -33,6 +33,7 @@
  MDCBottomSheetController automatically sets the appropriate presentation style and
  transitioningDelegate for the bottom sheet behavior.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomSheetController : UIViewController <MDCElevatable, MDCElevationOverriding>
 
 /**

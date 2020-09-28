@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 #import "supplemental/BottomSheetDummyStaticViewController.h"
 #import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
@@ -49,3 +51,5 @@
 }
 
 @end
+
+#endif

@@ -20,6 +20,7 @@
  Defines methods that allows the adopting delegate to respond to messages from an
  @c MDCActionSheetController.
  */
+API_UNAVAILABLE(macCatalyst)
 @protocol MDCActionSheetControllerDelegate <NSObject>
 @optional
 

@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 @interface BottomSheetDummyCollectionViewController : UICollectionViewController
 - (instancetype)initWithNumItems:(NSInteger)numItems NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;
@@ -21,3 +23,5 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil
                          bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 @end
+
+#endif

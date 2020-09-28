@@ -13,86 +13,92 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomSheet
-import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialTextFields
 
-class BottomSheetFirstResponderExample: UIViewController {
-  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
+#if !targetEnvironment(macCatalyst)
 
-  let contentStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.axis = .vertical
-    stackView.spacing = 8
-    return stackView
-  }()
+  import MaterialComponents.MaterialBottomSheet
+  import MaterialComponents.MaterialButtons
+  import MaterialComponents.MaterialButtons_Theming
+  import MaterialComponents.MaterialContainerScheme
+  import MaterialComponents.MaterialTextFields
 
-  let issueDescriptionLabel: UILabel = {
-    let label = UILabel()
-    label.numberOfLines = 0
-    label.text = """
-    With VoiceOver on, the focused text field steals focus back from the bottom sheet
-    if resignFirstResponder is not called.
-    """
-    label.textColor = .black
-    return label
-  }()
+  class BottomSheetFirstResponderExample: UIViewController {
+    @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
-  let textField: MDCMultilineTextField = {
-    let textField = MDCMultilineTextField()
-    textField.backgroundColor = UIColor.blue.withAlphaComponent(0.3)
-    return textField
-  }()
+    let contentStackView: UIStackView = {
+      let stackView = UIStackView()
+      stackView.axis = .vertical
+      stackView.spacing = 8
+      return stackView
+    }()
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    let issueDescriptionLabel: UILabel = {
+      let label = UILabel()
+      label.numberOfLines = 0
+      label.text = """
+        With VoiceOver on, the focused text field steals focus back from the bottom sheet
+        if resignFirstResponder is not called.
+        """
+      label.textColor = .black
+      return label
+    }()
 
-    view.backgroundColor = containerScheme.colorScheme.backgroundColor
+    let textField: MDCMultilineTextField = {
+      let textField = MDCMultilineTextField()
+      textField.backgroundColor = UIColor.blue.withAlphaComponent(0.3)
+      return textField
+    }()
 
-    let button = MDCButton()
-    button.setTitle("Show bottom sheet", for: .normal)
-    button.addTarget(self,
-                     action: #selector(BottomSheetFirstResponderExample.didTapButton),
-                     for: .touchUpInside)
+    override func viewDidLoad() {
+      super.viewDidLoad()
 
-    button.applyContainedTheme(withScheme: containerScheme)
-    button.sizeToFit()
+      view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
-    contentStackView.addArrangedSubview(issueDescriptionLabel)
-    contentStackView.addArrangedSubview(textField)
-    contentStackView.addArrangedSubview(button)
+      let button = MDCButton()
+      button.setTitle("Show bottom sheet", for: .normal)
+      button.addTarget(
+        self,
+        action: #selector(BottomSheetFirstResponderExample.didTapButton),
+        for: .touchUpInside)
 
-    contentStackView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(contentStackView)
-    contentStackView.leadingAnchor
+      button.applyContainedTheme(withScheme: containerScheme)
+      button.sizeToFit()
+
+      contentStackView.addArrangedSubview(issueDescriptionLabel)
+      contentStackView.addArrangedSubview(textField)
+      contentStackView.addArrangedSubview(button)
+
+      contentStackView.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview(contentStackView)
+      contentStackView.leadingAnchor
         .constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-    contentStackView.trailingAnchor
+      contentStackView.trailingAnchor
         .constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-    contentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+      contentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+      super.viewDidAppear(animated)
+      textField.becomeFirstResponder()
+    }
+
+    @objc func didTapButton() {
+      let menu = BottomSheetUIControl()
+      let bottomSheet = MDCBottomSheetController(contentViewController: menu)
+      textField.resignFirstResponder()
+      present(bottomSheet, animated: true)
+    }
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    textField.becomeFirstResponder()
+  // MARK: Catalog by Convention
+  extension BottomSheetFirstResponderExample {
+    @objc class func catalogMetadata() -> [String: Any] {
+      return [
+        "breadcrumbs": ["Bottom Sheet", "Over Focused Text Field (Swift)"],
+        "primaryDemo": false,
+        "presentable": false,
+      ]
+    }
   }
 
-  @objc func didTapButton() {
-    let menu = BottomSheetUIControl()
-    let bottomSheet = MDCBottomSheetController(contentViewController: menu)
-    textField.resignFirstResponder()
-    present(bottomSheet, animated: true)
-  }
-}
-
-// MARK: Catalog by Convention
-extension BottomSheetFirstResponderExample {
-  @objc class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Bottom Sheet", "Over Focused Text Field (Swift)"],
-      "primaryDemo": false,
-      "presentable": false,
-    ]
-  }
-}
+#endif

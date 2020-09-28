@@ -26,6 +26,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  An instance of MDCActionSheetAction is passed to MDCActionSheetController to
  add an action to the action sheet.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCActionSheetAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**

@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar.h"
@@ -111,3 +113,5 @@
 }
 
 @end
+
+#endif

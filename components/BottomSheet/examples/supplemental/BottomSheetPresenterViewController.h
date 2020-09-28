@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
@@ -27,3 +29,5 @@
 - (void)presentBottomSheet;
 
 @end
+
+#endif

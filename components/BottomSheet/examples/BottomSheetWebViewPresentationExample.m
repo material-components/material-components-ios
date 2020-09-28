@@ -15,6 +15,8 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
+#if !TARGET_OS_MACCATALYST
+
 #import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
 
@@ -75,3 +77,5 @@
 }
 
 @end
+
+#endif

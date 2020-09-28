@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+API_UNAVAILABLE(macCatalyst)
 @interface MDCShapeSchemeExampleViewController : UIViewController
 
 @end

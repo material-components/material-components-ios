@@ -25,6 +25,7 @@
 /**
  A UIPresentationController for presenting a modal view controller as a bottom sheet.
  */
+API_UNAVAILABLE(macCatalyst)
 @interface MDCBottomSheetPresentationController : UIPresentationController
 
 /**
