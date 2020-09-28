@@ -311,6 +311,7 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   // When
   self.alertView.contentInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
   self.alertView.accessoryViewVerticalInset = 0.f;
+  self.alertView.accessoryViewHorizontalInset = -5.0f;
 
   // Then
   [self generateSizedSnapshotAndVerifyForAlert:self.alertController];

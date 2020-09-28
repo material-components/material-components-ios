@@ -140,7 +140,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     return alert
   }
 
-  // Demonstrate a confirmation dialog with a custom table view.d
+  // Demonstrate a confirmation dialog with a custom table view.
   func performConfirmationDialog() -> MDCAlertController {
     let alert = MDCAlertController(title: "Phone ringtone", message: "Please select a ringtone:")
     alert.addAction(MDCAlertAction(title: "OK", handler: handler))
@@ -153,6 +153,8 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
       alertView.contentInsets.bottom = 0
       // Decreasing vertical margin between the accessory view and the message
       alertView.accessoryViewVerticalInset = 8
+      // Aligning the accessory view with the dialog's edge by removing all horizontal insets.
+      alertView.accessoryViewHorizontalInset = -alertView.contentInsets.left
     }
 
     alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
@@ -305,6 +307,7 @@ class ExampleTableSeparatorView: UIView, UITableViewDataSource {
 
   func setup() {
     tableView.dataSource = self
+    tableView.alwaysBounceVertical = false
     addSubview(tableView)
 
     let separator = UIView(frame: .zero)
@@ -315,7 +318,7 @@ class ExampleTableSeparatorView: UIView, UITableViewDataSource {
     separator.translatesAutoresizingMaskIntoConstraints = false
 
     NSLayoutConstraint.activate([
-      tableView.topAnchor.constraint(equalTo: self.topAnchor),
+      tableView.topAnchor.constraint(lessThanOrEqualTo: self.topAnchor),
       tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       separator.topAnchor.constraint(equalTo: tableView.bottomAnchor),
@@ -341,7 +344,7 @@ class ExampleTableSeparatorView: UIView, UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
     cell.textLabel?.text = ringtones[indexPath.row]
-    cell.indentationWidth = 0
+    cell.indentationLevel = 1
     return cell
   }
 }

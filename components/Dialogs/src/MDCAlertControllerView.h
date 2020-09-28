@@ -59,8 +59,8 @@
 @property(nonatomic, assign) UIEdgeInsets titleInsets;
 
 /**
- The edge insets around the content view (which includes the message and/or the accessory view)
- against the dialog edges or its neighbor elements, the title and the actions.
+ The edge insets around the content view (which includes the message, and the accessory view if it
+ is set) against the dialog edges or its neighbor elements, the title and the actions.
 
  Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
  */
@@ -104,6 +104,23 @@
  Default value is 20.
  */
 @property(nonatomic, assign) CGFloat accessoryViewVerticalInset;
+
+/**
+The horizontal inset that sets the leading and trailing margins of the accessory view. The accessory
+insets are added to the contentInsets.leading and contentInsets.trailing values when calculating the
+leading and trailing margins of the accessory view.
+
+@note: Unlike the content's horizontal insets, the accessory insets use a single value for both
+       leading and trailing edge, while the final margins are calculated using both the content and
+       the accessory insets.
+
+@note: You may use a negative `accessoryViewHorizontalInset` value in order to to decreases the
+       leading and trailing margins of the accessory view.
+
+Default value is 0 (meaning, the accessory view's horizontal insets are determined soley by the
+                    horizontal contentInsets values).
+*/
+@property(nonatomic, assign) CGFloat accessoryViewHorizontalInset;
 
 @end
 

@@ -70,6 +70,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.actionsHorizontalMargin = 8.0f;
     self.actionsVerticalMargin = 12.0f;
     self.accessoryViewVerticalInset = 20.0f;
+    self.accessoryViewHorizontalInset = 0.0f;
 
     self.titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.titleScrollView];
@@ -676,6 +677,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 // @param boundingWidth should not include any internal margins or padding
 - (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
   CGFloat contentInsets = self.contentInsets.left + self.contentInsets.right;
+  if (self.accessoryViewHorizontalInset > 0) {
+    contentInsets += self.accessoryViewHorizontalInset * 2.0;
+  }
   CGFloat titleInsets = self.titleInsets.left + self.titleInsets.right;
   CGSize boundsSize = CGRectInfinite.size;
 
@@ -829,8 +833,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
   CGRect messageFrame = [self messageFrameWithSize:messageSize];
   CGRect accessoryViewFrame = CGRectMake(
-      self.contentInsets.left, CGRectGetMaxY(messageFrame) + [self accessoryVerticalInset],
-      accessoryViewSize.width, accessoryViewSize.height);
+      self.contentInsets.left + self.accessoryViewHorizontalInset,
+      CGRectGetMaxY(messageFrame) + [self accessoryVerticalInset],
+      accessoryViewSize.width - self.accessoryViewHorizontalInset * 2.0, accessoryViewSize.height);
 
   self.titleLabel.frame = titleFrame;
   self.messageTextView.frame = messageFrame;
