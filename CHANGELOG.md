@@ -1,16 +1,22 @@
-# #develop#
+# 117.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release, we deleted the `buttonFont` property on `MDCAlertController`, added the `accessoryViewHorizontalInset` property to `MDCAlertControllerView`, made minor bug fixes, and deprecated numerous APIs across multiple components.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+### Dialogs
+
+The `buttonFont` property on `MDCAlertController` has been deleted. To set a button font in a dialog use the `-buttonForAction:` method to get the button, then call `-setFont:` on its `titleLabel`.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+This release contains deprecations in ButtonBar, FeatureHighlight, NavigationBar, FlexibleHeader, AppBar, ThumbTrack, and TabBar. See the component section for specifics.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### Dialogs
+
+Dialogs has a new `accessoryViewHorizontalInset` API.
 
 ## Component changes
 
