@@ -29,6 +29,8 @@ api_doc_root: true
 
 ## Using chips
 
+Chips allow users to enter information, make selections, filter content, or trigger actions. While buttons are expected to appear consistently and with familiar calls to action, chips should appear dynamically as a group of multiple interactive elements.
+
 ### Installing chips
 
 Add the following to your `Podfile`:
@@ -92,33 +94,29 @@ chipView.titleLabel.text = @"Tap me";
 
 ### Making chips accessible
 
-Always ensure that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 44x44 minimum touch target.
+Always verify that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 44x44 minimum touch target.
 
 Remember to set any relevant `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system values.
 
 ### Ink ripple animation
 
-Chips display animated ink splashes when the user presses the chip. Keep in mind this will appear on
-top of your 'highlighted' backgroundColor.
+Chips display animated ink splashes when the user presses the chip. Note that if you have a background color set for the `highlighted` state the ink animation will occur on top of that color.
 
 ### Stateful properties
 
-Like UIButton, Material Chips have many state-dependant properties. Set your background color, title
-color, border style, and elevation for each of their states. If you don't set a value for a specific
-state it will fall back to whatever value has been provided for the Normal state. Don't forget that
-you'll also need to set values for the combined states, such as Highlighted | Selected.
+Like `UIButton`, `MDCChipView` provides many state-dependant accessors. These methods allow you to set the background color, title
+color, border style, and elevation, both for individual states and combinations of states. If no value is set for a given state, the `normal` value will used.
 
 ### Selected Image View
 
-In order to make it as clear as possible a chip has been selected, you can optionally set the image
-of the `selectedImageView`. This image will only appear when the chip is selected. If you have a
-image set on the standard `imageView`, then the `selectedImageView` will appear on top. Otherwise
+Setting the image for the `selectedImageView` is optional but can help clarify that a chip is selected. This image will only appear when the chip is selected. If you have an
+image set on the standard `imageView`, then the `selectedImageView` will appear on top of it. Otherwise
 you'll need to resize the chip to show the selected image. See the Filter chip example to see this
 in action.
 
 ### Padding
 
-There are 4 `padding` properties which control how a chip is laid out. One for each of the chip's
+There are 4 `padding` properties that determine a chip's layout: one for each of the chip's
 subviews (`imageView` and `selectedImageView` share one padding property), and one which wraps all
 the others (`contentPadding`). This is useful so that you can set each of the padding properties to
 ensure your chips look correct whether or not they have an image and/or accessory view. The chip
