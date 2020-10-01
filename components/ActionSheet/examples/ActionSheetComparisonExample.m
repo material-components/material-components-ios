@@ -22,7 +22,7 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
 
-@interface ActionSheetComparisonExampleViewController : UIViewController
+@interface ActionSheetComparisonExample : UIViewController
 
 @property(nonatomic, strong) MDCButton *showMaterialButton;
 @property(nonatomic, strong) MDCButton *showUIKitButton;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation ActionSheetComparisonExampleViewController
+@implementation ActionSheetComparisonExample
 
 - (instancetype)init {
   self = [super init];
@@ -135,7 +135,7 @@
 
 @end
 
-@implementation ActionSheetComparisonExampleViewController (CatalogByConvention)
+@implementation ActionSheetComparisonExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{

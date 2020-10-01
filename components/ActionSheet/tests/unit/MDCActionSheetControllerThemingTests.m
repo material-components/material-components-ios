@@ -39,13 +39,13 @@ static const CGFloat kMediumAlpha = (CGFloat)0.6;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @end
 
-@interface MDCActionSheetThemingTest : XCTestCase
+@interface MDCActionSheetControllerThemingTests : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
-@implementation MDCActionSheetThemingTest
+@implementation MDCActionSheetControllerThemingTests
 
 - (void)setUp {
   [super setUp];

@@ -15,18 +15,18 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MDCActionSheetTestHelper.h"
+#import "ActionSheetTestHelpers.h"
 
 @interface MDCActionSheetItemTableViewCell (Testing)
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
 @end
 
-@interface MDCActionSheetTableCellTest : XCTestCase
+@interface MDCActionSheetItemTableViewCellTests : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @end
 
-@implementation MDCActionSheetTableCellTest
+@implementation MDCActionSheetItemTableViewCellTests
 
 - (void)setUp {
   [super setUp];
@@ -42,7 +42,7 @@
 
 - (void)testInitializerResultsInExpectedDefaults {
   // When
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -52,7 +52,7 @@
 
 - (void)testDefaultRenderingMode {
   // When
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -64,7 +64,7 @@
   // When
   UIImageRenderingMode imageMode = UIImageRenderingModeAlwaysOriginal;
   self.actionSheet.imageRenderingMode = imageMode;
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -74,7 +74,7 @@
 
 - (void)testDefaultCellActionTextColor {
   // When
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -85,11 +85,11 @@
 
 - (void)testSetActionTextColor {
   // When
-  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
+  NSArray *colors = [ActionSheetTestHelpers colorsToTest];
 
   for (UIColor *color in colors) {
     self.actionSheet.actionTextColor = color;
-    NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+    NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then
       XCTAssertEqualObjects(cell.actionLabel.textColor, color);
@@ -99,7 +99,7 @@
 
 - (void)testDefaultCellTintColor {
   // When
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -110,11 +110,11 @@
 
 - (void)testSetTintColor {
   // When
-  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
+  NSArray *colors = [ActionSheetTestHelpers colorsToTest];
 
   for (UIColor *color in colors) {
     self.actionSheet.actionTintColor = color;
-    NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+    NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then
       XCTAssertEqualObjects(cell.actionImageView.tintColor, color);
@@ -124,11 +124,11 @@
 
 - (void)testSetRippleColor {
   // When
-  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
+  NSArray *colors = [ActionSheetTestHelpers colorsToTest];
 
   for (UIColor *color in colors) {
     self.actionSheet.rippleColor = color;
-    NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+    NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then
       XCTAssertEqualObjects(cell.rippleColor, color);
@@ -142,7 +142,7 @@
 
   // When
   self.actionSheet.actionFont = actionFont;
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
   XCTAssertNotEqual(cells.count, 0U);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     // Then
@@ -160,7 +160,7 @@
   // When
   [self.actionSheet addAction:action];
   MDCActionSheetItemTableViewCell *cell =
-      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+      [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
 
   // Then
   XCTAssertEqual(cell.actionLabel.accessibilityLabel, action.accessibilityLabel);
@@ -179,7 +179,7 @@
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
-      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+      [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertEqualObjects(cell.actionLabel.textColor, fakeColor);
 }
 
@@ -205,7 +205,7 @@
   self.actionSheet.actionTextColor = fakeControllerColor;
 
   // Then
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
   for (NSUInteger index = 0; index < cells.count; ++index) {
     MDCActionSheetItemTableViewCell *cell = cells[index];
     if (index == 1) {
@@ -231,7 +231,7 @@
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
-      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+      [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertEqualObjects(cell.actionLabel.textColor, fakeColor);
 }
 
@@ -248,7 +248,7 @@
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
-      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+      [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeColor);
 }
 
@@ -274,7 +274,7 @@
   self.actionSheet.actionTintColor = fakeControllerColor;
 
   // Then
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheet];
   for (NSUInteger index = 0; index < cells.count; ++index) {
     MDCActionSheetItemTableViewCell *cell = cells[index];
     if (index == 1) {
@@ -300,7 +300,7 @@
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
-      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+      [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeColor);
 }
 
@@ -316,7 +316,7 @@
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
-      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+      [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertEqualObjects(cell.dividerColor, UIColor.blueColor);
 }
 
@@ -332,7 +332,7 @@
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
-      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+      [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
   XCTAssertTrue(cell.showsDivider);
 }
 
@@ -365,7 +365,7 @@
 
     // Then
     MDCActionSheetItemTableViewCell *cell =
-        [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+        [ActionSheetTestHelpers getCellFromActionSheet:self.actionSheet atIndex:0];
     XCTAssertEqual(cell.contentView.interactions.count, 1);
     XCTAssertTrue(
         [cell.contentView.interactions.firstObject isKindOfClass:[UIPointerInteraction class]]);
