@@ -74,7 +74,7 @@ static inline BOOL MDCCGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat epsilon = FLT_EPSILON;
   const CGFloat min = FLT_MIN;
 #endif
-  return (MDCFabs(a - b) < constantK * epsilon * MDCFabs(a + b) || MDCFabs(a - b) < min);
+  return (fabs(a - b) < constantK * epsilon * fabs(a + b) || fabs(a - b) < min);
 }
 
 __deprecated_msg("Use floor instead.") static inline CGFloat MDCFloor(CGFloat value) {
@@ -143,7 +143,7 @@ static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
     return 0;
   }
 
-  return MDCCeil(value * scale) / scale;
+  return ceil(value * scale) / scale;
 }
 
 /**
@@ -159,7 +159,7 @@ static inline CGFloat MDCFloorScaled(CGFloat value, CGFloat scale) {
     return 0;
   }
 
-  return MDCFloor(value * scale) / scale;
+  return floor(value * scale) / scale;
 }
 
 /**
@@ -186,13 +186,13 @@ static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
   }
 
   CGPoint originalMinimumPoint = CGPointMake(CGRectGetMinX(rect), CGRectGetMinY(rect));
-  CGPoint newOrigin = CGPointMake(MDCFloor(originalMinimumPoint.x * scale) / scale,
-                                  MDCFloor(originalMinimumPoint.y * scale) / scale);
+  CGPoint newOrigin = CGPointMake(floor(originalMinimumPoint.x * scale) / scale,
+                                  floor(originalMinimumPoint.y * scale) / scale);
   CGSize adjustWidthHeight =
       CGSizeMake(originalMinimumPoint.x - newOrigin.x, originalMinimumPoint.y - newOrigin.y);
   return CGRectMake(newOrigin.x, newOrigin.y,
-                    MDCCeil((CGRectGetWidth(rect) + adjustWidthHeight.width) * scale) / scale,
-                    MDCCeil((CGRectGetHeight(rect) + adjustWidthHeight.height) * scale) / scale);
+                    ceil((CGRectGetWidth(rect) + adjustWidthHeight.width) * scale) / scale,
+                    ceil((CGRectGetHeight(rect) + adjustWidthHeight.height) * scale) / scale);
 }
 
 static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
@@ -200,7 +200,7 @@ static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
     return CGPointZero;
   }
 
-  return CGPointMake(MDCRound(point.x * scale) / scale, MDCRound(point.y * scale) / scale);
+  return CGPointMake(round(point.x * scale) / scale, round(point.y * scale) / scale);
 }
 
 /**
@@ -217,7 +217,7 @@ static inline CGSize MDCSizeCeilWithScale(CGSize size, CGFloat scale) {
     return CGSizeZero;
   }
 
-  return CGSizeMake(MDCCeil(size.width * scale) / scale, MDCCeil(size.height * scale) / scale);
+  return CGSizeMake(ceil(size.width * scale) / scale, ceil(size.height * scale) / scale);
 }
 
 /**
