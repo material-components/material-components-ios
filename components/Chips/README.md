@@ -14,50 +14,24 @@ api_doc_root: true
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BChips%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BChips%5D)
 
-Chips are compact elements that represent an input, attribute, or action.
+[Chips](https://material.io/components/chips) are compact elements that represent an input, attribute, or action.
 
-## Design & API documentation
+![Chips hero image](docs/assets/chips-hero.png)
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-chips">Material Design guidelines: Chips</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Chips/src/MDCChipCollectionViewFlowLayout.h">MDCChipCollectionViewFlowLayout</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Chips/src/MDCChipCollectionViewCell.h">MDCChipCollectionViewCell</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Chips/src/MDCChipField.h">MDCChipField</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Chips/src/MDCChipView.h">MDCChipView</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Chips/src/MDCChipFieldDelegate.h">MDCChipFieldDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Chips/src/MDCChipField.h">MDCChipFieldDelimiter</a></li>
-</ul>
+## Contents
 
-## Table of contents
+* [Using chips](#using-chips)
+* [Input chips](#input-chips)
+* [Choice chips](#choice-chips)
+* [Filter chips](#filter-chips)
+* [Action chips](#action-chips)
+* [Theming chips](#theming-chips)
 
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Chips Collections](#chips-collections)
-  - [Input Chips](#input-chips)
-  - [Choice Chips](#choice-chips)
-  - [Filter Chips](#filter-chips)
-  - [Action Chips](#action-chips)
-- [Tips](#tips)
-  - [Ink ripple animation](#ink-ripple-animation)
-  - [Stateful properties](#stateful-properties)
-  - [Selected Image View](#selected-image-view)
-  - [Padding](#padding)
-  - [Adjusting chip sizes after changing the label](#adjusting-chip-sizes-after-changing-the-label)
-- [Behavioral flags](#behavioral-flags)
-  - [Accessibility](#accessibility)
-- [Examples](#examples)
-  - [Create a single Chip](#create-a-single-chip)
-- [Extensions](#extensions)
-  - [Theming](#theming)
+## Using chips
 
-- - -
+Chips allow users to enter information, make selections, filter content, or trigger actions. While buttons are expected to appear consistently and with familiar calls to action, chips should appear dynamically as a group of multiple interactive elements.
 
-## Installation
-
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
+### Installing chips
 
 Add the following to your `Podfile`:
 
@@ -72,7 +46,7 @@ Then, run the following command:
 pod install
 ```
 
-### Importing
+### Importing chips
 
 To import the component:
 
@@ -89,39 +63,129 @@ import MaterialComponents.MaterialChips
 ```
 <!--</div>-->
 
+### Usage
 
-## Chips Collections
+Create and add a single chip to your view controller just like any other `UIView`.
 
-<!-- Extracted from docs/chips-collections.md -->
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let chipView = MDCChipView()
+chipView.titleLabel.text = "Tap me"
+chipView.setTitleColor(UIColor.red, for: .selected)
+chipView.sizeToFit()
+chipView.addTarget(self, action: #selector(tap), for: .touchUpInside)
+self.view.addSubview(chipView)
+```
 
-Material design suggest the usage of chips collection in four context: Input Chips, Choice Chips, Filter Chips, and Action Chips.
+#### Objective-C
 
-### Input Chips
+```objc
+MDCChipView *chipView = [[MDCChipView alloc] init];
+chipView.titleLabel.text = @"Tap me";
+[chipView setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+[chipView sizeToFit];
+[chipView addTarget:self
+               action:@selector(tap:)
+     forControlEvents:UIControlEventTouchUpInside];
+[self.view addSubview:chipView];
+```
+<!--</div>-->
+
+### Making chips accessible
+
+Always verify that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 44x44 minimum touch target.
+
+Remember to set any relevant `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system values.
+
+### Ink ripple animation
+
+Chips display animated ink splashes when the user presses the chip. Note that if you have a background color set for the `highlighted` state the ink animation will occur on top of that color.
+
+### Stateful properties
+
+Like `UIButton`, `MDCChipView` provides many state-dependant accessors. These methods allow you to set the background color, title
+color, border style, and elevation, both for individual states and combinations of states. If no value is set for a given state, the `normal` value will used.
+
+### Selected Image View
+
+Setting the image for the `selectedImageView` is optional but can help clarify that a chip is selected. This image will only appear when the chip is selected. If you have an
+image set on the standard `imageView`, then the `selectedImageView` will appear on top of it. Otherwise
+you'll need to resize the chip to show the selected image. See the Filter chip example to see this
+in action.
+
+### Padding
+
+There are 4 `padding` properties that determine a chip's layout: one for each of the chip's
+subviews (`imageView` and `selectedImageView` share one padding property), and one which wraps all
+the others (`contentPadding`). This is useful so that you can set each of the padding properties to
+ensure your chips look correct whether or not they have an image and/or accessory view. The chip
+uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
+
+### Adjusting chip sizes after changing the label
+
+If the label of a chip in a collection view can be changed dynamically (e.g. in reaction to a user's
+tap), then you may notice that the chip's frame does not automatically update to accomodate the new
+size of the chip's label. To force your chip to update its layout when this happens you can invoke
+`invalidateIntrinsicContentSize` on the chip view. For example:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+chipView.invalidateIntrinsicContentSize()
+```
+
+#### Objective-C
+```objc
+[chipView invalidateIntrinsicContentSize];
+```
+<!--</div>-->
+
+## Types
+
+There are four types of chips:
+
+1. [input (text entry)](#input-chips)
+1. [choice](#choice-chips)
+1. [filter](#filter-chips)
+1. [action](#action-chips)
+
+![Examples of the four different chip types](docs/assets/chips-composite.png)
+
+### Input chips
+
 Input chips represent a complex piece of information in compact form, such as an entity (person, place, or thing) or text. They enable user input and verify that input by converting text into chips.
 
+We currently provide an implementation of Input Chips called `MDCChipField`.
 
-#### Implementation
-We currently provide an implementation of Input Chips called `MDCChipField`. 
+```objc
+MDCChipField *chipField = [[MDCChipField alloc] init];
+chipField.delegate = self;
+chipField.textField.placeholderLabel.text = @"This is a chip field.";
+chipField.showChipsDeleteButton = true
+[chipField sizeToFit];
+[self.view addSubview:chipField];
+```
+<!--</div>-->
 
+### Choice chips
 
-### Choice Chips
 Choice chips allow selection of a single chip from a set of options.
 
 Choice chips clearly delineate and display options in a compact area. They are a good alternative to toggle buttons, radio buttons, and single select menus.
 
-#### Implementation
 It is easiest to create choice Chips using a `UICollectionView`:
 
- - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
- <!--<div class="material-code-render" markdown="1">-->
- ```objc
- MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
+  - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
+  <!--<div class="material-code-render" markdown="1">-->
+  ```objc
+  MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
- ```
- <!--</div>-->
- 
- - Leave the default `UICollectionView` selection setting (single selection).
- - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
+  ```
+  <!--</div>-->
+
+  - Leave the default `UICollectionView` selection setting (single selection).
+  - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
 
   <!--<div class="material-code-render" markdown="1">-->
    ```objc
@@ -148,14 +212,12 @@ It is easiest to create choice Chips using a `UICollectionView`:
 
 - Use `UICollectionView` `selectItemAtIndexPath:animated:scrollPosition:` method to edit choice selection programmatically.
 
+### Filter chips
 
-### Filter Chips
 Filter chips use tags or descriptive words to filter content.
 
 Filter chips clearly delineate and display options in a compact area. They are a good alternative to toggle buttons or checkboxes.
 
-
-#### Implementation
 It is easiest to create filter Chips using a `UICollectionView`:
 
  - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
@@ -199,13 +261,12 @@ It is easiest to create filter Chips using a `UICollectionView`:
 
 - Use `UICollectionView` `deselectItemAtIndexPath:animated:` and `selectItemAtIndexPath:animated:scrollPosition:` methods to edit filter selection in code.
 
+### Action chips
 
-### Action Chips
 Action chips offer actions related to primary content. They should appear dynamically and contextually in a UI.
 
 An alternative to action chips are buttons, which should appear persistently and consistently.
 
-#### Implementation
 It is easiest to create action Chips using a `UICollectionView`:
 
  - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
@@ -256,130 +317,59 @@ It is easiest to create action Chips using a `UICollectionView`:
 
 - Use `UICollectionViewDelegate` method `collectionView:didSelectItemAtIndexPath:` to Trigger the action.
 
-- - -
+### Anatomy and key properties
 
+The following is an anatomy diagram of a chip:
 
-## Tips
+![Chip anatomy diagram](docs/assets/chips-anatomy.png)
 
-<!-- Extracted from docs/tips.md -->
+1.  Container
+1.  Thumbnail (optional)
+1.  Text
+1.  Remove icon (optional)
 
-### Ink ripple animation
-Chips display animated ink splashes when the user presses the chip. Keep in mind this will appear on
-top of your 'highlighted' backgroundColor.
+#### Container attributes
 
-### Stateful properties
-Like UIButton, Material Chips have many state-dependant properties. Set your background color, title
-color, border style, and elevation for each of their states. If you don't set a value for a specific
-state it will fall back to whatever value has been provided for the Normal state. Don't forget that
-you'll also need to set values for the combined states, such as Highlighted | Selected.
+&nbsp;               | Attribute                        | Related method(s)                               | Default value
+-------------------- | -------------------------------- | ------------------------------- | -------------
+**Color**            | N/A                              | `-setBackgroundColor:forState:`<br/>`-backgroundColorForState:`  | On surface color at 12% opacity
+**Ripple color**     | N/A                              | `-setRippleColor:forState:`<br/>`-rippleColorForState:`  | White at 14% opacity
+**Stroke width**     | N/A                              | `-setBorderWidth:forState:`<br/>`-borderWidthForState:`  | 0
+**Stroke color**     | N/A                              | `-setBorderColor:forState:`<br/>`-borderColorForState:`  | `nil`
+**Min height**       | `minimumSize`                    | N/A                                                      | `{ 0, 32 }`
+**Padding**          | `contentPadding` | N/A | `{ 4, 4, 4, 4 }` 
+**Min touch target** | `centerVisibleArea`, `visibleAreaInsets` | N/A                          | `NO`, `{ 0, 0, 0, 0 }`
 
-### Selected Image View
-In order to make it as clear as possible a chip has been selected, you can optionally set the image
-of the `selectedImageView`. This image will only appear when the chip is selected. If you have a
-image set on the standard `imageView`, then the `selectedImageView` will appear on top. Otherwise
-you'll need to resize the chip to show the selected image. See the Filter chip example to see this
-in action.
+#### Thumbnail attributes
 
-### Padding
-There are 4 `padding` properties which control how a chip is laid out. One for each of the chip's
-subviews (`imageView` and `selectedImageView` share one padding property), and one which wraps all
-the others (`contentPadding`). This is useful so that you can set each of the padding properties to
-ensure your chips look correct whether or not they have an image and/or accessory view. The chip
-uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
+**Chip icon**
 
-### Adjusting chip sizes after changing the label
-If the label of a chip in a collection view can be changed dynamically (e.g. in reaction to a user's
-tap), then you may notice that the chip's frame does not automatically update to accomodate the new
-size of the chip's label. To force your chip to update its layout when this happens you can invoke
-`invalidateIntrinsicContentSize` on the chip view. For example:
+&nbsp;         | Attribute                                       | Related method(s)                                                     | Default value
+-------------- | ----------------------------------------------- | --------------------------------------------------------------------- | -------------
+**Icon**       | `imageView`, `selectedImageView`                | N/A                                                                   | `nil`
+**Padding**    | `imagePadding`, `accessoryPadding` | N/A | `{ 0, 0, 0, 0 }`, `{ 0, 0, 0, 0 }`
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-chipView.invalidateIntrinsicContentSize()
-```
+#### Text attributes
 
-#### Objective-C
-```objc
-[chipView invalidateIntrinsicContentSize];
-```
-<!--</div>-->
+&nbsp;         | Attribute                                       | Related method(s)                                                           | Default value
+-------------- | ----------------------------------------------- | --------------------------------------------------------------------------- | -------------
+**Text label** | `titleLabel`                                    | N/A                   | N/A
+**Color**       | N/A                              | `-setTitleColor:forState:`<br/>`-titleColorForState:`  | On surface color at 87% opacity
+**Typography** | `titleFont`                        | N/A | Body 2
+**Padding**    | `titlePadding` | N/A       | `{ 3, 8, 4, 8 }`
 
-- - -
+## Theming chips
 
+`MDCChipView` supports Material Theming using a Container Scheme.
+There are two variants for Material Theming of an `MDCChipView`, which are the default theme and the outlined theme.
 
-## Behavioral flags
+Below is a Chip collection with the Shrine theme applied to it.
 
-<!-- Extracted from docs/enable-chips-that-delete.md -->
-
-If within your `MDCChipField` you want chips that can be deleted follow these steps.
-
-### Accessibility
-
-Enabling this flag will add 24x24 touch targets within the chip view. This goes against Google's recommended 
-48x48 touch targets. We recommend if you enable this behavior your associate it with a `MDCSnackbar` or 
-`MDCDialog` to confirm allow the user to confirm their behavior.
+![shrine-chips](docs/assets/shrine-chips.png)
 
 <!--<div class="material-code-render" markdown="1">-->
+
 #### Swift
-```swift
-let chipField = MDCChipField()
-chipField.showChipsDeleteButton = true
-```
-
-#### Objective-C
-```objc
-MDCChipField *chipField = [[MDCChipField alloc] init];
-chipField.showChipsDeleteButton = YES;
-```
-<!--</div>-->
-
-
-## Examples
-
-<!-- Extracted from docs/Examples.md -->
-
-### Create a single Chip
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let chipView = MDCChipView()
-chipView.titleLabel.text = "Tap me"
-chipView.setTitleColor(UIColor.red, for: .selected)
-chipView.sizeToFit()
-chipView.addTarget(self, action: #selector(tap), for: .touchUpInside)
-self.view.addSubview(chipView)
-```
-
-#### Objective-C
-
-```objc
-MDCChipView *chipView = [[MDCChipView alloc] init];
-chipView.titleLabel.text = @"Tap me";
-[chipView setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
-[chipView sizeToFit];
-[chipView addTarget:self
-               action:@selector(tap:)
-     forControlEvents:UIControlEventTouchUpInside];
-[self.view addSubview:chipView];
-```
-<!--</div>-->
-
-
-## Extensions
-
-<!-- Extracted from docs/theming.md -->
-
-### Theming
-
- `MDCChipView` supports Material Theming using a Container Scheme.
-There are two variants for Material Theming of an MDCChipVIew, which are the default theme
-and the outlined theme.
-
- <!--<div class="material-code-render" markdown="1">-->
-
- #### Swift
 
 ```swift
 // Import the Chips Theming Extensions module
@@ -393,7 +383,7 @@ chip.applyTheme(withScheme: containerScheme)
 chip.applyOutlinedTheme(withScheme: containerScheme)
 ```
 
- #### Objective-C
+#### Objective-C
 
 ```objc
 // Import the Tabs Theming Extensions header
@@ -408,4 +398,3 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 ```
 
 <!--</div>-->
-
