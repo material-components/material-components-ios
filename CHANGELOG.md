@@ -1,3 +1,38 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Flatten the unit tests into a single directory.](https://github.com/material-components/material-components-ios/commit/ab1ea86eef7d3b0f15bb2c056281755283185264) (Jeff Verkoeyen)
+* [Update all test and example files to match conventions.](https://github.com/material-components/material-components-ios/commit/791596b851fdac175b51f3685016b71c91d285e7) (Jeff Verkoeyen)
+
+### Chips
+
+* [Replace Chips docs](https://github.com/material-components/material-components-ios/commit/9cc66610ec101eadb4195355dd5e0e00239058a8) (Andrew Overton)
+
+### Dialogs
+
+* [Fix an issue that alertController:didTapAction:withEvent: delegate method is not called if the action doesn't have completion handler.](https://github.com/material-components/material-components-ios/commit/cbfa5400ede2c383980953311ee01a3e0937af32) (Nobody)
+
+### Snackbar
+
+* [Delete all deprecated APIs.](https://github.com/material-components/material-components-ios/commit/166e7ca6cbb528d223d17e4297103314b58e2667) (Jeff Verkoeyen)
+
+---
+
 # 117.0.0
 
 In this major release, we deleted the `buttonFont` property on `MDCAlertController`, added the `accessoryViewHorizontalInset` property to `MDCAlertControllerView`, made minor bug fixes, and deprecated numerous APIs across multiple components.
