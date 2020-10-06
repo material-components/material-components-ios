@@ -1,3 +1,21 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+---
+
 # 117.0.0
 
 In this major release, we deleted the `buttonFont` property on `MDCAlertController`, added the `accessoryViewHorizontalInset` property to `MDCAlertControllerView`, made minor bug fixes, and deprecated numerous APIs across multiple components.
