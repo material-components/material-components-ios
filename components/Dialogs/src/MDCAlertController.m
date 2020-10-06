@@ -574,6 +574,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)actionButtonPressed:(id)button forEvent:(UIEvent *)event {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
+  if ([self.delegate respondsToSelector:@selector(alertController:didTapAction:withEvent:)]) {
+    [self.delegate alertController:self didTapAction:action withEvent:event];
+  }
 
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
@@ -582,12 +585,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       dismissViewControllerAnimated:YES
                          completion:^(void) {
                            if (action.completionHandler) {
-                             if ([self.delegate respondsToSelector:@selector
-                                                (alertController:didTapAction:withEvent:)]) {
-                               [self.delegate alertController:self
-                                                 didTapAction:action
-                                                    withEvent:event];
-                             }
                              action.completionHandler(action);
                            }
                          }];

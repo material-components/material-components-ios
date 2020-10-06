@@ -16,7 +16,7 @@
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "MaterialActionSheet.h"
-#import "MDCActionSheetTestHelper.h"
+#import "ActionSheetTestHelpers.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialShadowElevations.h"
 
@@ -126,7 +126,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
   // Given
   self.actionSheet.message = @"Test message";
 
-  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
+  NSArray *colors = [ActionSheetTestHelpers colorsToTest];
   for (UIColor *color in colors) {
     // When
     self.actionSheet.messageTextColor = color;
@@ -140,7 +140,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
   // Given
   self.actionSheet.title = @"Test title";
 
-  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
+  NSArray *colors = [ActionSheetTestHelpers colorsToTest];
   for (UIColor *color in colors) {
     // When
     self.actionSheet.titleTextColor = color;
@@ -152,7 +152,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 
 - (void)testCustomBackgroundColor {
   // Given
-  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
+  NSArray *colors = [ActionSheetTestHelpers colorsToTest];
   for (UIColor *color in colors) {
     // When
     self.actionSheet.backgroundColor = color;
@@ -291,7 +291,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
   self.actionSheet.message = message;
 
   // When
-  [MDCActionSheetTestHelper addNumberOfActions:100 toActionSheet:self.actionSheet];
+  [ActionSheetTestHelpers addNumberOfActions:100 toActionSheet:self.actionSheet];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
   return viewRect;

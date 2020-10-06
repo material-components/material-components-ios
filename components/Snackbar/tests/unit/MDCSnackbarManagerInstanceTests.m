@@ -37,7 +37,7 @@
 - (void)setUp {
   [super setUp];
 
-  self.messageTextColor = MDCSnackbarManager.messageTextColor;
+  self.messageTextColor = MDCSnackbarManager.defaultManager.messageTextColor;
   self.snackbarMessageViewShadowColor =
       MDCSnackbarManager.defaultManager.snackbarMessageViewShadowColor;
   self.snackbarMessageViewBackgroundColor =

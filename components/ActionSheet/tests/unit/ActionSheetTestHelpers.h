@@ -26,7 +26,7 @@
 - (CGFloat)openingSheetHeight;
 @end
 
-@interface MDCActionSheetTestHelper : NSObject
+@interface ActionSheetTestHelpers : NSObject
 
 + (NSArray *)colorsToTest;
 

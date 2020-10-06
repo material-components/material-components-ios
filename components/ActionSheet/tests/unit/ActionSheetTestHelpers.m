@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCActionSheetTestHelper.h"
+#import "ActionSheetTestHelpers.h"
 
 #import <CoreImage/CoreImage.h>
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 
-@implementation MDCActionSheetTestHelper
+@implementation ActionSheetTestHelpers
 
 + (NSArray *)colorsToTest {
   UIColor *rgbColor = [UIColor colorWithRed:(CGFloat)0.7
@@ -52,7 +52,7 @@
 + (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:
     (MDCActionSheetController *)actionSheet {
   NSMutableArray *cellsArray = [[NSMutableArray alloc] init];
-  [MDCActionSheetTestHelper addNumberOfActions:10 toActionSheet:actionSheet];
+  [ActionSheetTestHelpers addNumberOfActions:10 toActionSheet:actionSheet];
   NSUInteger cellsCount = actionSheet.actions.count;
   UITableView *table = actionSheet.tableView;
   for (NSUInteger cellIndex = 0; cellIndex < cellsCount; ++cellIndex) {

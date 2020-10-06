@@ -15,8 +15,8 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MDCActionSheetTestHelper.h"
 #import "MaterialActionSheet.h"
+#import "ActionSheetTestHelpers.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 
@@ -31,13 +31,13 @@
 /**
  This class confirms behavior of @c MDCActionSheetController when used with Ripple.
  */
-@interface ActionSheetRippleTests : XCTestCase
+@interface MDCActionSheetControllerRippleTests : XCTestCase
 
 @property(nonatomic, strong, nullable) MDCActionSheetController *actionSheetController;
 
 @end
 
-@implementation ActionSheetRippleTests
+@implementation MDCActionSheetControllerRippleTests
 
 - (void)setUp {
   [super setUp];
@@ -56,7 +56,7 @@
  */
 - (void)testDefaultRipplePropertiesAreCorrect {
   // When
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheetController];
 
   // Then
   XCTAssertEqualObjects(self.actionSheetController.rippleColor, nil);
@@ -76,11 +76,12 @@
 - (void)testSettingRippleColor {
   // When
   self.actionSheetController.rippleColor = UIColor.redColor;
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
+  NSArray *cells = [ActionSheetTestHelpers getCellsFromActionSheet:self.actionSheetController];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.rippleTouchController.rippleView.rippleColor, UIColor.redColor);
   }
 }
+
 @end

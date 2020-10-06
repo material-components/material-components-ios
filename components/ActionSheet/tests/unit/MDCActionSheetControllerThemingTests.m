@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../../src/private/MDCActionSheetHeaderView.h"
-#import "../../../src/private/MDCActionSheetItemTableViewCell.h"
+#import "../../src/private/MDCActionSheetHeaderView.h"
+#import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MaterialActionSheet+Theming.h"
 #import "MaterialAvailability.h"
 #import "MaterialShadowElevations.h"
@@ -39,13 +39,13 @@ static const CGFloat kMediumAlpha = (CGFloat)0.6;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @end
 
-@interface MDCActionSheetThemingTest : XCTestCase
+@interface MDCActionSheetControllerThemingTests : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
-@implementation MDCActionSheetThemingTest
+@implementation MDCActionSheetControllerThemingTests
 
 - (void)setUp {
   [super setUp];

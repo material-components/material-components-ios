@@ -13,19 +13,17 @@
 // limitations under the License.
 
 import UIKit
-
+import MaterialComponents.MaterialActionSheet
+import MaterialComponents.MaterialActionSheet_Theming 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 
-import MaterialComponents.MaterialActionSheet
-import MaterialComponents.MaterialActionSheet_Theming
-
-class ActionSheetTypicalUseSwiftExampleViewController: UIViewController {
+class ActionSheetTypicalUseSwiftExample: UIViewController {
 
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
-  
+
   let tableView = UITableView()
   enum ActionSheetExampleType {
     case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed, thirtyOptions
@@ -39,7 +37,7 @@ class ActionSheetTypicalUseSwiftExampleViewController: UIViewController {
     ("With Title and Message", .titleAndMessage),
     ("Dynamic Type Enabled", .dynamicType),
     ("Delayed", .delayed),
-    ("Thirty Options", .thirtyOptions)
+    ("Thirty Options", .thirtyOptions),
   ]
   let cellIdentifier = "BaseCell"
 
@@ -64,19 +62,19 @@ class ActionSheetTypicalUseSwiftExampleViewController: UIViewController {
     let actionSheet: MDCActionSheetController
     switch type {
     case .typical:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.typical()
+      actionSheet = ActionSheetTypicalUseSwiftExample.typical()
     case .title:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.title()
+      actionSheet = ActionSheetTypicalUseSwiftExample.title()
     case .message:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.message()
+      actionSheet = ActionSheetTypicalUseSwiftExample.message()
     case .noIcons:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.noIcons()
+      actionSheet = ActionSheetTypicalUseSwiftExample.noIcons()
     case .titleAndMessage:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.titleAndMessage()
+      actionSheet = ActionSheetTypicalUseSwiftExample.titleAndMessage()
     case .dynamicType:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.dynamic()
+      actionSheet = ActionSheetTypicalUseSwiftExample.dynamic()
     case .delayed:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.titleAndMessage()
+      actionSheet = ActionSheetTypicalUseSwiftExample.titleAndMessage()
       let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "ic_home")) { _ in
         print("Second home action")
       }
@@ -90,7 +88,7 @@ class ActionSheetTypicalUseSwiftExampleViewController: UIViewController {
         actionSheet.contentEdgeInsets = UIEdgeInsets(top: -10, left: 0, bottom: -10, right: 0)
       }
     case .thirtyOptions:
-      actionSheet = ActionSheetTypicalUseSwiftExampleViewController.thirtyOptions()
+      actionSheet = ActionSheetTypicalUseSwiftExample.thirtyOptions()
     }
     actionSheet.applyTheme(withScheme: containerScheme)
     present(actionSheet, animated: true, completion: nil)
@@ -98,7 +96,7 @@ class ActionSheetTypicalUseSwiftExampleViewController: UIViewController {
 }
 
 // MARK: Catalog by Convensions
-extension ActionSheetTypicalUseSwiftExampleViewController {
+extension ActionSheetTypicalUseSwiftExample {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
@@ -110,13 +108,13 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
 
 }
 
-extension ActionSheetTypicalUseSwiftExampleViewController : UITableViewDelegate {
+extension ActionSheetTypicalUseSwiftExample: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     showActionSheet(data[indexPath.row].type)
   }
 }
 
-extension ActionSheetTypicalUseSwiftExampleViewController : UITableViewDataSource {
+extension ActionSheetTypicalUseSwiftExample: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     cell.textLabel?.text = data[indexPath.row].label
@@ -128,33 +126,42 @@ extension ActionSheetTypicalUseSwiftExampleViewController : UITableViewDataSourc
   }
 }
 
-extension ActionSheetTypicalUseSwiftExampleViewController {
+extension ActionSheetTypicalUseSwiftExample {
   static var actionOne: MDCActionSheetAction {
     let image = UIImage(named: "ic_home") ?? UIImage()
-    return MDCActionSheetAction(title: "Home",
-                                image: image) { (_) in
-                                  print("Home action") }
+    return MDCActionSheetAction(
+      title: "Home",
+      image: image
+    ) { (_) in
+      print("Home action")
+    }
   }
 
   static var actionTwo: MDCActionSheetAction {
     let image = UIImage(named: "ic_favorite") ?? UIImage()
-    return MDCActionSheetAction(title: "Favorite",
-                                image: image) { (_) in
-                                  print("Favorite action") }
+    return MDCActionSheetAction(
+      title: "Favorite",
+      image: image
+    ) { (_) in
+      print("Favorite action")
+    }
   }
 
   static var actionThree: MDCActionSheetAction {
     let image = UIImage(named: "ic_email") ?? UIImage()
-    return MDCActionSheetAction(title: "Email",
-                                image: image) { (_) in
-                                  print("Email action") }
+    return MDCActionSheetAction(
+      title: "Email",
+      image: image
+    ) { (_) in
+      print("Email action")
+    }
   }
 
   static var messageString: String {
-    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies diam " +
-      "libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risusnmaximus tempus. " +
-      "Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, quis eleifend nisi " +
-    "eros dictum mi. In finibus vulputate eros, in luctus diam auctor in."
+    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies diam "
+      + "libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risusnmaximus tempus. "
+      + "Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, quis eleifend nisi "
+      + "eros dictum mi. In finibus vulputate eros, in luctus diam auctor in."
   }
 
   static func typical() -> MDCActionSheetController {
@@ -174,8 +181,9 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
   }
 
   static func message() -> MDCActionSheetController {
-    let actionSheet = MDCActionSheetController(title: nil,
-                                               message: messageString)
+    let actionSheet = MDCActionSheetController(
+      title: nil,
+      message: messageString)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
     actionSheet.addAction(actionThree)
@@ -183,8 +191,9 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
   }
 
   static func titleAndMessage() -> MDCActionSheetController {
-    let actionSheet = MDCActionSheetController(title: "Action Sheet",
-                                               message: messageString)
+    let actionSheet = MDCActionSheetController(
+      title: "Action Sheet",
+      message: messageString)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
     actionSheet.addAction(actionThree)
@@ -193,15 +202,21 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
 
   static func noIcons() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action Sheet", message: messageString)
-    let action1 = MDCActionSheetAction(title: "Home", image: nil, handler: { _ in
-      print("Home action")
-    })
-    let action2 = MDCActionSheetAction(title: "Favorite", image: nil, handler: { _ in
-      print("Favorite action")
-    })
-    let action3 = MDCActionSheetAction(title: "Email", image: nil, handler: { _ in
-      print("Email action")
-    })
+    let action1 = MDCActionSheetAction(
+      title: "Home", image: nil,
+      handler: { _ in
+        print("Home action")
+      })
+    let action2 = MDCActionSheetAction(
+      title: "Favorite", image: nil,
+      handler: { _ in
+        print("Favorite action")
+      })
+    let action3 = MDCActionSheetAction(
+      title: "Email", image: nil,
+      handler: { _ in
+        print("Email action")
+      })
     actionSheet.addAction(action1)
     actionSheet.addAction(action2)
     actionSheet.addAction(action3)
@@ -212,9 +227,10 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
     actionSheet.mdc_adjustsFontForContentSizeCategory = true
     let image = UIImage(named: "ic_email") ?? UIImage()
-    let actionThree = MDCActionSheetAction(title: "Email",
-                                           image: image,
-                                           handler: nil)
+    let actionThree = MDCActionSheetAction(
+      title: "Email",
+      image: image,
+      handler: nil)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
     actionSheet.addAction(actionThree)
@@ -225,9 +241,10 @@ extension ActionSheetTypicalUseSwiftExampleViewController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
 
     for i in 1...30 {
-      let action = MDCActionSheetAction(title: "Action \(i)",
-                                        image: UIImage(named: "ic_home"),
-                                        handler: nil)
+      let action = MDCActionSheetAction(
+        title: "Action \(i)",
+        image: UIImage(named: "ic_home"),
+        handler: nil)
       actionSheet.addAction(action)
     }
     return actionSheet

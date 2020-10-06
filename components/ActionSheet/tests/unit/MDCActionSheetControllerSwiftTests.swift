@@ -15,7 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialActionSheet
 
-class ActionSheetTest: XCTestCase {
+class MDCActionSheetControllerSwiftTests: XCTestCase {
 
   var actionSheet: MDCActionSheetController!
 
@@ -71,8 +71,11 @@ class ActionSheetTest: XCTestCase {
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
       if let dataSource = table.dataSource {
-        let cell = dataSource.tableView(table, cellForRowAt: IndexPath(row: rowCount - 1,
-                                                                       section: section))
+        let cell = dataSource.tableView(
+          table,
+          cellForRowAt: IndexPath(
+            row: rowCount - 1,
+            section: section))
         XCTAssertEqual(cell.accessibilityIdentifier, testIdentifier)
       } else {
         XCTFail("No data source")
@@ -80,13 +83,13 @@ class ActionSheetTest: XCTestCase {
     } else {
       XCTFail("No table was loaded")
     }
-    
+
   }
 
   func testDefaultBackgroundColor() {
     // When
     let _ = actionSheet.view
-    
+
     // Then
     XCTAssertEqual(actionSheet.backgroundColor, .white)
     XCTAssertEqual(actionSheet.view.backgroundColor, .white)
@@ -142,7 +145,7 @@ class ActionSheetTest: XCTestCase {
 
     // Then
     self.wait(for: [expectation], timeout: 1)
-    XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
-    XCTAssertEqual(passedActionSheet, actionSheet);
+    XCTAssertEqual(passedTraitCollection, fakeTraitCollection)
+    XCTAssertEqual(passedActionSheet, actionSheet)
   }
 }

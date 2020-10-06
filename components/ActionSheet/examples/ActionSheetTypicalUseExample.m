@@ -22,8 +22,7 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
 
-@interface ActionSheetTypicalUseExampleViewController
-    : UIViewController <MDCActionSheetControllerDelegate>
+@interface ActionSheetTypicalUseExample : UIViewController <MDCActionSheetControllerDelegate>
 
 @property(nonatomic, strong) MDCButton *showButton;
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
@@ -31,7 +30,7 @@
 
 @end
 
-@implementation ActionSheetTypicalUseExampleViewController
+@implementation ActionSheetTypicalUseExample
 
 - (instancetype)init {
   self = [super init];
@@ -109,7 +108,7 @@
 
 @end
 
-@implementation ActionSheetTypicalUseExampleViewController (CatalogByConvention)
+@implementation ActionSheetTypicalUseExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
@@ -121,7 +120,7 @@
 
 @end
 
-@implementation ActionSheetTypicalUseExampleViewController (SnapshotTestingByConvention)
+@implementation ActionSheetTypicalUseExample (SnapshotTestingByConvention)
 
 - (void)testDefaults {
   // Given
