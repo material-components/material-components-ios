@@ -1,6 +1,6 @@
 # 118.0.0
 
-In this major release. we deleted all deprecated MDCSnackbarManager APIs, made minor bug fixes, and  made minor reorganizations to match conventions.
+In this major release. we deleted all deprecated MDCSnackbarManager APIs, and made minor bug fixes and reorganizations.
 
 ## Breaking changes
 
