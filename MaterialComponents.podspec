@@ -88,14 +88,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/private/Color"
     extension.dependency "MaterialComponents/schemes/Container"
     extension.dependency "MaterialComponents/ShadowElevations"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   # ActivityIndicator
