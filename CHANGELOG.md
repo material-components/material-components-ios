@@ -2,14 +2,10 @@
 
 Replace this text with a summarized description of this release's contents.
 ## Breaking changes
+### Snackbar
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+All Deprecated MDCSnackbarManager APIs have been deleted. For any of these APIs, instead of calling anything on MDCSnackbarManager, use MDCSnackbarManager.defaultManager and the same API will be available.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ## Component changes
