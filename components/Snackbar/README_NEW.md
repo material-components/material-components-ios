@@ -17,13 +17,11 @@ path: /catalog/Snackbars/
 
 ## Contents
 
-**Note to developers: review the TOC contents to ensure that all rel links apply to your platform dev doc**
-
 * [Using snackbars](#using-snackbars)
 * [Installing snackbars](#installing-snackbars)
 * [Importing snackbars](#importing-snackbars)
 * [Making snackbars accessible](#making-snackbars-accessible)
-* [Snackbars example](#snackbar-example)
+* [Snackbar example](#snackbar-example)
 * [Theming snackbars](#theming-snackbars)
 
 ## Using snackbars
@@ -114,7 +112,7 @@ The following is an anatomy diagram of a snackbar:
 **Color**            | N/A        | `-[MDCSnackBarMessageView setButtonTitleColor:forState:]` <br/> `-[MDCSnackBarMessageView buttonTitleColorForState]` | White at 60% opacity
 **Typography**       | `buttonFont`            | `-[MDCSnackBarMessageView setButtonFont:]` <br/> `-[MDCSnackBarMessageView buttonFont]`  | System body font.
 
-## Snackbars example
+## Snackbar example
 
 The following is an example of a snackbar with a message:
 
