@@ -26,6 +26,8 @@ path: /catalog/Snackbars/
 
 ## Using snackbars
 
+Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear.
+
 Displaying a snackbar involves two classes: `MDCSnackbarManager` and `MDCSnackbarMessage`.
 First, create an instance of `MDCSnackbarMessage` and provide a string to display to the user. Next,
 pass the `MDCSnackbarMessage` to `MDCSnackbarManager.defaultManager` with the static `-showMessage:` method. This will
@@ -36,9 +38,6 @@ Snackbar manager can be instructed to suspend and resume displaying messages as 
 messages are suspended the manager provides a suspension token that the client must keep as long as
 messages are suspended. When the client releases the suspension token or calls the manager's resume
 method with the suspension token, then messages will resume being displayed.
-
-Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear.
-
 ### Installing snackbars
 
 Add the following to your `Podfile`:
@@ -75,11 +74,11 @@ import MaterialComponents.MaterialSnackbar
 
 #### VoiceOver
 
-Snackbars work well with VoiceOver out of the box. `MDCSnackbarMessageView` exposes `accessibilityLabel` and `accessibilityHint` properties for situations where the custom values are needed.
+Snackbars have automatic VoiceOver support through UIKit, but `MDCSnackbarMessageView` also exposes `accessibilityLabel` and `accessibilityHint` properties for overriding the default values.
 
 #### Dynamic Type
 
-`MDCSnackbarMessageView` has a `mdc_adjustsFontForContentSizeCategory` property, which is modeled after Apple's `adjustsFontForContentSizeCategory` property. Setting this property to `YES` will result in font scaling according to the current trait environment.
+`MDCSnackbarMessageView` has a `mdc_adjustsFontForContentSizeCategory` property that is modeled after Apple's `adjustsFontForContentSizeCategory` property. Set this property to `YES` for font scaling according to the current trait environment.
 
 ## Snackbars anatomy and key properties
 
