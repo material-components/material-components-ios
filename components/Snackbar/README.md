@@ -17,13 +17,11 @@ path: /catalog/Snackbars/
 
 ## Contents
 
-**Note to developers: review the TOC contents to ensure that all rel links apply to your platform dev doc**
-
 * [Using snackbars](#using-snackbars)
 * [Installing snackbars](#installing-snackbars)
 * [Importing snackbars](#importing-snackbars)
 * [Making snackbars accessible](#making-snackbars-accessible)
-* [Snackbars example](#snackbar-example)
+* [Snackbar example](#snackbar-example)
 * [Theming snackbars](#theming-snackbars)
 
 ## Using snackbars
@@ -114,27 +112,9 @@ The following is an anatomy diagram of a snackbar:
 **Color**            | N/A        | `-[MDCSnackBarMessageView setButtonTitleColor:forState:]` <br/> `-[MDCSnackBarMessageView buttonTitleColorForState]` | White at 60% opacity
 **Typography**       | `buttonFont`            | `-[MDCSnackBarMessageView setButtonFont:]` <br/> `-[MDCSnackBarMessageView buttonFont]`  | System body font.
 
-## Snackbars example
+## Snackbar example
 
-The following is an example of a snackbar with a message:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-let message = MDCSnackbarMessage()
-message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
-MDCSnackbarManager.show(message)
-```
-
-#### Objective-C
-
-```objc
-MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
-[MDCSnackbarManager.defaultManager showMessage:message];
-```
-<!--</div>-->
+![Snackbar with a message and an action](docs/assets/snackbar-example.png)
 
 The following is an example of a snackbar with a message and an action button:
 
@@ -159,11 +139,11 @@ message.action = action
 MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
-  answerMessage.text = @"A lot";
+  answerMessage.text = @"A red flair silhouetted the jagged edge of a sublime wing.";
   [MDCSnackbarManager.defaultManager showMessage:answerMessage];
 };
 action.handler = actionHandler;
-action.title = @"Answer";
+action.title = "Action";
 message.action = action;
 ```
 <!--</div>-->
