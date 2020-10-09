@@ -734,6 +734,9 @@
   XCTAssertNil(self.drawerViewController.nextResponder);
   self.drawerViewController.shouldForwardBackgroundTouchEvents = YES;
   XCTAssertFalse(self.drawerViewController.dismissOnBackgroundTap);
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  XCTAssertTrue(drawerPresentationController.shouldForwardBackgroundTouchEvents);
   XCTAssertEqualObjects(self.drawerViewController.delegate,
                         self.drawerViewController.nextResponder);
 }
@@ -745,6 +748,13 @@
 
   XCTAssertFalse(self.drawerViewController.shouldDisplayMobileLandscapeFullscreen);
   XCTAssertFalse(drawerPresentationController.shouldDisplayMobileLandscapeFullscreen);
+}
+
+- (void)testGestureRecognizersSetCorrectly {
+  self.drawerViewController.shouldForwardBackgroundTouchEvents = YES;
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  XCTAssertTrue(drawerPresentationController.containerView.gestureRecognizers.count == 0);
 }
 
 - (void)testBottomDrawerTopInset {

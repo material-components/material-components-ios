@@ -231,6 +231,12 @@
 
 - (void)setShouldForwardBackgroundTouchEvents:(BOOL)shouldForwardBackgroundTouchEvents {
   _shouldForwardBackgroundTouchEvents = shouldForwardBackgroundTouchEvents;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldForwardBackgroundTouchEvents =
+        self.shouldForwardBackgroundTouchEvents;
+  }
   if (shouldForwardBackgroundTouchEvents) {
     [self setDismissOnBackgroundTap:NO];
   }
