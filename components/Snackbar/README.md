@@ -1,82 +1,44 @@
 <!--docs:
-title: "Snackbar"
+title: "Material Snackbars"
 layout: detail
 section: components
-excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
-iconId: toast
-path: /catalog/snackbars/
-api_doc_root: true
+excerpt: "Snackbars provide brief messages about app processes at the bottom of the screen."
+iconId: 
+path: /catalog/Snackbars/
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Snackbar -->
-
-# Snackbar
+# Snackbars
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BSnackbar%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BSnackbar%5D)
 
-Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
-Snackbars contain up to two lines of text directly related to the operation performed. They may
-contain a text action, but no icons.
+[Snackbars](https://material.io/components/snackbars) provide brief messages about app processes at the bottom of the screen. They can contain up to two lines of text and a text action button, but no icons.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
-</div>
+![Snackbars hero image](docs/assets/snackbars-hero.png)
 
-## Design & API documentation
+## Contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-snackbar">Material Design guidelines: Snack Bar</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarManager.h">MDCSnackbarManager</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarMessage.h">MDCSnackbarMessage</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarMessage.h">MDCSnackbarMessageAction</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarMessageView.h">MDCSnackbarMessageView</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarManager.h">MDCSnackbarSuspensionToken</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarManagerDelegate.h">MDCSnackbarManagerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://github.com/material-components/material-components-ios/blob/develop/components/Snackbar/src/MDCSnackbarAlignment.h">MDCSnackbarAlignment</a></li>
-</ul>
+* [Using snackbars](#using-snackbars)
+* [Installing snackbars](#installing-snackbars)
+* [Importing snackbars](#importing-snackbars)
+* [Making snackbars accessible](#making-snackbars-accessible)
+* [Snackbar example](#snackbar-example)
+* [Theming snackbars](#theming-snackbars)
 
-## Related components
+## Using snackbars
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../OverlayWindow">OverlayWindow</a></li>
-</ul>
+Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear.
 
-## Table of contents
-
-- [Overview](#overview)
-  - [Snackbar Manager and Message](#snackbar-manager-and-message)
-  - [Suspending and Resuming Display of Messages](#suspending-and-resuming-display-of-messages)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Typical use: display a message](#typical-use-display-a-message)
-  - [Typical use: display a message with an action](#typical-use-display-a-message-with-an-action)
-- [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-
-- - -
-
-## Overview
-
-### Snackbar Manager and Message
-
-Snackbar is comprised of two classes: MDCSnackbarManager and MDCSnackbarMessage. Snackbar messages
-contain text to be displayed to a user. Messages are passed to the manager. The manager decides when
-it is appropriate to show a message to the user.
-
-### Suspending and Resuming Display of Messages
+Displaying a snackbar involves two classes: `MDCSnackbarManager` and `MDCSnackbarMessage`.
+First, create an instance of `MDCSnackbarMessage` and provide a string to display to the user. Next,
+pass the `MDCSnackbarMessage` to `MDCSnackbarManager.defaultManager` with the static `-showMessage:` method. This will
+automatically construct an `MDCSnackbarMessageView` and appropriate overlay views so the snackbar is
+visible to the user.
 
 Snackbar manager can be instructed to suspend and resume displaying messages as needed. When
 messages are suspended the manager provides a suspension token that the client must keep as long as
 messages are suspended. When the client releases the suspension token or calls the manager's resume
 method with the suspension token, then messages will resume being displayed.
-
-## Installation
-
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
+### Installing snackbars
 
 Add the following to your `Podfile`:
 
@@ -91,7 +53,7 @@ Then, run the following command:
 pod install
 ```
 
-### Importing
+### Importing snackbars
 
 To import the component:
 
@@ -108,40 +70,52 @@ import MaterialComponents.MaterialSnackbar
 ```
 <!--</div>-->
 
+### Making snackbars accessible
 
-## Usage
+#### VoiceOver
 
-Displaying a snackbar requires using two classes: MDCSnackbarManager and MDCSnackbarMessage.
-First, create an instance of MDCSnackbarMessage and provide a string to display to the user. Next,
-pass the MDCSnackbarMessage to the MDCSnackbarManager.defaultManager with the static showMessage method. This will
-automatically construct an MDCSnackbarMessageView and appropriate overlay views so the snackbar is
-visible to the user.
+Snackbars have automatic VoiceOver support through UIKit, but `MDCSnackbarMessageView` also exposes `accessibilityLabel` and `accessibilityHint` properties for overriding the default values.
 
-<!-- Extracted from docs/typical-use-display-a-message.md -->
+#### Dynamic Type
 
-### Typical use: display a message
+`MDCSnackbarMessageView` has a `mdc_adjustsFontForContentSizeCategory` property that is modeled after Apple's `adjustsFontForContentSizeCategory` property. Set this property to `YES` for font scaling according to the current trait environment.
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
+## Snackbars anatomy and key properties
 
-```swift
-let message = MDCSnackbarMessage()
-message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
-MDCSnackbarManager.show(message)
-```
+The following is an anatomy diagram of a snackbar:
 
-#### Objective-C
+![Snackbar anatomy diagram](docs/assets/snackbars-anatomy.png)
 
-```objc
-MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
-message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
-[MDCSnackbarManager.defaultManager showMessage:message];
-```
-<!--</div>-->
+1. Text label
+1. Container
+1. Action (optional)
 
-<!-- Extracted from docs/typical-use-display-a-message-with-action.md -->
+### Text label attributes
 
-### Typical use: display a message with an action
+&nbsp;               | Attribute                | Related method(s) | Default value
+-------------------- | ------------------------ | ----------------- | -------------
+**Text label**       | `text`                   | `-[MDCSnackBarMessageView setText:]` <br/> `-[MDCSnackBarMessageView text]` | `nil`
+**Color**            | `messageTextColor`        | `-[MDCSnackBarMessageView setMessageTextColor:]` <br/> `-[MDCSnackBarMessageView messageTextColor]` | White at 60% opacity
+**Typography**       | `messageFont`            | `-[MDCSnackBarMessageView setMessageFont:]` <br/> `-[MDCSnackBarMessageView messageFont]`  | System body font.
+
+### Container attributes
+
+&nbsp;                  | Attribute                         | Related method(s)                               | Default value
+----------------------- | --------------------------------- | ----------------------------------------------- | -------------
+**Color**               | `snackbarMessageViewBackgroundColor`  | `-[MDCSnackBarMessageView setSnackbarMessageViewBackgroundColor:]` <br/> `-[MDCSnackBarMessageView snackbarMessageViewBackgroundColor]` | `#323232`
+**Elevation**           | `elevation`                   | `-[MDCSnackBarMessageView setElevation:]` <br/> `-[MDCSnackBarMessageView elevation]`                                             | `6`
+### Action attributes
+
+&nbsp;               | Attribute                  | Related method(s)    | Default value
+-------------------- | -------------------------- | -------------------- | -------------
+**Color**            | N/A        | `-[MDCSnackBarMessageView setButtonTitleColor:forState:]` <br/> `-[MDCSnackBarMessageView buttonTitleColorForState]` | White at 60% opacity
+**Typography**       | `buttonFont`            | `-[MDCSnackBarMessageView setButtonFont:]` <br/> `-[MDCSnackBarMessageView buttonFont]`  | System body font.
+
+## Snackbar example
+
+![Snackbar with a message and an action](docs/assets/snackbar-example.png)
+
+The following is an example of a snackbar with a message and an action button:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -164,21 +138,15 @@ message.action = action
 MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
-  answerMessage.text = @"A lot";
+  answerMessage.text = @"A red flair silhouetted the jagged edge of a sublime wing.";
   [MDCSnackbarManager.defaultManager showMessage:answerMessage];
 };
 action.handler = actionHandler;
-action.title = @"Answer";
+action.title = "Action";
 message.action = action;
 ```
 <!--</div>-->
 
+## Theming snackbars
 
-## Extensions
-
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-There is currently no theing extension for MDCSnackbar.
-
+Snacksbars on iOS do not support theming.
