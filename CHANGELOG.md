@@ -1,3 +1,33 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### NavigationDrawer
+
+* [Fix the bug caused by regression in the PR "Optional dismiss on accessibilityPerformEscape", where the forwarded touch events are interfered by gesture recognizer introduced in the CL. Cause: The variable dismissOnBackgroundTap should be used to determine whether gesture recognizer is added to the presentation view controller. When the check was removed, gesture recognizer is interfering and touchesended is not propagated. Fix: Add back the check and add tap gesture recognizer only when dismissOnBackgroundTap is set to true.](https://github.com/material-components/material-components-ios/commit/6ad0683d1aa17c4181439a082df98e7da54d635e) (Nobody)
+
+### Snackbar
+
+* [Replace snackbar docs](https://github.com/material-components/material-components-ios/commit/f8ef922901a41258cf9c3c68e617fa19af0e43b4) (Andrew Overton)
+
+### private/Math
+
+* [Remove use of deprecated methods.](https://github.com/material-components/material-components-ios/commit/139d7f628ec0d02ec545920899a43427d33e183a) (Aron Budinszky)
+
+---
+
 # 118.0.0
 
 In this major release. we deleted all deprecated MDCSnackbarManager APIs, and made minor bug fixes and reorganizations.
