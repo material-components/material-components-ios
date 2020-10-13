@@ -1,5 +1,7 @@
 # 118.0.1
 
+In this patch release, an MDCNavigationDrawer bug for accessibility dismissal is fixed and references to deprecated Math APIs are removed.
+
 ## Component changes
 
 ### NavigationDrawer
