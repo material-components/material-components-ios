@@ -763,9 +763,18 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 #pragma mark UIKeyInput
 
 - (void)deleteBackward {
-  [super deleteBackward];
-  if ([_baseTextFieldDelegate respondsToSelector:@selector(baseTextFieldDidDeleteBackward:)]) {
-    [_baseTextFieldDelegate baseTextFieldDidDeleteBackward:self];
+  BOOL shouldDeleteBackward = YES;
+  if ([self.baseTextFieldDelegate
+          respondsToSelector:@selector(baseTextFieldShouldDeleteBackward:)]) {
+    shouldDeleteBackward = [self.baseTextFieldDelegate baseTextFieldShouldDeleteBackward:self];
+  }
+
+  if (shouldDeleteBackward) {
+    [super deleteBackward];
+    if ([self.baseTextFieldDelegate
+            respondsToSelector:@selector(baseTextFieldDidDeleteBackward:)]) {
+      [self.baseTextFieldDelegate baseTextFieldDidDeleteBackward:self];
+    }
   }
 }
 

@@ -27,9 +27,17 @@ covered by @c UITextFieldDelegate.
 /**
  This method is called at the end of @c MDCBaseTextField's implementation of @c -deleteBackward.
 
- @param textField The MDCBaseTextField calling @c -deleteBackward.
+ @param textField The @c MDCBaseTextField calling @c -deleteBackward.
  */
 - (void)baseTextFieldDidDeleteBackward:(MDCBaseTextField *)textField;
-;
+
+/**
+ This method is called at the beginning of @c -deleteBackward. If it returns @c NO, the superclass
+ (@c UITextField) implementation of @c -deleteBackward will not be called. If it is not implemented,
+ the superclass implementation of @c -deleteBackward will always be called.
+
+ @param textField The @c MDCBaseTextField calling @c -deleteBackward.
+ */
+- (BOOL)baseTextFieldShouldDeleteBackward:(MDCBaseTextField *)textField;
 
 @end
