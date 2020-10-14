@@ -116,6 +116,21 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   [self addSubview:self.label];
 }
 
+#pragma mark UIResponder Overrides
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+  BOOL canPerformAction = [super canPerformAction:action withSender:sender];
+  if ([self.baseTextFieldDelegate
+          respondsToSelector:@selector(baseTextField:
+                                 shouldPerformAction:withSender:canPerformAction:)]) {
+    return [self.baseTextFieldDelegate baseTextField:self
+                                 shouldPerformAction:action
+                                          withSender:sender
+                                    canPerformAction:canPerformAction];
+  }
+  return canPerformAction;
+}
+
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {

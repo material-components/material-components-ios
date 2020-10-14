@@ -40,4 +40,20 @@ covered by @c UITextFieldDelegate.
  */
 - (BOOL)baseTextFieldShouldDeleteBackward:(MDCBaseTextField *)textField;
 
+/**
+ This method is called from @c MDCBaseTextField's implementation of the @c UIResponder method @c
+ -canPerformAction:withSender:. Implementing this method can allow you to do things like preventing
+ the user from pasting into the text field, for example.
+
+ @param textField The MDCBaseTextField.
+ @param action The action.
+ @param sender The sender.
+ @param canPerformAction This is the value that the superclass implementation of @c
+ -canPerformAction:withSender: returns.
+ */
+- (BOOL)baseTextField:(MDCBaseTextField *)textField
+    shouldPerformAction:(SEL)action
+             withSender:(id)sender
+       canPerformAction:(BOOL)canPerformAction;
+
 @end
