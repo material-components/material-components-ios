@@ -692,12 +692,22 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 }
 
 - (UIBezierPath *)accessibilityPath {
+  return [UIBezierPath bezierPathWithRect:self.accessibilityFrame];
+}
+
+- (CGRect)accessibilityFrame {
   if (self.window) {
-    CGRect frameInScreenCoordinates = [self convertRect:self.bounds
-                                      toCoordinateSpace:self.window.screen.coordinateSpace];
-    return [UIBezierPath bezierPathWithRect:frameInScreenCoordinates];
+    CGRect bounds = self.bounds;
+    CGFloat boundsMinY = CGRectGetMinY(bounds);
+    CGFloat floatingLabelMinY = CGRectGetMinY(self.layout.labelFrameFloating);
+    if (floatingLabelMinY < boundsMinY) {
+      CGFloat difference = boundsMinY - floatingLabelMinY;
+      bounds.origin.y = boundsMinY - difference;
+      bounds.size.height = bounds.size.height + difference;
+    }
+    return [self convertRect:bounds toCoordinateSpace:self.window.screen.coordinateSpace];
   } else {
-    return [super accessibilityPath];
+    return [super accessibilityFrame];
   }
 }
 

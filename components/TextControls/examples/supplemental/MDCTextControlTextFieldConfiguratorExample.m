@@ -45,6 +45,7 @@ static NSString *const kExampleTitle = @"MDCTextControl TextFields";
 + (NSDictionary *)catalogMetadata {
   return @{
     @"breadcrumbs" : @[ @"Text Controls", kExampleTitle ],
+    @"description" : @"Text fields let users enter and edit text.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
   };
