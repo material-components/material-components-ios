@@ -1,3 +1,23 @@
+# 118.1.0
+
+In this minor release, we have made several improvements to the TextControls component.
+
+## New features
+
+### TextControls
+
+Added `-baseTextFieldShouldDeleteBackward:` and `-baseTextField:shouldPerformAction:withSender:canPerformAction:` to `MDCBaseTextFieldDelegate`.
+
+## Component changes
+
+### TextControls
+
+* [Add -baseTextField:shouldPerformAction:withSender:canPerformAction:](https://github.com/material-components/material-components-ios/commit/6d0e6146188f84cbe19ce319745efa397df8fb97) (Andrew Overton)
+* [Add shouldDeleteBackward delegate method](https://github.com/material-components/material-components-ios/commit/364b062a5096ede477160db7e8ed980497e9fdd6) (Andrew Overton)
+* [consider floating label min Y in - accessibilityPath](https://github.com/material-components/material-components-ios/commit/b8d8690259c4560abb1c1806a8de032287c6e56e) (Andrew Overton)
+
+---
+
 # 118.0.1
 
 In this patch release, an MDCNavigationDrawer bug for accessibility dismissal is fixed and references to deprecated Math APIs are removed.
