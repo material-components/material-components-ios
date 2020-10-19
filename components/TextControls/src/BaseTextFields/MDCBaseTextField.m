@@ -116,6 +116,21 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   [self addSubview:self.label];
 }
 
+#pragma mark UIResponder Overrides
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+  BOOL canPerformAction = [super canPerformAction:action withSender:sender];
+  if ([self.baseTextFieldDelegate
+          respondsToSelector:@selector(baseTextField:
+                                 shouldPerformAction:withSender:canPerformAction:)]) {
+    return [self.baseTextFieldDelegate baseTextField:self
+                                 shouldPerformAction:action
+                                          withSender:sender
+                                    canPerformAction:canPerformAction];
+  }
+  return canPerformAction;
+}
+
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
@@ -692,12 +707,22 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 }
 
 - (UIBezierPath *)accessibilityPath {
+  return [UIBezierPath bezierPathWithRect:self.accessibilityFrame];
+}
+
+- (CGRect)accessibilityFrame {
   if (self.window) {
-    CGRect frameInScreenCoordinates = [self convertRect:self.bounds
-                                      toCoordinateSpace:self.window.screen.coordinateSpace];
-    return [UIBezierPath bezierPathWithRect:frameInScreenCoordinates];
+    CGRect bounds = self.bounds;
+    CGFloat boundsMinY = CGRectGetMinY(bounds);
+    CGFloat floatingLabelMinY = CGRectGetMinY(self.layout.labelFrameFloating);
+    if (floatingLabelMinY < boundsMinY) {
+      CGFloat difference = boundsMinY - floatingLabelMinY;
+      bounds.origin.y = boundsMinY - difference;
+      bounds.size.height = bounds.size.height + difference;
+    }
+    return [self convertRect:bounds toCoordinateSpace:self.window.screen.coordinateSpace];
   } else {
-    return [super accessibilityPath];
+    return [super accessibilityFrame];
   }
 }
 
@@ -763,9 +788,18 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 #pragma mark UIKeyInput
 
 - (void)deleteBackward {
-  [super deleteBackward];
-  if ([_baseTextFieldDelegate respondsToSelector:@selector(baseTextFieldDidDeleteBackward:)]) {
-    [_baseTextFieldDelegate baseTextFieldDidDeleteBackward:self];
+  BOOL shouldDeleteBackward = YES;
+  if ([self.baseTextFieldDelegate
+          respondsToSelector:@selector(baseTextFieldShouldDeleteBackward:)]) {
+    shouldDeleteBackward = [self.baseTextFieldDelegate baseTextFieldShouldDeleteBackward:self];
+  }
+
+  if (shouldDeleteBackward) {
+    [super deleteBackward];
+    if ([self.baseTextFieldDelegate
+            respondsToSelector:@selector(baseTextFieldDidDeleteBackward:)]) {
+      [self.baseTextFieldDelegate baseTextFieldDidDeleteBackward:self];
+    }
   }
 }
 
