@@ -1,16 +1,14 @@
-# #develop#
+# 118.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release, we have made several improvements to TextControls component.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### TextControls
+
+Added baseTextFieldShouldDeleteBackward: delegate method to MDCBaseTextFieldDelegate that is called at the beginning of deleteBackward.
+
+Added baseTextField:shouldPerformAction:withSender:canPerformAction: delegate method that is called from MDCBaseTextField's implementation of the UIResponder method canPerformAction:withSender:.
 
 ## Component changes
 
