@@ -27,7 +27,7 @@
 
  @param messageView The messageView of the snackbar that will be presented.
  */
-- (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView;
+- (void)willPresentSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
 
 @optional
 
@@ -47,6 +47,6 @@
 
  @param messageView The messageView of the snackbar that was just presented.
  */
-- (void)isPresentingSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView;
+- (void)isPresentingSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
 
 @end

@@ -258,7 +258,7 @@
   }
 }
 
-- (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
+- (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
   NSLog(@"A snackbar will be presented");
 }
 
