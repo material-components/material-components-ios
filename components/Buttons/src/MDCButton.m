@@ -386,6 +386,20 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   CGSize givenSizeWithInsets = CGSizeShrinkWithInsets(size, _visibleAreaInsets);
   CGSize superSize = [super sizeThatFits:givenSizeWithInsets];
 
+  // TODO(b/171816831): revisit this in a future iOS version to verify reproducibility.
+  // Because of a UIKit bug in iOS 13 and 14 (current), buttons that have both an image and text
+  // will not return an appropriately large size from [super sizeThatFits:]. In this case, we need
+  // to expand the width. The number 1 was chosen somewhat arbitrarily, but based on some spot
+  // testing, adding the smallest amount of extra width possible seems to fix the issue.
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    if (UIAccessibilityIsBoldTextEnabled() && [self imageForState:UIControlStateNormal] &&
+        [self titleForState:UIControlStateNormal]) {
+      superSize.width += 1;
+    }
+  }
+#endif
+
   if (self.minimumSize.height > 0) {
     superSize.height = MAX(self.minimumSize.height, superSize.height);
   }
