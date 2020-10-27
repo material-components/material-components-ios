@@ -20,7 +20,7 @@
 // Minimum width of an item view.
 static const CGFloat kMinWidth = 90;
 // Maximum width of an item view.
-static const CGFloat kMaxWidth = 360;
+static const CGFloat kLargeWidthSize = 360;
 // Minimum (expected) height of an item view with only a title or image (not both).
 static const CGFloat kMinHeightOfTitleOrImageOnlyView = 48;
 
@@ -61,33 +61,6 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   XCTAssertEqualWithAccuracy(intrinsicContentSize.height, kMinHeightOfTitleOrImageOnlyView, 0.001);
 }
 
-- (void)testIntrinsicContentSizeForLargeImageLimitsWidth {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
-  // When
-  itemView.iconImageView.image = fakeImage(1000, 1000);
-  CGSize intrinsicContentSize = itemView.intrinsicContentSize;
-
-  // Then
-  XCTAssertEqualWithAccuracy(intrinsicContentSize.width, kMaxWidth, 0.001);
-  XCTAssertEqualWithAccuracy(intrinsicContentSize.height, 1024, 0.001);
-}
-
-- (void)testIntrinsicContentSizeForLongTitleLimitsWidth {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
-  // When
-  itemView.titleLabel.text = kLongTitle;
-  CGSize intrinsicContentSize = itemView.intrinsicContentSize;
-
-  // Then
-  XCTAssertLessThan(intrinsicContentSize.width, kMaxWidth);
-}
-
-// The intrinsic content size should first make the item view wide (up to the max) and then increase
-// the height as necessary.  The exception would be a font that is very large.
 - (void)testIntrinsicContentSizeForShortTitleExpectedImageLimitsHeight {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
@@ -99,7 +72,6 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
   // Then
   XCTAssertGreaterThanOrEqual(intrinsicContentSize.width, kMinWidth);
-  XCTAssertLessThan(intrinsicContentSize.width, kMaxWidth);
   XCTAssertEqualWithAccuracy(intrinsicContentSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
@@ -120,8 +92,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 - (void)testSizeThatFitsForNoContentWithReasonableDimensionsIsMinimumSize {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-  CGSize requestedSize =
-      CGSizeMake(kMinWidth + (kMaxWidth - kMinWidth) / 2, kMinHeightOfTitleOrImageOnlyView + 10);
+  CGSize requestedSize = CGSizeMake(kMinWidth * 3, kMinHeightOfTitleOrImageOnlyView + 10);
 
   // When
   CGSize fitSize = [itemView sizeThatFits:requestedSize];
@@ -134,7 +105,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 - (void)testSizeThatFitsForNoContentWithLargeDimensionsIsMinimumSize {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-  CGSize requestedSize = CGSizeMake(kMaxWidth + 10, kMinHeightOfTitleOrImageOnlyView + 10);
+  CGSize requestedSize = CGSizeMake(kLargeWidthSize + 10, kMinHeightOfTitleOrImageOnlyView + 10);
 
   // When
   CGSize fitSize = [itemView sizeThatFits:requestedSize];
@@ -142,62 +113,6 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   // Then
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleOrImageOnlyView, 0.001);
-}
-
-- (void)testSizeThatFitsForLargeImageWithSmallerDimensionsLimitsWidth {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-  CGSize requestedSize = CGSizeMake(kMaxWidth, kMinHeightOfTitleOrImageOnlyView);
-
-  // When
-  itemView.iconImageView.image = fakeImage(1000, 1000);
-  CGSize fitSize = [itemView sizeThatFits:requestedSize];
-
-  // Then
-  XCTAssertEqualWithAccuracy(fitSize.width, kMaxWidth, 0.001);
-  XCTAssertEqualWithAccuracy(fitSize.height, 1024, 0.001);
-}
-
-- (void)testSizeThatFitsForLargeImageWithLargerDimensionsLimitsWidth {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-  CGSize requestedSize = CGSizeMake(2000, 2000);
-
-  // When
-  itemView.iconImageView.image = fakeImage(1000, 1000);
-  CGSize fitSize = [itemView sizeThatFits:requestedSize];
-
-  // Then
-  XCTAssertEqualWithAccuracy(fitSize.width, kMaxWidth, 0.001);
-  XCTAssertEqualWithAccuracy(fitSize.height, 1024, 0.001);
-}
-
-- (void)testSizeThatFitsForLongTitleWithSmallerDimensionsLimitsWidth {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
-  // When
-  itemView.titleLabel.text = kLongTitle;
-  CGSize fitSize = [itemView sizeThatFits:CGSizeZero];
-
-  // Then
-  XCTAssertGreaterThanOrEqual(fitSize.width, kMinWidth);
-  XCTAssertLessThanOrEqual(fitSize.width, kMaxWidth);
-  XCTAssertGreaterThanOrEqual(fitSize.height, kMinHeightOfTitleOrImageOnlyView);
-}
-
-- (void)testSizeThatFitsForLongTitleWithLargerDimensionsLimitsWidth {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
-  // When
-  itemView.titleLabel.text = kLongTitle;
-  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(1000, 1000)];
-
-  // Then
-  XCTAssertGreaterThanOrEqual(fitSize.width, kMinWidth);
-  XCTAssertLessThanOrEqual(fitSize.width, kMaxWidth);
-  XCTAssertGreaterThanOrEqual(fitSize.height, kMinHeightOfTitleOrImageOnlyView);
 }
 
 // The fit size should first make the item view wide (up to the max) and then increase the height as
@@ -213,7 +128,6 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
   // Then
   XCTAssertGreaterThanOrEqual(fitSize.width, kMinWidth);
-  XCTAssertLessThan(fitSize.width, kMaxWidth);
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
