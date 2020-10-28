@@ -1,40 +1,43 @@
-<!-- This file was auto-generated using ./scripts/generate_readme Banner -->
+<!--docs:
+title: "Material Banners"
+layout: detail
+section: components
+excerpt: "A banner displays a prominent message and related optional actions."
+iconId: 
+path: /catalog/material-banners/
+-->
 
 # Banner
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BBanner%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BBanner%5D)
 
-A banner displays a prominent message and related optional actions.
+A [banner](https://material.io/components/banners) displays a prominent message and related optional actions.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/banner.png" alt="Banner" width="320">
-</div>
+![Hero image of a banner showing a transaction error message](docs/assets/banner-hero.png)
 
-## Design & API documentation
+## Contents
 
+* [Using banners](#using-banners)
+* [Installing banners](#installing-banners)
+* [Making banners accessible](#making-banners-accessible)
+* [Banners example](#banners-example)
+* [Theming banners](#theming-banners)
 
-## Table of contents
+## Using banners
 
-- [Overview](#overview)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Appearance](#appearance)
-  - [Styling](#styling)
-  - [LayoutMargins](#layoutmargins)
-- [Examples](#examples)
-  - [Creating a banner view](#creating-a-banner-view)
+A banner displays an important, succinct message, and provides actions for users to address (or dismiss the banner). It requires a user action to be dismissed.
 
-- - -
+Banners should be displayed at the top of the screen, below a top app bar. They’re persistent and nonmodal, allowing the user to either ignore them or interact with them at any time. Only one banner should be shown at a time.
 
-## Overview
+By default, `MDCBannerView` is configured to display an image view, a text label and two buttons. To hide the image view on `MDCBannerView`, users can set the `hidden` property on `imageView` to be true. Similarly, users can hide a button on the banner view by setting the `hidden` property on `trailingButton` to be true.
 
-`MDCBannerView` is a view that displays an important, succinct message, and provides actions for users to address (or dismiss the banner). It requires a user action to be dismissed.
+By default, `MDCBannerView` is configured to display items with black text and white background with a gray divider at the bottom of the view. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textView`, `imageView`, `leadingButton` and `trailingButton`. `showsDivider` and `dividerColor` can be used to control the divider's visibility and color.
 
-## Installation
+`MDCBannerView` layouts are configurable through the `bannerViewLayoutStyle` property. This property can be set to either `MDCBannerViewLayoutStyleAutomatic`, `MDCBannerViewLayoutStyleSingleRow`, `MDCBannerViewLayoutStyleMultiRowStackedButton`, or `MDCBannerViewLayoutStyleMultiRowAlignedButton`.	
 
-<!-- Extracted from docs/installation.md -->
+`MDCBannerView` uses `layoutMargins` to manage the margins for elements on the banner view.
+
+## Installing banners
 
 ### Installation with CocoaPods
 
@@ -70,70 +73,119 @@ import MaterialComponents.MaterialBanner
 
 <!--</div>-->
 
+### Making banners accessible
 
+The system will set `accessibilityLabel` for the elements in the banner that contain text. As always, you are free to change these labels if it leads to a better VoiceOver expoerience. Consider setting an `accessibilityLabel` on the image view.
 
-## Usage
+The only non-standard accessibiility API exposed on `MDCBannerView` is `mdc_adjustsFontForContentSizeCategory`, which is an alternative to `adjustsFontForContentSizeCategory` that is specific to the MDC iOS library. Eventually we will deprecate and delete `mdc_adjustsFontForContentSizeCategory`.
 
-<!-- Extracted from docs/typical-use.md -->
+## Anatomy and key properties
 
-### Appearance
+![Banner anatomy diagram showing an image thumbnail, example text, and two text buttons](docs/assets/banner-anatomy.png)
 
-By default, `MDCBannerView` is configured to display an image view, a text label and two buttons. To hide the image view on `MDCBannerView`, users can set the `hidden` property on `imageView` to be true. Similarly, users can hide a button on the banner view by setting the `hidden` property on `trailingButton` to be true.
+Banners consist of the following:
 
-### Styling
+1. Image view (optional)
+2. Container
+3. Text
+4. Buttons
 
-By default, `MDCBannerView` is configured to display items with black text and white background with a grey divider at the bottom of the view. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textView`, `imageView`, `leadingButton` and `trailingButton`. `showsDivider` and `dividerColor` can be used to control the divider's visibility and color.
+### Image view attributes
 
-`MDCBannerView` can handle its layout style in both an automatic way and manual ways through `bannerViewLayoutStyle` property. By default, `MDCBannerViewLayoutStyleAutomatic` is set and layout is set automatically based on how elements are configured on the `MDCBannerView`. `MDCBannerViewLayoutStyleSingleRow`, `MDCBannerViewLayoutStyleMultiRowStackedButton` and `MDCBannerViewLayoutStyleMultiRowAlignedButton` are values that can be used as manual ways to handle layout style.
+&nbsp;               | Attribute                | Related method(s) | Default value
+-------------------- | ------------------------ | ----------------- | -------------
+**Image view**       | `imageView`              | `-[MDCBannerView imageView]` | N/A
+**Image**            | `imageView.image`        | `-[UIImageview setImage:]` <br/> `-[UIImageview image]` | N/A
 
-### LayoutMargins
+### Container attributes	
 
-`MDCBannerView` uses `layoutMargins` to manage the margins for elements on the banner view.
-<!--</div>-->
+&nbsp;                  | Attribute                         | Related method(s)                               | Default value
+----------------------- | --------------------------------- | ----------------------------------------------- | -------------
+**Color**               | `backgroundColor`  | `-[MDCBannerView setBackgroundColor:]` <br/> `-[MDCBannerView backgroundColor]` | White
 
+### Text attributes
 
-## Examples
+&nbsp;               | Attribute                | Related method(s) | Default value
+-------------------- | ------------------------ | ----------------- | -------------
+**Text**             | `textView.text`          | `-[UITextView setText:]` <br/> `-[UITextView text]` | `nil`
+**Color**            | `textView.text`          | `-[UITextView setTextColor:]` <br/> `-[UITextView textColor]` | Black
+**Typography**       | `textView.font`          | `-[UITextView setFont:]` <br/> `-[UITextView font]`  | Body 2 font
 
-<!-- Extracted from docs/examples.md -->
+### Button attributes
 
-### Creating a banner view
+&nbsp;               | Attribute                  | Related method(s)    | Default value
+-------------------- | -------------------------- | -------------------- | -------------
+**Leading button**   | `leadingButton`            | `-[MDCBannerVieiw leadingButton]` | N/A
+**Trailing button**  | `trailingButton`            | `-[MDCBannerVieiw trailingButton]` | N/A
+
+## Banners example
+
+![Banner with the words "banner text" and a dismiss button](docs/assets/banner-example.png)
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
 let bannerView = MDCBannerView()
-bannerView.textView.text = "Text on Banner"
-bannerView.imageView.image = UIImage(named: "bannerIcon")
-bannerView.leadingButton.setTitle("Action", for: .normal)
+bannerView.textView.text = "Banner text"
+bannerView.mdc_adjustsFontForContentSizeCategory = true
+
+let button = bannerView.leadingButton
+button.setTitle("Dismiss", for: .normal)
 bannerView.trailingButton.hidden = true
+bannerView.imageView.hidden = true
+bannerView.showsDivider = true
 
-// Optional configuration on layoutMargins
-bannerView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10);
-
-let bannerViewSize = bannerView.sizeThatFits(view.bounds.size)
-bannerView.frame = CGRect(x: 0, y: 0, width: bannerViewSize.width, height: bannerViewSize.height)
-
-view.addSubview(bannerView)
+addSubview(bannerView)
 ```
 
 #### Objective-C
 
 ```objc
 MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-bannerView.textView.text = @"Text on Banner";
-bannerView.imageView.image = [UIImage imageNamed:@"bannerIcon"];
-[bannerView.leadingButton setTitle:@"Action" forState:UIControlStateNormal];
+bannerView.textView.text = @"Banner text";
+bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+
+MDCButton *button = bannerView.leadingButton;
+[button setTitle:@"Dismiss" forState:UIControlStateNormal];
 bannerView.trailingButton.hidden = YES;
+bannerView.imageView.hidden = YES;
+bannerView.showsDivider = YES;
 
-// Optional configuration on layoutMargins. 
-bannerView.layoutMargins = UIEdgeInsetsMake(0, 10, 0, 10);
-
-CGSize bannerViewSize = [bannerView sizeThatFits:self.view.bounds.size];
-bannerView.frame = CGRectMake(0, 0, bannerViewSize.width, bannerViewSize.height);
-
-[self.view addSubview:bannerView];
+[self addBannerView:bannerView];
 ```
-
 <!--</div>-->
 
+## Theming banners
+
+`MDCBannerView` supports Material Theming using a container scheme.
+
+Here is an example of a Banner with the Shrine theme applied to it.
+
+![Banner with dummy text description and text button labeled "dismiss"](docs/assets/shrine-banner.png)
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+// Import the Banner theming module
+import MaterialComponents.MaterialBanner_MaterialTheming
+...
+// Create or use your app's Container Scheme
+let containerScheme = MDCContainerScheme()
+// Theme the banner with either default theme
+banner.applyTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+// Import the Tabs Theming Extensions header
+#import <MaterialComponents/MaterialBanner+MaterialTheming.h>
+...
+ // Create or use your app's Container Scheme
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+ // Theme the banner with either default theme
+[self.bannerView applyThemeWithScheme:containerScheme];
+```
+<!--</div>-->
