@@ -81,7 +81,7 @@ The only non-standard accessibiility API exposed on `MDCBannerView` is `mdc_adju
 
 ## Anatomy and key properties
 
-![Banners anatomy diagram](docs/assets/banner-anatomy.png)
+![Banner anatomy diagram showing an image thumbnail, example text, and two text buttons](docs/assets/banner-anatomy.png)
 
 Banners consist of the following:
 
@@ -162,7 +162,7 @@ bannerView.showsDivider = YES;
 
 Here is an example of a Banner with the Shrine theme applied to it.
 
-![shrine-banner](docs/assets/shrine-banner.png)
+![Banner with dummy text description and text button labeled "dismiss"](docs/assets/shrine-banner.png)
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
