@@ -1,3 +1,41 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Banner
+
+* [Replace banners docs](https://github.com/material-components/material-components-ios/commit/1ec910c31f5f6afd511ff030e79a80f6cfc4f0b1) (Andrew Overton)
+
+### Buttons
+
+* [Add extra width to buttons with text and image when UIAccessibilityIsBoldTextEnabled is true.](https://github.com/material-components/material-components-ios/commit/cf28c8191eeeaf03b0cd66865b4cd6368782a9ec) (Bryan Oltman)
+
+### Dialogs
+
+* [Support value comparison for MDCAlertAction](https://github.com/material-components/material-components-ios/commit/584294efffea830cb0f86ad061296f55cf1537e5) (Nobody)
+
+### Snackbar
+
+* [Update MDCSnackbarManagerDelegate presentation lifecycle methods to declare a nonnull MDCSnackbarMessageView.](https://github.com/material-components/material-components-ios/commit/0c6adf0080fd7acba535ec667576855a90c386c9) (Yarden Eitan)
+
+### Tabs
+
+* [Remove notion of max item width from TabBarView and MDCTabBarViewItemView](https://github.com/material-components/material-components-ios/commit/a60852c53ffd138f6b1bfcde8beb8a15e0811252) (Alyssa Weiss)
+
+---
+
 # 118.1.0
 
 In this minor release, we have made several improvements to the TextControls component.
