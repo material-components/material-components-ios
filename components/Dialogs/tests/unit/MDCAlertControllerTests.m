@@ -1166,4 +1166,58 @@ than @c UIContentSizeCategoryLarge.
 #endif
 }
 
+/** Verifies that actions with the same title and emphasis are considered equal. */
+- (void)testAlertActionsShouldBeEqualWithDifferentIdentities {
+  NSString *actionTitle = @"same action";
+  MDCActionEmphasis emphasis = MDCActionEmphasisLow;
+  MDCAlertAction *action1 = [MDCAlertAction actionWithTitle:actionTitle
+                                                   emphasis:emphasis
+                                                    handler:nil];
+  MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:actionTitle
+                                                   emphasis:emphasis
+                                                    handler:nil];
+
+  // Ensuring the two are equal in value.
+  XCTAssertEqualObjects(action1, action2);
+
+  // Ensuring the two do indeed have different identities.
+  XCTAssertNotEqual(action1, action2);
+}
+
+/** Verifies that actions with different titles are considered different. */
+- (void)testAlertActionsShouldBeNotEqualWithDifferentTitles {
+  MDCAlertAction *action1 = [MDCAlertAction actionWithTitle:@"action1" handler:nil];
+  MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"action2" handler:nil];
+
+  // Ensuring the two are not considered as equal.
+  XCTAssertNotEqualObjects(action1, action2);
+}
+
+/** Verifies that actions with the same title but different emphases are considered different. */
+- (void)testAlertActionsShouldBeNotEqualWithDifferentEmphases {
+  NSString *actionTitle = @"same action";
+  MDCAlertAction *action1 = [MDCAlertAction actionWithTitle:actionTitle
+                                                   emphasis:MDCActionEmphasisLow
+                                                    handler:nil];
+  MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:actionTitle
+                                                   emphasis:MDCActionEmphasisHigh
+                                                    handler:nil];
+
+  // Ensuring the two are not considered as equal.
+  XCTAssertNotEqualObjects(action1, action2);
+}
+
+/** Verifies that an action can be correctly copied. */
+- (void)testAlertActionCopiesShouldBeDifferentInIdentity {
+  NSString *actionTitle = @"action";
+  MDCAlertAction *action = [MDCAlertAction actionWithTitle:actionTitle handler:nil];
+  MDCAlertAction *clonedAction = [action copy];
+
+  // Ensuring the two are equal in value.
+  XCTAssertEqualObjects(clonedAction, action);
+
+  // Ensuring the two do indeed have different identities.
+  XCTAssertNotEqual(clonedAction, action);
+}
+
 @end
