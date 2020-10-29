@@ -32,7 +32,7 @@
   [self.willDisappearExpectation fulfill];
 }
 
-- (void)isPresentingSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
+- (void)isPresentingSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
   [self.isPresentingExpectation fulfill];
 }
 

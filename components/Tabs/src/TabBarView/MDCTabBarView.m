@@ -14,14 +14,14 @@
 
 #import "MDCTabBarView.h"
 
+#import "private/MDCTabBarViewIndicatorView.h"
+#import "private/MDCTabBarViewItemView.h"
+#import "private/MDCTabBarViewPrivateIndicatorContext.h"
 #import "MDCTabBarItemCustomViewing.h"
 #import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewDelegate.h"
 #import "MDCTabBarViewIndicatorTemplate.h"
 #import "MDCTabBarViewUnderlineIndicatorTemplate.h"
-#import "private/MDCTabBarViewIndicatorView.h"
-#import "private/MDCTabBarViewItemView.h"
-#import "private/MDCTabBarViewPrivateIndicatorContext.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
@@ -33,9 +33,6 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
-
-/** Maximum width of an item view. */
-static const CGFloat kMaxItemWidth = 360;
 
 /** The leading edge inset for scrollable tabs. */
 static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
@@ -794,12 +791,6 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
       CGFloat requiredWidthForJustifiedLayout = [self intrinsicContentSizeForJustifiedLayout].width;
       if (availableSize.width < requiredWidthForJustifiedLayout) {
         return MDCTabBarViewLayoutStyleScrollable;
-      }
-      UIEdgeInsets contentPadding =
-          [self contentPaddingForLayoutStyle:MDCTabBarViewLayoutStyleFixed];
-      CGFloat itemLayoutWidth = availableSize.width - contentPadding.left - contentPadding.right;
-      if ((itemLayoutWidth / self.items.count) > kMaxItemWidth) {
-        return MDCTabBarViewLayoutStyleFixedClusteredCentered;
       }
       return MDCTabBarViewLayoutStyleFixed;
     }

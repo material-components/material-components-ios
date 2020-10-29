@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MDCAlertActionManager.h"
+#import "MaterialButtons.h"
 #import "MDCAlertController+ButtonForAction.h"
+#import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
 
 @interface MDCAlertActionManagerTests : XCTestCase
@@ -59,7 +60,7 @@
   XCTAssertEqual([[self.actionManager buttonsInActionOrder] count], 0ul);
 }
 
-- (void)testActionManager_AddingButtonToActionBeforeAlertIsPResentedReturnsDetachedButtons {
+- (void)testActionManager_AddingButtonToActionBeforeAlertIsPresentedReturnsDetachedButtons {
   // Given
   [self.actionManager addAction:self.action];
 
@@ -136,6 +137,46 @@
   MDCButton *button2 = [alert buttonForAction:action2];
   XCTAssertNotNil(button2);
   XCTAssertNotNil(button2.superview);
+}
+
+/**
+ * Verifies that a new action of the same setup of an added action is not considered as included.
+ */
+- (void)testSecondActionWithSameValuesShouldNotBeIncluded {
+  [self.actionManager addAction:self.action];
+  MDCAlertAction *clonedAction = [self.action copy];
+  XCTAssertFalse([self.actionManager hasAction:clonedAction]);
+
+  // Ensures that the cloned action can be added.
+  [self.actionManager addAction:clonedAction];
+  XCTAssertTrue([self.actionManager hasAction:clonedAction]);
+}
+
+/** Verifes that a button is not created for an action with the same setup that's not yet added. */
+- (void)testButtonForActionShouldReturnNilForSameValueButDifferentActionObject {
+  [self.actionManager addAction:self.action];
+  MDCAlertAction *clonedAction = [self.action copy];
+  MDCButton *button = [self.actionManager createButtonForAction:self.action
+                                                         target:self
+                                                       selector:@selector(actionButtonPressed:)];
+
+  XCTAssertNotNil(button);
+  XCTAssertNil([self.actionManager buttonForAction:clonedAction]);
+}
+
+/** Verifies that the buttons for two equal actions have different identities. */
+- (void)testButtonsShouldBeUniqueWithActionsThatAreEqual {
+  MDCAlertAction *clonedAction = [self.action copy];
+  [self.actionManager addAction:self.action];
+  [self.actionManager addAction:clonedAction];
+
+  MDCButton *button1 = [self.actionManager createButtonForAction:self.action
+                                                          target:self
+                                                        selector:@selector(actionButtonPressed:)];
+  MDCButton *button2 = [self.actionManager createButtonForAction:clonedAction
+                                                          target:self
+                                                        selector:@selector(actionButtonPressed:)];
+  XCTAssertNotEqual(button1, button2);
 }
 
 @end

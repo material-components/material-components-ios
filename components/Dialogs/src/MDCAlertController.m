@@ -64,6 +64,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return self;
 }
 
+#pragma mark - NSCopying
+
 - (id)copyWithZone:(__unused NSZone *)zone {
   MDCAlertAction *action = [[self class] actionWithTitle:self.title
                                                 emphasis:self.emphasis
@@ -71,6 +73,22 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
+}
+
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)object {
+  if (![object isKindOfClass:[MDCAlertAction class]]) {
+    return NO;
+  }
+
+  MDCAlertAction *anotherAction = (MDCAlertAction *)object;
+  if (self == anotherAction) {
+    return YES;
+  }
+
+  return
+      [self.title isEqualToString:anotherAction.title] && self.emphasis == anotherAction.emphasis;
 }
 
 @end

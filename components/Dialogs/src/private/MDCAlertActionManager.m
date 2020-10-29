@@ -56,7 +56,7 @@
 }
 
 - (BOOL)hasAction:(nonnull MDCAlertAction *)action {
-  return [_actions indexOfObject:action] != NSNotFound;
+  return [_actions indexOfObjectIdenticalTo:action] != NSNotFound;
 }
 
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action {
