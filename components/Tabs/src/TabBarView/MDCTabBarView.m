@@ -17,6 +17,7 @@
 #import "private/MDCTabBarViewIndicatorView.h"
 #import "private/MDCTabBarViewItemView.h"
 #import "private/MDCTabBarViewPrivateIndicatorContext.h"
+#import "MaterialRipple.h"
 #import "MDCTabBarItemCustomViewing.h"
 #import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewDelegate.h"
@@ -249,7 +250,6 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
       mdcItemView.image = item.image;
       mdcItemView.selectedImage = item.selectedImage;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
-      mdcItemView.rippleTouchController.shouldProcessRippleWithScrollViewGestures = NO;
 
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
       if (@available(iOS 13, *)) {
@@ -847,6 +847,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
     itemViewOriginX += itemViewWidth;
   }
+  [self updateItemViewsShouldProcessRippleWithScrollViewGestures:YES];
 }
 
 - (void)layoutSubviewsForFixedClusteredLayout:(MDCTabBarViewLayoutStyle)layoutStyle {
@@ -884,6 +885,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
     itemViewOriginX += itemViewWidth;
   }
+  [self updateItemViewsShouldProcessRippleWithScrollViewGestures:YES];
 }
 
 - (void)layoutSubviewsForScrollableLayout:(MDCTabBarViewLayoutStyle)layoutStyle {
@@ -912,6 +914,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
         CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
     itemViewOriginX += intrinsicContentSize.width;
   }
+  [self updateItemViewsShouldProcessRippleWithScrollViewGestures:NO];
 }
 
 - (void)layoutSubviewsForNonFixedClusteredCentered {
@@ -939,6 +942,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
         CGRectMake(itemViewMinX, itemViewMinY, intrinsicContentSize.width, combineditemSize.height);
     itemViewMinX += intrinsicContentSize.width;
   }
+  [self updateItemViewsShouldProcessRippleWithScrollViewGestures:YES];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -1214,6 +1218,15 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
                    animations:animationBlock
                    completion:nil];
   [CATransaction commit];
+}
+
+- (void)updateItemViewsShouldProcessRippleWithScrollViewGestures:(BOOL)shouldProcees {
+  for (UIView *itemView in self.itemViews) {
+    if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      MDCTabBarViewItemView *mdcItemView = (MDCTabBarViewItemView *)itemView;
+      mdcItemView.rippleTouchController.shouldProcessRippleWithScrollViewGestures = shouldProcees;
+    }
+  }
 }
 
 #pragma mark - Actions
