@@ -369,9 +369,7 @@
 
  The button uses this property to determine intrinsicContentSize and sizeThatFits:.
 
- @note This property sets the @c shapeGenerator. Therefore you cannot use both properties
- simultaneously. If you do wish to use a custom shape with visibleAreaInsets, please set your own
- shapeGenerator that is inset from the frame instead of setting this property directly.
+ @note This API will be deprecated and removed. Consider using @c centerVisibleArea.
 
  Default is UIEdgeInsetsZero.
 */
