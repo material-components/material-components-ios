@@ -175,4 +175,36 @@
   [self snapshotVerifyView:snapshotView];
 }
 
+- (void)testVisibleAreaLayoutGuide {
+  // Given
+  UIView *overlayView = [[UIView alloc] init];
+  overlayView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+  MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
+  [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+
+  UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+  containerView.backgroundColor = [UIColor whiteColor];
+  [containerView addSubview:button];
+  [containerView addSubview:overlayView];
+  overlayView.translatesAutoresizingMaskIntoConstraints = NO;
+
+  [NSLayoutConstraint activateConstraints:@[
+    [overlayView.leadingAnchor constraintEqualToAnchor:button.visibleAreaLayoutGuide.leadingAnchor],
+    [overlayView.trailingAnchor
+        constraintEqualToAnchor:button.visibleAreaLayoutGuide.trailingAnchor],
+    [overlayView.topAnchor constraintEqualToAnchor:button.visibleAreaLayoutGuide.topAnchor],
+    [overlayView.bottomAnchor constraintEqualToAnchor:button.visibleAreaLayoutGuide.bottomAnchor],
+  ]];
+
+  // When
+  button.centerVisibleArea = YES;
+  button.frame = CGRectMake(0, 0, 100, 100);
+  button.center = containerView.center;
+  [containerView layoutIfNeeded];
+
+  // Then
+  [self snapshotVerifyView:containerView];
+}
+
 @end

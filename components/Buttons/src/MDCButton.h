@@ -92,6 +92,14 @@
 @property(nonatomic, assign) BOOL centerVisibleArea;
 
 /**
+ The edges of this guide are constrained to equal the edges of the visible area
+ when @c centerVisibleArea is @c YES.
+
+ @note If centerVisibleArea is @c NO then visibleAreaLayoutGuide is nil.
+*/
+@property(nonatomic, readonly, strong, nullable) UILayoutGuide *visibleAreaLayoutGuide;
+
+/**
  The default content edge insets of the button. They are set at initialization time.
  */
 @property(nonatomic, readonly) UIEdgeInsets defaultContentEdgeInsets;
