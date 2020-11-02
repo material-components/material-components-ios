@@ -29,8 +29,10 @@ extern const CGFloat MDCTabBarViewControllerAnimationDuration;
  as tappable items in a bottom MDCTabBar. When the user taps one of those items, the corresponding
  view controller appears.
  */
-IB_DESIGNABLE
-@interface MDCTabBarViewController : UIViewController <MDCTabBarDelegate, UIBarPositioningDelegate>
+__deprecated_msg(
+    "Use MDCTabBarView instead. See go/material-ios-tabbar-migration for more details.")
+    IB_DESIGNABLE @interface MDCTabBarViewController
+    : UIViewController<MDCTabBarDelegate, UIBarPositioningDelegate>
 
 /** The tab bar controller's delegate. */
 @property(nonatomic, weak, nullable) id<MDCTabBarControllerDelegate> delegate;
