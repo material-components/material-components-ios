@@ -61,9 +61,12 @@ static NSString *const kMiniButtonLabel = @"Add";
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
                                    inMode:MDCFloatingButtonModeExpanded];
-  [self.miniFloatingButton setVisibleAreaInsets:UIEdgeInsetsMake(2, 2, 2, 2)
+  [self.miniFloatingButton setCenterVisibleArea:YES
                                        forShape:MDCFloatingButtonShapeMini
                                          inMode:MDCFloatingButtonModeNormal];
+  [self.miniFloatingButton setCenterVisibleArea:YES
+                                       forShape:MDCFloatingButtonShapeMini
+                                         inMode:MDCFloatingButtonModeExpanded];
 
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
@@ -90,9 +93,14 @@ static NSString *const kMiniButtonLabel = @"Add";
   [self.largeIconFloatingButton sizeToFit];
   [self.defaultFloatingButton sizeToFit];
   [self.miniFloatingButton sizeToFit];
+  // Minimum touch target size (44, 44).
+  self.miniFloatingButton.frame = CGRectMake(
+      CGRectGetMinX(self.miniFloatingButton.frame), CGRectGetMinY(self.miniFloatingButton.frame),
+      MAX(44, CGRectGetWidth(self.miniFloatingButton.frame)),
+      MAX(44, CGRectGetHeight(self.miniFloatingButton.frame)));
 
   CGFloat totalUsedHeight = self.iPadLabel.intrinsicContentSize.height +
-                            self.miniFloatingButton.intrinsicContentSize.height +
+                            CGRectGetHeight(self.miniFloatingButton.frame) +
                             self.defaultFloatingButton.intrinsicContentSize.height +
                             self.largeIconFloatingButton.intrinsicContentSize.height;
 
@@ -107,7 +115,7 @@ static NSString *const kMiniButtonLabel = @"Add";
   CGFloat interViewSpacing = MIN(20, remainingMargins / interViewGapCount);
   CGFloat viewYOffset = (remainingMargins - interViewSpacing * interViewGapCount) / 2;
 
-  CGSize miniFabSize = self.miniFloatingButton.intrinsicContentSize;
+  CGSize miniFabSize = self.miniFloatingButton.bounds.size;
   CGSize defaultFabSize = self.defaultFloatingButton.intrinsicContentSize;
   CGSize largeIconFabSize = self.largeIconFloatingButton.intrinsicContentSize;
 
