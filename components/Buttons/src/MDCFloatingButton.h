@@ -249,17 +249,4 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
                     forShape:(MDCFloatingButtonShape)shape
                       inMode:(MDCFloatingButtonMode)mode;
 
-/**
- Sets the @c visibleAreaInsets value when the button has the specified @c shape and @c mode.
-
- @param visibleAreaInsets The insets to the visual representation of the button.
- @param shape The floating action button's shape (Default, Mini).
- @param mode The floating action button's mode (Normal, Expanded).
- */
-- (void)setVisibleAreaInsets:(UIEdgeInsets)visibleAreaInsets
-                    forShape:(MDCFloatingButtonShape)shape
-                      inMode:(MDCFloatingButtonMode)mode
-    __attribute__((deprecated(
-        "Consider using setCenterVisibleArea:forShape:InMode: to adjust visible area.")));
-
 @end
