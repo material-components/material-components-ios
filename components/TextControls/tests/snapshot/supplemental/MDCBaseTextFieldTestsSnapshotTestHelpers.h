@@ -45,5 +45,7 @@
     (MDCBaseTextField *)textField;
 + (void)configureTextFieldWithTextAndNoLabelTextAndPreferredContainerHeightWhileEditing:
     (MDCBaseTextField *)textField;
++ (void)configureTextFieldWithHebrewTextAndTrailingViewInRTL:(MDCBaseTextField *)textField;
++ (void)configureTextFieldWithHebrewTextAndLeadingViewInRTL:(MDCBaseTextField *)textField;
 
 @end

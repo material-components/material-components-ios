@@ -236,4 +236,28 @@
   [self validateTextField:textField];
 }
 
+- (void)testTextFieldWithHebrewTextAndLeadingViewInRTL {
+  // Given
+  MDCUnderlinedTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithHebrewTextAndLeadingViewInRTL:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithHebrewTextAndTrailingViewInRTL {
+  // Given
+  MDCUnderlinedTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithHebrewTextAndTrailingViewInRTL:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 @end
