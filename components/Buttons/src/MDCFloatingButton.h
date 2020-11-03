@@ -90,6 +90,13 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
 @property(nonatomic, assign) MDCFloatingButtonMode mode;
 
 /**
+ The shape of the floating button.
+
+ The default value is decided by the @c -initWithFrame:shape: initializer.
+ */
+@property(nonatomic, assign) MDCFloatingButtonShape shape;
+
+/**
  Changes the mode (with animation, if desired).
 
  If animated, the floating button's size will be updated automatically as part of the animation.

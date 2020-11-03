@@ -353,6 +353,14 @@ static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
 
 #pragma mark - Property Setters/Getters
 
+- (void)setShape:(MDCFloatingButtonShape)shape {
+  if (_shape == shape) {
+    return;
+  }
+  _shape = shape;
+  [self updateShapeAndAllowResize:YES];
+}
+
 - (void)setMode:(MDCFloatingButtonMode)mode {
   [self setMode:mode animated:NO animateAlongside:nil completion:nil];
 }

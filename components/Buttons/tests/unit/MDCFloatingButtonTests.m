@@ -757,6 +757,44 @@ static UIImage *fakeImage(void) {
   XCTAssertEqualWithAccuracy(button.layer.cornerRadius, CGRectGetHeight(button.bounds) / 2, 0.0001);
 }
 
+#pragma mark - shape methods
+
+- (void)testSizeChangeWhenChangingShapeFromDefaultToMini {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button sizeToFit];
+  [button layoutIfNeeded];
+
+  // When
+  button.shape = MDCFloatingButtonShapeMini;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertEqual(button.shape, MDCFloatingButtonShapeMini);
+  CGFloat miniDimension = [MDCFloatingButton miniDimension];
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(button.frame), miniDimension, FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(button.frame), miniDimension, FLT_EPSILON);
+}
+
+- (void)testSizeChangeWhenChangingShapeFromMiniToDefault {
+  // Given
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
+  [button sizeToFit];
+  [button layoutIfNeeded];
+
+  // When
+  button.shape = MDCFloatingButtonShapeDefault;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertEqual(button.shape, MDCFloatingButtonShapeDefault);
+  CGFloat defaultDimension = [MDCFloatingButton defaultDimension];
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(button.frame), defaultDimension, FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(button.frame), defaultDimension, FLT_EPSILON);
+}
+
 #pragma mark - setCenterVisibleArea:forShape:inMode:
 
 - (void)testDefaultCenterVisibleAreaValues {
