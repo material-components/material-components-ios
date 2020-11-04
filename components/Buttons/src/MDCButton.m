@@ -1253,7 +1253,8 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
                         change:(NSDictionary *)change
                        context:(void *)context {
   if (context == kKVOContextCornerRadius) {
-    if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero) &&
+    if ((!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero) ||
+         self.centerVisibleArea) &&
         self.shapeGenerator) {
       MDCRectangleShapeGenerator *shapeGenerator =
           [self generateShapeWithCornerRadius:self.layer.cornerRadius
