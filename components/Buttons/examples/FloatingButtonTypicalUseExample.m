@@ -71,6 +71,12 @@ static NSString *const kMiniButtonLabel = @"Add";
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
   self.defaultFloatingButton.accessibilityLabel = kButtonLabel;
+  [self.defaultFloatingButton setCenterVisibleArea:YES
+                                          forShape:MDCFloatingButtonShapeDefault
+                                            inMode:MDCFloatingButtonModeNormal];
+  [self.defaultFloatingButton setCenterVisibleArea:YES
+                                          forShape:MDCFloatingButtonShapeDefault
+                                            inMode:MDCFloatingButtonModeExpanded];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
   [self.largeIconFloatingButton setImage:plusImage36 forState:UIControlStateNormal];
