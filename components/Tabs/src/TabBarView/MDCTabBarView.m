@@ -772,6 +772,9 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
       }
     }
     case MDCTabBarViewLayoutStyleScrollableCentered: {
+      if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()) {
+        return MDCTabBarViewLayoutStyleScrollable;
+      }
       CGFloat scrollableCenteredWidth =
           [self
               intrinsicContentSizeForNonFixedLayoutStyle:MDCTabBarViewLayoutStyleScrollableCentered]
