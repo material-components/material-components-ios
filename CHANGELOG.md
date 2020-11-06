@@ -1,16 +1,23 @@
-# #develop#
+# 119.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release removes a deprecated MDCButton API, deprecates MDCTabBar, and provides
+enhancements to MDCButton and Tabs.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+MDCButton's `setVisibleAreaInsets:forShape:inMode:` API has been removed. Use
+`setCenterVisibleArea:forShape:InMode:` instead.
+
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+MDCTabBar has been deprecated. Please use MDCTabBarView instead.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+MDCFloatingButton now has a `shape` property that can be used to change the button's shape.
+
+MDCButton now has a `visibleAreaLayoutGuide` property that can be used to align content against the
+button's visible area using AutoLayout.
 
 ## Component changes
 
