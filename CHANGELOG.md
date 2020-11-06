@@ -1,3 +1,41 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Buttons
+
+* [Add shape API to allow changing FAB's shape after it is initialized.](https://github.com/material-components/material-components-ios/commit/a25c55ee80eb00b633228614cdb5b27ea229b2d5) (Wenyu Zhang)
+* [Add visibleAreaLayoutGuide for providing anchors to the visible area when centerVisibleArea is set to YES.](https://github.com/material-components/material-components-ios/commit/0de498c394d21db7fb824b046bf405091fcfbc24) (Yarden Eitan)
+* [Apply centerVisibleArea to a FAB with default shape example to reproduce shapeGenerator not getting updated issue on FAB.](https://github.com/material-components/material-components-ios/commit/d40ec950c35324985587f264805eeb72b80da6fd) (Wenyu Zhang)
+* [Fix cornerRadius change not triggering the update on shapeGenerator when centerVisibleArea is YES.](https://github.com/material-components/material-components-ios/commit/d4e0da5ce430325e13b1490deac030ce8e7eead0) (Wenyu Zhang)
+* [Migrate deprecated visibleAreaInsets API to centerVisibleArea API in FAB typical example.](https://github.com/material-components/material-components-ios/commit/7cdcc53b5b1ac75c6e03094b25aeeb02b16fb5b1) (Wenyu Zhang)
+* [Remove deprecated setVisibleAreaInsets:forShape:inMode: API.](https://github.com/material-components/material-components-ios/commit/615f273a419196225007cf0bcef47a478284b377) (Wenyu Zhang)
+* [Update note on visibleAreaInsets to indicate it will be deprecated explicitly to prevent future usage.](https://github.com/material-components/material-components-ios/commit/c371dd4169d3400dc37199732aa4fc46cd106225) (Wenyu Zhang)
+
+### Tabs
+
+* [Fallback to scrollable when scrollableCentered is set and VoiceOver is running](https://github.com/material-components/material-components-ios/commit/67e70a63c9fe47a5632e5fdbe83ce2e60ea77ecb) (Andrew Overton)
+* [Mark MDCTabBar as deprecated.](https://github.com/material-components/material-components-ios/commit/b5bd0e39417bcecc14cb24a90ae8bf73d358fd4e) (Alyssa Weiss)
+* [Update handling of ripple so that, for non scroll layout styles, it shows ripple on touch down rather than touch up.](https://github.com/material-components/material-components-ios/commit/b8dccb0965b97d0799aaae6bb3c45a1f33357641) (Alyssa Weiss)
+
+### TextControls
+
+* [add RTL snapshot tests](https://github.com/material-components/material-components-ios/commit/9e8c6cc75c6d7ec0a9f9ee716d12e608f043e64c) (Andrew Overton)
+
+---
+
 # 118.2.0
 
 In this minor release, we have made several improvements to the Dialogs, Snackbar, and Tabs components. We also improved the Banner component's documentation.
