@@ -1,11 +1,11 @@
 # 119.0.0
 
-This major release removes a deprecated MDCButton API, deprecates MDCTabBar, and provides
+This major release removes a deprecated MDCFloatingButton API, deprecates MDCTabBar, and provides
 enhancements to MDCButton and Tabs.
 
 ## Breaking changes
 
-MDCButton's `setVisibleAreaInsets:forShape:inMode:` API has been removed. Use
+MDCFloatingButton's `setVisibleAreaInsets:forShape:inMode:` API has been removed. Use
 `setCenterVisibleArea:forShape:InMode:` instead.
 
 ## New deprecations
