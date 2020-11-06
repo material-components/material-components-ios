@@ -123,6 +123,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 @property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
 @property(nonatomic, assign) BOOL enableTitleFontForState;
 @property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
+@property(nonatomic, strong) UIView *visibleAreaLayoutGuideView;
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 @property(nonatomic, assign) UIEdgeInsets currentVisibleAreaInsets;
 @end
@@ -132,6 +133,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize visibleAreaInsets = _visibleAreaInsets;
+@synthesize visibleAreaLayoutGuide = _visibleAreaLayoutGuide;
 @dynamic layer;
 
 + (Class)layerClass {
@@ -325,6 +327,10 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
           [self generateShapeWithCornerRadius:self.layer.cornerRadius
                             visibleAreaInsets:visibleAreaInsets];
       [self configureLayerWithShapeGenerator:shapeGenerator];
+      if (self.visibleAreaLayoutGuideView) {
+        self.visibleAreaLayoutGuideView.frame =
+            UIEdgeInsetsInsetRect(self.bounds, visibleAreaInsets);
+      }
     }
   }
 
@@ -1146,9 +1152,10 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
       _cornerRadiusObserverAdded = NO;
     }
   } else {
+    UIEdgeInsets visibleAreaInsets = self.visibleAreaInsets;
     MDCRectangleShapeGenerator *shapeGenerator =
         [self generateShapeWithCornerRadius:self.layer.cornerRadius
-                          visibleAreaInsets:self.visibleAreaInsets];
+                          visibleAreaInsets:visibleAreaInsets];
     [self configureLayerWithShapeGenerator:shapeGenerator];
 
     if (!_cornerRadiusObserverAdded) {
@@ -1215,12 +1222,39 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   return visibleAreaInsets;
 }
 
+- (UILayoutGuide *)visibleAreaLayoutGuide {
+  if (!_visibleAreaLayoutGuide) {
+    _visibleAreaLayoutGuide = [[UILayoutGuide alloc] init];
+    [self addLayoutGuide:_visibleAreaLayoutGuide];
+    _visibleAreaLayoutGuideView = [[UIView alloc] init];
+    _visibleAreaLayoutGuideView.userInteractionEnabled = NO;
+    [self insertSubview:_visibleAreaLayoutGuideView atIndex:0];
+    self.visibleAreaLayoutGuideView.frame =
+        UIEdgeInsetsInsetRect(self.bounds, self.visibleAreaInsets);
+
+    [_visibleAreaLayoutGuide.leftAnchor
+        constraintEqualToAnchor:_visibleAreaLayoutGuideView.leftAnchor]
+        .active = YES;
+    [_visibleAreaLayoutGuide.rightAnchor
+        constraintEqualToAnchor:_visibleAreaLayoutGuideView.rightAnchor]
+        .active = YES;
+    [_visibleAreaLayoutGuide.topAnchor
+        constraintEqualToAnchor:_visibleAreaLayoutGuideView.topAnchor]
+        .active = YES;
+    [_visibleAreaLayoutGuide.bottomAnchor
+        constraintEqualToAnchor:_visibleAreaLayoutGuideView.bottomAnchor]
+        .active = YES;
+  }
+  return _visibleAreaLayoutGuide;
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
   if (context == kKVOContextCornerRadius) {
-    if (!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero) &&
+    if ((!UIEdgeInsetsEqualToEdgeInsets(self.visibleAreaInsets, UIEdgeInsetsZero) ||
+         self.centerVisibleArea) &&
         self.shapeGenerator) {
       MDCRectangleShapeGenerator *shapeGenerator =
           [self generateShapeWithCornerRadius:self.layer.cornerRadius

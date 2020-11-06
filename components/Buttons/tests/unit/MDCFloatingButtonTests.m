@@ -757,95 +757,42 @@ static UIImage *fakeImage(void) {
   XCTAssertEqualWithAccuracy(button.layer.cornerRadius, CGRectGetHeight(button.bounds) / 2, 0.0001);
 }
 
-#pragma mark - setVisibleAreaInsets:forShape:inMode:
+#pragma mark - shape methods
 
-- (void)testDefaultVisibleAreaInsetsValues {
+- (void)testSizeChangeWhenChangingShapeFromDefaultToMini {
   // Given
-  MDCFloatingButton *defaultButtonNormal =
-      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
-  MDCFloatingButton *defaultButtonExpanded =
-      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
-  defaultButtonExpanded.mode = MDCFloatingButtonModeExpanded;
-  MDCFloatingButton *miniButtonNormal =
-      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  MDCFloatingButton *miniButtonExpanded =
-      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  miniButtonExpanded.mode = MDCFloatingButtonModeExpanded;
-
-  // Then
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButtonNormal.visibleAreaInsets));
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButtonExpanded.visibleAreaInsets));
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, miniButtonNormal.visibleAreaInsets));
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, miniButtonExpanded.visibleAreaInsets));
-}
-
-- (void)testSetVisibleAreaInsetsForShapeInNormalMode {
-  // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
-  MDCFloatingButton *miniButton =
-      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  [button sizeToFit];
+  [button layoutIfNeeded];
 
   // When
-  [defaultButton setVisibleAreaInsets:UIEdgeInsetsMake(1, 2, 3, 4)
-                             forShape:MDCFloatingButtonShapeDefault
-                               inMode:MDCFloatingButtonModeNormal];
-  defaultButton.mode = MDCFloatingButtonModeNormal;
-  [miniButton setVisibleAreaInsets:UIEdgeInsetsMake(9, 8, 7, 6)
-                          forShape:MDCFloatingButtonShapeMini
-                            inMode:MDCFloatingButtonModeNormal];
-  miniButton.mode = MDCFloatingButtonModeNormal;
+  button.shape = MDCFloatingButtonShapeMini;
+  [button sizeToFit];
 
   // Then
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4), defaultButton.visibleAreaInsets));
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6), miniButton.visibleAreaInsets));
+  XCTAssertEqual(button.shape, MDCFloatingButtonShapeMini);
+  CGFloat miniDimension = [MDCFloatingButton miniDimension];
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(button.frame), miniDimension, FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(button.frame), miniDimension, FLT_EPSILON);
 }
 
-- (void)testSetVisibleAreaInsetsForShapeInExpandedMode {
+- (void)testSizeChangeWhenChangingShapeFromMiniToDefault {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
-  MDCFloatingButton *miniButton =
-      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
+  MDCFloatingButton *button =
+      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
+  [button sizeToFit];
+  [button layoutIfNeeded];
 
   // When
-  [defaultButton setVisibleAreaInsets:UIEdgeInsetsMake(1, 2, 3, 4)
-                             forShape:MDCFloatingButtonShapeDefault
-                               inMode:MDCFloatingButtonModeExpanded];
-  defaultButton.mode = MDCFloatingButtonModeExpanded;
-  [miniButton setVisibleAreaInsets:UIEdgeInsetsMake(9, 8, 7, 6)
-                          forShape:MDCFloatingButtonShapeMini
-                            inMode:MDCFloatingButtonModeExpanded];
-  miniButton.mode = MDCFloatingButtonModeExpanded;
+  button.shape = MDCFloatingButtonShapeDefault;
+  [button sizeToFit];
 
   // Then
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4), defaultButton.visibleAreaInsets));
-  XCTAssertTrue(
-      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6), miniButton.visibleAreaInsets));
-}
-
-- (void)testChangingVisibleAreaInsetsWontTriggerResizing {
-  // Given
-  FakeFloatingButton *button = [[FakeFloatingButton alloc] init];  // Default shape
-  [button reset];
-
-  // When
-  [button setVisibleAreaInsets:UIEdgeInsetsMake(17, 21, 25, 29)
-                      forShape:MDCFloatingButtonShapeDefault
-                        inMode:MDCFloatingButtonModeNormal];
-
-  // Then
-  XCTAssertFalse(button.intrinsicContentSizeCalled);
-  XCTAssertFalse(button.invalidateIntrinsicContentSizeCalled);
-  XCTAssertFalse(button.sizeThatFitsCalled);
-  XCTAssertFalse(button.layoutSubviewsCalled);
+  XCTAssertEqual(button.shape, MDCFloatingButtonShapeDefault);
+  CGFloat defaultDimension = [MDCFloatingButton defaultDimension];
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(button.frame), defaultDimension, FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(button.frame), defaultDimension, FLT_EPSILON);
 }
 
 #pragma mark - setCenterVisibleArea:forShape:inMode:

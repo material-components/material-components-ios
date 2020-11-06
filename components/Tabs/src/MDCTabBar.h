@@ -34,6 +34,9 @@ typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
 };
 
 /**
+ @note MDCTabBar is deprecated. Please use MDCTabBarView instead. See
+ go/material-ios-tabbar-migration for more details.
+
  A material tab bar for switching between views of grouped content.
 
  Clients are responsible for responding to changes to the selected tab and updating the selected
@@ -43,8 +46,10 @@ typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
 
  @see https://material.io/go/design-tabs
  */
-IB_DESIGNABLE
-@interface MDCTabBar : UIView <UIBarPositioning, MDCElevatable, MDCElevationOverriding>
+__deprecated_msg(
+    "Use MDCTabBarView instead. See go/material-ios-tabbar-migration for more details.")
+    IB_DESIGNABLE @interface MDCTabBar
+    : UIView<UIBarPositioning, MDCElevatable, MDCElevationOverriding>
 
 /** The default height for the tab bar with a given position and item appearance. */
 + (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position
@@ -239,7 +244,7 @@ IB_DESIGNABLE
 
 #pragma mark -
 
-@interface MDCTabBar (ToBeDeprecated)
+@interface MDCTabBar (Deprecated)
 
 /**
  Ink color for taps on tab bar items. Default: Semi-transparent white.

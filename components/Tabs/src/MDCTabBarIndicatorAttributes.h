@@ -15,7 +15,9 @@
 #import <UIKit/UIKit.h>
 
 /** Defines how a tab bar indicator should appear in a specific context. */
-@interface MDCTabBarIndicatorAttributes : NSObject <NSCopying>
+__deprecated_msg("Use MDCTabBarViewIndicatorAttributes instead. See "
+                 "go/material-ios-tabbar-migration for more details.")
+    @interface MDCTabBarIndicatorAttributes : NSObject<NSCopying>
 
 /** If non-nil, a path that should be filled with the indicator tint color. */
 @property(nonatomic, nullable) UIBezierPath *path;

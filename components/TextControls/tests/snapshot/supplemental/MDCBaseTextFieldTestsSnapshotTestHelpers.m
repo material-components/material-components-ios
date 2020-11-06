@@ -208,6 +208,20 @@
   [textField becomeFirstResponder];
 }
 
++ (void)configureTextFieldWithHebrewTextAndTrailingViewInRTL:(MDCBaseTextField *)textField {
+  textField.text = @"את מבינה עברית";
+  textField.trailingView = [self createRedSideView];
+  textField.trailingViewMode = UITextFieldViewModeAlways;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+}
+
++ (void)configureTextFieldWithHebrewTextAndLeadingViewInRTL:(MDCBaseTextField *)textField {
+  textField.text = @"את מבינה עברית";
+  textField.leadingView = [self createRedSideView];
+  textField.leadingViewMode = UITextFieldViewModeAlways;
+  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+}
+
 #pragma mark Helpers
 
 + (UIView *)createBlueSideView {

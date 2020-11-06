@@ -20,7 +20,9 @@
  Delegate protocol for MDCTabBar. Clients may implement this protocol to receive notifications of
  selection changes in the tab bar or to determine the bar's position.
  */
-@protocol MDCTabBarDelegate <UIBarPositioningDelegate>
+__deprecated_msg(
+    "Use MDCTabBarViewDelegate instead. See go/material-ios-tabbar-migration for more details.")
+    @protocol MDCTabBarDelegate<UIBarPositioningDelegate>
 
 @optional
 

@@ -16,6 +16,7 @@
 
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
 #import "MaterialAvailability.h"
+#import "MaterialRipple.h"
 #import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewCustomViewable.h"
@@ -783,6 +784,36 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertTrue(CGSizeEqualToSize(actualIntrinsicContentSize, expectedIntrinsicContentSize),
                 @"(%@) is not equal to (%@)", NSStringFromCGSize(actualIntrinsicContentSize),
                 NSStringFromCGSize(expectedIntrinsicContentSize));
+}
+
+- (void)testRippleTouchControllerShouldProcessRippleWithScrollLayoutStyleIsNo {
+  // Given
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+  self.tabBarView.bounds = CGRectMake(0, 0, kMaxWidthTabBarItem, kMinHeight);
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  [self.tabBarView layoutIfNeeded];
+
+  // Then
+  XCTAssertEqual(self.tabBarView.effectiveLayoutStyle, MDCTabBarViewLayoutStyleScrollable);
+  for (UIView *view in self.tabBarView.itemViews) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)view;
+    XCTAssertFalse(itemView.rippleTouchController.shouldProcessRippleWithScrollViewGestures);
+  }
+}
+
+- (void)testRippleTouchControllerShouldProcessRippleWithFixedLayoutStyleIsYes {
+  // Given
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+  self.tabBarView.bounds = CGRectMake(0, 0, kMaxWidthTabBarItem, kMinHeight);
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  [self.tabBarView layoutIfNeeded];
+
+  // Then
+  XCTAssertEqual(self.tabBarView.effectiveLayoutStyle, MDCTabBarViewLayoutStyleFixed);
+  for (UIView *view in self.tabBarView.itemViews) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)view;
+    XCTAssertTrue(itemView.rippleTouchController.shouldProcessRippleWithScrollViewGestures);
+  }
 }
 
 #pragma mark - Delegate
