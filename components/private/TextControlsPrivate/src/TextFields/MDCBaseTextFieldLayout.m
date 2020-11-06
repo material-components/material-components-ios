@@ -34,10 +34,10 @@
                         labelPosition:(MDCTextControlLabelPosition)labelPosition
                         labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                     sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
-                             leftView:(UIView *)leftView
-                         leftViewMode:(UITextFieldViewMode)leftViewMode
-                            rightView:(UIView *)rightView
-                        rightViewMode:(UITextFieldViewMode)rightViewMode
+                          leadingView:(UIView *)leadingView
+                      leadingViewMode:(UITextFieldViewMode)leadingViewMode
+                         trailingView:(UIView *)trailingView
+                     trailingViewMode:(UITextFieldViewMode)trailingViewMode
                 clearButtonSideLength:(CGFloat)clearButtonSideLength
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                 leadingAssistiveLabel:(nonnull UILabel *)leadingAssistiveLabel
@@ -59,10 +59,10 @@
                              labelPosition:labelPosition
                              labelBehavior:labelBehavior
                          sideViewAlignment:sideViewAlignment
-                                  leftView:leftView
-                              leftViewMode:leftViewMode
-                                 rightView:rightView
-                             rightViewMode:rightViewMode
+                               leadingView:leadingView
+                           leadingViewMode:leadingViewMode
+                              trailingView:trailingView
+                          trailingViewMode:trailingViewMode
                      clearButtonSideLength:clearButtonSideLength
                            clearButtonMode:clearButtonMode
                      leadingAssistiveLabel:leadingAssistiveLabel
@@ -90,10 +90,10 @@
                            labelPosition:(MDCTextControlLabelPosition)labelPosition
                            labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                        sideViewAlignment:(MDCTextControlTextFieldSideViewAlignment)sideViewAlignment
-                                leftView:(UIView *)leftView
-                            leftViewMode:(UITextFieldViewMode)leftViewMode
-                               rightView:(UIView *)rightView
-                           rightViewMode:(UITextFieldViewMode)rightViewMode
+                             leadingView:(UIView *)leadingView
+                         leadingViewMode:(UITextFieldViewMode)leadingViewMode
+                            trailingView:(UIView *)trailingView
+                        trailingViewMode:(UITextFieldViewMode)trailingViewMode
                    clearButtonSideLength:(CGFloat)clearButtonSideLength
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leadingAssistiveLabel:(nonnull UILabel *)leadingAssistiveLabel
@@ -103,6 +103,11 @@
         customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
+  UIView *leftView = isRTL ? trailingView : leadingView;
+  UIView *rightView = isRTL ? leadingView : trailingView;
+  UITextFieldViewMode leftViewMode = isRTL ? trailingViewMode : leadingViewMode;
+  UITextFieldViewMode rightViewMode = isRTL ? leadingViewMode : trailingViewMode;
+
   BOOL displaysLeftView = [self displaysSideView:leftView
                                         viewMode:leftViewMode
                                        isEditing:isEditing];
@@ -254,15 +259,15 @@
                                  isRTL:isRTL];
   self.assistiveLabelViewFrame = CGRectMake(0, containerHeight, textFieldWidth,
                                             self.assistiveLabelViewLayout.calculatedHeight);
-  self.leftViewFrame = leftViewFrame;
-  self.rightViewFrame = rightViewFrame;
+  self.leadingViewFrame = isRTL ? rightViewFrame : leftViewFrame;
+  self.trailingViewFrame = isRTL ? leftViewFrame : rightViewFrame;
+  self.displaysLeadingView = isRTL ? displaysRightView : displaysLeftView;
+  self.displaysTrailingView = isRTL ? displaysLeftView : displaysRightView;
   self.clearButtonFrame = clearButtonFrame;
   self.textRectFloating = textRectFloating;
   self.textRectNormal = textRectNormal;
   self.labelFrameFloating = labelFrameFloating;
   self.labelFrameNormal = labelFrameNormal;
-  self.leftViewHidden = !displaysLeftView;
-  self.rightViewHidden = !displaysRightView;
   self.containerHeight = containerHeight;
 }
 

@@ -189,12 +189,35 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
-  self.leftView.hidden = self.layout.leftViewHidden;
-  self.rightView.hidden = self.layout.rightViewHidden;
   [self animateLabel];
+  [self updateSideViews];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   if (![self validateHeight]) {
     [self invalidateIntrinsicContentSize];
+  }
+}
+
+- (void)updateSideViews {
+  if (self.layout.displaysLeadingView) {
+    if (self.leadingView) {
+      if (self.leadingView.superview != self) {
+        [self addSubview:self.leadingView];
+      }
+      self.leadingView.frame = self.layout.leadingViewFrame;
+    }
+  } else {
+    [self.leadingView removeFromSuperview];
+  }
+
+  if (self.layout.displaysTrailingView) {
+    if (self.trailingView) {
+      if (self.trailingView.superview != self) {
+        [self addSubview:self.trailingView];
+      }
+      self.trailingView.frame = self.layout.trailingViewFrame;
+    }
+  } else {
+    [self.trailingView removeFromSuperview];
   }
 }
 
@@ -244,10 +267,10 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
                          labelPosition:self.labelPosition
                          labelBehavior:self.labelBehavior
                      sideViewAlignment:self.sideViewAlignment
-                              leftView:self.leftView
-                          leftViewMode:self.leftViewMode
-                             rightView:self.rightView
-                         rightViewMode:self.rightViewMode
+                           leadingView:self.leadingView
+                       leadingViewMode:self.leadingViewMode
+                          trailingView:self.trailingView
+                      trailingViewMode:self.trailingViewMode
                  clearButtonSideLength:clearButtonSideLength
                        clearButtonMode:self.clearButtonMode
                  leadingAssistiveLabel:self.assistiveLabelView.leadingAssistiveLabel
@@ -333,19 +356,45 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
-  [self mdc_setLeftViewMode:leftViewMode];
+  self.leadingViewMode = leftViewMode;
+}
+
+- (UITextFieldViewMode)leftViewMode {
+  return self.leadingViewMode;
 }
 
 - (void)setRightViewMode:(UITextFieldViewMode)rightViewMode {
-  [self mdc_setRightViewMode:rightViewMode];
+  self.trailingViewMode = rightViewMode;
+}
+
+- (UITextFieldViewMode)rightViewMode {
+  return self.trailingViewMode;
+}
+
+/**
+ RTL behavior appears to have been added to UITextField some time after the leftView and rightView
+ properties. As a result, things don't always behave how one might expect. The values returned from
+ -leftViewRectForBounds: and -rightViewRectForBounds: can sometimes be ignored in RTL locales, or
+ when semanticContentAttribute is set. To get around this strange behavior from the superclass we
+ manage our own leading and trailing views. The setters for the original UITextField leftView and
+ rightView properties get forwarded to the setters for leadingView and trailingView, respectively.
+ In RTL, -setRightView: will call -setTrailingView:, which will result in a view that gets rendered
+ on the left edge of the view, which is consistent with how UITextField behaves.
+*/
+- (void)setRightView:(UIView *)rightView {
+  self.trailingView = rightView;
+}
+
+- (UIView *)rightView {
+  return self.trailingView;
 }
 
 - (void)setLeftView:(UIView *)leftView {
-  [self mdc_setLeftView:leftView];
+  self.leadingView = leftView;
 }
 
-- (void)setRightView:(UIView *)rightView {
-  [self mdc_setRightView:rightView];
+- (UIView *)leftView {
+  return self.leadingView;
 }
 
 #pragma mark Custom Accessors
@@ -369,83 +418,25 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 }
 
 - (void)setTrailingView:(UIView *)trailingView {
-  if ([self shouldLayoutForRTL]) {
-    [self mdc_setLeftView:trailingView];
-  } else {
-    [self mdc_setRightView:trailingView];
-  }
-}
-
-- (UIView *)trailingView {
-  if ([self shouldLayoutForRTL]) {
-    return self.leftView;
-  } else {
-    return self.rightView;
-  }
+  [_trailingView removeFromSuperview];
+  _trailingView = trailingView;
+  [self setNeedsLayout];
 }
 
 - (void)setLeadingView:(UIView *)leadingView {
-  if ([self shouldLayoutForRTL]) {
-    [self mdc_setRightView:leadingView];
-  } else {
-    [self mdc_setLeftView:leadingView];
-  }
-}
-
-- (UIView *)leadingView {
-  if ([self shouldLayoutForRTL]) {
-    return self.rightView;
-  } else {
-    return self.leftView;
-  }
-}
-
-- (void)mdc_setLeftView:(UIView *)leftView {
-  [super setLeftView:leftView];
-}
-
-- (void)mdc_setRightView:(UIView *)rightView {
-  [super setRightView:rightView];
+  [_leadingView removeFromSuperview];
+  _leadingView = leadingView;
+  [self setNeedsLayout];
 }
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
-  if ([self shouldLayoutForRTL]) {
-    [self mdc_setLeftViewMode:trailingViewMode];
-  } else {
-    [self mdc_setRightViewMode:trailingViewMode];
-  }
-}
-
-- (UITextFieldViewMode)trailingViewMode {
-  if ([self shouldLayoutForRTL]) {
-    return self.leftViewMode;
-  } else {
-    return self.rightViewMode;
-  }
+  _trailingViewMode = trailingViewMode;
+  [self setNeedsLayout];
 }
 
 - (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
-  if ([self shouldLayoutForRTL]) {
-    [self mdc_setRightViewMode:leadingViewMode];
-  } else {
-    [self mdc_setLeftViewMode:leadingViewMode];
-  }
-}
-
-- (UITextFieldViewMode)leadingViewMode {
-  if ([self shouldLayoutForRTL]) {
-    return self.rightViewMode;
-  } else {
-    return self.leftViewMode;
-  }
-}
-
-- (void)mdc_setLeftViewMode:(UITextFieldViewMode)leftViewMode {
-  [super setLeftViewMode:leftViewMode];
-}
-
-- (void)mdc_setRightViewMode:(UITextFieldViewMode)rightViewMode {
-  [super setRightViewMode:rightViewMode];
+  _leadingViewMode = leadingViewMode;
+  [self setNeedsLayout];
 }
 
 #pragma mark MDCTextControl accessors
@@ -487,28 +478,6 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   CGRect textRect = [self textRectFromLayout:self.layout labelPosition:self.labelPosition];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
-}
-
-// The implementations for this method and the method below deserve some context! Unfortunately,
-// Apple's RTL behavior with these methods is very unintuitive. Imagine you're in an RTL locale and
-// you set @c leftView on a standard UITextField. Even though the property that you set is called @c
-// leftView, the method @c -rightViewRectForBounds: will be called. They are treating @c leftView as
-// @c rightView, even though @c rightView is nil. The RTL-aware wrappers around these APIs that
-// MDCBaseTextField introduce handle this situation more accurately.
-- (CGRect)leftViewRectForBounds:(CGRect)bounds {
-  if ([self shouldLayoutForRTL]) {
-    return self.layout.rightViewFrame;
-  } else {
-    return self.layout.leftViewFrame;
-  }
-}
-
-- (CGRect)rightViewRectForBounds:(CGRect)bounds {
-  if ([self shouldLayoutForRTL]) {
-    return self.layout.leftViewFrame;
-  } else {
-    return self.layout.rightViewFrame;
-  }
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {

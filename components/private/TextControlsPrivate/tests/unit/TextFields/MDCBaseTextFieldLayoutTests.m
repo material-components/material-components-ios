@@ -57,10 +57,10 @@
                          labelPosition:MDCTextControlLabelPositionFloating
                          labelBehavior:MDCTextControlLabelBehaviorFloats
                      sideViewAlignment:MDCTextControlTextFieldSideViewAlignmentCenteredInContainer
-                              leftView:[self createSideView]
-                          leftViewMode:viewMode
-                             rightView:[self createSideView]
-                         rightViewMode:viewMode
+                           leadingView:[self createSideView]
+                       leadingViewMode:viewMode
+                          trailingView:[self createSideView]
+                      trailingViewMode:viewMode
                  clearButtonSideLength:19
                        clearButtonMode:viewMode
                  leadingAssistiveLabel:assistiveLabelView.leadingAssistiveLabel
@@ -95,10 +95,10 @@
       [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeAlways isEditing:YES];
 
   // Then
-  XCTAssertFalse(nonEditingLayout.leftViewHidden);
-  XCTAssertFalse(nonEditingLayout.rightViewHidden);
-  XCTAssertFalse(editingLayout.leftViewHidden);
-  XCTAssertFalse(editingLayout.rightViewHidden);
+  XCTAssertTrue(nonEditingLayout.displaysLeadingView);
+  XCTAssertTrue(nonEditingLayout.displaysTrailingView);
+  XCTAssertTrue(editingLayout.displaysLeadingView);
+  XCTAssertTrue(editingLayout.displaysTrailingView);
 }
 
 - (void)testLeftAndRightViewsWithViewModeWhileEditing {
@@ -109,10 +109,10 @@
       [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeWhileEditing isEditing:YES];
 
   // Then
-  XCTAssertTrue(nonEditingLayout.leftViewHidden);
-  XCTAssertTrue(nonEditingLayout.rightViewHidden);
-  XCTAssertFalse(editingLayout.leftViewHidden);
-  XCTAssertFalse(editingLayout.rightViewHidden);
+  XCTAssertFalse(nonEditingLayout.displaysLeadingView);
+  XCTAssertFalse(nonEditingLayout.displaysTrailingView);
+  XCTAssertTrue(editingLayout.displaysLeadingView);
+  XCTAssertTrue(editingLayout.displaysTrailingView);
 }
 
 - (void)testLeftAndRightViewsWithViewModeUnlessEditing {
@@ -123,10 +123,10 @@
       [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeUnlessEditing isEditing:YES];
 
   // Then
-  XCTAssertFalse(nonEditingLayout.leftViewHidden);
-  XCTAssertFalse(nonEditingLayout.rightViewHidden);
-  XCTAssertTrue(editingLayout.leftViewHidden);
-  XCTAssertTrue(editingLayout.rightViewHidden);
+  XCTAssertTrue(nonEditingLayout.displaysLeadingView);
+  XCTAssertTrue(nonEditingLayout.displaysTrailingView);
+  XCTAssertFalse(editingLayout.displaysLeadingView);
+  XCTAssertFalse(editingLayout.displaysTrailingView);
 }
 
 - (void)testLeftAndRightViewsWithViewModeNever {
@@ -137,10 +137,10 @@
       [self createLayoutWithSideViewsAndViewMode:UITextFieldViewModeNever isEditing:YES];
 
   // Then
-  XCTAssertTrue(nonEditingLayout.leftViewHidden);
-  XCTAssertTrue(nonEditingLayout.rightViewHidden);
-  XCTAssertTrue(editingLayout.leftViewHidden);
-  XCTAssertTrue(editingLayout.rightViewHidden);
+  XCTAssertFalse(nonEditingLayout.displaysLeadingView);
+  XCTAssertFalse(nonEditingLayout.displaysTrailingView);
+  XCTAssertFalse(editingLayout.displaysLeadingView);
+  XCTAssertFalse(editingLayout.displaysTrailingView);
 }
 
 - (void)testLabelFrameWithLabelPosition {

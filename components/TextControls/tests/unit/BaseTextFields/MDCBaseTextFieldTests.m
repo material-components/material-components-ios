@@ -41,112 +41,52 @@
 
 #pragma mark Tests
 
-- (void)testLeadingViewEqualsLeftViewInLTR {
+- (void)testSettingLeftViewSetsLeadingView {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
 
   // When
-  UIView *sideView = [self createSideView];
-  textField.leadingView = sideView;
+  textField.leftView = [self createSideView];
 
   // Then
   XCTAssertTrue(textField.leftView == textField.leadingView,
-                @"The leading view should be the left view.");
+                @"Setting the leftView should set the leadingView.");
 }
 
-- (void)testLeadingViewEqualsRightViewInRTL {
+- (void)testSettingRightViewSetsTrailingView {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
 
   // When
-  UIView *sideView = [self createSideView];
-  textField.leadingView = sideView;
-
-  // Then
-  XCTAssertTrue(textField.rightView == textField.leadingView,
-                @"The leading view should be the right view.");
-}
-
-- (void)testTrailingViewEqualsRightViewInLTR {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
-
-  // When
-  UIView *sideView = [self createSideView];
-  textField.trailingView = sideView;
+  textField.rightView = [self createSideView];
 
   // Then
   XCTAssertTrue(textField.rightView == textField.trailingView,
-                @"The trailing view should be the right view.");
+                @"Setting the rightView should set the trailingView.");
 }
 
-- (void)testTrailingViewEqualsLeftViewInRTL {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-
-  // When
-  UIView *sideView = [self createSideView];
-  textField.trailingView = sideView;
-
-  // Then
-  XCTAssertTrue(textField.leftView == textField.trailingView,
-                @"The trailing view should be the left view.");
-}
-
-- (void)testLeadingViewModeEqualsLeftViewModeInLTR {
+- (void)testSettingLeftViewModeSetsLeadingViewMode {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
 
   // When
-  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
-  textField.leadingViewMode = UITextFieldViewModeAlways;
+  textField.leftViewMode = UITextFieldViewModeAlways;
 
   // Then
   XCTAssertTrue(textField.leftViewMode == textField.leadingViewMode,
-                @"The leading view mode should be equal to the left view mode.");
+                @"Setting the leftViewMode should set the leadingViewMode.");
 }
 
-- (void)testLeadingViewModeEqualsRightViewModeInRTL {
+- (void)testSettingRightViewModeSetsTrailingViewMode {
   // Given
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
 
   // When
-  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  textField.leadingViewMode = UITextFieldViewModeAlways;
-
-  // Then
-  XCTAssertTrue(textField.rightViewMode == textField.leadingViewMode,
-                @"The leading view mode should be equal to the right view mode.");
-}
-
-- (void)testTrailingViewModeEqualsRightViewModeInLTR {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-
-  // When
-  textField.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
-  textField.trailingViewMode = UITextFieldViewModeAlways;
+  textField.rightViewMode = UITextFieldViewModeAlways;
 
   // Then
   XCTAssertTrue(textField.rightViewMode == textField.trailingViewMode,
-                @"The trailing view mode should be equal to the right view mode.");
-}
-
-- (void)testTrailingViewModeEqualsLeftViewModeInRTL {
-  // Given
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-
-  // When
-  textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  textField.trailingViewMode = UITextFieldViewModeAlways;
-
-  // Then
-  XCTAssertTrue(textField.leftViewMode == textField.trailingViewMode,
-                @"The trailing view mode should be equal to left view mode.");
+                @"Setting the rightViewMode should set the trailingViewMode.");
 }
 
 - (void)testAdjustTextAreaFrameWithParentClassTextAreaFrame {
