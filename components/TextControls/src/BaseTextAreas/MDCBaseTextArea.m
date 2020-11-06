@@ -632,7 +632,6 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
     for (NSString *assistiveLabelKeyPath in [MDCBaseTextArea assistiveLabelKVOKeyPaths]) {
       if ([assistiveLabelKeyPath isEqualToString:keyPath]) {
-        [self invalidateIntrinsicContentSize];
         [self setNeedsLayout];
         break;
       }
