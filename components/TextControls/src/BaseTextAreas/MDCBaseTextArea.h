@@ -168,4 +168,11 @@ values are allowed.
  */
 @property(nonatomic, assign) CGFloat containerRadius;
 
+/**
+ This property is modeled after the @c placeholder property on UITextField. Note that setting @c
+ placeholder is different than setting the @c text property on MDCBaseTextArea's @c label property.
+ @c label and @c placeholder are unrelated.
+ */
+@property(nonatomic, strong, nullable) NSString *placeholder;
+
 @end

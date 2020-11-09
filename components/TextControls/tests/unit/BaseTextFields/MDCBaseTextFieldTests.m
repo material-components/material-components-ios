@@ -247,36 +247,6 @@
   XCTAssertTrue(CGSizeEqualToSize(newSize, correctSize));
 }
 
-- (void)testPlaceholderVisibility {
-  // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
-
-  // When
-  NSString *placeholder = @"placeholder";
-  NSString *text = @"text";
-  NSString *nilPlaceholder = nil;
-  NSString *nilText = nil;
-
-  // Then
-  XCTAssertFalse([textField
-      shouldPlaceholderBeVisibleWithPlaceholder:nilPlaceholder
-                                           text:text
-                                  labelPosition:MDCTextControlLabelPositionNormal]);
-  XCTAssertFalse([textField
-      shouldPlaceholderBeVisibleWithPlaceholder:placeholder
-                                           text:text
-                                  labelPosition:MDCTextControlLabelPositionNormal]);
-  XCTAssertFalse([textField
-      shouldPlaceholderBeVisibleWithPlaceholder:placeholder
-                                           text:nilText
-                                  labelPosition:MDCTextControlLabelPositionNormal]);
-  XCTAssertTrue([textField
-      shouldPlaceholderBeVisibleWithPlaceholder:placeholder
-                                           text:nilText
-                                  labelPosition:MDCTextControlLabelPositionFloating]);
-}
-
 - (void)testDefaultAccessibilityLabelWithOnlyLabelText {
   // Given
   CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);

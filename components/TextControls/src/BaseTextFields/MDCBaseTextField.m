@@ -548,30 +548,8 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 #pragma mark Placeholder
 
 - (BOOL)shouldPlaceholderBeVisible {
-  return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
-                                                    text:self.text
-                                           labelPosition:self.labelPosition];
-}
-
-- (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
-                                             text:(NSString *)text
-                                    labelPosition:(MDCTextControlLabelPosition)labelPosition {
-  BOOL hasPlaceholder = placeholder.length > 0;
-  BOOL hasText = text.length > 0;
-
-  if (hasPlaceholder) {
-    if (hasText) {
-      return NO;
-    } else {
-      if (labelPosition == MDCTextControlLabelPositionNormal) {
-        return NO;
-      } else {
-        return YES;
-      }
-    }
-  } else {
-    return NO;
-  }
+  return MDCTextControlShouldPlaceholderBeVisibleWithPlaceholder(self.placeholder, self.text,
+                                                                 self.labelPosition);
 }
 
 #pragma mark Label

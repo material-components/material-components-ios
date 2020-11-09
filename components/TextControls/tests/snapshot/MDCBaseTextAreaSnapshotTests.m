@@ -94,4 +94,17 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testTextAreaWithLabelAndPlaceholderWhileEditing {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.placeholder = @"This is a placeholder.";
+  textArea.label.text = @"This is a floating label";
+  [textArea.textView becomeFirstResponder];
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 @end
