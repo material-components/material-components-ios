@@ -28,7 +28,37 @@ selections from a range of values.
 
 Sliders reflect a range of values along a bar, from which users may select a single value. They are ideal for adjusting settings such as volume, brightness, or applying image filters.
 
-Sliders can have icons on both ends of the bar that reflect a range of values.
+### Installing sliders
+
+In order to install with [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) first add the component to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/Slider'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then run the installer:
+
+```bash
+pod install
+```
+
+Then import the Slider target:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialSlider
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialSlider.h"
+```
+<!--</div>-->
+
+### Typical use
 
 `MDCSlider` can be be used like a standard `UIControl`.
 
@@ -91,36 +121,6 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
  
  // Setting a thumb color for selected state.
  [slider setThumbColor:[UIColor redColor] forState:UIControlStateSelected];
-```
-<!--</div>-->
-
-### Installing sliders
-
-In order to install with [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) first add the component to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/Slider'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then run the installer:
-
-```bash
-pod install
-```
-
-Then import the Slider target:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialSlider
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialSlider.h"
 ```
 <!--</div>-->
 
@@ -218,7 +218,7 @@ Source code:
 *   `MDCSlider`
     *   [Class source](https://github.com/material-components/material-components-ios/tree/develop/components/Slider)
 
-!["Example of continuous slider with minimum of 0, maximum of 100, and value of 7."](docs/assets/continuous-slider.png)
+!["Continuous slider from 0 to 100, set at a value of 70."](docs/assets/continuous-slider.png)
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -252,7 +252,7 @@ Source code:
 *   `MDCSlider`
     *   [Class source](https://github.com/material-components/material-components-ios/tree/develop/components/Slider)
 
-!["Example of discrete slider with minimum of 0, maximum of 100, and value of 7."](docs/assets/discrete-slider.png)
+!["Discrete slider from 0 to 100, set at a value of 70."](docs/assets/discrete-slider.png)
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
