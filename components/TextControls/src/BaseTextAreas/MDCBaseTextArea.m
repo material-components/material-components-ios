@@ -35,6 +35,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 #pragma mark MDCTextControl properties
 @property(strong, nonatomic) UILabel *label;
+@property(nonatomic, strong) UILabel *placeholderLabel;
 @property(nonatomic, strong) MDCTextControlAssistiveLabelView *assistiveLabelView;
 @property(strong, nonatomic) MDCBaseTextAreaLayout *layout;
 @property(nonatomic, assign) MDCTextControlState textControlState;
@@ -88,6 +89,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self setUpLabel];
   [self setUpAssistiveLabels];
   [self setUpTextView];
+  [self setUpPlaceholderLabel];
   [self observeTextViewNotifications];
   [self observeAssistiveLabelKeyPaths];
 }
@@ -135,6 +137,11 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 - (void)setUpLabel {
   self.label = [[UILabel alloc] init];
   [self addSubview:self.label];
+}
+
+- (void)setUpPlaceholderLabel {
+  self.placeholderLabel = [[UILabel alloc] init];
+  [self.textView addSubview:self.placeholderLabel];
 }
 
 - (void)setUpTextView {
@@ -195,6 +202,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 - (void)postLayoutSubviews {
   self.maskedTextViewContainerView.frame = self.containerFrame;
   self.textView.frame = self.layout.textViewFrame;
+  [self updatePlaceholderLabel];
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
@@ -366,6 +374,81 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   return MDCTextControlStateWith(isEnabled, isEditing);
 }
 
+#pragma mark Placeholder
+
+- (BOOL)shouldPlaceholderBeVisible {
+  return MDCTextControlShouldPlaceholderBeVisibleWithPlaceholder(
+      self.placeholder, self.textView.text, self.labelPosition);
+}
+
+/**
+ This method provides the default paragraph style object for the placeholder label. Without this
+ it's much harder to get the placeholder to be perfectly vertically aligned with the text in the
+ text view.
+ */
+- (NSParagraphStyle *)defaultPlaceholderParagraphStyle {
+  static NSParagraphStyle *paragraphStyle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    id attribute =
+        [self defaultUiTextFieldPlaceholderAttributeWithKey:NSParagraphStyleAttributeName];
+    if ([attribute isKindOfClass:[NSParagraphStyle class]]) {
+      paragraphStyle = (NSParagraphStyle *)attribute;
+    }
+  });
+  return paragraphStyle;
+}
+
+- (UIColor *)defaultPlaceholderColor {
+  static UIColor *placeholderColor = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    id attribute =
+        [self defaultUiTextFieldPlaceholderAttributeWithKey:NSForegroundColorAttributeName];
+    if ([attribute isKindOfClass:[UIColor class]]) {
+      placeholderColor = (UIColor *)attribute;
+    }
+  });
+  return placeholderColor;
+}
+
+- (id)defaultUiTextFieldPlaceholderAttributeWithKey:(NSAttributedStringKey)attributedStringKey {
+  UITextField *textField = [[UITextField alloc] init];
+  textField.placeholder = @"placeholder";
+  NSAttributedString *attributedPlaceholder = textField.attributedPlaceholder;
+  NSDictionary *attributeKeysToAttributes =
+      [attributedPlaceholder attributesAtIndex:0
+                         longestEffectiveRange:nil
+                                       inRange:NSMakeRange(0, attributedPlaceholder.length)];
+  for (NSAttributedStringKey key in attributeKeysToAttributes) {
+    if (key == attributedStringKey) {
+      return attributeKeysToAttributes[attributedStringKey];
+    }
+  }
+  return nil;
+}
+
+- (void)updatePlaceholderLabel {
+  if ([self shouldPlaceholderBeVisible]) {
+    NSDictionary<NSAttributedStringKey, id> *attributes = @{
+      NSParagraphStyleAttributeName : [self defaultPlaceholderParagraphStyle],
+      NSForegroundColorAttributeName : [self defaultPlaceholderColor],
+      NSFontAttributeName : self.normalFont
+    };
+    NSAttributedString *attributedPlaceholder =
+        [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
+    self.placeholderLabel.attributedText = attributedPlaceholder;
+    self.placeholderLabel.numberOfLines = self.numberOfLinesOfVisibleText;
+    CGRect frame = self.textView.bounds;
+    CGSize sizeThatFits = [self.placeholderLabel sizeThatFits:frame.size];
+    frame.size = sizeThatFits;
+    self.placeholderLabel.frame = frame;
+    self.placeholderLabel.hidden = NO;
+  } else {
+    self.placeholderLabel.hidden = YES;
+  }
+}
+
 #pragma mark Label
 
 - (void)animateLabel {
@@ -409,6 +492,11 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 - (UITextView *)textView {
   return self.baseTextAreaTextView;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder {
+  _placeholder = placeholder;
+  [self setNeedsLayout];
 }
 
 #pragma mark MDCTextControl Protocol Accessors
@@ -632,7 +720,6 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
     for (NSString *assistiveLabelKeyPath in [MDCBaseTextArea assistiveLabelKVOKeyPaths]) {
       if ([assistiveLabelKeyPath isEqualToString:keyPath]) {
-        [self invalidateIntrinsicContentSize];
         [self setNeedsLayout];
         break;
       }

@@ -1,3 +1,30 @@
+# 119.1.0
+
+This minor release adds placeholder support to MDCTextArea and includes bug fixes for
+BottomNavigation and TextControls.
+
+## New features
+
+You can now set a placeholder on any subclass of MDCBaseTextArea.
+
+## Component changes
+
+### BottomNavigation
+
+* [Add fade animation to bottom navigation item title label on (de)selection.](https://github.com/material-components/material-components-ios/commit/d9e294ab0002f2c8569e0dc0e74825e4284d13ee) (Bryan Oltman)
+
+### TextControls
+
+* [Add text area snapshot tests](https://github.com/material-components/material-components-ios/commit/a180642678c2751866220ee965d50a3d89f8dbe4) (Andrew Overton)
+* [Call -[MDCBaseTextAreaDelegate baseTextArea:shouldChangeSize:] when setting assistive label text (if needed).](https://github.com/material-components/material-components-ios/commit/0b7be00f853db7cf02a8e0c0122308aab1a56a58) (Nobody)
+
+## Multi-component changes
+
+* [Add placeholder to text area](https://github.com/material-components/material-components-ios/commit/52e9d15a2bc7de82a2210a8a7d0423998db3bc4c) (Andrew Overton)
+* [Use custom leadingView/trailingView instead of UITextField's leftView/rightView](https://github.com/material-components/material-components-ios/commit/d729b5c464e2f4947056b7d98dd212132f7d7f68) (Andrew Overton)
+
+---
+
 # 119.0.0
 
 This major release removes a deprecated MDCFloatingButton API, deprecates MDCTabBar, and provides

@@ -12,14 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControl.h"
-#import "MDCTextControlAssistiveLabelView.h"
-#import "MDCTextControlAssistiveLabelViewLayout.h"
-#import "MDCTextControlColorViewModel.h"
-#import "MDCTextControlGradientManager.h"
-#import "MDCTextControlHorizontalPositioning.h"
-#import "MDCTextControlHorizontalPositioningReference.h"
-#import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelPosition.h"
 #import "MDCTextControlPlaceholderSupport.h"
-#import "MDCTextControlVerticalPositioningReference.h"
+
+#import <UIKit/UIKit.h>
+
+#import "MDCTextControlLabelPosition.h"
+
+BOOL MDCTextControlShouldPlaceholderBeVisibleWithPlaceholder(
+    NSString *placeholder, NSString *text, MDCTextControlLabelPosition labelPosition) {
+  BOOL hasPlaceholder = placeholder.length > 0;
+  BOOL hasText = text.length > 0;
+
+  if (hasPlaceholder) {
+    if (hasText) {
+      return NO;
+    } else {
+      if (labelPosition == MDCTextControlLabelPositionNormal) {
+        return NO;
+      } else {
+        return YES;
+      }
+    }
+  } else {
+    return NO;
+  }
+}

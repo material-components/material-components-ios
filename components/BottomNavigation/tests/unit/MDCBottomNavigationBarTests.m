@@ -282,17 +282,17 @@ static NSString *const kTestItemTitleText = @"Title";
   self.bottomNavBar.items = @[ item1, item2 ];
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
-    XCTAssert(itemView.label.isHidden);
+    XCTAssertEqualWithAccuracy(itemView.label.alpha, 0.0, 0.001);
   }
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
-    XCTAssert(!itemView.label.isHidden);
+    XCTAssertEqualWithAccuracy(itemView.label.alpha, 1.0, 0.001);
   }
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.bottomNavBar.itemViews.firstObject.selected = YES;
   self.bottomNavBar.itemViews.lastObject.selected = NO;
-  XCTAssert(!self.bottomNavBar.itemViews.firstObject.label.isHidden);
-  XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.itemViews.firstObject.label.alpha, 1.0, 0.001);
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.itemViews.lastObject.label.alpha, 0.0, 0.001);
 }
 
 - (void)testDefaultElevation {

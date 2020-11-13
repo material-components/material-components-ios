@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RemoteImageServiceForMDCDemos"
-  s.version      = "119.0.0"
+  s.version      = "119.1.0"
   s.summary      = "A helper image class for the MDC demos."
   s.description  = "This spec is made for use in the MDC demos. It gets images via url."
   s.homepage     = "https://github.com/material-components/material-components-ios"

@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControl.h"
-#import "MDCTextControlAssistiveLabelView.h"
-#import "MDCTextControlAssistiveLabelViewLayout.h"
-#import "MDCTextControlColorViewModel.h"
-#import "MDCTextControlGradientManager.h"
-#import "MDCTextControlHorizontalPositioning.h"
-#import "MDCTextControlHorizontalPositioningReference.h"
-#import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelPosition.h"
-#import "MDCTextControlPlaceholderSupport.h"
-#import "MDCTextControlVerticalPositioningReference.h"
+#import "MaterialSnapshot.h"
+
+#import <UIKit/UIKit.h>
+
+#import "MDCBaseTextArea.h"
+
+@interface MDCBaseTextAreaSnapshotTests : MDCSnapshotTestCase
+- (MDCBaseTextArea *)createTextAreaWithFrame:(CGRect)frame;
+@end
