@@ -438,7 +438,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
     NSAttributedString *attributedPlaceholder =
         [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
     self.placeholderLabel.attributedText = attributedPlaceholder;
-    self.placeholderLabel.numberOfLines = self.numberOfLinesOfVisibleText;
+    self.placeholderLabel.numberOfLines = (NSInteger)self.numberOfLinesOfVisibleText;
     CGRect frame = self.textView.bounds;
     CGSize sizeThatFits = [self.placeholderLabel sizeThatFits:frame.size];
     frame.size = sizeThatFits;

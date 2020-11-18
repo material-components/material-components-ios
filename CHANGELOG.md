@@ -1,3 +1,19 @@
+# 119.1.1
+
+In this patch release we have updated the Slider documentation and fixed a CocoaPods build issue.
+
+## Component changes
+
+### Slider
+
+* [Replace Slider docs](https://github.com/material-components/material-components-ios/commit/0a56c1683f21af85f578e351eebca43114969cfa) (Andrew Overton)
+
+### TextControls
+
+* [Fix Cocoapods build error](https://github.com/material-components/material-components-ios/commit/09d8ea6bf66ec5dc8200bf3f869bdd412a328507) (Andrew Overton)
+
+---
+
 # 119.1.0
 
 This minor release adds placeholder support to MDCTextArea and includes bug fixes for
