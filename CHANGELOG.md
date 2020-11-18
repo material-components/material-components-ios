@@ -1,16 +1,6 @@
-# #develop#
+# 119.1.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+In this patch release we have updated the Slider documentation and fixed a CocoaPods build issue.
 
 ## Component changes
 
