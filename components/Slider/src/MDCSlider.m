@@ -248,6 +248,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) { return MDCPalette.blueP
 
 #pragma mark - ThumbTrack passthrough methods
 
+- (CGFloat)thumbRippleMaximumRadius {
+  return _thumbTrack.thumbRippleMaximumRadius;
+}
+
+- (void)setThumbRippleMaximumRadius:(CGFloat)thumbRippleMaximumRadius {
+  _thumbTrack.thumbRippleMaximumRadius = thumbRippleMaximumRadius;
+}
+
 - (void)setThumbRadius:(CGFloat)thumbRadius {
   _thumbTrack.thumbRadius = thumbRadius;
 }

@@ -449,6 +449,9 @@ IB_DESIGNABLE
  */
 @property(nonatomic, strong, null_resettable) UIFont *discreteValueLabelFont;
 
+/** The max radius of the ripple when the user touches the thumb. */
+@property(nonatomic, assign) CGFloat thumbRippleMaximumRadius;
+
 @end
 
 @interface MDCSlider (ToBeDeprecated)
