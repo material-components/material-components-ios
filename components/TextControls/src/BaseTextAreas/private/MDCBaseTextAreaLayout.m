@@ -38,6 +38,9 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 @property(nonatomic, strong, nonnull) NSArray<NSNumber *> *verticalGradientLocations;
 @property(nonatomic, strong, nonnull) NSArray<NSNumber *> *horizontalGradientLocations;
 
+@property(nonatomic, assign) BOOL placeholderLabelHidden;
+@property(nonatomic, assign) CGRect placeholderLabelFrame;
+
 @end
 
 @implementation MDCBaseTextAreaLayout
@@ -53,6 +56,7 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                                label:(nonnull UILabel *)label
                        labelPosition:(MDCTextControlLabelPosition)labelPosition
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
+                    placeholderLabel:(nonnull UILabel *)placeholderLabel
                leadingAssistiveLabel:(UILabel *)leadingAssistiveLabel
               trailingAssistiveLabel:(UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:
@@ -71,6 +75,7 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                                    label:label
                            labelPosition:labelPosition
                            labelBehavior:labelBehavior
+                        placeholderLabel:placeholderLabel
                    leadingAssistiveLabel:leadingAssistiveLabel
                   trailingAssistiveLabel:trailingAssistiveLabel
               assistiveLabelDrawPriority:assistiveLabelDrawPriority
@@ -92,6 +97,7 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                                label:(UILabel *)label
                        labelPosition:(MDCTextControlLabelPosition)labelPosition
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
+                    placeholderLabel:(UILabel *)placeholderLabel
                leadingAssistiveLabel:(UILabel *)leadingAssistiveLabel
               trailingAssistiveLabel:(UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:
@@ -130,8 +136,6 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 
   CGFloat textViewMinY = 0;
   CGFloat bottomPadding = 0;
-  CGFloat textViewHeight = 0;
-  CGRect textViewFrame = CGRectZero;
   CGFloat containerHeight = 0;
   BOOL shouldLayoutForFloatingLabel = MDCTextControlShouldLayoutForFloatingLabelWithLabelPosition(
       labelPosition, labelBehavior, label.text);
@@ -145,17 +149,27 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
     }
     bottomPadding = verticalPositioningReference.paddingBetweenEditingTextAndContainerBottom;
     containerHeight = verticalPositioningReference.containerHeightWithFloatingLabel;
-    textViewHeight = containerHeight - bottomPadding - textViewMinY;
-    textViewFrame =
-        CGRectMake(globalTextMinX, textViewMinY, globalTextMaxX - globalTextMinX, textViewHeight);
   } else {
     textViewMinY = verticalPositioningReference.paddingAroundTextWhenNoFloatingLabel;
     bottomPadding = verticalPositioningReference.paddingAroundTextWhenNoFloatingLabel;
     containerHeight = verticalPositioningReference.containerHeightWithoutFloatingLabel;
-    textViewHeight = containerHeight - bottomPadding - textViewMinY;
-    textViewFrame =
-        CGRectMake(globalTextMinX, textViewMinY, globalTextMaxX - globalTextMinX, textViewHeight);
     normalLabelFrame.origin.y = textViewMinY;
+  }
+  CGFloat textViewWidth = globalTextMaxX - globalTextMinX;
+  CGFloat textViewHeight = containerHeight - bottomPadding - textViewMinY;
+  CGRect textViewFrame = CGRectMake(globalTextMinX, textViewMinY, textViewWidth, textViewHeight);
+
+  self.placeholderLabelHidden = placeholderLabel.attributedText == nil;
+  if (self.placeholderLabelHidden) {
+    self.placeholderLabelFrame = CGRectZero;
+  } else {
+    CGSize sizeThatFits = [placeholderLabel sizeThatFits:textViewFrame.size];
+    CGFloat placeholderLabelMinX = 0;
+    if (isRTL) {
+      placeholderLabelMinX = textViewWidth - sizeThatFits.width;
+    }
+    self.placeholderLabelFrame =
+        CGRectMake(placeholderLabelMinX, 0, sizeThatFits.width, sizeThatFits.height);
   }
 
   self.assistiveLabelViewLayout = [[MDCTextControlAssistiveLabelViewLayout alloc]

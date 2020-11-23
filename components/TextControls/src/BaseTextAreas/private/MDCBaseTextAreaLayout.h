@@ -22,6 +22,9 @@
 @property(nonatomic, assign, readonly) CGRect labelFrameFloating;
 @property(nonatomic, assign, readonly) CGRect labelFrameNormal;
 
+@property(nonatomic, assign, readonly) BOOL placeholderLabelHidden;
+@property(nonatomic, assign, readonly) CGRect placeholderLabelFrame;
+
 @property(nonatomic, assign, readonly) CGRect textViewFrame;
 
 @property(nonatomic, assign, readonly) CGRect assistiveLabelViewFrame;
@@ -53,6 +56,7 @@
                                label:(nonnull UILabel *)label
                        labelPosition:(MDCTextControlLabelPosition)labelPosition
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
+                    placeholderLabel:(nonnull UILabel *)placeholderLabel
                leadingAssistiveLabel:(nonnull UILabel *)leadingAssistiveLabel
               trailingAssistiveLabel:(nonnull UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:

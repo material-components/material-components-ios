@@ -107,4 +107,18 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testTextAreaWithArabigLabelAndPlaceholderWhileEditingRTL {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.placeholder = @"لكن لا بد";
+  textArea.label.text = @"لكن لا بد";
+  textArea.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  [textArea.textView becomeFirstResponder];
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 @end

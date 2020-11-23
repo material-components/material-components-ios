@@ -177,6 +177,9 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 - (void)setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
   [super setSemanticContentAttribute:semanticContentAttribute];
+
+  self.textView.semanticContentAttribute = semanticContentAttribute;
+  self.placeholderLabel.semanticContentAttribute = semanticContentAttribute;
   [self setNeedsLayout];
 }
 
@@ -191,6 +194,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 - (void)preLayoutSubviews {
   self.textControlState = [self determineCurrentTextControlState];
   self.labelPosition = [self determineCurrentLabelPosition];
+  self.placeholderLabel.attributedText = [self determineAttributedPlaceholder];
+  self.placeholderLabel.numberOfLines = (NSInteger)self.numberOfLinesOfVisibleText;
   MDCTextControlColorViewModel *colorViewModel =
       [self textControlColorViewModelForState:self.textControlState];
   [self applyColorViewModel:colorViewModel withLabelPosition:self.labelPosition];
@@ -202,7 +207,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 - (void)postLayoutSubviews {
   self.maskedTextViewContainerView.frame = self.containerFrame;
   self.textView.frame = self.layout.textViewFrame;
-  [self updatePlaceholderLabel];
+  self.placeholderLabel.hidden = self.layout.placeholderLabelHidden;
+  self.placeholderLabel.frame = self.layout.placeholderLabelFrame;
   self.assistiveLabelView.frame = self.layout.assistiveLabelViewFrame;
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
@@ -239,6 +245,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                                label:self.label
                                        labelPosition:self.labelPosition
                                        labelBehavior:self.labelBehavior
+                                    placeholderLabel:self.placeholderLabel
                                leadingAssistiveLabel:self.assistiveLabelView.leadingAssistiveLabel
                               trailingAssistiveLabel:self.assistiveLabelView.trailingAssistiveLabel
                           assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
@@ -375,6 +382,19 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 #pragma mark Placeholder
 
+- (NSAttributedString *)determineAttributedPlaceholder {
+  if ([self shouldPlaceholderBeVisible]) {
+    NSDictionary<NSAttributedStringKey, id> *attributes = @{
+      NSParagraphStyleAttributeName : [self defaultPlaceholderParagraphStyle],
+      NSForegroundColorAttributeName : [self defaultPlaceholderColor],
+      NSFontAttributeName : self.normalFont
+    };
+    return [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
+  } else {
+    return nil;
+  }
+}
+
 - (BOOL)shouldPlaceholderBeVisible {
   return MDCTextControlShouldPlaceholderBeVisibleWithPlaceholder(
       self.placeholder, self.textView.text, self.labelPosition);
@@ -425,27 +445,6 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
     }
   }
   return nil;
-}
-
-- (void)updatePlaceholderLabel {
-  if ([self shouldPlaceholderBeVisible]) {
-    NSDictionary<NSAttributedStringKey, id> *attributes = @{
-      NSParagraphStyleAttributeName : [self defaultPlaceholderParagraphStyle],
-      NSForegroundColorAttributeName : [self defaultPlaceholderColor],
-      NSFontAttributeName : self.normalFont
-    };
-    NSAttributedString *attributedPlaceholder =
-        [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
-    self.placeholderLabel.attributedText = attributedPlaceholder;
-    self.placeholderLabel.numberOfLines = (NSInteger)self.numberOfLinesOfVisibleText;
-    CGRect frame = self.textView.bounds;
-    CGSize sizeThatFits = [self.placeholderLabel sizeThatFits:frame.size];
-    frame.size = sizeThatFits;
-    self.placeholderLabel.frame = frame;
-    self.placeholderLabel.hidden = NO;
-  } else {
-    self.placeholderLabel.hidden = YES;
-  }
 }
 
 #pragma mark Label
