@@ -209,19 +209,18 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self animateLabel];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   [self layoutGradientLayers];
-  [self scrollToVisibleText];
+  [self scrollToSelectedText];
   if ([self widthHasChanged] || [self calculatedHeightHasChanged]) {
     [self handleIntrinsicContentSizeChange];
   }
 }
 
-- (void)scrollToVisibleText {
-  // This method was added to address b/161887902, with help from
-  // https://stackoverflow.com/a/49631521
-  NSRange range = NSMakeRange(self.textView.text.length - 1, 1);
-  [self.textView scrollRangeToVisible:range];
-  self.textView.scrollEnabled = NO;
-  self.textView.scrollEnabled = YES;
+- (void)scrollToSelectedText {
+  //  Undesirable things happen to the text view's contentOffset when adding new lines in a growing
+  //  MDCBaseTextArea in iOS versions 11 and 12. Specifically, hitting return will appear to result
+  //  in two newlines, instead of one, but it's really just contentOffset being set. This line seems
+  //  to prevent this issue without creating any others.
+  [self.textView scrollRangeToVisible:self.textView.selectedRange];
 }
 
 - (MDCBaseTextAreaLayout *)calculateLayoutWithSize:(CGSize)size {
