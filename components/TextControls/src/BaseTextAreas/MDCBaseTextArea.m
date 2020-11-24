@@ -213,11 +213,36 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   self.assistiveLabelView.layout = self.layout.assistiveLabelViewLayout;
   [self.assistiveLabelView setNeedsLayout];
   [self animateLabel];
+  [self updateSideViews];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
   [self layoutGradientLayers];
   [self scrollToSelectedText];
   if ([self widthHasChanged] || [self calculatedHeightHasChanged]) {
     [self handleIntrinsicContentSizeChange];
+  }
+}
+
+- (void)updateSideViews {
+  if (self.layout.displaysLeadingView) {
+    if (self.leadingView) {
+      if (self.leadingView.superview != self) {
+        [self addSubview:self.leadingView];
+      }
+      self.leadingView.frame = self.layout.leadingViewFrame;
+    }
+  } else {
+    [self.leadingView removeFromSuperview];
+  }
+
+  if (self.layout.displaysTrailingView) {
+    if (self.trailingView) {
+      if (self.trailingView.superview != self) {
+        [self addSubview:self.trailingView];
+      }
+      self.trailingView.frame = self.layout.trailingViewFrame;
+    }
+  } else {
+    [self.trailingView removeFromSuperview];
   }
 }
 
@@ -246,6 +271,10 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                        labelPosition:self.labelPosition
                                        labelBehavior:self.labelBehavior
                                     placeholderLabel:self.placeholderLabel
+                                         leadingView:self.leadingView
+                                     leadingViewMode:self.leadingViewMode
+                                        trailingView:self.trailingView
+                                    trailingViewMode:self.trailingViewMode
                                leadingAssistiveLabel:self.assistiveLabelView.leadingAssistiveLabel
                               trailingAssistiveLabel:self.assistiveLabelView.trailingAssistiveLabel
                           assistiveLabelDrawPriority:self.assistiveLabelDrawPriority
@@ -498,6 +527,28 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 }
 
 #pragma mark MDCTextControl Protocol Accessors
+
+- (void)setLeadingView:(UIView *)leadingView {
+  [_leadingView removeFromSuperview];
+  _leadingView = leadingView;
+  [self setNeedsLayout];
+}
+
+- (void)setTrailingview:(UIView *)trailingView {
+  [_trailingView removeFromSuperview];
+  _trailingView = trailingView;
+  [self setNeedsLayout];
+}
+
+- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
+  _leadingViewMode = leadingViewMode;
+  [self setNeedsLayout];
+}
+
+- (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
+  _trailingViewMode = trailingViewMode;
+  [self setNeedsLayout];
+}
 
 - (void)setContainerStyle:(id<MDCTextControlStyle>)containerStyle {
   id<MDCTextControlStyle> oldStyle = _containerStyle;

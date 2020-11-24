@@ -65,6 +65,26 @@ FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
 @property(nonatomic, assign, readonly) MDCTextControlLabelBehavior labelBehavior;
 
 /**
+ This is an RTL-aware version of UITextField's leftView/rightView properties.
+ */
+@property(strong, nonatomic, nullable) UIView *leadingView;
+
+/**
+ This is an RTL-aware version of UITextField's leftView/rightView properties.
+ */
+@property(strong, nonatomic, nullable) UIView *trailingView;
+
+/**
+ This is an RTL-aware version of UITextField's leftViewMode/rightViewMode properties.
+ */
+@property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
+
+/**
+ This is an RTL-aware version of UITextField's leftViewMode/rightViewMode properties.
+ */
+@property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
+/**
  The @c label is a label that occupies the text area in a resting state with no text and that either
  floats above the text or disappears in an editing state. It is distinct from a placeholder.
  */

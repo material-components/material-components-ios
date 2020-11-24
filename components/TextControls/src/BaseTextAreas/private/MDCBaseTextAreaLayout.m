@@ -15,7 +15,9 @@
 #import "MDCBaseTextAreaLayout.h"
 
 #import "MDCTextControlAssistiveLabelViewLayout.h"
+#import "MDCTextControlHorizontalPositioning.h"
 #import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlSideViewSupport.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
@@ -57,6 +59,10 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                        labelPosition:(MDCTextControlLabelPosition)labelPosition
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                     placeholderLabel:(nonnull UILabel *)placeholderLabel
+                         leadingView:(nullable UIView *)leadingView
+                     leadingViewMode:(UITextFieldViewMode)leadingViewMode
+                        trailingView:(nullable UIView *)trailingView
+                    trailingViewMode:(UITextFieldViewMode)trailingViewMode
                leadingAssistiveLabel:(UILabel *)leadingAssistiveLabel
               trailingAssistiveLabel:(UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:
@@ -76,6 +82,10 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                            labelPosition:labelPosition
                            labelBehavior:labelBehavior
                         placeholderLabel:placeholderLabel
+                             leadingView:leadingView
+                         leadingViewMode:leadingViewMode
+                            trailingView:trailingView
+                        trailingViewMode:trailingViewMode
                    leadingAssistiveLabel:leadingAssistiveLabel
                   trailingAssistiveLabel:trailingAssistiveLabel
               assistiveLabelDrawPriority:assistiveLabelDrawPriority
@@ -98,6 +108,10 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
                        labelPosition:(MDCTextControlLabelPosition)labelPosition
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                     placeholderLabel:(UILabel *)placeholderLabel
+                         leadingView:(UIView *)leadingView
+                     leadingViewMode:(UITextFieldViewMode)leadingViewMode
+                        trailingView:(UIView *)trailingView
+                    trailingViewMode:(UITextFieldViewMode)trailingViewMode
                leadingAssistiveLabel:(UILabel *)leadingAssistiveLabel
               trailingAssistiveLabel:(UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:
@@ -105,19 +119,47 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
+  UIView *leftView = isRTL ? trailingView : leadingView;
+  UIView *rightView = isRTL ? leadingView : trailingView;
+  UITextFieldViewMode leftViewMode = isRTL ? trailingViewMode : leadingViewMode;
+  UITextFieldViewMode rightViewMode = isRTL ? leadingViewMode : trailingViewMode;
+
+  BOOL displaysLeftView =
+      MDCTextControlShouldDisplaySideViewWithSideView(leftView, leftViewMode, isEditing);
+  BOOL displaysRightView =
+      MDCTextControlShouldDisplaySideViewWithSideView(rightView, rightViewMode, isEditing);
+
   CGFloat leadingEdgePadding = horizontalPositioningReference.leadingEdgePadding;
   CGFloat trailingEdgePadding = horizontalPositioningReference.trailingEdgePadding;
   CGFloat leftEdgePadding = isRTL ? trailingEdgePadding : leadingEdgePadding;
   CGFloat rightEdgePadding = isRTL ? leadingEdgePadding : trailingEdgePadding;
+  CGFloat horizontalInterItemPadding = horizontalPositioningReference.horizontalInterItemSpacing;
 
-  CGFloat globalTextMinX = leftEdgePadding;
-  CGFloat globalTextMaxX = size.width - rightEdgePadding;
+  CGFloat leftViewWidth = CGRectGetWidth(leftView.frame);
+  CGFloat leftViewMinX = 0;
+  CGFloat leftViewMaxX = 0;
+  if (displaysLeftView) {
+    leftViewMinX = leftEdgePadding;
+    leftViewMaxX = leftViewMinX + leftViewWidth;
+  }
+
+  CGFloat textAreaWidth = size.width;
+  CGFloat rightViewMinX = 0;
+  if (displaysRightView) {
+    CGFloat rightViewMaxX = textAreaWidth - rightEdgePadding;
+    rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
+  }
+
+  CGFloat textRectMinX =
+      displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : leftEdgePadding;
+  CGFloat textRectMaxX = displaysRightView ? rightViewMinX - horizontalInterItemPadding
+                                           : textAreaWidth - rightEdgePadding;
 
   CGRect floatingLabelFrame =
       [self floatingLabelFrameWithText:label.text
                                         floatingFont:floatingFont
-                                      globalTextMinX:globalTextMinX
-                                      globalTextMaxX:globalTextMaxX
+                                        textRectMinX:textRectMinX
+                                        textRectMaxX:textRectMaxX
           paddingBetweenContainerTopAndFloatingLabel:verticalPositioningReference
                                                          .paddingBetweenContainerTopAndFloatingLabel
                                                isRTL:isRTL];
@@ -126,8 +168,8 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
   CGRect normalLabelFrame =
       [self normalLabelFrameWithLabelText:label.text
                                               font:font
-                                    globalTextMinX:globalTextMinX
-                                    globalTextMaxX:globalTextMaxX
+                                      textRectMinX:textRectMinX
+                                      textRectMaxX:textRectMaxX
           paddingBetweenContainerTopAndNormalLabel:verticalPositioningReference
                                                        .paddingBetweenContainerTopAndNormalLabel
                                              isRTL:isRTL];
@@ -155,9 +197,9 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
     containerHeight = verticalPositioningReference.containerHeightWithoutFloatingLabel;
     normalLabelFrame.origin.y = textViewMinY;
   }
-  CGFloat textViewWidth = globalTextMaxX - globalTextMinX;
+  CGFloat textViewWidth = textRectMaxX - textRectMinX;
   CGFloat textViewHeight = containerHeight - bottomPadding - textViewMinY;
-  CGRect textViewFrame = CGRectMake(globalTextMinX, textViewMinY, textViewWidth, textViewHeight);
+  CGRect textViewFrame = CGRectMake(textRectMinX, textViewMinY, textViewWidth, textViewHeight);
 
   self.placeholderLabelHidden = placeholderLabel.attributedText == nil;
   if (self.placeholderLabelHidden) {
@@ -171,6 +213,24 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
     self.placeholderLabelFrame =
         CGRectMake(placeholderLabelMinX, 0, sizeThatFits.width, sizeThatFits.height);
   }
+
+  CGRect leftViewFrame = CGRectZero;
+  if (displaysLeftView) {
+    leftViewFrame = [self sideViewFrameWithSideView:leftView
+                                               minX:leftViewMinX
+                                    containerHeight:containerHeight];
+  }
+  CGRect rightViewFrame = CGRectZero;
+  if (displaysRightView) {
+    rightViewFrame = [self sideViewFrameWithSideView:rightView
+                                                minX:rightViewMinX
+                                     containerHeight:containerHeight];
+  }
+
+  self.leadingViewFrame = isRTL ? rightViewFrame : leftViewFrame;
+  self.trailingViewFrame = isRTL ? leftViewFrame : rightViewFrame;
+  self.displaysLeadingView = isRTL ? displaysRightView : displaysLeftView;
+  self.displaysTrailingView = isRTL ? displaysLeftView : displaysRightView;
 
   self.assistiveLabelViewLayout = [[MDCTextControlAssistiveLabelViewLayout alloc]
                          initWithWidth:size.width
@@ -236,17 +296,25 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
   return maxY;
 }
 
+- (CGRect)sideViewFrameWithSideView:(UIView *)sideView
+                               minX:(CGFloat)minX
+                    containerHeight:(CGFloat)containerHeight {
+  CGFloat sideViewHeight = CGRectGetHeight(sideView.bounds);
+  CGFloat minY = (0.5f * containerHeight) - (0.5f * sideViewHeight);
+  return CGRectMake(minX, minY, CGRectGetWidth(sideView.bounds), sideViewHeight);
+}
+
 - (CGRect)normalLabelFrameWithLabelText:(NSString *)labelText
                                         font:(UIFont *)font
-                              globalTextMinX:(CGFloat)globalTextMinX
-                              globalTextMaxX:(CGFloat)globalTextMaxX
+                                textRectMinX:(CGFloat)textRectMinX
+                                textRectMaxX:(CGFloat)textRectMaxX
     paddingBetweenContainerTopAndNormalLabel:(CGFloat)paddingBetweenContainerTopAndNormalLabel
                                        isRTL:(BOOL)isRTL {
-  CGFloat maxTextWidth = globalTextMaxX - globalTextMinX;
+  CGFloat maxTextWidth = textRectMaxX - textRectMinX;
   CGSize normalLabelSize = [self textSizeWithText:labelText font:font maxWidth:maxTextWidth];
-  CGFloat normalLabelMinX = globalTextMinX;
+  CGFloat normalLabelMinX = textRectMinX;
   if (isRTL) {
-    normalLabelMinX = globalTextMaxX - normalLabelSize.width;
+    normalLabelMinX = textRectMaxX - normalLabelSize.width;
   }
   CGFloat normalLabelMinY = paddingBetweenContainerTopAndNormalLabel;
   return CGRectMake(normalLabelMinX, normalLabelMinY, normalLabelSize.width,
@@ -255,16 +323,16 @@ static const CGFloat kGradientBlurLength = (CGFloat)4.0;
 
 - (CGRect)floatingLabelFrameWithText:(NSString *)text
                                   floatingFont:(UIFont *)floatingFont
-                                globalTextMinX:(CGFloat)globalTextMinX
-                                globalTextMaxX:(CGFloat)globalTextMaxX
+                                  textRectMinX:(CGFloat)textRectMinX
+                                  textRectMaxX:(CGFloat)textRectMaxX
     paddingBetweenContainerTopAndFloatingLabel:(CGFloat)paddingBetweenContainerTopAndFloatingLabel
                                          isRTL:(BOOL)isRTL {
-  CGFloat maxTextWidth = globalTextMaxX - globalTextMinX;
+  CGFloat maxTextWidth = textRectMaxX - textRectMinX;
   CGSize floatingLabelSize = [self textSizeWithText:text font:floatingFont maxWidth:maxTextWidth];
   CGFloat textMinY = paddingBetweenContainerTopAndFloatingLabel;
-  CGFloat textMinX = globalTextMinX;
+  CGFloat textMinX = textRectMinX;
   if (isRTL) {
-    textMinX = globalTextMaxX - floatingLabelSize.width;
+    textMinX = textRectMaxX - floatingLabelSize.width;
   }
   return CGRectMake(textMinX, textMinY, floatingLabelSize.width, floatingLabelSize.height);
 }

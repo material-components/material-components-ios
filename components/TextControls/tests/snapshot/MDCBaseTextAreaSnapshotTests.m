@@ -121,4 +121,46 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testTextAreaWhileEditingWithLabelAndTrailingViewUnlessEditingAndLeadingViewWhileEditing {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.label.text = @"This is a floating label";
+  textArea.leadingView = [self createSideView];
+  textArea.leadingViewMode = UITextFieldViewModeWhileEditing;
+  textArea.trailingView = [self createSideView];
+  textArea.trailingViewMode = UITextFieldViewModeUnlessEditing;
+  textArea.minimumNumberOfVisibleRows = 3;
+  [textArea.textView becomeFirstResponder];
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
+- (void)testTextAreaWhileEditingWithLabelAndLeadingViewUnlessEditingAndTrailingViewWhileEditing {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.label.text = @"This is a floating label";
+  textArea.leadingView = [self createSideView];
+  textArea.leadingViewMode = UITextFieldViewModeUnlessEditing;
+  textArea.trailingView = [self createSideView];
+  textArea.trailingViewMode = UITextFieldViewModeWhileEditing;
+  textArea.minimumNumberOfVisibleRows = 3;
+  [textArea.textView becomeFirstResponder];
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
+#pragma mark Helpers
+
+- (UIView *)createSideView {
+  UIView *sideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+  sideView.backgroundColor = [UIColor blueColor];
+  return sideView;
+}
+
 @end

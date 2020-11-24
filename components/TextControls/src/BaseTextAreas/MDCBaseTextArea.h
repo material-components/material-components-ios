@@ -54,6 +54,26 @@
 @property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
 
 /**
+ This is an RTL-aware version of UITextField's leftView/rightView properties.
+ */
+@property(strong, nonatomic, nullable) UIView *leadingView;
+
+/**
+ This is an RTL-aware version of UITextField's leftView/rightView properties.
+ */
+@property(strong, nonatomic, nullable) UIView *trailingView;
+
+/**
+ This is an RTL-aware version of UITextField's leftViewMode/rightViewMode properties.
+ */
+@property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
+
+/**
+ This is an RTL-aware version of UITextField's leftViewMode/rightViewMode properties.
+ */
+@property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
+/**
 The UITextView contained within the text area.
  */
 @property(strong, nonatomic, readonly, nonnull) UITextView *textView;

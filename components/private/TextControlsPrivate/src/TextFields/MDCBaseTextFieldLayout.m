@@ -14,6 +14,7 @@
 
 #import "MDCBaseTextFieldLayout.h"
 
+#import "MaterialTextControlsPrivate+Shared.h"
 
 @interface MDCBaseTextFieldLayout ()
 @end
@@ -108,12 +109,10 @@
   UITextFieldViewMode leftViewMode = isRTL ? trailingViewMode : leadingViewMode;
   UITextFieldViewMode rightViewMode = isRTL ? leadingViewMode : trailingViewMode;
 
-  BOOL displaysLeftView = [self displaysSideView:leftView
-                                        viewMode:leftViewMode
-                                       isEditing:isEditing];
-  BOOL displaysRightView = [self displaysSideView:rightView
-                                         viewMode:rightViewMode
-                                        isEditing:isEditing];
+  BOOL displaysLeftView =
+      MDCTextControlShouldDisplaySideViewWithSideView(leftView, leftViewMode, isEditing);
+  BOOL displaysRightView =
+      MDCTextControlShouldDisplaySideViewWithSideView(rightView, rightViewMode, isEditing);
   BOOL displaysClearButton = [self shouldDisplayClearButtonWithViewMode:clearButtonMode
                                                               isEditing:isEditing
                                                                    text:text];
@@ -290,31 +289,6 @@
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
   return (CGFloat)round((double)(centerY - ((CGFloat)0.5 * height)));
-}
-
-- (BOOL)displaysSideView:(UIView *)subview
-                viewMode:(UITextFieldViewMode)viewMode
-               isEditing:(BOOL)isEditing {
-  BOOL displaysSideView = NO;
-  if (subview && !CGSizeEqualToSize(CGSizeZero, subview.frame.size)) {
-    switch (viewMode) {
-      case UITextFieldViewModeWhileEditing:
-        displaysSideView = isEditing;
-        break;
-      case UITextFieldViewModeUnlessEditing:
-        displaysSideView = !isEditing;
-        break;
-      case UITextFieldViewModeAlways:
-        displaysSideView = YES;
-        break;
-      case UITextFieldViewModeNever:
-        displaysSideView = NO;
-        break;
-      default:
-        break;
-    }
-  }
-  return displaysSideView;
 }
 
 - (BOOL)shouldDisplayClearButtonWithViewMode:(UITextFieldViewMode)viewMode
