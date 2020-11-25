@@ -258,4 +258,16 @@
   [self validateTextField:textField];
 }
 
+- (void)testTextFieldWithLeadingViewTrailingViewAndCustomPaddings {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithLeadingViewTrailingViewAndCustomPaddings:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 @end

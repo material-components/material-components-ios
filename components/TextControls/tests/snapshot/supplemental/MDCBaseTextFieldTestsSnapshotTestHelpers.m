@@ -222,6 +222,18 @@
   textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
 }
 
++ (void)configureTextFieldWithLeadingViewTrailingViewAndCustomPaddings:
+    (MDCBaseTextField *)textField {
+  textField.text = @"Some text";
+  textField.leadingView = [self createRedSideView];
+  textField.leadingViewMode = UITextFieldViewModeAlways;
+  textField.leadingView = [self createBlueSideView];
+  textField.leadingViewMode = UITextFieldViewModeAlways;
+  textField.leadingEdgePaddingOverride = @(30.0f);
+  textField.trailingEdgePaddingOverride = @(30.0f);
+  textField.horizontalInterItemSpacingOverride = @(30.0f);
+}
+
 #pragma mark Helpers
 
 + (UIView *)createBlueSideView {

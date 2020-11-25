@@ -26,7 +26,7 @@
 
 /**
  The @c label is a label that occupies the area the text usually occupies when there is no
- text. It is distinct from the placeholder in that it can move above the text area or disappear to
+ text. It is distinct from the placeholder in that it can move above the text region or disappear to
  reveal the placeholder when editing begins.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *label;
@@ -76,7 +76,7 @@
 /**
  Sets the floating label color for a given state.
  Floating label color refers to the color of the label when it's in its "floating position," i.e.
- when it's above the text area.
+ when it's above the text region.
  @param floatingLabelColor The UIColor for the given state.
  @param state The MDCTextControlState.
  */
@@ -87,7 +87,7 @@
 /**
  Returns the floating label color for a given state.
  Floating label color refers to the color of the label when it's in its "floating position," i.e.
- when it's above the text area.
+ when it's above the text field.
  @param state The MDCTextControlState.
  */
 - (nonnull UIColor *)floatingLabelColorForState:(MDCTextControlState)state;
@@ -170,6 +170,14 @@
  property is @c nil by default.
  */
 @property(nullable, nonatomic, strong) NSNumber *trailingEdgePaddingOverride;
+
+/**
+ When this property is set, the text field will convert it to a @c CGFloat and use that as the
+ horizontal distance between things like the text field's text region, the leading/trailing views,
+ and the clear button. When this property is @c nil, the text field will use a default value that is
+ specific to its style. This property is @c nil by default.
+ */
+@property(nullable, nonatomic, strong) NSNumber *horizontalInterItemSpacingOverride;
 
 /**
  This property allows the user to override the default height of the container. The container is the

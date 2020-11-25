@@ -112,56 +112,68 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 
 #pragma mark - Initialization
 
-- (instancetype)init {
-  self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
   if (self) {
-    _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
-    _needsScrollToSelectedItem = YES;
-    _shouldAdjustForSafeAreaInsets = YES;
-    _items = @[];
-    _stateToImageTintColor = [NSMutableDictionary dictionary];
-    _stateToTitleColor = [NSMutableDictionary dictionary];
-    _stateToTitleFont = [NSMutableDictionary dictionary];
-    _preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
-    _layoutStyleToContentPadding = [NSMutableDictionary dictionary];
-    _layoutStyleToContentPadding[@(MDCTabBarViewLayoutStyleScrollable)] =
-        [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, kScrollableTabsLeadingEdgeInset, 0, 0)];
-    self.backgroundColor = UIColor.whiteColor;
-    self.showsHorizontalScrollIndicator = NO;
-
-    _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
-    _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    _selectionIndicatorView.userInteractionEnabled = NO;
-    _selectionIndicatorView.tintColor = UIColor.blackColor;
-    _selectionIndicatorView.indicatorPathAnimationDuration = kSelectionChangeAnimationDuration;
-    _selectionIndicatorView.indicatorPathTimingFunction =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-
-    _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
-
-    // The bottom divider is positioned behind the selection indicator.
-    _bottomDividerView = [[UIView alloc] init];
-    _bottomDividerView.backgroundColor = UIColor.clearColor;
-    [self addSubview:_bottomDividerView];
-
-    // The selection indicator is positioned behind the item views.
-    [self addSubview:_selectionIndicatorView];
-
-    // By default, inset the content within the safe area. This is generally the desired behavior,
-    // but clients can override it if they want.
-    if (@available(iOS 11.0, *)) {
-      [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
-    }
-
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-    if (@available(iOS 13, *)) {
-      // If clients report conflicting gesture recognizers please see proposed solution in the
-      // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
-      [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
-    }
-#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+    [self commonMDCTabBarViewInit];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCTabBarViewInit];
+  }
+  return self;
+}
+
+- (void)commonMDCTabBarViewInit {
+  _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
+  _needsScrollToSelectedItem = YES;
+  _shouldAdjustForSafeAreaInsets = YES;
+  _items = @[];
+  _stateToImageTintColor = [NSMutableDictionary dictionary];
+  _stateToTitleColor = [NSMutableDictionary dictionary];
+  _stateToTitleFont = [NSMutableDictionary dictionary];
+  _preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
+  _layoutStyleToContentPadding = [NSMutableDictionary dictionary];
+  _layoutStyleToContentPadding[@(MDCTabBarViewLayoutStyleScrollable)] =
+      [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, kScrollableTabsLeadingEdgeInset, 0, 0)];
+  self.backgroundColor = UIColor.whiteColor;
+  self.showsHorizontalScrollIndicator = NO;
+
+  _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
+  _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
+  _selectionIndicatorView.userInteractionEnabled = NO;
+  _selectionIndicatorView.tintColor = UIColor.blackColor;
+  _selectionIndicatorView.indicatorPathAnimationDuration = kSelectionChangeAnimationDuration;
+  _selectionIndicatorView.indicatorPathTimingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+
+  _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
+
+  // The bottom divider is positioned behind the selection indicator.
+  _bottomDividerView = [[UIView alloc] init];
+  _bottomDividerView.backgroundColor = UIColor.clearColor;
+  [self addSubview:_bottomDividerView];
+
+  // The selection indicator is positioned behind the item views.
+  [self addSubview:_selectionIndicatorView];
+
+  // By default, inset the content within the safe area. This is generally the desired behavior,
+  // but clients can override it if they want.
+  if (@available(iOS 11.0, *)) {
+    [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
+  }
+
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13, *)) {
+    // If clients report conflicting gesture recognizers please see proposed solution in the
+    // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
+    [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
+  }
+#endif  // defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
 }
 
 - (void)dealloc {

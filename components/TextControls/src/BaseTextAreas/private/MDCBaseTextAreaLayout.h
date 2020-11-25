@@ -19,8 +19,17 @@
 
 @interface MDCBaseTextAreaLayout : NSObject
 
+@property(nonatomic, assign) BOOL displaysLeadingView;
+@property(nonatomic, assign) BOOL displaysTrailingView;
+
+@property(nonatomic, assign) CGRect leadingViewFrame;
+@property(nonatomic, assign) CGRect trailingViewFrame;
+
 @property(nonatomic, assign, readonly) CGRect labelFrameFloating;
 @property(nonatomic, assign, readonly) CGRect labelFrameNormal;
+
+@property(nonatomic, assign, readonly) BOOL placeholderLabelHidden;
+@property(nonatomic, assign, readonly) CGRect placeholderLabelFrame;
 
 @property(nonatomic, assign, readonly) CGRect textViewFrame;
 
@@ -53,6 +62,11 @@
                                label:(nonnull UILabel *)label
                        labelPosition:(MDCTextControlLabelPosition)labelPosition
                        labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
+                    placeholderLabel:(nonnull UILabel *)placeholderLabel
+                         leadingView:(nullable UIView *)leadingView
+                     leadingViewMode:(UITextFieldViewMode)leadingViewMode
+                        trailingView:(nullable UIView *)trailingView
+                    trailingViewMode:(UITextFieldViewMode)trailingViewMode
                leadingAssistiveLabel:(nonnull UILabel *)leadingAssistiveLabel
               trailingAssistiveLabel:(nonnull UILabel *)trailingAssistiveLabel
           assistiveLabelDrawPriority:

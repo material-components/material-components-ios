@@ -16,9 +16,10 @@
 
 #import "MaterialButtons.h"
 
-#import "MDCBaseTextArea.h"
 #import "MaterialButtons+Theming.h"
+#import "MDCBaseTextArea.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 #import "MDCTextControlLabelBehavior.h"
 #import "MDCFilledTextArea.h"
@@ -28,6 +29,7 @@
 
 @interface MDCTextControlTextAreaContentViewController () <UITextViewDelegate>
 @property(nonatomic, assign) BOOL shouldAddDebugBorder;
+@property(nonatomic, assign) BOOL shouldAddDebugLeadingView;
 @end
 
 @implementation MDCTextControlTextAreaContentViewController
@@ -38,10 +40,13 @@
   MDCFilledTextArea *textArea = [[MDCFilledTextArea alloc] init];
   textArea.textView.delegate = self;
   textArea.labelBehavior = MDCTextControlLabelBehaviorFloats;
-  textArea.label.text = @"Phone number";
-  textArea.leadingAssistiveLabel.text = @"This is a string.";
+  textArea.label.text = @"This is label text";
+  textArea.leadingAssistiveLabel.text = @"This is assistive label text.";
   if (self.shouldAddDebugBorder) {
     [self addBorderToTextArea:textArea];
+  }
+  if (self.shouldAddDebugLeadingView) {
+    [self addLeadingViewToTextArea:textArea];
   }
   [textArea applyThemeWithScheme:self.containerScheme];
   return textArea;
@@ -50,20 +55,28 @@
 - (MDCOutlinedTextArea *)createMaterialOutlinedTextArea {
   MDCOutlinedTextArea *textArea = [[MDCOutlinedTextArea alloc] init];
   textArea.textView.delegate = self;
-  textArea.label.text = @"Phone number";
-  [textArea applyThemeWithScheme:self.containerScheme];
+  textArea.label.text = @"This is label text";
+  textArea.leadingAssistiveLabel.text = @"This is assistive label text.";
   if (self.shouldAddDebugBorder) {
     [self addBorderToTextArea:textArea];
   }
+  if (self.shouldAddDebugLeadingView) {
+    [self addLeadingViewToTextArea:textArea];
+  }
+  [textArea applyThemeWithScheme:self.containerScheme];
   return textArea;
 }
 
 - (MDCBaseTextArea *)createDefaultBaseTextArea {
   MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] init];
   textArea.textView.delegate = self;
-  textArea.label.text = @"This is a floating label";
+  textArea.label.text = @"This is label text";
+  textArea.leadingAssistiveLabel.text = @"This is assistive label text.";
   if (self.shouldAddDebugBorder) {
     [self addBorderToTextArea:textArea];
+  }
+  if (self.shouldAddDebugLeadingView) {
+    [self addLeadingViewToTextArea:textArea];
   }
   return textArea;
 }
@@ -77,12 +90,23 @@
   textArea.layer.borderWidth = 1;
 }
 
+- (void)addLeadingViewToTextArea:(MDCBaseTextArea *)textArea {
+  UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+  imageView.tintColor = self.containerScheme.colorScheme.primaryColor;
+  UIImage *image =
+      [[UIImage imageNamed:@"ic_cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  imageView.image = image;
+  textArea.leadingView = imageView;
+  textArea.leadingViewMode = UITextFieldViewModeAlways;
+}
+
 #pragma mark Overrides
 
 - (void)initializeScrollViewSubviewsArray {
   [super initializeScrollViewSubviewsArray];
 
   self.shouldAddDebugBorder = NO;
+  self.shouldAddDebugLeadingView = NO;
 
   MDCFilledTextArea *filledTextAreaWithoutFloatingLabel = [self createMaterialFilledTextArea];
   filledTextAreaWithoutFloatingLabel.labelBehavior = MDCTextControlLabelBehaviorDisappears;
