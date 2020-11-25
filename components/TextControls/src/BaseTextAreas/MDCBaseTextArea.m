@@ -61,7 +61,6 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 @synthesize containerStyle = _containerStyle;
 @synthesize assistiveLabelDrawPriority = _assistiveLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
-@synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 #pragma mark Object Lifecycle

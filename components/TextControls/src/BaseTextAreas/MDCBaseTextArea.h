@@ -82,6 +82,9 @@ The UITextView contained within the text area.
 The minimum number of simultaneously visible lines of text. The height of the text area will reflect
 this value if the number of lines of total text is less than or equal to this value. Fractional
 values are allowed.
+
+ @note The @c preferredContainerHeight property takes precedence over this one. If you set a valid
+@c preferredContainerHeight it will be used and @c minimumNumberOfVisibleRows will be ignored.
  */
 @property(nonatomic, assign) CGFloat minimumNumberOfVisibleRows;
 
@@ -89,6 +92,9 @@ values are allowed.
 The maximum number of simultaneously visible lines of text. The height of the text area will reflect
 this value if the number of lines of total text is greater than or equal to this value. Fractional
 values are allowed.
+
+ @note The @c preferredContainerHeight property takes precedence over this one. If you set a valid
+@c preferredContainerHeight it will be used and @c maximumNumberOfVisibleRows will be ignored.
  */
 @property(nonatomic, assign) CGFloat maximumNumberOfVisibleRows;
 
@@ -162,20 +168,34 @@ values are allowed.
 - (nonnull UIColor *)trailingAssistiveLabelColorForState:(MDCTextControlState)state;
 
 /**
- When this property is set, the text field will convert it to a @c CGFloat and use that as the
- horizontal distance between the leading edge of the text field and the subview closest to it. When
- this property is @c nil, the text field will use a default value that depends on the style. This
+ When this property is set, the text area will convert it to a @c CGFloat and use that as the
+ horizontal distance between the leading edge of the text area and the subview closest to it. When
+ this property is @c nil, the text area will use a default value that depends on the style. This
  property is @c nil by default.
  */
 @property(nullable, nonatomic, strong) NSNumber *leadingEdgePaddingOverride;
 
 /**
- When this property is set, the text field will convert it to a @c CGFloat and use that as the
- horizontal distance between the trailing edge of the text field and the subview closest to it. When
- this property is @c nil, the text field will use a default value that depends on the style. This
+ When this property is set, the text area will convert it to a @c CGFloat and use that as the
+ horizontal distance between the trailing edge of the text area and the subview closest to it. When
+ this property is @c nil, the text area will use a default value that depends on the style. This
  property is @c nil by default.
  */
 @property(nullable, nonatomic, strong) NSNumber *trailingEdgePaddingOverride;
+
+/**
+ This property allows the user to override the default height of the container. The container is the
+ region above the the assistive labels within the text area. If there is no assistive label text,
+ the container's frame will be equal to the frame of the text area itself.
+
+ If this property is set to a value that's smaller than the
+ default height of the container it will be ignored.
+
+ @note This property takes precedence over @c minimumNumberOfVisibleRows and @c
+ maximumNumberOfVisibleRows. If you set a valid  @c preferredContainerHeight then @c
+ minimumNumberOfVisibleRows and @c maximumNumberOfVisibleRows will be ignored.
+ */
+@property(nonatomic, assign) CGFloat preferredContainerHeight;
 
 /**
  This property determines the corner radius of the container, when applicable. Setting this property

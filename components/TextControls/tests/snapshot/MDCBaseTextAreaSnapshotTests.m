@@ -155,6 +155,18 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testTextAreaWithPreferredContainerHeightOf300 {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.label.text = @"This is a label";
+  textArea.preferredContainerHeight = 300.0f;
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 #pragma mark Helpers
 
 - (UIView *)createSideView {
