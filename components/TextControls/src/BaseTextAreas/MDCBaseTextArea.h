@@ -170,7 +170,7 @@ values are allowed.
 /**
  When this property is set, the text area will convert it to a @c CGFloat and use that as the
  horizontal distance between the leading edge of the text area and the subview closest to it. When
- this property is @c nil, the text area will use a default value that depends on the style. This
+ this property is @c nil, the text area will use a default value that is specific to its style. This
  property is @c nil by default.
  */
 @property(nullable, nonatomic, strong) NSNumber *leadingEdgePaddingOverride;
@@ -178,10 +178,18 @@ values are allowed.
 /**
  When this property is set, the text area will convert it to a @c CGFloat and use that as the
  horizontal distance between the trailing edge of the text area and the subview closest to it. When
- this property is @c nil, the text area will use a default value that depends on the style. This
+ this property is @c nil, the text area will use a default value that is specific to its style. This
  property is @c nil by default.
  */
 @property(nullable, nonatomic, strong) NSNumber *trailingEdgePaddingOverride;
+
+/**
+ When this property is set, the text area will convert it to a @c CGFloat and use that as the
+ horizontal distance between the text area's contained text view and its leading and trailing views.
+ When this property is @c nil, the text area will use a default value that is specific to its style.
+ This property is @c nil by default.
+ */
+@property(nullable, nonatomic, strong) NSNumber *horizontalInterItemSpacingOverride;
 
 /**
  This property allows the user to override the default height of the container. The container is the

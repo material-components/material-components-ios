@@ -305,6 +305,10 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
     horizontalPositioningReference.trailingEdgePadding =
         (CGFloat)[self.trailingEdgePaddingOverride doubleValue];
   }
+  if (self.horizontalInterItemSpacingOverride) {
+    horizontalPositioningReference.horizontalInterItemSpacing =
+        (CGFloat)[self.horizontalInterItemSpacingOverride doubleValue];
+  }
   return horizontalPositioningReference;
 }
 

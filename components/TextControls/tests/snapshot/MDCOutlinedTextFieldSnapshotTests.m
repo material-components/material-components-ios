@@ -259,4 +259,16 @@
   [self validateTextField:textField];
 }
 
+- (void)testTextFieldWithLeadingViewTrailingViewAndCustomPaddings {
+  // Given
+  MDCOutlinedTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureTextFieldWithLeadingViewTrailingViewAndCustomPaddings:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 @end

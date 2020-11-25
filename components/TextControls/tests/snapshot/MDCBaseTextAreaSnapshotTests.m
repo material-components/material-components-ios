@@ -167,6 +167,24 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testTextAreaWithLeadingViewTrailingViewAndCustomPaddings {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.label.text = @"Label text";
+  textArea.leadingView = [self createSideView];
+  textArea.leadingViewMode = UITextFieldViewModeAlways;
+  textArea.leadingView = [self createSideView];
+  textArea.leadingViewMode = UITextFieldViewModeAlways;
+  textArea.leadingEdgePaddingOverride = @(30.0f);
+  textArea.trailingEdgePaddingOverride = @(30.0f);
+  textArea.horizontalInterItemSpacingOverride = @(30.0f);
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 #pragma mark Helpers
 
 - (UIView *)createSideView {
