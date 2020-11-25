@@ -16,10 +16,8 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "MDCTabBarViewItemViewDelegate.h"
 #import "MaterialMath.h"
-
-/** The minimum width of any item view. */
-static const CGFloat kMinWidth = 90;
 
 /** The minimum height of any item view with only a title or image (not both). */
 static const CGFloat kMinHeightTitleOrImageOnly = 48;
@@ -197,7 +195,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (CGSize)sizeThatFits:(CGSize)size {
   if (!self.titleLabel.text.length && !self.iconImageView.image) {
-    return CGSizeMake(kMinWidth, kMinHeightTitleOrImageOnly);
+    return CGSizeMake([self minWidth], kMinHeightTitleOrImageOnly);
   }
   if (self.titleLabel.text.length && !self.iconImageView.image) {
     return [self sizeThatFitsTextOnly:size];
@@ -211,7 +209,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize maxSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
   return CGSizeMake(
-      MAX(kMinWidth, labelSize.width + kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right),
+      MAX([self minWidth], labelSize.width + kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right),
       MAX(kMinHeightTitleOrImageOnly,
           labelSize.height + kEdgeInsetsTextOnly.top + kEdgeInsetsTextOnly.bottom));
 }
@@ -219,7 +217,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 - (CGSize)sizeThatFitsImageOnly:(CGSize)size {
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
   return CGSizeMake(
-      MAX(kMinWidth,
+      MAX([self minWidth],
           imageIntrinsicContentSize.width + kEdgeInsetsImageOnly.left + kEdgeInsetsImageOnly.right),
       MAX(kMinHeightTitleOrImageOnly, imageIntrinsicContentSize.height + kEdgeInsetsImageOnly.top +
                                           kEdgeInsetsImageOnly.bottom));
@@ -229,12 +227,12 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize maxSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
   CGSize labelFitSize = [self.titleLabel sizeThatFits:maxSize];
   CGSize imageFitSize = self.iconImageView.intrinsicContentSize;
-  return CGSizeMake(
-      MAX(kMinWidth, kEdgeInsetsTextAndImage.left + MAX(imageFitSize.width, labelFitSize.width) +
-                         kEdgeInsetsTextAndImage.right),
-      MAX(kMinHeightTitleAndImage, kEdgeInsetsTextAndImage.top + imageFitSize.height +
-                                       kImageTitlePadding + labelFitSize.height +
-                                       kEdgeInsetsTextAndImage.bottom));
+  return CGSizeMake(MAX([self minWidth], kEdgeInsetsTextAndImage.left +
+                                             MAX(imageFitSize.width, labelFitSize.width) +
+                                             kEdgeInsetsTextAndImage.right),
+                    MAX(kMinHeightTitleAndImage, kEdgeInsetsTextAndImage.top + imageFitSize.height +
+                                                     kImageTitlePadding + labelFitSize.height +
+                                                     kEdgeInsetsTextAndImage.bottom));
 }
 
 #pragma mark - MDCTabBarViewItemView properties
@@ -253,6 +251,13 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (UIImage *)selectedImage {
   return _selectedImage ?: self.image;
+}
+
+- (CGFloat)minWidth {
+  if (self.itemViewDelegate && [self.itemViewDelegate respondsToSelector:@selector(minItemWidth)]) {
+    return self.itemViewDelegate.minItemWidth;
+  }
+  return 0;
 }
 
 #pragma mark - UIAccessibility

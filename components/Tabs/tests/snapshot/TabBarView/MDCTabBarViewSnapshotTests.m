@@ -706,6 +706,40 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testLayoutBehaviorWhenMinItemWidthIsSet {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+
+  // When
+  self.tabBarView.items = @[ item1, item2 ];
+  self.tabBarView.minItemWidth = 200;
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds = CGRectMake(
+      0, 0, MIN(kMaxItemWidth * self.tabBarView.items.count, intrinsicContentSize.width * 2),
+      intrinsicContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testLayoutBehaviorWhenMinItemWidthIsZero {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+
+  // When
+  self.tabBarView.items = @[ item1, item2 ];
+  self.tabBarView.minItemWidth = 0;
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds = CGRectMake(
+      0, 0, MIN(kMaxItemWidth * self.tabBarView.items.count, intrinsicContentSize.width * 2),
+      intrinsicContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 #pragma mark - Safe Area/Inset Support
 
 - (void)testSafeAreaTopAndLeftInsetsForJustifiedLayoutStyle {

@@ -16,6 +16,7 @@
 
 #import "private/MDCTabBarViewIndicatorView.h"
 #import "private/MDCTabBarViewItemView.h"
+#import "private/MDCTabBarViewItemViewDelegate.h"
 #import "private/MDCTabBarViewPrivateIndicatorContext.h"
 #import "MaterialRipple.h"
 #import "MDCTabBarItemCustomViewing.h"
@@ -34,6 +35,9 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
+
+/** Default minimum width of an item in the Tab bar */
+static const CGFloat kDefaultMinItemWidth = 90;
 
 /** The leading edge inset for scrollable tabs. */
 static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
@@ -56,7 +60,8 @@ static NSString *const kLargeContentSizeImage = @"largeContentSizeImage";
 static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageInsets";
 
 #ifdef __IPHONE_13_4
-@interface MDCTabBarView (PointerInteractions) <UIPointerInteractionDelegate>
+@interface MDCTabBarView (PointerInteractions) <UIPointerInteractionDelegate,
+                                                MDCTabBarViewItemViewDelegate>
 @end
 #endif
 
@@ -140,6 +145,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   _layoutStyleToContentPadding = [NSMutableDictionary dictionary];
   _layoutStyleToContentPadding[@(MDCTabBarViewLayoutStyleScrollable)] =
       [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, kScrollableTabsLeadingEdgeInset, 0, 0)];
+  _minItemWidth = kDefaultMinItemWidth;
   self.backgroundColor = UIColor.whiteColor;
   self.showsHorizontalScrollIndicator = NO;
 
@@ -251,6 +257,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     }
     if (!itemView) {
       MDCTabBarViewItemView *mdcItemView = [[MDCTabBarViewItemView alloc] init];
+      mdcItemView.itemViewDelegate = self;
       mdcItemView.titleLabel.text = item.title;
       mdcItemView.accessibilityLabel = item.accessibilityLabel;
       mdcItemView.accessibilityHint = item.accessibilityHint;
