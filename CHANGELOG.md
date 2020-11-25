@@ -1,3 +1,37 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Tabs
+
+* [Support typical UIView initializers in MDCTabBarView](https://github.com/material-components/material-components-ios/commit/93df55946bd14c1aa8f4cbf07844face44952c11) (Andrew Overton)
+
+### TextControls
+
+* [Expose inter item spacing](https://github.com/material-components/material-components-ios/commit/16359d718a9c5af2983f7ba6c35f2dde227f642a) (Andrew Overton)
+* [Expose preferredContainerHeight on MDCBaseTextArea](https://github.com/material-components/material-components-ios/commit/732e39b160d73545a7c1aad6bfd43df1d5e88198) (Andrew Overton)
+* [Fix RTL placeholder behavior](https://github.com/material-components/material-components-ios/commit/77c77dc0f8ac9da6d3a1e127df40049924cdb18b) (Andrew Overton)
+* [Modify automatic scrolling behavior](https://github.com/material-components/material-components-ios/commit/a4d2f5ac0acfe1af18eefc7df9349c1547f1b4ce) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add text areas leading/trailing views](https://github.com/material-components/material-components-ios/commit/a349540e26ce57f4102de7f3bb77a901cdb12df2) (Andrew Overton)
+* [Slider layout and size changes](https://github.com/material-components/material-components-ios/commit/a539853e3ca9603dfc10f9e6680114970a295879) (Andrew Overton)
+
+---
+
 # 119.1.1
 
 In this patch release we have updated the Slider documentation and fixed a CocoaPods build issue.
