@@ -17,8 +17,33 @@
 
 @class MDCTabBarViewItemView;
 
+/** The different styles for an @c MDCTabBarViewItemView. */
+typedef NS_ENUM(NSUInteger, MDCTabBarViewItemViewStyle) {
+
+  /**
+   The item has text only
+   */
+  MDCTabBarViewItemViewStyleTextOnly = 0,
+
+  /**
+   The item has an image only
+   */
+  MDCTabBarViewItemViewStyleImageOnly = 1,
+
+  /**
+   The item has both text and image.
+   */
+  MDCTabBarViewItemViewStyleTextAndImage = 2,
+};
+
 @protocol MDCTabBarViewItemViewDelegate <NSObject>
 
+/* Minimum item width*/
 @property(nonatomic) CGFloat minItemWidth;
+
+/**
+ The edge insets between for the item when the item has a given style.
+ */
+- (UIEdgeInsets)contentInsetsForItemViewStyle:(MDCTabBarViewItemViewStyle)itemViewStyle;
 
 @end
