@@ -164,12 +164,18 @@ Here is an example of a Banner with the Shrine theme applied to it.
 
 ![Banner with dummy text description and text button labeled "dismiss"](docs/assets/shrine-banner.png)
 
+Add the following to your Podfile
+
+```ruby
+pod 'MaterialComponents/Banner+Theming'
+```
+
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
 // Import the Banner theming module
-import MaterialComponents.MaterialBanner_MaterialTheming
+import MaterialComponents.MaterialBanner_Theming
 ...
 // Create or use your app's Container Scheme
 let containerScheme = MDCContainerScheme()
@@ -181,7 +187,7 @@ banner.applyTheme(withScheme: containerScheme)
 
 ```objc
 // Import the Tabs Theming Extensions header
-#import <MaterialComponents/MaterialBanner+MaterialTheming.h>
+#import <MaterialComponents/MaterialBanner+Theming.h>
 ...
  // Create or use your app's Container Scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
