@@ -9,26 +9,23 @@ path: /catalog/textfields/
 
 # Text fields
 
-[Text fields](https://material.io/components/text-fields) allow users to enter text into a UI. They typically appear in forms and dialogs.
+[Text fields](https://material.io/components/text-fields) let users enter and
+edit text.
 
-Text fields come in two styles:
+!["A screen with several text fields arranged vertically."](docs/assets/textfields-hero.png)
 
-1.  [Filled text fields](#filled-text-fields)
-2.  [Outlined text fields](#outlined-text-fields)
+## Contents
 
-!["Text field examples of both filled and outlined types, and each type showing
-both inactive and focused states. The filled text fields show a grey background
-and a darker grey activation indicator that is purple when focused. The outlined
-text fields show a clear background and an outline that is purple when
-focused"](docs/assets/text-field-generic.png)
+*   [Using text fields](#using-text-fields)
+*   [Filled text field](#filled-text-field)
+*   [Outlined text field](#outlined-text-field)
+*   [Theming](#theming)
 
 ## Using text fields
 
-Material iOS text fields consist of both single-line and multi-line offerings in both filled and outlined styles. The single-line text fields, MDCFilledTextField and MDCOutlinedTextField, are subclasses of UITextField, and can generally be used in the same ways as UITextField. The multi-line text fields, also known as text areas, include MDCFilledTextArea and MDCOutlinedTextArea. These classes are subclasses of UIControl that contain UITextViews. 
+### Installing
 
-Because these classes make use of things like floating labels and assistive labels, their layout considerations are different than those of UITextField and UITextView. Where UITextField and UITextView can be whatever height a developer wants them to be, these classes have heights that they need to be in order to look correct. The process for ensuring that instances of these classes are sized correctly depends on whether one is in an Auto Layout or Manual Layout environment. In an Auto Layout environment, the text field or text area's preferred height will be reflected in `-intrinsicContentSize`, and the user will probably not have to do anything other than set a width constraint on the view to ensure that the preferred height is achieved. In a Manual Layout environment, standard methods like `-sizeThatFits:` or `-sizeToFit` must be used to inform the frames of the text field. These methods assume that the view already has a preferred width, and that any relevant APIs related to preferred number of lines have been set.
-
-To make use of filled or outlined text fields or text areas, add any of the following targets to your Podfile:
+To make use of Material text fields, add any of the following subspecs to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/TextControls+FilledTextAreas'
@@ -44,7 +41,7 @@ Then, run the following command:
 pod install
 ```
 
-From there, import the relevant target.
+From there, import the relevant target or file and instantiate your text field.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -69,19 +66,34 @@ import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
 ## Making text fields accessible
 
-As mentioned above, MDCFilledTextField and MDCOutlinedTextField inherit from UITextField, and MDCFilledTextArea and MDCOutlinedTextArea contain UITextViews. Both UITextField and UITextView are accessible by default, and generally work out of the box with VoiceOver. The same is true for the text field and text area classes we provide. However, because they also make use of floating labels and assistive labels below the input text, their VoiceOver behavior is slightly different. If `accessibilityLabel` is _not_ explictly set on a text field or text area, the `accessibilityLabel` that VoiceOver reads is a concatenation of the floating label text, the entered text, and the assistive label text. If `accessibilityLabel` _is_ set, the screen reader will read whatever it is set to. If you would like fine-grained control over what VoiceOver reads for these classes it is probably best to set the `accessibilityLabel` yourself.
+Material iOS text field offerings either inherit from `UITextField` or they contain `UITextView` instances. Both of these classes are accessible by default, and generally work out of the box with VoiceOver. However, the text fields we provide make use of floating labels above the text and assistive labels below the text, which makes the VoiceOver behavior of our text fields slightly different. If `accessibilityLabel` is _not_ explictly set on a single-line text field or multi-line text area, the `accessibilityLabel` that VoiceOver reads is a concatenation of the floating label text, the entered text, and the assistive label text. If `accessibilityLabel` _is_ set, the screen reader will read whatever it is set to. If you would like fine-grained control over what VoiceOver reads for these classes it is probably best to set the `accessibilityLabel` yourself.
 
-## Filled text fields
+## Types
+
+Text fields come in two styles:
+
+1.  [Filled text fields](#filled-text-field)
+2.  [Outlined text fields](#outlined-text-field)
+
+!["Text field examples of both filled and outlined types, each type showing
+both inactive and focused states. The filled text fields show a gray background
+and a darker gray activation indicator that is purple when focused. The outlined
+text fields show a clear background and an outline that is purple when
+focused"](docs/assets/text-field-generic.png)
+
+Material iOS text fields consist of both single-line and multi-line offerings in both filled and outlined styles. The single-line text fields are `MDCFilledTextField` and `MDCOutlinedTextField`. The multi-line text fields (text areas) are `MDCFilledTextArea` and `MDCOutlinedTextArea`. Because these classes make use of things like floating labels and assistive labels, their layout considerations are different than those of `UITextField` and `UITextView`. Where `UITextField` and `UITextView` can be whatever height a developer wants them to be, these classes have heights that they need to be in order to look correct. The process for ensuring that instances of these classes are sized correctly depends on whether one is in an Auto Layout or Manual Layout environment. In an Auto Layout environment, the text field or text area's preferred height will be reflected in `-intrinsicContentSize`, and the user will probably not have to do anything other than set a width constraint on the view to ensure that the preferred height is achieved. In a Manual Layout environment, standard methods like `-sizeThatFits:` or `-sizeToFit` must be used to inform the frames of the text field. These methods assume that the view already has a preferred width, and that any relevant APIs related to preferred number of lines have been set.
+
+## Filled text field
 
 [Filled text fields](https://material.io/components/text-fields/#filled-text-field)
 have more visual emphasis than outlined text fields, making them stand out when
 surrounded by other content and components.
 
-### Single-line filled text fields
+### Single-line filled text field
 
 ![Filled text field](docs/assets/filled-text-field.png)
 
-To set up a single-line filled text field using [MDCFilledTextField](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/FilledTextFields/MDCFilledTextField.h), do the following:
+To set up a single-line filled text field using [`MDCFilledTextField`](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/FilledTextFields/MDCFilledTextField.h), do the following:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -109,11 +121,11 @@ textField.leadingAssistiveLabel.text = @"This is helper text";
 ```
 <!--</div>-->
 
-### Multi-line filled text fields
+### Multi-line filled text field
 
 ![Filled text area](docs/assets/filled-text-area.png)
 
-To set up a multi-line filled text field (text area) using [MDCFilledTextArea](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/FilledTextAreas/MDCFilledTextArea.h), do the following:
+To set up a multi-line filled text field (text area) using [`MDCFilledTextArea`](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/FilledTextAreas/MDCFilledTextArea.h), do the following:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -208,18 +220,18 @@ A filled text field has a filled container, input text, a label, an activation i
 
 Not supported.
 
-## Outlined text fields
+## Outlined text field
 
 [Outlined text fields](https://material.io/components/text-fields/#outlined-text-field)
 have less visual emphasis than filled text fields. When they appear in places
 like forms, where many text fields are placed together, their reduced emphasis
 helps simplify the layout.
 
-### Single-line outlined text fields
+### Single-line outlined text field
 
 ![Outlined text field](docs/assets/outlined-text-field.png)
 
-To set up a single-line outlined text field using [MDCOutlinedTextField](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/OutlinedTextFields/MDCOutlinedTextField.h), do the following:
+To set up a single-line outlined text field using [`MDCOutlinedTextField`](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/OutlinedTextFields/MDCOutlinedTextField.h), do the following:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -247,11 +259,11 @@ textField.leadingAssistiveLabel.text = @"This is helper text";
 ```
 <!--</div>-->
 
-### Multi-line Outlined text fields
+### Multi-line Outlined text field
 
 ![Outlined text area](docs/assets/outlined-text-area.png)
 
-To set up a multi-line outlined text field (text area) using [MDCOutlinedTextArea](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/OutlinedTextAreas/MDCOutlinedTextArea.h), do the following:
+To set up a multi-line outlined text field (text area) using [`MDCOutlinedTextArea`](https://github.com/material-components/material-components-ios/blob/develop/components/TextControls/src/OutlinedTextAreas/MDCOutlinedTextArea.h), do the following:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -348,7 +360,7 @@ The following examples shows a filled text field with a label.
 
 Not supported.
 
-### Theming text fields and text areas
+## Theming
 
 Text fields and text areas support Material Theming using a Container Scheme. The filled and outlined text fields and text areas each have default theming methods and theming methods intended to convey an error state. [Learn more about theming extensions](../../docs/theming.md). Below are some screenshots of filled and outlined text fields using the Shrine theme:
 
@@ -356,9 +368,7 @@ Text fields and text areas support Material Theming using a Container Scheme. Th
 
 ![Shrine outlined text field](docs/assets/shrine-outlined-text-field.png)
 
-### Cards theming example
-
-In order to achieve something like the examples shown above, import your desired theming target.
+In order to achieve something like the examples shown above, add one of the relevant theming subspecs to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/TextControls+FilledTextAreasTheming'
@@ -369,13 +379,13 @@ pod 'MaterialComponents/TextControls+OutlinedTextFieldsTheming'
 
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer.
+Then Run the installer:
 
 ```bash
 pod install
 ```
 
-Next, import the appropriate theming target.
+Next, import the relevant target or file.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
