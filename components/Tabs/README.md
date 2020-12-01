@@ -18,11 +18,11 @@ Material tabs can be broken into two main categories: fixed and scrollable.
 
 ### Fixed tabs
 
-![fixed tab example](docs/assets/tabs-fixed-hero.png)
+![Fixed tabs for dog, cats, birds. Birds tab selected](docs/assets/tabs-fixed-hero.png)
 
 ### Scrollable tabs
 
-![scrollabe tab example](docs/assets/tabs-scrollable-hero.png)
+![Scrollable tabs for pitbulls, terrier, poodle. Pitbulls tab selected](docs/assets/tabs-scrollable-hero.png)
 
 ## Contents
 
@@ -102,7 +102,7 @@ From there, initialize an `MDCTabBarView` and add it to your view controller's v
 
 Tab bars contain tab bar items with optional icons and text labels. Tab bar items can be selected or unselected. The selection indicator appears below the currently selected tab bar item.
 
-![Tabs anatomy diagram](docs/assets/tabs-anatomy.png)
+![Tabs anatomy diagram with Recents, Favorites and Nearby text labels and icons](docs/assets/tabs-anatomy.png)
 
 1.  Container
 2.  Selected icon (optional if there’s a label)
@@ -150,7 +150,7 @@ Tab bars contain tab bar items with optional icons and text labels. Tab bar item
 
 Tabs supports Material Theming using a Container Scheme. To learn more about theming extensions, see [here](https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md). Below is a screenshot of an `MDCTabBarView` with the Material Design Shrine theme:
 
-![Shrine card](docs/assets/shrine-tabs.png)
+![Shrine tab with Home, Settings, Email and Search text labels and icons](docs/assets/shrine-tabs.png)
 
 ### Tabs theming example
 

@@ -31,7 +31,7 @@ Banners should be displayed at the top of the screen, below a top app bar. Theyâ
 
 By default, `MDCBannerView` is configured to display an image view, a text label and two buttons. To hide the image view on `MDCBannerView`, users can set the `hidden` property on `imageView` to be true. Similarly, users can hide a button on the banner view by setting the `hidden` property on `trailingButton` to be true.
 
-By default, `MDCBannerView` is configured to display items with black text and white background with a gray divider at the bottom of the view. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textView`, `imageView`, `leadingButton` and `trailingButton`. `showsDivider` and `dividerColor` can be used to control the divider's visibility and color.
+By default, `MDCBannerView` is configured to display items with black text and white background with a grey divider at the bottom of the view. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textView`, `imageView`, `leadingButton` and `trailingButton`. `showsDivider` and `dividerColor` can be used to control the divider's visibility and color.
 
 `MDCBannerView` layouts are configurable through the `bannerViewLayoutStyle` property. This property can be set to either `MDCBannerViewLayoutStyleAutomatic`, `MDCBannerViewLayoutStyleSingleRow`, `MDCBannerViewLayoutStyleMultiRowStackedButton`, or `MDCBannerViewLayoutStyleMultiRowAlignedButton`.	
 

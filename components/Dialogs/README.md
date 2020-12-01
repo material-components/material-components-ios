@@ -182,7 +182,7 @@ MDCAlertAction *alertAction =
 
 The following is an anatomy diagram of a Material dialog:
 
-![anatomy](docs/assets/dialogs-anatomy.png)
+![Dialog anatomy diagram with title, description, and Cancel and Accept buttons](docs/assets/dialogs-anatomy.png)
 
 1.  Container
 1.  Title (optional)
@@ -217,7 +217,7 @@ The following is an anatomy diagram of a Material dialog:
 
 ### Theming dialogs
 
-![Alert dialog with Shrine theming](docs/assets/shrine_dialog.png)
+![Shrine-themed dummy dialog with Accept and Cancel buttons](docs/assets/shrine_dialog.png)
 
 You can theme a Material Dialog using a container scheme and the Dialogs theming extension. To achieve something like the
 Shrine theming above first add the Dialogs theming extension to your project by adding the following line to your Podfile:
