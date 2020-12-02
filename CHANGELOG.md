@@ -1,3 +1,35 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Banner
+
+* [Updated documentation](https://github.com/material-components/material-components-ios/commit/62863b262e31c43ef0aa355ae9d299a13fd040a4) (Cristina De Rito)
+
+### Tabs
+
+* [Add and expose property to MDCTabBarView for setting the edge insets for each item in the tab bar.](https://github.com/material-components/material-components-ios/commit/58431831194f7bd4c7acb49722f4aa15c873776d) (Alyssa Weiss)
+* [Create and expose a minItemWidth property for MDCTabBarView to set the min width of items on the tab bar. This is done by adding a MDCTabBarViewItemViewDelegate protocol that MDCTabBarView conforms to.](https://github.com/material-components/material-components-ios/commit/a07df1ee5a64ac60cfeadd67caf1d43883ac2c7d) (Alyssa Weiss)
+* [When building with -Wnullability-completeness, either no property should specify a nullability (nullable/nonnull) or all of them must specify one. If this is not the case, the compilation will fail.](https://github.com/material-components/material-components-ios/commit/d391e7a2bc91bea4ef0cf75cd02a34cd17de960f) (Nobody)
+
+## Multi-component changes
+
+* [Miscellaneous doc fixes](https://github.com/material-components/material-components-ios/commit/0c7a12b0c7f2de8c6aaf4bd107289a89551aef34) (Andrew Overton)
+
+---
+
 # 119.1.2
 
 In this patch release we made improvements to TextControls and Slider and fixed a bug in Tabs.
