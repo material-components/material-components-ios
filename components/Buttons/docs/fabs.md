@@ -22,6 +22,8 @@ A floating action button (FAB) represents the primary action of a screen.
 *   [Extended FAB](#extended-fab)
 *   [Theming](#theming)
 
+- - -
+
 ## Using FABs
 
 ### Installing
@@ -330,7 +332,7 @@ pod MaterialComponents/Buttons+Theming
 
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer:
+Then run the installer:
 
 ```bash
 pod install

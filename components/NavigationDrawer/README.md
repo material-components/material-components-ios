@@ -15,21 +15,64 @@ api_doc_root: true
 
 ![Bottom navigation example](docs/assets/bottom-drawer-hero.png)
 
-Navigation drawers are recommended for:
-  <li class="icon-list-item icon-list-item">Apps with five or more top-level destinations.</li>
-  <li class="icon-list-item icon-list-item">Apps with two or more levels of navigation hierarchy.</li>
-  <li class="icon-list-item icon-list-item">Quick navigation between unrelated destinations.</li>
-
 ## Contents
 
 * [Using navigation drawers](#using-navigation-drawers)
-* [Installing navigation drawers](#installing-navigation-drawers)
-* [Making navigation drawers accessible](#making-navigation-drawers-accessible)
-* [Theming navigation drawers](#theming-navigation-drawers)
+* [Bottom navigation drawer](#bottom-navigation-drawer)
+* [Theming](#theming)
+
+- - -
 
 ## Using navigation drawers
 
-While there is such a thing as a side navigation drawer, for example, we only provide bottom navigation drawers. Our bottom navigation drawer implementation is centered around `MDCBottomDrawerViewController`, a `UIViewController` subclass. `MDCBottomDrawerViewController` has a `contentViewController` property, whose view is displayed as the primary content of the drawer, as well as a `headerViewController` property, whose view is positioned above the content view controller and sticks to the top when the drawer is full-screen. For more information on implementing custom view controller classes see [Apple's View Controller Programming Guide](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/DefiningYourSubclass.html#//apple_ref/doc/uid/TP40007457-CH7-SW1).
+### Installing
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/NavigationDrawer'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
+
+### Importing
+
+From there, import the relevant target or file.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialNavigationDrawer
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialNavigationDrawer.h"
+```
+<!--</div>-->
+
+## Making navigation drawers accessible
+
+While `MDCBottomDrawerViewController` supports the accessibility escape "Z" gesture, it is advisible that the content view controller provides its own dismiss action affordance. Note that it is the responsibility of the header and content view controllers to implement any custom accessibility behavior.
+
+## Types
+
+While there is such a thing as a side navigation drawer, for example, we only provide bottom navigation drawers.
+
+## Bottom navigation drawer
+
+Our bottom navigation drawer implementation is centered around `MDCBottomDrawerViewController`, a `UIViewController` subclass. `MDCBottomDrawerViewController` has a `contentViewController` property, whose view is displayed as the primary content of the drawer, as well as a `headerViewController` property, whose view is positioned above the content view controller and sticks to the top when the drawer is full-screen. For more information on implementing custom view controller classes see [Apple's View Controller Programming Guide](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/DefiningYourSubclass.html#//apple_ref/doc/uid/TP40007457-CH7-SW1).
+
+Bottom navigation drawers are recommended for:
+* Apps with five or more top-level destinations.
+* Apps with two or more levels of navigation hierarchy.
+* Quick navigation between unrelated destinations.
 
 `MDCBottomDrawerViewController` presentation makes use of the `UIPresentationController` subclass `MDCBottomDrawerPresentationController`, as well as `MDCBottomDrawerTransitionController`, which conforms to `UIViewControllerTransitioningDelegate`.
 
@@ -107,47 +150,11 @@ bottomDrawerViewController.trackingScrollView = contentViewController.view;
 ```
 <!--</div>-->
 
-## Installing navigation drawers
-
-Add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/NavigationDrawer'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
-
-### Importing
-
-To import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialNavigationDrawer
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialNavigationDrawer.h"
-```
-<!--</div>-->
-
-## Making navigation drawers accessible
-
-While `MDCBottomDrawerViewController` supports the accessibility escape "Z" gesture, it is advisible that the content view controller provides its own dismiss action affordance. Note that it is the responsibility of the header and content view controllers to implement any custom accessibility behavior.
-
-## Theming navigation drawers
+## Theming
 
 While `MDCBottomDrawerViewController` does have a theming extension, it should not be relied on for ensuring the content and header are themed correctly. It only sets properties like corner radius, scrim color, and handle color. To display sufficiently themed content with `MDCBottomDrawerViewController` you must make sure the content and header view controllers are themed independently.
 
-To make use of the bottom drawer theming extension you need to install it wth Cocoapods. First, add the following line to your `Podfile`.
+To make use of the bottom drawer theming extension you need to install it wth Cocoapods. First, add the following line to your `Podfile`:
 
 ```bash
 pod MaterialComponents/NavigationDrawer+Theming
@@ -155,13 +162,13 @@ pod MaterialComponents/NavigationDrawer+Theming
 
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer.
+Then run the installer:
 
 ```bash
 pod install
 ```
 
-Next, import the NavigationDrawer theming target, and call the correct theming method.
+Next, import the theming target, and call the correct theming method.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

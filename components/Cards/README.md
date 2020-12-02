@@ -23,6 +23,8 @@ a single subject.
 *   [Card](#card)
 *   [Theming](#theming)
 
+- - -
+
 ## Using cards
 
 ### Installing
@@ -311,7 +313,7 @@ pod MaterialComponents/Cards+Theming
 
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer:
+Then run the installer:
 
 ```bash
 pod install
