@@ -63,7 +63,7 @@ import MaterialComponents.MaterialBottomNavigation
 
 `MDCBottomNavigationBar` works much like a `UITabBar` and both are populated with an array of `UITabBarItem` instances. However, `MDCBottomNavigationBar` is built with Material Design in mind and should be used with other Material Design components where possible to provide a consistent look and feel in an app. Additionally, while `MDCBottomNavigationBar` has similar features to `MDCTabBar`, `MDCTabBar` is chiefly intended for top navigation, whereas `MDCBottomNavigationBar`--as the name indicates--is intended for bottom navigation.
 
-It is recommended that a bottom navigation bar contain anywhere from three to five items. If there are fewer than three destinations, consider using tabs instead. If your top-level navigation has more than six destinations, provide access to destinations not covered in bottom navigation through alternative locations, such as a navigation drawer.
+It is recommended that a bottom navigation bar contain anywhere from three to five items. If there are fewer than three destinations, consider using Material tabs instead. If your top-level navigation has more than six destinations, provide access to destinations not covered in bottom navigation through alternative locations, such as a navigation drawer.
 
 Title visibility in `MDCBottomNavigationBar` can be configured in three ways:
 

@@ -1,15 +1,3 @@
-<!--docs:
-title: "Linear progress indicator"
-layout: detail
-section: components
-excerpt: "Progress view is a linear progress indicator that implements Material Design animation and layout."
-iconId: progress_linear
-path: /catalog/progress-indicators/progress-views/
-api_doc_root: true
--->
-
-<!-- This file was auto-generated using ./scripts/generate_readme ProgressView -->
-
 # Progress view
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BProgressView%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BProgressView%5D)

@@ -171,7 +171,15 @@ To theme your banner, first add the following to your `Podfile`:
 pod 'MaterialComponents/Banner+Theming'
 ```
 
-Then, import the relevant target or file and call the theming method.
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then run the installer:
+
+```bash
+pod install
+```
+
+From there, import the relevant target or file and call the theming method.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -189,7 +197,7 @@ banner.applyTheme(withScheme: containerScheme)
 #### Objective-C
 
 ```objc
-// Import the Tabs Theming Extensions header
+// Import the Banner Theming Extensions header
 #import <MaterialComponents/MaterialBanner+Theming.h>
 ...
  // Create or use your app's Container Scheme
