@@ -26,6 +26,8 @@ information and actions relating to the current screen.
 * [Migration guides](#migration-guides)
 * [Unsupported](#unsupported)
 
+- - -
+
 ## Using top app bars
 
 ### Installing
@@ -73,7 +75,7 @@ A top app bar is essentially a FlexibleHeader with a HeaderStackView and Navigat
 make use of it in some manner. Top app bars rely on each view controller creating and managing their
 own `MDCAppBarViewController` instances. This differs from UIKit, where many view controllers in a stack share a single `UINavigationBar` instance.
 
-## Making top app bars accessible
+### Making top app bars accessible
 
 Because the app bar mirrors the state of your view controller's `navigationItem`, making it accessible often does not require any extra work.
 
@@ -652,7 +654,7 @@ pod 'MaterialComponents/AppBar+Theming'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer:
+Then run the installer:
 
 ```bash
 pod install

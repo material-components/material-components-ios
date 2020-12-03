@@ -23,6 +23,8 @@ api_doc_root: true
 *   [Toggle button](#toggle-button)
 *   [Theming](#theming)
 
+- - -
+
 ## Using buttons
 
 ### Installing
@@ -365,7 +367,7 @@ pod MaterialComponents/Buttons+Theming
 
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer:
+Then run the installer:
 
 ```bash
 pod install

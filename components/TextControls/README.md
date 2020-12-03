@@ -21,6 +21,8 @@ edit text.
 *   [Outlined text field](#outlined-text-field)
 *   [Theming](#theming)
 
+- - -
+
 ## Using text fields
 
 ### Installing

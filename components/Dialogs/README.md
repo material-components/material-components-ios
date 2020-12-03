@@ -25,6 +25,8 @@ involve multiple tasks.
 * [Alert dialog](#alert-dialog)
 * [Theming](#theming)
 
+- - -
+
 ## Using dialogs
 
 ### Installing
@@ -66,9 +68,9 @@ Dialogs on iOS consist of three classes:
 
 ### Making dialogs accessible
 
-### `MDCPresentationController` Accessibility
+### `MDCDialogPresentationController` Accessibility
 
-As `MDCPresentationController` is responsible for the presentation of your
+As `MDCDialogPresentationController` is responsible for the presentation of your
 custom view controllers, it does not implement any accessibility
 functionality itself.
 
@@ -227,7 +229,7 @@ pod 'MaterialComponents/Dialogs+Theming'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer:
+Then run the installer:
 
 ```bash
 pod install

@@ -19,50 +19,14 @@ api_doc_root: true
 ## Contents
 
 * [Using bottom app bars](#using-bottom-app-bars)
-* [Installing bottom app bars](#installing-bottom-app-bars)
-* [Making bottom app bars accessible](#making-bottom-app-bars-accessible)
-* [Bottom app bar anatomy](#bottom-app-bar-anatomy)
-* [Theming bottom app bars](#theming-bottom-app-bars)
+* [Bottom app bar](#bottom-app-bar)
+* [Theming](#theming)
+
+- - -
 
 ## Using bottom app bars
 
-Bottom app bars group primary and secondary actions at the bottom of the screen, where they are easily reachable by the user's thumb.
-
-Use the `UIView` subclass `MDCBottomAppBarView` to add a bottom app bar to your app. `MDCBottomAppBarView` contains a horizontally centered [floating action button](https://material.io/develop/ios/components/fabs/) for primary actions and a customizable [navigation bar](https://material.io/components/ios/catalog/navigation-bar) for secondary actions. The `MDCBottomAppBarView` API includes properties that allow changes in elevation, position, and visibility of the embedded floating action button.
-
-Instances of `UIBarButtonItem` can be added to a `MDCBottomAppBarView`'s navigation bar. Leading and trailing navigation items will be shown and hidden based on the position of the floating action button.
-
-Transitions between floating action button position, elevation, and visibility states are animated by default, but can be disabled if desired.
-
-### Bottom app bar example
-
-`MDCBottomAppBarView` can be added to a view hierarchy like any `UIView`. Material Design guidelines
-recommend always placing the bottom app bar at the bottom of the screen.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-let bottomAppBar = MDCBottomAppBarView()
-addSubview(bottomAppBar)
-view.leftAnchor.constraint(equalTo: bottomAppBarView.leftAnchor).isActive = true
-view.rightAnchor.constraint(equalTo: bottomAppBarView.rightAnchor).isActive = true
-view.bottomAnchor.constraint(equalTo: bottomAppBarView.bottomAnchor).isActive = true
-```
-
-#### Objective-C
-
-```objc
-MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
-[self addSubview:bottomAppBar];
-[self.view.leftAnchor constraintEqualToAnchor:bottomAppBarView.leftAnchor].active = YES;
-[self.view.rightAnchor constraintEqualToAnchor:bottomAppBarView.rightAnchor].active = YES;
-[self.view.bottomAnchor constraintEqualToAnchor:self.textField.bottomAnchor].active = YES;
-```
-
-<!--</div>-->
-
-## Installing `MDCBottomAppBarView`
+### Installing
 
 In order to use `MDCBottomAppBarView`, first add the component to your `Podfile`:
 
@@ -71,13 +35,13 @@ pod MaterialComponents/BottomAppBar
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then, run the installer.
+Then, run the installer:
 
 ```bash
 pod install
 ```
 
-After that, import the component target.
+After that, import the relevant target or file.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -93,7 +57,7 @@ import MaterialComponents.MaterialBottomAppBar
 
 From there, initialize an `MDCBottomAppBarView` like you would any `UIView`.
 
-## Making bottom app bars accessible
+### Making bottom app bars accessible
 
 The following recommendations will ensure that the bottom app bar is accessible to as many users as possible:
 
@@ -157,7 +121,46 @@ trailingButton.accessibilityHint = @"Purchase the item";
 ```
 <!--</div>-->
 
-## Bottom app bar anatomy
+## Types
+
+There is only one type of bottom app bar.
+
+## Bottom app bar
+
+Bottom app bars group primary and secondary actions at the bottom of the screen, where they are easily reachable by the user's thumb.
+
+### Bottom app bar example
+
+Use the `UIView` subclass `MDCBottomAppBarView` to add a bottom app bar to your app. `MDCBottomAppBarView` contains a horizontally centered [floating action button](https://material.io/develop/ios/components/fabs/) for primary actions and a customizable [navigation bar](https://material.io/components/ios/catalog/navigation-bar) for secondary actions. The `MDCBottomAppBarView` API includes properties that allow changes in elevation, position, and visibility of the embedded floating action button.
+
+Instances of `UIBarButtonItem` can be added to a `MDCBottomAppBarView`'s navigation bar. Leading and trailing navigation items will be shown and hidden based on the position of the floating action button.
+
+Transitions involving floating action button position, elevation, and visibility are animated by default, but animation can be disabled if desired.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+let bottomAppBar = MDCBottomAppBarView()
+addSubview(bottomAppBar)
+view.leftAnchor.constraint(equalTo: bottomAppBarView.leftAnchor).isActive = true
+view.rightAnchor.constraint(equalTo: bottomAppBarView.rightAnchor).isActive = true
+view.bottomAnchor.constraint(equalTo: bottomAppBarView.bottomAnchor).isActive = true
+```
+
+#### Objective-C
+
+```objc
+MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+[self addSubview:bottomAppBar];
+[self.view.leftAnchor constraintEqualToAnchor:bottomAppBarView.leftAnchor].active = YES;
+[self.view.rightAnchor constraintEqualToAnchor:bottomAppBarView.rightAnchor].active = YES;
+[self.view.bottomAnchor constraintEqualToAnchor:self.textField.bottomAnchor].active = YES;
+```
+
+<!--</div>-->
+
+### Bottom app bar anatomy
 
 A bottom app bar has a container and an optional navigation icon, anchored
 floating action button (FAB), action item(s) and an overflow menu.
@@ -190,6 +193,6 @@ floating action button (FAB), action item(s) and an overflow menu.
 **Alignment mode**               | `floatingButtonPosition`           | `-setFloatingButtonPosition:` <br> `-floatingButtonPosition`           | `.center`
 **Elevation**                    | `floatingButtonElevation`          | `-setFloatingButtonElevation:` <br> `-floatingButtonElevation`           | 0
 
-## Theming bottom app bars
+## Theming
 
 `MDCBottomAppBarView` does not currently have a Material Design theming extension or otherwise support theming. Please indicate interest in adding theming support by commenting on [issue #7172](https://github.com/material-components/material-components-ios/issues/7172).
