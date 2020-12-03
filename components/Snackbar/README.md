@@ -101,7 +101,7 @@ let actionHandler = {() in
 action.handler = actionHandler
 action.title = "OK"
 message.action = action
-MDCSnackbarManager.defaultManager.showMessage(message)
+MDCSnackbarManager.default.showMessage(message)
 ```
 
 #### Objective-C

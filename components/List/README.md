@@ -42,7 +42,7 @@ Then, run the following command:
 pod install
 ```
 
-From there, import the component the relevant target or file and use your list item like you would any other `UICollectionViewCell`.
+From there, import the relevant target or file and use your list item like you would any other `UICollectionViewCell`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

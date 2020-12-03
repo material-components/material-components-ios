@@ -63,7 +63,7 @@ While `MDCBottomDrawerViewController` supports the accessibility escape "Z" gest
 
 ## Types
 
-While there is such a thing as a side navigation drawer, for example, we only provide bottom navigation drawers.
+Both bottom navigation drawers and side navigation drawers exist, but we only offer a bottom navigation drawer implementation.
 
 ## Bottom navigation drawer
 
