@@ -1,16 +1,15 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this patch release we updated the Tabs API and made documentation updates for Slider and other components.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
+
+### Tabs
+
+*new* property:   `itemViewContentInsets` in `MDCTabBarView`.
+*new* property:   `minItemWidth` in `MDCTabBarView` and `MDCTabBarViewItemViewDelegate`
+*new* property:   `itemViewDelegate` in `MDCTabBarViewItemView`.
+*new* property:   `itemViewStyle` in `MDCTabBarViewItemViewDelegate`.
 
 ## Component changes
 
@@ -22,7 +21,7 @@ Replace this text with example code for each new feature.
 
 * [Add and expose property to MDCTabBarView for setting the edge insets for each item in the tab bar.](https://github.com/material-components/material-components-ios/commit/58431831194f7bd4c7acb49722f4aa15c873776d) (Alyssa Weiss)
 * [Create and expose a minItemWidth property for MDCTabBarView to set the min width of items on the tab bar. This is done by adding a MDCTabBarViewItemViewDelegate protocol that MDCTabBarView conforms to.](https://github.com/material-components/material-components-ios/commit/a07df1ee5a64ac60cfeadd67caf1d43883ac2c7d) (Alyssa Weiss)
-* [When building with -Wnullability-completeness, either no property should specify a nullability (nullable/nonnull) or all of them must specify one. If this is not the case, the compilation will fail.](https://github.com/material-components/material-components-ios/commit/d391e7a2bc91bea4ef0cf75cd02a34cd17de960f) (Nobody)
+* [When building with -Wnullability-completeness, either no property should specify a nullability (nullable/nonnull) or all of them must specify one. If this is not the case, the compilation will fail.](https://github.com/material-components/material-components-ios/commit/d391e7a2bc91bea4ef0cf75cd02a34cd17de960f) (Sylvain Defresne)
 
 ## Multi-component changes
 
