@@ -16,10 +16,8 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "MDCTabBarViewItemViewDelegate.h"
 #import "MaterialMath.h"
-
-/** The minimum width of any item view. */
-static const CGFloat kMinWidth = 90;
 
 /** The minimum height of any item view with only a title or image (not both). */
 static const CGFloat kMinHeightTitleOrImageOnly = 48;
@@ -29,19 +27,6 @@ static const CGFloat kMinHeightTitleAndImage = 72;
 
 /** The vertical padding between the image view and the title label. */
 static const CGFloat kImageTitlePadding = 3;
-
-/// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
-static const UIEdgeInsets kEdgeInsetsTextAndImage = {
-    .top = 12, .right = 16, .bottom = 12, .left = 16};
-
-/**
- Edge insets for text-only Tabs. Although top and bottom are not specified, we insert some
- minimal (8 points) padding so things don't look awful.
- */
-static const UIEdgeInsets kEdgeInsetsTextOnly = {.top = 8, .right = 16, .bottom = 8, .left = 16};
-
-/** Edge insets for image-only Tabs. */
-static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .bottom = 12, .left = 16};
 
 @interface MDCTabBarViewItemView ()
 
@@ -123,7 +108,8 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 }
 
 - (CGRect)titleLabelFrameForTitleOnlyLayout {
-  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextOnly);
+  CGRect contentFrame = UIEdgeInsetsInsetRect(
+      self.bounds, [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleTextOnly]);
 
   CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   CGSize labelWidthFitSize = [self.titleLabel sizeThatFits:contentSize];
@@ -141,7 +127,8 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 }
 
 - (CGRect)iconImageViewFrameForImageOnlyLayout {
-  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsImageOnly);
+  CGRect contentFrame = UIEdgeInsetsInsetRect(
+      self.bounds, [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleImageOnly]);
 
   CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
@@ -155,7 +142,8 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (void)layoutTitleLabelFrame:(CGRect *)titleLabelFrame
            iconImageViewFrame:(CGRect *)iconImageViewFrame {
-  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextAndImage);
+  CGRect contentFrame = UIEdgeInsetsInsetRect(
+      self.bounds, [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleTextAndImage]);
 
   CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   CGSize labelSingleLineSize = self.titleLabel.intrinsicContentSize;
@@ -197,7 +185,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (CGSize)sizeThatFits:(CGSize)size {
   if (!self.titleLabel.text.length && !self.iconImageView.image) {
-    return CGSizeMake(kMinWidth, kMinHeightTitleOrImageOnly);
+    return CGSizeMake([self minWidth], kMinHeightTitleOrImageOnly);
   }
   if (self.titleLabel.text.length && !self.iconImageView.image) {
     return [self sizeThatFitsTextOnly:size];
@@ -210,31 +198,34 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 - (CGSize)sizeThatFitsTextOnly:(CGSize)size {
   CGSize maxSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
+  UIEdgeInsets contentInsets =
+      [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleTextOnly];
   return CGSizeMake(
-      MAX(kMinWidth, labelSize.width + kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right),
-      MAX(kMinHeightTitleOrImageOnly,
-          labelSize.height + kEdgeInsetsTextOnly.top + kEdgeInsetsTextOnly.bottom));
+      MAX([self minWidth], labelSize.width + contentInsets.left + contentInsets.right),
+      MAX(kMinHeightTitleOrImageOnly, labelSize.height + contentInsets.top + contentInsets.bottom));
 }
 
 - (CGSize)sizeThatFitsImageOnly:(CGSize)size {
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
-  return CGSizeMake(
-      MAX(kMinWidth,
-          imageIntrinsicContentSize.width + kEdgeInsetsImageOnly.left + kEdgeInsetsImageOnly.right),
-      MAX(kMinHeightTitleOrImageOnly, imageIntrinsicContentSize.height + kEdgeInsetsImageOnly.top +
-                                          kEdgeInsetsImageOnly.bottom));
+  UIEdgeInsets contentInsets =
+      [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleImageOnly];
+  return CGSizeMake(MAX([self minWidth],
+                        imageIntrinsicContentSize.width + contentInsets.left + contentInsets.right),
+                    MAX(kMinHeightTitleOrImageOnly, imageIntrinsicContentSize.height +
+                                                        contentInsets.top + contentInsets.bottom));
 }
 
 - (CGSize)sizeThatFitsTextAndImage:(CGSize)size {
   CGSize maxSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
   CGSize labelFitSize = [self.titleLabel sizeThatFits:maxSize];
   CGSize imageFitSize = self.iconImageView.intrinsicContentSize;
+  UIEdgeInsets contentInsets =
+      [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleTextAndImage];
   return CGSizeMake(
-      MAX(kMinWidth, kEdgeInsetsTextAndImage.left + MAX(imageFitSize.width, labelFitSize.width) +
-                         kEdgeInsetsTextAndImage.right),
-      MAX(kMinHeightTitleAndImage, kEdgeInsetsTextAndImage.top + imageFitSize.height +
-                                       kImageTitlePadding + labelFitSize.height +
-                                       kEdgeInsetsTextAndImage.bottom));
+      MAX([self minWidth],
+          contentInsets.left + MAX(imageFitSize.width, labelFitSize.width) + contentInsets.right),
+      MAX(kMinHeightTitleAndImage, contentInsets.top + imageFitSize.height + kImageTitlePadding +
+                                       labelFitSize.height + contentInsets.bottom));
 }
 
 #pragma mark - MDCTabBarViewItemView properties
@@ -253,6 +244,21 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (UIImage *)selectedImage {
   return _selectedImage ?: self.image;
+}
+
+- (CGFloat)minWidth {
+  if (self.itemViewDelegate && [self.itemViewDelegate respondsToSelector:@selector(minItemWidth)]) {
+    return self.itemViewDelegate.minItemWidth;
+  }
+  return 0;
+}
+
+- (UIEdgeInsets)contentInsetsForItemViewStyle:(MDCTabBarViewItemViewStyle)itemViewStyle {
+  if (self.itemViewDelegate &&
+      [self.itemViewDelegate respondsToSelector:@selector(contentInsetsForItemViewStyle:)]) {
+    return [self.itemViewDelegate contentInsetsForItemViewStyle:itemViewStyle];
+  }
+  return UIEdgeInsetsZero;
 }
 
 #pragma mark - UIAccessibility

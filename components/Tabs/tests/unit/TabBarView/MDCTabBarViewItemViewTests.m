@@ -15,7 +15,9 @@
 #import <XCTest/XCTest.h>
 
 #import <CoreGraphics/CoreGraphics.h>
+#import "../../../src/TabBarView/MDCTabBarView.h"
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
+#import "../../../src/TabBarView/private/MDCTabBarViewItemViewDelegate.h"
 
 // Minimum width of an item view.
 static const CGFloat kMinWidth = 90;
@@ -43,18 +45,33 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 }
 
 @interface MDCTabBarViewItemViewTests : XCTestCase
+
+/** The view being tested. */
+@property(nonatomic, strong) MDCTabBarViewItemView *itemView;
 @end
 
 @implementation MDCTabBarViewItemViewTests
 
+- (void)setUp {
+  [super setUp];
+
+  self.itemView = [[MDCTabBarViewItemView alloc] init];
+  MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
+  self.itemView.itemViewDelegate = (id<MDCTabBarViewItemViewDelegate>)tabBarView;
+}
+
+- (void)tearDown {
+  self.itemView.itemViewDelegate = nil;
+  self.itemView = nil;
+
+  [super tearDown];
+}
+
 #pragma mark - -intrinsicContentSize
 
 - (void)testIntrinsicContentSizeForNoTitleNoImageIsMinimumSize {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
   // When
-  CGSize intrinsicContentSize = itemView.intrinsicContentSize;
+  CGSize intrinsicContentSize = self.itemView.intrinsicContentSize;
 
   // Then
   XCTAssertEqualWithAccuracy(intrinsicContentSize.width, kMinWidth, 0.001);
@@ -62,27 +79,35 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 }
 
 - (void)testIntrinsicContentSizeForShortTitleExpectedImageLimitsHeight {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
   // When
-  itemView.iconImageView.image = fakeImage(24, 24);
-  itemView.titleLabel.text = @"Favorites";
-  CGSize intrinsicContentSize = itemView.intrinsicContentSize;
+  self.itemView.iconImageView.image = fakeImage(24, 24);
+  self.itemView.titleLabel.text = @"Favorites";
+  CGSize intrinsicContentSize = self.itemView.intrinsicContentSize;
 
   // Then
   XCTAssertGreaterThanOrEqual(intrinsicContentSize.width, kMinWidth);
   XCTAssertEqualWithAccuracy(intrinsicContentSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
+- (void)testIntrinsicContentSizeWhenMinItemWidthIsSetOnDelegate {
+  // Given
+  self.itemView.itemViewDelegate.minItemWidth = 150;
+
+  // When
+  self.itemView.iconImageView.image = fakeImage(24, 24);
+  self.itemView.titleLabel.text = @"Favorites";
+  CGSize intrinsicContentSize = self.itemView.intrinsicContentSize;
+
+  // Then
+  XCTAssertGreaterThanOrEqual(intrinsicContentSize.width, 150);
+  XCTAssertEqualWithAccuracy(intrinsicContentSize.height, kMinHeightOfTitleAndImageView, 0.001);
+}
+
 #pragma mark - -sizeThatFits:
 
 - (void)testSizeThatFitsForNoContentWithSmallDimensionsIsMinimumSize {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
   // When
-  CGSize fitSize = [itemView sizeThatFits:CGSizeZero];
+  CGSize fitSize = [self.itemView sizeThatFits:CGSizeZero];
 
   // Then
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
@@ -91,11 +116,10 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
 - (void)testSizeThatFitsForNoContentWithReasonableDimensionsIsMinimumSize {
   // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
   CGSize requestedSize = CGSizeMake(kMinWidth * 3, kMinHeightOfTitleOrImageOnlyView + 10);
 
   // When
-  CGSize fitSize = [itemView sizeThatFits:requestedSize];
+  CGSize fitSize = [self.itemView sizeThatFits:requestedSize];
 
   // Then
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
@@ -104,11 +128,10 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
 - (void)testSizeThatFitsForNoContentWithLargeDimensionsIsMinimumSize {
   // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
   CGSize requestedSize = CGSizeMake(kLargeWidthSize + 10, kMinHeightOfTitleOrImageOnlyView + 10);
 
   // When
-  CGSize fitSize = [itemView sizeThatFits:requestedSize];
+  CGSize fitSize = [self.itemView sizeThatFits:requestedSize];
 
   // Then
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
@@ -118,13 +141,10 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 // The fit size should first make the item view wide (up to the max) and then increase the height as
 // necessary.  The exception would be a font that is very large.
 - (void)testSizeThatFitsForShortTitleExpectedImageLargerDimensionsLimitsHeight {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
   // When
-  itemView.iconImageView.image = fakeImage(24, 24);
-  itemView.titleLabel.text = @"Favorites";
-  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(1000, 1000)];
+  self.itemView.iconImageView.image = fakeImage(24, 24);
+  self.itemView.titleLabel.text = @"Favorites";
+  CGSize fitSize = [self.itemView sizeThatFits:CGSizeMake(1000, 1000)];
 
   // Then
   XCTAssertGreaterThanOrEqual(fitSize.width, kMinWidth);
@@ -134,104 +154,96 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 #pragma mark - -contentFrame
 
 - (void)testContentFrameForTextOnlyViewReturnsTitleLabelFittingFrame {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
   // When
-  itemView.titleLabel.text = @"Favorites";
-  [itemView sizeToFit];
+  self.itemView.titleLabel.text = @"Favorites";
+  [self.itemView sizeToFit];
 
   // Then
   // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
-  CGRect contentFrame = itemView.contentFrame;
-  [itemView layoutIfNeeded];
+  CGRect contentFrame = self.itemView.contentFrame;
+  [self.itemView layoutIfNeeded];
   XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero), @"(%@) is equal to (%@))",
                  NSStringFromCGRect(contentFrame), NSStringFromCGRect(CGRectZero));
   XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
-                             CGRectGetHeight(itemView.titleLabel.bounds), 0.001);
+                             CGRectGetHeight(self.itemView.titleLabel.bounds), 0.001);
   XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
-                           CGRectGetWidth(itemView.titleLabel.bounds));
+                           CGRectGetWidth(self.itemView.titleLabel.bounds));
   CGPoint itemViewTopCenter =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMinY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMinY(self.itemView.bounds));
   XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewTopCenter),
                  @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame),
                  NSStringFromCGPoint(itemViewTopCenter));
   CGPoint itemViewMidBounds =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMidY(self.itemView.bounds));
   XCTAssertTrue(CGRectContainsPoint(contentFrame, itemViewMidBounds), @"(%@) does not contain (%@)",
                 NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewMidBounds));
 
   CGPoint itemViewBottomCenter =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMaxY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMaxY(self.itemView.bounds));
   XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewBottomCenter),
                  @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame),
                  NSStringFromCGPoint(itemViewBottomCenter));
 }
 
 - (void)testContentFrameForIconOnlyViewReturnsIconImageViewFittingFrame {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
   // When
-  itemView.iconImageView.image = fakeImage(24, 24);
-  [itemView sizeToFit];
+  self.itemView.iconImageView.image = fakeImage(24, 24);
+  [self.itemView sizeToFit];
 
   // Then
   // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
-  CGRect contentFrame = itemView.contentFrame;
-  [itemView layoutIfNeeded];
+  CGRect contentFrame = self.itemView.contentFrame;
+  [self.itemView layoutIfNeeded];
   XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero), @"(%@) is equal to (%@)",
                  NSStringFromCGRect(contentFrame), NSStringFromCGRect(CGRectZero));
   XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
-                             CGRectGetHeight(itemView.iconImageView.bounds), 0.001);
+                             CGRectGetHeight(self.itemView.iconImageView.bounds), 0.001);
   XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
-                           CGRectGetWidth(itemView.iconImageView.bounds));
+                           CGRectGetWidth(self.itemView.iconImageView.bounds));
   CGPoint itemViewTopCenter =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMinY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMinY(self.itemView.bounds));
   XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewTopCenter),
                  @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame),
                  NSStringFromCGPoint(itemViewTopCenter));
   CGPoint itemViewMidBounds =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMidY(self.itemView.bounds));
   XCTAssertTrue(CGRectContainsPoint(contentFrame, itemViewMidBounds), @"(%@) does not contain (%@)",
                 NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewMidBounds));
 
   CGPoint itemViewBottomCenter =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMaxY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMaxY(self.itemView.bounds));
   XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewBottomCenter),
                  @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame),
                  NSStringFromCGPoint(itemViewBottomCenter));
 }
 
 - (void)testContentFrameForTextAndIconViewReturnsFrameWithTitleLabelWidthAndTitleImageHeight {
-  // Given
-  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-
   // When
-  itemView.iconImageView.image = fakeImage(24, 24);
-  itemView.titleLabel.text = @"Favorites";
-  [itemView sizeToFit];
+  self.itemView.iconImageView.image = fakeImage(24, 24);
+  self.itemView.titleLabel.text = @"Favorites";
+  [self.itemView sizeToFit];
 
   // Then
   // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
-  CGRect contentFrame = itemView.contentFrame;
-  [itemView layoutIfNeeded];
+  CGRect contentFrame = self.itemView.contentFrame;
+  [self.itemView layoutIfNeeded];
   XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero), @"(%@) is equal to (%@)",
                  NSStringFromCGRect(contentFrame), NSStringFromCGRect(CGRectZero));
-  XCTAssertGreaterThan(CGRectGetHeight(contentFrame), CGRectGetHeight(itemView.titleLabel.bounds));
+  XCTAssertGreaterThan(CGRectGetHeight(contentFrame),
+                       CGRectGetHeight(self.itemView.titleLabel.bounds));
   XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
-                           CGRectGetWidth(itemView.titleLabel.bounds));
+                           CGRectGetWidth(self.itemView.titleLabel.bounds));
   CGPoint itemViewTopCenter =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMinY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMinY(self.itemView.bounds));
   XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewTopCenter),
                  @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame),
                  NSStringFromCGPoint(itemViewTopCenter));
   CGPoint itemViewMidBounds =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMidY(self.itemView.bounds));
   XCTAssertTrue(CGRectContainsPoint(contentFrame, itemViewMidBounds), @"(%@) does not contain (%@)",
                 NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewMidBounds));
   CGPoint itemViewBottomCenter =
-      CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMaxY(itemView.bounds));
+      CGPointMake(CGRectGetMidX(self.itemView.bounds), CGRectGetMaxY(self.itemView.bounds));
   XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewBottomCenter),
                  @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame),
                  NSStringFromCGPoint(itemViewBottomCenter));

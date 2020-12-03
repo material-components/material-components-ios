@@ -15,7 +15,9 @@
 #import <XCTest/XCTest.h>
 
 #import <CoreGraphics/CoreGraphics.h>
+#import "../../../src/TabBarView/MDCTabBarView.h"
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
+#import "../../../src/TabBarView/private/MDCTabBarViewItemViewDelegate.h"
 #import "MaterialSnapshot.h"
 
 /** Minimum width of an item view for proper layout. */
@@ -67,6 +69,8 @@ static NSString *const kLongTitleArabic =
   self.itemView.iconImageView.image =
       [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24) withStyle:MDCSnapshotTestImageStyleFramedX]
           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
+  self.itemView.itemViewDelegate = (id<MDCTabBarViewItemViewDelegate>)tabBarView;
 }
 
 - (void)tearDown {

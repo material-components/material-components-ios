@@ -16,6 +16,7 @@
 
 #import "private/MDCTabBarViewIndicatorView.h"
 #import "private/MDCTabBarViewItemView.h"
+#import "private/MDCTabBarViewItemViewDelegate.h"
 #import "private/MDCTabBarViewPrivateIndicatorContext.h"
 #import "MaterialRipple.h"
 #import "MDCTabBarItemCustomViewing.h"
@@ -34,6 +35,24 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
+
+/** Default minimum width of an item in the Tab bar */
+static const CGFloat kDefaultMinItemWidth = 90;
+
+/// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
+static const UIEdgeInsets kDefaultItemViewContentInsetsTextAndImage = {
+    .top = 12, .right = 16, .bottom = 12, .left = 16};
+
+/**
+ Edge insets for text-only Tabs. Although top and bottom are not specified, we insert some
+ minimal (8 points) padding so things don't look awful.
+ */
+static const UIEdgeInsets kDefaultItemViewContentInsetsTextOnly = {
+    .top = 8, .right = 16, .bottom = 8, .left = 16};
+
+/** Edge insets for image-only Tabs. */
+static const UIEdgeInsets kDefaultItemViewContentInsetsImageOnly = {
+    .top = 12, .right = 16, .bottom = 12, .left = 16};
 
 /** The leading edge inset for scrollable tabs. */
 static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
@@ -56,7 +75,8 @@ static NSString *const kLargeContentSizeImage = @"largeContentSizeImage";
 static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageInsets";
 
 #ifdef __IPHONE_13_4
-@interface MDCTabBarView (PointerInteractions) <UIPointerInteractionDelegate>
+@interface MDCTabBarView (PointerInteractions) <UIPointerInteractionDelegate,
+                                                MDCTabBarViewItemViewDelegate>
 @end
 #endif
 
@@ -93,6 +113,8 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
  */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, NSValue *> *layoutStyleToContentPadding;
+
+@property(nonatomic) BOOL useDefaultItemViewContentInsets;
 
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
 /**
@@ -140,6 +162,8 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   _layoutStyleToContentPadding = [NSMutableDictionary dictionary];
   _layoutStyleToContentPadding[@(MDCTabBarViewLayoutStyleScrollable)] =
       [NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(0, kScrollableTabsLeadingEdgeInset, 0, 0)];
+  _minItemWidth = kDefaultMinItemWidth;
+  _useDefaultItemViewContentInsets = YES;
   self.backgroundColor = UIColor.whiteColor;
   self.showsHorizontalScrollIndicator = NO;
 
@@ -224,6 +248,11 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   [self invalidateIntrinsicContentSize];
 }
 
+- (void)setItemViewContentInsets:(UIEdgeInsets)itemViewContentInsets {
+  _itemViewContentInsets = itemViewContentInsets;
+  _useDefaultItemViewContentInsets = NO;
+}
+
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
   NSParameterAssert(items);
 
@@ -251,6 +280,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     }
     if (!itemView) {
       MDCTabBarViewItemView *mdcItemView = [[MDCTabBarViewItemView alloc] init];
+      mdcItemView.itemViewDelegate = self;
       mdcItemView.titleLabel.text = item.title;
       mdcItemView.accessibilityLabel = item.accessibilityLabel;
       mdcItemView.accessibilityHint = item.accessibilityHint;
@@ -503,6 +533,24 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     return paddingValue.UIEdgeInsetsValue;
   }
   return UIEdgeInsetsZero;
+}
+
+#pragma mark - MDCTabBarViewItemViewDelegate
+
+- (UIEdgeInsets)contentInsetsForItemViewStyle:(MDCTabBarViewItemViewStyle)itemViewStyle {
+  if (self.useDefaultItemViewContentInsets) {
+    switch (itemViewStyle) {
+      case 0:
+        return kDefaultItemViewContentInsetsTextOnly;
+      case 1:
+        return kDefaultItemViewContentInsetsImageOnly;
+      case 2:
+        return kDefaultItemViewContentInsetsTextAndImage;
+    }
+    return self.itemViewContentInsets;
+  } else {
+    return self.itemViewContentInsets;
+  }
 }
 
 #pragma mark - UIAccessibility

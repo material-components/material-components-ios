@@ -15,26 +15,29 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTabBarViewCustomViewable.h"
+#import "MDCTabBarViewItemViewDelegate.h"
 
 #import <MaterialComponents/MaterialRipple.h>
 
 /** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
 @interface MDCTabBarViewItemView : UIView <MDCTabBarViewCustomViewable>
 
+@property(nonatomic, strong, nullable) id<MDCTabBarViewItemViewDelegate> itemViewDelegate;
+
 /** The image to display when unselected. */
-@property(nonatomic, strong) UIImage *image;
+@property(nonatomic, strong, nullable) UIImage *image;
 
 /** The image to display when selected. */
-@property(nonatomic, strong) UIImage *selectedImage;
+@property(nonatomic, strong, nullable) UIImage *selectedImage;
 
 /** The image view to display the icon. */
-@property(nonatomic, strong) UIImageView *iconImageView;
+@property(nonatomic, strong, nonnull) UIImageView *iconImageView;
 
 /** The label to display the title. */
-@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong, nonnull) UILabel *titleLabel;
 
 /** The ripple contronller to display the ripple touch effect. */
-@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
+@property(nonatomic, strong, nonnull) MDCRippleTouchController *rippleTouchController;
 
 #pragma mark - UILargeContentViewerItem
 
@@ -42,12 +45,12 @@
  The title to display in the large content viewer. If set to nil, this property will return
  @c title.
  */
-@property(nonatomic, copy) NSString *largeContentTitle NS_AVAILABLE_IOS(13_0);
+@property(nonatomic, copy, nullable) NSString *largeContentTitle NS_AVAILABLE_IOS(13_0);
 
 /**
  The image to display in the large content viwer.  If set to nil, the property will return
  @c image . If set to nil (or not set) @c scalesLargeContentImage will return YES otherwise NO.
  */
-@property(nonatomic) UIImage *largeContentImage NS_AVAILABLE_IOS(13_0);
+@property(nonatomic, nullable) UIImage *largeContentImage NS_AVAILABLE_IOS(13_0);
 
 @end

@@ -216,6 +216,23 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 - (UIEdgeInsets)contentPaddingForLayoutStyle:(MDCTabBarViewLayoutStyle)layoutStyle;
 
 /**
+ The minimum width for each item in the tab bar view. Defaults to 90. This property is only used
+ when the tab bar view's items are @c UITabBarItems and not @c MDCTabBarItems, or any other custom
+ @c UITabBarItem subclasses that conform to @c MDCTabBarItemCustomViewing.
+ */
+@property(nonatomic, assign) CGFloat minItemWidth;
+
+/** The edge insets between for each item in the tab bar view. Defaults to:
+ * {.top = 8, .right = 16, .bottom = 8, .left = 16} for text only,
+ * {.top = 12, .right = 16, .bottom = 12, .left = 16} for image only, and
+ * {.top = 12, .right = 16, .bottom = 12, .left = 16} for text and image. Setting this property
+ * overrides all three defualts. This property is only used when the tab bar view's items are @c
+ * UITabBarItems and not @c MDCTabBarItems, or any other custom @c UITabBarItem subclasses that
+ * conform to @c MDCTabBarItemCustomViewing.
+ */
+@property(nonatomic) UIEdgeInsets itemViewContentInsets;
+
+/**
  Returns the @c UIAccessibility element associated with the provided item.
 
  @note The returned object is not guaranteed to be of type @c UIAccessibilityElement. It is

@@ -119,7 +119,7 @@ Now that our component can come in all different sizes and shapes, you will need
 
 ### Using Shapes in the already shape-supported components (Buttons / Cards)
 
-If the component already supports shapes, it then already has an accessible id<MDCShapeGenerating> shapeGenerator property.
+If the component already supports shapes, it then already has an accessible `id<MDCShapeGenerating>` shapeGenerator property.
 In that case you only need to set the shapeGenerator to a shape of your choice and the component will be contained in that shape. There are available examples here: 
  * <a href="../../components/Buttons/examples/ButtonsShapesExample.m">Shaped Buttons</a>
  * <a href="../../components/Cards/examples/ShapedCardViewController.swift ">Shaped Cards</a>
