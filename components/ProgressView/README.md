@@ -5,7 +5,7 @@
 Progress view is a linear progress indicator that implements Material Design animation and layout.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/progress_view.png" alt="Progress View" width="375">
+  <img src="docs/assets/progress_view.png" alt="Progress views with normal, tinted, custom colors, backwards progress (reset), and backwards progress (animated)" width="375">
 </div>
 
 ## Design & API documentation
@@ -22,7 +22,7 @@ Progress view is a linear progress indicator that implements Material Design ani
   <li class="icon-list-item icon-list-item--link"><a href="../ActivityIndicator">ActivityIndicator</a></li>
 </ul>
 
-## Table of contents
+**Contents**
 
 - [Overview](#overview)
 - [Installation](#installation)
@@ -85,9 +85,9 @@ import MaterialComponents.MaterialProgressView
 
 ### Typical use
 
-Add the progress view to your view hierarchy like you would with any other view. Note that it works
-best when the progress view is added at the bottom of a view, as showing (resp. hiding) grows up
-(resp. shrinks down).
+Add the progress view to your view hierarchy like you would with any other view.
+
+**NOTE**: We recommend adding the progress view to the bottom of a view.
 
 **Step 1: Add the progress view to a view**
 
@@ -159,7 +159,7 @@ func completeAndHideProgressView() {
 
 ## Differences From UIProgressView
 
-This progress view provides an animation effect when showing and hidding it: it grows up (resp.
+This progress view provides an animation effect when showing and hiding it: it grows up (resp.
 shrinks down). Additionally, all animated changes APIs take an optional completion block, to
 synchronize multistep animations.
 
@@ -170,7 +170,7 @@ synchronize multistep animations.
 
 ### MDCProgressView
 
-#### -accessibilityValue
+#### `-accessibilityValue`
 
 Like UIProgressView, MDCProgressView's `accessibilityValue` is based on the current value of the ProgressView's
 `progress` property. Also like UIProgressView, this `accessibilityValue` takes the form of a whole number

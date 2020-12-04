@@ -12,9 +12,9 @@ api_doc_root: true
 
 [Progress indicators](https://material.io/components/progress-indicators) express an unspecified wait time or display the length of a process.
 
-![Progress indicator hero](docs/assets/progress-indicator-hero.gif)
+![Linear progress indicator with dark purple indicator and light purple track](docs/assets/progress-indicator-hero.gif)
 
-# Contents
+**Contents**
 
 * [Using progress indicators](#using-progress-indicators)
 * [Linear progress indicator](#linear-progress-indicator)
@@ -123,7 +123,7 @@ Linear progress indicators support both determinate and indeterminate operations
 
 <img src="docs/assets/determinate-linear.png" alt="A determinate linear progress indicator at 75%" width="300"/>
 
-To achieve a determinate linear progress view like the one above, do the following:
+To generate a determinate linear progress view like the one above, do the following:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -155,7 +155,7 @@ self.progressView.progress = 0.75f;
 
 <img src="docs/assets/indeterminate-linear.gif" alt="An indeterminate linear progress indicator." width="300"/>
 
-To achieve an indeterminate linear progress view like the one above, do exactly as above, but set the `mode` property.
+To generate an indeterminate linear progress view like the one above, set the `mode` property.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -209,8 +209,8 @@ Circular progress indicators support both determinate and indeterminate processe
 property and setting a percentage progress with `progress`. `progress` must be set to a floating
 point number between 0 and 1. Values beyond this range will be capped within the range.
 
-Note: Activity indicators are hidden unless they are animating, even if the indicator is determinate
-progress.
+_**NOTE: Activity indicators are hidden unless they are animating, even if the indicator is determinate
+progress.**_
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -284,7 +284,7 @@ MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 
 Theming is only available for linear progress indicators on iOS. The following is an example of an `MDCProgressView` with a Shrine theme:
 
-<img src="docs/assets/shrine-linear-progress-indicator.gif" alt="A linear progress view with a Shrine theme applied to it." width="300"/>
+<img src="docs/assets/shrine-linear-progress-indicator.gif" alt="Linear progress indicator with pink indicator and light pink track." width="300"/>
 
 To theme an `MDCProgressView` with a theming extension and a container scheme, first add the following to your `Podfile`:
 
