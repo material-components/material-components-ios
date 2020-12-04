@@ -119,13 +119,19 @@ static const CGFloat kDimensionalEpsilon = 0.001;
   }
   CGFloat halfOfBorderWidth = self.shapedBorderWidth / 2.f;
   CGAffineTransform colorLayerTransform = [self generateTransformInsetByValue:halfOfBorderWidth];
-  _colorLayer.path = CGPathCreateCopyByTransformingPath(self.shadowPath, &colorLayerTransform);
+  CGPathRef colorLayerPath =
+      CGPathCreateCopyByTransformingPath(self.shadowPath, &colorLayerTransform);
+  _colorLayer.path = colorLayerPath;
+  CGPathRelease(colorLayerPath);
   // The shape layer is used to provide the user a mask for their content, which means also
   // show the full border. Because the border is shown half outside and half inside
   // the color layer path, we must inset the shape layer by the full border width.
   CGAffineTransform shapeLayerTransform =
       [self generateTransformInsetByValue:self.shapedBorderWidth];
-  _shapeLayer.path = CGPathCreateCopyByTransformingPath(self.shadowPath, &shapeLayerTransform);
+  CGPathRef shapeLayerPath =
+      CGPathCreateCopyByTransformingPath(self.shadowPath, &shapeLayerTransform);
+  _shapeLayer.path = shapeLayerPath;
+  CGPathRelease(shapeLayerPath);
 }
 
 - (CGAffineTransform)generateTransformInsetByValue:(CGFloat)value {
