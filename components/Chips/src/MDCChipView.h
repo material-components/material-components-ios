@@ -151,7 +151,8 @@
  Custom insets to use when computing touch targets. A positive inset value will shrink the hit
  area for the Chip.
  */
-@property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
+@property(nonatomic, assign)
+    UIEdgeInsets hitAreaInsets __deprecated_msg("Use centerVisibleArea instead.");
 
 /**
  A Boolean value that determines whether the visible area is centered in the bounds of the view.

@@ -358,16 +358,6 @@
 @property(nonatomic, assign) BOOL enableTitleFontForState;
 
 /**
- Insets to apply to the button’s hit area.
-
- Allows the button to detect touches outside of its bounds. A negative value indicates an
- extension past the bounds.
-
- Default is UIEdgeInsetsZero.
- */
-@property(nonatomic) UIEdgeInsets hitAreaInsets;
-
-/**
  The inset margins for the rectangle surrounding all of the button’s visual representation.
  Use this property when you wish to have the touch target (frame) be larger than the
  visible content.
@@ -426,5 +416,19 @@
  self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
+
+@end
+
+@interface MDCButton (Deprecated)
+
+/**
+ Insets to apply to the button’s hit area.
+
+ Allows the button to detect touches outside of its bounds. A negative value indicates an
+ extension past the bounds.
+
+ Default is UIEdgeInsetsZero.
+ */
+@property(nonatomic) UIEdgeInsets hitAreaInsets __deprecated_msg("Use centerVisibleArea instead.");
 
 @end
