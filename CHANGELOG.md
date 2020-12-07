@@ -1,4 +1,4 @@
-# #develop#
+ # 119.2.0
 
 In this minor release we deprecated hitAreaInsets APIs in Buttons, FloatingButtons, and Chips, and introduced minor bug fixes and documentation updates.
 
