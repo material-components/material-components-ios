@@ -150,6 +150,23 @@ static NSString *controlStateDescription(UIControlState controlState) {
                         [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
 }
 
+- (void)testUppercaseAttributedTitleYes {
+  // Given
+  NSAttributedString *originalAttributedTitle =
+      [[NSAttributedString alloc] initWithString:@"some Text"];
+
+  // When
+  self.button.uppercaseTitle = YES;
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateNormal];
+
+  // Then
+  NSString *uppercaseString =
+      [originalAttributedTitle.string uppercaseStringWithLocale:[NSLocale currentLocale]];
+  NSAttributedString *uppercaseAttributedTitle =
+      [[NSAttributedString alloc] initWithString:uppercaseString];
+  XCTAssertEqualObjects(self.button.currentAttributedTitle, uppercaseAttributedTitle);
+}
+
 - (void)testUppercaseTitleNo {
   // Given
   NSString *originalTitle = @"some Text";
@@ -160,6 +177,19 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertEqualObjects(self.button.currentTitle, originalTitle);
+}
+
+- (void)testUppercaseAttributedTitleNo {
+  // Given
+  NSAttributedString *originalAttributedTitle =
+      [[NSAttributedString alloc] initWithString:@"some Text"];
+
+  // When
+  self.button.uppercaseTitle = NO;
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqualObjects(self.button.currentAttributedTitle, originalAttributedTitle);
 }
 
 - (void)testUppercaseTitleNoChangedToYes {
@@ -178,6 +208,26 @@ static NSString *controlStateDescription(UIControlState controlState) {
                         [originalTitle uppercaseStringWithLocale:[NSLocale currentLocale]]);
 }
 
+- (void)testUppercaseAttributedTitleNoChangedToYes {
+  // Given
+  NSAttributedString *originalAttributedTitle =
+      [[NSAttributedString alloc] initWithString:@"some Text"];
+
+  // When
+  self.button.uppercaseTitle = NO;
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateNormal];
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateHighlighted];
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateDisabled];
+  self.button.uppercaseTitle = YES;
+
+  // Then
+  NSString *uppercaseString =
+      [originalAttributedTitle.string uppercaseStringWithLocale:[NSLocale currentLocale]];
+  NSAttributedString *uppercaseAttributedTitle =
+      [[NSAttributedString alloc] initWithString:uppercaseString];
+  XCTAssertEqualObjects(self.button.currentAttributedTitle, uppercaseAttributedTitle);
+}
+
 - (void)testUppercaseTitleYesChangedToNo {
   // Given
   NSString *originalTitle = @"some Text";
@@ -191,6 +241,22 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertEqualObjects(self.button.currentTitle, originalTitle);
+}
+
+- (void)testUppercaseAttributedTitleYesChangedToNo {
+  // Given
+  NSAttributedString *originalAttributedTitle =
+      [[NSAttributedString alloc] initWithString:@"some Text"];
+
+  // When
+  self.button.uppercaseTitle = YES;
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateNormal];
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateHighlighted];
+  [self.button setAttributedTitle:originalAttributedTitle forState:UIControlStateDisabled];
+  self.button.uppercaseTitle = NO;
+
+  // Then
+  XCTAssertEqualObjects(self.button.currentAttributedTitle, originalAttributedTitle);
 }
 
 - (void)testSetEnabledAnimated {

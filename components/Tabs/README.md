@@ -14,26 +14,68 @@ api_doc_root: true
 
 [Tabs](https://material.io/components/tabs) organize content across different screens, data sets, and other interactions.
 
-Material tabs can be broken into two main categories: fixed and scrollable.
-
-### Fixed tabs
-
-![Fixed tabs for dog, cats, birds. Birds tab selected](docs/assets/tabs-fixed-hero.png)
-
-### Scrollable tabs
-
-![Scrollable tabs for pitbulls, terrier, poodle. Pitbulls tab selected](docs/assets/tabs-scrollable-hero.png)
+![Generic tab bar with numbered tabs](docs/assets/tabs-generic-hero.png)
 
 ## Contents
 
 * [Using tabs](#using-tabs)
-* [Installing tabs](#installing-tabs)
-* [Making tabs accessible](#making-tabs-accessible)
-* [Tabs anatomy](#tabs-anatomy)
-* [Theming tabs](#theming-tabs)
+* [Fixed tabs](#fixed-tabs)
+* [Scrollable tabs](#scrollable-tabs)
+* [Theming](#theming)
 * [Migrating from legacy tabs](#migrating-from-legacy-tabs)
 
+- - -
+
 ## Using tabs
+
+### Installing
+
+In order to use `MDCTabBarView`, first add the component to your `Podfile`:
+
+```bash
+pod MaterialComponents/Tabs+TabBarView
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run `pod install`:
+
+```bash
+pod install
+```
+
+After that, import the relevant target or file.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialTabs_TabBarView
+```
+
+#### Objective-C
+```objc
+#import <MaterialComponents/MaterialTabs+TabBarView.h>
+```
+<!--</div>-->
+
+From there, initialize an `MDCTabBarView` and add it to your view controller's view.
+
+### Making tabs accessible
+
+`MDCTabBarView` is accessible by default. VoiceOver reads the titles of the `UITabBarItem`s contained within a tab bar as `accessibilityLabels`, and the `MDCTabBarView` handles setting the `accessibilityTraits` when tab bar items become selected and unselected.
+
+## Types 
+
+Material tabs can be broken into two main categories: fixed and scrollable.
+
+## Fixed tabs
+
+![Fixed tabs for dog, cats, birds. Birds tab selected](docs/assets/tabs-fixed-hero.png)
+
+## Scrollable tabs
+
+![Scrollable tabs for pitbulls, terrier, poodle. Pitbulls tab selected](docs/assets/tabs-scrollable-hero.png)
+
+### Tabs example
 
 `MDCTabBarView` supports both fixed and scrolling tabs. By default, `MDCTabbarView` has a fixed layout. To set it up for scrolling, set the `preferredLayoutStyle` property to `.scrolling`. To receive updates about user actions, set the `delegate` property to an object conforming to `MDCTabBarViewDelegate`. Here is a simple set up of an `MDCTabBarView`:
 
@@ -63,42 +105,7 @@ tabBarView.items = @[
 ```
 <!--</div>-->
 
-## Installing tabs
-
-In order to use `MDCTabBarView`, first add the component to your `Podfile`:
-
-```bash
-pod MaterialComponents/Tabs+TabBarView
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run `pod install`.
-
-```bash
-pod install
-```
-
-After that, import the component target.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialTabs_TabBarView
-```
-
-#### Objective-C
-```objc
-#import <MaterialComponents/MaterialTabs+TabBarView.h>
-```
-<!--</div>-->
-
-From there, initialize an `MDCTabBarView` and add it to your view controller's view.
-
-## Making tabs accessible
-
-`MDCTabBarView` is accessible by default. VoiceOver reads the titles of the `UITabBarItem`s contained within a tab bar as `accessibilityLabels`, and the `MDCTabBarView` handles setting the `accessibilityTraits` when tab bar items become selected and unselected.
-
-## Tabs anatomy
+### Tabs anatomy
 
 Tab bars contain tab bar items with optional icons and text labels. Tab bar items can be selected or unselected. The selection indicator appears below the currently selected tab bar item.
 
@@ -146,7 +153,7 @@ Tab bars contain tab bar items with optional icons and text labels. Tab bar item
 ---------------------- | ------------------------------- | ------------------------------------------------------------ | -------------
 **Color**              | `selectionIndicatorStrokeColor`  | `-setSelectionIndicatorStrokeColor:` <br> `-selectionIndicatorStrokeColor` | On primary color
 
-## Theming tabs
+## Theming
 
 Tabs supports Material Theming using a Container Scheme. To learn more about theming extensions, see [here](https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md). Below is a screenshot of an `MDCTabBarView` with the Material Design Shrine theme:
 
@@ -154,7 +161,7 @@ Tabs supports Material Theming using a Container Scheme. To learn more about the
 
 ### Tabs theming example
 
-To make use of tabs theming install the tabs theming extensions with Cocoapods. First, add the following line to your `Podfile`.
+To make use of tabs theming install the tabs theming extensions with Cocoapods. First, add the following line to your `Podfile`:
 
 ```bash
 pod MaterialComponents/Tabs+TabBarViewTheming
@@ -162,14 +169,13 @@ pod MaterialComponents/Tabs+TabBarViewTheming
 
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer.
+Then Run the installer:
 
 ```bash
 pod install
 ```
 
 Next, import the Tabs theming target, and call the correct theming method.
-
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -272,8 +278,7 @@ subclass conforming to the `MDCTabBarItemCustomViewing` protocol is provided as
 `MDCTabBarItem`.
 
 <!--<div class="material-code-render" markdown="1">-->
-
-##### Swift
+#### Swift
 
 ```swift
 let customView = MyCustomTabView()
@@ -283,7 +288,7 @@ let tabBarView = MDCTabBarView()
 tabBarView.items = [ customItem ]
 ```
 
-##### Objective-C
+#### Objective-C
 
 ```objc
 MyCustomTabView *customView = [[MyCustomTabView alloc] init];

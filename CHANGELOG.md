@@ -1,3 +1,36 @@
+ # 119.2.0
+
+In this minor release we deprecated hitAreaInsets APIs in Buttons, FloatingButtons, and Chips, and introduced minor bug fixes and documentation updates.
+
+## API changes
+
+### hitAreaInsets APIs
+
+* hitAreaInsets APIs are deprecated in Buttons, FloatingButtons, and Chips.
+
+## Component changes
+
+### Buttons
+
+* [Fix bug where updating MDCButton's title case does not affect attributed titles.](https://github.com/material-components/material-components-ios/commit/9a8399a5660146ca5f12289412aa68b6ea5f0405) (Bill Griesau)
+
+### NavigationDrawer
+
+* [Removed a condition for `presentingViewYOffset` in `MDCBottomDrawerContainerViewController`](https://github.com/material-components/material-components-ios/commit/1d2349b616ed4d24b5a66aadbfeb11d52849d9a1) (Nobody)
+
+### Shapes
+
+* [Fix CGPath memory leaks under -[MDCShapedShadowLayer generateColorPathGivenLineWidth]](https://github.com/material-components/material-components-ios/commit/0118f4a52f8cd03bb95f888a57e064f01096ff2e) (Nobody)
+
+## Multi-component changes
+
+* [Add ProgressIndicators.md for material.io](https://github.com/material-components/material-components-ios/commit/f1d4dd25f0688437caf9e5527a9ea44bb67e72cd) (Andrew Overton)
+* [Audit recent docs changes, part 1 Closes https://github.com/material-components/material-components-ios/pull/10132](https://github.com/material-components/material-components-ios/commit/8d8763ef717236005cdb7300e1c712038a337f72) (Andrew Overton)
+* [Audit recent docs changes, part 2](https://github.com/material-components/material-components-ios/commit/62ccb5c72fb6822c7199abbeeafcba8dd61e34e0) (Andrew Overton)
+* [Deprecate hitAreaInsets APIs from MDCButton, MDCFloatingButton, and MDChipView.](https://github.com/material-components/material-components-ios/commit/a3d1aa132e97f4317320abf58e8c8496315319b4) (Wenyu Zhang)
+
+---
+
 # 119.1.3
 
 In this patch release we updated the Tabs API and made documentation updates for Slider and other components.

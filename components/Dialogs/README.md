@@ -17,55 +17,34 @@ api_doc_root: true
 Dialogs inform users about a task and can contain critical information, require decisions, or
 involve multiple tasks.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/dialogs.gif" alt="gif of a dialog being presented and dismissed" width="320">
-</div>
-
-There are four types of dialogs:
-
-1. [Alert](#alert-dialog)
-1. [Simple](#simple-dialog)
-1. [Confirmation](#confirmation-dialog)
-1. [Full-screen](#full-screen-dialog)
-
-The alert style is the only style supported on iOS. Consider using the [ActionSheet](https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/README.md) component in situations where one of the unsupported dialog types would have been appropriate.
+!["Dialog confirming settings centered in a screen"](docs/assets/dialogs-hero.png)
 
 ## Contents
 
 * [Using dialogs](#using-dialogs)
-* [Making dialogs accessible](#making-dialogs-accessible)
-* [Dialogs examples](#dialogs-examples)
-* [Theming dialogs](#theming-dialogs)
+* [Alert dialog](#alert-dialog)
+* [Theming](#theming)
+
+- - -
 
 ## Using dialogs
 
-Our dialogs offerings consist of three classes.
+### Installing
 
-* `MDCAlertController` provides a basic alert interface with support for things like title text, message text, and optional accessory views.
-* `MDCDialogTransitionController` is involved in the presentation of dialogs. It conforms to `UIViewControllerAnimatedTransitioning` and `UIViewControllerTransitioningDelegate`, and vends the presentation controllers to be used in presentation and dismissal transitions. It can be used in the presentation of `MDCAlertController`s as well as custom dialog view controller classes.
-* `MDCDialogPresentationController` is the `UIPresentationController` subclass provided by `MDCDialogTransitionController`.
-
-To present either an `MDCAlertController` or a custom dialog, set its `modalPresentationStyle`
-property to `UIModalPresentationCustom` and its `transitioningDelegate` property to an
-instance of `MDCDialogTransitionController`. Then, present the view controller from the
-root controller.
-
-### Installing dialogs
-
-In order to install Dialogs with [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) first add the component to your `Podfile`:
+In order to use Dialogs with [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) first add the `Dialogs` subspec to your `Podfile`:
 
 ```bash
 pod MaterialComponents/Dialogs
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then, run the installer.
+Then, run the installer:
 
 ```bash
 pod install
 ```
 
-After that, import the Dialogs target.
+After that, import the relevant target or file.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -79,11 +58,19 @@ import MaterialComponents.MaterialDialogs
 ```
 <!--</div>-->
 
-## Making dialogs accessible
+### Dialogs classes
 
-### `MDCPresentationController` Accessibility
+Dialogs on iOS consist of three classes:
 
-As `MDCPresentationController` is responsible for the presentation of your
+1. `MDCAlertController` provides a basic alert interface with support for things like title text, message text, and optional accessory views.
+1. `MDCDialogTransitionController` is involved in the presentation of dialogs. It conforms to `UIViewControllerAnimatedTransitioning` and `UIViewControllerTransitioningDelegate`, and vends the presentation controllers to be used in presentation and dismissal transitions. It can be used in the presentation of `MDCAlertController`s as well as custom dialog view controller classes.
+1. `MDCDialogPresentationController` is the `UIPresentationController` subclass provided by `MDCDialogTransitionController`.
+
+### Making dialogs accessible
+
+### `MDCDialogPresentationController` Accessibility
+
+As `MDCDialogPresentationController` is responsible for the presentation of your
 custom view controllers, it does not implement any accessibility
 functionality itself.
 
@@ -99,48 +86,27 @@ the `-performAccessibilityEscape` method in your custom dialog view controller c
 }
 ```
 
-## Dialogs examples
+## Types
 
-### Custom dialog example
+There are four types of dialogs:
 
-The sample code below shows how to use the Dialogs component to present a custom dialog.
-For a more in-depth example, see the [`DialogsCustomShadowExampleViewController`](examples/DialogsCustomShadowExampleViewController.swift).
+1. [Alert](#alert-dialog)
+1. Simple
+1. Confirmation
+1. Full-screen
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
+![Examples of the four types of dialogs.](docs/assets/dialogs-types.png)
 
-```swift
-// The following is called from the presenting view controller and has the
-// following variable defined to keep a reference to the transition
-// controller.
-strong var dialogTransitionController: MDCDialogTransitionController
+## Alert dialog
 
-// To present the dialog myDialogViewController
-dialogTransitionController = MDCDialogTransitionController()
-myDialogViewController.modalPresentationStyle = .custom
-myDialogViewController.transitioningDelegate = dialogTransitionController
+The alert style is the only style supported on iOS. Consider using the [ActionSheet](https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/README.md) component in situations where one of the unsupported dialog types would have been appropriate.
 
-present(myDialogViewController, animated: true, completion:...)
-```
-
-#### Objective-C
-
-```objc
-// self is the presenting view controller and which has the following property
-// defined to keep a reference to the transition controller.
-@property(nonatomic) MDCDialogTransitionController *dialogTransitionController;
-
-// To present the dialog myDialogViewController
-self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
-myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
-myDialogViewController.transitioningDelegate = self.dialogTransitionController;
-[self presentViewController:myDialogViewController animated:YES completion:...];
-
-```
-<!--</div>-->
+To present either an `MDCAlertController` or a custom dialog view controller, set its `modalPresentationStyle`
+property to `UIModalPresentationCustom` and its `transitioningDelegate` property to an
+instance of `MDCDialogTransitionController`. Then, present the view controller from the
+root controller.
 
 ### `MDCAlertController` example
-
 
 The sample code below shows how to use the Dialogs component to present an 
 `MDCAlertController`. For a more in-depth example, see the
@@ -178,6 +144,44 @@ MDCAlertAction *alertAction =
 ```
 <!--</div>-->
 
+### Custom alert dialog example
+
+The sample code below shows how to present a custom dialog.
+For a more in-depth example, see the [`DialogsCustomShadowExampleViewController`](examples/DialogsCustomShadowExampleViewController.swift).
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+// The following is called from the presenting view controller and has the
+// following variable defined to keep a reference to the transition
+// controller.
+strong var dialogTransitionController: MDCDialogTransitionController
+
+// To present the dialog myDialogViewController
+dialogTransitionController = MDCDialogTransitionController()
+myDialogViewController.modalPresentationStyle = .custom
+myDialogViewController.transitioningDelegate = dialogTransitionController
+
+present(myDialogViewController, animated: true, completion:...)
+```
+
+#### Objective-C
+
+```objc
+// self is the presenting view controller and which has the following property
+// defined to keep a reference to the transition controller.
+@property(nonatomic) MDCDialogTransitionController *dialogTransitionController;
+
+// To present the dialog myDialogViewController
+self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
+myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
+myDialogViewController.transitioningDelegate = self.dialogTransitionController;
+[self presentViewController:myDialogViewController animated:YES completion:...];
+
+```
+<!--</div>-->
+
 ### Anatomy and key properties
 
 The following is an anatomy diagram of a Material dialog:
@@ -207,27 +211,31 @@ The following is an anatomy diagram of a Material dialog:
 
 #### Content attributes
 
-**Supporting text**
-
 &nbsp;         | **Attribute**            | **Related methods** | **Default value**
 -------------- | ------------------------ | ------------------- | -----------------
 **Text**       | `message`                  | `-setMessage:`<br/>`-message` | `nil`
 **Text color** | `messageColor`             | `-setMessageColor:`<br/>`-messageColor` | `nil`
 **Typography** | `messageFont`              | `-setMessageFont:` <br/> `-messageFont` | Body 1
 
-### Theming dialogs
+## Theming
 
 ![Shrine-themed dummy dialog with Accept and Cancel buttons](docs/assets/shrine_dialog.png)
 
-You can theme a Material Dialog using a container scheme and the Dialogs theming extension. To achieve something like the
-Shrine theming above first add the Dialogs theming extension to your project by adding the following line to your Podfile:
+You can theme a Material dialog using a container scheme and a theming extension. To achieve something like the
+Shrine theming above first add the `Dialogs+Theming` extension to your project by adding the following line to your  `Podfile`:
 
 ```bash
 pod 'MaterialComponents/Dialogs+Theming'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
-Then import the theming extension and the `MDCContainerScheme` and create an `MDCContainerScheme` instance. A container scheme 
-defines the design parameters that you can use to theme your dialogs. Finally, call the appropriate method on the theming extension.
+Then run the installer:
+
+```bash
+pod install
+```
+
+Then import the theming extension and create an `MDCContainerScheme` instance. A container scheme defines the design parameters that you can use to theme your dialogs. Finally, call the appropriate method on the theming extension.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -260,8 +268,8 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
 ### Theming Actions
 
-Actions in MDCAlertController have emphasis which affects how the Dialog's buttons will be themed.
-High, Medium and Low emphasis are supported.
+`MDCAlertController` actions have emphasis values which affect how the dialog's buttons will be themed.
+`.high`, `.medium`, and `.low` emphasis are supported.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

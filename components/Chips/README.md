@@ -14,26 +14,26 @@ api_doc_root: true
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BChips%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BChips%5D)
 
-[Chips](https://material.io/components/chips) are compact elements that represent an input, attribute, or action.
+[Chips](https://material.io/components/chips) are compact elements that represent an input, attribute, or action. They allow users to enter information, make selections, filter content, or trigger actions. While buttons are expected to appear consistently and with familiar calls to action, chips should appear dynamically as a group of multiple interactive elements.
 
 ![Chips hero image](docs/assets/chips-hero.png)
 
 ## Contents
 
 * [Using chips](#using-chips)
-* [Input chips](#input-chips)
-* [Choice chips](#choice-chips)
-* [Filter chips](#filter-chips)
-* [Action chips](#action-chips)
-* [Theming chips](#theming-chips)
+* [Input chip](#input-chip)
+* [Choice chip](#choice-chip)
+* [Filter chip](#filter-chip)
+* [Action chip](#action-chip)
+* [Theming](#theming)
+
+- - -
 
 ## Using chips
 
-Chips allow users to enter information, make selections, filter content, or trigger actions. While buttons are expected to appear consistently and with familiar calls to action, chips should appear dynamically as a group of multiple interactive elements.
+### Installing
 
-### Installing chips
-
-Add the following to your `Podfile`:
+To use chips in your app first add the following to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/Chips'
@@ -46,9 +46,7 @@ Then, run the following command:
 pod install
 ```
 
-### Importing chips
-
-To import the component:
+From there, import the relevant target or file.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -63,9 +61,24 @@ import MaterialComponents.MaterialChips
 ```
 <!--</div>-->
 
-### Usage
+### Making chips accessible
 
-Create and add a single chip to your view controller just like any other `UIView`.
+Always verify that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 44x44 minimum touch target.
+
+Remember to set any relevant `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system-assigned values.
+
+## Types
+
+There are four types of chips:
+
+1. [Input (text entry)](#input-chip)
+1. [Choice](#choice-chip)
+1. [Filter](#filter-chip)
+1. [Action](#action-chip)
+
+![Examples of the four different chip types](docs/assets/chips-composite.png)
+
+It is possible to create each type of chip by instantiating a single `MDCChipView` and adidng it to your view controller just like any other `UIView`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -92,11 +105,7 @@ chipView.titleLabel.text = @"Tap me";
 ```
 <!--</div>-->
 
-### Making chips accessible
-
-Always verify that your chips meet minimum touch requirements, as defined by either Apple's Human Interface Guidelines or Material. Material recommends a 44x44 minimum touch target.
-
-Remember to set any relevant `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system values.
+`MDCChipView` allows for customization of the following:
 
 ### Ink ripple animation
 
@@ -141,18 +150,7 @@ chipView.invalidateIntrinsicContentSize()
 ```
 <!--</div>-->
 
-## Types
-
-There are four types of chips:
-
-1. [input (text entry)](#input-chips)
-1. [choice](#choice-chips)
-1. [filter](#filter-chips)
-1. [action](#action-chips)
-
-![Examples of the four different chip types](docs/assets/chips-composite.png)
-
-### Input chips
+## Input chip
 
 Input chips represent a complex piece of information in compact form, such as an entity (person, place, or thing) or text. They enable user input and verify that input by converting text into chips.
 
@@ -168,7 +166,7 @@ chipField.showChipsDeleteButton = true
 ```
 <!--</div>-->
 
-### Choice chips
+## Choice chip
 
 Choice chips allow selection of a single chip from a set of options.
 
@@ -212,7 +210,7 @@ It is easiest to create choice Chips using a `UICollectionView`:
 
 - Use `UICollectionView` `selectItemAtIndexPath:animated:scrollPosition:` method to edit choice selection programmatically.
 
-### Filter chips
+## Filter chip
 
 Filter chips use tags or descriptive words to filter content.
 
@@ -261,7 +259,7 @@ It is easiest to create filter Chips using a `UICollectionView`:
 
 - Use `UICollectionView` `deselectItemAtIndexPath:animated:` and `selectItemAtIndexPath:animated:scrollPosition:` methods to edit filter selection in code.
 
-### Action chips
+## Action chip
 
 Action chips offer actions related to primary content. They should appear dynamically and contextually in a UI.
 
@@ -358,12 +356,25 @@ The following is an anatomy diagram of a chip:
 **Typography** | `titleFont`                        | N/A | Body 2
 **Padding**    | `titlePadding` | N/A       | `{ 3, 8, 4, 8 }`
 
-## Theming chips
+## Theming
 
-`MDCChipView` supports Material Theming using a Container Scheme.
-There are two variants for Material Theming of an `MDCChipView`, which are the default theme and the outlined theme.
+`MDCChipView` supports Material Theming using a Container Scheme. To install the `MDCChipView` theming extension, first add the following line to your `Podfile`:
 
-Below is a Chip collection with the Shrine theme applied to it.
+```bash
+pod MaterialComponents/Chips+Theming
+```
+
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then run the installer:
+
+```bash
+pod install
+```
+
+There are two theming variants for `MDCChipView`: the default theme and the outlined theme.
+
+Below is a Chip collection with the Shrine outlined theme applied to it.
 
 ![shrine-chips](docs/assets/shrine-chips.png)
 

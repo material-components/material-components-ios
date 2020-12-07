@@ -12,43 +12,42 @@ api_doc_root: true
 
 [Buttons](https://material.io/components/buttons/) allow users to take actions, and make choices, with a single tap.
 
-There are four types of buttons:
+!["Button on a screen"](assets/buttons_hero.png)
 
-1. [Text button](#text-button)
-2. [Outlined button](#outlined-button)
-3. [Contained button](#contained-button)
-4. [Toggle button](#toggle-button) (*not supported in iOS*)
+## Contents
 
-![Example of the four button types](assets/buttons_types.png)
+*   [Using buttons](#using-buttons)
+*   [Text button](#text-button)
+*   [Outlined button](#outlined-button)
+*   [Contained button](#contained-button)
+*   [Toggle button](#toggle-button)
+*   [Theming](#theming)
 
+- - -
 
 ## Using buttons
 
-All Material buttons are implemented by `MDCButton`, a subclass of [UIButton](https://developer.apple.com/documentation/uikit/uibutton).
-* [GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/Buttons/src/MDCButton.h)
+### Installing
 
-### Install `MDCButton`
-
-`MDCButton` is used to implement all four Material Buttons. In order to use `MCDButton`, first add Buttons to your `Podfile`:
+In order to use Material buttons, first add the `Buttons` subspec to your `Podfile`:
 
 ```bash
 pod MaterialComponents/Buttons
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then, run the installer.
+Then, run the installer:
 
 ```bash
 pod install
 ```
 
-After that, import the Buttons and initialize them using `alloc`/`init`.
+After that, import the relevant target or file and initialize your button.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
 
 let button = MDCButton()
 ```
@@ -57,12 +56,10 @@ let button = MDCButton()
 
 ```objc
 #import "MaterialButtons.h"
-#import <MaterialComponents/MaterialButtons+Theming.h>
 
 MDCButton *button = [[MDCButton alloc] init];
 ```
 <!--</div>-->
-
 
 ### Making Buttons accessible
 
@@ -129,7 +126,7 @@ button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, vertical
 
 #### Set the minimum visual size of the button
 
-Set your buttons to have a minimum size. [Material Buttons
+Set your buttons to have a minimum size. Though there are some exceptions, [Material Buttons
 guidelines](https://material.io/design/components/buttons.html#specs)
 typically recommend [a minimum height of 36 points and a minimum width of 64
 points](https://material.io/design/components/buttons.html#specs).
@@ -145,13 +142,6 @@ button.minimumSize = CGSize(width: 64, height: 48)
 button.minimumSize = CGSizeMake(64, 36);
 ```
 <!--</div>-->
-
-#### Exceptions
-
-However there are
-[some](https://material.io/design/components/buttons.html#toggle-button) clear
-[exceptions](https://material.io/design/components/app-bars-bottom.html#specs)
-for these rules. Please adjust your buttons sizes accordingly.
 
 #### Using `accessibilityHint`
 
@@ -171,6 +161,19 @@ repeats weekly on the following day(s)." The list items do not need
 (representing a day of the week) has the `accessibilityHint` value, "Toggles
 this day."
 
+## Types
+
+There are four types of buttons:
+
+1. [Text button](#text-button)
+2. [Outlined button](#outlined-button)
+3. [Contained button](#contained-button)
+4. [Toggle button](#toggle-button) (*not supported in iOS*)
+
+![Example of the four button types](assets/buttons_types.png)
+
+All Material buttons are implemented by `MDCButton`, a subclass of [`UIButton`](https://developer.apple.com/documentation/uikit/uibutton).
+* [GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/Buttons/src/MDCButton.h)
 
 ## Text button
 
@@ -180,7 +183,7 @@ this day."
 
 ### Text button example
 
-To use a text button use the text button theming method on the MDCButton theming extension. For more information on theming extensions see the [Theming section](#theming-buttons). 
+To use a text button use the text button theming method on the `MDCButton` theming extension. For more information on theming extensions see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -237,7 +240,7 @@ A text button has a text label, a transparent container and an optional icon.
 
 ### Outlined button example
 
-To achieve an outlined button use the outlined button theming method on the MDCButton theming extension. To access the theming extension see the [Theming section](#theming-buttons). 
+To achieve an outlined button use the outlined button theming method on the `MDCButton` theming extension. To access the theming extension see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -294,7 +297,7 @@ An outlined button has a text label, a container, and an optional icon.
 
 ### Contained button example
 
-Contained buttons are implemented by [MDCButton](https://github.com/material-components/material-components-ios/blob/stable/components/Buttons/src/MDCButton.h). To achieve a contained button use the contained button theming method on the MDCButton theming extension. To access the theming extension see the [Theming section](#theming). 
+Contained buttons are implemented by `MDCButton`. To achieve a contained button use the contained button theming method on the `MDCButton` theming extension. To access the theming extension see the [Theming section](#theming).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
@@ -347,16 +350,16 @@ A contained button has a text label, a container, and an optional icon.
 
 [Toggle buttons](https://material.io/components/buttons/#toggle-button) can be used to select from a group of choices. They are not supported on iOS.
 
-## Theming buttons
+## Theming
 
-You can theme an MDCButton to match any of the Material Button styles using theming
+You can theme an `MDCButton` to match any of the Material Button styles using theming
 extensions. [Learn more about theming extensions](../../../docs/theming.md). Below is a screenshot of Material Buttons with the Material Design Shrine theme:
 
 ![Shrine buttons](assets/shrine-buttons.png)
 
 ### Buttons theming example
 
-To make use of the theming methods shown in the examples above install the Buttons theming extensions with Cocoapods. First, add the following line to your `Podfile`.
+To make use of the theming methods shown in the examples above install the Buttons theming extensions with Cocoapods. First, add the following line to your `Podfile`:
 
 ```bash
 pod MaterialComponents/Buttons+Theming
@@ -364,7 +367,7 @@ pod MaterialComponents/Buttons+Theming
 
 <!--{: .code-renderer.code-renderer--install }-->
 
-Then Run the installer.
+Then run the installer:
 
 ```bash
 pod install

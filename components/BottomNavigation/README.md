@@ -15,30 +15,19 @@ api_doc_root: true
 Bottom navigation bars allow movement between primary destinations in an app. Tapping on a bottom
 navigation icon takes you directly to the associated view or refreshes the currently active view.
 
-![A generic bottom navigation with the "music" item selected](docs/assets/bottom-nav-generic.png)
+![A generic bottom navigation with the "music" item selected](docs/assets/bottom-nav-hero.png)
 
 ## Contents
 
 * [Using bottom navigation](#using-bottom-navigation)
-* [Installing bottom navigation](#installing-bottom-navigation)
-* [Making bottom navigation accessible](#making-bottom-navigation-accessible)
-* [Theming bottom navigation](#theming-bottom-navigation)
+* [Bottom navigation bar](#bottom-navigation-bar)
+* [Theming](#theming)
 
 - - -
 
 ## Using bottom navigation
 
-MDCBottomNavigationBar can be added to a view hierarchy like any UIView. Material Design guidelines recommend always placing bottom navigation at the bottom of the screen.
-
-MDCBottomNavigationBar works much like a UITabBar and both are populated with an array of UITabBarItems. However, MDCBottomNavigationBar is built with Material Design in mind and should be used with other Material Design components where possible to provide a consistent look and feel in an app. Additionally, while MDCBottomNavigationBar has similar features to MDCTabBar, MDCTabBar is chiefly intended for top navigation, whereas MDCBottomNavigationBar — as the name indicates — in intended for bottom navigation.
-
-It is recommended that three to five items are used to populate the content of the bottom navigation bar. If there are fewer than three destinations, consider using tabs instead. If your top-level navigation has more than six destinations, provide access to destinations not covered in bottom navigation through alternative locations, such as a navigation drawer.
-
-Title visibility can be configured in three ways: only show the title of the *selected* item, always show title regardless of any item's selection state, and never show title regardless of any item's selection state. The default behavior of bottom navigation is to only show the title for an item that is selected.
-
-In landscape orientation, items can be configured to be justified or compactly clustered together. When items are justified the bottom navigation bar is fitted to the width of the device. Justified items can have their titles shown below their respective icons or adjacent to their respective icons.
-
-## Installing bottom navigation
+### Installing
 
 In order to install bottom navigation with Cocoapods first add it to your `Podfile`:
 
@@ -53,7 +42,7 @@ Then, run the following command:
 pod install
 ```
 
-From there, import the component:
+From there, import the relevant target or file and instantiate your view.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -68,12 +57,30 @@ import MaterialComponents.MaterialBottomNavigation
 ```
 <!--</div>-->
 
+### Bottom navigation classes
+
+`MDCBottomNavigationBar` is the iOS bottom navigation implementation. `MDCBottomNavigationBar` can be added to a view hierarchy like any `UIView`. Material Design recommends always placing bottom navigation components at the bottom of the screen.
+
+`MDCBottomNavigationBar` works much like a `UITabBar` and both are populated with an array of `UITabBarItem` instances. However, `MDCBottomNavigationBar` is built with Material Design in mind and should be used with other Material Design components where possible to provide a consistent look and feel in an app. Additionally, while `MDCBottomNavigationBar` has similar features to `MDCTabBar`, `MDCTabBar` is chiefly intended for top navigation, whereas `MDCBottomNavigationBar`--as the name indicates--is intended for bottom navigation.
+
+It is recommended that a bottom navigation bar contain anywhere from three to five items. If there are fewer than three destinations, consider using Material tabs instead. If your top-level navigation has more than six destinations, provide access to destinations not covered in bottom navigation through alternative locations, such as a navigation drawer.
+
+Title visibility in `MDCBottomNavigationBar` can be configured in three ways:
+
+1. To only show the title of the *selected* item.
+1. To always show title regardless of any item's selection state
+1. To never show title regardless of any item's selection state. 
+
+The default behavior of `MDCBottomNavigationBar` is to only show the title for an item that is selected.
+
+In landscape orientation, items can be configured to be justified or compactly clustered together. When items are justified the bottom navigation bar is fitted to the width of the device. Justified items can have their titles shown below their respective icons or adjacent to their respective icons.
+
 ## Making bottom navigation accessible
 
 To help ensure your bottom navigation item is accessible to as many users as possible, please
 be sure to review the following recommendations:
 
-* Ensure that your `UITabBarItem`s have appropriate `accessibilityLabel`s. Setting a new
+* Ensure that your `UITabBarItem` instances have their `accessibilityLabel` properties set. Setting a new
 `accessibilityLabel` on a `UITabBarItem` will result in the corresponding bottom navigation
 bar item's `accessibilityLabel` changing.
 
@@ -102,13 +109,14 @@ Make sure that your bottom navigation bar respects the minimum touch area. The M
 #### Swift
 ```swift
 override func viewWillLayoutSubviews() {
-super.viewWillLayoutSubviews()
-let size = bottomNavBar.sizeThatFits(view.bounds.size)
-let bottomNavBarFrame = CGRect(x: 0,
-y: view.bounds.height - size.height,
-width: size.width,
-height: size.height)
-bottomNavBar.frame = bottomNavBarFrame
+  super.viewWillLayoutSubviews()
+  let size = bottomNavBar.sizeThatFits(view.bounds.size)
+  let bottomNavBarFrame = CGRect(x: 0,
+    y: view.bounds.height - size.height,
+    width: size.width,
+    height: size.height
+  )
+  bottomNavBar.frame = bottomNavBarFrame
 }
 
 ```
@@ -126,6 +134,10 @@ bottomNavBar.frame = bottomNavBarFrame
 }
 
 ```
+
+## Types
+
+There is only one type of bottom navigation bar.
 
 ## Bottom navigation bar
 
@@ -255,12 +267,24 @@ The following is an anatomy diagram for the bottom navigation bar:
 **Typography**            | `itemTitleFont`                        | `-setItemTitleFont:` <br/> `-itemTitleFont`                         | Headline 6
 **Color**                 | `selectedItemTitleColor`               | `-setSelectedItemTitleColor` <br/> `-selectedItemTitleColor`         | `[UIColor blackColor]`
 
-## Theming bottom navigation
+## Theming
 
 ![A bottom navigation with Shrine theming](docs/assets/bottom-nav-shrine.png)
 
-You can theme a Material bottom navigation bar using a container scheme and the BottomNavigation theming extension. To achieve something like the
-Shrine theming above first add the BottomNavigation theming extension to your project by adding the following line to your Podfile:
+The example above is a bottom navigation bar with Shrine theming. To get started with your own theming, first add the `BottomNavigation+Theming` subspec to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/BottomNavigation+Theming'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then run the installer:
+
+```bash
+pod install
+```
+
+Then, import the relevant file or target and call the appropriate theming method. 
 
 <!--<div class="material-code-render" markdown="1">-->
 

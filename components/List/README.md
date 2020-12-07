@@ -14,34 +14,60 @@ api_doc_root: true
 
 [Lists](https://material.io/components/lists/) are continuous, vertical indexes of text or images.
 
-There are three list types:
-1. [Single-line list](#single-line-list)
-1. [Two-line list](#two-line-list)
-1. [Three-line list](#three-line-list)
-
-![Composite image of the three list types](docs/assets/lists-types.png)
-
 ## Contents
 
 * [Using lists](#using-lists)
-* [Installing lists](#installing-lists)
-* [Making lists accessible](#making-lists-accessible)
-* [List anatomy](#list-anatomy)
-* [Types of lists](#types-of-list)
-* [Theming lists](#theming-lists)
+* [Single-line list](#single-line-list)
+* [Two-line list](#two-line-list)
+* [Three-line list](#three-line-list)
+* [Theming lists](#theming)
 * [Building your own list item](#building-your-own-list-item)
+
+- - -
 
 ## Using lists
 
+### Installing
+
+In order to install lists with Cocoapods first add the List component subspec to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/List'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
+
+From there, import the relevant target or file and use your list item like you would any other `UICollectionViewCell`.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialList
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialList.h"
+```
+<!--</div>-->
+
+### List classes
+
 We currently offer two `UICollectionViewCell` subclasses that can be used to create Material Design lists: `MDCBaseCell` and `MDCSelfSizingStereoCell`.
 
-### `MDCBaseCell`
+#### `MDCBaseCell`
 
 The `MDCBaseCell` is a list item in its simplest form, a `UICollectionViewCell` subclass with ripple and elevation. The `MDCBaseCell` provides a starting point to build anything demonstrated in the extensive [design guidelines](https://material.io/go/design-lists). To build a list using `MDCBaseCell` simply treat it like you would any other `UICollectionViewCell`.
 
 ![Animation showing a list of MDCBaseCell views with Ripple effects](docs/assets/list_base_cell_animated.gif)
 
-### `MDCSelfSizingStereoCell`
+#### `MDCSelfSizingStereoCell`
 
 The `MDCSelfSizingStereoCell` is a subclass of `MDCBaseCell`. It exposes two image views (trailing and leading) and two labels (title and detail) that the user can configure however they like.
 
@@ -74,39 +100,9 @@ MDCBaseCell *cell =
 ```
 <!--</div>-->
 
-## Installing lists
+### Making lists accessible
 
-In order to install lists with Cocoapods first add the List component subspec to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/List'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
-
-From there, import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialList
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialList.h"
-```
-<!--</div>-->
-
-## Making lists accessible
-
-### Setting `-isAccessibilityElement`
+#### Setting `-isAccessibilityElement`
 
 We recommend setting `UICollectionViewCell`s (and `UITableViewCell`s) as `accessibilityElements`. That way, VoiceOver doesn't traverse the entire cell and articulate an overwhelming amount of accessibility information for each of its subviews.
 
@@ -159,7 +155,14 @@ An instance of `MDCSelfSizingStereoCell` can be configured to be a single-line, 
 **Title text**            |`titleLabel`                             | N/A                           | N/A
 **Detail text**            |`titleLabel`                              | N/A                          | N/A
 
-## Types of list
+## Types
+
+There are three list types:
+1. [Single-line list](#single-line-list)
+1. [Two-line list](#two-line-list)
+1. [Three-line list](#three-line-list)
+
+![Composite image of the three list types](docs/assets/lists-types.png)
 
 ### Single-line list
 
@@ -279,18 +282,26 @@ func collectionView(_ collectionView: UICollectionView,
 ```
 <!--</div>-->
 
-## Theming lists
+## Theming
 
 This is an example of a two-line list with Shrine theming:
 
 ![A two-line list item with example text and shrine theming](docs/assets/shrine-list.png)
 
 To theme a list item in your own app, use the Material Theming extension. To do that, first add the
-Theming extension to your project:
+theming extension to your `Podfile`:
 
 ```bash
 pod `MaterialComponents/List+Theming`
 ```
+
+Then run the installer:
+
+```bash
+pod install
+```
+
+From there, call the theming method from your `UICollectionViewDelegate` code.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

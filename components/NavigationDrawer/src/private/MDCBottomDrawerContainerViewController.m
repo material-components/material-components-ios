@@ -1158,8 +1158,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 - (CGFloat)presentingViewYOffset {
   CGFloat yOffset = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.presentingViewBounds);
-  if (yOffset > 0 && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular &&
-      ![self shouldUseMaximumDrawerHeight]) {
+  if (yOffset > 0 && ![self shouldUseMaximumDrawerHeight]) {
     return yOffset;
   }
   return 0;
