@@ -1,16 +1,12 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we deprecated hitAreaInsets APIs in Buttons, FloatingButtons, and Chips, and introduced minor bug fixes and documentation updates.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
+
+### hitAreaInsets APIs
+
+* hitAreaInsets APIs are deprecated in Buttons, FloatingButtons, and Chips.
 
 ## Component changes
 
