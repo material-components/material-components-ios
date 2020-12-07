@@ -12,7 +12,7 @@ api_doc_root: true
 
 [Bottom sheets](https://material.io/components/sheets-bottom) are surfaces containing supplementary content that are anchored to the bottom of the screen.
 
-![Example bottom sheet: modal bottom sheet](docs/assets/bottom-sheet-hero.png)
+![Bottom sheet with 4 options.](docs/assets/bottom-sheet-hero.png)
 
 **Contents**
 
@@ -59,7 +59,7 @@ import MaterialComponents.MaterialBottomSheet
 
 ### Making bottom sheets accessible
 
-As a user of the bottom sheet compoent, it is up to you to determine that its contents are accecssible. The bottom sheet ccomponent does not have any specific APIs for managing the accessibility of a bottom sheet's contents. `MDCBottomSheetController` does, however, have such APIs for the scrim:
+As a user of the bottom sheet component, it is up to you to determine that its contents are accessible. The bottom sheet ccomponent does not have any specific APIs for managing the accessibility of a bottom sheet's contents. `MDCBottomSheetController` does, however, have such APIs for the scrim:
 
 * `isScrimAccessibilityElement`
 * `scrimAccessibilityLabel`
@@ -79,7 +79,7 @@ There are three types suitable for different use cases:
 
 ## Standard bottom sheet
 
-Standard bottom sheets co-exist with the screen’s main UI region and allow for simultaneously viewing and interacting with both regions. They are commonly used to keep a feature or secondary content visible on screen when content in main UI region is frequently scrolled or panned.
+Standard bottom sheets coexist with the screen’s main UI region and allow for simultaneously viewing and interacting with both regions. They are commonly used to keep a feature or secondary content visible on screen when content in main UI region is frequently scrolled or panned.
 
 There is no standard bottom sheet implementation on iOS. This is because the iOS bottom sheet implementation makes use of custom view controller transitions, which do not allow interaction with the presenting view controller, even when the presented view controller does not take up the whole screen. 
 
@@ -98,7 +98,7 @@ Use `MDCBottomSheetController` and its accompanying presentation controller clas
 * [`MDCBottomSheetController`GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/BottomSheet/src/MDCBottomSheetController.h)
 * [`MDCBottomSheetPresentationController` GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/BottomSheet/src/MDCBottomSheetPresentationController.h)
 
-![A modal bottom sheet with a slider in it](docs/assets/modal-bottom-sheet.png)
+![Bottom sheet with grey slider on top of a grey background](docs/assets/modal-bottom-sheet.png)
 
 Something like the above example can be achieved using the code below.
 
@@ -127,7 +127,7 @@ MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] initWi
 
 #### Behavioral customizations
 
-You can also choose to have your bottom sheet not be dismissable when dragged downwards by using the dismissOnDraggingDownSheet property on MDCBottomSheetController.
+You can also choose to have your bottom sheet not be dismissable when dragged downwards by using the `dismissOnDraggingDownSheet` property on `MDCBottomSheetController`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -207,7 +207,7 @@ Expanding bottom sheets are recommended for use on mobile and tablet.
 
 ### Expanding bottom sheet example
 
-To achieve an expanding bottom sheet on iOS, simply set the `trackingScrollView` property on your `MDCBottomSheetController`. If the `contentSize` of the scroll view has a large enough height the bottom sheet will expand to the top.
+To generate an expanding bottom sheet on iOS, set the `trackingScrollView` property on your `MDCBottomSheetController`. If the `contentSize` of the scroll view has a large enough height the bottom sheet will expand to the top.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
