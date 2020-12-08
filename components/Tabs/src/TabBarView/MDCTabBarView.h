@@ -226,7 +226,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  * {.top = 8, .right = 16, .bottom = 8, .left = 16} for text only,
  * {.top = 12, .right = 16, .bottom = 12, .left = 16} for image only, and
  * {.top = 12, .right = 16, .bottom = 12, .left = 16} for text and image. Setting this property
- * overrides all three defualts. This property is only used when the tab bar view's items are @c
+ * overrides all three defaults. This property is only used when the tab bar view's items are @c
  * UITabBarItems and not @c MDCTabBarItems, or any other custom @c UITabBarItem subclasses that
  * conform to @c MDCTabBarItemCustomViewing.
  */

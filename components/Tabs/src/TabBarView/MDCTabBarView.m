@@ -333,6 +333,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 
   self.selectedItem = newSelectedItem;
   [self addObserversToTabBarItems];
+  [self updateTitleFontForAllViews];
 
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
