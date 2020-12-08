@@ -8,65 +8,99 @@ path: /catalog/bottom-sheet/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme BottomSheet -->
-
 # Sheets: bottom
 
-Bottom sheets slide up from the bottom of the screen to reveal more content. Bottom sheets integrate with the app to display supporting content or present deep-linked content from other apps.
+[Bottom sheets](https://material.io/components/sheets-bottom) are surfaces containing supplementary content that are anchored to the bottom of the screen.
 
-<div class="article__asset article__asset--screenshot">
-   <img src="docs/assets/bottom_sheet.png" alt="Bottom Sheet" width="375">
-</div>
+![Bottom sheet with 4 options.](docs/assets/bottom-sheet-hero.png)
 
-## Design & API Documentation
+**Contents**
 
-<ul class="icon-list">
-<li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-sheets-bottom">Material Design guidelines: Bottom sheet</a></li>
-</ul>
+* [Using bottom sheets](#using-bottom-sheets)
+* [Standard bottom sheet](#standard-bottom-sheet)
+* [Modal bottom sheet](#modal-bottom-sheet)
+* [Expanding bottom sheet](#expanding-bottom-sheet)
+* [Theming](#theming)
 
 - - -
 
-## Installation
+## Using bottom sheets
 
-### Installation with CocoaPods
+Bottom sheets are supplementary surfaces primarily used on mobile. 
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+### Installing
+
+In order to install with [Cocoapods](https://guides.cocoapods.org/using/getting-started.html), first add the component to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/BottomSheet'
 ```
-<!--{: .code-renderer.code-renderer--install }-->
 
-Then, run the following command:
+Then run the installer:
 
 ```bash
 pod install
 ```
 
-- - -
-
-## Usage
-
-### Importing
-
-Before using Bottom Sheet, you'll need to import it:
+From there, import the relevant target or file.
 
 <!--<div class="material-code-render" markdown="1">-->
+
 #### Swift
 ```swift
 import MaterialComponents.MaterialBottomSheet
 ```
 
 #### Objective-C
-
 ```objc
 #import "MaterialBottomSheet.h"
 ```
 <!--</div>-->
 
-## Examples
+### Making bottom sheets accessible
 
-Create a view controller that the bottom sheet will hold and initialize the bottom sheet with that view controller. After the bottom sheet is created, it is ready to be presented on the current view controller.
+As a user of the bottom sheet component, it is up to you to determine that its contents are accessible. The bottom sheet ccomponent does not have any specific APIs for managing the accessibility of a bottom sheet's contents. `MDCBottomSheetController` does, however, have such APIs for the scrim:
+
+* `isScrimAccessibilityElement`
+* `scrimAccessibilityLabel`
+* `scrimAccessibilityHint`
+* `scrimAccessibilityTraits`
+
+We recommend giving all of these properties appropriate values for your use case.
+ 
+## Types
+
+There are three types suitable for different use cases:
+1. [Standard bottom sheets](#standard-bottom-sheet) display content that complements the screen’s primary content and remain visible while users interact with the primary content
+1. [Modal bottom sheets](#modal-bottom-sheet) are an alternative to inline menus or simple dialogs on mobile and provide room for additional items, longer descriptions, and iconography, and must be dismissed in order to interact with the underlying content
+1. [Expanding bottom sheets](#expanding-bottom-sheet) provide a small, collapsed surface that can be expanded by the user to access a key feature or task to offer the persistent access of a standard sheet with the space and focus of a modal sheet.
+
+![Composite image of bottom sheet types](docs/assets/bottom-sheet-types.png)
+
+## Standard bottom sheet
+
+Standard bottom sheets coexist with the screen’s main UI region and allow for simultaneously viewing and interacting with both regions. They are commonly used to keep a feature or secondary content visible on screen when content in main UI region is frequently scrolled or panned.
+
+There is no standard bottom sheet implementation on iOS. This is because the iOS bottom sheet implementation makes use of custom view controller transitions, which do not allow interaction with the presenting view controller, even when the presented view controller does not take up the whole screen. 
+
+## Modal bottom sheet
+
+Modal bottom sheets present a set of choices while blocking interaction with the rest of the screen. They are an alternative to inline menus and simple dialogs on mobile, providing additional room for content, iconography, and actions.
+
+Modal bottom sheets are used in mobile apps only.
+
+### Modal bottom sheet examples
+
+#### Basic modal sheet example
+
+Use `MDCBottomSheetController` and its accompanying presentation controller class, `MDCBottomSheetPresentationController`, to achieve a modal bottom sheet on iOS. 
+
+* [`MDCBottomSheetController`GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/BottomSheet/src/MDCBottomSheetController.h)
+* [`MDCBottomSheetPresentationController` GitHub source](https://github.com/material-components/material-components-ios/blob/develop/components/BottomSheet/src/MDCBottomSheetPresentationController.h)
+
+![Bottom sheet with grey slider on top of a grey background](docs/assets/modal-bottom-sheet.png)
+
+Something like the above example can be achieved using the code below.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -75,6 +109,7 @@ Create a view controller that the bottom sheet will hold and initialize the bott
 let viewController: ViewController = ViewController()
 // Initialize the bottom sheet with the view controller just created
 let bottomSheet: MDCBottomSheetController = MDCBottomSheetController(contentViewController: viewController)
+// At this point perform any customizations, like adding a slider, for example.
 // Present the bottom sheet
 present(bottomSheet, animated: true, completion: nil)
 ```
@@ -85,31 +120,14 @@ present(bottomSheet, animated: true, completion: nil)
 ViewController *viewController = [[ViewController alloc] init];
 // Initialize the bottom sheet with the view controller just created
 MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+// At this point perform any customizations, like adding a slider, for example.
 // Present the bottom sheet
 [self presentViewController:bottomSheet animated:true completion:nil];
 ```
 
-<!--</div>-->
+#### Behavioral customizations
 
-Create a button that will call the code above.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let button = UIButton(frame: .zero)
-button.addTarget(self, action: #selector(presentBottomSheet), for: .touchUpInside)
-```
-
-#### Objective-C
-```objc
-_button = [[UIButton alloc] initWithFrame:CGRectZero];
-[_button addTarget:self action:@selector(presentBottomSheet) forControlEvents:UIControlEventTouchUpInside];
-```
-<!--</div>-->
-
-### Behavioral Customizations
-
-You can also choose to have your bottom sheet not be dismissable when dragged downwards by using the dismissOnDraggingDownSheet property on MDCBottomSheetController.
+You can also choose to have your bottom sheet not be dismissable when dragged downwards by using the `dismissOnDraggingDownSheet` property on `MDCBottomSheetController`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -133,20 +151,93 @@ bottomSheet.dismissOnDraggingDownSheet = NO;
 ```
 <!--</div>-->
 
+### Anatomy and key properties
 
-## Extensions
+The following shows the anatomy of a modal bottom sheet:
 
-<!-- Extracted from docs/shape-theming.md -->
+![Modal bottom sheet anatomy](docs/assets/modal-bottom-sheet-anatomy.png)
 
-### Shape Theming
+1. Sheet
+2. Contents
+3. Scrim
 
-You can theme a bottom sheet with your app's shape scheme using the ShapeThemer extension.
+_**Note: A bottom sheet similar to the one shown above is easily attainable with the [ActionSheet](https://github.com/material-components/material-components-ios/tree/develop/components/ActionSheet) component, which makes use of `MDCBottomSheetPresentationController`.**_
 
-You must first add the ShapeThemer extension to your project:
+#### Sheet properties
+
+&nbsp;                | **Attribute**             | **Related methods**                                    | **Default value**
+----------------------| --------------------------| ------------------------------------------------------ | -----------------
+**Sheet height**      | `preferredSheetHeight`          | `-[MDCBottomSheetPresentationController setPreferredSheetHeight:]` <br/> `-[MDCBottomSheetPresentationController preferredSheetHeight]` | N/A
+**Elevation**             | `elevation`          | `-[MDCBottomSheetPresentationController setElevation:]` <br/> `-[MDCBottomSheetPresentationController elevation]`| 16
+
+#### Contents properties
+
+&nbsp;                | **Attribute**             | **Related methods**                                    | **Default value**
+----------------------| --------------------------| ------------------------------------------------------ | -----------------
+**Contents**      | `contentViewController`       | `-[MDCBottomSheetController initWithContentViewController:]` <br/> `-[MDCBottomSheetController contentViewController]` | N/A
+**Elevation**             | `elevation`          | `-[MDCBottomSheetPresentationController setElevation:]` <br/> `-[MDCBottomSheetPresentationController elevation]`| 16
+**Title text**             | `title`          | `-[MDCActionSheetComtroller setTitle:]` <br/> `-[MDCActionSheetComtroller title]` | `nil`
+**Message text**             | `message`          | `-[MDCActionSheetComtroller setMessage:]` <br/> `-[MDCActionSheetComtroller message]` | `nil`
+**Title font**             | `titleFont`          | `-[MDCActionSheetComtroller setTitleFont:]` <br/> `-[MDCActionSheetComtroller titleFont]` | `nil`
+**Message font**             | `messageFont`          | `-[MDCActionSheetComtroller setMessageFont:]` <br/> `-[MDCActionSheetComtroller messageFont]` | `nil`
+**Action font**             | `actionFont`          | `-[MDCActionSheetComtroller setActionFont:]` <br/> `-[MDCActionSheetComtroller actionFont]` | `nil`
+**Ripple color**             | `rippleColor`          | `-[MDCActionSheetComtroller setRippleColor:]` <br/> `-[MDCActionSheetComtroller rippleColor]` | `nil`
+**Background color**             | `backgroundColor`          | `-[MDCActionSheetComtroller -setBackgroundColor:]` <br/> `-[MDCActionSheetComtroller backgroundColor]` | `nil`
+**Title text color**             | `titleTextColor`          | `-[MDCActionSheetComtroller -setTitleTextColor:]` <br/> `-[MDCActionSheetComtroller titleTextColor]` | `nil`
+**Message text color**             | `messageTextColor`          | `-[MDCActionSheetComtroller -setMessageTextColor:]` <br/> `-[MDCActionSheetComtroller messageTextColor]` | `nil`
+**Action text color**             | `actionTextColor`          | `-[MDCActionSheetComtroller -setActionTextColor:]` <br/> `-[MDCActionSheetComtroller actionTextColor]` | `nil`
+**Action tint color**             | `actionTintColor`          | `-[MDCActionSheetComtroller -setActionTintColor:]` <br/> `-[MDCActionSheetComtroller actionTintColor]` | `nil`
+
+#### Scrim properties
+
+&nbsp;                | **Attribute**             | **Related methods**                                    | **Default value**
+----------------------| --------------------------| ------------------------------------------------------ | -----------------
+**Color**      | `scrimColor`          | `-[MDCBottomSheetPresentationController setScrimColor:]` <br/> `-[MDCBottomSheetPresentationController scrimColor]` | White at 40% opacity
+
+## Expanding bottom sheet
+
+An expanding bottom sheet is a surface anchored to the bottom of the screen that users can expand to access a feature or task. It can be used for:
+
+* **Persistently displaying a cross-app feature**, such as a shopping cart
+* **Collecting and acting on user selections** from a set of items, such as photos in a gallery
+* **Supporting tasks**, such as chat and comments
+* **Indirect navigation between items**, such as videos in a playlist
+
+Expanding bottom sheets are recommended for use on mobile and tablet.
+
+### Expanding bottom sheet example
+
+To generate an expanding bottom sheet on iOS, set the `trackingScrollView` property on your `MDCBottomSheetController`. If the `contentSize` of the scroll view has a large enough height the bottom sheet will expand to the top.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+bottomSheet.trackingScrollView = scrollView
+```
+
+#### Objective-C
+```objc
+bottomSheet.trackingScrollView = self.scrollView;
+```
+<!--</div>-->
+
+## Theming
+
+Unlike most Material components on iOS, bottom sheets do not offer theming with a container scheme. However, `MDCBottomSheetController` does have a shape themer. In order to use the shape themer, first add the following to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/BottomSheet+ShapeThemer'
 ```
+
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then run the installer:
+
+```bash
+pod install
+```
+
+Next, import the relevant taret or file and call the correct theming method.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -175,4 +266,3 @@ id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
      toBottomSheetController:component];
 ```
 <!--</div>-->
-
