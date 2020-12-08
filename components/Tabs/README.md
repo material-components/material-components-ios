@@ -16,7 +16,7 @@ api_doc_root: true
 
 ![Generic tab bar with numbered tabs](docs/assets/tabs-generic-hero.png)
 
-## Contents
+**Contents**
 
 * [Using tabs](#using-tabs)
 * [Fixed tabs](#fixed-tabs)

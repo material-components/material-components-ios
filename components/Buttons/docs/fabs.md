@@ -14,7 +14,7 @@ A floating action button (FAB) represents the primary action of a screen.
 
 !["A FAB on a screen"](assets/fab-hero.png)
 
-## Contents
+**Contents**
 
 *   [Using FABs](#using-fabs)
 *   [Regular FAB](#regular-fab)

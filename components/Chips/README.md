@@ -18,7 +18,7 @@ api_doc_root: true
 
 ![Chips hero image](docs/assets/chips-hero.png)
 
-## Contents
+**Contents**
 
 * [Using chips](#using-chips)
 * [Input chip](#input-chip)

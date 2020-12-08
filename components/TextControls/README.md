@@ -14,7 +14,7 @@ edit text.
 
 !["A screen with several text fields arranged vertically."](docs/assets/textfields-hero.png)
 
-## Contents
+**Contents**
 
 *   [Using text fields](#using-text-fields)
 *   [Filled text field](#filled-text-field)
