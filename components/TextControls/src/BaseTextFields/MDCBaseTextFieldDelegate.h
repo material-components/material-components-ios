@@ -56,4 +56,15 @@ covered by @c UITextFieldDelegate.
              withSender:(id)sender
        canPerformAction:(BOOL)canPerformAction;
 
+/**
+ At the end of every layout pass @c MDCBaseTextField checks to see if the intrinsic height it
+ calculates has changed. If it has, it calls this method. Setting assistive label text is an example
+ of something that results in this method getting called. If you have a height constraint set on the
+ text field, this method is a good place to update that constraint's constant.
+
+ @param textField The MDCBaseTextField.
+ @param height The newly calculated height.
+ */
+- (void)baseTextField:(MDCBaseTextField *)textField didUpdateIntrinsicHeight:(CGFloat)height;
+
 @end
