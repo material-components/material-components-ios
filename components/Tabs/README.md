@@ -207,6 +207,7 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 // Or Surface Theme
 [self.tabBar applySurfaceThemeWithScheme:containerScheme];
 ```
+<!--</div>-->
 
 ## Migrating from legacy tabs
 
@@ -229,7 +230,7 @@ and its APIs present equivalent information.
 
 To set the image tint colors, use `- setImageTintColor:forState:`. The
 `MDCTabBar` APIs, `- selectedItemTintColor` and `- unselectedItemTintColor` are
-unavailable. 
+unavailable.
 
 To set the fonts of the labels, use `- setTitleFont:forState:`.
 The `MDCTabBar` APIs, `- selectedItemTitleFont` and `- unselectedItemTitleFont`
