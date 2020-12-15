@@ -1,3 +1,44 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomSheet
+
+* [Replace bottom sheet docs](https://github.com/material-components/material-components-ios/commit/82c03655498bd13cdf0229d71d562fed97d48813) (Andrew Overton)
+
+### NavigationDrawer
+
+* [Added `presentingViewYOffset` to `contentHeightSurplus` in `MDCBottomDrawerContainerViewController`](https://github.com/material-components/material-components-ios/commit/8ce4ebebd6877abce65e9b36123f39d97deded30) (Nobody)
+
+### Tabs
+
+* [Add call to update fonts from setItems to make sure tabBarView fonts are applied to new items.](https://github.com/material-components/material-components-ios/commit/0807c24b05bb588acede2152f2fca7d591ed0a1c) (Alyssa Weiss)
+* [Add missing div tag](https://github.com/material-components/material-components-ios/commit/7de109ee8160c8853d274f9a9dfdb7d0188b465f) (Andrew Overton)
+* [Fix an issue where the indicator was shown moving in, rather than already at the selected item, when the tab bar appears for the first time.](https://github.com/material-components/material-components-ios/commit/75a2ad15c78b7b5f504b6701cc0f0ce67deb1792) (Hao Sun)
+* [Fix an issue where the indicator was shown moving in, rather than already at the selected item, when the tab bar items are recreated and the tab selected.](https://github.com/material-components/material-components-ios/commit/8343349fd944320eea78f3e1af50a3e0d65641c8) (Nobody)
+
+### TextControls
+
+* [Rethink sizing behavior with sizing delegate method](https://github.com/material-components/material-components-ios/commit/178fee91ff1965e75acc1c73214cb1f200598bf5) (Andrew Overton)
+
+## Multi-component changes
+
+* [Change component README ToCs to bold paragraph style](https://github.com/material-components/material-components-ios/commit/fb4d874f62a3aa5c59c54df829617e97ea9957bd) (Andrew Overton)
+
+---
+
  # 119.2.0
 
 In this minor release we deprecated hitAreaInsets APIs in Buttons, FloatingButtons, and Chips, and introduced minor bug fixes and documentation updates.
