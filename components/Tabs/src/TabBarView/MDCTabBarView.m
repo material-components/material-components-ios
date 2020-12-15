@@ -331,7 +331,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     newSelectedItem = self.selectedItem;
   }
 
-  self.selectedItem = newSelectedItem;
+  [self setSelectedItem:newSelectedItem animated:NO];
   [self addObserversToTabBarItems];
   [self updateTitleFontForAllViews];
 
