@@ -522,6 +522,36 @@ static UIImage *fakeImage(CGSize size) {
                 statefulTitleFont, font);
 }
 
+- (void)testTitleFontSetsFontForItems {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:25];
+
+  // When
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  [self.tabBarView setTitleFont:fakeFont forState:UIControlStateNormal];
+
+  // Then
+  for (int i = 0; i < (int)[self.tabBarView.items count]; i++) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)self.tabBarView.itemViews[i];
+    XCTAssertTrue([itemView.titleLabel.font isEqual:fakeFont]);
+  }
+}
+
+- (void)testTitleFontSetsFontForItemsAddedAfterFontSet {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:25];
+
+  // When
+  [self.tabBarView setTitleFont:fakeFont forState:UIControlStateNormal];
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+
+  // Then
+  for (int i = 0; i < (int)[self.tabBarView.items count]; i++) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)self.tabBarView.itemViews[i];
+    XCTAssertTrue([itemView.titleLabel.font isEqual:fakeFont]);
+  }
+}
+
 - (void)testContentPaddingAddedToContentSizeForScrollableLayout {
   // Given
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;

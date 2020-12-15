@@ -14,7 +14,7 @@ api_doc_root: true
 
 [Lists](https://material.io/components/lists/) are continuous, vertical indexes of text or images.
 
-## Contents
+**Contents**
 
 * [Using lists](#using-lists)
 * [Single-line list](#single-line-list)

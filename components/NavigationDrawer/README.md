@@ -15,7 +15,7 @@ api_doc_root: true
 
 ![Bottom navigation example](docs/assets/bottom-drawer-hero.png)
 
-## Contents
+**Contents**
 
 * [Using navigation drawers](#using-navigation-drawers)
 * [Bottom navigation drawer](#bottom-navigation-drawer)

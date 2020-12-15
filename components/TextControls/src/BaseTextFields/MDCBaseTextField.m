@@ -34,7 +34,8 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 @property(nonatomic, assign) MDCTextControlLabelPosition labelPosition;
 @property(nonatomic, assign) CGRect labelFrame;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
-@property(nonatomic, assign) CGSize cachedIntrinsicContentSize;
+@property(nonatomic, assign) CGFloat lastRecordedWidth;
+@property(nonatomic, assign) CGFloat lastCalculatedHeight;
 
 /**
  This property maps MDCTextControlStates as NSNumbers to
@@ -146,8 +147,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 }
 
 - (CGSize)intrinsicContentSize {
-  self.cachedIntrinsicContentSize = [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
-  return self.cachedIntrinsicContentSize;
+  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -158,6 +158,19 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 - (void)setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
   [super setSemanticContentAttribute:semanticContentAttribute];
   [self setNeedsLayout];
+}
+
+- (void)setBounds:(CGRect)bounds {
+  [super setBounds:bounds];
+
+  // I wouldn't think something like the following is necessary, but in light of b/173646979 I think
+  // it is.
+  CGFloat newWidth = CGRectGetWidth(bounds);
+  BOOL widthHasChanged = newWidth != self.lastRecordedWidth;
+  if (widthHasChanged) {
+    [self setNeedsLayout];
+  }
+  self.lastRecordedWidth = CGRectGetWidth(bounds);
 }
 
 #pragma mark Layout
@@ -171,9 +184,6 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
  -layoutSubviews in the layout cycle.
  */
 - (void)preLayoutSubviews {
-  if (![self validateWidth]) {
-    [self invalidateIntrinsicContentSize];
-  }
   self.textControlState = [self determineCurrentTextControlState];
   self.labelPosition = [self determineCurrentLabelPosition];
   MDCTextControlColorViewModel *colorViewModel =
@@ -192,9 +202,19 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   [self animateLabel];
   [self updateSideViews];
   [self.containerStyle applyStyleToTextControl:self animationDuration:self.animationDuration];
-  if (![self validateHeight]) {
+  [self updateCalculatedHeight];
+}
+
+- (void)updateCalculatedHeight {
+  if (self.layout.calculatedHeight != self.lastCalculatedHeight) {
     [self invalidateIntrinsicContentSize];
+    if ([self.baseTextFieldDelegate respondsToSelector:@selector(baseTextField:
+                                                           didUpdateIntrinsicHeight:)]) {
+      [self.baseTextFieldDelegate baseTextField:self
+                       didUpdateIntrinsicHeight:self.layout.calculatedHeight];
+    }
   }
+  self.lastCalculatedHeight = self.layout.calculatedHeight;
 }
 
 - (void)updateSideViews {
@@ -332,14 +352,6 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
-- (BOOL)validateWidth {
-  return CGRectGetWidth(self.bounds) == self.cachedIntrinsicContentSize.width;
-}
-
-- (BOOL)validateHeight {
-  return self.layout.calculatedHeight == self.cachedIntrinsicContentSize.height;
-}
-
 - (BOOL)shouldLayoutForRTL {
   if (self.semanticContentAttribute == UISemanticContentAttributeForceRightToLeft) {
     return YES;
@@ -463,7 +475,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 }
 
 - (CGRect)containerFrame {
-  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.containerHeight);
+  return CGRectMake(0, 0, CGRectGetWidth(self.bounds), self.layout.containerHeight);
 }
 
 - (CGFloat)numberOfLinesOfVisibleText {
@@ -791,7 +803,6 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 
     for (NSString *assistiveLabelKeyPath in [MDCBaseTextField assistiveLabelKVOKeyPaths]) {
       if ([assistiveLabelKeyPath isEqualToString:keyPath]) {
-        [self invalidateIntrinsicContentSize];
         [self setNeedsLayout];
         break;
       }

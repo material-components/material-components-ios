@@ -331,8 +331,9 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     newSelectedItem = self.selectedItem;
   }
 
-  self.selectedItem = newSelectedItem;
+  [self setSelectedItem:newSelectedItem animated:NO];
   [self addObserversToTabBarItems];
+  [self updateTitleFontForAllViews];
 
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
@@ -768,7 +769,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   }
 
   self.contentSize = [self calculatedContentSize];
-  [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
+  [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem] animated:NO];
 
   if (self.needsScrollToSelectedItem) {
     self.needsScrollToSelectedItem = NO;
@@ -1315,9 +1316,8 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   }
 }
 
-/// Sets _selectionIndicator's bounds and center to display under the item at the given index with
-/// no animation. May be called from an animation block to animate the transition.
-- (void)updateSelectionIndicatorToIndex:(NSUInteger)index {
+/// Sets _selectionIndicator's bounds and center to display under the item at the given index.
+- (void)updateSelectionIndicatorToIndex:(NSUInteger)index animated:(BOOL)animated {
   if (index == NSNotFound || index >= self.items.count) {
     // Hide selection indicator.
     self.selectionIndicatorView.bounds = CGRectZero;
@@ -1358,7 +1358,14 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
       [template indicatorAttributesForContext:context];
 
   // Update the selection indicator.
-  [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
+  if (animated) {
+    [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
+  } else {
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
+    [CATransaction commit];
+  }
 }
 
 /**
@@ -1372,7 +1379,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   void (^animationBlock)(void) = ^{
     [self updateImageTintColorForAllViews];
     [self updateTitleFontForAllViews];
-    [self updateSelectionIndicatorToIndex:index];
+    [self updateSelectionIndicatorToIndex:index animated:animate];
 
     // Force layout so any changes to the selection indicator are captured by the animation block.
     [self.selectionIndicatorView layoutIfNeeded];

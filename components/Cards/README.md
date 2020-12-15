@@ -17,7 +17,7 @@ a single subject.
 
 ![An arrangement of cards containing various charts and graphs](docs/assets/card-hero.png)
 
-## Contents
+**Contents**
 
 *   [Using cards](#using-cards)
 *   [Card](#card)

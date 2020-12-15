@@ -14,7 +14,7 @@ api_doc_root: true
 
 !["Button on a screen"](assets/buttons_hero.png)
 
-## Contents
+**Contents**
 
 *   [Using buttons](#using-buttons)
 *   [Text button](#text-button)

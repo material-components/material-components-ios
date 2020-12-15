@@ -16,7 +16,7 @@ api_doc_root: true
 
 ![Bottom app bar hero](docs/assets/bottom-app-bar-hero.png)
 
-## Contents
+**Contents**
 
 * [Using bottom app bars](#using-bottom-app-bars)
 * [Bottom app bar](#bottom-app-bar)

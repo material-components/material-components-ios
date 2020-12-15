@@ -17,7 +17,7 @@ navigation icon takes you directly to the associated view or refreshes the curre
 
 ![A generic bottom navigation with the "music" item selected](docs/assets/bottom-nav-hero.png)
 
-## Contents
+**Contents**
 
 * [Using bottom navigation](#using-bottom-navigation)
 * [Bottom navigation bar](#bottom-navigation-bar)

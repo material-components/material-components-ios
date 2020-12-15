@@ -16,7 +16,7 @@ A [banner](https://material.io/components/banners) displays a prominent message 
 
 ![Hero image of a banner showing a transaction error message](docs/assets/banner-hero.png)
 
-## Contents
+**Contents**
 
 * [Using banners](#using-banners)
 * [Banner](#banner)

@@ -19,7 +19,7 @@ involve multiple tasks.
 
 !["Dialog confirming settings centered in a screen"](docs/assets/dialogs-hero.png)
 
-## Contents
+**Contents**
 
 * [Using dialogs](#using-dialogs)
 * [Alert dialog](#alert-dialog)

@@ -20,6 +20,7 @@
 #import "MDCNavigationDrawerFakes.h"
 
 @interface MDCBottomDrawerContainerViewController (MDCBottomDrawerHeaderTesting)
+@property(nonatomic) CGFloat contentHeightSurplus;
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 @end
 
@@ -286,6 +287,39 @@
 
   // Then
   XCTAssertFalse([self.navigationDrawer accessibilityPerformEscape]);
+}
+
+- (void)testContentHeightSurplusIsAddingYOffset {
+  // Given
+  self.navigationDrawer.headerViewController.preferredContentSize = CGSizeMake(100, 200);
+  self.navigationDrawer.contentViewController.preferredContentSize = CGSizeMake(100, 200);
+  [self.navigationDrawer.presentationController presentationTransitionWillBegin];
+  // This will be used to assert the `contentHeightSurplus` The height surplus is calculated by
+  // adding the content height and the header height. We then add the `presentingViewYOffset`.
+  // The offset is calculated by subtracting the frame height with the presenting bounds height.
+  // The presenting view bounds here is 0 and the content and header height get cancelled out in
+  // the surplus calculation. So the surplus ends up being the frame height
+  CGFloat frameHeight = CGRectGetHeight(self.navigationDrawer.view.frame);
+
+  // When
+  self.navigationDrawer.maximumDrawerHeight = 0;
+
+  // Then
+  XCTAssertEqual(self.navigationDrawer.maximumDrawerHeight, 0);
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertEqual(presentationController.maximumDrawerHeight, 0);
+    XCTAssertEqual(presentationController.bottomDrawerContainerViewController.maximumDrawerHeight,
+                   0);
+    XCTAssertEqual(presentationController.bottomDrawerContainerViewController.contentHeightSurplus,
+                   frameHeight);
+  } else {
+    XCTFail(@"The presentation controller should be class of kind "
+            @"MDCBottomDrawerPresentationController but is %@",
+            self.navigationDrawer.presentationController.class);
+  }
 }
 
 @end
