@@ -351,18 +351,24 @@ publish_release() {
 
   enforce_changelog_version
 
-  ghtoken=$(cat ~/.gh.json | grep "github_token" | cut -d'"' -f4)
+  ghtoken="$(cut -d " " -f 2 <<< $(cat ~/.config/gh/hosts.yml | grep "oauth_token: "))"
   if [ -z "$ghtoken" ]; then
-    echo "Must be authenticated with gh."
+    echo "Error: Unable to find a token in ~/.config/gh/hosts.yml."
     echo
-    echo "Install gh by running:"
+    echo "You must authenticate with the official GitHub command line interface tool:"
+    echo "https://github.com/cli/cli"
     echo
-    echo "    npm install -g gh"
+    echo "Not to be confused with the following unofficial (and no longer maintained) GitHub command line tool that this script used to use:"
+    echo "https://github.com/node-gh/gh"
     echo
-    echo "And then get an auth token by running:"
+    echo "To proceed, do the following:"
+    echo "1. Install the official command line tool"
+    echo "2. Authenticate using 'gh auth login'"
+    echo "    a. When it asks 'What account do you want to log into?', choose 'GitHub.com'"
+    echo "    b. When it asks 'How would you like to authenticate?', choose 'Login with a web browser'"
+    echo "3. Re-run the scripts/release command"
     echo
-    echo "    gh user"
-    echo
+    echo "You will probably have to delete or move the old gh to make way for the new (official) one."
     exit 1
   fi
 
