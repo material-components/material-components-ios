@@ -218,15 +218,15 @@ To create a mini FAB use the `+floatingButtonWithShape:` constructor with a valu
 For more information on theming FABs see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let fab = MDCFloatingButton(shape: mini)
+```
+
 #### Objective-C
 ```objc
 MDCFloatingButton *fab =
     [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
-```
-
-#### Swift
-```swift
-let fab = MDCFloatingButton(shape: mini)
 ```
 <!--</div>-->
 
@@ -269,17 +269,17 @@ To create an extended FAB use the `+floatingButtonWithShape:` constructor with a
 For more information on theming FABs see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let fab = MDCFloatingButton(shape: .default)
+fab.mode = .expanded
+```
+
 #### Objective-C
 ```objc
 MDCFloatingButton *fab =
     [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
 fab.mode = MDCFloatingButtonModeExpanded;
-```
-
-#### Swift
-```swift
-let fab = MDCFloatingButton(shape: .default)
-fab.mode = .expanded
 ```
 <!--</div>-->
 
