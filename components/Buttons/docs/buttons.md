@@ -186,15 +186,15 @@ All Material buttons are implemented by `MDCButton`, a subclass of [`UIButton`](
 To use a text button use the text button theming method on the `MDCButton` theming extension. For more information on theming extensions see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-```objc
-[self.button applyTextThemeWithScheme:self.containerScheme];
-```
-
 #### Swift
 
 ```swift
 button.applyTextTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+```objc
+[self.button applyTextThemeWithScheme:self.containerScheme];
 ```
 <!--</div>-->
 
@@ -243,15 +243,14 @@ A text button has a text label, a transparent container and an optional icon.
 To achieve an outlined button use the outlined button theming method on the `MDCButton` theming extension. To access the theming extension see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.applyOutlinedTheme(withScheme: containerScheme)
+```
+
 #### Objective-C
 ```objc
 [self.button applyOutlinedThemeWithScheme:self.containerScheme];
-```
-
-#### Swift
-
-```swift
-button.applyOutlinedTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 
@@ -300,15 +299,14 @@ An outlined button has a text label, a container, and an optional icon.
 Contained buttons are implemented by `MDCButton`. To achieve a contained button use the contained button theming method on the `MDCButton` theming extension. To access the theming extension see the [Theming section](#theming).
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.applyContainedTheme(withScheme: containerScheme)
+```
+
 #### Objective-C
 ```objc
 [self.button applyContainedThemeWithScheme:self.containerScheme];
-```
-
-#### Swift
-
-```swift
-button.applyContainedTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 

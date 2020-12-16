@@ -173,19 +173,6 @@ Single-line list items contain a maximum of one line of text.
 ![Image of three single-line list items with sample text](docs/assets/single-line-list-example.png)
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-```objc
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCSelfSizingStereoCell *cell =
-      (MDCSelfSizingStereoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
-                                                forIndexPath:indexPath];
-  cell.titleLabel.text = @"This is a single-line list";
-  return cell;
-}
-```
-
 #### Swift
 
 ```swift
@@ -200,6 +187,19 @@ func collectionView(_ collectionView: UICollectionView,
   return cell
 }
 ```
+
+#### Objective-C
+
+```objc
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCSelfSizingStereoCell *cell =
+      (MDCSelfSizingStereoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
+  cell.titleLabel.text = @"This is a single-line list";
+  return cell;
+}
+```
 <!--</div>-->
 
 ### Two-line list
@@ -211,20 +211,6 @@ Two-line list items contain a maximum of two lines of text.
 ![Image of three two-line list items with sample text](docs/assets/two-line-list-example.png)
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-```objc
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCSelfSizingStereoCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
-                                                forIndexPath:indexPath];
-  cell.titleLabel.text = @"This is a two-line list";
-  cell.detailLabel.text = @"This is secondary text that occupies one line.";
-  return cell;
-}
-```
-
 #### Swift
 
 ```swift
@@ -240,6 +226,20 @@ func collectionView(_ collectionView: UICollectionView,
   return cell
 }
 ```
+
+#### Objective-C
+
+```objc
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCSelfSizingStereoCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
+  cell.titleLabel.text = @"This is a two-line list";
+  cell.detailLabel.text = @"This is secondary text that occupies one line.";
+  return cell;
+}
+```
 <!--</div>-->
 
 ### Three-line list
@@ -251,20 +251,6 @@ Three-line list items contains a maximum of three lines of text.
 ![Image of three three-line list items with sample text](docs/assets/three-line-list-example.png)
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-```objc
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCSelfSizingStereoCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
-                                                forIndexPath:indexPath];
-  cell.titleLabel.text = @"This is a three-line list";
-  cell.detailLabel.text = @"This is secondary text\nthat occupies two lines.";
-  return cell;
-}
-```
-
 #### Swift
 
 ```swift
@@ -278,6 +264,20 @@ func collectionView(_ collectionView: UICollectionView,
   cell.titleLabel.text = "This is a three-line list"
   cell.detailLabel.text = "This is secondary text\nthat occupies two lines."
   return cell
+}
+```
+
+#### Objective-C
+
+```objc
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCSelfSizingStereoCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
+  cell.titleLabel.text = @"This is a three-line list";
+  cell.detailLabel.text = @"This is secondary text\nthat occupies two lines.";
+  return cell;
 }
 ```
 <!--</div>-->
@@ -375,20 +375,20 @@ to take:
 1. Initialize `MDCInkView` on init and add it as a subview:
 
     <!--<div class="material-code-render" markdown="1">-->
-    #### Objective-C
-
-    ```objc
-    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.usesLegacyInkRipple = NO;
-    [self addSubview:_inkView];
-    ```
-
     #### Swift
 
     ```swift
     let inkView = MDCInkView(frame: bounds)
     inkView.usesLegacyInkRipple = false
     addSubview(inkView)
+    ```
+
+    #### Objective-C
+
+    ```objc
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.usesLegacyInkRipple = NO;
+    [self addSubview:_inkView];
     ```
     <!--</div>-->
 
@@ -400,6 +400,16 @@ and save where the touches were so we can then start the ripple animation from
 that point:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+
+    ```swift
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+      let touch = touches.first
+      let location = touch?.location(in: self)
+      lastTouch = location
+    }
+    ```
+
     #### Objective-C
 
     ```objc
@@ -411,35 +421,12 @@ that point:
       [super touchesBegan:touches withEvent:event];
     }
     ```
-
-    #### Swift
-
-    ```swift
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-      let touch = touches.first
-      let location = touch?.location(in: self)
-      lastTouch = location
-    }
-    ```
     <!--</div>-->
 
 1. Override the `setHighlighted` method for your cell and apply the start and
 stop ripple animations:
 
     <!--<div class="material-code-render" markdown="1">-->
-    #### Objective-C
-
-    ```objc
-    - (void)setHighlighted:(BOOL)highlighted {
-      [super setHighlighted:highlighted];
-      if (highlighted) {
-        [_inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
-      } else {
-        [_inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
-      }
-    }
-    ```
-
     #### Swift
 
     ```swift
@@ -455,27 +442,40 @@ stop ripple animations:
       // get...
     }
     ```
+
+    #### Objective-C
+
+    ```objc
+    - (void)setHighlighted:(BOOL)highlighted {
+      [super setHighlighted:highlighted];
+      if (highlighted) {
+        [_inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+      } else {
+        [_inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+      }
+    }
+    ```
     <!--</div>-->
 
 1. When the cell is reused we must make sure no outstanding ripple animations
 stay on the cell so we need to clear the ink before:
 
     <!--<div class="material-code-render" markdown="1">-->
-    #### Objective-C
-
-    ```objc
-    - (void)prepareForReuse {
-      [_inkView cancelAllAnimationsAnimated:NO];
-      [super prepareForReuse];
-    }
-    ```
-
     #### Swift
 
     ```swift
     override func prepareForReuse() {
       inkView.cancelAllAnimations(animated: false)
       super.prepareForReuse()
+    }
+    ```
+
+    #### Objective-C
+
+    ```objc
+    - (void)prepareForReuse {
+      [_inkView cancelAllAnimationsAnimated:NO];
+      [super prepareForReuse];
     }
     ```
     <!--</div>-->
@@ -497,6 +497,12 @@ and their superview (the cell's `contentView`).
     constraints that are set up to be accessible throughout the file:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    var imageLeftPaddingConstraint: NSLayoutConstraint
+    var imageRightPaddingConstraint: NSLayoutConstraint
+    var imageWidthConstraint: NSLayoutConstraint
+    ```
 
     #### Objective-C
     ```objc
@@ -504,13 +510,6 @@ and their superview (the cell's `contentView`).
     NSLayoutConstraint *_imageRightPaddingConstraint;
     NSLayoutConstraint *_imageWidthConstraint;
     ``` 
-
-    #### Swift
-    ```swift
-    var imageLeftPaddingConstraint: NSLayoutConstraint
-    var imageRightPaddingConstraint: NSLayoutConstraint
-    var imageWidthConstraint: NSLayoutConstraint
-    ```
     <!--</div>-->
 
     This is in order to support the changing layout if an image is set or not.
@@ -521,6 +520,13 @@ when the cell is set up. For that we expose a `setCellWidth` method that sets
 the width constraint of the `contentView`:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    func set(cellWidth: CGFloat) {
+      cellWidthConstraint.constant = cellWidth
+      cellWidthConstraint.isActive = true
+    }
+    ```
 
     #### Objective-C
     ```objc
@@ -529,20 +535,20 @@ the width constraint of the `contentView`:
       _cellWidthConstraint.active = YES;
     }
     ```
-
-    #### Swift
-    ```swift
-    func set(cellWidth: CGFloat) {
-      cellWidthConstraint.constant = cellWidth
-      cellWidthConstraint.isActive = true
-    }
-    ```
     <!--</div>-->
 
     and then in the collection view's `cellForItemAtIndexPath` delegate method we
     set the width:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    var cellWidth = collectionView.bounds.width
+    if #available(iOS 11.0, *) {
+      cellWidth -= collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right
+    }
+    set(cellWidth: cellWidth)
+    ```
 
     #### Objective-C
     ```objc
@@ -553,15 +559,6 @@ the width constraint of the `contentView`:
     }
     [cell setCellWidth:cellWidth];
     ```
-
-    #### Swift
-    ```swift
-    var cellWidth = collectionView.bounds.width
-    if #available(iOS 11.0, *) {
-      cellWidth -= collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right
-    }
-    set(cellWidth: cellWidth)
-    ```
     <!--</div>-->
 
 1. In our collection view's flow layout we must set an `estimatedItemSize` so
@@ -571,16 +568,15 @@ the collection view will defer the size calculations to its content.
     might break in runtime.
 
     <!--<div class="material-code-render" markdown="1">-->
-
-    #### Objective-C
-    ```objc
-    _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
-    ```
-
     #### Swift
     ```swift
     flowLayout.estimatedItemSize = CGSize(width: kSmallArbitraryCellWidth, 
                                          height: kSmallestCellHeight)
+    ```
+
+    #### Objective-C
+    ```objc
+    _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
     ```
     <!--</div>-->
 
@@ -601,6 +597,17 @@ support it in our cells we need to follow these steps:
 set/update methods:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    func updateTitleFont() {
+      if (_titleFont == nil) {
+        _titleFont = defaultTitleFont
+      }
+      _titleLabel.font = 
+          _titleFont.mdc_fontSized(forMaterialTextStyle: .subheadline, 
+                                   scaledForDynamicType: mdc_adjustsFontForContentSizeCategory)
+    }
+    ```
 
     #### Objective-C
     ```objc
@@ -614,18 +621,6 @@ set/update methods:
       [self setNeedsLayout];
     }
     ```
-
-    #### Swift
-    ```swift
-    func updateTitleFont() {
-      if (_titleFont == nil) {
-        _titleFont = defaultTitleFont
-      }
-      _titleLabel.font = 
-          _titleFont.mdc_fontSized(forMaterialTextStyle: .subheadline, 
-                                   scaledForDynamicType: mdc_adjustsFontForContentSizeCategory)
-    }
-    ```
     <!--</div>-->
 
 1. Add an observer in the cell to check for the
@@ -633,6 +628,13 @@ set/update methods:
 text size has been changed.
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    NotificationCenter.default.addObserver(self, 
+                                           selector: #selector(contentSizeCategoryDidChange(notification:)), 
+                                           name: UIContentSizeCategory.didChangeNotification, 
+                                           object: nil)
+    ```
 
     #### Objective-C
     ```objc
@@ -642,20 +644,19 @@ text size has been changed.
                name:UIContentSizeCategoryDidChangeNotification
              object:nil];
     ```
-
-    #### Swift
-    ```swift
-    NotificationCenter.default.addObserver(self, 
-                                           selector: #selector(contentSizeCategoryDidChange(notification:)), 
-                                           name: UIContentSizeCategory.didChangeNotification, 
-                                           object: nil)
-    ```
     <!--</div>-->
 
 
     In the selector update the font sizes to reflect the change:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    func contentSizeCategoryDidChange(_: NSNotification) {
+      updateTitleFont()
+      updateDetailsFont()
+    }
+    ```
 
     #### Objective-C
     ```objc
@@ -664,32 +665,23 @@ text size has been changed.
       [self updateDetailsFont];
     }
     ```
-
-    #### Swift
-    ```swift
-    func contentSizeCategoryDidChange(_: NSNotification) {
-      updateTitleFont()
-      updateDetailsFont()
-    }
-    ```
     <!--</div>-->
 
 1. Add an observer also in the `UIViewController` so we can reload the
    collection view once there is a change:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    func contentSizeCategoryDidChange(_: NSNotification) {
+      collectionView.reloadData()
+    }
+    ```
 
     #### Objective-C
     ```objc
     - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
       [self.collectionView reloadData];
-    }
-    ```
-
-    #### Swift
-    ```swift
-    func contentSizeCategoryDidChange(_: NSNotification) {
-      collectionView.reloadData()
     }
     ```
     <!--</div>-->
@@ -701,6 +693,12 @@ text size has been changed.
     aware of the safe area:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    if #available(iOS 11.0, *) {
+      collectionView.contentInsetAdjustmentBehavior = .always
+    }
+    ```
 
     #### Objective-C
     ```objc
@@ -709,13 +707,6 @@ text size has been changed.
       self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
     }
     #endif
-    ```
-
-    #### Swift
-    ```swift
-    if #available(iOS 11.0, *) {
-      collectionView.contentInsetAdjustmentBehavior = .always
-    }
     ```
     <!--</div>-->
 
@@ -730,6 +721,22 @@ text size has been changed.
     code changes to achieve that:
 
     <!--<div class="material-code-render" markdown="1">-->
+    #### Swift
+    ```swift
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+      super.traitCollectionDidChange(previousTraitCollection)
+      self.collectionView.collectionViewLayout.invalidateLayout()
+      self.collectionView.reloadData()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+      super.viewWillTransition(to: size, with: coordinator)
+      self.collectionView.collectionViewLayout.invalidateLayout()
+      coordinator.animate(alongsideTransition: nil) { (_) in
+        self.collectionView.collectionViewLayout.invalidateLayout()
+      }
+    }
+    ```
 
     #### Objective-C
     ```objc
@@ -750,23 +757,6 @@ text size has been changed.
       }];
     }
     ```
-
-    #### Swift
-    ```swift
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-      super.traitCollectionDidChange(previousTraitCollection)
-      self.collectionView.collectionViewLayout.invalidateLayout()
-      self.collectionView.reloadData()
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-      super.viewWillTransition(to: size, with: coordinator)
-      self.collectionView.collectionViewLayout.invalidateLayout()
-      coordinator.animate(alongsideTransition: nil) { (_) in
-        self.collectionView.collectionViewLayout.invalidateLayout()
-      }
-    }
-    ```
     <!--</div>-->
 
 ### Right to left text support
@@ -774,31 +764,29 @@ text size has been changed.
 To support right to left text we need to import `MDFInternationalization`:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MDFInternationalization
+```
 
 #### Objective-C
 ```objc
 #import <MDFInternationalization/MDFInternationalization.h>
-```
-
-#### Swift
-```swift
-import MDFInternationalization
 ```
 <!--</div>-->
 
 and for each of our cell's subviews me need to update the `autoResizingMask`:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+_titleLabel.autoresizingMask =
+  MDFTrailingMarginAutoresizingMaskForLayoutDirection(mdf_effectiveUserInterfaceLayoutDirection)
+```
 
 #### Objective-C
 ```objc
 _titleLabel.autoresizingMask =
     MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
 ``` 
-
-#### Swift
-```swift
-_titleLabel.autoresizingMask =
-  MDFTrailingMarginAutoresizingMaskForLayoutDirection(mdf_effectiveUserInterfaceLayoutDirection)
-```
 <!--</div>-->
