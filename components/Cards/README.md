@@ -175,8 +175,6 @@ card.accessibilityLabel = [NSString
 ```
 <!--</div>-->
 
-## Types
-
 ## Card
 
 ![Card with sample image and buttons](docs/assets/custom-card.png)
@@ -299,7 +297,7 @@ _**Note:** All the optional elements of a card's content are implemented through
 **Elevation**        | N/A                       | `-setShadowElevation:forState:`<br/>`-shadowElevationForState:`     | 1
 **Ripple color**     | `rippleView.rippleColor`  | N/A                                                                 | `nil`
 
-### Theming
+## Theming
 
 Cards supports Material Theming using a Container Scheme. `MDCCard` and `MDCCardCollectionCell` have both default and outlined theming methods. Learn more about theming extensions [here](../../docs/theming.md). Below is a screenshot of an `MDCCard` with the Material Design Shrine theme:
 

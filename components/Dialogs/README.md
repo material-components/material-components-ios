@@ -86,20 +86,11 @@ the `-performAccessibilityEscape` method in your custom dialog view controller c
 }
 ```
 
-## Types
-
-There are four types of dialogs:
-
-1. [Alert](#alert-dialog)
-1. Simple
-1. Confirmation
-1. Full-screen
-
-![Examples of the four types of dialogs.](docs/assets/dialogs-types.png)
-
 ## Alert dialog
 
-The alert style is the only style supported on iOS. Consider using the [ActionSheet](https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/README.md) component in situations where one of the unsupported dialog types would have been appropriate.
+![Example alert dialog with lorem ipsum sample text.](docs/assets/alert-example.png)
+
+Alerts are the only type of dialog supported on iOS. Consider using the [ActionSheet](https://github.com/material-components/material-components-ios/blob/develop/components/ActionSheet/README.md) component in situations where one of the unsupported dialog types would have been appropriate.
 
 To present either an `MDCAlertController` or a custom dialog view controller, set its `modalPresentationStyle`
 property to `UIModalPresentationCustom` and its `transitioningDelegate` property to an

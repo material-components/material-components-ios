@@ -142,11 +142,7 @@ this day."
 
 ## Types
 
-There are three types of FABs:
-
-1. [Regular FABs](#regular-fabs)
-2. [Mini FABs](#mini-fabs)
-3. [Extended FABs](#extended-fabs)
+There are three types of FABs: 1\. [Regular FABs](#regular-fab) 2\. [Mini FABs](#mini-fab) 3\. [Extended FABs](#extended-fab)
 
 ![Three FABs, one of each type.](assets/fab-types.png)
 

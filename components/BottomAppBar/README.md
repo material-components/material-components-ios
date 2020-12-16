@@ -121,10 +121,6 @@ trailingButton.accessibilityHint = @"Purchase the item";
 ```
 <!--</div>-->
 
-## Types
-
-There is only one type of bottom app bar.
-
 ## Bottom app bar
 
 Bottom app bars group primary and secondary actions at the bottom of the screen, where they are easily reachable by the user's thumb.

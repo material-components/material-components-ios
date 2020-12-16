@@ -20,7 +20,6 @@ api_doc_root: true
 *   [Text button](#text-button)
 *   [Outlined button](#outlined-button)
 *   [Contained button](#contained-button)
-*   [Toggle button](#toggle-button)
 *   [Theming](#theming)
 
 - - -
@@ -163,12 +162,7 @@ this day."
 
 ## Types
 
-There are four types of buttons:
-
-1. [Text button](#text-button)
-2. [Outlined button](#outlined-button)
-3. [Contained button](#contained-button)
-4. [Toggle button](#toggle-button) (*not supported in iOS*)
+There are four types of buttons: 1. [Text button](#text-button) 2. [Outlined button](#outlined-button) 3. [Contained button](#contained-button) 4. Toggle button (*not supported in iOS*)"
 
 ![Example of the four button types](assets/buttons_types.png)
 
@@ -343,10 +337,6 @@ A contained button has a text label, a container, and an optional icon.
 ----------------------------------------------- | ----------------- | --------------------------------------------------------- | -------------
 **Icon**                                        | `imageView`        | `setImage:forState:`<br/>`imageForState:` | `nil`
 **Color**                                       | `imageView.tintColor` | `setImageViewTintColor:forState:`<br/>`imageViewTintColorForState:` | `nil`
-
-## Toggle button
-
-[Toggle buttons](https://material.io/components/buttons/#toggle-button) can be used to select from a group of choices. They are not supported on iOS.
 
 ## Theming
 
