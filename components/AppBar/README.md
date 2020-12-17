@@ -21,7 +21,6 @@ information and actions relating to the current screen.
 
 * [Using top app bars](#using-top-app-bars)
 * [Regular top app bar](#regular-top-app-bar)
-* [Contextual action bar](#contextual-action-bar)
 * [Theming](#theming)
 * [Migration guides](#migration-guides)
 * [Unsupported](#unsupported)
@@ -104,15 +103,9 @@ NSLog(@"accessibilityLabel: %@",self.navigationItem.rightBarButtonItem.accessibi
 ```
 <!--</div>-->
 
-## Types
-
-There are two types of top app bar:
-1. [Regular top app bar](#regular-top-app-bar)
-1. [Contextual action bar](#contextual-action-bar)
-
-![Regular top app bar and contextual action bars](docs/assets/appbar-types.png)
-
 ## Regular top app bar
+
+![Example of an iOS regular top app bar](docs/assets/app-bar-example.png)
 
 Regular top app bars are the only top app bars supported on iOS.
 
@@ -640,10 +633,6 @@ See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage g
 &nbsp;                           | Attribute            | Related method(s)                          | Default value
 -------------------------------- | -------------------- | ------------------------------------------ | -------------
 **Icons**                        | `-[UIViewController navigationItem]` | `-setLeftBarButtonItems:`<br>`-leftBarButtonItems`<br>`-setRightBarButtonItems:`<br>`-rightBarButtonItems` | `nil`
-
-## Contextual action bar
-
-Contextual action bars are not implemented on iOS.
 
 ## Theming
 
