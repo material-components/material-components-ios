@@ -14,6 +14,8 @@
 
 #import "MDCCard+MaterialTheming.h"
 
+#import "MaterialCards.h"
+
 static const MDCShadowElevation kNormalElevation = 1;
 static const MDCShadowElevation kHighlightedElevation = 1;
 static const CGFloat kBorderWidth = 1;
@@ -35,7 +37,7 @@ static const CGFloat kOutlinedVariantBorderOpacity = (CGFloat)0.37;
   if (shapeScheme) {
     [self applyThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4;
   }
 
   [self setShadowElevation:kNormalElevation forState:UIControlStateNormal];
@@ -66,7 +68,7 @@ static const CGFloat kOutlinedVariantBorderOpacity = (CGFloat)0.37;
   if (shapeScheme) {
     [self applyThemeWithShapeScheme:shapeScheme];
   } else {
-    self.layer.cornerRadius = (CGFloat)4;
+    self.layer.cornerRadius = 4;
   }
 
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
