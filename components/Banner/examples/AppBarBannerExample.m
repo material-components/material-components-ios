@@ -86,7 +86,7 @@
 - (void)showBanner {
   self.banner = [[MDCBannerView alloc] init];
   [self.banner applyThemeWithScheme:_containerScheme];
-  self.banner.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
+  self.banner.contentEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 8);
   self.banner.textView.text = @"This banner has been set as bottomBar of this AppBar.";
   [self.banner.leadingButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   [self.banner.leadingButton addTarget:self

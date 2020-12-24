@@ -86,6 +86,15 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView
  */
 @property(nonatomic, readwrite, strong, nonnull) UIColor *dividerColor;
 
+/**
+ The insets applied to the banner for all its content.
+
+ The banner uses this property to determine @c intrinsicContentSize and @c sizeThatFits:.
+
+ The default value is @c UIEdgeInsetsZero.
+ */
+@property(nonatomic, readwrite, assign) UIEdgeInsets contentEdgeInsets;
+
 /*
  Indicates whether the banner should automatically update its font when the device’s
  UIContentSizeCategory is changed.
