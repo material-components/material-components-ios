@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCSelfSizingStereoCellImageViewVerticalPosition.h"
+
 @interface MDCSelfSizingStereoCellLayout : NSObject
 
 @property(nonatomic, assign, readonly) CGFloat cellWidth;
@@ -28,7 +30,11 @@
 @property(nonatomic, assign, readonly) CGRect trailingImageViewFrame;
 
 - (instancetype)initWithLeadingImageView:(UIImageView *)leadingImageView
+        leadingImageViewVerticalPosition:
+            (MDCSelfSizingStereoCellImageViewVerticalPosition)leadingImageViewVerticalPosition
                        trailingImageView:(UIImageView *)trailingImageView
+       trailingImageViewVerticalPosition:
+           (MDCSelfSizingStereoCellImageViewVerticalPosition)trailingImageViewVerticalPosition
                            textContainer:(UIView *)textContainer
                               titleLabel:(UILabel *)titleLabel
                              detailLabel:(UILabel *)detailLabel

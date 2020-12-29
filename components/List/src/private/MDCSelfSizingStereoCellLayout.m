@@ -15,6 +15,7 @@
  */
 
 #import "MDCSelfSizingStereoCellLayout.h"
+#import "MDCSelfSizingStereoCellImageViewVerticalPosition.h"
 
 static const CGFloat kVerticalMarginMin = 8.0;
 static const CGFloat kVerticalMarginMax = 16.0;
@@ -39,146 +40,203 @@ static const CGFloat kInterLabelVerticalPadding = 6.0;
 @implementation MDCSelfSizingStereoCellLayout
 
 - (instancetype)initWithLeadingImageView:(UIImageView *)leadingImageView
+        leadingImageViewVerticalPosition:
+            (MDCSelfSizingStereoCellImageViewVerticalPosition)leadingImageViewVerticalPosition
                        trailingImageView:(UIImageView *)trailingImageView
+       trailingImageViewVerticalPosition:
+           (MDCSelfSizingStereoCellImageViewVerticalPosition)trailingImageViewVerticalPosition
                            textContainer:(UIView *)textContainer
                               titleLabel:(UILabel *)titleLabel
                              detailLabel:(UILabel *)detailLabel
                                cellWidth:(CGFloat)cellWidth {
   self = [super init];
   if (self) {
-    self.cellWidth = cellWidth;
-    [self assignFrameForLeadingImageView:leadingImageView];
-    [self assignFrameForTrailingImageView:trailingImageView];
-    [self assignFramesForTextContainer:textContainer titleLabel:titleLabel detailLabel:detailLabel];
-    self.calculatedHeight = [self calculateHeight];
+    [self calculateLayoutWithLeadingImageView:leadingImageView
+             leadingImageViewVerticalPosition:leadingImageViewVerticalPosition
+                            trailingImageView:trailingImageView
+            trailingImageViewVerticalPosition:trailingImageViewVerticalPosition
+                                textContainer:textContainer
+                                   titleLabel:titleLabel
+                                  detailLabel:detailLabel
+                                    cellWidth:cellWidth];
   }
   return self;
 }
 
-- (void)assignFrameForLeadingImageView:(UIImageView *)leadingImageView {
-  CGSize size = [self sizeForImage:leadingImageView.image];
-  CGFloat leadingPadding = 0;
-  CGFloat topPadding = 0;
-  if (!CGSizeEqualToSize(size, CGSizeZero)) {
-    leadingPadding = kHorizontalMargin;
-    topPadding = [self verticalMarginForImageViewOfSize:size];
+/**
+ This method calculates the frames for the subviews in the cell. It starts by determining the
+ leading and trailing image view frames. Then it uses those frames to determine the frame of the
+ title label, detail label, and the view that contains them. Then, it calculates the height of the
+ cell. Finally, it vertically centers the iamge views if necessary.
+ */
+- (void)calculateLayoutWithLeadingImageView:(UIImageView *)leadingImageView
+           leadingImageViewVerticalPosition:
+               (MDCSelfSizingStereoCellImageViewVerticalPosition)leadingImageViewVerticalPosition
+                          trailingImageView:(UIImageView *)trailingImageView
+          trailingImageViewVerticalPosition:
+              (MDCSelfSizingStereoCellImageViewVerticalPosition)trailingImageViewVerticalPosition
+                              textContainer:(UIView *)textContainer
+                                 titleLabel:(UILabel *)titleLabel
+                                detailLabel:(UILabel *)detailLabel
+                                  cellWidth:(CGFloat)cellWidth {
+  // Initially assume an image view frame of .zero.
+  CGRect leadingImageViewFrame = CGRectZero;
+  CGSize leadingImageViewSize = [self sizeForImage:leadingImageView.image];
+  BOOL displaysLeadingImageView = !CGSizeEqualToSize(leadingImageViewSize, CGSizeZero);
+  if (displaysLeadingImageView) {
+    // Calculate non-zero image view frame because image exists and has a valid size.
+    CGFloat leadingImageViewMinX = kHorizontalMargin;
+    CGFloat leadingImageViewMinY = [self verticalMarginForImageViewOfSize:leadingImageViewSize];
+    leadingImageViewFrame = CGRectMake(leadingImageViewMinX, leadingImageViewMinY,
+                                       leadingImageViewSize.width, leadingImageViewSize.height);
   }
-  CGRect rect = CGRectZero;
-  rect.origin = CGPointMake(leadingPadding, topPadding);
-  rect.size = size;
-  self.leadingImageViewFrame = rect;
-}
 
-- (void)assignFrameForTrailingImageView:(UIImageView *)trailingImageView {
-  CGSize size = [self sizeForImage:trailingImageView.image];
-  CGFloat trailingPadding = 0;
-  CGFloat topPadding = 0;
-  if (!CGSizeEqualToSize(size, CGSizeZero)) {
-    trailingPadding = kHorizontalMargin;
-    topPadding = [self verticalMarginForImageViewOfSize:size];
+  // Initially assume an image view frame of .zero.
+  CGRect trailingImageViewFrame = CGRectZero;
+  CGSize trailingImageViewSize = [self sizeForImage:trailingImageView.image];
+  BOOL displaysTrailingImageView = !CGSizeEqualToSize(trailingImageViewSize, CGSizeZero);
+  if (displaysTrailingImageView) {
+    // Calculate non-zero image view frame because image exists and has a valid size.
+    CGFloat trailingImageViewMinX = cellWidth - kHorizontalMargin - trailingImageViewSize.width;
+    CGFloat trailingImageViewMinY = [self verticalMarginForImageViewOfSize:trailingImageViewSize];
+    trailingImageViewFrame = CGRectMake(trailingImageViewMinX, trailingImageViewMinY,
+                                        trailingImageViewSize.width, trailingImageViewSize.height);
   }
-  CGFloat originX = self.cellWidth - trailingPadding - size.width;
-  CGRect rect = CGRectZero;
-  rect.origin = CGPointMake(originX, topPadding);
-  rect.size = size;
-  self.trailingImageViewFrame = rect;
-}
 
-- (void)assignFramesForTextContainer:(UIView *)textContainer
-                          titleLabel:(UILabel *)titleLabel
-                         detailLabel:(UILabel *)detailLabel {
+  // Initialize text-related view frame as .zero.
+  CGRect titleLabelFrame = CGRectZero;
+  CGRect detailLabelFrame = CGRectZero;
+  CGRect textContainerFrame = CGRectZero;
+
   BOOL containsTitleText = titleLabel.text.length > 0;
   BOOL containsDetailText = detailLabel.text.length > 0;
-  if (!containsTitleText && !containsDetailText) {
-    self.titleLabelFrame = CGRectZero;
-    self.detailLabelFrame = CGRectZero;
-    self.textContainerFrame = CGRectZero;
-    return;
-  }
+  if (containsTitleText || containsDetailText) {
+    // Determine min x of text region
+    CGFloat textContainerMinX = kHorizontalMargin;
+    if (displaysLeadingImageView) {
+      textContainerMinX = CGRectGetMaxX(leadingImageViewFrame) + kHorizontalMargin;
+    }
 
-  BOOL hasLeadingImage = !CGRectEqualToRect(self.leadingImageViewFrame, CGRectZero);
-  BOOL hasTrailingImage = !CGRectEqualToRect(self.trailingImageViewFrame, CGRectZero);
-  CGFloat leadingImageViewMaxX = (hasLeadingImage ? CGRectGetMaxX(self.leadingImageViewFrame) : 0);
-  CGFloat textContainerMinX = leadingImageViewMaxX + kHorizontalMargin;
-  CGFloat trailingImageViewMinX =
-      (hasTrailingImage ? CGRectGetMinX(self.trailingImageViewFrame) : self.cellWidth);
-  CGFloat textContainerMaxX = trailingImageViewMinX - kHorizontalMargin;
-  CGFloat textContainerMinY = kVerticalMarginMax;
-  CGFloat textContainerWidth = textContainerMaxX - textContainerMinX;
-  CGFloat textContainerHeight = 0;
+    // Determine max x of text region
+    CGFloat textContainerMaxX = cellWidth - kHorizontalMargin;
+    if (displaysTrailingImageView) {
+      textContainerMaxX = CGRectGetMinX(trailingImageViewFrame) - kHorizontalMargin;
+    }
 
-  const CGSize fittingSize = CGSizeMake(textContainerWidth, CGFLOAT_MAX);
+    // Begin determining the frame of the view that contains the title and detail labels.
+    // The final frame of this view must be calculated further down because it depends on the frames
+    // of the labels it contains.
+    CGFloat textContainerMinY = kVerticalMarginMax;
+    CGFloat textContainerWidth = textContainerMaxX - textContainerMinX;
+    CGFloat textContainerHeight = 0;
 
-  CGSize titleSize = [titleLabel sizeThatFits:fittingSize];
-  titleSize.width = textContainerWidth;
-  const CGFloat titleLabelMinX = 0;
-  CGFloat titleLabelMinY = 0;
-  CGPoint titleOrigin = CGPointMake(titleLabelMinX, titleLabelMinY);
-  CGRect titleFrame = CGRectZero;
-  titleFrame.origin = titleOrigin;
-  titleFrame.size = titleSize;
-  self.titleLabelFrame = titleFrame;
+    CGSize fittingSize = CGSizeMake(textContainerWidth, CGFLOAT_MAX);
 
-  CGSize detailSize = [detailLabel sizeThatFits:fittingSize];
-  detailSize.width = textContainerWidth;
-  const CGFloat detailLabelMinX = 0;
-  CGFloat detailLabelMinY = CGRectGetMaxY(titleFrame);
-  if (titleLabel.text.length > 0 && detailLabel.text.length > 0) {
-    detailLabelMinY += kInterLabelVerticalPadding;
-  }
-  CGPoint detailOrigin = CGPointMake(detailLabelMinX, detailLabelMinY);
-  CGRect detailFrame = CGRectZero;
-  detailFrame.origin = detailOrigin;
-  detailFrame.size = detailSize;
-  self.detailLabelFrame = detailFrame;
+    // Determine title label size and then frame within container view
+    CGSize titleSize = [titleLabel sizeThatFits:fittingSize];
+    titleSize.width = textContainerWidth;
+    CGFloat titleLabelMinX = 0;
+    CGFloat titleLabelMinY = 0;
+    CGPoint titleOrigin = CGPointMake(titleLabelMinX, titleLabelMinY);
+    titleLabelFrame.origin = titleOrigin;
+    titleLabelFrame.size = titleSize;
 
-  textContainerHeight = CGRectGetMaxY(self.detailLabelFrame);
+    // Determine detail label size and then frame within container view
+    CGSize detailSize = [detailLabel sizeThatFits:fittingSize];
+    detailSize.width = textContainerWidth;
+    CGFloat detailLabelMinX = 0;
+    CGFloat detailLabelMinY = CGRectGetMaxY(titleLabelFrame);
+    if (titleLabel.text.length > 0 && detailLabel.text.length > 0) {
+      detailLabelMinY += kInterLabelVerticalPadding;
+    }
+    CGPoint detailOrigin = CGPointMake(detailLabelMinX, detailLabelMinY);
+    detailLabelFrame.origin = detailOrigin;
+    detailLabelFrame.size = detailSize;
 
-  CGRect textContainerFrame = CGRectZero;
-  CGPoint textContainerOrigin = CGPointMake(textContainerMinX, textContainerMinY);
-  CGSize textContainerSize = CGSizeMake(textContainerWidth, textContainerHeight);
-  textContainerFrame.origin = textContainerOrigin;
-  textContainerFrame.size = textContainerSize;
-  self.textContainerFrame = textContainerFrame;
+    // Determine title and detail label container view height and then frame
+    textContainerHeight = CGRectGetMaxY(detailLabelFrame);
 
-  BOOL hasOnlyTitleText = containsTitleText && !containsDetailText;
-  BOOL shouldVerticallyCenterTitleText = hasOnlyTitleText && hasLeadingImage;
-  if (shouldVerticallyCenterTitleText) {
-    CGFloat leadingImageViewCenterY = CGRectGetMidY(self.leadingImageViewFrame);
-    CGFloat textContainerCenterY = CGRectGetMidY(self.textContainerFrame);
-    CGFloat difference = textContainerCenterY - leadingImageViewCenterY;
-    CGRect offsetTextContainerRect = CGRectOffset(self.textContainerFrame, 0, -difference);
-    BOOL willExtendPastMargin = offsetTextContainerRect.origin.y < kVerticalMarginMax;
-    if (!willExtendPastMargin) {
-      self.textContainerFrame = offsetTextContainerRect;
+    CGPoint textContainerOrigin = CGPointMake(textContainerMinX, textContainerMinY);
+    CGSize textContainerSize = CGSizeMake(textContainerWidth, textContainerHeight);
+    textContainerFrame.origin = textContainerOrigin;
+    textContainerFrame.size = textContainerSize;
+
+    // Usually the image views are positioned at the top. However, this looks funny if there is only
+    // one line of text. If there is only one line of text, make it have the same center Y as the
+    // image views.
+    BOOL hasOnlyTitleText = containsTitleText && !containsDetailText;
+    BOOL shouldVerticallyCenterTitleText = hasOnlyTitleText && displaysLeadingImageView;
+    if (shouldVerticallyCenterTitleText) {
+      CGFloat leadingImageViewCenterY = CGRectGetMidY(leadingImageViewFrame);
+      CGFloat textContainerCenterY = CGRectGetMidY(textContainerFrame);
+      CGFloat difference = textContainerCenterY - leadingImageViewCenterY;
+      CGRect offsetTextContainerRect = CGRectOffset(textContainerFrame, 0, -difference);
+      BOOL willExtendPastMargin = offsetTextContainerRect.origin.y < kVerticalMarginMax;
+      if (!willExtendPastMargin) {
+        textContainerFrame = offsetTextContainerRect;
+      }
     }
   }
+
+  // Calculate the height of the cell.
+  CGFloat calculatedHeight = [self calculateHeightWithLeadingImageViewFrame:leadingImageViewFrame
+                                                     trailingImageViewFrame:trailingImageViewFrame
+                                                         textContainerFrame:textContainerFrame];
+
+  // Center the image views if the user has specified that they want the image views centered.
+  if (displaysLeadingImageView &&
+      leadingImageViewVerticalPosition == MDCSelfSizingStereoCellImageViewVerticalPositionCenter) {
+    CGFloat verticallyCenteredLeadingImageViewMinY =
+        (0.5f * calculatedHeight) - (0.5f * leadingImageViewSize.height);
+    leadingImageViewFrame =
+        CGRectMake(CGRectGetMinX(leadingImageViewFrame), verticallyCenteredLeadingImageViewMinY,
+                   leadingImageViewSize.width, leadingImageViewSize.height);
+  }
+
+  if (displaysTrailingImageView &&
+      trailingImageViewVerticalPosition == MDCSelfSizingStereoCellImageViewVerticalPositionCenter) {
+    CGFloat verticallyCenteredTrailingImageViewMinY =
+        (0.5f * calculatedHeight) - (0.5f * trailingImageViewSize.height);
+    trailingImageViewFrame =
+        CGRectMake(CGRectGetMinX(trailingImageViewFrame), verticallyCenteredTrailingImageViewMinY,
+                   trailingImageViewSize.width, trailingImageViewSize.height);
+  }
+
+  // Set the properties to be read by the cell.
+  self.textContainerFrame = textContainerFrame;
+  self.titleLabelFrame = titleLabelFrame;
+  self.detailLabelFrame = detailLabelFrame;
+  self.cellWidth = cellWidth;
+  self.leadingImageViewFrame = leadingImageViewFrame;
+  self.trailingImageViewFrame = trailingImageViewFrame;
+  self.calculatedHeight = calculatedHeight;
 }
 
-- (CGFloat)calculateHeight {
+- (CGFloat)calculateHeightWithLeadingImageViewFrame:(CGRect)leadingImageViewFrame
+                             trailingImageViewFrame:(CGRect)trailingImageViewFrame
+                                 textContainerFrame:(CGRect)textContainerFrame {
   CGFloat maxHeight = 0;
   CGFloat leadingImageViewRequiredVerticalSpace = 0;
   CGFloat trailingImageViewRequiredVerticalSpace = 0;
   CGFloat textContainerRequiredVerticalSpace = 0;
-  if (!CGRectEqualToRect(self.leadingImageViewFrame, CGRectZero)) {
+  if (!CGRectEqualToRect(leadingImageViewFrame, CGRectZero)) {
     leadingImageViewRequiredVerticalSpace =
-        CGRectGetMaxY(self.leadingImageViewFrame) +
-        [self verticalMarginForImageViewOfSize:self.leadingImageViewFrame.size];
+        CGRectGetMaxY(leadingImageViewFrame) +
+        [self verticalMarginForImageViewOfSize:leadingImageViewFrame.size];
     if (leadingImageViewRequiredVerticalSpace > maxHeight) {
       maxHeight = leadingImageViewRequiredVerticalSpace;
     }
   }
-  if (!CGRectEqualToRect(self.trailingImageViewFrame, CGRectZero)) {
+  if (!CGRectEqualToRect(trailingImageViewFrame, CGRectZero)) {
     trailingImageViewRequiredVerticalSpace =
-        CGRectGetMaxY(self.trailingImageViewFrame) +
-        [self verticalMarginForImageViewOfSize:self.trailingImageViewFrame.size];
+        CGRectGetMaxY(trailingImageViewFrame) +
+        [self verticalMarginForImageViewOfSize:trailingImageViewFrame.size];
     if (trailingImageViewRequiredVerticalSpace > maxHeight) {
       maxHeight = trailingImageViewRequiredVerticalSpace;
     }
   }
-  if (!CGRectEqualToRect(self.textContainerFrame, CGRectZero)) {
-    textContainerRequiredVerticalSpace =
-        CGRectGetMaxY(self.textContainerFrame) + kVerticalMarginMax;
+  if (!CGRectEqualToRect(textContainerFrame, CGRectZero)) {
+    textContainerRequiredVerticalSpace = CGRectGetMaxY(textContainerFrame) + kVerticalMarginMax;
     if (textContainerRequiredVerticalSpace > maxHeight) {
       maxHeight = textContainerRequiredVerticalSpace;
     }
@@ -202,8 +260,9 @@ static const CGFloat kInterLabelVerticalPadding = 6.0;
 }
 
 - (CGFloat)verticalMarginForImageViewOfSize:(CGSize)size {
-  CGFloat leadingImageHeight = size.height;
-  if (leadingImageHeight > 0 && leadingImageHeight <= kImageSideLengthMedium) {
+  if (size.height == 0) {
+    return 0;
+  } else if (size.height > 0 && size.height <= kImageSideLengthMedium) {
     return kVerticalMarginMax;
   } else {
     return kVerticalMarginMin;
