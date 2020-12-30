@@ -262,6 +262,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   }
 
 #ifdef __IPHONE_13_4
+#if !TARGET_OS_TV
   if (@available(iOS 13.4, *)) {
     if ([self respondsToSelector:@selector(pointerStyleProvider)]) {
       __weak __typeof__(self) weakSelf = self;
@@ -282,7 +283,8 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
       self.pointerInteractionEnabled = NO;
     }
   }
-#endif
+#endif  // !TARGET_OS_TV
+#endif  // __IPHONE_13_4
 }
 
 - (void)dealloc {
