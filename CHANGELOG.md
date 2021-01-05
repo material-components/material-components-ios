@@ -1,3 +1,40 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### Banner
+
+* [ Add contentEdgeInsets support to replace layoutMargins usage in sizeThatFits:.](https://github.com/material-components/material-components-ios/commit/8bd8b295e227310a8c835ec9d3f58ca3b651319a) (Wenyu Zhang)
+* [setNeedsLayout before showing Banner in BannerAutolayoutSwiftExampleViewController](https://github.com/material-components/material-components-ios/commit/1faf60e6f5fee51470fc2b21b26304879d6405da) (Wenyu Zhang)
+
+### Cards
+
+* [Update setting corner radius to match team style guide](https://github.com/material-components/material-components-ios/commit/4b7c446e7e14b43202421311894e388b18df6650) (Cody Weaver)
+
+### List
+
+* [Support vertically centered image views in MDCSelfSizingStereoCell](https://github.com/material-components/material-components-ios/commit/bdeb1f7e9d23708ab01440cb3f7e9d681c195038) (Andrew Overton)
+
+## Multi-component changes
+
+* [Additional requested docs changes](https://github.com/material-components/material-components-ios/commit/b42de42c876dada1437193a2c0b793b5cef41e70) (Andrew Overton)
+* [Ensure swift snippets always come before objc](https://github.com/material-components/material-components-ios/commit/08ca10b07876de6f363c7f6baf6b265f3980fea1) (Andrew Overton)
+* [Improve support for tvOS.](https://github.com/material-components/material-components-ios/commit/3bc7339b7a8e834a661de78fe3ae9805468f5259) (Jeff Verkoeyen)
+
+---
+
 # 119.3.0
 
 In this minor release we added a new method to the `MDCBaseTextFieldDelegate` protocol and fixed bugs in NavigationDrawer, TextControls, and Tabs.
