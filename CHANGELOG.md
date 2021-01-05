@@ -4,7 +4,7 @@ In this minor release, we added a new contentEdgeInsets API to Banner, added sup
 
 ## API changes
 
-### Banner 
+### Banner
 
 *new* property: `contentEdgeInsets` in `MDCBannerView`.
 
