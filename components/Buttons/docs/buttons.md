@@ -20,7 +20,6 @@ api_doc_root: true
 *   [Text button](#text-button)
 *   [Outlined button](#outlined-button)
 *   [Contained button](#contained-button)
-*   [Toggle button](#toggle-button)
 *   [Theming](#theming)
 
 - - -
@@ -163,12 +162,7 @@ this day."
 
 ## Types
 
-There are four types of buttons:
-
-1. [Text button](#text-button)
-2. [Outlined button](#outlined-button)
-3. [Contained button](#contained-button)
-4. [Toggle button](#toggle-button) (*not supported in iOS*)
+There are four types of buttons: 1. [Text button](#text-button) 2. [Outlined button](#outlined-button) 3. [Contained button](#contained-button) 4. Toggle button (*not supported in iOS*)"
 
 ![Example of the four button types](assets/buttons_types.png)
 
@@ -186,15 +180,15 @@ All Material buttons are implemented by `MDCButton`, a subclass of [`UIButton`](
 To use a text button use the text button theming method on the `MDCButton` theming extension. For more information on theming extensions see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-```objc
-[self.button applyTextThemeWithScheme:self.containerScheme];
-```
-
 #### Swift
 
 ```swift
 button.applyTextTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+```objc
+[self.button applyTextThemeWithScheme:self.containerScheme];
 ```
 <!--</div>-->
 
@@ -243,15 +237,14 @@ A text button has a text label, a transparent container and an optional icon.
 To achieve an outlined button use the outlined button theming method on the `MDCButton` theming extension. To access the theming extension see the [Theming section](#theming). 
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.applyOutlinedTheme(withScheme: containerScheme)
+```
+
 #### Objective-C
 ```objc
 [self.button applyOutlinedThemeWithScheme:self.containerScheme];
-```
-
-#### Swift
-
-```swift
-button.applyOutlinedTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 
@@ -300,15 +293,14 @@ An outlined button has a text label, a container, and an optional icon.
 Contained buttons are implemented by `MDCButton`. To achieve a contained button use the contained button theming method on the `MDCButton` theming extension. To access the theming extension see the [Theming section](#theming).
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.applyContainedTheme(withScheme: containerScheme)
+```
+
 #### Objective-C
 ```objc
 [self.button applyContainedThemeWithScheme:self.containerScheme];
-```
-
-#### Swift
-
-```swift
-button.applyContainedTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 
@@ -345,10 +337,6 @@ A contained button has a text label, a container, and an optional icon.
 ----------------------------------------------- | ----------------- | --------------------------------------------------------- | -------------
 **Icon**                                        | `imageView`        | `setImage:forState:`<br/>`imageForState:` | `nil`
 **Color**                                       | `imageView.tintColor` | `setImageViewTintColor:forState:`<br/>`imageViewTintColorForState:` | `nil`
-
-## Toggle button
-
-[Toggle buttons](https://material.io/components/buttons/#toggle-button) can be used to select from a group of choices. They are not supported on iOS.
 
 ## Theming
 

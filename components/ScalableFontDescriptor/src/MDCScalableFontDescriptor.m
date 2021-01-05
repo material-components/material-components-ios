@@ -54,7 +54,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
       textStyles = @[
+#if !TARGET_OS_TV
         UIFontTextStyleLargeTitle,
+#endif
         UIFontTextStyleTitle1,
         UIFontTextStyleTitle2,
         UIFontTextStyleTitle3,

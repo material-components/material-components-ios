@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCBaseCell.h"
+#import "MDCSelfSizingStereoCellImageViewVerticalPosition.h"
 
 /**
  MDCSelfSizingStereoCell is intended to be an easy to use readymade implementation of a basic
@@ -43,9 +44,21 @@ __attribute__((objc_subclassing_restricted)) @interface MDCSelfSizingStereoCell 
 @property(nonatomic, strong, readonly) UIImageView *leadingImageView;
 
 /**
+ This property influences the positioning of @c leadingImageView. The default value is @c .top.
+ */
+@property(nonatomic, assign)
+    MDCSelfSizingStereoCellImageViewVerticalPosition leadingImageViewVerticalPosition;
+
+/**
  The UIImageView responsible for displaying the trailing image.
  */
 @property(nonatomic, strong, readonly) UIImageView *trailingImageView;
+
+/**
+ This property influences the positioning of @c trailingImageView. The default value is @c .top.
+ */
+@property(nonatomic, assign)
+    MDCSelfSizingStereoCellImageViewVerticalPosition trailingImageViewVerticalPosition;
 
 /**
  The UILabel responsible for displaying the title text. By default, `numberOfLines` is set to 0 so

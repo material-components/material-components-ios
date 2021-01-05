@@ -135,10 +135,6 @@ override func viewWillLayoutSubviews() {
 
 ```
 
-## Types
-
-There is only one type of bottom navigation bar.
-
 ## Bottom navigation bar
 
 ![A bottom navigation item with home, mail, favorites, reader, and birthday sections](docs/assets/bottom-nav-example.png)

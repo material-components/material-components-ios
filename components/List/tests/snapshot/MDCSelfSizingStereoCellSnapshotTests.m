@@ -156,6 +156,29 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   [self generateSnapshotAndVerifyForView:self.collectionView];
 }
 
+- (void)testCellWithTitleAndDetailAndVerticallyCenteredImage {
+  // When
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  cell.titleLabel.text = @"This is a title label. This is a title label. This is a title label. "
+                         @"This is a title label. This is a title label.";
+  cell.detailLabel.text = @"This is a detail label. This is a detail label. This is a detail "
+                          @"label. This is a detail label. This is a detail label.";
+  cell.leadingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                   withStyle:MDCSnapshotTestImageStyleCheckerboard];
+  cell.trailingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                    withStyle:MDCSnapshotTestImageStyleRectangles];
+  cell.leadingImageViewVerticalPosition = MDCSelfSizingStereoCellImageViewVerticalPositionCenter;
+  cell.trailingImageViewVerticalPosition = MDCSelfSizingStereoCellImageViewVerticalPositionCenter;
+  self.arrayOfCells = @[ cell ];
+
+  CGSize cellSize = [cell systemLayoutSizeFittingSize:CGSizeMake(170, CGFLOAT_MAX)];
+  self.collectionView.frame = CGRectMake(0, 0, cellSize.width, cellSize.height);
+  self.collectionViewLayout.estimatedItemSize = cellSize;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.collectionView];
+}
+
 - (void)testCellWithDynamicTypeForContentSizeCategoryExtraSmallEnabledForTitleAndDetail {
   if (@available(iOS 10.0, *)) {
     // Given
@@ -280,6 +303,8 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   dequeuedCell.leadingImageView.image = cell.leadingImageView.image;
   dequeuedCell.trailingImageView.image = cell.trailingImageView.image;
   dequeuedCell.mdc_adjustsFontForContentSizeCategory = cell.mdc_adjustsFontForContentSizeCategory;
+  dequeuedCell.leadingImageViewVerticalPosition = cell.leadingImageViewVerticalPosition;
+  dequeuedCell.trailingImageViewVerticalPosition = cell.trailingImageViewVerticalPosition;
   [dequeuedCell removeFromSuperview];
   return dequeuedCell;
 }

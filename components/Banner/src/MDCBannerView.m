@@ -36,6 +36,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 @interface MDCBannerView ()
 
+@property(nonatomic, readwrite, strong) UIView *contentView;
+
 @property(nonatomic, readwrite, strong) UITextView *textView;
 
 @property(nonatomic, readwrite, strong) UIImageView *imageView;
@@ -46,6 +48,12 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 @property(nonatomic, readwrite, strong) UIView *divider;
 @property(nonatomic, readwrite, assign) CGFloat dividerHeight;
+
+// Content constraints
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *contentViewConstraintTop;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *contentViewConstraintBottom;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *contentViewConstraintLeft;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *contentViewConstraintRight;
 
 // Image constraints
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *imageViewConstraintLeading;
@@ -123,6 +131,12 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.backgroundColor = UIColor.whiteColor;
   _bannerViewLayoutStyle = MDCBannerViewLayoutStyleAutomatic;
   self.layoutMargins = UIEdgeInsetsZero;
+  self.contentEdgeInsets = UIEdgeInsetsZero;
+
+  UIView *contentView = [[UIView alloc] init];
+  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  _contentView = contentView;
+  [self addSubview:contentView];
 
   // Create textView
   UITextView *textView = [[UITextView alloc] init];
@@ -138,7 +152,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   textView.textAlignment = NSTextAlignmentNatural;
   textView.textContainerInset = UIEdgeInsetsZero;
   textView.backgroundColor = UIColor.clearColor;
-  [self addSubview:textView];
+  [contentView addSubview:textView];
   _textView = textView;
 
   // Create imageView
@@ -149,13 +163,13 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   imageView.contentMode = UIViewContentModeCenter;
   imageView.clipsToBounds = YES;
   imageView.hidden = YES;
-  [self addSubview:imageView];
+  [contentView addSubview:imageView];
   _imageView = imageView;
 
   // Create a button container to organize buttons
   UIView *buttonContainerView = [[UIView alloc] init];
   buttonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:buttonContainerView];
+  [contentView addSubview:buttonContainerView];
   self.buttonContainerView = buttonContainerView;
 
   // Create leadingButton and trailingButton
@@ -194,6 +208,15 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   return self.divider.backgroundColor;
 }
 
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  _contentEdgeInsets = contentEdgeInsets;
+
+  self.contentViewConstraintBottom.constant = -contentEdgeInsets.bottom;
+  self.contentViewConstraintTop.constant = contentEdgeInsets.top;
+  self.contentViewConstraintLeft.constant = contentEdgeInsets.left;
+  self.contentViewConstraintRight.constant = -contentEdgeInsets.right;
+}
+
 - (CGFloat)mdc_currentElevation {
   return 0;
 }
@@ -201,6 +224,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 #pragma mark - Constraints Helpers
 
 - (void)setupConstraints {
+  [self setUpContentConstraints];
   [self setUpImageViewConstraints];
   [self setUpTextViewConstraints];
   [self setUpButtonContainerConstraints];
@@ -208,12 +232,27 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [self setUpDividerConstraints];
 }
 
+- (void)setUpContentConstraints {
+  self.contentViewConstraintLeft =
+      [self.contentView.leftAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leftAnchor
+                                                  constant:self.contentEdgeInsets.left];
+  self.contentViewConstraintRight =
+      [self.contentView.rightAnchor constraintEqualToAnchor:self.layoutMarginsGuide.rightAnchor
+                                                   constant:-self.contentEdgeInsets.right];
+  self.contentViewConstraintTop =
+      [self.contentView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                                 constant:self.contentEdgeInsets.top];
+  self.contentViewConstraintBottom =
+      [self.contentView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
+                                                    constant:-self.contentEdgeInsets.bottom];
+}
+
 - (void)setUpImageViewConstraints {
   self.imageViewConstraintLeading =
-      [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+      [self.imageView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor
                                                    constant:kLeadingPadding];
   self.imageViewConstraintTopLarge =
-      [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+      [self.imageView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
                                                constant:kTopPaddingLarge];
   self.imageViewConstraintCenterY =
       [self.imageView.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
@@ -221,38 +260,38 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)setUpTextViewConstraints {
   self.textViewConstraintTop =
-      [self.textView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+      [self.textView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
                                               constant:kTopPaddingLarge];
   self.textViewConstraintCenterY =
       [self.textView.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
   self.textViewConstraintTrailing =
-      [self.textView.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
+      [self.textView.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor
                                                    constant:-kTextTrailingPadding];
   self.textViewConstraintLeadingWithImage =
       [self.textView.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor
                                                   constant:kSpaceBetweenIconImageAndTextView];
   self.textViewConstraintLeadingWithMargin =
-      [self.textView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+      [self.textView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor
                                                   constant:kLeadingPadding];
 }
 
 - (void)setUpButtonContainerConstraints {
-  self.buttonContainerConstraintLeading = [self.buttonContainerView.leadingAnchor
-      constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
-                     constant:kLeadingPadding];
+  self.buttonContainerConstraintLeading =
+      [self.buttonContainerView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor
+                                                             constant:kLeadingPadding];
   self.buttonContainerConstraintWidthWithLeadingButton =
       [self.buttonContainerView.widthAnchor constraintEqualToAnchor:self.leadingButton.widthAnchor];
   self.buttonContainerConstraintTrailing = [self.buttonContainerView.trailingAnchor
-      constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
+      constraintEqualToAnchor:self.contentView.trailingAnchor
                      constant:-kButtonContainerTrailingPadding];
-  self.buttonContainerConstraintBottom = [self.buttonContainerView.bottomAnchor
-      constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
-                     constant:-kBottomPadding];
+  self.buttonContainerConstraintBottom =
+      [self.buttonContainerView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor
+                                                            constant:-kBottomPadding];
   self.buttonContainerConstraintLeadingWithTextView = [self.buttonContainerView.leadingAnchor
       constraintEqualToAnchor:self.textView.trailingAnchor
                      constant:kHorizontalSpaceBetweenTextViewAndButton];
   self.buttonContainerConstraintTopWithMargin =
-      [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+      [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
                                                          constant:kTopPaddingSmall];
   self.buttonContainerConstraintTopWithImageViewGreater = [self.buttonContainerView.topAnchor
       constraintGreaterThanOrEqualToAnchor:self.imageView.bottomAnchor
@@ -315,6 +354,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 - (void)deactivateAllConstraints {
+  self.contentViewConstraintBottom.active = NO;
+  self.contentViewConstraintTop.active = NO;
+  self.contentViewConstraintLeft.active = NO;
+  self.contentViewConstraintRight.active = NO;
   self.imageViewConstraintLeading.active = NO;
   self.imageViewConstraintTopLarge.active = NO;
   self.imageViewConstraintCenterY.active = NO;
@@ -361,7 +404,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (CGSize)sizeThatFits:(CGSize)size {
   MDCBannerViewLayoutStyle layoutStyle = [self layoutStyleForSizeToFit:size];
-  CGFloat frameHeight = self.layoutMargins.top + self.layoutMargins.bottom;
+  CGFloat frameHeight = self.contentEdgeInsets.top + self.contentEdgeInsets.bottom;
   CGSize contentSize = [self contentSizeForLayoutSize:size];
   switch (layoutStyle) {
     case MDCBannerViewLayoutStyleSingleRow: {
@@ -444,6 +487,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)updateConstraintsWithLayoutStyle:(MDCBannerViewLayoutStyle)layoutStyle {
   [self deactivateAllConstraints];
+  self.contentViewConstraintBottom.active = YES;
+  self.contentViewConstraintTop.active = YES;
+  self.contentViewConstraintLeft.active = YES;
+  self.contentViewConstraintRight.active = YES;
 
   self.imageViewConstraintLeading.active = YES;
   if (!self.imageView.hidden) {
@@ -561,6 +608,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (CGSize)contentSizeForLayoutSize:(CGSize)layoutSize {
   CGFloat remainingWidth = layoutSize.width;
   CGFloat marginsPadding = self.layoutMargins.left + self.layoutMargins.right;
+  marginsPadding += self.contentEdgeInsets.left + self.contentEdgeInsets.right;
   remainingWidth -= marginsPadding;
   remainingWidth -= (kLeadingPadding + kButtonContainerTrailingPadding);
   return CGSizeMake(remainingWidth, layoutSize.height);

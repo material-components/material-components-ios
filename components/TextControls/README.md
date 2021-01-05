@@ -412,19 +412,19 @@ import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 From there, call either the default or the error theming method.
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Objective-C
-
-```objc
-MDCContainerScheme *containerScheme = ... // Set up a container scheme;
-[textField applyThemeWithScheme:self.containerScheme]; // Default theming method
-[textField applyErrorThemeWithScheme:self.containerScheme]; // Error theming method
-```
-
 #### Swift
 
 ```swift
 let containerScheme = ... // Set up a container scheme
 textField.applyTheme(withScheme: self.containerScheme) // Default theming method
 textField.applyErrorTheme(withScheme: self.containerScheme) // Error theming method
+```
+
+#### Objective-C
+
+```objc
+MDCContainerScheme *containerScheme = ... // Set up a container scheme;
+[textField applyThemeWithScheme:self.containerScheme]; // Default theming method
+[textField applyErrorThemeWithScheme:self.containerScheme]; // Error theming method
 ```
 <!--</div>-->
