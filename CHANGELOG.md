@@ -1,6 +1,6 @@
 # 119.4.0
 
-In this minor release, we added a new contentEdgeInsets API to Banner, added support for vertically centtered image views in MDCSelfSizingStereoCell, and improved support for tvOS.
+In this minor release, we added a new contentEdgeInsets API to Banner, added support for vertically centered image views in MDCSelfSizingStereoCell, and improved support for tvOS.
 
 ## API changes
 
