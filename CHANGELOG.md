@@ -1,16 +1,18 @@
-# #develop#
+# 119.4.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release, we added a new contentEdgeInsets API to Banner, added support for vertically centtered image views in MDCSelfSizingStereoCell, and improved support for tvOS.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
+
+### Banner 
+
+*new* property: `contentEdgeInsets` in `MDCBannerView`.
+
+### Lists
+
+*new* enum: `MDCSelfSizingStereoCellImageViewVerticalPosition`.
+*new* property: `leadingImageViewVerticalPosition` in `MDCSelfSizingStereoCell`.
+*new* property: `trailingImageViewVerticalPosition` in `MDCSelfSizingStereoCell`.
 
 ## Component changes
 
