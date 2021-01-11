@@ -1,3 +1,21 @@
+# 119.5.0
+
+In this minor release, we added a new userDraggingEnabled API to MDCBottomDrawerViewController.
+
+## API changes
+
+### NavigationDrawer
+
+*new* property `userDraggingEnabled` in `MDCBottomDrawerViewController`.
+
+## Component changes
+
+### NavigationDrawer
+
+* [Adds a property to `MDCBottomDrawerViewController` which allows to disable scrolling. It essentially exposes the 'scrollEnabled' property of the internal scroll view so that users may not drag the drawer manually. Programatic modifications of the content offset are still allowed.](https://github.com/material-components/material-components-ios/commit/e042db31045720e8995b924acf773205f3cf9603) (Nobody)
+
+---
+
 # 119.4.0
 
 In this minor release, we added a new contentEdgeInsets API to Banner, added support for vertically centered image views in MDCSelfSizingStereoCell, and improved support for tvOS.
