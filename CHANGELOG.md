@@ -1,4 +1,4 @@
-# #develop#
+# 119.5.0
 
 In this minor release, we added a new userDraggingEnabled API to MDCBottomDrawerViewController.
 
