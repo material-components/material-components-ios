@@ -375,6 +375,14 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.trackingScrollView = trackingScrollView;
 }
 
+- (BOOL)userDraggingEnabled {
+  return self.bottomDrawerContainerViewController.userDraggingEnabled;
+}
+
+- (void)setUserDraggingEnabled:(BOOL)userDraggingEnabled {
+  self.bottomDrawerContainerViewController.userDraggingEnabled = userDraggingEnabled;
+}
+
 - (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
   _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
   self.bottomDrawerContainerViewController.maximumInitialDrawerHeight =
