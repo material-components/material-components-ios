@@ -420,6 +420,14 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   }
 }
 
+- (BOOL)userDraggingEnabled {
+  return self.scrollView.scrollEnabled;
+}
+
+- (void)setUserDraggingEnabled:(BOOL)userDraggable {
+  self.scrollView.scrollEnabled = userDraggable;
+}
+
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
     return;

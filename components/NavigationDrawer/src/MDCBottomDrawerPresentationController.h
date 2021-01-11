@@ -181,6 +181,9 @@
 */
 @property(nonatomic) BOOL shouldDisplayMobileLandscapeFullscreen;
 
+/** Whether the drawer allows the user to drag it or not. */
+@property(nonatomic) BOOL userDraggingEnabled;
+
 /**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
  drawer will scroll to the start of its content.

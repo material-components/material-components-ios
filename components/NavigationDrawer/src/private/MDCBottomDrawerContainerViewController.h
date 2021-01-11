@@ -151,7 +151,7 @@
 
  Note: This flag is only applicable when @c headerViewController` is nil. If @c headerViewController
  is non-nil, setting this flag to YES will have no effect.
-       
+
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
@@ -188,6 +188,9 @@
  Defaults to YES.
 */
 @property(nonatomic, assign) BOOL shouldDisplayMobileLandscapeFullscreen;
+
+/** Whether the drawer allows the user to drag it or not. */
+@property(nonatomic) BOOL userDraggingEnabled;
 
 /**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MaterialElevation.h"
 #import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerState.h"
-#import "MaterialElevation.h"
 // TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
 // longer import delegates as transitive dependencies.
 #import "MDCBottomDrawerViewControllerDelegate.h"
@@ -161,7 +161,7 @@
 
  Note: This flag is only applicable when @c headerViewController is nil. If @c headerViewController
  is non-nil, setting this flag to YES will have no effect.
- 
+
  Defaults to NO.
 */
 @property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
@@ -213,6 +213,9 @@
  Defaults to YES.
 */
 @property(nonatomic) BOOL shouldDisplayMobileLandscapeFullscreen;
+
+/** Whether the drawer allows the user to drag it or not. */
+@property(nonatomic) BOOL userDraggingEnabled;
 
 /**
  Sets the top corners radius for an MDCBottomDrawerState drawerState
