@@ -14,9 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
+#import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
+#import "MaterialButtons.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialSnackbar.h"
 #import "MaterialTypography.h"
-#import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
 
 #import "../../src/private/MDCSnackbarManagerInternal.h"
 #import "../../src/private/MDCSnackbarOverlayView.h"
