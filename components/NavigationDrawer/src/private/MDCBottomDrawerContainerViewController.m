@@ -15,9 +15,11 @@
 #import "MDCBottomDrawerContainerViewController.h"
 
 #import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerState.h"
 #import "MDCBottomDrawerContainerViewControllerDelegate.h"
-#import "MDCBottomDrawerHeaderMask.h"
 #import "MDCBottomDrawerShadowedView.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialApplication.h"
 #import "MaterialMath.h"
 #import "MaterialUIMetrics.h"
@@ -1099,11 +1101,6 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
   CGFloat scrollingDistance = _contentHeaderTopInset + totalHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
-  // readded `presentingViewYOffset` because offset is cancelled out
-  // by being included in both the `scrollingDistance` and `containerHeight`.
-  // Because `containerHeight` is used in independent calculations
-  // we can't remove the offset from there.
-  _contentHeightSurplus += self.presentingViewYOffset;
   if ([self shouldPresentFullScreen]) {
     self.drawerState = MDCBottomDrawerStateFullScreen;
   } else if (_contentHeightSurplus <= 0) {
@@ -1116,6 +1113,13 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
     [self cacheLayoutCalculationsWithAddedContentHeight:addedContentheight];
   }
+  // Readded `presentingViewYOffset` because offset is cancelled out
+  // by being included in both the `scrollingDistance` and `containerHeight`.
+  // Because `containerHeight` is used in independent calculations
+  // we can't remove the offset from there.
+  // This y-offset should be readded at the end of this method, this is to prevent it from being
+  // included in the recursive call in the conditional above.
+  _contentHeightSurplus += self.presentingViewYOffset;
 }
 
 - (CGFloat)transitionPercentageForContentOffset:(CGPoint)contentOffset
