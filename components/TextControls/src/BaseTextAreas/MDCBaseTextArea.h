@@ -223,4 +223,10 @@ values are allowed.
  */
 @property(nonatomic, strong, nullable) NSString *placeholder;
 
+/**
+ The color of the placeholder. The default value is the color used by the placeholder in @c
+ UITextField.
+ */
+@property(nonatomic, strong, null_resettable) UIColor *placeholderColor;
+
 @end

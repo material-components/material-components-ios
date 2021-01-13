@@ -107,6 +107,20 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testTextAreaWithLabelAndCustomColorPlaceholderWhileEditing {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.placeholderColor = [UIColor blueColor];
+  textArea.placeholder = @"This is a custom color placeholder.";
+  textArea.label.text = @"This is a floating label";
+  [textArea.textView becomeFirstResponder];
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 - (void)testTextAreaWithArabigLabelAndPlaceholderWhileEditingRTL {
   // Given
   MDCBaseTextArea *textArea = self.textArea;
