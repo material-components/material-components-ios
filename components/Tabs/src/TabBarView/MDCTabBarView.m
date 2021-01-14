@@ -561,10 +561,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 }
 
 - (UIAccessibilityTraits)accessibilityTraits {
-  if (@available(iOS 10.0, *)) {
-    return [super accessibilityTraits] | UIAccessibilityTraitTabBar;
-  }
-  return [super accessibilityTraits];
+  return [super accessibilityTraits] | UIAccessibilityTraitTabBar;
 }
 
 #pragma mark - Custom APIs
