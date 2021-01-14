@@ -14,6 +14,7 @@
 
 #import "MDCSheetContainerView.h"
 
+#import "MDCSheetState.h"
 #import "MDCDraggableView.h"
 #import "MDCDraggableViewDelegate.h"
 #import "MDCSheetBehavior.h"
@@ -60,6 +61,7 @@ static const CGFloat kSheetBounceBuffer = 150;
                    scrollView:(UIScrollView *)scrollView {
   self = [super initWithFrame:frame];
   if (self) {
+    self.willBeDismissed = NO;
     if (UIAccessibilityIsVoiceOverRunning()) {
       _sheetState = MDCSheetStateExtended;
     } else {
@@ -358,7 +360,12 @@ static const CGFloat kSheetBounceBuffer = 150;
 
 - (void)keyboardStateChangedWithNotification:(__unused NSNotification *)notification {
   if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
+    // Only add animation if the view is not set to be dismissed with the new keyboard. Otherwise,
+    // the view will first adjust height to fit above the keyboard and then dismiss, which appears
+    // glitchy on the screen.
+    if (!self.willBeDismissed) {
+      [self animatePaneWithInitialVelocity:CGPointZero];
+    }
   }
 }
 
