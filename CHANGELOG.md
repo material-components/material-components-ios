@@ -1,3 +1,54 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomSheet
+
+* [Fix bug that was causing messy animation when a keyboard is going to appear after the bottom sheet dismisses.](https://github.com/material-components/material-components-ios/commit/4deaee13215776f82c104e4008c68168f8a62fba) (Alyssa Weiss)
+
+### NavigationDrawer
+
+* [Rotation UI Bug Fix This change is a slight alteration to the change introduced in cl/347036858 this moves the added code to the bottom of the method so as to not interfere with the recursive call.](https://github.com/material-components/material-components-ios/commit/6b4b0290a9df02f995f306e96a188b4b80745870) (Nobody)
+
+### ShadowLayer
+
+* [Add example for performance testing.](https://github.com/material-components/material-components-ios/commit/8da92053bd494128be6f659dd04c24f95ffa8b74) (Cody Weaver)
+
+### Shapes
+
+* [Add properties to configure the border color/width of `MDCShapedView`.](https://github.com/material-components/material-components-ios/commit/2d6db967af07c5805c7ded4cc56a7735a6c6337f) (Darren Mo)
+
+### Snackbar
+
+* [Add present+dismiss unit test for legacy snackbar.](https://github.com/material-components/material-components-ios/commit/11e4afa57cb8e59403715aa6bac4ec74788d1462) (Yarden Eitan)
+* [Make imports more explicit](https://github.com/material-components/material-components-ios/commit/2158cbeda7e7b30e74d3635e315e707c06ef560a) (Cody Weaver)
+
+### Tabs
+
+* [Remove iOS 10 check in accessibilityTrait handling since only iOS 10 + is supported now](https://github.com/material-components/material-components-ios/commit/738a505dacefbb2371b5e0ae04989192eaa56370) (Alyssa Weiss)
+
+### TextControls
+
+* [Add placeholderColor property](https://github.com/material-components/material-components-ios/commit/48808bfe67683fbed035a9519be0b958ae9ae714) (Andrew Overton)
+
+### schemes/Color
+
+* [Delete elevationOverlayColor: It is not used in any theming extensions.](https://github.com/material-components/material-components-ios/commit/4195a48cca0c55245629f7eecb650ee1d292e635) (Randall Li)
+
+---
+
 # 119.5.0
 
 In this minor release, we added a new userDraggingEnabled API to MDCBottomDrawerViewController.
