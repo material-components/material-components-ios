@@ -5,15 +5,15 @@ In this major release, we deleted the `elevationOverlayColor` property from MDCS
 ## Breaking changes
 
 ### ColorScheme
-The '`elevationOverlayColor` property has been deleted.
+The `elevationOverlayColor` property has been deleted.
 
 ## New features
 
 ### ShapedView
-Added `shapedBorderColor` and `shapedBorderWidth`.
+Added `shapedBorderColor` and `shapedBorderWidth` properties.
 
 ### TextControls
-Added `placeholderColor`.
+Added `placeholderColor` property.
 
 ## Component changes
 
