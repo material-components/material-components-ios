@@ -65,6 +65,22 @@
   return self.layer.shapeGenerator;
 }
 
+- (UIColor *)shapedBorderColor {
+  return self.layer.shapedBorderColor;
+}
+
+- (void)setShapedBorderColor:(UIColor *)shapedBorderColor {
+  self.layer.shapedBorderColor = shapedBorderColor;
+}
+
+- (CGFloat)shapedBorderWidth {
+  return self.layer.shapedBorderWidth;
+}
+
+- (void)setShapedBorderWidth:(CGFloat)shapedBorderWidth {
+  self.layer.shapedBorderWidth = shapedBorderWidth;
+}
+
 // MDCShapedView captures backgroundColor assigments so that they can be set to the
 // MDCShapedShadowLayer fillColor. If we don't do this the background of the layer will obscure any
 // shapes drawn by the shape layer.

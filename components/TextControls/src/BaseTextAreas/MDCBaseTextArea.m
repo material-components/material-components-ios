@@ -21,7 +21,10 @@
 #import "private/MDCBaseTextAreaLayout.h"
 #import "private/MDCBaseTextAreaTextView.h"
 #import "MDCBaseTextAreaDelegate.h"
+#import "MDCTextControlLabelBehavior.h"
+#import "MDCTextControlState.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
+#import "MDCTextControlAssistiveLabelDrawPriority.h"
 #import "MaterialTextControlsPrivate+Shared.h"
 
 static char *const kKVOContextMDCBaseTextArea = "kKVOContextMDCBaseTextArea";
@@ -109,6 +112,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   self.minimumNumberOfVisibleRows = kMDCBaseTextAreaDefaultMinimumNumberOfVisibleLines;
   self.maximumNumberOfVisibleRows = kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines;
   self.gradientManager = [[MDCTextControlGradientManager alloc] init];
+  self.placeholderColor = [self defaultPlaceholderColor];
 }
 
 - (void)setUpTapGesture {
@@ -418,7 +422,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   if ([self shouldPlaceholderBeVisible]) {
     NSDictionary<NSAttributedStringKey, id> *attributes = @{
       NSParagraphStyleAttributeName : [self defaultPlaceholderParagraphStyle],
-      NSForegroundColorAttributeName : [self defaultPlaceholderColor],
+      NSForegroundColorAttributeName : self.placeholderColor,
       NSFontAttributeName : self.normalFont
     };
     return [[NSAttributedString alloc] initWithString:self.placeholder attributes:attributes];
@@ -527,6 +531,10 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 - (void)setPlaceholder:(NSString *)placeholder {
   _placeholder = placeholder;
   [self setNeedsLayout];
+}
+
+- (void)setPlaceholderColor:(UIColor *)placeholderColor {
+  _placeholderColor = placeholderColor ?: [self defaultPlaceholderColor];
 }
 
 #pragma mark MDCTextControl Protocol Accessors

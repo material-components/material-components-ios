@@ -17,6 +17,7 @@
 #import <WebKit/WebKit.h>
 
 #import "private/MDCSheetContainerView.h"
+#import "MDCBottomSheetController.h"
 #import "MDCBottomSheetPresentationControllerDelegate.h"
 #import "MDCSheetContainerViewDelegate.h"
 #import "MaterialMath.h"
@@ -228,6 +229,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
     return;
   }
 
+  self.sheetView.willBeDismissed = YES;
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
   [self.presentingViewController
       dismissViewControllerAnimated:YES

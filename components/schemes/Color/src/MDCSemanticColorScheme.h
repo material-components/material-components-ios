@@ -76,11 +76,6 @@
 @property(nonnull, readonly, copy, nonatomic) UIColor *onBackgroundColor;
 
 /**
- A color that is used for the elevation overlays, applied with an alpha on top of surfaces.
- */
-@property(nonnull, readonly, copy, nonatomic) UIColor *elevationOverlayColor;
-
-/**
  A flag that indicates whether the overlay color should be applied on an elevated surface in Dark
  Mode. There is no elevation overlay applied in Light Mode.
  */
@@ -123,7 +118,6 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSecondaryColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSurfaceColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onBackgroundColor;
-@property(nonnull, readwrite, copy, nonatomic) UIColor *elevationOverlayColor;
 @property(readwrite, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 
 /**

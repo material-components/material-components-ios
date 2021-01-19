@@ -54,19 +54,18 @@
 
 - (void)testRectShapedViewWithBorderWidthAndCorrectMaskingOfContent {
   // Given
-  MDCShapedShadowLayer *shadowLayer = (MDCShapedShadowLayer *)self.shapedView.layer;
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
   MDCRoundedCornerTreatment *cornerTreatment = [MDCRoundedCornerTreatment cornerWithRadius:50.f];
   [shapeGenerator setCorners:cornerTreatment];
-  shadowLayer.shapedBorderWidth = 10;
-  shadowLayer.shapedBorderColor = UIColor.redColor;
+  self.shapedView.shapedBorderWidth = 10;
+  self.shapedView.shapedBorderColor = UIColor.redColor;
   UIView *contentView = [[UIView alloc] initWithFrame:self.shapedView.bounds];
   contentView.backgroundColor = UIColor.systemPinkColor;
   [self.shapedView addSubview:contentView];
 
   // When
   self.shapedView.shapeGenerator = shapeGenerator;
-  contentView.layer.mask = shadowLayer.shapeLayer;
+  contentView.layer.mask = ((MDCShapedShadowLayer *)self.shapedView.layer).shapeLayer;
 
   // Then
   [self generateSnapshotAndVerifyView];
@@ -77,12 +76,12 @@
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
   MDCRoundedCornerTreatment *cornerTreatment = [MDCRoundedCornerTreatment cornerWithRadius:50.f];
   [shapeGenerator setCorners:cornerTreatment];
-  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderWidth = 10;
-  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderColor = UIColor.redColor;
+  self.shapedView.shapedBorderWidth = 10;
+  self.shapedView.shapedBorderColor = UIColor.redColor;
 
   // When
   self.shapedView.shapeGenerator = shapeGenerator;
-  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderWidth = 0;
+  self.shapedView.shapedBorderWidth = 0;
 
   // Then
   [self generateSnapshotAndVerifyView];
@@ -93,8 +92,8 @@
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
   MDCRoundedCornerTreatment *cornerTreatment = [MDCRoundedCornerTreatment cornerWithRadius:50.f];
   [shapeGenerator setCorners:cornerTreatment];
-  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderWidth = 10;
-  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderColor = UIColor.redColor;
+  self.shapedView.shapedBorderWidth = 10;
+  self.shapedView.shapedBorderColor = UIColor.redColor;
 
   // When
   self.shapedView.shapeGenerator = shapeGenerator;
@@ -112,8 +111,8 @@
   shapeGenerator.topRightCornerOffset = CGPointMake(-40.f, 40.f);
   shapeGenerator.bottomLeftCornerOffset = CGPointMake(40.f, -40.f);
   shapeGenerator.bottomRightCornerOffset = CGPointMake(-40.f, -40.f);
-  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderWidth = 10;
-  ((MDCShapedShadowLayer *)self.shapedView.layer).shapedBorderColor = UIColor.redColor;
+  self.shapedView.shapedBorderWidth = 10;
+  self.shapedView.shapedBorderColor = UIColor.redColor;
 
   // When
   self.shapedView.shapeGenerator = shapeGenerator;

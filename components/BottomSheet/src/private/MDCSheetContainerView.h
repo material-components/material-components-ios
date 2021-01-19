@@ -22,6 +22,7 @@
 @property(nonatomic, weak, nullable) id<MDCSheetContainerViewDelegate> delegate;
 @property(nonatomic, readonly) MDCSheetState sheetState;
 @property(nonatomic) CGFloat preferredSheetHeight;
+@property(nonatomic) BOOL willBeDismissed;
 
 /**
  When set to false, the bottom sheet controller can't be dismissed by dragging the sheet down.
