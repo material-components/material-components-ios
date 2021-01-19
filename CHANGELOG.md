@@ -1,16 +1,19 @@
-# #develop#
+# 120.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release, we deleted the `elevationOverlayColor` property from MDCSemanticColorScheme, added a `placeholderColor` property to MDCTextControls, added a `shapedBorderColor` property and a `shapedBorderWidth` property to MDCShapedView, and made multiple bug fixes.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### ColorScheme
+The '`elevationOverlayColor` property has been deleted.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### ShapedView
+Added `shapedBorderColor` and `shapedBorderWidth`.
+
+### TextControls
+Added `placeholderColor`.
 
 ## Component changes
 
