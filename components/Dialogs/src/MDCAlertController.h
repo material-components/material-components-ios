@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
+
 #import "MaterialButtons.h"
 // TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
 // longer import delegates as transitive dependencies.
 #import "MDCAlertControllerDelegate.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
-
-#import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
 
 @class MDCAlertAction;
 @class MDCAlertController;
@@ -387,6 +387,34 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
  Defaults to @c NO.
 */
 @property(nonatomic, assign) BOOL orderVerticalActionsByEmphasis;
+
+/**
+ A Boolean value that indicates whether the alert's contents autorotates.
+
+ Defaults to UIKit's shouldAutorotate.
+*/
+@property(nonatomic) BOOL shouldAutorotateOverride;
+
+/**
+ A bit mask that specifies which orientations the view controller supports.
+
+ Defaults to UIKit's supportedInterfaceOrientations.
+*/
+@property(nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientationsOverride;
+
+/**
+ The interface orientation to use when presenting the alert.
+
+ Defaults to UIKit's preferredInterfaceOrientationForPresentation.
+*/
+@property(nonatomic) UIInterfaceOrientation preferredInterfaceOrientationForPresentationOverride;
+
+/**
+ The transition style to use when presenting the view controller override.
+
+ Defaults to UIKit's modalTransitionStyle.
+*/
+@property(nonatomic) UIModalTransitionStyle modalTransitionStyleOverride;
 
 @end
 

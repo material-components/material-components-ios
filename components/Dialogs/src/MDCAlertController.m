@@ -12,23 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAlertController.h"
-
-#import "MaterialButtons.h"
 #import "MDCAlertController+Customize.h"
-#import "MDCAlertControllerDelegate.h"
-#import "MDCAlertControllerView.h"
-#import "MDCDialogPresentationController.h"
-#import "MDCDialogTransitionController.h"
-#import "UIViewController+MaterialDialogs.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCAlertActionManager.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
+#import "MaterialDialogs.h"
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialMath.h"
 
 // The Bundle for string resources.
 static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
@@ -180,6 +173,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _shadowColor = UIColor.blackColor;
     _mdc_overrideBaseElevation = -1;
+    _shouldAutorotateOverride = super.shouldAutorotate;
+    _supportedInterfaceOrientationsOverride = super.supportedInterfaceOrientations;
+    _preferredInterfaceOrientationForPresentationOverride =
+        super.preferredInterfaceOrientationForPresentation;
+    _modalTransitionStyleOverride = super.modalTransitionStyle;
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
@@ -738,6 +736,22 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
             [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
       }
                       completion:nil];
+}
+
+- (BOOL)shouldAutorotate {
+  return _shouldAutorotateOverride;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return _supportedInterfaceOrientationsOverride;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+  return _preferredInterfaceOrientationForPresentationOverride;
+}
+
+- (UIModalTransitionStyle)modalTransitionStyle {
+  return _modalTransitionStyleOverride;
 }
 
 #pragma mark - Resource bundle
