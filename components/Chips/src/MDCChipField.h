@@ -58,6 +58,18 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
   MDCChipFieldDelimiterAll = 0xFFFFFFFF
 };
 
+/**
+  This class provides an "input chips" experience on iOS, where chip creation is
+ coordinated with a user's text input. It manages an @c MDCTextField and a series of @c
+ MDCChipViews. When the user hits the return key, new chips are added. When the client hits the
+ delete button and the text field has no text, the last chip is deleted.
+
+ @note The input chip experience this class provides is incomplete. For example, it only supports
+ chips laid out in multiple rows, as opposed to the single-row input chips you'd fine in an email
+ "to" field. Additionally, it does not theme the chips with the Material chip styles. It is
+ currently not considered high priority to provide these features, but if you are interested in
+ them, or any others, please consider filing a bug or reaching out to the Material iOS team.
+ */
 @interface MDCChipField : UIView
 
 /**
