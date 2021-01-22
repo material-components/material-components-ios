@@ -122,6 +122,16 @@
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
+ Whether or not the height of the bottom sheet should adjust to include extra height for any bottom
+ safe area insets. If, for example, this is set to @c YES, and the preferred content size height is
+ 100 and the screen has a bottom safe area inset of 10, the total height of the displayed bottom
+ sheet height would be 110. If set to @c NO, the height would be 100.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL adjustHeightForSafeAreaInsets;
+
+/**
  Bottom sheet controllers must be created with @c initWithContentViewController:.
  */
 - (nonnull instancetype)init NS_UNAVAILABLE;

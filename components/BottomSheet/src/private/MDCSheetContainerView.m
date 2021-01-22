@@ -172,12 +172,13 @@ static const CGFloat kSheetBounceBuffer = 150;
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
 
-    _preferredSheetHeight = self.originalPreferredSheetHeight + self.safeAreaInsets.bottom;
+    if (self.adjustHeightForSafeAreaInsets) {
+      _preferredSheetHeight = self.originalPreferredSheetHeight + self.safeAreaInsets.bottom;
 
-    UIEdgeInsets contentInset = self.sheet.scrollView.contentInset;
-    contentInset.bottom = MAX(contentInset.bottom, self.safeAreaInsets.bottom);
-    self.sheet.scrollView.contentInset = contentInset;
-
+      UIEdgeInsets contentInset = self.sheet.scrollView.contentInset;
+      contentInset.bottom = MAX(contentInset.bottom, self.safeAreaInsets.bottom);
+      self.sheet.scrollView.contentInset = contentInset;
+    }
     CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
     scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width, CGRectGetHeight(self.frame));
     self.sheet.scrollView.frame = scrollViewFrame;
@@ -219,12 +220,12 @@ static const CGFloat kSheetBounceBuffer = 150;
   }
 }
 
-- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
-  self.originalPreferredSheetHeight = preferredSheetHeight;
-
+- (void)updateSheetHeight {
   CGFloat adjustedPreferredSheetHeight = self.originalPreferredSheetHeight;
   if (@available(iOS 11.0, *)) {
-    adjustedPreferredSheetHeight += self.safeAreaInsets.bottom;
+    if (self.adjustHeightForSafeAreaInsets) {
+      adjustedPreferredSheetHeight += self.safeAreaInsets.bottom;
+    }
   }
 
   if (_preferredSheetHeight == adjustedPreferredSheetHeight) {
@@ -238,6 +239,16 @@ static const CGFloat kSheetBounceBuffer = 150;
   if (self.window) {
     [self animatePaneWithInitialVelocity:CGPointZero];
   }
+}
+
+- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
+  self.originalPreferredSheetHeight = preferredSheetHeight;
+  [self updateSheetHeight];
+}
+
+- (void)setAdjustHeightForSafeAreaInsets:(BOOL)adjustHeightForSafeAreaInsets {
+  _adjustHeightForSafeAreaInsets = adjustHeightForSafeAreaInsets;
+  [self updateSheetHeight];
 }
 
 // Slides the sheet position downwards, so the right amount peeks above the bottom of the superview.

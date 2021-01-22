@@ -18,7 +18,11 @@
 #import "MDCBottomSheetPresentationController.h"
 #import "MDCBottomSheetPresentationControllerDelegate.h"
 #import "MDCBottomSheetTransitionController.h"
+#import "MDCSheetState.h"
 #import "UIViewController+MaterialBottomSheet.h"
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 #import "MaterialMath.h"
 
 static const CGFloat kElevationSpreadMaskAffordance = 50.0f;
@@ -48,6 +52,7 @@ static const CGFloat kElevationSpreadMaskAffordance = 50.0f;
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
     _transitionController.dismissOnBackgroundTap = YES;
     _transitionController.dismissOnDraggingDownSheet = YES;
+    _transitionController.adjustHeightForSafeAreaInsets = YES;
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
     _shapeGenerators = [NSMutableDictionary dictionary];
@@ -267,6 +272,14 @@ static const CGFloat kElevationSpreadMaskAffordance = 50.0f;
 
 - (UIColor *)scrimColor {
   return _transitionController.scrimColor;
+}
+
+- (void)setAdjustHeightForSafeAreaInsets:(BOOL)adjustHeightForSafeAreaInsets {
+  _transitionController.adjustHeightForSafeAreaInsets = adjustHeightForSafeAreaInsets;
+}
+
+- (BOOL)adjustHeightForSafeAreaInsets {
+  return _transitionController.adjustHeightForSafeAreaInsets;
 }
 
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {

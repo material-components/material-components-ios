@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCSheetState.h"
 #import "MaterialBottomSheet.h"
 
 #import <UIKit/UIKit.h>
@@ -72,6 +73,7 @@
        @c setFrame: in case there are side-effects in UIView.
  */
 @interface FakeSheetView : MDCSheetContainerView
+@property(nonatomic, assign) UIEdgeInsets customSafeAreaInsets;
 @end
 
 @implementation FakeSheetView {
@@ -86,6 +88,10 @@
   [super setFrame:frame];
 
   _frame = frame;
+}
+
+- (UIEdgeInsets)safeAreaInsets {
+  return _customSafeAreaInsets;
 }
 @end
 
@@ -271,6 +277,72 @@
 
   // Then
   XCTAssertEqualWithAccuracy(CGRectGetHeight(sheetView.frame), CGRectGetHeight(smallFrame), 0.001);
+}
+
+- (void)testDefaultAdjustHeightForSafeAreaInsets {
+  XCTAssertTrue(self.presentationController.adjustHeightForSafeAreaInsets);
+}
+
+- (void)testAdjustHeightForSafeAreaInsetsIsNo {
+  // Given
+  CGFloat preferredSheetHeight = 200;
+  CGFloat inset = 20;
+  self.sheetView.customSafeAreaInsets = UIEdgeInsetsMake(inset, inset, inset, inset);
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+  self.presentationController.adjustHeightForSafeAreaInsets = NO;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
+}
+
+- (void)testAdjustHeightForSafeAreaInsetsSetBeforeHeightIsSet {
+  // Given
+  CGFloat preferredSheetHeight = 200;
+  CGFloat inset = 20;
+  self.sheetView.customSafeAreaInsets = UIEdgeInsetsMake(inset, inset, inset, inset);
+  self.presentationController.adjustHeightForSafeAreaInsets = NO;
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
+}
+
+- (void)testAdjustHeightForSafeAreaInsetsIsYes {
+  // Given
+  CGFloat preferredSheetHeight = 200;
+  CGFloat inset = 20;
+  self.sheetView.customSafeAreaInsets = UIEdgeInsetsMake(inset, inset, inset, inset);
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+  self.presentationController.adjustHeightForSafeAreaInsets = YES;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight + inset,
+                             0.001);
+}
+
+- (void)testadjustHeightForSafeAreaInsetsChangesToNo {
+  // Given
+  CGFloat preferredSheetHeight = 200;
+  CGFloat inset = 20;
+  self.sheetView.customSafeAreaInsets = UIEdgeInsetsMake(inset, inset, inset, inset);
+  self.presentationController.adjustHeightForSafeAreaInsets = YES;
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+  self.presentationController.adjustHeightForSafeAreaInsets = NO;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
 }
 
 - (void)testSheetViewFrameMatchesScrollViewFrame {
