@@ -140,7 +140,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   }
 }
 
-- (void)setProgressTintColors:(NSArray *)progressTintColors {
+- (void)setProgressTintColors:(NSArray<UIColor *> *)progressTintColors {
   _progressTintColors = [progressTintColors copy];
   _progressTintColor = nil;
   self.progressView.colors = _progressTintColors;
