@@ -111,7 +111,8 @@
   // receives an updated value for `preferredSheetHeight`.
   self.sheetView = [[FakeSheetView alloc] initWithFrame:CGRectZero
                                             contentView:[[UIView alloc] init]
-                                             scrollView:[[UIScrollView alloc] init]];
+                                             scrollView:[[UIScrollView alloc] init]
+                               simulateScrollViewBounce:YES];
 
   // Only used as a required `-init` parameters for MDCBottomSheetPresentationController
   UIViewController *stubPresentingViewController = [[UIViewController alloc] init];
@@ -267,7 +268,8 @@
   FakeSheetView *sheetView =
       [[FakeSheetView alloc] initWithFrame:smallFrame
                                contentView:[[UIView alloc] initWithFrame:smallFrame]
-                                scrollView:scrollView];
+                                scrollView:scrollView
+                  simulateScrollViewBounce:YES];
 
   self.presentationController.sheetView = sheetView;
   self.presentationController.preferredSheetHeight = 5000;
@@ -353,7 +355,8 @@
   MDCSheetContainerView *fakeSheet =
       [[MDCSheetContainerView alloc] initWithFrame:fakeFrame
                                        contentView:[[UIView alloc] initWithFrame:fakeFrame]
-                                        scrollView:scrollView];
+                                        scrollView:scrollView
+                          simulateScrollViewBounce:YES];
 
   // When
   [fakeSheet setNeedsLayout];

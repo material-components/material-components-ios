@@ -36,6 +36,16 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
+ When @c trackingScrollView is @c nil and this property is @ YES, the bottom sheet simulates the @c
+ UIScrollView bouncing effect. When @c trackingScrollView is @c nil and this property is set to @c
+ NO, the simulated bouncing effect is turned off. When  @c trackingScrollView is NOT @c nil, this
+ property doesn't do anything.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL simulateScrollViewBounce;
+
+/**
  When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;

@@ -43,6 +43,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 @property(nonatomic) BOOL isDragging;
 @property(nonatomic) CGFloat originalPreferredSheetHeight;
 @property(nonatomic) CGRect previousAnimatedBounds;
+@property(nonatomic) BOOL simulateScrollViewBounce;
 
 @end
 
@@ -58,10 +59,12 @@ static const CGFloat kSheetBounceBuffer = 150;
 
 - (instancetype)initWithFrame:(CGRect)frame
                   contentView:(UIView *)contentView
-                   scrollView:(UIScrollView *)scrollView {
+                   scrollView:(UIScrollView *)scrollView
+     simulateScrollViewBounce:(BOOL)simulateScrollViewBounce {
   self = [super initWithFrame:frame];
   if (self) {
-    self.willBeDismissed = NO;
+    _willBeDismissed = NO;
+    _simulateScrollViewBounce = simulateScrollViewBounce;
     if (UIAccessibilityIsVoiceOverRunning()) {
       _sheetState = MDCSheetStateExtended;
     } else {
@@ -70,6 +73,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 
     // Don't set the frame yet because we're going to change the anchor point.
     _sheet = [[MDCDraggableView alloc] initWithFrame:CGRectZero scrollView:scrollView];
+    _sheet.simulateScrollViewBounce = _simulateScrollViewBounce;
     _sheet.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     _sheet.delegate = self;
     _sheet.backgroundColor = contentView.backgroundColor;
@@ -145,7 +149,8 @@ static const CGFloat kSheetBounceBuffer = 150;
   [super didMoveToWindow];
   if (self.window) {
     if (!self.sheetBehavior) {
-      self.sheetBehavior = [[MDCSheetBehavior alloc] initWithItem:self.sheet];
+      self.sheetBehavior = [[MDCSheetBehavior alloc] initWithItem:self.sheet
+                                         simulateScrollViewBounce:self.simulateScrollViewBounce];
     }
     [self animatePaneWithInitialVelocity:CGPointZero];
   } else {
@@ -419,15 +424,15 @@ static const CGFloat kSheetBounceBuffer = 150;
   MDCSheetState targetState;
   if (self.preferredSheetHeight == [self maximumSheetHeight]) {
     // Cannot be extended, only closed.
-    targetState = ((velocity.y >= 0 && self.dismissOnDraggingDownSheet) ? MDCSheetStateClosed
-                                                                        : MDCSheetStatePreferred);
+    targetState = ((velocity.y > 0 && self.dismissOnDraggingDownSheet) ? MDCSheetStateClosed
+                                                                       : MDCSheetStatePreferred);
   } else {
     CGFloat currentSheetHeight = CGRectGetMaxY(self.bounds) - CGRectGetMinY(self.sheet.frame);
     if (currentSheetHeight >= self.preferredSheetHeight) {
-      targetState = (velocity.y >= 0 ? MDCSheetStatePreferred : MDCSheetStateExtended);
+      targetState = (velocity.y > 0 ? MDCSheetStatePreferred : MDCSheetStateExtended);
     } else {
-      targetState = ((velocity.y >= 0 && self.dismissOnDraggingDownSheet) ? MDCSheetStateClosed
-                                                                          : MDCSheetStatePreferred);
+      targetState = ((velocity.y > 0 && self.dismissOnDraggingDownSheet) ? MDCSheetStateClosed
+                                                                         : MDCSheetStatePreferred);
     }
   }
   self.isDragging = NO;

@@ -29,8 +29,12 @@
 /**
  * Initializes a @c MDCSheetBehavior.
  * @param item The dynamic item (a view) to apply the sheet behavior to.
+ * @param simulateScrollViewBounce If the user has specified that they do not want to simulate the
+ * scrollview bouncing in the absence of a bottom sheet's trackingScrollView we should also tone
+ * down the bounce effect the UIKit dynamics provide.
  */
-- (nonnull instancetype)initWithItem:(nonnull id<UIDynamicItem>)item NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithItem:(nonnull id<UIDynamicItem>)item
+            simulateScrollViewBounce:(BOOL)simulateScrollViewBounce NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 

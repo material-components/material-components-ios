@@ -38,7 +38,8 @@ Whether or not the height of the view should adjust to include extra height for 
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame
                           contentView:(nonnull UIView *)contentView
-                           scrollView:(nullable UIScrollView *)scrollView NS_DESIGNATED_INITIALIZER;
+                           scrollView:(nullable UIScrollView *)scrollView
+             simulateScrollViewBounce:(BOOL)simulateScrollViewBounce NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder NS_UNAVAILABLE;

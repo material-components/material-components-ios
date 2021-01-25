@@ -74,6 +74,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                        presentingViewController:presentingViewController];
   if (self) {
     _adjustHeightForSafeAreaInsets = YES;
+    _simulateScrollViewBounce = YES;
   }
   return self;
 }
@@ -132,7 +133,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
   self.sheetView = [[MDCSheetContainerView alloc] initWithFrame:sheetFrame
                                                     contentView:self.presentedViewController.view
-                                                     scrollView:scrollView];
+                                                     scrollView:scrollView
+                                       simulateScrollViewBounce:self.simulateScrollViewBounce];
   self.sheetView.delegate = self;
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
   self.sheetView.dismissOnDraggingDownSheet = self.dismissOnDraggingDownSheet;
