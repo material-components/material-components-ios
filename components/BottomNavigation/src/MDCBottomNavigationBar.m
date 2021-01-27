@@ -16,6 +16,8 @@
 
 #import "MDCBottomNavigationBar.h"
 
+#import "MaterialElevation.h"
+#import "MaterialInk.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBottomNavigationBar+Private.h"
@@ -40,8 +42,6 @@ static const CGFloat kDefaultItemHorizontalPadding = 0;
 static const CGFloat kBarHeightStackedTitle = 56;
 static const CGFloat kBarHeightAdjacentTitle = 40;
 static const CGFloat kItemsHorizontalMargin = 12;
-
-static NSString *const kOfAnnouncement = @"of";
 
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
                                       MDCRippleTouchControllerDelegate>
