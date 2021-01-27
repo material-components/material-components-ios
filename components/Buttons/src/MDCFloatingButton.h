@@ -34,6 +34,11 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonShape) {
   MDCFloatingButtonShapeMini = 1
 };
 
+/**
+ Size of Material Floating button.
+
+ The expanded mode should only be used when text and an icon are used.
+ */
 typedef NS_ENUM(NSInteger, MDCFloatingButtonMode) {
   /**
    The floating button is a circle with its contents centered.
@@ -46,6 +51,12 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonMode) {
   MDCFloatingButtonModeExpanded = 1,
 };
 
+/**
+  Image location of Material Floating button.
+
+  If the button is @c MDCFloatingButtonModeExpanded this determines where the
+  text is rendered in relation to the icon.
+ */
 typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
   /**
    The image of the floating button is on the leading side of the title.

@@ -1,3 +1,56 @@
+# 121.0.0
+
+In this major release, we added a `scrollViewBounce` property and a `adjustHeightForSafeAreaInsets` property to BottomSheets, added a `shouldAutorotateOverride` property, a `preferredInterfaceOrientationForPresentationOverride` property, a `supportedInterfaceOrientationsOverride` property, and a `modalTransitionStyleOverride` property to MDCAlertController, and converted `progressTintColors` property on MDCProgressView to use light weight generics.
+
+## Breaking changes
+
+### ProgressView
+
+MDCProgressView's property `progressTintColors` started using light weight generics so values pass in need to be typed correctly.
+
+## New features
+
+### BottomSheet
+
+Bottom sheets have new propertie that turn off the overscroll and safe area insets.
+
+### Dialogs
+
+Added a `shouldAutorotateOverride` property, a `preferredInterfaceOrientationForPresentationOverride` property, a `supportedInterfaceOrientationsOverride` property, and a `modalTransitionStyleOverride` property to MDCAlertController.
+
+### ProgressView
+
+Converted `progressTintColors` property on MDCProgressView to use light weight generics.
+
+## Component changes
+
+### BottomSheet
+
+* [Add BOOL property for whether or not the height of the bottom sheet should adjust for safe area insets.](https://github.com/material-components/material-components-ios/commit/1fefeaf03268b9126dfaea00907a9bb5362560e5) (Alyssa Weiss)
+* [Add flag that turns off simulated bouncing when there isn't a tracking scroll view](https://github.com/material-components/material-components-ios/commit/1b985100ec89ed142981bd8f3d51b247f88e6f0c) (Andrew Overton)
+
+### Buttons
+
+* [Add documentation for Enums.](https://github.com/material-components/material-components-ios/commit/c727b890df3c0766706ad8000649f7733cdef997) (Cody Weaver)
+
+### Chips
+
+* [Add docs for MDCChipField](https://github.com/material-components/material-components-ios/commit/3f7cc9f51cf9ea9287b3e817bc730eaac31bd87e) (Andrew Overton)
+
+### Dialogs
+
+* [Adding customized interface orientations and transition style support to the alert dialog.](https://github.com/material-components/material-components-ios/commit/a9b6ca12b5cba778176b7cb129e866b8669ac8bc) (Nobody)
+
+### List
+
+* [Use isKindOfClass to ensure there is support for all MDCShadowLayer's subclasses.](https://github.com/material-components/material-components-ios/commit/d5bba14e9a51405ee2ed868fd630d852c49d0c6e) (Yarden Eitan)
+
+### ProgressView
+
+* [Add Objective-C generics to MDCProgressView](https://github.com/material-components/material-components-ios/commit/1b70fd6ad949c143d7225e3719c912fce8181719) (Andrew Overton)
+
+---
+
 # 120.0.0
 
 In this major release, we deleted the `elevationOverlayColor` property from MDCSemanticColorScheme, added a `placeholderColor` property to MDCTextControls, added a `shapedBorderColor` property and a `shapedBorderWidth` property to MDCShapedView, and made multiple bug fixes.

@@ -24,6 +24,13 @@
 @property(nonatomic, strong, readonly, nullable) UIScrollView *scrollView;
 
 /**
+ When @c scrollView is @c nil , the draggable view simulates the @c UIScrollView bouncing effect.
+ When this property is set to @c NO, the simulated bouncing effect is turned off.  When  @c
+ scrollView is not @c nil, this property doesn't do anything.
+ */
+@property(nonatomic, assign) BOOL simulateScrollViewBounce;
+
+/**
  * Delegate for handling drag events.
  */
 @property(nonatomic, weak, nullable) id<MDCDraggableViewDelegate> delegate;

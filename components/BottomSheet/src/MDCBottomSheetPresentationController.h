@@ -36,6 +36,16 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
+ When @c trackingScrollView is @c nil and this property is @ YES, the bottom sheet simulates the @c
+ UIScrollView bouncing effect. When @c trackingScrollView is @c nil and this property is set to @c
+ NO, the simulated bouncing effect is turned off. When  @c trackingScrollView is NOT @c nil, this
+ property doesn't do anything.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL simulateScrollViewBounce;
+
+/**
  When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
@@ -67,6 +77,16 @@
  the content height.
  */
 @property(nonatomic, assign) CGFloat preferredSheetHeight;
+
+/**
+Whether or not the height of the bottom sheet should adjust to include extra height for any bottom
+safe area insets. If, for example, this is set to @c YES, and the preferredSheetHeight is
+100 and the screen has a bottom safe area inset of 10, the total height of the displayed bottom
+sheet height would be 110. If set to @c NO, the height would be 100.
+
+Defaults to @c YES.
+*/
+@property(nonatomic, assign) BOOL adjustHeightForSafeAreaInsets;
 
 /**
  Customize the color of the background scrim.

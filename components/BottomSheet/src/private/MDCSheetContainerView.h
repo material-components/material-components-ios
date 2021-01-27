@@ -22,6 +22,13 @@
 @property(nonatomic, weak, nullable) id<MDCSheetContainerViewDelegate> delegate;
 @property(nonatomic, readonly) MDCSheetState sheetState;
 @property(nonatomic) CGFloat preferredSheetHeight;
+/**
+Whether or not the height of the view should adjust to include extra height for any bottom
+ safe area insets. If, for example, this is set to @c YES, and the preferredSheetHeight is
+ 100 and the screen has a bottom safe area inset of 10, the total height of the displayed bottom
+ sheet height would be 110. If set to @c NO, the height would be 100.
+ */
+@property(nonatomic, assign) BOOL adjustHeightForSafeAreaInsets;
 @property(nonatomic) BOOL willBeDismissed;
 
 /**
@@ -31,10 +38,10 @@
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame
                           contentView:(nonnull UIView *)contentView
-                           scrollView:(nullable UIScrollView *)scrollView NS_DESIGNATED_INITIALIZER;
+                           scrollView:(nullable UIScrollView *)scrollView
+             simulateScrollViewBounce:(BOOL)simulateScrollViewBounce NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @end
-

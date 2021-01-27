@@ -14,6 +14,10 @@
 
 #import "MDCFloatingButton.h"
 
+/**
+ This category is used to animate @c MDCFloatingButton instances, to expand or
+ collapse.
+ */
 @interface MDCFloatingButton (Animation)
 
 /**
