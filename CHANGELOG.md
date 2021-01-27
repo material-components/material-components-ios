@@ -16,7 +16,7 @@ Bottom sheets have new propertie that turn off the overscroll and safe area inse
 
 ### Dialogs
 
-
+Added a `shouldAutorotateOverride` property, a `preferredInterfaceOrientationForPresentationOverride` property, a `supportedInterfaceOrientationsOverride` property, and a `modalTransitionStyleOverride` property to MDCAlertController.
 
 ### ProgressView
 
