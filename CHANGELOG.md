@@ -1,16 +1,26 @@
-# #develop#
+# 121.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release, we added a `scrollViewBounce` property and a `adjustHeightForSafeAreaInsets` property to BottomSheets, added a `shouldAutorotateOverride` property, a `preferredInterfaceOrientationForPresentationOverride` property, a `supportedInterfaceOrientationsOverride` property, and a `modalTransitionStyleOverride` property to MDCAlertController, and converted `progressTintColors` property on MDCProgressView to use light weight generics.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### ProgressView
 
-Replace this text with links to deprecation guides.
+MDCProgressView's property `progressTintColors` started using light weight generics so values pass in need to be typed correctly.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### BottomSheet
+
+Bottom sheets have new propertie that turn off the overscroll and safe area insets.
+
+### Dialogs
+
+
+
+### ProgressView
+
+Converted `progressTintColors` property on MDCProgressView to use light weight generics.
 
 ## Component changes
 
