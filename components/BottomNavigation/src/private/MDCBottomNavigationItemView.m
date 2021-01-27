@@ -15,9 +15,10 @@
 
 #import "MDCBottomNavigationItemView.h"
 
+#import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialAvailability.h"
 #import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationItemBadge.h"
 
