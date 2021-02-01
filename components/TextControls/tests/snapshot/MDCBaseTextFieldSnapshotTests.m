@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextControls+FilledTextFieldsTheming.h"
-#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 #import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "supplemental/MDCTextControlSnapshotTestHelpers.h"
 

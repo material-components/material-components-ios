@@ -19,8 +19,6 @@
 #import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
 #import "supplemental/MDCTextControlSnapshotTestHelpers.h"
 #import "MaterialTextControls+FilledTextFields.h"
-#import "MaterialTextControls+FilledTextFieldsTheming.h"
-#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
 
 @interface MDCFilledTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCFilledTextField *textField;

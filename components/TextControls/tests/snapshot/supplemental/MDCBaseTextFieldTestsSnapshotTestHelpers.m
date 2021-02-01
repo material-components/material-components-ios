@@ -17,8 +17,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialTextControls+BaseTextFields.h"
+#import "MaterialTextControls+Enums.h"
+#import "MaterialTextControls+FilledTextFields.h"
+#import "MaterialTextControls+OutlinedTextFields.h"
+#import "MaterialTextControls+UnderlinedTextFields.h"
 #import "MDCTextControlSnapshotTestHelpers.h"
-#import "MaterialSnapshot.h"
 
 @interface MDCBaseTextField (AnimationDuration)
 @property(nonatomic, assign) NSTimeInterval animationDuration;
