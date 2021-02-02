@@ -20,9 +20,9 @@
  achieve the look and feel of the textfields at
  https://material.io/design/components/text-fields.html.
 */
-static const CGFloat kMinPaddingAroundTextWhenNoFloatingLabel = 6.0f;
+static const CGFloat kMinPaddingAroundTextWhenNoFloatingLabel = 4.0f;
 static const CGFloat kMaxPaddingAroundTextWhenNoFloatingLabel = 10.0f;
-static const CGFloat kMinPaddingBetweenFloatingLabelAndEditingText = (CGFloat)8.0;
+static const CGFloat kMinPaddingBetweenFloatingLabelAndEditingText = (CGFloat)3.0;
 static const CGFloat kMaxPaddingBetweenFloatingLabelAndEditingText = (CGFloat)12.0;
 static const CGFloat kMinPaddingAroundAssistiveLabels = (CGFloat)3.0;
 static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
