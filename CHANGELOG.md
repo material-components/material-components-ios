@@ -1,3 +1,28 @@
+# 121.0.1
+
+In this patch release we made some internal improvements to our imports and refined our deprecation policy.
+
+## Component changes
+
+### BottomNavigation
+
+* [Fix imports for MDCBottomNavigationItemView.](https://github.com/material-components/material-components-ios/commit/afe4105debedd8c7b3376b5a37e9beeafb9b368e) (Alyssa Weiss)
+* [Remove unused 'kOfAnnouncement' and fix imports.](https://github.com/material-components/material-components-ios/commit/3a4270e82053fec7c215a7a766fdfe6c7f153bae) (Alyssa Weiss)
+
+### Ripple
+
+* [Declare parameter type NSArray in the Ripple implementation.](https://github.com/material-components/material-components-ios/commit/73fb0330a6e1b0d6f70a0e50037b255cac1cafba) (Yarden Eitan)
+
+### TextControls
+
+* [Fix imports for clang tidy](https://github.com/material-components/material-components-ios/commit/ee7f2fce52de27f59a209cca2f43f7609e6e0172) (Andrew Overton)
+
+### Typography
+
+* [UIFont MDC simple equality: updated class docs.](https://github.com/material-components/material-components-ios/commit/274ba189abfb3d8065585b64a67f4d4179996e38) (Randall Li)
+
+---
+
 # 121.0.0
 
 In this major release, we added a `scrollViewBounce` property and a `adjustHeightForSafeAreaInsets` property to BottomSheets, added a `shouldAutorotateOverride` property, a `preferredInterfaceOrientationForPresentationOverride` property, a `supportedInterfaceOrientationsOverride` property, and a `modalTransitionStyleOverride` property to MDCAlertController, and converted `progressTintColors` property on MDCProgressView to use light weight generics.

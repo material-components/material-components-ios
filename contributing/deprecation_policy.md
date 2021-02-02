@@ -25,14 +25,13 @@ the deprecation process below.
 ## Our deprecation process (Googlers)
 
 1. Measure internal usage of the API.
-2. Create a GitHub issue.
-3. Write a migration guide.
-4. Add a comment to the API indicating that it will be deprecated.
-5. Determine a schedule for the API deletion.
-6. Announce that the API will be deprecated
-7. After the deprecation date, annotate the API as deprecated.
-8. After the deletion date, re-evaluate usage of the API.
-9. Delete the API and migration guide.
+2. Write a migration guide.
+3. Determine a schedule for the API deprecation and deletion.
+4. Mark the API as To Be Deprecated.
+5. Announce that the API will be deprecated.
+6. After the deprecation date, annotate the API as deprecated.
+7. After the deletion date, re-evaluate usage of the API.
+8. Delete the API and migration guide.
 
 ### Step 1: Measure internal usage of the API
 
@@ -40,25 +39,8 @@ Read [go/mdc-ios-measuring-api-usage](http://go/mdc-ios-measuring-api-usage) to 
 API usage internally.
 
 If there is zero API usage beyond our own library: skip to step 7 (Deprecate the API).
-Otherwise, proceed to step 2.
 
-### Step 2: Create a GitHub issue
-
-Create a GitHub issue with the following template:
-
-```
-- [x] Measure internal usage of the API.
-- [x] Create a GitHub issue.
-- [ ] Write a migration guide.
-- [ ] Add a comment to the API indicating that it will be deprecated.
-- [ ] Determine a schedule for the API deletion.
-- [ ] Announce that the API will be deprecated
-- [ ] After the deprecation date, annotate the API as deprecated.
-- [ ] After the deletion date, re-evaluate usage of the API.
-- [ ] Delete the API and migration guide.
-```
-
-### Step 3: Write a migration guide
+### Step 2: Write a migration guide
 
 This guide should be placed in the component's docs/ folder and have a prefix `migration-guide-`.
 
@@ -67,41 +49,7 @@ MDCAppBarViewController.
 
 Send this migration guide out for review as a standalone pull request.
 
-### Step 4: Add a comment to the API indicating that it will be deprecated.
-
-Add a `@warning` annotation to the API's public documentation indicating the intent for this API to
-eventually be deprecated. This warning should also provide a short suggested alternative, if one
-exists, and a link to the migration guide.
-
-For example:
-
-```objc
-@warning This method will soon be deprecated. Consider using
-@c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
-components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-```
-
-If the API to be deprecated is a method or property of a class, also move the API to a category
-named `ToBeDeprecated`. This will cause the API to show up in our release notes automatically as
-a to-be-deprecated API.
-
-For example:
-
-```objc
-@interface MDCAppBarContainerViewController (ToBeDeprecated)
-
-/**
- The App Bar views that will be presented in front of the contentViewController's view.
-
- @warning This API will eventually be deprecated. Use appBarViewController instead. Learn more at
- components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
- */
-@property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
-
-@end
-```
-
-### Step 5: Determine a schedule for the API deletion
+### Step 3: Determine a schedule for the API deprecation and deletion
 
 Generally speaking deprecations take a long time unless you take an active part in migrating
 clients. Calculate your estimates with this in mind. A rough guideline:
@@ -135,7 +83,41 @@ Map this schedule onto reality:
 
 **Once you have determined a schedule, add the schedule to the migration guide**.
 
-### Step 6: Announce that the API will be deprecated
+### Step 4: Mark the API as To Be Deprecated
+
+Add a `@warning` annotation to the API's public documentation indicating the intent for this API to
+eventually be deprecated. This warning should also provide a short suggested alternative, if one
+exists, and a link to the migration guide.
+
+For example:
+
+```objc
+@warning This method will soon be deprecated. Consider using
+@c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
+components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+```
+
+If the API to be deprecated is a method or property of a class, also move the API to a category
+named `ToBeDeprecated`. This will cause the API to show up in our release notes automatically as
+a to-be-deprecated API.
+
+For example:
+
+```objc
+@interface MDCAppBarContainerViewController (ToBeDeprecated)
+
+/**
+ The App Bar views that will be presented in front of the contentViewController's view.
+
+ @warning This API will eventually be deprecated. Use appBarViewController instead. Learn more at
+ components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ */
+@property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
+
+@end
+```
+
+### Step 5: Announce that the API will be deprecated
 
 Inform internal clients of the impending deprecation by sending an email with the following
 format:
@@ -152,12 +134,12 @@ The timeline for this deprecation is as follows:
 - <Deletion date>: The API will be deleted.
 ```
 
-### Step 7: After the deprecation date, annotate the API as deprecated
+### Step 6: After the deprecation date, annotate the API as deprecated
 
 Send a pull request annotating the API as deprecated. Use `__deprecated_msg("")` and provide a
 concise message with a recommendation for an alternative API, if any is available.
 
-### Step 8: After the deletion date, re-evaluate usage of the API
+### Step 7: After the deletion date, re-evaluate usage of the API
 
 Once the deletion date has passed and at least one release has been cut since the API was marked as
 deprecated, you can now consider deleting the API. But first: you must evaluate whether the API is
@@ -170,7 +152,7 @@ If the API is still being used by clients, you have a few options:
 
 Proceed to step 9 once you've confirmed that there are zero internal usages of the API.
 
-### Step 9: Delete the API and migration guide
+### Step 8: Delete the API and migration guide
 
 Once you have confirmed that there is no internal usage of the API, you can safely delete it and the migration guide.
 

@@ -12,17 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- The Typography component provides methods for getting sized fonts and opacities following Material
- style guidelines.
-
- This header is the umbrella header for the component and should be imported by consumers of the
- Typography component. Please do not directly import other headers. This will allow the componet to
- expand or contract the header file space without consumer modifications.
- */
-
 #import <UIKit/UIKit.h>
 
+/**
+ This UIFont category provides a shallow equality check. http://www.openradar.appspot.com/28406766
+ */
 @interface UIFont (MaterialSimpleEquality)
 
 /*
