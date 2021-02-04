@@ -45,6 +45,25 @@
   XCTAssertEqual(_progressView.cornerRadius, 0);
 }
 
+- (void)testDefaultMode {
+  XCTAssertEqual(_progressView.mode, MDCProgressViewModeDeterminate);
+}
+
+- (void)testSetMode {
+  _progressView.mode = MDCProgressViewModeIndeterminate;
+  XCTAssertEqual(_progressView.mode, MDCProgressViewModeIndeterminate);
+}
+
+- (void)testDefaultProgressTintColors {
+  XCTAssertEqual(_progressView.progressTintColors, nil);
+}
+
+- (void)testSetProgressTintColors {
+  NSArray<UIColor *> *colors = @[ UIColor.blueColor, UIColor.greenColor ];
+  _progressView.progressTintColors = colors;
+  XCTAssertEqualObjects(_progressView.progressTintColors, colors);
+}
+
 - (void)testInitialProgress {
   XCTAssertEqual(_progressView.progress, 0);
 }
