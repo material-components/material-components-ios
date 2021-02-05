@@ -56,7 +56,7 @@ IB_DESIGNABLE
 
  The default is nil.
 */
-@property(nonatomic, copy, nullable) NSArray<UIColor *> *progressTintColors;
+@property(nonatomic, copy, nullable) NSArray *progressTintColors;
 
 /**
  The color shown for the portion of the progress view that is not filled.
