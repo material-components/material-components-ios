@@ -168,6 +168,10 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
     _button.accessibilityValue = self.accessibilityValue;
+    // This needs to be set specifically for VoiceOver to work on iOS 14, see b/175421576
+    if (@available(iOS 14, *)) {
+      _button.accessibilityTraits |= UIAccessibilityTraitButton;
+    }
     [self addSubview:_button];
   }
 }
