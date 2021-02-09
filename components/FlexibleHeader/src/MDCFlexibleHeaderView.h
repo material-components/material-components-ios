@@ -251,7 +251,7 @@ IB_DESIGNABLE
 
  This object is intended to be used as a constraint item.
  */
-@property(nonatomic, nonnull, readonly) id topSafeAreaGuide;
+@property(nonatomic, nonnull, readonly) UIView *topSafeAreaGuide;
 
 #pragma mark Behaviors
 
