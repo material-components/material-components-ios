@@ -16,6 +16,7 @@
 
 #import "MDCTextControlTextAreaConfiguratorExample.h"
 
+#import "MDCTextControlConfiguratorExample.h"
 #import "MDCTextControlTextAreaContentViewController.h"
 
 static NSString *const kExampleTitle = @"MDCTextControl TextAreas";

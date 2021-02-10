@@ -14,10 +14,7 @@
 
 #import "MDCTextControlTextFieldContentViewController.h"
 
-#import "MaterialButtons.h"
-
-#import "MaterialButtons+Theming.h"
-#import "MDCBaseTextField.h"
+#import "MDCTextControlContentViewController.h"
 #import "MaterialTextControls+BaseTextFields.h"
 #import "MaterialColorScheme.h"
 
@@ -28,6 +25,7 @@
 #import "MDCOutlinedTextField+MaterialTheming.h"
 #import "MaterialTextControls+UnderlinedTextFields.h"
 #import "MDCUnderlinedTextField+MaterialTheming.h"
+#import "MaterialContainerScheme.h"
 
 @interface MDCTextControlTextFieldContentViewController ()
 @property(nonatomic, assign) BOOL shouldAddDebugLeadingView;

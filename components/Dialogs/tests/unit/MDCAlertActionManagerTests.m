@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 #import "MaterialButtons.h"
 #import "MDCAlertController+ButtonForAction.h"
+#import "MaterialDialogs.h"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
 

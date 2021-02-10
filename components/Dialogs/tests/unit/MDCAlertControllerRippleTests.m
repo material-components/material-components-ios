@@ -14,8 +14,10 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
+#import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
 
 #pragma mark - Subclasses for testing

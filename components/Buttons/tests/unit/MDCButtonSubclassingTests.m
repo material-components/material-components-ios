@@ -14,10 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCButton+Subclassing.h"
 #import "MaterialButtons.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialTypography.h"
 
 static const UIEdgeInsets ButtonTestContentEdgeInsets = {1, 2, 3, 4};
 static const CGFloat ButtonTestCornerRadius = (CGFloat)1.234;

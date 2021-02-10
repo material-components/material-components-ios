@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtons.h"
+#import "MaterialInk.h"
 #import "MaterialRipple.h"
 
 @interface MDCButton (Testing)

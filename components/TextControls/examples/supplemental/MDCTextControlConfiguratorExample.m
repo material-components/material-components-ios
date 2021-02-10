@@ -15,13 +15,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MDCTextControlContentViewController.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTextControls+FilledTextFieldsTheming.h"
-#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
-#import "MaterialTextControlsPrivate+Shared.h"
 
 #import "MDCTextControlConfiguratorExample.h"
-#import "MDCTraitEnvironmentChangeDelegate.h"
 
 @interface MDCTextControlConfiguratorExample ()
 

@@ -16,16 +16,13 @@
 
 #import "MaterialButtons.h"
 
-#import "MDCBaseTextField.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
 
-#import "MDCFilledTextField+MaterialTheming.h"
-#import "MDCFilledTextField.h"
-#import "MDCOutlinedTextField+MaterialTheming.h"
-#import "MDCOutlinedTextField.h"
 
 #import "MDCTraitEnvironmentChangeDelegate.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme+Scheming.h"
 
 @interface MDCTextControlContentViewController ()
 

@@ -15,7 +15,9 @@
 #import "MaterialDialogs+ColorThemer.h"
 #import "MaterialDialogs.h"
 
+#import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
+#import "MaterialColorScheme.h"
 
 #import <XCTest/XCTest.h>
 

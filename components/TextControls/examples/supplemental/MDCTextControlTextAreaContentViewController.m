@@ -14,9 +14,7 @@
 
 #import "MDCTextControlTextAreaContentViewController.h"
 
-#import "MaterialButtons.h"
-
-#import "MaterialButtons+Theming.h"
+#import "MDCTextControlContentViewController.h"
 #import "MDCBaseTextArea.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
