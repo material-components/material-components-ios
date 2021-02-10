@@ -15,15 +15,14 @@
 #import "MDCButton.h"
 
 #import "private/MDCButton+Subclassing.h"
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
 #import "MaterialMath.h"
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 // TODO(ajsecord): Animate title color when animating between enabled/disabled states.
 // Non-trivial: http://corecocoa.wordpress.com/2011/10/04/animatable-text-color-of-uilabel/

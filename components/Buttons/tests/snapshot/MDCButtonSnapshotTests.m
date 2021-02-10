@@ -19,7 +19,7 @@
 #import "MaterialAvailability.h"
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
-#import "UIView+MDCSnapshot.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 
 /** A tests fake class of MDCButton. */
