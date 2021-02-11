@@ -1,5 +1,6 @@
 #import "BottomSheetPresenterViewController.h"
 #import "MaterialBottomSheet.h"
+#import "MaterialButtons.h"
 
 /**
  Demonstrates the use of MDCBottomSheetTransitionController.

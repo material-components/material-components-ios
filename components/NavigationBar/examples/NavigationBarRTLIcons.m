@@ -13,15 +13,12 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
-#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
-#import "MaterialNavigationBar+ColorThemer.h"
 #import "MaterialNavigationBar.h"
-#import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarRTL : UIViewController
 

@@ -14,9 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 #import "MaterialNavigationBar+ColorThemer.h"
 #import "MaterialNavigationBar.h"
-#import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
+#import "MaterialColorScheme.h"
 
 @implementation NavigationBarWithCustomFontExample
 

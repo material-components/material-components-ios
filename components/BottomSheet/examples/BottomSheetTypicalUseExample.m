@@ -19,8 +19,13 @@
 #import "MaterialAppBar.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "BottomSheetPresenterViewController.h"
+#import "MDCSheetState.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialBottomSheet+ShapeThemer.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialColorScheme.h"
+#import "MaterialShapeScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
 @end

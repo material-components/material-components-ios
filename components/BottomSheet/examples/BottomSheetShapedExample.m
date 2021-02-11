@@ -15,14 +15,17 @@
 #import <UIKit/UIKit.h>
 
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
-#import "supplemental/BottomSheetDummyStaticViewController.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "BottomSheetPresenterViewController.h"
+#import "MDCSheetState.h"
 #import "MaterialBottomSheet.h"
+#import "MaterialFlexibleHeader.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface BottomSheetShapedExample : BottomSheetPresenterViewController
 @end

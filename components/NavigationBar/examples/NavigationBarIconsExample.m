@@ -13,6 +13,8 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialIcons+ic_arrow_back.h"
