@@ -14,6 +14,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "MaterialButtons.h"
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"

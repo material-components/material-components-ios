@@ -17,6 +17,7 @@
 #import "MDCTabBarExtendedAlignment.h"
 #import "MaterialTabs.h"
 #import "MaterialTabs+Theming.h"
+#import "MaterialContainerScheme.h"
 
 static NSString *const kItemTitleShort1Latin = @"Quando";
 static NSString *const kItemTitleShort2Latin = @"No";

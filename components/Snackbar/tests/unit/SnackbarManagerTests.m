@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 #import "../../src/private/MDCSnackbarManagerInternal.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialSnackbar.h"
 
 @interface MDCSnackbarManagerInternal (SnackbarManagerTesting)

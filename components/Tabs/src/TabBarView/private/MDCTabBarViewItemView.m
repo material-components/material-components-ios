@@ -16,6 +16,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "MaterialRipple.h"
 #import "MDCTabBarViewItemViewDelegate.h"
 #import "MaterialMath.h"
 
