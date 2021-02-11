@@ -15,8 +15,9 @@
 #import "MaterialSnapshot.h"
 
 #import "MaterialAvailability.h"
-#import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 /**
  An MDCCard subclass that allows the user to override the @c traitCollection property.

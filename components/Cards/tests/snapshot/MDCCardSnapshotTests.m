@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
+#import "MaterialCards+Theming.h"
 #import "MaterialSnapshot.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 @interface MDCCardSnapshotTests : MDCSnapshotTestCase
 

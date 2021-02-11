@@ -14,6 +14,7 @@
 
 #import "MDCSelfSizingStereoCellExample.h"
 
+#import "MaterialContainerScheme.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialList+Theming.h"

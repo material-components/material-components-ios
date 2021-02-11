@@ -15,12 +15,12 @@
 #import "MDCChipView.h"
 #import "private/MDCChipView+Private.h"
 
+#import "MaterialElevation.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"

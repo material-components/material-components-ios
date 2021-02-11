@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCInkLayer.h"
+#import "MDCInkLayerDelegate.h"
 
 #pragma mark - Fake classes
 

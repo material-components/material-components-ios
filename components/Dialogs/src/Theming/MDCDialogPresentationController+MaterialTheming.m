@@ -14,6 +14,14 @@
 
 #import "MDCDialogPresentationController+MaterialTheming.h"
 
+#import "MaterialDialogs.h"
+
+#import "MaterialShadowElevations.h"
+
+#import "MaterialColorScheme.h"
+
+#import "MaterialContainerScheme.h"
+
 static const CGFloat kCornerRadius = 4;
 
 @implementation MDCDialogPresentationController (MaterialTheming)

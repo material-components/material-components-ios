@@ -14,6 +14,8 @@
 
 #import "CollectionsSectionInsetsExampleSupplemental.h"
 
+#import "MaterialCollections.h"
+
 @implementation CollectionsSectionInsetsExample (Supplemental)
 
 - (void)viewDidLoad {

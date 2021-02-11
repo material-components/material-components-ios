@@ -14,6 +14,8 @@
 
 #import "CollectionsEditingManyCellsExampleSupplemental.h"
 
+#import "MaterialCollections.h"
+
 @implementation CollectionsEditingManyCellsExample (Supplemental)
 
 #pragma mark - CatalogByConvention

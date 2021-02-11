@@ -16,7 +16,6 @@
 
 #import "MDCFlexibleHeaderTopSafeArea.h"
 
-#import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
 
 // The default status bar height for non-X devices.
