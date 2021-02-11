@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "supplemental/CollectionsInkExample.h"
+#import "MaterialCollections.h"
 #import "MaterialPalettes.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";

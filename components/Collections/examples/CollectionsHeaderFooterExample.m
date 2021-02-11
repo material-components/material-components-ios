@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "supplemental/CollectionsHeaderFooterExample.h"
-#import "MaterialTypography.h"
+#import "MaterialCollections.h"
 
 static const NSInteger kSectionCount = 3;
 static const NSInteger kSectionItemCount = 2;

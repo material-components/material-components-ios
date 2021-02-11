@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "supplemental/CollectionsSwipeToDismissSectionExample.h"
+#import "MaterialCollections.h"
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;
