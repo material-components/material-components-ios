@@ -207,4 +207,64 @@
   [self snapshotVerifyView:containerView];
 }
 
+- (void)testInferMinimumAndMaximumSizeWhenMultiline {
+  // Given
+  MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
+  [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  NSString *titleString =
+      @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has "
+      @"been the industry's standard dummy text ever since the 1500s, when an unknown printer took "
+      @"a galley of type and scrambled it to make a type specimen book.";
+  [button setTitle:titleString forState:UIControlStateNormal];
+  button.translatesAutoresizingMaskIntoConstraints = NO;
+
+  UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 500)];
+  containerView.backgroundColor = [UIColor whiteColor];
+  [containerView addSubview:button];
+
+  [NSLayoutConstraint activateConstraints:@[
+    [button.heightAnchor constraintGreaterThanOrEqualToConstant:44],
+    [button.widthAnchor constraintLessThanOrEqualToAnchor:containerView.widthAnchor constant:-40],
+    [button.centerXAnchor constraintEqualToAnchor:containerView.centerXAnchor],
+    [button.centerYAnchor constraintEqualToAnchor:containerView.centerYAnchor],
+  ]];
+
+  // When
+  button.titleLabel.numberOfLines = 0;
+  button.inferMinimumAndMaximumSizeWhenMultiline = YES;
+  [containerView setNeedsLayout];
+  [containerView layoutIfNeeded];
+
+  // Then
+  [self snapshotVerifyView:containerView];
+}
+
+- (void)testInferMinimumAndMaximumSizeWhenMultilineManualLayout {
+  // Given
+  CGFloat desiredButtonWidth = 250.0f;
+  CGFloat estimatedButtonHeight = 100.0f;
+  CGRect estimatedButtonFrame = CGRectMake(0, 0, desiredButtonWidth, estimatedButtonHeight);
+  MDCButton *button = [[MDCButton alloc] initWithFrame:estimatedButtonFrame];
+  [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  NSString *titleString =
+      @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has "
+      @"been the industry's standard dummy text ever since the 1500s, when an unknown printer took "
+      @"a galley of type and scrambled it to make a type specimen book.";
+  [button setTitle:titleString forState:UIControlStateNormal];
+
+  UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 500)];
+  containerView.backgroundColor = [UIColor whiteColor];
+  [containerView addSubview:button];
+
+  // When
+  button.titleLabel.numberOfLines = 0;
+  button.inferMinimumAndMaximumSizeWhenMultiline = YES;
+  [button sizeToFit];
+  button.center = CGPointMake(0.5f * CGRectGetWidth(containerView.frame),
+                              0.5f * CGRectGetHeight(containerView.frame));
+
+  // Then
+  [self snapshotVerifyView:containerView];
+}
+
 @end

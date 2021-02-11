@@ -135,6 +135,24 @@
 @property(nonatomic, assign) CGSize maximumSize UI_APPEARANCE_SELECTOR;
 
 /**
+ Setting this property to @c YES when the button's @c titleLabel is multi-line (i.e. when @c
+ numberOfLines is not equal to 1) will result in the button inferring what its size should be and
+ then setting both the @c minimumSize and @c maximumSize to that value. Setting this property back
+ to @c NO will result in @c maximumSize and @c minimumSize being reset to @c CGSizeZero.
+
+ In both Manual Layout and Auto Layout environments the inferred height is a function of the width.
+ In an Auto Layout environment the width will depend on the constraints placed on the view. In a
+ Manual Layout environment the current width will be assumed to be the preferred width, so it is
+ important to make sure the button's width is set to an appropriate value before turning this flag
+ on. In an Auto Layout environment, the view will likely resize itself as needed when this flag is
+ turned on. In a Manual Layout environment, you will likely have to call @c -sizeToFit after turning
+ this flag on.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL inferMinimumAndMaximumSizeWhenMultiline;
+
+/**
  The apparent background color as seen by the user, i.e. the color of the view behind the button.
 
  The underlying color hint is used by buttons to calculate accessible title text colors when in

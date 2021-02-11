@@ -125,6 +125,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 @property(nonatomic, strong) UIView *visibleAreaLayoutGuideView;
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 @property(nonatomic, assign) UIEdgeInsets currentVisibleAreaInsets;
+@property(nonatomic, assign) CGSize lastRecordedIntrinsicContentSize;
 @end
 
 @implementation MDCButton
@@ -358,6 +359,10 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
     self.rippleView.frame = bounds;
   }
   self.titleLabel.frame = MDCRectAlignToScale(self.titleLabel.frame, [UIScreen mainScreen].scale);
+
+  if ([self shouldInferMinimumAndMaximumSize]) {
+    [self inferMinimumAndMaximumSize];
+  }
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
@@ -425,7 +430,9 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 }
 
 - (CGSize)intrinsicContentSize {
-  return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  self.lastRecordedIntrinsicContentSize = size;
+  return size;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -1291,6 +1298,54 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   shapeGenerator.bottomRightCornerOffset =
       CGPointMake(-visibleAreaInsets.right, -visibleAreaInsets.bottom);
   return shapeGenerator;
+}
+
+#pragma mark Multi-line Minimum And Maximum Sizing Inference
+
+- (BOOL)shouldInferMinimumAndMaximumSize {
+  return (self.inferMinimumAndMaximumSizeWhenMultiline && self.titleLabel.numberOfLines != 1 &&
+          self.titleLabel.text.length > 0);
+}
+
+- (void)setInferMinimumAndMaximumSizeWhenMultiline:(BOOL)inferMinimumAndMaximumSizeWhenMultiline {
+  _inferMinimumAndMaximumSizeWhenMultiline = inferMinimumAndMaximumSizeWhenMultiline;
+  if (!_inferMinimumAndMaximumSizeWhenMultiline) {
+    self.minimumSize = CGSizeZero;
+    self.maximumSize = CGSizeZero;
+  }
+  [self setNeedsLayout];
+  // Call -layoutIfNeeded in addition to -setNeedsLayout. If in a Manual Layout environment, the
+  // client will probably call -sizeToFit: after enabling this flag, like the docs suggest. We want
+  // the pending layout pass to happen before they are able to do that, so minimumSize and
+  // maximumSize are already set when it happens.
+  [self layoutIfNeeded];
+}
+
+- (void)inferMinimumAndMaximumSize {
+  CGSize buttonSize = self.bounds.size;
+  CGSize sizeShrunkFromVisibleAreaInsets =
+      CGSizeShrinkWithInsets(buttonSize, self.visibleAreaInsets);
+  CGSize sizeShrunkFromContentEdgeInsets =
+      CGSizeShrinkWithInsets(sizeShrunkFromVisibleAreaInsets, self.contentEdgeInsets);
+  CGSize boundingSizeForLabel = sizeShrunkFromContentEdgeInsets;
+  if ([self imageForState:self.state]) {
+    boundingSizeForLabel.width -= CGRectGetWidth(self.imageView.frame);
+  }
+  boundingSizeForLabel.height = CGFLOAT_MAX;
+  CGSize sizeThatFitsLabel = [self.titleLabel sizeThatFits:boundingSizeForLabel];
+  CGSize sizeShrunkFromContentEdgeInsetsWithNewHeight =
+      CGSizeMake(sizeShrunkFromContentEdgeInsets.width, sizeThatFitsLabel.height);
+  CGSize sizeExpandedFromContentEdgeInsets =
+      CGSizeExpandWithInsets(sizeShrunkFromContentEdgeInsetsWithNewHeight, self.contentEdgeInsets);
+  CGSize sizeExpandedFromVisibleAreaInsets =
+      CGSizeExpandWithInsets(sizeExpandedFromContentEdgeInsets, self.visibleAreaInsets);
+  self.minimumSize = sizeExpandedFromVisibleAreaInsets;
+  self.maximumSize = sizeExpandedFromVisibleAreaInsets;
+
+  if (!CGSizeEqualToSize(sizeExpandedFromVisibleAreaInsets,
+                         self.lastRecordedIntrinsicContentSize)) {
+    [self invalidateIntrinsicContentSize];
+  }
 }
 
 @end
