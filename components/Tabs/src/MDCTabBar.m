@@ -28,7 +28,6 @@
 #import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarDelegate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
-#import "MDCTabBarSizeClassDelegate.h"
 #import "MaterialTypography.h"
 
 /// Padding between image and title in points, according to the spec.
