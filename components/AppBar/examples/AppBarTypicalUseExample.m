@@ -15,8 +15,12 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialNavigationBar.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 

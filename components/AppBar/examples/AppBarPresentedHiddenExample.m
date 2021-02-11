@@ -16,10 +16,10 @@
 
 #import "AppBarSampleViewController.h"
 #import "MaterialAppBar.h"
-#import "MaterialAppBar+Theming.h"
 #import "MaterialAvailability.h"
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialFlexibleHeader.h"
 #import "MaterialContainerScheme.h"
 
 // This example demonstrates a view controller being presented with the AppBar initially hidden.

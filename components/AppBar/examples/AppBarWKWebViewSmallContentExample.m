@@ -16,8 +16,12 @@
 #import <WebKit/WebKit.h>
 
 #import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialNavigationBar.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 // This demonstrates that a WKWebView with minimal content as the tracking scroll view is not able
 // to scroll as expected. This requires enabling useAdditionalSafeAreaInsetsForWebKitScrollViews
