@@ -14,6 +14,12 @@
 
 #import "MDCButtonScheme.h"
 
+#import "MaterialColorScheme.h"
+
+#import "MaterialShapeScheme.h"
+
+#import "MaterialTypographyScheme.h"
+
 @implementation MDCButtonScheme
 
 - (instancetype)init {

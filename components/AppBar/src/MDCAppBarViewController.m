@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAppBar.h"
+#import "MDCAppBarViewController.h"
 
 #import "MDCAppBarContainerViewController.h"
 
@@ -20,14 +20,13 @@
 #import "private/MaterialAppBarStrings_table.h"
 #import "MDCAppBarViewControllerAccessibilityPerformEscapeDelegate.h"
 #import "MaterialFlexibleHeader.h"
+#import "MaterialHeaderStackView.h"
+#import "MaterialNavigationBar.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
-#import "MaterialApplication.h"
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialUIMetrics.h"
 #import <MDFInternationalization/MDFInternationalization.h>
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 static NSString *const kBarStackKey = @"barStack";
 

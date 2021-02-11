@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MaterialCards.h"
-#import "MaterialCards+Theming.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
 

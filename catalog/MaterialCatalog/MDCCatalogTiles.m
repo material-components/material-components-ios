@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCCatalogTiles.h"
-#import "MaterialThemes.h"
+#import "MaterialColorScheme.h"
 
 UIImage* _Nullable MDCDrawImage(CGRect frame,
                                 MDCDrawFunc drawFunc,

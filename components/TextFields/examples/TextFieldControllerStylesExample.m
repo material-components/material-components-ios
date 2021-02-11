@@ -18,6 +18,8 @@
 #import "MaterialTextFields.h"
 
 #import "supplemental/TextFieldControllerStylesExampleSupplemental.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 @interface TextFieldControllerStylesExample ()
 

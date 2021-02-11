@@ -14,8 +14,6 @@
 
 #import "UICollectionViewController+MDCCardReordering.h"
 
-#import "MDCCardCollectionCell.h"
-#import "MaterialInk.h"
 
 @implementation UICollectionViewController (MDCCardReordering)
 

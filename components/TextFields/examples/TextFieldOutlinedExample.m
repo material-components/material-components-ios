@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields+Theming.h"
 #import "MaterialTextFields.h"
+#import "MaterialTextFields+Theming.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 @interface TextFieldOutlinedObjectiveCExample
     : UIViewController <UITextFieldDelegate, UITextViewDelegate>
