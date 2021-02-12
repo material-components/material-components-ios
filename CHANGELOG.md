@@ -12,8 +12,6 @@ In this major release, we have made some API-breaking changes and landed some bu
 
 - We've removed generics annotations from ProgressView's progressTintColors.
 
-## API changes
-
 ## Component changes
 
 ### AppBar
