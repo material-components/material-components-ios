@@ -1,3 +1,65 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### AppBar
+
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/1437067081c38031d16e80f08437d4667543bce0) (Jeff Verkoeyen)
+
+### BottomNavigation
+
+* [Ensure correct Voiceover behavior in iOS 14.](https://github.com/material-components/material-components-ios/commit/4b4b0f3d7d1753a926ef88723361656252219f28) (Alyssa Weiss)
+
+### Buttons
+
+* [Add inferMinimumAndMaximumSizeWhenMultiline](https://github.com/material-components/material-components-ios/commit/8f2917d52553499260f11c8fd388304838ef9361) (Andrew Overton)
+* [Internal change](https://github.com/material-components/material-components-ios/commit/105c4f4ab046ab01bf0677247cfbceee2b51440f) (Andrew Overton)
+
+### Collections
+
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/6171ea2840fb0901a49c0a886c54bf048ff0e8f4) (Jeff Verkoeyen)
+
+### Dialogs
+
+* [Fixed typo in API doc.](https://github.com/material-components/material-components-ios/commit/bcf4760ceba9933de3aa771b1e58cc9e97d7fbed) (Randall Li)
+
+### FlexibleHeader
+
+* [Redefine topSafeAreaGuide as a UIView.](https://github.com/material-components/material-components-ios/commit/22cb5afa87d9fedc134ae64002e48a3c227b2798) (Randall Li)
+
+### ProgressView
+
+* [Add snapshot and unit tests.](https://github.com/material-components/material-components-ios/commit/fdb53be95e6923b7175e5fcd09e850ae0bf69252) (Alyssa Weiss)
+* [Remove generics from ProgressView's progressTintColors](https://github.com/material-components/material-components-ios/commit/c7a70ce81893c97656f8aec6c824fc44066dad88) (Andrew Overton)
+
+### Tabs
+
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/6028ffe8792402eb137f9197e0521439bdf999b9) (Cody Weaver)
+
+## Multi-component changes
+
+* [Clean up markdown formatting.](https://github.com/material-components/material-components-ios/commit/d0ac5f2c8396ba7c5cd278b7892330effe7aa093) (Nobody)
+* [Expose density on text fields and text areas](https://github.com/material-components/material-components-ios/commit/73e404888d1e98e930e62b68f864b60e264c32f3) (Andrew Overton)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/25c9049d5a4ee13ed9085ca01a92ed3b25867989) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/39c20e15f82a89c5ea7311f708c8360671efea5a) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/63988b35da1fa5281b4260abd8a075817b19d155) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/9f9b452b3aeb357ed46977d3c86d40d29e63200f) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/b3fa42005b31417c687f8a96aa9c4df568182506) (Jeff Verkoeyen)
+
+---
+
 # 121.0.1
 
 In this patch release we made some internal improvements to our imports and refined our deprecation policy.
