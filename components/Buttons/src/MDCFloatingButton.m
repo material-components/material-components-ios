@@ -14,9 +14,9 @@
 
 #import "MDCFloatingButton.h"
 
-#import "private/MDCButton+Subclassing.h"
 #import "private/MDCFloatingButtonModeAnimator.h"
 #import "private/MDCFloatingButtonModeAnimatorDelegate.h"
+#import "MDCButton.h"
 #import "MaterialShadowElevations.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>

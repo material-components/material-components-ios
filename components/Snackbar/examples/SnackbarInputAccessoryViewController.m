@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialPalettes.h"
 #import "MaterialSnackbar.h"
 
 @interface SnackbarInputAccessoryViewController : UIViewController

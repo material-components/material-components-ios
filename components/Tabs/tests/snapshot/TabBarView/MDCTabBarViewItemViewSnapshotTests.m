@@ -17,7 +17,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "../../../src/TabBarView/MDCTabBarView.h"
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
-#import "../../../src/TabBarView/private/MDCTabBarViewItemViewDelegate.h"
+#import "MaterialRipple.h"
 #import "MaterialSnapshot.h"
 
 /** Minimum width of an item view for proper layout. */

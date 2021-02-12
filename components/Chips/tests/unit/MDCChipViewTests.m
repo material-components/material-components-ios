@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCChipView.h"
+#import "MaterialShadowElevations.h"
 
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;

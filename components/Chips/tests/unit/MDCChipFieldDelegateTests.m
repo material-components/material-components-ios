@@ -16,6 +16,8 @@
 
 #import "MDCChipField.h"
 #import "MDCChipFieldDelegate.h"
+#import "MDCChipView.h"
+#import "MaterialTextFields.h"
 
 /**
  A class to record messages from MDCChipField.

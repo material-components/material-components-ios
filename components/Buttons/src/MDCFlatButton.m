@@ -14,8 +14,9 @@
 
 #import "MDCFlatButton.h"
 
-#import "MaterialShadowElevations.h"
 #import "private/MDCButton+Subclassing.h"
+#import "MDCButton.h"
+#import "MaterialShadowElevations.h"
 
 @interface MDCFlatButton ()
 @property(nonatomic) BOOL hasOpaqueBackground;

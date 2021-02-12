@@ -15,7 +15,6 @@
 #import "MDCRaisedButton.h"
 
 #import "MaterialShadowElevations.h"
-#import "private/MDCButton+Subclassing.h"
 
 @implementation MDCRaisedButton
 
