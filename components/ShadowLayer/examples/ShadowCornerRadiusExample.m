@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialShadowLayer.h"
 #import "MaterialSlider.h"
 #import "ShadowRadiusLabel.h"
 

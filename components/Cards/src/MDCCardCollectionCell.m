@@ -14,9 +14,14 @@
 
 #import "MDCCardCollectionCell.h"
 
+#import "MaterialElevation.h"
+#import "MaterialInk.h"
+#import "MaterialRipple.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
+#import "MaterialShapes.h"
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialMath.h"
-#import "MaterialShapes.h"
 
 static const CGFloat MDCCardCellCornerRadiusDefault = 4;
 static const CGFloat MDCCardCellSelectedImagePadding = 8;

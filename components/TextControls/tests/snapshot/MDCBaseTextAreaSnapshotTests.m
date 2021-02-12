@@ -199,6 +199,20 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testDenseTextAreaWithLabelTextAndText {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.label.text = @"Label text";
+  textArea.textView.text = @"Text";
+  textArea.verticalDensity = 1.0f;
+  [textArea.textView becomeFirstResponder];
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 #pragma mark Helpers
 
 - (UIView *)createSideView {

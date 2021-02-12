@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertController+Testing.h"
+#import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
 
 #import <XCTest/XCTest.h>

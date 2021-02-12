@@ -12,11 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MDCAlertController+ButtonForAction.h>
-#import <MaterialComponents/MaterialDialogs+ColorThemer.h>
-#import <MaterialComponents/MaterialDialogs+TypographyThemer.h>
-#import <MaterialComponents/MaterialShadowElevations.h>
+#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MDCAlertController+ButtonForAction.h"  // TODO(b/126884296): One-off transformation needs fixing in copy.bara.sky
+#import "MaterialDialogs.h"
+#import "MaterialShadowElevations.h"  // ComponentImport
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
+#import "MaterialTypographyScheme+Scheming.h"
 
 static const CGFloat kCornerRadius = 4;
 

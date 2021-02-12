@@ -16,6 +16,7 @@
 
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
 
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 

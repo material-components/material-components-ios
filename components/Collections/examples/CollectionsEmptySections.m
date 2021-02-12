@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MaterialCollections.h"
-#import "MaterialTypography.h"
 
 static const NSInteger kSectionCount = 3;
 static const NSInteger kSectionItemCount = 0;

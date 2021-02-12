@@ -14,6 +14,7 @@
 
 #import "ShadowElevationsPointsLabel.h"
 
+#import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
 @implementation ShadowElevationsPointsLabel

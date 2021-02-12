@@ -17,6 +17,9 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "../../src/private/MDCBottomDrawerHeaderMask.h"
 #import "../../src/private/MDCBottomDrawerShadowedView.h"
+#import "MDCBottomDrawerState.h"
+#import "MaterialNavigationDrawer.h"
+#import "MDCBottomDrawerContainerViewControllerDelegate.h"
 #import "MDCNavigationDrawerFakes.h"
 #import "MaterialShadowLayer.h"
 

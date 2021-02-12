@@ -16,6 +16,9 @@
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialNavigationBar.h"
+#import "MaterialColorScheme.h"
 
 @interface AppBarImageryExample : UITableViewController
 @property(nonatomic, strong) MDCAppBarViewController *appBarViewController;

@@ -14,8 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+TypographyThemer.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCButtonTypographyThemerTests : XCTestCase
 @end

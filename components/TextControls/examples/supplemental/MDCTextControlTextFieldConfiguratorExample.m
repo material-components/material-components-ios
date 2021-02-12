@@ -16,6 +16,7 @@
 
 #import "MDCTextControlTextFieldConfiguratorExample.h"
 
+#import "MDCTextControlConfiguratorExample.h"
 #import "MDCTextControlTextFieldContentViewController.h"
 
 static NSString *const kExampleTitle = @"MDCTextControl TextFields";

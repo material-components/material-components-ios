@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAlertControllerView.h"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
 
+#import "MaterialShadowElevations.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialButtons.h"

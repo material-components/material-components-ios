@@ -14,6 +14,7 @@
 
 #import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFeatureHighlight.h"
+#import "MaterialColorScheme.h"
 
 #import <XCTest/XCTest.h>
 

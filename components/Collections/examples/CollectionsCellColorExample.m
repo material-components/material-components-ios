@@ -15,6 +15,7 @@
 #import "supplemental/CollectionsCellColorExample.h"
 
 #import "MaterialAvailability.h"
+#import "MaterialCollections.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 

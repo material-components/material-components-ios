@@ -15,8 +15,10 @@
 #import "MaterialSnapshot.h"
 
 #import "MaterialAvailability.h"
-#import "MaterialTabs+Theming.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+Theming.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 /**
  An MDCTabBar subclass that allows the user to override the @c traitCollection property.

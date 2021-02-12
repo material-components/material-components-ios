@@ -16,7 +16,7 @@
 
 #import "private/MDCDialogShadowedView.h"
 #import "MDCDialogPresentationControllerDelegate.h"
-#import "MaterialShadowLayer.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialKeyboardWatcher.h"
 
 static const CGFloat MDCDialogMinimumWidth = 280;

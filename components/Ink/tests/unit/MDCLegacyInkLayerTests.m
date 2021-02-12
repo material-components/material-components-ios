@@ -14,7 +14,8 @@
 
 #import <XCTest/XCTest.h>
 #import "../../src/private/MDCLegacyInkLayer+Private.h"
-#import "MaterialInk.h"
+#import "MDCLegacyInkLayer.h"
+#import "MDCLegacyInkLayerRippleDelegate.h"
 
 #pragma mark - Property exposure
 

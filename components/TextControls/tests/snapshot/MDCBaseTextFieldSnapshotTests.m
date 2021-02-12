@@ -268,4 +268,16 @@
   [self validateTextField:textField];
 }
 
+- (void)testEditingDenseTextFieldWithLabelTextAndText {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  [MDCBaseTextFieldTestsSnapshotTestHelpers
+      configureEditingDenseTextFieldWithLabelTextAndText:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
 @end

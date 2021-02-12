@@ -16,6 +16,8 @@
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialColorScheme.h"
 
 @interface AppBarSectionHeadersExample : UITableViewController
 

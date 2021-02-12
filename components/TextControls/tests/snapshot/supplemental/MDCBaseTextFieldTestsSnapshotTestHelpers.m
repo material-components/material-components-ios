@@ -237,6 +237,13 @@
   textField.horizontalInterItemSpacingOverride = @(30.0f);
 }
 
++ (void)configureEditingDenseTextFieldWithLabelTextAndText:(MDCBaseTextField *)textField {
+  textField.text = @"Some text";
+  textField.label.text = @"Label text";
+  textField.verticalDensity = 1.0f;
+  [textField becomeFirstResponder];
+}
+
 #pragma mark Helpers
 
 + (UIView *)createBlueSideView {

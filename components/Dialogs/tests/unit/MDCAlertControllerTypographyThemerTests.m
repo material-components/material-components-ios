@@ -15,7 +15,9 @@
 #import "MaterialDialogs+TypographyThemer.h"
 #import "MaterialDialogs.h"
 
+#import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
+#import "MaterialTypographyScheme.h"
 
 #import <XCTest/XCTest.h>
 

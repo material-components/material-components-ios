@@ -17,7 +17,6 @@
 #import <objc/runtime.h>
 
 #import "UIFont+MaterialScalable.h"
-#import "private/MDCFontTraits.h"
 #import "private/MDCTypographyUtilities.h"
 
 MDCTextStyle const MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";

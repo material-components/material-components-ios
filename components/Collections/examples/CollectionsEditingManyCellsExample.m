@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "supplemental/CollectionsEditingManyCellsExampleSupplemental.h"
+#import "MaterialCollections.h"
 
 static const NSInteger kSectionCount = 25;
 static const NSInteger kSectionItemCount = 50;

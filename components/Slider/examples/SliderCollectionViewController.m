@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialSlider+ColorThemer.h"

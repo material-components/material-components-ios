@@ -15,9 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtonBar.h"
-#import "MaterialInk.h"
 #import "MaterialNavigationBar.h"
-#import "MaterialRipple.h"
 
 @interface MDCNavigationBar (Testing)
 - (MDCButtonBar *)leadingButtonBar;

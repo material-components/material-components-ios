@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MDFInternationalization/MDFInternationalization.h>
-#import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar+ColorThemer.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
+#import "MaterialColorScheme.h"
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
 

@@ -14,6 +14,7 @@
 
 #import "ShadowRadiusLabel.h"
 
+#import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
 @implementation ShadowRadiusLabel

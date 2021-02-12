@@ -16,8 +16,12 @@
 #import <WebKit/WebKit.h>
 
 #import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialNavigationBar.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 // This demonstrates a bug when WKWebView's scroll view is the tracking scroll view and the web
 // view's content is smaller than the screen. Note that the content is scrollable because the

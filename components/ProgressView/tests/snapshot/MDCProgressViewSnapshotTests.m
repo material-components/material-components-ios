@@ -215,4 +215,42 @@
   [self generateSnapshotAndVerifyForView:self.progressView];
 }
 
+- (void)testHidden {
+  // When
+  self.progressView.progress = .5;
+  XCTestExpectation *hiddenExpectation = [self expectationWithDescription:@"hidden"];
+  [self.progressView setHidden:YES
+                      animated:NO
+                    completion:^(BOOL finished) {
+                      [hiddenExpectation fulfill];
+                    }];
+  [self waitForExpectations:@[ hiddenExpectation ] timeout:1];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
+- (void)testHiddenThenUnhidden {
+  // When
+  self.progressView.progress = .5;
+  XCTestExpectation *hiddenExpectation = [self expectationWithDescription:@"hidden"];
+  XCTestExpectation *unhiddenExpectation = [self expectationWithDescription:@"unhidden"];
+  [self.progressView setHidden:YES
+                      animated:NO
+                    completion:^(BOOL finished) {
+                      [hiddenExpectation fulfill];
+                    }];
+  [self waitForExpectations:@[ hiddenExpectation ] timeout:1];
+
+  [self.progressView setHidden:NO
+                      animated:NO
+                    completion:^(BOOL finished) {
+                      [unhiddenExpectation fulfill];
+                    }];
+  [self waitForExpectations:@[ unhiddenExpectation ] timeout:1];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.progressView];
+}
+
 @end

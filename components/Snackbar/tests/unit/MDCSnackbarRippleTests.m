@@ -14,6 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialButtons.h"
+#import "MaterialInk.h"
 #import "MaterialSnackbar.h"
 
 #import "../../src/private/MDCSnackbarManagerInternal.h"

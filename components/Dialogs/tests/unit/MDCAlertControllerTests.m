@@ -16,6 +16,8 @@
 
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MDCAlertActionManager.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
 
 #import "../../src/private/MDCDialogShadowedView.h"

@@ -14,6 +14,7 @@
 
 #import "MDCShapeCategory.h"
 #import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
 
 @implementation MDCShapeCategory
 

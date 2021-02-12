@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCRippleLayer.h"
+#import "MDCRippleLayerDelegate.h"
 
 #pragma mark - Fake classes
 

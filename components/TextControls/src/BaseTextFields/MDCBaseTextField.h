@@ -205,6 +205,14 @@
  */
 @property(nonatomic, assign) CGFloat containerRadius;
 
+/**
+ This property influences how much vertical space there is between the various elements contained in
+ the text field. When it's 0 (the default) there is maximal vertical space between elements. When it
+ is 1, there is minimal vertical space between elements. Values less than 0 and greater than 1 will
+ be clamped.
+ */
+@property(nonatomic, assign) CGFloat verticalDensity;
+
 @end
 
 @interface MDCBaseTextField (UIAccessibility)

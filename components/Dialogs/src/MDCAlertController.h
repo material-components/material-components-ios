@@ -74,7 +74,7 @@
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
- A block that is invoked whan a link (a URL) in the attributed message text is tapped.
+ A block that is invoked when a link (a URL) in the attributed message text is tapped.
 
  @param URL The URL of the link that was tapped. May include external or internal URLs.
  @param range The range of characters (in the attributed text) of the link that was tapped.

@@ -15,8 +15,6 @@
 #import <UIKit/UIKit.h>
 
 #import "AppBarSampleViewController.h"
-#import "MaterialAppBar.h"
-#import "MaterialAppBar+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"

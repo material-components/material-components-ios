@@ -16,6 +16,8 @@
 
 #import "MDCAppBarNavigationControllerToBeDeprecatedDelegate.h"
 #import "MDCAppBarViewController.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialHeaderStackView.h"
 
 #import <objc/runtime.h>
 

@@ -16,10 +16,10 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialFlexibleHeader.h"
 
 #import "supplemental/FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
 #import "supplemental/FlexibleHeaderTopSafeAreaTestsFakeViewController.h"
+#import "MDCFlexibleHeaderTopSafeArea.h"
 
 @interface FlexibleHeaderTopSafeAreaTests : XCTestCase
 @end

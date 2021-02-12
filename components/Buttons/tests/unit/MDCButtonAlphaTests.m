@@ -15,10 +15,6 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtons.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialShapes.h"
-#import "MaterialTypography.h"
 
 @interface MDCButtonAlphaTests : XCTestCase
 @property(nonatomic, strong, nullable) MDCButton *button;

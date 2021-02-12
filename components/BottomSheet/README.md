@@ -124,6 +124,7 @@ MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] initWi
 // Present the bottom sheet
 [self presentViewController:bottomSheet animated:true completion:nil];
 ```
+<!--</div>-->
 
 #### Behavioral customizations
 

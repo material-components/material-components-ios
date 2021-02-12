@@ -15,6 +15,8 @@
 #import "MDCBaseCellExample.h"
 
 #import "MaterialList.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 @implementation MDCBaseCellExample
 

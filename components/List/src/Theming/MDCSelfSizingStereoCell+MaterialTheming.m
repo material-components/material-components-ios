@@ -14,7 +14,12 @@
 
 #import "MDCSelfSizingStereoCell+MaterialTheming.h"
 
+#import "MaterialList.h"
 #import "MaterialTypography.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
+#import "MaterialTypographyScheme+Scheming.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kInkAlpha = (CGFloat)0.16;
