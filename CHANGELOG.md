@@ -1,11 +1,15 @@
 # 122.0.0
 
-In this major release, we have made some API-breaking changes and landed some bug fixes and test
-improvements.
+In this major release, we have made some API-breaking changes and landed some bug fixes and test improvements.
 
 ## Breaking changes
 
+### FlexibleHeader
+
 - FlexibleHeader's topSafeAreaGuide is now a UIView.
+
+### ProgressView
+
 - We've removed generics annotations from ProgressView's progressTintColors.
 
 ## API changes
