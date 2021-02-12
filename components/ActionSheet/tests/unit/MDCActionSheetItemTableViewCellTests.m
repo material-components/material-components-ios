@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
+#import "MaterialActionSheet.h"
 #import "ActionSheetTestHelpers.h"
 
 @interface MDCActionSheetItemTableViewCell (Testing)

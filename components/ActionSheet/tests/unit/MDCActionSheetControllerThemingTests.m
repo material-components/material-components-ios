@@ -16,9 +16,13 @@
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
+#import "MaterialActionSheet.h"
 #import "MaterialActionSheet+Theming.h"
 #import "MaterialAvailability.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;

@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons.h"
 #import "MaterialSnapshot.h"
 
 #import "MaterialButtons+Theming.h"
@@ -21,7 +22,9 @@
 #import "MDCAlertController+Testing.h"
 #import "MaterialDialogs+Theming.h"
 #import "MaterialTextFields.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kCellId = @"cellId";
 

@@ -14,6 +14,10 @@
 
 #import "MDCFloatingButtonColorThemer.h"
 
+#import "MaterialButtons.h"
+
+#import "MaterialColorScheme.h"
+
 @implementation MDCFloatingButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme

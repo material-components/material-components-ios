@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialButtons.h"
 #import "MaterialSnapshot.h"
 
 #import "MDCAlertController+ButtonForAction.h"
 #import "MaterialDialogs.h"
 #import "MDCAlertController+Testing.h"
 #import "MaterialDialogs+Theming.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kTitleShortLatin = @"Title";
 static NSString *const kMessageShortLatin = @"Message";

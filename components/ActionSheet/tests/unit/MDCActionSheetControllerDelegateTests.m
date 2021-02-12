@@ -16,7 +16,7 @@
 
 #import "MDCActionSheetController.h"
 #import "MDCActionSheetControllerDelegate.h"
-#import "MDCBottomSheetPresentationController.h"
+#import "MaterialBottomSheet.h"
 
 @interface ActionSheetControllerDelegate : NSObject <MDCActionSheetControllerDelegate>
 @property(nonatomic, readonly) MDCActionSheetController *dismissedActionSheetController;

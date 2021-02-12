@@ -14,6 +14,10 @@
 
 #import "MDCOutlinedButtonColorThemer.h"
 
+#import "MaterialButtons.h"
+
+#import "MaterialColorScheme.h"
+
 @implementation MDCOutlinedButtonColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme

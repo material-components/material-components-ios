@@ -17,6 +17,7 @@
 #import "../../src/private/MDCItemBarCell+Private.h"
 #import "../../src/private/MDCItemBarCell.h"
 #import "../../src/private/MDCItemBarStyle.h"
+#import "MaterialRipple.h"
 
 @interface MDCItemBarCellTests : XCTestCase
 

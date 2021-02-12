@@ -14,15 +14,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialApplication.h"
-#import "MaterialButtons+Theming.h"
-#import "MaterialButtons.h"
-#import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
-#import "MaterialDialogs+Theming.h"
-#import "MaterialDialogs.h"
-#import "MaterialTypographyScheme.h"
 #import "supplemental/DialogWithPreferredContentSizeExampleViewController.h"
+#import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialCollections.h"
+#import "MaterialDialogs.h"
+#import "MaterialDialogs+Theming.h"
+#import "MaterialApplication.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 #pragma mark - DialogsDismissingExampleViewController Interfaces
 

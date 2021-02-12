@@ -14,10 +14,11 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MaterialDialogs.h"
+#import "MaterialDialogs+Theming.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialDialogs+Theming.h"
-#import "MaterialDialogs.h"
+#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 static NSString *const kActionHighTitleLatin = @"High";

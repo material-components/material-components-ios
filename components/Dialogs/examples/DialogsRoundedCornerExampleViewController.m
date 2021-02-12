@@ -13,11 +13,12 @@
 // limitations under the License.
 
 #import "DialogsRoundedCornerExampleViewController.h"
-#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialDialogs+Theming.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialDialogs.h"
+#import "MaterialDialogs+Theming.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 static const CGFloat kCornerRadiusThemed = 3;
 static const CGFloat kCornerRadiusUnthemed = 12;

@@ -15,7 +15,6 @@
 
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
-#import "MaterialCollections.h"
 #import "MaterialDialogs.h"
 #import "MaterialDialogs+Theming.h"
 #import "MaterialColorScheme.h"
