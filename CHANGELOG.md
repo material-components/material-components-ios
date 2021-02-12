@@ -1,15 +1,13 @@
-# #develop#
+# 122.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release, we have made some API-breaking changes and landed some bug fixes and test
+improvements.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+- FlexibleHeader's topSafeAreaGuide is now a UIView.
+- We've removed generics annotations from ProgressView's progressTintColors.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ## Component changes
