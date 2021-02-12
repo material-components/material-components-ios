@@ -18,9 +18,7 @@
 
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationLargeItemDialogView.h"
-#import "MDCBottomNavigationBarControllerDelegate.h"
 #import "MaterialBottomNavigation.h"
-#import "MaterialApplication.h"
 
 // A context for Key Value Observing
 static void *const kObservationContext = (void *)&kObservationContext;
@@ -263,16 +261,35 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
   _navigationBarHidden = hidden;
 
+  MDCBottomNavigationBar *navigationBar = self.navigationBar;
   self.navigationBarItemsBottomAnchorConstraint.active = !hidden;
   self.navigationBarBottomAnchorConstraint.constant =
-      hidden ? CGRectGetHeight(self.navigationBar.frame) : 0;
+      hidden ? CGRectGetHeight(navigationBar.frame) : 0;
 
-  [UIView animateWithDuration:kNavigationBarHideShowAnimationDuration
+  void (^completionBlock)(BOOL) = nil;
+
+  if (hidden && animated) {
+    // For animated hides we deffer updating the nav-bar hidden state until the animation finishes.
+    completionBlock = ^(BOOL finished) {
+      if (finished) {
+        // Hide the view to avoid visual artifacts on rotations.
+        navigationBar.hidden = hidden;
+      }
+    };
+  } else {
+    // Update `hidden` state immediately for unhide or non-animated transitions to ensure it gets
+    // applied in the same run loop.
+    navigationBar.hidden = hidden;
+  }
+
+  NSTimeInterval duration = animated ? kNavigationBarHideShowAnimationDuration : 0;
+  [UIView animateWithDuration:duration
                    animations:^{
                      [self.view setNeedsLayout];
                      [self.view layoutIfNeeded];
                      [self updateNavigationBarInsets];
-                   }];
+                   }
+                   completion:completionBlock];
 }
 
 #pragma mark - MDCBottomNavigationBarDelegate
