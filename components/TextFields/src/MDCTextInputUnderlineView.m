@@ -14,7 +14,6 @@
 
 #import "MDCTextInputUnderlineView.h"
 
-#import "MaterialPalettes.h"
 
 static const CGFloat MDCTextInputUnderlineDefaultHeight = 1;
 

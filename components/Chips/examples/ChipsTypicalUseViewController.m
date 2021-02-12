@@ -16,6 +16,7 @@
 #import "MaterialChips.h"
 
 #import "supplemental/ChipsExampleAssets.h"
+#import "MaterialContainerScheme.h"
 
 @interface ChipModel : NSObject
 @property(nonatomic, strong) NSString *title;

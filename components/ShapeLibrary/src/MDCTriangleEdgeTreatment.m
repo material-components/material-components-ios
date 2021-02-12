@@ -14,6 +14,8 @@
 
 #import "MDCTriangleEdgeTreatment.h"
 
+#import "MaterialShapes.h"
+
 @implementation MDCTriangleEdgeTreatment
 
 - (instancetype)initWithSize:(CGFloat)size style:(MDCTriangleEdgeStyle)style {

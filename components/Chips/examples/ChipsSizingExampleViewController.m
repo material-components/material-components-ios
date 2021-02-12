@@ -17,6 +17,7 @@
 #import "MaterialSlider.h"
 
 #import "supplemental/ChipsExampleAssets.h"
+#import "MaterialContainerScheme.h"
 
 @interface ChipsSizingExampleViewController : UIViewController <MDCSliderDelegate>
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;

@@ -20,8 +20,6 @@
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInputBorderView.h"
-#import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
 #import "MDCTextInputUnderlineView.h"
 
 #import "MaterialMath.h"

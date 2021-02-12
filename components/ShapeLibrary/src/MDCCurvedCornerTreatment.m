@@ -14,6 +14,8 @@
 
 #import "MDCCurvedCornerTreatment.h"
 
+#import "MaterialShapes.h"
+
 @implementation MDCCurvedCornerTreatment
 
 - (instancetype)init {

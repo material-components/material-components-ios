@@ -14,6 +14,8 @@
 
 #import "MDCSlantedRectShapeGenerator.h"
 
+#import "MaterialShapes.h"
+
 @implementation MDCSlantedRectShapeGenerator {
   MDCRectangleShapeGenerator *_rectangleGenerator;
 }

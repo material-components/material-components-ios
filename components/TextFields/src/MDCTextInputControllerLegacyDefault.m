@@ -14,10 +14,9 @@
 
 #import "MDCTextInputControllerLegacyDefault.h"
 
-#import "MDCMultilineTextField.h"
-#import "MDCTextInput.h"
-#import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputArt.h"
+#import "MDCTextInput.h"
+#import "MDCTextInputControllerBase.h"
 
 #import "MaterialTypography.h"
 
