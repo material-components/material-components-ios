@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
 #import "MaterialShapeScheme.h"
 
 @interface MDCShapeSchemeTests : XCTestCase

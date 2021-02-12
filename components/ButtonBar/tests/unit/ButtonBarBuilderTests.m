@@ -16,6 +16,7 @@
 #import "../../src/private/MDCAppBarButtonBarBuilder.h"
 #import "MaterialButtonBar.h"
 #import "MaterialButtons.h"
+#import "MaterialInk.h"
 
 @interface MDCAppBarButtonBarBuilder (UnitTests)
 + (void)configureButton:(MDCButton *)destinationButton

@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialAppBar.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialNavigationBar.h"
 #import "MaterialSnapshot.h"
 
 #import "MaterialAppBar+Theming.h"

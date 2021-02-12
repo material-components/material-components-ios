@@ -14,10 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar+Theming.h"
 #import "MaterialAppBar.h"
-#import "MaterialBanner+Theming.h"
+#import "MaterialAppBar+Theming.h"
 #import "MaterialBanner.h"
+#import "MaterialBanner+Theming.h"
+#import "MaterialButtons.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialHeaderStackView.h"
 #import "MaterialContainerScheme.h"
 
 @interface AppBarBannerExample : UITableViewController

@@ -15,6 +15,11 @@
 #import "MDCCard+MaterialTheming.h"
 
 #import "MaterialCards.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialShapeScheme.h"
 
 static const MDCShadowElevation kNormalElevation = 1;
 static const MDCShadowElevation kHighlightedElevation = 1;
