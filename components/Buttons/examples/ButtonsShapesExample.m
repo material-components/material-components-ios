@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialContainerScheme.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
-#import "MaterialTypography.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
+#import "MaterialShapeScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ButtonsShapesExample ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;

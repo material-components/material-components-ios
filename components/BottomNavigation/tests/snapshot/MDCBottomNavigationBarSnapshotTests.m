@@ -25,6 +25,9 @@
 #import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kWidthWide = 1600;
 static const CGFloat kWidthNarrow = 240;

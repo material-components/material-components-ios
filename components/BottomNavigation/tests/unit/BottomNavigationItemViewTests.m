@@ -16,6 +16,7 @@
 
 #import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationItemView+Testing.h"
 
 #import "MaterialInk.h"

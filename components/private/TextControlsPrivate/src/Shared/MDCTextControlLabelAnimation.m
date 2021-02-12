@@ -14,8 +14,8 @@
 
 #import "MDCTextControlLabelAnimation.h"
 
-#import "MDCTextControl.h"
 #import "MaterialAnimationTiming.h"
+#import "MDCTextControlLabelPosition.h"
 
 @implementation MDCTextControlLabelAnimation
 

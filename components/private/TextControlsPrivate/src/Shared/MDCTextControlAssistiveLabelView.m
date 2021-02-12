@@ -14,6 +14,8 @@
 
 #import "MDCTextControlAssistiveLabelView.h"
 
+#import "MDCTextControlAssistiveLabelViewLayout.h"
+
 @interface MDCTextControlAssistiveLabelView ()
 @property(nonatomic, strong) UILabel *leadingAssistiveLabel;
 @property(nonatomic, strong) UILabel *trailingAssistiveLabel;

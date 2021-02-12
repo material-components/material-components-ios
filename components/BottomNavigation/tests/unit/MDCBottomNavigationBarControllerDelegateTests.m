@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialBottomNavigation+BottomNavigationController.h"
+#import "MaterialBottomNavigation.h"
 
 /** Delegate that implements no optional APIs. */
 @interface MDCBottomNavigationBarControllerDelegateWithNoOptionals
