@@ -17,6 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 
 @interface BottomSheetTests : XCTestCase
 @property(nonatomic, strong, nullable) MDCBottomSheetController *bottomSheet;

@@ -19,6 +19,7 @@
 
 #import "MaterialAvailability.h"
 #import "MDCLegacyInkLayerDelegate.h"
+#import "MDCLegacyInkLayerRippleDelegate.h"
 
 static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start,
                                                         CGPoint end,

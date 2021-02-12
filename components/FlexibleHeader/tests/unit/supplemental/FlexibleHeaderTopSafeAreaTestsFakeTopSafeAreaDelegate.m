@@ -14,6 +14,8 @@
 
 #import "FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
 
+#import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
+
 @implementation FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
 
 #pragma mark MDCFlexibleHeaderTopSafeAreaDelegate

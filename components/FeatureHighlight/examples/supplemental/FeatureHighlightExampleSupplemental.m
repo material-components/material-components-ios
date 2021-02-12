@@ -15,11 +15,14 @@
 #import "FeatureHighlightExampleSupplemental.h"
 
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialMath.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialCollections.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
+#import "MaterialMath.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const reuseIdentifier = @"Cell";
 

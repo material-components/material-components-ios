@@ -14,9 +14,11 @@
 
 #import "MDCAlertColorThemer.h"
 
-#import "MDCAlertController+ButtonForAction.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons.h"
+#import "MDCAlertController+ButtonForAction.h"
+#import "MaterialDialogs.h"
+#import "MaterialColorScheme.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-implementations"

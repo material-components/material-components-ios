@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #import "CollectionViewListCell.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
+#import "MaterialTypographyScheme+Scheming.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 static const CGFloat kImagePadding = 16;
 static const CGFloat kImageHeight = 40;

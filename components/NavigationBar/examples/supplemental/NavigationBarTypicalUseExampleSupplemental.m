@@ -19,6 +19,7 @@
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
+#import "MaterialNavigationBar.h"
 #import "MaterialPalettes.h"
 
 @interface ExampleInstructionsViewNavigationBarTypicalUseExample : UIView

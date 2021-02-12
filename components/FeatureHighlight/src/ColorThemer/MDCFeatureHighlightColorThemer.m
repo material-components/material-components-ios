@@ -14,6 +14,10 @@
 
 #import "MDCFeatureHighlightColorThemer.h"
 
+#import "MaterialFeatureHighlight.h"
+
+#import "MaterialColorScheme.h"
+
 @implementation MDCFeatureHighlightColorThemer
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme

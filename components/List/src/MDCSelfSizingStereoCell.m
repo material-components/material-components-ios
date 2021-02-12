@@ -18,7 +18,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialInk.h"
 #import "MaterialTypography.h"
 
 #import "private/MDCSelfSizingStereoCellLayout.h"

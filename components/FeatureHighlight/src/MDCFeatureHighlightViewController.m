@@ -14,10 +14,9 @@
 
 #import "MDCFeatureHighlightViewController.h"
 
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "MaterialTypography.h"
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView+Private.h"
+#import "MDCFeatureHighlightView.h"
 
 static const CGFloat kMDCFeatureHighlightLineSpacing = 1;
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;

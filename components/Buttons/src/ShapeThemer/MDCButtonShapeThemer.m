@@ -14,6 +14,12 @@
 
 #import "MDCButtonShapeThemer.h"
 
+#import "MaterialButtons.h"
+
+#import "MaterialShapes.h"
+
+#import "MaterialShapeScheme.h"
+
 @implementation MDCButtonShapeThemer
 
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme

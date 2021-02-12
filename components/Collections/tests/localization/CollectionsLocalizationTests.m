@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialCollections.h"
 #import "MDCCollectionStringResources.h"
 
 @interface CollectionsLocalizationTests : XCTestCase

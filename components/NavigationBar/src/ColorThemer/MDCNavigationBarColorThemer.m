@@ -14,6 +14,10 @@
 
 #import "MDCNavigationBarColorThemer.h"
 
+#import "MaterialNavigationBar.h"
+
+#import "MaterialColorScheme.h"
+
 @implementation MDCNavigationBarColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
