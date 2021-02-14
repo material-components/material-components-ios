@@ -29,4 +29,4 @@ typedef NS_ENUM(NSUInteger, MDCBottomDrawerState) {
   MDCBottomDrawerStateCollapsed = 0,
   MDCBottomDrawerStateExpanded = 1,
   MDCBottomDrawerStateFullScreen = 2,
-};
+} API_UNAVAILABLE(macCatalyst);

@@ -13,22 +13,27 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialNavigationDrawer
 
-class BottomDrawerWithHeaderLessContentExample: BottomDrawerWithHeaderExample {
+#if !targetEnvironment(macCatalyst)
 
-  @objc override func presentNavigationDrawer() {
-    contentViewController.preferredHeight = 500
-    super.presentNavigationDrawer()
+  import MaterialComponents.MaterialBottomAppBar
+  import MaterialComponents.MaterialColorScheme
+  import MaterialComponents.MaterialNavigationDrawer
+
+  class BottomDrawerWithHeaderLessContentExample: BottomDrawerWithHeaderExample {
+
+    @objc override func presentNavigationDrawer() {
+      contentViewController.preferredHeight = 500
+      super.presentNavigationDrawer()
+    }
+
+    @objc override class func catalogMetadata() -> [String: Any] {
+      return [
+        "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Less Content"],
+        "primaryDemo": false,
+        "presentable": false,
+      ]
+    }
   }
 
-  @objc override class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Less Content"],
-      "primaryDemo": false,
-      "presentable": false,
-    ]
-  }
-}
+#endif

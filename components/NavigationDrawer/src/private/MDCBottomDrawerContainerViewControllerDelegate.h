@@ -19,6 +19,7 @@
 /**
  Delegate for MDCBottomDrawerContainerViewController.
  */
+API_UNAVAILABLE(macCatalyst)
 @protocol MDCBottomDrawerContainerViewControllerDelegate <NSObject>
 
 /**

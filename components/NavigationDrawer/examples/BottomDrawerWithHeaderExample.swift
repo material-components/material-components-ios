@@ -13,90 +13,101 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialNavigationDrawer
 
-class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewControllerDelegate {
+#if !targetEnvironment(macCatalyst)
 
-  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-  let bottomAppBar = MDCBottomAppBarView()
+  import MaterialComponents.MaterialBottomAppBar
+  import MaterialComponents.MaterialColorScheme
+  import MaterialComponents.MaterialNavigationDrawer
 
-  let headerViewController = DrawerHeaderViewController()
-  let contentViewController = DrawerContentViewController()
+  class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewControllerDelegate {
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = colorScheme.backgroundColor
+    @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let bottomAppBar = MDCBottomAppBarView()
 
-    bottomAppBar.isFloatingButtonHidden = true
-    let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
-    barButtonLeadingItem.image = menuImage
-    barButtonLeadingItem.target = self
-    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
-    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    let headerViewController = DrawerHeaderViewController()
+    let contentViewController = DrawerContentViewController()
 
-    bottomAppBar.barTintColor = colorScheme.surfaceColor;
-    let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
-    bottomAppBar.leadingBarItemsTintColor = barItemTintColor
-    bottomAppBar.trailingBarItemsTintColor = barItemTintColor
-    bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
-    bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
-    bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      view.backgroundColor = colorScheme.backgroundColor
 
-    view.addSubview(bottomAppBar)
-  }
+      bottomAppBar.isFloatingButtonHidden = true
+      let barButtonLeadingItem = UIBarButtonItem()
+      let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
+      barButtonLeadingItem.image = menuImage
+      barButtonLeadingItem.target = self
+      barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+      bottomAppBar.leadingBarButtonItems = [barButtonLeadingItem]
 
-  private func layoutBottomAppBar() {
-    let size = bottomAppBar.sizeThatFits(view.bounds.size)
-    var bottomBarViewFrame = CGRect(x: 0,
-                                    y: view.bounds.size.height - size.height,
-                                    width: size.width,
-                                    height: size.height)
-    if #available(iOS 11.0, *) {
-      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
-      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+      bottomAppBar.barTintColor = colorScheme.surfaceColor
+      let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
+      bottomAppBar.leadingBarItemsTintColor = barItemTintColor
+      bottomAppBar.trailingBarItemsTintColor = barItemTintColor
+      bottomAppBar.floatingButton.setBackgroundColor(colorScheme.primaryColor, for: .normal)
+      bottomAppBar.floatingButton.setTitleColor(colorScheme.onPrimaryColor, for: .normal)
+      bottomAppBar.floatingButton.setImageTintColor(colorScheme.onPrimaryColor, for: .normal)
+
+      view.addSubview(bottomAppBar)
     }
-    bottomAppBar.frame = bottomBarViewFrame
+
+    private func layoutBottomAppBar() {
+      let size = bottomAppBar.sizeThatFits(view.bounds.size)
+      var bottomBarViewFrame = CGRect(
+        x: 0,
+        y: view.bounds.size.height - size.height,
+        width: size.width,
+        height: size.height)
+      if #available(iOS 11.0, *) {
+        bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+        bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+      }
+      bottomAppBar.frame = bottomBarViewFrame
+    }
+
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+
+      layoutBottomAppBar()
+    }
+
+    @objc func presentNavigationDrawer() {
+      let bottomDrawerViewController = MDCBottomDrawerViewController()
+      bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
+      bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
+      bottomDrawerViewController.isTopHandleHidden = false
+      bottomDrawerViewController.topHandleColor = UIColor.lightGray
+      bottomDrawerViewController.contentViewController = contentViewController
+      bottomDrawerViewController.headerViewController = headerViewController
+      bottomDrawerViewController.delegate = self
+      bottomDrawerViewController.headerViewController?.view.backgroundColor =
+        colorScheme.surfaceColor
+      bottomDrawerViewController.contentViewController?.view.backgroundColor =
+        colorScheme.surfaceColor
+      bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+      present(bottomDrawerViewController, animated: true, completion: nil)
+    }
+
+    func bottomDrawerControllerDidChangeTopInset(
+      _ controller: MDCBottomDrawerViewController,
+      topInset: CGFloat
+    ) {
+      headerViewController.titleLabel.center =
+        CGPoint(
+          x: headerViewController.view.frame.size.width / 2,
+          y: (headerViewController.view.frame.size.height + topInset) / 2)
+    }
   }
 
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
+  extension BottomDrawerWithHeaderExample {
 
-    layoutBottomAppBar()
+    @objc class func catalogMetadata() -> [String: Any] {
+      return [
+        "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
+        "primaryDemo": false,
+        "presentable": false,
+      ]
+    }
   }
 
-  @objc func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
-    bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
-    bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
-    bottomDrawerViewController.isTopHandleHidden = false
-    bottomDrawerViewController.topHandleColor = UIColor.lightGray
-    bottomDrawerViewController.contentViewController = contentViewController
-    bottomDrawerViewController.headerViewController = headerViewController
-    bottomDrawerViewController.delegate = self
-    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
-    present(bottomDrawerViewController, animated: true, completion: nil)
-  }
-
-  func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController,
-                                               topInset: CGFloat) {
-    headerViewController.titleLabel.center =
-      CGPoint(x: headerViewController.view.frame.size.width / 2,
-              y: (headerViewController.view.frame.size.height + topInset) / 2)
-  }
-}
-
-extension BottomDrawerWithHeaderExample {
-
-  @objc class func catalogMetadata() -> [String: Any] {
-    return [
-      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
-      "primaryDemo": false,
-      "presentable": false,
-    ]
-  }
-}
+#endif
