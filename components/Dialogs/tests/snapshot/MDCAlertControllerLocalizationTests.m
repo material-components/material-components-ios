@@ -21,6 +21,7 @@
 #import "MDCAlertController+Testing.h"
 #import "MaterialSnapshot.h"
 
+static NSString *const kThaiTextWithDiacritics = @"นี้ Thai text นี้";
 static NSString *const kTitleUrdu = @"عنوان";
 static NSString *const kMessageUrdu =
     @"براہ کرم اپنا نیٹ ورک کنکشن چیک کریں اور دوبارہ کوشش کریں۔براہ کرم اپنا نیٹ ورک کنکشن چیک "
@@ -85,6 +86,35 @@ static NSString *const kActionLowUrdu = @"کم";
 }
 
 #pragma mark - Tests
+
+/** Verifies the top of Thai attributed message with diacritics won't be cut off. */
+- (void)testPreferredContentSizeWithThaiAttributedMessage {
+  // When
+  self.alertController.attributedMessage =
+      [[NSAttributedString alloc] initWithString:kThaiTextWithDiacritics];
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+/** Verifies the top of Thai message with diacritics won't be cut off. */
+- (void)testPreferredContentSizeWithThaiMessage {
+  // When
+  self.alertController.message = kThaiTextWithDiacritics;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
+/** Verifies the top of Thai message and title with diacritics won't be cut off. */
+- (void)testPreferredContentSizeWithThaiMessageAndTitle {
+  // When
+  self.alertController.title = kThaiTextWithDiacritics;
+  self.alertController.message = kThaiTextWithDiacritics;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
 
 - (void)testPreferredContentSizeWithNotoNastaliqUrdu {
   // When
