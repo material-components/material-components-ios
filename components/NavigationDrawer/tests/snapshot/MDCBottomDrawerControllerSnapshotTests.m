@@ -149,6 +149,33 @@
   [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
 }
 
+- (void)testPresentedDrawerWithThemingWith201907ColorSchemeDefaults {
+  // Given
+  MDCContainerScheme *tempContainerScheme = [[MDCContainerScheme alloc] init];
+  tempContainerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+  self.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
+  self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
+      initWithOriginalPresentingViewController:self.presentingViewController
+                            trackingScrollView:nil];
+  self.containerViewController.contentViewController =
+      self.bottomDrawerViewController.contentViewController;
+  self.containerViewController.headerViewController =
+      self.bottomDrawerViewController.headerViewController;
+
+  // When
+  self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
+  self.bottomDrawerViewController.contentViewController.preferredContentSize =
+      CGSizeMake(375, 1000);
+  self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
+  [self.bottomDrawerViewController applyThemeWithScheme:tempContainerScheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
+}
+
 - (void)testPresentedDrawerWithColoredViewsWithVerticalSizeClassCompact {
   // Given
   self.presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);

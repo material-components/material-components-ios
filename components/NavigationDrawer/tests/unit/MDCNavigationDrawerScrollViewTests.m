@@ -733,6 +733,13 @@
   XCTAssertTrue(drawerPresentationController.dismissOnBackgroundTap);
 }
 
+- (void)testSetAdjustLayoutForIPadSlideOverCorrectly {
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  self.drawerViewController.adjustLayoutForIPadSlideOver = YES;
+  XCTAssertTrue(drawerPresentationController.adjustLayoutForIPadSlideOver);
+}
+
 - (void)testSetShouldForwardTouchEventsCorrectly {
   XCTAssertNil(self.drawerViewController.nextResponder);
   self.drawerViewController.shouldForwardBackgroundTouchEvents = YES;

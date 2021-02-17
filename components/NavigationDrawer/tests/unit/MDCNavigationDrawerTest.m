@@ -72,6 +72,11 @@
   }
 }
 
+- (void)testDrawerDefaultState {
+  // Then
+  XCTAssertEqual(self.navigationDrawer.drawerState, MDCBottomDrawerStateCollapsed);
+}
+
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   XCTestExpectation *expectation =
