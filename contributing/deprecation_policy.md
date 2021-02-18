@@ -19,4 +19,4 @@ Before embarking on the deprecation of any API we should collaboratively answer 
 
 If you would like to propose that an API be deprecated please
 [file a bug](https://github.com/material-components/material-components-ios/issues/new/choose)
-explaining which API you'd like deprecated.
+explaining which API you'd like deprecated. Googlers can read more at go/material-ios-deprecation-process
