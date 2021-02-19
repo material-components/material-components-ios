@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+#import "MDCTabBarTextTransform.h"
 #import "MaterialTabs.h"
 #import "MaterialTypography.h"
 

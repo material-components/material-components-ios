@@ -16,8 +16,11 @@
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar.h"
+#import "MaterialButtons.h"
+#import "MaterialHeaderStackView.h"
 #import "MaterialTabs.h"
 #import "MaterialTabs+Theming.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 
 @interface TabBarIconExample ()

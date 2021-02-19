@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+#import "MaterialChips+Theming.h"
+#import "MaterialContainerScheme.h"
 
 @interface ChipsCollectionExampleViewController : UICollectionViewController
 @property(nonatomic, strong) NSArray<NSString *> *titles;

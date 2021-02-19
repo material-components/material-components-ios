@@ -17,12 +17,15 @@
 #import "MaterialActionSheet.h"  // ComponentImport
 #import "MaterialActionSheet+Theming.h"  // SubtargetImport
 #import "MaterialAnimationTiming.h"  // ComponentImport
+#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"  // ComponentImport
 #import "MaterialTabs+TabBarView.h"
 #import "MaterialIcons+ic_check.h"  // PrivateSubtargetImport
 #import "MaterialIcons+ic_settings.h"  // PrivateSubtargetImport
 #import "MaterialMath.h"  // PrivateImport
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"  // SchemeImport
+#import "MaterialTypographyScheme+Scheming.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
 

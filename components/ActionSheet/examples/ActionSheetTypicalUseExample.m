@@ -20,7 +20,6 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
 
 @interface ActionSheetTypicalUseExample : UIViewController <MDCActionSheetControllerDelegate>
 

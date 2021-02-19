@@ -18,7 +18,9 @@
 #import "MaterialDialogs.h"
 #import "MDCAlertController+Testing.h"
 #import "MaterialDialogs+Theming.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kTitleShortLatin = @"Title";
 static NSString *const kTitleLongLatin =

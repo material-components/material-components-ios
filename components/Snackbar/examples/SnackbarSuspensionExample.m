@@ -14,8 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
+#import "MaterialCollections.h"
+#import "MaterialSnackbar.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kCategoryA = @"CategoryA";
 static NSString *const kCategoryB = @"CategoryB";

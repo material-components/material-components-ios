@@ -14,6 +14,7 @@
 
 #import "MDCRoundedCornerTreatment.h"
 
+#import "MaterialShapes.h"
 
 @implementation MDCRoundedCornerTreatment
 

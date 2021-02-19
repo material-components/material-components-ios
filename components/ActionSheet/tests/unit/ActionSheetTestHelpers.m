@@ -16,8 +16,8 @@
 
 #import <CoreImage/CoreImage.h>
 
-#import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
+#import "MaterialActionSheet.h"
 
 @implementation ActionSheetTestHelpers
 

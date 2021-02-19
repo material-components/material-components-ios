@@ -14,10 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAvailability.h"
 #import "MaterialBottomNavigation.h"
 #import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialPalettes.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 @interface BottomNavigationTypicalUseExample : UIViewController <MDCBottomNavigationBarDelegate>
 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MaterialChips.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 
 /*

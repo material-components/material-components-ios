@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
-#import "MaterialContainerScheme.h"
+#import "MaterialChips+Theming.h"
 #import "MaterialTextFields.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 @interface ChipsInputExampleViewController : UIViewController <MDCChipFieldDelegate>
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;

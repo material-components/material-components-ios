@@ -14,6 +14,8 @@
 
 #import "MDCCutCornerTreatment.h"
 
+#import "MaterialShapes.h"
+
 static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutKey";
 
 @implementation MDCCutCornerTreatment

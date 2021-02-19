@@ -14,8 +14,13 @@
 
 #import "MDCChipView+MaterialTheming.h"
 
+#import "MaterialChips.h"
 #import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme+Scheming.h"
 
 static const CGFloat kChipViewBaselineShapePercentageValue = (CGFloat)0.5;
 

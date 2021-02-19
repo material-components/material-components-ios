@@ -14,14 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTabBarDisplayDelegate.h"
-#import "MaterialAppBar.h"
-#import "MaterialButtons.h"
-#import "MaterialCollections.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTabs+Theming.h"
-#import "MaterialTabs.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
+#import "MaterialAppBar.h"
+#import "MaterialCollections.h"
+#import "MaterialHeaderStackView.h"
+#import "MDCTabBarDisplayDelegate.h"
+#import "MaterialTabs.h"
+#import "MaterialTabs+Theming.h"
+#import "MaterialContainerScheme.h"
 
 @implementation TabBarTextOnlyExample
 

@@ -14,10 +14,12 @@
 
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
-#import "MaterialTypography.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
+#import "MaterialShapeScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 

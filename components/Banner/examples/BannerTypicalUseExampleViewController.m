@@ -15,7 +15,6 @@
 #import "MaterialBanner.h"
 #import "MaterialBanner+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialTypography.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"

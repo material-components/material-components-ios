@@ -16,7 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/MDCChipField.h"
+#import "MaterialElevation.h"
+#import "MaterialTextFields.h"
 #import "MaterialTypography.h"
 
 // Expose internal methods for testing

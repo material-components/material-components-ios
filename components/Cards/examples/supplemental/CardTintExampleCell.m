@@ -14,6 +14,8 @@
 
 #import "CardTintExampleCell.h"
 
+#import "MaterialCards.h"
+
 @implementation CardTintExampleCell
 
 - (instancetype)initWithFrame:(CGRect)frame {

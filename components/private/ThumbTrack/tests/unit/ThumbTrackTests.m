@@ -14,8 +14,11 @@
 
 #import <XCTest/XCTest.h>
 #import "../../src/private/MDCThumbTrack+Private.h"
-#import "MaterialThumbTrack.h"
+#import "MaterialInk.h"
 #import "MaterialTypography.h"
+#import "MDCNumericValueLabel.h"
+#import "MaterialThumbTrack.h"
+#import "MDCDiscreteDotView.h"
 
 @interface ThumbTrackTests : XCTestCase
 

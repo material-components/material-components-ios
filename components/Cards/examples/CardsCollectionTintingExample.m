@@ -14,9 +14,9 @@
 
 #import "CardsCollectionTintingExample.h"
 
-#import "MaterialCards+Theming.h"
-#import "MaterialInk.h"
 #import "supplemental/CardTintExampleCell.h"
+#import "MaterialCards+Theming.h"
+#import "MaterialContainerScheme.h"
 
 @interface CardsCollectionTintingExample ()
 

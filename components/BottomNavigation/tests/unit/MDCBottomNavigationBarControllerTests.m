@@ -16,6 +16,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialBottomNavigation+BottomNavigationController.h"
+#import "MaterialBottomNavigation.h"
 
 static CGFloat const kDefaultExpectationTimeout = 15;
 

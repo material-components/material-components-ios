@@ -20,7 +20,6 @@
 #import "MaterialBottomNavigation.h"
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"
-#import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 

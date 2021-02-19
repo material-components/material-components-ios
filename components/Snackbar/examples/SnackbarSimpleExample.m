@@ -14,9 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "supplemental/SnackbarExampleSupplemental.h"
+#import "MaterialButtons.h"
+#import "MaterialCollections.h"
 #import "MaterialPalettes.h"
 #import "MaterialSnackbar.h"
-#import "supplemental/SnackbarExampleSupplemental.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface SnackbarSimpleExample : SnackbarExample <MDCSnackbarManagerDelegate>
 @end

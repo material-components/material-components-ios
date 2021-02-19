@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialAppBar.h"
+#import "MaterialFlexibleHeader.h"
 
 @interface AppBarNavigationControllerTests : XCTestCase
 

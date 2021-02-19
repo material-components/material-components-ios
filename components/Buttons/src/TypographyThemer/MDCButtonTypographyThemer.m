@@ -14,6 +14,10 @@
 
 #import "MDCButtonTypographyThemer.h"
 
+#import "MaterialButtons.h"
+
+#import "MaterialTypographyScheme+Scheming.h"
+
 @implementation MDCButtonTypographyThemer
 
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme

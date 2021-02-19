@@ -14,6 +14,16 @@
 
 #import "MDCTextInputControllerUnderline+MaterialTheming.h"
 
+#import "MDCTextInputControllerFloatingPlaceholder.h"
+
+#import "MaterialTextFields.h"
+
+#import "MaterialColorScheme.h"
+
+#import "MaterialContainerScheme.h"
+
+#import "MaterialTypographyScheme+Scheming.h"
+
 @implementation MDCTextInputControllerUnderline (MaterialTheming)
 
 - (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme {

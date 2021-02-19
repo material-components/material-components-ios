@@ -14,6 +14,7 @@
 
 #import "MDCFloatingButtonModeAnimator.h"
 
+#import "MDCFloatingButton.h"
 #import "MDCFloatingButtonModeAnimatorDelegate.h"
 
 #if TARGET_IPHONE_SIMULATOR

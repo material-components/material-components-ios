@@ -19,9 +19,9 @@
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputCharacterCounter.h"
+#import "MDCTextInputController.h"
 #import "MDCTextInputUnderlineView.h"
 
-#import "MaterialAnimationTiming.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 

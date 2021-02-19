@@ -16,9 +16,7 @@
 
 #import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
-#import "MDCTextInputController.h"
 #import "MDCTextInputControllerBase.h"
-#import "MDCTextInputControllerFloatingPlaceholder.h"
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputControllerBase+Subclassing.h"
 

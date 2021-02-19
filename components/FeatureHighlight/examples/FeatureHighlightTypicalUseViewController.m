@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "supplemental/FeatureHighlightExampleSupplemental.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFeatureHighlight.h"
-#import "supplemental/FeatureHighlightExampleSupplemental.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @implementation FeatureHighlightTypicalUseViewController
 

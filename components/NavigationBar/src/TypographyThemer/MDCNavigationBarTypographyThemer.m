@@ -14,6 +14,10 @@
 
 #import "MDCNavigationBarTypographyThemer.h"
 
+#import "MaterialNavigationBar.h"
+
+#import "MaterialTypographyScheme+Scheming.h"
+
 @implementation MDCNavigationBarTypographyThemer
 
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme

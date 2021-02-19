@@ -17,7 +17,6 @@
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MaterialActionSheet.h"
 #import "ActionSheetTestHelpers.h"
-#import "MaterialInk.h"
 #import "MaterialRipple.h"
 
 @interface MDCActionSheetController (TestingRipple)

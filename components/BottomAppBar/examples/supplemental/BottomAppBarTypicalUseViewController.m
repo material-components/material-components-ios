@@ -14,6 +14,8 @@
 
 #import "BottomAppBarTypicalUseViewController.h"
 
+#import "MaterialBottomAppBar.h"
+
 @interface BottomAppBarTypicalUseViewController ()
 
 @end

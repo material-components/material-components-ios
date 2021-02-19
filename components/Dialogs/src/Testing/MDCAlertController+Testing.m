@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCAlertController+Customize.h"
+#import "MaterialDialogs.h"
 #import "MDCAlertController+Testing.h"
 #import "MDCAlertControllerView+Private.h"
 

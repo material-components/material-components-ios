@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTabs+TypographyThemer.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+TypographyThemer.h"
+#import "MaterialTypographyScheme.h"
 
 #import <XCTest/XCTest.h>
 

@@ -15,8 +15,12 @@
 #import "BottomAppBarTypicalUseSupplemental.h"
 
 #import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialBottomAppBar.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kCellIdentifier = @"cell";
 

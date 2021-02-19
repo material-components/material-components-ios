@@ -14,6 +14,16 @@
 
 #import "MDCTextInputControllerOutlined+MaterialTheming.h"
 
+#import "MDCTextInputControllerFloatingPlaceholder.h"
+
+#import "MaterialTextFields.h"
+
+#import "MaterialColorScheme.h"
+
+#import "MaterialContainerScheme.h"
+
+#import "MaterialTypographyScheme+Scheming.h"
+
 static CGFloat const kOutlinedTextFieldActiveAlpha = (CGFloat)0.87;
 static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = (CGFloat)0.6;
 static CGFloat const kOutlinedTextFieldDisabledAlpha = (CGFloat)0.38;

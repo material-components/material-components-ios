@@ -14,11 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialSlider.h"
-#import "MaterialTabs+Theming.h"
-#import "MaterialTabs.h"
 #import "supplemental/TabBarViewControllerExampleSupplemental.h"
+#import "MaterialTabs.h"
+#import "MaterialTabs+Theming.h"
+#import "MaterialContainerScheme.h"
 
 @implementation TabBarViewControllerExample
 

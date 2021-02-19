@@ -14,6 +14,14 @@
 
 #import "MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 
+#import "MDCSheetState.h"
+
+#import "MaterialBottomSheet.h"
+
+#import "MaterialShapes.h"
+
+#import "MaterialShapeScheme.h"
+
 @implementation MDCBottomSheetControllerShapeThemerDefaultMapping
 
 + (void)applyShapeScheme:(id<MDCShapeScheming>)shapeScheme

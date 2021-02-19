@@ -15,6 +15,7 @@
 #import "MDCCurvedRectShapeGenerator.h"
 
 #import "MDCCurvedCornerTreatment.h"
+#import "MaterialShapes.h"
 
 @implementation MDCCurvedRectShapeGenerator {
   MDCRectangleShapeGenerator *_rectGenerator;

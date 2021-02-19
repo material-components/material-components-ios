@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialBottomNavigation.h"
+#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MaterialContainerScheme.h"
 
 @interface BottomNavigationBlurExample : UIViewController <UICollectionViewDataSource>
 

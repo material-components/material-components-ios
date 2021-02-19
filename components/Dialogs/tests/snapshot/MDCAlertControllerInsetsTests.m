@@ -18,7 +18,9 @@
 #import "MDCAlertController+Testing.h"
 #import "MaterialDialogs+Theming.h"
 #import "MDCAlertControllerView+Private.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kTitleShortLatin = @"Short Title";
 static NSString *const kTitleLongLatin = @"Lorem ipsum dolor sit amet";

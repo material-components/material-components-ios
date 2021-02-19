@@ -15,6 +15,9 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCAppBarViewController.h"
+#import "MaterialFlexibleHeader.h"
+#import "MaterialHeaderStackView.h"
+#import "MaterialNavigationBar.h"
 
 @interface AppBarViewControllerTests : XCTestCase
 
