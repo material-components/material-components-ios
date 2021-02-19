@@ -26,7 +26,7 @@
   // Given
 
   // This regex pattern does the following:
-  // Accept: "122.0.0", etc.
+  // Accept: "122.0.1", etc.
   // Reject: "0.0.0", "1.2", "1", "-1.2.3", "Hi, I'm a version 1.2.3", "1.2.3 is my version", etc.
   //
   // Note the major version must be >= 1 since "0.0.0" is used as the version when something goes
