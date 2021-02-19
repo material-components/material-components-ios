@@ -1,25 +1,12 @@
-# 122.1.0
+# 122.0.1
 
-This minor release introduces a new Dialogs feature, fixes a bug, and generally cleans up import
-statements.
-
-## New features
-
-### Dialogs
-
-You can now control whether a dialog dismisses automatically after an action was taken with the new
-`dismissOnAction` API.
+This patch release fixes a bug and generally cleans up import statements.
 
 ## Component changes
 
 ### BottomNavigation
 
 * [Honor the `animated` param when changing the hidden state of the bottom navigation bar.](https://github.com/material-components/material-components-ios/commit/cdf7ffccc2a4ab366b630eae460099ce977ea2c7) (Nobody)
-
-### Dialogs
-
-* [Adds dismissOnAction property to MDCAlertAction to allow callers to control when the dialog dismisses.](https://github.com/material-components/material-components-ios/commit/2c46233db995cd2dd12a5180efeb365b9850ac14) (Nobody)
-* [Adds dismissOnAction property to MDCAlertAction to allow callers to control when the dialog dismisses.](https://github.com/material-components/material-components-ios/commit/2e5571fa22ae8761d35c26709c0943bfb01e7039) (Nobody)
 
 ### NavigationDrawer
 
