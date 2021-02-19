@@ -1,3 +1,43 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### BottomNavigation
+
+* [Honor the `animated` param when changing the hidden state of the bottom navigation bar.](https://github.com/material-components/material-components-ios/commit/cdf7ffccc2a4ab366b630eae460099ce977ea2c7) (Nobody)
+
+### Dialogs
+
+* [Adds dismissOnAction property to MDCAlertAction to allow callers to control when the dialog dismisses.](https://github.com/material-components/material-components-ios/commit/2c46233db995cd2dd12a5180efeb365b9850ac14) (Nobody)
+* [Adds dismissOnAction property to MDCAlertAction to allow callers to control when the dialog dismisses.](https://github.com/material-components/material-components-ios/commit/2e5571fa22ae8761d35c26709c0943bfb01e7039) (Nobody)
+
+### NavigationDrawer
+
+* [Increase code coverage by adding more tests.](https://github.com/material-components/material-components-ios/commit/1e8dcc273e9c37d8cd4aad4167ec415ccc13b9be) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/1abdf167609ad6283cef7dd687a6e8e5b399a1e5) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/29803522c60f81168bc4fcf881b2d14bae554f42) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/2a8a6ac1c911ad256dfd5a2cc4762c7b46338d8e) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/4c86b139e41fc1dd5688f7d2fdfbb90d511ff3c4) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/8ce743ce8a43529d4b8c2dfe42dd64c5b608c050) (Jeff Verkoeyen)
+* [Optimizing imports](https://github.com/material-components/material-components-ios/commit/c53f44398e9605b38643a5ddcceefed71928cf25) (Jeff Verkoeyen)
+
+---
+
 # 122.0.0
 
 In this major release, we have made some API-breaking changes and landed some bug fixes and test improvements.
