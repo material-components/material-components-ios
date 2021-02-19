@@ -1,16 +1,14 @@
-# #develop#
+# 122.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces a new Dialogs feature, fixes a bug, and generally cleans up import
+statements.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### Dialogs
+
+You can now control whether a dialog dismisses automatically after an action was taken with the new
+`dismissOnAction` API.
 
 ## Component changes
 
