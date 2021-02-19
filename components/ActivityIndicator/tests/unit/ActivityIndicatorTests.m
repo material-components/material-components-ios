@@ -26,67 +26,66 @@ static CGFloat randomNumber() {
 @end
 
 @interface ActivityIndicatorTests : XCTestCase
-
+@property(nonatomic, strong, nullable) MDCActivityIndicator *indicator;
 @end
 
 @implementation ActivityIndicatorTests
 
-- (void)testSetRadiusMin {
-  // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+- (void)setUp {
+  [super setUp];
 
+  self.indicator = [[MDCActivityIndicator alloc] init];
+}
+
+- (void)tearDown {
+  self.indicator = nil;
+
+  [super tearDown];
+}
+
+- (void)testSetRadiusMin {
   // When
-  indicator.radius = 2;
+  self.indicator.radius = 2;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 5);
+  XCTAssertGreaterThanOrEqual(self.indicator.radius, 5);
 }
 
 - (void)testSetRadius {
-  // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-
   // When
   CGFloat random = randomNumber();
-  indicator.radius = random;
+  self.indicator.radius = random;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8);
-  XCTAssertEqual(indicator.radius, random);
+  XCTAssertGreaterThanOrEqual(self.indicator.radius, 8);
+  XCTAssertEqual(self.indicator.radius, random);
 }
 
 - (void)testDefaultColorCycle {
-  // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-
   // Then
-  XCTAssertGreaterThan(indicator.cycleColors.count, 0U,
+  XCTAssertGreaterThan(self.indicator.cycleColors.count, 0U,
                        @"The default value for |cycleColors| should be a non-empty array.");
 }
 
 - (void)testSetCycleColorsEmptyReturnsDefault {
-  // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-
   // When
-  indicator.cycleColors = @[];
+  self.indicator.cycleColors = @[];
 
   // Then
-  XCTAssertGreaterThan(indicator.cycleColors.count, 0U,
+  XCTAssertGreaterThan(self.indicator.cycleColors.count, 0U,
                        @"Assigning an empty array for |cycleColors| should result in a default"
                         " value being used instead.");
 }
 
 - (void)testSetCycleColorNonEmpty {
   // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
   NSArray<UIColor *> *cycleColors = @[ [UIColor redColor], [UIColor whiteColor] ];
 
   // When
-  indicator.cycleColors = cycleColors;
+  self.indicator.cycleColors = cycleColors;
 
   // Then
-  XCTAssertEqualObjects(indicator.cycleColors, cycleColors,
+  XCTAssertEqualObjects(self.indicator.cycleColors, cycleColors,
                         @"With a non-empty array, the |cycleColors| property should override the"
                          " default value.");
 }
@@ -95,72 +94,65 @@ static CGFloat randomNumber() {
   // Make sure that setting progress with or without animation work regardless of whether indicator
   // mode is determinate or indeterminate, and make sure that setting progress value doesn't change
   // the mode.
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  self.indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  [self verifySettingProgressOnIndicator:self.indicator animated:NO];
+  [self verifySettingProgressOnIndicator:self.indicator animated:YES];
+  XCTAssertEqual(self.indicator.indicatorMode, MDCActivityIndicatorModeDeterminate);
 
-  indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
-  [self verifySettingProgressOnIndicator:indicator animated:NO];
-  [self verifySettingProgressOnIndicator:indicator animated:YES];
-  XCTAssertEqual(indicator.indicatorMode, MDCActivityIndicatorModeDeterminate);
-
-  indicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
-  [self verifySettingProgressOnIndicator:indicator animated:NO];
-  [self verifySettingProgressOnIndicator:indicator animated:YES];
-  XCTAssertEqual(indicator.indicatorMode, MDCActivityIndicatorModeIndeterminate);
+  self.indicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+  [self verifySettingProgressOnIndicator:self.indicator animated:NO];
+  [self verifySettingProgressOnIndicator:self.indicator animated:YES];
+  XCTAssertEqual(self.indicator.indicatorMode, MDCActivityIndicatorModeIndeterminate);
 }
 
 - (void)testSetProgressStrokeNonanimated {
   // Make sure that the stroke layer updates accordingly when we set determinate progress.
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-  indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  self.indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
 
-  [indicator setProgress:(float)0.33 animated:NO];
-  XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.33);
+  [self.indicator setProgress:(float)0.33 animated:NO];
+  XCTAssertEqual(self.indicator.strokeLayer.strokeStart, 0.0);
+  XCTAssertEqual(self.indicator.strokeLayer.strokeEnd, (float)0.33);
 }
 
 - (void)testSetProgressStrokeAnimated {
   // Make sure that the stroke layer updates accordingly when we set determinate progress.
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-  indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
-  [indicator startAnimating];
+  self.indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  [self.indicator startAnimating];
 
-  [indicator setProgress:(float)0.55 animated:YES];
-  XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.55);
+  [self.indicator setProgress:(float)0.55 animated:YES];
+  XCTAssertEqual(self.indicator.strokeLayer.strokeStart, 0.0);
+  XCTAssertEqual(self.indicator.strokeLayer.strokeEnd, (float)0.55);
 }
 
 - (void)testSetAccessibiltyLabelProperty {
   // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
   NSString *testString = @"test this label";
 
   // When
-  indicator.accessibilityLabel = testString;
+  self.indicator.accessibilityLabel = testString;
 
   // Then
-  XCTAssertEqualObjects(indicator.accessibilityLabel, testString);
+  XCTAssertEqualObjects(self.indicator.accessibilityLabel, testString);
 }
 
 - (void)testStopsAnimatingWhenHidden {
   // Given
-  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
-  [indicator startAnimating];
+  [self.indicator startAnimating];
 
   // When
-  indicator.hidden = YES;
+  self.indicator.hidden = YES;
 
   // Then
-  XCTAssertFalse(indicator.animating);
+  XCTAssertFalse(self.indicator.animating);
 }
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
-  MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCActivityIndicator *passedActivityIndicator;
-  activityIndicator.traitCollectionDidChangeBlock =
+  self.indicator.traitCollectionDidChangeBlock =
       ^(MDCActivityIndicator *_Nonnull indicator,
         UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
@@ -170,12 +162,60 @@ static CGFloat randomNumber() {
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
-  [activityIndicator traitCollectionDidChange:testTraitCollection];
+  [self.indicator traitCollectionDidChange:testTraitCollection];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
-  XCTAssertEqual(passedActivityIndicator, activityIndicator);
+  XCTAssertEqual(passedActivityIndicator, self.indicator);
+}
+
+- (void)testTrackEnabledDefaultsToNo {
+  // Then
+  XCTAssertFalse(self.indicator.trackEnabled);
+}
+
+- (void)testTrackEnabledUpdatesWhenSet {
+  // When
+  self.indicator.trackEnabled = YES;
+
+  // Then
+  XCTAssertTrue(self.indicator.trackEnabled);
+}
+
+- (void)testDefaultStrokeWidth {
+  // Then
+  XCTAssertEqualWithAccuracy(self.indicator.strokeWidth, 2.5, 0.001);
+}
+
+- (void)testSetStrokeWidthToCustomValue {
+  // Given
+  CGFloat expectedWidth = 5;
+
+  // When
+  self.indicator.strokeWidth = expectedWidth;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.indicator.strokeWidth, expectedWidth, 0.001);
+}
+
+- (void)testDefaultAccessibilityTraits {
+  // Then
+  XCTAssertEqual(self.indicator.accessibilityTraits, UIAccessibilityTraitUpdatesFrequently);
+}
+
+- (void)testAccessibilityElementWhenAnimating {
+  // When
+  self.indicator.animating = YES;
+
+  // Then
+  XCTAssertTrue(self.indicator.isAccessibilityElement);
+}
+
+- (void)testDefaultIsAccessibilityElement {
+  // Then
+  XCTAssertFalse(self.indicator.animating);
+  XCTAssertFalse(self.indicator.isAccessibilityElement);
 }
 
 #pragma mark - Helpers
