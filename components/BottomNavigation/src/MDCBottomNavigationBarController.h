@@ -37,6 +37,7 @@
  preserved. Upon decoding, if the view controllers array contains a reference to the previous
  selected view controller, that view controller is set to selected.
  */
+API_AVAILABLE(ios(12.0))
 @interface MDCBottomNavigationBarController : UIViewController <MDCBottomNavigationBarDelegate>
 
 /**

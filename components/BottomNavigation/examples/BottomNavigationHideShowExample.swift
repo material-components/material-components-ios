@@ -18,6 +18,7 @@ import MaterialComponents.MaterialBottomNavigation_BottomNavigationController
 import MaterialComponents.MaterialBottomNavigation_Theming 
 import MaterialComponents.MaterialContainerScheme
 
+@available(iOS 12.0, *)
 class BottomNavigationHideShowExample: UIViewController {
   static let cellReuseIdentifier = "cell"
   static let numberOfCells = 40
@@ -73,6 +74,7 @@ class BottomNavigationHideShowExample: UIViewController {
   }
 }
 
+@available(iOS 12.0, *)
 extension BottomNavigationHideShowExample: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return BottomNavigationHideShowExample.numberOfCells
@@ -88,6 +90,7 @@ extension BottomNavigationHideShowExample: UITableViewDataSource {
 }
 
 // MARK: Catalog by convention
+@available(iOS 12.0, *)
 extension BottomNavigationHideShowExample {
   @objc class func catalogMetadata() -> [String: Any] {
     return [
@@ -96,9 +99,14 @@ extension BottomNavigationHideShowExample {
       "presentable": false,
     ]
   }
+
+  @objc class func minimumOSVersion() -> OperatingSystemVersion {
+    return OperatingSystemVersion(majorVersion: 12, minorVersion: 0, patchVersion: 0)
+  }
 }
 
 // MARK: Snapshot Testing by Convention
+@available(iOS 12.0, *)
 extension BottomNavigationHideShowExample {
   @objc func testAdjustsContentInsetsForHiddenBottomBar() {
     toggleBottomBar(animated: false)
