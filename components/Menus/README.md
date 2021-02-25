@@ -1,4 +1,5 @@
 # Menus
 
-The [Menus component](https://material.io/go/design-menus) is yet to be completed, please follow the [tracking issue](https://www.pivotaltracker.com/epic/show/3954820) for more information.
-
+Material will not implement a [Menus component](https://material.io/go/design-menus)
+on iOS. For googlers looking for guidance on how to use Menus on iOS, please
+visit go/material-ios-guidance-menus.

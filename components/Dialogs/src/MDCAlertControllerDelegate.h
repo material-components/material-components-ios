@@ -47,7 +47,8 @@
 
 /**
  Called on the delegate after the alert action is tapped by the user and while the alert is still on
- the screen.
+ the screen. This is called whenever the action is tapped regardless of whether it dismisses the
+ alert controller or not.
  */
 - (void)alertController:(nonnull MDCAlertController *)alertController
            didTapAction:(nonnull MDCAlertAction *)action

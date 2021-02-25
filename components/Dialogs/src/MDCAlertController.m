@@ -28,7 +28,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @interface MDCAlertAction ()
 
-@property(nonatomic, nullable, copy) MDCActionHandler completionHandler;
+@property(nonatomic, nullable, copy) MDCActionHandler tapHandler;
 
 @end
 
@@ -51,8 +51,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self = [super init];
   if (self) {
     _title = [title copy];
+    _dismissOnAction = YES;
     _emphasis = emphasis;
-    _completionHandler = [handler copy];
+    _tapHandler = [handler copy];
   }
   return self;
 }
@@ -62,7 +63,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (id)copyWithZone:(__unused NSZone *)zone {
   MDCAlertAction *action = [[self class] actionWithTitle:self.title
                                                 emphasis:self.emphasis
-                                                 handler:self.completionHandler];
+                                                 handler:self.tapHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
@@ -594,16 +595,21 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     [self.delegate alertController:self didTapAction:action withEvent:event];
   }
 
-  // We call our action.completionHandler after we dismiss the existing alert in case the handler
-  // also presents a view controller. Otherwise we get a warning about presenting on a controller
-  // which is already presenting.
-  [self.presentingViewController
-      dismissViewControllerAnimated:YES
-                         completion:^(void) {
-                           if (action.completionHandler) {
-                             action.completionHandler(action);
-                           }
-                         }];
+  if (action.dismissOnAction) {
+    // We call our action.tapHandler after we dismiss the existing alert in case the handler
+    // also presents a view controller. Otherwise we get a warning about presenting on a controller
+    // which is already presenting.
+    [self.presentingViewController dismissViewControllerAnimated:YES
+                                                      completion:^(void) {
+                                                        if (action.tapHandler) {
+                                                          action.tapHandler(action);
+                                                        }
+                                                      }];
+  } else {
+    if (action.tapHandler) {
+      action.tapHandler(action);
+    }
+  }
 }
 
 #pragma mark - Text View Delegate
