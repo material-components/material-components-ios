@@ -1,16 +1,10 @@
-# #develop#
+# 123.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we have made the MDCBottomNavigationBarController class and its APIs only be available from iOS 12 and up.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+The MDCBottomNavigationBarController class now only supports iOS 12 and up.
 
 ## Component changes
 
