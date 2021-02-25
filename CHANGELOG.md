@@ -1,3 +1,33 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActivityIndicator
+
+* [Add unit tests.](https://github.com/material-components/material-components-ios/commit/2416f191aa1b80b52bc4131d653e373ba83fd4dd) (Cody Weaver)
+
+### BottomNavigation
+
+* [Annotate APIs as only supporting iOS 12+.](https://github.com/material-components/material-components-ios/commit/b190b1c3344b209e48e0553a2832a3972c6bab71) (Jeff Verkoeyen)
+
+### Dialogs
+
+* [Adds dismissOnAction property to MDCAlertAction to allow callers to control when the dialog dismisses.](https://github.com/material-components/material-components-ios/commit/9c91e26f04cd5829cb996818a6d0119b23c944fa) (Nobody)
+
+---
+
 # 122.0.1
 
 This patch release fixes a bug and generally cleans up import statements.
