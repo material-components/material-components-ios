@@ -144,10 +144,7 @@ This button allows the user to signal that they want to toggle the layout direct
   [button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
   [button applyContainedThemeWithScheme:self.containerScheme];
   [button sizeToFit];
-  button.enabled = NO;
-  if (@available(iOS 10.0, *)) {
-    button.enabled = YES;
-  }
+  button.enabled = YES;
   return button;
 }
 

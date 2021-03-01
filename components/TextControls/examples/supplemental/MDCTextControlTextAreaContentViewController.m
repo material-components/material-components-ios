@@ -147,20 +147,18 @@
 - (void)enforcePreferredFonts {
   [super enforcePreferredFonts];
 
-  if (@available(iOS 10.0, *)) {
-    [self.allTextAreas
-        enumerateObjectsUsingBlock:^(MDCBaseTextArea *textArea, NSUInteger idx, BOOL *stop) {
-          textArea.textView.adjustsFontForContentSizeCategory = YES;
-          textArea.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                                       compatibleWithTraitCollection:textArea.traitCollection];
-          textArea.leadingAssistiveLabel.font =
-              [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
-                  compatibleWithTraitCollection:textArea.traitCollection];
-          textArea.trailingAssistiveLabel.font =
-              [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
-                  compatibleWithTraitCollection:textArea.traitCollection];
-        }];
-  }
+  [self.allTextAreas
+      enumerateObjectsUsingBlock:^(MDCBaseTextArea *textArea, NSUInteger idx, BOOL *stop) {
+        textArea.textView.adjustsFontForContentSizeCategory = YES;
+        textArea.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                                     compatibleWithTraitCollection:textArea.traitCollection];
+        textArea.leadingAssistiveLabel.font =
+            [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+                compatibleWithTraitCollection:textArea.traitCollection];
+        textArea.trailingAssistiveLabel.font =
+            [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+                compatibleWithTraitCollection:textArea.traitCollection];
+      }];
 }
 
 - (void)handleResignFirstResponderTapped {

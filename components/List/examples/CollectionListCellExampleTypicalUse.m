@@ -21,8 +21,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
-static const CGFloat kSmallestCellHeight = 40;
-static const CGFloat kSmallArbitraryCellWidth = 100;
 
 @implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;
@@ -35,11 +33,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100;
   flowLayout.minimumInteritemSpacing = 0;
   flowLayout.minimumLineSpacing = 1;
   flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  if (@available(iOS 10.0, *)) {
-    flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize;
-  } else {
-    flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
-  }
+  flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize;
   return [self initWithCollectionViewLayout:flowLayout];
 }
 
