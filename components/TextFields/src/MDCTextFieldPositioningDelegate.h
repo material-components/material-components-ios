@@ -21,7 +21,9 @@
  Usually, these methods are direct mirrors of internal methods with the addition of a default value.
  */
 
-@protocol MDCTextInputPositioningDelegate <NSObject>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @protocol MDCTextInputPositioningDelegate<NSObject>
 
 @optional
 

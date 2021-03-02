@@ -52,7 +52,9 @@
 
  Underline View Mode - While editing
  */
-@interface MDCTextInputControllerFullWidth : NSObject <MDCTextInputController>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @interface MDCTextInputControllerFullWidth : NSObject<MDCTextInputController>
 
 /**
  Color for background for the various views making up a text field.

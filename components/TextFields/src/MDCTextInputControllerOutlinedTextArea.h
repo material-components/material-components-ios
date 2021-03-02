@@ -67,6 +67,8 @@
  closely align with the "label text" as described in the guidance.
  */
 
-@interface MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerBase
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @interface MDCTextInputControllerOutlinedTextArea : MDCTextInputControllerBase
 
 @end

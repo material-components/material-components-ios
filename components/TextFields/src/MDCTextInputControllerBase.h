@@ -57,7 +57,9 @@
  placeholder as distinct from `label text`. The placeholder-related properties of this class most
  closely align with the "label text" as described in the guidance.
 */
-@interface MDCTextInputControllerBase : NSObject <MDCTextInputControllerFloatingPlaceholder>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @interface MDCTextInputControllerBase : NSObject<MDCTextInputControllerFloatingPlaceholder>
 
 /**
  The color behind the input and label that defines the preferred tap zone.

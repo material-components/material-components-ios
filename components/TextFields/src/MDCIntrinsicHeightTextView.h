@@ -22,6 +22,8 @@
  NOTE: UITextView is a subclass of UIScrollView. That's why it has a contentSize.
  */
 
-@interface MDCIntrinsicHeightTextView : UITextView
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @interface MDCIntrinsicHeightTextView : UITextView
 
 @end
