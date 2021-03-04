@@ -1,6 +1,6 @@
 # 124.0.0
 
-In this release `MDCTextField` and its associated classes and protocols are deprecated. As well as cleaning up pre iOS 12 checks in the library.
+In this release `MDCTextField` and its associated classes and protocols are deprecated. We also deleted the Pesto example application and cleaned up pre iOS 12 checks in the library.
 
 ## Breaking changes
 
