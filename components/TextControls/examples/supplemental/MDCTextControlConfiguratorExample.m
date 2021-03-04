@@ -131,23 +131,18 @@ All the content size categories that this view controller supports.
 
 - (void)setContentSizeCategory:(UIContentSizeCategory)contentSizeCategory
          onChildViewController:(UIViewController *)viewController {
-  if (@available(iOS 10.0, *)) {
-    UITraitCollection *contentSizeCategoryTraitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:contentSizeCategory];
-    UITraitCollection *currentTraitCollection = viewController.traitCollection;
-    NSArray *traitCollections = @[ currentTraitCollection, contentSizeCategoryTraitCollection ];
-    UITraitCollection *traitCollection =
-        [UITraitCollection traitCollectionWithTraitsFromCollections:traitCollections];
-    [self setOverrideTraitCollection:traitCollection forChildViewController:viewController];
-    [self.view setNeedsLayout];
-  }
+  UITraitCollection *contentSizeCategoryTraitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:contentSizeCategory];
+  UITraitCollection *currentTraitCollection = viewController.traitCollection;
+  NSArray *traitCollections = @[ currentTraitCollection, contentSizeCategoryTraitCollection ];
+  UITraitCollection *traitCollection =
+      [UITraitCollection traitCollectionWithTraitsFromCollections:traitCollections];
+  [self setOverrideTraitCollection:traitCollection forChildViewController:viewController];
+  [self.view setNeedsLayout];
 }
 
 - (UIContentSizeCategory)contentSizeCategoryForViewController:(UIViewController *)viewController {
-  if (@available(iOS 10.0, *)) {
-    return viewController.traitCollection.preferredContentSizeCategory;
-  }
-  return nil;
+  return viewController.traitCollection.preferredContentSizeCategory;
 }
 
 - (void)setContainerScheme:(id<MDCContainerScheming>)containerScheme {

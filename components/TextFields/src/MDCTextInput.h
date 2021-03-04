@@ -42,7 +42,9 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 @protocol MDCTextInputPositioningDelegate;
 
 /** Common API for Material Design compliant text inputs. */
-@protocol MDCTextInput <NSObject>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @protocol MDCTextInput<NSObject>
 
 /**
  The attributed text string of the placeholder label.
@@ -232,7 +234,9 @@ Common API for text inputs that support having a leading view.
 MDCTextField implements this protocol but MDCMultilineTextField does not because the designers
 determined multiline text fields should only have trailing views.
 */
-@protocol MDCLeadingViewTextInput <MDCTextInput>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @protocol MDCLeadingViewTextInput<MDCTextInput>
 
 /**
  An overlay view on the leading side.

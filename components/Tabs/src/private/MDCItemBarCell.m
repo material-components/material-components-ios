@@ -228,11 +228,9 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   self.selectedImage = item.selectedImage;
   self.image = item.image;
   self.badgeValue = item.badgeValue;
-  if (@available(iOS 10.0, *)) {
-    if (item.badgeColor) {
-      self.style.badgeColor = item.badgeColor;
-      self.badge.badgeColor = item.badgeColor;
-    }
+  if (item.badgeColor) {
+    self.style.badgeColor = item.badgeColor;
+    self.badge.badgeColor = item.badgeColor;
   }
   self.accessibilityIdentifier = item.accessibilityIdentifier;
   self.accessibilityLabel = item.accessibilityLabel;

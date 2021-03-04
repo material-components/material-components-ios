@@ -19,7 +19,9 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MDCMultilineTextInputDelegate <NSObject>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @protocol MDCMultilineTextInputDelegate<NSObject>
 
 @optional
 

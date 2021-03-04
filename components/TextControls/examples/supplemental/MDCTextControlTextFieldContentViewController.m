@@ -172,20 +172,18 @@
 - (void)enforcePreferredFonts {
   [super enforcePreferredFonts];
 
-  if (@available(iOS 10.0, *)) {
-    [self.allTextFields
-        enumerateObjectsUsingBlock:^(MDCBaseTextField *textField, NSUInteger idx, BOOL *stop) {
-          textField.adjustsFontForContentSizeCategory = YES;
-          textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                               compatibleWithTraitCollection:textField.traitCollection];
-          textField.leadingAssistiveLabel.font =
-              [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
-                  compatibleWithTraitCollection:textField.traitCollection];
-          textField.trailingAssistiveLabel.font =
-              [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
-                  compatibleWithTraitCollection:textField.traitCollection];
-        }];
-  }
+  [self.allTextFields
+      enumerateObjectsUsingBlock:^(MDCBaseTextField *textField, NSUInteger idx, BOOL *stop) {
+        textField.adjustsFontForContentSizeCategory = YES;
+        textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                             compatibleWithTraitCollection:textField.traitCollection];
+        textField.leadingAssistiveLabel.font =
+            [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+                compatibleWithTraitCollection:textField.traitCollection];
+        textField.trailingAssistiveLabel.font =
+            [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2
+                compatibleWithTraitCollection:textField.traitCollection];
+      }];
 }
 
 - (void)handleResignFirstResponderTapped {

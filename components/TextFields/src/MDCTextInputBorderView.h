@@ -14,7 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCTextInputBorderView : UIView <NSCopying>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @interface MDCTextInputBorderView : UIView<NSCopying>
 
 /**
  The color of the area inside the border.

@@ -54,6 +54,8 @@
  placeholder as distinct from `label text`. The placeholder-related properties of this class most
  closely align with the "label text" as described in the guidance.
  */
-@interface MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @interface MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth
 
 @end

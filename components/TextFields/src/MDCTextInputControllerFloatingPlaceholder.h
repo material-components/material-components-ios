@@ -21,7 +21,9 @@
  placeholder as distinct from `label text`. The placeholder-related properties of this class most
  closely align with the "label text" as described in the guidance.
  */
-@protocol MDCTextInputControllerFloatingPlaceholder <MDCTextInputController>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @protocol MDCTextInputControllerFloatingPlaceholder<MDCTextInputController>
 
 /**
  The color applied to the placeholder when floating and the text field is first responder. However,

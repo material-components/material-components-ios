@@ -53,7 +53,7 @@ end
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
-  s.version      = "123.0.0"
+  s.version      = "124.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components snapshot tests."
   s.homepage     = "https://github.com/material-components/material-components-ios"

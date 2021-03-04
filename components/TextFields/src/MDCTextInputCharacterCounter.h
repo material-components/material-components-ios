@@ -23,7 +23,9 @@
  of context), this object can instead choose to do sophisticated counting (ie: ignoring whitespace,
  ignoring url strings, ignoring usernames, etc).
  */
-@protocol MDCTextInputCharacterCounter <NSObject>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @protocol MDCTextInputCharacterCounter<NSObject>
 
 /**
  Returns the count of characters for the text field.
@@ -41,6 +43,8 @@
 
  MDCTextInputAllCharactersCounter is naive (counts each character regardless of context).
  */
-@interface MDCTextInputAllCharactersCounter : NSObject <MDCTextInputCharacterCounter>
+__deprecated_msg(
+    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
+    @interface MDCTextInputAllCharactersCounter : NSObject<MDCTextInputCharacterCounter>
 
 @end
