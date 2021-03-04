@@ -1,16 +1,14 @@
-# #develop#
+# 124.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this release `MDCTextField` and its associated classes and protocols are deprecated. As well as cleaning up pre iOS 12 checks in the library.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+`MDCTextField` and its associated classes and protocols are deprecated.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
+
+ * All classes and protocols under in the `components/TextFields` folder are now deprecated.
 
 ## Component changes
 
