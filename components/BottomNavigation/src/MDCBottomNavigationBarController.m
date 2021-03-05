@@ -266,19 +266,17 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   self.navigationBarBottomAnchorConstraint.constant =
       hidden ? CGRectGetHeight(navigationBar.frame) : 0;
 
-  void (^completionBlock)(BOOL) = nil;
+  void (^completionBlock)(BOOL) = ^(BOOL finished) {
+    // Update the end hidden state of the navigation bar if it was not interrupted (the end state
+    // matches the current state). Otherwise an already scheduled animation will take care of this.
+    if (finished && !hidden != !self.navigationBarItemsBottomAnchorConstraint.active) {
+      navigationBar.hidden = hidden;
+    }
+  };
 
-  if (hidden && animated) {
-    // For animated hides we deffer updating the nav-bar hidden state until the animation finishes.
-    completionBlock = ^(BOOL finished) {
-      if (finished) {
-        // Hide the view to avoid visual artifacts on rotations.
-        navigationBar.hidden = hidden;
-      }
-    };
-  } else {
-    // Update `hidden` state immediately for unhide or non-animated transitions to ensure it gets
-    // applied in the same run loop.
+  // Immediatelly update the navigation bar's hidden state when it is going to become visible to be
+  // able to see the animation).
+  if (!hidden) {
     navigationBar.hidden = hidden;
   }
 
