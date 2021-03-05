@@ -106,7 +106,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/private/Application"
-    component.dependency "MotionAnimator", "~> 2.0"
+    component.dependency "MotionAnimator", "~> 4.0"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
