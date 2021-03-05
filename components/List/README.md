@@ -155,16 +155,13 @@ An instance of `MDCSelfSizingStereoCell` can be configured to be a single-line, 
 **Title text**            |`titleLabel`                             | N/A                           | N/A
 **Detail text**            |`titleLabel`                              | N/A                          | N/A
 
-## Types
+**Types**
 
-There are three list types:
-1. [Single-line list](#single-line-list)
-1. [Two-line list](#two-line-list)
-1. [Three-line list](#three-line-list)
+There are three list types: 1\. [Single-line list](#single-line-list), 2\. [Two-line list](#two-line-list) 3\. [Three-line list](#three-line-list)
 
 ![Composite image of the three list types](docs/assets/lists-types.png)
 
-### Single-line list
+## Single-line list
 
 Single-line list items contain a maximum of one line of text.
 
@@ -202,7 +199,7 @@ func collectionView(_ collectionView: UICollectionView,
 ```
 <!--</div>-->
 
-### Two-line list
+## Two-line list
 
 Two-line list items contain a maximum of two lines of text.
 
@@ -242,7 +239,7 @@ func collectionView(_ collectionView: UICollectionView,
 ```
 <!--</div>-->
 
-### Three-line list
+## Three-line list
 
 Three-line list items contains a maximum of three lines of text.
 
