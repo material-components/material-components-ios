@@ -1,8 +1,0 @@
-platform :ios, "10.0"
-use_frameworks!
-
-target 'Shrine' do
-  pod 'MaterialComponents/AppBar', :path => '../../'
-  pod 'MaterialComponents/PageControl', :path => '../../'
-  pod 'RemoteImageServiceForMDCDemos', :path => '../supplemental'
-end
