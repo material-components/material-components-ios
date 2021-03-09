@@ -1,3 +1,15 @@
+# 124.0.1
+
+This patch release fixes a bug in BottomNavigation.
+
+## Component changes
+
+### BottomNavigation
+
+* [Update hidden state logic to address a race condition occurring when showing/hiding the navigation bar multiple times before the animation ends.](https://github.com/material-components/material-components-ios/commit/4f12b7da7121408e46a4ffbe09204e7a5575eabb) (German Rodriguez)
+
+---
+
 # 124.0.0
 
 In this release `MDCTextField` and its associated classes and protocols are deprecated. We also deleted the Pesto example application and cleaned up pre iOS 12 checks in the library.
