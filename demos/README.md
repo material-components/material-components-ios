@@ -2,7 +2,6 @@
 
 The following demo apps can be found in this directory:
 
-- [Shrine](Shrine/) - a demo shopping app, incorporating a flexible header, custom typography, and collections
 - [Bare](Bare/) - a skeleton example app used to measure the size of Material Components for iOS
 
 ## Trying out Material Components
