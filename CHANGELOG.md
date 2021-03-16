@@ -1,3 +1,36 @@
+# 124.1.1
+
+In this minor release we added a new Shadow Component and removed the Shrine demo.
+
+## New features
+
+A new Shadow Component.
+
+## API changes
+
+### Shadow
+
+Use the new Shadow component to create a shadow adjusted to your elevation:
+
+
+```objc
+MDCShadow *lowElevationShadow = MDCShadowForElevation(2);
+MDCShadow *highElevationShadow = MDCShadowForElevation(24);
+```
+
+```swift
+let lowElevation = MDCShadowForElevation(2)
+let highElevation = MDCShadowForElevation(24)
+```
+
+## Component changes
+
+### Shadow
+
+* [New in-development Shadow component (not ready for public use).](https://github.com/material-components/material-components-ios/commit/ff33bab752cb518e46d2a2d4011045d081428b80) (Ben Hamilton)
+
+---
+
 # 124.0.1
 
 This patch release fixes a bug in BottomNavigation.
