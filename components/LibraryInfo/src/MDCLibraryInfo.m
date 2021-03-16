@@ -19,7 +19,7 @@
 // This string is updated automatically as a part of the release process and should not be edited
 // manually. Do not rename this constant or change the formatting without updating the release
 // scripts.
-static NSString* const kMDCLibraryInfoVersionString = @"124.0.1";
+static NSString* const kMDCLibraryInfoVersionString = @"124.1.1";
 
 @implementation MDCLibraryInfo
 
