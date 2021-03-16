@@ -78,10 +78,6 @@ messages are suspended the manager provides a suspension token that the client m
 messages are suspended. When the client releases the suspension token or calls the manager's resume
 method with the suspension token, then messages will resume being displayed.
 
-## Types
-
-There is only one type of snackbar.
-
 ## Snackbar
 
 ![Snackbar with a message and an action](docs/assets/snackbar-example.png)

@@ -63,21 +63,15 @@ From there, initialize an `MDCTabBarView` and add it to your view controller's v
 
 `MDCTabBarView` is accessible by default. VoiceOver reads the titles of the `UITabBarItem`s contained within a tab bar as `accessibilityLabels`, and the `MDCTabBarView` handles setting the `accessibilityTraits` when tab bar items become selected and unselected.
 
-## Types 
+**Types**
 
-Material tabs can be broken into two main categories: fixed and scrollable.
+Material tabs can be broken into two main categories: 1\. Fixed tabs 2\. Scrollable tabs
 
-## Fixed tabs
-
-![Fixed tabs for dog, cats, birds. Birds tab selected](docs/assets/tabs-fixed-hero.png)
-
-## Scrollable tabs
-
-![Scrollable tabs for pitbulls, terrier, poodle. Pitbulls tab selected](docs/assets/tabs-scrollable-hero.png)
+![An example of a fixed tab bar view and a scrolling tab bar view.](docs/assets/tabs-types.png)
 
 ### Tabs example
 
-`MDCTabBarView` supports both fixed and scrolling tabs. By default, `MDCTabbarView` has a fixed layout. To set it up for scrolling, set the `preferredLayoutStyle` property to `.scrolling`. To receive updates about user actions, set the `delegate` property to an object conforming to `MDCTabBarViewDelegate`. Here is a simple set up of an `MDCTabBarView`:
+`MDCTabBarView` supports both fixed and scrolling tabs. By default, `MDCTabbarView` has a fixed layout. To set it up for scrolling, set the `preferredLayoutStyle` property to `.scrollable`. To receive updates about user actions, set the `delegate` property to an object conforming to `MDCTabBarViewDelegate`. Here is a simple set up of an `MDCTabBarView`:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -88,6 +82,7 @@ tabBarView.items = [
   UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
   UITabBarItem(title: "Favorites", image: UIImage(named: "heart"), tag: 0),
 ]
+tabBarView.preferredLayoutStyle = .scrollable // or .fixed
 view.addSubview(tabBarView)
 // Configure constraints
 ```
@@ -100,6 +95,7 @@ tabBarView.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Favorites" image:[UIImage imageNamed:@"heart"] tag:0],
 ];
+tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable; // or MDCTabBarViewLayoutStyleFixed
 [self.view addSubview:tabBarView];
 // Configure constraints
 ```

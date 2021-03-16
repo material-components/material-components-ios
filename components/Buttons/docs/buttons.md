@@ -160,9 +160,9 @@ repeats weekly on the following day(s)." The list items do not need
 (representing a day of the week) has the `accessibilityHint` value, "Toggles
 this day."
 
-## Types
+**Types**
 
-There are four types of buttons: 1. [Text button](#text-button) 2. [Outlined button](#outlined-button) 3. [Contained button](#contained-button) 4. Toggle button (*not supported in iOS*)"
+There are four types of buttons: 1\. [Text button](#text-button) 2\. [Outlined button](#outlined-button) 3\. [Contained button](#contained-button) 4\. Toggle button (*not supported in iOS*)"
 
 ![Example of the four button types](assets/buttons_types.png)
 

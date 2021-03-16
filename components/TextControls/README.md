@@ -66,16 +66,13 @@ import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
 <!--</div>-->
 
-## Making text fields accessible
+### Making text fields accessible
 
 Material iOS text field offerings either inherit from `UITextField` or they contain `UITextView` instances. Both of these classes are accessible by default, and generally work out of the box with VoiceOver. However, the text fields we provide make use of floating labels above the text and assistive labels below the text, which makes the VoiceOver behavior of our text fields slightly different. If `accessibilityLabel` is _not_ explictly set on a single-line text field or multi-line text area, the `accessibilityLabel` that VoiceOver reads is a concatenation of the floating label text, the entered text, and the assistive label text. If `accessibilityLabel` _is_ set, the screen reader will read whatever it is set to. If you would like fine-grained control over what VoiceOver reads for these classes it is probably best to set the `accessibilityLabel` yourself.
 
-## Types
+**Types**
 
-Text fields come in two styles:
-
-1.  [Filled text fields](#filled-text-field)
-2.  [Outlined text fields](#outlined-text-field)
+There are two types of text fields: 1\. [filled text fields](#filled-text-field) 2\. [outlined text fields](#outlined-text-field)
 
 !["Text field examples of both filled and outlined types, each type showing
 both inactive and focused states. The filled text fields show a gray background

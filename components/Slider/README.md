@@ -16,7 +16,7 @@ selections from a range of values.
 
 !["Slider with sound icon buttons on each end."](docs/assets/sliders-hero.png)
 
-## Contents
+**Contents**
 
 *   [Using sliders](#using-sliders)
 *   [Continuous sliders](#continuous-sliders)
@@ -132,6 +132,7 @@ To help ensure your slider is accessible to as many users as possible, please be
 
 Set an appropriate `accessibilityLabel` value for your slider. This should reflect what the slider affects.
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 slider.accessibilityLabel = "Volume level"
@@ -141,6 +142,7 @@ slider.accessibilityLabel = "Volume level"
 ```objc
 slider.accessibilityLabel = @"Volume level";
 ``` 
+<!--</div>-->
 
 #### Minimum touch size
 
@@ -149,7 +151,7 @@ at least 44 points high and 44 wide](https://material.io/design/usability/access
 The height of the slider is set to 27 points so make sure there is sufficient space so that touches don't affect other 
 elements.
 
-## Types
+**Types**
 
 There are two types of sliders: 1\. [Continuous slider](#continuous-slider) and 2\.
 [Discrete slider](#discrete-slider)
@@ -157,6 +159,8 @@ There are two types of sliders: 1\. [Continuous slider](#continuous-slider) and 
 !["Slider examples of both continuous and discrete sliders."](docs/assets/sliders-types.png)
 
 A slider with one thumb is called a single point slider, and a slider with two thumbs is called a range slider.
+
+_**Note:** Range sliders are not supported on iOS._
 
 ### Anatomy and key properties
 
@@ -240,10 +244,6 @@ slider.value = 70.0f;
 ```
 <!--</div>-->
 
-#### Continuous range slider example
-
-Range sliders are not yet implemented on iOS.
-
 ## Discrete sliders
 
 #### Discrete single point slider example
@@ -277,10 +277,6 @@ slider.numberOfDiscreteValues = 10;
 slider.shouldDisplayDiscreteValueLabel = NO;
 ```
 <!--</div>-->
-
-#### Discrete range slider example
-
-Range sliders are not yet implemented on iOS.
 
 ## Theming sliders
 

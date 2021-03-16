@@ -290,7 +290,7 @@ To support Dynamic Type in your component, you need to set up text styles repres
 
 Users configure text styles in source code. First, you call the `scalerForMaterialTextStyle:` method. This method returns an `MDCFontScalar` object for a given `MDCFontTextStyle`. Next, use the `MDCFontScalar` object to scale a `UIFont` by calling `scaledFontWithFont:` method. This method scales the font based on Dynamic Type setting provided by the user. This method also supports both system fonts and custom fonts.
 
-##### Objective-C
+#### Objective-C
 
 ```objc
 UIFont *customFont = [UIFont fontWithName:@"CustomFontName" size:18.0];
@@ -299,7 +299,7 @@ UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
 label.font = customScalingFont;
 ```
 
-##### Swift
+#### Swift
 
 ```swift
 let customFont = UIFont(name: "CustomFontName", size: 18.0)!

@@ -68,20 +68,16 @@ As a user of the bottom sheet component, it is up to you to determine that its c
 
 We recommend giving all of these properties appropriate values for your use case.
  
-## Types
+**Types**
 
 There are three types suitable for different use cases:
-1. [Standard bottom sheets](#standard-bottom-sheet) display content that complements the screen’s primary content and remain visible while users interact with the primary content
+1. Standard bottom sheets display content that complements the screen’s primary content and remain visible while users interact with the primary content
 1. [Modal bottom sheets](#modal-bottom-sheet) are an alternative to inline menus or simple dialogs on mobile and provide room for additional items, longer descriptions, and iconography, and must be dismissed in order to interact with the underlying content
 1. [Expanding bottom sheets](#expanding-bottom-sheet) provide a small, collapsed surface that can be expanded by the user to access a key feature or task to offer the persistent access of a standard sheet with the space and focus of a modal sheet.
 
 ![Composite image of bottom sheet types](docs/assets/bottom-sheet-types.png)
 
-## Standard bottom sheet
-
-Standard bottom sheets coexist with the screen’s main UI region and allow for simultaneously viewing and interacting with both regions. They are commonly used to keep a feature or secondary content visible on screen when content in main UI region is frequently scrolled or panned.
-
-There is no standard bottom sheet implementation on iOS. This is because the iOS bottom sheet implementation makes use of custom view controller transitions, which do not allow interaction with the presenting view controller, even when the presented view controller does not take up the whole screen. 
+_**Note:** Standard bottom sheets aren't supported on iOS. This is because the iOS bottom sheet implementation makes use of custom view controller transitions, which do not allow interaction with the presenting view controller, even when the presented view controller does not take up the whole screen._
 
 ## Modal bottom sheet
 
