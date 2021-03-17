@@ -117,13 +117,6 @@ static const CGFloat kItemsHorizontalMargin = 12;
     }
   }
 
-  UIBlurEffect *defaultBlurEffect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
-  _blurEffectView = [[UIVisualEffectView alloc] initWithEffect:defaultBlurEffect];
-  _blurEffectView.hidden = !_backgroundBlurEnabled;
-  _blurEffectView.autoresizingMask =
-      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  [self addSubview:_blurEffectView];  // Needs to always be at the bottom
-
   _barView = [[UIView alloc] init];
   _barView.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
@@ -165,7 +158,9 @@ static const CGFloat kItemsHorizontalMargin = 12;
   [super layoutSubviews];
 
   CGRect standardBounds = CGRectStandardize(self.bounds);
-  self.blurEffectView.frame = standardBounds;
+  if (self.blurEffectView) {
+    self.blurEffectView.frame = standardBounds;
+  }
   self.barView.frame = standardBounds;
   self.layer.shadowColor = self.shadowColor.CGColor;
 
@@ -775,7 +770,9 @@ static const CGFloat kItemsHorizontalMargin = 12;
     return;
   }
   _backgroundBlurEffectStyle = backgroundBlurEffectStyle;
-  self.blurEffectView.effect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+  if (self.blurEffectView) {
+    self.blurEffectView.effect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+  }
 }
 
 - (void)setBackgroundBlurEnabled:(BOOL)backgroundBlurEnabled {
@@ -784,7 +781,17 @@ static const CGFloat kItemsHorizontalMargin = 12;
   }
   _backgroundBlurEnabled = backgroundBlurEnabled;
 
-  self.blurEffectView.hidden = !_backgroundBlurEnabled;
+  if (_backgroundBlurEnabled & !self.blurEffectView) {
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+    self.blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    self.blurEffectView.hidden = !_backgroundBlurEnabled;
+    self.blurEffectView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [self insertSubview:self.blurEffectView atIndex:0];  // Needs to always be at the bottom
+    self.blurEffectView.frame = CGRectStandardize(self.bounds);
+  } else if (self.blurEffectView) {
+    self.blurEffectView.hidden = !_backgroundBlurEnabled;
+  }
 }
 
 - (void)setAlignment:(MDCBottomNavigationBarAlignment)alignment {
