@@ -27,6 +27,7 @@
 		6681FDFD1CC586660013A0C7 /* MDCCatalogTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681FDFC1CC586660013A0C7 /* MDCCatalogTileView.swift */; };
 		66CD19292072A54000DE6340 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CD19282072A54000DE6340 /* AppTheme.swift */; };
 		66D3389520730A3E00FFA1AB /* MDCThemePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */; };
+		66E97FE826019E6200B8EE75 /* CatalogAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66E97FE726019E6200B8EE75 /* CatalogAssets.xcassets */; };
 		75F4516F2130AB879A7EDBD5 /* Pods_MDCCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A55EA1CC69E40D5EF866144 /* Pods_MDCCatalog.framework */; };
 		DE309CF31C8DEB8400E73247 /* MDCCatalogComponentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */; };
 		DEF64EA41C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */; };
@@ -121,6 +122,7 @@
 		66A69D4124E2FDC900D0698E /* MDCActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MDCActionExtension.entitlements; sourceTree = "<group>"; };
 		66CD19282072A54000DE6340 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		66D3389420730A3E00FFA1AB /* MDCThemePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCThemePickerViewController.swift; sourceTree = "<group>"; };
+		66E97FE726019E6200B8EE75 /* CatalogAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CatalogAssets.xcassets; sourceTree = SOURCE_ROOT; };
 		88AB955E76304B684707293E /* Pods_MDCActionExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCActionExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B4FE989AA27838D0FB6A13 /* Pods-MDCCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCCatalog.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		93314CA227FB65FEC87098C3 /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = Pods/EarlGrey/EarlGrey/EarlGrey.framework; sourceTree = SOURCE_ROOT; };
@@ -209,6 +211,7 @@
 				664524B61C6BA62A001ADBF8 /* AppDelegate.swift */,
 				66CD19282072A54000DE6340 /* AppTheme.swift */,
 				665A34D91C6BD01900962055 /* MDCCatalog-Bridging-Header.h */,
+				66E97FE726019E6200B8EE75 /* CatalogAssets.xcassets */,
 				DEF64EA31C8DEE83007C4EA0 /* MDCCatalogCollectionViewCell.swift */,
 				DE309CF21C8DEB8400E73247 /* MDCCatalogComponentsController.swift */,
 				64F6D8801F91522A00AA4B24 /* MDCCatalogDebugAlert.swift */,
@@ -398,6 +401,7 @@
 			files = (
 				404564F21E007C5E004C9D0A /* Roboto-Medium.ttf in Resources */,
 				36C870B81E8AD6A20032EA7D /* RobotoMono-Medium.ttf in Resources */,
+				66E97FE826019E6200B8EE75 /* CatalogAssets.xcassets in Resources */,
 				664524C11C6BA62A001ADBF8 /* LaunchScreen.storyboard in Resources */,
 				5D090E571C9AEB8D0061344A /* Localizable.strings in Resources */,
 				664524BE1C6BA62A001ADBF8 /* Assets.xcassets in Resources */,
