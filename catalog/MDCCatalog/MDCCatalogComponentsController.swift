@@ -33,7 +33,6 @@ class MDCCatalogComponentsController: UICollectionViewController,
     static let inset: CGFloat = 16
     static let menuTopVerticalSpacing: CGFloat = 38
     static let logoWidthHeight: CGFloat = 30
-    static let menuButtonWidthHeight: CGFloat = 24
     static let spacing: CGFloat = 1
   }
 
@@ -53,39 +52,7 @@ class MDCCatalogComponentsController: UICollectionViewController,
     return imageView
   }()
 
-  private lazy var menuButton: UIButton = {
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
-    button.setImage(dotsImage, for: .normal)
-    button.adjustsImageWhenHighlighted = false
-    button.accessibilityLabel = "Menu"
-    button.accessibilityHint = "Opens catalog configuration options."
-    // Without this compiler version check, the build fails on Xcode versions <11.4 with the error:
-    //   "Use of undeclared type 'UIPointerInteractionDelegate'"
-    // Ideally, we would be able to tie this to an iOS version rather than a compiler version, but
-    // such a solution does not seem to be available for Swift.
-#if compiler(>=5.2)
-      if #available(iOS 13.4, *) {
-        let interaction = UIPointerInteraction(delegate: self)
-        button.addInteraction(interaction)
-      }
-#endif
-    return button
-  }()
-
-
   private let node: CBCNode
-  private lazy var titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    titleLabel.adjustsFontSizeToFitWidth = true
-    return titleLabel
-  }()
-
-  private var logoLeftPaddingConstraint: NSLayoutConstraint?
-  private var menuButtonRightPaddingConstraint: NSLayoutConstraint?
-  private var menuTopPaddingConstraint: NSLayoutConstraint?
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
@@ -103,13 +70,38 @@ class MDCCatalogComponentsController: UICollectionViewController,
 
     title = "Material Components for iOS"
 
+    if #available(iOS 13.0, *) {
+      let appearance = UINavigationBarAppearance()
+      appearance.configureWithDefaultBackground()
+      appearance.titleTextAttributes[.foregroundColor] = UIColor.black
+      appearance.largeTitleTextAttributes[.foregroundColor] = UIColor.clear
+      navigationItem.standardAppearance = appearance
+
+      let scrollEdgeAppearance = UINavigationBarAppearance()
+      scrollEdgeAppearance.configureWithTransparentBackground()
+      scrollEdgeAppearance.titleTextAttributes[.foregroundColor] = UIColor.black
+      scrollEdgeAppearance.largeTitleTextAttributes[.foregroundColor] = UIColor.clear
+      navigationItem.scrollEdgeAppearance = scrollEdgeAppearance
+
+      navigationItem.largeTitleDisplayMode = .always
+
+      let image = MDCDrawImage(CGRect(x:0,
+                                      y:0,
+                                      width: Constants.logoWidthHeight,
+                                      height: Constants.logoWidthHeight),
+                               { frame, _ in MDCCatalogDrawMDCLogoLight(frame, nil) },
+                               nil)
+      logo.image = image
+      navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logo)
+    }
+
     addChild(headerViewController)
 
     headerViewController.isTopLayoutGuideAdjustmentEnabled = true
     headerViewController.inferTopSafeAreaInsetFromViewController = true
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = 128
-    headerViewController.headerView.minimumHeight = 56
+    headerViewController.headerView.minimumHeight = 44
 
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
@@ -129,8 +121,6 @@ class MDCCatalogComponentsController: UICollectionViewController,
     headerViewController.headerView.backgroundColor = colorScheme.primaryColor
     setNeedsStatusBarAppearanceUpdate()
 
-    titleLabel.textColor = colorScheme.onPrimaryColor
-    menuButton.tintColor = colorScheme.onPrimaryColor
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
   }
@@ -151,46 +141,29 @@ class MDCCatalogComponentsController: UICollectionViewController,
     let containerView = UIView(frame: headerViewController.headerView.bounds)
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    titleLabel.text = title!
-    titleLabel.textColor = AppTheme.containerScheme.colorScheme.onPrimaryColor
-    titleLabel.textAlignment = .center
-    titleLabel.font = AppTheme.containerScheme.typographyScheme.headline6
-    titleLabel.sizeToFit()
-
-    let titleInsets = UIEdgeInsets(top: 0,
-                                   left: Constants.inset,
-                                   bottom: Constants.inset,
-                                   right: Constants.inset)
-    let titleSize = titleLabel.sizeThatFits(containerView.bounds.size)
-
-    containerView.addSubview(titleLabel)
-
     headerViewController.headerView.addSubview(containerView)
     headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    containerView.addSubview(logo)
+    let imageView = UIImageView(image: UIImage(named: "amsterdam-kadoelen")!)
+    imageView.frame = headerViewController.headerView.bounds
+    imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    imageView.contentMode = .scaleAspectFill
+    imageView.clipsToBounds = true
+    headerViewController.headerView.addSubview(imageView)
 
     let colorScheme = AppTheme.containerScheme.colorScheme
 
-    let image = MDCDrawImage(CGRect(x:0,
-                                    y:0,
-                                    width: Constants.logoWidthHeight,
-                                    height: Constants.logoWidthHeight),
-                             { MDCCatalogDrawMDCLogoLight($0, $1) },
-                             colorScheme)
-    logo.image = image
+    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
 
-    menuButton.addTarget(self.navigationController,
-                         action: #selector(navigationController?.presentMenu),
-                         for: .touchUpInside)
-    menuButton.tintColor = colorScheme.onPrimaryColor
-    containerView.addSubview(menuButton)
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: dotsImage,
+                                                        style: .plain,
+                                                        target: navigationController,
+                                                        action: #selector(navigationController?.presentMenu))
+    navigationItem.rightBarButtonItem?.accessibilityLabel = "Menu"
+    navigationItem.rightBarButtonItem?.accessibilityHint = "Opens catalog configuration options."
 
-    setupFlexibleHeaderContentConstraints()
-    constrainLabel(label: titleLabel,
-                   containerView: containerView,
-                   insets: titleInsets,
-                   height: titleSize.height)
+    // TODO: This needs to change as the header collapses.
+    navigationItem.rightBarButtonItem?.tintColor = .white
 
     headerViewController.headerView.backgroundColor = colorScheme.primaryColor
 
@@ -216,7 +189,6 @@ class MDCCatalogComponentsController: UICollectionViewController,
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     collectionView?.collectionViewLayout.invalidateLayout()
-    navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
   override func willAnimateRotation(
@@ -230,81 +202,6 @@ class MDCCatalogComponentsController: UICollectionViewController,
 
   override var childForStatusBarHidden: UIViewController? {
     return headerViewController
-  }
-
-  @available(iOS 11, *)
-  override func viewSafeAreaInsetsDidChange() {
-    // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
-    logoLeftPaddingConstraint?.constant = Constants.inset + view.safeAreaInsets.left
-    menuButtonRightPaddingConstraint?.constant = -1 * (Constants.inset + view.safeAreaInsets.right)
-    menuTopPaddingConstraint?.constant = Constants.inset + view.safeAreaInsets.top
-  }
-
-  func setupFlexibleHeaderContentConstraints() {
-
-    logoLeftPaddingConstraint = NSLayoutConstraint(item: logo,
-                                                   attribute: .leading,
-                                                   relatedBy: .equal,
-                                                   toItem: logo.superview,
-                                                   attribute: .leading,
-                                                   multiplier: 1,
-                                                   constant: Constants.inset)
-    logoLeftPaddingConstraint?.isActive = true
-
-    menuButtonRightPaddingConstraint = NSLayoutConstraint(item: menuButton,
-                                                          attribute: .trailing,
-                                                          relatedBy: .equal,
-                                                          toItem: menuButton.superview,
-                                                          attribute: .trailing,
-                                                          multiplier: 1,
-                                                          constant: -1 * Constants.inset)
-    menuButtonRightPaddingConstraint?.isActive = true
-
-    menuTopPaddingConstraint = NSLayoutConstraint(item: menuButton,
-                                                  attribute: .top,
-                                                  relatedBy: .equal,
-                                                  toItem: menuButton.superview,
-                                                  attribute: .top,
-                                                  multiplier: 1,
-                                                  constant: Constants.menuTopVerticalSpacing)
-    menuTopPaddingConstraint?.isActive = true
-
-    NSLayoutConstraint(item: logo,
-                       attribute: .centerY,
-                       relatedBy: .equal,
-                       toItem: menuButton,
-                       attribute: .centerY,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: Constants.logoWidthHeight).isActive = true
-
-    NSLayoutConstraint(item: menuButton,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: menuButton,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: menuButton,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: Constants.menuButtonWidthHeight).isActive = true
   }
 
   // MARK: UICollectionViewDataSource
@@ -392,45 +289,6 @@ class MDCCatalogComponentsController: UICollectionViewController,
     }
     self.navigationController?.setMenuBarButton(for: vc)
     self.navigationController?.pushViewController(vc, animated: true)
-  }
-
-  // MARK: Private
-  func constrainLabel(label: UILabel,
-                      containerView: UIView,
-                      insets: UIEdgeInsets,
-                      height: CGFloat) {
-
-    NSLayoutConstraint(item: label,
-                       attribute: .leading,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .trailing,
-                       multiplier: 1.0,
-                       constant: insets.left).isActive = true
-
-    NSLayoutConstraint(item: label,
-                       attribute: .trailing,
-                       relatedBy: .equal,
-                       toItem: menuButton,
-                       attribute: .leading,
-                       multiplier: 1.0,
-                       constant: -insets.right).isActive = true
-
-    NSLayoutConstraint(item: label,
-                       attribute: .bottom,
-                       relatedBy: .equal,
-                       toItem: containerView,
-                       attribute: .bottom,
-                       multiplier: 1.0,
-                       constant: -insets.bottom).isActive = true
-
-    NSLayoutConstraint(item: label,
-                       attribute: .height,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1.0,
-                       constant: height).isActive = true
   }
 }
 

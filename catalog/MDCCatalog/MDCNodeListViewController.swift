@@ -228,12 +228,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
                             forCellReuseIdentifier: "NodeViewTableViewDemoCell")
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
   @objc func themeDidChange(notification: NSNotification) {
     setNeedsStatusBarAppearanceUpdate()
     self.tableView.reloadData()

@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
 
   var window: UIWindow?
 
-  let navigationController = MDCAppBarNavigationController()
+  let navigationController = UINavigationController()
   var tree: CBCNode?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
@@ -41,6 +41,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
     let tree = CBCCreatePresentableNavigationTree()
     self.tree = tree
 
+    if #available(iOS 13.0, *) {
+      navigationController.navigationBar.prefersLargeTitles = true
+
+      let appearance = UINavigationBarAppearance()
+      appearance.configureWithDefaultBackground()
+      navigationController.navigationBar.standardAppearance = appearance
+
+      let scrollEdgeAppearance = UINavigationBarAppearance()
+      scrollEdgeAppearance.configureWithDefaultBackground()
+      navigationController.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
+    }
     navigationController.delegate = self
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
@@ -48,12 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
 
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
-
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.themeDidChange),
-      name: AppTheme.didChangeGlobalThemeNotificationName,
-      object: nil)
 
     if self.responds(to: Selector((AppDelegate.performPostLaunchSelector))) {
       self.perform(Selector((AppDelegate.performPostLaunchSelector)))
@@ -66,32 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   // catalog by convention example tree.
   @objc func navigationTree() -> CBCNode? {
     return self.tree
-  }
-
-  @objc func themeDidChange(notification: NSNotification) {
-    let colorScheme = AppTheme.containerScheme.colorScheme
-    for viewController in navigationController.children {
-      guard let appBar = navigationController.appBar(for: viewController) else {
-        continue
-      }
-
-      MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-    }
-  }
-
-  // MARK: MDCAppBarNavigationControllerInjectorDelegate
-
-  func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
-                                  willAdd appBarViewController: MDCAppBarViewController,
-                                  asChildOf viewController: UIViewController) {
-    MDCAppBarColorThemer.applyColorScheme(AppTheme.containerScheme.colorScheme,
-                                                        to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.containerScheme.typographyScheme,
-                                                    to: appBarViewController)
-
-    if let injectee = viewController as? CatalogAppBarInjectee {
-      injectee.appBarNavigationControllerInjector(willAdd: appBarViewController)
-    }
   }
 }
 
