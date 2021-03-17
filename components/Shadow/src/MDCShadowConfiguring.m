@@ -45,7 +45,7 @@ void MDCConfigureShadowForViewWithShadowAndPath(UIView *view, UIColor *shadowCol
   }
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   view.layer.shadowColor = shadowColor.CGColor;
-  view.layer.shadowOpacity = shadow.opacity;
+  view.layer.shadowOpacity = (float)shadow.opacity;
   view.layer.shadowRadius = shadow.radius;
   view.layer.shadowOffset = shadow.offset;
   view.layer.shadowPath = path;
