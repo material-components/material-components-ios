@@ -87,6 +87,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   if (self) {
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
+    self.shouldGroupAccessibilityChildren = YES;
 
     self.orderVerticalActionsByEmphasis = NO;
     self.actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
