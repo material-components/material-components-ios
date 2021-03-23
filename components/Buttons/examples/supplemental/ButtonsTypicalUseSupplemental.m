@@ -122,6 +122,14 @@ static const CGFloat kViewOffsetToCenter = 20;
     CGFloat labelOffset = (CGRectGetHeight(button.bounds) - CGRectGetHeight(label.bounds)) / 2;
     label.center = CGPointMake(centerX - (CGRectGetWidth(label.bounds) / 2) - kViewOffsetToCenter,
                                heightSum + labelOffset + (CGRectGetHeight(label.bounds) / 2));
+
+    // Pin the label's frame to pixel boundaries to reduce snapshot flakiness due to inaccuracies in
+    // floating point rounding behavior on the GPU when taking snapshots.
+    CGRect labelFrame = label.frame;
+    labelFrame.origin.x = floor(labelFrame.origin.x);
+    labelFrame.origin.y = floor(labelFrame.origin.y);
+    label.frame = labelFrame;
+
     heightSum += CGRectGetHeight(button.bounds);
     if (i < self.buttons.count - 1) {
       heightSum += button.enabled ? 24 : 36;
