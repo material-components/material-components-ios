@@ -91,6 +91,8 @@ extension NavigationBarAlertExample {
       "breadcrumbs": ["Navigation Bar", "Popover Alert"],
       "primaryDemo": false,
       "presentable": false,
+      "snapshotDelay": 1.0,
+      "thresholdPercentage": 4.0,
     ]
   }
 
