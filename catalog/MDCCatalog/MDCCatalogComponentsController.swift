@@ -65,15 +65,14 @@ class MDCCatalogComponentsController: UICollectionViewController,
     //   "Use of undeclared type 'UIPointerInteractionDelegate'"
     // Ideally, we would be able to tie this to an iOS version rather than a compiler version, but
     // such a solution does not seem to be available for Swift.
-#if compiler(>=5.2)
+    #if compiler(>=5.2)
       if #available(iOS 13.4, *) {
         let interaction = UIPointerInteraction(delegate: self)
         button.addInteraction(interaction)
       }
-#endif
+    #endif
     return button
   }()
-
 
   private let node: CBCNode
   private lazy var titleLabel: UILabel = {
@@ -92,10 +91,11 @@ class MDCCatalogComponentsController: UICollectionViewController,
 
     let layout = UICollectionViewFlowLayout()
     let sectionInset: CGFloat = Constants.spacing
-    layout.sectionInset = UIEdgeInsets(top: sectionInset,
-                                       left: sectionInset,
-                                       bottom: sectionInset,
-                                       right: sectionInset)
+    layout.sectionInset = UIEdgeInsets(
+      top: sectionInset,
+      left: sectionInset,
+      bottom: sectionInset,
+      right: sectionInset)
     layout.minimumInteritemSpacing = Constants.spacing
     layout.minimumLineSpacing = Constants.spacing
 
@@ -111,7 +111,8 @@ class MDCCatalogComponentsController: UICollectionViewController,
     headerViewController.headerView.maximumHeight = 128
     headerViewController.headerView.minimumHeight = 56
 
-    collectionView?.register(MDCCatalogCollectionViewCell.self,
+    collectionView?.register(
+      MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
     collectionView?.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
@@ -157,10 +158,11 @@ class MDCCatalogComponentsController: UICollectionViewController,
     titleLabel.font = AppTheme.containerScheme.typographyScheme.headline6
     titleLabel.sizeToFit()
 
-    let titleInsets = UIEdgeInsets(top: 0,
-                                   left: Constants.inset,
-                                   bottom: Constants.inset,
-                                   right: Constants.inset)
+    let titleInsets = UIEdgeInsets(
+      top: 0,
+      left: Constants.inset,
+      bottom: Constants.inset,
+      right: Constants.inset)
     let titleSize = titleLabel.sizeThatFits(containerView.bounds.size)
 
     containerView.addSubview(titleLabel)
@@ -172,25 +174,29 @@ class MDCCatalogComponentsController: UICollectionViewController,
 
     let colorScheme = AppTheme.containerScheme.colorScheme
 
-    let image = MDCDrawImage(CGRect(x:0,
-                                    y:0,
-                                    width: Constants.logoWidthHeight,
-                                    height: Constants.logoWidthHeight),
-                             { MDCCatalogDrawMDCLogoLight($0, $1) },
-                             colorScheme)
+    let image = MDCDrawImage(
+      CGRect(
+        x: 0,
+        y: 0,
+        width: Constants.logoWidthHeight,
+        height: Constants.logoWidthHeight),
+      { MDCCatalogDrawMDCLogoLight($0, $1) },
+      colorScheme)
     logo.image = image
 
-    menuButton.addTarget(self.navigationController,
-                         action: #selector(navigationController?.presentMenu),
-                         for: .touchUpInside)
+    menuButton.addTarget(
+      self.navigationController,
+      action: #selector(navigationController?.presentMenu),
+      for: .touchUpInside)
     menuButton.tintColor = colorScheme.onPrimaryColor
     containerView.addSubview(menuButton)
 
     setupFlexibleHeaderContentConstraints()
-    constrainLabel(label: titleLabel,
-                   containerView: containerView,
-                   insets: titleInsets,
-                   height: titleSize.height)
+    constrainLabel(
+      label: titleLabel,
+      containerView: containerView,
+      insets: titleInsets,
+      height: titleSize.height)
 
     headerViewController.headerView.backgroundColor = colorScheme.primaryColor
 
@@ -220,7 +226,8 @@ class MDCCatalogComponentsController: UICollectionViewController,
   }
 
   override func willAnimateRotation(
-    to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+    to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval
+  ) {
     collectionView?.collectionViewLayout.invalidateLayout()
   }
 
@@ -242,69 +249,82 @@ class MDCCatalogComponentsController: UICollectionViewController,
 
   func setupFlexibleHeaderContentConstraints() {
 
-    logoLeftPaddingConstraint = NSLayoutConstraint(item: logo,
-                                                   attribute: .leading,
-                                                   relatedBy: .equal,
-                                                   toItem: logo.superview,
-                                                   attribute: .leading,
-                                                   multiplier: 1,
-                                                   constant: Constants.inset)
+    logoLeftPaddingConstraint = NSLayoutConstraint(
+      item: logo,
+      attribute: .leading,
+      relatedBy: .equal,
+      toItem: logo.superview,
+      attribute: .leading,
+      multiplier: 1,
+      constant: Constants.inset)
     logoLeftPaddingConstraint?.isActive = true
 
-    menuButtonRightPaddingConstraint = NSLayoutConstraint(item: menuButton,
-                                                          attribute: .trailing,
-                                                          relatedBy: .equal,
-                                                          toItem: menuButton.superview,
-                                                          attribute: .trailing,
-                                                          multiplier: 1,
-                                                          constant: -1 * Constants.inset)
+    menuButtonRightPaddingConstraint = NSLayoutConstraint(
+      item: menuButton,
+      attribute: .trailing,
+      relatedBy: .equal,
+      toItem: menuButton.superview,
+      attribute: .trailing,
+      multiplier: 1,
+      constant: -1 * Constants.inset)
     menuButtonRightPaddingConstraint?.isActive = true
 
-    menuTopPaddingConstraint = NSLayoutConstraint(item: menuButton,
-                                                  attribute: .top,
-                                                  relatedBy: .equal,
-                                                  toItem: menuButton.superview,
-                                                  attribute: .top,
-                                                  multiplier: 1,
-                                                  constant: Constants.menuTopVerticalSpacing)
+    menuTopPaddingConstraint = NSLayoutConstraint(
+      item: menuButton,
+      attribute: .top,
+      relatedBy: .equal,
+      toItem: menuButton.superview,
+      attribute: .top,
+      multiplier: 1,
+      constant: Constants.menuTopVerticalSpacing)
     menuTopPaddingConstraint?.isActive = true
 
-    NSLayoutConstraint(item: logo,
-                       attribute: .centerY,
-                       relatedBy: .equal,
-                       toItem: menuButton,
-                       attribute: .centerY,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: Constants.logoWidthHeight).isActive = true
+    NSLayoutConstraint(
+      item: logo,
+      attribute: .centerY,
+      relatedBy: .equal,
+      toItem: menuButton,
+      attribute: .centerY,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
+    NSLayoutConstraint(
+      item: logo,
+      attribute: .width,
+      relatedBy: .equal,
+      toItem: logo,
+      attribute: .height,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
+    NSLayoutConstraint(
+      item: logo,
+      attribute: .width,
+      relatedBy: .equal,
+      toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1,
+      constant: Constants.logoWidthHeight
+    ).isActive = true
 
-    NSLayoutConstraint(item: menuButton,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: menuButton,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: menuButton,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: Constants.menuButtonWidthHeight).isActive = true
+    NSLayoutConstraint(
+      item: menuButton,
+      attribute: .width,
+      relatedBy: .equal,
+      toItem: menuButton,
+      attribute: .height,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
+    NSLayoutConstraint(
+      item: menuButton,
+      attribute: .width,
+      relatedBy: .equal,
+      toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1,
+      constant: Constants.menuButtonWidthHeight
+    ).isActive = true
   }
 
   // MARK: UICollectionViewDataSource
@@ -313,8 +333,10 @@ class MDCCatalogComponentsController: UICollectionViewController,
     return 1
   }
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return node.children.count
   }
 
@@ -340,11 +362,14 @@ class MDCCatalogComponentsController: UICollectionViewController,
 
   // MARK: UICollectionViewDelegate
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
     let cell =
-      collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
-                                         for: indexPath)
+      collectionView.dequeueReusableCell(
+        withReuseIdentifier: "MDCCatalogCollectionViewCell",
+        for: indexPath)
     cell.backgroundColor = AppTheme.containerScheme.colorScheme.backgroundColor
 
     let componentName = node.children[indexPath.row].title
@@ -358,9 +383,11 @@ class MDCCatalogComponentsController: UICollectionViewController,
     return cell
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
     let dividerWidth: CGFloat = 1
     var safeInsets: CGFloat = 0
     if #available(iOS 11, *) {
@@ -381,8 +408,10 @@ class MDCCatalogComponentsController: UICollectionViewController,
     return CGSize(width: cellWidthHeight, height: cellWidthHeight)
   }
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               didSelectItemAt indexPath: IndexPath) {
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath
+  ) {
     let node = self.node.children[indexPath.row]
     var vc: UIViewController
     if node.isExample() {
@@ -395,42 +424,52 @@ class MDCCatalogComponentsController: UICollectionViewController,
   }
 
   // MARK: Private
-  func constrainLabel(label: UILabel,
-                      containerView: UIView,
-                      insets: UIEdgeInsets,
-                      height: CGFloat) {
+  func constrainLabel(
+    label: UILabel,
+    containerView: UIView,
+    insets: UIEdgeInsets,
+    height: CGFloat
+  ) {
 
-    NSLayoutConstraint(item: label,
-                       attribute: .leading,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .trailing,
-                       multiplier: 1.0,
-                       constant: insets.left).isActive = true
+    NSLayoutConstraint(
+      item: label,
+      attribute: .leading,
+      relatedBy: .equal,
+      toItem: logo,
+      attribute: .trailing,
+      multiplier: 1.0,
+      constant: insets.left
+    ).isActive = true
 
-    NSLayoutConstraint(item: label,
-                       attribute: .trailing,
-                       relatedBy: .equal,
-                       toItem: menuButton,
-                       attribute: .leading,
-                       multiplier: 1.0,
-                       constant: -insets.right).isActive = true
+    NSLayoutConstraint(
+      item: label,
+      attribute: .trailing,
+      relatedBy: .equal,
+      toItem: menuButton,
+      attribute: .leading,
+      multiplier: 1.0,
+      constant: -insets.right
+    ).isActive = true
 
-    NSLayoutConstraint(item: label,
-                       attribute: .bottom,
-                       relatedBy: .equal,
-                       toItem: containerView,
-                       attribute: .bottom,
-                       multiplier: 1.0,
-                       constant: -insets.bottom).isActive = true
+    NSLayoutConstraint(
+      item: label,
+      attribute: .bottom,
+      relatedBy: .equal,
+      toItem: containerView,
+      attribute: .bottom,
+      multiplier: 1.0,
+      constant: -insets.bottom
+    ).isActive = true
 
-    NSLayoutConstraint(item: label,
-                       attribute: .height,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1.0,
-                       constant: height).isActive = true
+    NSLayoutConstraint(
+      item: label,
+      attribute: .height,
+      relatedBy: .equal,
+      toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1.0,
+      constant: height
+    ).isActive = true
   }
 }
 
@@ -439,19 +478,21 @@ class MDCCatalogComponentsController: UICollectionViewController,
 // Ideally, we would be able to tie this to an iOS version rather than a compiler version, but such
 // a solution does not seem to be available for Swift.
 #if compiler(>=5.2)
-@available(iOS 13.4, *)
-extension MDCCatalogComponentsController: UIPointerInteractionDelegate {
   @available(iOS 13.4, *)
-  func pointerInteraction(_ interaction: UIPointerInteraction,
-                          styleFor region: UIPointerRegion) -> UIPointerStyle? {
-    guard let interactionView = interaction.view else {
-      return nil
+  extension MDCCatalogComponentsController: UIPointerInteractionDelegate {
+    @available(iOS 13.4, *)
+    func pointerInteraction(
+      _ interaction: UIPointerInteraction,
+      styleFor region: UIPointerRegion
+    ) -> UIPointerStyle? {
+      guard let interactionView = interaction.view else {
+        return nil
+      }
+      let targetedPreview = UITargetedPreview(view: interactionView)
+      let pointerStyle = UIPointerStyle(effect: .highlight(targetedPreview))
+      return pointerStyle
     }
-    let targetedPreview = UITargetedPreview(view: interactionView)
-    let pointerStyle = UIPointerStyle(effect: .highlight(targetedPreview))
-    return pointerStyle
   }
-}
 #endif
 
 // UIScrollViewDelegate
@@ -464,8 +505,9 @@ extension MDCCatalogComponentsController {
   }
 
   override func scrollViewDidEndDragging(
-      _ scrollView: UIScrollView,
-      willDecelerate decelerate: Bool) {
+    _ scrollView: UIScrollView,
+    willDecelerate decelerate: Bool
+  ) {
     let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
@@ -479,9 +521,10 @@ extension MDCCatalogComponentsController {
   }
 
   override func scrollViewWillEndDragging(
-      _ scrollView: UIScrollView,
-      withVelocity velocity: CGPoint,
-      targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    _ scrollView: UIScrollView,
+    withVelocity velocity: CGPoint,
+    targetContentOffset: UnsafeMutablePointer<CGPoint>
+  ) {
     let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollWillEndDragging(
