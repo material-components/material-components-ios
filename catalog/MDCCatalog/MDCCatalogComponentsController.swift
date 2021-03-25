@@ -213,7 +213,7 @@ class MDCCatalogComponentsController: UICollectionViewController,
     view.addSubview(headerViewController.view)
     headerViewController.didMove(toParent: self)
 
-    collectionView?.accessibilityIdentifier = "collectionView"
+    collectionView?.accessibilityIdentifier = "componentList"
     if #available(iOS 11.0, *) {
       collectionView?.contentInsetAdjustmentBehavior = .always
     }
