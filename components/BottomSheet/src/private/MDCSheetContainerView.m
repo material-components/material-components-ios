@@ -166,11 +166,7 @@ static const CGFloat kSheetBounceBuffer = 150;
     return;
   }
 
-  [self updateSheetFrame];
-  // Adjusts the pane to the correct snap point, e.g. after a rotation.
-  if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
-  }
+  [self updateSheetFrameRemoveAnimations:YES];
 }
 
 - (void)safeAreaInsetsDidChange {
@@ -187,6 +183,10 @@ static const CGFloat kSheetBounceBuffer = 150;
     CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
     scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width, CGRectGetHeight(self.frame));
     self.sheet.scrollView.frame = scrollViewFrame;
+
+    // Note this is needed to make sure the full displayed frame updates to reflect the new safe
+    // area insets after rotation. See b/183357841 for context.
+    [self updateSheetFrameRemoveAnimations:NO];
   }
 }
 
@@ -238,12 +238,7 @@ static const CGFloat kSheetBounceBuffer = 150;
   }
   _preferredSheetHeight = adjustedPreferredSheetHeight;
 
-  [self updateSheetFrame];
-
-  // Adjusts the pane to the correct snap point if we are visible.
-  if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
-  }
+  [self updateSheetFrameRemoveAnimations:YES];
 }
 
 - (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
@@ -257,8 +252,10 @@ static const CGFloat kSheetBounceBuffer = 150;
 }
 
 // Slides the sheet position downwards, so the right amount peeks above the bottom of the superview.
-- (void)updateSheetFrame {
-  [self.animator removeAllBehaviors];
+- (void)updateSheetFrameRemoveAnimations:(BOOL)removeAnimations {
+  if (removeAnimations) {
+    [self.animator removeAllBehaviors];
+  }
 
   CGRect sheetRect = self.bounds;
   sheetRect.origin.y = CGRectGetMaxY(self.bounds) - [self effectiveSheetHeight];
@@ -274,6 +271,11 @@ static const CGFloat kSheetBounceBuffer = 150;
     contentFrame.size.height = [self effectiveSheetHeight];
   }
   self.contentView.frame = contentFrame;
+
+  // Adjusts the pane to the correct snap point, e.g. after a rotation.
+  if (self.window) {
+    [self animatePaneWithInitialVelocity:CGPointZero];
+  }
 }
 
 - (void)updateSheetState {
