@@ -32,8 +32,9 @@
   self = [super init];
   if (self) {
     _actions = [[NSMutableArray alloc] init];
-    _actionButtons = [NSMapTable mapTableWithKeyOptions:NSMapTableWeakMemory
-                                           valueOptions:NSMapTableStrongMemory];
+    _actionButtons = [NSMapTable
+        mapTableWithKeyOptions:(NSMapTableObjectPointerPersonality | NSMapTableWeakMemory)
+                  valueOptions:NSMapTableStrongMemory];
   }
   return self;
 }
@@ -95,7 +96,7 @@
   button.accessibilityIdentifier = action.accessibilityIdentifier;
 #ifdef __IPHONE_13_4
   if (@available(iOS 13.4, *)) {
-    if ([self respondsToSelector:@selector(isPointerInteractionEnabled)]) {
+    if ([button respondsToSelector:@selector(setPointerInteractionEnabled:)]) {
       button.pointerInteractionEnabled = YES;
     }
   }
