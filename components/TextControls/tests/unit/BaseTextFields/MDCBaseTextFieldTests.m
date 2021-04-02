@@ -352,19 +352,17 @@
 }
 
 - (void)testAdjustsFontForContentSizeCategory {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
-    MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
+  // Given
+  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
 
-    // When
-    textField.adjustsFontForContentSizeCategory = YES;
+  // When
+  textField.adjustsFontForContentSizeCategory = YES;
 
-    // Then
-    XCTAssertTrue(textField.adjustsFontForContentSizeCategory);
-    XCTAssertTrue(textField.leadingAssistiveLabel.adjustsFontForContentSizeCategory);
-    XCTAssertTrue(textField.trailingAssistiveLabel.adjustsFontForContentSizeCategory);
-  }
+  // Then
+  XCTAssertTrue(textField.adjustsFontForContentSizeCategory);
+  XCTAssertTrue(textField.leadingAssistiveLabel.adjustsFontForContentSizeCategory);
+  XCTAssertTrue(textField.trailingAssistiveLabel.adjustsFontForContentSizeCategory);
 }
 
 - (void)testIntrinsicContentInvalidationWhenWidthChanges {

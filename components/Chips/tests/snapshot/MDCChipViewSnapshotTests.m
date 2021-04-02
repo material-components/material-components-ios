@@ -138,10 +138,8 @@
 
 - (void)testBaselineThemedChipWithImageRTL {
   // Given
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.imageView.image = [self leadingImage];
@@ -162,10 +160,8 @@
 
 - (void)testOutlinedThemedChipWithImageRTL {
   // Given
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.imageView.image = [self leadingImage];
@@ -199,10 +195,8 @@
 - (void)testDefaultChipWithAccessoryViewAndPositiveTopLeftAccessoryPaddingRTL {
   // Given
   self.chip.accessoryView = [self deleteButton];
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.accessoryPadding = UIEdgeInsetsMake(10, 10, 0, 0);
@@ -225,10 +219,8 @@
 - (void)testDefaultChipWithAccessoryViewAndPositiveBottomRightAccessoryPaddingRTL {
   // Given
   self.chip.accessoryView = [self deleteButton];
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.accessoryPadding = UIEdgeInsetsMake(0, 0, 10, 10);
@@ -251,10 +243,8 @@
 - (void)testDefaultChipWithAccessoryViewAndNegativeTopLeftAccessoryPaddingRTL {
   // Given
   self.chip.accessoryView = [self deleteButton];
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.accessoryPadding = UIEdgeInsetsMake(-6, -6, 0, 0);
@@ -277,10 +267,8 @@
 - (void)testDefaultChipWithAccessoryViewAndNegativeBottomRightAccessoryPaddingRTL {
   // Given
   self.chip.accessoryView = [self deleteButton];
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.accessoryPadding = UIEdgeInsetsMake(0, 0, -6, -6);
@@ -300,10 +288,8 @@
 
 - (void)testBaselineThemedChipWithAccessoryViewRTL {
   // Given
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.accessoryView = [self deleteButton];
@@ -324,10 +310,8 @@
 
 - (void)testOutlinedThemedChipWithAccessoryViewRTL {
   // Given
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.accessoryView = [self deleteButton];
@@ -360,10 +344,8 @@
 
 - (void)testBaselineThemedChipWithImageAndAccessoryViewRTL {
   // Given
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.imageView.image = [self leadingImage];
@@ -386,10 +368,8 @@
 
 - (void)testOutlinedThemedChipWithImageAndAccessoryViewRTL {
   // Given
-  if (@available(iOS 10.0, *)) {
-    self.chip.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
-  }
+  self.chip.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithLayoutDirection:UITraitEnvironmentLayoutDirectionRightToLeft];
 
   // When
   self.chip.imageView.image = [self leadingImage];

@@ -15,11 +15,11 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialAvailability.h"
-#import "MaterialBanner+Theming.h"
 #import "MaterialBanner.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialMath.h"
+#import "MaterialBanner+Theming.h"
 #import "UIColor+MaterialDynamic.h"
+#import "MaterialMath.h"
+#import "MaterialContainerScheme.h"
 
 // The opacity value applied to text view.
 static CGFloat const kTextViewOpacity = (CGFloat)0.87;
@@ -56,12 +56,9 @@ This class is used for creating a @UIWindow with customized size category.
 }
 
 - (UITraitCollection *)traitCollection {
-  if (@available(iOS 10.0, *)) {
-    UITraitCollection *traitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
-    return traitCollection;
-  }
-  return [super traitCollection];
+  UITraitCollection *traitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+  return traitCollection;
 }
 
 @end
@@ -190,27 +187,24 @@ This class is used for creating a @UIWindow with customized size category.
 }
 
 - (void)testFontsAreScaledWhenTypographySchemeRequestsPrescaling {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    self.containerScheme.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-    self.containerScheme.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  // Given
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
 
-    // When
-    MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow
-        *extraExtraLargeContainer =
-            [[MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-                initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
-    [extraExtraLargeContainer addSubview:self.bannerView];
-    [NSNotificationCenter.defaultCenter
-        postNotificationName:UIContentSizeCategoryDidChangeNotification
-                      object:nil];
-    [self.bannerView applyThemeWithScheme:self.containerScheme];
+  // When
+  MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow *extraExtraLargeContainer =
+      [[MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+          initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
+  [extraExtraLargeContainer addSubview:self.bannerView];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+  [self.bannerView applyThemeWithScheme:self.containerScheme];
 
-    // Then
-    XCTAssertGreaterThan(self.bannerView.textView.font.pointSize,
-                         self.containerScheme.typographyScheme.body2.pointSize);
-  }
+  // Then
+  XCTAssertGreaterThan(self.bannerView.textView.font.pointSize,
+                       self.containerScheme.typographyScheme.body2.pointSize);
 }
 
 - (void)testBannerViewBackgroundColorChangeWhenUIUserInterfaceStyleChangesOnIOS13 {

@@ -1213,11 +1213,9 @@ static UIImage *fakeImage(CGSize size) {
   // When
   self.tabBarView.accessibilityTraits = UIAccessibilityTraitLink;
 
-  if (@available(iOS 10.0, *)) {
-    // Then
-    XCTAssertEqual(self.tabBarView.accessibilityTraits,
-                   UIAccessibilityTraitTabBar | UIAccessibilityTraitLink);
-  }
+  // Then
+  XCTAssertEqual(self.tabBarView.accessibilityTraits,
+                 UIAccessibilityTraitTabBar | UIAccessibilityTraitLink);
 }
 
 #pragma mark - Custom APIs

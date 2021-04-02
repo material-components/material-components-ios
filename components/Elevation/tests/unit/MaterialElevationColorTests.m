@@ -47,14 +47,11 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                    blue:(CGFloat)0.6
                                   alpha:(CGFloat)0.6];
   self.greyScaleColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.6];
-  if (@available(iOS 10.0, *)) {
-    self.p3DisplayColor = [UIColor colorWithDisplayP3Red:(CGFloat)0.8
-                                                   green:(CGFloat)0.7
-                                                    blue:(CGFloat)0.5
-                                                   alpha:(CGFloat)0.4];
-  } else {
-    self.p3DisplayColor = nil;
-  }
+  self.p3DisplayColor = [UIColor colorWithDisplayP3Red:(CGFloat)0.8
+                                                 green:(CGFloat)0.7
+                                                  blue:(CGFloat)0.5
+                                                 alpha:(CGFloat)0.4];
+
   UIImage *patternImage = fakeImageWithColorAndSize(UIColor.blueColor, CGRectMake(0, 0, 100, 100));
   self.patternColor = [UIColor colorWithPatternImage:patternImage];
 }
@@ -85,10 +82,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                           secondColor:expectedRGBColor];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
                                           secondColor:expectedGreyScaleColor];
-  if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
-                                            secondColor:expectedP3Display];
-  }
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                          secondColor:expectedP3Display];
 }
 
 - (void)testResolvedColorWithLowElevation {
@@ -119,10 +114,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                           secondColor:expectedRGBColor];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
                                           secondColor:expectedGreyScaleColor];
-  if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
-                                            secondColor:expectedP3Display];
-  }
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                          secondColor:expectedP3Display];
 }
 
 - (void)testResolvedColorWithHighElevation {
@@ -153,10 +146,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                           secondColor:expectedRGBColor];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
                                           secondColor:expectedGreyScaleColor];
-  if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
-                                            secondColor:expectedP3Display];
-  }
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                          secondColor:expectedP3Display];
 }
 
 - (void)testResolvedColorWithNegativeElevation {
@@ -176,10 +167,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                           secondColor:expectedRGBColor];
   [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
                                           secondColor:expectedGreyScaleColor];
-  if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
-                                            secondColor:expectedP3Display];
-  }
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                          secondColor:expectedP3Display];
 }
 
 - (void)testResolvedColorWithElevationForDynamicColorOniOS13AndAbove {

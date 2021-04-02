@@ -13,8 +13,8 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
-#import <MDFInternationalization/MDFInternationalization.h>
 #import "SnapshotFakeMDCTextField.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 @implementation SnapshotFakeMDCTextField {
   BOOL _isEditing;
@@ -56,10 +56,7 @@
     return _effectiveUserInterfaceLayoutDirection;
   }
 
-  if (@available(iOS 10.0, *)) {
-    return [super effectiveUserInterfaceLayoutDirection];
-  }
-  return UIApplication.sharedApplication.userInterfaceLayoutDirection;
+  return [super effectiveUserInterfaceLayoutDirection];
 }
 
 - (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)direction {

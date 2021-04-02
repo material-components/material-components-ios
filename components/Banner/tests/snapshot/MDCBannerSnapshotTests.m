@@ -14,8 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialBanner+Theming.h"
 #import "MaterialBanner.h"
+#import "MaterialBanner+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypographyScheme.h"
 
@@ -63,12 +63,9 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 }
 
 - (UITraitCollection *)traitCollection {
-  if (@available(iOS 10.0, *)) {
-    UITraitCollection *traitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
-    return traitCollection;
-  }
-  return [super traitCollection];
+  UITraitCollection *traitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+  return traitCollection;
 }
 
 @end
@@ -452,66 +449,62 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 }
 
 - (void)testDynamicTypeForContentSizeCategoryExtraExtraLarge {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    self.bannerView = [[MDCBannerView alloc] init];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  // Given
+  self.bannerView = [[MDCBannerView alloc] init];
+  self.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
-    // When
-    self.bannerView.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
-    self.bannerView.textView.text = kBannerShortText;
-    self.bannerView.textView.font = self.typographyScheme.body2;
-    MDCButton *button = self.bannerView.leadingButton;
-    [button setTitle:@"Action" forState:UIControlStateNormal];
-    [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
-    button.uppercaseTitle = YES;
-    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    self.bannerView.trailingButton.hidden = YES;
-    self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+  // When
+  self.bannerView.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
+  self.bannerView.textView.text = kBannerShortText;
+  self.bannerView.textView.font = self.typographyScheme.body2;
+  MDCButton *button = self.bannerView.leadingButton;
+  [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
+  button.uppercaseTitle = YES;
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
-              UIContentSizeCategoryExtraExtraLarge
-                                                    andVerifyForView:self.bannerView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+            UIContentSizeCategoryExtraExtraLarge
+                                                  andVerifyForView:self.bannerView];
 }
 
 - (void)testDynamicTypeForAttributedTextStringWhenContentSizeCategoryIsExtraExtraLarge {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    self.bannerView = [[MDCBannerView alloc] init];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-    MDCButton *button = self.bannerView.leadingButton;
-    self.bannerView.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
-    [button setTitle:@"Action" forState:UIControlStateNormal];
-    [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
-    button.uppercaseTitle = YES;
-    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    self.bannerView.trailingButton.hidden = YES;
+  // Given
+  self.bannerView = [[MDCBannerView alloc] init];
+  self.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  MDCButton *button = self.bannerView.leadingButton;
+  self.bannerView.layoutMargins = UIEdgeInsetsMake(0, 8, 0, 8);
+  [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
+  button.uppercaseTitle = YES;
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  self.bannerView.trailingButton.hidden = YES;
 
-    // When
-    NSMutableAttributedString *bannerString =
-        [[NSMutableAttributedString alloc] initWithString:kBannerShortText];
-    [bannerString addAttribute:NSFontAttributeName
-                         value:self.typographyScheme.body1
-                         range:NSMakeRange(10, 8)];
-    [bannerString addAttribute:NSForegroundColorAttributeName
-                         value:UIColor.redColor
-                         range:NSMakeRange(0, 9)];
-    [bannerString addAttribute:NSLinkAttributeName
-                         value:@"http://www.google.com"
-                         range:NSMakeRange([kBannerShortText length] - 2, 2)];
-    self.bannerView.textView.attributedText = bannerString;
-    self.bannerView.textView.font = self.typographyScheme.body2;
-    self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+  // When
+  NSMutableAttributedString *bannerString =
+      [[NSMutableAttributedString alloc] initWithString:kBannerShortText];
+  [bannerString addAttribute:NSFontAttributeName
+                       value:self.typographyScheme.body1
+                       range:NSMakeRange(10, 8)];
+  [bannerString addAttribute:NSForegroundColorAttributeName
+                       value:UIColor.redColor
+                       range:NSMakeRange(0, 9)];
+  [bannerString addAttribute:NSLinkAttributeName
+                       value:@"http://www.google.com"
+                       range:NSMakeRange([kBannerShortText length] - 2, 2)];
+  self.bannerView.textView.attributedText = bannerString;
+  self.bannerView.textView.font = self.typographyScheme.body2;
+  self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
-              UIContentSizeCategoryExtraExtraLarge
-                                                    andVerifyForView:self.bannerView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+            UIContentSizeCategoryExtraExtraLarge
+                                                  andVerifyForView:self.bannerView];
 }
 
 - (void)testPreferredFontForAXXLContentSizeCategory {
