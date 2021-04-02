@@ -569,4 +569,58 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
   XCTAssertGreaterThan(self.actionSheet.tableView.contentInset.top, originalTableContentInset);
 }
 
+- (void)testViewForActionWhenNoActionsAdded {
+  // Given
+  self.actionSheet.view.bounds = CGRectMake(0, 0, 500, 500);
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                 image:nil
+                                                               handler:nil];
+
+  // When
+  UIView *view = [self.actionSheet viewForAction:action];
+
+  // Then
+  XCTAssertNil(view);
+}
+
+- (void)testViewForActionWhenMultipleActionsAreAdded {
+  // Given
+  self.actionSheet.view.bounds = CGRectMake(0, 0, 500, 500);
+  MDCActionSheetAction *actionOne = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                    image:nil
+                                                                  handler:nil];
+  MDCActionSheetAction *actionTwo = [MDCActionSheetAction actionWithTitle:@"Bar"
+                                                                    image:nil
+                                                                  handler:nil];
+  [self.actionSheet addAction:actionOne];
+  [self.actionSheet addAction:actionTwo];
+
+  // When
+  UIView *view = [self.actionSheet viewForAction:actionTwo];
+
+  // Then
+  XCTAssertNotNil(view);
+}
+
+- (void)testViewForActionWhenActionHasNotBeenAddedThenAdded {
+  // Given
+  self.actionSheet.view.bounds = CGRectMake(0, 0, 500, 500);
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                 image:nil
+                                                               handler:nil];
+
+  // When
+  UIView *view = [self.actionSheet viewForAction:action];
+
+  // Then
+  XCTAssertNil(view);
+
+  // When
+  [self.actionSheet addAction:action];
+  view = [self.actionSheet viewForAction:action];
+
+  // Then
+  XCTAssertNotNil(view);
+}
+
 @end

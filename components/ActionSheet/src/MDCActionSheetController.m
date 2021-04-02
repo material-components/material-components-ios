@@ -18,8 +18,11 @@
 #import "private/MDCActionSheetItemTableViewCell.h"
 #import "private/MaterialActionSheetStrings.h"
 #import "private/MaterialActionSheetStrings_table.h"
+#import "MDCActionSheetAction.h"
 #import "MDCActionSheetControllerDelegate.h"
 #import "MaterialAvailability.h"
+#import "MaterialBottomSheet.h"
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
 #import "MaterialMath.h"
@@ -182,6 +185,16 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
     self.addLeadingPaddingToCell = YES;
   }
   [self updateTable];
+}
+
+- (UIView *)viewForAction:(MDCActionSheetAction *)action {
+  if (![self.actions containsObject:action]) {
+    return nil;
+  }
+  [self.view layoutIfNeeded];
+  NSUInteger rowIndex = [self.actions indexOfObject:action];
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+  return [self.tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {

@@ -94,6 +94,13 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 - (void)addAction:(nonnull MDCActionSheetAction *)action;
 
 /**
+ Returns the view associated with a given @c action.
+
+ @param action The action used to create the view.
+ */
+- (nullable UIView *)viewForAction:(nonnull MDCActionSheetAction *)action;
+
+/**
  The object that acts as the delegate of the @c MDCActionSheetController
 */
 @property(nonatomic, weak, nullable) id<MDCActionSheetControllerDelegate> delegate;
