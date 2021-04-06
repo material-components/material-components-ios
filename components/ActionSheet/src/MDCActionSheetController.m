@@ -306,7 +306,15 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   if (!self.dismissOnBackgroundTap) {
     return NO;
   }
-  [self dismissViewControllerAnimated:YES completion:nil];
+  [self
+      dismissViewControllerAnimated:YES
+                         completion:^{
+                           if ([self.delegate
+                                   respondsToSelector:@selector
+                                   (actionSheetControllerDismissalAnimationCompleted:)]) {
+                             [self.delegate actionSheetControllerDismissalAnimationCompleted:self];
+                           }
+                         }];
   return YES;
 }
 
