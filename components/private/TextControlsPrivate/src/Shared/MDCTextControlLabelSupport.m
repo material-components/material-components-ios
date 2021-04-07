@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 #import <UIKit/UIKit.h>
 
-MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText,
-                                                            BOOL hasText,
-                                                            BOOL canLabelFloat,
-                                                            BOOL isEditing) {
+MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText, BOOL hasText,
+                                                            BOOL canLabelFloat, BOOL isEditing) {
   if (hasLabelText) {
     if (canLabelFloat) {
       if (isEditing) {
@@ -44,4 +42,17 @@ MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText,
   } else {
     return MDCTextControlLabelPositionNone;
   }
+}
+
+CGSize MDCTextControlLabelSizeWith(NSString *text, CGFloat maxWidth, UIFont *font) {
+  if (!font) {
+    return CGSizeZero;
+  }
+  CGSize fittingSize = CGSizeMake(maxWidth, CGFLOAT_MAX);
+  NSDictionary *attributes = @{NSFontAttributeName : font};
+  CGRect rect = [text boundingRectWithSize:fittingSize
+                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                attributes:attributes
+                                   context:nil];
+  return rect.size;
 }

@@ -43,6 +43,8 @@
 @property(nonatomic, strong, nonnull, readonly) NSArray<NSNumber *> *verticalGradientLocations;
 @property(nonatomic, strong, nonnull, readonly) NSArray<NSNumber *> *horizontalGradientLocations;
 
+@property(nonatomic, assign) BOOL labelTruncationIsPresent;
+
 /**
  Initializing an MDCBaseTextAreaLayout object with this initializer is tantamount to calculating a
  layout for a text area. The  long parameter list includes everything that might impact

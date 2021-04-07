@@ -15,24 +15,24 @@
 #import <UIKit/UIKit.h>
 
 /**
- This enum represents different states the floating label can be in.
+ This enum represents different positional states the label can be in.
  */
 typedef NS_ENUM(NSUInteger, MDCTextControlLabelPosition) {
   /**
-   The state where the floating label is not visible.
+   The state where the label is not visible.
    */
   MDCTextControlLabelPositionNone,
   /**
-   The state where the floating label is floating.
+   The state where the label is positioned (i.e. floating) above the text rect.
    */
   MDCTextControlLabelPositionFloating,
   /**
-   The state where the floating label is occupying the normal text area.
+   The state where the label is positioned in the normal text area.
    */
   MDCTextControlLabelPositionNormal,
 };
 
-MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText,
-                                                            BOOL hasText,
-                                                            BOOL canLabelFloat,
-                                                            BOOL isEditing);
+MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText, BOOL hasText,
+                                                            BOOL canLabelFloat, BOOL isEditing);
+
+CGSize MDCTextControlLabelSizeWith(NSString *text, CGFloat maxWidth, UIFont *font);

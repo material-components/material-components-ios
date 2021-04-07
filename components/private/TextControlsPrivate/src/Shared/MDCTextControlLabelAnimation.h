@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 
 /**
  The logic to animate labels is extracted into its own class so that any MDCTextControl can
@@ -31,11 +31,12 @@
  no animation in progress.
  */
 + (void)animateLabel:(nonnull UILabel *)label
-                 state:(MDCTextControlLabelPosition)labelPosition
-      normalLabelFrame:(CGRect)normalLabelFrame
-    floatingLabelFrame:(CGRect)floatingLabelFrame
-            normalFont:(nonnull UIFont *)normalFont
-          floatingFont:(nonnull UIFont *)floatingFont
-     animationDuration:(NSTimeInterval)animationDuration
-            completion:(void (^__nullable)(BOOL))completion;
+                       state:(MDCTextControlLabelPosition)labelPosition
+            normalLabelFrame:(CGRect)normalLabelFrame
+          floatingLabelFrame:(CGRect)floatingLabelFrame
+                  normalFont:(nonnull UIFont *)normalFont
+                floatingFont:(nonnull UIFont *)floatingFont
+    labelTruncationIsPresent:(BOOL)labelTruncationIsPresent
+           animationDuration:(NSTimeInterval)animationDuration
+                  completion:(void (^__nullable)(BOOL))completion;
 @end

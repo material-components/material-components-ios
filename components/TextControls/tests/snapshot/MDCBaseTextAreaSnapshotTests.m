@@ -213,6 +213,17 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testTextAreaWithTruncatingNormalLabel {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.label.text = @"Very long label text withaverylongwordinit";
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 #pragma mark Helpers
 
 - (UIView *)createSideView {

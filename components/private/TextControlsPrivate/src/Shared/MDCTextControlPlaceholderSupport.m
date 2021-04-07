@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 
 BOOL MDCTextControlShouldPlaceholderBeVisibleWithPlaceholder(
     NSString *placeholder, NSString *text, MDCTextControlLabelPosition labelPosition) {

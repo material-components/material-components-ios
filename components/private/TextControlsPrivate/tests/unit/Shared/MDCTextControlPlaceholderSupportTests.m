@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 #import "MDCTextControlPlaceholderSupport.h"
 
 @interface MDCTextControlPlaceholderSupportTests : XCTestCase
