@@ -557,18 +557,27 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   if ([self.delegate respondsToSelector:@selector(chipFieldShouldBeginEditing:)]) {
     shouldBeginEditing = [self.delegate chipFieldShouldBeginEditing:self];
   }
-  if (shouldBeginEditing) {
-    if (textField == self.textField) {
-      [self deselectAllChips];
-    }
-    if ([self.delegate respondsToSelector:@selector(chipFieldDidBeginEditing:)]) {
-      [self.delegate chipFieldDidBeginEditing:self];
-    }
-  }
   return shouldBeginEditing;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+  BOOL shouldEndEditing = YES;
+  if ([self.delegate respondsToSelector:@selector(chipFieldShouldEndEditing:)]) {
+    shouldEndEditing = [self.delegate chipFieldShouldEndEditing:self];
+  }
+  return shouldEndEditing;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+  if (textField == self.textField) {
+    [self deselectAllChips];
+  }
+  if ([self.delegate respondsToSelector:@selector(chipFieldDidBeginEditing:)]) {
+    [self.delegate chipFieldDidBeginEditing:self];
+  }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
   if ((self.delimiter & MDCChipFieldDelimiterDidEndEditing) == MDCChipFieldDelimiterDidEndEditing) {
     if (textField == self.textField) {
       [self commitInput];
@@ -577,7 +586,6 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   if ([self.delegate respondsToSelector:@selector(chipFieldDidEndEditing:)]) {
     [self.delegate chipFieldDidEndEditing:self];
   }
-  return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
