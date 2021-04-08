@@ -14,33 +14,36 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialTextControls+Enums.h"
+#import "MaterialTextControls+OutlinedTextFields.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTextControls+OutlinedTextFieldsTheming.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kDisabledOpacity = (CGFloat)0.60;
 
-static const CGFloat kFilledSublayerFillColorNormalOpacity = (CGFloat)0.12;
 static const CGFloat kTextColorNormalOpacity = (CGFloat)0.87;
+static const CGFloat kFloatingLabelColorEditingOpacity = (CGFloat)0.87;
 static const CGFloat kNormalLabelColorNormalOpacity = (CGFloat)0.60;
+static const CGFloat kOutlineColorNormalOpacity = (CGFloat)0.38;
 
-static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
 static const CGFloat kPrimaryFloatingLabelColorNormalOpacity = (CGFloat)0.60;
-static const CGFloat kPrimaryFloatingLabelColorEditingOpacity = (CGFloat)0.87;
-static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
+static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
 
-@interface MDCFilledTextFieldThemingTest : XCTestCase
-@property(nonatomic, strong) MDCFilledTextField *textField;
+@interface MDCOutlinedTextFieldThemingTest : XCTestCase
+@property(nonatomic, strong) MDCOutlinedTextField *textField;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
-@implementation MDCFilledTextFieldThemingTest
+@implementation MDCOutlinedTextFieldThemingTest
 
 - (void)setUp {
   [super setUp];
 
-  self.textField = [[MDCFilledTextField alloc] init];
+  self.textField = [[MDCOutlinedTextField alloc] init];
   self.colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
   self.typographyScheme =
@@ -159,8 +162,8 @@ static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
 
   UIColor *floatingLabelColorNormal = [self.colorScheme.onSurfaceColor
       colorWithAlphaComponent:kPrimaryFloatingLabelColorNormalOpacity];
-  UIColor *floatingLabelColorEditing = [self.colorScheme.primaryColor
-      colorWithAlphaComponent:kPrimaryFloatingLabelColorEditingOpacity];
+  UIColor *floatingLabelColorEditing =
+      [self.colorScheme.primaryColor colorWithAlphaComponent:kFloatingLabelColorEditingOpacity];
   UIColor *floatingLabelColorDisabled = [floatingLabelColorNormal
       colorWithAlphaComponent:kPrimaryFloatingLabelColorNormalOpacity * kDisabledOpacity];
 
@@ -170,17 +173,11 @@ static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
   UIColor *normalLabelColorDisabled = [normalLabelColorNormal
       colorWithAlphaComponent:kNormalLabelColorNormalOpacity * kDisabledOpacity];
 
-  UIColor *underlineColorNormal =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kPrimaryUnderlineColorNormalOpacity];
-  UIColor *underlineColorEditing = self.colorScheme.primaryColor;
-  UIColor *underlineColorDisabled = [underlineColorNormal
-      colorWithAlphaComponent:kPrimaryUnderlineColorNormalOpacity * kDisabledOpacity];
-
-  UIColor *filledSublayerFillColorNormal = [self.colorScheme.onSurfaceColor
-      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
-  UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
-  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
-      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
+  UIColor *outlineColorNormal =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlineColorNormalOpacity];
+  UIColor *outlineColorEditing = self.colorScheme.primaryColor;
+  UIColor *outlineColorDisabled =
+      [outlineColorNormal colorWithAlphaComponent:kOutlineColorNormalOpacity * kDisabledOpacity];
 
   UIColor *tintColor = self.colorScheme.primaryColor;
 
@@ -220,18 +217,12 @@ static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
   XCTAssertEqualObjects(
       [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateDisabled],
       assistiveLabelColorDisabled);
-  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateNormal],
-                        underlineColorNormal);
-  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateEditing],
-                        underlineColorEditing);
-  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateDisabled],
-                        underlineColorDisabled);
-  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateNormal],
-                        filledSublayerFillColorNormal);
-  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateEditing],
-                        filledSublayerFillColorEditing);
-  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateDisabled],
-                        filledSublayerFillColorDisabled);
+  XCTAssertEqualObjects([self.textField outlineColorForState:MDCTextControlStateNormal],
+                        outlineColorNormal);
+  XCTAssertEqualObjects([self.textField outlineColorForState:MDCTextControlStateEditing],
+                        outlineColorEditing);
+  XCTAssertEqualObjects([self.textField outlineColorForState:MDCTextControlStateDisabled],
+                        outlineColorDisabled);
   XCTAssertEqualObjects(self.textField.tintColor, tintColor);
 
   // Typography
@@ -264,15 +255,9 @@ static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
   UIColor *normalLabelColorDisabled = [normalLabelColorNormal
       colorWithAlphaComponent:kNormalLabelColorNormalOpacity * kDisabledOpacity];
 
-  UIColor *underlineColorNormal = self.colorScheme.errorColor;
-  UIColor *underlineColorEditing = underlineColorNormal;
-  UIColor *underlineColorDisabled = [underlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
-
-  UIColor *filledSublayerFillColorNormal = [self.colorScheme.onSurfaceColor
-      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
-  UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
-  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
-      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
+  UIColor *outlineColorNormal = self.colorScheme.errorColor;
+  UIColor *outlineColorEditing = outlineColorNormal;
+  UIColor *outlineColorDisabled = [outlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
 
   UIColor *tintColor = self.colorScheme.errorColor;
 
@@ -312,18 +297,12 @@ static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
   XCTAssertEqualObjects(
       [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateDisabled],
       assistiveLabelColorDisabled);
-  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateNormal],
-                        underlineColorNormal);
-  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateEditing],
-                        underlineColorEditing);
-  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateDisabled],
-                        underlineColorDisabled);
-  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateNormal],
-                        filledSublayerFillColorNormal);
-  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateEditing],
-                        filledSublayerFillColorEditing);
-  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateDisabled],
-                        filledSublayerFillColorDisabled);
+  XCTAssertEqualObjects([self.textField outlineColorForState:MDCTextControlStateNormal],
+                        outlineColorNormal);
+  XCTAssertEqualObjects([self.textField outlineColorForState:MDCTextControlStateEditing],
+                        outlineColorEditing);
+  XCTAssertEqualObjects([self.textField outlineColorForState:MDCTextControlStateDisabled],
+                        outlineColorDisabled);
   XCTAssertEqualObjects(self.textField.tintColor, tintColor);
 
   // Typography

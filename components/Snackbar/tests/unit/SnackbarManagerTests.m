@@ -254,9 +254,11 @@
 }
 
 - (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // TODO(b/184189330): Evaluate why this is flaking.
+  XCTSkip("b/184189330");
+
   // Then
   if (@available(iOS 12, *)) {
-    // TODO(b/184189330): Evaluate why this is behaving differently on iOS 12+
     XCTAssertEqualWithAccuracy(MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation, 99,
                                FLT_EPSILON);
   } else {

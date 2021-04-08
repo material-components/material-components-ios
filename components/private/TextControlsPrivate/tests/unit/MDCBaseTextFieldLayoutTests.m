@@ -16,6 +16,7 @@
 
 #import "MDCTextControlLabelBehavior.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
+#import "MDCTextControlAssistiveLabelDrawPriority.h"
 #import "MaterialTextControlsPrivate+Shared.h"
 #import "MaterialTextControlsPrivate+TextFields.h"
 

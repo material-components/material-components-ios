@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialTextControls+BaseTextFields.h"
+#import "MaterialTextControls+Enums.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
 
 @interface MDCBaseTextField (Private)

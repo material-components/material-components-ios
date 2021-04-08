@@ -15,7 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialSnackbar.h"
-#import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
+#import "MDCFakeMDCSnackbarManagerDelegate.h"
 
 @interface MDCSnackbarManagerInstanceTests : XCTestCase
 

@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCTextControlState.h"
 #import "MaterialTextControls+FilledTextAreas.h"
 
 @interface MDCFilledTextAreaTests : XCTestCase

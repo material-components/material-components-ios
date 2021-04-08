@@ -17,9 +17,12 @@
 #import "MaterialAvailability.h"
 #import "MaterialBanner.h"
 #import "MaterialBanner+Theming.h"
+#import "MaterialButtons.h"
 #import "UIColor+MaterialDynamic.h"
 #import "MaterialMath.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 // The opacity value applied to text view.
 static CGFloat const kTextViewOpacity = (CGFloat)0.87;

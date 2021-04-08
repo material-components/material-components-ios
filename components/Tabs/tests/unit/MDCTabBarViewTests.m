@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
+#import "../../src/TabBarView/private/MDCTabBarViewItemView.h"
 #import "MaterialAvailability.h"
 #import "MaterialRipple.h"
 #import "MDCTabBarItem.h"

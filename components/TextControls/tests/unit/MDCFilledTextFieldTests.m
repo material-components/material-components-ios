@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialTextControls+Enums.h"
 #import "MaterialTextControls+FilledTextFields.h"
 
 @interface MDCFilledTextFieldTests : XCTestCase

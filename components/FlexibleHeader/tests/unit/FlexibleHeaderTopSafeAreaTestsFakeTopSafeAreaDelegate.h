@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "../../../src/private/MDCFlexibleHeaderTopSafeArea.h"
+#import "../../src/private/MDCFlexibleHeaderTopSafeArea.h"
 
 @interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
     : NSObject <MDCFlexibleHeaderTopSafeAreaDelegate>

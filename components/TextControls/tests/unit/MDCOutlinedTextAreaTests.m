@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialAvailability.h"
+#import "MDCTextControlState.h"
 #import "MaterialTextControls+OutlinedTextAreas.h"
 
 @interface MDCOutlinedTextAreaTests : XCTestCase

@@ -17,8 +17,8 @@
 
 #import "MaterialFlexibleHeader.h"
 
-#import "supplemental/FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
 #import "MDCFlexibleHeaderTopSafeArea.h"
+#import "FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
 
 @interface MDCFlexibleHeaderView (UnitTestingPrivateAPIs)
 @property(nonatomic, strong) MDCFlexibleHeaderTopSafeArea *topSafeArea;

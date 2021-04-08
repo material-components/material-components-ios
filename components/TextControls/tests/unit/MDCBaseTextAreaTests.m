@@ -15,7 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialTextControls+BaseTextAreas.h"
-#import "MaterialTextControlsPrivate+BaseStyle.h"
+#import "MDCTextControlState.h"
 
 @interface MDCBaseTextArea (Private)
 - (BOOL)shouldLayoutForRTL;

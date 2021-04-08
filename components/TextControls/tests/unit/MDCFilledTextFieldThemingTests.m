@@ -1,4 +1,4 @@
-// Copyright 2020-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,32 +14,37 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialTextControls+Enums.h"
+#import "MaterialTextControls+FilledTextFields.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTextControls+OutlinedTextAreasTheming.h"
+#import "MaterialTextControls+FilledTextFieldsTheming.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kDisabledOpacity = (CGFloat)0.60;
 
+static const CGFloat kFilledSublayerFillColorNormalOpacity = (CGFloat)0.12;
 static const CGFloat kTextColorNormalOpacity = (CGFloat)0.87;
-static const CGFloat kFloatingLabelColorEditingOpacity = (CGFloat)0.87;
 static const CGFloat kNormalLabelColorNormalOpacity = (CGFloat)0.60;
-static const CGFloat kOutlineColorNormalOpacity = (CGFloat)0.38;
 
-static const CGFloat kPrimaryFloatingLabelColorNormalOpacity = (CGFloat)0.60;
 static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
+static const CGFloat kPrimaryFloatingLabelColorNormalOpacity = (CGFloat)0.60;
+static const CGFloat kPrimaryFloatingLabelColorEditingOpacity = (CGFloat)0.87;
+static const CGFloat kPrimaryUnderlineColorNormalOpacity = (CGFloat)0.42;
 
-@interface MDCOutlinedTextAreaThemingTest : XCTestCase
-@property(nonatomic, strong) MDCOutlinedTextArea *textArea;
+@interface MDCFilledTextFieldThemingTest : XCTestCase
+@property(nonatomic, strong) MDCFilledTextField *textField;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
-@implementation MDCOutlinedTextAreaThemingTest
+@implementation MDCFilledTextFieldThemingTest
 
 - (void)setUp {
   [super setUp];
 
-  self.textArea = [[MDCOutlinedTextArea alloc] init];
+  self.textField = [[MDCFilledTextField alloc] init];
   self.colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
   self.typographyScheme =
@@ -50,7 +55,7 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
 }
 
 - (void)tearDown {
-  self.textArea = nil;
+  self.textField = nil;
   self.colorScheme = nil;
   self.typographyScheme = nil;
   self.containerScheme = nil;
@@ -58,15 +63,15 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
   [super tearDown];
 }
 
-- (void)testTextAreaPrimaryThemingDefault {
+- (void)testTextFieldPrimaryThemingDefault {
   // When
-  [self.textArea applyThemeWithScheme:self.containerScheme];
+  [self.textField applyThemeWithScheme:self.containerScheme];
 
   // Then
-  [self verifyTextAreaPrimaryTheming];
+  [self verifyTextFieldPrimaryTheming];
 }
 
-- (void)testTextAreaPrimaryThemingCustom {
+- (void)testTextFieldPrimaryThemingCustom {
   // Given
   self.colorScheme = [self customColorScheme];
   self.typographyScheme = [self customTypographyScheme];
@@ -74,21 +79,21 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
   self.containerScheme.typographyScheme = self.typographyScheme;
 
   // When
-  [self.textArea applyThemeWithScheme:self.containerScheme];
+  [self.textField applyThemeWithScheme:self.containerScheme];
 
   // Then
-  [self verifyTextAreaPrimaryTheming];
+  [self verifyTextFieldPrimaryTheming];
 }
 
-- (void)testTextAreaErrorThemingDefault {
+- (void)testTextFieldErrorThemingDefault {
   // When
-  [self.textArea applyErrorThemeWithScheme:self.containerScheme];
+  [self.textField applyErrorThemeWithScheme:self.containerScheme];
 
   // Then
-  [self verifyTextAreaErrorTheming];
+  [self verifyTextFieldErrorTheming];
 }
 
-- (void)testTextAreaErrorThemingCustom {
+- (void)testTextFieldErrorThemingCustom {
   // Given
   self.colorScheme = [self customColorScheme];
   self.typographyScheme = [self customTypographyScheme];
@@ -96,10 +101,10 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
   self.containerScheme.typographyScheme = self.typographyScheme;
 
   // When
-  [self.textArea applyErrorThemeWithScheme:self.containerScheme];
+  [self.textField applyErrorThemeWithScheme:self.containerScheme];
 
   // Then
-  [self verifyTextAreaErrorTheming];
+  [self verifyTextFieldErrorTheming];
 }
 
 #pragma mark - Test helpers
@@ -142,7 +147,7 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
   return typographyScheme;
 }
 
-- (void)verifyTextAreaPrimaryTheming {
+- (void)verifyTextFieldPrimaryTheming {
   // Color
   UIColor *textColorNormal =
       [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kTextColorNormalOpacity];
@@ -158,8 +163,8 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
 
   UIColor *floatingLabelColorNormal = [self.colorScheme.onSurfaceColor
       colorWithAlphaComponent:kPrimaryFloatingLabelColorNormalOpacity];
-  UIColor *floatingLabelColorEditing =
-      [self.colorScheme.primaryColor colorWithAlphaComponent:kFloatingLabelColorEditingOpacity];
+  UIColor *floatingLabelColorEditing = [self.colorScheme.primaryColor
+      colorWithAlphaComponent:kPrimaryFloatingLabelColorEditingOpacity];
   UIColor *floatingLabelColorDisabled = [floatingLabelColorNormal
       colorWithAlphaComponent:kPrimaryFloatingLabelColorNormalOpacity * kDisabledOpacity];
 
@@ -169,65 +174,77 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
   UIColor *normalLabelColorDisabled = [normalLabelColorNormal
       colorWithAlphaComponent:kNormalLabelColorNormalOpacity * kDisabledOpacity];
 
-  UIColor *outlineColorNormal =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlineColorNormalOpacity];
-  UIColor *outlineColorEditing = self.colorScheme.primaryColor;
-  UIColor *outlineColorDisabled =
-      [outlineColorNormal colorWithAlphaComponent:kOutlineColorNormalOpacity * kDisabledOpacity];
+  UIColor *underlineColorNormal =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kPrimaryUnderlineColorNormalOpacity];
+  UIColor *underlineColorEditing = self.colorScheme.primaryColor;
+  UIColor *underlineColorDisabled = [underlineColorNormal
+      colorWithAlphaComponent:kPrimaryUnderlineColorNormalOpacity * kDisabledOpacity];
+
+  UIColor *filledSublayerFillColorNormal = [self.colorScheme.onSurfaceColor
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
+  UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
+  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
 
   UIColor *tintColor = self.colorScheme.primaryColor;
 
-  XCTAssertEqualObjects([self.textArea floatingLabelColorForState:MDCTextControlStateNormal],
+  XCTAssertEqualObjects([self.textField floatingLabelColorForState:MDCTextControlStateNormal],
                         floatingLabelColorNormal);
-  XCTAssertEqualObjects([self.textArea floatingLabelColorForState:MDCTextControlStateEditing],
+  XCTAssertEqualObjects([self.textField floatingLabelColorForState:MDCTextControlStateEditing],
                         floatingLabelColorEditing);
-  XCTAssertEqualObjects([self.textArea floatingLabelColorForState:MDCTextControlStateDisabled],
+  XCTAssertEqualObjects([self.textField floatingLabelColorForState:MDCTextControlStateDisabled],
                         floatingLabelColorDisabled);
-  XCTAssertEqualObjects([self.textArea normalLabelColorForState:MDCTextControlStateNormal],
+  XCTAssertEqualObjects([self.textField normalLabelColorForState:MDCTextControlStateNormal],
                         normalLabelColorNormal);
-  XCTAssertEqualObjects([self.textArea normalLabelColorForState:MDCTextControlStateEditing],
+  XCTAssertEqualObjects([self.textField normalLabelColorForState:MDCTextControlStateEditing],
                         normalLabelColorEditing);
-  XCTAssertEqualObjects([self.textArea normalLabelColorForState:MDCTextControlStateDisabled],
+  XCTAssertEqualObjects([self.textField normalLabelColorForState:MDCTextControlStateDisabled],
                         normalLabelColorDisabled);
-  XCTAssertEqualObjects([self.textArea textColorForState:MDCTextControlStateNormal],
+  XCTAssertEqualObjects([self.textField textColorForState:MDCTextControlStateNormal],
                         textColorNormal);
-  XCTAssertEqualObjects([self.textArea textColorForState:MDCTextControlStateEditing],
+  XCTAssertEqualObjects([self.textField textColorForState:MDCTextControlStateEditing],
                         textColorEditing);
-  XCTAssertEqualObjects([self.textArea textColorForState:MDCTextControlStateDisabled],
+  XCTAssertEqualObjects([self.textField textColorForState:MDCTextControlStateDisabled],
                         textColorDisabled);
   XCTAssertEqualObjects(
-      [self.textArea leadingAssistiveLabelColorForState:MDCTextControlStateNormal],
+      [self.textField leadingAssistiveLabelColorForState:MDCTextControlStateNormal],
       assistiveLabelColorNormal);
   XCTAssertEqualObjects(
-      [self.textArea leadingAssistiveLabelColorForState:MDCTextControlStateEditing],
+      [self.textField leadingAssistiveLabelColorForState:MDCTextControlStateEditing],
       assistiveLabelColorEditing);
   XCTAssertEqualObjects(
-      [self.textArea leadingAssistiveLabelColorForState:MDCTextControlStateDisabled],
+      [self.textField leadingAssistiveLabelColorForState:MDCTextControlStateDisabled],
       assistiveLabelColorDisabled);
   XCTAssertEqualObjects(
-      [self.textArea trailingAssistiveLabelColorForState:MDCTextControlStateNormal],
+      [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateNormal],
       assistiveLabelColorNormal);
   XCTAssertEqualObjects(
-      [self.textArea trailingAssistiveLabelColorForState:MDCTextControlStateEditing],
+      [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateEditing],
       assistiveLabelColorEditing);
   XCTAssertEqualObjects(
-      [self.textArea trailingAssistiveLabelColorForState:MDCTextControlStateDisabled],
+      [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateDisabled],
       assistiveLabelColorDisabled);
-  XCTAssertEqualObjects([self.textArea outlineColorForState:MDCTextControlStateNormal],
-                        outlineColorNormal);
-  XCTAssertEqualObjects([self.textArea outlineColorForState:MDCTextControlStateEditing],
-                        outlineColorEditing);
-  XCTAssertEqualObjects([self.textArea outlineColorForState:MDCTextControlStateDisabled],
-                        outlineColorDisabled);
-  XCTAssertEqualObjects(self.textArea.tintColor, tintColor);
+  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateNormal],
+                        underlineColorNormal);
+  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateEditing],
+                        underlineColorEditing);
+  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateDisabled],
+                        underlineColorDisabled);
+  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateNormal],
+                        filledSublayerFillColorNormal);
+  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateEditing],
+                        filledSublayerFillColorEditing);
+  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateDisabled],
+                        filledSublayerFillColorDisabled);
+  XCTAssertEqualObjects(self.textField.tintColor, tintColor);
 
   // Typography
-  XCTAssertEqualObjects(self.textArea.textView.font, self.typographyScheme.subtitle1);
-  XCTAssertEqualObjects(self.textArea.leadingAssistiveLabel.font, self.typographyScheme.caption);
-  XCTAssertEqualObjects(self.textArea.trailingAssistiveLabel.font, self.typographyScheme.caption);
+  XCTAssertEqualObjects(self.textField.font, self.typographyScheme.subtitle1);
+  XCTAssertEqualObjects(self.textField.leadingAssistiveLabel.font, self.typographyScheme.caption);
+  XCTAssertEqualObjects(self.textField.trailingAssistiveLabel.font, self.typographyScheme.caption);
 }
 
-- (void)verifyTextAreaErrorTheming {
+- (void)verifyTextFieldErrorTheming {
   // Color
   UIColor *textColorNormal =
       [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kTextColorNormalOpacity];
@@ -251,60 +268,72 @@ static const CGFloat kPrimaryAssistiveLabelColorNormalOpacity = (CGFloat)0.60;
   UIColor *normalLabelColorDisabled = [normalLabelColorNormal
       colorWithAlphaComponent:kNormalLabelColorNormalOpacity * kDisabledOpacity];
 
-  UIColor *outlineColorNormal = self.colorScheme.errorColor;
-  UIColor *outlineColorEditing = outlineColorNormal;
-  UIColor *outlineColorDisabled = [outlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
+  UIColor *underlineColorNormal = self.colorScheme.errorColor;
+  UIColor *underlineColorEditing = underlineColorNormal;
+  UIColor *underlineColorDisabled = [underlineColorNormal colorWithAlphaComponent:kDisabledOpacity];
+
+  UIColor *filledSublayerFillColorNormal = [self.colorScheme.onSurfaceColor
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity];
+  UIColor *filledSublayerFillColorEditing = filledSublayerFillColorNormal;
+  UIColor *filledSublayerFillColorDisabled = [filledSublayerFillColorNormal
+      colorWithAlphaComponent:kFilledSublayerFillColorNormalOpacity * kDisabledOpacity];
 
   UIColor *tintColor = self.colorScheme.errorColor;
 
-  XCTAssertEqualObjects([self.textArea floatingLabelColorForState:MDCTextControlStateNormal],
+  XCTAssertEqualObjects([self.textField floatingLabelColorForState:MDCTextControlStateNormal],
                         floatingLabelColorNormal);
-  XCTAssertEqualObjects([self.textArea floatingLabelColorForState:MDCTextControlStateEditing],
+  XCTAssertEqualObjects([self.textField floatingLabelColorForState:MDCTextControlStateEditing],
                         floatingLabelColorEditing);
-  XCTAssertEqualObjects([self.textArea floatingLabelColorForState:MDCTextControlStateDisabled],
+  XCTAssertEqualObjects([self.textField floatingLabelColorForState:MDCTextControlStateDisabled],
                         floatingLabelColorDisabled);
-  XCTAssertEqualObjects([self.textArea normalLabelColorForState:MDCTextControlStateNormal],
+  XCTAssertEqualObjects([self.textField normalLabelColorForState:MDCTextControlStateNormal],
                         normalLabelColorNormal);
-  XCTAssertEqualObjects([self.textArea normalLabelColorForState:MDCTextControlStateEditing],
+  XCTAssertEqualObjects([self.textField normalLabelColorForState:MDCTextControlStateEditing],
                         normalLabelColorEditing);
-  XCTAssertEqualObjects([self.textArea normalLabelColorForState:MDCTextControlStateDisabled],
+  XCTAssertEqualObjects([self.textField normalLabelColorForState:MDCTextControlStateDisabled],
                         normalLabelColorDisabled);
-  XCTAssertEqualObjects([self.textArea textColorForState:MDCTextControlStateNormal],
+  XCTAssertEqualObjects([self.textField textColorForState:MDCTextControlStateNormal],
                         textColorNormal);
-  XCTAssertEqualObjects([self.textArea textColorForState:MDCTextControlStateEditing],
+  XCTAssertEqualObjects([self.textField textColorForState:MDCTextControlStateEditing],
                         textColorEditing);
-  XCTAssertEqualObjects([self.textArea textColorForState:MDCTextControlStateDisabled],
+  XCTAssertEqualObjects([self.textField textColorForState:MDCTextControlStateDisabled],
                         textColorDisabled);
   XCTAssertEqualObjects(
-      [self.textArea leadingAssistiveLabelColorForState:MDCTextControlStateNormal],
+      [self.textField leadingAssistiveLabelColorForState:MDCTextControlStateNormal],
       assistiveLabelColorNormal);
   XCTAssertEqualObjects(
-      [self.textArea leadingAssistiveLabelColorForState:MDCTextControlStateEditing],
+      [self.textField leadingAssistiveLabelColorForState:MDCTextControlStateEditing],
       assistiveLabelColorEditing);
   XCTAssertEqualObjects(
-      [self.textArea leadingAssistiveLabelColorForState:MDCTextControlStateDisabled],
+      [self.textField leadingAssistiveLabelColorForState:MDCTextControlStateDisabled],
       assistiveLabelColorDisabled);
   XCTAssertEqualObjects(
-      [self.textArea trailingAssistiveLabelColorForState:MDCTextControlStateNormal],
+      [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateNormal],
       assistiveLabelColorNormal);
   XCTAssertEqualObjects(
-      [self.textArea trailingAssistiveLabelColorForState:MDCTextControlStateEditing],
+      [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateEditing],
       assistiveLabelColorEditing);
   XCTAssertEqualObjects(
-      [self.textArea trailingAssistiveLabelColorForState:MDCTextControlStateDisabled],
+      [self.textField trailingAssistiveLabelColorForState:MDCTextControlStateDisabled],
       assistiveLabelColorDisabled);
-  XCTAssertEqualObjects([self.textArea outlineColorForState:MDCTextControlStateNormal],
-                        outlineColorNormal);
-  XCTAssertEqualObjects([self.textArea outlineColorForState:MDCTextControlStateEditing],
-                        outlineColorEditing);
-  XCTAssertEqualObjects([self.textArea outlineColorForState:MDCTextControlStateDisabled],
-                        outlineColorDisabled);
-  XCTAssertEqualObjects(self.textArea.tintColor, tintColor);
+  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateNormal],
+                        underlineColorNormal);
+  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateEditing],
+                        underlineColorEditing);
+  XCTAssertEqualObjects([self.textField underlineColorForState:MDCTextControlStateDisabled],
+                        underlineColorDisabled);
+  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateNormal],
+                        filledSublayerFillColorNormal);
+  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateEditing],
+                        filledSublayerFillColorEditing);
+  XCTAssertEqualObjects([self.textField filledBackgroundColorForState:MDCTextControlStateDisabled],
+                        filledSublayerFillColorDisabled);
+  XCTAssertEqualObjects(self.textField.tintColor, tintColor);
 
   // Typography
-  XCTAssertEqualObjects(self.textArea.textView.font, self.typographyScheme.subtitle1);
-  XCTAssertEqualObjects(self.textArea.leadingAssistiveLabel.font, self.typographyScheme.caption);
-  XCTAssertEqualObjects(self.textArea.trailingAssistiveLabel.font, self.typographyScheme.caption);
+  XCTAssertEqualObjects(self.textField.font, self.typographyScheme.subtitle1);
+  XCTAssertEqualObjects(self.textField.leadingAssistiveLabel.font, self.typographyScheme.caption);
+  XCTAssertEqualObjects(self.textField.trailingAssistiveLabel.font, self.typographyScheme.caption);
 }
 
 @end

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "../../../src/TabBarView/private/MDCTabBarViewIndicatorView.h"
+#import "../../src/TabBarView/private/MDCTabBarViewIndicatorView.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <XCTest/XCTest.h>

@@ -14,6 +14,8 @@
 
 #import "MDCFakeMDCSnackbarManagerDelegate.h"
 
+#import "MaterialSnackbar.h"
+
 @implementation FakeMDCSnackbarManagerDelegate
 
 - (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {

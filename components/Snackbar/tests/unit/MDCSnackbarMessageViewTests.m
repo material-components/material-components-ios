@@ -14,10 +14,10 @@
 
 #import <XCTest/XCTest.h>
 
-#import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialSnackbar.h"
+#import "MDCFakeMDCSnackbarManagerDelegate.h"
 #import "MaterialTypography.h"
 
 #import "../../src/private/MDCSnackbarManagerInternal.h"
@@ -688,6 +688,8 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 }
 
 - (void)testLegacySnackbarMessagePresentsThenDismisses {
+  // TODO(b/184189330): Evaluate why this is flaking.
+
   // Given
   MDCSnackbarMessage.usesLegacySnackbar = YES;
   self.message.duration = 0.1;
