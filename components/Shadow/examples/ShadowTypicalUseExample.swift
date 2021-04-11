@@ -29,14 +29,15 @@ final class ShadowedView: UIView {
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    MDCConfigureShadow(for: self, color: MDCShadowColor(), elevation: 2)
+    MDCConfigureShadow(
+      for: self, shadow: MDCShadowForElevation(1, MDCShadowsCollectionDefault()),
+      color: MDCShadowColor())
   }
 }
 
 /// Typical use-case for a shaped view with Material Shadows.
 final class ShapedView: UIView {
   let shapeLayer = CAShapeLayer()
-  let shadow = MDCShadowForElevation(2)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -61,14 +62,17 @@ final class ShapedView: UIView {
     super.layoutSubviews()
     guard let path = polygonPath(bounds: self.bounds, numSides: 3, numPoints: 3) else { return }
     shapeLayer.path = path
-    MDCConfigureShadow(for: self, color: MDCShadowColor(), shadow: shadow, path: path)
+
+    MDCConfigureShadow(
+      for: self, shadow: MDCShadowForElevation(1, MDCShadowsCollectionDefault()),
+      color: MDCShadowColor(),
+      path: path)
   }
 }
 
 /// More complex use-case for a view with a custom shape which animates.
 final class AnimatedShapedView: UIView {
   let shapeLayer = CAShapeLayer()
-  let shadow = MDCShadowForElevation(2)
   let firstNumSides = 3
   let lastNumSides = 12
   let animationStepDuration: CFTimeInterval = 0.6
@@ -104,7 +108,10 @@ final class AnimatedShapedView: UIView {
         bounds: bounds, numSides: firstNumSides, numPoints: lastNumSides)
     else { return }
     shapeLayer.path = startPath
-    MDCConfigureShadow(for: self, color: MDCShadowColor(), shadow: shadow, path: startPath)
+    MDCConfigureShadow(
+      for: self, shadow: MDCShadowForElevation(1, MDCShadowsCollectionDefault()),
+      color: MDCShadowColor(),
+      path: startPath)
 
     var polygonPaths = (firstNumSides...lastNumSides).map {
       polygonPath(bounds: bounds, numSides: $0, numPoints: lastNumSides)

@@ -15,10 +15,13 @@
 #import <UIKit/UIKit.h>
 
 /**
- Immutable value type holding shadow metrics to apply to a view's layer. Use
- `MDCShadowForElevation()` or `MDCShadowBuilder` to create this object.
+ An immutable shadow object that consists of shadow properties (opacity, radius, offset).
+
+ To generate a shadow instance, please use the MDCShadowBuilder APIs.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCShadow : NSObject
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /** CALayer.shadowOpacity */
 @property(nonatomic, readonly) CGFloat opacity;
@@ -28,8 +31,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadow : NSObject
 
 /** CALayer.shadowOffset */
 @property(nonatomic, readonly) CGSize offset;
-
-- (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end
 
@@ -50,15 +51,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadowBuilder : NSObj
 /** Returns an immutable value type containing a snapshot of the values in this object. */
 - (nonnull MDCShadow *)build;
 
+/** Returns a builder with the provided opacity, radius, and offset properties. */
++ (nonnull MDCShadowBuilder *)builderWithOpacity:(CGFloat)opacity
+                                          radius:(CGFloat)radius
+                                          offset:(CGSize)offset;
+
 @end
-
-/**
- Default color for a Material shadow. On iOS >= 13, this is a dynamic color.
- */
-FOUNDATION_EXTERN UIColor *_Nonnull MDCShadowColor(void);
-
-/**
- Returns an `MDCShadow` representing the Material shadow metrics for the given elevation (in
- points).
- */
-FOUNDATION_EXTERN MDCShadow *_Nonnull MDCShadowForElevation(CGFloat elevation);

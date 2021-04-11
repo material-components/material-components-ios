@@ -48,6 +48,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 @property(nonatomic, strong, nullable) CAShapeLayer *shapeLayer;
 @property(nonatomic, nullable) CGPathRef shapePath;
 @property(nonatomic, strong, nullable) UITraitCollection *traitCollectionOverride;
+
 @end
 
 @implementation MDCShadowTestView
@@ -68,13 +69,17 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  if (self.shapePath) {
+  if (self.shapePath != nil) {
+    _Nonnull CGPathRef shapePath = self.shapePath;
     self.backgroundColor = nil;
-    MDCShadow *shadow = MDCShadowForElevation(self.shadowElevation);
-    MDCConfigureShadowForViewWithShadowAndPath(self, self.shadowColor, shadow, self.shapePath);
+    MDCConfigureShadowForViewWithPath(
+        self, MDCShadowForElevation(self.shadowElevation, MDCShadowsCollectionDefault()),
+        self.shadowColor, shapePath);
   } else {
     self.backgroundColor = UIColor.whiteColor;
-    MDCConfigureShadowForViewWithElevation(self, self.shadowColor, self.shadowElevation);
+    MDCConfigureShadowForView(
+        self, MDCShadowForElevation(self.shadowElevation, MDCShadowsCollectionDefault()),
+        self.shadowColor);
   }
 }
 
@@ -135,7 +140,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)testShadowWithLowElevationShouldRenderShadow {
   // Given
-  self.view.shadowElevation = 2;
+  self.view.shadowElevation = 1;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.view];
@@ -143,7 +148,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)testShadowWithHighElevationShouldRenderShadow {
   // Given
-  self.view.shadowElevation = 10;
+  self.view.shadowElevation = 8;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.view];
@@ -151,7 +156,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)testShadowWithLowElevationShouldUpdateShadowOnBoundsChange {
   // Given
-  self.view.shadowElevation = 2;
+  self.view.shadowElevation = 1;
 
   // When
   [self.view layoutIfNeeded];
@@ -163,7 +168,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)testShadowWithLowElevationAndCornerRadiusShouldRenderRoundedShadow {
   // Given
-  self.view.shadowElevation = 2;
+  self.view.shadowElevation = 1;
   self.view.layer.cornerRadius = 3;
 
   // Then
@@ -172,7 +177,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)testShadowWithLowElevationAndCornerRadiusShouldUpdateShadowOnBoundsChange {
   // Given
-  self.view.shadowElevation = 2;
+  self.view.shadowElevation = 1;
   self.view.layer.cornerRadius = 3;
 
   // When
@@ -185,7 +190,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)testShadowWithLowElevationAndShapeLayerShouldRenderShapedShadow {
   // Given
-  self.view.shadowElevation = 2;
+  self.view.shadowElevation = 1;
   UIBezierPath *triangleBezierPath = UIBezierPath.bezierPath;
   [triangleBezierPath moveToPoint:CGPointMake(40, 0)];
   [triangleBezierPath addLineToPoint:CGPointMake(80, 80)];
@@ -201,7 +206,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 #if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    self.view.shadowElevation = 2;
+    self.view.shadowElevation = 1;
     self.view.shadowColor = MDCTestDynamicShadowColor();
 
     // When
@@ -218,7 +223,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 #if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    self.view.shadowElevation = 2;
+    self.view.shadowElevation = 1;
     self.view.shadowColor = MDCTestDynamicShadowColor();
 
     // When
