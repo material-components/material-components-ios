@@ -166,7 +166,7 @@ static const CGFloat kSheetBounceBuffer = 150;
     return;
   }
 
-  [self updateSheetFrameRemoveAnimations:YES];
+  [self updateSheetFrame];
 }
 
 - (void)safeAreaInsetsDidChange {
@@ -186,7 +186,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 
     // Note this is needed to make sure the full displayed frame updates to reflect the new safe
     // area insets after rotation. See b/183357841 for context.
-    [self updateSheetFrameRemoveAnimations:NO];
+    [self updateSheetFrame];
   }
 }
 
@@ -238,7 +238,7 @@ static const CGFloat kSheetBounceBuffer = 150;
   }
   _preferredSheetHeight = adjustedPreferredSheetHeight;
 
-  [self updateSheetFrameRemoveAnimations:YES];
+  [self updateSheetFrame];
 }
 
 - (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
@@ -252,10 +252,8 @@ static const CGFloat kSheetBounceBuffer = 150;
 }
 
 // Slides the sheet position downwards, so the right amount peeks above the bottom of the superview.
-- (void)updateSheetFrameRemoveAnimations:(BOOL)removeAnimations {
-  if (removeAnimations) {
-    [self.animator removeAllBehaviors];
-  }
+- (void)updateSheetFrame {
+  [self.animator removeAllBehaviors];
 
   CGRect sheetRect = self.bounds;
   sheetRect.origin.y = CGRectGetMaxY(self.bounds) - [self effectiveSheetHeight];
