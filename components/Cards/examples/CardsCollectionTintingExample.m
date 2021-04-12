@@ -32,16 +32,13 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.minimumInteritemSpacing = 0;
   defaultLayout.minimumLineSpacing = 1;
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  self = [super initWithCollectionViewLayout:defaultLayout];
-  if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-  }
-  return self;
+  return [self initWithCollectionViewLayout:defaultLayout];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
     _collectionViewLayout = layout;
   }
   return self;
@@ -116,8 +113,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
     @"breadcrumbs" : @[ @"Cards", @"Collection Card Tinting" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
-    @"skip_snapshots" : @YES,  // Crashing with 'NSInternalInconsistencyException', reason: 'layout
-                               // cannot be nil in setCollectionViewLayout:'
   };
 }
 
