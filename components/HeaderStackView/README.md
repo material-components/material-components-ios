@@ -13,9 +13,7 @@ api_doc_root: true
 The header stack view component is a view that coordinates the layout of two vertically stacked
 bar views.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/header_stack_view.png" alt="Header Stack View" width="320">
-</div>
+<img src="docs/assets/header_stack_view.png" alt="Header Stack View" width="320">
 
 ## Design & API Documentation
 

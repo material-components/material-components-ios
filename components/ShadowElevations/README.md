@@ -15,9 +15,7 @@ Higher shadow elevations have greater shadow intensities, akin to raising an obj
 surface resulting in a more prominent, albeit more diffuse, shadow. This component provides commonly
 used Material Design elevations for components.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/shadows.png" alt="Shadows" width="375">
-</div>
+<img src="docs/assets/shadows.png" alt="Shadows" width="375">
 
 ## Design & API Documentation
 
