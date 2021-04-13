@@ -106,7 +106,7 @@ UIColor *MDCShadowColor(void) {
     return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
       switch (traitCollection.userInterfaceStyle) {
         case UIUserInterfaceStyleUnspecified:
-          __attribute__((fallthrough));
+          /* FALLTHROUGH - TODO(b/185199658): Migrate to proper fallthrough logic */
         case UIUserInterfaceStyleLight:
           return LightStyleShadowColor();
         case UIUserInterfaceStyleDark:
