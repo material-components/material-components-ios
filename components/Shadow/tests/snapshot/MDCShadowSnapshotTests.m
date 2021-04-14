@@ -73,12 +73,12 @@ static UIColor *MDCTestDynamicShadowColor(void) {
     _Nonnull CGPathRef shapePath = self.shapePath;
     self.backgroundColor = nil;
     MDCConfigureShadowForViewWithPath(
-        self, MDCShadowForElevation(self.shadowElevation, MDCShadowsCollectionDefault()),
+        self, [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation],
         self.shadowColor, shapePath);
   } else {
     self.backgroundColor = UIColor.whiteColor;
     MDCConfigureShadowForView(
-        self, MDCShadowForElevation(self.shadowElevation, MDCShadowsCollectionDefault()),
+        self, [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation],
         self.shadowColor);
   }
 }

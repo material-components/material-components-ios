@@ -163,8 +163,3 @@ void MDCConfigureShadowForViewWithPath(UIView *view, MDCShadow *shadow, UIColor 
   view.layer.shadowOffset = shadow.offset;
   view.layer.shadowPath = path;
 }
-
-MDCShadow *MDCShadowForElevation(CGFloat elevation,
-                                 MDCShadowsCollection *shadowValuesForElevation) {
-  return [shadowValuesForElevation shadowForElevation:elevation];
-}

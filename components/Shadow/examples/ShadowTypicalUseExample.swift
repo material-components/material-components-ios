@@ -30,7 +30,7 @@ final class ShadowedView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
     MDCConfigureShadow(
-      for: self, shadow: MDCShadowForElevation(1, MDCShadowsCollectionDefault()),
+      for: self, shadow: MDCShadowsCollectionDefault().shadow(forElevation: 1),
       color: MDCShadowColor())
   }
 }
@@ -64,7 +64,7 @@ final class ShapedView: UIView {
     shapeLayer.path = path
 
     MDCConfigureShadow(
-      for: self, shadow: MDCShadowForElevation(1, MDCShadowsCollectionDefault()),
+      for: self, shadow: MDCShadowsCollectionDefault().shadow(forElevation: 1),
       color: MDCShadowColor(),
       path: path)
   }
@@ -109,7 +109,7 @@ final class AnimatedShapedView: UIView {
     else { return }
     shapeLayer.path = startPath
     MDCConfigureShadow(
-      for: self, shadow: MDCShadowForElevation(1, MDCShadowsCollectionDefault()),
+      for: self, shadow: MDCShadowsCollectionDefault().shadow(forElevation: 1),
       color: MDCShadowColor(),
       path: startPath)
 

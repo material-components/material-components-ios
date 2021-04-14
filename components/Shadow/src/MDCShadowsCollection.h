@@ -27,6 +27,19 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadowsCollection : N
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
+/**
+ Returns an MDCShadow instance representing the shadow properties for the given elevation (in
+ points) by fetching from the @c shadowsCollection container holding elevation to MDCShadow instance
+ bindings.
+
+ Note: If the provided elevation is not stored, the shadow properties that are set are of the
+ nearest elevation above the provided elevation. i.e. if elevations 1 and 3 are set, and an
+ elevation of 2 is provided as input, the shadow properties set will be of elevation 3. If the
+ provided elevation is above the highest elevation value that is set, then the shadow properties set
+ will be of the highest elevation.
+ */
+- (nonnull MDCShadow *)shadowForElevation:(CGFloat)elevation;
+
 @end
 
 /**
@@ -66,14 +79,14 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadowsCollectionBuil
  offset.
  @param elevation The elevation provided in points (dp).
  */
-+ (MDCShadowsCollectionBuilder *_Nonnull)builderWithShadow:(MDCShadow *_Nonnull)shadow
++ (nonnull MDCShadowsCollectionBuilder *)builderWithShadow:(MDCShadow *_Nonnull)shadow
                                               forElevation:(CGFloat)elevation;
 
 /**
  Builds and returns an MDCShadowsCollection instance given the provided shadows using the
  @c addShadow:forElevation and  @c addShadowsForElevations: APIs.
  */
-- (MDCShadowsCollection *_Nonnull)build;
+- (nonnull MDCShadowsCollection *)build;
 
 @end
 
@@ -130,17 +143,3 @@ FOUNDATION_EXTERN UIColor *_Nonnull MDCShadowColor(void);
  radius, offset) for elevations.
  */
 FOUNDATION_EXTERN MDCShadowsCollection *_Nonnull MDCShadowsCollectionDefault(void);
-
-/**
- Returns an MDCShadow instance representing the shadow properties for the given elevation (in
- points) by using the @c shadowsCollection container holding elevation to MDCShadow instance
- bindings.
-
- Note: If the provided elevation is not stored, the shadow properties that are set are of the
- nearest elevation above the provided elevation. i.e. if elevations 1 and 3 are set, and an
- elevation of 2 is provided as input, the shadow properties set will be of elevation 3. If the
- provided elevation is above the highest elevation value that is set, then the shadow properties set
- will be of the highest elevation.
- */
-FOUNDATION_EXTERN MDCShadow *_Nonnull MDCShadowForElevation(
-    CGFloat elevation, MDCShadowsCollection *_Nonnull shadowsCollection);
