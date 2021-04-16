@@ -260,7 +260,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
 @end
 
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0) && !TARGET_OS_TV
 /**
  This component supports UIKit's Large Content Viewer. It is recommended that images associated with
  each tab bar item be backed with a PDF image with "preserve vector data" enabled within the assets
@@ -276,6 +276,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  For more details on the Large Content Viewer see:
  https://developer.apple.com/videos/play/wwdc2019/261/
  */
+API_UNAVAILABLE(tvos, watchos)
 @interface MDCBottomNavigationBar (UILargeContentViewerInteractionDelegate) <
     UILargeContentViewerInteractionDelegate>
 @end
