@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2021-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCChipCollectionViewCell.h"
-#import "MDCChipCollectionViewFlowLayout.h"
-#import "MDCChipField.h"
-#import "MDCChipFieldDelegate.h"
-#import "MDCChipView.h"
-#import "MDCChipViewDeleteButton.h"
+#import <UIKit/UIKit.h>
+
+/*
+ A Material chip delete button. This is used by @c MDCChipField, but can also be used in any @c
+ MDCChipView by setting it as its @c accessoryView.
+ */
+@interface MDCChipViewDeleteButton : UIButton
+
+/*
+ The length of the sides of the image view that displays the circular X.
+ */
++ (CGFloat)imageSideLength;
+
+@end
