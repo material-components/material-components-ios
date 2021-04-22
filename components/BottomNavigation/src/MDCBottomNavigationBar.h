@@ -19,6 +19,7 @@
 // migrated to no longer import MDCBottomNavigationBarDelegate as a transitive dependency.
 #import "MDCBottomNavigationBarDelegate.h"
 #import "MaterialElevation.h"
+#import "MaterialShadow.h"
 #import "MaterialShadowElevations.h"
 
 @protocol MDCBottomNavigationBarDelegate;
