@@ -1,16 +1,11 @@
-# #develop#
+# 124.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release, we added opt-in feature from MDCShadowLayer to MDCShadow for several components, annotated APIs with tvOS availability, and fixed a variety of bugs on components.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### Chips
+`MDCChipFieldDelegate` has a new delegate method `chipFieldShouldEndEditing` to match `chipFieldShouldBeginEditing`.
 
 ## Component changes
 
