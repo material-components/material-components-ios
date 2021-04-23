@@ -1,3 +1,95 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Allow clients to get the view associated with a given action.](https://github.com/material-components/material-components-ios/commit/1524182f7c54917d0c1c0b53a3f906aca00b7827) (Cody Weaver)
+* [Inform the delegate that the action sheet is dismissed when the dismissal is issued from the accessibility gesture.](https://github.com/material-components/material-components-ios/commit/1405e1942927b964814327f872274e99ec367c44) (Nobody)
+
+### ActivityIndicator
+
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/5cb61f3efe1555abce020f2764a4870fdca0a8fd) (Nobody)
+
+### BottomNavigation
+
+* [Adds opt-in from MDCShadowLayer to MDCShadow.](https://github.com/material-components/material-components-ios/commit/e5a68ba77edb55af83f76ddb9071334b6d6d672c) (Yarden Eitan)
+* [Only initialize blur effect view if it is not hidden.](https://github.com/material-components/material-components-ios/commit/0f99d29856ff36a30e787e765c09047d7eba7330) (Alyssa Weiss)
+
+### BottomSheet
+
+* [Add ignoreKeyboardHeight to allow configuring bottomSheet's behavior when keyboard is present.](https://github.com/material-components/material-components-ios/commit/dfe9dcb58ef177a13cb6b1f28f47c88eeba401cd) (Wenyu Zhang)
+* [Adjust content view frame when safe area insets change.](https://github.com/material-components/material-components-ios/commit/ac810a4f3891f364e3f34c6448e728c5449d3300) (Alyssa Weiss)
+* [Fix Bottom sheet bug that was causing flickering.](https://github.com/material-components/material-components-ios/commit/14a603f05a4c1d368559ea4fdb34ff90112c4946) (Alyssa Weiss)
+
+### ButtonBar
+
+* [Fix use of wrong enum values (using FloatingBar rather than ButtonBar)](https://github.com/material-components/material-components-ios/commit/40453fe9d2b9363044a72cf09b0109cb6e4bf7b6) (Yarden Eitan)
+
+### Buttons
+
+* [Attempt to reduce flakiness of the buttons screenshot tests.](https://github.com/material-components/material-components-ios/commit/8465222386b80bbd39953785edb3a99f1a7b16bc) (Jeff Verkoeyen)
+
+### Cards
+
+* [Fix broken examples](https://github.com/material-components/material-components-ios/commit/381db186fe25441d41700f573dada81a0652096d) (Yarden Eitan)
+
+### Chips
+
+* [Extract clear button from MDCChipField](https://github.com/material-components/material-components-ios/commit/5cd7b82f1b003fac18950278a6db3ca777b4762e) (Andrew Overton)
+* [This CL makes two changes: 1. Adds a new delegate method `chipFieldShouldEndEditing` to match `chipFieldShouldBeginEditing` 2. Moved the call to the chip field delegate for `chipFieldDidBeginEditing` and `chipFieldDidEndEditing` so they are fired at the correct time.](https://github.com/material-components/material-components-ios/commit/32fdb16b23fdb52866cab2230563c87aa84ef875) (Nobody)
+
+### Dialogs
+
+* [Avoid cutting off the top of Thai characters with diacritics. In iOS platform, text font are not strictly required to fit within the UIFont.lineHeight. Some Thai characters with diacritics are rendered outside the UILabel/UITextView's bounds.](https://github.com/material-components/material-components-ios/commit/08d42c18d8ae1991e25c97ebf456c0acb4fa292a) (Nobody)
+* [Groups MDCAlertController view's accessibility children.](https://github.com/material-components/material-components-ios/commit/386923b4240dc480bc84c2f4011aa55d99b25897) (Nobody)
+* [Inform the dialogPresentationControllerDelegate that the alert controller is dismissed when the dismissal is issued from the accessibility gesture.](https://github.com/material-components/material-components-ios/commit/caaed1b045775d441d6cbf9e6ad00881885a6929) (Nobody)
+
+### NavigationBar
+
+* [Upgrade Swift to 5.](https://github.com/material-components/material-components-ios/commit/4bd9eccdf130c8cac481684748f8d444fe4761a1) (Jeff Verkoeyen)
+
+### Shadow
+
+* [Add initial readme file with simple usage guide.](https://github.com/material-components/material-components-ios/commit/242f895f053ae7fea62fc02289bc99aa0ef630a2) (Yarden Eitan)
+* [Code improvements for the new Shadow component.](https://github.com/material-components/material-components-ios/commit/e2f4fd39ee036bef0411b59b35080642b4a23483) (Yarden Eitan)
+* [Dragon Catalog example of new in-development Shadow component.](https://github.com/material-components/material-components-ios/commit/70482cc12c44174f92f0574bb66e8df114e43dc6) (Ben Hamilton)
+* [Move MDCShadowForElevation to become an instance method of MDCShadowsCollection.](https://github.com/material-components/material-components-ios/commit/ff5df61330ec171a8edbdce5a0671cffa18ea1f0) (Yarden Eitan)
+* [Remove __attribute__((fallthrough))](https://github.com/material-components/material-components-ios/commit/d5db0659054f17b87e696af8eb6a7701b8c9ba08) (Yarden Eitan)
+
+### Typography
+
+* [Deleted scaledValueForValue API from Material Typography.](https://github.com/material-components/material-components-ios/commit/e12e0a457383df14b73f2fc41ca90c7075fe3097) (Alyssa Weiss)
+* [Remove description related to iOS 9 as there is no longer iOS 9 support](https://github.com/material-components/material-components-ios/commit/53e1d5e945558e38310adb46def813e81ee872e3) (Alyssa Weiss)
+
+## Multi-component changes
+
+* [Add opt-in new performant shadow support.](https://github.com/material-components/material-components-ios/commit/c9904413f7b4bfcc8b8a2949b8b4809cd2a1c3b5) (Yarden Eitan)
+* [Annotate APIs with tvOS availability.](https://github.com/material-components/material-components-ios/commit/9638b0bfa4c41cd66ff7675070d94d6f52cb2f0e) (Jeff Verkoeyen)
+* [Disable label animation when label is truncated](https://github.com/material-components/material-components-ios/commit/2a31a3162fc31d95a4a575b6d1cbc96770cfa834) (Andrew Overton)
+* [Fix broken images in iOS/Supporting APIs dev docs](https://github.com/material-components/material-components-ios/commit/39911e5e756fc2a7e186a9ad569396587d1c2845) (Nobody)
+* [Fix build errors related to the Shadow component.](https://github.com/material-components/material-components-ios/commit/bf652865ce9c4ec36498f5a38b5c948974062ecc) (Jeff Verkoeyen)
+* [Flattening all unit tests into single directories as per convention.](https://github.com/material-components/material-components-ios/commit/a8e4831fd0b9ea2427d392311defb707fdaa0217) (Jeff Verkoeyen)
+* [Internal Change](https://github.com/material-components/material-components-ios/commit/84b83bdb8bf34172214876305a9fcc9ae5436b47) (Yarden Eitan)
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/1c14fb5e7b0239c1ef893cf06f1b83f49232f3f4) (Jeff Verkoeyen)
+* [Internal change.](https://github.com/material-components/material-components-ios/commit/9a49fd96f94c7785c500099284f3eb36c8b46740) (Jeff Verkoeyen)
+* [Miscellaneous doc updates](https://github.com/material-components/material-components-ios/commit/4e245ac6dc00546eb2760fb571ee7d2e2514e532) (Andrew Overton)
+* [Remove all iOS 10 availability checks from material_components_ios now that only iOS 10+ is supported.](https://github.com/material-components/material-components-ios/commit/924c49e43b406305adaa86f681bac21b1a5458e5) (Alyssa Weiss)
+
+---
+
 # 124.1.1
 
 In this minor release we added a new Shadow Component and removed the Shrine demo.
