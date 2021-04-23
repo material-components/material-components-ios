@@ -18,6 +18,7 @@
 #import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
+#import "MaterialShadow.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 

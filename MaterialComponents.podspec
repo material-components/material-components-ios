@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "124.1.1"
+  mdc.version      = "124.2.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -170,6 +170,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/AppBar+ColorThemer"
+      unit_tests.dependency "MaterialComponents/AppBar+Theming"
       unit_tests.dependency "MaterialComponents/AppBar+TypographyThemer"
     end
   end
@@ -180,14 +181,6 @@ Pod::Spec.new do |mdc|
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Container"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   mdc.subspec "AppBar+ColorThemer" do |extension|
@@ -239,8 +232,11 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-        "components/#{component.base_name}/tests/unit/*.m"
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}"
       ]
+      unit_tests.dependency "MaterialComponents/schemes/Container"
+      unit_tests.dependency "MaterialComponents/private/Color"
+      unit_tests.dependency "MaterialComponents/private/Math"
     end
   end
 
@@ -257,15 +253,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/Elevation"
     extension.dependency "MaterialComponents/Typography"
     extension.dependency "MaterialComponents/schemes/Container"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}"
-      ]
-      unit_tests.dependency "MaterialComponents/schemes/Container"
-      unit_tests.dependency "MaterialComponents/private/Color"
-      unit_tests.dependency "MaterialComponents/private/Math"
-    end
   end
 
   # BottomAppBar
@@ -312,6 +299,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/Shadow"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
@@ -364,10 +352,8 @@ Pod::Spec.new do |mdc|
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
+      "components/#{extension.base_name.split('+')[0]}/tests/unit/MDCBottomNavigationThemingTests.m"
       ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
     end
   end
 
@@ -428,6 +414,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
+    component.dependency "MaterialComponents/Shadow"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/ShapeLibrary"
@@ -515,14 +502,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/ShadowElevations"
     extension.dependency "MaterialComponents/schemes/Container"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   # ButtonBar
@@ -584,14 +563,6 @@ Pod::Spec.new do |mdc|
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Container"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   # Chips
@@ -635,14 +606,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Container"
     extension.dependency "MaterialComponents/Typography"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   # CollectionCells
@@ -803,14 +766,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/ShadowElevations"
     extension.dependency "MaterialComponents/schemes/Container"
     extension.dependency "MaterialComponents/Buttons+Theming"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   mdc.subspec "Elevation" do |component|
@@ -1031,14 +986,6 @@ Pod::Spec.new do |mdc|
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Container"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   # NavigationBar
@@ -1246,8 +1193,7 @@ Pod::Spec.new do |mdc|
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
+      "components/#{extension.base_name.split('+')[0]}/tests/unit/ProgressViewMaterialThemingTests.m",
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
     end
@@ -1274,12 +1220,30 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  # Shadow
+
+  mdc.subspec "Shadow" do |component|
+    component.ios.deployment_target = '10.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.dependency "MaterialComponents/Availability"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      ]
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+    end
+  end
+
   # ShadowElevations
 
   mdc.subspec "ShadowElevations" do |component|
     component.ios.deployment_target = '10.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -1478,10 +1442,8 @@ Pod::Spec.new do |mdc|
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
+        "components/#{extension.base_name.split('+')[0]}/tests/unit/TabsThemingTests.m",
       ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
     end
   end
 
@@ -1499,7 +1461,9 @@ Pod::Spec.new do |mdc|
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
+        "components/#{extension.base_name.split('+')[0]}/tests/unit/MDCTabBarViewIndicatorViewTests.m",
+        "components/#{extension.base_name.split('+')[0]}/tests/unit/MDCTabBarViewItemViewTests.m",
+        "components/#{extension.base_name.split('+')[0]}/tests/unit/MDCTabBarViewTests.m",
       ]
       unit_tests.dependency "MaterialComponents/AppBar"
       unit_tests.dependency "MaterialComponents/HeaderStackView"
@@ -1519,7 +1483,7 @@ Pod::Spec.new do |mdc|
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/tests/unit/TabBarView/MDCTabBarViewThemingTests.m",
+        "components/#{extension.base_name.split('+')[0]}/tests/unit/MDCTabBarViewThemingTests.m",
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
     end
@@ -1577,7 +1541,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCBaseTextAreaTests.m"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
     end
@@ -1599,7 +1563,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCBaseTextFieldTests.m"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
     end
@@ -1621,7 +1585,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCFilledTextAreaTests.m"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
     end
@@ -1642,7 +1606,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCFilledTextAreaThemingTests.m"
       ]
     end
   end
@@ -1663,7 +1627,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCFilledTextFieldTests.m"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
     end
@@ -1684,7 +1648,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCFilledTextFieldThemingTests.m"
       ]
     end
   end
@@ -1705,7 +1669,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCOutlinedTextAreaTests.m"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
     end
@@ -1726,7 +1690,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCOutlinedTextAreaThemingTests.m"
       ]
       unit_tests.dependency "MaterialComponents/Availability"
     end
@@ -1748,7 +1712,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCOutlinedTextFieldTests.m"
       ]
       unit_tests.dependency "MaterialComponents/schemes/Container"
     end
@@ -1769,7 +1733,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+      "components/#{component.base_name.split('+')[0]}/tests/unit/MDCOutlinedTextFieldThemingTests.m"
       ]
     end
   end
@@ -1826,14 +1790,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/schemes/Container"
-
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
-      ]
-      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
   end
 
   # Themes
@@ -2100,7 +2056,7 @@ Pod::Spec.new do |mdc|
 
       component.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [
-        "components/private/#{component.base_name.split('+')[0]}/tests/unit/#{component.base_name.split('+')[1]}/*.{h,m,swift}"
+        "components/private/#{component.base_name.split('+')[0]}/tests/unit/*.{h,m,swift}"
         ]
         unit_tests.dependency "MaterialComponents/schemes/Container"
       end

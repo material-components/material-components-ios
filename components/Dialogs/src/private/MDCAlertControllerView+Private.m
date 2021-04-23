@@ -36,6 +36,35 @@ static const CGFloat MDCDialogActionMinTouchTarget = 48.0f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
+/** Calculates the minimum text height for a single line text using device metrics. */
+static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Nullable font) {
+  if (title.length == 0) {
+    return font.lineHeight;
+  }
+
+  NSDictionary<NSAttributedStringKey, id> *attributes =
+      font == nil ? nil : @{NSFontAttributeName : font};
+  CGRect boundingRect = [title boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
+                                            options:NSStringDrawingUsesDeviceMetrics
+                                         attributes:attributes
+                                            context:nil];
+  // Some text height may exceed the UIFont.lineHeight.
+  // https://developer.apple.com/documentation/uikit/uifont?language=objc
+  // --------------------
+  //  |               |
+  //  | <= ascender   |
+  //  |               | <= lineHeight
+  // -----------------|
+  //  | <= descender  |
+  // --------------------
+  // UIFont.lineHeight consist of UIFont.ascender and UIFont.descender. UIFont.descender is the
+  // bottom offset from the baseline. The boundingRect.origin.y is the amount of space the text will
+  // occupy in UIFont.descender. So the minimum text view line height is text height + the leftover
+  // space in the UIFont.descender not occupied by the rendered text.
+  CGFloat bottomPadding = boundingRect.origin.y - font.descender;
+  return boundingRect.size.height + bottomPadding;
+}
+
 @interface MDCNonselectableTextView : UITextView
 @end
 
@@ -58,6 +87,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if (self) {
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
+    self.shouldGroupAccessibilityChildren = YES;
 
     self.orderVerticalActionsByEmphasis = NO;
     self.actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
@@ -1059,6 +1089,41 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 @implementation MDCNonselectableTextView
 
+#pragma mark - UITextView
+
+- (void)setAttributedText:(NSAttributedString *)attributedText {
+  if ([self.attributedText isEqual:attributedText]) {
+    return;
+  }
+
+  [super setAttributedText:attributedText];
+  [self updateTopInsetAndTextContainerInset:self.textContainerInset];
+}
+
+- (void)setFont:(UIFont *)font {
+  if ([self.font isEqual:font]) {
+    return;
+  }
+
+  [super setFont:font];
+  [self updateTopInsetAndTextContainerInset:self.textContainerInset];
+}
+
+- (void)setText:(NSString *)text {
+  if ([self.text isEqual:text]) {
+    return;
+  }
+
+  [super setText:text];
+  [self updateTopInsetAndTextContainerInset:self.textContainerInset];
+}
+
+- (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
+  [self updateTopInsetAndTextContainerInset:textContainerInset];
+}
+
+#pragma mark - UIView
+
 // Disabling text selection when selectable is YES, while allowing gestures for inlined links.
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
   if (UIAccessibilityIsVoiceOverRunning()) {
@@ -1084,6 +1149,30 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   NSInteger offset = [self offsetFromPosition:self.beginningOfDocument toPosition:range.start];
   id link = [self.attributedText attribute:NSLinkAttributeName atIndex:offset effectiveRange:nil];
   return link != nil;
+}
+
+#pragma mark - Private
+
+/**
+ * Updates the top text inset of the UITextView to avoid rendering text outside the view
+ * boundary. We need to calculate the text margin when we change the text or the text font.
+ *
+ * @note Our title UILabel already has a top margin, so its text won't exceed the parent view's
+ * boundary.
+ *
+ * @param textContainerInset The target text insets to display. It will update the following text
+ * margin: left, right and bottom.
+ */
+- (void)updateTopInsetAndTextContainerInset:(UIEdgeInsets)textContainerInset {
+  // To avoid changing the top margin when the view width changes, we only compare the text height
+  // for a single line text.
+  UIFont *font = self.font;
+  CGFloat singleLineTextViewHeight = SingleLineTextViewHeight(self.text, font);
+  textContainerInset.top = MAX(0.0f, singleLineTextViewHeight - font.lineHeight);
+  if (!UIEdgeInsetsEqualToEdgeInsets(super.textContainerInset, textContainerInset)) {
+    // Note that |self setTextContainerInset:| will call this method.
+    super.textContainerInset = textContainerInset;
+  }
 }
 
 @end

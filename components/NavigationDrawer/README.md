@@ -61,11 +61,9 @@ import MaterialComponents.MaterialNavigationDrawer
 
 While `MDCBottomDrawerViewController` supports the accessibility escape "Z" gesture, it is advisible that the content view controller provides its own dismiss action affordance. Note that it is the responsibility of the header and content view controllers to implement any custom accessibility behavior.
 
-## Types
+## Bottom navigation drawer
 
 Both bottom navigation drawers and side navigation drawers exist, but we only offer a bottom navigation drawer implementation.
-
-## Bottom navigation drawer
 
 Our bottom navigation drawer implementation is centered around `MDCBottomDrawerViewController`, a `UIViewController` subclass. `MDCBottomDrawerViewController` has a `contentViewController` property, whose view is displayed as the primary content of the drawer, as well as a `headerViewController` property, whose view is positioned above the content view controller and sticks to the top when the drawer is full-screen. For more information on implementing custom view controller classes see [Apple's View Controller Programming Guide](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/DefiningYourSubclass.html#//apple_ref/doc/uid/TP40007457-CH7-SW1).
 

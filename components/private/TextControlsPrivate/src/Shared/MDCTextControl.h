@@ -21,7 +21,7 @@
 #import "MDCTextControlColorViewModel.h"
 #import "MDCTextControlHorizontalPositioningReference.h"
 #import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
 UIFont *_Nonnull MDCTextControlDefaultUITextFieldFont(void);

@@ -400,14 +400,18 @@ typedef NS_ENUM(NSInteger, MDCContentHorizontalAlignment) {
 
  Defaults to UIKit's supportedInterfaceOrientations.
 */
-@property(nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientationsOverride;
+@property(nonatomic)
+    UIInterfaceOrientationMask supportedInterfaceOrientationsOverride API_UNAVAILABLE(tvos, watchos)
+        ;
 
 /**
  The interface orientation to use when presenting the alert.
 
  Defaults to UIKit's preferredInterfaceOrientationForPresentation.
 */
-@property(nonatomic) UIInterfaceOrientation preferredInterfaceOrientationForPresentationOverride;
+@property(nonatomic)
+    UIInterfaceOrientation preferredInterfaceOrientationForPresentationOverride API_UNAVAILABLE(
+        tvos, watchos);
 
 /**
  The transition style to use when presenting the view controller override.

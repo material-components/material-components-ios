@@ -4,6 +4,14 @@ Material Components for iOS (MDC-iOS) help developers execute [Material Design](
 
 Material Components for iOS are written in Objective-C and support Swift and Interface Builder.
 
+Some Material components are intentionally not made available on iOS because
+you should use native components on Apple's platforms instead. This includes
+checkboxes, radio buttons, and switches (use UISwitch and UITableView instead)
+and data tables and image lists (use UITableView / UICollectionView instead).
+
+If a component is missing and not listed above, you can file a feature request
+via https://github.com/material-components/material-components-ios/issues/new?assignees=&labels=&template=Feature_request.md
+
 <a name="components"></a>
 <!--{: .jumplink }-->
 

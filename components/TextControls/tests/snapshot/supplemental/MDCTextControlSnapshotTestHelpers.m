@@ -60,11 +60,9 @@ static const NSTimeInterval kTextFieldValidationAnimationTimeout = 30.0;
 }
 
 + (void)applyContentSizeCategory:(UIContentSizeCategory)contentSizeCategory {
-  if (@available(iOS 10.0, *)) {
-    UITraitCollection *traitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:contentSizeCategory];
-    [MDCTextControlSnapshotTestHelpers updateTraitCollectionWithTraitCollection:traitCollection];
-  }
+  UITraitCollection *traitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:contentSizeCategory];
+  [MDCTextControlSnapshotTestHelpers updateTraitCollectionWithTraitCollection:traitCollection];
 }
 
 + (void)updateTraitCollectionWithTraitCollection:(UITraitCollection *)traitCollection {

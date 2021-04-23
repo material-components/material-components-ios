@@ -414,18 +414,16 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testTabBarItemBadgeColors {
   // When
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  if (@available(iOS 10.0, *)) {
-    self.item1.badgeValue = kItemTitleShort3Latin;
-    self.item1.badgeColor = UIColor.cyanColor;
-    self.item2.badgeValue = kItemTitleShort1Latin;
-    self.item2.badgeColor = UIColor.orangeColor;
-    self.item3.badgeValue = kItemTitleShort2Latin;
-    self.item3.badgeColor = UIColor.blackColor;
-    self.item4.badgeValue = kItemTitleShort1Latin;
-    self.item4.badgeColor = UIColor.blueColor;
-    self.item5.badgeValue = kItemTitleShort3Latin;
-    self.item5.badgeColor = UIColor.whiteColor;
-  }
+  self.item1.badgeValue = kItemTitleShort3Latin;
+  self.item1.badgeColor = UIColor.cyanColor;
+  self.item2.badgeValue = kItemTitleShort1Latin;
+  self.item2.badgeColor = UIColor.orangeColor;
+  self.item3.badgeValue = kItemTitleShort2Latin;
+  self.item3.badgeColor = UIColor.blackColor;
+  self.item4.badgeValue = kItemTitleShort1Latin;
+  self.item4.badgeColor = UIColor.blueColor;
+  self.item5.badgeValue = kItemTitleShort3Latin;
+  self.item5.badgeColor = UIColor.whiteColor;
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
   [self.tabBar sizeToFit];
 

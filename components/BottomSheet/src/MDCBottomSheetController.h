@@ -71,6 +71,14 @@
 @property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;
 
 /**
+ A Boolean value that controls whether the height of the keyboard should affect
+ the bottom sheet's frame when the keyboard shows on the screen.
+
+ The default value is @c NO.
+ */
+@property(nonatomic) BOOL ignoreKeyboardHeight;
+
+/**
  The color applied to the sheet's background when presented by MDCBottomSheetPresentationController.
 
  Defaults to a semi-transparent Black.

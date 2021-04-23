@@ -46,16 +46,11 @@
 // before a horizontally flipped UIImage causes the image to render outside of the UIImageView's
 // frame.
 - (void)testHorizontallyFlippedImageWithContentInsets {
-  // Given
-  if (@available(iOS 10.0, *)) {
-    // When
-    self.button.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
-    UIImage *testImage =
-        [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)] imageWithHorizontallyFlippedOrientation];
-    [self.button setImage:testImage forState:UIControlStateNormal];
-  } else {
-    // Fallback on earlier versions
-  }
+  // When
+  self.button.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
+  UIImage *testImage =
+      [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)] imageWithHorizontallyFlippedOrientation];
+  [self.button setImage:testImage forState:UIControlStateNormal];
 
   // Then
   [self.button sizeToFit];

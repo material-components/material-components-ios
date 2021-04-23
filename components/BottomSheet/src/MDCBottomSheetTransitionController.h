@@ -73,6 +73,14 @@ Defaults to @c YES.
 */
 @property(nonatomic, assign) BOOL adjustHeightForSafeAreaInsets;
 
+/**
+ A Boolean value that controls whether the height of the keyboard should affect
+ the bottom sheet's frame when the keyboard shows on the screen.
+
+ The default value is @c NO.
+ */
+@property(nonatomic) BOOL ignoreKeyboardHeight;
+
 @end
 
 @interface MDCBottomSheetTransitionController (ScrimAccessibility)

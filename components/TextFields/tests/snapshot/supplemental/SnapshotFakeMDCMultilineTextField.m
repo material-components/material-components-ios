@@ -54,10 +54,7 @@
   if (_isEffectiveUserInterfaceLayoutDirectionOverridden) {
     return _effectiveUserInterfaceLayoutDirection;
   }
-  if (@available(iOS 10.0, *)) {
-    return [super effectiveUserInterfaceLayoutDirection];
-  }
-  return UIApplication.sharedApplication.userInterfaceLayoutDirection;
+  return [super effectiveUserInterfaceLayoutDirection];
 }
 
 - (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)direction {

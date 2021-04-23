@@ -17,5 +17,6 @@
 #import "MDCPathGenerator.h"
 #import "MDCRectangleShapeGenerator.h"
 #import "MDCShapeGenerating.h"
+#import "MDCShapeMediator.h"
 #import "MDCShapedShadowLayer.h"
 #import "MDCShapedView.h"

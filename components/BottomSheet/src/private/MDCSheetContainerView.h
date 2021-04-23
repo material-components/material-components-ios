@@ -32,6 +32,14 @@ Whether or not the height of the view should adjust to include extra height for 
 @property(nonatomic) BOOL willBeDismissed;
 
 /**
+ A Boolean value that controls whether the height of the keyboard should affect
+ the bottom sheet's frame when the keyboard shows on the screen.
+
+ The default value is @c NO.
+ */
+@property(nonatomic) BOOL ignoreKeyboardHeight;
+
+/**
  When set to false, the bottom sheet controller can't be dismissed by dragging the sheet down.
  */
 @property(nonatomic, assign) BOOL dismissOnDraggingDownSheet;

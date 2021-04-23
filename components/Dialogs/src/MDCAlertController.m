@@ -866,7 +866,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   MDCDialogPresentationController *dialogPresentationController =
       self.mdc_dialogPresentationController;
   if (dialogPresentationController.dismissOnBackgroundTap) {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+    void (^dismissalCompletion)(void) = ^{
+      if ([dialogPresentationController.dialogPresentationControllerDelegate
+              respondsToSelector:@selector(dialogPresentationControllerDidDismiss:)]) {
+        [dialogPresentationController.dialogPresentationControllerDelegate
+            dialogPresentationControllerDidDismiss:dialogPresentationController];
+      }
+    };
+    [self.presentingViewController dismissViewControllerAnimated:YES
+                                                      completion:dismissalCompletion];
     return YES;
   }
   return NO;

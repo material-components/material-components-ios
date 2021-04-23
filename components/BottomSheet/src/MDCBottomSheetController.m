@@ -179,6 +179,15 @@ static const CGFloat kElevationSpreadMaskAffordance = 50.0f;
       dismissOnDraggingDownSheet;
 }
 
+- (BOOL)ignoreKeyboardHeight {
+  return _transitionController.ignoreKeyboardHeight;
+}
+
+- (void)setIgnoreKeyboardHeight:(BOOL)ignoreKeyboardHeight {
+  _transitionController.ignoreKeyboardHeight = ignoreKeyboardHeight;
+  self.mdc_bottomSheetPresentationController.ignoreKeyboardHeight = ignoreKeyboardHeight;
+}
+
 - (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
                         sheetState:(MDCSheetState)sheetState {
   _state = sheetState;

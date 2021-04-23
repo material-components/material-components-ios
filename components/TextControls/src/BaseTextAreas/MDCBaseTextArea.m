@@ -489,6 +489,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                           floatingLabelFrame:self.layout.labelFrameFloating
                                   normalFont:self.normalFont
                                 floatingFont:self.floatingFont
+                    labelTruncationIsPresent:self.layout.labelTruncationIsPresent
                            animationDuration:self.animationDuration
                                   completion:^(BOOL finished) {
                                     if (finished) {

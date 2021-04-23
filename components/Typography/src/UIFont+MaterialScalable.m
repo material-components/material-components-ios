@@ -58,12 +58,8 @@ static char MDCFontScaleObjectKey;
 }
 
 - (UIFont *)mdc_scaledFontForTraitEnvironment:(id<UITraitEnvironment>)traitEnvironment {
-  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if (@available(iOS 10.0, *)) {
-    sizeCategory = traitEnvironment.traitCollection.preferredContentSizeCategory;
-  } else if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  }
+  UIContentSizeCategory sizeCategory =
+      traitEnvironment.traitCollection.preferredContentSizeCategory;
   return [self mdc_scaledFontForSizeCategory:sizeCategory];
 }
 

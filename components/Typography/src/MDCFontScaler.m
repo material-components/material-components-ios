@@ -280,30 +280,6 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   return scaledFont;
 }
 
-- (CGFloat)scaledValueForValue:(CGFloat)value {
-  UIContentSizeCategory defaultSizeCategory = UIContentSizeCategoryLarge;
-  // If it is available, query the preferredContentSizeCategory.
-  UIContentSizeCategory currentSizeCategory = GetCurrentSizeCategory();
-
-  NSNumber *defaultFontSizeNumber = _scalingCurve[defaultSizeCategory];
-  NSNumber *currentFontSizeNumber = _scalingCurve[currentSizeCategory];
-
-  // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
-  if (currentFontSizeNumber == nil || defaultFontSizeNumber == nil) {
-    return value;
-  }
-
-  CGFloat currentFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
-  CGFloat defaultFontSize = (CGFloat)defaultFontSizeNumber.doubleValue;
-
-  // Guard against broken / incomplete scaling curves by returning self if fontSize <= 0.0.
-  if (currentFontSize <= 0.0 || defaultFontSize <= 0.0) {
-    return value;
-  }
-
-  return (currentFontSize / defaultFontSize) * value;
-}
-
 - (NSString *)description {
   NSString *superDescription = [super description];
   NSString *styleDescription = @"No Attached Style";

@@ -15,8 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "supplemental/ButtonTestView.h"
 #import "MaterialButtons.h"
+#import "ButtonTestView.h"
 
 @interface MDCButtonInterfaceBuilderCompatibilityTests : XCTestCase
 

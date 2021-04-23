@@ -20,6 +20,7 @@
  A delegate that can be implemented in order to respond to events specific to
  MDCAppBarViewController.
  */
+API_UNAVAILABLE(tvos, watchos)
 @protocol MDCAppBarViewControllerAccessibilityPerformEscapeDelegate <NSObject>
 @required
 

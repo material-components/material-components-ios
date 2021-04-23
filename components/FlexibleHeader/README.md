@@ -17,9 +17,7 @@ api_doc_root: true
 A flexible header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/flexible-header.gif" alt="An animation showing a flexible header appearing and disappearing." width="320">
-</div>
+<img src="docs/assets/flexible-header.gif" alt="An animation showing a flexible header appearing and disappearing." width="320">
 
 ## Design & API documentation
 

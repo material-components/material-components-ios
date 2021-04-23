@@ -14,7 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCShadow.h"
+#import "MaterialShadow.h"
+
+@interface MDCShadowsCollection (Testing)
+- (MDCShadow *)shadowForElevation:(CGFloat)elevation;
+@end
 
 @interface MDCShadowTests : XCTestCase
 @end
@@ -23,7 +27,7 @@
 
 - (void)testZeroElevationShouldReturnEmptyShadow {
   // Given
-  MDCShadow *shadow = MDCShadowForElevation(0);
+  MDCShadow *shadow = [MDCShadowsCollectionDefault() shadowForElevation:0];
 
   // Then
   XCTAssertEqual(shadow.opacity, 0);
@@ -33,7 +37,7 @@
 
 - (void)testLowElevationShouldReturnShadow {
   // Given
-  MDCShadow *shadow = MDCShadowForElevation(2);
+  MDCShadow *shadow = [MDCShadowsCollectionDefault() shadowForElevation:2];
 
   // Then
   XCTAssertGreaterThan(shadow.opacity, 0);
@@ -43,7 +47,7 @@
 
 - (void)testHighElevationShouldReturnShadow {
   // Given
-  MDCShadow *shadow = MDCShadowForElevation(24);
+  MDCShadow *shadow = [MDCShadowsCollectionDefault() shadowForElevation:24];
 
   // Then
   XCTAssertGreaterThan(shadow.opacity, 0);
@@ -53,8 +57,8 @@
 
 - (void)testSameElevationShouldBeEqualToSelf {
   // Given
-  MDCShadow *lowElevationShadowA = MDCShadowForElevation(2);
-  MDCShadow *lowElevationShadowB = MDCShadowForElevation(2);
+  MDCShadow *lowElevationShadowA = [MDCShadowsCollectionDefault() shadowForElevation:2];
+  MDCShadow *lowElevationShadowB = [MDCShadowsCollectionDefault() shadowForElevation:2];
 
   // Then
   XCTAssertEqualObjects(lowElevationShadowA, lowElevationShadowB);
@@ -62,29 +66,60 @@
 
 - (void)testLowElevationShouldReturnDifferentShadowFromHighElevation {
   // Given
-  MDCShadow *lowElevationShadow = MDCShadowForElevation(2);
-  MDCShadow *highElevationShadow = MDCShadowForElevation(24);
+  MDCShadow *lowElevationShadow = [MDCShadowsCollectionDefault() shadowForElevation:2];
+  MDCShadow *highElevationShadow = [MDCShadowsCollectionDefault() shadowForElevation:24];
 
   // Then
   XCTAssertNotEqualObjects(lowElevationShadow, highElevationShadow);
 }
 
-- (void)testBuilderReturnsExpectedValues {
+- (void)testDefaultShadowElevationValuesAreReturnedCorrectlyForOutOfBoundsElevations {
   // Given
-  MDCShadowBuilder *shadowBuilder = [[MDCShadowBuilder alloc] init];
+  MDCShadowsCollection *shadowsCollection = MDCShadowsCollectionDefault();
 
   // When
-  shadowBuilder.opacity = 42;
-  shadowBuilder.radius = 23;
-  shadowBuilder.offset = CGSizeMake(1, 2);
-
-  MDCShadow *shadow = [shadowBuilder build];
+  MDCShadow *negativeShadow = [shadowsCollection shadowForElevation:-4];
+  MDCShadow *bigShadow = [shadowsCollection shadowForElevation:13];
+  MDCShadow *hugeShadow = [shadowsCollection shadowForElevation:3000];
 
   // Then
-  XCTAssertEqualWithAccuracy(shadow.opacity, 42, 1e-6);
-  XCTAssertEqualWithAccuracy(shadow.radius, 23, 1e-6);
-  XCTAssertEqualWithAccuracy(shadow.offset.width, 1, 1e-6);
-  XCTAssertEqualWithAccuracy(shadow.offset.height, 2, 1e-6);
+  XCTAssertEqualObjects(negativeShadow, [shadowsCollection shadowForElevation:0]);
+  XCTAssertEqualObjects(bigShadow, [shadowsCollection shadowForElevation:12]);
+  XCTAssertEqualObjects(hugeShadow, [shadowsCollection shadowForElevation:12]);
+}
+
+- (void)testDefaultShadowElevationValuesAreReturnedCorrectlyForInBetweenValueElevations {
+  // Given
+  MDCShadowsCollection *shadowsCollection = MDCShadowsCollectionDefault();
+
+  // When
+  MDCShadow *shadow1 = [shadowsCollection shadowForElevation:0.1];
+  MDCShadow *shadow2 = [shadowsCollection shadowForElevation:2.314];
+  MDCShadow *shadow3 = [shadowsCollection shadowForElevation:4];
+  MDCShadow *shadow4 = [shadowsCollection shadowForElevation:6.01];
+  MDCShadow *shadow5 = [shadowsCollection shadowForElevation:9.11];
+
+  // Then
+  XCTAssertEqualObjects(shadow1, [shadowsCollection shadowForElevation:1]);
+  XCTAssertEqualObjects(shadow2, [shadowsCollection shadowForElevation:3]);
+  XCTAssertEqualObjects(shadow3, [shadowsCollection shadowForElevation:6]);
+  XCTAssertEqualObjects(shadow4, [shadowsCollection shadowForElevation:8]);
+  XCTAssertEqualObjects(shadow5, [shadowsCollection shadowForElevation:12]);
+}
+
+- (void)testSettingNewShadowInstanceUsingBuilder {
+  // Given
+  MDCShadow *shadow = [[MDCShadowBuilder builderWithOpacity:0.1
+                                                     radius:0.2
+                                                     offset:CGSizeMake(0.3, 0.4)] build];
+
+  // When
+  MDCShadowsCollection *shadowsCollection =
+      [[MDCShadowsCollectionBuilder builderWithShadow:shadow forElevation:4] build];
+
+  // Then
+  MDCShadow *fetchedShadow = [shadowsCollection shadowForElevation:4];
+  XCTAssertEqualObjects(shadow, fetchedShadow);
 }
 
 @end

@@ -75,6 +75,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   if (self) {
     _adjustHeightForSafeAreaInsets = YES;
     _simulateScrollViewBounce = YES;
+    _ignoreKeyboardHeight = NO;
   }
   return self;
 }
@@ -139,6 +140,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
   self.sheetView.dismissOnDraggingDownSheet = self.dismissOnDraggingDownSheet;
   self.sheetView.adjustHeightForSafeAreaInsets = self.adjustHeightForSafeAreaInsets;
+  self.sheetView.ignoreKeyboardHeight = self.ignoreKeyboardHeight;
 
   [containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
@@ -318,6 +320,13 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _adjustHeightForSafeAreaInsets = adjustHeightForSafeAreaInsets;
   if (_sheetView) {
     _sheetView.adjustHeightForSafeAreaInsets = adjustHeightForSafeAreaInsets;
+  }
+}
+
+- (void)setIgnoreKeyboardHeight:(BOOL)ignoreKeyboardHeight {
+  _ignoreKeyboardHeight = ignoreKeyboardHeight;
+  if (_sheetView) {
+    _sheetView.ignoreKeyboardHeight = ignoreKeyboardHeight;
   }
 }
 

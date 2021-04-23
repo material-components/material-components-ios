@@ -22,6 +22,16 @@
 @interface MDCBottomNavigationBar ()
 
 /**
+ A collection of MDCShadow instances each assigned an elevation (in dp).
+
+ To create your own MDCShadowsCollection, please use the provided MDCShadowsCollectionBuilder and
+ populate it with MDCShadow instances using the provided MDCShadowBuilder.
+
+ Defaults to MDCShadowsCollectionDefault().
+ */
+@property(nonatomic, strong, null_resettable) MDCShadowsCollection *shadowsCollection;
+
+/**
  * Returns the tab bar item whose corresponding view contains the given point.
  * @param point CGPoint The point at which to get the corresponding tab bar item. The point must be
  * in the coordinate space of the receiver's bounds.

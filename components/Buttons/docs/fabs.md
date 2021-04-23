@@ -140,7 +140,7 @@ repeats weekly on the following day(s)." The list items do not need
 (representing a day of the week) has the `accessibilityHint` value, "Toggles
 this day."
 
-## Types
+**Types**
 
 There are three types of FABs: 1\. [Regular FABs](#regular-fab) 2\. [Mini FABs](#mini-fab) 3\. [Extended FABs](#extended-fab)
 
