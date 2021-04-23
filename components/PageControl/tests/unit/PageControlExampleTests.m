@@ -81,7 +81,12 @@
   [nativePageControl sizeToFit];
   CGRect frame = CGRectIntegral(pageControl.frame);
   XCTAssertEqual(frame.size.height, 48.0);
-  XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
+  if (@available(iOS 14, *)) {
+    XCTAssertEqual(frame.size.width, 7);
+    XCTAssertEqual(nativePageControl.frame.size.width, 85);
+  } else {
+    XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
+  }
 
   // Test both controls with 4 pages.
   pageControl.numberOfPages = 4;
@@ -90,7 +95,12 @@
   [nativePageControl sizeToFit];
   frame = CGRectIntegral(pageControl.frame);
   XCTAssertEqual(frame.size.height, 48.0);
-  XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
+  if (@available(iOS 14, *)) {
+    XCTAssertEqual(frame.size.width, 55);
+    XCTAssertEqual(nativePageControl.frame.size.width, 141);
+  } else {
+    XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
+  }
 
   // Test with different number of pages for each control.
   pageControl.numberOfPages = 4;

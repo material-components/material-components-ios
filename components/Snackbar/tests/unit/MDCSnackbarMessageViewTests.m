@@ -14,10 +14,10 @@
 
 #import <XCTest/XCTest.h>
 
-#import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialSnackbar.h"
+#import "MDCFakeMDCSnackbarManagerDelegate.h"
 #import "MaterialTypography.h"
 
 #import "../../src/private/MDCSnackbarManagerInternal.h"
@@ -442,69 +442,65 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 }
 
 - (void)testMessageViewMessageDynamicTypeBehavior {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    MDCSnackbarMessageViewTestsFakeView *messageView =
-        [[MDCSnackbarMessageViewTestsFakeView alloc] init];
-    messageView.mdc_adjustsFontForContentSizeCategory = YES;
+  // Given
+  MDCSnackbarMessageViewTestsFakeView *messageView =
+      [[MDCSnackbarMessageViewTestsFakeView alloc] init];
+  messageView.mdc_adjustsFontForContentSizeCategory = YES;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 #pragma clang diagnostic pop
-    UIFont *messageFont = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
-    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
-    messageFont = [fontScaler scaledFontWithFont:messageFont];
-    messageFont = [messageFont mdc_scaledFontAtDefaultSize];
-    messageView.messageFont = messageFont;
-    CGFloat originalMessageFontSize = messageView.label.font.pointSize;
+  UIFont *messageFont = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
+  MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
+  messageFont = [fontScaler scaledFontWithFont:messageFont];
+  messageFont = [messageFont mdc_scaledFontAtDefaultSize];
+  messageView.messageFont = messageFont;
+  CGFloat originalMessageFontSize = messageView.label.font.pointSize;
 
-    // When
-    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraExtraLarge;
-    UITraitCollection *traitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
-    messageView.traitCollectionOverride = traitCollection;
-    [NSNotificationCenter.defaultCenter
-        postNotificationName:UIContentSizeCategoryDidChangeNotification
-                      object:nil];
+  // When
+  UIContentSizeCategory size = UIContentSizeCategoryExtraExtraExtraLarge;
+  UITraitCollection *traitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+  messageView.traitCollectionOverride = traitCollection;
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
-    // Then
-    CGFloat actualMessageFontSize = messageView.label.font.pointSize;
-    XCTAssertGreaterThan(actualMessageFontSize, originalMessageFontSize);
-  }
+  // Then
+  CGFloat actualMessageFontSize = messageView.label.font.pointSize;
+  XCTAssertGreaterThan(actualMessageFontSize, originalMessageFontSize);
 }
 
 - (void)testMessageViewButtonDynamicTypeBehavior {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    MDCSnackbarMessageViewTestsFakeView *messageView =
-        [[MDCSnackbarMessageViewTestsFakeView alloc] init];
-    messageView.mdc_adjustsFontForContentSizeCategory = YES;
+  // Given
+  MDCSnackbarMessageViewTestsFakeView *messageView =
+      [[MDCSnackbarMessageViewTestsFakeView alloc] init];
+  messageView.mdc_adjustsFontForContentSizeCategory = YES;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 #pragma clang diagnostic pop
-    MDCButton *button = [[MDCButton alloc] init];
-    [messageView.actionButtons addObject:button];
-    UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
-    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
-    buttonFont = [fontScaler scaledFontWithFont:buttonFont];
-    buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
-    messageView.buttonFont = buttonFont;
-    CGFloat originalButtonFontSize = [button titleFontForState:UIControlStateNormal].pointSize;
+  MDCButton *button = [[MDCButton alloc] init];
+  [messageView.actionButtons addObject:button];
+  UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
+  MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
+  buttonFont = [fontScaler scaledFontWithFont:buttonFont];
+  buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
+  messageView.buttonFont = buttonFont;
+  CGFloat originalButtonFontSize = [button titleFontForState:UIControlStateNormal].pointSize;
 
-    // When
-    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraExtraLarge;
-    UITraitCollection *traitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
-    messageView.traitCollectionOverride = traitCollection;
-    [NSNotificationCenter.defaultCenter
-        postNotificationName:UIContentSizeCategoryDidChangeNotification
-                      object:nil];
+  // When
+  UIContentSizeCategory size = UIContentSizeCategoryExtraExtraExtraLarge;
+  UITraitCollection *traitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+  messageView.traitCollectionOverride = traitCollection;
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
-    // Then
-    CGFloat actualButtonFontSize = [button titleFontForState:UIControlStateNormal].pointSize;
-    XCTAssertGreaterThan(actualButtonFontSize, originalButtonFontSize);
-  }
+  // Then
+  CGFloat actualButtonFontSize = [button titleFontForState:UIControlStateNormal].pointSize;
+  XCTAssertGreaterThan(actualButtonFontSize, originalButtonFontSize);
 }
 
 - (void)testMessageViewAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
@@ -692,6 +688,8 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 }
 
 - (void)testLegacySnackbarMessagePresentsThenDismisses {
+  // TODO(b/184189330): Evaluate why this is flaking.
+
   // Given
   MDCSnackbarMessage.usesLegacySnackbar = YES;
   self.message.duration = 0.1;

@@ -255,7 +255,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 
 @end
 
-#if MDC_AVAILABLE_SDK_IOS(13_0)
+#if MDC_AVAILABLE_SDK_IOS(13_0) && !TARGET_OS_TV
 /**
  This component supports UIKit's Large Content Viewer. It is recommended that images associated with
  each tab bar item be backed with a PDF image with "preserve vector data" enabled within the assets

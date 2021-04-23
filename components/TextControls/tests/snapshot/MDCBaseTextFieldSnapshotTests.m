@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialTextControls+BaseTextFields.h"
 #import "MaterialSnapshot.h"
 
 #import <UIKit/UIKit.h>
@@ -275,6 +276,17 @@
   // When
   [MDCBaseTextFieldTestsSnapshotTestHelpers
       configureEditingDenseTextFieldWithLabelTextAndText:textField];
+
+  // Then
+  [self validateTextField:textField];
+}
+
+- (void)testTextFieldWithTruncatingNormalLabel {
+  // Given
+  MDCBaseTextField *textField = self.textField;
+
+  // When
+  textField.label.text = @"Very long label text withaverylongwordinit";
 
   // Then
   [self validateTextField:textField];

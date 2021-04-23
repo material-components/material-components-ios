@@ -39,6 +39,7 @@
 
  scrollView.delegate = headerViewController;
  */
+API_UNAVAILABLE(tvos, watchos)
 @interface MDCFlexibleHeaderViewController
     : UIViewController <UIScrollViewDelegate, UITableViewDelegate>
 

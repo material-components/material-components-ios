@@ -67,14 +67,9 @@ Always verify that your chips meet minimum touch requirements, as defined by eit
 
 Remember to set any relevant `accessibilityLabels` or `accessibilityTraits`, especially if you are not satisfied with default system-assigned values.
 
-## Types
+**Types**
 
-There are four types of chips:
-
-1. [Input (text entry)](#input-chip)
-1. [Choice](#choice-chip)
-1. [Filter](#filter-chip)
-1. [Action](#action-chip)
+There are four types of chips: 1\. [Input (text entry)](#input-chip) 2\. [Choice](#choice-chip) 3\. [Filter](#filter-chip) 4\. [Action](#action-chip)
 
 ![Examples of the four different chip types](docs/assets/chips-composite.png)
 
@@ -92,7 +87,6 @@ self.view.addSubview(chipView)
 ```
 
 #### Objective-C
-
 ```objc
 MDCChipView *chipView = [[MDCChipView alloc] init];
 chipView.titleLabel.text = @"Tap me";
@@ -156,6 +150,18 @@ Input chips represent a complex piece of information in compact form, such as an
 
 We currently provide an implementation of Input Chips called `MDCChipField`.
 
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let chipField = MDCChipField()
+chipField.delegate = self
+chipField.textField.placeholderLabel.text = "This is a chip field."
+chipField.showChipsDeleteButton = true
+chipField.sizeToFit()
+view.addSubview(chipField)
+```
+
+#### Objective-C
 ```objc
 MDCChipField *chipField = [[MDCChipField alloc] init];
 chipField.delegate = self;
@@ -176,6 +182,13 @@ It is easiest to create choice Chips using a `UICollectionView`:
 - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let layout = MDCChipCollectionViewFlowLayout()
+collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+```
+
+#### Objective-C
 ```objc
 MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
 _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
@@ -183,26 +196,46 @@ _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionV
 <!--</div>-->
 
 - Leave the default `UICollectionView` selection setting (single selection).
-
 - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+func loadView() {
+  super.loadView()
+
+  collectionView.register(
+      MDCChipCollectionViewCell.self,
+      forCellWithReuseIdentifier: "identifier")
+}
+
+func collectionView(
+  _ collectionView: UICollectionView,
+  cellForItemAt indexPath: IndexPath
+) -> UICollectionViewCell {
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath) as! MDCChipCollectionViewCell
+  let chipView = cell.chipView
+  // configure the chipView to be a choice chip
+  return cell
+}
+```
+
+#### Objective-C
 ```objc
 - (void)loadView {
   [super loadView];
-  …
+
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"identifier"];
-  ...
- }
+}
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"identifier" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
-  // configure the chipView
-   return cell;
+  // configure the chipView to be a choice chip
+  return cell;
 }
 ```
 <!--</div>-->
@@ -222,6 +255,13 @@ It is easiest to create filter Chips using a `UICollectionView`:
 - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let layout = MDCChipCollectionViewFlowLayout()
+collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+```
+
+#### Objective-C
 ```objc
 MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
 _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
@@ -231,30 +271,57 @@ _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionV
 - Allow multi cell selection in the `UICollectionView`:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+collectionView.allowsMultipleSelection = true
+```
+
+#### Objective-C
 ```objc
-collectionView.allowsMultipleSelection = YES; 
+collectionView.allowsMultipleSelection = YES;
 ```
 <!--</div>-->
 
 - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+func loadView() {
+  super.loadView()
+
+  collectionView.register(
+      MDCChipCollectionViewCell.self,
+      forCellWithReuseIdentifier: "identifier")
+}
+
+func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath) as! MDCChipCollectionViewCell
+    let chipView = cell.chipView
+    // configure the chipView to be a filter chip
+    return cell
+}
+```
+
+#### Objective-C
 ```objc
 - (void)loadView {
   [super loadView];
-  …
+
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"identifier"];
-  ...
- }
+}
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"identifier" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
-  // configure the chipView
-   return cell;
+  // configure the chipView to be a filter chip
+  return cell;
 }
 ```
 <!--</div>-->
@@ -274,6 +341,13 @@ It is easiest to create action Chips using a `UICollectionView`:
 - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let layout = MDCChipCollectionViewFlowLayout()
+collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+```
+
+#### Objective-C
 ```objc
 MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
 _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
@@ -284,22 +358,43 @@ _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionV
 - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+func loadView() {
+  super.loadView()
+
+  collectionView.register(
+      MDCChipCollectionViewCell.self,
+      forCellWithReuseIdentifier: "identifier")
+}
+
+func collectionView(
+  _ collectionView: UICollectionView,
+  cellForItemAt indexPath: IndexPath
+) -> UICollectionViewCell {
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath) as! MDCChipCollectionViewCell
+  let chipView = cell.chipView
+  // configure the chipView to be an action chip
+  return cell
+}
+```
+
+#### Objective-C
 ```objc
 - (void)loadView {
   [super loadView];
-  …
+
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"identifier"];
-  ...
- }
+}
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"identifier" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
-  // configure the chipView
-   return cell;
+  // configure the chipView to be an action chip
+  return cell;
 }
 ```
 <!--</div>-->
@@ -307,6 +402,18 @@ _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionV
 - Make sure that `MDCChipCollectionViewCell` does not stay in selected state
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  // For action chips, we never want the chip to stay in selected state.
+  // Other possible apporaches would be relying on theming or Customizing collectionViewCell
+  // selected state.
+  collectionView.deselectItem(at: indexPath, animated: false)
+  // Trigger the action
+}
+```
+
+#### Objective-C
 ```objc
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   // For action chips, we never want the chip to stay in selected state.

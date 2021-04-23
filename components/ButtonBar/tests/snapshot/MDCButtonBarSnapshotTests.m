@@ -322,7 +322,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
 - (void)testLayoutPositionTrailingWithTitlesLTR {
   // When
-  self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
+  self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionTrailing;
   CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
@@ -335,7 +335,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   [self changeItemsToImages];
 
   // When
-  self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
+  self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionTrailing;
   CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
 
@@ -345,7 +345,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
 
 - (void)testLayoutPositionTrailingWithTitlesRTL {
   // When
-  self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
+  self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionTrailing;
   [self changeToRTLAndArabic];
   CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);
@@ -359,7 +359,7 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   [self changeItemsToImages];
 
   // When
-  self.buttonBar.layoutPosition = MDCFloatingButtonImageLocationTrailing;
+  self.buttonBar.layoutPosition = MDCButtonBarLayoutPositionTrailing;
   [self changeToRTLAndArabic];
   CGSize fitSize = [self.buttonBar sizeThatFits:CGSizeZero];
   self.buttonBar.bounds = CGRectMake(0, 0, fitSize.width * 2, fitSize.height);

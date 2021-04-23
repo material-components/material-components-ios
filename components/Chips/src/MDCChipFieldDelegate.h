@@ -24,6 +24,13 @@
 - (BOOL)chipFieldShouldBeginEditing:(nonnull MDCChipField *)chipField;
 
 /**
+ Asks the delegate if editing should end in the specified chip field.
+
+ @param chipField The @c MDCChipField where is about to end.
+ */
+- (BOOL)chipFieldShouldEndEditing:(nonnull MDCChipField *)chipField;
+
+/**
  Tells the delegate that editing began in the specified chip field.
 
  @param chipField The MDCChipField where editing began.

@@ -15,18 +15,19 @@
 #import "MDCTextControlLabelAnimation.h"
 
 #import "MaterialAnimationTiming.h"
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 
 @implementation MDCTextControlLabelAnimation
 
 + (void)animateLabel:(nonnull UILabel *)label
-                 state:(MDCTextControlLabelPosition)labelPosition
-      normalLabelFrame:(CGRect)normalLabelFrame
-    floatingLabelFrame:(CGRect)floatingLabelFrame
-            normalFont:(nonnull UIFont *)normalFont
-          floatingFont:(nonnull UIFont *)floatingFont
-     animationDuration:(NSTimeInterval)animationDuration
-            completion:(void (^__nullable)(BOOL))completion {
+                       state:(MDCTextControlLabelPosition)labelPosition
+            normalLabelFrame:(CGRect)normalLabelFrame
+          floatingLabelFrame:(CGRect)floatingLabelFrame
+                  normalFont:(nonnull UIFont *)normalFont
+                floatingFont:(nonnull UIFont *)floatingFont
+    labelTruncationIsPresent:(BOOL)labelTruncationIsPresent
+           animationDuration:(NSTimeInterval)animationDuration
+                  completion:(void (^__nullable)(BOOL))completion {
   BOOL isAnimationInProgress = label.layer.animationKeys.count > 0;
   if (isAnimationInProgress) {
     if (completion) {
@@ -53,7 +54,7 @@
   BOOL currentFrameIsCGRectZero = CGRectEqualToRect(currentFrame, CGRectZero);
   BOOL isNormalTransition = willChangeFrame && !currentFrameIsCGRectZero;
   BOOL nonZeroDuration = animationDuration > 0;
-  BOOL shouldPerformAnimation = nonZeroDuration && isNormalTransition;
+  BOOL shouldPerformAnimation = nonZeroDuration && isNormalTransition && !labelTruncationIsPresent;
 
   void (^completionBlock)(BOOL finished) = ^void(BOOL finished) {
     label.transform = CGAffineTransformIdentity;

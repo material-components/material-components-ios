@@ -131,7 +131,7 @@ In that case you only need to set the shapeGenerator to a shape of your choice a
 <img src="assets/diamondfab.gif" alt="Diamond FAB.">
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Swift
+#### Swift
 ```swift
 let floatingButton = MDCFloatingButton()
 floatingButton.setImage(plusImage for:.normal)
@@ -143,7 +143,7 @@ floatingButton.shapeGenerator = floatingShapeGenerator
 self.view.addSubview(floatingButton)
 ```
 
-##### Objective-C
+#### Objective-C
 ```objc
 self.floatingButton = [[MDCFloatingButton alloc] init];
 [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
@@ -162,7 +162,7 @@ self.floatingButton.shapeGenerator = floatingShapeGenerator;
 <img src="assets/cutcornersbutton.gif" alt="Cut Corners Button.">
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Swift
+#### Swift
 ```swift
 let containedButton = MDCButton()
 containedButton.setTitle("Add To Cart" for:.normal)
@@ -176,7 +176,7 @@ containedButton.sizeToFit()
 self.view.addSubview(containedButton)
 ```
 
-##### Objective-C
+#### Objective-C
 ```objc
 MDCButton *containedButton = [[MDCButton alloc] init];
 [containedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
@@ -197,7 +197,7 @@ containedButton.shapeGenerator = raisedShapeGenerator;
 <img src="assets/cardcellcutcorner.gif" alt="Card Cell Cut Corner.">
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Swift
+#### Swift
 ```swift
 func collectionView(_ collectionView: UICollectionView,
                     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -209,7 +209,7 @@ func collectionView(_ collectionView: UICollectionView,
   return cell
 ```
 
-##### Objective-C
+#### Objective-C
 ```objc
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,7 +230,7 @@ func collectionView(_ collectionView: UICollectionView,
 <img src="assets/cardwithdiffcorners.gif" alt="Card With Different Corners.">
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Swift
+#### Swift
 ```swift
 let card = MDCCard()
 let shapeGenerator = MDCRectangleShapeGenerator()
@@ -244,7 +244,7 @@ shapeGenerator.bottomRightCorner = curvedCorner
 card.shapeGenerator = shapeGenerator
 ```
 
-##### Objective-C
+#### Objective-C
 ```objc
 MDCCard *card = [[MDCCard alloc] init];
 MDCRectangleShapeGenerator *shapeGenerator =

@@ -64,7 +64,7 @@
   // If we are within an application, query the preferredContentSizeCategory.
   if ([UIApplication mdc_safeSharedApplication]) {
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
+  } else {
     sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
   }
 

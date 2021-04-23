@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 
 /**
  This method tells an MDCTextControl whether to display a side view or not.

@@ -89,6 +89,7 @@ class BottomNavigationControllerExampleScrollableChildViewController: UICollecti
   }
 }
 
+@available(iOS 12, *)
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
 
   var containerScheme: MDCContainerScheming = MDCContainerScheme() {
@@ -133,6 +134,7 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
 
 // MARK: Private Functions
 
+@available(iOS 12, *)
 extension BottomNavigationControllerExampleViewController {
   fileprivate func apply(containerScheme: MDCContainerScheming) {
     navigationBar.applyPrimaryTheme(withScheme: containerScheme)

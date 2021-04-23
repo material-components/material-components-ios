@@ -24,7 +24,9 @@
 @property(nonatomic, nullable) MDCChipField *chip;
 @property(nonatomic, copy, nullable) NSString *delegateTextInput;
 @property(nonatomic) BOOL delegateShouldBeginEditing;
+@property(nonatomic) BOOL delegateShouldEndEditing;
 @property(nonatomic) BOOL delegateDidBeginEditingCalled;
+@property(nonatomic) BOOL delegateDidEndEditingCalled;
 
 @end
 
@@ -36,6 +38,7 @@
   self.chip = [[MDCChipField alloc] init];
   self.chip.delegate = self;
   self.delegateShouldBeginEditing = YES;
+  self.delegateShouldEndEditing = YES;
 }
 
 - (void)tearDown {
@@ -43,7 +46,9 @@
   self.chip.delegate = nil;
   self.chip = nil;
   self.delegateShouldBeginEditing = YES;
+  self.delegateShouldEndEditing = YES;
   self.delegateDidBeginEditingCalled = NO;
+  self.delegateDidEndEditingCalled = NO;
   [super tearDown];
 }
 
@@ -68,7 +73,7 @@
   XCTAssertEqual((unsigned long)self.delegateTextInput.length, 0UL);
 }
 
-- (void)testDelegateShouldNotBeginEditingDoesNotTriggerDidBeginEditing {
+- (void)testDelegateShouldNotBeginEditing {
   // Given
   self.delegateShouldBeginEditing = NO;
 
@@ -78,10 +83,9 @@
 
   // Then
   XCTAssertFalse(shouldBeginEditing);
-  XCTAssertFalse(self.delegateDidBeginEditingCalled);
 }
 
-- (void)testShouldBeginEditingTriggersDidBeginEditing {
+- (void)testShouldBeginEditing {
   // Given
   self.delegateShouldBeginEditing = YES;
 
@@ -91,7 +95,46 @@
 
   // Then
   XCTAssertTrue(shouldBeginEditing);
+}
+
+- (void)testTextFieldDidBeginEditingTriggersDidBeginEditing {
+  // When
+  [self.chip.textField.delegate textFieldDidBeginEditing:self.chip.textField];
+
+  // Then
   XCTAssertTrue(self.delegateDidBeginEditingCalled);
+}
+
+- (void)testDelegateShouldNotEndEditing {
+  // Given
+  self.delegateShouldEndEditing = NO;
+
+  // When
+  BOOL shouldEndEditing =
+      [self.chip.textField.delegate textFieldShouldEndEditing:self.chip.textField];
+
+  // Then
+  XCTAssertFalse(shouldEndEditing);
+}
+
+- (void)testDelegateShouldEndEditing {
+  // Given
+  self.delegateShouldEndEditing = YES;
+
+  // When
+  BOOL shouldEndEditing =
+      [self.chip.textField.delegate textFieldShouldEndEditing:self.chip.textField];
+
+  // Then
+  XCTAssertTrue(shouldEndEditing);
+}
+
+- (void)testTextFieldDidEndEditingTriggersDidEndEditing {
+  // When
+  [self.chip.textField.delegate textFieldDidEndEditing:self.chip.textField];
+
+  // Then
+  XCTAssertTrue(self.delegateDidEndEditingCalled);
 }
 
 #pragma mark - MDCChipFieldDelegate
@@ -106,6 +149,14 @@
 
 - (void)chipFieldDidBeginEditing:(MDCChipField *)chipField {
   self.delegateDidBeginEditingCalled = YES;
+}
+
+- (BOOL)chipFieldShouldEndEditing:(MDCChipField *)chipField {
+  return self.delegateShouldEndEditing;
+}
+
+- (void)chipFieldDidEndEditing:(MDCChipField *)chipField {
+  self.delegateDidEndEditingCalled = YES;
 }
 
 @end

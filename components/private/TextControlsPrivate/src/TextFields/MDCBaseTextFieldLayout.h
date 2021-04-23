@@ -33,6 +33,7 @@
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat containerHeight;
+@property(nonatomic, assign) BOOL labelTruncationIsPresent;
 
 /**
   Initializing an MDCBaseTextFieldLayout object with this initializer is tantamount to calculating a

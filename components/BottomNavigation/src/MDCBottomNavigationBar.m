@@ -26,6 +26,7 @@
 #import "MDCBottomNavigationBarDelegate.h"
 #import "MaterialPalettes.h"
 #import "MaterialRipple.h"
+#import "MaterialShadow.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -72,8 +73,13 @@ static const CGFloat kItemsHorizontalMargin = 12;
 @end
 
 @implementation MDCBottomNavigationBar
+
+static BOOL gEnablePerformantShadow = NO;
+
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize shadowsCollection = _shadowsCollection;
+@synthesize elevation = _elevation;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -117,13 +123,6 @@ static const CGFloat kItemsHorizontalMargin = 12;
     }
   }
 
-  UIBlurEffect *defaultBlurEffect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
-  _blurEffectView = [[UIVisualEffectView alloc] initWithEffect:defaultBlurEffect];
-  _blurEffectView.hidden = !_backgroundBlurEnabled;
-  _blurEffectView.autoresizingMask =
-      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  [self addSubview:_blurEffectView];  // Needs to always be at the bottom
-
   _barView = [[UIView alloc] init];
   _barView.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
@@ -141,11 +140,8 @@ static const CGFloat kItemsHorizontalMargin = 12;
   [_barView addSubview:_itemsLayoutView];
 
   _itemsLayoutView.accessibilityTraits = UIAccessibilityTraitTabBar;
-  _elevation = MDCShadowElevationBottomNavigationBar;
-  [(MDCShadowLayer *)self.layer setElevation:_elevation];
-  UIColor *defaultShadowColor = UIColor.blackColor;
-  _shadowColor = defaultShadowColor;
-  self.layer.shadowColor = defaultShadowColor.CGColor;
+  self.elevation = MDCShadowElevationBottomNavigationBar;
+  self.shadowColor = gEnablePerformantShadow ? MDCShadowColor() : UIColor.blackColor;
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
@@ -165,7 +161,9 @@ static const CGFloat kItemsHorizontalMargin = 12;
   [super layoutSubviews];
 
   CGRect standardBounds = CGRectStandardize(self.bounds);
-  self.blurEffectView.frame = standardBounds;
+  if (self.blurEffectView) {
+    self.blurEffectView.frame = standardBounds;
+  }
   self.barView.frame = standardBounds;
   self.layer.shadowColor = self.shadowColor.CGColor;
 
@@ -176,6 +174,10 @@ static const CGFloat kItemsHorizontalMargin = 12;
     [self sizeItemsLayoutViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
   }
   [self layoutItemViews];
+
+  if (gEnablePerformantShadow) {
+    [self updateShadow];
+  }
 }
 
 - (void)safeAreaInsetsDidChange {
@@ -210,16 +212,31 @@ static const CGFloat kItemsHorizontalMargin = 12;
 }
 
 + (Class)layerClass {
-  return [MDCShadowLayer class];
+  if (gEnablePerformantShadow) {
+    return [super layerClass];
+  } else {
+    return [MDCShadowLayer class];
+  }
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
-  BOOL elevationChanged = !MDCCGFloatEqual(_elevation, elevation);
-  _elevation = elevation;
-  [(MDCShadowLayer *)self.layer setElevation:elevation];
-  if (elevationChanged) {
-    [self mdc_elevationDidChange];
+  if (MDCCGFloatEqual(_elevation, elevation)) {
+    return;
   }
+  _elevation = elevation;
+  if (gEnablePerformantShadow) {
+    [self updateShadow];
+  } else {
+    MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.layer;
+    shadowLayer.elevation = elevation;
+  }
+  [self mdc_elevationDidChange];
+}
+
+- (void)updateShadow {
+  MDCConfigureShadowForView(self,
+                            [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
+                            self.shadowColor);
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
@@ -775,7 +792,9 @@ static const CGFloat kItemsHorizontalMargin = 12;
     return;
   }
   _backgroundBlurEffectStyle = backgroundBlurEffectStyle;
-  self.blurEffectView.effect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+  if (self.blurEffectView) {
+    self.blurEffectView.effect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+  }
 }
 
 - (void)setBackgroundBlurEnabled:(BOOL)backgroundBlurEnabled {
@@ -784,7 +803,17 @@ static const CGFloat kItemsHorizontalMargin = 12;
   }
   _backgroundBlurEnabled = backgroundBlurEnabled;
 
-  self.blurEffectView.hidden = !_backgroundBlurEnabled;
+  if (_backgroundBlurEnabled & !self.blurEffectView) {
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+    self.blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    self.blurEffectView.hidden = !_backgroundBlurEnabled;
+    self.blurEffectView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [self insertSubview:self.blurEffectView atIndex:0];  // Needs to always be at the bottom
+    self.blurEffectView.frame = CGRectStandardize(self.bounds);
+  } else if (self.blurEffectView) {
+    self.blurEffectView.hidden = !_backgroundBlurEnabled;
+  }
 }
 
 - (void)setAlignment:(MDCBottomNavigationBarAlignment)alignment {
@@ -834,6 +863,19 @@ static const CGFloat kItemsHorizontalMargin = 12;
 
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
+}
+
+- (MDCShadowsCollection *)shadowsCollection {
+  if (!_shadowsCollection) {
+    _shadowsCollection = MDCShadowsCollectionDefault();
+  }
+  return _shadowsCollection;
+}
+
+- (void)setShadowsCollection:(MDCShadowsCollection *)shadowsCollection {
+  _shadowsCollection = shadowsCollection;
+
+  [self updateShadow];
 }
 
 - (void)cancelRippleInItemView:(MDCBottomNavigationItemView *)itemView animated:(BOOL)animated {
@@ -934,5 +976,15 @@ static const CGFloat kItemsHorizontalMargin = 12;
   return [UIPointerStyle styleWithEffect:highlightEffect shape:shape];
 }
 #endif
+
+#pragma mark - Performant Shadow Toggle
+
++ (void)setEnablePerformantShadow:(BOOL)enable {
+  gEnablePerformantShadow = enable;
+}
+
++ (BOOL)enablePerformantShadow {
+  return gEnablePerformantShadow;
+}
 
 @end

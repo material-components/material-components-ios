@@ -18,6 +18,7 @@
 #import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
+#import "MaterialShadow.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapes.h"
@@ -112,6 +113,9 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _cornerRadiusObserverAdded;
   CGFloat _inkMaxRippleRadius;
+
+  MDCShapeMediator *_shapedLayer;
+  CGFloat _currentElevation;
 }
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 #pragma clang diagnostic push
@@ -130,14 +134,21 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 
 @implementation MDCButton
 
+static BOOL gEnablePerformantShadow = NO;
+
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize visibleAreaInsets = _visibleAreaInsets;
 @synthesize visibleAreaLayoutGuide = _visibleAreaLayoutGuide;
+@synthesize shadowsCollection = _shadowsCollection;
 @dynamic layer;
 
 + (Class)layerClass {
-  return [MDCShapedShadowLayer class];
+  if (gEnablePerformantShadow) {
+    return [super class];
+  } else {
+    return [MDCShapedShadowLayer class];
+  }
 }
 
 - (instancetype)init {
@@ -170,7 +181,9 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 
     // Storyboards will set the backgroundColor via the UIView backgroundColor setter, so we have
     // to write that in to our _backgroundColors dictionary.
-    _backgroundColors[@(UIControlStateNormal)] = self.layer.shapedBackgroundColor;
+    _backgroundColors[@(UIControlStateNormal)] = gEnablePerformantShadow
+                                                     ? _shapedLayer.shapedBackgroundColor
+                                                     : self.layer.shapedBackgroundColor;
     [self updateBackgroundColor];
   }
   return self;
@@ -179,6 +192,9 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 - (void)commonMDCButtonInit {
   // TODO(b/142861610): Default to `NO`, then remove once all internal usage is migrated.
   _enableTitleFontForState = YES;
+  if (gEnablePerformantShadow) {
+    _shapedLayer = [[MDCShapeMediator alloc] initWithViewLayer:self.layer];
+  }
   _disabledAlpha = MDCButtonDisabledAlpha;
   _enabledAlpha = self.alpha;
   _uppercaseTitle = YES;
@@ -191,6 +207,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   _accessibilityTraitsIncludesButton = YES;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   _mdc_overrideBaseElevation = -1;
+  _currentElevation = 0;
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -206,11 +223,12 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 #endif
 
   self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
-  if (!self.layer.shapeGenerator) {
-    self.layer.shadowPath = [self boundingPath].CGPath;
+  if (gEnablePerformantShadow) {
+    self.layer.shadowColor = MDCShadowColor().CGColor;
+  } else {
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.elevation = [self elevationForState:self.state];
   }
-  self.layer.shadowColor = [UIColor blackColor].CGColor;
-  self.layer.elevation = [self elevationForState:self.state];
 
   _shadowColors = [NSMutableDictionary dictionary];
   _shadowColors[@(UIControlStateNormal)] = [UIColor colorWithCGColor:self.layer.shadowColor];
@@ -336,8 +354,15 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
     }
   }
 
-  if (!self.layer.shapeGenerator) {
-    self.layer.shadowPath = [self boundingPath].CGPath;
+  if (gEnablePerformantShadow) {
+    if (_shapedLayer.shapeGenerator) {
+      [_shapedLayer layoutShapedSublayers];
+    }
+    [self updateShadow];
+  } else {
+    if (!self.layer.shapeGenerator) {
+      self.layer.shadowPath = [self boundingPath].CGPath;
+    }
   }
 
   // Center unbounded ink view frame taking into account possible insets using contentRectForBounds.
@@ -732,12 +757,17 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 
 - (void)animateButtonToHeightForState:(UIControlState)state {
   CGFloat newElevation = [self elevationForState:state];
-  if (MDCCGFloatEqual(self.layer.elevation, newElevation)) {
+  if (MDCCGFloatEqual(self.mdc_currentElevation, newElevation)) {
     return;
   }
+  _currentElevation = newElevation;
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCButtonAnimationDuration];
-  self.layer.elevation = newElevation;
+  if (gEnablePerformantShadow) {
+    [self updateShadow];
+  } else {
+    self.layer.elevation = newElevation;
+  }
   [CATransaction commit];
   [self mdc_elevationDidChange];
 }
@@ -754,7 +784,8 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIColor *)backgroundColor {
-  return self.layer.shapedBackgroundColor;
+  return gEnablePerformantShadow ? _shapedLayer.shapedBackgroundColor
+                                 : self.layer.shapedBackgroundColor;
 }
 
 - (UIColor *)backgroundColorForState:(UIControlState)state {
@@ -818,10 +849,15 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   _userElevations[@(state)] = @(elevation);
   MDCShadowElevation newElevation = [self elevationForState:self.state];
   // If no change to the current elevation, don't perform updates
-  if (MDCCGFloatEqual(newElevation, self.layer.elevation)) {
+  if (MDCCGFloatEqual(newElevation, self.mdc_currentElevation)) {
     return;
   }
-  self.layer.elevation = newElevation;
+  _currentElevation = newElevation;
+  if (gEnablePerformantShadow) {
+    [self updateShadow];
+  } else {
+    self.layer.elevation = newElevation;
+  }
   [self mdc_elevationDidChange];
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
@@ -829,6 +865,18 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   // TODO(ajsecord): Move to MDCFlatButton and update this comment.
   if (state == UIControlStateNormal) {
     [self updateAlphaAndBackgroundColorAnimated:NO];
+  }
+}
+
+- (void)updateShadow {
+  if (_shapedLayer.shapeGenerator == nil) {
+    MDCConfigureShadowForView(self,
+                              [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
+                              [self shadowColorForState:self.state] ?: MDCShadowColor());
+  } else {
+    MDCConfigureShadowForViewWithPath(
+        self, [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
+        [self shadowColorForState:self.state] ?: MDCShadowColor(), self.layer.shadowPath);
   }
 }
 
@@ -891,7 +939,11 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
     // We fall back to UIControlStateNormal if there is no value for the current state.
     width = _borderWidths[@(UIControlStateNormal)];
   }
-  self.layer.shapedBorderWidth = (width != nil) ? (CGFloat)width.doubleValue : 0;
+  if (gEnablePerformantShadow) {
+    _shapedLayer.shapedBorderWidth = (width != nil) ? (CGFloat)width.doubleValue : 0;
+  } else {
+    self.layer.shapedBorderWidth = (width != nil) ? (CGFloat)width.doubleValue : 0;
+  }
 }
 
 #pragma mark - Title Font
@@ -942,7 +994,14 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 #pragma mark - MaterialElevation
 
 - (CGFloat)mdc_currentElevation {
-  return [self elevationForState:self.state];
+  return _currentElevation;
+}
+
+- (MDCShadowsCollection *)shadowsCollection {
+  if (!_shadowsCollection) {
+    _shadowsCollection = MDCShadowsCollectionDefault();
+  }
+  return _shadowsCollection;
 }
 
 #pragma mark - Private methods
@@ -1025,7 +1084,11 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 - (void)updateBackgroundColor {
   // When shapeGenerator is unset then self.layer.shapedBackgroundColor sets the layer's
   // backgroundColor. Whereas when shapeGenerator is set the sublayer's fillColor is set.
-  self.layer.shapedBackgroundColor = [self backgroundColorForState:self.state];
+  if (gEnablePerformantShadow) {
+    _shapedLayer.shapedBackgroundColor = [self backgroundColorForState:self.state];
+  } else {
+    self.layer.shapedBackgroundColor = [self backgroundColorForState:self.state];
+  }
   [self updateDisabledTitleColor];
 }
 
@@ -1060,7 +1123,11 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
     // We fall back to UIControlStateNormal if there is no value for the current state.
     color = _borderColors[@(UIControlStateNormal)];
   }
-  self.layer.shapedBorderColor = color ?: NULL;
+  if (gEnablePerformantShadow) {
+    _shapedLayer.shapedBorderColor = color ?: NULL;
+  } else {
+    self.layer.shapedBorderColor = color ?: NULL;
+  }
 }
 
 - (void)updateTitleFont {
@@ -1088,29 +1155,53 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
   if (shapeGenerator) {
     self.layer.shadowPath = nil;
   } else {
-    self.layer.shadowPath = [self boundingPath].CGPath;
+    if (gEnablePerformantShadow) {
+      MDCConfigureShadowForView(
+          self, [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
+          [self shadowColorForState:self.state] ?: MDCShadowColor());
+    } else {
+      self.layer.shadowPath = [self boundingPath].CGPath;
+    }
   }
-  self.layer.shapeGenerator = shapeGenerator;
+
+  if (gEnablePerformantShadow) {
+    _shapedLayer.shapeGenerator = shapeGenerator;
+  } else {
+    self.layer.shapeGenerator = shapeGenerator;
+  }
   // The imageView is added very early in the lifecycle of a UIButton, therefore we need to move
   // the colorLayer behind the imageView otherwise the image will not show.
   // Because the inkView needs to go below the imageView, but above the colorLayer
   // we need to have the colorLayer be at the back
-  [self.layer.colorLayer removeFromSuperlayer];
-  if (self.enableRippleBehavior) {
-    [self.layer insertSublayer:self.layer.colorLayer below:self.rippleView.layer];
+  if (gEnablePerformantShadow) {
+    [_shapedLayer.colorLayer removeFromSuperlayer];
+    if (self.enableRippleBehavior) {
+      [self.layer insertSublayer:_shapedLayer.colorLayer below:self.rippleView.layer];
+    } else {
+      [self.layer insertSublayer:_shapedLayer.colorLayer below:self.inkView.layer];
+    }
   } else {
-    [self.layer insertSublayer:self.layer.colorLayer below:self.inkView.layer];
+    [self.layer.colorLayer removeFromSuperlayer];
+    if (self.enableRippleBehavior) {
+      [self.layer insertSublayer:self.layer.colorLayer below:self.rippleView.layer];
+    } else {
+      [self.layer insertSublayer:self.layer.colorLayer below:self.inkView.layer];
+    }
   }
   [self updateBackgroundColor];
   [self updateInkForShape];
 }
 
 - (id<MDCShapeGenerating>)shapeGenerator {
+  if (gEnablePerformantShadow) {
+    return _shapedLayer.shapeGenerator;
+  }
   return self.layer.shapeGenerator;
 }
 
 - (void)updateInkForShape {
-  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  CGRect boundingBox = CGPathGetBoundingBox(gEnablePerformantShadow ? _shapedLayer.shapeLayer.path
+                                                                    : self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
       (CGFloat)(hypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
@@ -1346,6 +1437,16 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
                          self.lastRecordedIntrinsicContentSize)) {
     [self invalidateIntrinsicContentSize];
   }
+}
+
+#pragma mark - Performant Shadow Toggle
+
++ (void)setEnablePerformantShadow:(BOOL)enable {
+  gEnablePerformantShadow = enable;
+}
+
++ (BOOL)enablePerformantShadow {
+  return gEnablePerformantShadow;
 }
 
 @end

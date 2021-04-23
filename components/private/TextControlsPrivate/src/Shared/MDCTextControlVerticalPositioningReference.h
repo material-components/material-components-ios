@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCTextControlLabelBehavior.h"
-#import "MDCTextControlLabelPosition.h"
+#import "MDCTextControlLabelSupport.h"
 
 /**
  Style objects vend objects conforming to this protocol to provide the MDCTextControl's layout

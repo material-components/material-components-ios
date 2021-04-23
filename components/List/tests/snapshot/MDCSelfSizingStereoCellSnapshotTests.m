@@ -37,12 +37,9 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
 }
 
 - (UITraitCollection *)traitCollection {
-  if (@available(iOS 10.0, *)) {
-    UITraitCollection *traitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
-    return traitCollection;
-  }
-  return [super traitCollection];
+  UITraitCollection *traitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+  return traitCollection;
 }
 
 @end
@@ -180,45 +177,41 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
 }
 
 - (void)testCellWithDynamicTypeForContentSizeCategoryExtraSmallEnabledForTitleAndDetail {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  self.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
-    // When
-    cell.titleLabel.text = @"Title";
-    cell.titleLabel.font = self.typographyScheme.subtitle1;
-    cell.detailLabel.text = @"Detail";
-    cell.detailLabel.font = self.typographyScheme.button;
-    cell.mdc_adjustsFontForContentSizeCategory = YES;
-    self.arrayOfCells = @[ cell ];
+  // When
+  cell.titleLabel.text = @"Title";
+  cell.titleLabel.font = self.typographyScheme.subtitle1;
+  cell.detailLabel.text = @"Detail";
+  cell.detailLabel.font = self.typographyScheme.button;
+  cell.mdc_adjustsFontForContentSizeCategory = YES;
+  self.arrayOfCells = @[ cell ];
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
-                                                    andVerifyForView:self.collectionView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
+                                                  andVerifyForView:self.collectionView];
 }
 
 - (void)testCellWithDynamicTypeForContentSizeCategoryExtraLargeEnabledForTitleAndDetail {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  self.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
-    // When
-    cell.titleLabel.text = @"Title";
-    cell.titleLabel.font = self.typographyScheme.subtitle1;
-    cell.detailLabel.text = @"Detail";
-    cell.detailLabel.font = self.typographyScheme.button;
-    cell.mdc_adjustsFontForContentSizeCategory = YES;
-    self.arrayOfCells = @[ cell ];
+  // When
+  cell.titleLabel.text = @"Title";
+  cell.titleLabel.font = self.typographyScheme.subtitle1;
+  cell.detailLabel.text = @"Detail";
+  cell.detailLabel.font = self.typographyScheme.button;
+  cell.mdc_adjustsFontForContentSizeCategory = YES;
+  self.arrayOfCells = @[ cell ];
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraLarge
-                                                    andVerifyForView:self.collectionView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraLarge
+                                                  andVerifyForView:self.collectionView];
 }
 
 - (void)testPreferredFontForAXXLContentSizeCategory {

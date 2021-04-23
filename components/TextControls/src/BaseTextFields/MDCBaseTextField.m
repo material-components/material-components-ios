@@ -542,13 +542,9 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 #pragma mark Dynamic Type
 
 - (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
-  if (@available(iOS 10.0, *)) {
-    [super setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
-    self.leadingAssistiveLabel.adjustsFontForContentSizeCategory =
-        adjustsFontForContentSizeCategory;
-    self.trailingAssistiveLabel.adjustsFontForContentSizeCategory =
-        adjustsFontForContentSizeCategory;
-  }
+  [super setAdjustsFontForContentSizeCategory:adjustsFontForContentSizeCategory];
+  self.leadingAssistiveLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.trailingAssistiveLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
 }
 
 - (void)observeContentSizeCategoryNotifications {
@@ -585,6 +581,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
                           floatingLabelFrame:self.layout.labelFrameFloating
                                   normalFont:self.normalFont
                                 floatingFont:self.floatingFont
+                    labelTruncationIsPresent:self.layout.labelTruncationIsPresent
                            animationDuration:self.animationDuration
                                   completion:^(BOOL finished) {
                                     if (finished) {

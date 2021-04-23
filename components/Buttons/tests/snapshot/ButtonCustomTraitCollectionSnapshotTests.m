@@ -19,8 +19,8 @@
 
 #import "MaterialAvailability.h"
 #import "MaterialButtons.h"
-#import "MaterialColor.h"
 #import "MaterialTypography.h"
+#import "MaterialColor.h"
 
 /** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */
 @interface ButtonDynamicTypeSnapshotTestFakeButton : MDCButton
@@ -77,15 +77,10 @@
 
 /**
  Used to set the @c UIContentSizeCategory on an @c MDCButton.
-
- @note On iOS 9 or below this method has no impact.
  */
 - (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
-  UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
-  if (@available(iOS 10.0, *)) {
-    traitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
-  }
+  UITraitCollection *traitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
 
   self.button.traitCollectionOverride = traitCollection;
 }

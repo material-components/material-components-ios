@@ -19,9 +19,7 @@ influenced by Material Design specifications for animation and layout. The API m
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/pagecontrol.gif" alt="An animation demonstrating a page control alternating between three pages." width="190">
-</div>
+<img src="docs/assets/pagecontrol.gif" alt="An animation demonstrating a page control alternating between three pages." width="190">
 
 ## Design & API documentation
 

@@ -64,6 +64,7 @@ static const CGFloat kSheetBounceBuffer = 150;
   self = [super initWithFrame:frame];
   if (self) {
     _willBeDismissed = NO;
+    _ignoreKeyboardHeight = NO;
     _simulateScrollViewBounce = simulateScrollViewBounce;
     if (UIAccessibilityIsVoiceOverRunning()) {
       _sheetState = MDCSheetStateExtended;
@@ -167,10 +168,6 @@ static const CGFloat kSheetBounceBuffer = 150;
   }
 
   [self updateSheetFrame];
-  // Adjusts the pane to the correct snap point, e.g. after a rotation.
-  if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
-  }
 }
 
 - (void)safeAreaInsetsDidChange {
@@ -187,6 +184,10 @@ static const CGFloat kSheetBounceBuffer = 150;
     CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
     scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width, CGRectGetHeight(self.frame));
     self.sheet.scrollView.frame = scrollViewFrame;
+
+    // Note this is needed to make sure the full displayed frame updates to reflect the new safe
+    // area insets after rotation. See b/183357841 for context.
+    [self updateSheetFrame];
   }
 }
 
@@ -239,11 +240,6 @@ static const CGFloat kSheetBounceBuffer = 150;
   _preferredSheetHeight = adjustedPreferredSheetHeight;
 
   [self updateSheetFrame];
-
-  // Adjusts the pane to the correct snap point if we are visible.
-  if (self.window) {
-    [self animatePaneWithInitialVelocity:CGPointZero];
-  }
 }
 
 - (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
@@ -274,6 +270,11 @@ static const CGFloat kSheetBounceBuffer = 150;
     contentFrame.size.height = [self effectiveSheetHeight];
   }
   self.contentView.frame = contentFrame;
+
+  // Adjusts the pane to the correct snap point, e.g. after a rotation.
+  if (self.window) {
+    [self animatePaneWithInitialVelocity:CGPointZero];
+  }
 }
 
 - (void)updateSheetState {
@@ -339,9 +340,12 @@ static const CGFloat kSheetBounceBuffer = 150;
 // Calculates the snap-point for the view to spring to.
 - (CGPoint)targetPoint {
   CGRect bounds = self.bounds;
-  CGFloat keyboardOffset = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
   CGFloat midX = CGRectGetMidX(bounds);
-  CGFloat bottomY = CGRectGetMaxY(bounds) - keyboardOffset;
+  CGFloat bottomY = CGRectGetMaxY(bounds);
+  if (!self.ignoreKeyboardHeight) {
+    CGFloat keyboardOffset = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
+    bottomY -= keyboardOffset;
+  }
 
   CGPoint targetPoint;
   switch (self.sheetState) {

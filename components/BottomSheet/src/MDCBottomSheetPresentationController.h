@@ -46,6 +46,14 @@
 @property(nonatomic, assign) BOOL simulateScrollViewBounce;
 
 /**
+ A Boolean value that controls whether the height of the keyboard should affect
+ the bottom sheet's frame when the keyboard shows on the screen.
+
+ The default value is @c NO.
+ */
+@property(nonatomic) BOOL ignoreKeyboardHeight;
+
+/**
  When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;

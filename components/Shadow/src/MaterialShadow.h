@@ -14,4 +14,4 @@
 // limitations under the License.
 
 #import "MDCShadow.h"
-#import "MDCShadowConfiguring.h"
+#import "MDCShadowsCollection.h"

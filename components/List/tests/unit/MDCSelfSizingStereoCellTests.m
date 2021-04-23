@@ -46,12 +46,9 @@
 }
 
 - (UITraitCollection *)traitCollection {
-  if (@available(iOS 10.0, *)) {
-    UITraitCollection *traitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
-    return traitCollection;
-  }
-  return [super traitCollection];
+  UITraitCollection *traitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+  return traitCollection;
 }
 
 @end
@@ -91,12 +88,8 @@
                     object:nil];
 
   // Then
-  // We only test the behavior for iOS10.0+ because we are not able to
-  // simulate UIApplication in this test for iOS9.0 path.
-  if (@available(iOS 10.0, *)) {
-    XCTAssertGreaterThan(cell.titleLabel.font.pointSize, defaultTitleSize);
-    XCTAssertGreaterThan(cell.detailLabel.font.pointSize, defaultDetailSize);
-  }
+  XCTAssertGreaterThan(cell.titleLabel.font.pointSize, defaultTitleSize);
+  XCTAssertGreaterThan(cell.detailLabel.font.pointSize, defaultDetailSize);
 }
 
 - (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableIsYES {

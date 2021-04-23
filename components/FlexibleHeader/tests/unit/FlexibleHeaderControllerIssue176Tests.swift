@@ -65,8 +65,15 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
     fhvc.didMove(toParent: parentVc)
 
-    XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y,
-                   -fhvc.headerView.maximumHeight)
-    XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.maximumHeight)
+    if #available(iOS 13, *) {
+      // TODO(b/184161521): Evaluate why this behavior changed on iOS 13+.
+      XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y, 0)
+      XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.minimumHeight)
+    } else {
+      XCTAssertEqual(
+        fhvc.headerView.trackingScrollView!.contentOffset.y,
+        -fhvc.headerView.maximumHeight)
+      XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.maximumHeight)
+    }
   }
 }

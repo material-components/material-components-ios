@@ -77,19 +77,4 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  */
 - (nonnull UIFont *)scaledFontWithFont:(nonnull UIFont *)font;
 
-/**
- Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
-
- This method calculates the current scale factor and multiplies it by the given value.
-
- As an example, assume the metrics value for @c .Large is 12 and the current @c
- UIContentCategorySize is
- @c .ExtraLarge with a metrics value of 24.  When passed a @c value of 10, expect a return
- value of 20.
-
- @param value The original layout value.
- @return A value that has been scaled based on the attached scaling curve
- */
-- (CGFloat)scaledValueForValue:(CGFloat)value;
-
 @end
