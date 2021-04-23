@@ -64,6 +64,7 @@ static const CGFloat kSheetBounceBuffer = 150;
   self = [super initWithFrame:frame];
   if (self) {
     _willBeDismissed = NO;
+    _ignoreKeyboardHeight = NO;
     _simulateScrollViewBounce = simulateScrollViewBounce;
     if (UIAccessibilityIsVoiceOverRunning()) {
       _sheetState = MDCSheetStateExtended;
@@ -339,9 +340,12 @@ static const CGFloat kSheetBounceBuffer = 150;
 // Calculates the snap-point for the view to spring to.
 - (CGPoint)targetPoint {
   CGRect bounds = self.bounds;
-  CGFloat keyboardOffset = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
   CGFloat midX = CGRectGetMidX(bounds);
-  CGFloat bottomY = CGRectGetMaxY(bounds) - keyboardOffset;
+  CGFloat bottomY = CGRectGetMaxY(bounds);
+  if (!self.ignoreKeyboardHeight) {
+    CGFloat keyboardOffset = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
+    bottomY -= keyboardOffset;
+  }
 
   CGPoint targetPoint;
   switch (self.sheetState) {
