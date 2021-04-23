@@ -4,6 +4,9 @@ In this minor release, we added opt-in feature from MDCShadowLayer to MDCShadow 
 
 ## New features
 
+### BottomSheet
+`MDCBottomSheetController` has a new `ignoreKeyboardHeight` property to control BottomSheet's behavior when keyboard is present.
+
 ### Chips
 `MDCChipFieldDelegate` has a new delegate method `chipFieldShouldEndEditing` to match `chipFieldShouldBeginEditing`.
 
