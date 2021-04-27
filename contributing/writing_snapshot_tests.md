@@ -17,7 +17,6 @@ order to write snapshot tests for a component:
 ```
   ...
   s.subspec "Cards" do |component|
-    component.ios.deployment_target = '10.0'
     component.test_spec 'tests' do |tests|
       tests.test_spec 'snapshot' do |snapshot_tests|
         snapshot_tests.requires_app_host = true

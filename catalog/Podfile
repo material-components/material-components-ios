@@ -5,7 +5,7 @@ project 'MDCCatalog.xcodeproj'
 # install! 'cocoapods', :disable_input_output_paths => true
 
 target "MDCCatalog" do
-  platform :ios, '10.0'
+  platform :ios, '11.0'
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../', :testspecs => [
@@ -88,7 +88,7 @@ target "MDCCatalog" do
 end
 
 target "MDCActionExtension" do
-  platform :ios, '10.0'
+  platform :ios, '11.0'
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
@@ -99,7 +99,7 @@ target "MDCActionExtension" do
 end
 
 target "MDCDragons" do
-  platform :ios, '10.0'
+  platform :ios, '11.0'
   project 'MDCDragons.xcodeproj'
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialComponents', :path => '../'
