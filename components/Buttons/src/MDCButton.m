@@ -145,7 +145,7 @@ static BOOL gEnablePerformantShadow = NO;
 
 + (Class)layerClass {
   if (gEnablePerformantShadow) {
-    return [super class];
+    return [super layerClass];
   } else {
     return [MDCShapedShadowLayer class];
   }
