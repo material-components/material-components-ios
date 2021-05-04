@@ -17,6 +17,7 @@
 
 #import "supplemental/ChipsExampleAssets.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ChipModel : NSObject
 @property(nonatomic, strong) NSString *title;
@@ -28,7 +29,7 @@
 @interface ChipsTypicalUseViewController
     : UICollectionViewController <UICollectionViewDelegateFlowLayout>
 @property(nonatomic, strong) NSArray<ChipModel *> *model;
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @property(nonatomic) BOOL popRecognizerDelaysTouches;
 @property(nonatomic) CGSize chipSize;
 @property(nonatomic) BOOL chipCenterVisibleArea;
@@ -72,6 +73,11 @@ static ChipModel *MakeModel(NSString *title,
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  self.containerScheme.typographyScheme = typographyScheme;
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -148,7 +154,6 @@ static ChipModel *MakeModel(NSString *title,
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
 
   ChipModel *model = self.model[indexPath.row];

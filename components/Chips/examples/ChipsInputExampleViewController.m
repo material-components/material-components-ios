@@ -17,9 +17,10 @@
 #import "MaterialTextFields.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ChipsInputExampleViewController : UIViewController <MDCChipFieldDelegate>
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong) MDCChipField *chipField;
 @end
 
@@ -35,6 +36,11 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  self.containerScheme.typographyScheme = typographyScheme;
 
   if (self.containerScheme.colorScheme) {
     self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
@@ -98,7 +104,6 @@
   } else {
     [chip applyThemeWithScheme:self.containerScheme];
   }
-  chip.mdc_adjustsFontForContentSizeCategory = YES;
   [self recomputeChipFieldChipHeightWithChip:chip];
 
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);

@@ -17,12 +17,13 @@
 
 #import "supplemental/ChipsExampleAssets.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ChipsCustomizedExampleViewController
     : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @implementation ChipsCustomizedExampleViewController
@@ -71,6 +72,11 @@
 
 - (void)loadView {
   [super loadView];
+
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  self.containerScheme.typographyScheme = typographyScheme;
 
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
@@ -122,7 +128,6 @@
   [[self class] configureChip:cell.chipView];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = ChipsExampleAssets.doneImage;
-  cell.chipView.mdc_adjustsFontForContentSizeCategory = YES;
   cell.alwaysAnimateResize = YES;
   [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;

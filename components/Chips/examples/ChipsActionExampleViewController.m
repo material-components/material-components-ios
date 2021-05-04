@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+#import "MaterialChips+Theming.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ChipsActionExampleViewController
     : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
-@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @property(nonatomic, assign, getter=isOutlined) BOOL outlined;
 @end
 
@@ -42,6 +43,11 @@
 
 - (void)loadView {
   [super loadView];
+
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  self.containerScheme.typographyScheme = typographyScheme;
 
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
@@ -119,8 +125,6 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   MDCChipView *chipView = cell.chipView;
-
-  chipView.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
