@@ -318,13 +318,29 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 - (void)testAdjustsFontForContentSizeUpscalesUIFontMetricsFontsForSizeCategoryAXXXL {
   if (@available(iOS 11.0, *)) {
     // Given
-    UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
     UITraitCollection *extraSmallTraits = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    originalFont = [bodyMetrics scaledFontForFont:originalFont
-                    compatibleWithTraitCollection:extraSmallTraits];
-    self.alertController.titleFont = originalFont;
+
+    UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:20];
+    XCTAssertNotNil(titleFont);
+    titleFont = [bodyMetrics scaledFontForFont:titleFont
+                 compatibleWithTraitCollection:extraSmallTraits];
+    self.alertController.titleFont = titleFont;
+
+    UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:15];
+    messageFont = [bodyMetrics scaledFontForFont:messageFont
+                   compatibleWithTraitCollection:extraSmallTraits];
+    self.alertController.messageFont = messageFont;
+
+    UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:20];
+    buttonFont = [bodyMetrics scaledFontForFont:buttonFont
+                  compatibleWithTraitCollection:extraSmallTraits];
+    for (MDCAlertAction *action in self.alertController.actions) {
+      MDCButton *button = [self.alertController buttonForAction:action];
+      button.titleLabel.font = buttonFont;
+    }
+
     self.alertController.adjustsFontForContentSizeCategory = YES;
     [self.alertController loadViewIfNeeded];
 
@@ -364,14 +380,29 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 - (void)testAdjustsFontForContentSizeDownscalesUIFontMetricsFontsForSizeCategoryXS {
   if (@available(iOS 11.0, *)) {
     // Given
-    UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
     UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
     UITraitCollection *aXXXLTraits =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                                UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    originalFont = [bodyMetrics scaledFontForFont:originalFont
-                    compatibleWithTraitCollection:aXXXLTraits];
-    self.alertController.titleFont = originalFont;
+
+    UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:20];
+    XCTAssertNotNil(titleFont);
+    titleFont = [bodyMetrics scaledFontForFont:titleFont compatibleWithTraitCollection:aXXXLTraits];
+    self.alertController.titleFont = titleFont;
+
+    UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:15];
+    messageFont = [bodyMetrics scaledFontForFont:messageFont
+                   compatibleWithTraitCollection:aXXXLTraits];
+    self.alertController.messageFont = messageFont;
+
+    UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:20];
+    buttonFont = [bodyMetrics scaledFontForFont:buttonFont
+                  compatibleWithTraitCollection:aXXXLTraits];
+    for (MDCAlertAction *action in self.alertController.actions) {
+      MDCButton *button = [self.alertController buttonForAction:action];
+      button.titleLabel.font = buttonFont;
+    }
+
     self.alertController.adjustsFontForContentSizeCategory = YES;
     [self.alertController loadViewIfNeeded];
 

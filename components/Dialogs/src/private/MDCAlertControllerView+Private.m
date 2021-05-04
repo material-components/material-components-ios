@@ -82,6 +82,8 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -122,6 +124,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     } else {
       self.titleLabel.font = [MDCTypography titleFont];
     }
+    self.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     self.titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
     [self.titleScrollView addSubview:self.titleLabel];
 
@@ -138,6 +141,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     } else {
       self.messageTextView.font = [MDCTypography body1Font];
     }
+    self.messageTextView.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     self.messageTextView.textColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
     // The messageTextView is a private API, and therefore it needs to inherit its background
     // color from the alert's background so it can be themed (necessary for dark mode support,
@@ -187,6 +191,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
         self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
     button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+    button.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     // TODO(#1726): Determine default text color values for Normal and Disabled
     button.minimumSize =
         CGSizeMake(MDCDialogActionButtonMinimumWidth, MDCDialogActionButtonMinimumHeight);
@@ -1068,6 +1073,15 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 }
 
 #pragma mark - Dynamic Type
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+    button.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  }
+  self.messageTextView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+}
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;

@@ -532,16 +532,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
   _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-  if (@available(iOS 11.0, *)) {
     if (self.viewLoaded) {
-      self.alertView.titleLabel.adjustsFontForContentSizeCategory =
-          adjustsFontForContentSizeCategory;
-      // TODO(https://github.com/material-components/material-components-ios/issues/8673): Add
-      // Buttons
-      // TODO(https://github.com/material-components/material-components-ios/issues/8671): Add
-      // Message
+      self.alertView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
     }
-  }
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
@@ -785,8 +778,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setupAlertView {
   self.alertView.titleLabel.text = self.title;
-  self.alertView.titleLabel.adjustsFontForContentSizeCategory =
-      self.adjustsFontForContentSizeCategory;
+  self.alertView.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
   if (self.attributedMessage.length > 0) {
     self.alertView.messageTextView.attributedText = self.attributedMessage;
   } else {
