@@ -724,6 +724,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   CGFloat maxWidth = MAX(messageSize.width, accessoryViewSize.width);
   CGFloat contentWidth = MAX(titleWidth + titleInsets, maxWidth + contentInsets);
 
+  // Recalculate the accessory view size using the `boundingWidth` to ensure the height calculated
+  // here matches what layoutSubviews will use for the frame.
+  accessoryViewSize =
+      [self.accessoryView systemLayoutSizeFittingSize:boundsSize
+                        withHorizontalFittingPriority:UILayoutPriorityRequired
+                              verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
+
   CGFloat totalElementsHeight = messageSize.height + accessoryViewSize.height;
   CGFloat contentHeight = (fabs(contentWidth) <= FLT_EPSILON) || totalElementsHeight <= FLT_EPSILON
                               ? 0.0f
