@@ -36,6 +36,7 @@ static const CGFloat kMinimumHeaderHeight = 8;
 @implementation MDCActionSheetHeaderView
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -186,6 +187,12 @@ static const CGFloat kMinimumHeaderHeight = 8;
                                                   object:nil];
   }
   [self updateFonts];
+}
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.messageLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
 }
 
 - (UIColor *)defaultTitleTextColor {

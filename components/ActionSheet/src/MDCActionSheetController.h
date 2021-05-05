@@ -43,7 +43,7 @@
 
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
-    : UIViewController<MDCElevatable, MDCElevationOverriding>
+    : UIViewController<MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.

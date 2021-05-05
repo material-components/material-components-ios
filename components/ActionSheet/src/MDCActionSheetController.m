@@ -123,6 +123,7 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
@@ -393,6 +394,7 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
+  cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
   cell.rippleColor = self.rippleColor;
   cell.tintColor = action.tintColor ?: self.actionTintColor;
@@ -510,6 +512,11 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
 }
 
 #pragma mark - Dynamic Type
+
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  self.header.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+}
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
