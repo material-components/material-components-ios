@@ -731,8 +731,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       animateAlongsideTransition:^(
           __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
         // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
-        self.preferredContentSize =
-            [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+        self.preferredContentSize = [self.alertView calculatePreferredContentSizeForBounds:size];
       }
                       completion:nil];
 }
