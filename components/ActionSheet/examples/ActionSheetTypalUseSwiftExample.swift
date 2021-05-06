@@ -225,7 +225,7 @@ extension ActionSheetTypicalUseSwiftExample {
 
   static func dynamic() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
-    actionSheet.mdc_adjustsFontForContentSizeCategory = true
+    actionSheet.adjustsFontForContentSizeCategory = true
     let image = UIImage(named: "ic_email") ?? UIImage()
     let actionThree = MDCActionSheetAction(
       title: "Email",
