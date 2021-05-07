@@ -631,83 +631,11 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 #pragma mark - Font
-
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
-  _mdc_adjustsFontForContentSizeCategory = mdc_adjustsFontForContentSizeCategory;
-
-  if (mdc_adjustsFontForContentSizeCategory) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-  } else {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIContentSizeCategoryDidChangeNotification
-                                                  object:nil];
-  }
-
-  // Set mdc_adjustsFontForContentSizeCategory on buttons
-  self.leadingButton.mdc_adjustsFontForContentSizeCategory =
-      self.mdc_adjustsFontForContentSizeCategory;
-  self.trailingButton.mdc_adjustsFontForContentSizeCategory =
-      self.mdc_adjustsFontForContentSizeCategory;
-
-  [self updateBannerFont];
-}
-
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self updateBannerFont];
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
-  [self updateBannerFont];
-
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
-  }
-}
-
-- (void)updateBannerFont {
-  [self updateTextFont];
-
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsUpdateConstraints];
-}
-
-- (void)updateTextFont {
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    NSAttributedString *attributedText = self.textView.attributedText;
-    NSMutableAttributedString *mutableAttributedText = [attributedText mutableCopy];
-    UIFont *textFont = self.textView.font;
-    if (textFont.mdc_scalingCurve) {
-      textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
-    }
-    self.textView.font = textFont;
-    [mutableAttributedText beginEditing];
-    __block BOOL hasScalableFont = NO;
-    [mutableAttributedText
-        enumerateAttribute:NSFontAttributeName
-                   inRange:NSMakeRange(0, mutableAttributedText.length)
-                   options:0
-                usingBlock:^(id value, NSRange range, BOOL *stop) {
-                  if (value) {
-                    UIFont *previousFont = (UIFont *)value;
-                    if (previousFont.mdc_scalingCurve) {
-                      hasScalableFont = YES;
-                      UIFont *scaledFont = [previousFont mdc_scaledFontForTraitEnvironment:self];
-                      [mutableAttributedText removeAttribute:NSFontAttributeName range:range];
-                      [mutableAttributedText addAttribute:NSFontAttributeName
-                                                    value:scaledFont
-                                                    range:range];
-                    }
-                  }
-                }];
-    [mutableAttributedText endEditing];
-    if (hasScalableFont) {
-      self.textView.attributedText = [mutableAttributedText copy];
-    }
   }
 }
 

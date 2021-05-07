@@ -265,7 +265,6 @@ static NSString *const exampleSuperLongText =
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
   bannerView.textView.text = exampleShortText;
   bannerView.textView.font = self.typographyScheme.body2;
-  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -441,7 +440,6 @@ static NSString *const exampleSuperLongText =
                         value:@"http://www.google.com"
                         range:NSMakeRange([exampleLongText length] - 11, 11)];
   bannerView.textView.attributedText = exampleString;
-  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
