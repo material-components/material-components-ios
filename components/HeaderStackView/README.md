@@ -18,7 +18,7 @@ bar views.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/components/app-bars-top/ios">Material Design guidelines: App Bar</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://github.com/material-components/material-components-ios/blob/develop/components/HeaderStackView/src/MDCHeaderStackView.h">API: MDCHeaderStackView</a></li>
 </ul>
 
