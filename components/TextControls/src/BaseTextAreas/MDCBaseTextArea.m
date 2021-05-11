@@ -547,7 +547,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self setNeedsLayout];
 }
 
-- (void)setTrailingview:(UIView *)trailingView {
+- (void)setTrailingView:(UIView *)trailingView {
   [_trailingView removeFromSuperview];
   _trailingView = trailingView;
   [self setNeedsLayout];
