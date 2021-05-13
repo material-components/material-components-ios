@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.resources = ['components/*/examples/resources/*', 'components/private/*/examples/resources/*', 'components/schemes/*/examples/resources/*']
   s.dependency 'MaterialComponents'
-	s.dependency 'MDFInternationalization'
+	s.dependency 'MDFInternationalization', "~> 3.0"
 	s.dependency 'MDFTextAccessibility'
   s.public_header_files = ['components/*/examples/*.h', 'components/*/examples/supplemental/*.h', 'components/private/*/examples/*.h', 'components/schemes/*/examples/*.h']
 end

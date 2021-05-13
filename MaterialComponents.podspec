@@ -100,7 +100,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MotionAnimator", "~> 4.0"
@@ -154,7 +154,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/private/Icons/ic_arrow_back"
     component.dependency "MaterialComponents/private/UIMetrics"
 
@@ -258,7 +258,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/NavigationBar"
     component.dependency "MaterialComponents/private/Math"
@@ -285,7 +285,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/MaterialBottomNavigation+BottomNavigationController.h"
     ]
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/Availability"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
@@ -398,7 +398,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
-    component.dependency 'MDFInternationalization'
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency 'MDFTextAccessibility'
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
@@ -502,7 +502,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/private/Application"
 
@@ -560,7 +560,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
@@ -607,7 +607,7 @@ Pod::Spec.new do |mdc|
     ]
     component.framework = "CoreGraphics", "QuartzCore"
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/CollectionLayoutAttributes"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
@@ -696,7 +696,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -940,7 +940,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -975,7 +975,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ButtonBar"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Typography"
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1096,7 +1096,7 @@ Pod::Spec.new do |mdc|
     component.resources = [
       "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -1137,7 +1137,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/private/Math"
 
@@ -1354,7 +1354,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/SizeClassDelegate/*.{h,m}"
     ]
 
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
@@ -1417,7 +1417,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/AnimationTiming"
     extension.dependency "MaterialComponents/Ripple"
     extension.dependency "MaterialComponents/private/Math"
-    extension.dependency "MDFInternationalization"
+    extension.dependency "MDFInternationalization", "~> 3.0"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -1464,7 +1464,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -1494,7 +1494,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     component.dependency "MaterialComponents/private/TextControlsPrivate+BaseStyle"
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -1515,7 +1515,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/TextControlsPrivate+Shared"
     component.dependency "MaterialComponents/private/TextControlsPrivate+BaseStyle"
     component.dependency "MaterialComponents/private/TextControlsPrivate+TextFields"
-    component.dependency "MDFInternationalization"
+    component.dependency "MDFInternationalization", "~> 3.0"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -2032,7 +2032,7 @@ Pod::Spec.new do |mdc|
       component.dependency "MaterialComponents/ShadowLayer"
       component.dependency "MaterialComponents/ShapeLibrary"
       component.dependency "MaterialComponents/Typography"
-      component.dependency "MDFInternationalization"
+      component.dependency "MDFInternationalization", "~> 3.0"
       component.dependency "MaterialComponents/private/Math"
 
       component.test_spec 'UnitTests' do |unit_tests|
