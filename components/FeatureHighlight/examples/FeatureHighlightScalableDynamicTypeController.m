@@ -19,13 +19,12 @@
 
 @implementation FeatureHighlightScalableDynamicTypeController
 
-- (void)showFeatureHighlight:(BOOL)useLegacyFontScaling {
+- (void)showFeatureHighlight {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_featureButton
                                                               completion:nil];
 
-  vc.mdc_adjustsFontForContentSizeCategory = YES;
-  vc.mdc_legacyFontScaling = useLegacyFontScaling;
+  vc.adjustsFontForContentSizeCategory = YES;
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
   vc.bodyText = @"This text scales in Dynamic Type.";
@@ -33,11 +32,7 @@
 }
 
 - (void)didTapStandardButton:(id)sender {
-  [self showFeatureHighlight:NO];
-}
-
-- (void)didTapLegacyButton:(id)sender {
-  [self showFeatureHighlight:YES];
+  [self showFeatureHighlight];
 }
 
 - (void)viewDidLoad {
@@ -57,14 +52,6 @@
                               action:@selector(didTapStandardButton:)
                     forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.showStandardButton];
-
-  self.showLegacyButton = [[MDCButton alloc] initWithFrame:CGRectZero];
-  [self.showLegacyButton setTitle:@"Show Highlight (Legacy)" forState:UIControlStateNormal];
-  [self.showLegacyButton sizeToFit];
-  [self.showLegacyButton addTarget:self
-                            action:@selector(didTapLegacyButton:)
-                  forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:self.showLegacyButton];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -75,16 +62,9 @@
 
   CGRect frame;
 
-  [self.showLegacyButton sizeToFit];
-  self.showLegacyButton.center = self.view.center;
-  frame = self.showLegacyButton.frame;
-  frame.origin.y = CGRectGetHeight(self.view.frame) - 60;
-  self.showLegacyButton.frame = frame;
-
   [self.showStandardButton sizeToFit];
   self.showStandardButton.center = self.view.center;
   frame = self.showStandardButton.frame;
-  frame.origin.y = CGRectGetMinY(self.showLegacyButton.frame) - 60;
   self.showStandardButton.frame = frame;
 }
 

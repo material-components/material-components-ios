@@ -18,6 +18,5 @@
 
 @property(nonatomic) UIButton *featureButton;
 @property(nonatomic) UIButton *showStandardButton;
-@property(nonatomic) UIButton *showLegacyButton;
 
 @end

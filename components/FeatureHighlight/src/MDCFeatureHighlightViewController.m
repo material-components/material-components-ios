@@ -63,10 +63,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   self.featureHighlightView.displayedView = _displayedView;
   self.featureHighlightView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.featureHighlightView.mdc_adjustsFontForContentSizeCategory =
-      _mdc_adjustsFontForContentSizeCategory;
   self.featureHighlightView.adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
-  self.featureHighlightView.mdc_legacyFontScaling = _mdc_legacyFontScaling;
 
   __weak MDCFeatureHighlightViewController *weakSelf = self;
   self.featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -264,42 +261,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
                                self->_completion(accepted);
                              }
                            }];
-}
-
-#pragma mark - Dynamic Type
-
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    [self updateFontsForDynamicType];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-  } else {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIContentSizeCategoryDidChangeNotification
-                                                  object:nil];
-  }
-}
-
-- (void)mdc_setLegacyFontScaling:(BOOL)legacyScaling {
-  _mdc_legacyFontScaling = legacyScaling;
-
-  if (self.isViewLoaded) {
-    self.featureHighlightView.mdc_legacyFontScaling = legacyScaling;
-  }
-}
-
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self updateFontsForDynamicType];
-}
-
-- (void)updateFontsForDynamicType {
-  [self.featureHighlightView updateTitleFont];
-  [self.featureHighlightView updateBodyFont];
-  [self.featureHighlightView layoutIfNeeded];
 }
 
 #pragma mark - Accessibility

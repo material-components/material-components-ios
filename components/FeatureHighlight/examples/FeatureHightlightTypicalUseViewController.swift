@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons_ButtonThemer 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialFeatureHighlight_ColorThemer 
 import MaterialComponents.MaterialFeatureHighlight
-import MaterialComponents.MaterialFeatureHighlight_ColorThemer
+import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
 /// Example to show how to use a feature highlight
@@ -56,12 +56,13 @@ class FeatureHighlightSwiftViewController: UIViewController {
   }
 
   @objc func showFeatureHighlight() {
-    let vc = MDCFeatureHighlightViewController(highlightedView: featureButton,
-                                               completion: nil)
+    let vc = MDCFeatureHighlightViewController(
+      highlightedView: featureButton,
+      completion: nil)
     MDCFeatureHighlightColorThemer.applySemanticColorScheme(colorScheme, to: vc)
     vc.titleFont = typographyScheme.headline6
     vc.bodyFont = typographyScheme.body2
-    vc.mdc_adjustsFontForContentSizeCategory = true
+    vc.adjustsFontForContentSizeCategory = true
     vc.titleText = "Hey this is a title for the Feature Highlight"
     vc.bodyText = "This is the description of the feature highlight view controller"
     self.present(vc, animated: true, completion: nil)

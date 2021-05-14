@@ -135,24 +135,6 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 @property(nonatomic, strong, nullable) UIFont *bodyFont;
 
 /**
- Indicates whether the feature highlight contents should automatically update their font when the
- device’s UIContentSizeCategory changes.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- Default value is NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
-/**
- Enable legacy font scaling curves for Dynamic Type.
- Default value is NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
-
-/**
  A block that is invoked when the @c MDCFeatureHighlightViewController receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
