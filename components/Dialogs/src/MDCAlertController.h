@@ -336,6 +336,14 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
 
+/**
+ Adds an array of actions to the alert dialog.
+
+ @param actions Will be added to the end of @c MDCAlertController actions.
+ @seealso This is a _convenience_ API for @c addAction:.
+ */
+- (void)addActions:(nonnull NSArray<MDCAlertAction *> *)actions;
+
 // TODO(https://github.com/material-components/material-components-ios/issues/9891): Replace
 // MDCActionEmphasis with UIControlContentHorizontalAlignment after dropping support for iOS 10.
 /** Content alignment for Alert actions. */

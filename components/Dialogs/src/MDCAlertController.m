@@ -353,6 +353,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self addButtonToAlertViewForAction:action];
 }
 
+- (void)addActions:(NSArray<MDCAlertAction *> *)actions {
+  for (MDCAlertAction *action in actions) {
+    [self addAction:action];
+  }
+}
+
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action {
   MDCButton *button = [self.actionManager buttonForAction:action];
   if (!button && [self.actionManager hasAction:action]) {

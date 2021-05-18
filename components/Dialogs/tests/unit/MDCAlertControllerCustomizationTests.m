@@ -14,6 +14,8 @@
 
 #import "MaterialDialogs.h"
 
+#import "MaterialButtons.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
 
 #import <XCTest/XCTest.h>
@@ -232,6 +234,36 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertEqual(self.alertView.isVerticalActionsLayout, true);
+}
+
+- (void)testAddActionsMaintainsOrder {
+  // Given
+  MDCAlertAction *actionOne = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  MDCAlertAction *actionTwo = [MDCAlertAction actionWithTitle:@"Bar" handler:nil];
+  MDCAlertController *otherAlert = [[MDCAlertController alloc] init];
+
+  // When
+  [self.alert addActions:@[ actionOne, actionTwo ]];
+  [otherAlert addAction:actionOne];
+  [otherAlert addAction:actionTwo];
+
+  // Then
+  XCTAssertEqualObjects(self.alert.actions, otherAlert.actions);
+}
+
+- (void)testAddActionsCreatesButtonsCorrectly {
+  // Given
+  MDCAlertAction *actionOne = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  MDCAlertAction *actionTwo = [MDCAlertAction actionWithTitle:@"Bar" handler:nil];
+
+  // When
+  [self.alert addActions:@[ actionOne, actionTwo ]];
+
+  // Then
+  XCTAssertEqualObjects([[self.alert buttonForAction:actionOne] titleForState:UIControlStateNormal],
+                        [actionOne.title uppercaseString]);
+  XCTAssertEqualObjects([[self.alert buttonForAction:actionTwo] titleForState:UIControlStateNormal],
+                        [actionTwo.title uppercaseString]);
 }
 
 #pragma mark - Helpers

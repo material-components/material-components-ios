@@ -19,6 +19,13 @@
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
 
+/** Category for @c MDCAlertController to expose the @c actionManager property. */
+@interface MDCAlertController (Testing)
+/** Manages the actions and the creation of buttons based off a given action. */
+@property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
+
+@end
+
 @interface MDCAlertActionManagerTests : XCTestCase
 
 @property(nonatomic, nullable, strong) MDCAlertActionManager *actionManager;
@@ -178,6 +185,46 @@
                                                           target:self
                                                         selector:@selector(actionButtonPressed:)];
   XCTAssertNotEqual(button1, button2);
+}
+
+- (void)testAddActionsResultsInSameButtonsOrderAsAddAction {
+  // Given
+  MDCAlertAction *actionOne = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  MDCAlertAction *actionTwo = [MDCAlertAction actionWithTitle:@"Bar" handler:nil];
+  MDCAlertController *alertOne = [[MDCAlertController alloc] init];
+  MDCAlertController *alertTwo = [[MDCAlertController alloc] init];
+
+  // When
+  [alertOne addActions:@[ actionOne, actionTwo ]];
+  [alertTwo addAction:actionOne];
+  [alertTwo addAction:actionTwo];
+
+  // Then
+  XCTAssertEqualObjects(alertOne.actionManager.actions, alertTwo.actionManager.actions);
+}
+
+- (void)testAddActionsWithButtonsInActionOrder {
+  // Given
+  MDCAlertAction *actionOne = [MDCAlertAction actionWithTitle:@"Foo" handler:nil];
+  MDCAlertAction *actionTwo = [MDCAlertAction actionWithTitle:@"Bar" handler:nil];
+  MDCAlertController *alertOne = [[MDCAlertController alloc] init];
+
+  // When
+  [alertOne addActions:@[ actionOne, actionTwo ]];
+  MDCButton *buttonOne =
+      [alertOne.actionManager createButtonForAction:actionOne
+                                             target:self
+                                           selector:@selector(actionButtonPressed:)];
+  MDCButton *buttonTwo =
+      [alertOne.actionManager createButtonForAction:actionTwo
+                                             target:self
+                                           selector:@selector(actionButtonPressed:)];
+
+  // Then
+  XCTAssertEqualObjects([buttonOne titleForState:UIControlStateNormal],
+                        [actionOne.title uppercaseString]);
+  XCTAssertEqualObjects([buttonTwo titleForState:UIControlStateNormal],
+                        [actionTwo.title uppercaseString]);
 }
 
 @end
