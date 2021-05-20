@@ -68,26 +68,3 @@
 @property(nonatomic, strong, nullable, readonly) UIFont *overline;
 
 @end
-
-/**
- A basic font scheme implements the MDCFontScheme protocol.
-
- @warning This class will soon be deprecated. Consider using MDCTypographyScheme instead.
- */
-@interface MDCBasicFontScheme : NSObject <MDCFontScheme>
-
-@property(nonatomic, nullable) UIFont *headline1;
-@property(nonatomic, nullable) UIFont *headline2;
-@property(nonatomic, nullable) UIFont *headline3;
-@property(nonatomic, nullable) UIFont *headline4;
-@property(nonatomic, nullable) UIFont *headline5;
-@property(nonatomic, nullable) UIFont *headline6;
-@property(nonatomic, nullable) UIFont *subtitle1;
-@property(nonatomic, nullable) UIFont *subtitle2;
-@property(nonatomic, nullable) UIFont *body1;
-@property(nonatomic, nullable) UIFont *body2;
-@property(nonatomic, nullable) UIFont *caption;
-@property(nonatomic, nullable) UIFont *button;
-@property(nonatomic, nullable) UIFont *overline;
-
-@end
