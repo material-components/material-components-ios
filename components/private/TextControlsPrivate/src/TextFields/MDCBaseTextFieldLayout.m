@@ -168,7 +168,7 @@
     if (displaysRightView) {
       textRectMaxX = rightViewMinX - horizontalInterItemPadding;
     } else {
-      textRectMaxX = textFieldWidth - horizontalInterItemPadding;
+      textRectMaxX = textFieldWidth - rightEdgePadding;
     }
   } else {
     textRectMinX = displaysLeftView ? leftViewMaxX + horizontalInterItemPadding : leftEdgePadding;
