@@ -16,7 +16,7 @@
 
 #import "MaterialTextControls+BaseTextFields.h"
 #import "MaterialTextControls+Enums.h"
-#import "MaterialTextControlsPrivate+BaseStyle.h"
+#import "MDCTextControlLabelSupport.h"
 
 @interface MDCBaseTextField (Private)
 - (BOOL)shouldLayoutForRTL;
@@ -248,67 +248,6 @@
   XCTAssertTrue(CGSizeEqualToSize(newSize, correctSize));
 }
 
-- (void)testDefaultAccessibilityLabelWithOnlyLabelText {
-  // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
-  NSString *labelText = @"label text";
-
-  // When
-  textField.label.text = labelText;
-
-  // Then
-  XCTAssertTrue([labelText isEqualToString:textField.accessibilityLabel]);
-}
-
-- (void)testDefaultAccessibilityLabelWithLeadingAssistiveLabelText {
-  // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
-  NSString *leadingAssistiveLabelText = @"leading assistive label text";
-
-  // When
-  textField.leadingAssistiveLabel.text = leadingAssistiveLabelText;
-
-  // Then
-  XCTAssertTrue(
-      [textField.leadingAssistiveLabel.text isEqualToString:textField.accessibilityLabel]);
-}
-
-- (void)testDefaultAccessibilityLabelWithTrailingAssistiveLabelText {
-  // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
-  NSString *trailingAssistiveLabelText = @"trailing assistive label text";
-
-  // When
-  textField.trailingAssistiveLabel.text = trailingAssistiveLabelText;
-
-  // Then
-  XCTAssertTrue(
-      [textField.trailingAssistiveLabel.text isEqualToString:textField.accessibilityLabel]);
-}
-
-- (void)testDefaultAccessibilityLabelWithTextSetOnEveryLabel {
-  // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
-  NSString *labelText = @"label text";
-  NSString *leadingAssistiveLabelText = @"leading assistive label text";
-  NSString *trailingAssistiveLabelText = @"trailing assistive label text";
-
-  // When
-  textField.label.text = labelText;
-  textField.leadingAssistiveLabel.text = leadingAssistiveLabelText;
-  textField.trailingAssistiveLabel.text = trailingAssistiveLabelText;
-
-  // Then
-  NSString *concatenatedText =
-      [NSString stringWithFormat:@"%@, %@, %@", labelText, leadingAssistiveLabelText,
-                                 trailingAssistiveLabelText];
-  XCTAssertTrue([concatenatedText isEqualToString:textField.accessibilityLabel]);
-}
-
 - (void)testDefaultAccessibilityLabelWithNoLabelText {
   // Given
   CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
@@ -316,23 +255,6 @@
 
   // Then
   XCTAssertNil(textField.accessibilityLabel);
-}
-
-- (void)testDefaultAccessibilityLabelWithLabelTextAndLeadingAssistiveLabelText {
-  // Given
-  CGRect textFieldFrame = CGRectMake(0, 0, 130, 100);
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:textFieldFrame];
-  NSString *labelText = @"label text";
-  NSString *leadingAssistiveLabelText = @"leading assistive label text";
-
-  // When
-  textField.label.text = labelText;
-  textField.leadingAssistiveLabel.text = leadingAssistiveLabelText;
-
-  // Then
-  NSString *concatenatedText =
-      [NSString stringWithFormat:@"%@, %@", labelText, leadingAssistiveLabelText];
-  XCTAssertTrue([concatenatedText isEqualToString:textField.accessibilityLabel]);
 }
 
 - (void)testClientSpecifiedAccessibilityLabel {

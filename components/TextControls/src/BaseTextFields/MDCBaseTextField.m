@@ -649,28 +649,31 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 
 #pragma mark Accessibility Overrides
 
-- (NSString *)accessibilityLabel {
-  NSString *superAccessibilityLabel = [super accessibilityLabel];
-  if (superAccessibilityLabel.length > 0) {
-    return superAccessibilityLabel;
-  }
+- (NSInteger)accessibilityElementCount {
+  return [self accessibilityElements].count;
+}
 
-  NSMutableArray *accessibilityLabelComponents = [NSMutableArray new];
-  if (self.label.text.length > 0) {
-    [accessibilityLabelComponents addObject:self.label.text];
+- (NSArray *)accessibilityElements {
+  NSMutableArray *mutableElements = [[super accessibilityElements] mutableCopy];
+  if (self.label.isAccessibilityElement && self.labelPosition != MDCTextControlLabelPositionNone) {
+    // The label should be before the system text field element
+    [mutableElements insertObject:self.label atIndex:0];
   }
-  if (self.leadingAssistiveLabel.text.length > 0) {
-    [accessibilityLabelComponents addObject:self.leadingAssistiveLabel.text];
+  if (self.leadingView.isAccessibilityElement && self.leadingView.superview == self) {
+    // The leading view should be first if it's there
+    [mutableElements insertObject:self.leadingView atIndex:0];
   }
-  if (self.trailingAssistiveLabel.text.length > 0) {
-    [accessibilityLabelComponents addObject:self.trailingAssistiveLabel.text];
+  if (self.trailingView.isAccessibilityElement && self.trailingView.superview == self) {
+    // The trailing view should be after the system text field element or clear button if it's there
+    [mutableElements addObject:self.trailingView];
   }
-
-  if (accessibilityLabelComponents.count > 0) {
-    return [accessibilityLabelComponents componentsJoinedByString:@", "];
+  if (self.leadingAssistiveLabel.isAccessibilityElement) {
+    [mutableElements addObject:self.leadingAssistiveLabel];
   }
-
-  return nil;
+  if (self.trailingAssistiveLabel.isAccessibilityElement) {
+    [mutableElements addObject:self.trailingAssistiveLabel];
+  }
+  return [mutableElements copy];
 }
 
 - (UIBezierPath *)accessibilityPath {
