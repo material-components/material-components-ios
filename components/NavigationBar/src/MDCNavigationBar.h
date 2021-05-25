@@ -41,7 +41,13 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
   /**
    Align the title view's center with the navigation bar's center, if possible.
    */
-  MDCNavigationBarTitleViewLayoutBehaviorCenter
+  MDCNavigationBarTitleViewLayoutBehaviorCenter,
+
+  /**
+   Align the title view's center with the navigation bar's center, if possible. Relies on the title
+   view's intrinsicContentSize to determine its width.
+   */
+  MDCNavigationBarTitleViewLayoutBehaviorCenterFit
 };
 
 /**

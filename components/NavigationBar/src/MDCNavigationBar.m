@@ -320,7 +320,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       // Do nothing. The default textFrame calculation will fill the available space.
       break;
 
-    case MDCNavigationBarTitleViewLayoutBehaviorCenter: {
+    case MDCNavigationBarTitleViewLayoutBehaviorCenter:  // Intentional fall through.
+    case MDCNavigationBarTitleViewLayoutBehaviorCenterFit: {
       CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, self.titleInsets).size.width;
       availableWidth -=
           MAX(_leadingButtonBar.frame.size.width, _trailingButtonBar.frame.size.width) * 2;
@@ -328,6 +329,9 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
         availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
       }
       titleViewFrame.size.width = availableWidth;
+      if (self.titleViewLayoutBehavior == MDCNavigationBarTitleViewLayoutBehaviorCenterFit) {
+        titleViewFrame.size.width = MIN(self.titleView.intrinsicContentSize.width, availableWidth);
+      }
       titleViewFrame = [self mdc_frameAlignedHorizontally:titleViewFrame
                                                 alignment:MDCNavigationBarTitleAlignmentCenter];
       break;

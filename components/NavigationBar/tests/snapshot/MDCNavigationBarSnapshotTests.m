@@ -274,4 +274,32 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.navBar];
 }
 
+- (void)testNavbarWithTitleViewBehaviorCenter {
+  // When
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  // Using a label as custom view to have a view that has an intrinsic content size.
+  UILabel *customTitleLabel = [[UILabel alloc] init];
+  customTitleLabel.text = kItemTitleShort1Latin;
+  // Tint the background to see the label's full frame on the screenshot.
+  customTitleLabel.backgroundColor = UIColor.cyanColor;
+  self.navBar.titleView = customTitleLabel;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.navBar];
+}
+
+- (void)testNavbarWithTitleViewBehaviorCenterFit {
+  // When
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenterFit;
+  // Using a label as custom view to have a view that has an intrinsic content size.
+  UILabel *customTitleLabel = [[UILabel alloc] init];
+  customTitleLabel.text = kItemTitleShort1Latin;
+  // Tint the background to see the label's full frame on the screenshot.
+  customTitleLabel.backgroundColor = UIColor.cyanColor;
+  self.navBar.titleView = customTitleLabel;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.navBar];
+}
+
 @end
