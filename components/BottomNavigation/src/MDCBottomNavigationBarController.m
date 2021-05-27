@@ -280,14 +280,19 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
     navigationBar.hidden = hidden;
   }
 
+  void (^animations)(void) = ^{
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+    [self updateNavigationBarInsets];
+  };
+
   NSTimeInterval duration = animated ? kNavigationBarHideShowAnimationDuration : 0;
-  [UIView animateWithDuration:duration
-                   animations:^{
-                     [self.view setNeedsLayout];
-                     [self.view layoutIfNeeded];
-                     [self updateNavigationBarInsets];
-                   }
-                   completion:completionBlock];
+  if (animated) {
+    [UIView animateWithDuration:duration animations:animations completion:completionBlock];
+  } else {
+    animations();
+    completionBlock(YES);
+  }
 }
 
 #pragma mark - MDCBottomNavigationBarDelegate
