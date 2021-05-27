@@ -247,10 +247,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?: UIColor.whiteColor;
     _mdc_adjustsFontForContentSizeCategory = manager.mdc_adjustsFontForContentSizeCategory;
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-        manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-#pragma clang diagnostic pop
     _messageFont = manager.messageFont;
     _buttonFont = manager.buttonFont;
     _message = message;
@@ -580,7 +576,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     if (_mdc_adjustsFontForContentSizeCategory) {
       if (_messageFont.mdc_scalingCurve) {
         _label.font = [_messageFont mdc_scaledFontForTraitEnvironment:self];
-      } else if (_adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+      } else {
         _label.font =
             [_messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
                                        scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -638,7 +634,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     if (_mdc_adjustsFontForContentSizeCategory) {
       if (_buttonFont.mdc_scalingCurve) {
         finalButtonFont = [_buttonFont mdc_scaledFontForTraitEnvironment:self];
-      } else if (_adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+      } else {
         finalButtonFont =
             [_buttonFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];

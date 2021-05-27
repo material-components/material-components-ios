@@ -108,17 +108,6 @@
   XCTAssertEqual(manager.messageElevation, fakeElevation);
 }
 
-- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
-  // Given
-  MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
-
-  // Then
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  XCTAssertTrue(manager.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
-#pragma clang diagnostic pop
-}
-
 - (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
   // Given
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];

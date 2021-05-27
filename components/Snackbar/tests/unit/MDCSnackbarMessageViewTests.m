@@ -446,10 +446,6 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   MDCSnackbarMessageViewTestsFakeView *messageView =
       [[MDCSnackbarMessageViewTestsFakeView alloc] init];
   messageView.mdc_adjustsFontForContentSizeCategory = YES;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-#pragma clang diagnostic pop
   UIFont *messageFont = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
   MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
   messageFont = [fontScaler scaledFontWithFont:messageFont];
@@ -476,10 +472,6 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   MDCSnackbarMessageViewTestsFakeView *messageView =
       [[MDCSnackbarMessageViewTestsFakeView alloc] init];
   messageView.mdc_adjustsFontForContentSizeCategory = YES;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-#pragma clang diagnostic pop
   MDCButton *button = [[MDCButton alloc] init];
   [messageView.actionButtons addObject:button];
   UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
@@ -501,17 +493,6 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   // Then
   CGFloat actualButtonFontSize = [button titleFontForState:UIControlStateNormal].pointSize;
   XCTAssertGreaterThan(actualButtonFontSize, originalButtonFontSize);
-}
-
-- (void)testMessageViewAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
-  // Given
-  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
-
-  // Then
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  XCTAssertTrue(messageView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
-#pragma clang diagnostic pop
 }
 
 - (void)testMessageStaysWhenFocusOnShowIsEnabled {

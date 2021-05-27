@@ -237,21 +237,6 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- Affects the fallback behavior for when a scaled font is not provided.
-
- If enabled, the font size will adjust even if a scaled font has not been provided for
- a given UIFont property on this component.
-
- If disabled, the font size will only be adjusted if a scaled font has been provided.
- This behavior most closely matches UIKit's.
-
- Default value is YES.
- */
-@property(nonatomic, assign)
-    BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable __deprecated_msg(
-        "Use UIFontMetrics and UIContentSizeCategoryAdjusting on iOS 11+ or MDCFontScaler on "
-        "earlier versions");
-/**
  If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views by
  default. If accessibilityViewIsModal needs to be set for specific snackbar views,
  -willPresentSnackbarWithMessageView: in MDCSnackbarManagerDelegate can be used to access
