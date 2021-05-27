@@ -353,18 +353,4 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
-/**
- Affects the fallback behavior for when a scaled font is not provided.
-
- If enabled, the font size will adjust even if a scaled font has not been provided for
- a given UIFont property on this component.
-
- If disabled, the font size will only be adjusted if a scaled font has been provided.
- This behavior most closely matches UIKit's.
-
- Default value is YES, but this flag will eventually default to NO and then be deprecated
- and deleted.
- */
-@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-
 @end

@@ -119,7 +119,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, strong, nonnull) NSMutableDictionary<NSNumber *, UIColor *> *rippleColors;
 @property(nonatomic, readonly) CGFloat pixelScale;
 @property(nonatomic, assign) BOOL enableRippleBehavior;
-@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 @property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
 @property(nonatomic, assign) UIEdgeInsets currentVisibleAreaInsets;
 @property(nonatomic, assign) CGFloat currentCornerRadius;
@@ -156,7 +155,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   self.isAccessibilityElement = YES;
   self.accessibilityTraits = UIAccessibilityTraitButton;
   _mdc_overrideBaseElevation = -1;
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   [self addObservers];
 }
 
@@ -584,7 +582,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (titleFont.mdc_scalingCurve) {
       titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
-    } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+    } else {
       titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
