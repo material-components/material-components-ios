@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/UIFont+MaterialTypographyPrivate.h"
+#import "MDCTypographyFontLoader.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilon = (CGFloat)0.001;
