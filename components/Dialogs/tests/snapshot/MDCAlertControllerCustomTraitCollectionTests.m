@@ -162,49 +162,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
 #pragma mark - Dynamic Type
 
-/** Tests the basic behavior when the combination of fonts and settings don't allow font scaling. */
-- (void)testSystemFontNotScaledWhenScaledFontUnavailableForContentSizeExtraSmall {
-  // Given
-  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
-  self.alertController.messageFont = originalFont;
-  self.alertController.titleFont = originalFont;
-  for (MDCAlertAction *action in self.alertController.actions) {
-    [[self.alertController buttonForAction:action] setTitleFont:originalFont
-                                                       forState:UIControlStateNormal];
-  }
-  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  [self.alertController loadViewIfNeeded];
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/** Tests the basic behavior when the combination of fonts and settings don't allow font scaling. */
-- (void)testSystemFontNotScaledWhenScaledFontUnavailableForContentSizeAXXXL {
-  // Given
-  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
-  self.alertController.messageFont = originalFont;
-  self.alertController.titleFont = originalFont;
-  for (MDCAlertAction *action in self.alertController.actions) {
-    [[self.alertController buttonForAction:action] setTitleFont:originalFont
-                                                       forState:UIControlStateNormal];
-  }
-  [self
-      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  [self.alertController loadViewIfNeeded];
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
 /**
  Tests the original MDCTypography behavior for Dynamic Type.
 
@@ -225,7 +182,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
                                                        forState:UIControlStateNormal];
   }
   [self setAlertControllerContentSizeCategory:UIContentSizeCategoryExtraSmall];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
   [self.alertController loadViewIfNeeded];
@@ -256,7 +212,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   }
   [self
       setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
   [self.alertController loadViewIfNeeded];

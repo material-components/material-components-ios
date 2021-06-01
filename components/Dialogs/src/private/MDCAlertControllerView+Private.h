@@ -70,16 +70,4 @@
 
 - (void)updateFonts;
 
-/**
- Affects the fallback behavior for when a scaled font is not provided.
-
- If @c YES, the font size will adjust even if a scaled font has not been provided for
- a given @c UIFont property on this component.
-
- If @c NO, the font size will only be adjusted if a scaled font has been provided.
-
- Default value is @c YES.
- */
-@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-
 @end

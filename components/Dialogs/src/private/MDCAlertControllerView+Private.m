@@ -188,8 +188,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     button.inkColor = self.buttonInkColor;
     // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
     // dynamic type correctly.
-    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-        self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
     button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     button.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     // TODO(#1726): Determine default text color values for Normal and Disabled
@@ -220,11 +218,9 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 - (void)updateTitleFont {
   UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      titleFont =
-          [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-    }
+    titleFont =
+        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   }
 
   self.titleLabel.font = titleFont;
@@ -326,11 +322,9 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 - (void)updateMessageFont {
   UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      messageFont = [messageFont
-          mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-    }
+    messageFont =
+        [messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   }
 
   self.messageTextView.font = messageFont;
@@ -385,11 +379,9 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       buttonFont = button.titleLabel.font;
     }
     if (self.mdc_adjustsFontForContentSizeCategory) {
-      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-        buttonFont = [buttonFont
-            mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                         scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-      }
+      buttonFont =
+          [buttonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
     if (button.enableTitleFontForState) {
       [button setTitleFont:buttonFont forState:UIControlStateNormal];

@@ -171,7 +171,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
     _actionsHorizontalAlignmentInVerticalLayout = MDCContentHorizontalAlignmentCenter;
     _actionManager = [[MDCAlertActionManager alloc] init];
-    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
     _shadowColor = UIColor.blackColor;
     _mdc_overrideBaseElevation = -1;
     _shouldAutorotateOverride = super.shouldAutorotate;
@@ -580,14 +579,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
-    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-}
-
 - (void)actionButtonPressed:(id)button forEvent:(UIEvent *)event {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
   if ([self.delegate respondsToSelector:@selector(alertController:didTapAction:withEvent:)]) {
@@ -818,8 +809,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   } else {
     self.alertView.messageColor = self.messageColor ?: UIColor.blackColor;
   }
-  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-      self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   if (self.backgroundColor) {
     // Avoid reset background color to transparent when self.backgroundColor is nil.
     self.alertView.backgroundColor = self.backgroundColor;

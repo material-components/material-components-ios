@@ -170,7 +170,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Then
   XCTAssertNotNil(self.alert.actions);
   XCTAssertNotNil(self.alert.title);
-  XCTAssertTrue(self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
   XCTAssertEqualObjects(self.alert.shadowColor, UIColor.blackColor);
 
   XCTAssertNotNil(self.alert.message);
@@ -187,7 +186,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertNotNil(self.attributedAlert.title);
   XCTAssertNil(self.attributedAlert.attributedLinkColor);
   XCTAssertNil(self.attributedAlert.attributedMessageAction);
-  XCTAssertTrue(self.attributedAlert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
   XCTAssertEqualObjects(self.attributedAlert.shadowColor, UIColor.blackColor);
 
   XCTAssertNotNil(self.attributedAlert.attributedMessage);
@@ -663,48 +661,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertEqualObjects(self.alert.view.backgroundColor, testColor);
 }
 
-/**
- Test the setting @c adjustFontForContentSizeCategoryWhenScaledFontsIsUnavailable also sets the
- property on the @c alertView.
- */
-- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailableSetsTheAlertViewProperty {
-  // When
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // Then
-  XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
-}
-
-- (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
-  // Given
-  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
-  self.alert.titleFont = fakeTitleFont;
-  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
-  self.alert.messageFont = fakeMessageFont;
-  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
-                                                       handler:^(MDCAlertAction *action){
-                                                       }];
-  [self.alert addAction:fakeAction];
-  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
-  [[self.alert buttonForAction:fakeAction] setTitleFont:fakeButtonFont
-                                               forState:UIControlStateNormal];
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // When
-  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
-
-  // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
-                view.titleLabel.font, fakeTitleFont);
-  XCTAssertTrue([view.messageTextView.font mdc_isSimplyEqual:fakeMessageFont],
-                @"%@ is not equal to %@", view.messageTextView.font, fakeMessageFont);
-  MDCButton *button = [self.alert buttonForAction:fakeAction];
-  XCTAssertTrue([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
-                @"%@ is not equal to %@", [button titleFontForState:UIControlStateNormal],
-                fakeButtonFont);
-}
-
 - (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
@@ -718,7 +674,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
   [[self.alert buttonForAction:fakeAction] setTitleFont:fakeButtonFont
                                                forState:UIControlStateNormal];
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
@@ -753,7 +708,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   [self.alert addAction:fakeAction];
   [[self.alert buttonForAction:fakeAction] setTitleFont:fakeButtonFont
                                                forState:UIControlStateNormal];
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
   [self.alert addAction:fakeAction2];
   [[self.alert buttonForAction:fakeAction2] setTitleFont:fakeButtonFont
@@ -788,7 +742,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
                                                         }];
 
   // When
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
   [self.alert addAction:fakeAction];
@@ -838,7 +791,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // When
   [self.alert loadViewIfNeeded];
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -878,7 +830,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // When
   [self.alert loadViewIfNeeded];
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -924,7 +875,6 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // When
   [alert loadViewIfNeeded];
-  alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
@@ -981,7 +931,6 @@ than @c UIContentSizeCategoryLarge.
 
   // When
   [alert loadViewIfNeeded];
-  alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then

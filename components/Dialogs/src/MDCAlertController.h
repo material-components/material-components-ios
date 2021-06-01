@@ -295,18 +295,6 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
     (MDCAlertController *_Nullable alertController,
      UITraitCollection *_Nullable previousTraitCollection);
 
-/**
- Affects the fallback behavior for when a scaled font is not provided.
-
- If @c YES, the font size will adjust even if a scaled font has not been provided for
- a given @c UIFont property on this component.
-
- If @c NO, the font size will only be adjusted if a scaled font has been provided.
-
- Defaults to @c YES.
- */
-@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-
 /** @c MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:
     (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
