@@ -15,8 +15,8 @@
 #import "MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetAction.h"
 
-#import <MaterialComponents/MaterialRipple.h>
-#import <MaterialComponents/MaterialTypography.h>
+#import "MaterialRipple.h"  // ComponentImport
+#import "MaterialTypography.h"  // ComponentImport
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 static const CGFloat kImageTopPadding = 16;
@@ -52,8 +52,6 @@ static inline UIColor *RippleColor() {
   NSLayoutConstraint *_contentContainerBottomConstraint;
   NSLayoutConstraint *_contentContainerTrailingConstraint;
 }
-
-@synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier {
@@ -217,19 +215,8 @@ static inline UIColor *RippleColor() {
 - (void)updateTitleFont {
   UIFont *titleFont =
       _actionFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    self.actionLabel.font =
-        [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-  } else {
-    self.actionLabel.font = titleFont;
-  }
+  self.actionLabel.font = titleFont;
   [self setNeedsLayout];
-}
-
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-  [self updateTitleFont];
 }
 
 - (void)setActionTextColor:(UIColor *)actionTextColor {

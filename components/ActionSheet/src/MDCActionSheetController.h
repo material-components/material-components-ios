@@ -137,20 +137,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
      UITraitCollection *_Nullable previousTraitCollection);
 
 /**
- Indicates whether the button should automatically update its font when the device’s
- UIContentSizeCategory is changed.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- If set to YES, this button will base its text font on MDCFontTextStyleButton.
-
- Defaults value is NO.
- */
-@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
-
-/**
   The font applied to the title of the action sheet controller.
  */
 @property(nonatomic, nonnull, strong) UIFont *titleFont;

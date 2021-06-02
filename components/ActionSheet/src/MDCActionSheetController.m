@@ -122,7 +122,6 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
-@synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 @synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
@@ -391,7 +390,6 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
       [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
   MDCActionSheetAction *action = _actions[indexPath.row];
   cell.action = action;
-  cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.actionLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
@@ -518,31 +516,9 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   self.header.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
 }
 
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-  self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
-  [self updateFontsForDynamicType];
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateFontsForDynamicType)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-  } else {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIContentSizeCategoryDidChangeNotification
-                                                  object:nil];
-  }
-  [self.view setNeedsLayout];
-}
-
 - (void)updateTableFonts {
   UIFont *finalActionsFont =
       _actionFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    finalActionsFont = [finalActionsFont
-        mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                     scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-  }
   _actionFont = finalActionsFont;
   [self updateTable];
 }

@@ -25,9 +25,6 @@
 
 @property(nonatomic, nullable, copy) NSString *message;
 
-@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
-
 @property(nonatomic, strong, nonnull) UIFont *titleFont;
 
 @property(nonatomic, strong, nonnull) UIFont *messageFont;

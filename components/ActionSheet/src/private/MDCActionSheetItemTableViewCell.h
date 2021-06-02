@@ -24,9 +24,6 @@
 */
 @property(nonatomic, nonnull) MDCActionSheetAction *action;
 
-@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
-
 @property(nonatomic, nonnull, strong) UIFont *actionFont;
 
 @property(nonatomic, strong, nullable) UIColor *actionTextColor;
