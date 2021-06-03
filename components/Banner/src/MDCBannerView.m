@@ -176,14 +176,12 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   MDCButton *leadingButton = [[MDCButton alloc] init];
   leadingButton.translatesAutoresizingMaskIntoConstraints = NO;
   leadingButton.backgroundColor = UIColor.whiteColor;
-  leadingButton.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
   [buttonContainerView addSubview:leadingButton];
   _leadingButton = leadingButton;
 
   MDCButton *trailingButton = [[MDCButton alloc] init];
   trailingButton.translatesAutoresizingMaskIntoConstraints = NO;
   trailingButton.backgroundColor = UIColor.whiteColor;
-  trailingButton.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
   [buttonContainerView addSubview:trailingButton];
   _trailingButton = trailingButton;
 

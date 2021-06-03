@@ -184,18 +184,6 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
- Affects the fallback behavior for when a scaled font is not provided.
-
- If @c YES, the font size will adjust even if a scaled font has not been provided for
- a given @c UIFont property on this component.
-
- If @c NO, the font size will only be adjusted if a scaled font has been provided.
-
- Default value is @c YES.
- */
-@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-
-/**
  The shape generator used to define the button's shape.
 
  When the shapeGenerator is nil, MDCButton will use the default underlying layer with

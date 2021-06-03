@@ -205,7 +205,6 @@ static BOOL gEnablePerformantShadow = NO;
   _borderWidths = [NSMutableDictionary dictionary];
   _fonts = [NSMutableDictionary dictionary];
   _accessibilityTraitsIncludesButton = YES;
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   _mdc_overrideBaseElevation = -1;
   _currentElevation = 0;
 
@@ -966,10 +965,8 @@ static BOOL gEnablePerformantShadow = NO;
     if (font.mdc_scalingCurve) {
       font = [font mdc_scaledFontForTraitEnvironment:self];
     } else {
-      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-        font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                                  scaledForDynamicType:YES];
-      }
+      font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                scaledForDynamicType:YES];
     }
   }
   return font;
