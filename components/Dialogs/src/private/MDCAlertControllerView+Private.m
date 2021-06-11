@@ -36,6 +36,10 @@ static const CGFloat MDCDialogActionMinTouchTarget = 48.0f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
+/** KVO context for this file. */
+static char *const kKVOContextMDCAlertControllerViewPrivate =
+    "kKVOContextMDCAlertControllerViewPrivate";
+
 /** Calculates the minimum text height for a single line text using device metrics. */
 static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Nullable font) {
   if (title.length == 0) {
@@ -76,6 +80,10 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
+/** The most recent VoiceOver-assigned contentOffset for the contentScrollView whose x and y values
+ * were positive. */
+@property(nonatomic, assign) CGPoint contentScrollViewLastValidVoiceOverContentOffset;
+
 @end
 
 @implementation MDCAlertControllerView {
@@ -109,6 +117,11 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.contentScrollView];
+    self.contentScrollViewLastValidVoiceOverContentOffset = CGPointZero;
+    [self.contentScrollView addObserver:self
+                             forKeyPath:NSStringFromSelector(@selector(contentOffset))
+                                options:NSKeyValueObservingOptionNew
+                                context:kKVOContextMDCAlertControllerViewPrivate];
 
     self.actionsScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self addSubview:self.actionsScrollView];
@@ -433,6 +446,30 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 }
 
 #pragma mark - Internal
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context {
+  if (context == kKVOContextMDCAlertControllerViewPrivate) {
+    if (UIAccessibilityIsVoiceOverRunning() && (object == self.contentScrollView)) {
+      // For some reason, VoiceOver sets a contentOffset with negative x and y values on
+      // self.contentScrollView when the user navigates through the text in self.messageTextView
+      // word by word in landscape. This results in the text VoiceOver is focusing on to not be
+      // visible. This code remembers the contentOffsets with positive x and y values that VoiceOver
+      // sets, and re-applies them when it finds that VoiceOver has set ones with negative x and y
+      // values. (b/181607796)
+      CGPoint contentOffset = self.contentScrollView.contentOffset;
+      BOOL isValidContentOffset = (contentOffset.x >= 0 && contentOffset.y >= 0);
+      if (isValidContentOffset) {
+        self.contentScrollViewLastValidVoiceOverContentOffset = contentOffset;
+      } else {
+        self.contentScrollView.contentOffset =
+            self.contentScrollViewLastValidVoiceOverContentOffset;
+      }
+    }
+  }
+}
 
 - (CGSize)actionFittingSizeInHorizontalLayout {
   CGSize size = CGSizeMake([self horizontalSpacing], 0.0f);
@@ -837,7 +874,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
   self.contentScrollView.contentSize = contentRect.size;
 
-  // Place Content in contentScrollView
+  // Place Content in titleScrollView
   CGSize titleBoundsSize = boundsSize;
   titleBoundsSize.width = boundsSize.width - (self.titleInsets.left + self.titleInsets.right);
   CGSize titleSize = [self.titleLabel sizeThatFits:titleBoundsSize];
