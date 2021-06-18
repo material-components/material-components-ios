@@ -23,10 +23,6 @@
 #import "MaterialTextControls+UnderlinedTextFields.h"
 #import "MDCTextControlSnapshotTestHelpers.h"
 
-@interface MDCBaseTextField (AnimationDuration)
-@property(nonatomic, assign) NSTimeInterval animationDuration;
-@end
-
 /**
  This class puts the configuration for TextControl based TextField snapshot tests in one place so
  that snapshot test cases for the MDCFilledTextField and MDCOutlinedTextField can test the same

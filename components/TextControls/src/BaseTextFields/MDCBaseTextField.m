@@ -35,7 +35,6 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 @property(nonatomic, assign) MDCTextControlState textControlState;
 @property(nonatomic, assign) MDCTextControlLabelPosition labelPosition;
 @property(nonatomic, assign) CGRect labelFrame;
-@property(nonatomic, assign) NSTimeInterval animationDuration;
 @property(nonatomic, assign) CGFloat lastRecordedWidth;
 @property(nonatomic, assign) CGFloat lastCalculatedHeight;
 

@@ -213,14 +213,9 @@
  */
 @property(nonatomic, assign) CGFloat verticalDensity;
 
-@end
-
-@interface MDCBaseTextField (UIAccessibility)
-
 /**
- If @c accessibilityLabel is not set, this value will be a concatenation of any @c label text, @c
- leadingAssistiveLabel text, and @c trailingAssistiveLabel text.
+ The duration for any animations the text field performs.
  */
-@property(nullable, nonatomic, copy) NSString *accessibilityLabel;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 @end
