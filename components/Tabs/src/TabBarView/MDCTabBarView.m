@@ -191,6 +191,11 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
   }
 
+  // Tab bars only scroll horizontally, so it can't scroll to top. Setting this property to false
+  // prevents it from interfering with other scroll views on screen responding to the scroll-to-top
+  // gesture.
+  self.scrollsToTop = NO;
+
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13, *)) {
     // If clients report conflicting gesture recognizers please see proposed solution in the
