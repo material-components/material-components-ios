@@ -253,6 +253,14 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 - (CGRect)rectForItem:(nonnull UITabBarItem *)item
     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
 
+/**
+ Scrolls the tab bar so that @c item is centered.
+
+ @param item The tab bar item to be centered.
+ @param animated Whether to animate the scroll.
+ */
+- (void)scrollToItem:(UITabBarItem *)item animated:(BOOL)animated;
+
 @end
 
 #if MDC_AVAILABLE_SDK_IOS(13_0) && !TARGET_OS_TV
