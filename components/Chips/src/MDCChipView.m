@@ -672,25 +672,21 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
-  if (context == kKVOContextMDCChipView) {
-    if (!object) {
-      return;
-    }
-
-    id newValue = [object valueForKey:keyPath];
-    if (newValue == [NSNull null]) {
-      newValue = nil;
-    }
-
+  if (context != kKVOContextMDCChipView) {
+    return;
+  }
+  if (object == self.titleLabel) {
     NSArray<NSString *> *titleLabelKeyPaths = [self titleLabelKVOKeyPaths];
     for (NSString *titleLabelKeyPath in titleLabelKeyPaths) {
       if ([titleLabelKeyPath isEqualToString:keyPath]) {
         [self invalidateIntrinsicContentSize];
+        [self setNeedsLayout];
       }
     }
-
+  } else if (object == self.imageView) {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
       [self invalidateIntrinsicContentSize];
+      [self setNeedsLayout];
     }
   }
 }

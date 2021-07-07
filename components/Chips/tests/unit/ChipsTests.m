@@ -31,12 +31,28 @@
 /** Used to set the value of @c traitCollection. */
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 
+/** Used to determine whether invalidateIntrinsicContentSize has been called. */
+@property(nonatomic, assign) BOOL invalidateIntrinsicContentSizeWasCalled;
+
+/** Used to determine whether setNeedsLayout has been called. */
+@property(nonatomic, assign) BOOL setNeedsLayoutWasCalled;
+
 @end
 
 @implementation MDCChipsTestsFakeChipView
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+- (void)invalidateIntrinsicContentSize {
+  [super invalidateIntrinsicContentSize];
+  self.invalidateIntrinsicContentSizeWasCalled = YES;
+}
+
+- (void)setNeedsLayout {
+  [super setNeedsLayout];
+  self.setNeedsLayoutWasCalled = YES;
 }
 
 @end
@@ -409,6 +425,30 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertEqual(controlViewCount, (NSUInteger)1);
+}
+
+- (void)testSettingImageViewImageResultsInCallsToInvalidateIntrinsicContentSize {
+  // Given
+  MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
+  chipView.invalidateIntrinsicContentSizeWasCalled = NO;
+
+  // When
+  chipView.imageView.image = TestImage(CGSizeMake(20, 20));
+
+  // Then
+  XCTAssertTrue(chipView.invalidateIntrinsicContentSizeWasCalled);
+}
+
+- (void)testSettingImageViewImageResultsInCallsToSetNeedsLayout {
+  // Given
+  MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
+  chipView.setNeedsLayoutWasCalled = NO;
+
+  // When
+  chipView.imageView.image = TestImage(CGSizeMake(20, 20));
+
+  // Then
+  XCTAssertTrue(chipView.setNeedsLayoutWasCalled);
 }
 
 - (void)testChipViewDynamicTypeBehavior {
