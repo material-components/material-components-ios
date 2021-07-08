@@ -15,6 +15,7 @@
 #import "MDCBottomSheetTransitionController.h"
 
 #import "MDCBottomSheetPresentationController.h"
+#import "MDCBottomSheetTransitionControllerDelegate.h"
 
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
@@ -140,6 +141,10 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
         // If we're dismissing, remove the presented view from the hierarchy
         if (!presenting) {
           [fromView removeFromSuperview];
+          if ([self.delegate
+                  respondsToSelector:@selector(didDismissBottomSheetTransitionController:)]) {
+            [self.delegate didDismissBottomSheetTransitionController:self];
+          }
         }
 
         // From ADC : UIViewControllerContextTransitioning

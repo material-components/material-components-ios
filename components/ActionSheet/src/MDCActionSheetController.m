@@ -142,6 +142,7 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
     _actions = [[NSMutableArray alloc] init];
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
     _transitionController.dismissOnBackgroundTap = YES;
+    _transitionController.delegate = self;
     /**
      "We must call super because we've made the setters on this class unavailable and overridden
      their implementations to throw assertions."
@@ -177,6 +178,10 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   }
 
   return self;
+}
+
+- (void)didDismissBottomSheetTransitionController:(MDCBottomSheetTransitionController *)controller {
+  [self.delegate actionSheetControllerDidDismiss:self];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {

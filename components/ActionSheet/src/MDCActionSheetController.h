@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCActionSheetAction.h"
+#import "MDCBottomSheetTransitionControllerDelegate.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialElevation.h"
 
@@ -43,7 +44,8 @@
 
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
-    : UIViewController<MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
+    : UIViewController<MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting,
+                       MDCBottomSheetTransitionControllerDelegate>
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.
