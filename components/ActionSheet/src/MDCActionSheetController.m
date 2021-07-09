@@ -181,7 +181,9 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
 }
 
 - (void)didDismissBottomSheetTransitionController:(MDCBottomSheetTransitionController *)controller {
-  [self.delegate actionSheetControllerDidDismiss:self];
+  if ([self.delegate respondsToSelector:@selector(actionSheetControllerDidDismiss:)]) {
+    [self.delegate actionSheetControllerDidDismiss:self];
+  }
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
