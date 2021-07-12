@@ -62,7 +62,6 @@ static inline UIColor *MDCTextInputControllerBaseDefaultTextErrorColorDefault() 
 #pragma mark - Class Properties
 
 static BOOL _floatingEnabledDefault = YES;
-static BOOL _mdc_adjustsFontForContentSizeCategoryDefault = NO;
 
 static CGFloat _floatingPlaceholderScaleDefault =
     MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDefault;
@@ -249,9 +248,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 
   // This controller will handle Dynamic Type and all fonts for the text input
-  _mdc_adjustsFontForContentSizeCategory =
-      _textInput.mdc_adjustsFontForContentSizeCategory ||
-      [self class].mdc_adjustsFontForContentSizeCategoryDefault;
+  _mdc_adjustsFontForContentSizeCategory = _textInput.mdc_adjustsFontForContentSizeCategory || NO;
   _textInput.underline.disabledColor = self.disabledColor;
   _textInput.mdc_adjustsFontForContentSizeCategory = NO;
   _textInput.positioningDelegate = self;
@@ -1706,15 +1703,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                                     name:UIContentSizeCategoryDidChangeNotification
                                                   object:nil];
   }
-}
-
-+ (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
-  return _mdc_adjustsFontForContentSizeCategoryDefault;
-}
-
-+ (void)setMdc_adjustsFontForContentSizeCategoryDefault:
-    (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
-  _mdc_adjustsFontForContentSizeCategoryDefault = mdc_adjustsFontForContentSizeCategoryDefault;
 }
 
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {

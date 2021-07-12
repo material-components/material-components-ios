@@ -180,13 +180,10 @@ __deprecated_msg(
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
- Default is mdc_adjustsFontForContentSizeCategoryDefault.
+ Default is @c NO.
  */
 @property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
-
-/** Default value for mdc_adjustsFontForContentSizeCategory. */
-@property(class, nonatomic, assign) BOOL mdc_adjustsFontForContentSizeCategoryDefault;
 
 /**
  Color for decorations that indicates the input is enabled but not currently editing.

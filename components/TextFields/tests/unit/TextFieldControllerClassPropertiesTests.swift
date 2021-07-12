@@ -27,7 +27,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerFilled.roundedCornersDefault = []
     MDCTextInputControllerFilled.errorColorDefault = nil
     MDCTextInputControllerFilled.inlinePlaceholderColorDefault = nil
-    MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault = false
     MDCTextInputControllerFilled.activeColorDefault = nil
     MDCTextInputControllerFilled.normalColorDefault = nil
     MDCTextInputControllerFilled.disabledColorDefault = nil
@@ -48,7 +47,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerOutlined.roundedCornersDefault = []
     MDCTextInputControllerOutlined.errorColorDefault = nil
     MDCTextInputControllerOutlined.inlinePlaceholderColorDefault = nil
-    MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault = false
     MDCTextInputControllerOutlined.activeColorDefault = nil
     MDCTextInputControllerOutlined.normalColorDefault = nil
     MDCTextInputControllerOutlined.disabledColorDefault = nil
@@ -70,7 +68,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerUnderline.roundedCornersDefault = []
     MDCTextInputControllerUnderline.errorColorDefault = nil
     MDCTextInputControllerUnderline.inlinePlaceholderColorDefault = nil
-    MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault = false
     MDCTextInputControllerUnderline.activeColorDefault = nil
     MDCTextInputControllerUnderline.normalColorDefault = nil
     MDCTextInputControllerUnderline.disabledColorDefault = nil
@@ -91,7 +88,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     MDCTextInputControllerFullWidth.errorColorDefault = nil
     MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault = nil
-    MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault = false
     MDCTextInputControllerFullWidth.activeColorDefault = nil
     MDCTextInputControllerFullWidth.normalColorDefault = nil
     MDCTextInputControllerFullWidth.disabledColorDefault = nil
@@ -114,7 +110,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(
       MDCTextInputControllerFilled.inlinePlaceholderColorDefault,
       UIColor(white: 0, alpha: CGFloat(0.54)))
-    XCTAssertEqual(MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault, false)
     XCTAssertEqual(
       MDCTextInputControllerFilled.activeColorDefault,
       MDCPalette.blue.accent700)
@@ -169,9 +164,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
       controller.inlinePlaceholderColor,
       MDCTextInputControllerFilled.inlinePlaceholderColorDefault)
     XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerFilled.activeColorDefault)
     XCTAssertEqual(
@@ -222,11 +214,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     MDCTextInputControllerFilled.inlinePlaceholderColorDefault = .orange
     XCTAssertEqual(MDCTextInputControllerFilled.inlinePlaceholderColorDefault, .orange)
-
-    MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault = false
-    XCTAssertEqual(
-      MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault,
-      false)
 
     MDCTextInputControllerFilled.activeColorDefault = .purple
     XCTAssertEqual(MDCTextInputControllerFilled.activeColorDefault, .purple)
@@ -288,9 +275,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
       controller.inlinePlaceholderColor,
       MDCTextInputControllerFilled.inlinePlaceholderColorDefault)
     XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerFilled.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerFilled.activeColorDefault)
     XCTAssertEqual(
@@ -340,8 +324,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(
       MDCTextInputControllerOutlined.inlinePlaceholderColorDefault,
       UIColor(white: 0, alpha: CGFloat(0.54)))
-    XCTAssertEqual(
-      MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault, false)
     XCTAssertEqual(
       MDCTextInputControllerOutlined.activeColorDefault,
       MDCPalette.blue.accent700)
@@ -395,9 +377,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
       controller.inlinePlaceholderColor,
       MDCTextInputControllerOutlined.inlinePlaceholderColorDefault)
     XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerOutlined.activeColorDefault)
     XCTAssertEqual(
@@ -448,11 +427,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     MDCTextInputControllerOutlined.inlinePlaceholderColorDefault = .orange
     XCTAssertEqual(MDCTextInputControllerOutlined.inlinePlaceholderColorDefault, .orange)
-
-    MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault = false
-    XCTAssertEqual(
-      MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault,
-      false)
 
     MDCTextInputControllerOutlined.activeColorDefault = .purple
     XCTAssertEqual(MDCTextInputControllerOutlined.activeColorDefault, .purple)
@@ -514,9 +488,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
       controller.inlinePlaceholderColor,
       MDCTextInputControllerOutlined.inlinePlaceholderColorDefault)
     XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerOutlined.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerOutlined.activeColorDefault)
     XCTAssertEqual(
@@ -566,8 +537,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(
       MDCTextInputControllerUnderline.inlinePlaceholderColorDefault,
       UIColor(white: 0, alpha: CGFloat(0.54)))
-    XCTAssertEqual(
-      MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault, false)
     XCTAssertEqual(
       MDCTextInputControllerUnderline.activeColorDefault,
       MDCPalette.blue.accent700)
@@ -621,9 +590,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
       controller.inlinePlaceholderColor,
       MDCTextInputControllerUnderline.inlinePlaceholderColorDefault)
     XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerUnderline.activeColorDefault)
     XCTAssertEqual(
@@ -674,11 +640,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     MDCTextInputControllerUnderline.inlinePlaceholderColorDefault = .orange
     XCTAssertEqual(MDCTextInputControllerUnderline.inlinePlaceholderColorDefault, .orange)
-
-    MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault = false
-    XCTAssertEqual(
-      MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault,
-      false)
 
     MDCTextInputControllerUnderline.activeColorDefault = .purple
     XCTAssertEqual(MDCTextInputControllerUnderline.activeColorDefault, .purple)
@@ -740,9 +701,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
       controller.inlinePlaceholderColor,
       MDCTextInputControllerUnderline.inlinePlaceholderColorDefault)
     XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerUnderline.mdc_adjustsFontForContentSizeCategoryDefault)
-    XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerUnderline.activeColorDefault)
     XCTAssertEqual(
@@ -795,9 +753,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(
       MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault,
       UIColor(white: 0, alpha: CGFloat(0.54)))
-    XCTAssertEqual(
-      MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault,
-      false)
     XCTAssertEqual(MDCTextInputControllerFullWidth.activeColorDefault, .clear)
     XCTAssertEqual(MDCTextInputControllerFullWidth.normalColorDefault, .clear)
     XCTAssertEqual(MDCTextInputControllerFullWidth.underlineHeightActiveDefault, 0)
@@ -829,9 +784,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(
       controller.inlinePlaceholderColor,
       MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault)
-    XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault)
     XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerFullWidth.activeColorDefault)
@@ -873,11 +825,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault = .orange
     XCTAssertEqual(MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault, .orange)
-
-    MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault = false
-    XCTAssertEqual(
-      MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault,
-      false)
 
     MDCTextInputControllerFullWidth.activeColorDefault = .purple
     XCTAssertEqual(MDCTextInputControllerFullWidth.activeColorDefault, .clear)
@@ -923,9 +870,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(
       controller.inlinePlaceholderColor,
       MDCTextInputControllerFullWidth.inlinePlaceholderColorDefault)
-    XCTAssertEqual(
-      controller.mdc_adjustsFontForContentSizeCategory,
-      MDCTextInputControllerFullWidth.mdc_adjustsFontForContentSizeCategoryDefault)
     XCTAssertEqual(
       controller.activeColor,
       MDCTextInputControllerFullWidth.activeColorDefault)
