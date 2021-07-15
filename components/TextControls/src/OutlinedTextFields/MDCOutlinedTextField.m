@@ -18,6 +18,7 @@
 
 #import "MaterialTextControls+BaseTextFields.h"
 #import "MaterialTextControlsPrivate+OutlinedStyle.h"
+#import "MaterialTextControlsPrivate+TextFields.h"
 
 @interface MDCOutlinedTextField (Private) <MDCTextControl>
 @end
@@ -56,6 +57,12 @@
 
 - (CGFloat)containerRadius {
   return self.outlinedStyle.outlineCornerRadius;
+}
+
+#pragma mark MDCTextControlTextField methods
+
+- (MDCTextControlTextFieldSideViewAlignment)sideViewAlignment {
+  return MDCTextControlTextFieldSideViewAlignmentAlignedWithText;
 }
 
 #pragma mark Stateful Color APIs

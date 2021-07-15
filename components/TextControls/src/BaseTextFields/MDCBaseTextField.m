@@ -34,7 +34,8 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 @property(nonatomic, assign) MDCTextControlState textControlState;
 @property(nonatomic, assign) MDCTextControlLabelPosition labelPosition;
-@property(nonatomic, assign) CGRect labelFrame;
+@property(nonatomic, assign) CGRect floatingLabelFrame;
+@property(nonatomic, assign) CGRect normalLabelFrame;
 @property(nonatomic, assign) CGFloat lastRecordedWidth;
 @property(nonatomic, assign) CGFloat lastCalculatedHeight;
 
@@ -192,7 +193,8 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   [self applyColorViewModel:colorViewModel withLabelPosition:self.labelPosition];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
-  self.labelFrame = [self.layout labelFrameWithLabelPosition:self.labelPosition];
+  self.normalLabelFrame = self.layout.labelFrameNormal;
+  self.floatingLabelFrame = self.layout.labelFrameFloating;
 }
 
 - (void)postLayoutSubviews {
@@ -586,7 +588,8 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
                                     if (finished) {
                                       // Ensure that the label position is correct in case of
                                       // competing animations.
-                                      weakSelf.label.frame = weakSelf.labelFrame;
+                                      weakSelf.label.frame = [weakSelf.layout
+                                          labelFrameWithLabelPosition:self.labelPosition];
                                     }
                                   }];
 }

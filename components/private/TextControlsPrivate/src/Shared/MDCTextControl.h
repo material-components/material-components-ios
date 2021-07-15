@@ -53,11 +53,14 @@ FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
 @property(nonatomic, assign, readonly) MDCTextControlLabelPosition labelPosition;
 
 /**
- The value for the label frame that should be used for style application. While style application
- takes place the value for @c label.frame is in flux, so @c labelFrame gives the style the final
- value for the label's frame.
+ The value for the floating label frame, to be used for style application.
  */
-@property(nonatomic, assign, readonly) CGRect labelFrame;
+@property(nonatomic, assign, readonly) CGRect floatingLabelFrame;
+
+/**
+ The value for the normal label frame, to be used for style application.
+ */
+@property(nonatomic, assign, readonly) CGRect normalLabelFrame;
 
 /**
  Describes the behavior of the label when the view begins editing.

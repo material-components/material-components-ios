@@ -43,7 +43,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 @property(strong, nonatomic) MDCBaseTextAreaLayout *layout;
 @property(nonatomic, assign) MDCTextControlState textControlState;
 @property(nonatomic, assign) MDCTextControlLabelPosition labelPosition;
-@property(nonatomic, assign) CGRect labelFrame;
+@property(nonatomic, assign) CGRect normalLabelFrame;
+@property(nonatomic, assign) CGRect floatingLabelFrame;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
 
 @property(nonatomic, strong)
@@ -204,7 +205,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self applyColorViewModel:colorViewModel withLabelPosition:self.labelPosition];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithSize:fittingSize];
-  self.labelFrame = [self.layout labelFrameWithLabelPosition:self.labelPosition];
+  self.floatingLabelFrame = self.layout.labelFrameFloating;
+  self.normalLabelFrame = self.layout.labelFrameNormal;
 }
 
 - (void)postLayoutSubviews {
@@ -495,7 +497,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                     if (finished) {
                                       // Ensure that the label position is correct in case of
                                       // competing animations.
-                                      weakSelf.label.frame = weakSelf.labelFrame;
+                                      weakSelf.label.frame = [weakSelf.layout
+                                          labelFrameWithLabelPosition:self.labelPosition];
                                     }
                                   }];
 }
