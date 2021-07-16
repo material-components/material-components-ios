@@ -350,7 +350,7 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
 
  Default value is NO.
 
- This property will be depricated and deleted. Instead, please use
+ This property will be deprecateds and deleted. Instead, please use
  titleLabel.adjustsFontForContentSizeCategory and make sure the title font is a
  scalable font.
  */

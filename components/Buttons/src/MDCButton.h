@@ -421,7 +421,7 @@
 
  Defaults value is NO.
 
- This property will be depricated and deleted. Instead, please use
+ This property will be deprecated and deleted. Instead, please use
  titleLabel.adjustsFontForContentSizeCategory and make sure the title font is a
  scalable font.
  */
