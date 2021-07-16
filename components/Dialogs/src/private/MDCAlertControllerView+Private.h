@@ -70,4 +70,16 @@
 
 - (void)updateFonts;
 
+/*
+ Indicates whether the view's contents should automatically update their font when the device’s
+ @c UIContentSizeCategory changes.
+
+ This property is modeled after @c adjustsFontForContentSizeCategory property in
+ @c UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
 @end
