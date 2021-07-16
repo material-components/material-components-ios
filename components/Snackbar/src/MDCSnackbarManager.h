@@ -222,21 +222,6 @@
 - (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
 
 /**
- Indicates whether the Snackbar should automatically update its font when the device’s
- UIContentSizeCategory is changed.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- If set to YES, this button will base its message font on MDCFontTextStyleBody2
- and its button font on MDCFontTextStyleButton.
-
- Default is set to NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
-
-/**
  If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views by
  default. If accessibilityViewIsModal needs to be set for specific snackbar views,
  -willPresentSnackbarWithMessageView: in MDCSnackbarManagerDelegate can be used to access
@@ -266,6 +251,27 @@
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlockForMessageView)
     (id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation);
+@end
+
+@interface MDCSnackbarManager (ToBeDeprecated)
+
+/**
+ Indicates whether the Snackbar should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its message font on MDCFontTextStyleBody2
+ and its button font on MDCFontTextStyleButton.
+
+ Default is set to NO.
+
+ To get a snackbar to respond to Dynamic Type, make sure to set scalable fonts.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory;
+
 @end
 
 /**

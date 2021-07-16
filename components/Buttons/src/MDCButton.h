@@ -169,20 +169,6 @@
  */
 @property(nonatomic, strong, nullable) UIColor *underlyingColorHint;
 
-/*
- Indicates whether the button should automatically update its font when the device’s
- UIContentSizeCategory is changed.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- If set to YES, this button will base its text font on MDCFontTextStyleButton.
-
- Defaults value is NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
 /**
  The shape generator used to define the button's shape.
 
@@ -423,6 +409,24 @@
  self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
+
+/*
+ Indicates whether the button should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its text font on MDCFontTextStyleButton.
+
+ Defaults value is NO.
+
+ This property will be depricated and deleted. Instead, please use
+ titleLabel.adjustsFontForContentSizeCategory and make sure the title font is a
+ scalable font.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 @end
 

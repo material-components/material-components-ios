@@ -97,6 +97,18 @@
                    forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
+ A block that is invoked when the MDCSnackbarMessageView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCSnackbarMessageView *_Nonnull messageView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+@end
+
+@interface MDCSnackbarMessageView (ToBeDeprecated)
+
+/**
  Indicates whether the Snackbar should automatically update its font when the device’s
  UIContentSizeCategory is changed.
 
@@ -107,16 +119,10 @@
  and its button font on MDCFontTextStyleButton.
 
  Default value is NO.
+
+ To get a snackbar to respond to Dynamic Type, make sure to set scalable fonts.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
-/**
- A block that is invoked when the MDCSnackbarMessageView receives a call to @c
- traitCollectionDidChange:. The block is called after the call to the superclass.
- */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (MDCSnackbarMessageView *_Nonnull messageView,
-     UITraitCollection *_Nullable previousTraitCollection);
 
 @end

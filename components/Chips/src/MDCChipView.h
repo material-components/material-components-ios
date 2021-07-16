@@ -125,20 +125,6 @@
  */
 @property(nonatomic) CGFloat cornerRadius;
 
-/*
- Indicates whether the chip should automatically update its font when the device’s
- UIContentSizeCategory is changed.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- If set to YES, this button will base its text font on MDCFontTextStyleButton.
-
- Default value is NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
 /**
  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent
  to no minimum for that dimension.
@@ -352,5 +338,23 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
  @note Defaults to @c NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/*
+ Indicates whether the chip should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its text font on MDCFontTextStyleButton.
+
+ Default value is NO.
+
+ This property will be depricated and deleted. Instead, please use
+ titleLabel.adjustsFontForContentSizeCategory and make sure the title font is a
+ scalable font.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 @end
